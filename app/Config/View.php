@@ -59,4 +59,21 @@ class View extends BaseView
      * @var list<class-string<ViewDecoratorInterface>>
      */
     public array $decorators = [];
+
+    /**
+     * Subdirectory within app/Views for namespaced view overrides.
+     *
+     * Namespaced views will be searched in:
+     *
+     *   app/Views/{$appOverridesFolder}/{Namespace}/{view_path}.{php|html...}
+     *
+     * This allows application-level overrides for package or module views
+     * without modifying vendor source files.
+     *
+     * Examples:
+     *   'overrides' -> app/Views/overrides/Example/Blog/post/card.php
+     *   'vendor'    -> app/Views/vendor/Example/Blog/post/card.php
+     *   ''          -> app/Views/Example/Blog/post/card.php (direct mapping)
+     */
+    public string $appOverridesFolder = 'overrides';
 }

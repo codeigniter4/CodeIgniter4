@@ -83,7 +83,7 @@ final class PreparedQueryTest extends CIUnitTestCase
 
     public function testPrepareReturnsManualPreparedQuery(): void
     {
-        $this->query = $this->db->prepare(static function ($db) {
+        $this->query = $this->db->prepare(static function ($db): Query {
             $sql = "INSERT INTO {$db->protectIdentifiers($db->DBPrefix . 'user')} ("
                 . $db->protectIdentifiers('name') . ', '
                 . $db->protectIdentifiers('email') . ', '
@@ -127,7 +127,7 @@ final class PreparedQueryTest extends CIUnitTestCase
 
     public function testExecuteRunsQueryManualAndReturnsTrue(): void
     {
-        $this->query = $this->db->prepare(static function ($db) {
+        $this->query = $this->db->prepare(static function ($db): Query {
             $sql = "INSERT INTO {$db->protectIdentifiers($db->DBPrefix . 'user')} ("
                 . $db->protectIdentifiers('name') . ', '
                 . $db->protectIdentifiers('email') . ', '
@@ -164,7 +164,7 @@ final class PreparedQueryTest extends CIUnitTestCase
 
     public function testExecuteRunsQueryManualAndReturnsFalse(): void
     {
-        $this->query = $this->db->prepare(static function ($db) {
+        $this->query = $this->db->prepare(static function ($db): Query {
             $sql = "INSERT INTO {$db->protectIdentifiers($db->DBPrefix . 'without_auto_increment')} ("
                 . $db->protectIdentifiers('key') . ', '
                 . $db->protectIdentifiers('value')
@@ -200,7 +200,7 @@ final class PreparedQueryTest extends CIUnitTestCase
 
     public function testExecuteSelectQueryManualAndCheckTypeAndResult(): void
     {
-        $this->query = $this->db->prepare(static function ($db) {
+        $this->query = $this->db->prepare(static function ($db): Query {
             $sql = 'SELECT '
                 . $db->protectIdentifiers('name') . ', '
                 . $db->protectIdentifiers('email') . ', '

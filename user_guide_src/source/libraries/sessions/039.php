@@ -3,12 +3,12 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
-use CodeIgniter\Session\Handlers\FileHandler;
+use CodeIgniter\Session\Handlers\DatabaseHandler;
 
 class Session extends BaseConfig
 {
     // ...
-    public string $driver = 'CodeIgniter\Session\Handlers\DatabaseHandler';
+    public string $driver = DatabaseHandler::class;
 
     // ...
     public string $savePath = 'ci_sessions';

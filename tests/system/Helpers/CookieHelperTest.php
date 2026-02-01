@@ -19,6 +19,7 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
@@ -43,6 +44,8 @@ final class CookieHelperTest extends CIUnitTestCase
         $_COOKIE = [];
 
         parent::setUp();
+
+        Services::injectMock('superglobals', new Superglobals());
 
         $this->name   = 'greetings';
         $this->value  = 'hello world';
@@ -152,14 +155,14 @@ final class CookieHelperTest extends CIUnitTestCase
 
     public function testGetCookie(): void
     {
-        $_COOKIE['TEST'] = '5';
+        service('superglobals')->setCookie('TEST', '5');
 
         $this->assertSame('5', get_cookie('TEST'));
     }
 
     public function testGetCookieDefaultPrefix(): void
     {
-        $_COOKIE['prefix_TEST'] = '5';
+        service('superglobals')->setCookie('prefix_TEST', '5');
 
         $config         = new CookieConfig();
         $config->prefix = 'prefix_';
@@ -170,7 +173,7 @@ final class CookieHelperTest extends CIUnitTestCase
 
     public function testGetCookiePrefix(): void
     {
-        $_COOKIE['abc_TEST'] = '5';
+        service('superglobals')->setCookie('abc_TEST', '5');
 
         $config         = new CookieConfig();
         $config->prefix = 'prefix_';
@@ -181,7 +184,7 @@ final class CookieHelperTest extends CIUnitTestCase
 
     public function testGetCookieNoPrefix(): void
     {
-        $_COOKIE['abc_TEST'] = '5';
+        service('superglobals')->setCookie('abc_TEST', '5');
 
         $config         = new CookieConfig();
         $config->prefix = 'prefix_';

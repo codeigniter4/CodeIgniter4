@@ -15,7 +15,6 @@ use Closure;
 use CodeIgniter\Cache\ResponseCache;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Events\Events;
-use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Filters\Filters;
@@ -26,6 +25,7 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Request;
+use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponsableInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\URI;
@@ -55,7 +55,7 @@ class CodeIgniter
     /**
      * The current version of CodeIgniter Framework
      */
-    public const CI_VERSION = '4.6.5';
+    public const CI_VERSION = '4.7.0';
 
     /**
      * App startup time.
@@ -95,14 +95,14 @@ class CodeIgniter
     /**
      * Current response.
      *
-     * @var ResponseInterface
+     * @var ResponseInterface|null
      */
     protected $response;
 
     /**
      * Router to use.
      *
-     * @var Router
+     * @var Router|null
      */
     protected $router;
 
@@ -116,14 +116,14 @@ class CodeIgniter
     /**
      * Controller method to invoke.
      *
-     * @var string
+     * @var string|null
      */
     protected $method;
 
     /**
      * Output handler to use.
      *
-     * @var string
+     * @var string|null
      */
     protected $output;
 
@@ -193,35 +193,21 @@ class CodeIgniter
     }
 
     /**
-     * Checks system for missing required PHP extensions.
-     *
-     * @return void
-     *
-     * @throws FrameworkException
-     *
-     * @codeCoverageIgnore
-     *
-     * @deprecated 4.5.0 Moved to system/bootstrap.php.
+     * Reset request-specific state for worker mode.
+     * Clears all request/response data to prepare for the next request.
      */
-    protected function resolvePlatformExtensions()
+    public function resetForWorkerMode(): void
     {
-        $requiredExtensions = [
-            'intl',
-            'json',
-            'mbstring',
-        ];
+        $this->request    = null;
+        $this->response   = null;
+        $this->router     = null;
+        $this->controller = null;
+        $this->method     = null;
+        $this->output     = null;
 
-        $missingExtensions = [];
-
-        foreach ($requiredExtensions as $extension) {
-            if (! extension_loaded($extension)) {
-                $missingExtensions[] = $extension;
-            }
-        }
-
-        if ($missingExtensions !== []) {
-            throw FrameworkException::forMissingExtension(implode(', ', $missingExtensions));
-        }
+        // Reset timing
+        $this->startTime = null;
+        $this->totalTime = 0;
     }
 
     /**
@@ -493,8 +479,12 @@ class CodeIgniter
 
         $returned = $this->startController();
 
+        // If startController returned a Response (from an attribute or Closure), use it
+        if ($returned instanceof ResponseInterface) {
+            $this->gatherOutput($cacheConfig, $returned);
+        }
         // Closure controller has run in startController().
-        if (! is_callable($this->controller)) {
+        elseif (! is_callable($this->controller)) {
             $controller = $this->createController();
 
             if (! method_exists($controller, '_remap') && ! is_callable([$controller, $this->method], false)) {
@@ -528,6 +518,13 @@ class CodeIgniter
             if ($response instanceof ResponseInterface) {
                 $this->response = $response;
             }
+        }
+
+        // Execute controller attributes' after() methods AFTER framework filters
+        if ((config('Routing')->useControllerAttributes ?? true) === true) {
+            $this->benchmark->start('route_attributes_after');
+            $this->response = $this->router->executeAfterAttributes($this->request, $this->response);
+            $this->benchmark->stop('route_attributes_after');
         }
 
         // Skip unnecessary processing for special Responses.
@@ -886,6 +883,27 @@ class CodeIgniter
             || ($this->method[0] === '_' && $this->method !== '__invoke')
         ) {
             throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
+        }
+
+        // Execute route attributes' before() methods
+        // This runs after routing/validation but BEFORE expensive controller instantiation
+        if ((config('Routing')->useControllerAttributes ?? true) === true) {
+            $this->benchmark->start('route_attributes_before');
+            $attributeResponse = $this->router->executeBeforeAttributes($this->request);
+            $this->benchmark->stop('route_attributes_before');
+
+            // If attribute returns a Response, short-circuit
+            if ($attributeResponse instanceof ResponseInterface) {
+                $this->benchmark->stop('controller_constructor');
+                $this->benchmark->stop('controller');
+
+                return $attributeResponse;
+            }
+
+            // If attribute returns a modified Request, use it
+            if ($attributeResponse instanceof RequestInterface) {
+                $this->request = $attributeResponse;
+            }
         }
 
         return null;

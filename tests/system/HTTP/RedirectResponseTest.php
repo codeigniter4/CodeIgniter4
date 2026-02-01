@@ -16,6 +16,7 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Router\RouteCollection;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Validation\Validation;
@@ -49,7 +50,8 @@ final class RedirectResponseTest extends CIUnitTestCase
 
         $this->resetServices();
 
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        Services::injectMock('superglobals', new Superglobals());
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $this->config          = new App();
         $this->config->baseURL = 'http://example.com/';
@@ -134,8 +136,8 @@ final class RedirectResponseTest extends CIUnitTestCase
     public function testWithInput(): void
     {
         $_SESSION = [];
-        $_GET     = ['foo' => 'bar'];
-        $_POST    = ['bar' => 'baz'];
+        service('superglobals')->setGet('foo', 'bar');
+        service('superglobals')->setPost('bar', 'baz');
 
         $response = new RedirectResponse(new App());
 
@@ -183,7 +185,7 @@ final class RedirectResponseTest extends CIUnitTestCase
     #[RunInSeparateProcess]
     public function testRedirectBack(): void
     {
-        $_SERVER['HTTP_REFERER'] = 'http://somewhere.com';
+        service('superglobals')->setServer('HTTP_REFERER', 'http://somewhere.com');
 
         $this->request = new MockIncomingRequest($this->config, new SiteURI($this->config), null, new UserAgent());
         Services::injectMock('request', $this->request);

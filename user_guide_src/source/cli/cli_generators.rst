@@ -251,6 +251,27 @@ Options:
 * ``--namespace``: Set the root namespace. Defaults to value of ``Tests``.
 * ``--force``: Set this flag to overwrite existing files on destination.
 
+make:transformer
+----------------
+
+Creates a new API transformer file.
+
+Usage:
+======
+::
+
+    make:transformer <name> [options]
+
+Argument:
+=========
+* ``name``: The name of the transformer class. **[REQUIRED]**
+
+Options:
+========
+* ``--namespace``: Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--suffix``: Append the component suffix to the generated class name.
+* ``--force``: Set this flag to overwrite existing files on destination.
+
 make:migration
 --------------
 

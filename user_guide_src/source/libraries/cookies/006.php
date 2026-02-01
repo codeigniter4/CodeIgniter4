@@ -2,6 +2,6 @@
 
 use CodeIgniter\Cookie\Cookie;
 
-Cookie::SAMESITE_LAX;       // 'lax'
-Cookie::SAMESITE_STRICT;    // 'strict'
-Cookie::SAMESITE_NONE;      // 'none'
+Cookie::SAMESITE_LAX;    // 'Lax'
+Cookie::SAMESITE_STRICT; // 'Strict'
+Cookie::SAMESITE_NONE;   // 'None'

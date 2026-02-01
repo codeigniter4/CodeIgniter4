@@ -13,11 +13,16 @@ declare(strict_types=1);
 
 namespace CodeIgniter\API;
 
+use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Format\Format;
 use CodeIgniter\Format\FormatterInterface;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\HTTP\URI;
+use CodeIgniter\Model;
+use Throwable;
 
 /**
  * Provides common, more readable, methods to provide
@@ -321,7 +326,7 @@ trait ResponseTrait
         // if we don't have a formatter, make one
         $this->formatter ??= $format->getFormatter($mime);
 
-        $asHtml = $this->stringAsHtml ?? false;
+        $asHtml = property_exists($this, 'stringAsHtml') ? $this->stringAsHtml : false;
 
         if (
             ($mime === 'application/json' && $asHtml && is_string($data))
@@ -359,5 +364,169 @@ trait ResponseTrait
         $this->format = $format === null ? null : strtolower($format);
 
         return $this;
+    }
+
+    // --------------------------------------------------------------------
+    // Pagination Methods
+    // --------------------------------------------------------------------
+
+    /**
+     * Paginates the given model or query builder and returns
+     * an array containing the paginated results along with
+     * metadata such as total items, total pages, current page,
+     * and items per page.
+     *
+     * The result would be in the following format:
+     * [
+     *   'data' => [...],
+     *   'meta' => [
+     *       'page' => 1,
+     *       'perPage' => 20,
+     *       'total' => 100,
+     *       'totalPages' => 5,
+     *   ],
+     *   'links' => [
+     *       'self' => '/api/items?page=1&perPage=20',
+     *       'first' => '/api/items?page=1&perPage=20',
+     *       'last' => '/api/items?page=5&perPage=20',
+     *       'prev' => null,
+     *       'next' => '/api/items?page=2&perPage=20',
+     *   ]
+     * ]
+     *
+     * @param class-string<TransformerInterface>|null $transformWith
+     */
+    protected function paginate(BaseBuilder|Model $resource, int $perPage = 20, ?string $transformWith = null): ResponseInterface
+    {
+        try {
+            assert($this->request instanceof IncomingRequest);
+
+            $page = max(1, (int) ($this->request->getGet('page') ?? 1));
+
+            // If using a Model we can use its built-in paginate method
+            if ($resource instanceof Model) {
+                $data  = $resource->paginate($perPage, 'default', $page);
+                $pager = $resource->pager;
+
+                $meta = [
+                    'page'       => $pager->getCurrentPage(),
+                    'perPage'    => $pager->getPerPage(),
+                    'total'      => $pager->getTotal(),
+                    'totalPages' => $pager->getPageCount(),
+                ];
+            } else {
+                // Query Builder, we need to handle pagination manually
+                $offset = ($page - 1) * $perPage;
+                $total  = (clone $resource)->countAllResults();
+                $data   = $resource->limit($perPage, $offset)->get()->getResultArray();
+
+                $meta = [
+                    'page'       => $page,
+                    'perPage'    => $perPage,
+                    'total'      => $total,
+                    'totalPages' => (int) ceil($total / $perPage),
+                ];
+            }
+
+            // Transform data if a transformer is provided
+            if ($transformWith !== null) {
+                if (! class_exists($transformWith)) {
+                    throw ApiException::forTransformerNotFound($transformWith);
+                }
+
+                $transformer = new $transformWith($this->request);
+
+                if (! $transformer instanceof TransformerInterface) {
+                    throw ApiException::forInvalidTransformer($transformWith);
+                }
+
+                $data = $transformer->transformMany($data);
+            }
+
+            $links = $this->buildLinks($meta);
+
+            $this->response->setHeader('Link', $this->linkHeader($links));
+            $this->response->setHeader('X-Total-Count', (string) $meta['total']);
+
+            return $this->respond([
+                'data'  => $data,
+                'meta'  => $meta,
+                'links' => $links,
+            ]);
+        } catch (ApiException $e) {
+            // Re-throw ApiExceptions so they can be handled by the caller
+            throw $e;
+        } catch (DatabaseException $e) {
+            log_message('error', lang('RESTful.cannotPaginate') . ' ' . $e->getMessage());
+
+            return $this->failServerError(lang('RESTful.cannotPaginate'));
+        } catch (Throwable $e) {
+            log_message('error', lang('RESTful.paginateError') . ' ' . $e->getMessage());
+
+            return $this->failServerError(lang('RESTful.paginateError'));
+        }
+    }
+
+    /**
+     * Builds pagination links based on the current request URI and pagination metadata.
+     *
+     * @param array<string, int> $meta Pagination metadata (page, perPage, total, totalPages)
+     *
+     * @return array<string, string|null> Array of pagination links with relations as keys
+     */
+    private function buildLinks(array $meta): array
+    {
+        assert($this->request instanceof IncomingRequest);
+
+        /** @var URI $uri */
+        $uri   = current_url(true);
+        $query = $this->request->getGet();
+
+        $set = static function ($page) use ($uri, $query, $meta): string {
+            $params         = $query;
+            $params['page'] = $page;
+
+            // Ensure perPage is in the links if it's not default
+            if (! isset($params['perPage']) && $meta['perPage'] !== 20) {
+                $params['perPage'] = $meta['perPage'];
+            }
+
+            return (string) (new URI((string) $uri))->setQuery(http_build_query($params));
+        };
+
+        $totalPages = max(1, (int) $meta['totalPages']);
+        $page       = (int) $meta['page'];
+
+        return [
+            'self'  => $set($page),
+            'first' => $set(1),
+            'last'  => $set($totalPages),
+            'prev'  => $page > 1 ? $set($page - 1) : null,
+            'next'  => $page < $totalPages ? $set($page + 1) : null,
+        ];
+    }
+
+    /**
+     * Formats the pagination links into a single Link header string
+     * for middleware/machine use.
+     *
+     * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Link
+     * @see https://datatracker.ietf.org/doc/html/rfc8288
+     *
+     * @param array<string, string|null> $links Pagination links with relations as keys
+     *
+     * @return string Formatted Link header value
+     */
+    private function linkHeader(array $links): string
+    {
+        $parts = [];
+
+        foreach (['self', 'first', 'prev', 'next', 'last'] as $rel) {
+            if ($links[$rel] !== null && $links[$rel] !== '') {
+                $parts[] = "<{$links[$rel]}>; rel=\"{$rel}\"";
+            }
+        }
+
+        return implode(', ', $parts);
     }
 }

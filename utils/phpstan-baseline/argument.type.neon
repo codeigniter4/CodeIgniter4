@@ -1,4 +1,4 @@
-# total 87 errors
+# total 84 errors
 
 parameters:
     ignoreErrors:
@@ -28,12 +28,12 @@ parameters:
             path: ../../system/Database/SQLite3/Builder.php
 
         -
-            message: '#^Parameter \#2 \$to of method CodeIgniter\\Router\\RouteCollection\:\:add\(\) expects array\|\(Closure\(mixed \.\.\.\)\: \(CodeIgniter\\HTTP\\ResponseInterface\|string\|void\)\)\|string, Closure\(mixed\)\: \(CodeIgniter\\HTTP\\DownloadResponse\|null\) given\.$#'
+            message: '#^Parameter \#2 \$to of method CodeIgniter\\Router\\RouteCollection\:\:add\(\) expects array\|\(Closure\(mixed \.\.\.\)\: \(CodeIgniter\\HTTP\\ResponseInterface\|string\|void\)\)\|string, Closure\(mixed\)\: CodeIgniter\\HTTP\\ResponseInterface given\.$#'
             count: 1
             path: ../../tests/system/CodeIgniterTest.php
 
         -
-            message: '#^Parameter \#2 \$to of method CodeIgniter\\Router\\RouteCollection\:\:add\(\) expects array\|\(Closure\(mixed \.\.\.\)\: \(CodeIgniter\\HTTP\\ResponseInterface\|string\|void\)\)\|string, Closure\(mixed\)\: CodeIgniter\\HTTP\\ResponseInterface given\.$#'
+            message: '#^Parameter \#2 \$to of method CodeIgniter\\Router\\RouteCollection\:\:add\(\) expects array\|\(Closure\(mixed \.\.\.\)\: \(CodeIgniter\\HTTP\\ResponseInterface\|string\|void\)\)\|string, Closure\(mixed\)\: \(CodeIgniter\\HTTP\\DownloadResponse\|null\) given\.$#'
             count: 1
             path: ../../tests/system/CodeIgniterTest.php
 
@@ -123,6 +123,11 @@ parameters:
             path: ../../tests/system/HTTP/HeaderTest.php
 
         -
+            message: '#^Parameter \#1 \$array of method CodeIgniter\\Superglobals\:\:setServerArray\(\) expects array\<string, array\<mixed\>\|float\|int\|string\>, array\<string, string\|null\> given\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/MessageTest.php
+
+        -
             message: '#^Parameter \#3 \$expire of method CodeIgniter\\HTTP\\Response\:\:setCookie\(\) expects int, string given\.$#'
             count: 1
             path: ../../tests/system/HTTP/ResponseSendTest.php
@@ -178,11 +183,6 @@ parameters:
             path: ../../tests/system/Images/GDHandlerTest.php
 
         -
-            message: '#^Parameter \#1 \$filename of function file_get_contents expects string, resource given\.$#'
-            count: 2
-            path: ../../tests/system/Images/ImageMagickHandlerTest.php
-
-        -
             message: '#^Parameter \#2 \$message of method CodeIgniter\\Log\\Handlers\\ChromeLoggerHandler\:\:handle\(\) expects string, stdClass given\.$#'
             count: 1
             path: ../../tests/system/Log/Handlers/ChromeLoggerHandlerTest.php
@@ -203,19 +203,9 @@ parameters:
             path: ../../tests/system/Models/DataConverterModelTest.php
 
         -
-            message: '#^Parameter \#1 \$id of method CodeIgniter\\Model\:\:update\(\) expects array\|int\|string\|null, false\|null given\.$#'
-            count: 1
-            path: ../../tests/system/Models/UpdateModelTest.php
-
-        -
             message: '#^Parameter \#1 \$format of method CodeIgniter\\RESTful\\ResourceController\:\:setFormat\(\) expects ''json''\|''xml'', ''Nonsense'' given\.$#'
             count: 1
             path: ../../tests/system/RESTful/ResourceControllerTest.php
-
-        -
-            message: '#^Parameter \#1 \$config of class CodeIgniter\\Test\\Mock\\MockSecurity constructor expects Config\\Security, CodeIgniter\\Config\\BaseConfig\|null given\.$#'
-            count: 1
-            path: ../../tests/system/Security/SecurityCSRFSessionRandomizeTokenTest.php
 
         -
             message: '#^Parameter \#1 \$request of method CodeIgniter\\CodeIgniter\:\:setRequest\(\) expects CodeIgniter\\HTTP\\CLIRequest\|CodeIgniter\\HTTP\\IncomingRequest, CodeIgniter\\HTTP\\Request given\.$#'

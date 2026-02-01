@@ -14,7 +14,9 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Config\Factories;
+use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
@@ -33,7 +35,8 @@ final class ResponseTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
-        $this->server = $_SERVER;
+        Services::injectMock('superglobals', new Superglobals());
+        $this->server = service('superglobals')->getServerArray();
 
         parent::setUp();
 
@@ -44,7 +47,7 @@ final class ResponseTest extends CIUnitTestCase
     {
         Factories::reset('config');
 
-        $_SERVER = $this->server;
+        service('superglobals')->setServerArray($this->server);
     }
 
     public function testCanSetStatusCode(): void
@@ -278,9 +281,10 @@ final class ResponseTest extends CIUnitTestCase
         ?int $code,
         int $expectedCode,
     ): void {
-        $_SERVER['SERVER_SOFTWARE'] = $server;
-        $_SERVER['SERVER_PROTOCOL'] = $protocol;
-        $_SERVER['REQUEST_METHOD']  = $method;
+        service('superglobals')
+            ->setServer('SERVER_SOFTWARE', $server)
+            ->setServer('SERVER_PROTOCOL', $protocol)
+            ->setServer('REQUEST_METHOD', $method);
 
         $response = new Response(new App());
         $response->redirect('example.com', 'auto', $code);
@@ -321,9 +325,10 @@ final class ResponseTest extends CIUnitTestCase
         ?int $code,
         int $expectedCode,
     ): void {
-        $_SERVER['SERVER_SOFTWARE'] = 'Microsoft-IIS';
-        $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
-        $_SERVER['REQUEST_METHOD']  = 'POST';
+        service('superglobals')
+            ->setServer('SERVER_SOFTWARE', 'Microsoft-IIS')
+            ->setServer('SERVER_PROTOCOL', 'HTTP/1.1')
+            ->setServer('REQUEST_METHOD', 'POST');
 
         $response = new Response(new App());
         $response->redirect('example.com', 'auto', $code);
@@ -331,7 +336,7 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertSame('0;url=example.com', $response->getHeaderLine('Refresh'));
         $this->assertSame($expectedCode, $response->getStatusCode());
 
-        unset($_SERVER['SERVER_SOFTWARE']);
+        service('superglobals')->unsetServer('SERVER_SOFTWARE');
     }
 
     public static function provideRedirectWithIIS(): iterable
@@ -518,9 +523,10 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testTemporaryRedirectHTTP11(): void
     {
-        $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
-        $_SERVER['REQUEST_METHOD']  = 'POST';
-        $response                   = new Response(new App());
+        service('superglobals')
+            ->setServer('SERVER_PROTOCOL', 'HTTP/1.1')
+            ->setServer('REQUEST_METHOD', 'POST');
+        $response = new Response(new App());
 
         $response->setProtocolVersion('HTTP/1.1');
         $response->redirect('/foo');
@@ -530,9 +536,10 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testTemporaryRedirectGetHTTP11(): void
     {
-        $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
-        $_SERVER['REQUEST_METHOD']  = 'GET';
-        $response                   = new Response(new App());
+        service('superglobals')
+            ->setServer('SERVER_PROTOCOL', 'HTTP/1.1')
+            ->setServer('REQUEST_METHOD', 'GET');
+        $response = new Response(new App());
 
         $response->setProtocolVersion('HTTP/1.1');
         $response->redirect('/foo');

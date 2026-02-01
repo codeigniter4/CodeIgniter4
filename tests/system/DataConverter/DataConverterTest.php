@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\DataConverter;
 
 use Closure;
+use CodeIgniter\DataCaster\Exceptions\CastException;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -22,6 +23,9 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Entity\CustomUser;
 use Tests\Support\Entity\User;
+use Tests\Support\Enum\ColorEnum;
+use Tests\Support\Enum\RoleEnum;
+use Tests\Support\Enum\StatusEnum;
 
 /**
  * @internal
@@ -193,6 +197,76 @@ final class DataConverterTest extends CIUnitTestCase
                     'temp' => 15.9,
                 ],
             ],
+            'enum string-backed' => [
+                [
+                    'id'     => 'int',
+                    'status' => 'enum[' . StatusEnum::class . ']',
+                ],
+                [
+                    'id'     => '1',
+                    'status' => 'active',
+                ],
+                [
+                    'id'     => 1,
+                    'status' => StatusEnum::ACTIVE,
+                ],
+            ],
+            'enum int-backed' => [
+                [
+                    'id'   => 'int',
+                    'role' => 'enum[' . RoleEnum::class . ']',
+                ],
+                [
+                    'id'   => '1',
+                    'role' => '2',
+                ],
+                [
+                    'id'   => 1,
+                    'role' => RoleEnum::ADMIN,
+                ],
+            ],
+            'enum unit' => [
+                [
+                    'id'    => 'int',
+                    'color' => 'enum[' . ColorEnum::class . ']',
+                ],
+                [
+                    'id'    => '1',
+                    'color' => 'RED',
+                ],
+                [
+                    'id'    => 1,
+                    'color' => ColorEnum::RED,
+                ],
+            ],
+            'enum nullable null' => [
+                [
+                    'id'     => 'int',
+                    'status' => '?enum[' . StatusEnum::class . ']',
+                ],
+                [
+                    'id'     => '1',
+                    'status' => null,
+                ],
+                [
+                    'id'     => 1,
+                    'status' => null,
+                ],
+            ],
+            'enum nullable not null' => [
+                [
+                    'id'     => 'int',
+                    'status' => '?enum[' . StatusEnum::class . ']',
+                ],
+                [
+                    'id'     => '1',
+                    'status' => 'pending',
+                ],
+                [
+                    'id'     => 1,
+                    'status' => StatusEnum::PENDING,
+                ],
+            ],
         ];
     }
 
@@ -319,6 +393,76 @@ final class DataConverterTest extends CIUnitTestCase
                 [
                     'id'   => 1,
                     'temp' => 15.9,
+                ],
+            ],
+            'enum string-backed' => [
+                [
+                    'id'     => 'int',
+                    'status' => 'enum[' . StatusEnum::class . ']',
+                ],
+                [
+                    'id'     => 1,
+                    'status' => StatusEnum::ACTIVE,
+                ],
+                [
+                    'id'     => 1,
+                    'status' => 'active',
+                ],
+            ],
+            'enum int-backed' => [
+                [
+                    'id'   => 'int',
+                    'role' => 'enum[' . RoleEnum::class . ']',
+                ],
+                [
+                    'id'   => 1,
+                    'role' => RoleEnum::ADMIN,
+                ],
+                [
+                    'id'   => 1,
+                    'role' => 2,
+                ],
+            ],
+            'enum unit' => [
+                [
+                    'id'    => 'int',
+                    'color' => 'enum[' . ColorEnum::class . ']',
+                ],
+                [
+                    'id'    => 1,
+                    'color' => ColorEnum::RED,
+                ],
+                [
+                    'id'    => 1,
+                    'color' => 'RED',
+                ],
+            ],
+            'enum nullable null' => [
+                [
+                    'id'     => 'int',
+                    'status' => '?enum[' . StatusEnum::class . ']',
+                ],
+                [
+                    'id'     => 1,
+                    'status' => null,
+                ],
+                [
+                    'id'     => 1,
+                    'status' => null,
+                ],
+            ],
+            'enum nullable not null' => [
+                [
+                    'id'     => 'int',
+                    'status' => '?enum[' . StatusEnum::class . ']',
+                ],
+                [
+                    'id'     => 1,
+                    'status' => StatusEnum::PENDING,
+                ],
+                [
+                    'id'     => 1,
+                    'status' => 'pending',
                 ],
             ],
         ];
@@ -727,5 +871,117 @@ final class DataConverterTest extends CIUnitTestCase
             'name'       => 'John Smith',
             'created_at' => '2023-12-02 07:35:57',
         ], $array);
+    }
+
+    /**
+     * @param array<string, string> $types
+     * @param array<string, mixed>  $data
+     */
+    #[DataProvider('provideEnumExceptions')]
+    public function testEnumExceptions(array $types, array $data, string $message, bool $useToDataSource): void
+    {
+        $this->expectException(CastException::class);
+        $this->expectExceptionMessage($message);
+
+        $converter = $this->createDataConverter($types);
+
+        if ($useToDataSource) {
+            $converter->toDataSource($data);
+        } else {
+            $converter->fromDataSource($data);
+        }
+    }
+
+    /**
+     * @return iterable<string, array<string, array<string, mixed>|bool|string>>
+     */
+    public static function provideEnumExceptions(): iterable
+    {
+        return [
+            'get invalid backed enum value' => [
+                'types' => [
+                    'id'     => 'int',
+                    'status' => 'enum[' . StatusEnum::class . ']',
+                ],
+                'data' => [
+                    'id'     => '1',
+                    'status' => 'invalid_status',
+                ],
+                'message'         => 'Invalid value "invalid_status" for enum "Tests\Support\Enum\StatusEnum"',
+                'useToDataSource' => false,
+            ],
+            'get invalid unit enum case name' => [
+                'types' => [
+                    'id'    => 'int',
+                    'color' => 'enum[' . ColorEnum::class . ']',
+                ],
+                'data' => [
+                    'id'    => '1',
+                    'color' => 'YELLOW',
+                ],
+                'message'         => 'Invalid case name "YELLOW" for enum "Tests\Support\Enum\ColorEnum"',
+                'useToDataSource' => false,
+            ],
+            'get missing class' => [
+                'types' => [
+                    'id'     => 'int',
+                    'status' => 'enum',
+                ],
+                'data' => [
+                    'id'     => '1',
+                    'status' => 'active',
+                ],
+                'message'         => 'Enum class must be specified for enum casting',
+                'useToDataSource' => false,
+            ],
+            'get not enum' => [
+                'types' => [
+                    'id'     => 'int',
+                    'status' => 'enum[stdClass]',
+                ],
+                'data' => [
+                    'id'     => '1',
+                    'status' => 'active',
+                ],
+                'message'         => 'The "stdClass" is not a valid enum class',
+                'useToDataSource' => false,
+            ],
+            'set invalid type' => [
+                'types' => [
+                    'id'     => 'int',
+                    'status' => 'enum[' . StatusEnum::class . ']',
+                ],
+                'data' => [
+                    'id'     => 1,
+                    'status' => ColorEnum::RED,
+                ],
+                'message'         => 'Expected enum of type "Tests\Support\Enum\StatusEnum", but received "Tests\Support\Enum\ColorEnum"',
+                'useToDataSource' => true,
+            ],
+            'set missing class' => [
+                'types' => [
+                    'id'     => 'int',
+                    'status' => 'enum',
+                ],
+                'data' => [
+                    'id'     => 1,
+                    'status' => StatusEnum::ACTIVE,
+                ],
+                'message'         => 'Enum class must be specified for enum casting',
+                'useToDataSource' => true,
+            ],
+            'set not enum' => [
+                'types' => [
+                    'id'     => 'int',
+                    'status' => 'enum[stdClass]',
+                ],
+                'data' => [
+                    'id'     => 1,
+                    'status' => StatusEnum::ACTIVE,
+                ],
+                'message'         => 'The "stdClass" is not a valid enum class',
+                'useToDataSource' => true,
+            ],
+        ];
     }
 }

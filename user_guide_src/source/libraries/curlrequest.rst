@@ -23,6 +23,23 @@ to change very little to move over to use Guzzle.
 Config for CURLRequest
 **********************
 
+.. _curlrequest-sharing-connection:
+
+Sharing Connection
+==================
+
+.. versionadded:: 4.7.0
+
+By default, this option is enabled with the constants ``CURL_LOCK_DATA_CONNECT`` and ``CURL_LOCK_DATA_DNS``.
+
+If you want to share connection between requests, set ``$shareConnectionOptions`` with array constant `CURL_LOCK_DATA_* <https://www.php.net/manual/en/curl.constants.php#constant.curl-lock-data-connect>`_ in **app/Config/CURLRequest.php**:
+
+.. literalinclude:: curlrequest/039.php
+
+or when you want to disable it, just change to empty array:
+
+.. literalinclude:: curlrequest/040.php
+
 .. _curlrequest-sharing-options:
 
 Sharing Options
@@ -251,6 +268,18 @@ Allows you to pause a number of milliseconds before sending the request:
 
 .. literalinclude:: curlrequest/023.php
 
+dns_cache_timeout
+=================
+
+.. versionadded:: 4.7.0
+
+By default, CodeIgniter does not change the DNS Cache Timeout value (``120`` seconds). If you need to
+modify this value, you can do so by passing an amount of time in seconds with the ``dns_cache_timeout`` option.
+
+.. literalinclude:: curlrequest/037.php
+
+.. note:: Based on the `libcurl <https://curl.se/libcurl/c/CURLOPT_DNS_CACHE_TIMEOUT.html>`__ documentation, you can set to zero (``0``) to completely disable caching, or set to ``-1`` to make the cached entries remain forever.
+
 form_params
 ===========
 
@@ -265,6 +294,15 @@ if it's not already set:
         requests.
 
 .. _curlrequest-request-options-headers:
+
+fresh_connect
+=============
+
+.. versionadded:: 4.7.0
+
+By default, the request is sent using a fresh connection. You can disable this behavior using the ``fresh_connect`` option:
+
+.. literalinclude:: curlrequest/038.php
 
 headers
 =======

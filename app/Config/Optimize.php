@@ -7,6 +7,8 @@ namespace Config;
  *
  * NOTE: This class does not extend BaseConfig for performance reasons.
  *       So you cannot replace the property values with Environment Variables.
+ *
+ * WARNING: Do not use these options when running the app in the Worker Mode.
  */
 class Optimize
 {

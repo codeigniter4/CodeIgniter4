@@ -15,7 +15,9 @@ namespace CodeIgniter\CLI;
 
 use CodeIgniter\CodeIgniter;
 use CodeIgniter\Config\DotEnv;
+use CodeIgniter\Config\Services;
 use CodeIgniter\Events\Events;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCLIConfig;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
@@ -34,12 +36,14 @@ final class ConsoleTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        Services::injectMock('superglobals', new Superglobals());
+
         $env = new DotEnv(ROOTPATH);
         $env->load();
 
         // Set environment values that would otherwise stop the framework from functioning during tests.
-        if (! isset($_SERVER['app.baseURL'])) {
-            $_SERVER['app.baseURL'] = 'http://example.com/';
+        if (service('superglobals')->server('app.baseURL') === null) {
+            service('superglobals')->setServer('app.baseURL', 'http://example.com/');
         }
 
         $this->app = new MockCodeIgniter(new MockCLIConfig());
@@ -173,8 +177,8 @@ final class ConsoleTest extends CIUnitTestCase
      */
     protected function initCLI(...$command): void
     {
-        $_SERVER['argv'] = ['spark', ...$command];
-        $_SERVER['argc'] = count($_SERVER['argv']);
+        service('superglobals')->setServer('argv', ['spark', ...$command]);
+        service('superglobals')->setServer('argc', count(service('superglobals')->server('argv')));
 
         CLI::init();
     }

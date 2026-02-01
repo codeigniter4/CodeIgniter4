@@ -47,6 +47,8 @@ trait RequestTrait
      * Stores values we've retrieved from PHP globals.
      *
      * @var array{get?: array, post?: array, request?: array, cookie?: array, server?: array}
+     *
+     * @deprecated 4.7.0 Use the Superglobals service instead
      */
     protected $globals = [];
 
@@ -231,7 +233,11 @@ trait RequestTrait
      */
     public function setGlobal(string $name, $value)
     {
+        // Keep BC with $globals array
         $this->globals[$name] = $value;
+
+        // Also update Superglobals via service
+        service('superglobals')->setGlobalArray($name, $value);
 
         return $this;
     }
@@ -260,7 +266,7 @@ trait RequestTrait
         }
 
         // Null filters cause null values to return.
-        $filter ??= FILTER_DEFAULT;
+        $filter ??= FILTER_UNSAFE_RAW;
         $flags = is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
 
         // Return all values when $index is null
@@ -312,7 +318,7 @@ trait RequestTrait
 
         if (is_array($value)
             && (
-                $filter !== FILTER_DEFAULT
+                $filter !== FILTER_UNSAFE_RAW
                 || (
                     (is_numeric($flags) && $flags !== 0)
                     || is_array($flags) && $flags !== []
@@ -342,6 +348,8 @@ trait RequestTrait
      * @param 'cookie'|'get'|'post'|'request'|'server' $name Superglobal name (lowercase)
      *
      * @return void
+     *
+     * @deprecated 4.7.0 No longer needs to be called explicitly. Used internally to maintain BC with $globals.
      */
     protected function populateGlobals(string $name)
     {
@@ -349,28 +357,7 @@ trait RequestTrait
             $this->globals[$name] = [];
         }
 
-        // Don't populate ENV as it might contain
-        // sensitive data that we don't want to get logged.
-        switch ($name) {
-            case 'get':
-                $this->globals['get'] = $_GET;
-                break;
-
-            case 'post':
-                $this->globals['post'] = $_POST;
-                break;
-
-            case 'request':
-                $this->globals['request'] = $_REQUEST;
-                break;
-
-            case 'cookie':
-                $this->globals['cookie'] = $_COOKIE;
-                break;
-
-            case 'server':
-                $this->globals['server'] = $_SERVER;
-                break;
-        }
+        // Get data from Superglobals service instead of direct access
+        $this->globals[$name] = service('superglobals')->getGlobalArray($name);
     }
 }

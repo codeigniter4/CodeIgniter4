@@ -32,17 +32,11 @@ class WincacheHandler extends BaseHandler
         $this->prefix = $config->prefix;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function initialize()
+    public function initialize(): void
     {
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function get(string $key)
+    public function get(string $key): mixed
     {
         $key     = static::validateKey($key, $this->prefix);
         $success = false;
@@ -53,76 +47,54 @@ class WincacheHandler extends BaseHandler
         return $success ? $data : null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function save(string $key, $value, int $ttl = 60)
+    public function save(string $key, mixed $value, int $ttl = 60): bool
     {
         $key = static::validateKey($key, $this->prefix);
 
         return wincache_ucache_set($key, $value, $ttl);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function delete(string $key)
+    public function delete(string $key): bool
     {
         $key = static::validateKey($key, $this->prefix);
 
         return wincache_ucache_delete($key);
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @return never
-     */
-    public function deleteMatching(string $pattern)
+    public function deleteMatching(string $pattern): never
     {
         throw new BadMethodCallException('The deleteMatching method is not implemented for Wincache. You must select File, Redis or Predis handlers to use it.');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function increment(string $key, int $offset = 1)
+    public function increment(string $key, int $offset = 1): bool
     {
         $key = static::validateKey($key, $this->prefix);
 
-        return wincache_ucache_inc($key, $offset);
+        $result = wincache_ucache_inc($key, $offset);
+
+        return $result !== false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function decrement(string $key, int $offset = 1)
+    public function decrement(string $key, int $offset = 1): bool
     {
         $key = static::validateKey($key, $this->prefix);
 
-        return wincache_ucache_dec($key, $offset);
+        $result = wincache_ucache_dec($key, $offset);
+
+        return $result !== false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function clean()
+    public function clean(): bool
     {
         return wincache_ucache_clear();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getCacheInfo()
+    public function getCacheInfo(): array|false
     {
         return wincache_ucache_info(true);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getMetaData(string $key)
+    public function getMetaData(string $key): ?array
     {
         $key = static::validateKey($key, $this->prefix);
 
@@ -139,12 +111,9 @@ class WincacheHandler extends BaseHandler
             ];
         }
 
-        return false; // @TODO This will return null in a future release
+        return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function isSupported(): bool
     {
         return extension_loaded('wincache') && ini_get('wincache.ucenabled');

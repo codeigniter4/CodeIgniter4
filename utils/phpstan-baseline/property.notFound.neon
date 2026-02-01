@@ -1,4 +1,4 @@
-# total 51 errors
+# total 49 errors
 
 parameters:
     ignoreErrors:
@@ -74,7 +74,7 @@ parameters:
 
         -
             message: '#^Access to an undefined property CodeIgniter\\Encryption\\EncrypterInterface\:\:\$key\.$#'
-            count: 2
+            count: 3
             path: ../../tests/system/Encryption/Handlers/OpenSSLHandlerTest.php
 
         -
@@ -89,8 +89,18 @@ parameters:
 
         -
             message: '#^Access to an undefined property CodeIgniter\\Encryption\\EncrypterInterface\:\:\$key\.$#'
-            count: 1
+            count: 2
             path: ../../tests/system/Encryption/Handlers/SodiumHandlerTest.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\Encryption\\EncrypterInterface\:\:\$cipher\.$#'
+            count: 1
+            path: ../../tests/system/Encryption/KeyRotationDecoratorTest.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\Encryption\\EncrypterInterface\:\:\$key\.$#'
+            count: 1
+            path: ../../tests/system/Encryption/KeyRotationDecoratorTest.php
 
         -
             message: '#^Access to an undefined property CodeIgniter\\I18n\\TimeLegacy\:\:\$foobar\.$#'
@@ -121,18 +131,3 @@ parameters:
             message: '#^Access to an undefined property CodeIgniter\\I18n\\Time\:\:\$weekOfWeek\.$#'
             count: 1
             path: ../../tests/system/I18n/TimeTest.php
-
-        -
-            message: '#^Access to an undefined property CodeIgniter\\Config\\BaseConfig\:\:\$regenerate\.$#'
-            count: 2
-            path: ../../tests/system/Security/SecurityCSRFSessionRandomizeTokenTest.php
-
-        -
-            message: '#^Access to an undefined property CodeIgniter\\Config\\BaseConfig\:\:\$tokenRandomize\.$#'
-            count: 2
-            path: ../../tests/system/Security/SecurityCSRFSessionRandomizeTokenTest.php
-
-        -
-            message: '#^Access to an undefined property CodeIgniter\\Config\\BaseConfig\:\:\$regenerate\.$#'
-            count: 2
-            path: ../../tests/system/Security/SecurityCSRFSessionTest.php

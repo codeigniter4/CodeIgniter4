@@ -189,7 +189,7 @@ final class ValidationModelTest extends LiveModelTestCase
             'foo'  => 'bar',
         ];
 
-        $rules = $cleaner($rules, null);
+        $rules = $cleaner($rules, []);
         $this->assertEmpty($rules);
     }
 
@@ -393,7 +393,7 @@ final class ValidationModelTest extends LiveModelTestCase
 
         // Simulate to get the entity from the database.
         $entity = new SimpleEntity();
-        $entity->setAttributes([
+        $entity->injectRawData([
             'id'     => '1',
             'field1' => 'value1',
             'field2' => 'value2',
@@ -434,7 +434,7 @@ final class ValidationModelTest extends LiveModelTestCase
 
         // Simulate to get the entity from the database.
         $entity = new SimpleEntity();
-        $entity->setAttributes([
+        $entity->injectRawData([
             'id'     => '1',
             'field1' => 'value1',
             'field2' => 'value2',
@@ -470,7 +470,7 @@ final class ValidationModelTest extends LiveModelTestCase
         };
 
         $entity = new SimpleEntity();
-        $entity->setAttributes([
+        $entity->injectRawData([
             'field1' => 'value1',
             // field2 is missing
             'field3' => '',

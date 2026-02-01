@@ -1,0 +1,13 @@
+# total 2 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Call to function property_exists\(\) with \$this\(class@anonymous/tests/system/API/ResponseTraitTest\.php\:190\) and ''stringAsHtml'' will always evaluate to true\.$#'
+            count: 1
+            path: ../../tests/system/API/ResponseTraitTest.php
+
+        -
+            message: '#^Call to function property_exists\(\) with \$this\(class@anonymous/tests/system/API/ResponseTraitTest\.php\:310\) and ''stringAsHtml'' will always evaluate to true\.$#'
+            count: 1
+            path: ../../tests/system/API/ResponseTraitTest.php

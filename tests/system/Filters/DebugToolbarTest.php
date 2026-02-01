@@ -13,11 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Filters;
 
+use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Filters as FilterConfig;
 use PHPUnit\Framework\Attributes\BackupGlobals;
@@ -41,13 +43,15 @@ final class DebugToolbarTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        Services::injectMock('superglobals', new Superglobals());
+
         $this->request  = service('request');
         $this->response = service('response');
     }
 
     public function testDebugToolbarFilter(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config          = new FilterConfig();
         $config->globals = [

@@ -284,4 +284,15 @@ class Events
     {
         return static::$performanceLog;
     }
+
+    /**
+     * Cleanup performance log and request-specific listeners for worker mode.
+     *
+     * Called at the END of each request to clean up state.
+     */
+    public static function cleanupForWorkerMode(): void
+    {
+        static::$performanceLog = [];
+        static::removeAllListeners('DBQuery');
+    }
 }

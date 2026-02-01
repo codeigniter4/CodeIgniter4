@@ -86,19 +86,21 @@ trait MessageTrait
      */
     public function populateHeaders(): void
     {
-        $contentType = $_SERVER['CONTENT_TYPE'] ?? getenv('CONTENT_TYPE');
+        $contentType = service('superglobals')->server('CONTENT_TYPE', (string) getenv('CONTENT_TYPE'));
         if (! empty($contentType)) {
             $this->setHeader('Content-Type', $contentType);
         }
         unset($contentType);
 
-        foreach (array_keys($_SERVER) as $key) {
+        $serverArray = service('superglobals')->getServerArray();
+
+        foreach (array_keys($serverArray) as $key) {
             if (sscanf($key, 'HTTP_%s', $header) === 1) {
                 // take SOME_HEADER and turn it into Some-Header
                 $header = str_replace('_', ' ', strtolower($header));
                 $header = str_replace(' ', '-', ucwords($header));
 
-                $this->setHeader($header, $_SERVER[$key]);
+                $this->setHeader($header, $serverArray[$key]);
 
                 // Add us to the header map, so we can find them case-insensitively
                 $this->headerMap[strtolower($header)] = $header;

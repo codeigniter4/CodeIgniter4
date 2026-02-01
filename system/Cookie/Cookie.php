@@ -20,7 +20,6 @@ use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\I18n\Time;
 use Config\Cookie as CookieConfig;
 use DateTimeInterface;
-use ReturnTypeWillChange;
 
 /**
  * A `Cookie` class represents an immutable HTTP cookie value object.
@@ -606,12 +605,9 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      *
      * @param string $offset
      *
-     * @return bool|int|string
-     *
      * @throws InvalidArgumentException
      */
-    #[ReturnTypeWillChange]
-    public function offsetGet($offset)
+    public function offsetGet($offset): bool|int|string
     {
         if (! $this->offsetExists($offset)) {
             throw new InvalidArgumentException(sprintf('Undefined offset "%s".', $offset));
@@ -803,11 +799,11 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
             $samesite = self::SAMESITE_LAX;
         }
 
-        if (! in_array(strtolower($samesite), self::ALLOWED_SAMESITE_VALUES, true)) {
+        if (! in_array(ucfirst(strtolower($samesite)), self::ALLOWED_SAMESITE_VALUES, true)) {
             throw CookieException::forInvalidSameSite($samesite);
         }
 
-        if (strtolower($samesite) === self::SAMESITE_NONE && ! $secure) {
+        if (ucfirst(strtolower($samesite)) === self::SAMESITE_NONE && ! $secure) {
             throw CookieException::forInvalidSameSiteNone();
         }
     }

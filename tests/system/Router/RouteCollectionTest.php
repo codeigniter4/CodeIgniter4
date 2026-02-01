@@ -15,9 +15,11 @@ namespace CodeIgniter\Router;
 
 use App\Controllers\Home;
 use App\Controllers\Product;
+use CodeIgniter\Config\Services;
 use CodeIgniter\Controller;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Method;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Feature;
 use Config\Modules;
@@ -38,6 +40,8 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $this->resetServices(true);
         $this->resetFactories();
+
+        Services::injectMock('superglobals', new Superglobals());
     }
 
     protected function getCollector(array $config = [], array $files = [], $moduleConfig = null): RouteCollection
@@ -551,7 +555,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testHostnameOption(): void
     {
-        $_SERVER['HTTP_HOST'] = 'example.com';
+        service('superglobals')->setServer('HTTP_HOST', 'example.com');
 
         $routes = $this->getCollector();
 
@@ -1161,7 +1165,7 @@ final class RouteCollectionTest extends CIUnitTestCase
      */
     public function testWithSubdomain(): void
     {
-        $_SERVER['HTTP_HOST'] = 'adm.example.com';
+        service('superglobals')->setServer('HTTP_HOST', 'adm.example.com');
 
         $routes = $this->getCollector();
 
@@ -1176,7 +1180,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testWithSubdomainMissing(): void
     {
-        $_SERVER['HTTP_HOST'] = 'www.example.com';
+        service('superglobals')->setServer('HTTP_HOST', 'www.example.com');
 
         $routes = $this->getCollector();
 
@@ -1191,7 +1195,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testWithDifferentSubdomain(): void
     {
-        $_SERVER['HTTP_HOST'] = 'adm.example.com';
+        service('superglobals')->setServer('HTTP_HOST', 'adm.example.com');
 
         $routes = $this->getCollector();
 
@@ -1208,7 +1212,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     {
         $routes = $this->getCollector();
 
-        $_SERVER['HTTP_HOST'] = 'www.example.com';
+        service('superglobals')->setServer('HTTP_HOST', 'www.example.com');
 
         $routes->add('/objects/(:alphanum)', 'Admin::objectsList/$1', ['subdomain' => 'sales']);
         $routes->add('/objects/(:alphanum)', 'App::objectsList/$1');
@@ -1224,7 +1228,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     {
         $routes = $this->getCollector();
 
-        $_SERVER['HTTP_HOST'] = 'example.co.uk';
+        service('superglobals')->setServer('HTTP_HOST', 'example.co.uk');
 
         $routes->add('/objects/(:alphanum)', 'Admin::objectsList/$1', ['subdomain' => 'sales']);
         $routes->add('/objects/(:alphanum)', 'App::objectsList/$1');
@@ -1238,7 +1242,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testWithDifferentSubdomainMissing(): void
     {
-        $_SERVER['HTTP_HOST'] = 'adm.example.com';
+        service('superglobals')->setServer('HTTP_HOST', 'adm.example.com');
 
         $routes = $this->getCollector();
 
@@ -1257,7 +1261,7 @@ final class RouteCollectionTest extends CIUnitTestCase
      */
     public function testWithNoSubdomainAndDot(): void
     {
-        $_SERVER['HTTP_HOST'] = 'example.com';
+        service('superglobals')->setServer('HTTP_HOST', 'example.com');
 
         $routes = $this->getCollector();
 
@@ -1271,7 +1275,7 @@ final class RouteCollectionTest extends CIUnitTestCase
      */
     public function testWithSubdomainOrdered(): void
     {
-        $_SERVER['HTTP_HOST'] = 'adm.example.com';
+        service('superglobals')->setServer('HTTP_HOST', 'adm.example.com');
 
         $routes = $this->getCollector();
 
@@ -1531,7 +1535,7 @@ final class RouteCollectionTest extends CIUnitTestCase
      */
     public function testRouteToWithSubdomainMatch(): void
     {
-        $_SERVER['HTTP_HOST'] = 'doc.example.com';
+        service('superglobals')->setServer('HTTP_HOST', 'doc.example.com');
         service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
@@ -1543,7 +1547,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteToWithSubdomainMismatch(): void
     {
-        $_SERVER['HTTP_HOST'] = 'dev.example.com';
+        service('superglobals')->setServer('HTTP_HOST', 'dev.example.com');
         service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
@@ -1555,7 +1559,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteToWithSubdomainNot(): void
     {
-        $_SERVER['HTTP_HOST'] = 'example.com';
+        service('superglobals')->setServer('HTTP_HOST', 'example.com');
         service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
@@ -1567,7 +1571,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteToWithGenericSubdomainMatch(): void
     {
-        $_SERVER['HTTP_HOST'] = 'doc.example.com';
+        service('superglobals')->setServer('HTTP_HOST', 'doc.example.com');
         service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
@@ -1579,7 +1583,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteToWithGenericSubdomainMismatch(): void
     {
-        $_SERVER['HTTP_HOST'] = 'dev.example.com';
+        service('superglobals')->setServer('HTTP_HOST', 'dev.example.com');
         service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
@@ -1591,7 +1595,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteToWithGenericSubdomainNot(): void
     {
-        $_SERVER['HTTP_HOST'] = 'example.com';
+        service('superglobals')->setServer('HTTP_HOST', 'example.com');
         service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
@@ -1603,7 +1607,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteToWithoutSubdomainMatch(): void
     {
-        $_SERVER['HTTP_HOST'] = 'doc.example.com';
+        service('superglobals')->setServer('HTTP_HOST', 'doc.example.com');
         service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
@@ -1615,7 +1619,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteToWithoutSubdomainMismatch(): void
     {
-        $_SERVER['HTTP_HOST'] = 'dev.example.com';
+        service('superglobals')->setServer('HTTP_HOST', 'dev.example.com');
         service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
@@ -1627,7 +1631,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteToWithoutSubdomainNot(): void
     {
-        $_SERVER['HTTP_HOST'] = 'example.com';
+        service('superglobals')->setServer('HTTP_HOST', 'example.com');
         service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
@@ -1644,7 +1648,7 @@ final class RouteCollectionTest extends CIUnitTestCase
      */
     public function testRouteOverwritingDifferentSubdomains(): void
     {
-        $_SERVER['HTTP_HOST'] = 'doc.domain.com';
+        service('superglobals')->setServer('HTTP_HOST', 'doc.domain.com');
         service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
@@ -1665,7 +1669,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteOverwritingTwoRules(): void
     {
-        $_SERVER['HTTP_HOST'] = 'doc.domain.com';
+        service('superglobals')->setServer('HTTP_HOST', 'doc.domain.com');
         service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
@@ -1686,7 +1690,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteOverwritingTwoRulesLastApplies(): void
     {
-        $_SERVER['HTTP_HOST'] = 'doc.domain.com';
+        service('superglobals')->setServer('HTTP_HOST', 'doc.domain.com');
         service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
@@ -1706,7 +1710,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteOverwritingMatchingSubdomain(): void
     {
-        $_SERVER['HTTP_HOST'] = 'doc.domain.com';
+        service('superglobals')->setServer('HTTP_HOST', 'doc.domain.com');
         service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
@@ -1726,7 +1730,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteOverwritingMatchingHost(): void
     {
-        $_SERVER['HTTP_HOST'] = 'doc.domain.com';
+        service('superglobals')->setServer('HTTP_HOST', 'doc.domain.com');
         service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();

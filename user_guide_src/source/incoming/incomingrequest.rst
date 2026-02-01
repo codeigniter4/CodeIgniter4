@@ -131,16 +131,6 @@ The ``getServer()`` method will pull from ``$_SERVER``.
 
 * ``$request->getServer()``
 
-getEnv()
---------
-
-.. deprecated:: 4.4.4 This method does not work from the beginning. Use
-    :php:func:`env()` instead.
-
-The ``getEnv()`` method will pull from ``$_ENV``.
-
-* ``$request->getEnv()``
-
 getPostGet()
 ------------
 
@@ -325,7 +315,6 @@ The methods provided by the parent classes that are available are:
 * :meth:`CodeIgniter\\HTTP\\Request::getMethod`
 * :meth:`CodeIgniter\\HTTP\\Request::setMethod`
 * :meth:`CodeIgniter\\HTTP\\Request::getServer`
-* :meth:`CodeIgniter\\HTTP\\Request::getEnv`
 * :meth:`CodeIgniter\\HTTP\\Request::setGlobal`
 * :meth:`CodeIgniter\\HTTP\\Request::fetchGlobal`
 * :meth:`CodeIgniter\\HTTP\\Message::getBody`
@@ -530,17 +519,4 @@ The methods provided by the parent classes that are available are:
         .. note:: Prior to v4.4.0, this was the safest method to determine the
             "current URI", since ``IncomingRequest::$uri`` might not be aware of
             the complete App configuration for base URLs.
-
-    .. php:method:: setPath($path)
-
-        .. deprecated:: 4.4.0
-
-        :param    string    $path: The relative path to use as the current URI
-        :returns:        This Incoming Request
-        :rtype:    IncomingRequest
-
-        .. note:: Prior to v4.4.0, used mostly just for testing purposes, this
-            allowed you to set the relative path value for the current request
-            instead of relying on URI detection. This also updated the
-            underlying ``URI`` instance with the new path.
 

@@ -1049,11 +1049,11 @@ final class URITest extends CIUnitTestCase
 
     public function testBasedNoIndex(): void
     {
-        $_SERVER['REQUEST_URI']  = '/ci/v4/controller/method';
-        $_SERVER['SCRIPT_NAME']  = '/ci/v4/index.php';
-        $_SERVER['QUERY_STRING'] = '';
-        $_SERVER['HTTP_HOST']    = 'example.com';
-        $_SERVER['PATH_INFO']    = '/controller/method';
+        service('superglobals')->setServer('REQUEST_URI', '/ci/v4/controller/method');
+        service('superglobals')->setServer('SCRIPT_NAME', '/ci/v4/index.php');
+        service('superglobals')->setServer('QUERY_STRING', '');
+        service('superglobals')->setServer('HTTP_HOST', 'example.com');
+        service('superglobals')->setServer('PATH_INFO', '/controller/method');
 
         $this->resetServices();
 
@@ -1083,11 +1083,11 @@ final class URITest extends CIUnitTestCase
 
     public function testBasedWithIndex(): void
     {
-        $_SERVER['REQUEST_URI']  = '/ci/v4/index.php/controller/method';
-        $_SERVER['SCRIPT_NAME']  = '/ci/v4/index.php';
-        $_SERVER['QUERY_STRING'] = '';
-        $_SERVER['HTTP_HOST']    = 'example.com';
-        $_SERVER['PATH_INFO']    = '/controller/method';
+        service('superglobals')->setServer('REQUEST_URI', '/ci/v4/index.php/controller/method');
+        service('superglobals')->setServer('SCRIPT_NAME', '/ci/v4/index.php');
+        service('superglobals')->setServer('QUERY_STRING', '');
+        service('superglobals')->setServer('HTTP_HOST', 'example.com');
+        service('superglobals')->setServer('PATH_INFO', '/controller/method');
 
         $this->resetServices();
 
@@ -1124,11 +1124,11 @@ final class URITest extends CIUnitTestCase
     {
         $this->resetServices();
 
-        $_SERVER['REQUEST_URI']  = '/ci/v4/controller/method';
-        $_SERVER['SCRIPT_NAME']  = '/ci/v4/index.php';
-        $_SERVER['QUERY_STRING'] = '';
-        $_SERVER['HTTP_HOST']    = 'example.com';
-        $_SERVER['PATH_INFO']    = '/controller/method';
+        service('superglobals')->setServer('REQUEST_URI', '/ci/v4/controller/method');
+        service('superglobals')->setServer('SCRIPT_NAME', '/ci/v4/index.php');
+        service('superglobals')->setServer('QUERY_STRING', '');
+        service('superglobals')->setServer('HTTP_HOST', 'example.com');
+        service('superglobals')->setServer('PATH_INFO', '/controller/method');
 
         $config                            = new App();
         $config->baseURL                   = 'http://example.com/ci/v4';

@@ -1,0 +1,18 @@
+# total 3 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Call to function property_exists\(\) with \$this\(CodeIgniter\\Debug\\ExceptionHandler\) and ''stringAsHtml'' will always evaluate to false\.$#'
+            count: 1
+            path: ../../system/Debug/ExceptionHandler.php
+
+        -
+            message: '#^Call to function property_exists\(\) with \$this\(class@anonymous/tests/system/API/ResponseTraitTest\.php\:132\) and ''stringAsHtml'' will always evaluate to false\.$#'
+            count: 1
+            path: ../../tests/system/API/ResponseTraitTest.php
+
+        -
+            message: '#^Call to function property_exists\(\) with \$this\(class@anonymous/tests/system/API/ResponseTraitTest\.php\:630\) and ''stringAsHtml'' will always evaluate to false\.$#'
+            count: 1
+            path: ../../tests/system/API/ResponseTraitTest.php

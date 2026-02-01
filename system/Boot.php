@@ -77,6 +77,39 @@ class Boot
     }
 
     /**
+     * Bootstrap for FrankenPHP worker mode.
+     *
+     * This method performs one-time initialization for worker mode,
+     * loading everything except the CodeIgniter instance, which should
+     * be created fresh for each request.
+     *
+     * @used-by `public/frankenphp-worker.php`
+     */
+    public static function bootWorker(Paths $paths): CodeIgniter
+    {
+        static::definePathConstants($paths);
+        if (! defined('APP_NAMESPACE')) {
+            static::loadConstants();
+        }
+        static::checkMissingExtensions();
+
+        static::loadDotEnv($paths);
+        static::defineEnvironment();
+        static::loadEnvironmentBootstrap($paths);
+
+        static::loadCommonFunctions();
+        static::loadAutoloader();
+        static::setExceptionHandler();
+        static::initializeKint();
+
+        static::checkOptimizationsForWorker();
+
+        static::autoloadHelpers();
+
+        return Boot::initializeCodeIgniter();
+    }
+
+    /**
      * Used by command line scripts other than
      * * `spark`
      * * `php-cli`
@@ -144,7 +177,9 @@ class Boot
         static::loadDotEnv($paths);
         static::loadEnvironmentBootstrap($paths, false);
 
+        static::loadCommonFunctionsMock();
         static::loadCommonFunctions();
+
         static::loadAutoloader();
         static::setExceptionHandler();
         static::initializeKint();
@@ -170,7 +205,8 @@ class Boot
     protected static function loadDotEnv(Paths $paths): void
     {
         require_once $paths->systemDirectory . '/Config/DotEnv.php';
-        (new DotEnv($paths->appDirectory . '/../'))->load();
+        $envDirectory = $paths->envDirectory ?? $paths->appDirectory . '/../';
+        (new DotEnv($envDirectory))->load();
     }
 
     protected static function defineEnvironment(): void
@@ -259,6 +295,11 @@ class Boot
         require_once SYSTEMPATH . 'Common.php';
     }
 
+    protected static function loadCommonFunctionsMock(): void
+    {
+        require_once SYSTEMPATH . 'Test/Mock/MockCommon.php';
+    }
+
     /**
      * The autoloader allows all the pieces to work together in the framework.
      * We have to load it here, though, so that the config files can use the
@@ -303,7 +344,6 @@ class Boot
 
         foreach ([
             'intl',
-            'json',
             'mbstring',
         ] as $extension) {
             if (! extension_loaded($extension)) {
@@ -324,6 +364,20 @@ class Boot
         echo $message;
 
         exit(EXIT_ERROR);
+    }
+
+    protected static function checkOptimizationsForWorker(): void
+    {
+        if (class_exists(Optimize::class)) {
+            $optimize = new Optimize();
+
+            if ($optimize->configCacheEnabled || $optimize->locatorCacheEnabled) {
+                echo 'Optimization settings (configCacheEnabled, locatorCacheEnabled) '
+                    . 'must be disabled in Config\Optimize when running in Worker Mode.';
+
+                exit(EXIT_ERROR);
+            }
+        }
     }
 
     protected static function initializeKint(): void

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Encryption\Handlers;
 
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
+use SensitiveParameter;
 
 /**
  * SodiumHandler uses libsodium in encryption.
@@ -40,11 +41,19 @@ class SodiumHandler extends BaseHandler
     /**
      * {@inheritDoc}
      */
-    public function encrypt($data, $params = null)
+    public function encrypt(#[SensitiveParameter] $data, #[SensitiveParameter] $params = null)
     {
-        $this->parseParams($params);
+        // Allow key override
+        $key = $params !== null
+            ? (is_array($params) && isset($params['key']) ? $params['key'] : $params)
+            : $this->key;
 
-        if (empty($this->key)) {
+        // Allow blockSize override
+        $blockSize = (is_array($params) && isset($params['blockSize']))
+            ? $params['blockSize']
+            : $this->blockSize;
+
+        if (empty($key)) {
             throw EncryptionException::forNeedsStarterKey();
         }
 
@@ -52,18 +61,18 @@ class SodiumHandler extends BaseHandler
         $nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES); // 24 bytes
 
         // add padding before we encrypt the data
-        if ($this->blockSize <= 0) {
+        if ($blockSize <= 0) {
             throw EncryptionException::forEncryptionFailed();
         }
 
-        $data = sodium_pad($data, $this->blockSize);
+        $data = sodium_pad($data, $blockSize);
 
         // encrypt message and combine with nonce
-        $ciphertext = $nonce . sodium_crypto_secretbox($data, $nonce, $this->key);
+        $ciphertext = $nonce . sodium_crypto_secretbox($data, $nonce, $key);
 
         // cleanup buffers
         sodium_memzero($data);
-        sodium_memzero($this->key);
+        sodium_memzero($key);
 
         return $ciphertext;
     }
@@ -71,11 +80,19 @@ class SodiumHandler extends BaseHandler
     /**
      * {@inheritDoc}
      */
-    public function decrypt($data, $params = null)
+    public function decrypt($data, #[SensitiveParameter] $params = null)
     {
-        $this->parseParams($params);
+        // Allow key override
+        $key = $params !== null
+            ? (is_array($params) && isset($params['key']) ? $params['key'] : $params)
+            : $this->key;
 
-        if (empty($this->key)) {
+        // Allow blockSize override
+        $blockSize = (is_array($params) && isset($params['blockSize']))
+            ? $params['blockSize']
+            : $this->blockSize;
+
+        if (empty($key)) {
             throw EncryptionException::forNeedsStarterKey();
         }
 
@@ -89,7 +106,7 @@ class SodiumHandler extends BaseHandler
         $ciphertext = self::substr($data, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
 
         // decrypt data
-        $data = sodium_crypto_secretbox_open($ciphertext, $nonce, $this->key);
+        $data = sodium_crypto_secretbox_open($ciphertext, $nonce, $key);
 
         if ($data === false) {
             // message was tampered in transit
@@ -97,15 +114,15 @@ class SodiumHandler extends BaseHandler
         }
 
         // remove extra padding during encryption
-        if ($this->blockSize <= 0) {
+        if ($blockSize <= 0) {
             throw EncryptionException::forAuthenticationFailed();
         }
 
-        $data = sodium_unpad($data, $this->blockSize);
+        $data = sodium_unpad($data, $blockSize);
 
         // cleanup buffers
         sodium_memzero($ciphertext);
-        sodium_memzero($this->key);
+        sodium_memzero($key);
 
         return $data;
     }
@@ -118,6 +135,8 @@ class SodiumHandler extends BaseHandler
      * @return void
      *
      * @throws EncryptionException If key is empty
+     *
+     * @deprecated 4.7.0 No longer used.
      */
     protected function parseParams($params)
     {

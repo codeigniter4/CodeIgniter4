@@ -151,16 +151,6 @@ class Connection extends BaseConnection
     }
 
     /**
-     * Keep or establish the connection if no queries have been sent for
-     * a length of time exceeding the server's idle timeout.
-     *
-     * @return void
-     */
-    public function reconnect()
-    {
-    }
-
-    /**
      * Close the database connection.
      *
      * @return void
@@ -174,6 +164,20 @@ class Connection extends BaseConnection
             oci_free_statement($this->stmtId);
         }
         oci_close($this->connID);
+    }
+
+    /**
+     * Ping the database connection.
+     */
+    protected function _ping(): bool
+    {
+        try {
+            $result = $this->simpleQuery('SELECT 1 FROM DUAL');
+
+            return $result !== false;
+        } catch (DatabaseException) {
+            return false;
+        }
     }
 
     /**
@@ -231,7 +235,14 @@ class Connection extends BaseConnection
 
             return $result;
         } catch (ErrorException $e) {
-            log_message('error', (string) $e);
+            $trace = array_slice($e->getTrace(), 2); // remove call to error handler
+
+            log_message('error', "{message}\nin {exFile} on line {exLine}.\n{trace}", [
+                'message' => $e->getMessage(),
+                'exFile'  => clean_path($e->getFile()),
+                'exLine'  => $e->getLine(),
+                'trace'   => render_backtrace($trace),
+            ]);
 
             if ($this->DBDebug) {
                 throw new DatabaseException($e->getMessage(), $e->getCode(), $e);

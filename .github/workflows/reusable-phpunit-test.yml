@@ -175,7 +175,7 @@ jobs:
       - name: Setup global environment variables
         run: |
           echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
-          echo "ARTIFACT_NAME=${{ inputs.job-id || github.job }}-php-${{ inputs.php-version }}-db-${{ inputs.db-platform || 'none' }}" >> $GITHUB_ENV
+          echo "ARTIFACT_NAME=${{ inputs.job-id || github.job }}-php-${{ inputs.php-version }}-db-${{ inputs.db-platform || 'none' }}${{ inputs.mysql-version || '' }}" >> $GITHUB_ENV
 
       - name: Cache dependencies
         uses: actions/cache@v5
@@ -214,6 +214,7 @@ jobs:
           DB: ${{ inputs.db-platform }}
           TACHYCARDIA_MONITOR_GA: ${{ inputs.enable-profiling && 'enabled' || '' }}
           TERM: xterm-256color
+        continue-on-error: ${{ inputs.php-version == '8.5' }}
 
       - name: Upload coverage results as artifact
         if: ${{ inputs.enable-artifact-upload }}

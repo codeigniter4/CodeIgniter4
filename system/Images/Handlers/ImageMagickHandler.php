@@ -13,27 +13,30 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Images\Handlers;
 
-use CodeIgniter\I18n\Time;
 use CodeIgniter\Images\Exceptions\ImageException;
 use Config\Images;
-use Exception;
 use Imagick;
+use ImagickDraw;
+use ImagickDrawException;
+use ImagickException;
+use ImagickPixel;
+use ImagickPixelException;
 
 /**
- * Class ImageMagickHandler
- *
- * FIXME - This needs conversion & unit testing, to use the imagick extension
+ * Image handler for Imagick extension.
  */
 class ImageMagickHandler extends BaseHandler
 {
     /**
-     * Stores image resource in memory.
+     * Stores Imagick instance.
      *
-     * @var string|null
+     * @var Imagick|null
      */
     protected $resource;
 
     /**
+     * Constructor.
+     *
      * @param Images $config
      *
      * @throws ImageException
@@ -42,25 +45,95 @@ class ImageMagickHandler extends BaseHandler
     {
         parent::__construct($config);
 
-        if (! extension_loaded('imagick') && ! class_exists(Imagick::class)) {
-            throw ImageException::forMissingExtension('IMAGICK'); // @codeCoverageIgnore
+        if (! extension_loaded('imagick')) {
+            throw ImageException::forMissingExtension('IMAGICK');  // @codeCoverageIgnore
+        }
+    }
+
+    /**
+     * Loads the image for manipulation.
+     *
+     * @return void
+     *
+     * @throws ImageException
+     */
+    protected function ensureResource()
+    {
+        if (! $this->resource instanceof Imagick) {
+            // Verify that we have a valid image
+            $this->image();
+
+            try {
+                $this->resource = new Imagick();
+                $this->resource->readImage($this->image()->getPathname());
+
+                // Check for valid image
+                if ($this->resource->getImageWidth() === 0 || $this->resource->getImageHeight() === 0) {
+                    throw ImageException::forInvalidImageCreate($this->image()->getPathname());
+                }
+
+                $this->supportedFormatCheck();
+            } catch (ImagickException $e) {
+                throw ImageException::forInvalidImageCreate($e->getMessage());
+            }
+        }
+    }
+
+    /**
+     * Handles all the grunt work of resizing, etc.
+     *
+     * @param string $action  Type of action to perform
+     * @param int    $quality Quality setting for Imagick operations
+     *
+     * @return $this
+     *
+     * @throws ImageException
+     */
+    protected function process(string $action, int $quality = 100)
+    {
+        $this->image();
+
+        $this->ensureResource();
+
+        try {
+            switch ($action) {
+                case 'resize':
+                    $this->resource->resizeImage(
+                        $this->width,
+                        $this->height,
+                        Imagick::FILTER_LANCZOS,
+                        0,
+                    );
+                    break;
+
+                case 'crop':
+                    $width  = $this->width;
+                    $height = $this->height;
+                    $xAxis  = $this->xAxis ?? 0;
+                    $yAxis  = $this->yAxis ?? 0;
+
+                    $this->resource->cropImage(
+                        $width,
+                        $height,
+                        $xAxis,
+                        $yAxis,
+                    );
+
+                    // Reset canvas to cropped size
+                    $this->resource->setImagePage(0, 0, 0, 0);
+                    break;
+            }
+
+            // Handle transparency for supported image types
+            if (in_array($this->image()->imageType, $this->supportTransparency, true)
+                && $this->resource->getImageAlphaChannel() === Imagick::ALPHACHANNEL_UNDEFINED) {
+                $this->resource->setImageAlphaChannel(Imagick::ALPHACHANNEL_OPAQUE);
+            }
+        } catch (ImagickException) {
+            throw ImageException::forImageProcessFailed();
         }
 
-        $cmd = $this->config->libraryPath;
-
-        if ($cmd === '') {
-            throw ImageException::forInvalidImageLibraryPath($cmd);
-        }
-
-        if (preg_match('/convert$/i', $cmd) !== 1) {
-            $cmd = rtrim($cmd, '\/') . '/convert';
-
-            $this->config->libraryPath = $cmd;
-        }
-
-        if (! is_file($cmd)) {
-            throw ImageException::forInvalidImageLibraryPath($cmd);
-        }
+        return $this;
     }
 
     /**
@@ -68,50 +141,56 @@ class ImageMagickHandler extends BaseHandler
      *
      * @return ImageMagickHandler
      *
-     * @throws Exception
+     * @throws ImagickException
      */
     public function _resize(bool $maintainRatio = false)
     {
-        $source      = empty($this->resource) ? $this->image()->getPathname() : $this->resource;
-        $destination = $this->getResourcePath();
+        if ($maintainRatio) {
+            // If maintaining a ratio, we need a custom approach
+            $this->ensureResource();
 
-        $escape = '\\';
+            // Use thumbnailImage which preserves an aspect ratio
+            $this->resource->thumbnailImage($this->width, $this->height, true);
 
-        if (PHP_OS_FAMILY === 'Windows') {
-            $escape = '';
+            return $this;
         }
 
-        $action = $maintainRatio
-            ? ' -resize ' . ($this->width ?? 0) . 'x' . ($this->height ?? 0) . ' ' . escapeshellarg($source) . ' ' . escapeshellarg($destination)
-            : ' -resize ' . ($this->width ?? 0) . 'x' . ($this->height ?? 0) . "{$escape}! " . escapeshellarg($source) . ' ' . escapeshellarg($destination);
-
-        $this->process($action);
-
-        return $this;
+        // Use the common process() method for normal resizing
+        return $this->process('resize');
     }
 
     /**
      * Crops the image.
      *
-     * @return bool|ImageMagickHandler
+     * @return $this
      *
-     * @throws Exception
+     * @throws ImagickException
      */
     public function _crop()
     {
-        $source      = empty($this->resource) ? $this->image()->getPathname() : $this->resource;
-        $destination = $this->getResourcePath();
+        // Use the common process() method for cropping
+        $result = $this->process('crop');
 
-        $extent = ' ';
-        if ($this->xAxis >= $this->width || $this->yAxis > $this->height) {
-            $extent = ' -background transparent -extent ' . ($this->width ?? 0) . 'x' . ($this->height ?? 0) . ' ';
+        // Handle a case where crop dimensions exceed the original image size
+        if ($this->resource instanceof Imagick) {
+            $imgWidth  = $this->resource->getImageWidth();
+            $imgHeight = $this->resource->getImageHeight();
+
+            if ($this->xAxis >= $imgWidth || $this->yAxis >= $imgHeight) {
+                // Create transparent background
+                $background = new Imagick();
+                $background->newImage($this->width, $this->height, new ImagickPixel('transparent'));
+                $background->setImageFormat($this->resource->getImageFormat());
+
+                // Composite our image on the background
+                $background->compositeImage($this->resource, Imagick::COMPOSITE_OVER, 0, 0);
+
+                // Replace our resource
+                $this->resource = $background;
+            }
         }
 
-        $action = ' -crop ' . ($this->width ?? 0) . 'x' . ($this->height ?? 0) . '+' . ($this->xAxis ?? 0) . '+' . ($this->yAxis ?? 0) . $extent . escapeshellarg($source) . ' ' . escapeshellarg($destination);
-
-        $this->process($action);
-
-        return $this;
+        return $result;
     }
 
     /**
@@ -120,18 +199,18 @@ class ImageMagickHandler extends BaseHandler
      *
      * @return $this
      *
-     * @throws Exception
+     * @throws ImagickException
      */
     protected function _rotate(int $angle)
     {
-        $angle = '-rotate ' . $angle;
+        $this->ensureResource();
 
-        $source      = empty($this->resource) ? $this->image()->getPathname() : $this->resource;
-        $destination = $this->getResourcePath();
+        // Create transparent background
+        $this->resource->setImageBackgroundColor(new ImagickPixel('transparent'));
+        $this->resource->rotateImage(new ImagickPixel('transparent'), $angle);
 
-        $action = ' ' . $angle . ' ' . escapeshellarg($source) . ' ' . escapeshellarg($destination);
-
-        $this->process($action);
+        // Reset canvas dimensions
+        $this->resource->setImagePage($this->resource->getImageWidth(), $this->resource->getImageHeight(), 0, 0);
 
         return $this;
     }
@@ -141,88 +220,96 @@ class ImageMagickHandler extends BaseHandler
      *
      * @return $this
      *
-     * @throws Exception
+     * @throws ImagickException|ImagickPixelException
      */
     protected function _flatten(int $red = 255, int $green = 255, int $blue = 255)
     {
-        $flatten = "-background 'rgb({$red},{$green},{$blue})' -flatten";
+        $this->ensureResource();
 
-        $source      = empty($this->resource) ? $this->image()->getPathname() : $this->resource;
-        $destination = $this->getResourcePath();
+        // Create background
+        $bg = new ImagickPixel("rgb({$red},{$green},{$blue})");
 
-        $action = ' ' . $flatten . ' ' . escapeshellarg($source) . ' ' . escapeshellarg($destination);
+        // Create a new canvas with the background color
+        $canvas = new Imagick();
+        $canvas->newImage(
+            $this->resource->getImageWidth(),
+            $this->resource->getImageHeight(),
+            $bg,
+            $this->resource->getImageFormat(),
+        );
 
-        $this->process($action);
+        // Composite our image on the background
+        $canvas->compositeImage(
+            $this->resource,
+            Imagick::COMPOSITE_OVER,
+            0,
+            0,
+        );
+
+        // Replace our resource with the flattened version
+        $this->resource->clear();
+        $this->resource = $canvas;
 
         return $this;
     }
 
     /**
-     * Flips an image along it's vertical or horizontal axis.
+     * Flips an image along its vertical or horizontal axis.
      *
      * @return $this
      *
-     * @throws Exception
+     * @throws ImagickException
      */
     protected function _flip(string $direction)
     {
-        $angle = $direction === 'horizontal' ? '-flop' : '-flip';
+        $this->ensureResource();
 
-        $source      = empty($this->resource) ? $this->image()->getPathname() : $this->resource;
-        $destination = $this->getResourcePath();
-
-        $action = ' ' . $angle . ' ' . escapeshellarg($source) . ' ' . escapeshellarg($destination);
-
-        $this->process($action);
+        if ($direction === 'horizontal') {
+            $this->resource->flopImage();
+        } else {
+            $this->resource->flipImage();
+        }
 
         return $this;
     }
 
     /**
-     * Get driver version
+     * Get a driver version
+     *
+     * @return string
      */
-    public function getVersion(): string
+    public function getVersion()
     {
-        $versionString = $this->process('-version')[0];
-        preg_match('/ImageMagick\s(?P<version>[\S]+)/', $versionString, $matches);
+        $version = Imagick::getVersion();
 
-        return $matches['version'];
+        if (preg_match('/ImageMagick\s+(\d+\.\d+\.\d+)/', $version['versionString'], $matches)) {
+            return $matches[1];
+        }
+
+        return '';
     }
 
     /**
-     * Handles all of the grunt work of resizing, etc.
+     * Check if a given image format is supported
      *
-     * @return array Lines of output from shell command
+     * @return void
      *
-     * @throws Exception
+     * @throws ImageException
      */
-    protected function process(string $action, int $quality = 100): array
+    protected function supportedFormatCheck()
     {
-        if ($action !== '-version') {
-            $this->supportedFormatCheck();
+        if (! $this->resource instanceof Imagick) {
+            return;
         }
 
-        $cmd = $this->config->libraryPath;
-        $cmd .= $action === '-version' ? ' ' . $action : ' -quality ' . $quality . ' ' . $action;
-
-        $retval = 1;
-        $output = [];
-        // exec() might be disabled
-        if (function_usable('exec')) {
-            @exec($cmd, $output, $retval);
+        if ($this->image()->imageType === IMAGETYPE_WEBP && ! in_array('WEBP', Imagick::queryFormats(), true)) {
+            throw ImageException::forInvalidImageCreate(lang('images.webpNotSupported'));
         }
-
-        // Did it work?
-        if ($retval > 0) {
-            throw ImageException::forImageProcessFailed();
-        }
-
-        return $output;
     }
 
     /**
-     * Saves any changes that have been made to file. If no new filename is
-     * provided, the existing image is overwritten, otherwise a copy of the
+     * Saves any changes that have been made to the file. If no new filename is
+     * provided, the existing image is overwritten; otherwise a copy of the
      * file is made at $target.
      *
      * Example:
@@ -230,6 +317,8 @@ class ImageMagickHandler extends BaseHandler
      *          ->save();
      *
      * @param non-empty-string|null $target
+     *
+     * @throws ImagickException
      */
     public function save(?string $target = null, int $quality = 90): bool
     {
@@ -238,7 +327,7 @@ class ImageMagickHandler extends BaseHandler
 
         // If no new resource has been created, then we're
         // simply copy the existing one.
-        if (empty($this->resource) && $quality === 100) {
+        if (! $this->resource instanceof Imagick && $quality === 100) {
             if ($original === null) {
                 return true;
             }
@@ -251,188 +340,172 @@ class ImageMagickHandler extends BaseHandler
 
         $this->ensureResource();
 
-        // Copy the file through ImageMagick so that it has
-        // a chance to convert file format.
-        $action = escapeshellarg($this->resource) . ' ' . escapeshellarg($target);
+        $this->resource->setImageCompressionQuality($quality);
 
-        $this->process($action, $quality);
-
-        unlink($this->resource);
-
-        return true;
-    }
-
-    /**
-     * Get Image Resource
-     *
-     * This simply creates an image resource handle
-     * based on the type of image being processed.
-     * Since ImageMagick is used on the cli, we need to
-     * ensure we have a temporary file on the server
-     * that we can use.
-     *
-     * To ensure we can use all features, like transparency,
-     * during the process, we'll use a PNG as the temp file type.
-     *
-     * @return string
-     *
-     * @throws Exception
-     */
-    protected function getResourcePath()
-    {
-        if ($this->resource !== null) {
-            return $this->resource;
+        if ($target !== null) {
+            $extension = pathinfo($target, PATHINFO_EXTENSION);
+            $this->resource->setImageFormat($extension);
         }
 
-        $this->resource = WRITEPATH . 'cache/' . Time::now()->getTimestamp() . '_' . bin2hex(random_bytes(10)) . '.png';
+        try {
+            $result = $this->resource->writeImage($target);
 
-        $name = basename($this->resource);
-        $path = pathinfo($this->resource, PATHINFO_DIRNAME);
+            chmod($target, $this->filePermissions);
 
-        $this->image()->copy($path, $name);
+            $this->resource->clear();
+            $this->resource = null;
 
-        return $this->resource;
-    }
-
-    /**
-     * Make the image resource object if needed
-     *
-     * @return void
-     *
-     * @throws Exception
-     */
-    protected function ensureResource()
-    {
-        $this->getResourcePath();
-
-        $this->supportedFormatCheck();
-    }
-
-    /**
-     * Check if given image format is supported
-     *
-     * @return void
-     *
-     * @throws ImageException
-     */
-    protected function supportedFormatCheck()
-    {
-        if ($this->image()->imageType === IMAGETYPE_WEBP && ! in_array('WEBP', Imagick::queryFormats(), true)) {
-            throw ImageException::forInvalidImageCreate(lang('Images.webpNotSupported'));
+            return $result;
+        } catch (ImagickException) {
+            throw ImageException::forSaveFailed();
         }
     }
 
     /**
      * Handler-specific method for overlaying text on an image.
      *
-     * @throws Exception
+     * @throws ImagickDrawException|ImagickException|ImagickPixelException
      */
     protected function _text(string $text, array $options = [])
     {
-        $xAxis   = 0;
-        $yAxis   = 0;
-        $gravity = '';
-        $cmd     = '';
+        $this->ensureResource();
 
-        // Reverse the vertical offset
-        // When the image is positioned at the bottom
-        // we don't want the vertical offset to push it
-        // further down. We want the reverse, so we'll
-        // invert the offset. Note: The horizontal
-        // offset flips itself automatically
-        if ($options['vAlign'] === 'bottom') {
-            $options['vOffset'] *= -1;
+        $draw = new ImagickDraw();
+
+        if (isset($options['fontPath'])) {
+            $draw->setFont($options['fontPath']);
         }
 
-        if ($options['hAlign'] === 'right') {
-            $options['hOffset'] *= -1;
+        if (isset($options['fontSize'])) {
+            $draw->setFontSize($options['fontSize']);
         }
 
-        // Font
-        if (! empty($options['fontPath'])) {
-            $cmd .= ' -font ' . escapeshellarg($options['fontPath']);
+        if (isset($options['color'])) {
+            $color = $options['color'];
+
+            // Shorthand hex, #f00
+            if (strlen($color) === 3) {
+                $color = implode('', array_map(str_repeat(...), str_split($color), [2, 2, 2]));
+            }
+
+            [$r, $g, $b] = sscanf("#{$color}", '#%02x%02x%02x');
+            $opacity     = $options['opacity'] ?? 1.0;
+            $draw->setFillColor(new ImagickPixel("rgba({$r},{$g},{$b},{$opacity})"));
         }
 
-        if (isset($options['hAlign'], $options['vAlign'])) {
+        // Calculate text positioning
+        $imgWidth  = $this->resource->getImageWidth();
+        $imgHeight = $this->resource->getImageHeight();
+        $xAxis     = 0;
+        $yAxis     = 0;
+
+        // Default padding
+        $padding = $options['padding'] ?? 0;
+
+        if (isset($options['hAlign'])) {
+            $hOffset = $options['hOffset'] ?? 0;
+
             switch ($options['hAlign']) {
                 case 'left':
-                    $xAxis   = $options['hOffset'] + $options['padding'];
-                    $yAxis   = $options['vOffset'] + $options['padding'];
-                    $gravity = $options['vAlign'] === 'top' ? 'NorthWest' : 'West';
-                    if ($options['vAlign'] === 'bottom') {
-                        $gravity = 'SouthWest';
-                        $yAxis   = $options['vOffset'] - $options['padding'];
-                    }
+                    $xAxis = $hOffset + $padding;
+                    $draw->setTextAlignment(Imagick::ALIGN_LEFT);
                     break;
 
                 case 'center':
-                    $xAxis   = $options['hOffset'] + $options['padding'];
-                    $yAxis   = $options['vOffset'] + $options['padding'];
-                    $gravity = $options['vAlign'] === 'top' ? 'North' : 'Center';
-                    if ($options['vAlign'] === 'bottom') {
-                        $yAxis   = $options['vOffset'] - $options['padding'];
-                        $gravity = 'South';
-                    }
+                    $xAxis = $imgWidth / 2 + $hOffset;
+                    $draw->setTextAlignment(Imagick::ALIGN_CENTER);
                     break;
 
                 case 'right':
-                    $xAxis   = $options['hOffset'] - $options['padding'];
-                    $yAxis   = $options['vOffset'] + $options['padding'];
-                    $gravity = $options['vAlign'] === 'top' ? 'NorthEast' : 'East';
-                    if ($options['vAlign'] === 'bottom') {
-                        $gravity = 'SouthEast';
-                        $yAxis   = $options['vOffset'] - $options['padding'];
-                    }
+                    $xAxis = $imgWidth - $hOffset - $padding;
+                    $draw->setTextAlignment(Imagick::ALIGN_RIGHT);
                     break;
             }
-
-            $xAxis = $xAxis >= 0 ? '+' . $xAxis : $xAxis;
-            $yAxis = $yAxis >= 0 ? '+' . $yAxis : $yAxis;
-
-            $cmd .= ' -gravity ' . escapeshellarg($gravity) . ' -geometry ' . escapeshellarg("{$xAxis}{$yAxis}");
         }
 
-        // Color
-        if (isset($options['color'])) {
-            [$r, $g, $b] = sscanf("#{$options['color']}", '#%02x%02x%02x');
+        if (isset($options['vAlign'])) {
+            $vOffset = $options['vOffset'] ?? 0;
 
-            $cmd .= ' -fill ' . escapeshellarg("rgba({$r},{$g},{$b},{$options['opacity']})");
+            switch ($options['vAlign']) {
+                case 'top':
+                    $yAxis = $vOffset + $padding + ($options['fontSize'] ?? 16);
+                    break;
+
+                case 'middle':
+                    $yAxis = $imgHeight / 2 + $vOffset;
+                    break;
+
+                case 'bottom':
+                    // Note: Vertical offset is inverted for bottom alignment as per original implementation
+                    $yAxis = $vOffset < 0 ? $imgHeight + $vOffset - $padding : $imgHeight - $vOffset - $padding;
+                    break;
+            }
         }
 
-        // Font Size - use points....
-        if (isset($options['fontSize'])) {
-            $cmd .= ' -pointsize ' . escapeshellarg((string) $options['fontSize']);
+        if (isset($options['withShadow'])) {
+            $shadow = clone $draw;
+
+            if (isset($options['shadowColor'])) {
+                $shadowColor = $options['shadowColor'];
+
+                // Shorthand hex, #f00
+                if (strlen($shadowColor) === 3) {
+                    $shadowColor = implode('', array_map(str_repeat(...), str_split($shadowColor), [2, 2, 2]));
+                }
+
+                [$sr, $sg, $sb] = sscanf("#{$shadowColor}", '#%02x%02x%02x');
+                $shadow->setFillColor(new ImagickPixel("rgb({$sr},{$sg},{$sb})"));
+            } else {
+                $shadow->setFillColor(new ImagickPixel('rgba(0,0,0,0.5)'));
+            }
+
+            $offset = $options['shadowOffset'] ?? 3;
+
+            $this->resource->annotateImage(
+                $shadow,
+                $xAxis + $offset,
+                $yAxis + $offset,
+                0,
+                $text,
+            );
         }
 
-        // Text
-        $cmd .= ' -annotate 0 ' . escapeshellarg($text);
-
-        $source      = empty($this->resource) ? $this->image()->getPathname() : $this->resource;
-        $destination = $this->getResourcePath();
-
-        $cmd = ' ' . escapeshellarg($source) . ' ' . $cmd . ' ' . escapeshellarg($destination);
-
-        $this->process($cmd);
+        // Draw the main text
+        $this->resource->annotateImage(
+            $draw,
+            $xAxis,
+            $yAxis,
+            0,
+            $text,
+        );
     }
 
     /**
      * Return the width of an image.
      *
      * @return int
+     *
+     * @throws ImagickException
      */
     public function _getWidth()
     {
-        return imagesx(imagecreatefromstring(file_get_contents($this->resource)));
+        $this->ensureResource();
+
+        return $this->resource->getImageWidth();
     }
 
     /**
      * Return the height of an image.
      *
      * @return int
+     *
+     * @throws ImagickException
      */
     public function _getHeight()
     {
-        return imagesy(imagecreatefromstring(file_get_contents($this->resource)));
+        $this->ensureResource();
+
+        return $this->resource->getImageHeight();
     }
 
     /**
@@ -459,5 +532,21 @@ class ImageMagickHandler extends BaseHandler
             8       => $this->rotate(270),
             default => $this,
         };
+    }
+
+    /**
+     * Clears metadata from the image.
+     *
+     * @return $this
+     *
+     * @throws ImagickException
+     */
+    public function clearMetadata(): static
+    {
+        $this->ensureResource();
+
+        $this->resource->stripImage();
+
+        return $this;
     }
 }

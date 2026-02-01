@@ -18,6 +18,7 @@ use CodeIgniter\DataCaster\Cast\BooleanCast;
 use CodeIgniter\DataCaster\Cast\CastInterface;
 use CodeIgniter\DataCaster\Cast\CSVCast;
 use CodeIgniter\DataCaster\Cast\DatetimeCast;
+use CodeIgniter\DataCaster\Cast\EnumCast;
 use CodeIgniter\DataCaster\Cast\FloatCast;
 use CodeIgniter\DataCaster\Cast\IntBoolCast;
 use CodeIgniter\DataCaster\Cast\IntegerCast;
@@ -54,6 +55,7 @@ final class DataCaster
         'boolean'   => BooleanCast::class,
         'csv'       => CSVCast::class,
         'datetime'  => DatetimeCast::class,
+        'enum'      => EnumCast::class,
         'double'    => FloatCast::class,
         'float'     => FloatCast::class,
         'int'       => IntegerCast::class,

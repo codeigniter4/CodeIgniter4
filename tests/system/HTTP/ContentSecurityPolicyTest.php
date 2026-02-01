@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\TestResponse;
 use Config\App;
@@ -40,43 +41,54 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->prepare();
     }
 
-    // Having this method as setUp() doesn't work - can't find Config\App !?
-    protected function prepare(bool $CSPEnabled = true): void
+    private function prepare(bool $CSPEnabled = true): void
     {
         $this->resetServices();
 
-        $config             = config('App');
+        $config = config(App::class);
+
         $config->CSPEnabled = $CSPEnabled;
-        $this->response     = new Response($config);
+
+        $this->response = new Response($config);
         $this->response->pretend(false);
+
         $this->csp = $this->response->getCSP();
     }
 
-    protected function work(string $parm = 'Hello'): bool
+    private function work(string $body = 'Hello'): bool
     {
-        $body = $parm;
         $this->response->setBody($body);
         $this->response->setCookie('foo', 'bar');
 
         ob_start();
         $this->response->send();
-        $buffer = ob_clean();
-        if (ob_get_level() > 0) {
-            ob_end_clean();
+
+        return ob_end_clean();
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function getCspDirectives(string $header): array
+    {
+        if (str_starts_with($header, 'Content-Security-Policy-Report-Only:')) {
+            $header = trim(substr($header, 36));
+        } elseif (str_starts_with($header, 'Content-Security-Policy:')) {
+            $header = trim(substr($header, 24));
         }
 
-        return $buffer;
+        return array_map(trim(...), explode(';', $header));
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testExistence(): void
     {
-        $this->prepare();
-        $this->work();
-
+        $this->assertTrue($this->work());
         $this->assertHeaderEmitted('Content-Security-Policy:');
     }
 
@@ -84,10 +96,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
     #[RunInSeparateProcess]
     public function testReportOnly(): void
     {
-        $this->prepare();
         $this->csp->reportOnly(false);
-        $this->work();
-
+        $this->assertTrue($this->work());
         $this->assertHeaderEmitted('Content-Security-Policy:');
     }
 
@@ -95,359 +105,631 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
     #[RunInSeparateProcess]
     public function testDefaults(): void
     {
-        $this->prepare();
+        $this->assertTrue($this->work());
 
-        $result = $this->work();
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
 
-        $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("base-uri 'self';", (string) $result);
-        $this->assertStringContainsString("connect-src 'self';", (string) $result);
-        $this->assertStringContainsString("default-src 'self';", (string) $result);
-        $this->assertStringContainsString("img-src 'self';", (string) $result);
-        $this->assertStringContainsString("script-src 'self';", (string) $result);
-        $this->assertStringContainsString("style-src 'self';", (string) $result);
+        $directives = $this->getCspDirectives($header);
+        $this->assertContains("base-uri 'self'", $directives);
+        $this->assertContains("connect-src 'self'", $directives);
+        $this->assertContains("default-src 'self'", $directives);
+        $this->assertContains("img-src 'self'", $directives);
+        $this->assertContains("script-src 'self'", $directives);
+        $this->assertContains("style-src 'self'", $directives);
+    }
+
+    public function testKeywordSourcesAreEnclosedInSingleQuotes(): void
+    {
+        // clear directives set by config
+        $this->csp->clearDirective('child-src');
+        $this->csp->clearDirective('form-action');
+        $this->csp->clearDirective('img-src');
+        $this->csp->clearDirective('object-src');
+        $this->csp->clearDirective('script-src');
+        $this->csp->clearDirective('style-src');
+
+        $this->csp->addBaseURI('self');
+        $this->csp->addChildSrc('none');
+        $this->csp->addFontSrc('unsafe-inline');
+        $this->csp->addFormAction('unsafe-eval');
+        $this->csp->addFrameAncestor('strict-dynamic');
+        $this->csp->addFrameSrc('report-sample');
+        $this->csp->addImageSrc('wasm-unsafe-eval');
+        $this->csp->addMediaSrc('unsafe-allow-redirects');
+        $this->csp->addManifestSrc('trusted-types-eval');
+        $this->csp->addObjectSrc('report-sha256');
+        $this->csp->addScriptSrc('report-sha384');
+        $this->csp->addStyleSrc('report-sha512');
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+
+        $directives = $this->getCspDirectives($header);
+        $this->assertContains("base-uri 'self'", $directives);
+        $this->assertContains("child-src 'none'", $directives);
+        $this->assertContains("font-src 'unsafe-inline'", $directives);
+        $this->assertContains("form-action 'unsafe-eval'", $directives);
+        $this->assertContains("frame-ancestors 'strict-dynamic'", $directives);
+        $this->assertContains("frame-src 'report-sample'", $directives);
+        $this->assertContains("img-src 'wasm-unsafe-eval'", $directives);
+        $this->assertContains("media-src 'unsafe-allow-redirects'", $directives);
+        $this->assertContains("manifest-src 'trusted-types-eval'", $directives);
+        $this->assertContains("object-src 'report-sha256'", $directives);
+        $this->assertContains("script-src 'report-sha384'", $directives);
+        $this->assertContains("style-src 'report-sha512'", $directives);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testConfigSetsListAsDirectivesValues(): void
+    {
+        $config              = new CSPConfig();
+        $config->defaultSrc  = ['self', 'example.com'];
+        $config->scriptSrc   = ['self', 'scripts.example.com'];
+        $config->styleSrc    = ['self', 'styles.example.com'];
+        $config->fontSrc     = ['self', 'fonts.example.com'];
+        $config->imageSrc    = ['self', 'images.example.com'];
+        $config->connectSrc  = ['self', 'api.example.com'];
+        $config->frameSrc    = ['self', 'frames.example.com'];
+        $config->childSrc    = ['self', 'childs.example.com'];
+        $config->objectSrc   = ['self', 'objects.example.com'];
+        $config->mediaSrc    = ['self', 'media.example.com'];
+        $config->manifestSrc = ['self', 'manifests.example.com'];
+        $config->pluginTypes = ['application/x-shockwave-flash', 'application/pdf'];
+
+        $csp = new ContentSecurityPolicy($config);
+
+        $response = new Response(new App());
+        $response->pretend(true);
+
+        $response->setBody('Blah blah blah blah');
+        $csp->finalize($response);
+
+        $directives = $this->getCspDirectives($response->getHeaderLine('Content-Security-Policy'));
+        $this->assertContains("default-src 'self' example.com", $directives);
+        $this->assertContains("script-src 'self' scripts.example.com", $directives);
+        $this->assertContains("style-src 'self' styles.example.com", $directives);
+        $this->assertContains("font-src 'self' fonts.example.com", $directives);
+        $this->assertContains("img-src 'self' images.example.com", $directives);
+        $this->assertContains("connect-src 'self' api.example.com", $directives);
+        $this->assertContains("frame-src 'self' frames.example.com", $directives);
+        $this->assertContains("child-src 'self' childs.example.com", $directives);
+        $this->assertContains("object-src 'self' objects.example.com", $directives);
+        $this->assertContains("media-src 'self' media.example.com", $directives);
+        $this->assertContains("manifest-src 'self' manifests.example.com", $directives);
+        $this->assertContains('plugin-types application/x-shockwave-flash application/pdf', $directives);
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testChildSrc(): void
     {
-        $this->prepare();
         $this->csp->addChildSrc('evil.com', true);
         $this->csp->addChildSrc('good.com', false);
-        $result = $this->work();
+        $this->assertTrue($this->work());
 
-        $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString('child-src evil.com;', (string) $result);
-        $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("child-src 'self' good.com;", (string) $result);
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains("child-src 'self' good.com", $this->getCspDirectives($header));
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
+        $this->assertIsString($header);
+        $this->assertContains('child-src evil.com', $this->getCspDirectives($header));
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testConnectSrc(): void
     {
-        $this->prepare();
         $this->csp->reportOnly(true);
         $this->csp->addConnectSrc('iffy.com');
         $this->csp->addConnectSrc('maybe.com');
-        $result = $this->work();
+        $this->assertTrue($this->work());
 
-        $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString("connect-src 'self' iffy.com maybe.com;", (string) $result);
+        $header = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
+        $this->assertIsString($header);
+        $this->assertContains("connect-src 'self' iffy.com maybe.com", $this->getCspDirectives($header));
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testFontSrc(): void
     {
-        $this->prepare();
         $this->csp->reportOnly(true);
         $this->csp->addFontSrc('iffy.com');
         $this->csp->addFontSrc('fontsrus.com', false);
-        $result = $this->work();
+        $this->assertTrue($this->work());
 
-        $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString('font-src iffy.com;', (string) $result);
-        $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString('font-src fontsrus.com;', (string) $result);
+        $header = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
+        $this->assertIsString($header);
+        $this->assertContains('font-src iffy.com', $this->getCspDirectives($header));
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains('font-src fontsrus.com', $this->getCspDirectives($header));
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testFormAction(): void
     {
-        $this->prepare();
         $this->csp->reportOnly(true);
         $this->csp->addFormAction('surveysrus.com');
-        $result = $this->work();
+        $this->assertTrue($this->work());
 
-        $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString("form-action 'self' surveysrus.com;", (string) $result);
+        $header = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
+        $this->assertIsString($header);
+        $this->assertContains("form-action 'self' surveysrus.com", $this->getCspDirectives($header));
 
-        $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringNotContainsString("form-action 'self';", (string) $result);
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertNotContains("form-action 'self'", $this->getCspDirectives($header));
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testFrameAncestor(): void
     {
-        $this->prepare();
         $this->csp->addFrameAncestor('self');
         $this->csp->addFrameAncestor('them.com', true);
-        $result = $this->work();
+        $this->assertTrue($this->work());
 
-        $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString('frame-ancestors them.com;', (string) $result);
-        $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("frame-ancestors 'self';", (string) $result);
+        $header = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
+        $this->assertIsString($header);
+        $this->assertContains('frame-ancestors them.com', $this->getCspDirectives($header));
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains("frame-ancestors 'self'", $this->getCspDirectives($header));
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testFrameSrc(): void
     {
-        $this->prepare();
         $this->csp->addFrameSrc('self');
         $this->csp->addFrameSrc('them.com', true);
-        $result = $this->work();
+        $this->assertTrue($this->work());
 
-        $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString('frame-src them.com;', (string) $result);
-        $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("frame-src 'self';", (string) $result);
+        $header = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
+        $this->assertIsString($header);
+        $this->assertContains('frame-src them.com', $this->getCspDirectives($header));
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains("frame-src 'self'", $this->getCspDirectives($header));
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testImageSrc(): void
     {
-        $this->prepare();
         $this->csp->addImageSrc('cdn.cloudy.com');
         $this->csp->addImageSrc('them.com', true);
-        $result = $this->work();
+        $this->assertTrue($this->work());
 
-        $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString('img-src them.com;', (string) $result);
-        $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("img-src 'self' cdn.cloudy.com;", (string) $result);
+        $header = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
+        $this->assertIsString($header);
+        $this->assertContains('img-src them.com', $this->getCspDirectives($header));
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains("img-src 'self' cdn.cloudy.com", $this->getCspDirectives($header));
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testMediaSrc(): void
     {
-        $this->prepare();
         $this->csp->addMediaSrc('self');
         $this->csp->addMediaSrc('them.com', true);
-        $result = $this->work();
+        $this->assertTrue($this->work());
 
-        $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString('media-src them.com;', (string) $result);
-        $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("media-src 'self';", (string) $result);
+        $header = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
+        $this->assertIsString($header);
+        $this->assertContains('media-src them.com', $this->getCspDirectives($header));
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains("media-src 'self'", $this->getCspDirectives($header));
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testManifestSrc(): void
     {
-        $this->prepare();
         $this->csp->addManifestSrc('cdn.cloudy.com');
         $this->csp->addManifestSrc('them.com', true);
-        $result = $this->work();
+        $this->assertTrue($this->work());
 
-        $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString('manifest-src them.com;', (string) $result);
-        $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString('manifest-src cdn.cloudy.com;', (string) $result);
+        $header = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
+        $this->assertIsString($header);
+        $this->assertContains('manifest-src them.com', $this->getCspDirectives($header));
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains('manifest-src cdn.cloudy.com', $this->getCspDirectives($header));
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testPluginType(): void
     {
-        $this->prepare();
         $this->csp->addPluginType('self');
         $this->csp->addPluginType('application/x-shockwave-flash', true);
-        $result = $this->work();
+        $this->assertTrue($this->work());
 
-        $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString('plugin-types application/x-shockwave-flash;', (string) $result);
-        $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("plugin-types 'self';", (string) $result);
+        $header = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
+        $this->assertIsString($header);
+        $this->assertContains('plugin-types application/x-shockwave-flash', $this->getCspDirectives($header));
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains("plugin-types 'self'", $this->getCspDirectives($header));
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testPluginArray(): void
     {
-        $this->prepare();
         $this->csp->addPluginType('application/x-shockwave-flash');
         $this->csp->addPluginType('application/wacky-hacky');
-        $result = $this->work();
+        $this->assertTrue($this->work());
 
-        $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString('plugin-types application/x-shockwave-flash application/wacky-hacky;', (string) $result);
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains('plugin-types application/x-shockwave-flash application/wacky-hacky', $this->getCspDirectives($header));
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testObjectSrc(): void
     {
-        $this->prepare();
         $this->csp->addObjectSrc('cdn.cloudy.com');
         $this->csp->addObjectSrc('them.com', true);
-        $result = $this->work();
+        $this->assertTrue($this->work());
 
-        $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString('object-src them.com;', (string) $result);
-        $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("object-src 'self' cdn.cloudy.com;", (string) $result);
+        $header = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
+        $this->assertIsString($header);
+        $this->assertContains('object-src them.com', $this->getCspDirectives($header));
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains("object-src 'self' cdn.cloudy.com", $this->getCspDirectives($header));
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testScriptSrc(): void
     {
-        $this->prepare();
         $this->csp->addScriptSrc('cdn.cloudy.com');
         $this->csp->addScriptSrc('them.com', true);
-        $result = $this->work();
+        $this->assertTrue($this->work());
 
-        $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString('script-src them.com;', (string) $result);
-        $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("script-src 'self' cdn.cloudy.com;", (string) $result);
+        $header = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
+        $this->assertIsString($header);
+        $this->assertContains('script-src them.com', $this->getCspDirectives($header));
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains("script-src 'self' cdn.cloudy.com", $this->getCspDirectives($header));
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testScriptSrcElem(): void
+    {
+        $this->csp->addScriptSrcElem('cdn.cloudy.com');
+        $this->csp->addScriptSrcElem('them.com', true);
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
+        $this->assertIsString($header);
+        $this->assertContains('script-src-elem them.com', $this->getCspDirectives($header));
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains("script-src-elem 'self' cdn.cloudy.com", $this->getCspDirectives($header));
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testScriptSrcAttr(): void
+    {
+        $this->csp->addScriptSrcAttr('cdn.cloudy.com');
+        $this->csp->addScriptSrcAttr('them.com', true);
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
+        $this->assertIsString($header);
+        $this->assertContains('script-src-attr them.com', $this->getCspDirectives($header));
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains("script-src-attr 'self' cdn.cloudy.com", $this->getCspDirectives($header));
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testStyleSrc(): void
     {
-        $this->prepare();
         $this->csp->addStyleSrc('cdn.cloudy.com');
         $this->csp->addStyleSrc('them.com', true);
-        $result = $this->work();
+        $this->assertTrue($this->work());
 
-        $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString('style-src them.com;', (string) $result);
-        $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("style-src 'self' cdn.cloudy.com;", (string) $result);
+        $header = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
+        $this->assertIsString($header);
+        $this->assertContains('style-src them.com', $this->getCspDirectives($header));
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains("style-src 'self' cdn.cloudy.com", $this->getCspDirectives($header));
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testStyleSrcElem(): void
+    {
+        $this->csp->addStyleSrcElem('cdn.cloudy.com');
+        $this->csp->addStyleSrcElem('them.com', true);
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
+        $this->assertIsString($header);
+        $this->assertContains('style-src-elem them.com', $this->getCspDirectives($header));
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains("style-src-elem 'self' cdn.cloudy.com", $this->getCspDirectives($header));
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testStyleSrcAttr(): void
+    {
+        $this->csp->addStyleSrcAttr('cdn.cloudy.com');
+        $this->csp->addStyleSrcAttr('them.com', true);
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
+        $this->assertIsString($header);
+        $this->assertContains('style-src-attr them.com', $this->getCspDirectives($header));
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains("style-src-attr 'self' cdn.cloudy.com", $this->getCspDirectives($header));
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testWorkerSrc(): void
+    {
+        $this->csp->addWorkerSrc('workers.com');
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains('worker-src workers.com', $this->getCspDirectives($header));
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testBaseURIDefault(): void
     {
-        $this->prepare();
-        $result = $this->work();
+        $this->assertTrue($this->work());
 
-        $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("base-uri 'self';", (string) $result);
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains("base-uri 'self'", $this->getCspDirectives($header));
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testBaseURI(): void
     {
-        $this->prepare();
         $this->csp->addBaseURI('example.com');
-        $result = $this->work();
+        $this->assertTrue($this->work());
 
-        $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString('base-uri example.com;', (string) $result);
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains('base-uri example.com', $this->getCspDirectives($header));
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testBaseURIRich(): void
     {
-        $this->prepare();
         $this->csp->addBaseURI(['self', 'example.com']);
-        $result = $this->work();
+        $this->assertTrue($this->work());
 
-        $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("base-uri 'self' example.com;", (string) $result);
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains("base-uri 'self' example.com", $this->getCspDirectives($header));
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testDefaultSrc(): void
     {
-        $this->prepare();
         $this->csp->reportOnly(false);
         $this->csp->setDefaultSrc('maybe.com');
         $this->csp->setDefaultSrc('iffy.com');
-        $result = $this->work();
+        $this->assertTrue($this->work());
 
-        $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString('default-src iffy.com;', (string) $result);
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains('default-src iffy.com', $this->getCspDirectives($header));
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testReportURI(): void
     {
-        $this->prepare();
         $this->csp->reportOnly(false);
         $this->csp->setReportURI('http://example.com/csptracker');
-        $result = $this->work();
+        $this->assertTrue($this->work());
 
-        $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString('report-uri http://example.com/csptracker;', (string) $result);
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains('report-uri http://example.com/csptracker', $this->getCspDirectives($header));
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testRemoveReportURI(): void
     {
-        $this->prepare();
         $this->csp->reportOnly(false);
         $this->csp->setReportURI('');
-        $this->work();
+        $this->assertTrue($this->work());
 
-        $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringNotContainsString('report-uri ', (string) $result);
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertStringNotContainsString('report-uri', $header);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testReportTo(): void
+    {
+        $this->csp->reportOnly(false);
+        $this->csp->addReportingEndpoints(['default' => 'http://example.com/csp-reports']);
+        $this->csp->setReportToEndpoint('default');
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains('report-uri http://example.com/csp-reports', $this->getCspDirectives($header));
+        $this->assertContains('report-to default', $this->getCspDirectives($header));
+
+        $this->assertHeaderEmitted('Reporting-Endpoints');
+        $header = $this->getHeaderEmitted('Reporting-Endpoints');
+        $this->assertIsString($header);
+        $this->assertSame('Reporting-Endpoints: default="http://example.com/csp-reports"', $header);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testReportToMultipleEndpoints(): void
+    {
+        $this->csp->reportOnly(false);
+        $this->csp->addReportingEndpoints([
+            'endpoint1' => 'http://example.com/csp-reports-1',
+            'endpoint2' => 'http://example.com/csp-reports-2',
+        ]);
+        $this->csp->setReportToEndpoint('endpoint2');
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains('report-uri http://example.com/csp-reports-2', $this->getCspDirectives($header));
+        $this->assertContains('report-to endpoint2', $this->getCspDirectives($header));
+
+        $this->assertHeaderEmitted('Reporting-Endpoints');
+        $header = $this->getHeaderEmitted('Reporting-Endpoints');
+        $this->assertIsString($header);
+        $this->assertSame(
+            'Reporting-Endpoints: endpoint1="http://example.com/csp-reports-1", endpoint2="http://example.com/csp-reports-2"',
+            $header,
+        );
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testCannotSetReportToWithoutEndpoints(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The reporting endpoint "nonexistent-endpoint" has not been defined.');
+
+        $this->csp->setReportToEndpoint('nonexistent-endpoint');
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testRemoveReportTo(): void
+    {
+        $this->csp->addReportingEndpoints(['default' => 'http://example.com/csp-reports']);
+        $this->csp->setReportToEndpoint('default');
+        $this->csp->setReportToEndpoint('');
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertStringNotContainsString('report-uri', $header);
+        $this->assertStringNotContainsString('report-to', $header);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testSandboxEmptyFlag(): void
+    {
+        $this->csp->addSandbox('');
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains('sandbox', $this->getCspDirectives($header));
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testSandboxFlags(): void
     {
-        $this->prepare();
         $this->csp->reportOnly(false);
         $this->csp->addSandbox(['allow-popups', 'allow-top-navigation']);
-        //      $this->csp->addSandbox('allow-popups');
-        $result = $this->work();
+        $this->assertTrue($this->work());
 
-        $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString('sandbox allow-popups allow-top-navigation;', (string) $result);
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains('sandbox allow-popups allow-top-navigation', $this->getCspDirectives($header));
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testUpgradeInsecureRequests(): void
     {
-        $this->prepare();
         $this->csp->upgradeInsecureRequests();
-        $result = $this->work();
+        $this->assertTrue($this->work());
 
-        $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString('upgrade-insecure-requests;', (string) $result);
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains('upgrade-insecure-requests', $this->getCspDirectives($header));
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testBodyEmpty(): void
     {
-        $this->prepare();
-        $body = '';
-        $this->response->setBody($body);
+        $this->response->setBody('');
         $this->csp->finalize($this->response);
-        $this->assertSame($body, $this->response->getBody());
+        $this->assertSame('', $this->response->getBody());
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testBodyScriptNonce(): void
     {
-        $this->prepare();
         $body = 'Blah blah {csp-script-nonce} blah blah';
+
         $this->response->setBody($body);
         $this->csp->addScriptSrc('cdn.cloudy.com');
+        $this->assertTrue($this->work($body));
 
-        $result     = $this->work($body);
         $nonceStyle = array_filter(
             $this->getPrivateProperty($this->csp, 'styleSrc'),
             static fn ($value): bool => str_starts_with($value, 'nonce-'),
+            ARRAY_FILTER_USE_KEY,
         );
-
-        $this->assertStringContainsString('nonce=', (string) $this->response->getBody());
-        $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString('nonce-', (string) $result);
         $this->assertSame([], $nonceStyle);
+
+        $responseBody = $this->response->getBody();
+        $this->assertIsString($responseBody);
+        $this->assertStringContainsString('nonce=', $responseBody);
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertStringContainsString('nonce-', $header);
     }
 
     public function testBodyScriptNonceCustomScriptTag(): void
@@ -508,21 +790,25 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
     #[RunInSeparateProcess]
     public function testBodyStyleNonce(): void
     {
-        $this->prepare();
         $body = 'Blah blah {csp-style-nonce} blah blah';
         $this->response->setBody($body);
         $this->csp->addStyleSrc('cdn.cloudy.com');
+        $this->assertTrue($this->work($body));
 
-        $result      = $this->work($body);
         $nonceScript = array_filter(
             $this->getPrivateProperty($this->csp, 'scriptSrc'),
             static fn ($value): bool => str_starts_with($value, 'nonce-'),
+            ARRAY_FILTER_USE_KEY,
         );
-
-        $this->assertStringContainsString('nonce=', (string) $this->response->getBody());
-        $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString('nonce-', (string) $result);
         $this->assertSame([], $nonceScript);
+
+        $responseBody = $this->response->getBody();
+        $this->assertIsString($responseBody);
+        $this->assertStringContainsString('nonce=', $responseBody);
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertStringContainsString('nonce-', $header);
     }
 
     public function testBodyStyleNonceCustomStyleTag(): void
@@ -543,24 +829,44 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
+    public function testHashDigestsInScriptSrc(): void
+    {
+        $sha256 = sprintf('sha256-%s', base64_encode(hash('sha256', 'test-script', true)));
+        $sha384 = sprintf('sha384-%s', base64_encode(hash('sha384', 'test-script', true)));
+        $sha512 = sprintf('sha512-%s', base64_encode(hash('sha512', 'test-script', true)));
+
+        $this->csp->addScriptSrc($sha256);
+        $this->csp->addScriptSrc($sha384);
+        $this->csp->addScriptSrc($sha512);
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains(
+            sprintf("script-src 'self' '%s' '%s' '%s'", $sha256, $sha384, $sha512),
+            $this->getCspDirectives($header),
+        );
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testHeaderWrongCaseNotFound(): void
     {
-        $this->prepare();
-        $result = $this->work();
+        $this->assertTrue($this->work());
 
-        $result = $this->getHeaderEmitted('content-security-policy');
-        $this->assertNull($result);
+        $header = $this->getHeaderEmitted('content-security-policy');
+        $this->assertNull($header);
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testHeaderIgnoreCase(): void
     {
-        $this->prepare();
-        $result = $this->work();
+        $this->assertTrue($this->work());
 
-        $result = $this->getHeaderEmitted('content-security-policy', true);
-        $this->assertStringContainsString("base-uri 'self';", (string) $result);
+        $header = $this->getHeaderEmitted('content-security-policy', true);
+        $this->assertIsString($header);
+        $this->assertContains("base-uri 'self'", $this->getCspDirectives($header));
     }
 
     #[PreserveGlobalState(false)]
@@ -568,9 +874,9 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
     public function testCSPDisabled(): void
     {
         $this->prepare(false);
-        $this->work();
-        $this->response->getCSP()->addStyleSrc('https://example.com');
+        $this->assertTrue($this->work());
 
+        $this->response->getCSP()->addStyleSrc('https://example.com');
         $this->assertHeaderNotEmitted('content-security-policy', true);
     }
 
@@ -598,30 +904,37 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
     #[RunInSeparateProcess]
     public function testHeaderScriptNonceEmittedOnceGetScriptNonceCalled(): void
     {
-        $this->prepare();
-
         $this->csp->getScriptNonce();
-        $this->work();
+        $this->assertTrue($this->work());
 
-        $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("script-src 'self' 'nonce-", (string) $result);
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertStringContainsString("script-src 'self' 'nonce-", $header);
     }
 
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testClearDirective(): void
     {
-        $this->prepare();
-
+        $this->csp->addFontSrc('fonts.example.com');
         $this->csp->addStyleSrc('css.example.com');
-        $this->csp->clearDirective('style-src');
-
         $this->csp->setReportURI('http://example.com/csp/reports');
+        $this->csp->addReportingEndpoints(['default' => 'http://example.com/csp/reports']);
+        $this->csp->setReportToEndpoint('default');
+
+        $this->csp->clearDirective('fonts-src'); // intentional wrong directive
+        $this->csp->clearDirective('style-src');
         $this->csp->clearDirective('report-uri');
+        $this->csp->clearDirective('report-to');
+
         $this->csp->finalize($this->response);
 
         $header = $this->response->getHeaderLine('Content-Security-Policy');
 
-        $this->assertStringNotContainsString('style-src ', $header);
-        $this->assertStringNotContainsString('css.example.com', $header);
-        $this->assertStringNotContainsString('report-uri', $header);
+        $directives = $this->getCspDirectives($header);
+        $this->assertContains('font-src fonts.example.com', $directives);
+        $this->assertNotContains('style-src css.example.com', $directives);
+        $this->assertNotContains('report-uri http://example.com/csp/reports', $directives);
+        $this->assertNotContains('report-to default', $directives);
     }
 }

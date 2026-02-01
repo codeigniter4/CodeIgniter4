@@ -3,22 +3,22 @@
 parameters:
     ignoreErrors:
         -
-            message: '#^Class CodeIgniter\\Model has PHPDoc tag @method for method when\(\) parameter \#2 \$callback with no signature specified for callable\.$#'
-            count: 1
-            path: ../../system/Model.php
-
-        -
-            message: '#^Class CodeIgniter\\Model has PHPDoc tag @method for method when\(\) parameter \#3 \$defaultCallback with no signature specified for callable\.$#'
-            count: 1
-            path: ../../system/Model.php
-
-        -
             message: '#^Class CodeIgniter\\Model has PHPDoc tag @method for method whenNot\(\) parameter \#2 \$callback with no signature specified for callable\.$#'
             count: 1
             path: ../../system/Model.php
 
         -
             message: '#^Class CodeIgniter\\Model has PHPDoc tag @method for method whenNot\(\) parameter \#3 \$defaultCallback with no signature specified for callable\.$#'
+            count: 1
+            path: ../../system/Model.php
+
+        -
+            message: '#^Class CodeIgniter\\Model has PHPDoc tag @method for method when\(\) parameter \#2 \$callback with no signature specified for callable\.$#'
+            count: 1
+            path: ../../system/Model.php
+
+        -
+            message: '#^Class CodeIgniter\\Model has PHPDoc tag @method for method when\(\) parameter \#3 \$defaultCallback with no signature specified for callable\.$#'
             count: 1
             path: ../../system/Model.php
 

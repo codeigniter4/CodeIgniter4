@@ -80,6 +80,7 @@ use Config\Session as ConfigSession;
 use Config\Toolbar as ConfigToolbar;
 use Config\Validation as ConfigValidation;
 use Config\View as ConfigView;
+use Config\WorkerMode;
 
 /**
  * Services Configuration file.
@@ -200,6 +201,18 @@ class BaseService
     public static function get(string $key): ?object
     {
         return static::$instances[$key] ?? static::__callStatic($key, []);
+    }
+
+    /**
+     * Checks if a service instance has been created.
+     *
+     * @param string $key Identifier of the entry to check.
+     *
+     * @return bool True if the service instance exists, false otherwise.
+     */
+    public static function has(string $key): bool
+    {
+        return isset(static::$instances[$key]);
     }
 
     /**
@@ -359,6 +372,53 @@ class BaseService
         if ($initAutoloader) {
             static::autoloader()->initialize(new Autoload(), new Modules());
         }
+    }
+
+    /**
+     * Reconnect cache connection for worker mode at the start of a request.
+     * Checks if cache connection is alive and reconnects if needed.
+     *
+     * This should be called at the beginning of each request in worker mode,
+     * before the application runs.
+     */
+    public static function reconnectCacheForWorkerMode(): void
+    {
+        if (! isset(static::$instances['cache'])) {
+            return;
+        }
+
+        $cache = static::$instances['cache'];
+
+        if (! $cache->ping()) {
+            $cache->reconnect();
+        }
+    }
+
+    /**
+     * Resets all services except those in the persistent list.
+     * Used for worker mode to preserve expensive-to-initialize services.
+     *
+     * Called at the END of each request to clean up state.
+     */
+    public static function resetForWorkerMode(WorkerMode $config): void
+    {
+        // Reset mocks (testing only, safe to clear)
+        static::$mocks = [];
+
+        // Reset factories
+        static::$factories = [];
+
+        // Process each service instance
+        $persistentInstances = [];
+
+        foreach (static::$instances as $serviceName => $service) {
+            // Persist services in the persistent list
+            if (in_array($serviceName, $config->persistentServices, true)) {
+                $persistentInstances[$serviceName] = $service;
+            }
+        }
+
+        static::$instances = $persistentInstances;
     }
 
     /**

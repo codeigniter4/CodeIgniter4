@@ -191,4 +191,19 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
     {
         $this->assertTrue($this->handler->isSupported());
     }
+
+    public function testPing(): void
+    {
+        $this->assertTrue($this->handler->ping());
+    }
+
+    public function testReconnect(): void
+    {
+        $this->handler->save(self::$key1, 'value');
+        $this->assertSame('value', $this->handler->get(self::$key1));
+
+        $this->assertTrue($this->handler->reconnect());
+
+        $this->assertSame('value', $this->handler->get(self::$key1));
+    }
 }

@@ -17,7 +17,7 @@ use CodeIgniter\Files\Exceptions\FileException;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\I18n\Time;
 use Config\Mimes;
-use ReturnTypeWillChange;
+use RuntimeException;
 use SplFileInfo;
 
 /**
@@ -59,13 +59,11 @@ class File extends SplFileInfo
      *
      * Implementations SHOULD return the value stored in the "size" key of
      * the file in the $_FILES array if available, as PHP calculates this based
-     * on the actual size transmitted. A RuntimeException will be thrown if the file
-     * does not exist or an error occurs.
+     * on the actual size transmitted.
      *
-     * @return false|int The file size in bytes, or false on failure
+     * @throws RuntimeException if the file does not exist or an error occurs
      */
-    #[ReturnTypeWillChange]
-    public function getSize()
+    public function getSize(): false|int
     {
         return $this->size ?? ($this->size = parent::getSize());
     }
@@ -133,11 +131,9 @@ class File extends SplFileInfo
             return $this->originalMimeType ?? 'application/octet-stream'; // @codeCoverageIgnore
         }
 
-        $finfo    = finfo_open(FILEINFO_MIME_TYPE);
-        $mimeType = finfo_file($finfo, $this->getRealPath() ?: $this->__toString());
-        finfo_close($finfo);
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
 
-        return $mimeType;
+        return finfo_file($finfo, $this->getRealPath() ?: $this->__toString());
     }
 
     /**

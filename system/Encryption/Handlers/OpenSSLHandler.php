@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Encryption\Handlers;
 
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
+use SensitiveParameter;
 
 /**
  * Encryption handling for OpenSSL library
@@ -79,19 +80,19 @@ class OpenSSLHandler extends BaseHandler
     /**
      * {@inheritDoc}
      */
-    public function encrypt($data, $params = null)
+    public function encrypt(#[SensitiveParameter] $data, #[SensitiveParameter] $params = null)
     {
         // Allow key override
-        if ($params !== null) {
-            $this->key = is_array($params) && isset($params['key']) ? $params['key'] : $params;
-        }
+        $key = $params !== null
+            ? (is_array($params) && isset($params['key']) ? $params['key'] : $params)
+            : $this->key;
 
-        if (empty($this->key)) {
+        if (empty($key)) {
             throw EncryptionException::forNeedsStarterKey();
         }
 
         // derive a secret key
-        $encryptKey = \hash_hkdf($this->digest, $this->key, 0, $this->encryptKeyInfo);
+        $encryptKey = \hash_hkdf($this->digest, $key, 0, $this->encryptKeyInfo);
 
         // basic encryption
         $iv = ($ivSize = \openssl_cipher_iv_length($this->cipher)) ? \openssl_random_pseudo_bytes($ivSize) : null;
@@ -105,7 +106,7 @@ class OpenSSLHandler extends BaseHandler
         $result = $this->rawData ? $iv . $data : base64_encode($iv . $data);
 
         // derive a secret key
-        $authKey = \hash_hkdf($this->digest, $this->key, 0, $this->authKeyInfo);
+        $authKey = \hash_hkdf($this->digest, $key, 0, $this->authKeyInfo);
 
         $hmacKey = \hash_hmac($this->digest, $result, $authKey, $this->rawData);
 
@@ -115,19 +116,19 @@ class OpenSSLHandler extends BaseHandler
     /**
      * {@inheritDoc}
      */
-    public function decrypt($data, $params = null)
+    public function decrypt($data, #[SensitiveParameter] $params = null)
     {
         // Allow key override
-        if ($params !== null) {
-            $this->key = is_array($params) && isset($params['key']) ? $params['key'] : $params;
-        }
+        $key = $params !== null
+            ? (is_array($params) && isset($params['key']) ? $params['key'] : $params)
+            : $this->key;
 
-        if (empty($this->key)) {
+        if (empty($key)) {
             throw EncryptionException::forNeedsStarterKey();
         }
 
         // derive a secret key
-        $authKey = \hash_hkdf($this->digest, $this->key, 0, $this->authKeyInfo);
+        $authKey = \hash_hkdf($this->digest, $key, 0, $this->authKeyInfo);
 
         $hmacLength = $this->rawData
             ? $this->digestSize[$this->digest]
@@ -151,8 +152,14 @@ class OpenSSLHandler extends BaseHandler
         }
 
         // derive a secret key
-        $encryptKey = \hash_hkdf($this->digest, $this->key, 0, $this->encryptKeyInfo);
+        $encryptKey = \hash_hkdf($this->digest, $key, 0, $this->encryptKeyInfo);
 
-        return \openssl_decrypt($data, $this->cipher, $encryptKey, OPENSSL_RAW_DATA, $iv);
+        $result = \openssl_decrypt($data, $this->cipher, $encryptKey, OPENSSL_RAW_DATA, $iv);
+
+        if ($result === false) {
+            throw EncryptionException::forAuthenticationFailed();
+        }
+
+        return $result;
     }
 }

@@ -90,6 +90,48 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/9596
+     */
+    public function testRegexMatchWithArrayData(): void
+    {
+        $data = [
+            ['uid' => '2025/06/000001'],
+            ['uid' => '2025/06/000002'],
+            ['uid' => '2025/06/000003'],
+            ['uid' => '2025/06/000004'],
+            ['uid' => '2025/06/000005'],
+        ];
+
+        $this->validation->setRules([
+            '*.uid' => 'regex_match[/^(\d{4})\/(0[1-9]|1[0-2])\/\d{6}$/]',
+        ]);
+
+        $this->assertTrue($this->validation->run($data));
+    }
+
+    public function testRegexMatchWithPlaceholder(): void
+    {
+        $data = [
+            'code'       => 'ABC1234',
+            'phone'      => '1234567890',
+            'prefix'     => 'ABC',
+            'min_digits' => 10,
+            'max_digits' => 15,
+        ];
+
+        $this->validation->setRules([
+            'prefix'     => 'required|string',
+            'min_digits' => 'required|integer',
+            'max_digits' => 'required|integer',
+            'code'       => 'required|regex_match[/^{{prefix}}\d{4}$/]',
+            'phone'      => 'required|regex_match[/^\d{{{min_digits}},{{max_digits}}}$/]',
+        ]);
+
+        $result = $this->validation->run($data);
+        $this->assertTrue($result);
+    }
+
     #[DataProvider('provideValidUrl')]
     public function testValidURL(?string $url, bool $isLoose, bool $isStrict): void
     {

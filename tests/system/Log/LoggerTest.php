@@ -131,8 +131,8 @@ final class LoggerTest extends CIUnitTestCase
 
         Time::setTestNow('2023-11-25 12:00:00');
 
-        $_POST    = ['foo' => 'bar'];
-        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message $_POST: ' . print_r($_POST, true);
+        service('superglobals')->setPost('foo', 'bar');
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message $_POST: ' . print_r(service('superglobals')->getPostArray(), true);
 
         $logger->log('debug', 'Test message {post_vars}');
 
@@ -150,8 +150,8 @@ final class LoggerTest extends CIUnitTestCase
 
         Time::setTestNow('2023-11-25 12:00:00');
 
-        $_GET     = ['bar' => 'baz'];
-        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message $_GET: ' . print_r($_GET, true);
+        service('superglobals')->setGet('bar', 'baz');
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message $_GET: ' . print_r(service('superglobals')->getGetArray(), true);
 
         $logger->log('debug', 'Test message {get_vars}');
 

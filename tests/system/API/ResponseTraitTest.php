@@ -14,6 +14,10 @@ declare(strict_types=1);
 namespace CodeIgniter\API;
 
 use CodeIgniter\Config\Factories;
+use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Database\BaseResult;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Format\FormatterInterface;
 use CodeIgniter\Format\JSONFormatter;
 use CodeIgniter\Format\XMLFormatter;
@@ -21,14 +25,19 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Model;
+use CodeIgniter\Pager\Pager;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
 use Config\Cookie;
 use Config\Services;
+use Exception;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
+use Tests\Support\API\InvalidTransformer;
+use Tests\Support\API\TestTransformer;
 
 /**
  * @internal
@@ -681,5 +690,527 @@ final class ResponseTraitTest extends CIUnitTestCase
         $method = self::getPrivateMethodInvoker($controller, $method);
 
         return $method(...$args);
+    }
+
+    /**
+     * Helper method to create a mock Model with a mock Pager
+     *
+     * @param array<int, array<string, mixed>> $data
+     */
+    private function createMockModelWithPager(array $data, int $page, int $perPage, int $total, int $totalPages): Model
+    {
+        // Create a mock Pager
+        $pager = $this->createMock(Pager::class);
+        $pager->method('getCurrentPage')->willReturn($page);
+        $pager->method('getPerPage')->willReturn($perPage);
+        $pager->method('getTotal')->willReturn($total);
+        $pager->method('getPageCount')->willReturn($totalPages);
+
+        // Create a mock Model with a public pager property
+        $model = $this->createMock(Model::class);
+
+        $model->method('paginate')->willReturn($data);
+        $model->pager = $pager;
+
+        return $model;
+    }
+
+    public function testPaginateWithModel(): void
+    {
+        // Mock data
+        $data = [
+            ['id' => 1, 'name' => 'Item 1'],
+            ['id' => 2, 'name' => 'Item 2'],
+        ];
+
+        $model = $this->createMockModelWithPager($data, 1, 20, 50, 3);
+
+        $controller = $this->makeController('/api/items');
+
+        $this->invoke($controller, 'paginate', [$model, 20]);
+
+        // Check response structure
+        $responseBody = json_decode($this->response->getBody(), true);
+
+        $this->assertArrayHasKey('data', $responseBody);
+        $this->assertArrayHasKey('meta', $responseBody);
+        $this->assertArrayHasKey('links', $responseBody);
+
+        // Check meta
+        $this->assertSame(1, $responseBody['meta']['page']);
+        $this->assertSame(20, $responseBody['meta']['perPage']);
+        $this->assertSame(50, $responseBody['meta']['total']);
+        $this->assertSame(3, $responseBody['meta']['totalPages']);
+
+        // Check data
+        $this->assertSame($data, $responseBody['data']);
+
+        // Check headers
+        $this->assertSame('50', $this->response->getHeaderLine('X-Total-Count'));
+        $this->assertNotEmpty($this->response->getHeaderLine('Link'));
+    }
+
+    public function testPaginateWithQueryBuilder(): void
+    {
+        // Mock the database and builder
+        $db = $this->createMock(BaseConnection::class);
+
+        $builder = $this->getMockBuilder(BaseBuilder::class)
+            ->setConstructorArgs(['test_table', $db])
+            ->onlyMethods(['countAllResults', 'limit', 'get'])
+            ->getMock();
+
+        $result = $this->createMock(BaseResult::class);
+
+        $data = [
+            ['id' => 1, 'name' => 'Item 1'],
+            ['id' => 2, 'name' => 'Item 2'],
+        ];
+
+        // Mock the query builder chain
+        $builder->method('countAllResults')->willReturn(50);
+        $builder->method('limit')->willReturnSelf();
+        $builder->method('get')->willReturn($result);
+        $result->method('getResultArray')->willReturn($data);
+
+        $controller = $this->makeController('/api/items');
+
+        $this->invoke($controller, 'paginate', [$builder, 20]);
+
+        // Check response structure
+        $responseBody = json_decode($this->response->getBody(), true);
+
+        $this->assertArrayHasKey('data', $responseBody);
+        $this->assertArrayHasKey('meta', $responseBody);
+        $this->assertArrayHasKey('links', $responseBody);
+
+        // Check meta
+        $this->assertSame(1, $responseBody['meta']['page']);
+        $this->assertSame(20, $responseBody['meta']['perPage']);
+        $this->assertSame(50, $responseBody['meta']['total']);
+        $this->assertSame(3, $responseBody['meta']['totalPages']);
+    }
+
+    public function testPaginateWithCustomPerPage(): void
+    {
+        $data = [
+            ['id' => 1, 'name' => 'Item 1'],
+            ['id' => 2, 'name' => 'Item 2'],
+            ['id' => 3, 'name' => 'Item 3'],
+            ['id' => 4, 'name' => 'Item 4'],
+            ['id' => 5, 'name' => 'Item 5'],
+        ];
+
+        $model = $this->createMockModelWithPager($data, 1, 5, 25, 5);
+
+        $controller = $this->makeController('/api/items');
+
+        $this->invoke($controller, 'paginate', [$model, 5]);
+
+        $responseBody = json_decode($this->response->getBody(), true);
+
+        // Check meta with custom perPage
+        $this->assertSame(5, $responseBody['meta']['perPage']);
+        $this->assertSame(25, $responseBody['meta']['total']);
+        $this->assertSame(5, $responseBody['meta']['totalPages']);
+    }
+
+    public function testPaginateWithPageParameter(): void
+    {
+        $data = [
+            ['id' => 21, 'name' => 'Item 21'],
+            ['id' => 22, 'name' => 'Item 22'],
+        ];
+
+        $model = $this->createMockModelWithPager($data, 2, 20, 50, 3);
+
+        // Create controller with page=2 in query string
+        $controller = $this->makeController('/api/items?page=2');
+        Services::superglobals()->setGet('page', '2');
+
+        $this->invoke($controller, 'paginate', [$model, 20]);
+
+        $responseBody = json_decode($this->response->getBody(), true);
+
+        // Check that we're on page 2
+        $this->assertSame(2, $responseBody['meta']['page']);
+
+        // Check links
+        $this->assertStringContainsString('page=2', (string) $responseBody['links']['self']);
+        $this->assertStringContainsString('page=1', (string) $responseBody['links']['prev']);
+        $this->assertStringContainsString('page=3', (string) $responseBody['links']['next']);
+    }
+
+    public function testPaginateLinksStructure(): void
+    {
+        $data = [['id' => 1, 'name' => 'Item 1']];
+
+        $model = $this->createMockModelWithPager($data, 2, 20, 100, 5);
+
+        Services::superglobals()->setGet('page', '2');
+        $controller = $this->makeController('/api/items?page=2');
+
+        $this->invoke($controller, 'paginate', [$model, 20]);
+
+        $responseBody = json_decode($this->response->getBody(), true);
+
+        // Check all link types exist
+        $this->assertArrayHasKey('self', $responseBody['links']);
+        $this->assertArrayHasKey('first', $responseBody['links']);
+        $this->assertArrayHasKey('last', $responseBody['links']);
+        $this->assertArrayHasKey('prev', $responseBody['links']);
+        $this->assertArrayHasKey('next', $responseBody['links']);
+
+        // Check link values
+        $this->assertStringContainsString('page=2', (string) $responseBody['links']['self']);
+        $this->assertStringContainsString('page=1', (string) $responseBody['links']['first']);
+        $this->assertStringContainsString('page=5', (string) $responseBody['links']['last']);
+        $this->assertStringContainsString('page=1', (string) $responseBody['links']['prev']);
+        $this->assertStringContainsString('page=3', (string) $responseBody['links']['next']);
+    }
+
+    public function testPaginateFirstPageNoPrevLink(): void
+    {
+        $data = [['id' => 1, 'name' => 'Item 1']];
+
+        $model = $this->createMockModelWithPager($data, 1, 20, 50, 3);
+
+        $controller = $this->makeController('/api/items');
+
+        $this->invoke($controller, 'paginate', [$model, 20]);
+
+        $responseBody = json_decode($this->response->getBody(), true);
+
+        // First page should not have a prev link
+        $this->assertNull($responseBody['links']['prev']);
+        // But should have a next link
+        $this->assertNotNull($responseBody['links']['next']);
+    }
+
+    public function testPaginateLastPageNoNextLink(): void
+    {
+        $data = [['id' => 41, 'name' => 'Item 41']];
+
+        $model = $this->createMockModelWithPager($data, 3, 20, 50, 3);
+
+        Services::superglobals()->setGet('page', '3');
+        $controller = $this->makeController('/api/items?page=3');
+
+        $this->invoke($controller, 'paginate', [$model, 20]);
+
+        $responseBody = json_decode($this->response->getBody(), true);
+
+        // Last page should not have a next link
+        $this->assertNull($responseBody['links']['next']);
+        // But should have a prev link
+        $this->assertNotNull($responseBody['links']['prev']);
+    }
+
+    public function testPaginateLinkHeader(): void
+    {
+        $data = [['id' => 1, 'name' => 'Item 1']];
+
+        $model = $this->createMockModelWithPager($data, 2, 20, 100, 5);
+
+        Services::superglobals()->setGet('page', '2');
+        $controller = $this->makeController('/api/items?page=2');
+
+        $this->invoke($controller, 'paginate', [$model, 20]);
+
+        $linkHeader = $this->response->getHeaderLine('Link');
+
+        // Check that Link header is properly formatted
+        $this->assertStringContainsString('rel="self"', $linkHeader);
+        $this->assertStringContainsString('rel="first"', $linkHeader);
+        $this->assertStringContainsString('rel="last"', $linkHeader);
+        $this->assertStringContainsString('rel="prev"', $linkHeader);
+        $this->assertStringContainsString('rel="next"', $linkHeader);
+
+        // Check format <url>; rel="relation"
+        $this->assertMatchesRegularExpression('/<[^>]+>;\s*rel="self"/', $linkHeader);
+        $this->assertMatchesRegularExpression('/<[^>]+>;\s*rel="first"/', $linkHeader);
+    }
+
+    public function testPaginateXTotalCountHeader(): void
+    {
+        $data = [['id' => 1, 'name' => 'Item 1']];
+
+        $model = $this->createMockModelWithPager($data, 1, 20, 150, 8);
+
+        $controller = $this->makeController('/api/items');
+
+        $this->invoke($controller, 'paginate', [$model, 20]);
+
+        // Check X-Total-Count header
+        $this->assertSame('150', $this->response->getHeaderLine('X-Total-Count'));
+    }
+
+    public function testPaginateWithDatabaseException(): void
+    {
+        $model = $this->createMock(Model::class);
+
+        // Make the model throw a DatabaseException
+        $model->method('paginate')->willThrowException(
+            new DatabaseException('Database error'),
+        );
+
+        $controller = $this->makeController('/api/items');
+
+        $this->invoke($controller, 'paginate', [$model, 20]);
+
+        // Should return a 500 error
+        $this->assertSame(500, $this->response->getStatusCode());
+
+        $responseBody = json_decode($this->response->getBody(), true);
+
+        // Check error response structure
+        $this->assertArrayHasKey('status', $responseBody);
+        $this->assertArrayHasKey('error', $responseBody);
+        $this->assertArrayHasKey('messages', $responseBody);
+        $this->assertSame(500, $responseBody['status']);
+    }
+
+    public function testPaginateWithGenericException(): void
+    {
+        $model = $this->createMock(Model::class);
+
+        // Make the model throw a generic exception
+        $model->method('paginate')->willThrowException(
+            new Exception('Generic error'),
+        );
+
+        $controller = $this->makeController('/api/items');
+
+        $this->invoke($controller, 'paginate', [$model, 20]);
+
+        // Should return a 500 error
+        $this->assertSame(500, $this->response->getStatusCode());
+
+        $responseBody = json_decode($this->response->getBody(), true);
+
+        // Check error response structure
+        $this->assertSame(500, $responseBody['status']);
+        $this->assertArrayHasKey('error', $responseBody);
+    }
+
+    public function testPaginateWithNonDefaultPerPageInLinks(): void
+    {
+        $data = [['id' => 1, 'name' => 'Item 1']];
+
+        $model = $this->createMockModelWithPager($data, 1, 10, 50, 5);
+
+        $controller = $this->makeController('/api/items');
+
+        $this->invoke($controller, 'paginate', [$model, 10]);
+
+        $responseBody = json_decode($this->response->getBody(), true);
+
+        // Check that perPage is included in links when it's not the default (20)
+        $this->assertStringContainsString('perPage=10', (string) $responseBody['links']['self']);
+        $this->assertStringContainsString('perPage=10', (string) $responseBody['links']['first']);
+        $this->assertStringContainsString('perPage=10', (string) $responseBody['links']['last']);
+        $this->assertStringContainsString('perPage=10', (string) $responseBody['links']['next']);
+    }
+
+    public function testPaginatePreservesOtherQueryParameters(): void
+    {
+        $data = [['id' => 1, 'name' => 'Item 1']];
+
+        $model = $this->createMockModelWithPager($data, 1, 20, 50, 3);
+
+        Services::superglobals()->setGet('filter', 'active');
+        Services::superglobals()->setGet('sort', 'name');
+        $controller = $this->makeController('/api/items?filter=active&sort=name');
+
+        $this->invoke($controller, 'paginate', [$model, 20]);
+
+        $responseBody = json_decode($this->response->getBody(), true);
+
+        // Check that other query parameters are preserved in links
+        $this->assertStringContainsString('filter=active', (string) $responseBody['links']['self']);
+        $this->assertStringContainsString('sort=name', (string) $responseBody['links']['self']);
+        $this->assertStringContainsString('filter=active', (string) $responseBody['links']['next']);
+        $this->assertStringContainsString('sort=name', (string) $responseBody['links']['next']);
+    }
+
+    public function testPaginateSinglePage(): void
+    {
+        $data = [
+            ['id' => 1, 'name' => 'Item 1'],
+            ['id' => 2, 'name' => 'Item 2'],
+        ];
+
+        $model = $this->createMockModelWithPager($data, 1, 20, 2, 1);
+
+        $controller = $this->makeController('/api/items');
+
+        $this->invoke($controller, 'paginate', [$model, 20]);
+
+        $responseBody = json_decode($this->response->getBody(), true);
+
+        // For a single page, prev and next should be null
+        $this->assertNull($responseBody['links']['prev']);
+        $this->assertNull($responseBody['links']['next']);
+        // First and last should point to page 1
+        $this->assertStringContainsString('page=1', (string) $responseBody['links']['first']);
+        $this->assertStringContainsString('page=1', (string) $responseBody['links']['last']);
+    }
+
+    public function testPaginateWithTransformer(): void
+    {
+        $data = [
+            ['id' => 1, 'name' => 'Item 1'],
+            ['id' => 2, 'name' => 'Item 2'],
+        ];
+
+        $model = $this->createMockModelWithPager($data, 1, 20, 2, 1);
+
+        $controller = $this->makeController('/api/items');
+
+        $this->invoke($controller, 'paginate', [$model, 20, TestTransformer::class]);
+
+        $responseBody = json_decode($this->response->getBody(), true);
+
+        // Check that data is transformed
+        $this->assertArrayHasKey('data', $responseBody);
+        $this->assertCount(2, $responseBody['data']);
+
+        // Check first item is transformed
+        $this->assertArrayHasKey('transformed', $responseBody['data'][0]);
+        $this->assertTrue($responseBody['data'][0]['transformed']);
+        $this->assertArrayHasKey('name_upper', $responseBody['data'][0]);
+        $this->assertSame('ITEM 1', $responseBody['data'][0]['name_upper']);
+
+        // Check second item is transformed
+        $this->assertArrayHasKey('transformed', $responseBody['data'][1]);
+        $this->assertTrue($responseBody['data'][1]['transformed']);
+        $this->assertArrayHasKey('name_upper', $responseBody['data'][1]);
+        $this->assertSame('ITEM 2', $responseBody['data'][1]['name_upper']);
+
+        // Meta and links should still be present
+        $this->assertArrayHasKey('meta', $responseBody);
+        $this->assertArrayHasKey('links', $responseBody);
+    }
+
+    public function testPaginateWithTransformerAndQueryBuilder(): void
+    {
+        $data = [
+            ['id' => 1, 'name' => 'Item 1'],
+            ['id' => 2, 'name' => 'Item 2'],
+        ];
+
+        // Mock the database and builder
+        $db = $this->createMock(BaseConnection::class);
+
+        $builder = $this->getMockBuilder(BaseBuilder::class)
+            ->setConstructorArgs(['test_table', $db])
+            ->onlyMethods(['countAllResults', 'limit', 'get'])
+            ->getMock();
+
+        $result = $this->createMock(BaseResult::class);
+        $result->method('getResultArray')->willReturn($data);
+
+        $builder->method('countAllResults')->willReturn(2);
+        $builder->method('limit')->willReturnSelf();
+        $builder->method('get')->willReturn($result);
+
+        $controller = $this->makeController('/api/items');
+
+        $this->invoke($controller, 'paginate', [$builder, 20, TestTransformer::class]);
+
+        $responseBody = json_decode($this->response->getBody(), true);
+
+        // Check that data is transformed
+        $this->assertArrayHasKey('data', $responseBody);
+        $this->assertCount(2, $responseBody['data']);
+        $this->assertTrue($responseBody['data'][0]['transformed']);
+        $this->assertSame('ITEM 1', $responseBody['data'][0]['name_upper']);
+    }
+
+    public function testPaginateWithNonExistentTransformer(): void
+    {
+        $data = [
+            ['id' => 1, 'name' => 'Item 1'],
+        ];
+
+        $model = $this->createMockModelWithPager($data, 1, 20, 1, 1);
+
+        $controller = $this->makeController('/api/items');
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessage(lang('Api.transformerNotFound', ['NonExistent\\Transformer']));
+
+        $this->invoke($controller, 'paginate', [$model, 20, 'NonExistent\\Transformer']);
+    }
+
+    public function testPaginateWithInvalidTransformer(): void
+    {
+        $data = [
+            ['id' => 1, 'name' => 'Item 1'],
+        ];
+
+        $model = $this->createMockModelWithPager($data, 1, 20, 1, 1);
+
+        $controller = $this->makeController('/api/items');
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessage(lang('Api.invalidTransformer', [InvalidTransformer::class]));
+
+        $this->invoke($controller, 'paginate', [$model, 20, InvalidTransformer::class]);
+    }
+
+    public function testPaginateWithTransformerPreservesMetaAndLinks(): void
+    {
+        $data = [
+            ['id' => 1, 'name' => 'Item 1'],
+            ['id' => 2, 'name' => 'Item 2'],
+            ['id' => 3, 'name' => 'Item 3'],
+        ];
+
+        $model = $this->createMockModelWithPager($data, 1, 2, 10, 5);
+
+        $controller = $this->makeController('/api/items');
+
+        $this->invoke($controller, 'paginate', [$model, 2, TestTransformer::class]);
+
+        $responseBody = json_decode($this->response->getBody(), true);
+
+        // Check meta is correct
+        $this->assertSame(1, $responseBody['meta']['page']);
+        $this->assertSame(2, $responseBody['meta']['perPage']);
+        $this->assertSame(10, $responseBody['meta']['total']);
+        $this->assertSame(5, $responseBody['meta']['totalPages']);
+
+        // Check links are present
+        $this->assertArrayHasKey('self', $responseBody['links']);
+        $this->assertArrayHasKey('first', $responseBody['links']);
+        $this->assertArrayHasKey('last', $responseBody['links']);
+        $this->assertArrayHasKey('next', $responseBody['links']);
+        $this->assertArrayHasKey('prev', $responseBody['links']);
+
+        // Check headers
+        $this->assertSame('10', $this->response->getHeaderLine('X-Total-Count'));
+        $this->assertNotEmpty($this->response->getHeaderLine('Link'));
+    }
+
+    public function testPaginateWithTransformerEmptyData(): void
+    {
+        $data = [];
+
+        $model = $this->createMockModelWithPager($data, 1, 20, 0, 0);
+
+        $controller = $this->makeController('/api/items');
+
+        $this->invoke($controller, 'paginate', [$model, 20, TestTransformer::class]);
+
+        $responseBody = json_decode($this->response->getBody(), true);
+
+        // Check that data is empty array
+        $this->assertArrayHasKey('data', $responseBody);
+        $this->assertSame([], $responseBody['data']);
+
+        // Meta should show no results
+        $this->assertSame(0, $responseBody['meta']['total']);
+        $this->assertSame(0, $responseBody['meta']['totalPages']);
     }
 }

@@ -155,14 +155,14 @@ final class CookieTest extends CIUnitTestCase
         // expires => 0
         $cookie = new Cookie('test', 'value');
         $this->assertSame(0, $cookie->getExpiresTimestamp());
-        $this->assertSame('Thu, 01-Jan-1970 00:00:00 GMT', $cookie->getExpiresString());
+        $this->assertSame('Thu, 01 Jan 1970 00:00:00 GMT', $cookie->getExpiresString());
         $this->assertTrue($cookie->isExpired());
         $this->assertSame(0, $cookie->getMaxAge());
 
         $date   = new DateTimeImmutable('2021-01-10 00:00:00 GMT', new DateTimeZone('UTC'));
         $cookie = new Cookie('test', 'value', ['expires' => $date]);
         $this->assertSame((int) $date->format('U'), $cookie->getExpiresTimestamp());
-        $this->assertSame('Sun, 10-Jan-2021 00:00:00 GMT', $cookie->getExpiresString());
+        $this->assertSame('Sun, 10 Jan 2021 00:00:00 GMT', $cookie->getExpiresString());
     }
 
     /**
@@ -272,7 +272,7 @@ final class CookieTest extends CIUnitTestCase
             $a->toHeaderString(),
         );
         $this->assertSame(
-            "cookie=monster; Expires=Sun, 14-Feb-2021 00:00:00 GMT; Max-Age={$max}; Path=/web; Domain=localhost; HttpOnly; SameSite=Lax",
+            "cookie=monster; Expires=Sun, 14 Feb 2021 00:00:00 GMT; Max-Age={$max}; Path=/web; Domain=localhost; HttpOnly; SameSite=Lax",
             (string) $b,
         );
         $this->assertSame(
@@ -280,7 +280,7 @@ final class CookieTest extends CIUnitTestCase
             (string) $c,
         );
         $this->assertSame(
-            'cookie=deleted; Expires=Thu, 01-Jan-1970 00:00:00 GMT; Max-Age=0; Path=/; HttpOnly; SameSite=Lax',
+            'cookie=deleted; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Max-Age=0; Path=/; HttpOnly; SameSite=Lax',
             (string) $d,
         );
 

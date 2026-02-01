@@ -14,11 +14,13 @@ declare(strict_types=1);
 namespace CodeIgniter\Security;
 
 use CodeIgniter\Config\Factories;
+use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Security\Exceptions\SecurityException;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
 use CodeIgniter\Test\Mock\MockSecurity;
@@ -38,9 +40,9 @@ final class SecurityTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $_COOKIE = [];
-
         $this->resetServices();
+
+        Services::injectMock('superglobals', new Superglobals(null, null, null, []));
     }
 
     private static function createMockSecurity(SecurityConfig $config = new SecurityConfig()): MockSecurity
@@ -72,7 +74,7 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testHashIsReadFromCookie(): void
     {
-        $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
+        service('superglobals')->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
 
         $security = $this->createMockSecurity();
 
@@ -86,7 +88,7 @@ final class SecurityTest extends CIUnitTestCase
     {
         $security = $this->createMockSecurity();
 
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $security->verify(new Request(new MockAppConfig()));
 
@@ -96,21 +98,23 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testGetHashReturnsCSRFCookieWhenGETWithCSRFCookie(): void
     {
-        $_SERVER['REQUEST_METHOD']   = 'GET';
-        $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'GET')
+            ->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
 
         $security = $this->createMockSecurity();
 
         $security->verify(new Request(new MockAppConfig()));
 
-        $this->assertSame($_COOKIE['csrf_cookie_name'], $security->getHash());
+        $this->assertSame('8b9218a55906f9dcc1dc263dce7f005a', $security->getHash());
     }
 
     public function testCSRFVerifyPostThrowsExceptionOnNoMatch(): void
     {
-        $_SERVER['REQUEST_METHOD']   = 'POST';
-        $_POST['csrf_test_name']     = '8b9218a55906f9dcc1dc263dce7f005a';
-        $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005b';
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005a')
+            ->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005b');
 
         $security = $this->createMockSecurity();
         $request  = $this->createIncomingRequest();
@@ -121,10 +125,11 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testCSRFVerifyPostReturnsSelfOnMatch(): void
     {
-        $_SERVER['REQUEST_METHOD']   = 'POST';
-        $_POST['foo']                = 'bar';
-        $_POST['csrf_test_name']     = '8b9218a55906f9dcc1dc263dce7f005a';
-        $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('foo', 'bar')
+            ->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005a')
+            ->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
 
         $security = $this->createMockSecurity();
         $request  = $this->createIncomingRequest();
@@ -132,13 +137,14 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertInstanceOf(Security::class, $security->verify($request));
         $this->assertLogged('info', 'CSRF token verified.');
 
-        $this->assertCount(1, $_POST);
+        $this->assertCount(1, service('superglobals')->getPostArray());
     }
 
     public function testCSRFVerifyHeaderThrowsExceptionOnNoMatch(): void
     {
-        $_SERVER['REQUEST_METHOD']   = 'POST';
-        $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005b';
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005b');
 
         $security = $this->createMockSecurity();
         $request  = $this->createIncomingRequest();
@@ -151,9 +157,10 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testCSRFVerifyHeaderReturnsSelfOnMatch(): void
     {
-        $_SERVER['REQUEST_METHOD']   = 'POST';
-        $_POST['foo']                = 'bar';
-        $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('foo', 'bar')
+            ->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
 
         $security = $this->createMockSecurity();
         $request  = $this->createIncomingRequest();
@@ -163,13 +170,14 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertInstanceOf(Security::class, $security->verify($request));
         $this->assertLogged('info', 'CSRF token verified.');
 
-        $this->assertCount(1, $_POST);
+        $this->assertCount(1, service('superglobals')->getPostArray());
     }
 
     public function testCSRFVerifyJsonThrowsExceptionOnNoMatch(): void
     {
-        $_SERVER['REQUEST_METHOD']   = 'POST';
-        $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005b';
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005b');
 
         $security = $this->createMockSecurity();
         $request  = $this->createIncomingRequest();
@@ -184,8 +192,9 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testCSRFVerifyJsonReturnsSelfOnMatch(): void
     {
-        $_SERVER['REQUEST_METHOD']   = 'POST';
-        $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
 
         $security = $this->createMockSecurity();
         $request  = $this->createIncomingRequest();
@@ -202,8 +211,9 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testCSRFVerifyPutBodyThrowsExceptionOnNoMatch(): void
     {
-        $_SERVER['REQUEST_METHOD']   = 'PUT';
-        $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005b';
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'PUT')
+            ->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005b');
 
         $security = $this->createMockSecurity();
         $request  = $this->createIncomingRequest();
@@ -218,8 +228,9 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testCSRFVerifyPutBodyReturnsSelfOnMatch(): void
     {
-        $_SERVER['REQUEST_METHOD']   = 'PUT';
-        $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'PUT')
+            ->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
 
         $security = $this->createMockSecurity();
         $request  = $this->createIncomingRequest();
@@ -245,9 +256,10 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testRegenerateWithFalseSecurityRegenerateProperty(): void
     {
-        $_SERVER['REQUEST_METHOD']   = 'POST';
-        $_POST['csrf_test_name']     = '8b9218a55906f9dcc1dc263dce7f005a';
-        $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005a')
+            ->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
 
         $config             = new SecurityConfig();
         $config->regenerate = false;
@@ -265,9 +277,10 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testRegenerateWithFalseSecurityRegeneratePropertyManually(): void
     {
-        $_SERVER['REQUEST_METHOD']   = 'POST';
-        $_POST['csrf_test_name']     = '8b9218a55906f9dcc1dc263dce7f005a';
-        $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005a')
+            ->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
 
         $config             = new SecurityConfig();
         $config->regenerate = false;
@@ -286,9 +299,10 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testRegenerateWithTrueSecurityRegenerateProperty(): void
     {
-        $_SERVER['REQUEST_METHOD']   = 'POST';
-        $_POST['csrf_test_name']     = '8b9218a55906f9dcc1dc263dce7f005a';
-        $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005a')
+            ->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
 
         $config             = new SecurityConfig();
         $config->regenerate = true;
@@ -317,16 +331,15 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testGetPostedTokenReturnsTokenFromPost(): void
     {
-        $_POST['csrf_test_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
-        $request                 = $this->createIncomingRequest();
-        $method                  = self::getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
+        service('superglobals')->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005a');
+        $request = $this->createIncomingRequest();
+        $method  = self::getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
 
         $this->assertSame('8b9218a55906f9dcc1dc263dce7f005a', $method($request));
     }
 
     public function testGetPostedTokenReturnsTokenFromHeader(): void
     {
-        $_POST   = [];
         $request = $this->createIncomingRequest()->setHeader('X-CSRF-TOKEN', '8b9218a55906f9dcc1dc263dce7f005a');
         $method  = self::getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
 
@@ -335,7 +348,6 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testGetPostedTokenReturnsTokenFromJsonBody(): void
     {
-        $_POST    = [];
         $jsonBody = json_encode(['csrf_test_name' => '8b9218a55906f9dcc1dc263dce7f005a']);
         $request  = $this->createIncomingRequest()->setBody($jsonBody);
         $method   = self::getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
@@ -345,7 +357,6 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testGetPostedTokenReturnsTokenFromFormBody(): void
     {
-        $_POST    = [];
         $formBody = 'csrf_test_name=8b9218a55906f9dcc1dc263dce7f005a';
         $request  = $this->createIncomingRequest()->setBody($formBody);
         $method   = self::getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');

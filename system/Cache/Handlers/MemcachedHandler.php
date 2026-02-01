@@ -57,22 +57,7 @@ class MemcachedHandler extends BaseHandler
         $this->config = array_merge($this->config, $config->memcached);
     }
 
-    /**
-     * Closes the connection to Memcache(d) if present.
-     */
-    public function __destruct()
-    {
-        if ($this->memcached instanceof Memcached) {
-            $this->memcached->quit();
-        } elseif ($this->memcached instanceof Memcache) {
-            $this->memcached->close();
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function initialize()
+    public function initialize(): void
     {
         try {
             if (class_exists(Memcached::class)) {
@@ -116,10 +101,7 @@ class MemcachedHandler extends BaseHandler
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function get(string $key)
+    public function get(string $key): mixed
     {
         $data = [];
         $key  = static::validateKey($key, $this->prefix);
@@ -144,10 +126,7 @@ class MemcachedHandler extends BaseHandler
         return is_array($data) ? $data[0] : $data;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function save(string $key, $value, int $ttl = 60)
+    public function save(string $key, mixed $value, int $ttl = 60): bool
     {
         $key = static::validateKey($key, $this->prefix);
 
@@ -170,30 +149,19 @@ class MemcachedHandler extends BaseHandler
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function delete(string $key)
+    public function delete(string $key): bool
     {
         $key = static::validateKey($key, $this->prefix);
 
         return $this->memcached->delete($key);
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @return never
-     */
-    public function deleteMatching(string $pattern)
+    public function deleteMatching(string $pattern): never
     {
         throw new BadMethodCallException('The deleteMatching method is not implemented for Memcached. You must select File, Redis or Predis handlers to use it.');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function increment(string $key, int $offset = 1)
+    public function increment(string $key, int $offset = 1): false|int
     {
         if (! $this->config['raw']) {
             return false;
@@ -204,10 +172,7 @@ class MemcachedHandler extends BaseHandler
         return $this->memcached->increment($key, $offset, $offset, 60);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function decrement(string $key, int $offset = 1)
+    public function decrement(string $key, int $offset = 1): false|int
     {
         if (! $this->config['raw']) {
             return false;
@@ -220,33 +185,24 @@ class MemcachedHandler extends BaseHandler
         return $this->memcached->decrement($key, $offset, $offset, 60);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function clean()
+    public function clean(): bool
     {
         return $this->memcached->flush();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getCacheInfo()
+    public function getCacheInfo(): array|false
     {
         return $this->memcached->getStats();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getMetaData(string $key)
+    public function getMetaData(string $key): ?array
     {
         $key    = static::validateKey($key, $this->prefix);
         $stored = $this->memcached->get($key);
 
         // if not an array, don't try to count for PHP7.2
         if (! is_array($stored) || count($stored) !== 3) {
-            return false; // @TODO This will return null in a future release
+            return null;
         }
 
         [$data, $time, $limit] = $stored;
@@ -258,11 +214,50 @@ class MemcachedHandler extends BaseHandler
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function isSupported(): bool
     {
         return extension_loaded('memcached') || extension_loaded('memcache');
+    }
+
+    public function ping(): bool
+    {
+        $version = $this->memcached->getVersion();
+
+        if ($this->memcached instanceof Memcached) {
+            // Memcached extension returns array with server:port => version
+            if (! is_array($version)) {
+                return false;
+            }
+
+            $serverKey = $this->config['host'] . ':' . $this->config['port'];
+
+            return isset($version[$serverKey]) && $version[$serverKey] !== false;
+        }
+
+        if ($this->memcached instanceof Memcache) {
+            // Memcache extension returns string version
+            return is_string($version) && $version !== '';
+        }
+
+        return false;
+    }
+
+    public function reconnect(): bool
+    {
+        if ($this->memcached instanceof Memcached) {
+            $this->memcached->quit();
+        } elseif ($this->memcached instanceof Memcache) {
+            $this->memcached->close();
+        }
+
+        try {
+            $this->initialize();
+
+            return true;
+        } catch (CriticalError $e) {
+            log_message('error', 'Cache: Memcached reconnection failed: ' . $e->getMessage());
+
+            return false;
+        }
     }
 }

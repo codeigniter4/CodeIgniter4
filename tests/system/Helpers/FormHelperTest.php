@@ -13,12 +13,15 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Helpers;
 
+use CodeIgniter\Config\Services as CodeIgniterServices;
 use CodeIgniter\HTTP\SiteURI;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\DocTypes;
 use Config\Filters;
 use Config\Services;
+use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
@@ -27,6 +30,7 @@ use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 /**
  * @internal
  */
+#[BackupGlobals(true)]
 #[Group('SeparateProcess')]
 final class FormHelperTest extends CIUnitTestCase
 {
@@ -36,6 +40,10 @@ final class FormHelperTest extends CIUnitTestCase
         $this->resetServices();
 
         parent::setUp();
+
+        $_POST = $_GET = [];
+
+        CodeIgniterServices::injectMock('superglobals', new Superglobals());
 
         helper('form');
     }
@@ -573,9 +581,9 @@ final class FormHelperTest extends CIUnitTestCase
             </optgroup>
             </select>\n
             EOH;
-        $_POST['cars'] = 'audi';
+        service('superglobals')->setPost('cars', 'audi');
         $this->assertSame($expected, form_dropdown('cars', $options));
-        unset($_POST['cars']);
+        service('superglobals')->unsetPost('cars');
     }
 
     public function testFormDropdownWithSelectedAttribute(): void
@@ -975,7 +983,7 @@ final class FormHelperTest extends CIUnitTestCase
     #[RunInSeparateProcess]
     public function testSetRadioFromPost(): void
     {
-        $_POST['bar'] = 'baz';
+        service('superglobals')->setPost('bar', 'baz');
 
         $this->assertSame(' checked="checked"', set_radio('bar', 'baz'));
         $this->assertSame('', set_radio('bar', 'boop'));
@@ -986,12 +994,12 @@ final class FormHelperTest extends CIUnitTestCase
     #[RunInSeparateProcess]
     public function testSetRadioFromPostWithValueZero(): void
     {
-        $_POST['bar'] = '0';
+        service('superglobals')->setPost('bar', '0');
 
         $this->assertSame(' checked="checked"', set_radio('bar', '0'));
         $this->assertSame('', set_radio('bar', 'boop'));
 
-        $_POST = [];
+        service('superglobals')->setPostArray([]);
 
         $this->assertSame(' checked="checked"', set_radio('bar', '0', true));
     }
@@ -1033,7 +1041,6 @@ final class FormHelperTest extends CIUnitTestCase
     public function testSetRadioDefault(): void
     {
         $_SESSION = [];
-        $_POST    = [];
 
         $this->assertSame(' checked="checked"', set_radio('code', 'alpha', true));
         $this->assertSame('', set_radio('code', 'beta', false));

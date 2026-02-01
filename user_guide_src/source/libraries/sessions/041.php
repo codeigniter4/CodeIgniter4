@@ -3,12 +3,12 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
-use CodeIgniter\Session\Handlers\FileHandler;
+use CodeIgniter\Session\Handlers\RedisHandler;
 
 class Session extends BaseConfig
 {
     // ...
-    public string $driver = 'CodeIgniter\Session\Handlers\RedisHandler';
+    public string $driver = RedisHandler::class;
 
     // ...
     public string $savePath = 'tcp://localhost:6379';

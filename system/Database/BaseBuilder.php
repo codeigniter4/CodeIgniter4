@@ -947,8 +947,8 @@ class BaseBuilder
      * @used-by whereNotIn()
      * @used-by orWhereNotIn()
      *
-     * @param non-empty-string|null                                      $key
-     * @param array|BaseBuilder|(Closure(BaseBuilder): BaseBuilder)|null $values The values searched on, or anonymous function with subquery
+     * @param non-empty-string|null                                            $key
+     * @param BaseBuilder|(Closure(BaseBuilder): BaseBuilder)|list<mixed>|null $values The values searched on, or anonymous function with subquery
      *
      * @return $this
      *

@@ -44,6 +44,9 @@ $RECYCLE.BIN/
 .env
 .vagrant
 Vagrantfile
+user_guide_src/venv/
+.python-version
+user_guide_src/.python-version
 
 #-------------------------
 # Temporary Files

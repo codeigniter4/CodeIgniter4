@@ -88,7 +88,7 @@ if (! function_exists('get_cookie')) {
         }
 
         $request = service('request');
-        $filter  = $xssClean ? FILTER_SANITIZE_FULL_SPECIAL_CHARS : FILTER_DEFAULT;
+        $filter  = $xssClean ? FILTER_SANITIZE_FULL_SPECIAL_CHARS : FILTER_UNSAFE_RAW;
 
         return $request->getCookie($prefix . $index, $filter);
     }

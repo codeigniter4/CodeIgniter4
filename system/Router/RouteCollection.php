@@ -1637,7 +1637,7 @@ class RouteCollection implements RouteCollectionInterface
         }
 
         if ($this->currentSubdomain === null) {
-            $this->currentSubdomain = $this->determineCurrentSubdomain();
+            $this->currentSubdomain = parse_subdomain($this->httpHost);
         }
 
         if (! is_array($subdomains)) {
@@ -1651,50 +1651,6 @@ class RouteCollection implements RouteCollectionInterface
         }
 
         return in_array($this->currentSubdomain, $subdomains, true);
-    }
-
-    /**
-     * Examines the HTTP_HOST to get the best match for the subdomain. It
-     * won't be perfect, but should work for our needs.
-     *
-     * It's especially not perfect since it's possible to register a domain
-     * with a period (.) as part of the domain name.
-     *
-     * @return false|string the subdomain
-     */
-    private function determineCurrentSubdomain()
-    {
-        // We have to ensure that a scheme exists
-        // on the URL else parse_url will mis-interpret
-        // 'host' as the 'path'.
-        $url = $this->httpHost;
-        if (! str_starts_with($url, 'http')) {
-            $url = 'http://' . $url;
-        }
-
-        $parsedUrl = parse_url($url);
-
-        $host = explode('.', $parsedUrl['host']);
-
-        if ($host[0] === 'www') {
-            unset($host[0]);
-        }
-
-        // Get rid of any domains, which will be the last
-        unset($host[count($host) - 1]);
-
-        // Account for .co.uk, .co.nz, etc. domains
-        if (end($host) === 'co') {
-            $host = array_slice($host, 0, -1);
-        }
-
-        // If we only have 1 part left, then we don't have a sub-domain.
-        if (count($host) === 1) {
-            // Set it to false so we don't make it back here again.
-            return false;
-        }
-
-        return array_shift($host);
     }
 
     /**

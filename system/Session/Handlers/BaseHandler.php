@@ -19,7 +19,7 @@ use Psr\Log\LoggerAwareTrait;
 use SessionHandlerInterface;
 
 /**
- * Base class for session handling
+ * Base class for session handling.
  */
 abstract class BaseHandler implements SessionHandlerInterface
 {
@@ -40,7 +40,7 @@ abstract class BaseHandler implements SessionHandlerInterface
     protected $lock = false;
 
     /**
-     * Cookie prefix
+     * Cookie prefix.
      *
      * The Config\Cookie::$prefix setting is completely ignored.
      * See https://codeigniter.com/user_guide/libraries/sessions.html#session-preferences
@@ -50,14 +50,14 @@ abstract class BaseHandler implements SessionHandlerInterface
     protected $cookiePrefix = '';
 
     /**
-     * Cookie domain
+     * Cookie domain.
      *
      * @var string
      */
     protected $cookieDomain = '';
 
     /**
-     * Cookie path
+     * Cookie path.
      *
      * @var string
      */
@@ -71,7 +71,7 @@ abstract class BaseHandler implements SessionHandlerInterface
     protected $cookieSecure = false;
 
     /**
-     * Cookie name to use
+     * Cookie name to use.
      *
      * @var string
      */
@@ -85,7 +85,7 @@ abstract class BaseHandler implements SessionHandlerInterface
     protected $matchIP = false;
 
     /**
-     * Current session ID
+     * Current session ID.
      *
      * @var string|null
      */
@@ -93,9 +93,9 @@ abstract class BaseHandler implements SessionHandlerInterface
 
     /**
      * The 'save path' for the session
-     * varies between
+     * varies between.
      *
-     * @var array|string
+     * @var array<string, mixed>|string
      */
     protected $savePath;
 

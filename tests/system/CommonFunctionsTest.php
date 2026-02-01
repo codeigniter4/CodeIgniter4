@@ -15,6 +15,7 @@ namespace CodeIgniter;
 
 use CodeIgniter\Config\BaseService;
 use CodeIgniter\Config\Factories;
+use CodeIgniter\Config\Services as CodeIgniterServices;
 use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
@@ -67,6 +68,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->resetServices();
 
         parent::setUp();
+
+        CodeIgniterServices::injectMock('superglobals', new Superglobals());
     }
 
     public function testStringifyAttributes(): void
@@ -103,7 +106,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testEnvGetsFromSERVER(): void
     {
-        $_SERVER['foo'] = 'bar';
+        service('superglobals')->setServer('foo', 'bar');
 
         $this->assertSame('bar', env('foo', 'baz'));
     }
@@ -135,7 +138,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testRedirectReturnsRedirectResponse(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $response = $this->createMock(Response::class);
         Services::injectMock('response', $response);
@@ -425,7 +428,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
     {
         $this->injectSessionMock();
         // setup from RedirectResponseTest...
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $this->config          = new App();
         $this->config->baseURL = 'http://example.com/';
@@ -437,12 +440,13 @@ final class CommonFunctionsTest extends CIUnitTestCase
         Services::injectMock('request', $this->request);
 
         // setup & ask for a redirect...
-        $_SESSION = [];
-        $_GET     = ['foo' => 'bar'];
-        $_POST    = [
+        $_SESSION     = [];
+        $superglobals = service('superglobals');
+        $superglobals->setGetArray(['foo' => 'bar']);
+        $superglobals->setPostArray([
             'bar'    => 'baz',
             'zibble' => 'fritz',
-        ];
+        ]);
 
         $response = new RedirectResponse(new App());
         $response->withInput();
@@ -459,7 +463,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
     {
         $this->injectSessionMock();
         // setup from RedirectResponseTest...
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $this->config          = new App();
         $this->config->baseURL = 'http://example.com/';
@@ -471,11 +475,12 @@ final class CommonFunctionsTest extends CIUnitTestCase
         Services::injectMock('request', $this->request);
 
         // setup & ask for a redirect...
-        $_SESSION = [];
-        $_GET     = [];
-        $_POST    = [
+        $_SESSION     = [];
+        $superglobals = service('superglobals');
+        $superglobals->setGetArray([]);
+        $superglobals->setPostArray([
             'zibble' => serialize('fritz'),
-        ];
+        ]);
 
         $response = new RedirectResponse(new App());
         $response->withInput();
@@ -494,7 +499,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
     {
         $this->injectSessionMock();
         // setup from RedirectResponseTest...
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $this->config          = new App();
         $this->config->baseURL = 'http://example.com/';
@@ -512,9 +517,10 @@ final class CommonFunctionsTest extends CIUnitTestCase
         ];
 
         // setup & ask for a redirect...
-        $_SESSION = [];
-        $_GET     = [];
-        $_POST    = ['location' => $locations];
+        $_SESSION     = [];
+        $superglobals = service('superglobals');
+        $superglobals->setGetArray([]);
+        $superglobals->setPostArray(['location' => $locations]);
 
         $response = new RedirectResponse(new App());
         $response->withInput();
@@ -804,5 +810,15 @@ final class CommonFunctionsTest extends CIUnitTestCase
         is_windows();
         $this->assertSame(str_contains(php_uname(), 'Windows'), is_windows());
         $this->assertSame(defined('PHP_WINDOWS_VERSION_MAJOR'), is_windows());
+    }
+
+    public function testRenderBacktrace(): void
+    {
+        $trace   = (new RuntimeException('Test exception'))->getTrace();
+        $renders = explode("\n", render_backtrace($trace));
+
+        foreach ($renders as $render) {
+            $this->assertMatchesRegularExpression('/^\s*\d* .+(?:\(\d+\))?: \S+(?:(?:\->|::)\S+)?\(.*\)$/', $render);
+        }
     }
 }
