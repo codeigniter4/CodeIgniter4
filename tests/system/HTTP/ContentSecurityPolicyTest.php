@@ -118,6 +118,48 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertContains("style-src 'self'", $directives);
     }
 
+    public function testKeywordSourcesAreEnclosedInSingleQuotes(): void
+    {
+        // clear directives set by config
+        $this->csp->clearDirective('child-src');
+        $this->csp->clearDirective('form-action');
+        $this->csp->clearDirective('img-src');
+        $this->csp->clearDirective('object-src');
+        $this->csp->clearDirective('script-src');
+        $this->csp->clearDirective('style-src');
+
+        $this->csp->addBaseURI('self');
+        $this->csp->addChildSrc('none');
+        $this->csp->addFontSrc('unsafe-inline');
+        $this->csp->addFormAction('unsafe-eval');
+        $this->csp->addFrameAncestor('strict-dynamic');
+        $this->csp->addFrameSrc('report-sample');
+        $this->csp->addImageSrc('wasm-unsafe-eval');
+        $this->csp->addMediaSrc('unsafe-allow-redirects');
+        $this->csp->addManifestSrc('trusted-types-eval');
+        $this->csp->addObjectSrc('report-sha256');
+        $this->csp->addScriptSrc('report-sha384');
+        $this->csp->addStyleSrc('report-sha512');
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+
+        $directives = $this->getCspDirectives($header);
+        $this->assertContains("base-uri 'self'", $directives);
+        $this->assertContains("child-src 'none'", $directives);
+        $this->assertContains("font-src 'unsafe-inline'", $directives);
+        $this->assertContains("form-action 'unsafe-eval'", $directives);
+        $this->assertContains("frame-ancestors 'strict-dynamic'", $directives);
+        $this->assertContains("frame-src 'report-sample'", $directives);
+        $this->assertContains("img-src 'wasm-unsafe-eval'", $directives);
+        $this->assertContains("media-src 'unsafe-allow-redirects'", $directives);
+        $this->assertContains("manifest-src 'trusted-types-eval'", $directives);
+        $this->assertContains("object-src 'report-sha256'", $directives);
+        $this->assertContains("script-src 'report-sha384'", $directives);
+        $this->assertContains("style-src 'report-sha512'", $directives);
+    }
+
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testConfigSetsListAsDirectivesValues(): void
