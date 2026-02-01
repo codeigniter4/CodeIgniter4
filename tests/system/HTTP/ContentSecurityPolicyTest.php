@@ -378,15 +378,17 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
     #[RunInSeparateProcess]
     public function testScriptSrcElem(): void
     {
-        $this->prepare();
         $this->csp->addScriptSrcElem('cdn.cloudy.com');
         $this->csp->addScriptSrcElem('them.com', true);
-        $result = $this->work();
+        $this->assertTrue($this->work());
 
-        $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString('script-src-elem them.com;', (string) $result);
-        $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("script-src-elem 'self' cdn.cloudy.com;", (string) $result);
+        $header = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
+        $this->assertIsString($header);
+        $this->assertContains('script-src-elem them.com', $this->getCspDirectives($header));
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains("script-src-elem 'self' cdn.cloudy.com", $this->getCspDirectives($header));
     }
 
     #[PreserveGlobalState(false)]

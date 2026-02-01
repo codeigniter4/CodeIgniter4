@@ -42,10 +42,10 @@ class ContentSecurityPolicy
         'object-src'      => 'objectSrc',
         'plugin-types'    => 'pluginTypes',
         'script-src'      => 'scriptSrc',
-        'script-src-elem' => 'scriptSrcElem',
         'style-src'       => 'styleSrc',
-        'manifest-src'    => 'manifestSrc',
         'sandbox'         => 'sandbox',
+        'manifest-src'    => 'manifestSrc',
+        'script-src-elem' => 'scriptSrcElem',
     ];
 
     /**
@@ -155,13 +155,6 @@ class ContentSecurityPolicy
     protected $scriptSrc = [];
 
     /**
-     * Used for security enforcement
-     *
-     * @var array|string
-     */
-    protected $scriptSrcElem = [];
-
-    /**
      * The `style-src` directive restricts which styles the user may applies to the protected resource.
      *
      * @var array<string, bool>|string
@@ -192,6 +185,13 @@ class ContentSecurityPolicy
      * @var array<string, bool>|string
      */
     protected $manifestSrc = [];
+
+    /**
+     * The `script-src-elem` directive applies to all script requests and script blocks.
+     *
+     * @var array<string, bool>|string
+     */
+    protected $scriptSrcElem = [];
 
     /**
      * Instructs user agents to rewrite URL schemes by changing HTTP to HTTPS.
@@ -658,12 +658,11 @@ class ContentSecurityPolicy
     }
 
     /**
-     * Adds a new valid endpoint for javascript file sources. Can be either
-     * a URI class or a simple string.
+     * Adds a new value to the `script-src-elem` directive.
      *
      * @see https://www.w3.org/TR/CSP/#directive-script-src-elem
      *
-     * @param array|string $uri
+     * @param list<string>|string $uri
      *
      * @return $this
      */

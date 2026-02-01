@@ -57,7 +57,7 @@ class ContentSecurityPolicy extends BaseConfig
     public $scriptSrc = 'self';
 
     /**
-     * Lists allowed scripts' URLs.
+     * Specifies valid sources for JavaScript <script> elements.
      *
      * @var list<string>|string
      */
