@@ -49,6 +49,7 @@ class Database extends Config
             'datetime' => 'Y-m-d H:i:s',
             'time'     => 'H:i:s',
         ],
+        'timezone' => false,
     ];
 
     //    /**
@@ -98,6 +99,7 @@ class Database extends Config
     //            'datetime' => 'Y-m-d H:i:s',
     //            'time'     => 'H:i:s',
     //        ],
+    //        'timezone'   => false,
     //    ];
 
     //    /**
@@ -155,6 +157,7 @@ class Database extends Config
     //            'datetime' => 'Y-m-d H:i:s',
     //            'time'     => 'H:i:s',
     //        ],
+    //        'timezone'   => false,
     //    ];
 
     /**

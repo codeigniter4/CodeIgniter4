@@ -191,6 +191,12 @@ Description of Values
                  This can be used since v4.5.0, and you can get the value, e.g., ``$db->dateFormat['datetime']``.
                  Currently, the database drivers do not use these values directly,
                  but :ref:`Model <model-saving-dates>` uses them.
+**timezone**     (``MySQLi``, ``Postgre``, and ``OCI8`` only) The database session timezone.
+                 * ``false``       - Don't set session timezone (default, backward compatible)
+                 * ``true``        - Automatically sync with ``App::$appTimezone``
+                 * ``string``      - Specific timezone offset (e.g., ``'+05:30'``) or named timezone (e.g., ``'America/New_York'``)
+                 Named timezones are automatically converted to offsets for database compatibility.
+                 See :ref:`database-config-timezone` for details.
 ================ ===========================================================================================================
 
 .. _DateTime format: https://www.php.net/manual/en/datetime.format.php
@@ -229,3 +235,21 @@ MySQLi driver accepts an array with the following options:
 * ``ssl_capath`` - Path to a directory containing trusted CA certificates in PEM format
 * ``ssl_cipher`` - List of *allowed* ciphers to be used for the encryption, separated by colons (``:``)
 * ``ssl_verify`` - true/false (boolean) - Whether to verify the server certificate or not
+
+.. _database-config-timezone:
+
+timezone
+--------
+
+.. versionadded:: 4.8.0
+
+Synchronizes the database session timezone with your application timezone to ensure consistent
+timestamps between model operations and database functions like ``NOW()``.
+
+.. note:: Modern database environments usually have UTC set by default, so this option may not be needed
+    in most cases.
+
+Accepts ``false`` (default, don't set), ``true`` (auto-sync with ``App::$appTimezone``),
+or a timezone string (e.g., ``'+05:30'`` or ``'America/New_York'``).
+
+Named timezones are automatically converted to offsets for compatibility.
