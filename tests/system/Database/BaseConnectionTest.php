@@ -385,6 +385,7 @@ final class BaseConnectionTest extends CIUnitTestCase
 
         $result = $this->getPrivateMethodInvoker($db, 'convertTimezoneToOffset')('Invalid/Timezone');
         $this->assertSame('+00:00', $result);
+        $this->assertLogged('error', "Invalid timezone 'Invalid/Timezone'. Falling back to UTC. DateTimeZone::__construct(): Unknown or bad timezone (Invalid/Timezone).");
     }
 
     public function testGetSessionTimezoneWithFalse(): void

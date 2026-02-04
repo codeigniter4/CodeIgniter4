@@ -16,7 +16,6 @@ namespace CodeIgniter\Database\Live;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Database\SQLite3\Connection;
 use CodeIgniter\Exceptions\RuntimeException;
-use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
@@ -188,7 +187,7 @@ final class ConnectTest extends CIUnitTestCase
 
         $appConfig      = config('App');
         $appTimezone    = $appConfig->appTimezone ?? 'UTC';
-        $expectedOffset = $this->convertTimezoneToOffset($appTimezone);
+        $expectedOffset = $this->getPrivateMethodInvoker($db, 'convertTimezoneToOffset')($appTimezone);
 
         $this->assertSame($expectedOffset, $timezone);
     }
@@ -220,23 +219,5 @@ final class ConnectTest extends CIUnitTestCase
             default:
                 throw new RuntimeException("Unsupported driver: {$driver}");
         }
-    }
-
-    /**
-     * Helper method to convert timezone to offset (mirrors BaseConnection logic)
-     */
-    private function convertTimezoneToOffset(string $timezone): string
-    {
-        if (preg_match('/^[+-]\d{2}:\d{2}$/', $timezone)) {
-            return $timezone;
-        }
-
-        $time   = Time::now($timezone);
-        $offset = $time->getOffset();
-
-        $hours   = (int) ($offset / 3600);
-        $minutes = abs((int) (($offset % 3600) / 60));
-
-        return sprintf('%+03d:%02d', $hours, $minutes);
     }
 }

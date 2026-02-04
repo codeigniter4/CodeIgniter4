@@ -1959,7 +1959,7 @@ abstract class BaseConnection implements ConnectionInterface
             return sprintf('%+03d:%02d', $hours, $minutes);
         } catch (Exception $e) {
             // If timezone conversion fails, log and return UTC
-            log_message('error', "Invalid timezone '{$timezone}': {$e->getMessage()}. Falling back to UTC.");
+            log_message('error', "Invalid timezone '{$timezone}'. Falling back to UTC. {$e->getMessage()}.");
 
             return '+00:00';
         }
