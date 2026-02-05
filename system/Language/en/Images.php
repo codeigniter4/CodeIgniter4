@@ -21,7 +21,7 @@ return [
     'pngNotSupported'        => 'PNG images are not supported.',
     'webpNotSupported'       => 'WEBP images are not supported.',
     'fileNotSupported'       => 'The supplied file is not a supported image type.',
-    'unsupportedImageCreate' => 'Your server does not support the GD function required to process this type of image.',
+    'unsupportedImageCreate' => 'Your server does not support the required functionality to process this type of image.',
     'jpgOrPngRequired'       => 'The image resize protocol specified in your preferences only works with JPEG or PNG image types.',
     'rotateUnsupported'      => 'Image rotation does not appear to be supported by your server.',
     'imageProcessFailed'     => 'Image processing failed. Please verify that your server supports the chosen protocol and that the path to your image library is correct.',

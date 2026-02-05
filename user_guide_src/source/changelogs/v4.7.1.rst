@@ -18,6 +18,8 @@ BREAKING
 Message Changes
 ***************
 
+- Updated ``Images.unsupportedImageCreate``.
+
 *******
 Changes
 *******
