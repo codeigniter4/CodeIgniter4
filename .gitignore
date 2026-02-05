@@ -44,45 +44,45 @@ $RECYCLE.BIN/
 .env
 .vagrant
 Vagrantfile
-user_guide_src/venv/
+/user_guide_src/venv/
 .python-version
-user_guide_src/.python-version
+/user_guide_src/.python-version
 
 #-------------------------
 # Temporary Files
 #-------------------------
-writable/cache/*
-!writable/cache/index.html
+/writable/cache/*
+!/writable/cache/index.html
 
-writable/logs/*
-!writable/logs/index.html
+/writable/logs/*
+!/writable/logs/index.html
 
-writable/session/*
-!writable/session/index.html
+/writable/session/*
+!/writable/session/index.html
 
-writable/uploads/*
-!writable/uploads/index.html
+/writable/uploads/*
+!/writable/uploads/index.html
 
-writable/debugbar/*
-!writable/debugbar/index.html
+/writable/debugbar/*
+!/writable/debugbar/index.html
 
-writable/**/*.db
-writable/**/*.sqlite
+/writable/**/*.db
+/writable/**/*.sqlite
 
 php_errors.log
 
 #-------------------------
 # User Guide Temp Files
 #-------------------------
-user_guide_src/build/*
+/user_guide_src/build/*
 
 #-------------------------
 # Test Files
 #-------------------------
-tests/coverage*
+/tests/coverage*
 
 # Don't save phpunit under version control.
-phpunit
+/phpunit
 
 #-------------------------
 # Composer
