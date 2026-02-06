@@ -281,5 +281,7 @@ deptrac:
       - CodeIgniter\Pager\PagerInterface
     CodeIgniter\HTTP\DownloadResponse:
       - CodeIgniter\Pager\PagerInterface
+    CodeIgniter\HTTP\SSEResponse:
+      - CodeIgniter\Pager\PagerInterface
     CodeIgniter\Validation\Validation:
       - CodeIgniter\View\RendererInterface
