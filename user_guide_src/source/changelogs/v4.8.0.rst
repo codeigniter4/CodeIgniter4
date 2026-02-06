@@ -51,6 +51,8 @@ Forge
 Others
 ------
 
+- Added new ``timezone`` option to connection array in ``Config\Database`` config. This ensures consistent timestamps between model operations and database functions like ``NOW()``. Supported drivers: **MySQLi**, **Postgre**, and **OCI8**. See :ref:`database-config-timezone` for details.
+
 Model
 =====
 

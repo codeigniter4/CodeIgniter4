@@ -15,6 +15,7 @@ namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Database\SQLite3\Connection;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
@@ -132,5 +133,91 @@ final class ConnectTest extends CIUnitTestCase
         $this->assertSame($originalDebugValue, self::getPrivateProperty($firstSharedDb, 'DBDebug'));
         $this->assertSame($originalDebugValue, self::getPrivateProperty($secondSharedDb, 'DBDebug'));
         $this->assertSame(! $originalDebugValue, self::getPrivateProperty($nonSharedDb, 'DBDebug'));
+    }
+
+    public function testTimezoneSetWithSpecificOffset(): void
+    {
+        $config             = $this->tests;
+        $config['timezone'] = '+05:30';
+        $driver             = $config['DBDriver'];
+
+        if (in_array($driver, ['SQLite3', 'SQLSRV'], true)) {
+            $this->markTestSkipped("Driver {$driver} does not support session timezone");
+        }
+
+        $db = Database::connect($config, false);
+
+        $timezone = $this->getDatabaseTimezone($db, $driver);
+
+        $this->assertSame('+05:30', $timezone);
+    }
+
+    public function testTimezoneSetWithNamedTimezone(): void
+    {
+        $config             = $this->tests;
+        $config['timezone'] = 'America/New_York';
+        $driver             = $config['DBDriver'];
+
+        if (in_array($driver, ['SQLite3', 'SQLSRV'], true)) {
+            $this->markTestSkipped("Driver {$driver} does not support session timezone");
+        }
+
+        $db = Database::connect($config, false);
+
+        $timezone = $this->getDatabaseTimezone($db, $driver);
+
+        // Named timezones are converted to offsets
+        // America/New_York is either -05:00 (EST) or -04:00 (EDT)
+        $this->assertContains($timezone, ['-05:00', '-04:00']);
+    }
+
+    public function testTimezoneAutoSyncWithAppTimezone(): void
+    {
+        $config             = $this->tests;
+        $config['timezone'] = true;
+        $driver             = $config['DBDriver'];
+
+        if (in_array($driver, ['SQLite3', 'SQLSRV'], true)) {
+            $this->markTestSkipped("Driver {$driver} does not support session timezone");
+        }
+
+        $db = Database::connect($config, false);
+
+        $timezone = $this->getDatabaseTimezone($db, $driver);
+
+        $appConfig      = config('App');
+        $appTimezone    = $appConfig->appTimezone ?? 'UTC';
+        $expectedOffset = $this->getPrivateMethodInvoker($db, 'convertTimezoneToOffset')($appTimezone);
+
+        $this->assertSame($expectedOffset, $timezone);
+    }
+
+    /**
+     * Helper method to get database timezone based on driver
+     *
+     * @param mixed $db
+     */
+    private function getDatabaseTimezone($db, string $driver): string
+    {
+        switch ($driver) {
+            case 'MySQLi':
+                $result = $db->query('SELECT @@session.time_zone as tz')->getRow();
+
+                return $result->tz;
+
+            case 'Postgre':
+                $result = $db->query('SHOW TIME ZONE')->getRow();
+
+                // PostgreSQL returns the timezone name, but we set it as offset
+                return $result->timezone ?? $result->TimeZone;
+
+            case 'OCI8':
+                $result = $db->query('SELECT SESSIONTIMEZONE as tz FROM DUAL')->getRow();
+
+                return $result->tz ?? $result->TZ;
+
+            default:
+                throw new RuntimeException("Unsupported driver: {$driver}");
+        }
     }
 }

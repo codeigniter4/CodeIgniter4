@@ -345,4 +345,94 @@ final class BaseConnectionTest extends CIUnitTestCase
             'with dots' => ['com.sitedb.web', '"com.sitedb.web"'],
         ];
     }
+
+    public function testConvertTimezoneToOffsetWithOffset(): void
+    {
+        $db = new MockConnection($this->options);
+
+        // Offset strings should be returned as-is
+        $result = $this->getPrivateMethodInvoker($db, 'convertTimezoneToOffset')('+05:30');
+        $this->assertSame('+05:30', $result);
+
+        $result = $this->getPrivateMethodInvoker($db, 'convertTimezoneToOffset')('-08:00');
+        $this->assertSame('-08:00', $result);
+
+        $result = $this->getPrivateMethodInvoker($db, 'convertTimezoneToOffset')('+00:00');
+        $this->assertSame('+00:00', $result);
+    }
+
+    public function testConvertTimezoneToOffsetWithNamedTimezone(): void
+    {
+        $db = new MockConnection($this->options);
+
+        // UTC should always be +00:00
+        $result = $this->getPrivateMethodInvoker($db, 'convertTimezoneToOffset')('UTC');
+        $this->assertSame('+00:00', $result);
+
+        $result = $this->getPrivateMethodInvoker($db, 'convertTimezoneToOffset')('America/New_York');
+        $this->assertContains($result, ['-05:00', '-04:00']); // EST/EDT
+
+        $result = $this->getPrivateMethodInvoker($db, 'convertTimezoneToOffset')('Europe/Paris');
+        $this->assertContains($result, ['+01:00', '+02:00']); // CET/CEST
+
+        $result = $this->getPrivateMethodInvoker($db, 'convertTimezoneToOffset')('Asia/Tokyo');
+        $this->assertSame('+09:00', $result); // JST (no DST)
+    }
+
+    public function testConvertTimezoneToOffsetWithInvalidTimezone(): void
+    {
+        $db = new MockConnection($this->options);
+
+        $result = $this->getPrivateMethodInvoker($db, 'convertTimezoneToOffset')('Invalid/Timezone');
+        $this->assertSame('+00:00', $result);
+        $this->assertLogged('error', "Invalid timezone 'Invalid/Timezone'. Falling back to UTC. DateTimeZone::__construct(): Unknown or bad timezone (Invalid/Timezone).");
+    }
+
+    public function testGetSessionTimezoneWithFalse(): void
+    {
+        $options             = $this->options;
+        $options['timezone'] = false;
+        $db                  = new MockConnection($options);
+
+        $result = $this->getPrivateMethodInvoker($db, 'getSessionTimezone')();
+        $this->assertNull($result);
+    }
+
+    public function testGetSessionTimezoneWithTrue(): void
+    {
+        $options             = $this->options;
+        $options['timezone'] = true;
+        $db                  = new MockConnection($options);
+
+        $result = $this->getPrivateMethodInvoker($db, 'getSessionTimezone')();
+        $this->assertSame('+00:00', $result); // UTC = +00:00
+    }
+
+    public function testGetSessionTimezoneWithSpecificOffset(): void
+    {
+        $options             = $this->options;
+        $options['timezone'] = '+05:30';
+        $db                  = new MockConnection($options);
+
+        $result = $this->getPrivateMethodInvoker($db, 'getSessionTimezone')();
+        $this->assertSame('+05:30', $result);
+    }
+
+    public function testGetSessionTimezoneWithSpecificNamedTimezone(): void
+    {
+        $options             = $this->options;
+        $options['timezone'] = 'America/Chicago';
+        $db                  = new MockConnection($options);
+
+        $result = $this->getPrivateMethodInvoker($db, 'getSessionTimezone')();
+        $this->assertContains($result, ['-06:00', '-05:00']);
+    }
+
+    public function testGetSessionTimezoneWithoutTimezoneKey(): void
+    {
+        $db = new MockConnection($this->options);
+
+        $result = $this->getPrivateMethodInvoker($db, 'getSessionTimezone')();
+        $this->assertNull($result);
+    }
 }

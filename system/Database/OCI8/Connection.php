@@ -145,9 +145,19 @@ class Connection extends BaseConnection
 
         $func = $persistent ? 'oci_pconnect' : 'oci_connect';
 
-        return ($this->charset === '')
+        $this->connID = ($this->charset === '')
             ? $func($this->username, $this->password, $this->DSN)
             : $func($this->username, $this->password, $this->DSN, $this->charset);
+
+        // Set session timezone if configured and connection is successful
+        if ($this->connID !== false) {
+            $timezoneOffset = $this->getSessionTimezone();
+            if ($timezoneOffset !== null) {
+                $this->simpleQuery("ALTER SESSION SET TIME_ZONE = '{$timezoneOffset}'");
+            }
+        }
+
+        return $this->connID;
     }
 
     /**

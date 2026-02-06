@@ -97,6 +97,12 @@ class Connection extends BaseConnection
 
                 throw new DatabaseException($error);
             }
+
+            // Set session timezone if configured
+            $timezoneOffset = $this->getSessionTimezone();
+            if ($timezoneOffset !== null) {
+                $this->simpleQuery("SET TIME ZONE '{$timezoneOffset}'");
+            }
         }
 
         return $this->connID;

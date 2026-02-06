@@ -16,6 +16,8 @@ namespace CodeIgniter\Database;
 use Closure;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Events\Events;
+use CodeIgniter\I18n\Time;
+use Exception;
 use stdClass;
 use Stringable;
 use Throwable;
@@ -155,6 +157,20 @@ abstract class BaseConnection implements ConnectionInterface
      * @var string
      */
     protected $DBCollat = '';
+
+    /**
+     * Database session timezone
+     *
+     * false    = Don't set timezone (default, backward compatible)
+     * true     = Automatically sync with app timezone
+     * string   = Specific timezone (offset or named timezone)
+     *
+     * Named timezones (e.g., 'America/New_York') will be automatically
+     * converted to offsets (e.g., '-05:00') for database compatibility.
+     *
+     * @var bool|string
+     */
+    protected $timezone = false;
 
     /**
      * Swap Prefix
@@ -1913,6 +1929,68 @@ abstract class BaseConnection implements ConnectionInterface
     protected function _enableForeignKeyChecks()
     {
         return '';
+    }
+
+    /**
+     * Converts a named timezone to an offset string.
+     *
+     * Converts timezone identifiers (e.g., 'America/New_York') to offset strings
+     * (e.g., '-05:00' or '-04:00' depending on DST). This is useful because not all
+     * databases have timezone tables loaded, but all support offset notation.
+     *
+     * @param string $timezone Named timezone (e.g., 'America/New_York', 'UTC', 'Europe/Paris')
+     *
+     * @return string Offset string (e.g., '+00:00', '-05:00', '+01:00')
+     */
+    protected function convertTimezoneToOffset(string $timezone): string
+    {
+        // If it's already an offset, return as-is
+        if (preg_match('/^[+-]\d{2}:\d{2}$/', $timezone)) {
+            return $timezone;
+        }
+
+        try {
+            $offset = Time::now($timezone)->getOffset();
+
+            // Convert offset seconds to +-HH:MM format
+            $hours   = (int) ($offset / 3600);
+            $minutes = abs((int) (($offset % 3600) / 60));
+
+            return sprintf('%+03d:%02d', $hours, $minutes);
+        } catch (Exception $e) {
+            // If timezone conversion fails, log and return UTC
+            log_message('error', "Invalid timezone '{$timezone}'. Falling back to UTC. {$e->getMessage()}.");
+
+            return '+00:00';
+        }
+    }
+
+    /**
+     * Gets the timezone string to use for database session.
+     *
+     * Handles the timezone configuration logic:
+     * - false: Don't set timezone (returns null)
+     * - true: Auto-sync with app timezone from config
+     * - string: Use specific timezone (converts named timezones to offsets)
+     *
+     * @return string|null The timezone offset string, or null if timezone should not be set
+     */
+    protected function getSessionTimezone(): ?string
+    {
+        if ($this->timezone === false) {
+            return null;
+        }
+
+        // Auto-sync with app timezone
+        if ($this->timezone === true) {
+            $appConfig = config('App');
+            $timezone  = $appConfig->appTimezone ?? 'UTC';
+        } else {
+            // Use specific timezone from config
+            $timezone = $this->timezone;
+        }
+
+        return $this->convertTimezoneToOffset($timezone);
     }
 
     /**
