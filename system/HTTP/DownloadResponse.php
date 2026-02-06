@@ -23,7 +23,7 @@ use Config\Mimes;
  *
  * @see \CodeIgniter\HTTP\DownloadResponseTest
  */
-class DownloadResponse extends Response
+class DownloadResponse extends Response implements NonBufferedResponseInterface
 {
     /**
      * Download file name

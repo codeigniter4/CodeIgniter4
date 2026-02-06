@@ -231,6 +231,41 @@ Some browsers can display files such as PDF. To tell the browser to display the 
 
 .. literalinclude:: response/033.php
 
+.. _server-sent-events:
+
+Server-Sent Events (SSE)
+========================
+
+.. versionadded:: 4.8.0
+
+CodeIgniter provides an ``SSEResponse`` for streaming
+`Server-Sent Events <https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events>`_
+over HTTP. This is useful for long-lived connections where the server pushes
+events to the client.
+
+.. literalinclude:: response/036.php
+
+The callback receives the ``SSEResponse`` instance. Use ``event()``,
+``comment()``, or ``retry()`` to send SSE fields. If you pass an array to
+``event()``, it will be JSON-encoded. If encoding fails or the client
+disconnects, ``event()`` returns ``false``.
+
+The response is streamed: output buffering is disabled, and the session is closed
+to avoid blocking other requests. Headers must be set **before** returning the
+response because anything set inside the callback will be too late.
+
+After filters still run. Any headers or cookies they set will be sent, but they
+must not rely on the response body. View rendering, and decorators are not applied
+because the response body is not built - stream your output in the callback.
+
+Custom Headers and Keep-Alive
+-----------------------------
+
+If you need custom headers, set them before returning the response. You can also
+use comments for keep-alive and configure the client retry interval:
+
+.. literalinclude:: response/037.php
+
 HTTP Caching
 ============
 

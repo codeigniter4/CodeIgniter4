@@ -65,6 +65,8 @@ Helpers and Functions
 Others
 ======
 
+- Added ``SSEResponse`` class for streaming Server-Sent Events (SSE) over HTTP. See :ref:`server-sent-events`.
+
 ***************
 Message Changes
 ***************

@@ -15,8 +15,8 @@ namespace CodeIgniter\Filters;
 
 use CodeIgniter\Cache\ResponseCache;
 use CodeIgniter\HTTP\CLIRequest;
-use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\NonBufferedResponseInterface;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -68,7 +68,7 @@ class PageCache implements FilterInterface
         assert($request instanceof CLIRequest || $request instanceof IncomingRequest);
 
         if (
-            ! $response instanceof DownloadResponse
+            ! $response instanceof NonBufferedResponseInterface
             && ! $response instanceof RedirectResponse
             && ($this->cacheStatusCodes === [] || in_array($response->getStatusCode(), $this->cacheStatusCodes, true))
         ) {
