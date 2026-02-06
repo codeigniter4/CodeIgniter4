@@ -14,10 +14,12 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
  */
+#[Group('SeparateProcess')]
 final class SSEResponseTest extends CIUnitTestCase
 {
     public function testEventFormatsLinesAndSanitizesFields(): void
