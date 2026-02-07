@@ -266,6 +266,24 @@ use comments for keep-alive and configure the client retry interval:
 
 .. literalinclude:: response/037.php
 
+Production Considerations
+-------------------------
+
+Some server stacks and CDNs buffer or compress responses (e.g., Apache with
+``mod_deflate``), which can break real-time SSE delivery.
+``SSEResponse`` disables PHP output buffering, turns off zlib output
+compression, and sets ``Content-Encoding: identity`` and ``X-Accel-Buffering: no``.
+However, intermediaries may still buffer or compress, so configure your web server
+or CDN to disable buffering/compression for SSE endpoints.
+
+Example: Product-Oriented Use Case
+----------------------------------
+
+The following example simulates a small notification stream to illustrate a more
+product-focused use case:
+
+.. literalinclude:: response/038.php
+
 HTTP Caching
 ============
 

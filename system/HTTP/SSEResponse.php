@@ -174,6 +174,7 @@ class SSEResponse extends Response implements NonBufferedResponseInterface
         $this->setContentType('text/event-stream', 'UTF-8');
         $this->removeHeader('Cache-Control');
         $this->setHeader('Cache-Control', 'no-cache');
+        $this->setHeader('Content-Encoding', 'identity');
         $this->setHeader('X-Accel-Buffering', 'no');
 
         // Connection: keep-alive is only valid for HTTP/1.x
