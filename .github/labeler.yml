@@ -1,0 +1,11 @@
+# Github Action
+"github_actions":
+  - changed-files:
+      - any-glob-to-any-file:
+        - .github/*
+
+# Match PRs into or from branch 4.7
+"4.7":
+  - base-branch: '4.7'
+  - head-branch: '4.7'
+  
