@@ -16,7 +16,6 @@ namespace CodeIgniter\Test;
 use Closure;
 use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
-use CodeIgniter\HTTP\Header;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\Request;
@@ -36,7 +35,7 @@ use ReflectionException;
  * against your application in trait format.
  *
  * @property array<int|string, mixed>           $session
- * @property array<string, Header|list<Header>> $headers
+ * @property array<string, list<string>|string> $headers
  * @property RouteCollection|null               $routes
  *
  * @mixin CIUnitTestCase
@@ -115,10 +114,11 @@ trait FeatureTestTrait
      *
      * Example of use
      * withHeaders([
-     *  'Authorization' => 'Token'
+     *     'Authorization' => 'Token',
+     *     'Cache-Control' => ['no-cache', 'no-store'],
      * ])
      *
-     * @param array<string, Header|list<Header>> $headers Array of headers
+     * @param array<string, list<string>|string> $headers Array of headers
      *
      * @return $this
      */
