@@ -125,7 +125,7 @@ class SSEResponse extends Response implements NonBufferedResponseInterface
         $output = '';
 
         foreach (explode("\n", $value) as $line) {
-            $output .= ($prefix !== '' ? "{$prefix}: " : ': ') . $line . "\n";
+            $output .= "{$prefix}: " . $line . "\n";
         }
 
         return $output . "\n";
