@@ -370,7 +370,7 @@ trait ResponseTrait
         if ($this->CSP->enabled()) {
             $this->CSP->finalize($this);
         } else {
-            $this->body = $this->CSP->clearNoncePlaceholders($this->body);
+            $this->body = $this->CSP->clearNoncePlaceholders($this->body ?? '');
         }
 
         $this->sendHeaders();
