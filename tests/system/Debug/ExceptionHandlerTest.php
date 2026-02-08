@@ -16,9 +16,12 @@ namespace CodeIgniter\Debug;
 use App\Controllers\Home;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Exceptions\RuntimeException;
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\IniTestTrait;
 use CodeIgniter\Test\StreamFilterTrait;
+use Config\App;
 use Config\Exceptions as ExceptionsConfig;
 use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
@@ -40,6 +43,8 @@ final class ExceptionHandlerTest extends CIUnitTestCase
         parent::setUp();
 
         $this->handler = new ExceptionHandler(new ExceptionsConfig());
+
+        $this->resetServices();
     }
 
     public function testDetermineViewsPageNotFoundException(): void
@@ -385,5 +390,33 @@ final class ExceptionHandlerTest extends CIUnitTestCase
         $this->assertTrue($sanitizeData(true));
         $this->assertFalse($sanitizeData(false));
         $this->assertNull($sanitizeData(null));
+    }
+
+    public function testHandleJsonResponseWithCSPEnabledProducesValidJson(): void
+    {
+        $config             = config(App::class);
+        $config->CSPEnabled = true;
+
+        /** @var IncomingRequest $request */
+        $request = service('incomingrequest', $config, false);
+        $request->setHeader('accept', 'application/json');
+        $response = new Response($config);
+        $response->pretend();
+
+        $exception = new RuntimeException('Test exception');
+
+        ob_start();
+        $this->handler->handle($exception, $request, $response, 500, EXIT_ERROR);
+        $output = ob_get_clean();
+
+        $json = json_decode($output);
+        $this->assertNotNull($json);
+
+        // Nonce placeholders must not appear in the output
+        $this->assertStringNotContainsString('{csp-style-nonce}', (string) $output);
+        $this->assertStringNotContainsString('{csp-script-nonce}', (string) $output);
+
+        // The nonce attribute values should be properly JSON-escaped
+        $this->assertMatchesRegularExpression('/nonce=\\\\"[A-Za-z0-9+\/=]+\\\\"/', $output);
     }
 }
