@@ -937,4 +937,67 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertNotContains('report-uri http://example.com/csp/reports', $directives);
         $this->assertNotContains('report-to default', $directives);
     }
+
+    public function testClearNoncePlaceholdersWithDefaultTags(): void
+    {
+        $config = new CSPConfig();
+        $csp    = new ContentSecurityPolicy($config);
+
+        $body = 'Test {csp-script-nonce} and {csp-style-nonce} here';
+        $cleaned = $csp->clearNoncePlaceholders($body);
+
+        $this->assertSame('Test  and  here', $cleaned);
+        $this->assertStringNotContainsString('{csp-script-nonce}', $cleaned);
+        $this->assertStringNotContainsString('{csp-style-nonce}', $cleaned);
+    }
+
+    public function testClearNoncePlaceholdersWithCustomTags(): void
+    {
+        $config                 = new CSPConfig();
+        $config->scriptNonceTag = '{custom-script-nonce}';
+        $config->styleNonceTag  = '{custom-style-nonce}';
+        $csp                    = new ContentSecurityPolicy($config);
+
+        $body = 'Test {custom-script-nonce} and {custom-style-nonce} here';
+        $cleaned = $csp->clearNoncePlaceholders($body);
+
+        $this->assertSame('Test  and  here', $cleaned);
+        $this->assertStringNotContainsString('{custom-script-nonce}', $cleaned);
+        $this->assertStringNotContainsString('{custom-style-nonce}', $cleaned);
+    }
+
+    public function testClearNoncePlaceholdersWithEmptyBody(): void
+    {
+        $config = new CSPConfig();
+        $csp    = new ContentSecurityPolicy($config);
+
+        $body = '';
+        $cleaned = $csp->clearNoncePlaceholders($body);
+
+        $this->assertSame('', $cleaned);
+    }
+
+    public function testClearNoncePlaceholdersWithNoPlaceholders(): void
+    {
+        $config = new CSPConfig();
+        $csp    = new ContentSecurityPolicy($config);
+
+        $body = 'Test body with no placeholders';
+        $cleaned = $csp->clearNoncePlaceholders($body);
+
+        $this->assertSame($body, $cleaned);
+    }
+
+    public function testClearNoncePlaceholdersWithMultiplePlaceholders(): void
+    {
+        $config = new CSPConfig();
+        $csp    = new ContentSecurityPolicy($config);
+
+        $body = '<script {csp-script-nonce}>a</script><script {csp-script-nonce}>b</script><style {csp-style-nonce}>c</style>';
+        $cleaned = $csp->clearNoncePlaceholders($body);
+
+        $this->assertStringNotContainsString('{csp-script-nonce}', $cleaned);
+        $this->assertStringNotContainsString('{csp-style-nonce}', $cleaned);
+        $this->assertSame('<script >a</script><script >b</script><style >c</style>', $cleaned);
+    }
 }

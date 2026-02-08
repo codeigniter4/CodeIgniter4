@@ -577,4 +577,80 @@ final class ResponseTest extends CIUnitTestCase
 
         $this->assertSame('Happy days', $actual);
     }
+
+    public function testSendRemovesDefaultNoncePlaceholdersWhenCSPDisabled(): void
+    {
+        $config             = new App();
+        $config->CSPEnabled = false;
+
+        $response = new Response($config);
+        $response->pretend(true);
+
+        $body = '<html><script {csp-script-nonce}>console.log("test")</script><style {csp-style-nonce}>.test{}</style></html>';
+        $response->setBody($body);
+
+        ob_start();
+        $response->send();
+        $actual = ob_get_contents();
+        ob_end_clean();
+
+        // Nonce placeholders should be removed when CSP is disabled
+        $this->assertStringNotContainsString('{csp-script-nonce}', $actual);
+        $this->assertStringNotContainsString('{csp-style-nonce}', $actual);
+        $this->assertStringContainsString('<script >console.log("test")</script>', $actual);
+        $this->assertStringContainsString('<style >.test{}</style>', $actual);
+    }
+
+    public function testSendRemovesCustomNoncePlaceholdersWhenCSPDisabled(): void
+    {
+        $appConfig             = new App();
+        $appConfig->CSPEnabled = false;
+
+        // Create custom CSP config with custom nonce tags
+        $cspConfig                 = new \Config\ContentSecurityPolicy();
+        $cspConfig->scriptNonceTag = '{custom-script-tag}';
+        $cspConfig->styleNonceTag  = '{custom-style-tag}';
+
+        $response = new Response($appConfig);
+        $response->pretend(true);
+
+        // Inject the custom CSP config
+        $reflection = new \ReflectionClass($response);
+        $cspProperty = $reflection->getProperty('CSP');
+        $cspProperty->setValue($response, new ContentSecurityPolicy($cspConfig));
+
+        $body = '<html><script {custom-script-tag}>test()</script><style {custom-style-tag}>.x{}</style></html>';
+        $response->setBody($body);
+
+        ob_start();
+        $response->send();
+        $actual = ob_get_contents();
+        ob_end_clean();
+
+        // Custom nonce placeholders should be removed when CSP is disabled
+        $this->assertStringNotContainsString('{custom-script-tag}', $actual);
+        $this->assertStringNotContainsString('{custom-style-tag}', $actual);
+        $this->assertStringContainsString('<script >test()</script>', $actual);
+        $this->assertStringContainsString('<style >.x{}</style>', $actual);
+    }
+
+    public function testSendWithCSPDisabledDoesNotAffectBodyWithoutNonceTags(): void
+    {
+        $config             = new App();
+        $config->CSPEnabled = false;
+
+        $response = new Response($config);
+        $response->pretend(true);
+
+        $body = '<html><script>console.log("test")</script></html>';
+        $response->setBody($body);
+
+        ob_start();
+        $response->send();
+        $actual = ob_get_contents();
+        ob_end_clean();
+
+        // Body without nonce tags should remain unchanged
+        $this->assertSame($body, $actual);
+    }
 }
