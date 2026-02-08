@@ -1052,4 +1052,9 @@ class ContentSecurityPolicy
 
         $this->{$this->directives[$directive]} = [];
     }
+
+    public function clearNoncePlaceholders(string $text): string
+    {
+        return str_replace([$this->styleNonceTag, $this->scriptNonceTag], '', $text);
+    }
 }
