@@ -943,7 +943,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $config = new CSPConfig();
         $csp    = new ContentSecurityPolicy($config);
 
-        $body = 'Test {csp-script-nonce} and {csp-style-nonce} here';
+        $body    = 'Test {csp-script-nonce} and {csp-style-nonce} here';
         $cleaned = $csp->clearNoncePlaceholders($body);
 
         $this->assertSame('Test  and  here', $cleaned);
@@ -958,7 +958,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $config->styleNonceTag  = '{custom-style-nonce}';
         $csp                    = new ContentSecurityPolicy($config);
 
-        $body = 'Test {custom-script-nonce} and {custom-style-nonce} here';
+        $body    = 'Test {custom-script-nonce} and {custom-style-nonce} here';
         $cleaned = $csp->clearNoncePlaceholders($body);
 
         $this->assertSame('Test  and  here', $cleaned);
@@ -971,7 +971,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $config = new CSPConfig();
         $csp    = new ContentSecurityPolicy($config);
 
-        $body = '';
+        $body    = '';
         $cleaned = $csp->clearNoncePlaceholders($body);
 
         $this->assertSame('', $cleaned);
@@ -982,7 +982,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $config = new CSPConfig();
         $csp    = new ContentSecurityPolicy($config);
 
-        $body = 'Test body with no placeholders';
+        $body    = 'Test body with no placeholders';
         $cleaned = $csp->clearNoncePlaceholders($body);
 
         $this->assertSame($body, $cleaned);
@@ -993,7 +993,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $config = new CSPConfig();
         $csp    = new ContentSecurityPolicy($config);
 
-        $body = '<script {csp-script-nonce}>a</script><script {csp-script-nonce}>b</script><style {csp-style-nonce}>c</style>';
+        $body    = '<script {csp-script-nonce}>a</script><script {csp-script-nonce}>b</script><style {csp-style-nonce}>c</style>';
         $cleaned = $csp->clearNoncePlaceholders($body);
 
         $this->assertStringNotContainsString('{csp-script-nonce}', $cleaned);

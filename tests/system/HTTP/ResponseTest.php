@@ -24,6 +24,7 @@ use DateTime;
 use DateTimeZone;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use ReflectionClass;
 
 /**
  * @internal
@@ -615,7 +616,7 @@ final class ResponseTest extends CIUnitTestCase
         $response->pretend(true);
 
         // Inject the custom CSP config
-        $reflection = new \ReflectionClass($response);
+        $reflection  = new ReflectionClass($response);
         $cspProperty = $reflection->getProperty('CSP');
         $cspProperty->setValue($response, new ContentSecurityPolicy($cspConfig));
 
