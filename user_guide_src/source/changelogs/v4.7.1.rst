@@ -30,7 +30,7 @@ Deprecations
 Bugs Fixed
 **********
 
-- **ContentSecurityPolicy:** Fixed a bug where ``generateNonces()`` corrupted JSON responses by replacing CSP nonce placeholders with unescaped double quotes. The method now automatically JSON-escapes nonce attributes when the response Content-Type is JSON.
+- **ContentSecurityPolicy:** Fixed a bug where ``generateNonces()`` produces corrupted JSON responses by replacing CSP nonce placeholders with unescaped double quotes. The method now automatically JSON-escapes nonce attributes when the response Content-Type is JSON.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_

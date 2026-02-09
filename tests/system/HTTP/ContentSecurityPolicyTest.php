@@ -951,8 +951,9 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
         $this->assertMatchesRegularExpression('/<style nonce="[A-Za-z0-9+\/=]+">/', $result);
         $this->assertMatchesRegularExpression('/<script nonce="[A-Za-z0-9+\/=]+">/', $result);
-        $this->assertStringNotContainsString('{csp-style-nonce}', (string) $result);
-        $this->assertStringNotContainsString('{csp-script-nonce}', (string) $result);
+        $this->assertIsString($result);
+        $this->assertStringNotContainsString('{csp-style-nonce}', $result);
+        $this->assertStringNotContainsString('{csp-script-nonce}', $result);
     }
 
     #[PreserveGlobalState(false)]
@@ -968,6 +969,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->response->getBody();
         $parsed = json_decode($result, true);
 
+        $this->assertSame(JSON_ERROR_NONE, json_last_error());
         $this->assertNotNull($parsed);
         $this->assertMatchesRegularExpression('/nonce="[A-Za-z0-9+\/=]+"/', $parsed['html']);
     }
