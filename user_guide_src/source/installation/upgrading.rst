@@ -7,6 +7,12 @@ upgrading from.
 
 See also :doc:`./backward_compatibility_notes`.
 
+The manual mentions changes to **project space**. To perform the update,
+you need to compare the original files from **vendor/codeigniter4/framework** or from the ZIP archive and make changes.
+
+Example, the original **app/Config/App.php** will be located in **vendor/codeigniter4/framework/app/Config/App.php**.
+Alternatively, replace it with a new file and add your previous lines.
+
 .. note:: If you don't know what version of CodeIgniter you are currently running,
     you can get it from :ref:`the Debug Toolbar <the-debug-toolbar>`,
     or simply echo the constant ``\CodeIgniter\CodeIgniter::CI_VERSION``.
