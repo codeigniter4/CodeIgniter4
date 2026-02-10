@@ -902,6 +902,10 @@ class ContentSecurityPolicy
         $pattern = sprintf('/(%s|%s)/', preg_quote($this->styleNonceTag, '/'), preg_quote($this->scriptNonceTag, '/'));
 
         $body = preg_replace_callback($pattern, function ($match): string {
+            if (! $this->enabled()) {
+                return '';
+            }
+
             $nonce = $match[0] === $this->styleNonceTag ? $this->getStyleNonce() : $this->getScriptNonce();
 
             return "nonce=\"{$nonce}\"";
@@ -922,6 +926,10 @@ class ContentSecurityPolicy
         $response->setHeader('Content-Security-Policy', []);
         $response->setHeader('Content-Security-Policy-Report-Only', []);
         $response->setHeader('Reporting-Endpoints', []);
+
+        if (! $this->enabled()) {
+            return;
+        }
 
         if (in_array($this->baseURI, ['', null, []], true)) {
             $this->baseURI = 'self';

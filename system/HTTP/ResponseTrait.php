@@ -367,11 +367,7 @@ trait ResponseTrait
     {
         // If we're enforcing a Content Security Policy,
         // we need to give it a chance to build out it's headers.
-        if ($this->CSP->enabled()) {
-            $this->CSP->finalize($this);
-        } else {
-            $this->body = $this->CSP->clearNoncePlaceholders($this->body ?? '');
-        }
+        $this->CSP->finalize($this);
 
         $this->sendHeaders();
         $this->sendCookies();

@@ -635,7 +635,7 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertStringContainsString('<style >.x{}</style>', (string) $actual);
     }
 
-    public function testSendWithCSPDisabledDoesNotAffectBodyWithoutNonceTags(): void
+    public function testSendNoEffectWhenBodyEmptyAndCSPDisabled(): void
     {
         $config             = new App();
         $config->CSPEnabled = false;
@@ -643,7 +643,7 @@ final class ResponseTest extends CIUnitTestCase
         $response = new Response($config);
         $response->pretend(true);
 
-        $body = '<html><script>console.log("test")</script></html>';
+        $body = '';
         $response->setBody($body);
 
         ob_start();
@@ -651,7 +651,51 @@ final class ResponseTest extends CIUnitTestCase
         $actual = ob_get_contents();
         ob_end_clean();
 
-        // Body without nonce tags should remain unchanged
-        $this->assertSame($body, $actual);
+        $this->assertSame('', (string) $actual);
+    }
+
+    public function testSendNoEffectWithNoPlaceholdersAndCSPDisabled(): void
+    {
+        $config             = new App();
+        $config->CSPEnabled = false;
+
+        $response = new Response($config);
+        $response->pretend(true);
+
+        $body = '<html><head><title>Test</title></head><body><p>No placeholders here</p></body></html>';
+        $response->setBody($body);
+
+        ob_start();
+        $response->send();
+        $actual = ob_get_contents();
+        ob_end_clean();
+
+        // Body should be unchanged when there are no placeholders and CSP is disabled
+        $this->assertSame($body, (string) $actual);
+    }
+
+    public function testSendRemovesMultiplePlaceholdersWhenCSPDisabled(): void
+    {
+        $config             = new App();
+        $config->CSPEnabled = false;
+
+        $response = new Response($config);
+        $response->pretend(true);
+
+        $body = '<html><script {csp-script-nonce}>console.log("test")</script><script {csp-script-nonce}>console.log("test2")</script><style {csp-style-nonce}>.test{}</style><style {csp-style-nonce}>.test2{}</style></html>';
+        $response->setBody($body);
+
+        ob_start();
+        $response->send();
+        $actual = ob_get_contents();
+        ob_end_clean();
+
+        // All nonce placeholders should be removed when CSP is disabled
+        $this->assertStringNotContainsString('{csp-script-nonce}', (string) $actual);
+        $this->assertStringNotContainsString('{csp-style-nonce}', (string) $actual);
+        $this->assertStringContainsString('<script >console.log("test")</script>', (string) $actual);
+        $this->assertStringContainsString('<script >console.log("test2")</script>', (string) $actual);
+        $this->assertStringContainsString('<style >.test{}</style>', (string) $actual);
+        $this->assertStringContainsString('<style >.test2{}</style>', (string) $actual);
     }
 }
