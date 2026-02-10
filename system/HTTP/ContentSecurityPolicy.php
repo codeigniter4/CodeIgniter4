@@ -923,13 +923,13 @@ class ContentSecurityPolicy
      */
     protected function buildHeaders(ResponseInterface $response)
     {
-        $response->setHeader('Content-Security-Policy', []);
-        $response->setHeader('Content-Security-Policy-Report-Only', []);
-        $response->setHeader('Reporting-Endpoints', []);
-
         if (! $this->enabled()) {
             return;
         }
+
+        $response->setHeader('Content-Security-Policy', []);
+        $response->setHeader('Content-Security-Policy-Report-Only', []);
+        $response->setHeader('Reporting-Endpoints', []);
 
         if (in_array($this->baseURI, ['', null, []], true)) {
             $this->baseURI = 'self';
