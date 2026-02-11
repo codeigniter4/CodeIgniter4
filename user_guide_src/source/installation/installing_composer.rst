@@ -158,6 +158,8 @@ Folders in your project after set up:
 - app, public, tests, writable
 - vendor/codeigniter4/framework/system
 
+.. _switch-to-dev-version:
+
 Latest Dev
 ----------
 
@@ -168,6 +170,9 @@ for a developer who is willing to live with the latest unreleased changes, which
 The `development user guide <https://codeigniter4.github.io/CodeIgniter4/>`_ is accessible online.
 Note that this differs from the released user guide, and will pertain to the
 develop branch explicitly.
+
+.. note:: You should not rely on the version of the framework in your project
+    - the development code may contain an incorrect number.
 
 Update for Latest Dev
 ^^^^^^^^^^^^^^^^^^^^^
@@ -188,15 +193,11 @@ files if necessary.
 Next Minor Version
 ^^^^^^^^^^^^^^^^^^
 
-If you want to use the next minor version branch, after using the ``builds`` command
-edit **composer.json** manually.
+If you want to use the next minor version branch:
 
-If you try the ``4.8`` branch, change the version to ``4.8.x-dev``::
+.. code-block:: console
 
-    "require": {
-        "php": "^8.2",
-        "codeigniter4/codeigniter4": "4.8.x-dev"
-    },
+    php builds next
 
 And run ``composer update`` to sync your vendor
 folder with the latest target build. Then, check the Upgrading Guide

@@ -1,7 +1,9 @@
 #!/usr/bin/env php
 <?php
 
-define('LATEST_RELEASE', '^4.0');
+define('LATEST_RELEASE', '^4.7');
+define('DEVELOP_BRANCH', 'dev-develop');
+define('NEXT_MINOR', '^4.8-dev');
 define('GITHUB_URL', 'https://github.com/codeigniter4/codeigniter4');
 
 /*
@@ -11,17 +13,17 @@ define('GITHUB_URL', 'https://github.com/codeigniter4/codeigniter4');
  * Use this script to toggle the CodeIgniter dependency between the
  * latest stable release and the most recent development update.
  *
- * Usage: php builds [release|development]
+ * Usage: php builds [release|development|next]
  */
 
+$branch = $argv[1] ?? '';
+
 // Determine the requested stability
-if (empty($argv[1]) || ! in_array($argv[1], ['release', 'development'], true)) {
-    echo 'Usage: php builds [release|development]' . PHP_EOL;
+if ($branch === '' || ! in_array($branch, ['release', 'development', 'next'], true)) {
+    echo 'Usage: php builds [release|development|next]' . PHP_EOL;
 
     exit;
 }
-
-$dev = $argv[1] === 'development';
 
 $modified = [];
 
@@ -36,7 +38,7 @@ if (is_file($file)) {
         $array = json_decode($contents, true);
 
         if (is_array($array)) {
-            if ($dev) {
+            if ($branch !== 'release') {
                 $array['minimum-stability'] = 'dev';
                 $array['prefer-stable']     = true;
                 $array['repositories'] ??= [];
@@ -57,7 +59,7 @@ if (is_file($file)) {
                     ];
                 }
 
-                $array['require']['codeigniter4/codeigniter4'] = 'dev-develop';
+                $array['require']['codeigniter4/codeigniter4'] = $branch === 'next' ? NEXT_MINOR : DEVELOP_BRANCH;
                 unset($array['require']['codeigniter4/framework']);
             } else {
                 unset($array['minimum-stability']);
@@ -70,7 +72,7 @@ if (is_file($file)) {
                         }
                     }
 
-                    if (empty($array['repositories'])) {
+                    if ($array['repositories'] === []) {
                         unset($array['repositories']);
                     }
                 }
@@ -100,7 +102,7 @@ foreach ($files as $file) {
     if (is_file($file)) {
         $contents = file_get_contents($file);
 
-        if ($dev) {
+        if ($branch !== 'release') {
             $contents = str_replace('vendor/codeigniter4/framework', 'vendor/codeigniter4/codeigniter4', $contents);
         } else {
             $contents = str_replace('vendor/codeigniter4/codeigniter4', 'vendor/codeigniter4/framework', $contents);
@@ -120,6 +122,7 @@ if ($modified === []) {
     foreach ($modified as $file) {
         echo " * {$file}" . PHP_EOL;
     }
-
-    echo 'Run `composer update` to sync changes with your vendor folder.' . PHP_EOL;
 }
+
+echo 'Run `composer update` to sync changes with your vendor folder.' . PHP_EOL;
+echo 'Don\'t forget to update the project files in app folder from "vendor/codeigniter4/*/app/".' . PHP_EOL;
