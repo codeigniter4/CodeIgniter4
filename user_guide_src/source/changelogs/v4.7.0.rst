@@ -173,6 +173,8 @@ To use a different encryption key permanently, pass a custom config when creatin
     // Get a new handler instance with the custom config (not shared)
     $handler = service('encrypter', $config, false);
 
+.. _v470-interface-changes:
+
 Interface Changes
 =================
 
@@ -182,6 +184,8 @@ Interface Changes
 - **Cache:** The ``CacheInterface`` now includes the ``remember()`` method. All built-in cache handlers inherit this method via ``BaseHandler``, so no changes are required for them.
 - **Database:** The ``QueryInterface`` now includes the ``getOriginalQuery()`` method.
 - **Images:** The ``ImageHandlerInterface`` now includes a new method: ``clearMetadata()``.
+
+.. _v470-method-signature-changes:
 
 Method Signature Changes
 ========================
@@ -235,10 +239,14 @@ Method Signature Changes
     - ``CodeIgniter\Session\Handlers\RedisHandler::read($id): false|string``
     - ``CodeIgniter\Session\Handlers\RedisHandler::gc($max_lifetime): int``
 
+.. _v470-property-signature-changes:
+
 Property Signature Changes
 ==========================
 
 - **Entity:** The protected property ``CodeIgniter\Entity\Entity::$dataCaster`` type has been changed from ``DataCaster`` to ``?DataCaster`` (nullable).
+
+.. _v470-removed-deprecated-items:
 
 Removed Deprecated Items
 ========================
