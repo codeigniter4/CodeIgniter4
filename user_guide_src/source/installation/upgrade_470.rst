@@ -39,6 +39,10 @@ This avoids ambiguity with regex quantifiers such as ``{1,3}``.
 Model Primary Key Validation Timing and Exceptions
 ==================================================
 
+The ``insertBatch()`` and ``updateBatch()`` methods now honor model settings
+like ``updateOnlyChanged`` and ``allowEmptyInserts``. This change ensures
+consistent handling across all insert/update operations.
+
 Primary key values are now validated before database queries in
 ``insert()``/``insertBatch()`` (without auto-increment), ``update()``, and
 ``delete()``.
