@@ -33,6 +33,7 @@ Bugs Fixed
 **********
 
 - **ContentSecurityPolicy:** Fixed a bug where ``generateNonces()`` produces corrupted JSON responses by replacing CSP nonce placeholders with unescaped double quotes. The method now automatically JSON-escapes nonce attributes when the response Content-Type is JSON.
+- **Model:** Fixed a bug where ``BaseModel::updateBatch()`` threw an exception when ``updateOnlyChanged`` was ``true`` and the index field value did not change.
 - **Session:** Fixed a bug in ``MemcachedHandler`` where the constructor incorrectly threw an exception when ``savePath`` was not empty.
 
 See the repo's
