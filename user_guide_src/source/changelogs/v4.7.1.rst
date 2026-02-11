@@ -32,6 +32,7 @@ Deprecations
 Bugs Fixed
 **********
 
+- **ContentSecurityPolicy:** Fixed a bug where custom CSP tags were not removed from generated HTML when CSP was disabled. The method now ensures that all custom CSP tags are removed from the generated HTML.
 - **ContentSecurityPolicy:** Fixed a bug where ``generateNonces()`` produces corrupted JSON responses by replacing CSP nonce placeholders with unescaped double quotes. The method now automatically JSON-escapes nonce attributes when the response Content-Type is JSON.
 - **Session:** Fixed a bug in ``MemcachedHandler`` where the constructor incorrectly threw an exception when ``savePath`` was not empty.
 
