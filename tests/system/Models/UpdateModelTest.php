@@ -270,59 +270,19 @@ final class UpdateModelTest extends LiveModelTestCase
      */
     public function testUpdateBatchWithEntityAndUpdateOnlyChanged(): void
     {
-        $entity1 = new class () extends Entity {
-            protected $id;
-            protected $name;
-            protected $email;
-            protected $country;
-            protected $deleted;
-            protected $created_at;
-            protected $updated_at;
-            protected $_options = [
-                'datamap' => [],
-                'dates'   => [
-                    'created_at',
-                    'updated_at',
-                    'deleted_at',
-                ],
-                'casts' => [],
-            ];
-        };
-
-        $entity2 = new class () extends Entity {
-            protected $id;
-            protected $name;
-            protected $email;
-            protected $country;
-            protected $deleted;
-            protected $created_at;
-            protected $updated_at;
-            protected $_options = [
-                'datamap' => [],
-                'dates'   => [
-                    'created_at',
-                    'updated_at',
-                    'deleted_at',
-                ],
-                'casts' => [],
-            ];
-        };
-
-        // Set up entity1 and mark as synced, then change only country.
+        $entity1          = new User();
         $entity1->id      = 1;
         $entity1->name    = 'Derek Jones';
         $entity1->email   = 'derek@world.com';
         $entity1->country = 'US';
-        $entity1->deleted = 0;
         $entity1->syncOriginal();
         $entity1->country = 'Greece';
 
-        // Set up entity2 and mark as synced, then change only country.
+        $entity2          = new User();
         $entity2->id      = 4;
         $entity2->name    = 'Chris Martin';
         $entity2->email   = 'chris@world.com';
         $entity2->country = 'UK';
-        $entity2->deleted = 0;
         $entity2->syncOriginal();
         $entity2->country = 'Finland';
 
