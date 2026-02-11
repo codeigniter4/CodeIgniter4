@@ -937,4 +937,40 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertNotContains('report-uri http://example.com/csp/reports', $directives);
         $this->assertNotContains('report-to default', $directives);
     }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testGenerateNoncesReplacesPlaceholdersInHtml(): void
+    {
+        $body = '<style {csp-style-nonce}>body{}</style><script {csp-script-nonce}>alert(1)</script>';
+
+        $this->response->setBody($body);
+        $this->csp->finalize($this->response);
+
+        $result = $this->response->getBody();
+
+        $this->assertMatchesRegularExpression('/<style nonce="[A-Za-z0-9+\/=]+">/', $result);
+        $this->assertMatchesRegularExpression('/<script nonce="[A-Za-z0-9+\/=]+">/', $result);
+        $this->assertIsString($result);
+        $this->assertStringNotContainsString('{csp-style-nonce}', $result);
+        $this->assertStringNotContainsString('{csp-script-nonce}', $result);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testGenerateNoncesEscapesQuotesInJsonResponse(): void
+    {
+        $data = json_encode(['html' => '<script {csp-script-nonce}>alert(1)</script>']);
+
+        $this->response->setContentType('application/json');
+        $this->response->setBody($data);
+        $this->csp->finalize($this->response);
+
+        $result = $this->response->getBody();
+        $parsed = json_decode($result, true);
+
+        $this->assertSame(JSON_ERROR_NONE, json_last_error());
+        $this->assertNotNull($parsed);
+        $this->assertMatchesRegularExpression('/nonce="[A-Za-z0-9+\/=]+"/', $parsed['html']);
+    }
 }

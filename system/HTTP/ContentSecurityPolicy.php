@@ -898,17 +898,21 @@ class ContentSecurityPolicy
             return;
         }
 
+        // Escape quotes for JSON responses to prevent corrupting the JSON body
+        $jsonEscape = str_contains($response->getHeaderLine('Content-Type'), 'json');
+
         // Replace style and script placeholders with nonces
         $pattern = sprintf('/(%s|%s)/', preg_quote($this->styleNonceTag, '/'), preg_quote($this->scriptNonceTag, '/'));
 
-        $body = preg_replace_callback($pattern, function ($match): string {
+        $body = preg_replace_callback($pattern, function ($match) use ($jsonEscape): string {
             if (! $this->enabled()) {
                 return '';
             }
 
             $nonce = $match[0] === $this->styleNonceTag ? $this->getStyleNonce() : $this->getScriptNonce();
+            $attr  = 'nonce="' . $nonce . '"';
 
-            return "nonce=\"{$nonce}\"";
+            return $jsonEscape ? str_replace('"', '\\"', $attr) : $attr;
         }, $body);
 
         $response->setBody($body);

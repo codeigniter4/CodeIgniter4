@@ -40,6 +40,8 @@ final class ExceptionHandlerTest extends CIUnitTestCase
         parent::setUp();
 
         $this->handler = new ExceptionHandler(new ExceptionsConfig());
+
+        $this->resetServices();
     }
 
     public function testDetermineViewsPageNotFoundException(): void
