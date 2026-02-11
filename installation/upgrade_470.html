@@ -303,16 +303,102 @@
 </ul>
 <nav class="contents local" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#project-files" id="id1">Project Files</a></p>
+<li><p><a class="reference internal" href="#breaking-changes" id="id1">Breaking Changes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#content-changes" id="id2">Content Changes</a></p></li>
-<li><p><a class="reference internal" href="#all-changes" id="id3">All Changes</a></p></li>
+<li><p><a class="reference internal" href="#php-8-2-required" id="id2">PHP 8.2 Required</a></p></li>
+<li><p><a class="reference internal" href="#validation-regex-match-placeholders" id="id3">Validation <code class="docutils literal notranslate"><span class="pre">regex_match</span></code> Placeholders</a></p></li>
+<li><p><a class="reference internal" href="#model-primary-key-validation-timing-and-exceptions" id="id4">Model Primary Key Validation Timing and Exceptions</a></p></li>
+<li><p><a class="reference internal" href="#entity-change-detection-is-now-deep" id="id5">Entity Change Detection Is Now Deep</a></p></li>
+<li><p><a class="reference internal" href="#encryption-handler-key-state" id="id6">Encryption Handler Key State</a></p></li>
+<li><p><a class="reference internal" href="#interface-changes" id="id7">Interface Changes</a></p></li>
+<li><p><a class="reference internal" href="#method-signature-changes" id="id8">Method Signature Changes</a></p></li>
+<li><p><a class="reference internal" href="#property-signature-changes" id="id9">Property Signature Changes</a></p></li>
+<li><p><a class="reference internal" href="#removed-deprecated-items" id="id10">Removed Deprecated Items</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#project-files" id="id11">Project Files</a></p>
+<ul>
+<li><p><a class="reference internal" href="#content-changes" id="id12">Content Changes</a></p></li>
+<li><p><a class="reference internal" href="#all-changes" id="id13">All Changes</a></p></li>
 </ul>
 </li>
 </ul>
 </nav>
+<section id="breaking-changes">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this heading"></a></h2>
+<section id="php-8-2-required">
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">PHP 8.2 Required</a><a class="headerlink" href="#php-8-2-required" title="Permalink to this heading"></a></h3>
+<p>The minimum PHP requirement has been updated to <strong>PHP 8.2</strong>.</p>
+<p>If your current runtime is older than PHP 8.2, upgrade PHP first before
+upgrading CodeIgniter.</p>
+</section>
+<section id="validation-regex-match-placeholders">
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Validation <code class="docutils literal notranslate"><span class="pre">regex_match</span></code> Placeholders</a><a class="headerlink" href="#validation-regex-match-placeholders" title="Permalink to this heading"></a></h3>
+<p>Placeholders in the <code class="docutils literal notranslate"><span class="pre">regex_match</span></code> validation rule must now use double curly
+braces.</p>
+<p>If you previously used single braces like
+<code class="docutils literal notranslate"><span class="pre">regex_match[/^{placeholder}$/]</span></code>, update it to:
+<code class="docutils literal notranslate"><span class="pre">regex_match[/^{{placeholder}}$/]</span></code>.</p>
+<p>This avoids ambiguity with regex quantifiers such as <code class="docutils literal notranslate"><span class="pre">{1,3}</span></code>.</p>
+</section>
+<section id="model-primary-key-validation-timing-and-exceptions">
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Model Primary Key Validation Timing and Exceptions</a><a class="headerlink" href="#model-primary-key-validation-timing-and-exceptions" title="Permalink to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">insertBatch()</span></code> and <code class="docutils literal notranslate"><span class="pre">updateBatch()</span></code> methods now honor model settings
+like <code class="docutils literal notranslate"><span class="pre">updateOnlyChanged</span></code> and <code class="docutils literal notranslate"><span class="pre">allowEmptyInserts</span></code>. This change ensures
+consistent handling across all insert/update operations.</p>
+<p>Primary key values are now validated before database queries in
+<code class="docutils literal notranslate"><span class="pre">insert()</span></code>/<code class="docutils literal notranslate"><span class="pre">insertBatch()</span></code> (without auto-increment), <code class="docutils literal notranslate"><span class="pre">update()</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">delete()</span></code>.</p>
+<p>Invalid primary key values now throw <code class="docutils literal notranslate"><span class="pre">InvalidArgumentException</span></code> instead of
+database-layer <code class="docutils literal notranslate"><span class="pre">DatabaseException</span></code>.</p>
+<p>If your code catches <code class="docutils literal notranslate"><span class="pre">DatabaseException</span></code> for invalid primary keys, update it
+to handle <code class="docutils literal notranslate"><span class="pre">InvalidArgumentException</span></code> as well.</p>
+</section>
+<section id="entity-change-detection-is-now-deep">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Entity Change Detection Is Now Deep</a><a class="headerlink" href="#entity-change-detection-is-now-deep" title="Permalink to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Entity::hasChanged()</span></code> and <code class="docutils literal notranslate"><span class="pre">Entity::syncOriginal()</span></code> now perform deep
+comparison for arrays and objects.</p>
+<p>If you relied on the previous shallow (reference-based) behavior, review your
+entity update flows and tests because nested changes are now detected.</p>
+<p>Also, <code class="docutils literal notranslate"><span class="pre">Entity::toRawArray()</span></code> now recursively converts arrays of entities when
+<code class="docutils literal notranslate"><span class="pre">$recursive</span></code> is <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
+</section>
+<section id="encryption-handler-key-state">
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Encryption Handler Key State</a><a class="headerlink" href="#encryption-handler-key-state" title="Permalink to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">OpenSSLHandler</span></code> and <code class="docutils literal notranslate"><span class="pre">SodiumHandler</span></code> no longer mutate the handler’s internal
+key when a key is passed via <code class="docutils literal notranslate"><span class="pre">$params</span></code> to <code class="docutils literal notranslate"><span class="pre">encrypt()</span></code>/<code class="docutils literal notranslate"><span class="pre">decrypt()</span></code>.</p>
+<p>If your code depended on passing a key once and reusing it implicitly later,
+move to explicit key configuration in <code class="docutils literal notranslate"><span class="pre">Config\\Encryption</span></code> (or pass a custom
+config when creating the encrypter service).</p>
+</section>
+<section id="interface-changes">
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Interface Changes</a><a class="headerlink" href="#interface-changes" title="Permalink to this heading"></a></h3>
+<p>Some interface changes have been made. Classes that implement framework
+interfaces should update their APIs to reflect these changes.</p>
+<p>See <a class="reference internal" href="../changelogs/v4.7.0.html#v470-interface-changes"><span class="std std-ref">ChangeLog</span></a> for details.</p>
+</section>
+<section id="method-signature-changes">
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Method Signature Changes</a><a class="headerlink" href="#method-signature-changes" title="Permalink to this heading"></a></h3>
+<p>Some method signature changes have been made. Classes that extend framework
+classes should update their method signatures to keep LSP compatibility.</p>
+<p>See <a class="reference internal" href="../changelogs/v4.7.0.html#v470-method-signature-changes"><span class="std std-ref">ChangeLog</span></a> for details.</p>
+</section>
+<section id="property-signature-changes">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Property Signature Changes</a><a class="headerlink" href="#property-signature-changes" title="Permalink to this heading"></a></h3>
+<p>Some property type signatures have changed (for example nullable
+<code class="docutils literal notranslate"><span class="pre">Entity::$dataCaster</span></code>). If you extend these classes, update your code
+accordingly.</p>
+<p>See <a class="reference internal" href="../changelogs/v4.7.0.html#v470-property-signature-changes"><span class="std std-ref">ChangeLog</span></a> for details.</p>
+</section>
+<section id="removed-deprecated-items">
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Removed Deprecated Items</a><a class="headerlink" href="#removed-deprecated-items" title="Permalink to this heading"></a></h3>
+<p>Some deprecated items have been removed. If your app still uses or extends
+these APIs, update your code before upgrading.</p>
+<p>See <a class="reference internal" href="../changelogs/v4.7.0.html#v470-removed-deprecated-items"><span class="std std-ref">ChangeLog</span></a> for details.</p>
+</section>
+</section>
 <section id="project-files">
-<h2><a class="toc-backref" href="#id1" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id11" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this heading"></a></h2>
 <p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to
 these files being outside of the <strong>system</strong> scope they will not be changed without your intervention.</p>
 <div class="admonition note">
@@ -322,7 +408,7 @@ with merging changes to the project space:
 <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
 </div>
 <section id="content-changes">
-<h3><a class="toc-backref" href="#id2" role="doc-backlink">Content Changes</a><a class="headerlink" href="#content-changes" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">Content Changes</a><a class="headerlink" href="#content-changes" title="Permalink to this heading"></a></h3>
 <p>The following files received significant changes (including deprecations or visual adjustments)
 and it is recommended that you merge the updated versions with your application:</p>
 <section id="config">
@@ -344,7 +430,7 @@ and it is recommended that you merge the updated versions with your application:
 </section>
 </section>
 <section id="all-changes">
-<h3><a class="toc-backref" href="#id3" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this heading"></a></h3>
 <p>This is a list of all files in the <strong>project space</strong> that received changes;
 many will be simple comments or formatting that have no effect on the runtime:</p>
 <ul class="simple">
