@@ -698,4 +698,36 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertStringContainsString('<style >.test{}</style>', $actual);
         $this->assertStringContainsString('<style >.test2{}</style>', $actual);
     }
+
+    public function testSendRemovesPlaceholdersWhenBothCSPAndAutoNonceAreDisabled(): void
+    {
+        $appConfig             = new App();
+        $appConfig->CSPEnabled = false;
+
+        // Create custom CSP config with custom nonce tags
+        $cspConfig            = new \Config\ContentSecurityPolicy();
+        $cspConfig->autoNonce = false;
+
+        $response = new Response($appConfig);
+        $response->pretend(true);
+
+        // Inject the custom CSP config
+        $reflection  = new ReflectionClass($response);
+        $cspProperty = $reflection->getProperty('CSP');
+        $cspProperty->setValue($response, new ContentSecurityPolicy($cspConfig));
+
+        $body = '<html><script {csp-script-nonce}>test()</script><style {csp-style-nonce}>.x{}</style></html>';
+        $response->setBody($body);
+
+        ob_start();
+        $response->send();
+        $actual = ob_get_clean();
+
+        // Custom nonce placeholders should be removed when CSP is disabled
+        $this->assertIsString($actual);
+        $this->assertStringNotContainsString('{csp-script-nonce}', $actual);
+        $this->assertStringNotContainsString('{csp-style-nonce}', $actual);
+        $this->assertStringContainsString('<script >test()</script>', $actual);
+        $this->assertStringContainsString('<style >.x{}</style>', $actual);
+    }
 }

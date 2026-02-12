@@ -429,6 +429,14 @@ class ContentSecurityPolicy
     {
         if ($this->autoNonce) {
             $this->generateNonces($response);
+        } else {
+            // If we're not auto-generating nonces, we should remove any nonce placeholders from the body to prevent them from being rendered.
+            $body = (string) $response->getBody();
+
+            if ($body !== '') {
+                $body = str_replace([$this->styleNonceTag, $this->scriptNonceTag], '', $body);
+                $response->setBody($body);
+            }
         }
 
         $this->buildHeaders($response);
