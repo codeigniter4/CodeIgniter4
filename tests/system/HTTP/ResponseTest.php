@@ -592,14 +592,14 @@ final class ResponseTest extends CIUnitTestCase
 
         ob_start();
         $response->send();
-        $actual = ob_get_contents();
-        ob_end_clean();
+        $actual = ob_get_clean();
 
         // Nonce placeholders should be removed when CSP is disabled
-        $this->assertStringNotContainsString('{csp-script-nonce}', (string) $actual);
-        $this->assertStringNotContainsString('{csp-style-nonce}', (string) $actual);
-        $this->assertStringContainsString('<script >console.log("test")</script>', (string) $actual);
-        $this->assertStringContainsString('<style >.test{}</style>', (string) $actual);
+        $this->assertIsString($actual);
+        $this->assertStringNotContainsString('{csp-script-nonce}', $actual);
+        $this->assertStringNotContainsString('{csp-style-nonce}', $actual);
+        $this->assertStringContainsString('<script >console.log("test")</script>', $actual);
+        $this->assertStringContainsString('<style >.test{}</style>', $actual);
     }
 
     public function testSendRemovesCustomNoncePlaceholdersWhenCSPDisabled(): void
@@ -625,14 +625,14 @@ final class ResponseTest extends CIUnitTestCase
 
         ob_start();
         $response->send();
-        $actual = ob_get_contents();
-        ob_end_clean();
+        $actual = ob_get_clean();
 
         // Custom nonce placeholders should be removed when CSP is disabled
-        $this->assertStringNotContainsString('{custom-script-tag}', (string) $actual);
-        $this->assertStringNotContainsString('{custom-style-tag}', (string) $actual);
-        $this->assertStringContainsString('<script >test()</script>', (string) $actual);
-        $this->assertStringContainsString('<style >.x{}</style>', (string) $actual);
+        $this->assertIsString($actual);
+        $this->assertStringNotContainsString('{custom-script-tag}', $actual);
+        $this->assertStringNotContainsString('{custom-style-tag}', $actual);
+        $this->assertStringContainsString('<script >test()</script>', $actual);
+        $this->assertStringContainsString('<style >.x{}</style>', $actual);
     }
 
     public function testSendNoEffectWhenBodyEmptyAndCSPDisabled(): void
@@ -648,10 +648,10 @@ final class ResponseTest extends CIUnitTestCase
 
         ob_start();
         $response->send();
-        $actual = ob_get_contents();
-        ob_end_clean();
+        $actual = ob_get_clean();
 
-        $this->assertSame('', (string) $actual);
+        $this->assertIsString($actual);
+        $this->assertSame('', $actual);
     }
 
     public function testSendNoEffectWithNoPlaceholdersAndCSPDisabled(): void
@@ -667,11 +667,11 @@ final class ResponseTest extends CIUnitTestCase
 
         ob_start();
         $response->send();
-        $actual = ob_get_contents();
-        ob_end_clean();
+        $actual = ob_get_clean();
 
         // Body should be unchanged when there are no placeholders and CSP is disabled
-        $this->assertSame($body, (string) $actual);
+        $this->assertIsString($actual);
+        $this->assertSame($body, $actual);
     }
 
     public function testSendRemovesMultiplePlaceholdersWhenCSPDisabled(): void
@@ -687,15 +687,15 @@ final class ResponseTest extends CIUnitTestCase
 
         ob_start();
         $response->send();
-        $actual = ob_get_contents();
-        ob_end_clean();
+        $actual = ob_get_clean();
 
         // All nonce placeholders should be removed when CSP is disabled
-        $this->assertStringNotContainsString('{csp-script-nonce}', (string) $actual);
-        $this->assertStringNotContainsString('{csp-style-nonce}', (string) $actual);
-        $this->assertStringContainsString('<script >console.log("test")</script>', (string) $actual);
-        $this->assertStringContainsString('<script >console.log("test2")</script>', (string) $actual);
-        $this->assertStringContainsString('<style >.test{}</style>', (string) $actual);
-        $this->assertStringContainsString('<style >.test2{}</style>', (string) $actual);
+        $this->assertIsString($actual);
+        $this->assertStringNotContainsString('{csp-script-nonce}', $actual);
+        $this->assertStringNotContainsString('{csp-style-nonce}', $actual);
+        $this->assertStringContainsString('<script >console.log("test")</script>', $actual);
+        $this->assertStringContainsString('<script >console.log("test2")</script>', $actual);
+        $this->assertStringContainsString('<style >.test{}</style>', $actual);
+        $this->assertStringContainsString('<style >.test2{}</style>', $actual);
     }
 }
