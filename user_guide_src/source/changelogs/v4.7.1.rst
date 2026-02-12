@@ -27,8 +27,8 @@ Changes
 Others
 ======
 
-- **builds:** In the ``builds`` script (for ``codeigniter4/appstarter``), the ``next`` option has been added
-  to switch ``4.7.x`` to the next minor version ``4.8-dev``. See :ref:`Latest Dev<switch-to-dev-version>`.
+- **builds:** In the ``builds`` script (for ``codeigniter4/appstarter``), the ``next`` argument has been added
+  to switch ``4.7.x`` to the next minor version ``4.8.x-dev``. See :ref:`Latest Dev<switch-to-dev-version>`.
 
 ************
 Deprecations

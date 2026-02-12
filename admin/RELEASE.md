@@ -126,8 +126,8 @@ the existing content.
       and `<version number="4.x.x">`
     * Update **admin/starter/builds**:
       * Set `define('LATEST_RELEASE', '^4.x')`
-      * Set `define('NEXT_MINOR', '^4.y-dev')`.
-      * If the major version changes, you need to manually change to `define('NEXT_MINOR', '^5.0-dev')`.
+      * Set `define('NEXT_MINOR', '4.y-dev')`.
+      * If the major version changes, you need to manually change to `define('NEXT_MINOR', '5.0-dev')`.
     * Commit the changes with `Prep for 4.x.x release`
 * [ ] Create a new PR from `release-4.x.x` to `develop`:
   * Title: `Prep for 4.x.x release`

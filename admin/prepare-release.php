@@ -25,7 +25,7 @@ $versionParts = explode('.', $version);
 $minor        = $versionParts[0] . '.' . $versionParts[1];
 
 // Note: Major version will change someday (4.x..5.x) - update manually.
-$nextVersion = $versionParts[0] . '.' . $versionParts[1] + 1;
+$nextMinor = $versionParts[0] . '.' . $versionParts[1] + 1;
 
 // Creates a branch for release.
 system('git switch develop');
@@ -80,7 +80,7 @@ replace_file_content(
 replace_file_content(
     './admin/starter/builds',
     '/define\(\'NEXT_MINOR\', \'.*?\'\);/mu',
-    "define('NEXT_MINOR', '^{$nextVersion}-dev');",
+    "define('NEXT_MINOR', '{$nextMinor}-dev');",
 );
 
 // Commits

@@ -3,7 +3,7 @@
 
 define('LATEST_RELEASE', '^4.7');
 define('DEVELOP_BRANCH', 'dev-develop');
-define('NEXT_MINOR', '^4.8-dev');
+define('NEXT_MINOR', '4.8-dev');
 define('GITHUB_URL', 'https://github.com/codeigniter4/codeigniter4');
 
 /*
