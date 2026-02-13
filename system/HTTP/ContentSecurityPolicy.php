@@ -429,8 +429,8 @@ class ContentSecurityPolicy
     {
         if ($this->autoNonce) {
             $this->generateNonces($response);
-        } else {
-            // If we're not auto-generating nonces, we should remove any nonce placeholders from the body to prevent them from being rendered.
+        } elseif (! $this->enabled()) {
+            // If autoNonce is disabled and CSP is not enabled, we should still remove any nonce tags from the body to prevent confusion.
             $body = (string) $response->getBody();
 
             if ($body !== '') {
