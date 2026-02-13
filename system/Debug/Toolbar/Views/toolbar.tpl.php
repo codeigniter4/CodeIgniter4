@@ -28,6 +28,7 @@ use CodeIgniter\View\Parser;
 <script id="toolbar_js">
     var ciSiteURL = "<?= rtrim(site_url(), '/') ?>"
     <?= file_get_contents(__DIR__ . '/toolbar.js') ?>
+    <?= file_get_contents(__DIR__ . '/toolbarstandalone.js') ?>
 </script>
 <div id="debug-icon" class="debug-bar-ndisplay">
     <a id="debug-icon-link">
