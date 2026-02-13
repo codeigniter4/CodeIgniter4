@@ -427,17 +427,7 @@ class ContentSecurityPolicy
      */
     public function finalize(ResponseInterface $response)
     {
-        if ($this->autoNonce) {
-            $this->generateNonces($response);
-        } elseif (! $this->enabled()) {
-            // If autoNonce is disabled and CSP is not enabled, we should still remove any nonce tags from the body to prevent confusion.
-            $body = (string) $response->getBody();
-
-            if ($body !== '') {
-                $body = str_replace([$this->styleNonceTag, $this->scriptNonceTag], '', $body);
-                $response->setBody($body);
-            }
-        }
+        $this->generateNonces($response);
 
         $this->buildHeaders($response);
     }
@@ -900,6 +890,10 @@ class ContentSecurityPolicy
      */
     protected function generateNonces(ResponseInterface $response)
     {
+        if ($this->enabled() && ! $this->autoNonce) {
+            return;
+        }
+
         $body = (string) $response->getBody();
 
         if ($body === '') {
