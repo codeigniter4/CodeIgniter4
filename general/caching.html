@@ -1,28 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Web Page Caching &mdash; CodeIgniter 4.7.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=34bb78ad" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css?v=eacb1234" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css?v=2b70fae9" />
 
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/js/citheme.js"></script>
-        <script src="../_static/js/carbon.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=52a74d40"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/js/citheme.js?v=e0bcfc84"></script>
+      <script src="../_static/js/carbon.js?v=b287325f"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -293,7 +290,7 @@
            <div itemprop="articleBody">
              
   <section id="web-page-caching">
-<h1>Web Page Caching<a class="headerlink" href="#web-page-caching" title="Permalink to this heading"></a></h1>
+<h1>Web Page Caching<a class="headerlink" href="#web-page-caching" title="Link to this heading"></a></h1>
 <p>CodeIgniter lets you cache your pages in order to achieve maximum
 performance.</p>
 <p>Although CodeIgniter is quite fast, the amount of dynamic information
@@ -317,7 +314,7 @@ static web pages.</p>
 </ul>
 </nav>
 <section id="how-does-caching-work">
-<h2><a class="toc-backref" href="#id1" role="doc-backlink">How Does Caching Work?</a><a class="headerlink" href="#how-does-caching-work" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">How Does Caching Work?</a><a class="headerlink" href="#how-does-caching-work" title="Link to this heading"></a></h2>
 <p>Caching can be enabled on a per-page basis, and you can set the length
 of time that a page should remain cached before being refreshed.</p>
 <div class="admonition note">
@@ -338,15 +335,15 @@ load speed when caching is enabled.</p>
 </div>
 </section>
 <section id="configuring-caching">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">Configuring Caching</a><a class="headerlink" href="#configuring-caching" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Configuring Caching</a><a class="headerlink" href="#configuring-caching" title="Link to this heading"></a></h2>
 <section id="setting-cache-engine">
-<h3><a class="toc-backref" href="#id3" role="doc-backlink">Setting Cache Engine</a><a class="headerlink" href="#setting-cache-engine" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Setting Cache Engine</a><a class="headerlink" href="#setting-cache-engine" title="Link to this heading"></a></h3>
 <p>Before using Web Page Caching, you must set the cache engine up by editing
 <strong>app/Config/Cache.php</strong>. See <a class="reference internal" href="../libraries/caching.html#libraries-caching-configuring-the-cache"><span class="std std-ref">Configuring the Cache</span></a>
 for details.</p>
 </section>
 <section id="setting-cachequerystring">
-<h3><a class="toc-backref" href="#id4" role="doc-backlink">Setting $cacheQueryString</a><a class="headerlink" href="#setting-cachequerystring" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Setting $cacheQueryString</a><a class="headerlink" href="#setting-cachequerystring" title="Link to this heading"></a></h3>
 <p>You can set whether or not to include the query string when generating the cache
 with <code class="docutils literal notranslate"><span class="pre">Config\Cache::$cacheQueryString</span></code>.</p>
 <p>Valid options are:</p>
@@ -362,9 +359,9 @@ parameters. E.g., <code class="docutils literal notranslate"><span class="pre">[
 </ul>
 </section>
 <section id="setting-cachestatuscodes">
-<span id="web-page-caching-cache-status-codes"></span><h3><a class="toc-backref" href="#id5" role="doc-backlink">Setting $cacheStatusCodes</a><a class="headerlink" href="#setting-cachestatuscodes" title="Permalink to this heading"></a></h3>
+<span id="web-page-caching-cache-status-codes"></span><h3><a class="toc-backref" href="#id5" role="doc-backlink">Setting $cacheStatusCodes</a><a class="headerlink" href="#setting-cachestatuscodes" title="Link to this heading"></a></h3>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 4.7.0.</span></p>
+<p><span class="versionmodified added">Added in version 4.7.0.</span></p>
 </div>
 <p>You can control which HTTP response status codes are allowed to be cached
 with <code class="docutils literal notranslate"><span class="pre">Config\Cache::$cacheStatusCodes</span></code>.</p>
@@ -397,7 +394,7 @@ instances are never cached by the <code class="docutils literal notranslate"><sp
 </section>
 </section>
 <section id="enabling-caching">
-<h2><a class="toc-backref" href="#id6" role="doc-backlink">Enabling Caching</a><a class="headerlink" href="#enabling-caching" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Enabling Caching</a><a class="headerlink" href="#enabling-caching" title="Link to this heading"></a></h2>
 <p>To enable caching, put the following tag in any of your controller
 methods:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -417,7 +414,7 @@ your output, you have to manually delete your cache.</p>
 </div>
 </section>
 <section id="deleting-caches">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">Deleting Caches</a><a class="headerlink" href="#deleting-caches" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Deleting Caches</a><a class="headerlink" href="#deleting-caches" title="Link to this heading"></a></h2>
 <p>If you no longer wish to cache a page you can remove the caching tag and
 it will no longer be refreshed when it expires.</p>
 <div class="admonition note">

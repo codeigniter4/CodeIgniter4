@@ -1,28 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Database Migrations &mdash; CodeIgniter 4.7.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=34bb78ad" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css?v=eacb1234" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css?v=2b70fae9" />
 
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/js/citheme.js"></script>
-        <script src="../_static/js/carbon.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=52a74d40"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/js/citheme.js?v=e0bcfc84"></script>
+      <script src="../_static/js/carbon.js?v=b287325f"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -293,7 +290,7 @@
            <div itemprop="articleBody">
              
   <section id="database-migrations">
-<h1>Database Migrations<a class="headerlink" href="#database-migrations" title="Permalink to this heading"></a></h1>
+<h1>Database Migrations<a class="headerlink" href="#database-migrations" title="Link to this heading"></a></h1>
 <p>Migrations are a convenient way for you to alter your database in a
 structured and organized manner. You could edit fragments of SQL by hand
 but you would then be responsible for telling other developers that they
@@ -324,11 +321,11 @@ include migrations from all namespaces.</p>
 </ul>
 </li>
 <li><p><a class="reference internal" href="#migration-preferences" id="id13">Migration Preferences</a></p></li>
-<li><p><a class="reference internal" href="#namespace-CodeIgniter\Database" id="id14">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#class-reference" id="id14">Class Reference</a></p></li>
 </ul>
 </nav>
 <section id="migration-file-names">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">Migration File Names</a><a class="headerlink" href="#migration-file-names" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Migration File Names</a><a class="headerlink" href="#migration-file-names" title="Link to this heading"></a></h2>
 <p>A migration file name is made up of a timestamp prefix, an underscore (<code class="docutils literal notranslate"><span class="pre">_</span></code>),
 and a descriptive name (classname).</p>
 <ul class="simple">
@@ -350,7 +347,7 @@ method taken. This helps prevent numbering conflicts when working in a team
 environment.</p>
 </section>
 <section id="create-a-migration">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Create a Migration</a><a class="headerlink" href="#create-a-migration" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Create a Migration</a><a class="headerlink" href="#create-a-migration" title="Link to this heading"></a></h2>
 <p>This will be the first migration for a new site which has a blog. All
 migrations go in the <strong>app/Database/Migrations/</strong> directory and have names such
 as <strong>2022-01-31-013057_AddBlog.php</strong>.</p>
@@ -400,7 +397,7 @@ See <a class="reference internal" href="#make-migration">make:migration</a> in <
 <p>Since the migration class is a PHP class, the classname must be unique in every migration file.</p>
 </div>
 <section id="foreign-keys">
-<h3><a class="toc-backref" href="#id4" role="doc-backlink">Foreign Keys</a><a class="headerlink" href="#foreign-keys" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Foreign Keys</a><a class="headerlink" href="#foreign-keys" title="Link to this heading"></a></h3>
 <p>When your tables include Foreign Keys, migrations can often cause problems as you attempt to drop tables and columns.
 To temporarily bypass the foreign key checks while running migrations, use the <code class="docutils literal notranslate"><span class="pre">disableForeignKeyChecks()</span></code> and
 <code class="docutils literal notranslate"><span class="pre">enableForeignKeyChecks()</span></code> methods on the database connection.</p>
@@ -425,7 +422,7 @@ To temporarily bypass the foreign key checks while running migrations, use the <
 </div>
 </section>
 <section id="database-groups">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">Database Groups</a><a class="headerlink" href="#database-groups" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Database Groups</a><a class="headerlink" href="#database-groups" title="Link to this heading"></a></h3>
 <p>A migration will only be run against a single database group. If you have multiple groups defined in
 <strong>app/Config/Database.php</strong>, then by default it will run against the <code class="docutils literal notranslate"><span class="pre">$defaultGroup</span></code> as specified
 in that same configuration file.</p>
@@ -464,7 +461,7 @@ run will be always created in the default database group.</p>
 </div>
 </section>
 <section id="namespaces">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">Namespaces</a><a class="headerlink" href="#namespaces" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Namespaces</a><a class="headerlink" href="#namespaces" title="Link to this heading"></a></h3>
 <p>The migration library can automatically scan all namespaces you have defined within
 <strong>app/Config/Autoload.php</strong> or loaded from an external source like Composer, using
 the <code class="docutils literal notranslate"><span class="pre">$psr4</span></code> property for matching directory names. It will include all migrations
@@ -484,12 +481,12 @@ re-usable, modular code suites.</p>
 </section>
 </section>
 <section id="command-line-tools">
-<span id="id1"></span><h2><a class="toc-backref" href="#id7" role="doc-backlink">Command-Line Tools</a><a class="headerlink" href="#command-line-tools" title="Permalink to this heading"></a></h2>
+<span id="id1"></span><h2><a class="toc-backref" href="#id7" role="doc-backlink">Command-Line Tools</a><a class="headerlink" href="#command-line-tools" title="Link to this heading"></a></h2>
 <p>CodeIgniter ships with several <a class="reference internal" href="../cli/spark_commands.html"><span class="doc">commands</span></a> that are available from the command line to help
 you work with migrations. These tools make things easier for those of you
 that wish to use them. The tools primarily provide access to the same methods that are available within the MigrationRunner class.</p>
 <section id="migrate">
-<h3><a class="toc-backref" href="#id8" role="doc-backlink">migrate</a><a class="headerlink" href="#migrate" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">migrate</a><a class="headerlink" href="#migrate" title="Link to this heading"></a></h3>
 <p>Migrates a database group with all available migrations:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark migrate</span>
 </pre></div>
@@ -514,7 +511,7 @@ not been run. These will all be collected and then sorted as a group by date cre
 to minimize any potential conflicts between the main application and any modules.</p>
 </section>
 <section id="migrate-rollback">
-<h3><a class="toc-backref" href="#id9" role="doc-backlink">migrate:rollback</a><a class="headerlink" href="#migrate-rollback" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">migrate:rollback</a><a class="headerlink" href="#migrate-rollback" title="Link to this heading"></a></h3>
 <p>Rolls back all migrations to a blank slate, effectively migration 0:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark migrate:rollback</span>
 </pre></div>
@@ -526,7 +523,7 @@ to minimize any potential conflicts between the main application and any modules
 </ul>
 </section>
 <section id="migrate-refresh">
-<h3><a class="toc-backref" href="#id10" role="doc-backlink">migrate:refresh</a><a class="headerlink" href="#migrate-refresh" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">migrate:refresh</a><a class="headerlink" href="#migrate-refresh" title="Link to this heading"></a></h3>
 <p>Refreshes the database state by first rolling back all migrations, and then migrating all:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark migrate:refresh</span>
 </pre></div>
@@ -540,7 +537,7 @@ to minimize any potential conflicts between the main application and any modules
 </ul>
 </section>
 <section id="migrate-status">
-<h3><a class="toc-backref" href="#id11" role="doc-backlink">migrate:status</a><a class="headerlink" href="#migrate-status" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">migrate:status</a><a class="headerlink" href="#migrate-status" title="Link to this heading"></a></h3>
 <p>Displays a list of all migrations and the date and time they ran, or ‘–’ if they have not been run:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark migrate:status</span>
 
@@ -561,7 +558,7 @@ to minimize any potential conflicts between the main application and any modules
 </ul>
 </section>
 <section id="make-migration">
-<h3><a class="toc-backref" href="#id12" role="doc-backlink">make:migration</a><a class="headerlink" href="#make-migration" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">make:migration</a><a class="headerlink" href="#make-migration" title="Link to this heading"></a></h3>
 <p>Creates a skeleton migration file in <strong>app/Database/Migrations</strong>.
 It automatically prepends the current timestamp. The class name it
 creates is the Pascal case version of the filename.</p>
@@ -583,7 +580,7 @@ database sessions:</p>
 </section>
 </section>
 <section id="migration-preferences">
-<h2><a class="toc-backref" href="#id13" role="doc-backlink">Migration Preferences</a><a class="headerlink" href="#migration-preferences" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id13" role="doc-backlink">Migration Preferences</a><a class="headerlink" href="#migration-preferences" title="Link to this heading"></a></h2>
 <p>The following is a table of all the config options for migrations, available in <strong>app/Config/Migrations.php</strong>.</p>
 <table class="docutils align-default">
 <thead>
@@ -620,14 +617,14 @@ in multi-process environments (e.g., Kubernetes).</p></td>
 </tbody>
 </table>
 </section>
-<section id="namespace-CodeIgniter\Database">
-<span id="class-reference"></span><h2><a class="toc-backref" href="#id14" role="doc-backlink">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\Database" title="Permalink to this heading"></a></h2>
-<dl class="php class">
+<section id="class-reference">
+<h2><a class="toc-backref" href="#id14" role="doc-backlink">Class Reference</a><a class="headerlink" href="#class-reference" title="Link to this heading"></a></h2>
+<dl class="php class" id="namespace-CodeIgniter\Database">
 <dt class="sig sig-object php" id="CodeIgniter\Database\MigrationRunner">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\Database\</span></span><span class="sig-name descname"><span class="pre">MigrationRunner</span></span><a class="headerlink" href="#CodeIgniter\Database\MigrationRunner" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\Database\</span></span><span class="sig-name descname"><span class="pre">MigrationRunner</span></span><a class="headerlink" href="#CodeIgniter\Database\MigrationRunner" title="Link to this definition"></a></dt>
 <dd><dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\Database\MigrationRunner::findMigrations">
-<span class="sig-name descname"><span class="pre">findMigrations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\MigrationRunner::findMigrations" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">findMigrations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\MigrationRunner::findMigrations" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>An array of migration files</p>
@@ -641,7 +638,7 @@ in multi-process environments (e.g., Kubernetes).</p></td>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\Database\MigrationRunner::latest">
-<span class="sig-name descname"><span class="pre">latest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$group</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\MigrationRunner::latest" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">latest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$group</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\MigrationRunner::latest" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -661,7 +658,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\Database\MigrationRunner::regress">
-<span class="sig-name descname"><span class="pre">regress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$targetBatch</span></em>, <em class="sig-param"><span class="pre">$group</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\MigrationRunner::regress" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">regress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$targetBatch</span></em>, <em class="sig-param"><span class="pre">$group</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\MigrationRunner::regress" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -687,7 +684,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\Database\MigrationRunner::force">
-<span class="sig-name descname"><span class="pre">force</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$path</span></em>, <em class="sig-param"><span class="pre">$namespace</span></em>, <em class="sig-param"><span class="pre">$group</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\MigrationRunner::force" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">force</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$path</span></em>, <em class="sig-param"><span class="pre">$namespace</span></em>, <em class="sig-param"><span class="pre">$group</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\MigrationRunner::force" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -712,7 +709,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\Database\MigrationRunner::setNamespace">
-<span class="sig-name descname"><span class="pre">setNamespace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$namespace</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\MigrationRunner::setNamespace" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">setNamespace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$namespace</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\MigrationRunner::setNamespace" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -740,7 +737,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\Database\MigrationRunner::setGroup">
-<span class="sig-name descname"><span class="pre">setGroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$group</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\MigrationRunner::setGroup" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">setGroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$group</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\MigrationRunner::setGroup" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">

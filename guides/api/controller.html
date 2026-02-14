@@ -1,28 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Building a RESTful Controller &mdash; CodeIgniter 4.7.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/citheme.css" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/citheme_dark.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=34bb78ad" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/citheme.css?v=eacb1234" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/citheme_dark.css?v=2b70fae9" />
 
   
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
-        <script src="../../_static/js/citheme.js"></script>
-        <script src="../../_static/js/carbon.js"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=52a74d40"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/js/citheme.js?v=e0bcfc84"></script>
+      <script src="../../_static/js/carbon.js?v=b287325f"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -294,15 +291,15 @@
            <div itemprop="articleBody">
              
   <section id="building-a-restful-controller">
-<span id="ci47-rest-part4"></span><h1>Building a RESTful Controller<a class="headerlink" href="#building-a-restful-controller" title="Permalink to this heading"></a></h1>
+<span id="ci47-rest-part4"></span><h1>Building a RESTful Controller<a class="headerlink" href="#building-a-restful-controller" title="Link to this heading"></a></h1>
 <p>In this chapter, we build the API endpoints to expose your <code class="docutils literal notranslate"><span class="pre">book</span></code> table through a proper RESTful API.
 We’ll use <code class="xref php php-class docutils literal notranslate"><span class="pre">CodeIgniter\RESTful\ResourceController</span></code> to handle CRUD actions with almost no boilerplate.</p>
 <section id="what-is-restful">
-<h2>What is RESTful?<a class="headerlink" href="#what-is-restful" title="Permalink to this heading"></a></h2>
+<h2>What is RESTful?<a class="headerlink" href="#what-is-restful" title="Link to this heading"></a></h2>
 <p>RESTful APIs use standard HTTP verbs (<code class="docutils literal notranslate"><span class="pre">GET</span></code>, <code class="docutils literal notranslate"><span class="pre">POST</span></code>, <code class="docutils literal notranslate"><span class="pre">PUT</span></code>, <code class="docutils literal notranslate"><span class="pre">DELETE</span></code>) to perform actions on resources identified by URIs. This approach makes APIs predictable and easy to use. There can be much debate on some of the finer points of what makes a REST API, but following these basics can get it close enough for many uses. By using auto-routing and the <code class="xref php php-class docutils literal notranslate"><span class="pre">ApiResponseTrait</span></code>, CodeIgniter makes it simple to create RESTful endpoints.</p>
 </section>
 <section id="generate-the-controller">
-<h2>Generate the controller<a class="headerlink" href="#generate-the-controller" title="Permalink to this heading"></a></h2>
+<h2>Generate the controller<a class="headerlink" href="#generate-the-controller" title="Link to this heading"></a></h2>
 <p>Run the Spark command:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:controller Api/Books</span>
 </pre></div>
@@ -366,7 +363,7 @@ We’ll use <code class="xref php php-class docutils literal notranslate"><span 
 </div>
 </section>
 <section id="api-transformers">
-<h2>API Transformers<a class="headerlink" href="#api-transformers" title="Permalink to this heading"></a></h2>
+<h2>API Transformers<a class="headerlink" href="#api-transformers" title="Link to this heading"></a></h2>
 <p>It is considered a best practice to separate your data models from the way they are presented in your API responses. This is often done using transformers or resource classes that format the data consistently. CodeIgniter provides API transformers to help with this.</p>
 <p>Create the transformers with the generator command:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:transformer BookTransformer</span>
@@ -409,7 +406,7 @@ We’ll use <code class="xref php php-class docutils literal notranslate"><span 
 <p>You may have noticed that we did not use an AuthorTransformer. This is because the author data is simple enough that we can return it directly without additional transformation. However, for more complex related resources, you might want to create separate transformers for them as well. Additionally, we’ll collect the author information at query time so that we don’t hit any N+1 query issues later.</p>
 </section>
 <section id="listing-books">
-<h2>Listing Books<a class="headerlink" href="#listing-books" title="Permalink to this heading"></a></h2>
+<h2>Listing Books<a class="headerlink" href="#listing-books" title="Link to this heading"></a></h2>
 <p>We made the <code class="docutils literal notranslate"><span class="pre">$id</span></code> parameter optional so that the same method can handle both listing all books and retrieving a single book by ID. Let’s implement that now.</p>
 <div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">     * List one or many resources</span>
 <span class="x">     * GET /api/books</span>
@@ -443,7 +440,7 @@ We’ll use <code class="xref php php-class docutils literal notranslate"><span 
 <p>If no <code class="docutils literal notranslate"><span class="pre">$id</span></code> is provided, we use the model to retrieve all books, stopping short of actually retrieving the records. This allows us to use the <code class="docutils literal notranslate"><span class="pre">ResponseTrait</span></code>’s <a class="reference internal" href="../../outgoing/api_responses.html#paginate" title="paginate"><code class="xref php php-meth docutils literal notranslate"><span class="pre">paginate</span></code></a> method to handle pagination automatically. We pass the name of the transformer to the <code class="docutils literal notranslate"><span class="pre">paginate</span></code> method so that it can format each book in the paginated result set.</p>
 <p>In both of these cases, we use a new method on the model called <code class="docutils literal notranslate"><span class="pre">withAuthorInfo()</span></code>. This is a custom method we will add to the model to join the related author data when retrieving books.</p>
 <section id="add-the-model-helper-method">
-<h3>Add the Model helper method<a class="headerlink" href="#add-the-model-helper-method" title="Permalink to this heading"></a></h3>
+<h3>Add the Model helper method<a class="headerlink" href="#add-the-model-helper-method" title="Link to this heading"></a></h3>
 <p>In your BookModel, we add a new method called <code class="docutils literal notranslate"><span class="pre">withAuthorInfo()</span></code>. This method uses the Query Builder to join the <code class="docutils literal notranslate"><span class="pre">author</span></code> table and select the relevant author fields. This way, when we retrieve books, we also get the associated author information without needing to make separate queries for each book.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -464,7 +461,7 @@ We’ll use <code class="xref php php-class docutils literal notranslate"><span 
 </div>
 </section>
 <section id="test-the-list-endpoint">
-<h3>Test the list endpoint<a class="headerlink" href="#test-the-list-endpoint" title="Permalink to this heading"></a></h3>
+<h3>Test the list endpoint<a class="headerlink" href="#test-the-list-endpoint" title="Link to this heading"></a></h3>
 <p>Start the local server:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark serve</span>
 </pre></div>
@@ -514,7 +511,7 @@ We’ll use <code class="xref php php-class docutils literal notranslate"><span 
 </section>
 </section>
 <section id="implement-the-remaining-methods">
-<h2>Implement the remaining methods<a class="headerlink" href="#implement-the-remaining-methods" title="Permalink to this heading"></a></h2>
+<h2>Implement the remaining methods<a class="headerlink" href="#implement-the-remaining-methods" title="Link to this heading"></a></h2>
 <p>Edit <strong>app/Controllers/Api/Books.php</strong> to include the remaining methods:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -640,7 +637,7 @@ We’ll use <code class="xref php php-class docutils literal notranslate"><span 
 <p>And that’s it! You now have a fully functional RESTful API for managing books, complete with proper HTTP methods, status codes, and data transformation. You can further enhance this API by adding authentication, validation, and other features as needed.</p>
 </section>
 <section id="a-more-semantic-naming-scheme">
-<h2>A More Semantic Naming Scheme<a class="headerlink" href="#a-more-semantic-naming-scheme" title="Permalink to this heading"></a></h2>
+<h2>A More Semantic Naming Scheme<a class="headerlink" href="#a-more-semantic-naming-scheme" title="Link to this heading"></a></h2>
 <p>In the previous examples, we used method names like <code class="docutils literal notranslate"><span class="pre">getIndex()</span></code>, <code class="docutils literal notranslate"><span class="pre">putIndex()</span></code>, etc. because we wanted to rely solely on the HTTP verb to determine the action. With auto-routing enabled, we have to use the <code class="docutils literal notranslate"><span class="pre">index</span></code> method name to avoid conflicts with URI segments. However, if you prefer more semantic method names, you could change the method names so that they reflect the action being performed, such as <code class="docutils literal notranslate"><span class="pre">getList()</span></code>, <code class="docutils literal notranslate"><span class="pre">postCreate()</span></code>, <code class="docutils literal notranslate"><span class="pre">putUpdate()</span></code>, and <code class="docutils literal notranslate"><span class="pre">deleteDelete()</span></code>. This would make each method’s purpose clearer at a glance and would add one new segment to the URI.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>GET    /api/books/list         -&gt; getList()
 POST   /api/books/create       -&gt; postCreate()

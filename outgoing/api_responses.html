@@ -1,28 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>API Responses &mdash; CodeIgniter 4.7.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=34bb78ad" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css?v=eacb1234" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css?v=2b70fae9" />
 
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/js/citheme.js"></script>
-        <script src="../_static/js/carbon.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=52a74d40"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/js/citheme.js?v=e0bcfc84"></script>
+      <script src="../_static/js/carbon.js?v=b287325f"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -293,7 +290,7 @@
            <div itemprop="articleBody">
              
   <section id="api-responses">
-<h1>API Responses<a class="headerlink" href="#api-responses" title="Permalink to this heading"></a></h1>
+<h1>API Responses<a class="headerlink" href="#api-responses" title="Link to this heading"></a></h1>
 <p>Much of modern PHP development requires building APIs, whether simply to provide data for a javascript-heavy
 single page application, or as a standalone product. CodeIgniter provides a couple of traits that can be
 used with any controller to make common response types simple, with no need to remember which HTTP status code
@@ -312,7 +309,7 @@ should be returned for which response types.</p>
 </ul>
 </nav>
 <section id="response-examples">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">Response Examples</a><a class="headerlink" href="#response-examples" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Response Examples</a><a class="headerlink" href="#response-examples" title="Link to this heading"></a></h2>
 <p>The following example shows a common usage pattern within your controllers.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -379,7 +376,7 @@ exist for the most common use cases:</p>
 </div>
 </section>
 <section id="handling-response-types">
-<span id="api-response-trait-handling-response-types"></span><h2><a class="toc-backref" href="#id3" role="doc-backlink">Handling Response Types</a><a class="headerlink" href="#handling-response-types" title="Permalink to this heading"></a></h2>
+<span id="api-response-trait-handling-response-types"></span><h2><a class="toc-backref" href="#id3" role="doc-backlink">Handling Response Types</a><a class="headerlink" href="#handling-response-types" title="Link to this heading"></a></h2>
 <p>When you pass your data in any of these methods, they will determine the data type to format the results as based on
 the following criteria:</p>
 <ul class="simple">
@@ -447,10 +444,10 @@ support both JSON and XML:</p>
 JSON data will be sent back to the client.</p>
 </section>
 <section id="class-reference">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Class Reference</a><a class="headerlink" href="#class-reference" title="Link to this heading"></a></h2>
 <dl class="php method">
 <dt class="sig sig-object php" id="setResponseFormat">
-<span class="sig-name descname"><span class="pre">setResponseFormat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$format</span></em><span class="sig-paren">)</span><a class="headerlink" href="#setResponseFormat" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">setResponseFormat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$format</span></em><span class="sig-paren">)</span><a class="headerlink" href="#setResponseFormat" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -469,7 +466,7 @@ JSON data will be sent back to the client.</p>
 </div>
 <dl class="php method">
 <dt class="sig sig-object php" id="respond">
-<span class="sig-name descname"><span class="pre">respond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$data</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$statusCode</span> <span class="pre">=</span> <span class="pre">200</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#respond" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">respond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$data</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$statusCode</span> <span class="pre">=</span> <span class="pre">200</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#respond" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -495,7 +492,7 @@ be the final method in the script execution.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="fail">
-<span class="sig-name descname"><span class="pre">fail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$messages</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">int</span> <span class="pre">$status</span> <span class="pre">=</span> <span class="pre">400</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#fail" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">fail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$messages</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">int</span> <span class="pre">$status</span> <span class="pre">=</span> <span class="pre">400</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#fail" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -548,7 +545,7 @@ that match the status code.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="respondCreated">
-<span class="sig-name descname"><span class="pre">respondCreated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$data</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#respondCreated" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">respondCreated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$data</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#respondCreated" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -572,7 +569,7 @@ that match the status code.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="respondDeleted">
-<span class="sig-name descname"><span class="pre">respondDeleted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$data</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#respondDeleted" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">respondDeleted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$data</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#respondDeleted" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -596,7 +593,7 @@ that match the status code.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="respondNoContent">
-<span class="sig-name descname"><span class="pre">respondNoContent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">'No</span> <span class="pre">Content'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#respondNoContent" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">respondNoContent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">'No</span> <span class="pre">Content'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#respondNoContent" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -620,7 +617,7 @@ meaningful reply to send back to the client, typically 204.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="failUnauthorized">
-<span class="sig-name descname"><span class="pre">failUnauthorized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$description</span> <span class="pre">=</span> <span class="pre">'Unauthorized'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failUnauthorized" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">failUnauthorized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$description</span> <span class="pre">=</span> <span class="pre">'Unauthorized'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failUnauthorized" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -644,7 +641,7 @@ or has incorrect authorization. Status code is 401.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="failForbidden">
-<span class="sig-name descname"><span class="pre">failForbidden</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$description</span> <span class="pre">=</span> <span class="pre">'Forbidden'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code=null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failForbidden" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">failForbidden</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$description</span> <span class="pre">=</span> <span class="pre">'Forbidden'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code=null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failForbidden" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -669,7 +666,7 @@ the client should not try again because it won’t help. Status code is 403.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="failNotFound">
-<span class="sig-name descname"><span class="pre">failNotFound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$description</span> <span class="pre">=</span> <span class="pre">'Not</span> <span class="pre">Found'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code=null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failNotFound" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">failNotFound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$description</span> <span class="pre">=</span> <span class="pre">'Not</span> <span class="pre">Found'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code=null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failNotFound" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -692,7 +689,7 @@ the client should not try again because it won’t help. Status code is 403.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="failValidationErrors">
-<span class="sig-name descname"><span class="pre">failValidationErrors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$errors</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code=null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failValidationErrors" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">failValidationErrors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$errors</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code=null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failValidationErrors" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -715,7 +712,7 @@ the client should not try again because it won’t help. Status code is 403.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="failResourceExists">
-<span class="sig-name descname"><span class="pre">failResourceExists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$description</span> <span class="pre">=</span> <span class="pre">'Conflict'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code=null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failResourceExists" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">failResourceExists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$description</span> <span class="pre">=</span> <span class="pre">'Conflict'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code=null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failResourceExists" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -739,7 +736,7 @@ Status code is typically 409.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="failResourceGone">
-<span class="sig-name descname"><span class="pre">failResourceGone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$description</span> <span class="pre">=</span> <span class="pre">'Gone'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code=null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failResourceGone" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">failResourceGone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$description</span> <span class="pre">=</span> <span class="pre">'Gone'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code=null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failResourceGone" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -763,7 +760,7 @@ is no longer available. Status code is typically 410.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="failTooManyRequests">
-<span class="sig-name descname"><span class="pre">failTooManyRequests</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$description</span> <span class="pre">=</span> <span class="pre">'Too</span> <span class="pre">Many</span> <span class="pre">Requests'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code=null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failTooManyRequests" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">failTooManyRequests</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$description</span> <span class="pre">=</span> <span class="pre">'Too</span> <span class="pre">Many</span> <span class="pre">Requests'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code=null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failTooManyRequests" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -787,7 +784,7 @@ This might be due to some form of throttling or rate limiting. Status code is ty
 
 <dl class="php method">
 <dt class="sig sig-object php" id="failServerError">
-<span class="sig-name descname"><span class="pre">failServerError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$description</span> <span class="pre">=</span> <span class="pre">'Internal</span> <span class="pre">Server</span> <span class="pre">Error'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failServerError" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">failServerError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$description</span> <span class="pre">=</span> <span class="pre">'Internal</span> <span class="pre">Server</span> <span class="pre">Error'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failServerError" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -810,12 +807,12 @@ This might be due to some form of throttling or rate limiting. Status code is ty
 
 </section>
 <section id="pagination-responses">
-<span id="api-response-trait-paginate"></span><h2><a class="toc-backref" href="#id5" role="doc-backlink">Pagination Responses</a><a class="headerlink" href="#pagination-responses" title="Permalink to this heading"></a></h2>
+<span id="api-response-trait-paginate"></span><h2><a class="toc-backref" href="#id5" role="doc-backlink">Pagination Responses</a><a class="headerlink" href="#pagination-responses" title="Link to this heading"></a></h2>
 <p>When returning paginated results from an API endpoint, you can use the <code class="docutils literal notranslate"><span class="pre">paginate()</span></code> method to return the
 results along with the pagination information. This helps to keep consistent responses across your API, while
 providing all of the information that clients will need to properly page through the results.</p>
 <section id="example-usage">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">Example Usage</a><a class="headerlink" href="#example-usage" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Example Usage</a><a class="headerlink" href="#example-usage" title="Link to this heading"></a></h3>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">App\Controllers\BaseController</span><span class="p">;</span>
@@ -894,10 +891,10 @@ name and any necessary joins or where clauses.</p>
 </section>
 </section>
 <section id="id1">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">Class Reference</a><a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Class Reference</a><a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
 <dl class="php method">
 <dt class="sig sig-object php" id="paginate">
-<span class="sig-name descname"><span class="pre">paginate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">Model|BaseBuilder</span> <span class="pre">$resource</span></em>, <em class="sig-param"><span class="pre">int</span> <span class="pre">$perPage</span> <span class="pre">=</span> <span class="pre">20</span></em>, <em class="sig-param"><span class="pre">?string</span> <span class="pre">$transformWith</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="sig-paren">)</span><a class="headerlink" href="#paginate" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">paginate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">Model|BaseBuilder</span> <span class="pre">$resource</span></em>, <em class="sig-param"><span class="pre">int</span> <span class="pre">$perPage</span> <span class="pre">=</span> <span class="pre">20</span></em>, <em class="sig-param"><span class="pre">?string</span> <span class="pre">$transformWith</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="sig-paren">)</span><a class="headerlink" href="#paginate" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">

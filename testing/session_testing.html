@@ -1,28 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Session Testing &mdash; CodeIgniter 4.7.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=34bb78ad" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css?v=eacb1234" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css?v=2b70fae9" />
 
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/js/citheme.js"></script>
-        <script src="../_static/js/carbon.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=52a74d40"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/js/citheme.js?v=e0bcfc84"></script>
+      <script src="../_static/js/carbon.js?v=b287325f"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -293,7 +290,7 @@
            <div itemprop="articleBody">
              
   <section id="session-testing">
-<h1>Session Testing<a class="headerlink" href="#session-testing" title="Permalink to this heading"></a></h1>
+<h1>Session Testing<a class="headerlink" href="#session-testing" title="Link to this heading"></a></h1>
 <p>Testing session behavior in your application is made simple with the ArrayHandler session driver.
 Unlike other session drivers, ArrayHandler does not persist data to disk, database, or external storage.
 This allows you to simulate session interactions safely during unit or integration tests, without affecting real session data.</p>
@@ -314,7 +311,7 @@ While in most production scenarios you would use file, database, or cache-backed
 </ul>
 </nav>
 <section id="initializing-sessions">
-<h2><a class="toc-backref" href="#id1" role="doc-backlink">Initializing Sessions</a><a class="headerlink" href="#initializing-sessions" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Initializing Sessions</a><a class="headerlink" href="#initializing-sessions" title="Link to this heading"></a></h2>
 <p>You can initialize a session using the ArrayHandler driver for testing. This example shows how to create a session instance with a proper configuration:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -334,7 +331,7 @@ While in most production scenarios you would use file, database, or cache-backed
 </div>
 </section>
 <section id="setting-and-retrieving-data">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">Setting and Retrieving Data</a><a class="headerlink" href="#setting-and-retrieving-data" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Setting and Retrieving Data</a><a class="headerlink" href="#setting-and-retrieving-data" title="Link to this heading"></a></h2>
 <p>Once initialized, you can set session values and retrieve them as usual:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -355,7 +352,7 @@ after the object is destroyed (typically at the end of a request or test), the d
 </div>
 </section>
 <section id="example-test-case">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Example Test Case</a><a class="headerlink" href="#example-test-case" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Example Test Case</a><a class="headerlink" href="#example-test-case" title="Link to this heading"></a></h2>
 <p>Here’s a simple example demonstrating usage of the ArrayHandler in a PHPUnit test:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -399,9 +396,9 @@ after the object is destroyed (typically at the end of a request or test), the d
 </div>
 </section>
 <section id="session-assertions">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Session Assertions</a><a class="headerlink" href="#session-assertions" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Session Assertions</a><a class="headerlink" href="#session-assertions" title="Link to this heading"></a></h2>
 <section id="using-phpunit-assertions-with-arrayhandler">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">Using PHPUnit Assertions with ArrayHandler</a><a class="headerlink" href="#using-phpunit-assertions-with-arrayhandler" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Using PHPUnit Assertions with ArrayHandler</a><a class="headerlink" href="#using-phpunit-assertions-with-arrayhandler" title="Link to this heading"></a></h3>
 <p>When testing sessions directly with Session and ArrayHandler in a unit test, use standard PHPUnit assertions.
 <code class="docutils literal notranslate"><span class="pre">assertSessionHas()</span></code> and <code class="docutils literal notranslate"><span class="pre">assertSessionMissing()</span></code> are not available in this context because you are interacting directly with the session object,
 not a response object.</p>
@@ -425,7 +422,7 @@ not a response object.</p>
 </div>
 </section>
 <section id="session-assertions-via-testresponse">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">Session Assertions via TestResponse</a><a class="headerlink" href="#session-assertions-via-testresponse" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Session Assertions via TestResponse</a><a class="headerlink" href="#session-assertions-via-testresponse" title="Link to this heading"></a></h3>
 <p>When testing controllers or HTTP responses, you can use CodeIgniter 4’s session
 assertion helpers, such as <code class="docutils literal notranslate"><span class="pre">assertSessionHas()</span></code> and <code class="docutils literal notranslate"><span class="pre">assertSessionMissing()</span></code>,
 which are available on the <code class="docutils literal notranslate"><span class="pre">TestResponse</span></code> object. These helpers allow you to
@@ -434,7 +431,7 @@ See more: <a class="reference internal" href="response.html#response-session-ass
 </section>
 </section>
 <section id="custom-session-values">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">Custom Session Values</a><a class="headerlink" href="#custom-session-values" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Custom Session Values</a><a class="headerlink" href="#custom-session-values" title="Link to this heading"></a></h2>
 <p>In Feature Tests, you can provide custom session data for a single test using the <code class="docutils literal notranslate"><span class="pre">withSession()</span></code> method.
 This allows you to simulate session states such as logged-in users or specific roles during the request.
 For full details and examples, see: <a class="reference internal" href="feature.html#feature-setting-session-values"><span class="std std-ref">Setting Session Values</span></a></p>

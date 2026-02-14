@@ -1,28 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Worker Mode &mdash; CodeIgniter 4.7.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=34bb78ad" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css?v=eacb1234" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css?v=2b70fae9" />
 
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/js/citheme.js"></script>
-        <script src="../_static/js/carbon.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=52a74d40"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/js/citheme.js?v=e0bcfc84"></script>
+      <script src="../_static/js/carbon.js?v=b287325f"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -293,7 +290,7 @@
            <div itemprop="articleBody">
              
   <section id="worker-mode">
-<h1>Worker Mode<a class="headerlink" href="#worker-mode" title="Permalink to this heading"></a></h1>
+<h1>Worker Mode<a class="headerlink" href="#worker-mode" title="Link to this heading"></a></h1>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#introduction" id="id1">Introduction</a></p>
@@ -339,7 +336,7 @@
 </ul>
 </nav>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 4.7.0.</span></p>
+<p><span class="versionmodified added">Added in version 4.7.0.</span></p>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -347,14 +344,14 @@
 worker implementation is <strong>FrankenPHP</strong>, which is backed by the PHP Foundation.</p>
 </div>
 <section id="introduction">
-<h2><a class="toc-backref" href="#id1" role="doc-backlink">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Introduction</a><a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
 <section id="what-is-worker-mode">
-<h3><a class="toc-backref" href="#id2" role="doc-backlink">What is Worker Mode?</a><a class="headerlink" href="#what-is-worker-mode" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">What is Worker Mode?</a><a class="headerlink" href="#what-is-worker-mode" title="Link to this heading"></a></h3>
 <p>Worker Mode is a performance optimization feature that allows CodeIgniter to handle multiple
 HTTP requests within the same PHP process, instead of starting a new process for each request
 like traditional PHP-FPM does.</p>
 <section id="traditional-php-vs-worker-mode">
-<h4>Traditional PHP vs Worker Mode<a class="headerlink" href="#traditional-php-vs-worker-mode" title="Permalink to this heading"></a></h4>
+<h4>Traditional PHP vs Worker Mode<a class="headerlink" href="#traditional-php-vs-worker-mode" title="Link to this heading"></a></h4>
 <p><strong>Traditional PHP (PHP-FPM)</strong></p>
 <p>In traditional PHP, each HTTP request goes through this cycle:</p>
 <ol class="arabic simple">
@@ -393,7 +390,7 @@ resulting in <strong>2-3x performance improvements</strong> for typical database
 </section>
 </section>
 <section id="how-codeigniter-manages-state">
-<h3><a class="toc-backref" href="#id3" role="doc-backlink">How CodeIgniter Manages State</a><a class="headerlink" href="#how-codeigniter-manages-state" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">How CodeIgniter Manages State</a><a class="headerlink" href="#how-codeigniter-manages-state" title="Link to this heading"></a></h3>
 <p>The key challenge in Worker Mode is preventing state from leaking between requests.
 CodeIgniter handles this through several mechanisms:</p>
 <dl class="simple">
@@ -413,9 +410,9 @@ Unhealthy connections are automatically re-established.</p>
 </section>
 </section>
 <section id="getting-started">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Getting Started</a><a class="headerlink" href="#getting-started" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Getting Started</a><a class="headerlink" href="#getting-started" title="Link to this heading"></a></h2>
 <section id="installation">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">Installation</a><a class="headerlink" href="#installation" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Installation</a><a class="headerlink" href="#installation" title="Link to this heading"></a></h3>
 <ol class="arabic">
 <li><p>Install FrankenPHP following the <a class="reference external" href="https://frankenphp.dev/">official documentation</a></p>
 <p>You can use a static binary or Docker. Here, we will assume we use a static binary,
@@ -436,7 +433,7 @@ The defaults are recommended for most applications.</p></li>
 </ol>
 </section>
 <section id="running-the-worker">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">Running the Worker</a><a class="headerlink" href="#running-the-worker" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Running the Worker</a><a class="headerlink" href="#running-the-worker" title="Link to this heading"></a></h3>
 <p>Start FrankenPHP using the generated Caddyfile:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">frankenphp run</span>
 </pre></div>
@@ -448,7 +445,7 @@ The defaults are recommended for most applications.</p></li>
 </div>
 </section>
 <section id="uninstalling">
-<h3><a class="toc-backref" href="#id7" role="doc-backlink">Uninstalling</a><a class="headerlink" href="#uninstalling" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Uninstalling</a><a class="headerlink" href="#uninstalling" title="Link to this heading"></a></h3>
 <p>To remove the Worker Mode template files:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark worker:uninstall</span>
 </pre></div>
@@ -457,7 +454,7 @@ The defaults are recommended for most applications.</p></li>
 </section>
 </section>
 <section id="performance-benchmarks">
-<h2><a class="toc-backref" href="#id8" role="doc-backlink">Performance Benchmarks</a><a class="headerlink" href="#performance-benchmarks" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Performance Benchmarks</a><a class="headerlink" href="#performance-benchmarks" title="Link to this heading"></a></h2>
 <p>Worker Mode typically provides <strong>2-3x performance improvements</strong> for database-driven
 applications. The actual gains depend on your application’s characteristics:</p>
 <table class="docutils align-default">
@@ -484,21 +481,21 @@ the largest gains, as this overhead is eliminated entirely.</p></td>
 </tbody>
 </table>
 <section id="worker-count-considerations">
-<h3><a class="toc-backref" href="#id9" role="doc-backlink">Worker Count Considerations</a><a class="headerlink" href="#worker-count-considerations" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Worker Count Considerations</a><a class="headerlink" href="#worker-count-considerations" title="Link to this heading"></a></h3>
 <p>Total throughput scales with worker count. Match worker count to your typical concurrency
 patterns and available CPU cores. Too few workers limit concurrency; too many waste memory.</p>
 </section>
 <section id="first-request-latency">
-<h3><a class="toc-backref" href="#id10" role="doc-backlink">First Request Latency</a><a class="headerlink" href="#first-request-latency" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">First Request Latency</a><a class="headerlink" href="#first-request-latency" title="Link to this heading"></a></h3>
 <p>The initial request to each worker is slower due to bootstrap and connection establishment.
 Subsequent requests benefit from cached resources and persistent connections.</p>
 </section>
 </section>
 <section id="configuration">
-<h2><a class="toc-backref" href="#id11" role="doc-backlink">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id11" role="doc-backlink">Configuration</a><a class="headerlink" href="#configuration" title="Link to this heading"></a></h2>
 <p>All worker mode configuration is managed through the <strong>app/Config/WorkerMode.php</strong> file.</p>
 <section id="configuration-options">
-<h3><a class="toc-backref" href="#id12" role="doc-backlink">Configuration Options</a><a class="headerlink" href="#configuration-options" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">Configuration Options</a><a class="headerlink" href="#configuration-options" title="Link to this heading"></a></h3>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Option</p></th>
@@ -524,7 +521,7 @@ Default: <code class="docutils literal notranslate"><span class="pre">['autoload
 </table>
 </section>
 <section id="persistent-services">
-<h3><a class="toc-backref" href="#id13" role="doc-backlink">Persistent Services</a><a class="headerlink" href="#persistent-services" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">Persistent Services</a><a class="headerlink" href="#persistent-services" title="Link to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">$persistentServices</span></code> array controls which services survive between requests.
 The default configuration includes:</p>
 <table class="docutils align-default">
@@ -569,7 +566,7 @@ that are truly stateless or manage their own request isolation.</p>
 </section>
 </section>
 <section id="optimize-configuration">
-<h2><a class="toc-backref" href="#id14" role="doc-backlink">Optimize Configuration</a><a class="headerlink" href="#optimize-configuration" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id14" role="doc-backlink">Optimize Configuration</a><a class="headerlink" href="#optimize-configuration" title="Link to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">app/Config/Optimize.php</span></code> configuration options (Config Caching and File Locator Caching)
 should <strong>NOT</strong> be used with Worker Mode.</p>
 <p>These optimizations were designed for traditional PHP where each request starts fresh. In Worker
@@ -581,7 +578,7 @@ cause issues with stale data.</p>
 <strong>app/Config/Optimize.php</strong> when using Worker Mode.</p>
 </div>
 <section id="opcache-settings">
-<h3><a class="toc-backref" href="#id15" role="doc-backlink">OPcache Settings</a><a class="headerlink" href="#opcache-settings" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">OPcache Settings</a><a class="headerlink" href="#opcache-settings" title="Link to this heading"></a></h3>
 <p>Worker Mode benefits significantly from OPcache. Ensure it’s enabled and properly configured:</p>
 <div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">opcache.enable</span><span class="o">=</span><span class="s">1</span>
 <span class="na">opcache.memory_consumption</span><span class="o">=</span><span class="s">256</span>
@@ -592,9 +589,9 @@ cause issues with stale data.</p>
 </section>
 </section>
 <section id="important-considerations">
-<h2><a class="toc-backref" href="#id16" role="doc-backlink">Important Considerations</a><a class="headerlink" href="#important-considerations" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id16" role="doc-backlink">Important Considerations</a><a class="headerlink" href="#important-considerations" title="Link to this heading"></a></h2>
 <section id="state-management">
-<h3><a class="toc-backref" href="#id17" role="doc-backlink">State Management</a><a class="headerlink" href="#state-management" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">State Management</a><a class="headerlink" href="#state-management" title="Link to this heading"></a></h3>
 <p>Since the PHP process persists across requests, careful attention to state management is essential:</p>
 <ul class="simple">
 <li><p><strong>Avoid static properties</strong> for request-specific data, as these persist between requests</p></li>
@@ -604,14 +601,14 @@ cause issues with stale data.</p>
 </ul>
 </section>
 <section id="registrars">
-<h3><a class="toc-backref" href="#id18" role="doc-backlink">Registrars</a><a class="headerlink" href="#registrars" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id18" role="doc-backlink">Registrars</a><a class="headerlink" href="#registrars" title="Link to this heading"></a></h3>
 <p>Config registrars (<code class="docutils literal notranslate"><span class="pre">Config/Registrar.php</span></code> files) work correctly in Worker Mode.
 Registrar files are discovered once when the worker starts, and registrar logic is applied
 every time a Config class is instantiated. Each request gets a fresh Config instance with
 registrars applied.</p>
 </section>
 <section id="memory-management">
-<h3><a class="toc-backref" href="#id19" role="doc-backlink">Memory Management</a><a class="headerlink" href="#memory-management" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id19" role="doc-backlink">Memory Management</a><a class="headerlink" href="#memory-management" title="Link to this heading"></a></h3>
 <p>Monitor memory usage:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ps aux | grep frankenphp</span>
 </pre></div>
@@ -625,7 +622,7 @@ registrars applied.</p>
 </ul>
 </section>
 <section id="debugging">
-<h3><a class="toc-backref" href="#id20" role="doc-backlink">Debugging</a><a class="headerlink" href="#debugging" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id20" role="doc-backlink">Debugging</a><a class="headerlink" href="#debugging" title="Link to this heading"></a></h3>
 <p>Worker Mode can make debugging more challenging since the process persists across requests:</p>
 <ul class="simple">
 <li><p><strong>Restart workers after code changes</strong> - workers don’t auto-reload modified files</p></li>
@@ -634,7 +631,7 @@ registrars applied.</p>
 </ul>
 </section>
 <section id="session-and-cache-handlers">
-<h3><a class="toc-backref" href="#id21" role="doc-backlink">Session and Cache Handlers</a><a class="headerlink" href="#session-and-cache-handlers" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id21" role="doc-backlink">Session and Cache Handlers</a><a class="headerlink" href="#session-and-cache-handlers" title="Link to this heading"></a></h3>
 <p><strong>File-based handlers</strong> may experience file locking contention between workers.
 For production environments, consider using:</p>
 <ul class="simple">
@@ -643,7 +640,7 @@ For production environments, consider using:</p>
 </ul>
 </section>
 <section id="database-connections">
-<h3><a class="toc-backref" href="#id22" role="doc-backlink">Database Connections</a><a class="headerlink" href="#database-connections" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id22" role="doc-backlink">Database Connections</a><a class="headerlink" href="#database-connections" title="Link to this heading"></a></h3>
 <p>Database connections are automatically managed:</p>
 <ul class="simple">
 <li><p>Connections persist across requests for performance</p></li>

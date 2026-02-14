@@ -1,28 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HTTP Messages &mdash; CodeIgniter 4.7.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=34bb78ad" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css?v=eacb1234" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css?v=2b70fae9" />
 
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/js/citheme.js"></script>
-        <script src="../_static/js/carbon.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=52a74d40"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/js/citheme.js?v=e0bcfc84"></script>
+      <script src="../_static/js/carbon.js?v=b287325f"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -293,20 +290,20 @@
            <div itemprop="articleBody">
              
   <section id="http-messages">
-<h1>HTTP Messages<a class="headerlink" href="#http-messages" title="Permalink to this heading"></a></h1>
+<h1>HTTP Messages<a class="headerlink" href="#http-messages" title="Link to this heading"></a></h1>
 <p>The Message class provides an interface to the portions of an HTTP message that are common to both
 requests and responses, including the message body, protocol version, utilities for working with
 the headers, and methods for handling content negotiation.</p>
 <p>This class is the parent class that both the <a class="reference internal" href="request.html"><span class="doc">Request Class</span></a> and the
 <a class="reference internal" href="../outgoing/response.html"><span class="doc">Response Class</span></a> extend from, and it is not used directly.</p>
-<section id="namespace-CodeIgniter\HTTP">
-<span id="class-reference"></span><h2>Class Reference<a class="headerlink" href="#namespace-CodeIgniter\HTTP" title="Permalink to this heading"></a></h2>
-<dl class="php class">
+<section id="class-reference">
+<h2>Class Reference<a class="headerlink" href="#class-reference" title="Link to this heading"></a></h2>
+<dl class="php class" id="namespace-CodeIgniter\HTTP">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Message">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\HTTP\</span></span><span class="sig-name descname"><span class="pre">Message</span></span><a class="headerlink" href="#CodeIgniter\HTTP\Message" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\HTTP\</span></span><span class="sig-name descname"><span class="pre">Message</span></span><a class="headerlink" href="#CodeIgniter\HTTP\Message" title="Link to this definition"></a></dt>
 <dd><dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Message::getBody">
-<span class="sig-name descname"><span class="pre">getBody</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::getBody" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getBody</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::getBody" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The current message body</p>
@@ -325,7 +322,7 @@ the headers, and methods for handling content negotiation.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Message::setBody">
-<span class="sig-name descname"><span class="pre">setBody</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::setBody" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">setBody</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::setBody" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -344,7 +341,7 @@ the headers, and methods for handling content negotiation.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Message::appendBody">
-<span class="sig-name descname"><span class="pre">appendBody</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::appendBody" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">appendBody</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::appendBody" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -363,7 +360,7 @@ the headers, and methods for handling content negotiation.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Message::populateHeaders">
-<span class="sig-name descname"><span class="pre">populateHeaders</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::populateHeaders" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">populateHeaders</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::populateHeaders" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>void</p>
@@ -380,7 +377,7 @@ The preceding <code class="docutils literal notranslate"><span class="pre">HTTP_
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Message::headers">
-<span class="sig-name descname"><span class="pre">headers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::headers" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">headers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::headers" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>An array of all of the headers found.</p>
@@ -394,7 +391,7 @@ The preceding <code class="docutils literal notranslate"><span class="pre">HTTP_
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Message::header">
-<span class="sig-name descname"><span class="pre">header</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::header" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">header</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::header" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -454,7 +451,7 @@ method to retrieve the values as a string:</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Message::hasHeader">
-<span class="sig-name descname"><span class="pre">hasHeader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::hasHeader" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">hasHeader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::hasHeader" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -472,7 +469,7 @@ method to retrieve the values as a string:</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Message::getHeaderLine">
-<span class="sig-name descname"><span class="pre">getHeaderLine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::getHeaderLine" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getHeaderLine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::getHeaderLine" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -501,7 +498,7 @@ of the header values when the header has multiple values. The values are appropr
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Message::setHeader">
-<span class="sig-name descname"><span class="pre">setHeader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em>, <em class="sig-param"><span class="pre">$value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::setHeader" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">setHeader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em>, <em class="sig-param"><span class="pre">$value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::setHeader" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -528,7 +525,7 @@ or an array of strings:</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Message::removeHeader">
-<span class="sig-name descname"><span class="pre">removeHeader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::removeHeader" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">removeHeader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::removeHeader" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -552,7 +549,7 @@ or an array of strings:</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Message::appendHeader">
-<span class="sig-name descname"><span class="pre">appendHeader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em>, <em class="sig-param"><span class="pre">$value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::appendHeader" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">appendHeader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em>, <em class="sig-param"><span class="pre">$value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::appendHeader" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -578,7 +575,7 @@ If it is a string then a LogicException will be thrown.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Message::prependHeader">
-<span class="sig-name descname"><span class="pre">prependHeader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em>, <em class="sig-param"><span class="pre">$value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::prependHeader" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">prependHeader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em>, <em class="sig-param"><span class="pre">$value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::prependHeader" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -604,9 +601,9 @@ If it is a string then a LogicException will be thrown.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Message::addHeader">
-<span class="sig-name descname"><span class="pre">addHeader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em>, <em class="sig-param"><span class="pre">$value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::addHeader" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">addHeader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em>, <em class="sig-param"><span class="pre">$value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::addHeader" title="Link to this definition"></a></dt>
 <dd><div class="versionadded">
-<p><span class="versionmodified added">New in version 4.5.0.</span></p>
+<p><span class="versionmodified added">Added in version 4.5.0.</span></p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -634,7 +631,7 @@ Use this only when you set multiple headers with the same name,</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Message::getProtocolVersion">
-<span class="sig-name descname"><span class="pre">getProtocolVersion</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::getProtocolVersion" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getProtocolVersion</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::getProtocolVersion" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The current HTTP protocol version</p>
@@ -649,7 +646,7 @@ return <code class="docutils literal notranslate"><span class="pre">1.1</span></
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Message::setProtocolVersion">
-<span class="sig-name descname"><span class="pre">setProtocolVersion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$version</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::setProtocolVersion" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">setProtocolVersion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$version</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Message::setProtocolVersion" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">

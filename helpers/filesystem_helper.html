@@ -1,28 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Filesystem Helper &mdash; CodeIgniter 4.7.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=34bb78ad" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css?v=eacb1234" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css?v=2b70fae9" />
 
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/js/citheme.js"></script>
-        <script src="../_static/js/carbon.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=52a74d40"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/js/citheme.js?v=e0bcfc84"></script>
+      <script src="../_static/js/carbon.js?v=b287325f"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -293,7 +290,7 @@
            <div itemprop="articleBody">
              
   <section id="filesystem-helper">
-<h1>Filesystem Helper<a class="headerlink" href="#filesystem-helper" title="Permalink to this heading"></a></h1>
+<h1>Filesystem Helper<a class="headerlink" href="#filesystem-helper" title="Link to this heading"></a></h1>
 <p>The Filesystem Helper file contains functions that assist in working with
 files and directories.</p>
 <nav class="contents local" id="contents">
@@ -303,7 +300,7 @@ files and directories.</p>
 </ul>
 </nav>
 <section id="loading-this-helper">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">Loading this Helper</a><a class="headerlink" href="#loading-this-helper" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Loading this Helper</a><a class="headerlink" href="#loading-this-helper" title="Link to this heading"></a></h2>
 <p>This helper is loaded using the following code:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -312,11 +309,11 @@ files and directories.</p>
 </div>
 </section>
 <section id="available-functions">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Available Functions</a><a class="headerlink" href="#available-functions" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Available Functions</a><a class="headerlink" href="#available-functions" title="Link to this heading"></a></h2>
 <p>The following functions are available:</p>
 <dl class="php function">
 <dt class="sig sig-object php" id="directory_map">
-<span class="sig-name descname"><span class="pre">directory_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$sourceDir</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$directoryDepth</span> <span class="pre">=</span> <span class="pre">0</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$hidden</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#directory_map" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">directory_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$sourceDir</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$directoryDepth</span> <span class="pre">=</span> <span class="pre">0</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$hidden</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#directory_map" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -393,7 +390,7 @@ be numerically indexed. Here is an example of a typical array:</p>
 
 <dl class="php function">
 <dt class="sig sig-object php" id="directory_mirror">
-<span class="sig-name descname"><span class="pre">directory_mirror</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$original</span></em>, <em class="sig-param"><span class="pre">$target</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$overwrite</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#directory_mirror" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">directory_mirror</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$original</span></em>, <em class="sig-param"><span class="pre">$target</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$overwrite</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#directory_mirror" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -420,7 +417,7 @@ into the target directory, i.e. “mirror” its contents.</p>
 
 <dl class="php function">
 <dt class="sig sig-object php" id="write_file">
-<span class="sig-name descname"><span class="pre">write_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$path</span></em>, <em class="sig-param"><span class="pre">$data</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$mode</span> <span class="pre">=</span> <span class="pre">'wb'</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#write_file" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">write_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$path</span></em>, <em class="sig-param"><span class="pre">$data</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$mode</span> <span class="pre">=</span> <span class="pre">'wb'</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#write_file" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -478,7 +475,7 @@ are always relative to the main site index.</p>
 
 <dl class="php function">
 <dt class="sig sig-object php" id="delete_files">
-<span class="sig-name descname"><span class="pre">delete_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$path</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$delDir</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$htdocs</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$hidden</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#delete_files" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">delete_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$path</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$delDir</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$htdocs</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$hidden</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#delete_files" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -518,7 +515,7 @@ root path will be deleted as well.</p>
 
 <dl class="php function">
 <dt class="sig sig-object php" id="get_filenames">
-<span class="sig-name descname"><span class="pre">get_filenames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$sourceDir</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$includePath</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$hidden</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$includeDir</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#get_filenames" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_filenames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$sourceDir</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$includePath</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$hidden</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$includeDir</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#get_filenames" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -553,7 +550,7 @@ a full file path.</p>
 
 <dl class="php function">
 <dt class="sig sig-object php" id="get_dir_file_info">
-<span class="sig-name descname"><span class="pre">get_dir_file_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$sourceDir</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$topLevelOnly</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#get_dir_file_info" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_dir_file_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$sourceDir</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$topLevelOnly</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#get_dir_file_info" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -582,7 +579,7 @@ operation.</p>
 
 <dl class="php function">
 <dt class="sig sig-object php" id="get_file_info">
-<span class="sig-name descname"><span class="pre">get_file_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$file[,</span> <span class="pre">$returnedValues</span> <span class="pre">=</span> <span class="pre">['name',</span> <span class="pre">'server_path',</span> <span class="pre">'size',</span> <span class="pre">'date']]</span></em><span class="sig-paren">)</span><a class="headerlink" href="#get_file_info" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_file_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$file[,</span> <span class="pre">$returnedValues</span> <span class="pre">=</span> <span class="pre">['name',</span> <span class="pre">'server_path',</span> <span class="pre">'size',</span> <span class="pre">'date']]</span></em><span class="sig-paren">)</span><a class="headerlink" href="#get_file_info" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -606,7 +603,7 @@ information you want returned.</p>
 
 <dl class="php function">
 <dt class="sig sig-object php" id="symbolic_permissions">
-<span class="sig-name descname"><span class="pre">symbolic_permissions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$perms</span></em><span class="sig-paren">)</span><a class="headerlink" href="#symbolic_permissions" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">symbolic_permissions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$perms</span></em><span class="sig-paren">)</span><a class="headerlink" href="#symbolic_permissions" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -631,7 +628,7 @@ standard symbolic notation of file permissions.</p>
 
 <dl class="php function">
 <dt class="sig sig-object php" id="octal_permissions">
-<span class="sig-name descname"><span class="pre">octal_permissions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$perms</span></em><span class="sig-paren">)</span><a class="headerlink" href="#octal_permissions" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">octal_permissions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$perms</span></em><span class="sig-paren">)</span><a class="headerlink" href="#octal_permissions" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -656,7 +653,7 @@ a three character octal notation of file permissions.</p>
 
 <dl class="php function">
 <dt class="sig sig-object php" id="same_file">
-<span class="sig-name descname"><span class="pre">same_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$file1</span></em>, <em class="sig-param"><span class="pre">$file2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#same_file" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">same_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$file1</span></em>, <em class="sig-param"><span class="pre">$file2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#same_file" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -681,7 +678,7 @@ a three character octal notation of file permissions.</p>
 
 <dl class="php function">
 <dt class="sig sig-object php" id="set_realpath">
-<span class="sig-name descname"><span class="pre">set_realpath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$path</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$checkExistence</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#set_realpath" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">set_realpath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$path</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$checkExistence</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#set_realpath" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">

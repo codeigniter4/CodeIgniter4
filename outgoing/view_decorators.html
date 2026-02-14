@@ -1,28 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>View Decorators &mdash; CodeIgniter 4.7.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=34bb78ad" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css?v=eacb1234" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css?v=2b70fae9" />
 
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/js/citheme.js"></script>
-        <script src="../_static/js/carbon.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=52a74d40"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/js/citheme.js?v=e0bcfc84"></script>
+      <script src="../_static/js/carbon.js?v=b287325f"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -293,7 +290,7 @@
            <div itemprop="articleBody">
              
   <section id="view-decorators">
-<h1>View Decorators<a class="headerlink" href="#view-decorators" title="Permalink to this heading"></a></h1>
+<h1>View Decorators<a class="headerlink" href="#view-decorators" title="Link to this heading"></a></h1>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#what-are-view-decorators" id="id1">What are View Decorators?</a></p></li>
@@ -306,15 +303,15 @@
 </ul>
 </nav>
 <section id="what-are-view-decorators">
-<h2><a class="toc-backref" href="#id1" role="doc-backlink">What are View Decorators?</a><a class="headerlink" href="#what-are-view-decorators" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">What are View Decorators?</a><a class="headerlink" href="#what-are-view-decorators" title="Link to this heading"></a></h2>
 <p>View Decorators allow your application to modify the HTML output during the rendering process. This happens just
 prior to being cached, and allows you to apply custom functionality to your views.</p>
 <p>You can use View Decorators with <a class="reference internal" href="view_renderer.html"><span class="doc">View Renderer</span></a> or <a class="reference internal" href="view_parser.html"><span class="doc">View Parser</span></a>.</p>
 </section>
 <section id="creating-decorators">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">Creating Decorators</a><a class="headerlink" href="#creating-decorators" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Creating Decorators</a><a class="headerlink" href="#creating-decorators" title="Link to this heading"></a></h2>
 <section id="creating-decorator-class">
-<h3><a class="toc-backref" href="#id3" role="doc-backlink">Creating Decorator Class</a><a class="headerlink" href="#creating-decorator-class" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Creating Decorator Class</a><a class="headerlink" href="#creating-decorator-class" title="Link to this heading"></a></h3>
 <p>Creating your own view decorators requires creating a new class that implements <code class="docutils literal notranslate"><span class="pre">CodeIgniter\View\ViewDecoratorInterface</span></code>.
 This requires a single method that takes the generated HTML string, performs any modifications on it, and returns
 the resulting HTML.</p>
@@ -337,7 +334,7 @@ the resulting HTML.</p>
 </div>
 </section>
 <section id="registering-decorator-class">
-<h3><a class="toc-backref" href="#id4" role="doc-backlink">Registering Decorator Class</a><a class="headerlink" href="#registering-decorator-class" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Registering Decorator Class</a><a class="headerlink" href="#registering-decorator-class" title="Link to this heading"></a></h3>
 <p>Once created, the class must be registered in <strong>app/Config/View.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 

@@ -1,28 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Controller Attributes &mdash; CodeIgniter 4.7.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=34bb78ad" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css?v=eacb1234" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css?v=2b70fae9" />
 
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/js/citheme.js"></script>
-        <script src="../_static/js/carbon.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=52a74d40"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/js/citheme.js?v=e0bcfc84"></script>
+      <script src="../_static/js/carbon.js?v=b287325f"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -293,7 +290,7 @@
            <div itemprop="articleBody">
              
   <section id="controller-attributes">
-<span id="incoming-controller-attributes"></span><h1>Controller Attributes<a class="headerlink" href="#controller-attributes" title="Permalink to this heading"></a></h1>
+<span id="incoming-controller-attributes"></span><h1>Controller Attributes<a class="headerlink" href="#controller-attributes" title="Link to this heading"></a></h1>
 <p>PHP Attributes can be used to define filters and other metadata on controller classes and methods. This keeps the configuration close to the code it affects, and can make it easier to see at a glance what filters are applied to a given controller or method. This works across all routing methods, including auto-routing, which allows for a near feature-parity between the more robust route declarations and auto-routing.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
@@ -313,7 +310,7 @@
 </ul>
 </nav>
 <section id="getting-started">
-<h2><a class="toc-backref" href="#id1" role="doc-backlink">Getting Started</a><a class="headerlink" href="#getting-started" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Getting Started</a><a class="headerlink" href="#getting-started" title="Link to this heading"></a></h2>
 <p>Controller Attributes can be applied to either the entire class, or to a specific method. The following example shows how to apply the <code class="docutils literal notranslate"><span class="pre">Filters</span></code> attribute to a controller class:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -353,14 +350,14 @@
 </div>
 <p>Class-level and method-level attributes can work together to provide a flexible way to manage your routes at the controller level.</p>
 <section id="disabling-attributes">
-<h3><a class="toc-backref" href="#id2" role="doc-backlink">Disabling Attributes</a><a class="headerlink" href="#disabling-attributes" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">Disabling Attributes</a><a class="headerlink" href="#disabling-attributes" title="Link to this heading"></a></h3>
 <p>If you know that you will not be using attributes in your application, you can disable the feature by setting the <code class="docutils literal notranslate"><span class="pre">$useControllerAttributes</span></code> property in your <code class="docutils literal notranslate"><span class="pre">app/Config/Routing.php</span></code> file to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
 </section>
 </section>
 <section id="provided-attributes">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Provided Attributes</a><a class="headerlink" href="#provided-attributes" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Provided Attributes</a><a class="headerlink" href="#provided-attributes" title="Link to this heading"></a></h2>
 <section id="filter">
-<h3><a class="toc-backref" href="#id4" role="doc-backlink">Filter</a><a class="headerlink" href="#filter" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Filter</a><a class="headerlink" href="#filter" title="Link to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">Filters</span></code> attribute allows you to specify one or more filters to be applied to a controller class or method. You can specify filters to run before or after the controller action, and you can also provide parameters to the filters. Here’s an example of how to use the <code class="docutils literal notranslate"><span class="pre">Filters</span></code> attribute:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -400,7 +397,7 @@
 </div>
 </section>
 <section id="restrict">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">Restrict</a><a class="headerlink" href="#restrict" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Restrict</a><a class="headerlink" href="#restrict" title="Link to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">Restrict</span></code> attribute allows you to restrict access to the class or method based on the domain, the sub-domain, or
 the environment the application is running in. Here’s an example of how to use the <code class="docutils literal notranslate"><span class="pre">Restrict</span></code> attribute:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -435,7 +432,7 @@ the environment the application is running in. Here’s an example of how to use
 </div>
 </section>
 <section id="cache">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">Cache</a><a class="headerlink" href="#cache" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Cache</a><a class="headerlink" href="#cache" title="Link to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">Cache</span></code> attribute allows the output of the controller method to be cached for a specified amount of time. You can specify a duration in seconds, and optionally a cache key. Here’s an example of how to use the <code class="docutils literal notranslate"><span class="pre">Cache</span></code> attribute:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -464,7 +461,7 @@ the environment the application is running in. Here’s an example of how to use
 </section>
 </section>
 <section id="custom-attributes">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">Custom Attributes</a><a class="headerlink" href="#custom-attributes" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Custom Attributes</a><a class="headerlink" href="#custom-attributes" title="Link to this heading"></a></h2>
 <p>You can also create your own custom attributes to add metadata or behavior to your controllers and methods. Custom attributes must implement the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Router\Attributes\RouteAttributeInterface</span></code> interface. Here’s an example of a custom attribute that adds a custom header to the response:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 

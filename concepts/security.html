@@ -1,28 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Security Guidelines &mdash; CodeIgniter 4.7.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=34bb78ad" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css?v=eacb1234" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css?v=2b70fae9" />
 
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/js/citheme.js"></script>
-        <script src="../_static/js/carbon.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=52a74d40"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/js/citheme.js?v=e0bcfc84"></script>
+      <script src="../_static/js/carbon.js?v=b287325f"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -293,7 +290,7 @@
            <div itemprop="articleBody">
              
   <section id="security-guidelines">
-<h1>Security Guidelines<a class="headerlink" href="#security-guidelines" title="Permalink to this heading"></a></h1>
+<h1>Security Guidelines<a class="headerlink" href="#security-guidelines" title="Link to this heading"></a></h1>
 <p>We take security seriously.
 CodeIgniter incorporates a number of features and techniques to either enforce
 good security practices, or to enable you to do so easily.</p>
@@ -338,9 +335,9 @@ the CodeIgniter provisions to address the problem.</p>
 </ul>
 </nav>
 <section id="owasp-top-10-2021">
-<h2><a class="toc-backref" href="#id39" role="doc-backlink">OWASP Top 10 2021</a><a class="headerlink" href="#owasp-top-10-2021" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id39" role="doc-backlink">OWASP Top 10 2021</a><a class="headerlink" href="#owasp-top-10-2021" title="Link to this heading"></a></h2>
 <section id="a01-2021-broken-access-control">
-<h3><a class="toc-backref" href="#id40" role="doc-backlink">A01:2021 Broken Access Control</a><a class="headerlink" href="#a01-2021-broken-access-control" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id40" role="doc-backlink">A01:2021 Broken Access Control</a><a class="headerlink" href="#a01-2021-broken-access-control" title="Link to this heading"></a></h3>
 <p>Access control enforces policy such that users cannot act outside of their intended
 permissions. Failures typically lead to unauthorized information disclosure,
 modification, or destruction of all data or performing a business function outside
@@ -366,7 +363,7 @@ privileges or abusing JWT invalidation.</p></li>
 pages as a standard user.</p></li>
 </ul>
 <section id="owasp-recommendations">
-<h4>OWASP recommendations<a class="headerlink" href="#owasp-recommendations" title="Permalink to this heading"></a></h4>
+<h4>OWASP recommendations<a class="headerlink" href="#owasp-recommendations" title="Link to this heading"></a></h4>
 <p>Access control is only effective in trusted server-side code or server-less API,
 where the attacker cannot modify the access control check or metadata.</p>
 <ul class="simple">
@@ -388,7 +385,7 @@ follow the OAuth standards to revoke access.</p></li>
 </ul>
 </section>
 <section id="codeigniter-provisions">
-<h4>CodeIgniter provisions<a class="headerlink" href="#codeigniter-provisions" title="Permalink to this heading"></a></h4>
+<h4>CodeIgniter provisions<a class="headerlink" href="#codeigniter-provisions" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><a class="reference internal" href="structure.html#application-structure-public"><span class="std std-ref">Public</span></a> folder, with application and system
 outside</p></li>
@@ -405,7 +402,7 @@ outside</p></li>
 </section>
 </section>
 <section id="a02-2021-cryptographic-failures">
-<h3><a class="toc-backref" href="#id41" role="doc-backlink">A02:2021 Cryptographic Failures</a><a class="headerlink" href="#a02-2021-cryptographic-failures" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id41" role="doc-backlink">A02:2021 Cryptographic Failures</a><a class="headerlink" href="#a02-2021-cryptographic-failures" title="Link to this heading"></a></h3>
 <p>The first thing is to determine the protection needs of data in transit and at
 rest. For example, passwords, credit card numbers, health records, personal
 information, and business secrets require extra protection, mainly if that data
@@ -442,7 +439,7 @@ hash functions used when cryptographic hash functions are needed?</p></li>
 example in the form of padding oracle attacks?</p></li>
 </ul>
 <section id="id1">
-<h4>OWASP recommendations<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h4>
+<h4>OWASP recommendations<a class="headerlink" href="#id1" title="Link to this heading"></a></h4>
 <p>Do the following, at a minimum, and consult the references:</p>
 <ul class="simple">
 <li><p>Classify data processed, stored, or transmitted by an application. Identify which
@@ -480,7 +477,7 @@ PKCS number 1 v1.5 .</p></li>
 </ul>
 </section>
 <section id="id2">
-<h4>CodeIgniter provisions<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h4>
+<h4>CodeIgniter provisions<a class="headerlink" href="#id2" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>The config for global secure access (<code class="docutils literal notranslate"><span class="pre">Config\App::$forceGlobalSecureRequests</span></code>)</p></li>
 <li><p><a class="reference internal" href="../general/common_functions.html#force_https" title="force_https"><code class="xref php php-func docutils literal notranslate"><span class="pre">force_https()</span></code></a> function</p></li>
@@ -492,7 +489,7 @@ PKCS number 1 v1.5 .</p></li>
 </section>
 </section>
 <section id="a03-2021-injection">
-<h3><a class="toc-backref" href="#id42" role="doc-backlink">A03:2021 Injection</a><a class="headerlink" href="#a03-2021-injection" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id42" role="doc-backlink">A03:2021 Injection</a><a class="headerlink" href="#a03-2021-injection" title="Link to this heading"></a></h3>
 <p>An application is vulnerable to attack when:</p>
 <ul class="simple">
 <li><p>User-supplied data is not validated, filtered, or sanitized by the application.</p></li>
@@ -512,7 +509,7 @@ data inputs is strongly encouraged. Organizations can include static (SAST),
 dynamic (DAST), and interactive (IAST) application security testing tools into
 the CI/CD pipeline to identify introduced injection flaws before production deployment.</p>
 <section id="id3">
-<h4>OWASP recommendations<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h4>
+<h4>OWASP recommendations<a class="headerlink" href="#id3" title="Link to this heading"></a></h4>
 <p>Preventing injection requires keeping data separate from commands and queries:</p>
 <ul>
 <li><p>The preferred option is to use a safe API, which avoids using the interpreter
@@ -544,7 +541,7 @@ records in case of SQL injection.</p></li>
 </ul>
 </section>
 <section id="id4">
-<h4>CodeIgniter provisions<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h4>
+<h4>CodeIgniter provisions<a class="headerlink" href="#id4" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><a class="reference internal" href="../general/urls.html#urls-uri-security"><span class="std std-ref">URI Security</span></a></p></li>
 <li><p><a class="reference internal" href="../incoming/filters.html#invalidchars"><span class="std std-ref">InvalidChars</span></a> filter</p></li>
@@ -560,7 +557,7 @@ records in case of SQL injection.</p></li>
 </section>
 </section>
 <section id="a04-2021-insecure-design">
-<h3><a class="toc-backref" href="#id43" role="doc-backlink">A04:2021 Insecure Design</a><a class="headerlink" href="#a04-2021-insecure-design" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id43" role="doc-backlink">A04:2021 Insecure Design</a><a class="headerlink" href="#a04-2021-insecure-design" title="Link to this heading"></a></h3>
 <p>Insecure design is a broad category representing different weaknesses, expressed
 as “missing or ineffective control design.” Insecure design is not the source for
 all other Top 10 risk categories. There is a difference between insecure design
@@ -573,7 +570,7 @@ specific attacks. One of the factors that contribute to insecure design is the
 lack of business risk profiling inherent in the software or system being developed,
 and thus the failure to determine what level of security design is required.</p>
 <section id="id5">
-<h4>OWASP recommendations<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h4>
+<h4>OWASP recommendations<a class="headerlink" href="#id5" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>Establish and use a secure development lifecycle with AppSec professionals to
 help evaluate and design security and privacy-related controls</p></li>
@@ -594,7 +591,7 @@ and protection needs</p></li>
 </ul>
 </section>
 <section id="id6">
-<h4>CodeIgniter provisions<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h4>
+<h4>CodeIgniter provisions<a class="headerlink" href="#id6" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><a class="reference internal" href="../testing/overview.html"><span class="doc">PHPUnit testing</span></a></p></li>
 <li><p><a class="reference internal" href="../libraries/throttler.html"><span class="doc">Throttler</span></a> for rate limit</p></li>
@@ -603,7 +600,7 @@ and protection needs</p></li>
 </section>
 </section>
 <section id="a05-2021-security-misconfiguration">
-<h3><a class="toc-backref" href="#id44" role="doc-backlink">A05:2021 Security Misconfiguration</a><a class="headerlink" href="#a05-2021-security-misconfiguration" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id44" role="doc-backlink">A05:2021 Security Misconfiguration</a><a class="headerlink" href="#a05-2021-security-misconfiguration" title="Link to this heading"></a></h3>
 <p>The application might be vulnerable if the application is:</p>
 <ul class="simple">
 <li><p>Missing appropriate security hardening across any part of the application stack
@@ -625,7 +622,7 @@ Components).</p></li>
 <p>Without a concerted, repeatable application security configuration process,
 systems are at a higher risk.</p>
 <section id="id7">
-<h4>OWASP recommendations<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h4>
+<h4>OWASP recommendations<a class="headerlink" href="#id7" title="Link to this heading"></a></h4>
 <p>Secure installation processes should be implemented, including:</p>
 <ul class="simple">
 <li><p>A repeatable hardening process makes it fast and easy to deploy another environment
@@ -647,7 +644,7 @@ settings in all environments.</p></li>
 </ul>
 </section>
 <section id="id8">
-<h4>CodeIgniter provisions<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h4>
+<h4>CodeIgniter provisions<a class="headerlink" href="#id8" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><a class="reference internal" href="../general/configuration.html#confirming-config-values"><span class="std std-ref">spark config:check</span></a> command</p></li>
 <li><p><a class="reference internal" href="../installation/running.html#spark-phpini-check"><span class="std std-ref">spark phpini:check</span></a> command</p></li>
@@ -657,7 +654,7 @@ settings in all environments.</p></li>
 </section>
 </section>
 <section id="a06-2021-vulnerable-and-outdated-components">
-<h3><a class="toc-backref" href="#id45" role="doc-backlink">A06:2021 Vulnerable and Outdated Components</a><a class="headerlink" href="#a06-2021-vulnerable-and-outdated-components" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id45" role="doc-backlink">A06:2021 Vulnerable and Outdated Components</a><a class="headerlink" href="#a06-2021-vulnerable-and-outdated-components" title="Link to this heading"></a></h3>
 <p>You are likely vulnerable:</p>
 <ul class="simple">
 <li><p>If you do not know the versions of all components you use (both client-side
@@ -678,7 +675,7 @@ patched libraries.</p></li>
 Misconfiguration).</p></li>
 </ul>
 <section id="id9">
-<h4>OWASP recommendations<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h4>
+<h4>OWASP recommendations<a class="headerlink" href="#id9" title="Link to this heading"></a></h4>
 <p>There should be a patch management process in place to:</p>
 <ul class="simple">
 <li><p>Remove unused dependencies, unnecessary features, components, files, and
@@ -703,14 +700,14 @@ applying updates or configuration changes for the lifetime of the application or
 portfolio.</p>
 </section>
 <section id="id10">
-<h4>CodeIgniter provisions<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h4>
+<h4>CodeIgniter provisions<a class="headerlink" href="#id10" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>Easy <a class="reference internal" href="../installation/installing_composer.html#app-starter-upgrading"><span class="std std-ref">Upgrading</span></a> by Composer</p></li>
 </ul>
 </section>
 </section>
 <section id="a07-2021-identification-and-authentication-failures">
-<h3><a class="toc-backref" href="#id46" role="doc-backlink">A07:2021 Identification and Authentication Failures</a><a class="headerlink" href="#a07-2021-identification-and-authentication-failures" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id46" role="doc-backlink">A07:2021 Identification and Authentication Failures</a><a class="headerlink" href="#a07-2021-identification-and-authentication-failures" title="Link to this heading"></a></h3>
 <p>Confirmation of the user’s identity, authentication, and session management is
 critical to protect against authentication-related attacks. There may be
 authentication weaknesses if the application:</p>
@@ -731,7 +728,7 @@ such as “knowledge-based answers,” which cannot be made safe.</p></li>
 or a period of inactivity.</p></li>
 </ul>
 <section id="id11">
-<h4>OWASP recommendations<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h4>
+<h4>OWASP recommendations<a class="headerlink" href="#id11" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>Where possible, implement multi-factor authentication to prevent automated
 credential stuffing, brute force, and stolen credential reuse attacks.</p></li>
@@ -753,7 +750,7 @@ timeouts.</p></li>
 </ul>
 </section>
 <section id="id12">
-<h4>CodeIgniter provisions<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h4>
+<h4>CodeIgniter provisions<a class="headerlink" href="#id12" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><a class="reference internal" href="../libraries/sessions.html"><span class="doc">Session</span></a> library</p></li>
 <li><p>An official authentication and authorization framework
@@ -762,7 +759,7 @@ timeouts.</p></li>
 </section>
 </section>
 <section id="a08-2021-software-and-data-integrity-failures">
-<h3><a class="toc-backref" href="#id47" role="doc-backlink">A08:2021 Software and Data Integrity Failures</a><a class="headerlink" href="#a08-2021-software-and-data-integrity-failures" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id47" role="doc-backlink">A08:2021 Software and Data Integrity Failures</a><a class="headerlink" href="#a08-2021-software-and-data-integrity-failures" title="Link to this heading"></a></h3>
 <p>Software and data integrity failures relate to code and infrastructure that does
 not protect against integrity violations. An example of this is where an application
 relies upon plugins, libraries, or modules from untrusted sources, repositories,
@@ -775,7 +772,7 @@ distributed and run on all installations.</p>
 <p>Another example is where objects or data are encoded or serialized into a structure
 that an attacker can see and modify is vulnerable to insecure deserialization.</p>
 <section id="id13">
-<h4>OWASP recommendations<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h4>
+<h4>OWASP recommendations<a class="headerlink" href="#id13" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>Use digital signatures or similar mechanisms to verify the software or data is
 from the expected source and has not been altered.</p></li>
@@ -797,14 +794,14 @@ tampering or replay of the serialized data</p></li>
 </ul>
 </section>
 <section id="id14">
-<h4>CodeIgniter provisions<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h4>
+<h4>CodeIgniter provisions<a class="headerlink" href="#id14" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>n/a</p></li>
 </ul>
 </section>
 </section>
 <section id="a09-2021-security-logging-and-monitoring-failures">
-<h3><a class="toc-backref" href="#id48" role="doc-backlink">A09:2021 Security Logging and Monitoring Failures</a><a class="headerlink" href="#a09-2021-security-logging-and-monitoring-failures" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id48" role="doc-backlink">A09:2021 Security Logging and Monitoring Failures</a><a class="headerlink" href="#a09-2021-security-logging-and-monitoring-failures" title="Link to this heading"></a></h3>
 <p>This category is to help detect, escalate, and respond to active breaches. Without
 logging and monitoring, breaches cannot be detected. Insufficient logging, detection,
 monitoring, and active response occurs any time:</p>
@@ -824,7 +821,7 @@ or near real-time.</p></li>
 <p>You are vulnerable to information leakage by making logging and alerting events
 visible to a user or an attacker (see A01:2021-Broken Access Control).</p>
 <section id="id15">
-<h4>OWASP recommendations<a class="headerlink" href="#id15" title="Permalink to this heading"></a></h4>
+<h4>OWASP recommendations<a class="headerlink" href="#id15" title="Link to this heading"></a></h4>
 <p>Developers should implement some or all the following controls, depending on the risk of the application:</p>
 <ul class="simple">
 <li><p>Ensure all login, access control, and server-side input validation failures can
@@ -847,7 +844,7 @@ such as the Elasticsearch, Logstash, Kibana (ELK) stack, that feature custom
 dashboards and alerting.</p>
 </section>
 <section id="id16">
-<h4>CodeIgniter provisions<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h4>
+<h4>CodeIgniter provisions<a class="headerlink" href="#id16" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><a class="reference internal" href="../general/logging.html"><span class="doc">Logging</span></a> library</p></li>
 <li><p>An official authentication and authorization framework
@@ -856,7 +853,7 @@ dashboards and alerting.</p>
 </section>
 </section>
 <section id="a10-2021-server-side-request-forgery-ssrf">
-<h3><a class="toc-backref" href="#id49" role="doc-backlink">A10:2021 Server-Side Request Forgery (SSRF)</a><a class="headerlink" href="#a10-2021-server-side-request-forgery-ssrf" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id49" role="doc-backlink">A10:2021 Server-Side Request Forgery (SSRF)</a><a class="headerlink" href="#a10-2021-server-side-request-forgery-ssrf" title="Link to this heading"></a></h3>
 <p>SSRF flaws occur whenever a web application is fetching a remote resource without
 validating the user-supplied URL. It allows an attacker to coerce the application
 to send a crafted request to an unexpected destination, even when protected by a
@@ -866,7 +863,7 @@ a URL becomes a common scenario. As a result, the incidence of SSRF is increasin
 Also, the severity of SSRF is becoming higher due to cloud services and the
 complexity of architectures.</p>
 <section id="id17">
-<h4>OWASP recommendations<a class="headerlink" href="#id17" title="Permalink to this heading"></a></h4>
+<h4>OWASP recommendations<a class="headerlink" href="#id17" title="Link to this heading"></a></h4>
 <p>Developers can prevent SSRF by implementing some or all the following defense in
 depth controls:</p>
 <p>From Network layer:</p>
@@ -904,7 +901,7 @@ applications.</p></li>
 have payload lists, tools, and skills to bypass deny lists.</p>
 </section>
 <section id="id18">
-<h4>CodeIgniter provisions<a class="headerlink" href="#id18" title="Permalink to this heading"></a></h4>
+<h4>CodeIgniter provisions<a class="headerlink" href="#id18" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><a class="reference internal" href="../libraries/validation.html"><span class="doc">Validation</span></a> library</p></li>
 <li><p><a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">HTTP library</span></a> provides for
@@ -914,15 +911,15 @@ have payload lists, tools, and skills to bypass deny lists.</p>
 </section>
 </section>
 <section id="owasp-api-security-top-10-2023">
-<h2><a class="toc-backref" href="#id50" role="doc-backlink">OWASP API Security Top 10 2023</a><a class="headerlink" href="#owasp-api-security-top-10-2023" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id50" role="doc-backlink">OWASP API Security Top 10 2023</a><a class="headerlink" href="#owasp-api-security-top-10-2023" title="Link to this heading"></a></h2>
 <section id="api1-2023-broken-object-level-authorization">
-<h3><a class="toc-backref" href="#id51" role="doc-backlink">API1:2023 Broken Object Level Authorization</a><a class="headerlink" href="#api1-2023-broken-object-level-authorization" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id51" role="doc-backlink">API1:2023 Broken Object Level Authorization</a><a class="headerlink" href="#api1-2023-broken-object-level-authorization" title="Link to this heading"></a></h3>
 <p>APIs tend to expose endpoints that handle object identifiers, creating a wide
 attack surface of Object Level Access Control issues. Object level authorization
 checks should be considered in every function that accesses a data source using
 an ID from the user.</p>
 <section id="id19">
-<h4>OWASP recommendations<a class="headerlink" href="#id19" title="Permalink to this heading"></a></h4>
+<h4>OWASP recommendations<a class="headerlink" href="#id19" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>Implement a proper authorization mechanism that relies on the user policies and
 hierarchy.</p></li>
@@ -935,7 +932,7 @@ not deploy changes that make the tests fail.</p></li>
 </ul>
 </section>
 <section id="id20">
-<h4>CodeIgniter provisions<a class="headerlink" href="#id20" title="Permalink to this heading"></a></h4>
+<h4>CodeIgniter provisions<a class="headerlink" href="#id20" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>An official authentication and authorization framework
 <a class="reference internal" href="../libraries/official_packages.html#shield"><span class="std std-ref">CodeIgniter Shield</span></a></p></li>
@@ -944,13 +941,13 @@ not deploy changes that make the tests fail.</p></li>
 </section>
 </section>
 <section id="api2-2023-broken-authentication">
-<h3><a class="toc-backref" href="#id52" role="doc-backlink">API2:2023 Broken Authentication</a><a class="headerlink" href="#api2-2023-broken-authentication" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id52" role="doc-backlink">API2:2023 Broken Authentication</a><a class="headerlink" href="#api2-2023-broken-authentication" title="Link to this heading"></a></h3>
 <p>Authentication mechanisms are often implemented incorrectly, allowing attackers
 to compromise authentication tokens or to exploit implementation flaws to assume
 other user’s identities temporarily or permanently. Compromising a system’s
 ability to identify the client/user, compromises API security overall.</p>
 <section id="id21">
-<h4>OWASP recommendations<a class="headerlink" href="#id21" title="Permalink to this heading"></a></h4>
+<h4>OWASP recommendations<a class="headerlink" href="#id21" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>Make sure you know all the possible flows to authenticate to the API (mobile/
 web/deep links that implement one-click authentication/etc.). Ask your engineers
@@ -975,7 +972,7 @@ for API clients authentication.</p></li>
 </ul>
 </section>
 <section id="id22">
-<h4>CodeIgniter provisions<a class="headerlink" href="#id22" title="Permalink to this heading"></a></h4>
+<h4>CodeIgniter provisions<a class="headerlink" href="#id22" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><a class="reference internal" href="../incoming/filters.html"><span class="doc">Controller Filters</span></a></p></li>
 <li><p><a class="reference internal" href="../incoming/routing.html#routing-spark-routes"><span class="std std-ref">spark routes</span></a> command</p></li>
@@ -986,13 +983,13 @@ for API clients authentication.</p></li>
 </section>
 </section>
 <section id="api3-2023-broken-object-property-level-authorization">
-<h3><a class="toc-backref" href="#id53" role="doc-backlink">API3:2023 Broken Object Property Level Authorization</a><a class="headerlink" href="#api3-2023-broken-object-property-level-authorization" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id53" role="doc-backlink">API3:2023 Broken Object Property Level Authorization</a><a class="headerlink" href="#api3-2023-broken-object-property-level-authorization" title="Link to this heading"></a></h3>
 <p>This category combines API3:2019 Excessive Data Exposure and API6:2019 - Mass
 Assignment, focusing on the root cause: the lack of or improper authorization
 validation at the object property level. This leads to information exposure or
 manipulation by unauthorized parties.</p>
 <section id="id23">
-<h4>OWASP recommendations<a class="headerlink" href="#id23" title="Permalink to this heading"></a></h4>
+<h4>OWASP recommendations<a class="headerlink" href="#id23" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>When exposing an object using an API endpoint, always make sure that the user
 should have access to the object’s properties you expose.</p></li>
@@ -1010,7 +1007,7 @@ business/functional requirements for the endpoint.</p></li>
 </ul>
 </section>
 <section id="id24">
-<h4>CodeIgniter provisions<a class="headerlink" href="#id24" title="Permalink to this heading"></a></h4>
+<h4>CodeIgniter provisions<a class="headerlink" href="#id24" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>Model’s <a class="reference internal" href="../models/model.html#model-allowed-fields"><span class="std std-ref">$allowedFields</span></a></p></li>
 <li><p>An official authentication and authorization framework
@@ -1019,14 +1016,14 @@ business/functional requirements for the endpoint.</p></li>
 </section>
 </section>
 <section id="api4-2023-unrestricted-resource-consumption">
-<h3><a class="toc-backref" href="#id54" role="doc-backlink">API4:2023 Unrestricted Resource Consumption</a><a class="headerlink" href="#api4-2023-unrestricted-resource-consumption" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id54" role="doc-backlink">API4:2023 Unrestricted Resource Consumption</a><a class="headerlink" href="#api4-2023-unrestricted-resource-consumption" title="Link to this heading"></a></h3>
 <p>Satisfying API requests requires resources such as network bandwidth, CPU, memory,
 and storage. Other resources such as emails/SMS/phone calls or biometrics validation
 are made available by service providers via API integrations, and paid for per
 request. Successful attacks can lead to Denial of Service or an increase of
 operational costs.</p>
 <section id="id25">
-<h4>OWASP recommendations<a class="headerlink" href="#id25" title="Permalink to this heading"></a></h4>
+<h4>OWASP recommendations<a class="headerlink" href="#id25" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>Use a solution that makes it easy to limit memory, CPU, number of restarts,
 file descriptors, and processes such as Containers / Serverless code (e.g. Lambdas).</p></li>
@@ -1049,7 +1046,7 @@ spending limits is not possible, billing alerts should be configured instead.</p
 </ul>
 </section>
 <section id="id26">
-<h4>CodeIgniter provisions<a class="headerlink" href="#id26" title="Permalink to this heading"></a></h4>
+<h4>CodeIgniter provisions<a class="headerlink" href="#id26" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><a class="reference internal" href="../libraries/validation.html"><span class="doc">Validation</span></a> library</p></li>
 <li><p><a class="reference internal" href="../libraries/throttler.html"><span class="doc">Throttler</span></a> for rate limit</p></li>
@@ -1057,13 +1054,13 @@ spending limits is not possible, billing alerts should be configured instead.</p
 </section>
 </section>
 <section id="api5-2023-broken-function-level-authorization">
-<h3><a class="toc-backref" href="#id55" role="doc-backlink">API5:2023 Broken Function Level Authorization</a><a class="headerlink" href="#api5-2023-broken-function-level-authorization" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id55" role="doc-backlink">API5:2023 Broken Function Level Authorization</a><a class="headerlink" href="#api5-2023-broken-function-level-authorization" title="Link to this heading"></a></h3>
 <p>Complex access control policies with different hierarchies, groups, and roles,
 and an unclear separation between administrative and regular functions, tend to
 lead to authorization flaws. By exploiting these issues, attackers can gain
 access to other users’ resources and/or administrative functions.</p>
 <section id="id27">
-<h4>OWASP recommendations<a class="headerlink" href="#id27" title="Permalink to this heading"></a></h4>
+<h4>OWASP recommendations<a class="headerlink" href="#id27" title="Link to this heading"></a></h4>
 <p>Your application should have a consistent and easy-to-analyze authorization module
 that is invoked from all your business functions. Frequently, such protection is
 provided by one or more components external to the application code.</p>
@@ -1080,7 +1077,7 @@ authorization checks based on the user’s group and role.</p></li>
 </ul>
 </section>
 <section id="id28">
-<h4>CodeIgniter provisions<a class="headerlink" href="#id28" title="Permalink to this heading"></a></h4>
+<h4>CodeIgniter provisions<a class="headerlink" href="#id28" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><a class="reference internal" href="../incoming/filters.html"><span class="doc">Controller Filters</span></a></p></li>
 <li><p>An official authentication and authorization framework
@@ -1089,13 +1086,13 @@ authorization checks based on the user’s group and role.</p></li>
 </section>
 </section>
 <section id="api6-2023-unrestricted-access-to-sensitive-business-flows">
-<h3><a class="toc-backref" href="#id56" role="doc-backlink">API6:2023 Unrestricted Access to Sensitive Business Flows</a><a class="headerlink" href="#api6-2023-unrestricted-access-to-sensitive-business-flows" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id56" role="doc-backlink">API6:2023 Unrestricted Access to Sensitive Business Flows</a><a class="headerlink" href="#api6-2023-unrestricted-access-to-sensitive-business-flows" title="Link to this heading"></a></h3>
 <p>APIs vulnerable to this risk expose a business flow - such as buying a ticket,
 or posting a comment - without compensating for how the functionality could harm
 the business if used excessively in an automated manner. This doesn’t necessarily
 come from implementation bugs.</p>
 <section id="id29">
-<h4>OWASP recommendations<a class="headerlink" href="#id29" title="Permalink to this heading"></a></h4>
+<h4>OWASP recommendations<a class="headerlink" href="#id29" title="Link to this heading"></a></h4>
 <p>The mitigation planning should be done in two layers:</p>
 <ul class="simple">
 <li><p>Business - identify the business flows that might harm the business if they
@@ -1121,20 +1118,20 @@ developer and B2B APIs). They tend to be an easy target for attackers because
 they often don’t implement all the required protection mechanisms.</p>
 </section>
 <section id="id30">
-<h4>CodeIgniter provisions<a class="headerlink" href="#id30" title="Permalink to this heading"></a></h4>
+<h4>CodeIgniter provisions<a class="headerlink" href="#id30" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>n/a</p></li>
 </ul>
 </section>
 </section>
 <section id="api7-2023-server-side-request-forgery">
-<h3><a class="toc-backref" href="#id57" role="doc-backlink">API7:2023 Server Side Request Forgery</a><a class="headerlink" href="#api7-2023-server-side-request-forgery" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id57" role="doc-backlink">API7:2023 Server Side Request Forgery</a><a class="headerlink" href="#api7-2023-server-side-request-forgery" title="Link to this heading"></a></h3>
 <p>Server-Side Request Forgery (SSRF) flaws can occur when an API is fetching a
 remote resource without validating the user-supplied URI. This enables an attacker
 to coerce the application to send a crafted request to an unexpected destination,
 even when protected by a firewall or a VPN.</p>
 <section id="id31">
-<h4>OWASP recommendations<a class="headerlink" href="#id31" title="Permalink to this heading"></a></h4>
+<h4>OWASP recommendations<a class="headerlink" href="#id31" title="Link to this heading"></a></h4>
 <ul>
 <li><p>Isolate the resource fetching mechanism in your network: usually these features
 are aimed to retrieve remote resources and not internal ones.</p></li>
@@ -1155,7 +1152,7 @@ Gravatar, etc.)</p></li>
 </ul>
 </section>
 <section id="id32">
-<h4>CodeIgniter provisions<a class="headerlink" href="#id32" title="Permalink to this heading"></a></h4>
+<h4>CodeIgniter provisions<a class="headerlink" href="#id32" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><a class="reference internal" href="../libraries/validation.html"><span class="doc">Validation</span></a> library</p></li>
 <li><p><a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">HTTP library</span></a> provides for
@@ -1166,13 +1163,13 @@ Gravatar, etc.)</p></li>
 </section>
 </section>
 <section id="api8-2023-security-misconfiguration">
-<h3><a class="toc-backref" href="#id58" role="doc-backlink">API8:2023 Security Misconfiguration</a><a class="headerlink" href="#api8-2023-security-misconfiguration" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id58" role="doc-backlink">API8:2023 Security Misconfiguration</a><a class="headerlink" href="#api8-2023-security-misconfiguration" title="Link to this heading"></a></h3>
 <p>APIs and the systems supporting them typically contain complex configurations,
 meant to make the APIs more customizable. Software and DevOps engineers can miss
 these configurations, or don’t follow security best practices when it comes to
 configuration, opening the door for different types of attacks.</p>
 <section id="id33">
-<h4>OWASP recommendations<a class="headerlink" href="#id33" title="Permalink to this heading"></a></h4>
+<h4>OWASP recommendations<a class="headerlink" href="#id33" title="Link to this heading"></a></h4>
 <p>The API life cycle should include:</p>
 <ul class="simple">
 <li><p>A repeatable hardening process leading to fast and easy deployment of a properly
@@ -1210,7 +1207,7 @@ being sent back to attackers.</p></li>
 </ul>
 </section>
 <section id="id34">
-<h4>CodeIgniter provisions<a class="headerlink" href="#id34" title="Permalink to this heading"></a></h4>
+<h4>CodeIgniter provisions<a class="headerlink" href="#id34" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>The config for global secure access (<code class="docutils literal notranslate"><span class="pre">Config\App::$forceGlobalSecureRequests</span></code>)</p></li>
 <li><p><a class="reference internal" href="../general/common_functions.html#force_https" title="force_https"><code class="xref php php-func docutils literal notranslate"><span class="pre">force_https()</span></code></a> function</p></li>
@@ -1221,13 +1218,13 @@ being sent back to attackers.</p></li>
 </section>
 </section>
 <section id="api9-2023-improper-inventory-management">
-<h3><a class="toc-backref" href="#id59" role="doc-backlink">API9:2023 Improper Inventory Management</a><a class="headerlink" href="#api9-2023-improper-inventory-management" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id59" role="doc-backlink">API9:2023 Improper Inventory Management</a><a class="headerlink" href="#api9-2023-improper-inventory-management" title="Link to this heading"></a></h3>
 <p>APIs tend to expose more endpoints than traditional web applications, making
 proper and updated documentation highly important. A proper inventory of hosts
 and deployed API versions also are important to mitigate issues such as deprecated
 API versions and exposed debug endpoints.</p>
 <section id="id35">
-<h4>OWASP recommendations<a class="headerlink" href="#id35" title="Permalink to this heading"></a></h4>
+<h4>OWASP recommendations<a class="headerlink" href="#id35" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>Inventory all API hosts and document important aspects of each one of them,
 focusing on the API environment (e.g. production, staging, test, development),
@@ -1254,20 +1251,20 @@ force all clients to move to the latest version.</p></li>
 </ul>
 </section>
 <section id="id36">
-<h4>CodeIgniter provisions<a class="headerlink" href="#id36" title="Permalink to this heading"></a></h4>
+<h4>CodeIgniter provisions<a class="headerlink" href="#id36" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><a class="reference internal" href="../incoming/routing.html#routing-spark-routes"><span class="std std-ref">spark routes</span></a> command</p></li>
 </ul>
 </section>
 </section>
 <section id="api10-2023-unsafe-consumption-of-apis">
-<h3><a class="toc-backref" href="#id60" role="doc-backlink">API10:2023 Unsafe Consumption of APIs</a><a class="headerlink" href="#api10-2023-unsafe-consumption-of-apis" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id60" role="doc-backlink">API10:2023 Unsafe Consumption of APIs</a><a class="headerlink" href="#api10-2023-unsafe-consumption-of-apis" title="Link to this heading"></a></h3>
 <p>Developers tend to trust data received from third-party APIs more than user input,
 and so tend to adopt weaker security standards. In order to compromise APIs,
 attackers go after integrated third-party services instead of trying to compromise
 the target API directly.</p>
 <section id="id37">
-<h4>OWASP recommendations<a class="headerlink" href="#id37" title="Permalink to this heading"></a></h4>
+<h4>OWASP recommendations<a class="headerlink" href="#id37" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>When evaluating service providers, assess their API security posture.</p></li>
 <li><p>Ensure all API interactions happen over a secure communication channel (TLS).</p></li>
@@ -1278,7 +1275,7 @@ to: do not blindly follow redirects.</p></li>
 </ul>
 </section>
 <section id="id38">
-<h4>CodeIgniter provisions<a class="headerlink" href="#id38" title="Permalink to this heading"></a></h4>
+<h4>CodeIgniter provisions<a class="headerlink" href="#id38" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><a class="reference internal" href="../libraries/curlrequest.html"><span class="doc">CURLRequest</span></a> class</p></li>
 <li><p><a class="reference internal" href="../libraries/validation.html"><span class="doc">Validation</span></a> library</p></li>

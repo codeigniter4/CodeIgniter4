@@ -1,28 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Version 4.6.0 &mdash; CodeIgniter 4.7.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=34bb78ad" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css?v=eacb1234" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css?v=2b70fae9" />
 
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/js/citheme.js"></script>
-        <script src="../_static/js/carbon.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=52a74d40"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/js/citheme.js?v=e0bcfc84"></script>
+      <script src="../_static/js/carbon.js?v=b287325f"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -294,7 +291,7 @@
            <div itemprop="articleBody">
              
   <section id="version-4-6-0">
-<h1>Version 4.6.0<a class="headerlink" href="#version-4-6-0" title="Permalink to this heading"></a></h1>
+<h1>Version 4.6.0<a class="headerlink" href="#version-4-6-0" title="Link to this heading"></a></h1>
 <p>Release Date: January 19, 2025</p>
 <p><strong>4.6.0 release of CodeIgniter4</strong></p>
 <nav class="contents local" id="contents">
@@ -351,11 +348,11 @@
 </ul>
 </nav>
 <section id="breaking">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">BREAKING</a><a class="headerlink" href="#breaking" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">BREAKING</a><a class="headerlink" href="#breaking" title="Link to this heading"></a></h2>
 <section id="behavior-changes">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">Behavior Changes</a><a class="headerlink" href="#behavior-changes" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Behavior Changes</a><a class="headerlink" href="#behavior-changes" title="Link to this heading"></a></h3>
 <section id="exceptions">
-<span id="v460-behavior-changes-exceptions"></span><h4><a class="toc-backref" href="#id6" role="doc-backlink">Exceptions</a><a class="headerlink" href="#exceptions" title="Permalink to this heading"></a></h4>
+<span id="v460-behavior-changes-exceptions"></span><h4><a class="toc-backref" href="#id6" role="doc-backlink">Exceptions</a><a class="headerlink" href="#exceptions" title="Link to this heading"></a></h4>
 <p>The exception class has been redesigned. See <a class="reference internal" href="../general/errors.html#exception-design"><span class="std std-ref">Exception Design</span></a> for details.
 The following breaking changes have been made accordingly:</p>
 <ul class="simple">
@@ -372,36 +369,36 @@ instead of <code class="docutils literal notranslate"><span class="pre">CodeIgni
 </ul>
 </section>
 <section id="filters-changes">
-<h4><a class="toc-backref" href="#id7" role="doc-backlink">Filters Changes</a><a class="headerlink" href="#filters-changes" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id7" role="doc-backlink">Filters Changes</a><a class="headerlink" href="#filters-changes" title="Link to this heading"></a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">Filters</span></code> class has been changed to allow multiple runs of the same filter
 with different arguments in before or after. See
 <a class="reference internal" href="../installation/upgrade_460.html#upgrade-460-filters-changes"><span class="std std-ref">Upgrading Guide</span></a> for details.</p>
 </section>
 <section id="registrars">
-<h4><a class="toc-backref" href="#id8" role="doc-backlink">Registrars</a><a class="headerlink" href="#registrars" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id8" role="doc-backlink">Registrars</a><a class="headerlink" href="#registrars" title="Link to this heading"></a></h4>
 <p>Added check to prevent Auto-Discovery of Registrars from running twice. If it is
 executed twice, an exception will be thrown. See
 <a class="reference internal" href="../installation/upgrade_460.html#upgrade-460-registrars-with-dirty-hack"><span class="std std-ref">Registrars with Dirty Hack</span></a>.</p>
 </section>
 <section id="time-createfromtimestamp">
-<h4><a class="toc-backref" href="#id9" role="doc-backlink">Time::createFromTimestamp()</a><a class="headerlink" href="#time-createfromtimestamp" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id9" role="doc-backlink">Time::createFromTimestamp()</a><a class="headerlink" href="#time-createfromtimestamp" title="Link to this heading"></a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">Time::createFromTimestamp()</span></code> handles timezones differently. If <code class="docutils literal notranslate"><span class="pre">$timezone</span></code>
 is not explicitly passed then the instance has timezone set to UTC unlike earlier
 where the currently set default timezone was used.
 See <a class="reference internal" href="../installation/upgrade_460.html#upgrade-460-time-create-from-timestamp"><span class="std std-ref">Upgrading Guide</span></a> for details.</p>
 </section>
 <section id="time-with-microseconds">
-<h4><a class="toc-backref" href="#id10" role="doc-backlink">Time with Microseconds</a><a class="headerlink" href="#time-with-microseconds" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id10" role="doc-backlink">Time with Microseconds</a><a class="headerlink" href="#time-with-microseconds" title="Link to this heading"></a></h4>
 <p>Fixed bugs that some methods in <code class="docutils literal notranslate"><span class="pre">Time</span></code> to lose microseconds have been fixed.
 See <a class="reference internal" href="../installation/upgrade_460.html#upgrade-460-time-keeps-microseconds"><span class="std std-ref">Upgrading Guide</span></a> for details.</p>
 </section>
 <section id="time-settimestamp">
-<h4><a class="toc-backref" href="#id11" role="doc-backlink">Time::setTimestamp()</a><a class="headerlink" href="#time-settimestamp" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id11" role="doc-backlink">Time::setTimestamp()</a><a class="headerlink" href="#time-settimestamp" title="Link to this heading"></a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">Time::setTimestamp()</span></code> behavior has been fixed.
 See <a class="reference internal" href="../installation/upgrade_460.html#upgrade-460-time-set-timestamp"><span class="std std-ref">Upgrading Guide</span></a> for details.</p>
 </section>
 <section id="error-reporting-to-non-html-requests">
-<h4><a class="toc-backref" href="#id12" role="doc-backlink">Error Reporting to Non-HTML Requests</a><a class="headerlink" href="#error-reporting-to-non-html-requests" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id12" role="doc-backlink">Error Reporting to Non-HTML Requests</a><a class="headerlink" href="#error-reporting-to-non-html-requests" title="Link to this heading"></a></h4>
 <p>In previous versions, when a request does not accept HTML, CodeIgniter showed
 error details only in the <code class="docutils literal notranslate"><span class="pre">development</span></code> and <code class="docutils literal notranslate"><span class="pre">testing</span></code> environments.</p>
 <p>But because it is not possible to display error details when using a custom
@@ -411,13 +408,13 @@ environment, this behavior has been fixed so that error details are displayed if
 both HTML requests and non-HTML requests.</p>
 </section>
 <section id="session-id-sid">
-<h4><a class="toc-backref" href="#id13" role="doc-backlink">Session ID (SID)</a><a class="headerlink" href="#session-id-sid" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id13" role="doc-backlink">Session ID (SID)</a><a class="headerlink" href="#session-id-sid" title="Link to this heading"></a></h4>
 <p>Now <code class="docutils literal notranslate"><span class="pre">Session</span></code> library forces to use the PHP default 32 character SIDs, with 4
 bits of entropy per character.
 See <a class="reference internal" href="../installation/upgrade_460.html#upgrade-460-sid-change"><span class="std std-ref">Upgrading Guide</span></a> for details.</p>
 </section>
 <section id="headers">
-<span id="v460-interface-changes"></span><h4><a class="toc-backref" href="#id14" role="doc-backlink">Headers</a><a class="headerlink" href="#headers" title="Permalink to this heading"></a></h4>
+<span id="v460-interface-changes"></span><h4><a class="toc-backref" href="#id14" role="doc-backlink">Headers</a><a class="headerlink" href="#headers" title="Link to this heading"></a></h4>
 <p>The headers set by the <code class="docutils literal notranslate"><span class="pre">Response</span></code> class replace those that can be set by the PHP
 <code class="docutils literal notranslate"><span class="pre">header()</span></code> function.</p>
 <p>In previous versions, headers set by the <code class="docutils literal notranslate"><span class="pre">Response</span></code> class were added to existing
@@ -450,7 +447,7 @@ Expires: Sun, 17 Nov 2024 14:17:37 GMT
 </section>
 </section>
 <section id="interface-changes">
-<h3><a class="toc-backref" href="#id15" role="doc-backlink">Interface Changes</a><a class="headerlink" href="#interface-changes" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">Interface Changes</a><a class="headerlink" href="#interface-changes" title="Link to this heading"></a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>As long as you have not extended the relevant CodeIgniter core classes
@@ -472,7 +469,7 @@ and require no intervention.</p>
 </ul>
 </section>
 <section id="method-signature-changes">
-<span id="v460-method-signature-changes"></span><h3><a class="toc-backref" href="#id16" role="doc-backlink">Method Signature Changes</a><a class="headerlink" href="#method-signature-changes" title="Permalink to this heading"></a></h3>
+<span id="v460-method-signature-changes"></span><h3><a class="toc-backref" href="#id16" role="doc-backlink">Method Signature Changes</a><a class="headerlink" href="#method-signature-changes" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Router:</strong> The constructor of the <code class="docutils literal notranslate"><span class="pre">DefinedRouteCollector</span></code> has been
 changed. The <code class="docutils literal notranslate"><span class="pre">RouteCollection</span></code> typehint has been changed to <code class="docutils literal notranslate"><span class="pre">RouteCollectionInterface</span></code>.</p></li>
@@ -484,7 +481,7 @@ added.</p></li>
 <li><p><strong>Helpers:</strong> <code class="docutils literal notranslate"><span class="pre">character_limiter()</span></code> parameter names have been updated. If you use named arguments, you need to update the function calls.</p></li>
 </ul>
 <section id="removed-type-definitions">
-<h4><a class="toc-backref" href="#id17" role="doc-backlink">Removed Type Definitions</a><a class="headerlink" href="#removed-type-definitions" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id17" role="doc-backlink">Removed Type Definitions</a><a class="headerlink" href="#removed-type-definitions" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><dl class="simple">
 <dt><strong>Database:</strong></dt><dd><ul>
@@ -507,7 +504,7 @@ and <code class="docutils literal notranslate"><span class="pre">SQLite3\Connect
 </section>
 </section>
 <section id="removed-deprecated-items">
-<span id="v460-removed-deprecated-items"></span><h3><a class="toc-backref" href="#id18" role="doc-backlink">Removed Deprecated Items</a><a class="headerlink" href="#removed-deprecated-items" title="Permalink to this heading"></a></h3>
+<span id="v460-removed-deprecated-items"></span><h3><a class="toc-backref" href="#id18" role="doc-backlink">Removed Deprecated Items</a><a class="headerlink" href="#removed-deprecated-items" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>API:</strong> The deprecated <code class="docutils literal notranslate"><span class="pre">failValidationError()</span></code> method in <code class="docutils literal notranslate"><span class="pre">CodeIgniter\API\ResponseTrait</span></code>
 has been removed. Use <code class="docutils literal notranslate"><span class="pre">failValidationErrors()</span></code> instead.</p></li>
@@ -527,15 +524,15 @@ and <code class="docutils literal notranslate"><span class="pre">ResponseInterfa
 </section>
 </section>
 <section id="enhancements">
-<h2><a class="toc-backref" href="#id19" role="doc-backlink">Enhancements</a><a class="headerlink" href="#enhancements" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id19" role="doc-backlink">Enhancements</a><a class="headerlink" href="#enhancements" title="Link to this heading"></a></h2>
 <section id="publisher">
-<h3><a class="toc-backref" href="#id20" role="doc-backlink">Publisher</a><a class="headerlink" href="#publisher" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id20" role="doc-backlink">Publisher</a><a class="headerlink" href="#publisher" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Publisher::discover()</span></code> now accepts a second parameter (<code class="docutils literal notranslate"><span class="pre">namespace</span></code>) specifying the namespace in which publishers should be searched. See <a class="reference internal" href="../libraries/publisher.html#discovery-in-a-specific-namespace"><span class="std std-ref">Discovery in a specific namespace</span></a> for the details.</p></li>
 </ul>
 </section>
 <section id="id1">
-<h3><a class="toc-backref" href="#id21" role="doc-backlink">Exceptions</a><a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id21" role="doc-backlink">Exceptions</a><a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
 <p>The exception class has been redesigned. See <a class="reference internal" href="../general/errors.html#exception-design"><span class="std std-ref">Exception Design</span></a> for details.
 The following new Exception classes have been added accordingly:</p>
 <ul class="simple">
@@ -554,7 +551,7 @@ The following new Exception classes have been added accordingly:</p>
 <p>Displaying exceptions for non-HTML responses now rely on the PHP <code class="docutils literal notranslate"><span class="pre">display_errors</span></code> setting instead of hardcoded environments.</p>
 </section>
 <section id="commands">
-<h3><a class="toc-backref" href="#id22" role="doc-backlink">Commands</a><a class="headerlink" href="#commands" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id22" role="doc-backlink">Commands</a><a class="headerlink" href="#commands" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>The <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">routes</span></code> and <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">filter:check</span></code> commands now display filter
 arguments.</p></li>
@@ -565,13 +562,13 @@ which when used will display information about opcache settings.</p></li>
 </ul>
 </section>
 <section id="routing">
-<h3><a class="toc-backref" href="#id23" role="doc-backlink">Routing</a><a class="headerlink" href="#routing" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id23" role="doc-backlink">Routing</a><a class="headerlink" href="#routing" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Now you can specify multiple hostnames when restricting routes.</p></li>
 </ul>
 </section>
 <section id="negotiator">
-<h3><a class="toc-backref" href="#id24" role="doc-backlink">Negotiator</a><a class="headerlink" href="#negotiator" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id24" role="doc-backlink">Negotiator</a><a class="headerlink" href="#negotiator" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Added a feature flag <code class="docutils literal notranslate"><span class="pre">Feature::$strictLocaleNegotiation</span></code> to enable strict locale comparision.
 Previously, response with language headers <code class="docutils literal notranslate"><span class="pre">Accept-language:</span> <span class="pre">en-US,en-GB;q=0.9</span></code> returned the first allowed language <code class="docutils literal notranslate"><span class="pre">en</span></code> could instead of the exact language <code class="docutils literal notranslate"><span class="pre">en-US</span></code> or <code class="docutils literal notranslate"><span class="pre">en-GB</span></code>.
@@ -579,16 +576,16 @@ Set the value to <code class="docutils literal notranslate"><span class="pre">tr
 </ul>
 </section>
 <section id="pagination">
-<h3><a class="toc-backref" href="#id25" role="doc-backlink">Pagination</a><a class="headerlink" href="#pagination" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id25" role="doc-backlink">Pagination</a><a class="headerlink" href="#pagination" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Added a new feature to get the total and the range number of items of the current page.
 See <a class="reference internal" href="../libraries/pagination.html#displaying-the-number-of-items-on-the-page"><span class="std std-ref">Displaying the Number of Items on the Page</span></a> for more details.</p></li>
 </ul>
 </section>
 <section id="database">
-<h3><a class="toc-backref" href="#id26" role="doc-backlink">Database</a><a class="headerlink" href="#database" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id26" role="doc-backlink">Database</a><a class="headerlink" href="#database" title="Link to this heading"></a></h3>
 <section id="others">
-<h4><a class="toc-backref" href="#id27" role="doc-backlink">Others</a><a class="headerlink" href="#others" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id27" role="doc-backlink">Others</a><a class="headerlink" href="#others" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>Added a new configuration <code class="docutils literal notranslate"><span class="pre">foundRows</span></code> for MySQLi to use <code class="docutils literal notranslate"><span class="pre">MYSQLI_CLIENT_FOUND_ROWS</span></code>.</p></li>
 <li><p>Added the <code class="docutils literal notranslate"><span class="pre">BaseConnection::resetTransStatus()</span></code> method to reset the transaction
@@ -599,7 +596,7 @@ to disk during transactions. Modifying this can be useful if we use journal mode
 </section>
 </section>
 <section id="libraries">
-<h3><a class="toc-backref" href="#id28" role="doc-backlink">Libraries</a><a class="headerlink" href="#libraries" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id28" role="doc-backlink">Libraries</a><a class="headerlink" href="#libraries" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>File:</strong> Added <code class="docutils literal notranslate"><span class="pre">getSizeByBinaryUnit()</span></code> and <code class="docutils literal notranslate"><span class="pre">getSizeByMetricUnit()</span></code> to <code class="docutils literal notranslate"><span class="pre">File</span></code> class.
 See <a class="reference internal" href="../libraries/files.html#file-get-size-by-binary-unit"><span class="std std-ref">File::getSizeByBinaryUnit()</span></a> and <a class="reference internal" href="../libraries/files.html#file-get-size-by-metric-unit"><span class="std std-ref">File::getSizeByMetricUnit()</span></a>.</p></li>
@@ -612,7 +609,7 @@ See <a class="reference internal" href="../libraries/file_collections.html#file-
 </ul>
 </section>
 <section id="id2">
-<h3><a class="toc-backref" href="#id29" role="doc-backlink">Others</a><a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id29" role="doc-backlink">Others</a><a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Filters:</strong> Now you can execute a filter more than once with the different
 arguments in before or after.</p></li>
@@ -623,16 +620,16 @@ the services cache. See <a class="reference internal" href="../concepts/services
 </section>
 </section>
 <section id="message-changes">
-<h2><a class="toc-backref" href="#id30" role="doc-backlink">Message Changes</a><a class="headerlink" href="#message-changes" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id30" role="doc-backlink">Message Changes</a><a class="headerlink" href="#message-changes" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">Validation.min_dims</span></code> message</p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">Errors.badRequest</span></code> and <code class="docutils literal notranslate"><span class="pre">Errors.sorryBadRequest</span></code></p></li>
 </ul>
 </section>
 <section id="changes">
-<h2><a class="toc-backref" href="#id31" role="doc-backlink">Changes</a><a class="headerlink" href="#changes" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id31" role="doc-backlink">Changes</a><a class="headerlink" href="#changes" title="Link to this heading"></a></h2>
 <section id="id3">
-<h3><a class="toc-backref" href="#id32" role="doc-backlink">Exceptions</a><a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id32" role="doc-backlink">Exceptions</a><a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
 <p>The exception classes have been redesigned. See <a class="reference internal" href="../general/errors.html#exception-design"><span class="std std-ref">Exception Design</span></a> for details.
 The following changes have been made accordingly:</p>
 <ul class="simple">
@@ -658,7 +655,7 @@ instead of <code class="docutils literal notranslate"><span class="pre">OutOfBou
 </section>
 </section>
 <section id="deprecations">
-<h2><a class="toc-backref" href="#id33" role="doc-backlink">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id33" role="doc-backlink">Deprecations</a><a class="headerlink" href="#deprecations" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><dl class="simple">
 <dt><strong>Filters:</strong></dt><dd><ul>
@@ -680,7 +677,7 @@ Use either <code class="docutils literal notranslate"><span class="pre">getSizeB
 </ul>
 </section>
 <section id="bugs-fixed">
-<h2><a class="toc-backref" href="#id34" role="doc-backlink">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id34" role="doc-backlink">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><dl class="simple">
 <dt><strong>Response:</strong></dt><dd><ul>

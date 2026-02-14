@@ -1,28 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Getting Started with REST APIs &mdash; CodeIgniter 4.7.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/citheme.css" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/citheme_dark.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=34bb78ad" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/citheme.css?v=eacb1234" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/citheme_dark.css?v=2b70fae9" />
 
   
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
-        <script src="../../_static/js/citheme.js"></script>
-        <script src="../../_static/js/carbon.js"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=52a74d40"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/js/citheme.js?v=e0bcfc84"></script>
+      <script src="../../_static/js/carbon.js?v=b287325f"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -293,7 +290,7 @@
            <div itemprop="articleBody">
              
   <section id="getting-started-with-rest-apis">
-<span id="ci47-rest-part1"></span><h1>Getting Started with REST APIs<a class="headerlink" href="#getting-started-with-rest-apis" title="Permalink to this heading"></a></h1>
+<span id="ci47-rest-part1"></span><h1>Getting Started with REST APIs<a class="headerlink" href="#getting-started-with-rest-apis" title="Link to this heading"></a></h1>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#getting-up-and-running" id="id1">Getting Up and Running</a></p>
@@ -321,9 +318,9 @@
 <div class="toctree-wrapper compound">
 </div>
 <section id="getting-up-and-running">
-<h2><a class="toc-backref" href="#id1" role="doc-backlink">Getting Up and Running</a><a class="headerlink" href="#getting-up-and-running" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Getting Up and Running</a><a class="headerlink" href="#getting-up-and-running" title="Link to this heading"></a></h2>
 <section id="installing-codeigniter">
-<h3><a class="toc-backref" href="#id2" role="doc-backlink">Installing CodeIgniter</a><a class="headerlink" href="#installing-codeigniter" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">Installing CodeIgniter</a><a class="headerlink" href="#installing-codeigniter" title="Link to this heading"></a></h3>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">composer create-project codeigniter4/appstarter books-api</span>
 <span class="go">cd books-api</span>
 <span class="go">php spark serve</span>
@@ -332,11 +329,11 @@
 <p>Open your browser to <code class="docutils literal notranslate"><span class="pre">http://localhost:8080</span></code> and you should see the CodeIgniter welcome page.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Keep the server running in one terminal. If you prefer, you can stop it anytime with <kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">Ctrl</kbd>+<kbd class="kbd docutils literal notranslate">C</kbd></kbd> and start again with <code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span> <span class="pre">serve</span></code>.</p>
+<p>Keep the server running in one terminal. If you prefer, you can stop it anytime with <kbd class="kbd docutils literal notranslate">Ctrl</kbd>+<kbd class="kbd docutils literal notranslate">C</kbd> and start again with <code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span> <span class="pre">serve</span></code>.</p>
 </div>
 </section>
 <section id="setting-development-mode">
-<h3><a class="toc-backref" href="#id3" role="doc-backlink">Setting Development Mode</a><a class="headerlink" href="#setting-development-mode" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Setting Development Mode</a><a class="headerlink" href="#setting-development-mode" title="Link to this heading"></a></h3>
 <p>Copy the environment file and enable development settings:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cp env .env</span>
 </pre></div>
@@ -351,7 +348,7 @@
 </div>
 </section>
 <section id="configure-sqlite">
-<h3><a class="toc-backref" href="#id4" role="doc-backlink">Configure SQLite</a><a class="headerlink" href="#configure-sqlite" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Configure SQLite</a><a class="headerlink" href="#configure-sqlite" title="Link to this heading"></a></h3>
 <p>We’ll use a single-file SQLite database under <strong>writable/</strong> so there’s no external setup.</p>
 <p>Open <strong>.env</strong> and <strong>uncomment</strong> the database section, then set:</p>
 <div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">database.default.DBDriver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">SQLite3</span>
@@ -376,7 +373,7 @@
 </ul>
 </section>
 <section id="what-s-next">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">What’s Next</a><a class="headerlink" href="#what-s-next" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">What’s Next</a><a class="headerlink" href="#what-s-next" title="Link to this heading"></a></h3>
 <p>In the next section, we’ll enable auto-routing and create a simple JSON endpoint (<code class="docutils literal notranslate"><span class="pre">/api/pings</span></code>) to see how HTTP verbs map to controller methods in CodeIgniter.</p>
 </section>
 </section>

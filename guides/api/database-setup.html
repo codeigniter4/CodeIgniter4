@@ -1,28 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Creating the Database and Model &mdash; CodeIgniter 4.7.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/citheme.css" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/citheme_dark.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=34bb78ad" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/citheme.css?v=eacb1234" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/citheme_dark.css?v=2b70fae9" />
 
   
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
-        <script src="../../_static/js/citheme.js"></script>
-        <script src="../../_static/js/carbon.js"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=52a74d40"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/js/citheme.js?v=e0bcfc84"></script>
+      <script src="../../_static/js/carbon.js?v=b287325f"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -294,7 +291,7 @@
            <div itemprop="articleBody">
              
   <section id="creating-the-database-and-model">
-<span id="ci47-rest-part3"></span><h1>Creating the Database and Model<a class="headerlink" href="#creating-the-database-and-model" title="Permalink to this heading"></a></h1>
+<span id="ci47-rest-part3"></span><h1>Creating the Database and Model<a class="headerlink" href="#creating-the-database-and-model" title="Link to this heading"></a></h1>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#create-the-migrations" id="id1">Create the Migrations</a></p></li>
@@ -304,7 +301,7 @@
 </nav>
 <p>In this section, we set up the data layer by creating a SQLite database table for our <code class="docutils literal notranslate"><span class="pre">books</span></code> resource, seeding it with sample data, and defining a model to access it. By the end, you’ll have a working <code class="docutils literal notranslate"><span class="pre">books</span></code> table populated with example rows.</p>
 <section id="create-the-migrations">
-<h2><a class="toc-backref" href="#id1" role="doc-backlink">Create the Migrations</a><a class="headerlink" href="#create-the-migrations" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Create the Migrations</a><a class="headerlink" href="#create-the-migrations" title="Link to this heading"></a></h2>
 <p>Migrations let you version-control your database schema by defining what to apply and how to roll it back. Let’s make ones for simple <code class="docutils literal notranslate"><span class="pre">authors</span></code> and <code class="docutils literal notranslate"><span class="pre">books</span></code> tables.</p>
 <p>Run the Spark command:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:migration CreateAuthorsTable</span>
@@ -418,7 +415,7 @@
 <p>Now, the database has the structure needed to hold our book and author records.</p>
 </section>
 <section id="create-a-seeder">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">Create a seeder</a><a class="headerlink" href="#create-a-seeder" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Create a seeder</a><a class="headerlink" href="#create-a-seeder" title="Link to this heading"></a></h2>
 <p>Seeders load sample data for development so you have something to work with right away. Here, we’ll add some example books and their authors.</p>
 <p>Run:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:seeder BookSeeder</span>
@@ -483,7 +480,7 @@
 <p>You should see confirmation messages indicating the rows were inserted.</p>
 </section>
 <section id="create-the-book-model">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Create the Book model</a><a class="headerlink" href="#create-the-book-model" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Create the Book model</a><a class="headerlink" href="#create-the-book-model" title="Link to this heading"></a></h2>
 <p>Models make database access simple and reusable by providing an object-oriented interface to your tables and a fluent query API. Let’s create models for the <code class="docutils literal notranslate"><span class="pre">authors</span></code> and <code class="docutils literal notranslate"><span class="pre">books</span></code> tables.</p>
 <p>Generate one:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:model AuthorModel</span>

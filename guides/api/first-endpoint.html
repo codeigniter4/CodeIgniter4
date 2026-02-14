@@ -1,28 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Auto Routing &amp; Your First Endpoint &mdash; CodeIgniter 4.7.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/citheme.css" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/citheme_dark.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=34bb78ad" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/citheme.css?v=eacb1234" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/citheme_dark.css?v=2b70fae9" />
 
   
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
-        <script src="../../_static/js/citheme.js"></script>
-        <script src="../../_static/js/carbon.js"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=52a74d40"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/js/citheme.js?v=e0bcfc84"></script>
+      <script src="../../_static/js/carbon.js?v=b287325f"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -294,7 +291,7 @@
            <div itemprop="articleBody">
              
   <section id="auto-routing-your-first-endpoint">
-<span id="ci47-rest-part2"></span><h1>Auto Routing &amp; Your First Endpoint<a class="headerlink" href="#auto-routing-your-first-endpoint" title="Permalink to this heading"></a></h1>
+<span id="ci47-rest-part2"></span><h1>Auto Routing &amp; Your First Endpoint<a class="headerlink" href="#auto-routing-your-first-endpoint" title="Link to this heading"></a></h1>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#why-auto-routing" id="id1">Why Auto-Routing?</a></p></li>
@@ -308,11 +305,11 @@
 </nav>
 <p>In this section, we enable CodeIgniter’s <em>Improved Auto Routing</em> feature and create a simple JSON endpoint to confirm everything is wired correctly.</p>
 <section id="why-auto-routing">
-<h2><a class="toc-backref" href="#id1" role="doc-backlink">Why Auto-Routing?</a><a class="headerlink" href="#why-auto-routing" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Why Auto-Routing?</a><a class="headerlink" href="#why-auto-routing" title="Link to this heading"></a></h2>
 <p>The previous tutorial showed how to define routes manually in <strong>app/Config/Routes.php</strong>. While powerful and flexible, this can be tedious for RESTful APIs with many endpoints that follow a common pattern. Auto-Routing simplifies this by mapping URL patterns to controller classes and methods based on conventions, and its focus on HTTP verbs works well for RESTful APIs.</p>
 </section>
 <section id="enable-improved-auto-routing">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">Enable Improved Auto Routing</a><a class="headerlink" href="#enable-improved-auto-routing" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Enable Improved Auto Routing</a><a class="headerlink" href="#enable-improved-auto-routing" title="Link to this heading"></a></h2>
 <p>By default, Auto-Routing is turned off. Enable it so your controllers automatically handle REST-style methods.</p>
 <p>Open <strong>app/Config/Feature.php</strong> and confirm this flag is <code class="docutils literal notranslate"><span class="pre">true</span></code> (this is the default):</p>
 <div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">public bool $autoRoutesImproved = true;</span>
@@ -326,7 +323,7 @@
 <p>That’s all you need for CodeIgniter to automatically map your controller classes and to URIs like <code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/api/pings</span></code> or <code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/pings</span></code>.</p>
 </section>
 <section id="create-a-ping-controller">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Create a Ping Controller</a><a class="headerlink" href="#create-a-ping-controller" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Create a Ping Controller</a><a class="headerlink" href="#create-a-ping-controller" title="Link to this heading"></a></h2>
 <p>To understand how a basic API endpoint works, let’s generate a controller to serve as our first API endpoint. This will provide a simple “ping” response to confirm our setup is correct.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:controller Api/Ping</span>
 </pre></div>
@@ -359,7 +356,7 @@
 </ul>
 </section>
 <section id="test-the-route">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Test the route</a><a class="headerlink" href="#test-the-route" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Test the route</a><a class="headerlink" href="#test-the-route" title="Link to this heading"></a></h2>
 <p>Start the development server if it isn’t running:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark serve</span>
 </pre></div>
@@ -378,7 +375,7 @@
 <p>Congratulations — that’s your first working JSON endpoint!</p>
 </section>
 <section id="understand-how-it-works">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">Understand how it works</a><a class="headerlink" href="#understand-how-it-works" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Understand how it works</a><a class="headerlink" href="#understand-how-it-works" title="Link to this heading"></a></h2>
 <p>When you request <code class="docutils literal notranslate"><span class="pre">/api/pings</span></code>:</p>
 <ol class="arabic simple">
 <li><p>The <strong>Improved Auto Router</strong> finds the <code class="docutils literal notranslate"><span class="pre">App\Controllers\Api\Pings</span></code> class.</p></li>
@@ -405,7 +402,7 @@
 </table>
 </section>
 <section id="content-negotiation-with-the-format-class">
-<h2><a class="toc-backref" href="#id6" role="doc-backlink">Content Negotiation with the Format Class</a><a class="headerlink" href="#content-negotiation-with-the-format-class" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Content Negotiation with the Format Class</a><a class="headerlink" href="#content-negotiation-with-the-format-class" title="Link to this heading"></a></h2>
 <p>By default, CodeIgniter uses the <code class="xref php php-class docutils literal notranslate"><span class="pre">CodeIgniter\Format\Format</span></code> class to automatically negotiate the response format. It can return responses in either JSON or XML depending on what the client requests.</p>
 <p>The <code class="xref php php-trait docutils literal notranslate"><span class="pre">ResponseTrait</span></code> sets the format to JSON by default. You can change this to XML if desired, but this tutorial will focus on JSON responses.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -429,7 +426,7 @@
 </div>
 </section>
 <section id="optional-return-more-data">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">Optional: Return More Data</a><a class="headerlink" href="#optional-return-more-data" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Optional: Return More Data</a><a class="headerlink" href="#optional-return-more-data" title="Link to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">respond()</span></code> method can return additional data:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 

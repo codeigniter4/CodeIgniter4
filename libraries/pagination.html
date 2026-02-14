@@ -1,28 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pagination &mdash; CodeIgniter 4.7.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=34bb78ad" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css?v=eacb1234" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css?v=2b70fae9" />
 
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/js/citheme.js"></script>
-        <script src="../_static/js/carbon.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=52a74d40"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/js/citheme.js?v=e0bcfc84"></script>
+      <script src="../_static/js/carbon.js?v=b287325f"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -293,7 +290,7 @@
            <div itemprop="articleBody">
              
   <section id="pagination">
-<h1>Pagination<a class="headerlink" href="#pagination" title="Permalink to this heading"></a></h1>
+<h1>Pagination<a class="headerlink" href="#pagination" title="Link to this heading"></a></h1>
 <p>CodeIgniter provides a very simple, but flexible pagination library that is simple to theme, works with the model,
 and capable of supporting multiple paginators on a single page.</p>
 <nav class="contents local" id="contents">
@@ -320,7 +317,7 @@ and capable of supporting multiple paginators on a single page.</p>
 </ul>
 </nav>
 <section id="loading-the-library">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Loading the Library</a><a class="headerlink" href="#loading-the-library" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Loading the Library</a><a class="headerlink" href="#loading-the-library" title="Link to this heading"></a></h2>
 <p>Like all services in CodeIgniter, it can be loaded via <code class="docutils literal notranslate"><span class="pre">Config\Services</span></code>, though you usually will not need
 to load it manually:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -330,7 +327,7 @@ to load it manually:</p>
 </div>
 </section>
 <section id="paginating-with-models">
-<span id="id1"></span><h2><a class="toc-backref" href="#id4" role="doc-backlink">Paginating with Models</a><a class="headerlink" href="#paginating-with-models" title="Permalink to this heading"></a></h2>
+<span id="id1"></span><h2><a class="toc-backref" href="#id4" role="doc-backlink">Paginating with Models</a><a class="headerlink" href="#paginating-with-models" title="Link to this heading"></a></h2>
 <p>In most cases, you will be using the Pager library in order to paginate results that you retrieve from the database.
 When using the <a class="reference internal" href="../models/model.html"><span class="doc">Model</span></a> class, you can use its built-in <code class="docutils literal notranslate"><span class="pre">paginate()</span></code> method to automatically
 retrieve the current batch of results, as well as set up the Pager library so it’s ready to use in your controllers.
@@ -364,12 +361,12 @@ The first element is the results from the database, <strong>users</strong>, whic
 the Model will hold on to the instance it used and store it in the public property, <code class="docutils literal notranslate"><span class="pre">$pager</span></code>. So, we grab
 that and assign it to the <code class="docutils literal notranslate"><span class="pre">$pager</span></code> variable in the view.</p>
 <section id="customizing-query-for-pagination">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">Customizing Query for Pagination</a><a class="headerlink" href="#customizing-query-for-pagination" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Customizing Query for Pagination</a><a class="headerlink" href="#customizing-query-for-pagination" title="Link to this heading"></a></h3>
 <p>To customize a query for pagination in a model, you can add
 <a class="reference internal" href="../database/query_builder.html"><span class="doc">Query Builder</span></a> methods before <code class="docutils literal notranslate"><span class="pre">paginate()</span></code>
 method.</p>
 <section id="adding-where">
-<h4>Adding WHERE<a class="headerlink" href="#adding-where" title="Permalink to this heading"></a></h4>
+<h4>Adding WHERE<a class="headerlink" href="#adding-where" title="Link to this heading"></a></h4>
 <p>If you want to add WHERE conditions, you can specify conditions directly:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">App\Models\UserModel</span><span class="p">;</span>
 
@@ -415,7 +412,7 @@ method.</p>
 </div>
 </section>
 <section id="adding-join">
-<h4>Adding JOIN<a class="headerlink" href="#adding-join" title="Permalink to this heading"></a></h4>
+<h4>Adding JOIN<a class="headerlink" href="#adding-join" title="Link to this heading"></a></h4>
 <p>You can join another table:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -456,7 +453,7 @@ try using <a class="reference internal" href="../database/queries.html#db-query"
 </section>
 </section>
 <section id="displaying-pager-links">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">Displaying Pager Links</a><a class="headerlink" href="#displaying-pager-links" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Displaying Pager Links</a><a class="headerlink" href="#displaying-pager-links" title="Link to this heading"></a></h3>
 <p>Within the view, we then need to tell it where to display the resulting links:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">links</span><span class="p">()</span> <span class="cp">?&gt;</span>
 </pre></div>
@@ -474,7 +471,7 @@ instead of the details pagination links:</p>
 modify to your needs. See below for details on how to completely customize the output.</p>
 </section>
 <section id="paginating-multiple-results">
-<h3><a class="toc-backref" href="#id7" role="doc-backlink">Paginating Multiple Results</a><a class="headerlink" href="#paginating-multiple-results" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Paginating Multiple Results</a><a class="headerlink" href="#paginating-multiple-results" title="Link to this heading"></a></h3>
 <p>If you need to provide links from two different result sets, you can pass group names to most of the pagination
 methods to keep the data separate:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -509,7 +506,7 @@ methods to keep the data separate:</p>
 </div>
 </section>
 <section id="setting-page-manually">
-<h3><a class="toc-backref" href="#id8" role="doc-backlink">Setting Page Manually</a><a class="headerlink" href="#setting-page-manually" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Setting Page Manually</a><a class="headerlink" href="#setting-page-manually" title="Link to this heading"></a></h3>
 <p>If you need to specify which page of results to return you can specify the page as the 3rd argument. This can be
 handy when you have a different manner than the default <code class="docutils literal notranslate"><span class="pre">$_GET</span></code> variable to control which page to show.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -524,7 +521,7 @@ handy when you have a different manner than the default <code class="docutils li
 </div>
 </section>
 <section id="specifying-the-uri-segment-for-page">
-<h3><a class="toc-backref" href="#id9" role="doc-backlink">Specifying the URI Segment for Page</a><a class="headerlink" href="#specifying-the-uri-segment-for-page" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Specifying the URI Segment for Page</a><a class="headerlink" href="#specifying-the-uri-segment-for-page" title="Link to this heading"></a></h3>
 <p>It is also possible to use a URI segment for the page number, instead of the page query parameter. Simply specify the
 segment number to use as the fourth argument. URIs generated by the pager would then look
 like <strong>https://domain.tld/foo/bar/[pageNumber]</strong> instead of <strong>https://domain.tld/foo/bar?page=[pageNumber]</strong>.</p>
@@ -537,7 +534,7 @@ like <strong>https://domain.tld/foo/bar/[pageNumber]</strong> instead of <strong
 </section>
 </section>
 <section id="manual-pagination">
-<h2><a class="toc-backref" href="#id10" role="doc-backlink">Manual Pagination</a><a class="headerlink" href="#manual-pagination" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Manual Pagination</a><a class="headerlink" href="#manual-pagination" title="Link to this heading"></a></h2>
 <p>You may find times where you just need to create pagination based on known data. You can create links manually
 with the <code class="docutils literal notranslate"><span class="pre">makeLinks()</span></code> method, which takes the current page, the number of results per page, and
 the total number of items as the first, second, and third parameters, respectively:</p>
@@ -597,7 +594,7 @@ the previous section. Specify the segment number to use as the fifth parameter t
 <p>Pagination library uses <strong>page</strong> query parameter for HTTP queries by default (if no group or <code class="docutils literal notranslate"><span class="pre">default</span></code> group name given) or <code class="docutils literal notranslate"><span class="pre">page_[groupName]</span></code> for custom group names.</p>
 </section>
 <section id="paginating-with-only-expected-queries">
-<h2><a class="toc-backref" href="#id11" role="doc-backlink">Paginating with Only Expected Queries</a><a class="headerlink" href="#paginating-with-only-expected-queries" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id11" role="doc-backlink">Paginating with Only Expected Queries</a><a class="headerlink" href="#paginating-with-only-expected-queries" title="Link to this heading"></a></h2>
 <p>By default, all GET queries are shown in the pagination links.</p>
 <p>For example, when accessing the URL <strong>https://domain.tld?search=foo&amp;order=asc&amp;hello=i+am+here&amp;page=2</strong>, the page 3 link can be generated, along with the other links, as follows:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -616,9 +613,9 @@ the previous section. Specify the segment number to use as the fifth parameter t
 <p>The <em>page</em> query is enabled by default. And <code class="docutils literal notranslate"><span class="pre">only()</span></code> acts in all pagination links.</p>
 </section>
 <section id="customizing-the-links">
-<h2><a class="toc-backref" href="#id12" role="doc-backlink">Customizing the Links</a><a class="headerlink" href="#customizing-the-links" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id12" role="doc-backlink">Customizing the Links</a><a class="headerlink" href="#customizing-the-links" title="Link to this heading"></a></h2>
 <section id="view-configuration">
-<h3><a class="toc-backref" href="#id13" role="doc-backlink">View Configuration</a><a class="headerlink" href="#view-configuration" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">View Configuration</a><a class="headerlink" href="#view-configuration" title="Link to this heading"></a></h3>
 <p>When the links are rendered out to the page, they use a view file to describe the HTML. You can easily change the view
 that is used by editing <strong>app/Config/Pager.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -683,7 +680,7 @@ methods:</p>
 </div>
 </section>
 <section id="creating-the-view">
-<h3><a class="toc-backref" href="#id14" role="doc-backlink">Creating the View</a><a class="headerlink" href="#creating-the-view" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">Creating the View</a><a class="headerlink" href="#creating-the-view" title="Link to this heading"></a></h3>
 <p>When you create a new view, you only need to create the code that is needed for creating the pagination links themselves.
 You should not create unnecessary wrapping divs since it might be used in multiple places and you only limit their
 usefulness. It is easiest to demonstrate creating a new view by showing you the existing <code class="docutils literal notranslate"><span class="pre">default_full</span></code> template:</p>
@@ -729,7 +726,7 @@ usefulness. It is easiest to demonstrate creating a new view by showing you the 
 </pre></div>
 </div>
 <section id="setsurroundcount">
-<h4>setSurroundCount()<a class="headerlink" href="#setsurroundcount" title="Permalink to this heading"></a></h4>
+<h4>setSurroundCount()<a class="headerlink" href="#setsurroundcount" title="Link to this heading"></a></h4>
 <p>In the first line, the <code class="docutils literal notranslate"><span class="pre">setSurroundCount()</span></code> method specifies that we want to show two links to either side of
 the current page link. The only parameter that it accepts is the number of links to show.</p>
 <div class="admonition note">
@@ -738,7 +735,7 @@ the current page link. The only parameter that it accepts is the number of links
 </div>
 </section>
 <section id="hasprevious-hasnext">
-<h4>hasPrevious() &amp; hasNext()<a class="headerlink" href="#hasprevious-hasnext" title="Permalink to this heading"></a></h4>
+<h4>hasPrevious() &amp; hasNext()<a class="headerlink" href="#hasprevious-hasnext" title="Link to this heading"></a></h4>
 <p>These methods return a boolean <code class="docutils literal notranslate"><span class="pre">true</span></code> if there are more links that can be displayed on either side of the current page,
 based on the value passed to <a class="reference internal" href="#setsurroundcount">setSurroundCount()</a>.</p>
 <p>For example, let’s say we have 20 pages of data. The current
@@ -750,7 +747,7 @@ page is page 3. If the surrounding count is 2, then the following links would sh
 <code class="docutils literal notranslate"><span class="pre">hasNext()</span></code> would return <code class="docutils literal notranslate"><span class="pre">true</span></code> since there are 15 additional pages of results after page five.</p>
 </section>
 <section id="getprevious-getnext">
-<h4>getPrevious() &amp; getNext()<a class="headerlink" href="#getprevious-getnext" title="Permalink to this heading"></a></h4>
+<h4>getPrevious() &amp; getNext()<a class="headerlink" href="#getprevious-getnext" title="Link to this heading"></a></h4>
 <p>These methods return the <strong>URL</strong> for the previous or next pages of results on either side of the numbered links.</p>
 <p>For example, you have the current page set at 5 and you want to have the links before and after (the surroundCount) to be 2 each, that will give you something like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>  <span class="o">|</span>  <span class="mi">4</span>  <span class="o">|</span>  <span class="mi">5</span>  <span class="o">|</span>  <span class="mi">6</span>  <span class="o">|</span>  <span class="mi">7</span>
@@ -760,12 +757,12 @@ page is page 3. If the surrounding count is 2, then the following links would sh
 <p>If you want to get page 4 and page 6, use <a class="reference internal" href="#getpreviouspage-getnextpage">getPreviousPage() &amp; getNextPage()</a> instead.</p>
 </section>
 <section id="getfirst-getlast">
-<h4>getFirst() &amp; getLast()<a class="headerlink" href="#getfirst-getlast" title="Permalink to this heading"></a></h4>
+<h4>getFirst() &amp; getLast()<a class="headerlink" href="#getfirst-getlast" title="Link to this heading"></a></h4>
 <p>Much like <a class="reference internal" href="#getprevious-getnext">getPrevious() &amp; getNext()</a>, these methods return the <strong>URL</strong> to the first and last pages in the
 result set.</p>
 </section>
 <section id="links">
-<h4>links()<a class="headerlink" href="#links" title="Permalink to this heading"></a></h4>
+<h4>links()<a class="headerlink" href="#links" title="Link to this heading"></a></h4>
 <p>Returns an array of data about all of the numbered links. Each link’s array contains the uri for the link, the
 title, which is just the number, and a boolean that tells whether the link is the current/active link or not:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -821,7 +818,7 @@ title, which is just the number, and a boolean that tells whether the link is th
 </div>
 </section>
 <section id="haspreviouspage-hasnextpage">
-<h4>hasPreviousPage() &amp; hasNextPage()<a class="headerlink" href="#haspreviouspage-hasnextpage" title="Permalink to this heading"></a></h4>
+<h4>hasPreviousPage() &amp; hasNextPage()<a class="headerlink" href="#haspreviouspage-hasnextpage" title="Link to this heading"></a></h4>
 <p>This method returns a boolean <code class="docutils literal notranslate"><span class="pre">true</span></code> if there are links to a page before and after, respectively, the current page being displayed.</p>
 <p>For example, let’s say we have 20 pages of data. The current
 page is page 3. If the surrounding count is 2, then the following links would show up like this:</p>
@@ -839,7 +836,7 @@ passed in <a class="reference internal" href="#setsurroundcount">setSurroundCoun
 </div>
 </section>
 <section id="getpreviouspage-getnextpage">
-<h4>getPreviousPage() &amp; getNextPage()<a class="headerlink" href="#getpreviouspage-getnextpage" title="Permalink to this heading"></a></h4>
+<h4>getPreviousPage() &amp; getNextPage()<a class="headerlink" href="#getpreviouspage-getnextpage" title="Link to this heading"></a></h4>
 <p>These methods return a <strong>URL</strong> for the previous and next pages in relation to the current page being displayed.</p>
 <p>For example, you have the current page set at 5 and you want to have the links before and after (the surroundCount) to be 2 each, that will give you something like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>  <span class="o">|</span>  <span class="mi">4</span>  <span class="o">|</span>  <span class="mi">5</span>  <span class="o">|</span>  <span class="mi">6</span>  <span class="o">|</span>  <span class="mi">7</span>
@@ -854,11 +851,11 @@ pages of results on either side of the numbered links.</p>
 <p>If you want page numbers instead of URLs, you can use the following methods:</p>
 </section>
 <section id="getpreviouspagenumber-getnextpagenumber">
-<h4>getPreviousPageNumber() &amp; getNextPageNumber()<a class="headerlink" href="#getpreviouspagenumber-getnextpagenumber" title="Permalink to this heading"></a></h4>
+<h4>getPreviousPageNumber() &amp; getNextPageNumber()<a class="headerlink" href="#getpreviouspagenumber-getnextpagenumber" title="Link to this heading"></a></h4>
 <p>These methods return the page number for the previous or next pages in relation to the current page being displayed.</p>
 </section>
 <section id="getfirstpagenumber-getlastpagenumber">
-<h4>getFirstPageNumber() &amp; getLastPageNumber()<a class="headerlink" href="#getfirstpagenumber-getlastpagenumber" title="Permalink to this heading"></a></h4>
+<h4>getFirstPageNumber() &amp; getLastPageNumber()<a class="headerlink" href="#getfirstpagenumber-getlastpagenumber" title="Link to this heading"></a></h4>
 <p>These methods return the page numbers of the first and last pages in the set of
 links to be displayed. For example, if the set of links to be displayed is something like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>  <span class="o">|</span>  <span class="mi">4</span>  <span class="o">|</span>  <span class="mi">5</span>  <span class="o">|</span>  <span class="mi">6</span>  <span class="o">|</span>  <span class="mi">7</span>
@@ -873,18 +870,18 @@ retrieve the last page number.</p>
 </div>
 </section>
 <section id="getcurrentpagenumber">
-<h4>getCurrentPageNumber()<a class="headerlink" href="#getcurrentpagenumber" title="Permalink to this heading"></a></h4>
+<h4>getCurrentPageNumber()<a class="headerlink" href="#getcurrentpagenumber" title="Link to this heading"></a></h4>
 <p>This method returns the page number of the current page.</p>
 </section>
 <section id="getpagecount">
-<h4>getPageCount()<a class="headerlink" href="#getpagecount" title="Permalink to this heading"></a></h4>
+<h4>getPageCount()<a class="headerlink" href="#getpagecount" title="Link to this heading"></a></h4>
 <p>This method returns total number of pages.</p>
 </section>
 </section>
 <section id="displaying-the-number-of-items-on-the-page">
-<span id="id2"></span><h3><a class="toc-backref" href="#id15" role="doc-backlink">Displaying the Number of Items on the Page</a><a class="headerlink" href="#displaying-the-number-of-items-on-the-page" title="Permalink to this heading"></a></h3>
+<span id="id2"></span><h3><a class="toc-backref" href="#id15" role="doc-backlink">Displaying the Number of Items on the Page</a><a class="headerlink" href="#displaying-the-number-of-items-on-the-page" title="Link to this heading"></a></h3>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 4.6.0.</span></p>
+<p><span class="versionmodified added">Added in version 4.6.0.</span></p>
 </div>
 <p>When paginating items, it’s often helpful to display the total number of items and the range of items shown on the current page. To simplify this task, new methods have been added. These methods make it easier to manage and display pagination details. Here’s an example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">setSurroundCount</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="cp">?&gt;</span>
@@ -897,19 +894,19 @@ retrieve the last page number.</p>
 </pre></div>
 </div>
 <section id="gettotal">
-<h4>getTotal()<a class="headerlink" href="#gettotal" title="Permalink to this heading"></a></h4>
+<h4>getTotal()<a class="headerlink" href="#gettotal" title="Link to this heading"></a></h4>
 <p>Returns the total items of the page.</p>
 </section>
 <section id="getperpage">
-<h4>getPerPage()<a class="headerlink" href="#getperpage" title="Permalink to this heading"></a></h4>
+<h4>getPerPage()<a class="headerlink" href="#getperpage" title="Link to this heading"></a></h4>
 <p>Returns the number of items to be displayed on the page.</p>
 </section>
 <section id="getperpagestart">
-<h4>getPerPageStart()<a class="headerlink" href="#getperpagestart" title="Permalink to this heading"></a></h4>
+<h4>getPerPageStart()<a class="headerlink" href="#getperpagestart" title="Link to this heading"></a></h4>
 <p>Returns the number of items the page starts with.</p>
 </section>
 <section id="getperpageend">
-<h4>getPerPageEnd()<a class="headerlink" href="#getperpageend" title="Permalink to this heading"></a></h4>
+<h4>getPerPageEnd()<a class="headerlink" href="#getperpageend" title="Link to this heading"></a></h4>
 <p>Returns the number of items the page ends with.</p>
 </section>
 </section>

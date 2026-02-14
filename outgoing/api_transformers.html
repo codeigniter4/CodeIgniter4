@@ -1,28 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>API Resources &mdash; CodeIgniter 4.7.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=34bb78ad" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css?v=eacb1234" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css?v=2b70fae9" />
 
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/js/citheme.js"></script>
-        <script src="../_static/js/carbon.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=52a74d40"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/js/citheme.js?v=e0bcfc84"></script>
+      <script src="../_static/js/carbon.js?v=b287325f"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -293,7 +290,7 @@
            <div itemprop="articleBody">
              
   <section id="api-resources">
-<span id="api-transformers"></span><h1>API Resources<a class="headerlink" href="#api-resources" title="Permalink to this heading"></a></h1>
+<span id="api-transformers"></span><h1>API Resources<a class="headerlink" href="#api-resources" title="Link to this heading"></a></h1>
 <p>When building APIs, you often need to transform your data models into a consistent format before sending
 them to the client. API Resources, implemented through transformers, provide a clean way to convert your
 entities, arrays, or objects into structured API responses. They help separate your internal data structure
@@ -329,12 +326,12 @@ from what you expose through your API, making it easier to maintain and evolve y
 <li><p><a class="reference internal" href="#using-toarray-only" id="id17">Using toArray() Only</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#namespace-CodeIgniter\API" id="id18">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#class-reference" id="id18">Class Reference</a></p></li>
 <li><p><a class="reference internal" href="#exception-reference" id="id19">Exception Reference</a></p></li>
 </ul>
 </nav>
 <section id="quick-example">
-<h2><a class="toc-backref" href="#id1" role="doc-backlink">Quick Example</a><a class="headerlink" href="#quick-example" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Quick Example</a><a class="headerlink" href="#quick-example" title="Link to this heading"></a></h2>
 <p>The following example shows a common usage pattern for transformers in your application.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -367,12 +364,12 @@ API response. The <code class="docutils literal notranslate"><span class="pre">t
 collections of resources.</p>
 </section>
 <section id="creating-a-transformer">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">Creating a Transformer</a><a class="headerlink" href="#creating-a-transformer" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Creating a Transformer</a><a class="headerlink" href="#creating-a-transformer" title="Link to this heading"></a></h2>
 <p>To create a transformer, extend the <code class="docutils literal notranslate"><span class="pre">BaseTransformer</span></code> class and implement the <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> method to
 define your API resource structure. The <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> method receives the resource being transformed as
 a parameter, allowing you to access and transform its data.</p>
 <section id="basic-transformer">
-<h3><a class="toc-backref" href="#id3" role="doc-backlink">Basic Transformer</a><a class="headerlink" href="#basic-transformer" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Basic Transformer</a><a class="headerlink" href="#basic-transformer" title="Link to this heading"></a></h3>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Transformers</span><span class="p">;</span>
@@ -398,14 +395,14 @@ the structure of your API response. You can include any fields you want from the
 also rename or transform values as needed.</p>
 </section>
 <section id="generating-transformer-files">
-<h3><a class="toc-backref" href="#id4" role="doc-backlink">Generating Transformer Files</a><a class="headerlink" href="#generating-transformer-files" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Generating Transformer Files</a><a class="headerlink" href="#generating-transformer-files" title="Link to this heading"></a></h3>
 <p>CodeIgniter provides a CLI command to quickly generate transformer skeleton files:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:transformer User</span>
 </pre></div>
 </div>
 <p>This creates a new transformer file at <strong>app/Transformers/User.php</strong> with the basic structure already in place.</p>
 <section id="command-options">
-<h4>Command Options<a class="headerlink" href="#command-options" title="Permalink to this heading"></a></h4>
+<h4>Command Options<a class="headerlink" href="#command-options" title="Link to this heading"></a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">make:transformer</span></code> command supports several options:</p>
 <dl>
 <dt><strong>–suffix</strong></dt><dd><p>Appends “Transformer” to the class name:</p>
@@ -427,7 +424,7 @@ also rename or transform values as needed.</p>
 </dl>
 </section>
 <section id="subdirectories">
-<h4>Subdirectories<a class="headerlink" href="#subdirectories" title="Permalink to this heading"></a></h4>
+<h4>Subdirectories<a class="headerlink" href="#subdirectories" title="Link to this heading"></a></h4>
 <p>You can organize transformers into subdirectories by including the path in the name:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:transformer api/v1/User</span>
 </pre></div>
@@ -436,7 +433,7 @@ also rename or transform values as needed.</p>
 </section>
 </section>
 <section id="using-transformers-in-controllers">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">Using Transformers in Controllers</a><a class="headerlink" href="#using-transformers-in-controllers" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Using Transformers in Controllers</a><a class="headerlink" href="#using-transformers-in-controllers" title="Link to this heading"></a></h3>
 <p>Once you’ve created a transformer, you can use it in your controllers to transform data before returning
 it to the client.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -477,7 +474,7 @@ it to the client.</p>
 </section>
 </section>
 <section id="field-filtering">
-<h2><a class="toc-backref" href="#id6" role="doc-backlink">Field Filtering</a><a class="headerlink" href="#field-filtering" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Field Filtering</a><a class="headerlink" href="#field-filtering" title="Link to this heading"></a></h2>
 <p>The transformer automatically supports field filtering through the <code class="docutils literal notranslate"><span class="pre">fields</span></code> query parameter of the current URL.
 This allows API clients to request only specific fields they need, reducing bandwidth and improving performance.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -512,7 +509,7 @@ This allows API clients to request only specific fields they need, reducing band
 </pre></div>
 </div>
 <section id="restricting-available-fields">
-<h3><a class="toc-backref" href="#id7" role="doc-backlink">Restricting Available Fields</a><a class="headerlink" href="#restricting-available-fields" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Restricting Available Fields</a><a class="headerlink" href="#restricting-available-fields" title="Link to this heading"></a></h3>
 <p>By default, clients can request any field defined in your <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> method. You can restrict which
 fields are allowed by overriding the <code class="docutils literal notranslate"><span class="pre">getAllowedFields()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -547,13 +544,13 @@ fields are allowed by overriding the <code class="docutils literal notranslate">
 </section>
 </section>
 <section id="including-related-resources">
-<h2><a class="toc-backref" href="#id8" role="doc-backlink">Including Related Resources</a><a class="headerlink" href="#including-related-resources" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Including Related Resources</a><a class="headerlink" href="#including-related-resources" title="Link to this heading"></a></h2>
 <p>Transformers support loading of related resources through the <code class="docutils literal notranslate"><span class="pre">include</span></code> query parameter. This
 follows a common API pattern where clients can specify which relationships they want included.
 While relationships are the most frequent use case, you can include any additional data
 you want by defining custom include methods.</p>
 <section id="defining-include-methods">
-<h3><a class="toc-backref" href="#id9" role="doc-backlink">Defining Include Methods</a><a class="headerlink" href="#defining-include-methods" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Defining Include Methods</a><a class="headerlink" href="#defining-include-methods" title="Link to this heading"></a></h3>
 <p>To support including related resources, create methods prefixed with <code class="docutils literal notranslate"><span class="pre">include</span></code> followed by the
 resource name. Inside these methods, you can access the current resource being transformed via
 <code class="docutils literal notranslate"><span class="pre">$this-&gt;resource</span></code>:</p>
@@ -616,7 +613,7 @@ The <code class="docutils literal notranslate"><span class="pre">$this-&gt;resou
 </div>
 </section>
 <section id="restricting-available-includes">
-<h3><a class="toc-backref" href="#id10" role="doc-backlink">Restricting Available Includes</a><a class="headerlink" href="#restricting-available-includes" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Restricting Available Includes</a><a class="headerlink" href="#restricting-available-includes" title="Link to this heading"></a></h3>
 <p>Similar to field filtering, you can restrict which relationships can be included by overriding the
 <code class="docutils literal notranslate"><span class="pre">getAllowedIncludes()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -697,7 +694,7 @@ The <code class="docutils literal notranslate"><span class="pre">$this-&gt;resou
 </div>
 </section>
 <section id="include-validation">
-<h3><a class="toc-backref" href="#id11" role="doc-backlink">Include Validation</a><a class="headerlink" href="#include-validation" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Include Validation</a><a class="headerlink" href="#include-validation" title="Link to this heading"></a></h3>
 <p>The transformer automatically validates that any requested includes have corresponding <code class="docutils literal notranslate"><span class="pre">include*()</span></code> methods
 defined in your transformer class. If a client requests an include that doesn’t exist, an <code class="docutils literal notranslate"><span class="pre">ApiException</span></code>
 will be thrown.</p>
@@ -711,7 +708,7 @@ will be thrown.</p>
 </section>
 </section>
 <section id="transforming-collections">
-<h2><a class="toc-backref" href="#id12" role="doc-backlink">Transforming Collections</a><a class="headerlink" href="#transforming-collections" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id12" role="doc-backlink">Transforming Collections</a><a class="headerlink" href="#transforming-collections" title="Link to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">transformMany()</span></code> method makes it easy to transform arrays of resources:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -740,10 +737,10 @@ will be thrown.</p>
 including any field filtering or includes specified in the request.</p>
 </section>
 <section id="working-with-different-data-types">
-<h2><a class="toc-backref" href="#id13" role="doc-backlink">Working with Different Data Types</a><a class="headerlink" href="#working-with-different-data-types" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id13" role="doc-backlink">Working with Different Data Types</a><a class="headerlink" href="#working-with-different-data-types" title="Link to this heading"></a></h2>
 <p>Transformers can handle various data types, not just entities.</p>
 <section id="transforming-entities">
-<h3><a class="toc-backref" href="#id14" role="doc-backlink">Transforming Entities</a><a class="headerlink" href="#transforming-entities" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">Transforming Entities</a><a class="headerlink" href="#transforming-entities" title="Link to this heading"></a></h3>
 <p>When you pass an <code class="docutils literal notranslate"><span class="pre">Entity</span></code> instance to <code class="docutils literal notranslate"><span class="pre">transform()</span></code>, it automatically calls the entity’s <code class="docutils literal notranslate"><span class="pre">toArray()</span></code>
 method to get the data:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -763,7 +760,7 @@ method to get the data:</p>
 </div>
 </section>
 <section id="transforming-arrays">
-<h3><a class="toc-backref" href="#id15" role="doc-backlink">Transforming Arrays</a><a class="headerlink" href="#transforming-arrays" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">Transforming Arrays</a><a class="headerlink" href="#transforming-arrays" title="Link to this heading"></a></h3>
 <p>You can transform plain arrays as well:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -781,7 +778,7 @@ method to get the data:</p>
 </div>
 </section>
 <section id="transforming-objects">
-<h3><a class="toc-backref" href="#id16" role="doc-backlink">Transforming Objects</a><a class="headerlink" href="#transforming-objects" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id16" role="doc-backlink">Transforming Objects</a><a class="headerlink" href="#transforming-objects" title="Link to this heading"></a></h3>
 <p>Any object can be cast to an array and transformed:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -798,7 +795,7 @@ method to get the data:</p>
 </div>
 </section>
 <section id="using-toarray-only">
-<h3><a class="toc-backref" href="#id17" role="doc-backlink">Using toArray() Only</a><a class="headerlink" href="#using-toarray-only" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">Using toArray() Only</a><a class="headerlink" href="#using-toarray-only" title="Link to this heading"></a></h3>
 <p>If you don’t pass a resource to <code class="docutils literal notranslate"><span class="pre">transform()</span></code>, it will use the data from your <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -825,14 +822,14 @@ method to get the data:</p>
 </div>
 </section>
 </section>
-<section id="namespace-CodeIgniter\API">
-<span id="class-reference"></span><h2><a class="toc-backref" href="#id18" role="doc-backlink">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\API" title="Permalink to this heading"></a></h2>
-<dl class="php class">
+<section id="class-reference">
+<h2><a class="toc-backref" href="#id18" role="doc-backlink">Class Reference</a><a class="headerlink" href="#class-reference" title="Link to this heading"></a></h2>
+<dl class="php class" id="namespace-CodeIgniter\API">
 <dt class="sig sig-object php" id="CodeIgniter\API\BaseTransformer">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\API\</span></span><span class="sig-name descname"><span class="pre">BaseTransformer</span></span><a class="headerlink" href="#CodeIgniter\API\BaseTransformer" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\API\</span></span><span class="sig-name descname"><span class="pre">BaseTransformer</span></span><a class="headerlink" href="#CodeIgniter\API\BaseTransformer" title="Link to this definition"></a></dt>
 <dd><dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\API\BaseTransformer::__construct">
-<span class="sig-name descname"><span class="pre">__construct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">?IncomingRequest</span> <span class="pre">$request</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\BaseTransformer::__construct" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__construct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">?IncomingRequest</span> <span class="pre">$request</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\BaseTransformer::__construct" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -845,7 +842,7 @@ method to get the data:</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\API\BaseTransformer::toArray">
-<span class="sig-name descname"><span class="pre">toArray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">mixed</span> <span class="pre">$resource</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\BaseTransformer::toArray" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">toArray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">mixed</span> <span class="pre">$resource</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\BaseTransformer::toArray" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -887,7 +884,7 @@ to include in the API response, accessing data from the <code class="docutils li
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\API\BaseTransformer::transform">
-<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$resource</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\BaseTransformer::transform" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$resource</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\BaseTransformer::transform" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -929,7 +926,7 @@ If it’s an Entity, extracts its array representation first. Otherwise, casts i
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\API\BaseTransformer::transformMany">
-<span class="sig-name descname"><span class="pre">transformMany</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">array</span> <span class="pre">$resources</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\BaseTransformer::transformMany" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">transformMany</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">array</span> <span class="pre">$resources</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\BaseTransformer::transformMany" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -964,7 +961,7 @@ includes are applied consistently to all items.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\API\BaseTransformer::getAllowedFields">
-<span class="sig-name descname"><span class="pre">getAllowedFields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\BaseTransformer::getAllowedFields" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getAllowedFields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\BaseTransformer::getAllowedFields" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Array of allowed field names, or <code class="docutils literal notranslate"><span class="pre">null</span></code> to allow all fields</p>
@@ -1007,7 +1004,7 @@ to create a whitelist of allowed fields.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\API\BaseTransformer::getAllowedIncludes">
-<span class="sig-name descname"><span class="pre">getAllowedIncludes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\BaseTransformer::getAllowedIncludes" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getAllowedIncludes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\BaseTransformer::getAllowedIncludes" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Array of allowed include names, or <code class="docutils literal notranslate"><span class="pre">null</span></code> to allow all includes</p>
@@ -1066,13 +1063,13 @@ Return an array of include names to create a whitelist. Return an empty array to
 
 </section>
 <section id="exception-reference">
-<h2><a class="toc-backref" href="#id19" role="doc-backlink">Exception Reference</a><a class="headerlink" href="#exception-reference" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id19" role="doc-backlink">Exception Reference</a><a class="headerlink" href="#exception-reference" title="Link to this heading"></a></h2>
 <dl class="php class">
 <dt class="sig sig-object php" id="CodeIgniter\API\ApiException">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\API\</span></span><span class="sig-name descname"><span class="pre">ApiException</span></span><a class="headerlink" href="#CodeIgniter\API\ApiException" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\API\</span></span><span class="sig-name descname"><span class="pre">ApiException</span></span><a class="headerlink" href="#CodeIgniter\API\ApiException" title="Link to this definition"></a></dt>
 <dd><dl class="php staticmethod">
 <dt class="sig sig-object php" id="CodeIgniter\API\ApiException::forInvalidFields">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">forInvalidFields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$field</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\ApiException::forInvalidFields" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">forInvalidFields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$field</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\ApiException::forInvalidFields" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1092,7 +1089,7 @@ fields list.</p>
 
 <dl class="php staticmethod">
 <dt class="sig sig-object php" id="CodeIgniter\API\ApiException::forInvalidIncludes">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">forInvalidIncludes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$include</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\ApiException::forInvalidIncludes" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">forInvalidIncludes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$include</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\ApiException::forInvalidIncludes" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1112,7 +1109,7 @@ allowed includes list.</p>
 
 <dl class="php staticmethod">
 <dt class="sig sig-object php" id="CodeIgniter\API\ApiException::forMissingInclude">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">forMissingInclude</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$include</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\ApiException::forMissingInclude" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">forMissingInclude</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$include</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\ApiException::forMissingInclude" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">

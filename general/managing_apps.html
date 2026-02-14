@@ -1,28 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Managing your Applications &mdash; CodeIgniter 4.7.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=34bb78ad" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css?v=eacb1234" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css?v=2b70fae9" />
 
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/js/citheme.js"></script>
-        <script src="../_static/js/carbon.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=52a74d40"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/js/citheme.js?v=e0bcfc84"></script>
+      <script src="../_static/js/carbon.js?v=b287325f"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -293,7 +290,7 @@
            <div itemprop="articleBody">
              
   <section id="managing-your-applications">
-<h1>Managing your Applications<a class="headerlink" href="#managing-your-applications" title="Permalink to this heading"></a></h1>
+<h1>Managing your Applications<a class="headerlink" href="#managing-your-applications" title="Link to this heading"></a></h1>
 <p>By default, it is assumed that you only intend to use CodeIgniter to
 manage one application, which you will build in your <strong>app</strong>
 directory. It is possible, however, to have multiple sets of
@@ -307,7 +304,7 @@ rename or relocate your application directory.</p>
 </ul>
 </nav>
 <section id="renaming-or-relocating-the-application-directory">
-<span id="renaming-app-directory"></span><h2><a class="toc-backref" href="#id1" role="doc-backlink">Renaming or Relocating the Application Directory</a><a class="headerlink" href="#renaming-or-relocating-the-application-directory" title="Permalink to this heading"></a></h2>
+<span id="renaming-app-directory"></span><h2><a class="toc-backref" href="#id1" role="doc-backlink">Renaming or Relocating the Application Directory</a><a class="headerlink" href="#renaming-or-relocating-the-application-directory" title="Link to this heading"></a></h2>
 <p>If you would like to rename your application directory or even move
 it to a different location on your server, other than your project root, open
 your main <strong>app/Config/Paths.php</strong> and set a <em>full server path</em> in the
@@ -344,7 +341,7 @@ they can find the <strong>Paths</strong> configuration file:</p>
 </ul>
 </section>
 <section id="running-multiple-applications-with-one-codeigniter-installation">
-<span id="running-multiple-app"></span><h2><a class="toc-backref" href="#id2" role="doc-backlink">Running Multiple Applications with one CodeIgniter Installation</a><a class="headerlink" href="#running-multiple-applications-with-one-codeigniter-installation" title="Permalink to this heading"></a></h2>
+<span id="running-multiple-app"></span><h2><a class="toc-backref" href="#id2" role="doc-backlink">Running Multiple Applications with one CodeIgniter Installation</a><a class="headerlink" href="#running-multiple-applications-with-one-codeigniter-installation" title="Link to this heading"></a></h2>
 <p>If you would like to share a common CodeIgniter framework installation, to manage
 several different applications, simply put all of the directories located
 inside your application directory into their own (sub)-directory.</p>
@@ -414,7 +411,7 @@ of those:</p>
 <p>Only when you change the Application Directory, see <a class="reference internal" href="#renaming-app-directory"><span class="std std-ref">Renaming or Relocating the Application Directory</span></a> and modify the paths in the <strong>index.php</strong> and <strong>spark</strong>.</p>
 </section>
 <section id="changing-the-location-of-the-env-file">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Changing the Location of the .env File</a><a class="headerlink" href="#changing-the-location-of-the-env-file" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Changing the Location of the .env File</a><a class="headerlink" href="#changing-the-location-of-the-env-file" title="Link to this heading"></a></h2>
 <p>If necessary, you can change the location of the <code class="docutils literal notranslate"><span class="pre">.env</span></code> file by adjusting the <code class="docutils literal notranslate"><span class="pre">$envDirectory</span></code>
 property in <code class="docutils literal notranslate"><span class="pre">app/Config/Paths.php</span></code>.</p>
 <p>By default, the framework loads environment settings from a <code class="docutils literal notranslate"><span class="pre">.env</span></code> file located one level above

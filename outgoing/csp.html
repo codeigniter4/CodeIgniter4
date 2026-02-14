@@ -1,28 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Security Policy &mdash; CodeIgniter 4.7.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=34bb78ad" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css?v=eacb1234" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css?v=2b70fae9" />
 
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/js/citheme.js"></script>
-        <script src="../_static/js/carbon.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=52a74d40"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/js/citheme.js?v=e0bcfc84"></script>
+      <script src="../_static/js/carbon.js?v=b287325f"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -293,7 +290,7 @@
            <div itemprop="articleBody">
              
   <section id="content-security-policy">
-<span id="id1"></span><h1>Content Security Policy<a class="headerlink" href="#content-security-policy" title="Permalink to this heading"></a></h1>
+<span id="id1"></span><h1>Content Security Policy<a class="headerlink" href="#content-security-policy" title="Link to this heading"></a></h1>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#what-is-content-security-policy" id="id2">What is Content Security Policy?</a></p></li>
@@ -314,7 +311,7 @@
 </ul>
 </nav>
 <section id="what-is-content-security-policy">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">What is Content Security Policy?</a><a class="headerlink" href="#what-is-content-security-policy" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">What is Content Security Policy?</a><a class="headerlink" href="#what-is-content-security-policy" title="Link to this heading"></a></h2>
 <p>One of the best protections you have against XSS attacks is to implement a Content
 Security Policy (CSP) on the site. This requires you to specify and authorize each
 source of content that is included in your site’s HTML, including images,
@@ -334,7 +331,7 @@ visit the following sites:</p>
 </ul>
 </section>
 <section id="turning-csp-on">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Turning CSP On</a><a class="headerlink" href="#turning-csp-on" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Turning CSP On</a><a class="headerlink" href="#turning-csp-on" title="Link to this heading"></a></h2>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>The <a class="reference internal" href="../testing/debugging.html#the-debug-toolbar"><span class="std std-ref">Debug Toolbar</span></a> may use Kint, which
@@ -374,7 +371,7 @@ to the CSP header appropriate for blocking or preventing. That can be overridden
 call basis, by providing an optional second parameter to the adding method call.</p>
 </section>
 <section id="runtime-configuration">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Runtime Configuration</a><a class="headerlink" href="#runtime-configuration" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Runtime Configuration</a><a class="headerlink" href="#runtime-configuration" title="Link to this heading"></a></h2>
 <p>If your application needs to make changes at run-time, you can access the instance at <code class="docutils literal notranslate"><span class="pre">$this-&gt;response-&gt;getCSP()</span></code> in your controllers.</p>
 <p>The
 class holds a number of methods that map pretty clearly to the appropriate header value that you need to set.
@@ -425,7 +422,7 @@ name or an array of them:</p>
 <p>The first parameter to each of the “add” methods is an appropriate string value,
 or an array of them.</p>
 <section id="report-only">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">Report Only</a><a class="headerlink" href="#report-only" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Report Only</a><a class="headerlink" href="#report-only" title="Link to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">reportOnly()</span></code> method allows you to specify the default reporting treatment
 for subsequent sources, unless over-ridden.</p>
 <p>For instance, you could specify
@@ -443,10 +440,10 @@ that youtube.com was allowed, and then provide several allowed but reported sour
 </div>
 </section>
 <section id="reporting-directives">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">Reporting Directives</a><a class="headerlink" href="#reporting-directives" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Reporting Directives</a><a class="headerlink" href="#reporting-directives" title="Link to this heading"></a></h3>
 <p>To specify the URL you want the reports to be sent to, you can use the <code class="docutils literal notranslate"><span class="pre">setReportURI()</span></code> method.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 4.7.0.</span></p>
+<p><span class="versionmodified added">Added in version 4.7.0.</span></p>
 </div>
 <p>CSP Level 3 deprecates the <code class="docutils literal notranslate"><span class="pre">report-uri</span></code> directive in favor of <code class="docutils literal notranslate"><span class="pre">report-to</span></code>. Therefore, you can
 use the <code class="docutils literal notranslate"><span class="pre">setReportToEndpoint()</span></code> method to set the reporting endpoint for CSP reports. Before adding
@@ -471,7 +468,7 @@ this directive, make sure the reporting endpoints are already defined using the 
 set the <code class="docutils literal notranslate"><span class="pre">report-uri</span></code> directive when you use the <code class="docutils literal notranslate"><span class="pre">setReportToEndpoint()</span></code> method.</p>
 </section>
 <section id="clear-directives">
-<span id="csp-clear-directives"></span><h3><a class="toc-backref" href="#id7" role="doc-backlink">Clear Directives</a><a class="headerlink" href="#clear-directives" title="Permalink to this heading"></a></h3>
+<span id="csp-clear-directives"></span><h3><a class="toc-backref" href="#id7" role="doc-backlink">Clear Directives</a><a class="headerlink" href="#clear-directives" title="Link to this heading"></a></h3>
 <p>If you want to clear existing CSP directives, you can use the <code class="docutils literal notranslate"><span class="pre">clearDirective()</span></code>
 method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -485,12 +482,12 @@ method:</p>
 </section>
 </section>
 <section id="inline-content">
-<h2><a class="toc-backref" href="#id8" role="doc-backlink">Inline Content</a><a class="headerlink" href="#inline-content" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Inline Content</a><a class="headerlink" href="#inline-content" title="Link to this heading"></a></h2>
 <p>It is possible to set a website to not protect even inline scripts and styles on its own pages, since this might have
 been the result of user-generated content. To protect against this, CSP allows you to specify a nonce within the
 <code class="docutils literal notranslate"><span class="pre">&lt;style&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;script&gt;</span></code> tags, and to add those values to the response’s header.</p>
 <section id="using-placeholders">
-<h3><a class="toc-backref" href="#id9" role="doc-backlink">Using Placeholders</a><a class="headerlink" href="#using-placeholders" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Using Placeholders</a><a class="headerlink" href="#using-placeholders" title="Link to this heading"></a></h3>
 <p>This is a pain to handle in real
 life, and is most secure when generated on the fly. To make this simple, you can include a <code class="docutils literal notranslate"><span class="pre">{csp-style-nonce}</span></code> or
 <code class="docutils literal notranslate"><span class="pre">{csp-script-nonce}</span></code> placeholder in the tag and it will be handled for you automatically:</p>
@@ -516,7 +513,7 @@ life, and is most secure when generated on the fly. To make this simple, you can
 </div>
 </section>
 <section id="using-functions">
-<span id="csp-using-functions"></span><h3><a class="toc-backref" href="#id10" role="doc-backlink">Using Functions</a><a class="headerlink" href="#using-functions" title="Permalink to this heading"></a></h3>
+<span id="csp-using-functions"></span><h3><a class="toc-backref" href="#id10" role="doc-backlink">Using Functions</a><a class="headerlink" href="#using-functions" title="Link to this heading"></a></h3>
 <p>If you don’t like the auto replacement functionality above, you can turn it off
 with setting <code class="docutils literal notranslate"><span class="pre">$autoNonce</span> <span class="pre">=</span> <span class="pre">false</span></code> in <strong>app/Config/ContentSecurityPolicy.php</strong>.</p>
 <p>In this case, you can use the functions, <a class="reference internal" href="../general/common_functions.html#csp_script_nonce" title="csp_script_nonce"><code class="xref php php-func docutils literal notranslate"><span class="pre">csp_script_nonce()</span></code></a> and <a class="reference internal" href="../general/common_functions.html#csp_style_nonce" title="csp_style_nonce"><code class="xref php php-func docutils literal notranslate"><span class="pre">csp_style_nonce()</span></code></a>:</p>

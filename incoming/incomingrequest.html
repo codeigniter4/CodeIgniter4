@@ -1,28 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>IncomingRequest Class &mdash; CodeIgniter 4.7.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=34bb78ad" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css?v=eacb1234" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css?v=2b70fae9" />
 
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/js/citheme.js"></script>
-        <script src="../_static/js/carbon.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=52a74d40"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/js/citheme.js?v=e0bcfc84"></script>
+      <script src="../_static/js/carbon.js?v=b287325f"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -293,7 +290,7 @@
            <div itemprop="articleBody">
              
   <section id="incomingrequest-class">
-<h1>IncomingRequest Class<a class="headerlink" href="#incomingrequest-class" title="Permalink to this heading"></a></h1>
+<h1>IncomingRequest Class<a class="headerlink" href="#incomingrequest-class" title="Link to this heading"></a></h1>
 <p>The IncomingRequest class provides an object-oriented representation of an HTTP request from a client, like a browser.
 It extends from, and has access to all the methods of the <a class="reference internal" href="request.html"><span class="doc">Request</span></a> and <a class="reference internal" href="message.html"><span class="doc">Message</span></a>
 classes, in addition to the methods listed below.</p>
@@ -323,7 +320,7 @@ classes, in addition to the methods listed below.</p>
 </ul>
 </nav>
 <section id="accessing-the-request">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">Accessing the Request</a><a class="headerlink" href="#accessing-the-request" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Accessing the Request</a><a class="headerlink" href="#accessing-the-request" title="Link to this heading"></a></h2>
 <p>An instance of the request class already populated for you if the current class is a descendant of
 <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller</span></code> and can be accessed as a class property:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -373,7 +370,7 @@ the controller, where you can save it as a class property:</p>
 </div>
 </section>
 <section id="determining-request-type">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Determining Request Type</a><a class="headerlink" href="#determining-request-type" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Determining Request Type</a><a class="headerlink" href="#determining-request-type" title="Link to this heading"></a></h2>
 <p>A request could be of several types, including an AJAX request or a request from the command line. This can
 be checked with the <code class="docutils literal notranslate"><span class="pre">isAJAX()</span></code> and <code class="docutils literal notranslate"><span class="pre">isCLI()</span></code> methods:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -396,9 +393,9 @@ which in some cases is not sent by default in XHR requests via JavaScript (i.e.,
 See the <a class="reference internal" href="../general/ajax.html"><span class="doc">AJAX Requests</span></a> section on how to avoid this problem.</p>
 </div>
 <section id="is">
-<span id="incomingrequest-is"></span><h3><a class="toc-backref" href="#id4" role="doc-backlink">is()</a><a class="headerlink" href="#is" title="Permalink to this heading"></a></h3>
+<span id="incomingrequest-is"></span><h3><a class="toc-backref" href="#id4" role="doc-backlink">is()</a><a class="headerlink" href="#is" title="Link to this heading"></a></h3>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+<p><span class="versionmodified added">Added in version 4.3.0.</span></p>
 </div>
 <p>Since v4.3.0, you can use the <code class="docutils literal notranslate"><span class="pre">is()</span></code> method. It accepts an HTTP method, <code class="docutils literal notranslate"><span class="pre">'ajax'</span></code>,
 or <code class="docutils literal notranslate"><span class="pre">'json'</span></code>, and returns boolean.</p>
@@ -426,7 +423,7 @@ or <code class="docutils literal notranslate"><span class="pre">'json'</span></c
 </div>
 </section>
 <section id="getmethod">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">getMethod()</a><a class="headerlink" href="#getmethod" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">getMethod()</a><a class="headerlink" href="#getmethod" title="Link to this heading"></a></h3>
 <p>You can check the HTTP method that this request represents with the <code class="docutils literal notranslate"><span class="pre">getMethod()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -457,7 +454,7 @@ string (i.e., <code class="docutils literal notranslate"><span class="pre">'get'
 </section>
 </section>
 <section id="retrieving-input">
-<h2><a class="toc-backref" href="#id6" role="doc-backlink">Retrieving Input</a><a class="headerlink" href="#retrieving-input" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Retrieving Input</a><a class="headerlink" href="#retrieving-input" title="Link to this heading"></a></h2>
 <p>You can retrieve input from <code class="docutils literal notranslate"><span class="pre">$_GET</span></code>, <code class="docutils literal notranslate"><span class="pre">$_POST</span></code>, <code class="docutils literal notranslate"><span class="pre">$_COOKIE</span></code>, <code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code>
 and <code class="docutils literal notranslate"><span class="pre">$_ENV</span></code> through the Request object.
 The data is not automatically filtered and returns the raw input data as passed in the request.</p>
@@ -483,37 +480,37 @@ like this:</p>
 </pre></div>
 </div>
 <section id="getting-data">
-<span id="incomingrequest-getting-data"></span><h3><a class="toc-backref" href="#id7" role="doc-backlink">Getting Data</a><a class="headerlink" href="#getting-data" title="Permalink to this heading"></a></h3>
+<span id="incomingrequest-getting-data"></span><h3><a class="toc-backref" href="#id7" role="doc-backlink">Getting Data</a><a class="headerlink" href="#getting-data" title="Link to this heading"></a></h3>
 <section id="getget">
-<h4>getGet()<a class="headerlink" href="#getget" title="Permalink to this heading"></a></h4>
+<h4>getGet()<a class="headerlink" href="#getget" title="Link to this heading"></a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">getGet()</span></code> method will pull from <code class="docutils literal notranslate"><span class="pre">$_GET</span></code>.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">$request-&gt;getGet()</span></code></p></li>
 </ul>
 </section>
 <section id="getpost">
-<h4>getPost()<a class="headerlink" href="#getpost" title="Permalink to this heading"></a></h4>
+<h4>getPost()<a class="headerlink" href="#getpost" title="Link to this heading"></a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">getPost()</span></code> method will pull from <code class="docutils literal notranslate"><span class="pre">$_POST</span></code>.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">$request-&gt;getPost()</span></code></p></li>
 </ul>
 </section>
 <section id="getcookie">
-<h4>getCookie()<a class="headerlink" href="#getcookie" title="Permalink to this heading"></a></h4>
+<h4>getCookie()<a class="headerlink" href="#getcookie" title="Link to this heading"></a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">getCookie()</span></code> method will pull from <code class="docutils literal notranslate"><span class="pre">$_COOKIE</span></code>.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">$request-&gt;getCookie()</span></code></p></li>
 </ul>
 </section>
 <section id="getserver">
-<h4>getServer()<a class="headerlink" href="#getserver" title="Permalink to this heading"></a></h4>
+<h4>getServer()<a class="headerlink" href="#getserver" title="Link to this heading"></a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">getServer()</span></code> method will pull from <code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code>.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">$request-&gt;getServer()</span></code></p></li>
 </ul>
 </section>
 <section id="getpostget">
-<h4>getPostGet()<a class="headerlink" href="#getpostget" title="Permalink to this heading"></a></h4>
+<h4>getPostGet()<a class="headerlink" href="#getpostget" title="Link to this heading"></a></h4>
 <p>In addition, there are a few utility methods for retrieving information from either <code class="docutils literal notranslate"><span class="pre">$_GET</span></code> or <code class="docutils literal notranslate"><span class="pre">$_POST</span></code>, while
 maintaining the ability to control the order you look for it:</p>
 <ul class="simple">
@@ -521,13 +518,13 @@ maintaining the ability to control the order you look for it:</p>
 </ul>
 </section>
 <section id="getgetpost">
-<h4>getGetPost()<a class="headerlink" href="#getgetpost" title="Permalink to this heading"></a></h4>
+<h4>getGetPost()<a class="headerlink" href="#getgetpost" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">$request-&gt;getGetPost()</span></code> - checks <code class="docutils literal notranslate"><span class="pre">$_GET</span></code> first, then <code class="docutils literal notranslate"><span class="pre">$_POST</span></code></p></li>
 </ul>
 </section>
 <section id="getvar">
-<h4>getVar()<a class="headerlink" href="#getvar" title="Permalink to this heading"></a></h4>
+<h4>getVar()<a class="headerlink" href="#getvar" title="Link to this heading"></a></h4>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>This method exists only for backward compatibility. Do not use it
@@ -550,7 +547,7 @@ the <code class="docutils literal notranslate"><span class="pre">getVar()</span>
 </section>
 </section>
 <section id="getting-json-data">
-<span id="incomingrequest-getting-json-data"></span><h3><a class="toc-backref" href="#id8" role="doc-backlink">Getting JSON Data</a><a class="headerlink" href="#getting-json-data" title="Permalink to this heading"></a></h3>
+<span id="incomingrequest-getting-json-data"></span><h3><a class="toc-backref" href="#id8" role="doc-backlink">Getting JSON Data</a><a class="headerlink" href="#getting-json-data" title="Link to this heading"></a></h3>
 <p>You can grab the contents of <code class="docutils literal notranslate"><span class="pre">php://input</span></code> as a JSON stream with <code class="docutils literal notranslate"><span class="pre">getJSON()</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -568,7 +565,7 @@ arrays, pass in <code class="docutils literal notranslate"><span class="pre">tru
 <a class="reference external" href="https://www.php.net/manual/en/function.json-decode.php">json_decode()</a> PHP function.</p>
 </section>
 <section id="getting-specific-data-from-json">
-<h3><a class="toc-backref" href="#id9" role="doc-backlink">Getting Specific Data from JSON</a><a class="headerlink" href="#getting-specific-data-from-json" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Getting Specific Data from JSON</a><a class="headerlink" href="#getting-specific-data-from-json" title="Link to this heading"></a></h3>
 <p>You can get a specific piece of data from a JSON stream by passing a variable name into <code class="docutils literal notranslate"><span class="pre">getJsonVar()</span></code> for the
 data that you want or you can use “dot” notation to dig into the JSON to get data that is not on the root level.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -608,7 +605,7 @@ pass true in the second parameter:</p>
 </div>
 </section>
 <section id="retrieving-raw-data-put-patch-delete">
-<span id="incomingrequest-retrieving-raw-data"></span><h3><a class="toc-backref" href="#id10" role="doc-backlink">Retrieving Raw Data (PUT, PATCH, DELETE)</a><a class="headerlink" href="#retrieving-raw-data-put-patch-delete" title="Permalink to this heading"></a></h3>
+<span id="incomingrequest-retrieving-raw-data"></span><h3><a class="toc-backref" href="#id10" role="doc-backlink">Retrieving Raw Data (PUT, PATCH, DELETE)</a><a class="headerlink" href="#retrieving-raw-data-put-patch-delete" title="Link to this heading"></a></h3>
 <p>Finally, you can grab the contents of <code class="docutils literal notranslate"><span class="pre">php://input</span></code> as a raw stream with <code class="docutils literal notranslate"><span class="pre">getRawInput()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -663,7 +660,7 @@ pass true in the second parameter:</p>
 </div>
 </section>
 <section id="filtering-input-data">
-<span id="incomingrequest-filtering-input-data"></span><h3><a class="toc-backref" href="#id11" role="doc-backlink">Filtering Input Data</a><a class="headerlink" href="#filtering-input-data" title="Permalink to this heading"></a></h3>
+<span id="incomingrequest-filtering-input-data"></span><h3><a class="toc-backref" href="#id11" role="doc-backlink">Filtering Input Data</a><a class="headerlink" href="#filtering-input-data" title="Link to this heading"></a></h3>
 <p>To maintain security of your application, you will want to filter all input as you access it. You can
 pass the type of filter to use as the second parameter of any of these methods. The native <code class="docutils literal notranslate"><span class="pre">filter_var()</span></code>
 function is used for the filtering. Head over to the PHP manual for a list of <a class="reference external" href="https://www.php.net/manual/en/filters.php">valid
@@ -679,7 +676,7 @@ exception of <code class="docutils literal notranslate"><span class="pre">getJSO
 </section>
 </section>
 <section id="retrieving-headers">
-<h2><a class="toc-backref" href="#id12" role="doc-backlink">Retrieving Headers</a><a class="headerlink" href="#retrieving-headers" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id12" role="doc-backlink">Retrieving Headers</a><a class="headerlink" href="#retrieving-headers" title="Link to this heading"></a></h2>
 <p>You can get access to any header that was sent with the request with the <code class="docutils literal notranslate"><span class="pre">headers()</span></code> method, which returns
 an array of all headers, with the key as the name of the header, and the value is an instance of
 <code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Header</span></code>:</p>
@@ -730,7 +727,7 @@ specified header object in a case-insensitive manner if it exists. If not, then 
 </div>
 </section>
 <section id="the-request-url">
-<h2><a class="toc-backref" href="#id13" role="doc-backlink">The Request URL</a><a class="headerlink" href="#the-request-url" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id13" role="doc-backlink">The Request URL</a><a class="headerlink" href="#the-request-url" title="Link to this heading"></a></h2>
 <p>You can retrieve a <a class="reference internal" href="../libraries/uri.html"><span class="doc">URI</span></a> object that represents the current URI for this request through the
 <code class="docutils literal notranslate"><span class="pre">$request-&gt;getUri()</span></code> method. You can cast this object as a string to get a full URL for the current request:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -764,7 +761,7 @@ the <code class="docutils literal notranslate"><span class="pre">getPath()</span
 </div>
 </section>
 <section id="uploaded-files">
-<h2><a class="toc-backref" href="#id14" role="doc-backlink">Uploaded Files</a><a class="headerlink" href="#uploaded-files" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id14" role="doc-backlink">Uploaded Files</a><a class="headerlink" href="#uploaded-files" title="Link to this heading"></a></h2>
 <p>Information about all uploaded files can be retrieved through <code class="docutils literal notranslate"><span class="pre">$request-&gt;getFiles()</span></code>, which returns an array of
 <code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Files\UploadedFile</span></code> instance. This helps to ease the pain of working with uploaded files,
 and uses best practices to minimize any security risks.</p>
@@ -793,7 +790,7 @@ multi-file upload, based on the filename given in the HTML file input:</p>
 </div>
 </section>
 <section id="content-negotiation">
-<h2><a class="toc-backref" href="#id15" role="doc-backlink">Content Negotiation</a><a class="headerlink" href="#content-negotiation" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id15" role="doc-backlink">Content Negotiation</a><a class="headerlink" href="#content-negotiation" title="Link to this heading"></a></h2>
 <p>You can easily negotiate content types with the request through the <code class="docutils literal notranslate"><span class="pre">negotiate()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -807,7 +804,7 @@ multi-file upload, based on the filename given in the HTML file input:</p>
 <p>See the <a class="reference internal" href="content_negotiation.html"><span class="doc">Content Negotiation</span></a> page for more details.</p>
 </section>
 <section id="class-reference">
-<h2><a class="toc-backref" href="#id16" role="doc-backlink">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id16" role="doc-backlink">Class Reference</a><a class="headerlink" href="#class-reference" title="Link to this heading"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In addition to the methods listed here, this class inherits the methods from the
@@ -837,12 +834,12 @@ multi-file upload, based on the filename given in the HTML file input:</p>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::getProtocolVersion()</span></code></p></li>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::setProtocolVersion()</span></code></p></li>
 </ul>
-<span class="target" id="namespace-CodeIgniter\HTTP"></span><dl class="php class">
+<dl class="php class" id="namespace-CodeIgniter\HTTP">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\IncomingRequest">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\HTTP\</span></span><span class="sig-name descname"><span class="pre">IncomingRequest</span></span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\HTTP\</span></span><span class="sig-name descname"><span class="pre">IncomingRequest</span></span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest" title="Link to this definition"></a></dt>
 <dd><dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\IncomingRequest::isCLI">
-<span class="sig-name descname"><span class="pre">isCLI</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::isCLI" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">isCLI</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::isCLI" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>True if the request was initiated from the command line, otherwise false.</p>
@@ -855,7 +852,7 @@ multi-file upload, based on the filename given in the HTML file input:</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\IncomingRequest::isAJAX">
-<span class="sig-name descname"><span class="pre">isAJAX</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::isAJAX" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">isAJAX</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::isAJAX" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>True if the request is an AJAX request, otherwise false.</p>
@@ -868,7 +865,7 @@ multi-file upload, based on the filename given in the HTML file input:</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\IncomingRequest::isSecure">
-<span class="sig-name descname"><span class="pre">isSecure</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::isSecure" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">isSecure</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::isSecure" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>True if the request is an HTTPS request, otherwise false.</p>
@@ -881,7 +878,7 @@ multi-file upload, based on the filename given in the HTML file input:</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\IncomingRequest::getVar">
-<span class="sig-name descname"><span class="pre">getVar</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$index</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$filter</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$flags</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::getVar" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getVar</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$index</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$filter</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$flags</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::getVar" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -910,7 +907,7 @@ another, more appropriate method.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\IncomingRequest::getGet">
-<span class="sig-name descname"><span class="pre">getGet</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$index</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$filter</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$flags</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::getGet" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getGet</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$index</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$filter</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$flags</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::getGet" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -970,7 +967,7 @@ the filter type to apply:</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\IncomingRequest::getPost">
-<span class="sig-name descname"><span class="pre">getPost</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$index</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$filter</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$flags</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::getPost" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getPost</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$index</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$filter</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$flags</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::getPost" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -993,7 +990,7 @@ found <a class="reference external" href="https://www.php.net/manual/en/filters.
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\IncomingRequest::getPostGet">
-<span class="sig-name descname"><span class="pre">getPostGet</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$index</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$filter</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$flags</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::getPostGet" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getPostGet</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$index</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$filter</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$flags</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::getPostGet" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1026,7 +1023,7 @@ Although POST data will be preferred in case of name conflict.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\IncomingRequest::getGetPost">
-<span class="sig-name descname"><span class="pre">getGetPost</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$index</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$filter</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$flags</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::getGetPost" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getGetPost</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$index</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$filter</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$flags</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::getGetPost" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1059,7 +1056,7 @@ Although GET data will be preferred in case of name conflict.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\IncomingRequest::getCookie">
-<span class="sig-name descname"><span class="pre">getCookie</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$index</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$filter</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$flags</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::getCookie" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getCookie</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$index</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$filter</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$flags</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::getCookie" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1100,7 +1097,7 @@ your configured <code class="docutils literal notranslate"><span class="pre">Con
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\IncomingRequest::getServer">
-<span class="sig-name descname"><span class="pre">getServer</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$index</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$filter</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$flags</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::getServer" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getServer</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$index</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$filter</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$flags</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::getServer" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1136,7 +1133,7 @@ as an array.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\IncomingRequest::getUserAgent">
-<span class="sig-name descname"><span class="pre">getUserAgent</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::getUserAgent" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getUserAgent</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::getUserAgent" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The User Agent string, as found in the SERVER data, or null if not found.</p>
@@ -1155,7 +1152,7 @@ as an array.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\IncomingRequest::getPath">
-<span class="sig-name descname"><span class="pre">getPath</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::getPath" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getPath</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::getPath" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The current URI path relative to baseURL</p>

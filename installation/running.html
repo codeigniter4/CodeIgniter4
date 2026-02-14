@@ -1,28 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Running Your App &mdash; CodeIgniter 4.7.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=34bb78ad" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css?v=eacb1234" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css?v=2b70fae9" />
 
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/js/citheme.js"></script>
-        <script src="../_static/js/carbon.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=52a74d40"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/js/citheme.js?v=e0bcfc84"></script>
+      <script src="../_static/js/carbon.js?v=b287325f"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -293,7 +290,7 @@
            <div itemprop="articleBody">
              
   <section id="running-your-app">
-<h1>Running Your App<a class="headerlink" href="#running-your-app" title="Permalink to this heading"></a></h1>
+<h1>Running Your App<a class="headerlink" href="#running-your-app" title="Link to this heading"></a></h1>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#initial-configuration" id="id3">Initial Configuration</a></p>
@@ -363,9 +360,9 @@ server.</p>
 <p>If you’re new to CodeIgniter, please read the <a class="reference internal" href="../intro/index.html"><span class="doc">Getting Started</span></a>
 section of the User Guide to begin learning how to build dynamic PHP applications. Enjoy!</p>
 <section id="initial-configuration">
-<span id="id1"></span><h2><a class="toc-backref" href="#id3" role="doc-backlink">Initial Configuration</a><a class="headerlink" href="#initial-configuration" title="Permalink to this heading"></a></h2>
+<span id="id1"></span><h2><a class="toc-backref" href="#id3" role="doc-backlink">Initial Configuration</a><a class="headerlink" href="#initial-configuration" title="Link to this heading"></a></h2>
 <section id="configure-for-your-site-uris">
-<h3><a class="toc-backref" href="#id4" role="doc-backlink">Configure for Your Site URIs</a><a class="headerlink" href="#configure-for-your-site-uris" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Configure for Your Site URIs</a><a class="headerlink" href="#configure-for-your-site-uris" title="Link to this heading"></a></h3>
 <p>Open the <strong>app/Config/App.php</strong> file with a text editor.</p>
 <ol class="arabic">
 <li><dl>
@@ -395,14 +392,14 @@ that does not contain <strong>index.php</strong>. See <a class="reference intern
 </ol>
 </section>
 <section id="configure-database-connection-settings">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">Configure Database Connection Settings</a><a class="headerlink" href="#configure-database-connection-settings" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Configure Database Connection Settings</a><a class="headerlink" href="#configure-database-connection-settings" title="Link to this heading"></a></h3>
 <p>If you intend to use a database, open the <strong>app/Config/Database.php</strong> file with
 a text editor and set your database settings. Alternately, these could be set in
 your <strong>.env</strong> file. See <a class="reference internal" href="../database/configuration.html#database-config-explanation-of-values"><span class="std std-ref">Database Configuration</span></a>
 for details.</p>
 </section>
 <section id="set-to-development-mode">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">Set to Development Mode</a><a class="headerlink" href="#set-to-development-mode" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Set to Development Mode</a><a class="headerlink" href="#set-to-development-mode" title="Link to this heading"></a></h3>
 <p>If it is not on the production server, set <code class="docutils literal notranslate"><span class="pre">CI_ENVIRONMENT</span></code> to <code class="docutils literal notranslate"><span class="pre">development</span></code>
 in <strong>.env</strong> file to take advantage of the debugging tools provided. See
 <a class="reference internal" href="../guides/first-app/index.html#setting-development-mode"><span class="std std-ref">Setting Development Mode</span></a> for the detail.</p>
@@ -415,16 +412,16 @@ run using the “production” environment. See also <a class="reference interna
 </div>
 </section>
 <section id="set-writable-folder-permission">
-<h3><a class="toc-backref" href="#id7" role="doc-backlink">Set Writable Folder Permission</a><a class="headerlink" href="#set-writable-folder-permission" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Set Writable Folder Permission</a><a class="headerlink" href="#set-writable-folder-permission" title="Link to this heading"></a></h3>
 <p>If you will be running your site using a web server (e.g., Apache or nginx),
 you will need to modify the permissions for the <strong>writable</strong> folder inside
 your project, so that it is writable by the user or account used by your
 web server.</p>
 </section>
 <section id="checking-php-ini-settings">
-<span id="spark-phpini-check"></span><h3><a class="toc-backref" href="#id8" role="doc-backlink">Checking PHP ini Settings</a><a class="headerlink" href="#checking-php-ini-settings" title="Permalink to this heading"></a></h3>
+<span id="spark-phpini-check"></span><h3><a class="toc-backref" href="#id8" role="doc-backlink">Checking PHP ini Settings</a><a class="headerlink" href="#checking-php-ini-settings" title="Link to this heading"></a></h3>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 4.5.0.</span></p>
+<p><span class="versionmodified added">Added in version 4.5.0.</span></p>
 </div>
 <p><a class="reference external" href="https://www.php.net/manual/en/ini.list.php">PHP ini settings</a> change the behaviors of PHP. CodeIgniter provides a command to
 check important PHP settings.</p>
@@ -457,7 +454,7 @@ in your controller.</p>
 </section>
 </section>
 <section id="local-development-server">
-<h2><a class="toc-backref" href="#id9" role="doc-backlink">Local Development Server</a><a class="headerlink" href="#local-development-server" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Local Development Server</a><a class="headerlink" href="#local-development-server" title="Link to this heading"></a></h2>
 <p>CodeIgniter 4 comes with a local development server, leveraging PHP’s built-in web server
 with CodeIgniter routing. You can launch it, with the following command line
 in the main directory:</p>
@@ -501,9 +498,9 @@ set to the path of the PHP executable you want to use:</p>
 </ul>
 </section>
 <section id="worker-mode-with-frankenphp">
-<h2><a class="toc-backref" href="#id10" role="doc-backlink">Worker Mode with FrankenPHP</a><a class="headerlink" href="#worker-mode-with-frankenphp" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Worker Mode with FrankenPHP</a><a class="headerlink" href="#worker-mode-with-frankenphp" title="Link to this heading"></a></h2>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 4.7.0.</span></p>
+<p><span class="versionmodified added">Added in version 4.7.0.</span></p>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -514,7 +511,7 @@ worker implementation is <strong>FrankenPHP</strong>, which is backed by the PHP
 your application to handle multiple requests within the same PHP process for
 improved performance.</p>
 <section id="quick-start">
-<h3><a class="toc-backref" href="#id11" role="doc-backlink">Quick Start</a><a class="headerlink" href="#quick-start" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Quick Start</a><a class="headerlink" href="#quick-start" title="Link to this heading"></a></h3>
 <ol class="arabic simple">
 <li><p>Install FrankenPHP using <a class="reference external" href="https://github.com/php/frankenphp/releases">static binaries</a></p></li>
 <li><p>Generate worker mode files:</p></li>
@@ -533,15 +530,15 @@ about state management, see <a class="reference internal" href="worker_mode.html
 </section>
 </section>
 <section id="hosting-with-apache">
-<h2><a class="toc-backref" href="#id12" role="doc-backlink">Hosting with Apache</a><a class="headerlink" href="#hosting-with-apache" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id12" role="doc-backlink">Hosting with Apache</a><a class="headerlink" href="#hosting-with-apache" title="Link to this heading"></a></h2>
 <p>A CodeIgniter4 webapp is normally hosted on a web server.
 Apache HTTP Server is the “standard” platform, and assumed in much of our documentation.</p>
 <p>Apache is bundled with many platforms, but can also be downloaded in a bundle
 with a database engine and PHP from <a class="reference external" href="https://bitnami.com/stacks/infrastructure">Bitnami</a>.</p>
 <section id="configure-main-config-file">
-<h3><a class="toc-backref" href="#id13" role="doc-backlink">Configure Main Config File</a><a class="headerlink" href="#configure-main-config-file" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">Configure Main Config File</a><a class="headerlink" href="#configure-main-config-file" title="Link to this heading"></a></h3>
 <section id="enabling-mod-rewrite">
-<h4><a class="toc-backref" href="#id14" role="doc-backlink">Enabling mod_rewrite</a><a class="headerlink" href="#enabling-mod-rewrite" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id14" role="doc-backlink">Enabling mod_rewrite</a><a class="headerlink" href="#enabling-mod-rewrite" title="Link to this heading"></a></h4>
 <p>The “mod_rewrite” module enables URLs without “index.php” in them, and is assumed
 in our user guide.</p>
 <p>Make sure that the rewrite module is enabled (uncommented) in the main
@@ -551,7 +548,7 @@ configuration file, e.g., <strong>apache2/conf/httpd.conf</strong>:</p>
 </div>
 </section>
 <section id="setting-document-root">
-<h4><a class="toc-backref" href="#id15" role="doc-backlink">Setting Document Root</a><a class="headerlink" href="#setting-document-root" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id15" role="doc-backlink">Setting Document Root</a><a class="headerlink" href="#setting-document-root" title="Link to this heading"></a></h4>
 <p>Also make sure that the default document root’s <code class="docutils literal notranslate"><span class="pre">&lt;Directory&gt;</span></code> element enables this too,
 in the <code class="docutils literal notranslate"><span class="pre">AllowOverride</span></code> setting:</p>
 <div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;Directory</span><span class="w"> </span><span class="s">&quot;/opt/lamp/apache2/htdocs&quot;</span><span class="nt">&gt;</span>
@@ -564,11 +561,11 @@ in the <code class="docutils literal notranslate"><span class="pre">AllowOverrid
 </section>
 </section>
 <section id="hosting-with-virtualhost">
-<h3><a class="toc-backref" href="#id16" role="doc-backlink">Hosting with VirtualHost</a><a class="headerlink" href="#hosting-with-virtualhost" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id16" role="doc-backlink">Hosting with VirtualHost</a><a class="headerlink" href="#hosting-with-virtualhost" title="Link to this heading"></a></h3>
 <p>We recommend using “virtual hosting” to run your apps.
 You can set up different aliases for each of the apps you work on,</p>
 <section id="enabling-vhost-alias-module">
-<h4><a class="toc-backref" href="#id17" role="doc-backlink">Enabling vhost_alias_module</a><a class="headerlink" href="#enabling-vhost-alias-module" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id17" role="doc-backlink">Enabling vhost_alias_module</a><a class="headerlink" href="#enabling-vhost-alias-module" title="Link to this heading"></a></h4>
 <p>Make sure that the virtual hosting module is enabled (uncommented) in the main
 configuration file, e.g., <strong>apache2/conf/httpd.conf</strong>:</p>
 <div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">LoadModule</span><span class="w"> </span>vhost_alias_module<span class="w"> </span>modules/mod_vhost_alias.so
@@ -576,7 +573,7 @@ configuration file, e.g., <strong>apache2/conf/httpd.conf</strong>:</p>
 </div>
 </section>
 <section id="adding-host-alias">
-<h4><a class="toc-backref" href="#id18" role="doc-backlink">Adding Host Alias</a><a class="headerlink" href="#adding-host-alias" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id18" role="doc-backlink">Adding Host Alias</a><a class="headerlink" href="#adding-host-alias" title="Link to this heading"></a></h4>
 <p>Add a host alias in your “hosts” file, typically <strong>/etc/hosts</strong> on unix-type platforms,
 or <strong>c:\Windows\System32\drivers\etc\hosts</strong> on Windows.</p>
 <p>Add a line to the file.
@@ -586,7 +583,7 @@ This could be <code class="docutils literal notranslate"><span class="pre">mypro
 </div>
 </section>
 <section id="setting-virtualhost">
-<h4><a class="toc-backref" href="#id19" role="doc-backlink">Setting VirtualHost</a><a class="headerlink" href="#setting-virtualhost" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id19" role="doc-backlink">Setting VirtualHost</a><a class="headerlink" href="#setting-virtualhost" title="Link to this heading"></a></h4>
 <p>Add a <code class="docutils literal notranslate"><span class="pre">&lt;VirtualHost&gt;</span></code> element for your webapp inside the virtual hosting configuration,
 e.g., <strong>apache2/conf/extra/httpd-vhost.conf</strong>:</p>
 <div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;VirtualHost</span><span class="w"> </span><span class="s">*:80</span><span class="nt">&gt;</span>
@@ -612,17 +609,17 @@ e.g., <strong>apache2/conf/extra/httpd-vhost.conf</strong>:</p>
 <p>Restart Apache.</p>
 </section>
 <section id="testing">
-<h4><a class="toc-backref" href="#id20" role="doc-backlink">Testing</a><a class="headerlink" href="#testing" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id20" role="doc-backlink">Testing</a><a class="headerlink" href="#testing" title="Link to this heading"></a></h4>
 <p>With the above configuration, your webapp would be accessed with the URL <strong>http://myproject.local/</strong> in your browser.</p>
 <p>Apache needs to be restarted whenever you change its configuration.</p>
 </section>
 </section>
 <section id="hosting-with-subfolder">
-<h3><a class="toc-backref" href="#id21" role="doc-backlink">Hosting with Subfolder</a><a class="headerlink" href="#hosting-with-subfolder" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id21" role="doc-backlink">Hosting with Subfolder</a><a class="headerlink" href="#hosting-with-subfolder" title="Link to this heading"></a></h3>
 <p>If you want a baseURL like <strong>http://localhost/myproject/</strong> with a subfolder,
 there are three ways.</p>
 <section id="making-symlink">
-<h4><a class="toc-backref" href="#id22" role="doc-backlink">Making Symlink</a><a class="headerlink" href="#making-symlink" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id22" role="doc-backlink">Making Symlink</a><a class="headerlink" href="#making-symlink" title="Link to this heading"></a></h4>
 <p>Place your project folder as follows, where <strong>htdocs</strong> is the Apache document root:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">├──</span> <span class="nx">myproject</span><span class="o">/</span> <span class="p">(</span><span class="nx">project</span> <span class="nx">folder</span><span class="p">)</span>
 <span class="nx">│</span>      <span class="nx">└──</span> <span class="k">public</span><span class="o">/</span>
@@ -636,7 +633,7 @@ there are three ways.</p>
 </div>
 </section>
 <section id="using-alias">
-<h4><a class="toc-backref" href="#id23" role="doc-backlink">Using Alias</a><a class="headerlink" href="#using-alias" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id23" role="doc-backlink">Using Alias</a><a class="headerlink" href="#using-alias" title="Link to this heading"></a></h4>
 <p>Place your project folder as follows, where <strong>htdocs</strong> is the Apache document root:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">├──</span> <span class="nx">myproject</span><span class="o">/</span> <span class="p">(</span><span class="nx">project</span> <span class="nx">folder</span><span class="p">)</span>
 <span class="nx">│</span>      <span class="nx">└──</span> <span class="k">public</span><span class="o">/</span>
@@ -654,7 +651,7 @@ there are three ways.</p>
 <p>Restart Apache.</p>
 </section>
 <section id="adding-htaccess">
-<h4><a class="toc-backref" href="#id24" role="doc-backlink">Adding .htaccess</a><a class="headerlink" href="#adding-htaccess" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id24" role="doc-backlink">Adding .htaccess</a><a class="headerlink" href="#adding-htaccess" title="Link to this heading"></a></h4>
 <p>The last resort is to add <strong>.htaccess</strong> to the project root.</p>
 <p>It is not recommended that you place the project folder in the document root.
 However, if you have no other choice, like on a shared server, you can use this.</p>
@@ -703,7 +700,7 @@ and create the <strong>.htaccess</strong> file:</p>
 </section>
 </section>
 <section id="hosting-with-mod-userdir-shared-hosts">
-<h3><a class="toc-backref" href="#id25" role="doc-backlink">Hosting with mod_userdir (Shared Hosts)</a><a class="headerlink" href="#hosting-with-mod-userdir-shared-hosts" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id25" role="doc-backlink">Hosting with mod_userdir (Shared Hosts)</a><a class="headerlink" href="#hosting-with-mod-userdir-shared-hosts" title="Link to this heading"></a></h3>
 <p>A common practice in shared hosting environments is to use the Apache module “mod_userdir” to enable per-user Virtual Hosts automatically. Additional configuration is required to allow CodeIgniter4 to be run from these per-user directories.</p>
 <p>The following assumes that the server is already configured for mod_userdir. A guide to enabling this module is available <a class="reference external" href="https://httpd.apache.org/docs/2.4/howto/public_html.html">in the Apache documentation</a>.</p>
 <p>Because CodeIgniter4 expects the server to find the framework front controller at <strong>public/index.php</strong> by default, you must specify this location as an alternative to search for the request (even if CodeIgniter4 is installed within the per-user web directory).</p>
@@ -766,20 +763,20 @@ and create the <strong>.htaccess</strong> file:</p>
 </div>
 </section>
 <section id="removing-the-index-php">
-<h3><a class="toc-backref" href="#id26" role="doc-backlink">Removing the index.php</a><a class="headerlink" href="#removing-the-index-php" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id26" role="doc-backlink">Removing the index.php</a><a class="headerlink" href="#removing-the-index-php" title="Link to this heading"></a></h3>
 <p>See <a class="reference internal" href="../general/urls.html#urls-remove-index-php-apache"><span class="std std-ref">CodeIgniter URLs</span></a>.</p>
 </section>
 <section id="setting-environment">
-<h3><a class="toc-backref" href="#id27" role="doc-backlink">Setting Environment</a><a class="headerlink" href="#setting-environment" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id27" role="doc-backlink">Setting Environment</a><a class="headerlink" href="#setting-environment" title="Link to this heading"></a></h3>
 <p>See <a class="reference internal" href="../general/environments.html#environment-apache"><span class="std std-ref">Handling Multiple Environments</span></a>.</p>
 </section>
 </section>
 <section id="hosting-with-nginx">
-<h2><a class="toc-backref" href="#id28" role="doc-backlink">Hosting with nginx</a><a class="headerlink" href="#hosting-with-nginx" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id28" role="doc-backlink">Hosting with nginx</a><a class="headerlink" href="#hosting-with-nginx" title="Link to this heading"></a></h2>
 <p>nginx is the second most widely used HTTP server for web hosting.
 Here you can find an example configuration using PHP 8.1 FPM (unix sockets) under Ubuntu Server.</p>
 <section id="default-conf">
-<h3><a class="toc-backref" href="#id29" role="doc-backlink">default.conf</a><a class="headerlink" href="#default-conf" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id29" role="doc-backlink">default.conf</a><a class="headerlink" href="#default-conf" title="Link to this heading"></a></h3>
 <p>This configuration enables URLs without “index.php” in them and using CodeIgniter’s “404 - File Not Found” for URLs ending with “.php”.</p>
 <div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="k">server</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
@@ -814,16 +811,16 @@ Here you can find an example configuration using PHP 8.1 FPM (unix sockets) unde
 </div>
 </section>
 <section id="id2">
-<h3><a class="toc-backref" href="#id30" role="doc-backlink">Setting Environment</a><a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id30" role="doc-backlink">Setting Environment</a><a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
 <p>See <a class="reference internal" href="../general/environments.html#environment-nginx"><span class="std std-ref">Handling Multiple Environments</span></a>.</p>
 </section>
 </section>
 <section id="deployment-to-shared-hosting-services">
-<h2><a class="toc-backref" href="#id31" role="doc-backlink">Deployment to Shared Hosting Services</a><a class="headerlink" href="#deployment-to-shared-hosting-services" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id31" role="doc-backlink">Deployment to Shared Hosting Services</a><a class="headerlink" href="#deployment-to-shared-hosting-services" title="Link to this heading"></a></h2>
 <p>See <a class="reference internal" href="deployment.html#deployment-to-shared-hosting-services"><span class="std std-ref">Deployment</span></a>.</p>
 </section>
 <section id="bootstrapping-the-app">
-<h2><a class="toc-backref" href="#id32" role="doc-backlink">Bootstrapping the App</a><a class="headerlink" href="#bootstrapping-the-app" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id32" role="doc-backlink">Bootstrapping the App</a><a class="headerlink" href="#bootstrapping-the-app" title="Link to this heading"></a></h2>
 <p>In some scenarios, you will want to load the framework without actually running the whole
 application. This is particularly useful for unit testing your project, but may also be
 handy for using third-party tools to analyze and modify your code. The framework comes

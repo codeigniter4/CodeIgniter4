@@ -1,28 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Request Class &mdash; CodeIgniter 4.7.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=34bb78ad" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css?v=eacb1234" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css?v=2b70fae9" />
 
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/js/citheme.js"></script>
-        <script src="../_static/js/carbon.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=52a74d40"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/js/citheme.js?v=e0bcfc84"></script>
+      <script src="../_static/js/carbon.js?v=b287325f"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -293,7 +290,7 @@
            <div itemprop="articleBody">
              
   <section id="request-class">
-<h1>Request Class<a class="headerlink" href="#request-class" title="Permalink to this heading"></a></h1>
+<h1>Request Class<a class="headerlink" href="#request-class" title="Link to this heading"></a></h1>
 <p>The request class is an object-oriented representation of an HTTP request. This is meant to
 work for both incoming, such as a request to the application from a browser, and outgoing requests,
 like would be used to send a request from the application to a third-party application.</p>
@@ -302,14 +299,14 @@ provides the common functionality they both need, but both cases have custom cla
 from the Request class to add specific functionality. In practice, you will need to use these classes.</p>
 <p>See the documentation for the <a class="reference internal" href="incomingrequest.html"><span class="doc">IncomingRequest Class</span></a> and
 <a class="reference internal" href="../libraries/curlrequest.html"><span class="doc">CURLRequest Class</span></a> for more usage details.</p>
-<section id="namespace-CodeIgniter\HTTP">
-<span id="class-reference"></span><h2>Class Reference<a class="headerlink" href="#namespace-CodeIgniter\HTTP" title="Permalink to this heading"></a></h2>
-<dl class="php class">
+<section id="class-reference">
+<h2>Class Reference<a class="headerlink" href="#class-reference" title="Link to this heading"></a></h2>
+<dl class="php class" id="namespace-CodeIgniter\HTTP">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Request">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\HTTP\</span></span><span class="sig-name descname"><span class="pre">Request</span></span><a class="headerlink" href="#CodeIgniter\HTTP\Request" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\HTTP\</span></span><span class="sig-name descname"><span class="pre">Request</span></span><a class="headerlink" href="#CodeIgniter\HTTP\Request" title="Link to this definition"></a></dt>
 <dd><dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Request::getIPAddress">
-<span class="sig-name descname"><span class="pre">getIPAddress</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Request::getIPAddress" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getIPAddress</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Request::getIPAddress" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The user’s IP Address, if it can be detected. If the IP address
@@ -335,7 +332,7 @@ return the reported client IP address by the HTTP header for the allowed IP addr
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Request::isValidIP">
-<span class="sig-name descname"><span class="pre">isValidIP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$ip</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$which</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Request::isValidIP" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">isValidIP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$ip</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$which</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Request::isValidIP" title="Link to this definition"></a></dt>
 <dd><div class="deprecated">
 <p><span class="versionmodified deprecated">Deprecated since version 4.0.5: </span>Use <a class="reference internal" href="../libraries/validation.html"><span class="doc">Validation</span></a> instead.</p>
 </div>
@@ -378,7 +375,7 @@ an IP format. The default checks for both formats.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Request::getMethod">
-<span class="sig-name descname"><span class="pre">getMethod</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Request::getMethod" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getMethod</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Request::getMethod" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>HTTP request method</p>
@@ -397,7 +394,7 @@ an IP format. The default checks for both formats.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Request::setMethod">
-<span class="sig-name descname"><span class="pre">setMethod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$method</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Request::setMethod" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">setMethod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$method</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Request::setMethod" title="Link to this definition"></a></dt>
 <dd><div class="deprecated">
 <p><span class="versionmodified deprecated">Deprecated since version 4.0.5: </span>Use <a class="reference internal" href="#CodeIgniter\HTTP\Request::withMethod" title="CodeIgniter\HTTP\Request::withMethod"><code class="xref php php-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Request::withMethod()</span></code></a> instead.</p>
 </div>
@@ -418,9 +415,9 @@ an IP format. The default checks for both formats.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Request::withMethod">
-<span class="sig-name descname"><span class="pre">withMethod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$method</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Request::withMethod" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">withMethod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$method</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Request::withMethod" title="Link to this definition"></a></dt>
 <dd><div class="versionadded">
-<p><span class="versionmodified added">New in version 4.0.5.</span></p>
+<p><span class="versionmodified added">Added in version 4.0.5.</span></p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -439,7 +436,7 @@ an IP format. The default checks for both formats.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Request::getServer">
-<span class="sig-name descname"><span class="pre">getServer</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$index</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$filter</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$flags</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Request::getServer" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getServer</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$index</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$filter</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$flags</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Request::getServer" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -473,7 +470,7 @@ as an array.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Request::getEnv">
-<span class="sig-name descname"><span class="pre">getEnv</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$index</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$filter</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$flags</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Request::getEnv" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getEnv</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$index</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$filter</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$flags</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Request::getEnv" title="Link to this definition"></a></dt>
 <dd><div class="deprecated">
 <p><span class="versionmodified deprecated">Deprecated since version 4.4.4: </span>This method does not work from the beginning. Use
 <a class="reference internal" href="../general/common_functions.html#env" title="env"><code class="xref php php-func docutils literal notranslate"><span class="pre">env()</span></code></a> instead.</p>
@@ -511,7 +508,7 @@ as an array.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Request::setGlobal">
-<span class="sig-name descname"><span class="pre">setGlobal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$method</span></em>, <em class="sig-param"><span class="pre">$value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Request::setGlobal" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">setGlobal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$method</span></em>, <em class="sig-param"><span class="pre">$value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Request::setGlobal" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -531,7 +528,7 @@ as an array.</p>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Request::fetchGlobal">
-<span class="sig-name descname"><span class="pre">fetchGlobal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$method</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$index</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$filter</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$flags</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Request::fetchGlobal" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">fetchGlobal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$method</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$index</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$filter</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$flags</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Request::fetchGlobal" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
