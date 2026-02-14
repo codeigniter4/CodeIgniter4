@@ -5,11 +5,13 @@
     bootstrap="system/Test/bootstrap.php"
     backupGlobals="false"
     beStrictAboutOutputDuringTests="true"
+    cacheDirectory="build/.phpunit.cache"
     colors="true"
     columns="max"
+    displayDetailsOnAllIssues="true"
     failOnRisky="true"
     failOnWarning="true"
-    cacheDirectory="build/.phpunit.cache">
+>
     <coverage
         pathCoverage="false"
         ignoreDeprecatedCodeUnits="true"
