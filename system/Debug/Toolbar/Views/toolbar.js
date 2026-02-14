@@ -8,8 +8,7 @@ var ciDebugBar = {
     icon: null,
 
     init: function () {
-        // Standalone debugbar pages do not have #toolbarContainer, use body as fallback.
-        this.toolbarContainer = document.getElementById("toolbarContainer") || document.body;
+        this.toolbarContainer = document.getElementById("toolbarContainer");
         this.toolbar = document.getElementById("debug-bar");
         this.icon = document.getElementById("debug-icon");
 
