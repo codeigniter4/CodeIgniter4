@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -11,7 +13,6 @@
 
 namespace CodeIgniter\AutoReview;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -66,6 +67,10 @@ final class CreateNewChangelogTest extends TestCase
             $this->getContents("./user_guide_src/source/changelogs/v{$newVersion}.rst"),
         );
         $this->assertStringContainsString(
+            "**{$newVersion} release of CodeIgniter4**",
+            $this->getContents("./user_guide_src/source/changelogs/v{$newVersion}.rst"),
+        );
+        $this->assertStringContainsString(
             $newVersion,
             $this->getContents('./user_guide_src/source/changelogs/index.rst'),
         );
@@ -106,7 +111,7 @@ final class CreateNewChangelogTest extends TestCase
             'major' => sprintf('%d.0.0', ++$parts[0]),
             'minor' => sprintf('%d.%d.0', $parts[0], ++$parts[1]),
             'patch' => sprintf('%d.%d.%d', $parts[0], $parts[1], ++$parts[2]),
-            default => throw new InvalidArgumentException('Invalid version increment mode. Use "major", "minor", or "patch".'),
+            default => $this->fail('Invalid version increment mode. Use "major", "minor", or "patch".'),
         };
     }
 
