@@ -33,6 +33,10 @@ final class CodeIgniterRuleCustomisationPolicy implements RuleCustomisationPolic
         $normalisedStrEndsWith = static fn (string $haystack, string $needle): bool => str_ends_with(str_replace('\\', '/', $haystack), $needle);
 
         return [
+            'declare_strict_types' => static fn (SplFileInfo $file): bool => ! $normalisedStrEndsWith(
+                $file->getPathname(),
+                '/tests/system/Debug/ExceptionsTest.php',
+            ),
             'native_function_casing' => static fn (SplFileInfo $file): bool => ! $normalisedStrEndsWith(
                 $file->getPathname(),
                 '/tests/system/Database/Live/PreparedQueryTest.php',
