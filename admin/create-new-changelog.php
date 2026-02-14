@@ -47,6 +47,13 @@ if ($isMinorUpdate) {
     copy('./admin/next-changelog-patch.rst', $newChangelog);
 }
 
+// Replace version in CodeIgniter.php to {version}-dev.
+replace_file_content(
+    './system/CodeIgniter.php',
+    '/public const CI_VERSION = \'.*?\';/u',
+    "public const CI_VERSION = '{$newVersion}-dev';",
+);
+
 // Add changelog to index.rst.
 replace_file_content(
     $changelogIndex,
