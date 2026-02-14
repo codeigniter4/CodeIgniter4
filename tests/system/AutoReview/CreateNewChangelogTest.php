@@ -27,14 +27,34 @@ final class CreateNewChangelogTest extends TestCase
 {
     private string $currentVersion;
 
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+
+        if (getenv('GITHUB_ACTIONS') !== false) {
+            exec('git fetch --unshallow 2>&1', $output, $exitCode);
+            exec('git fetch --tags 2>&1', $output, $exitCode);
+
+            if ($exitCode !== 0) {
+                self::fail(sprintf(
+                    "Failed to fetch git history and tags.\nOutput: %s",
+                    implode("\n", $output),
+                ));
+            }
+        }
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
 
-        exec('git describe --tags --abbrev=0 2>/dev/null', $output, $exitCode);
+        exec('git describe --tags --abbrev=0 2>&1', $output, $exitCode);
 
         if ($exitCode !== 0) {
-            $this->markTestSkipped('Unable to determine the current version from git tags.');
+            $this->markTestSkipped(sprintf(
+                "Unable to get the latest git tag.\nOutput: %s",
+                implode("\n", $output),
+            ));
         }
 
         // Current tag should already have the next patch docs done, so for testing purposes,
