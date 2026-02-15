@@ -104,6 +104,11 @@ example, you could load the **blog_view.php** file from **example/blog/Views** b
 
 .. literalinclude:: views/005.php
 
+.. note:: You must use backslashes (``\``) when referencing namespaced views,
+    as this is how CodeIgniter distinguishes a namespaced view from a regular
+    file path. Forward slashes (``/``) are only used for subdirectories within
+    the standard **app/Views** folder.
+
 .. _views-overriding-namespaced-views:
 
 Overriding Namespaced Views
@@ -150,6 +155,13 @@ To override this view (using the default configuration), create a file at the ma
                     └── blog_view.php <-- Your custom view
 
 Now, when you call ``view('Example\Blog\blog_view')``, CodeIgniter will automatically load your custom view from **app/Views/overrides/Example/Blog/blog_view.php** instead of the original module view file.
+
+.. note:: The override path must match exactly how you reference the view.
+    If you load a view as ``view('Example\Blog\blog_view')``, the override
+    path is **app/Views/overrides/Example/Blog/blog_view.php**. However,
+    if you explicitly include the ``Views`` directory in the call, e.g.,
+    ``view('Example\Blog\Views\blog_view')``, the override path must also
+    include it: **app/Views/overrides/Example/Blog/Views/blog_view.php**.
 
 .. _caching-views:
 
