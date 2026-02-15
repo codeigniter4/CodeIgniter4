@@ -24,7 +24,6 @@ use DateTime;
 use DateTimeZone;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
-use ReflectionClass;
 
 /**
  * @internal
@@ -612,13 +611,10 @@ final class ResponseTest extends CIUnitTestCase
         $cspConfig->scriptNonceTag = '{custom-script-tag}';
         $cspConfig->styleNonceTag  = '{custom-style-tag}';
 
+        Services::injectMock('csp', new ContentSecurityPolicy($cspConfig));
+
         $response = new Response($appConfig);
         $response->pretend(true);
-
-        // Inject the custom CSP config
-        $reflection  = new ReflectionClass($response);
-        $cspProperty = $reflection->getProperty('CSP');
-        $cspProperty->setValue($response, new ContentSecurityPolicy($cspConfig));
 
         $body = '<html><script {custom-script-tag}>test()</script><style {custom-style-tag}>.x{}</style></html>';
         $response->setBody($body);
@@ -708,13 +704,10 @@ final class ResponseTest extends CIUnitTestCase
         $cspConfig            = new \Config\ContentSecurityPolicy();
         $cspConfig->autoNonce = false;
 
+        Services::injectMock('csp', new ContentSecurityPolicy($cspConfig));
+
         $response = new Response($appConfig);
         $response->pretend(true);
-
-        // Inject the custom CSP config
-        $reflection  = new ReflectionClass($response);
-        $cspProperty = $reflection->getProperty('CSP');
-        $cspProperty->setValue($response, new ContentSecurityPolicy($cspConfig));
 
         $body = '<html><script {csp-script-nonce}>test()</script><style {csp-style-nonce}>.x{}</style></html>';
         $response->setBody($body);
