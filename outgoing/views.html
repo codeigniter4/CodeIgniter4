@@ -432,6 +432,13 @@ example, you could load the <strong>blog_view.php</strong> file from <strong>exa
 <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;Example\Blog\blog_view&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You must use backslashes (<code class="docutils literal notranslate"><span class="pre">\</span></code>) when referencing namespaced views,
+as this is how CodeIgniter distinguishes a namespaced view from a regular
+file path. Forward slashes (<code class="docutils literal notranslate"><span class="pre">/</span></code>) are only used for subdirectories within
+the standard <strong>app/Views</strong> folder.</p>
+</div>
 </section>
 <section id="overriding-namespaced-views">
 <span id="views-overriding-namespaced-views"></span><h2><a class="toc-backref" href="#id8" role="doc-backlink">Overriding Namespaced Views</a><a class="headerlink" href="#overriding-namespaced-views" title="Link to this heading"></a></h2>
@@ -468,6 +475,15 @@ This allows you to customize the output of modules or packages without modifying
 </pre></div>
 </div>
 <p>Now, when you call <code class="docutils literal notranslate"><span class="pre">view('Example\Blog\blog_view')</span></code>, CodeIgniter will automatically load your custom view from <strong>app/Views/overrides/Example/Blog/blog_view.php</strong> instead of the original module view file.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The override path must match exactly how you reference the view.
+If you load a view as <code class="docutils literal notranslate"><span class="pre">view('Example\Blog\blog_view')</span></code>, the override
+path is <strong>app/Views/overrides/Example/Blog/blog_view.php</strong>. However,
+if you explicitly include the <code class="docutils literal notranslate"><span class="pre">Views</span></code> directory in the call, e.g.,
+<code class="docutils literal notranslate"><span class="pre">view('Example\Blog\Views\blog_view')</span></code>, the override path must also
+include it: <strong>app/Views/overrides/Example/Blog/Views/blog_view.php</strong>.</p>
+</div>
 </section>
 </section>
 <section id="caching-views">
@@ -611,7 +627,7 @@ typically be in the form of a multi-dimensional array.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 15, 2026.
+      <span class="lastupdated">Last updated on Feb 16, 2026.
       </span></p>
   </div>
 
