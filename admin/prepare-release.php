@@ -80,7 +80,7 @@ replace_file_content(
 replace_file_content(
     './admin/starter/builds',
     '/define\(\'NEXT_MINOR\', \'.*?\'\);/mu',
-    "define('NEXT_MINOR', '{$nextMinor}-dev');",
+    "define('NEXT_MINOR', '^{$nextMinor}-dev');",
 );
 
 // Commits
