@@ -15,7 +15,6 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Exceptions\DownloadException;
 use CodeIgniter\Files\File;
-use Config\App;
 use Config\Mimes;
 
 /**
@@ -64,12 +63,9 @@ class DownloadResponse extends Response implements NonBufferedResponseInterface
      */
     protected $statusCode = 200;
 
-    /**
-     * Constructor.
-     */
     public function __construct(string $filename, bool $setMime)
     {
-        parent::__construct(config(App::class));
+        parent::__construct();
 
         $this->filename = $filename;
         $this->setMime  = $setMime;

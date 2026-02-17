@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use Closure;
-use Config\App;
 use JsonException;
 
 /**
@@ -31,7 +30,7 @@ class SSEResponse extends Response implements NonBufferedResponseInterface
      */
     public function __construct(private readonly Closure $callback)
     {
-        parent::__construct(config(App::class));
+        parent::__construct();
     }
 
     /**

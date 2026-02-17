@@ -112,7 +112,7 @@ final class ResponseTraitTest extends CIUnitTestCase
                 null,
                 new UserAgent(),
             );
-            $this->response = new MockResponse($config);
+            $this->response = new MockResponse();
         }
 
         $headers = array_merge(['Accept' => 'text/html'], $userHeaders);
@@ -625,7 +625,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->createCookieConfig();
 
         $request  = new MockIncomingRequest($config, new SiteURI($config), null, new UserAgent());
-        $response = new MockResponse($config);
+        $response = new MockResponse();
 
         $controller = new class ($request, $response) {
             use ResponseTrait;

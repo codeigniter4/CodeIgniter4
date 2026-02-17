@@ -62,10 +62,15 @@ Libraries
 Helpers and Functions
 =====================
 
-Others
-======
+HTTP
+====
 
 - Added ``SSEResponse`` class for streaming Server-Sent Events (SSE) over HTTP. See :ref:`server-sent-events`.
+- ``Response`` and its child classes no longer require ``Config\App`` passed to their constructors.
+    Consequently, ``CURLRequest``'s ``$config`` parameter is unused and will be removed in a future release.
+
+Others
+======
 
 ***************
 Message Changes
