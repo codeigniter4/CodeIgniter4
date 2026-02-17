@@ -1,4 +1,4 @@
-# total 8 errors
+# total 12 errors
 
 parameters:
     ignoreErrors:
@@ -41,3 +41,23 @@ parameters:
             message: '#^Parameter \#1 \$value \(int\) of method CodeIgniter\\Entity\\Cast\\IntBoolCast\:\:get\(\) should be contravariant with parameter \$value \(array\|bool\|float\|int\|object\|string\|null\) of method CodeIgniter\\Entity\\Cast\\CastInterface\:\:get\(\)$#'
             count: 1
             path: ../../system/Entity/Cast/IntBoolCast.php
+
+        -
+            message: '#^Parameter \#1 \$data \(array\{date\: string, timezone\: string, timezone_type\: int\}\) of method CodeIgniter\\I18n\\Time\:\:__unserialize\(\) should be contravariant with parameter \$data \(array\) of method DateTimeImmutable\:\:__unserialize\(\)$#'
+            count: 1
+            path: ../../system/I18n/Time.php
+
+        -
+            message: '#^Parameter \#1 \$data \(array\{date\: string, timezone\: string, timezone_type\: int\}\) of method CodeIgniter\\I18n\\Time\:\:__unserialize\(\) should be contravariant with parameter \$data \(array\) of method DateTimeInterface\:\:__unserialize\(\)$#'
+            count: 1
+            path: ../../system/I18n/Time.php
+
+        -
+            message: '#^Parameter \#1 \$data \(array\{date\: string, timezone\: string, timezone_type\: int\}\) of method CodeIgniter\\I18n\\TimeLegacy\:\:__unserialize\(\) should be contravariant with parameter \$data \(array\) of method DateTimeInterface\:\:__unserialize\(\)$#'
+            count: 1
+            path: ../../system/I18n/TimeLegacy.php
+
+        -
+            message: '#^Parameter \#1 \$data \(array\{date\: string, timezone\: string, timezone_type\: int\}\) of method CodeIgniter\\I18n\\TimeLegacy\:\:__unserialize\(\) should be contravariant with parameter \$data \(array\) of method DateTime\:\:__unserialize\(\)$#'
+            count: 1
+            path: ../../system/I18n/TimeLegacy.php

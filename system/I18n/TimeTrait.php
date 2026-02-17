@@ -1238,19 +1238,11 @@ trait TimeTrait
 
     /**
      * This is called when we unserialize the Time object.
+     *
+     * @param array{date: string, timezone: string, timezone_type: int} $data
      */
-    public function __wakeup(): void
+    public function __unserialize(array $data): void
     {
-        /**
-         * Prior to unserialization, this is a string.
-         *
-         * @var string $timezone
-         */
-        $timezone = $this->timezone;
-
-        $this->timezone = new DateTimeZone($timezone);
-
-        // @phpstan-ignore-next-line `$this->date` is a special property for PHP internal use.
-        parent::__construct($this->date, $this->timezone);
+        parent::__construct($data['date'], new DateTimeZone($data['timezone']));
     }
 }
