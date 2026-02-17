@@ -336,6 +336,7 @@ to switch <code class="docutils literal notranslate"><span class="pre">4.7.x</sp
 <li><p><strong>ContentSecurityPolicy:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">generateNonces()</span></code> produces corrupted JSON responses by replacing CSP nonce placeholders with unescaped double quotes. The method now automatically JSON-escapes nonce attributes when the response Content-Type is JSON.</p></li>
 <li><p><strong>Model:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">BaseModel::updateBatch()</span></code> threw an exception when <code class="docutils literal notranslate"><span class="pre">updateOnlyChanged</span></code> was <code class="docutils literal notranslate"><span class="pre">true</span></code> and the index field value did not change.</p></li>
 <li><p><strong>Session:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">MemcachedHandler</span></code> where the constructor incorrectly threw an exception when <code class="docutils literal notranslate"><span class="pre">savePath</span></code> was not empty.</p></li>
+<li><p><strong>Toolbar:</strong> Fixed a bug where the standalone toolbar page loaded from <code class="docutils literal notranslate"><span class="pre">?debugbar_time=...</span></code> was not interactive.</p></li>
 </ul>
 <p>See the repo’s
 <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a>
