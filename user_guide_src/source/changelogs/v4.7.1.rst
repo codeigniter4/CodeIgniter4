@@ -43,6 +43,7 @@ Bugs Fixed
 - **Model:** Fixed a bug where ``BaseModel::updateBatch()`` threw an exception when ``updateOnlyChanged`` was ``true`` and the index field value did not change.
 - **Session:** Fixed a bug in ``MemcachedHandler`` where the constructor incorrectly threw an exception when ``savePath`` was not empty.
 - **Toolbar:** Fixed a bug where the standalone toolbar page loaded from ``?debugbar_time=...`` was not interactive.
+- **View:** Fixed a bug where ``View`` would throw an error if the ``appOverridesFolder`` config property was not defined.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
