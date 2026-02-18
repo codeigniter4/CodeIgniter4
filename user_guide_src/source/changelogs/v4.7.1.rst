@@ -41,6 +41,7 @@ Bugs Fixed
 - **ContentSecurityPolicy:** Fixed a bug where custom CSP tags were not removed from generated HTML when CSP was disabled. The method now ensures that all custom CSP tags are removed from the generated HTML.
 - **ContentSecurityPolicy:** Fixed a bug where ``generateNonces()`` produces corrupted JSON responses by replacing CSP nonce placeholders with unescaped double quotes. The method now automatically JSON-escapes nonce attributes when the response Content-Type is JSON.
 - **Database:** Fixed a bug where ``BaseConnection::callFunction()`` could double-prefix already-prefixed function names.
+- **Database:** Fixed a bug where ``BasePreparedQuery::prepare()`` could mis-handle SQL containing colon syntax by over-broad named-placeholder replacement. It now preserves PostgreSQL cast syntax like ``::timestamp``.
 - **Model:** Fixed a bug where ``BaseModel::updateBatch()`` threw an exception when ``updateOnlyChanged`` was ``true`` and the index field value did not change.
 - **Session:** Fixed a bug in ``MemcachedHandler`` where the constructor incorrectly threw an exception when ``savePath`` was not empty.
 - **Toolbar:** Fixed a bug where the standalone toolbar page loaded from ``?debugbar_time=...`` was not interactive.

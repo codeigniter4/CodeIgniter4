@@ -45,6 +45,10 @@ final class PreparedQueryTest extends CIUnitTestCase
     {
         parent::tearDown();
 
+        if ($this->query === null) {
+            return;
+        }
+
         try {
             $this->query->close();
         } catch (BadMethodCallException) {
@@ -107,6 +111,68 @@ final class PreparedQueryTest extends CIUnitTestCase
         $expected = "INSERT INTO {$ec}{$pre}user{$ec} ({$ec}name{$ec}, {$ec}email{$ec}, {$ec}country{$ec}) VALUES ({$placeholders})";
 
         $this->assertSame($expected, $this->query->getQueryString());
+    }
+
+    public function testPrepareAndExecuteManualQueryWithNamedPlaceholdersKeepsTimeLiteral(): void
+    {
+        $this->query = $this->db->prepare(static function ($db): Query {
+            $sql = 'SELECT '
+                . $db->protectIdentifiers('name') . ', '
+                . $db->protectIdentifiers('email')
+                . ", '12:34' AS time_value "
+                . 'FROM ' . $db->protectIdentifiers($db->DBPrefix . 'user')
+                . ' WHERE '
+                . $db->protectIdentifiers('name') . ' = :name:'
+                . ' AND ' . $db->protectIdentifiers('email') . ' = :email';
+
+            return (new Query($db))->setQuery($sql);
+        });
+
+        $preparedSql = $this->query->getQueryString();
+
+        $this->assertStringContainsString("'12:34' AS time_value", $preparedSql);
+
+        if ($this->db->DBDriver === 'Postgre') {
+            $this->assertStringContainsString(' = $1', $preparedSql);
+            $this->assertStringContainsString(' = $2', $preparedSql);
+        } else {
+            $this->assertStringContainsString(' = ?', $preparedSql);
+        }
+
+        $result = $this->query->execute('Derek Jones', 'derek@world.com');
+
+        $this->assertInstanceOf(ResultInterface::class, $result);
+        $this->assertSame('Derek Jones', $result->getRow()->name);
+        $this->assertSame('derek@world.com', $result->getRow()->email);
+        $this->assertSame('12:34', $result->getRow()->time_value);
+    }
+
+    public function testPrepareAndExecuteManualQueryWithPostgreCastKeepsDoubleColonSyntax(): void
+    {
+        if ($this->db->DBDriver !== 'Postgre') {
+            $this->markTestSkipped('PostgreSQL-specific cast syntax test.');
+        }
+
+        $this->query = $this->db->prepare(static function ($db): Query {
+            $sql = 'SELECT '
+                . ':value: AS value, now()::timestamp AS created_at'
+                . ' FROM ' . $db->protectIdentifiers($db->DBPrefix . 'user')
+                . ' WHERE ' . $db->protectIdentifiers('name') . ' = :name:';
+
+            return (new Query($db))->setQuery($sql);
+        });
+
+        $preparedSql = $this->query->getQueryString();
+
+        $this->assertStringContainsString('$1 AS value', $preparedSql);
+        $this->assertStringContainsString('now()::timestamp AS created_at', $preparedSql);
+
+        $result = $this->query->execute('ci4', 'Derek Jones');
+
+        $this->assertInstanceOf(ResultInterface::class, $result);
+        $this->assertSame('ci4', $result->getRow()->value);
+        $this->assertNotEmpty($result->getRow()->created_at);
+        $this->assertNotSame('now()::timestamp', $result->getRow()->created_at);
     }
 
     public function testExecuteRunsQueryAndReturnsTrue(): void
