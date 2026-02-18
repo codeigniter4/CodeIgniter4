@@ -21,6 +21,7 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Entity\Entity;
 use CodeIgniter\Exceptions\BadMethodCallException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\Validation\ValidationInterface;
 use Config\Database;
@@ -533,10 +534,14 @@ class Model extends BaseModel
      */
     public function chunk(int $size, Closure $userFunc)
     {
+        if ($size <= 0) {
+            throw new InvalidArgumentException('chunk() requires a positive integer for the $size argument.');
+        }
+
         $total  = $this->builder()->countAllResults(false);
         $offset = 0;
 
-        while ($offset <= $total) {
+        while ($offset < $total) {
             $builder = clone $this->builder();
             $rows    = $builder->get($size, $offset);
 
