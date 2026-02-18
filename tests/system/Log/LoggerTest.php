@@ -36,6 +36,8 @@ final class LoggerTest extends CIUnitTestCase
 
         // Reset the current time.
         Time::setTestNow();
+
+        service('context')->clearAll(); // Clear any context data that may have been set during tests.
     }
 
     public function testThrowsExceptionWithBadHandlerSettings(): void
@@ -437,5 +439,68 @@ final class LoggerTest extends CIUnitTestCase
         ];
 
         $this->assertSame($expected, $logger->determineFile());
+    }
+
+    public function testLogsGlobalContext(): void
+    {
+        $config = new LoggerConfig();
+        $config->logGlobalContext = true;
+
+        $logger = new Logger($config);
+
+        Time::setTestNow('2026-02-18 12:00:00');
+
+        service('context')->set('foo', 'bar');
+
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message {"foo":"bar"}';
+
+        $logger->log('debug', 'Test message');
+
+        $logs = TestHandler::getLogs();
+
+        $this->assertCount(1, $logs);
+        $this->assertSame($expected, $logs[0]);
+    }
+
+    public function testDoesNotLogGlobalContext(): void
+    {
+        $config = new LoggerConfig();
+        $config->logGlobalContext = false;
+
+        $logger = new Logger($config);
+
+        Time::setTestNow('2026-02-18 12:00:00');
+
+        service('context')->set('foo', 'bar');
+
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message';
+
+        $logger->log('debug', 'Test message');
+
+        $logs = TestHandler::getLogs();
+
+        $this->assertCount(1, $logs);
+        $this->assertSame($expected, $logs[0]);
+    }
+
+    public function testDoesNotLogHiddenGlobalContext(): void
+    {
+        $config = new LoggerConfig();
+        $config->logGlobalContext = true;
+
+        $logger = new Logger($config);
+
+        Time::setTestNow('2026-02-18 12:00:00');
+
+        service('context')->setHidden('secret', 'hidden value');
+
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message';
+
+        $logger->log('debug', 'Test message');
+
+        $logs = TestHandler::getLogs();
+
+        $this->assertCount(1, $logs);
+        $this->assertSame($expected, $logs[0]);
     }
 }
