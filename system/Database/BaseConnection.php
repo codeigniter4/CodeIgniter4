@@ -1508,7 +1508,7 @@ abstract class BaseConnection implements ConnectionInterface
     {
         $driver = $this->getDriverFunctionPrefix();
 
-        if (! str_contains($driver, $functionName)) {
+        if (! str_starts_with($functionName, $driver)) {
             $functionName = $driver . $functionName;
         }
 
