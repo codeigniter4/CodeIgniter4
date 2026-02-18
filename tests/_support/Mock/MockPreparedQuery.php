@@ -17,6 +17,8 @@ use CodeIgniter\Database\BasePreparedQuery;
 
 /**
  * @internal
+ *
+ * @extends BasePreparedQuery<object, object, object>
  */
 final class MockPreparedQuery extends BasePreparedQuery
 {
