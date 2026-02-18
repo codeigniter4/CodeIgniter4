@@ -34,7 +34,7 @@ class Context
      * @param mixed $value The value to be stored in the context.
      * @return $this
      */
-    public function set(string|array $key, mixed $value): self
+    public function set(string|array $key, mixed $value = null): self
     {
         if (is_array($key)) {
             $this->data = array_merge($this->data, $key);
@@ -52,7 +52,7 @@ class Context
      * @param mixed $value The value to be stored in the context.
      * @return $this
      */
-    public function setHidden(string|array $key, mixed $value): self
+    public function setHidden(string|array $key, mixed $value = null): self
     {
         if (is_array($key)) {
             $this->hiddenData = array_merge($this->hiddenData, $key);
@@ -73,6 +73,34 @@ class Context
     public function get(string $key, mixed $default = null): mixed
     {
         return $this->data[$key] ?? $default;
+    }
+
+    /**
+     * Get only the specified keys from the context. If a key does not exist, it will be ignored.
+     *
+     * @param string|array<string> $keys An array of keys to retrieve from the context.
+     * @return array<string, mixed> An array of key-value pairs for the specified keys that exist in the context.
+     */
+    public function getOnly(string|array $keys): array
+    {
+        if (is_string($keys)) {
+            $keys = [$keys];
+        }
+        return array_filter($this->data, fn($k) => in_array($k, $keys), ARRAY_FILTER_USE_KEY);
+    }
+
+    /**
+     * Get all keys from the context except the specified keys.
+     *
+     * @param string|array<string> $keys An array of keys to exclude from the context.
+     * @return array<string, mixed> An array of key-value pairs for all keys in the context except the specified keys.
+     */
+    public function getExcept(string|array $keys): array
+    {
+        if (is_string($keys)) {
+            $keys = [$keys];
+        }
+        return array_filter($this->data, fn($k) => !in_array($k, $keys), ARRAY_FILTER_USE_KEY);
     }
 
     /**
@@ -98,6 +126,34 @@ class Context
     }
 
     /**
+     * Get only the specified keys from the hidden context. If a key does not exist, it will be ignored.
+     *
+     * @param string|array<string> $keys An array of keys to retrieve from the hidden context.
+     * @return array<string, mixed> An array of key-value pairs for the specified keys that exist in the hidden context.
+     */
+    public function getOnlyHidden(string|array $keys): array
+    {
+        if (is_string($keys)) {
+            $keys = [$keys];
+        }
+        return array_filter($this->hiddenData, fn($k) => in_array($k, $keys), ARRAY_FILTER_USE_KEY);
+    }
+
+    /**
+     * Get all keys from the hidden context except the specified keys.
+     *
+     * @param string|array<string> $keys An array of keys to exclude from the hidden context.
+     * @return array<string, mixed> An array of key-value pairs for all keys in the hidden context except the specified keys.
+     */
+    public function getExceptHidden(string|array $keys): array
+    {
+        if (is_string($keys)) {
+            $keys = [$keys];
+        }
+        return array_filter($this->hiddenData, fn($k) => !in_array($k, $keys), ARRAY_FILTER_USE_KEY);
+    }
+
+    /**
      * Get all hidden data from the context
      *
      * @return array<string, mixed> An array of all key-value pairs in the hidden context.
@@ -105,6 +161,17 @@ class Context
     public function getAllHidden(): array
     {
         return $this->hiddenData;
+    }
+
+    /**
+     * Check if a key does not exist in the context. Exactly the opposite of `has()`.
+     *
+     * @param string $key The key to check for non-existence in the context.
+     * @return bool True if the key does not exist in the context, false otherwise.
+     */
+    public function missing(string $key): bool
+    {
+        return !$this->has($key);
     }
 
     /**
@@ -116,6 +183,17 @@ class Context
     public function has(string $key): bool
     {
         return array_key_exists($key, $this->data);
+    }
+
+    /**
+     * Check if a key does not exist in the hidden context. Exactly the opposite of `hasHidden()`.
+     *
+     * @param string $key The key to check for non-existence in the hidden context.
+     * @return bool True if the key does not exist in the hidden context, false otherwise.
+     */
+    public function missingHidden(string $key): bool
+    {
+        return !$this->hasHidden($key);
     }
 
     /**
@@ -132,11 +210,18 @@ class Context
     /**
      * Remove a key-value pair from the context by its key.
      *
-     * @param string $key The key to identify the data to be removed from the context.
+     * @param string|array<string> $key The key to identify the data to be removed from the context.
      * @return $this
      */
-    public function remove(string $key): self
+    public function remove(string|array $key): self
     {
+        if (is_array($key)) {
+            foreach ($key as $k) {
+                unset($this->data[$k]);
+            }
+            return $this;
+        }
+
         unset($this->data[$key]);
         return $this;
     }
@@ -144,11 +229,18 @@ class Context
     /**
      * Remove a key-value pair from the hidden context by its key.
      *
-     * @param string $key The key to identify the data to be removed from the hidden context.
+     * @param string|array<string> $key The key to identify the data to be removed from the hidden context.
      * @return $this
      */
-    public function removeHidden(string $key): self
+    public function removeHidden(string|array $key): self
     {
+        if (is_array($key)) {
+            foreach ($key as $k) {
+                unset($this->hiddenData[$k]);
+            }
+            return $this;
+        }
+
         unset($this->hiddenData[$key]);
         return $this;
     }
