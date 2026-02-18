@@ -53,6 +53,24 @@ class Logger extends BaseConfig
 
     /**
      * --------------------------------------------------------------------------
+     * Whether to log the global context
+     * --------------------------------------------------------------------------
+     *
+     * You can enable/disable logging of global context data, which comes from the
+     * `CodeIgniter\Context\Context` class. This data is automatically included in
+     * logs, and can be set using the `set()` method of the Context class. This is
+     * useful for including additional information in your logs, such as user IDs,
+     * request IDs, etc.
+     *
+     * **NOTE:** This **DOES NOT** include any data that has been marked as hidden
+     * using the `setHidden()` method of the Context class.
+     *
+     * @var bool
+     */
+    public bool $logGlobalContext = false;
+
+    /**
+     * --------------------------------------------------------------------------
      * Log Handlers
      * --------------------------------------------------------------------------
      *

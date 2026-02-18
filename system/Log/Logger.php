@@ -115,6 +115,15 @@ class Logger implements LoggerInterface
     protected $cacheLogs = false;
 
     /**
+     * Whether to log the global context data.
+     *
+     * Set in app/Config/Logger.php
+     *
+     * @var bool
+     */
+    protected $logGlobalContext;
+
+    /**
      * Constructor.
      *
      * @param \Config\Logger $config
@@ -154,6 +163,8 @@ class Logger implements LoggerInterface
         if ($this->cacheLogs) {
             $this->logCache = [];
         }
+
+        $this->logGlobalContext = $config->logGlobalContext;
     }
 
     /**
@@ -251,6 +262,10 @@ class Logger implements LoggerInterface
         }
 
         $message = $this->interpolate($message, $context);
+
+        if ($this->logGlobalContext) {
+            $message .= ' ' . json_encode(service('context')->getAll());
+        }
 
         if ($this->cacheLogs) {
             $this->logCache[] = ['level' => $level, 'msg' => $message];
