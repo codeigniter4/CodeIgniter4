@@ -16,6 +16,7 @@ namespace CodeIgniter\Database;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 use PHPUnit\Framework\Attributes\Group;
+use Tests\Support\Mock\MockPreparedQuery;
 
 /**
  * @internal
@@ -53,32 +54,8 @@ final class BasePreparedQueryTest extends CIUnitTestCase
         $this->assertSame("SELECT '12:34' AS time_value, ? AS id", $query->preparedSql);
     }
 
-    private function createPreparedQuery(): BasePreparedQuery
+    private function createPreparedQuery(): MockPreparedQuery
     {
-        return new class (new MockConnection([])) extends BasePreparedQuery {
-            public string $preparedSql = '';
-
-            public function _prepare(string $sql, array $options = [])
-            {
-                $this->preparedSql = $sql;
-
-                return $this;
-            }
-
-            public function _execute(array $data): bool
-            {
-                return true;
-            }
-
-            public function _getResult()
-            {
-                return null;
-            }
-
-            protected function _close(): bool
-            {
-                return true;
-            }
-        };
+        return new MockPreparedQuery(new MockConnection([]));
     }
 }

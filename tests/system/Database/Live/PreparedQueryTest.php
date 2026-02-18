@@ -45,7 +45,7 @@ final class PreparedQueryTest extends CIUnitTestCase
     {
         parent::tearDown();
 
-        if ($this->query === null) {
+        if (! $this->query instanceof BasePreparedQuery) {
             return;
         }
 
@@ -115,11 +115,13 @@ final class PreparedQueryTest extends CIUnitTestCase
 
     public function testPrepareAndExecuteManualQueryWithNamedPlaceholdersKeepsTimeLiteral(): void
     {
-        $this->query = $this->db->prepare(static function ($db): Query {
+        // Quote alias to keep a consistent property name across drivers (OCI8 uppercases unquoted aliases)
+        $timeValue   = $this->db->protectIdentifiers('time_value');
+        $this->query = $this->db->prepare(static function ($db) use ($timeValue): Query {
             $sql = 'SELECT '
                 . $db->protectIdentifiers('name') . ', '
                 . $db->protectIdentifiers('email')
-                . ", '12:34' AS time_value "
+                . ", '12:34' AS " . $timeValue . ' '
                 . 'FROM ' . $db->protectIdentifiers($db->DBPrefix . 'user')
                 . ' WHERE '
                 . $db->protectIdentifiers('name') . ' = :name:'
@@ -130,7 +132,7 @@ final class PreparedQueryTest extends CIUnitTestCase
 
         $preparedSql = $this->query->getQueryString();
 
-        $this->assertStringContainsString("'12:34' AS time_value", $preparedSql);
+        $this->assertStringContainsString("'12:34' AS " . $timeValue, $preparedSql);
 
         if ($this->db->DBDriver === 'Postgre') {
             $this->assertStringContainsString(' = $1', $preparedSql);

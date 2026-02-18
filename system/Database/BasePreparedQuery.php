@@ -83,7 +83,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
         // We only support positional placeholders (?), so convert
         // named placeholders (:name or :name:) while leaving dialect
         // syntax like PostgreSQL casts (::type) untouched.
-        $sql = preg_replace('/(?<!:):([a-zA-Z_][a-zA-Z0-9_]*):?(?!:)/', '?', $sql);
+        $sql = preg_replace('/(?<!:):([a-zA-Z_]\w*):?(?!:)/', '?', $sql);
 
         /** @var Query $query */
         $query = new $queryClass($this->db);
