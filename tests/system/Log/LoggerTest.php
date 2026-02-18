@@ -443,7 +443,7 @@ final class LoggerTest extends CIUnitTestCase
 
     public function testLogsGlobalContext(): void
     {
-        $config = new LoggerConfig();
+        $config                   = new LoggerConfig();
         $config->logGlobalContext = true;
 
         $logger = new Logger($config);
@@ -464,7 +464,7 @@ final class LoggerTest extends CIUnitTestCase
 
     public function testDoesNotLogGlobalContext(): void
     {
-        $config = new LoggerConfig();
+        $config                   = new LoggerConfig();
         $config->logGlobalContext = false;
 
         $logger = new Logger($config);
@@ -485,7 +485,7 @@ final class LoggerTest extends CIUnitTestCase
 
     public function testDoesNotLogHiddenGlobalContext(): void
     {
-        $config = new LoggerConfig();
+        $config                   = new LoggerConfig();
         $config->logGlobalContext = true;
 
         $logger = new Logger($config);

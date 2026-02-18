@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace CodeIgniter\Context;
 
 use CodeIgniter\Test\CIUnitTestCase;
@@ -31,7 +40,7 @@ final class ContextTest extends CIUnitTestCase
     {
         $context = service('context');
         $context->set([
-            'user_id' => 123,
+            'user_id'  => 123,
             'username' => 'john_doe',
         ]);
 
@@ -55,7 +64,7 @@ final class ContextTest extends CIUnitTestCase
         $context = service('context');
         $context->setHidden([
             'api_key' => 'secret',
-            'token' => 'abc123',
+            'token'   => 'abc123',
         ]);
 
         $this->assertSame('secret', $context->getHidden('api_key'));
@@ -154,7 +163,7 @@ final class ContextTest extends CIUnitTestCase
         $context->setHidden('api_key', 'secret');
 
         $expected = [
-            'user_id' => 123,
+            'user_id'  => 123,
             'username' => 'john_doe',
         ];
         $this->assertSame($expected, $context->getOnly(['user_id', 'username', 'non_existent_key'])); // non_existent_key should be ignored
@@ -190,12 +199,12 @@ final class ContextTest extends CIUnitTestCase
     {
         $context = service('context');
         $context->set([
-            'user_id' => 123,
+            'user_id'  => 123,
             'username' => 'john_doe',
         ]);
 
         $expected = [
-            'user_id' => 123,
+            'user_id'  => 123,
             'username' => 'john_doe',
         ];
 
@@ -231,7 +240,7 @@ final class ContextTest extends CIUnitTestCase
 
         $expected = [
             'api_key' => 'secret',
-            'token' => 'abc123',
+            'token'   => 'abc123',
         ];
         $this->assertSame($expected, $context->getOnlyHidden(['api_key', 'token', 'non_existent_key'])); // non_existent_key should be ignored
     }
@@ -268,12 +277,12 @@ final class ContextTest extends CIUnitTestCase
         $context = service('context');
         $context->setHidden([
             'api_key' => 'secret',
-            'token' => 'abc123',
+            'token'   => 'abc123',
         ]);
 
         $expected = [
             'api_key' => 'secret',
-            'token' => 'abc123',
+            'token'   => 'abc123',
         ];
 
         $this->assertSame($expected, $context->getAllHidden());
@@ -359,9 +368,9 @@ final class ContextTest extends CIUnitTestCase
     {
         $context = service('context');
         $context->set([
-            'user_id' => 123,
+            'user_id'  => 123,
             'username' => 'john_doe',
-            'email' => 'john@example.com',
+            'email'    => 'john@example.com',
         ]);
 
         $context->remove(['user_id', 'username']);
@@ -386,8 +395,8 @@ final class ContextTest extends CIUnitTestCase
     {
         $context = service('context');
         $context->setHidden([
-            'api_key' => 'secret',
-            'token' => 'abc123',
+            'api_key'    => 'secret',
+            'token'      => 'abc123',
             'session_id' => 'xyz789',
         ]);
 
