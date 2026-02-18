@@ -264,7 +264,10 @@ class Logger implements LoggerInterface
         $message = $this->interpolate($message, $context);
 
         if ($this->logGlobalContext) {
-            $message .= ' ' . json_encode(service('context')->getAll());
+            $globalContext = service('context')->getAll();
+            if (is_array($globalContext) && $globalContext !== []) {
+                $message .= ' ' . json_encode($globalContext);
+            }
         }
 
         if ($this->cacheLogs) {
