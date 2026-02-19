@@ -561,6 +561,40 @@ class Model extends BaseModel
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * Works with `$this->builder` to get the Compiled select to
+     * determine the rows to operate on.
+     * This method works only with dbCalls.
+     */
+    public function chunkArray(int $size, Closure $userFunc)
+    {
+        $total  = $this->builder()->countAllResults(false);
+        $offset = 0;
+
+        while ($offset <= $total) {
+            $builder = clone $this->builder();
+            $rows    = $builder->get($size, $offset);
+
+            if (! $rows) {
+                throw DataException::forEmptyDataset('chunk');
+            }
+
+            $rows = $rows->getResult($this->tempReturnType);
+
+            $offset += $size;
+
+            if ($rows === []) {
+                continue;
+            }
+
+            if ($userFunc($rows) === false) {
+                return;
+            }
+        }
+    }
+
+    /**
      * Provides a shared instance of the Query Builder.
      *
      * @param non-empty-string|null $table
