@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Events\Events;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\I18n\Time;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Models\EntityModel;
@@ -51,6 +53,62 @@ final class MiscellaneousModelTest extends LiveModelTestCase
 
         $this->assertSame(2, $chunkCount);
         $this->assertSame([2, 2], $numRowsInChunk);
+    }
+
+    public function testChunkArrayThrowsOnZeroSize(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('chunkArray() requires a positive integer for the $size argument.');
+
+        $this->createModel(UserModel::class)->chunkArray(0, static function ($row): void {});
+    }
+
+    public function testChunkThrowsOnNegativeSize(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('chunkArray() requires a positive integer for the $size argument.');
+
+        $this->createModel(UserModel::class)->chunkArray(-1, static function ($row): void {});
+    }
+
+    public function testChunkArrayEarlyExit(): void
+    {
+        $rowCount = 0;
+
+        $this->createModel(UserModel::class)->chunkArray(2, static function ($rows) use (&$rowCount): bool {
+            $rowCount++;
+
+            return false;
+        });
+
+        $this->assertSame(1, $rowCount);
+    }
+
+    public function testChunkArrayDoesNotRunExtraQuery(): void
+    {
+        $queryCount = 0;
+        $listener   = static function () use (&$queryCount): void {
+            $queryCount++;
+        };
+
+        Events::on('DBQuery', $listener);
+        $this->createModel(UserModel::class)->chunkArray(4, static function ($rows): void {});
+        Events::removeListener('DBQuery', $listener);
+
+        $this->assertSame(2, $queryCount);
+    }
+
+    public function testChunkArrayEmptyTable(): void
+    {
+        $this->db->table('user')->truncate();
+
+        $rowCount = 0;
+
+        $this->createModel(UserModel::class)->chunkArray(2, static function ($row) use (&$rowCount): void {
+            $rowCount++;
+        });
+
+        $this->assertSame(0, $rowCount);
     }
 
     public function testCanCreateAndSaveEntityClasses(): void
