@@ -41,7 +41,7 @@ final class MiscellaneousModelTest extends LiveModelTestCase
 
     public function testChunkArray(): void
     {
-        $chunkCount = 0;
+        $chunkCount     = 0;
         $numRowsInChunk = [];
 
         $this->createModel(UserModel::class)->chunkArray(2, static function ($rows) use (&$chunkCount, &$numRowsInChunk): void {

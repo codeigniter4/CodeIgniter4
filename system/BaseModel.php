@@ -592,7 +592,7 @@ abstract class BaseModel
      * This method calls the `$userFunc` with the chunk, instead of a single record as in `chunk()`.
      * This allows you to operate on multiple records at once, which can be more efficient for certain operations.
      *
-     * @param Closure(array<array<string, string>>|array<object>): mixed $userFunc
+     * @param Closure(list<array<string, string>>|list<object>): mixed $userFunc
      *
      * @return void
      *
