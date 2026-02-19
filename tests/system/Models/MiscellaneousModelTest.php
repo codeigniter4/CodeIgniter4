@@ -39,6 +39,20 @@ final class MiscellaneousModelTest extends LiveModelTestCase
         $this->assertSame(4, $rowCount);
     }
 
+    public function testChunkArray(): void
+    {
+        $chunkCount = 0;
+        $numRowsInChunk = [];
+
+        $this->createModel(UserModel::class)->chunkArray(2, static function ($rows) use (&$chunkCount, &$numRowsInChunk): void {
+            $chunkCount++;
+            $numRowsInChunk[] = count($rows);
+        });
+
+        $this->assertSame(2, $chunkCount);
+        $this->assertSame([2, 2], $numRowsInChunk);
+    }
+
     public function testCanCreateAndSaveEntityClasses(): void
     {
         $entity = $this->createModel(EntityModel::class)->where('name', 'Developer')->first();
