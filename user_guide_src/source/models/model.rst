@@ -908,6 +908,10 @@ This is best used during cronjobs, data exports, or other large tasks.
 
 .. literalinclude:: model/049.php
 
+On the other hand, if you want entire chunk to be passed to the Closure, you can use the chunkArray() method.
+
+.. literalinclude:: model/064.php
+
 .. _model-events-callbacks:
 
 Working with Query Builder
