@@ -29,6 +29,21 @@ Interface Changes
 Method Signature Changes
 ========================
 
+Removed Deprecated Items
+========================
+
+- **Exceptions:** Removed the following properties and methods deprecated since v4.4.0:
+    - ``CodeIgniter\Debug\Exceptions::$ob_level``
+    - ``CodeIgniter\Debug\Exceptions::$viewPath``
+    - ``CodeIgniter\Debug\Exceptions::determineView()``
+    - ``CodeIgniter\Debug\Exceptions::render()``
+    - ``CodeIgniter\Debug\Exceptions::collectVars()``
+    - ``CodeIgniter\Debug\Exceptions::maskSensitiveData()``
+    - ``CodeIgniter\Debug\Exceptions::maskData()``
+    - ``CodeIgniter\Debug\Exceptions::cleanPath()``
+    - ``CodeIgniter\Debug\Exceptions::describeMemory()``
+    - ``CodeIgniter\Debug\Exceptions::highlightFile()``
+
 ************
 Enhancements
 ************

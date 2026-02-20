@@ -13,10 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Debug;
 
-use CodeIgniter\HTTP\CLIRequest;
-use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\RequestInterface;
-use CodeIgniter\HTTP\ResponseInterface;
 use Config\Exceptions as ExceptionsConfig;
 use Throwable;
 
@@ -54,21 +50,6 @@ abstract class BaseExceptionHandler
     }
 
     /**
-     * The main entry point into the handler.
-     *
-     * @param CLIRequest|IncomingRequest $request
-     *
-     * @return void
-     */
-    abstract public function handle(
-        Throwable $exception,
-        RequestInterface $request,
-        ResponseInterface $response,
-        int $statusCode,
-        int $exitCode,
-    );
-
-    /**
      * Gathers the variables that will be made available to the view.
      */
     protected function collectVars(Throwable $exception, int $statusCode): array
@@ -76,7 +57,7 @@ abstract class BaseExceptionHandler
         // Get the first exception.
         $firstException = $exception;
 
-        while ($prevException = $firstException->getPrevious()) {
+        while (($prevException = $firstException->getPrevious()) instanceof Throwable) {
             $firstException = $prevException;
         }
 
@@ -103,24 +84,22 @@ abstract class BaseExceptionHandler
     protected function maskSensitiveData(array $trace, array $keysToMask, string $path = ''): array
     {
         foreach ($trace as $i => $line) {
-            $trace[$i]['args'] = $this->maskData($line['args'], $keysToMask);
+            $trace[$i]['args'] = $this->maskData($line['args'], $keysToMask, $path);
         }
 
         return $trace;
     }
 
     /**
-     * @param array|object $args
-     *
-     * @return array|object
+     * @param array<int, string> $keysToMask
      */
-    private function maskData($args, array $keysToMask, string $path = '')
+    private function maskData(mixed $args, array $keysToMask, string $path = ''): mixed
     {
-        foreach ($keysToMask as $keyToMask) {
-            $explode = explode('/', $keyToMask);
+        foreach ($keysToMask as $key) {
+            $explode = explode('/', $key);
             $index   = end($explode);
 
-            if (str_starts_with(strrev($path . '/' . $index), strrev($keyToMask))) {
+            if (str_starts_with(strrev($path . '/' . $index), strrev($key))) {
                 if (is_array($args) && array_key_exists($index, $args)) {
                     $args[$index] = '******************';
                 } elseif (
