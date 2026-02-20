@@ -220,6 +220,14 @@ abstract class BaseConnection implements ConnectionInterface
     protected $lastQuery;
 
     /**
+     * The exception that would have been thrown on the last failed query
+     * if DBDebug were enabled. Null when the last query succeeded or when
+     * DBDebug is true (in which case the exception is thrown directly and
+     * this property is never set).
+     */
+    protected ?DatabaseException $lastException = null;
+
+    /**
      * Connection ID
      *
      * @var false|TConnection
@@ -698,8 +706,9 @@ abstract class BaseConnection implements ConnectionInterface
 
         // Run the query for real
         try {
-            $exception      = null;
-            $this->resultID = $this->simpleQuery($query->getQuery());
+            $exception           = null;
+            $this->lastException = null;
+            $this->resultID      = $this->simpleQuery($query->getQuery());
         } catch (DatabaseException $exception) {
             $this->resultID = false;
         }
@@ -737,11 +746,7 @@ abstract class BaseConnection implements ConnectionInterface
                 Events::trigger('DBQuery', $query);
 
                 if ($exception instanceof DatabaseException) {
-                    throw new DatabaseException(
-                        $exception->getMessage(),
-                        $exception->getCode(),
-                        $exception,
-                    );
+                    throw $exception;
                 }
 
                 return false;
@@ -1846,6 +1851,17 @@ abstract class BaseConnection implements ConnectionInterface
      * @return array{code: int|string|null, message: string|null}
      */
     abstract public function error(): array;
+
+    /**
+     * Returns the exception that would have been thrown on the last failed
+     * query if DBDebug were enabled. Returns null if the last query succeeded
+     * or if DBDebug is true (in which case the exception is always thrown
+     * directly and this method will always return null).
+     */
+    public function getLastException(): ?DatabaseException
+    {
+        return $this->lastException;
+    }
 
     /**
      * Insert ID

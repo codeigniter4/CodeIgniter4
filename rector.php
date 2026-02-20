@@ -129,6 +129,7 @@ return RectorConfig::configure()
         ClassPropertyAssignToConstructorPromotionRector::class => [
             __DIR__ . '/system/Database/BaseResult.php',
             __DIR__ . '/system/Database/RawSql.php',
+            __DIR__ . '/system/Database/Exceptions/DatabaseException.php',
             __DIR__ . '/system/Debug/BaseExceptionHandler.php',
             __DIR__ . '/system/Debug/Exceptions.php',
             __DIR__ . '/system/Filters/Filters.php',

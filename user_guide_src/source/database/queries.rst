@@ -203,15 +203,63 @@ placeholders in the query:
 Handling Errors
 ***************
 
-$db->error()
-============
+.. note:: It is strongly recommended to keep ``DBDebug`` set to ``true``
+    (the default). This ensures all query failures surface immediately as
+    exceptions, preventing silent data corruption. Setting it to ``false``
+    is considered legacy behaviour and may be deprecated in a future version.
 
-If you need to get the last error that has occurred, the ``error()`` method
-will return an array containing its code and message. Here's a quick
-example:
+DBDebug Enabled (Recommended)
+=============================
+
+When :ref:`DBDebug <database-config-explanation-of-values>` is ``true``
+(the default), any query failure throws a ``DatabaseException`` or one of
+its subclasses, which you can catch and handle:
+
+.. literalinclude:: queries/030.php
+
+.. _database-unique-constraint-violation:
+
+UniqueConstraintViolationException
+----------------------------------
+
+.. versionadded:: 4.8.0
+
+``UniqueConstraintViolationException`` extends ``DatabaseException`` and is
+thrown specifically when a query fails due to a duplicate key or unique
+constraint violation. Catching it separately allows you to handle this case
+without inspecting raw driver-specific error codes.
+
+DBDebug Disabled
+================
+
+When ``DBDebug`` is ``false``, query failures return ``false`` instead of
+throwing. Two methods are available to inspect what went wrong.
+
+$db->error()
+------------
+
+The ``error()`` method returns an array with ``code`` and ``message`` keys
+describing the last error. Error codes are driver-specific (an **int** for
+MySQLi, SQLite3, and OCI8; a SQLSTATE **string** for Postgre and SQLSRV):
 
 .. literalinclude:: queries/015.php
 
+.. _database-get-last-exception:
+
+$db->getLastException()
+-----------------------
+
+.. versionadded:: 4.8.0
+
+``getLastException()`` returns the typed exception that would have been
+thrown had ``DBDebug`` been ``true``. This is the recommended way to
+distinguish between failure types (e.g., a unique constraint violation vs.
+another database error) without enabling ``DBDebug``:
+
+.. literalinclude:: queries/031.php
+
+.. note:: ``getLastException()`` is reset to ``null`` at the start of every
+    query. Inspect it immediately after the failed operation.
 
 ****************
 Prepared Queries

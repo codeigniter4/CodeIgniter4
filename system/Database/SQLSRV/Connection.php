@@ -15,6 +15,7 @@ namespace CodeIgniter\Database\SQLSRV;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Exceptions\UniqueConstraintViolationException;
 use CodeIgniter\Database\TableName;
 use stdClass;
 
@@ -519,22 +520,49 @@ class Connection extends BaseConnection
             : sqlsrv_query($this->connID, $sql, [], ['Scrollable' => $this->scrollable]);
 
         if ($stmt === false) {
-            $trace = debug_backtrace();
-            $first = array_shift($trace);
+            $trace   = debug_backtrace();
+            $first   = array_shift($trace);
+            $message = $this->getAllErrorMessages();
 
             log_message('error', "{message}\nin {exFile} on line {exLine}.\n{trace}", [
-                'message' => $this->getAllErrorMessages(),
+                'message' => $message,
                 'exFile'  => clean_path($first['file']),
                 'exLine'  => $first['line'],
                 'trace'   => render_backtrace($trace),
             ]);
 
+            $error     = $this->error();
+            $exception = $this->isUniqueConstraintViolation()
+                ? new UniqueConstraintViolationException($message, $error['code'])
+                : new DatabaseException($message, $error['code']);
+
             if ($this->DBDebug) {
-                throw new DatabaseException($this->getAllErrorMessages());
+                throw $exception;
             }
+
+            $this->lastException = $exception;
         }
 
         return $stmt;
+    }
+
+    private function isUniqueConstraintViolation(): bool
+    {
+        $errors = sqlsrv_errors(SQLSRV_ERR_ERRORS);
+        if (! is_array($errors)) {
+            return false;
+        }
+
+        foreach ($errors as $error) {
+            // SQLSTATE 23000 (integrity constraint violation) with SQL Server error
+            // 2627 (UNIQUE CONSTRAINT or PRIMARY KEY violation) or 2601 (UNIQUE INDEX violation).
+            if (($error['SQLSTATE'] ?? '') === '23000'
+                && in_array($error['code'] ?? 0, [2627, 2601], true)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

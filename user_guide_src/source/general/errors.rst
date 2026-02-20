@@ -204,6 +204,18 @@ or when it is temporarily lost:
 
 This provides an exit code of 8.
 
+UniqueConstraintViolationException
+----------------------------------
+
+.. versionadded:: 4.8.0
+
+``UniqueConstraintViolationException`` extends ``DatabaseException`` and is thrown when a query
+fails due to a duplicate key or unique constraint violation. It is supported by all database drivers.
+
+.. literalinclude:: errors/019.php
+
+See :ref:`database-unique-constraint-violation` for full usage details.
+
 RedirectException
 -----------------
 

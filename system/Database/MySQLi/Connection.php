@@ -15,6 +15,7 @@ namespace CodeIgniter\Database\MySQLi;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Exceptions\UniqueConstraintViolationException;
 use CodeIgniter\Database\TableName;
 use CodeIgniter\Exceptions\LogicException;
 use mysqli;
@@ -317,9 +318,16 @@ class Connection extends BaseConnection
                 'trace'   => render_backtrace($e->getTrace()),
             ]);
 
+            // MySQL error 1062: ER_DUP_ENTRY – duplicate key value
+            $exception = $e->getCode() === 1062
+                ? new UniqueConstraintViolationException($e->getMessage(), $e->getCode(), $e)
+                : new DatabaseException($e->getMessage(), $e->getCode(), $e);
+
             if ($this->DBDebug) {
-                throw new DatabaseException($e->getMessage(), $e->getCode(), $e);
+                throw $exception;
             }
+
+            $this->lastException = $exception;
         }
 
         return false;

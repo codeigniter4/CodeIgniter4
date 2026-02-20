@@ -15,6 +15,7 @@ namespace CodeIgniter\Database\OCI8;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Exceptions\UniqueConstraintViolationException;
 use CodeIgniter\Database\Query;
 use CodeIgniter\Database\TableName;
 use ErrorException;
@@ -236,10 +237,27 @@ class Connection extends BaseConnection
 
             oci_set_prefetch($this->stmtId, 1000);
 
-            $result          = oci_execute($this->stmtId, $this->commitMode) ? $this->stmtId : false;
+            $result = oci_execute($this->stmtId, $this->commitMode) ? $this->stmtId : false;
+
+            if ($result === false) {
+                // ORA-00001: unique constraint violated
+                $error     = $this->error();
+                $exception = $error['code'] === 1
+                    ? new UniqueConstraintViolationException((string) $error['message'], $error['code'])
+                    : new DatabaseException((string) $error['message'], $error['code']);
+
+                if ($this->DBDebug) {
+                    throw $exception;
+                }
+
+                $this->lastException = $exception;
+
+                return false;
+            }
+
             $insertTableName = $this->parseInsertTableName($sql);
 
-            if ($result && $insertTableName !== '') {
+            if ($insertTableName !== '') {
                 $this->lastInsertedTableName = $insertTableName;
             }
 
@@ -254,9 +272,17 @@ class Connection extends BaseConnection
                 'trace'   => render_backtrace($trace),
             ]);
 
+            // ORA-00001: unique constraint violated
+            $error     = $this->error();
+            $exception = $error['code'] === 1
+                ? new UniqueConstraintViolationException((string) $error['message'], $error['code'], $e)
+                : new DatabaseException((string) $error['message'], $error['code'], $e);
+
             if ($this->DBDebug) {
-                throw new DatabaseException($e->getMessage(), $e->getCode(), $e);
+                throw $exception;
             }
+
+            $this->lastException = $exception;
         }
 
         return false;
@@ -615,25 +641,25 @@ class Connection extends BaseConnection
      */
     public function error(): array
     {
-        // oci_error() returns an array that already contains
-        // 'code' and 'message' keys, but it can return false
-        // if there was no error ....
-        $error     = oci_error();
+        // oci_error() is resource-specific: check each resource in priority order
+        // and return the first one that actually has an error. This ensures that
+        // e.g. oci_parse() failures (error on connID) are found even when stmtId
+        // holds a stale valid resource from the previous successful query.
         $resources = [$this->cursorId, $this->stmtId, $this->connID];
 
         foreach ($resources as $resource) {
             if (is_resource($resource)) {
                 $error = oci_error($resource);
-                break;
+
+                if (is_array($error)) {
+                    return $error;
+                }
             }
         }
 
-        return is_array($error)
-            ? $error
-            : [
-                'code'    => '',
-                'message' => '',
-            ];
+        $error = oci_error();
+
+        return is_array($error) ? $error : ['code' => '', 'message' => ''];
     }
 
     public function insertID(): int

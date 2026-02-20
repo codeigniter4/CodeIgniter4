@@ -48,7 +48,7 @@ final class ExecuteLogMessageFormatTest extends CIUnitTestCase
 
         $pattern = match ($db->DBDriver) {
             'MySQLi'  => '/Table \'test\.some_table\' doesn\'t exist/',
-            'Postgre' => '/pg_query\(\): Query failed: ERROR:  relation "some_table" does not exist/',
+            'Postgre' => '/ERROR:  relation "some_table" does not exist/',
             'SQLite3' => '/Unable to prepare statement:\s(\d+,\s)?no such table: some_table/',
             'OCI8'    => '/oci_execute\(\): ORA-00942: table or view does not exist/',
             'SQLSRV'  => '/\[Microsoft\]\[ODBC Driver \d+ for SQL Server\]\[SQL Server\]Invalid object name \'some_table\'/',
@@ -58,9 +58,7 @@ final class ExecuteLogMessageFormatTest extends CIUnitTestCase
 
         $this->assertMatchesRegularExpression($pattern, array_shift($messageFromLogs));
 
-        if ($db->DBDriver === 'Postgre') {
-            $messageFromLogs = array_slice($messageFromLogs, 2);
-        } elseif ($db->DBDriver === 'OCI8') {
+        if ($db->DBDriver === 'OCI8') {
             $messageFromLogs = array_slice($messageFromLogs, 1);
         }
 

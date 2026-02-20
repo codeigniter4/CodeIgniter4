@@ -15,6 +15,7 @@ namespace CodeIgniter\Database\SQLite3;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Exceptions\UniqueConstraintViolationException;
 use CodeIgniter\Database\TableName;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use Exception;
@@ -170,12 +171,28 @@ class Connection extends BaseConnection
                 'trace'   => render_backtrace($e->getTrace()),
             ]);
 
+            $error     = $this->error();
+            $exception = $this->isUniqueConstraintViolation($e->getMessage())
+                ? new UniqueConstraintViolationException($e->getMessage(), $error['code'], $e)
+                : new DatabaseException($e->getMessage(), $error['code'], $e);
+
             if ($this->DBDebug) {
-                throw new DatabaseException($e->getMessage(), $e->getCode(), $e);
+                throw $exception;
             }
+
+            $this->lastException = $exception;
         }
 
         return false;
+    }
+
+    private function isUniqueConstraintViolation(string $message): bool
+    {
+        // SQLite3 reports unique violations in two formats depending on version:
+        // Modern:  "UNIQUE constraint failed: table.column"
+        // Legacy:  "column X is not unique"
+        return str_contains($message, 'UNIQUE constraint failed')
+            || str_contains($message, 'is not unique');
     }
 
     /**

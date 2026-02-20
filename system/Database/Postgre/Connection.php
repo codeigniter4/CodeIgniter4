@@ -15,6 +15,7 @@ namespace CodeIgniter\Database\Postgre;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Exceptions\UniqueConstraintViolationException;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Database\TableName;
 use ErrorException;
@@ -55,6 +56,12 @@ class Connection extends BaseConnection
     protected $options;
     protected $sslmode;
     protected $service;
+
+    /**
+     * Last failed query result, used by error() to extract the SQLSTATE
+     * via pg_result_error_field() without string parsing.
+     */
+    private ?PgSqlResult $lastFailedResult = null;
 
     /**
      * Connect to the database.
@@ -202,8 +209,10 @@ class Connection extends BaseConnection
      */
     protected function execute(string $sql)
     {
+        $this->lastFailedResult = null;
+
         try {
-            return pg_query($this->connID, $sql);
+            $sent = pg_send_query($this->connID, $sql);
         } catch (ErrorException $e) {
             $trace = array_slice($e->getTrace(), 2); // remove the call to error handler
 
@@ -214,10 +223,95 @@ class Connection extends BaseConnection
                 'trace'   => render_backtrace($trace),
             ]);
 
+            $exception = new DatabaseException($e->getMessage(), 0, $e);
+
             if ($this->DBDebug) {
-                throw new DatabaseException($e->getMessage(), $e->getCode(), $e);
+                throw $exception;
+            }
+
+            $this->lastException = $exception;
+
+            return false;
+        }
+
+        if ($sent === false) {
+            return $this->handleConnectionError();
+        }
+
+        $result = pg_get_result($this->connID);
+
+        if ($result === false) {
+            return $this->handleConnectionError();
+        }
+
+        // Drain all results; return the last one (pg_query() semantics) or the first error.
+        $lastResult   = $result;
+        $failedResult = pg_result_status($result) === PGSQL_FATAL_ERROR ? $result : null;
+
+        while (($next = pg_get_result($this->connID)) !== false) {
+            $lastResult = $next;
+
+            if (! $failedResult instanceof PgSqlResult && pg_result_status($next) === PGSQL_FATAL_ERROR) {
+                $failedResult = $next;
             }
         }
+
+        if ($failedResult instanceof PgSqlResult) {
+            $sqlstate = (string) pg_result_error_field($failedResult, PGSQL_DIAG_SQLSTATE);
+            $message  = (string) pg_result_error($failedResult);
+            $trace    = debug_backtrace();
+            $first    = array_shift($trace);
+
+            $this->lastFailedResult = $failedResult;
+
+            // Log only the first line; pg_result_error() appends "LINE N: ..." context.
+            log_message('error', "{message}\nin {exFile} on line {exLine}.\n{trace}", [
+                'message' => explode("\n", $message)[0],
+                'exFile'  => clean_path($first['file']),
+                'exLine'  => $first['line'],
+                'trace'   => render_backtrace($trace),
+            ]);
+
+            $exception = $sqlstate === '23505'
+                ? new UniqueConstraintViolationException($message, $sqlstate)
+                : new DatabaseException($message, $sqlstate);
+
+            if ($this->DBDebug) {
+                throw $exception;
+            }
+
+            $this->lastException = $exception;
+
+            return false;
+        }
+
+        return $lastResult;
+    }
+
+    /**
+     * Logs a connection-level error from pg_last_error(), stores or throws a
+     * DatabaseException, and returns false.
+     */
+    private function handleConnectionError(): false
+    {
+        $message = pg_last_error($this->connID);
+        $trace   = debug_backtrace();
+        $first   = array_shift($trace);
+
+        log_message('error', "{message}\nin {exFile} on line {exLine}.\n{trace}", [
+            'message' => $message,
+            'exFile'  => clean_path($first['file']),
+            'exLine'  => $first['line'],
+            'trace'   => render_backtrace($trace),
+        ]);
+
+        $exception = new DatabaseException($message);
+
+        if ($this->DBDebug) {
+            throw $exception;
+        }
+
+        $this->lastException = $exception;
 
         return false;
     }
@@ -479,9 +573,19 @@ class Connection extends BaseConnection
      */
     public function error(): array
     {
+        if ($this->lastFailedResult instanceof PgSqlResult) {
+            return [
+                'code'    => (string) pg_result_error_field($this->lastFailedResult, PGSQL_DIAG_SQLSTATE),
+                'message' => (string) pg_result_error($this->lastFailedResult),
+            ];
+        }
+
+        // Fallback for connection-level errors: no SQLSTATE outside a result resource.
+        $message = pg_last_error($this->connID);
+
         return [
-            'code'    => '',
-            'message' => pg_last_error($this->connID),
+            'code'    => $message !== '' ? '08006' : 0,
+            'message' => $message,
         ];
     }
 
@@ -585,11 +689,49 @@ class Connection extends BaseConnection
     }
 
     /**
+     * Executes a transaction control command (BEGIN, COMMIT, ROLLBACK).
+     *
+     * Captures the result resource so SQLSTATE is available via error(),
+     * resets $lastFailedResult to prevent stale state, and wraps any
+     * ErrorException into a DatabaseException for consistent error semantics.
+     */
+    private function executeTransactionCommand(string $sql): bool
+    {
+        $this->lastFailedResult = null;
+
+        try {
+            $result = pg_query($this->connID, $sql);
+        } catch (ErrorException $e) {
+            $this->lastException = new DatabaseException($e->getMessage(), 0, $e);
+
+            return false;
+        }
+
+        if ($result === false) {
+            // Connection-level failure: no result resource, SQLSTATE unavailable.
+            // error() will fall back to pg_last_error() with code '08006'.
+            return false;
+        }
+
+        if (pg_result_status($result) === PGSQL_FATAL_ERROR) {
+            $this->lastFailedResult = $result;
+
+            $sqlstate            = (string) pg_result_error_field($result, PGSQL_DIAG_SQLSTATE);
+            $message             = (string) pg_result_error($result);
+            $this->lastException = new DatabaseException($message, $sqlstate);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Begin Transaction
      */
     protected function _transBegin(): bool
     {
-        return (bool) pg_query($this->connID, 'BEGIN');
+        return $this->executeTransactionCommand('BEGIN');
     }
 
     /**
@@ -597,7 +739,7 @@ class Connection extends BaseConnection
      */
     protected function _transCommit(): bool
     {
-        return (bool) pg_query($this->connID, 'COMMIT');
+        return $this->executeTransactionCommand('COMMIT');
     }
 
     /**
@@ -605,6 +747,6 @@ class Connection extends BaseConnection
      */
     protected function _transRollback(): bool
     {
-        return (bool) pg_query($this->connID, 'ROLLBACK');
+        return $this->executeTransactionCommand('ROLLBACK');
     }
 }
