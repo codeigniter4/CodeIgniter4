@@ -18,7 +18,6 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Method;
-use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Security\Exceptions\SecurityException;
@@ -26,6 +25,7 @@ use CodeIgniter\Session\Session;
 use Config\Cookie as CookieConfig;
 use Config\Security as SecurityConfig;
 use ErrorException;
+use JsonException;
 use SensitiveParameter;
 
 /**
@@ -233,32 +233,27 @@ class Security implements SecurityInterface
         Cookie::setDefaults($cookie);
     }
 
-    /**
-     * CSRF verification.
-     *
-     * @return $this
-     *
-     * @throws SecurityException
-     */
     public function verify(RequestInterface $request)
     {
-        // Protects POST, PUT, DELETE, PATCH
-        $method           = $request->getMethod();
-        $methodsToProtect = [Method::POST, Method::PUT, Method::DELETE, Method::PATCH];
-        if (! in_array($method, $methodsToProtect, true)) {
+        $method = $request->getMethod();
+
+        // Protect POST, PUT, DELETE, PATCH requests only
+        if (! in_array($method, [Method::POST, Method::PUT, Method::DELETE, Method::PATCH], true)) {
             return $this;
         }
+
+        assert($request instanceof IncomingRequest);
 
         $postedToken = $this->getPostedToken($request);
 
         try {
-            $token = ($postedToken !== null && $this->config->tokenRandomize)
-                ? $this->derandomize($postedToken) : $postedToken;
+            $token = $postedToken !== null && $this->config->tokenRandomize
+                ? $this->derandomize($postedToken)
+                : $postedToken;
         } catch (InvalidArgumentException) {
             $token = null;
         }
 
-        // Do the tokens match?
         if (! isset($token, $this->hash) || ! hash_equals($this->hash, $token)) {
             throw SecurityException::forDisallowedAction();
         }
@@ -277,64 +272,105 @@ class Security implements SecurityInterface
     /**
      * Remove token in POST or JSON request data
      */
-    private function removeTokenInRequest(RequestInterface $request): void
+    private function removeTokenInRequest(IncomingRequest $request): void
     {
-        assert($request instanceof Request);
-
         $superglobals = service('superglobals');
-        if ($superglobals->post($this->config->tokenName) !== null) {
-            // We kill this since we're done and we don't want to pollute the POST array.
-            $superglobals->unsetPost($this->config->tokenName);
+        $tokenName    = $this->config->tokenName;
+
+        // If the token is found in POST data, we can safely remove it.
+        if (is_string($superglobals->post($tokenName))) {
+            $superglobals->unsetPost($tokenName);
             $request->setGlobal('post', $superglobals->getPostArray());
-        } else {
-            $body = $request->getBody() ?? '';
-            $json = json_decode($body);
-            if ($json !== null && json_last_error() === JSON_ERROR_NONE) {
-                // We kill this since we're done and we don't want to pollute the JSON data.
-                unset($json->{$this->config->tokenName});
-                $request->setBody(json_encode($json));
-            } else {
-                parse_str($body, $parsed);
-                // We kill this since we're done and we don't want to pollute the BODY data.
-                unset($parsed[$this->config->tokenName]);
-                $request->setBody(http_build_query($parsed));
-            }
+
+            return;
         }
+
+        $body = $request->getBody() ?? '';
+
+        if ($body === '') {
+            return;
+        }
+
+        // If the token is found in JSON data, we can safely remove it.
+        try {
+            $json = json_decode($body, flags: JSON_THROW_ON_ERROR);
+        } catch (JsonException) {
+            $json = null;
+        }
+
+        if (is_object($json) && property_exists($json, $tokenName)) {
+            unset($json->{$tokenName});
+            $request->setBody(json_encode($json));
+
+            return;
+        }
+
+        // If the token is found in form-encoded data, we can safely remove it.
+        parse_str($body, $result);
+        unset($result[$tokenName]);
+        $request->setBody(http_build_query($result));
     }
 
-    private function getPostedToken(RequestInterface $request): ?string
+    private function getPostedToken(IncomingRequest $request): ?string
     {
-        assert($request instanceof IncomingRequest);
+        $tokenName  = $this->config->tokenName;
+        $headerName = $this->config->headerName;
 
-        // Does the token exist in POST, HEADER or optionally php:://input - json data or PUT, DELETE, PATCH - raw data.
+        // 1. Check POST data first.
+        $token = $request->getPost($tokenName);
 
-        if ($tokenValue = $request->getPost($this->config->tokenName)) {
-            return is_string($tokenValue) ? $tokenValue : null;
+        if ($this->isNonEmptyTokenString($token)) {
+            return $token;
         }
 
-        if ($request->hasHeader($this->config->headerName)) {
-            $tokenValue = $request->header($this->config->headerName)->getValue();
+        // 2. Check header data next.
+        if ($request->hasHeader($headerName)) {
+            $token = $request->header($headerName)->getValue();
 
-            return (is_string($tokenValue) && $tokenValue !== '') ? $tokenValue : null;
-        }
-
-        $body = (string) $request->getBody();
-
-        if ($body !== '') {
-            $json = json_decode($body);
-            if ($json !== null && json_last_error() === JSON_ERROR_NONE) {
-                $tokenValue = $json->{$this->config->tokenName} ?? null;
-
-                return is_string($tokenValue) ? $tokenValue : null;
+            if ($this->isNonEmptyTokenString($token)) {
+                return $token;
             }
+        }
 
-            parse_str($body, $parsed);
-            $tokenValue = $parsed[$this->config->tokenName] ?? null;
+        // 3. Finally, check the raw input data for JSON or form-encoded data.
+        $body = $request->getBody() ?? '';
 
-            return is_string($tokenValue) ? $tokenValue : null;
+        if ($body === '') {
+            return null;
+        }
+
+        // 3a. Check if a JSON payload exists and contains the token.
+        try {
+            $json = json_decode($body, flags: JSON_THROW_ON_ERROR);
+        } catch (JsonException) {
+            $json = null;
+        }
+
+        if (is_object($json) && property_exists($json, $tokenName)) {
+            $token = $json->{$tokenName};
+
+            if ($this->isNonEmptyTokenString($token)) {
+                return $token;
+            }
+        }
+
+        // 3b. Check if form-encoded data exists and contains the token.
+        parse_str($body, $result);
+        $token = $result[$tokenName] ?? null;
+
+        if ($this->isNonEmptyTokenString($token)) {
+            return $token;
         }
 
         return null;
+    }
+
+    /**
+     * @phpstan-assert-if-true non-empty-string $token
+     */
+    private function isNonEmptyTokenString(mixed $token): bool
+    {
+        return is_string($token) && $token !== '';
     }
 
     /**
