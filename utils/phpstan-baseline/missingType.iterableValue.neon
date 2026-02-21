@@ -1,4 +1,4 @@
-# total 1245 errors
+# total 1242 errors
 
 parameters:
     ignoreErrors:
@@ -4703,22 +4703,7 @@ parameters:
             path: ../../tests/system/AutoReview/ComposerJsonTest.php
 
         -
-            message: '#^Method CodeIgniter\\AutoReview\\FrameworkCodeTest\:\:getTestClasses\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/AutoReview/FrameworkCodeTest.php
-
-        -
             message: '#^Method CodeIgniter\\AutoReview\\FrameworkCodeTest\:\:provideEachTestClassHasCorrectGroupAttributeName\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/AutoReview/FrameworkCodeTest.php
-
-        -
-            message: '#^Property CodeIgniter\\AutoReview\\FrameworkCodeTest\:\:\$recognizedGroupAttributeNames type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/AutoReview/FrameworkCodeTest.php
-
-        -
-            message: '#^Property CodeIgniter\\AutoReview\\FrameworkCodeTest\:\:\$testClasses type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/AutoReview/FrameworkCodeTest.php
 

@@ -30,10 +30,22 @@ use SplFileInfo;
 final class FrameworkCodeTest extends TestCase
 {
     /**
-     * Cache of discovered test class names.
+     * Cache of source filenames.
+     *
+     * @var list<non-empty-string>
+     */
+    private static array $sourceFiles = [];
+
+    /**
+     * Cache of test class names.
+     *
+     * @var list<class-string>
      */
     private static array $testClasses = [];
 
+    /**
+     * @var list<string>
+     */
     private static array $recognizedGroupAttributeNames = [
         'AutoReview',
         'CacheLive',
@@ -41,6 +53,42 @@ final class FrameworkCodeTest extends TestCase
         'Others',
         'SeparateProcess',
     ];
+
+    public function testDeprecationsAreProperlyVersioned(): void
+    {
+        $deprecationsWithoutVersion = [];
+
+        foreach ($this->getSourceFiles() as $file) {
+            $lines = file($file, FILE_IGNORE_NEW_LINES);
+
+            if ($lines === false) {
+                continue;
+            }
+
+            foreach ($lines as $number => $line) {
+                if (! str_contains($line, '@deprecated')) {
+                    continue;
+                }
+
+                if (preg_match('/((?:\/\*)?\*|\/\/)\s+@deprecated\s+(?P<text>.+?)(?:\s*\*\s*)?$/', $line, $matches) === 1) {
+                    $deprecationText = trim($matches['text']);
+
+                    if (preg_match('/^v?\d+\.\d+/', $deprecationText) !== 1) {
+                        $deprecationsWithoutVersion[] = sprintf('%s:%d', $file, ++$number);
+                    }
+                }
+            }
+        }
+
+        $this->assertCount(
+            0,
+            $deprecationsWithoutVersion,
+            sprintf(
+                "The following lines contain @deprecated annotations without a version number:\n%s",
+                implode("\n", array_map(static fn (string $location): string => "  * {$location}", $deprecationsWithoutVersion)),
+            ),
+        );
+    }
 
     /**
      * @param class-string $class
@@ -87,6 +135,9 @@ final class FrameworkCodeTest extends TestCase
         }
     }
 
+    /**
+     * @return list<class-string>
+     */
     private static function getTestClasses(): array
     {
         if (self::$testClasses !== []) {
@@ -94,7 +145,6 @@ final class FrameworkCodeTest extends TestCase
         }
 
         helper('filesystem');
-
         $directory = set_realpath(dirname(__DIR__), true);
 
         $iterator = new RecursiveIteratorIterator(
@@ -144,5 +194,42 @@ final class FrameworkCodeTest extends TestCase
         self::$testClasses = $testClasses;
 
         return $testClasses;
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function getSourceFiles(): array
+    {
+        if (self::$sourceFiles !== []) {
+            return self::$sourceFiles;
+        }
+
+        helper('filesystem');
+        $phpFiles = [];
+        $basePath = dirname(__DIR__, 3);
+
+        foreach (['system', 'app', 'tests'] as $dir) {
+            $directory = set_realpath($basePath . DIRECTORY_SEPARATOR . $dir, true);
+
+            $iterator = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator(
+                    $directory,
+                    FilesystemIterator::SKIP_DOTS,
+                ),
+                RecursiveIteratorIterator::CHILD_FIRST,
+            );
+
+            /** @var SplFileInfo $file */
+            foreach ($iterator as $file) {
+                if ($file->isFile() && str_ends_with($file->getPathname(), '.php')) {
+                    $phpFiles[] = $file->getRealPath();
+                }
+            }
+        }
+
+        self::$sourceFiles = $phpFiles;
+
+        return $phpFiles;
     }
 }
