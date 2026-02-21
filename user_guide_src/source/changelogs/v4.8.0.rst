@@ -40,6 +40,11 @@ Removed Deprecated Items
 - **Autoloader:** Removed the following deprecated methods:
     - ``CodeIgniter\Autoloader\Autoloader::sanitizeFileName()``
     - ``CodeIgniter\Autoloader\Autoloader::discoverComposerNamespaces()``
+- **Cache:** Removed the following methods deprecated since v4.6.0:
+    - ``CodeIgniter\Cache\Handlers\FileHandler::writeFile()``
+    - ``CodeIgniter\Cache\Handlers\FileHandler::deleteFile()``
+    - ``CodeIgniter\Cache\Handlers\FileHandler::getDirFileInfo()``
+    - ``CodeIgniter\Cache\Handlers\FileHandler::getFileInfo()``
 - **Exceptions:** Removed the following properties and methods deprecated since v4.4.0:
     - ``CodeIgniter\Debug\Exceptions::$ob_level``
     - ``CodeIgniter\Debug\Exceptions::$viewPath``
