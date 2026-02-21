@@ -15,7 +15,6 @@ namespace CodeIgniter\Security;
 
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
-use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
@@ -32,66 +31,59 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class SecurityCSRFCookieRandomizeTokenTest extends CIUnitTestCase
 {
-    /**
-     * @var string CSRF protection hash
-     */
-    private string $hash = '8b9218a55906f9dcc1dc263dce7f005a';
-
-    /**
-     * @var string CSRF randomized token
-     */
-    private string $randomizedToken = '8bc70b67c91494e815c7d2219c1ae0ab005513c290126d34d41bf41c5265e0f1';
-
-    private SecurityConfig $config;
+    private const CSRF_PROTECTION_HASH  = '8b9218a55906f9dcc1dc263dce7f005a';
+    private const CSRF_RANDOMIZED_TOKEN = '8bc70b67c91494e815c7d2219c1ae0ab005513c290126d34d41bf41c5265e0f1';
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        Services::injectMock('superglobals', new Superglobals(null, null, null, []));
+        Services::injectMock('superglobals', new Superglobals(post: [], cookie: []));
 
-        $this->config                 = new SecurityConfig();
-        $this->config->csrfProtection = Security::CSRF_PROTECTION_COOKIE;
-        $this->config->tokenRandomize = true;
-        Factories::injectMock('config', 'Security', $this->config);
+        $config                 = new SecurityConfig();
+        $config->csrfProtection = Security::CSRF_PROTECTION_COOKIE;
+        $config->tokenRandomize = true;
+        Factories::injectMock('config', 'Security', $config);
 
-        // Set Cookie value
-        $security = new MockSecurity($this->config);
-        service('superglobals')->setCookie($security->getCookieName(), $this->hash);
+        $security = new MockSecurity($config);
+        service('superglobals')->setCookie($security->getCookieName(), self::CSRF_PROTECTION_HASH);
 
         $this->resetServices();
     }
 
-    public function testTokenIsReadFromCookie(): void
+    protected function tearDown(): void
     {
-        $security = new MockSecurity($this->config);
+        parent::tearDown();
 
-        $this->assertSame(
-            $this->randomizedToken,
-            $security->getHash(),
-        );
+        $this->resetServices();
+        Factories::reset('config');
     }
 
-    public function testCSRFVerifySetNewCookie(): void
+    public function testTokenIsReadFromCookie(): void
     {
-        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
-        service('superglobals')->setPost('foo', 'bar');
-        service('superglobals')->setPost('csrf_test_name', $this->randomizedToken);
+        $security = new MockSecurity(config('Security'));
+
+        $this->assertSame(self::CSRF_RANDOMIZED_TOKEN, $security->getHash());
+    }
+
+    public function testCsrfVerifySetNewCookie(): void
+    {
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('foo', 'bar')
+            ->setPost('csrf_test_name', self::CSRF_RANDOMIZED_TOKEN);
 
         $config  = new MockAppConfig();
         $request = new IncomingRequest($config, new SiteURI($config), null, new UserAgent());
 
-        $security = new Security($this->config);
+        $security = new Security(config('Security'));
 
         $this->assertInstanceOf(Security::class, $security->verify($request));
         $this->assertLogged('info', 'CSRF token verified.');
-        $this->assertCount(1, service('superglobals')->getPostArray());
+        $this->assertSame(['foo' => 'bar'], service('superglobals')->getPostArray());
 
-        /** @var Cookie $cookie */
-        $cookie  = $this->getPrivateProperty($security, 'cookie');
-        $newHash = $cookie->getValue();
-
-        $this->assertNotSame($this->hash, $newHash);
-        $this->assertSame(32, strlen($newHash));
+        $cookieHash = service('response')->getCookie($security->getCookieName())->getValue();
+        $this->assertNotSame(self::CSRF_PROTECTION_HASH, $cookieHash);
+        $this->assertSame(32, strlen($cookieHash));
     }
 }

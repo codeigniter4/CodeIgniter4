@@ -149,7 +149,6 @@ return RectorConfig::configure()
             __DIR__ . '/system/HTTP/CURLRequest.php',
             __DIR__ . '/system/HTTP/DownloadResponse.php',
             __DIR__ . '/system/HTTP/IncomingRequest.php',
-            __DIR__ . '/system/Security/Security.php',
             __DIR__ . '/system/Session/Session.php',
         ],
 
