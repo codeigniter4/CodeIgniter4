@@ -16,7 +16,6 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\Cookie\CookieStore;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
-use Config\App;
 use Config\Cookie as CookieConfig;
 
 /**
@@ -141,16 +140,7 @@ class Response extends Message implements ResponseInterface
      */
     protected $pretend = false;
 
-    /**
-     * Constructor
-     *
-     * @param App $config
-     *
-     * @todo Recommend removing reliance on config injection
-     *
-     * @deprecated 4.5.0 The param $config is no longer used.
-     */
-    public function __construct($config) // @phpstan-ignore-line
+    public function __construct()
     {
         // Default to a non-caching page.
         // Also ensures that a Cache-control header exists.

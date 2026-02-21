@@ -49,11 +49,10 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
     {
         $this->resetServices();
 
-        $config = config(App::class);
+        // Needed by CSP
+        config(App::class)->CSPEnabled = $CSPEnabled;
 
-        $config->CSPEnabled = $CSPEnabled;
-
-        $this->response = new Response($config);
+        $this->response = new Response();
         $this->response->pretend(false);
 
         $this->csp = $this->response->getCSP();
@@ -181,7 +180,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
         $csp = new ContentSecurityPolicy($config);
 
-        $response = new Response(new App());
+        $response = new Response();
         $response->pretend(true);
 
         $response->setBody('Blah blah blah blah');
@@ -738,7 +737,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $config->scriptNonceTag = '{custom-script-nonce-tag}';
         $csp                    = new ContentSecurityPolicy($config);
 
-        $response = new Response(new App());
+        $response = new Response();
         $response->pretend(true);
         $body = 'Blah blah {custom-script-nonce-tag} blah blah';
         $response->setBody($body);
@@ -754,7 +753,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $config->autoNonce = false;
         $csp               = new ContentSecurityPolicy($config);
 
-        $response = new Response(new App());
+        $response = new Response();
         $response->pretend(true);
         $body = 'Blah blah {csp-script-nonce} blah blah';
         $response->setBody($body);
@@ -773,7 +772,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $config->autoNonce = false;
         $csp               = new ContentSecurityPolicy($config);
 
-        $response = new Response(new App());
+        $response = new Response();
         $response->pretend(true);
         $body = 'Blah blah {csp-style-nonce} blah blah';
         $response->setBody($body);
@@ -817,7 +816,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $config->styleNonceTag = '{custom-style-nonce-tag}';
         $csp                   = new ContentSecurityPolicy($config);
 
-        $response = new Response(new App());
+        $response = new Response();
         $response->pretend(true);
         $body = 'Blah blah {custom-style-nonce-tag} blah blah';
         $response->setBody($body);

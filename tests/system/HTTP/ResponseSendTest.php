@@ -51,7 +51,7 @@ final class ResponseSendTest extends CIUnitTestCase
     #[WithoutErrorHandler]
     public function testHeadersMissingDate(): void
     {
-        $response = new Response(new App());
+        $response = new Response();
         $response->pretend(false);
 
         $body = 'Hello';
@@ -87,9 +87,9 @@ final class ResponseSendTest extends CIUnitTestCase
         $this->resetFactories();
         $this->resetServices();
 
-        $config             = config('App');
-        $config->CSPEnabled = true;
-        $response           = new Response($config);
+        config(App::class)->CSPEnabled = true;
+
+        $response = new Response();
         $response->pretend(false);
 
         $body = 'Hello';
@@ -122,7 +122,7 @@ final class ResponseSendTest extends CIUnitTestCase
     {
         $loginTime = time();
 
-        $response = new Response(new App());
+        $response = new Response();
         $response->pretend(false);
 
         $routes = service('routes');
@@ -161,7 +161,7 @@ final class ResponseSendTest extends CIUnitTestCase
         $request->method('isSecure')->willReturn(false);
         Services::injectMock('request', $request);
 
-        $response = new Response(new App());
+        $response = new Response();
         $response->pretend(false);
         $body = 'Hello';
         $response->setBody($body);
@@ -189,7 +189,7 @@ final class ResponseSendTest extends CIUnitTestCase
     #[WithoutErrorHandler]
     public function testHeaderOverride(): void
     {
-        $response = new Response(new App());
+        $response = new Response();
         $response->pretend(false);
 
         $body = 'Hello';

@@ -95,9 +95,7 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
                 $this->respond($data, $statusCode)->send();
 
                 if (ENVIRONMENT !== 'testing') {
-                    // @codeCoverageIgnoreStart
-                    exit($exitCode);
-                    // @codeCoverageIgnoreEnd
+                    exit($exitCode); // @codeCoverageIgnore
                 }
 
                 return;
@@ -126,9 +124,7 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
         $this->render($exception, $statusCode, $viewFile);
 
         if (ENVIRONMENT !== 'testing') {
-            // @codeCoverageIgnoreStart
-            exit($exitCode);
-            // @codeCoverageIgnoreEnd
+            exit($exitCode); // @codeCoverageIgnore
         }
     }
 

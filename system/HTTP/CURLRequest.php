@@ -115,7 +115,11 @@ class CURLRequest extends OutgoingRequest
      *  - timeout
      *  - any other request options to use as defaults.
      *
+     * @todo v4.8.0 Remove $config parameter since unused
+     *
      * @param array<string, mixed> $options
+     *
+     * @phpstan-ignore-next-line constructor.unusedParameter
      */
     public function __construct(App $config, URI $uri, ?ResponseInterface $response = null, array $options = [])
     {
@@ -125,7 +129,7 @@ class CURLRequest extends OutgoingRequest
 
         parent::__construct(Method::GET, $uri);
 
-        $this->responseOrig = $response ?? new Response($config);
+        $this->responseOrig = $response ?? new Response();
         // Remove the default Content-Type header.
         $this->responseOrig->removeHeader('Content-Type');
 

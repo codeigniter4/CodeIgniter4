@@ -582,6 +582,7 @@ abstract class BaseModel
      * @return void
      *
      * @throws DataException
+     * @throws InvalidArgumentException if $size is not a positive integer
      */
     abstract public function chunk(int $size, Closure $userFunc);
 

@@ -48,21 +48,21 @@ final class PageCacheTest extends CIUnitTestCase
 
         $request = $this->createRequest();
 
-        $response200 = new Response(new App());
+        $response200 = new Response();
         $response200->setStatusCode(200);
         $response200->setBody('Success');
 
         $result = $filter->after($request, $response200);
         $this->assertInstanceOf(Response::class, $result);
 
-        $response404 = new Response(new App());
+        $response404 = new Response();
         $response404->setStatusCode(404);
         $response404->setBody('Not Found');
 
         $result = $filter->after($request, $response404);
         $this->assertInstanceOf(Response::class, $result);
 
-        $response500 = new Response(new App());
+        $response500 = new Response();
         $response500->setStatusCode(500);
         $response500->setBody('Server Error');
 
@@ -79,7 +79,7 @@ final class PageCacheTest extends CIUnitTestCase
         $request = $this->createRequest();
 
         // Test 200 response - should be cached
-        $response200 = new Response(new App());
+        $response200 = new Response();
         $response200->setStatusCode(200);
         $response200->setBody('Success');
 
@@ -87,7 +87,7 @@ final class PageCacheTest extends CIUnitTestCase
         $this->assertInstanceOf(Response::class, $result);
 
         // Test 404 response - should NOT be cached
-        $response404 = new Response(new App());
+        $response404 = new Response();
         $response404->setStatusCode(404);
         $response404->setBody('Not Found');
 
@@ -95,7 +95,7 @@ final class PageCacheTest extends CIUnitTestCase
         $this->assertNotInstanceOf(ResponseInterface::class, $result);
 
         // Test 500 response - should NOT be cached
-        $response500 = new Response(new App());
+        $response500 = new Response();
         $response500->setStatusCode(500);
         $response500->setBody('Server Error');
 
@@ -111,21 +111,21 @@ final class PageCacheTest extends CIUnitTestCase
 
         $request = $this->createRequest();
 
-        $response200 = new Response(new App());
+        $response200 = new Response();
         $response200->setStatusCode(200);
         $response200->setBody('Success');
 
         $result = $filter->after($request, $response200);
         $this->assertInstanceOf(Response::class, $result);
 
-        $response404 = new Response(new App());
+        $response404 = new Response();
         $response404->setStatusCode(404);
         $response404->setBody('Not Found');
 
         $result = $filter->after($request, $response404);
         $this->assertInstanceOf(Response::class, $result);
 
-        $response410 = new Response(new App());
+        $response410 = new Response();
         $response410->setStatusCode(410);
         $response410->setBody('Gone');
 
@@ -133,7 +133,7 @@ final class PageCacheTest extends CIUnitTestCase
         $this->assertInstanceOf(Response::class, $result);
 
         // Test 500 response - should NOT be cached (not in whitelist)
-        $response500 = new Response(new App());
+        $response500 = new Response();
         $response500->setStatusCode(500);
         $response500->setBody('Server Error');
 
@@ -163,7 +163,7 @@ final class PageCacheTest extends CIUnitTestCase
 
         $request = $this->createRequest();
 
-        $response = new RedirectResponse(new App());
+        $response = new RedirectResponse();
         $response->redirect('/new-url');
 
         $result = $filter->after($request, $response);

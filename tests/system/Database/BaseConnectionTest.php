@@ -435,4 +435,28 @@ final class BaseConnectionTest extends CIUnitTestCase
         $result = $this->getPrivateMethodInvoker($db, 'getSessionTimezone')();
         $this->assertNull($result);
     }
+
+    public function testCallFunctionDoesNotDoublePrefixAlreadyPrefixedName(): void
+    {
+        $db = new class ($this->options) extends MockConnection {
+            protected function getDriverFunctionPrefix(): string
+            {
+                return 'str_';
+            }
+        };
+
+        $this->assertTrue($db->callFunction('str_contains', 'CodeIgniter', 'Ignite'));
+    }
+
+    public function testCallFunctionPrefixesUnprefixedName(): void
+    {
+        $db = new class ($this->options) extends MockConnection {
+            protected function getDriverFunctionPrefix(): string
+            {
+                return 'str_';
+            }
+        };
+
+        $this->assertTrue($db->callFunction('contains', 'CodeIgniter', 'Ignite'));
+    }
 }

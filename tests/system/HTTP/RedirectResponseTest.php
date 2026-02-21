@@ -70,7 +70,7 @@ final class RedirectResponseTest extends CIUnitTestCase
 
     public function testRedirectToFullURI(): void
     {
-        $response = new RedirectResponse(new App());
+        $response = new RedirectResponse();
 
         $response = $response->to('http://example.com/foo');
 
@@ -80,7 +80,7 @@ final class RedirectResponseTest extends CIUnitTestCase
 
     public function testRedirectRoute(): void
     {
-        $response = new RedirectResponse(new App());
+        $response = new RedirectResponse();
 
         $this->routes->add('exampleRoute', 'Home::index');
 
@@ -102,7 +102,7 @@ final class RedirectResponseTest extends CIUnitTestCase
         $this->expectException(HTTPException::class);
         $this->expectExceptionMessage('The route for "differentRoute" cannot be found.');
 
-        $response = new RedirectResponse(new App());
+        $response = new RedirectResponse();
 
         $this->routes->add('exampleRoute', 'Home::index');
 
@@ -114,7 +114,7 @@ final class RedirectResponseTest extends CIUnitTestCase
         $this->expectException(HTTPException::class);
         $this->expectExceptionMessage('The route for "Bad::badMethod" cannot be found.');
 
-        $response = new RedirectResponse(new App());
+        $response = new RedirectResponse();
 
         $this->routes->add('exampleRoute', 'Home::index');
 
@@ -123,8 +123,7 @@ final class RedirectResponseTest extends CIUnitTestCase
 
     public function testRedirectRelativeConvertsToFullURI(): void
     {
-        $response = new RedirectResponse($this->config);
-
+        $response = new RedirectResponse();
         $response = $response->to('/foo');
 
         $this->assertTrue($response->hasHeader('Location'));
@@ -139,7 +138,7 @@ final class RedirectResponseTest extends CIUnitTestCase
         service('superglobals')->setGet('foo', 'bar');
         service('superglobals')->setPost('bar', 'baz');
 
-        $response = new RedirectResponse(new App());
+        $response = new RedirectResponse();
 
         $returned = $response->withInput();
 
@@ -155,7 +154,7 @@ final class RedirectResponseTest extends CIUnitTestCase
     {
         $_SESSION = [];
 
-        $response = new RedirectResponse(new App());
+        $response = new RedirectResponse();
 
         $validation = $this->createMock(Validation::class);
         $validation->method('getErrors')->willReturn(['foo' => 'bar']);
@@ -173,7 +172,7 @@ final class RedirectResponseTest extends CIUnitTestCase
     {
         $_SESSION = [];
 
-        $response = new RedirectResponse(new App());
+        $response = new RedirectResponse();
 
         $returned = $response->with('foo', 'bar');
 
@@ -190,7 +189,7 @@ final class RedirectResponseTest extends CIUnitTestCase
         $this->request = new MockIncomingRequest($this->config, new SiteURI($this->config), null, new UserAgent());
         Services::injectMock('request', $this->request);
 
-        $response = new RedirectResponse(new App());
+        $response = new RedirectResponse();
 
         $returned = $response->back();
         $this->assertSame('http://somewhere.com', $returned->header('location')->getValue());
@@ -202,7 +201,7 @@ final class RedirectResponseTest extends CIUnitTestCase
     {
         $_SESSION = [];
 
-        $response = new RedirectResponse(new App());
+        $response = new RedirectResponse();
 
         $returned = $response->back();
 
@@ -223,7 +222,7 @@ final class RedirectResponseTest extends CIUnitTestCase
         $request = new MockIncomingRequest($config, new SiteURI($config), null, new UserAgent());
         Services::injectMock('request', $request);
 
-        $response = new RedirectResponse(new App());
+        $response = new RedirectResponse();
 
         $this->routes->add('exampleRoute', 'Home::index');
 
@@ -242,7 +241,7 @@ final class RedirectResponseTest extends CIUnitTestCase
         $baseResponse = service('response');
         $baseResponse->setCookie('foo', 'bar');
 
-        $response = new RedirectResponse(new App());
+        $response = new RedirectResponse();
         $this->assertFalse($response->hasCookie('foo', 'bar'));
 
         $response = $response->withCookies();
@@ -255,7 +254,7 @@ final class RedirectResponseTest extends CIUnitTestCase
     {
         $_SESSION = [];
 
-        $response = new RedirectResponse(new App());
+        $response = new RedirectResponse();
         $response = $response->withCookies();
 
         $this->assertEmpty($response->getCookies());
@@ -268,7 +267,7 @@ final class RedirectResponseTest extends CIUnitTestCase
         $baseResponse = service('response');
         $baseResponse->setHeader('foo', 'bar');
 
-        $response = new RedirectResponse(new App());
+        $response = new RedirectResponse();
         $this->assertFalse($response->hasHeader('foo'));
 
         $response = $response->withHeaders();
@@ -289,7 +288,7 @@ final class RedirectResponseTest extends CIUnitTestCase
             $baseResponse->removeHeader($key);
         }
 
-        $response = new RedirectResponse(new App());
+        $response = new RedirectResponse();
         $response->withHeaders();
 
         $this->assertEmpty($baseResponse->headers());

@@ -16,7 +16,6 @@ namespace CodeIgniter\Log\Handlers;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use CodeIgniter\Test\Mock\MockResponse;
-use Config\App;
 use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
@@ -77,7 +76,7 @@ final class ChromeLoggerHandlerTest extends CIUnitTestCase
 
     public function testChromeLoggerHeaderSent(): void
     {
-        Services::injectMock('response', new MockResponse(new App()));
+        Services::injectMock('response', new MockResponse());
         $response = service('response');
 
         $config = new LoggerConfig();

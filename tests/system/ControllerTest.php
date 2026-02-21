@@ -59,7 +59,7 @@ final class ControllerTest extends CIUnitTestCase
 
         $config         = new App();
         $this->request  = new IncomingRequest($config, new SiteURI($config), null, new UserAgent());
-        $this->response = new Response($config);
+        $this->response = new Response();
         $this->logger   = service('logger');
     }
 

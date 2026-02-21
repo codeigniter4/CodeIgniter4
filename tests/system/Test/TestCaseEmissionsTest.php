@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\Test;
 
 use CodeIgniter\HTTP\Response;
-use Config\App;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
@@ -49,7 +48,7 @@ final class TestCaseEmissionsTest extends CIUnitTestCase
     #[WithoutErrorHandler]
     public function testHeadersEmitted(): void
     {
-        $response = new Response(new App());
+        $response = new Response();
         $response->pretend(false);
 
         $body = 'Hello';
@@ -76,7 +75,7 @@ final class TestCaseEmissionsTest extends CIUnitTestCase
     #[WithoutErrorHandler]
     public function testHeadersNotEmitted(): void
     {
-        $response = new Response(new App());
+        $response = new Response();
         $response->pretend(false);
 
         $body = 'Hello';

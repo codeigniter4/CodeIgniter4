@@ -52,8 +52,7 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testCanSetStatusCode(): void
     {
-        $response = new Response(new App());
-
+        $response = new Response();
         $response->setStatusCode(200);
 
         $this->assertSame(200, $response->getStatusCode());
@@ -61,25 +60,15 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testSetStatusCodeThrowsExceptionForBadCodes(): void
     {
-        $response = new Response(new App());
+        $response = new Response();
 
         $this->expectException(HTTPException::class);
         $response->setStatusCode(54322);
     }
 
-    public function testConstructWithCSPEnabled(): void
-    {
-        $config             = new App();
-        $config->CSPEnabled = true;
-        $response           = new Response($config);
-
-        $this->assertInstanceOf(Response::class, $response);
-    }
-
     public function testSetStatusCodeSetsReason(): void
     {
-        $response = new Response(new App());
-
+        $response = new Response();
         $response->setStatusCode(200);
 
         $this->assertSame('OK', $response->getReasonPhrase());
@@ -87,8 +76,7 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testCanSetCustomReasonCode(): void
     {
-        $response = new Response(new App());
-
+        $response = new Response();
         $response->setStatusCode(200, 'Not the mama');
 
         $this->assertSame('Not the mama', $response->getReasonPhrase());
@@ -96,7 +84,7 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testRequiresMessageWithUnknownStatusCode(): void
     {
-        $response = new Response(new App());
+        $response = new Response();
 
         $this->expectException(HTTPException::class);
         $this->expectExceptionMessage(lang('HTTP.unknownStatusCode', [115]));
@@ -105,7 +93,7 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testRequiresMessageWithSmallStatusCode(): void
     {
-        $response = new Response(new App());
+        $response = new Response();
 
         $this->expectException(HTTPException::class);
         $this->expectExceptionMessage(lang('HTTP.invalidStatusCode', [95]));
@@ -114,7 +102,7 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testRequiresMessageWithLargeStatusCode(): void
     {
-        $response = new Response(new App());
+        $response = new Response();
 
         $this->expectException(HTTPException::class);
         $this->expectExceptionMessage(lang('HTTP.invalidStatusCode', [695]));
@@ -123,8 +111,7 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testSetStatusCodeInterpretsReason(): void
     {
-        $response = new Response(new App());
-
+        $response = new Response();
         $response->setStatusCode(300);
 
         $this->assertSame('Multiple Choices', $response->getReasonPhrase());
@@ -132,8 +119,7 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testSetStatusCodeSavesCustomReason(): void
     {
-        $response = new Response(new App());
-
+        $response = new Response();
         $response->setStatusCode(300, 'My Little Pony');
 
         $this->assertSame('My Little Pony', $response->getReasonPhrase());
@@ -141,14 +127,14 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testGetReasonDefaultsToOK(): void
     {
-        $response = new Response(new App());
+        $response = new Response();
 
         $this->assertSame('OK', $response->getReasonPhrase());
     }
 
     public function testSetDateRemembersDateInUTC(): void
     {
-        $response = new Response(new App());
+        $response = new Response();
 
         $datetime = DateTime::createFromFormat('!Y-m-d', '2000-03-10');
         $response->setDate($datetime);
@@ -170,7 +156,7 @@ final class ResponseTest extends CIUnitTestCase
 
         $this->resetServices();
 
-        $response = new Response($config);
+        $response = new Response();
         $pager    = service('pager');
 
         $pager->store('default', 3, 10, 200);
@@ -200,8 +186,7 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testSetContentType(): void
     {
-        $response = new Response(new App());
-
+        $response = new Response();
         $response->setContentType('text/json');
 
         $this->assertSame('text/json; charset=UTF-8', $response->getHeaderLine('Content-Type'));
@@ -209,8 +194,7 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testNoCache(): void
     {
-        $response = new Response(new App());
-
+        $response = new Response();
         $response->noCache();
 
         $this->assertSame('no-store, max-age=0, no-cache', $response->getHeaderLine('Cache-control'));
@@ -218,7 +202,7 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testSetCache(): void
     {
-        $response = new Response(new App());
+        $response = new Response();
 
         $date = date('r');
 
@@ -238,18 +222,15 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testSetCacheNoOptions(): void
     {
-        $response = new Response(new App());
-
-        $options = [];
-
-        $response->setCache($options);
+        $response = new Response();
+        $response->setCache([]);
 
         $this->assertSame('no-store, max-age=0, no-cache', $response->getHeaderLine('Cache-Control'));
     }
 
     public function testSetLastModifiedWithDateTimeObject(): void
     {
-        $response = new Response(new App());
+        $response = new Response();
 
         $datetime = DateTime::createFromFormat('Y-m-d', '2000-03-10');
         $response->setLastModified($datetime);
@@ -264,8 +245,7 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testRedirectSetsDefaultCodeAndLocationHeader(): void
     {
-        $response = new Response(new App());
-
+        $response = new Response();
         $response->redirect('example.com');
 
         $this->assertTrue($response->hasHeader('location'));
@@ -286,7 +266,7 @@ final class ResponseTest extends CIUnitTestCase
             ->setServer('SERVER_PROTOCOL', $protocol)
             ->setServer('REQUEST_METHOD', $method);
 
-        $response = new Response(new App());
+        $response = new Response();
         $response->redirect('example.com', 'auto', $code);
 
         $this->assertTrue($response->hasHeader('location'));
@@ -330,7 +310,7 @@ final class ResponseTest extends CIUnitTestCase
             ->setServer('SERVER_PROTOCOL', 'HTTP/1.1')
             ->setServer('REQUEST_METHOD', 'POST');
 
-        $response = new Response(new App());
+        $response = new Response();
         $response->redirect('example.com', 'auto', $code);
 
         $this->assertSame('0;url=example.com', $response->getHeaderLine('Refresh'));
@@ -353,14 +333,14 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testSetCookieFails(): void
     {
-        $response = new Response(new App());
+        $response = new Response();
 
         $this->assertFalse($response->hasCookie('foo'));
     }
 
     public function testSetCookieMatch(): void
     {
-        $response = new Response(new App());
+        $response = new Response();
         $response->setCookie('foo', 'bar');
 
         $this->assertTrue($response->hasCookie('foo'));
@@ -369,7 +349,7 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testSetCookieFailDifferentPrefix(): void
     {
-        $response = new Response(new App());
+        $response = new Response();
         $response->setCookie('foo', 'bar', '', '', '', 'ack');
 
         $this->assertFalse($response->hasCookie('foo'));
@@ -377,7 +357,7 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testSetCookieSuccessOnPrefix(): void
     {
-        $response = new Response(new App());
+        $response = new Response();
         $response->setCookie('foo', 'bar', '', '', '', 'ack');
 
         $this->assertTrue($response->hasCookie('foo', null, 'ack'));
@@ -396,7 +376,7 @@ final class ResponseTest extends CIUnitTestCase
         ];
         $expected = service('format')->getFormatter('application/json')->format($body);
 
-        $response = new Response(new App());
+        $response = new Response();
         $response->setJSON($body);
 
         $this->assertSame($expected, $response->getJSON());
@@ -415,7 +395,7 @@ final class ResponseTest extends CIUnitTestCase
         ];
         $expected = service('format')->getFormatter('application/json')->format($body);
 
-        $response = new Response(new App());
+        $response = new Response();
         $response->setBody($body);
 
         $this->assertSame($expected, $response->getJSON());
@@ -433,7 +413,7 @@ final class ResponseTest extends CIUnitTestCase
         ];
         $expected = service('format')->getFormatter('application/xml')->format($body);
 
-        $response = new Response(new App());
+        $response = new Response();
         $response->setXML($body);
 
         $this->assertSame($expected, $response->getXML());
@@ -452,7 +432,7 @@ final class ResponseTest extends CIUnitTestCase
         ];
         $expected = service('format')->getFormatter('application/xml')->format($body);
 
-        $response = new Response(new App());
+        $response = new Response();
         $response->setBody($body);
 
         $this->assertSame($expected, $response->getXML());
@@ -460,7 +440,7 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testGetDownloadResponseByData(): void
     {
-        $response = new Response(new App());
+        $response = new Response();
 
         $actual = $response->download('unit-test.txt', 'data');
 
@@ -478,7 +458,7 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testGetDownloadResponseByFilePath(): void
     {
-        $response = new Response(new App());
+        $response = new Response();
 
         $actual = $response->download(__FILE__, null);
 
@@ -496,7 +476,7 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testVagueDownload(): void
     {
-        $response = new Response(new App());
+        $response = new Response();
 
         $actual = $response->download();
 
@@ -505,7 +485,7 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testPretendMode(): void
     {
-        $response = new MockResponse(new App());
+        $response = new MockResponse();
         $response->pretend(true);
         $this->assertTrue($response->getPretend());
         $response->pretend(false);
@@ -514,7 +494,7 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testMisbehaving(): void
     {
-        $response = new MockResponse(new App());
+        $response = new MockResponse();
         $response->misbehave();
 
         $this->expectException(HTTPException::class);
@@ -526,7 +506,7 @@ final class ResponseTest extends CIUnitTestCase
         service('superglobals')
             ->setServer('SERVER_PROTOCOL', 'HTTP/1.1')
             ->setServer('REQUEST_METHOD', 'POST');
-        $response = new Response(new App());
+        $response = new Response();
 
         $response->setProtocolVersion('HTTP/1.1');
         $response->redirect('/foo');
@@ -539,7 +519,7 @@ final class ResponseTest extends CIUnitTestCase
         service('superglobals')
             ->setServer('SERVER_PROTOCOL', 'HTTP/1.1')
             ->setServer('REQUEST_METHOD', 'GET');
-        $response = new Response(new App());
+        $response = new Response();
 
         $response->setProtocolVersion('HTTP/1.1');
         $response->redirect('/foo');
@@ -553,7 +533,7 @@ final class ResponseTest extends CIUnitTestCase
     {
         $loginTime = time();
 
-        $response = new Response(new App());
+        $response = new Response();
         $answer1  = $response->redirect('/login')
             ->setCookie('foo', 'bar', YEAR)
             ->setCookie('login_time', (string) $loginTime, YEAR);
@@ -565,7 +545,7 @@ final class ResponseTest extends CIUnitTestCase
     // Make sure we don't blow up if pretending to send headers
     public function testPretendOutput(): void
     {
-        $response = new Response(new App());
+        $response = new Response();
         $response->pretend(true);
 
         $response->setBody('Happy days');
@@ -580,10 +560,7 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testSendRemovesDefaultNoncePlaceholdersWhenCSPDisabled(): void
     {
-        $config             = new App();
-        $config->CSPEnabled = false;
-
-        $response = new Response($config);
+        $response = new Response();
         $response->pretend(true);
 
         $body = '<html><script {csp-script-nonce}>console.log("test")</script><style {csp-style-nonce}>.test{}</style></html>';
@@ -603,9 +580,6 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testSendRemovesCustomNoncePlaceholdersWhenCSPDisabled(): void
     {
-        $appConfig             = new App();
-        $appConfig->CSPEnabled = false;
-
         // Create custom CSP config with custom nonce tags
         $cspConfig                 = new \Config\ContentSecurityPolicy();
         $cspConfig->scriptNonceTag = '{custom-script-tag}';
@@ -613,7 +587,7 @@ final class ResponseTest extends CIUnitTestCase
 
         Services::injectMock('csp', new ContentSecurityPolicy($cspConfig));
 
-        $response = new Response($appConfig);
+        $response = new Response();
         $response->pretend(true);
 
         $body = '<html><script {custom-script-tag}>test()</script><style {custom-style-tag}>.x{}</style></html>';
@@ -633,10 +607,7 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testSendNoEffectWhenBodyEmptyAndCSPDisabled(): void
     {
-        $config             = new App();
-        $config->CSPEnabled = false;
-
-        $response = new Response($config);
+        $response = new Response();
         $response->pretend(true);
 
         $body = '';
@@ -652,10 +623,7 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testSendNoEffectWithNoPlaceholdersAndCSPDisabled(): void
     {
-        $config             = new App();
-        $config->CSPEnabled = false;
-
-        $response = new Response($config);
+        $response = new Response();
         $response->pretend(true);
 
         $body = '<html><head><title>Test</title></head><body><p>No placeholders here</p></body></html>';
@@ -672,10 +640,7 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testSendRemovesMultiplePlaceholdersWhenCSPDisabled(): void
     {
-        $config             = new App();
-        $config->CSPEnabled = false;
-
-        $response = new Response($config);
+        $response = new Response();
         $response->pretend(true);
 
         $body = '<html><script {csp-script-nonce}>console.log("test")</script><script {csp-script-nonce}>console.log("test2")</script><style {csp-style-nonce}>.test{}</style><style {csp-style-nonce}>.test2{}</style></html>';
@@ -697,16 +662,13 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testSendRemovesPlaceholdersWhenBothCSPAndAutoNonceAreDisabled(): void
     {
-        $appConfig             = new App();
-        $appConfig->CSPEnabled = false;
-
         // Create custom CSP config with custom nonce tags
         $cspConfig            = new \Config\ContentSecurityPolicy();
         $cspConfig->autoNonce = false;
 
         Services::injectMock('csp', new ContentSecurityPolicy($cspConfig));
 
-        $response = new Response($appConfig);
+        $response = new Response();
         $response->pretend(true);
 
         $body = '<html><script {csp-script-nonce}>test()</script><style {csp-style-nonce}>.x{}</style></html>';
