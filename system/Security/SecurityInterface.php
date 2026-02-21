@@ -17,18 +17,17 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Security\Exceptions\SecurityException;
 
 /**
- * Expected behavior of a Security.
+ * Expected behavior of a Security object providing
+ * protection against CSRF attacks.
  */
 interface SecurityInterface
 {
     /**
      * Verify CSRF token sent with the request.
      *
-     * @return $this
-     *
      * @throws SecurityException
      */
-    public function verify(RequestInterface $request);
+    public function verify(RequestInterface $request): static;
 
     /**
      * Returns the CSRF Hash.

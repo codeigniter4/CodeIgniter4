@@ -110,7 +110,7 @@ class Security implements SecurityInterface
         }
     }
 
-    public function verify(RequestInterface $request)
+    public function verify(RequestInterface $request): static
     {
         $method = $request->getMethod();
 

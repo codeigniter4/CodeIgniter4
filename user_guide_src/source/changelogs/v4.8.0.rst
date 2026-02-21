@@ -26,6 +26,10 @@ Behavior Changes
 Interface Changes
 =================
 
+**NOTE:** If you've implemented your own classes that implement these interfaces from scratch, you will need to update your implementations to include the new methods to ensure compatibility.
+
+- **Security:** The ``SecurityInterface``'s ``verify()`` method now has a native return type of ``static``.
+
 Method Signature Changes
 ========================
 
