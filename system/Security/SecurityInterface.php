@@ -22,9 +22,9 @@ use CodeIgniter\Security\Exceptions\SecurityException;
 interface SecurityInterface
 {
     /**
-     * CSRF Verify
+     * Verify CSRF token sent with the request.
      *
-     * @return $this|false
+     * @return $this
      *
      * @throws SecurityException
      */
@@ -54,22 +54,4 @@ interface SecurityInterface
      * Check if request should be redirect on failure.
      */
     public function shouldRedirect(): bool;
-
-    /**
-     * Sanitize Filename
-     *
-     * Tries to sanitize filenames in order to prevent directory traversal attempts
-     * and other security threats, which is particularly useful for files that
-     * were supplied via user input.
-     *
-     * If it is acceptable for the user input to include relative paths,
-     * e.g. file/in/some/approved/folder.txt, you can set the second optional
-     * parameter, $relativePath to TRUE.
-     *
-     * @deprecated 4.6.2 Use `sanitize_filename()` instead
-     *
-     * @param string $str          Input file name
-     * @param bool   $relativePath Whether to preserve paths
-     */
-    public function sanitizeFilename(string $str, bool $relativePath = false): string;
 }

@@ -43,6 +43,17 @@ Removed Deprecated Items
     - ``CodeIgniter\Debug\Exceptions::cleanPath()``
     - ``CodeIgniter\Debug\Exceptions::describeMemory()``
     - ``CodeIgniter\Debug\Exceptions::highlightFile()``
+- **Security:** Removed the following properties and methods deprecated:
+    - ``CodeIgniter\Security\SecurityInterface::sanitizeFilename()`` (deprecated since v4.6.2)
+    - ``CodeIgniter\Security\Security::sanitizeFilename()`` (deprecated since v4.6.2)
+    - ``CodeIgniter\Security\Security::$csrfProtection`` (deprecated since v4.4.0)
+    - ``CodeIgniter\Security\Security::$tokenRandomize`` (deprecated since v4.4.0)
+    - ``CodeIgniter\Security\Security::$tokenName`` (deprecated since v4.4.0)
+    - ``CodeIgniter\Security\Security::$headerName`` (deprecated since v4.4.0)
+    - ``CodeIgniter\Security\Security::$expires`` (deprecated since v4.4.0)
+    - ``CodeIgniter\Security\Security::$regenerate`` (deprecated since v4.4.0)
+    - ``CodeIgniter\Security\Security::$redirect`` (deprecated since v4.4.0)
+    - ``CodeIgniter\Security\Security::$sameSite`` (deprecated since v4.4.0)
 
 ************
 Enhancements

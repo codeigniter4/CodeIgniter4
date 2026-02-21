@@ -240,15 +240,6 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertSame('foo=bar', $request->getBody());
     }
 
-    public function testSanitizeFilename(): void
-    {
-        $security = $this->createMockSecurity();
-
-        $filename = './<!--foo-->';
-
-        $this->assertSame('foo', $security->sanitizeFilename($filename));
-    }
-
     public function testRegenerateWithFalseSecurityRegenerateProperty(): void
     {
         service('superglobals')

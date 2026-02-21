@@ -29,8 +29,6 @@ use JsonException;
 use SensitiveParameter;
 
 /**
- * Class Security
- *
  * Provides methods that help protect your site against
  * Cross-Site Request Forgery attacks.
  *
@@ -43,26 +41,6 @@ class Security implements SecurityInterface
     protected const CSRF_HASH_BYTES      = 16;
 
     /**
-     * CSRF Protection Method
-     *
-     * Protection Method for Cross Site Request Forgery protection.
-     *
-     * @var string 'cookie' or 'session'
-     *
-     * @deprecated 4.4.0 Use $this->config->csrfProtection.
-     */
-    protected $csrfProtection = self::CSRF_PROTECTION_COOKIE;
-
-    /**
-     * CSRF Token Randomization
-     *
-     * @var bool
-     *
-     * @deprecated 4.4.0 Use $this->config->tokenRandomize.
-     */
-    protected $tokenRandomize = false;
-
-    /**
      * CSRF Hash (without randomization)
      *
      * Random hash for Cross Site Request Forgery protection.
@@ -70,28 +48,6 @@ class Security implements SecurityInterface
      * @var string|null
      */
     protected $hash;
-
-    /**
-     * CSRF Token Name
-     *
-     * Token name for Cross Site Request Forgery protection.
-     *
-     * @var string
-     *
-     * @deprecated 4.4.0 Use $this->config->tokenName.
-     */
-    protected $tokenName = 'csrf_token_name';
-
-    /**
-     * CSRF Header Name
-     *
-     * Header name for Cross Site Request Forgery protection.
-     *
-     * @var string
-     *
-     * @deprecated 4.4.0 Use $this->config->headerName.
-     */
-    protected $headerName = 'X-CSRF-TOKEN';
 
     /**
      * The CSRF Cookie instance.
@@ -108,58 +64,6 @@ class Security implements SecurityInterface
      * @var string
      */
     protected $cookieName = 'csrf_cookie_name';
-
-    /**
-     * CSRF Expires
-     *
-     * Expiration time for Cross Site Request Forgery protection cookie.
-     *
-     * Defaults to two hours (in seconds).
-     *
-     * @var int
-     *
-     * @deprecated 4.4.0 Use $this->config->expires.
-     */
-    protected $expires = 7200;
-
-    /**
-     * CSRF Regenerate
-     *
-     * Regenerate CSRF Token on every request.
-     *
-     * @var bool
-     *
-     * @deprecated 4.4.0 Use $this->config->regenerate.
-     */
-    protected $regenerate = true;
-
-    /**
-     * CSRF Redirect
-     *
-     * Redirect to previous page with error on failure.
-     *
-     * @var bool
-     *
-     * @deprecated 4.4.0 Use $this->config->redirect.
-     */
-    protected $redirect = false;
-
-    /**
-     * CSRF SameSite
-     *
-     * Setting for CSRF SameSite cookie token.
-     *
-     * Allowed values are: None - Lax - Strict - ''.
-     *
-     * Defaults to `Lax` as recommended in this link:
-     *
-     * @see https://portswigger.net/web-security/csrf/samesite-cookies
-     *
-     * @var string
-     *
-     * @deprecated `Config\Cookie` $samesite property is used.
-     */
-    protected $samesite = Cookie::SAMESITE_LAX;
 
     private readonly IncomingRequest $request;
 
@@ -452,29 +356,6 @@ class Security implements SecurityInterface
     public function shouldRedirect(): bool
     {
         return $this->config->redirect;
-    }
-
-    /**
-     * Sanitize Filename
-     *
-     * Tries to sanitize filenames in order to prevent directory traversal attempts
-     * and other security threats, which is particularly useful for files that
-     * were supplied via user input.
-     *
-     * If it is acceptable for the user input to include relative paths,
-     * e.g. file/in/some/approved/folder.txt, you can set the second optional
-     * parameter, $relativePath to TRUE.
-     *
-     * @deprecated 4.6.2 Use `sanitize_filename()` instead
-     *
-     * @param string $str          Input file name
-     * @param bool   $relativePath Whether to preserve paths
-     */
-    public function sanitizeFilename(string $str, bool $relativePath = false): string
-    {
-        helper('security');
-
-        return sanitize_filename($str, $relativePath);
     }
 
     /**
