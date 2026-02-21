@@ -34,6 +34,7 @@ return [
     'SMTPAuthPassword'      => 'Failed to authenticate password. Error: {0}',
     'SMTPDataFailure'       => 'Unable to send data: {0}',
     'exitStatus'            => 'Exit status code: {0}',
-    // @deprecated
+
+    // @deprecated v4.7.0
     'failedSMTPLogin' => 'Failed to send AUTH LOGIN command. Error: {0}',
 ];

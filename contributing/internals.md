@@ -44,6 +44,31 @@ afraid to use it when it's needed and can help things.
 -   Start simple, refactor as necessary to achieve clean separation of
     code, but don't overdo it.
 
+## Deprecations
+
+Deprecations happen when code no longer fits its purpose or is superseded by better solutions.
+In such cases, it's important that deprecations are documented clearly to guide developers during
+their upgrade process.
+
+- Add `@deprecated` tags in the doc block of deprecated functions, methods, classes, etc. Include
+    the version number where the deprecation was introduced, a description of why it's deprecated,
+    and recommended replacement(s), if any. If there are multiple alternative approaches, list all of them.
+
+- Do not add `@deprecated` tags to a function/method if you only mean to deprecate its parameter(s).
+    This will cause the whole function/method to be marked as deprecated by IDEs. Instead, trigger
+    a deprecation inside the function/method body if those parameters are passed. Ensure to include
+    the version number since when the deprecation occurred. Optionally, but encouraged, add a `@todo`
+    comment so that it can be found later on.
+
+- User-facing deprecation warnings should also be triggered via the framework's deprecation handling
+    mechanism (e.g., `@trigger_error()` or error log entries) to alert end users.
+
+- Do not add new tests for deprecated code paths. Instead, use tools and static analysis to ensure
+    that no code within the framework or official packages is using the deprecated functionality.
+
+- Document all deprecations in the changelog file for that release, under a "Deprecations"
+    section, so users are informed when upgrading.
+
 ## Testing
 
 Any new packages submitted to the framework must be accompanied by unit

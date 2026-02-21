@@ -33,6 +33,6 @@ return [
     'invalidDirection'       => 'Flip direction can be only "vertical" or "horizontal". Given: "{0}"',
     'exifNotSupported'       => 'Reading EXIF data is not supported by this PHP installation.',
 
-    // @deprecated
+    // @deprecated 4.7.0
     'libPathInvalid' => 'The path to your image library is not correct. Please set the correct path in your image preferences. "{0}"',
 ];
