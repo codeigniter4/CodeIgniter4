@@ -821,4 +821,11 @@ final class CommonFunctionsTest extends CIUnitTestCase
             $this->assertMatchesRegularExpression('/^\s*\d* .+(?:\(\d+\))?: \S+(?:(?:\->|::)\S+)?\(.*\)$/', $render);
         }
     }
+
+    public function testContext(): void
+    {
+        service('context')->set('foo', 'bar');
+
+        $this->assertSame('bar', context()->get('foo'));
+    }
 }

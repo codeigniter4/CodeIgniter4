@@ -14,6 +14,7 @@ declare(strict_types=1);
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Config\Factories;
+use CodeIgniter\Context\Context;
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\Cookie\CookieStore;
 use CodeIgniter\Cookie\Exceptions\CookieException;
@@ -209,6 +210,19 @@ if (! function_exists('config')) {
         }
 
         return Factories::config($name, ['getShared' => $getShared]);
+    }
+}
+
+if (! function_exists('context')) {
+    /**
+     * Provides access to the Context object, which is used to store
+     * contextual data during a request that can be accessed globally.
+     *
+     * @return Context
+     */
+    function context(): Context
+    {
+        return service('context');
     }
 }
 
