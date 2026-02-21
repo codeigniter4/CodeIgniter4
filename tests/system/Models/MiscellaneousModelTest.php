@@ -116,7 +116,7 @@ final class MiscellaneousModelTest extends LiveModelTestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('$size must be a positive integer.');
 
-        $this->createModel(UserModel::class)->chunkRows(0, static function ($row): void {});;
+        $this->createModel(UserModel::class)->chunkRows(0, static function ($row): void {});
     }
 
     public function testChunkRowsThrowsOnNegativeSize(): void
