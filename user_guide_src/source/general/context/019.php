@@ -7,4 +7,3 @@ if ($context->hasHidden('api_key')) {
 if ($context->missingHidden('api_key')) {
     // API key is not set
 }
-

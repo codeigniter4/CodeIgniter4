@@ -11,4 +11,3 @@ $data = $context->getExceptHidden(['db_password']);
 
 // Get all hidden data
 $allHidden = $context->getAllHidden();
-

@@ -6,4 +6,3 @@ $userData = $context->getOnly(['user_id', 'username']);
 // You can also pass a single key as a string
 $userId = $context->getOnly('user_id');
 // Returns: ['user_id' => 123]
-

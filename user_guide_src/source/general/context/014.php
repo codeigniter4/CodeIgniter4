@@ -1,4 +1,3 @@
 <?php
 
 $context->clear();
-

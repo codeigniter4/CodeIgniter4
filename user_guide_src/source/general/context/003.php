@@ -6,4 +6,3 @@ $context->set([
     'request_id'     => 'req_abc123',
     'correlation_id' => 'corr_xyz789',
 ]);
-

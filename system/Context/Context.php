@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -104,7 +106,7 @@ class Context
             $keys = [$keys];
         }
 
-        return array_filter($this->data, static fn ($k) => in_array($k, $keys, true), ARRAY_FILTER_USE_KEY);
+        return array_filter($this->data, static fn ($k): bool => in_array($k, $keys, true), ARRAY_FILTER_USE_KEY);
     }
 
     /**
@@ -120,7 +122,7 @@ class Context
             $keys = [$keys];
         }
 
-        return array_filter($this->data, static fn ($k) => ! in_array($k, $keys, true), ARRAY_FILTER_USE_KEY);
+        return array_filter($this->data, static fn ($k): bool => ! in_array($k, $keys, true), ARRAY_FILTER_USE_KEY);
     }
 
     /**
@@ -159,7 +161,7 @@ class Context
             $keys = [$keys];
         }
 
-        return array_filter($this->hiddenData, static fn ($k) => in_array($k, $keys, true), ARRAY_FILTER_USE_KEY);
+        return array_filter($this->hiddenData, static fn ($k): bool => in_array($k, $keys, true), ARRAY_FILTER_USE_KEY);
     }
 
     /**
@@ -175,7 +177,7 @@ class Context
             $keys = [$keys];
         }
 
-        return array_filter($this->hiddenData, static fn ($k) => ! in_array($k, $keys, true), ARRAY_FILTER_USE_KEY);
+        return array_filter($this->hiddenData, static fn ($k): bool => ! in_array($k, $keys, true), ARRAY_FILTER_USE_KEY);
     }
 
     /**

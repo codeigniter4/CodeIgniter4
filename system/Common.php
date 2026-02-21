@@ -217,8 +217,6 @@ if (! function_exists('context')) {
     /**
      * Provides access to the Context object, which is used to store
      * contextual data during a request that can be accessed globally.
-     *
-     * @return Context
      */
     function context(): Context
     {
