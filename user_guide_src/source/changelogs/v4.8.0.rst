@@ -71,7 +71,7 @@ Others
 Model
 =====
 
-- Added new ``chunkArray()`` method to ``CodeIgniter\Model`` for processing large datasets in smaller chunks. See :ref:`model-chunk-array` for usage.
+- Added new ``chunkArray()`` method to ``CodeIgniter\Model`` for processing large datasets in smaller chunks.
 
 Libraries
 =========

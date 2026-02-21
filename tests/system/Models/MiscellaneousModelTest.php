@@ -44,7 +44,7 @@ final class MiscellaneousModelTest extends LiveModelTestCase
     public function testChunkThrowsOnZeroSize(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('chunk() requires a positive integer for the $size argument.');
+        $this->expectExceptionMessage('$size must be a positive integer.');
 
         $this->createModel(UserModel::class)->chunk(0, static function ($row): void {});
     }
@@ -52,7 +52,7 @@ final class MiscellaneousModelTest extends LiveModelTestCase
     public function testChunkThrowsOnNegativeSize(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('chunk() requires a positive integer for the $size argument.');
+        $this->expectExceptionMessage('$size must be a positive integer.');
 
         $this->createModel(UserModel::class)->chunk(-1, static function ($row): void {});
     }
@@ -97,12 +97,12 @@ final class MiscellaneousModelTest extends LiveModelTestCase
         $this->assertSame(0, $rowCount);
     }
 
-    public function testChunkArray(): void
+    public function testChunkRows(): void
     {
         $chunkCount     = 0;
         $numRowsInChunk = [];
 
-        $this->createModel(UserModel::class)->chunkArray(2, static function ($rows) use (&$chunkCount, &$numRowsInChunk): void {
+        $this->createModel(UserModel::class)->chunkRows(2, static function ($rows) use (&$chunkCount, &$numRowsInChunk): void {
             $chunkCount++;
             $numRowsInChunk[] = count($rows);
         });
@@ -111,27 +111,27 @@ final class MiscellaneousModelTest extends LiveModelTestCase
         $this->assertSame([2, 2], $numRowsInChunk);
     }
 
-    public function testChunkArrayThrowsOnZeroSize(): void
+    public function testChunkRowsThrowsOnZeroSize(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('chunkArray() requires a positive integer for the $size argument.');
+        $this->expectExceptionMessage('$size must be a positive integer.');
 
-        $this->createModel(UserModel::class)->chunkArray(0, static function ($row): void {});
+        $this->createModel(UserModel::class)->chunkRows(0, static function ($row): void {});;
     }
 
-    public function testChunkArrayThrowsOnNegativeSize(): void
+    public function testChunkRowsThrowsOnNegativeSize(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('chunkArray() requires a positive integer for the $size argument.');
+        $this->expectExceptionMessage('$size must be a positive integer.');
 
-        $this->createModel(UserModel::class)->chunkArray(-1, static function ($row): void {});
+        $this->createModel(UserModel::class)->chunkRows(-1, static function ($row): void {});
     }
 
-    public function testChunkArrayEarlyExit(): void
+    public function testChunkRowsEarlyExit(): void
     {
         $rowCount = 0;
 
-        $this->createModel(UserModel::class)->chunkArray(2, static function ($rows) use (&$rowCount): bool {
+        $this->createModel(UserModel::class)->chunkRows(2, static function ($rows) use (&$rowCount): bool {
             $rowCount++;
 
             return false;
@@ -140,7 +140,7 @@ final class MiscellaneousModelTest extends LiveModelTestCase
         $this->assertSame(1, $rowCount);
     }
 
-    public function testChunkArrayDoesNotRunExtraQuery(): void
+    public function testChunkRowsDoesNotRunExtraQuery(): void
     {
         $queryCount = 0;
         $listener   = static function () use (&$queryCount): void {
@@ -148,19 +148,19 @@ final class MiscellaneousModelTest extends LiveModelTestCase
         };
 
         Events::on('DBQuery', $listener);
-        $this->createModel(UserModel::class)->chunkArray(4, static function ($rows): void {});
+        $this->createModel(UserModel::class)->chunkRows(4, static function ($rows): void {});
         Events::removeListener('DBQuery', $listener);
 
         $this->assertSame(2, $queryCount);
     }
 
-    public function testChunkArrayEmptyTable(): void
+    public function testChunkRowsEmptyTable(): void
     {
         $this->db->table('user')->truncate();
 
         $rowCount = 0;
 
-        $this->createModel(UserModel::class)->chunkArray(2, static function ($row) use (&$rowCount): void {
+        $this->createModel(UserModel::class)->chunkRows(2, static function ($row) use (&$rowCount): void {
             $rowCount++;
         });
 
