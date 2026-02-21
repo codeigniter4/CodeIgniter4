@@ -34,6 +34,14 @@ Interface Changes
 Method Signature Changes
 ========================
 
+- **CodeIgniter:** The deprecated parameters in methods have been removed:
+    - ``CodeIgniter\CodeIgniter::handleRequest()`` no longer accepts the deprecated ``$cacheConfig`` and ``$returnResponse`` parameters.
+       - ``$cacheConfig`` is no longer used and is now hard deprecated. A deprecation notice will be triggered if this is passed to the method.
+       - ``$returnResponse`` is now removed since already deprecated and unused.
+       - The updated method signature is now ``handleRequest(?RouteCollectionInterface $routes, ?Cache $cacheConfig = null)``.
+    - ``CodeIgniter\CodeIgniter::gatherOutput()`` no longer accepts the deprecated ``$cacheConfig`` parameter.
+       As this is the first parameter, custom uses of this method will need to be updated to remove the parameter.
+
 Removed Deprecated Items
 ========================
 
@@ -45,6 +53,21 @@ Removed Deprecated Items
     - ``CodeIgniter\Cache\Handlers\FileHandler::deleteFile()``
     - ``CodeIgniter\Cache\Handlers\FileHandler::getDirFileInfo()``
     - ``CodeIgniter\Cache\Handlers\FileHandler::getFileInfo()``
+- **CodeIgniter:** Removed the following properties and methods deprecated:
+    - ``CodeIgniter\CodeIgniter::$cacheTTL``
+    - ``CodeIgniter\CodeIgniter::$returnResponse``
+    - ``CodeIgniter\CodeIgniter::initializeKint()``
+    - ``CodeIgniter\CodeIgniter::detectEnvironment()``
+    - ``CodeIgniter\CodeIgniter::bootstrapEnvironment()``
+    - ``CodeIgniter\CodeIgniter::forceSecureAccess()``
+    - ``CodeIgniter\CodeIgniter::displayCache()``
+    - ``CodeIgniter\CodeIgniter::cache()``
+    - ``CodeIgniter\CodeIgniter::cachePage()``
+    - ``CodeIgniter\CodeIgniter::generateCacheName()``
+    - ``CodeIgniter\CodeIgniter::displayPerformanceMetrics()``
+    - ``CodeIgniter\CodeIgniter::determinePath()``
+    - ``CodeIgniter\CodeIgniter::callExit()``
+    - ``CodeIgniter\Test\MockCodeIgniter::callExit()``
 - **Exceptions:** Removed the following properties and methods deprecated since v4.4.0:
     - ``CodeIgniter\Debug\Exceptions::$ob_level``
     - ``CodeIgniter\Debug\Exceptions::$viewPath``

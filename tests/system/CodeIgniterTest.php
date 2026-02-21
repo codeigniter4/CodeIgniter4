@@ -789,12 +789,9 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         $routes = service('routes');
         $routes->add('test', static function () {
-            CodeIgniter::cache(3600);
+            service('responsecache')->setTtl(3600);
 
-            $response = service('response');
-            $string   = 'This is a test page. Elapsed time: {elapsed_time}';
-
-            return $response->setBody($string);
+            return service('response')->setBody('This is a test page. Elapsed time: {elapsed_time}');
         });
         $router = service('router', $routes, service('incomingrequest'));
         Services::injectMock('router', $router);
