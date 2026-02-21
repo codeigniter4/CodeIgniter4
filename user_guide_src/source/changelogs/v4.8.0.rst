@@ -23,8 +23,7 @@ BREAKING
 Behavior Changes
 ================
 
-- **Commands:** The ``get()`` and ``getClasses()`` methods of ``FilterCollector`` now compare the HTTP method case-sensitively.
-    This may affect filters defined for methods like `get`, `post`, etc., which should be updated to uppercase (e.g., `GET`, `POST`) to ensure they are applied correctly.
+- **Commands:** The ``filter:check`` command now requires the HTTP method argument to be uppercase (e.g., ``spark filter:check GET /`` instead of ``spark filter:check get /``).
 
 Interface Changes
 =================
