@@ -26,7 +26,6 @@ use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\Validation\ValidationInterface;
 use Config\Database;
 use Config\Feature;
-use Generator;
 use stdClass;
 
 /**
@@ -526,7 +525,7 @@ class Model extends BaseModel
         return $this->builder()->testMode($test)->countAllResults($reset);
     }
 
-    private function iterateChunks(int $size): Generator
+    private function iterateChunks(int $size): \Generator
     {
         if ($size <= 0) {
             throw new InvalidArgumentException('$size must be a positive integer.');
@@ -580,7 +579,7 @@ class Model extends BaseModel
      * determine the rows to operate on.
      * This method works only with dbCalls.
      */
-    public function chunkRows(int $size, Closure $userFunc)
+    public function chunkRows(int $size, Closure $userFunc): void
     {
         foreach ($this->iterateChunks($size) as $rows) {
             if ($userFunc($rows) === false) {
