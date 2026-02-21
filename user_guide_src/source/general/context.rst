@@ -178,8 +178,7 @@ To clear both regular and hidden data:
 
 .. literalinclude:: context/022.php
 
-.. important:: Regular data and hidden data are stored separately. A key can exist in both regular and hidden storage
-with different values. Use ``get()`` for regular data and ``getHidden()`` for hidden data.
+.. important:: Regular data and hidden data are stored separately. A key can exist in both regular and hidden storage with different values. Use ``get()`` for regular data and ``getHidden()`` for hidden data.
 
 ***********************************
 Integration with Logging
@@ -206,8 +205,7 @@ This would produce a log entry like:
 
     ERROR - 2026-02-18 --> Payment processing failed {"user_id":123,"transaction_id":"txn_12345"}
 
-.. note:: Hidden data set with ``setHidden()`` is **never** included in logs, even when ``$logGlobalContext`` is enabled.
-This ensures sensitive information like API keys or tokens remain secure.
+.. note:: Hidden data set with ``setHidden()`` is **never** included in logs, even when ``$logGlobalContext`` is enabled. This ensures sensitive information like API keys or tokens remain secure.
 
 ***************
 Important Notes
