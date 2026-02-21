@@ -118,6 +118,35 @@ Several core placeholders exist that will be automatically expanded for you base
 | {env:foo}      | The value of 'foo' in $_ENV                       |
 +----------------+---------------------------------------------------+
 
+.. _logging-global-context:
+
+Global Context Logging
+----------------------
+
+.. versionadded:: 4.8.0
+
+You can automatically append context data to all log messages by enabling the ``$logGlobalContext``
+property in **app/Config/Logger.php**:
+
+.. literalinclude:: context/023.php
+
+When enabled, all regular context data (set via the :ref:`Context class <context>`) is automatically
+appended to every log message as a JSON string:
+
+.. literalinclude:: context/024.php
+
+This would produce a log entry like:
+
+.. code-block:: text
+
+    ERROR - 2026-02-18 --> Payment processing failed {"user_id":123,"transaction_id":"txn_12345"}
+
+.. note:: Hidden data set with ``setHidden()`` is **never** included in log output, even when
+    ``$logGlobalContext`` is enabled. This protects sensitive information such as API keys
+    and tokens from appearing in log files.
+
+See :ref:`context` for full documentation on storing and managing context data.
+
 Using Third-Party Loggers
 =========================
 

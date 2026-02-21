@@ -74,6 +74,8 @@ Model
 Libraries
 =========
 
+- **Context**: This new feature allows you to easily set and retrieve normal or hidden contextual data for the current request. See :ref:`Context <context>` for details.
+
 Helpers and Functions
 =====================
 

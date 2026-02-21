@@ -1,6 +1,10 @@
+.. _context:
+
 ###################
 Context
 ###################
+
+.. versionadded:: 4.8.0
 
 .. contents::
     :local:
@@ -19,9 +23,9 @@ The Context class is particularly useful for:
 - Adding contextual information to your logs automatically
 - Storing sensitive data that should not appear in logs
 
-******************
-Accessing Context
-******************
+***********************
+Accessing Context Class
+***********************
 
 You can access the Context service anywhere in your application using the ``service()`` function:
 
@@ -123,7 +127,9 @@ To remove all context data:
 Hidden Context Data
 *********************
 
-The Context class provides a separate storage area for sensitive data that should not be included in logs. This is useful for storing API keys, passwords, tokens, or other sensitive information that you need to access during the request but don't want to expose in log files.
+The Context class provides a separate storage area for sensitive data that should not be included in logs.
+This is useful for storing API keys, passwords, tokens, or other sensitive information that you need to access
+during the request but don't want to expose in log files.
 
 Setting Hidden Data
 ===================
@@ -172,18 +178,21 @@ To clear both regular and hidden data:
 
 .. literalinclude:: context/022.php
 
-.. important:: Regular data and hidden data are stored separately. A key can exist in both regular and hidden storage with different values. Use ``get()`` for regular data and ``getHidden()`` for hidden data.
+.. important:: Regular data and hidden data are stored separately. A key can exist in both regular and hidden storage
+with different values. Use ``get()`` for regular data and ``getHidden()`` for hidden data.
 
 ***********************************
 Integration with Logging
 ***********************************
 
-The Context class integrates seamlessly with CodeIgniter's logging system. When enabled, context data is automatically appended to log messages, providing additional information for debugging and monitoring.
+The Context class integrates seamlessly with CodeIgniter's logging system. When enabled, context data is automatically
+appended to log messages, providing additional information for debugging and monitoring.
 
 Enabling Global Context Logging
 ================================
 
-To enable automatic logging of context data, set the ``$logGlobalContext`` property to ``true`` in your **app/Config/Logger.php** file:
+To enable automatic logging of context data, set the ``$logGlobalContext`` property to ``true`` in your
+**app/Config/Logger.php** file:
 
 .. literalinclude:: context/023.php
 
@@ -197,7 +206,8 @@ This would produce a log entry like:
 
     ERROR - 2026-02-18 --> Payment processing failed {"user_id":123,"transaction_id":"txn_12345"}
 
-.. note:: Hidden data set with ``setHidden()`` is **never** included in logs, even when ``$logGlobalContext`` is enabled. This ensures sensitive information like API keys or tokens remain secure.
+.. note:: Hidden data set with ``setHidden()`` is **never** included in logs, even when ``$logGlobalContext`` is enabled.
+This ensures sensitive information like API keys or tokens remain secure.
 
 ***************
 Important Notes
