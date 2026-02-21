@@ -56,16 +56,4 @@ class SessionException extends FrameworkException
     {
         return new static(lang('Session.invalidSavePathFormat', [$path]));
     }
-
-    /**
-     * @deprecated
-     *
-     * @return static
-     *
-     * @codeCoverageIgnore
-     */
-    public static function forInvalidSameSiteSetting(string $samesite)
-    {
-        return new static(lang('Session.invalidSameSiteSetting', [$samesite]));
-    }
 }

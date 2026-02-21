@@ -12,6 +12,6 @@ declare(strict_types=1);
  */
 
 return [
-    'missingExtension' => '{0} extension could not be found.',
-    'bazillion'        => 'billions and billions', // adds a new setting
+    'invalidFile' => 'The file provided is invalid.', // replacement
+    'bazillion'   => 'billions and billions', // new setting
 ];

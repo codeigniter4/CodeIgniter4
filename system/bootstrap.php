@@ -17,7 +17,6 @@ declare(strict_types=1);
  * ---------------------------------------------------------------
  */
 
-use CodeIgniter\Exceptions\FrameworkException;
 use Config\Autoload;
 use Config\Modules;
 use Config\Paths;
@@ -135,18 +134,18 @@ Services::exceptions()->initialize();
 if (! is_file(COMPOSER_PATH)) {
     $missingExtensions = [];
 
-    foreach ([
-        'intl',
-        'json',
-        'mbstring',
-    ] as $extension) {
+    foreach (['intl', 'json', 'mbstring'] as $extension) {
         if (! extension_loaded($extension)) {
             $missingExtensions[] = $extension;
         }
     }
 
     if ($missingExtensions !== []) {
-        throw FrameworkException::forMissingExtension(implode(', ', $missingExtensions));
+        throw new RuntimeException(sprintf(
+            'The framework needs the following extension%s installed and loaded: "%s".',
+            count($missingExtensions) > 1 ? 's' : '',
+            implode('", "', $missingExtensions),
+        ));
     }
 
     unset($missingExtensions);

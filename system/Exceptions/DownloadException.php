@@ -45,16 +45,6 @@ class DownloadException extends RuntimeException
     }
 
     /**
-     * @deprecated Since v4.5.6
-     *
-     * @return static
-     */
-    public static function forCannotSetCache()
-    {
-        return new static(lang('HTTP.cannotSetCache'));
-    }
-
-    /**
      * @return static
      */
     public static function forCannotSetStatusCode(int $code, string $reason)

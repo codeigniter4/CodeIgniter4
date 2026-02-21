@@ -70,7 +70,7 @@ Removed Deprecated Items
     - ``CodeIgniter\CodeIgniter::determinePath()``
     - ``CodeIgniter\CodeIgniter::callExit()``
     - ``CodeIgniter\Test\MockCodeIgniter::callExit()``
-- **Exceptions:** Removed the following properties and methods deprecated since v4.4.0:
+- **Debug:** Removed the following properties and methods deprecated since v4.4.0:
     - ``CodeIgniter\Debug\Exceptions::$ob_level``
     - ``CodeIgniter\Debug\Exceptions::$viewPath``
     - ``CodeIgniter\Debug\Exceptions::determineView()``
@@ -81,6 +81,13 @@ Removed Deprecated Items
     - ``CodeIgniter\Debug\Exceptions::cleanPath()``
     - ``CodeIgniter\Debug\Exceptions::describeMemory()``
     - ``CodeIgniter\Debug\Exceptions::highlightFile()``
+- **Exceptions:** Removed the following static constructors of ``FrameworkException`` and its child classes:
+    - ``CodeIgniter\Exceptions\DownloadException::forCannotSetCache()``
+    - ``CodeIgniter\Exceptions\FrameworkException::forMissingExtension()``
+    - ``CodeIgniter\Honeypot\Exceptions\HoneypotException::forNoHiddenValue()``
+    - ``CodeIgniter\HTTP\Exceptions\HTTPException::forInvalidSameSiteSetting()``
+    - ``CodeIgniter\Security\Exceptions\SecurityException::forInvalidSameSite()``
+    - ``CodeIgniter\Session\Exceptions\SessionException::forInvalidSameSiteSetting()``
 - **Security:** Removed the following properties and methods deprecated:
     - ``CodeIgniter\Security\SecurityInterface::sanitizeFilename()`` (deprecated since v4.6.2)
     - ``CodeIgniter\Security\Security::sanitizeFilename()`` (deprecated since v4.6.2)
@@ -139,6 +146,13 @@ Others
 ***************
 Message Changes
 ***************
+
+- Removed deprecated language keys tied to removed exception constructors:
+    - ``Core.missingExtension`` (``FrameworkException::forMissingExtension()``)
+    - ``HTTP.cannotSetCache`` (``DownloadException::forCannotSetCache()``)
+    - ``HTTP.invalidSameSiteSetting`` (``HTTPException::forInvalidSameSiteSetting()``)
+    - ``Security.invalidSameSite`` (``SecurityException::forInvalidSameSite()``)
+    - ``Session.invalidSameSiteSetting`` (``SessionException::forInvalidSameSiteSetting()``)
 
 *******
 Changes

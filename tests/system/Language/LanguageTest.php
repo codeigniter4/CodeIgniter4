@@ -265,11 +265,16 @@ final class LanguageTest extends CIUnitTestCase
 
     public function testPrioritizedLocator(): void
     {
-        // this should load the replacement bundle of messages
-        $message = lang('Core.missingExtension', [], 'en');
-        $this->assertSame('The framework needs the following extension(s) installed and loaded: "{0}".', $message);
-        // and we should have our new message too
-        $this->assertSame('billions and billions', lang('Core.bazillion', [], 'en'));
+        $this->assertSame(
+            'Invalid file: "{0}"',
+            lang('Core.invalidFile', [], 'en'),
+            'Failed asserting that the system language file is prioritized over the test support language file.',
+        );
+        $this->assertSame(
+            'billions and billions',
+            lang('Core.bazillion', [], 'en'),
+            'Failed asserting that the test support language file is used if key is not found in the system language file.',
+        );
     }
 
     /**

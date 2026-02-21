@@ -218,20 +218,6 @@ class HTTPException extends FrameworkException implements ExceptionInterface
     }
 
     /**
-     * For Invalid SameSite attribute setting
-     *
-     * @return HTTPException
-     *
-     * @deprecated Use `CookieException::forInvalidSameSite()` instead.
-     *
-     * @codeCoverageIgnore
-     */
-    public static function forInvalidSameSiteSetting(string $samesite)
-    {
-        return new static(lang('Security.invalidSameSiteSetting', [$samesite]));
-    }
-
-    /**
      * Thrown when the JSON format is not supported.
      * This is specifically for cases where data validation is expected to work with key-value structures.
      *
