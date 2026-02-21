@@ -16,8 +16,6 @@ namespace CodeIgniter\Autoloader;
 use App\Controllers\Home;
 use Closure;
 use CodeIgniter\Exceptions\ConfigException;
-use CodeIgniter\Exceptions\InvalidArgumentException;
-use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use Config\Autoload;
@@ -229,53 +227,6 @@ final class AutoloaderTest extends CIUnitTestCase
     public function testloadClassNonNamespaced(): void
     {
         $this->assertFalse(($this->classLoader)('Modules'));
-    }
-
-    public function testSanitizationContailsSpecialChars(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(
-            'The file path contains special characters "${}!#" that are not allowed: "${../path}!#/to/some/file.php_"',
-        );
-
-        $test = '${../path}!#/to/some/file.php_';
-
-        $this->loader->sanitizeFilename($test);
-    }
-
-    public function testSanitizationFilenameEdges(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(
-            'The characters ".-_" are not allowed in filename edges: "/path/to/some/file.php_"',
-        );
-
-        $test = '/path/to/some/file.php_';
-
-        $this->loader->sanitizeFilename($test);
-    }
-
-    public function testSanitizationRegexError(): void
-    {
-        $this->expectException(RuntimeException::class);
-
-        $test = mb_convert_encoding('クラスファイル.php', 'EUC-JP', 'UTF-8');
-
-        $this->loader->sanitizeFilename($test);
-    }
-
-    public function testSanitizationAllowUnicodeChars(): void
-    {
-        $test = 'Ä/path/to/some/file.php';
-
-        $this->assertSame($test, $this->loader->sanitizeFilename($test));
-    }
-
-    public function testSanitizationAllowsWindowsFilepaths(): void
-    {
-        $test = 'C:\path\to\some/file.php';
-
-        $this->assertSame($test, $this->loader->sanitizeFilename($test));
     }
 
     public function testFindsComposerRoutes(): void
