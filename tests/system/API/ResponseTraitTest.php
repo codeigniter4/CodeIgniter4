@@ -112,7 +112,7 @@ final class ResponseTraitTest extends CIUnitTestCase
                 null,
                 new UserAgent(),
             );
-            $this->response = new MockResponse($config);
+            $this->response = new MockResponse();
         }
 
         $headers = array_merge(['Accept' => 'text/html'], $userHeaders);
@@ -625,7 +625,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->createCookieConfig();
 
         $request  = new MockIncomingRequest($config, new SiteURI($config), null, new UserAgent());
-        $response = new MockResponse($config);
+        $response = new MockResponse();
 
         $controller = new class ($request, $response) {
             use ResponseTrait;
@@ -753,7 +753,7 @@ final class ResponseTraitTest extends CIUnitTestCase
     public function testPaginateWithQueryBuilder(): void
     {
         // Mock the database and builder
-        $db = $this->createMock(BaseConnection::class);
+        $db = $this->createStub(BaseConnection::class);
 
         $builder = $this->getMockBuilder(BaseBuilder::class)
             ->setConstructorArgs(['test_table', $db])
@@ -1100,7 +1100,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         ];
 
         // Mock the database and builder
-        $db = $this->createMock(BaseConnection::class);
+        $db = $this->createStub(BaseConnection::class);
 
         $builder = $this->getMockBuilder(BaseBuilder::class)
             ->setConstructorArgs(['test_table', $db])

@@ -80,10 +80,10 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      */
     public function prepare(string $sql, array $options = [], string $queryClass = Query::class)
     {
-        // We only supports positional placeholders (?)
-        // in order to work with the execute method below, so we
-        // need to replace our named placeholders (:name)
-        $sql = preg_replace('/:[^\s,)]+/', '?', $sql);
+        // We only support positional placeholders (?), so convert
+        // named placeholders (:name or :name:) while leaving dialect
+        // syntax like PostgreSQL casts (::type) untouched.
+        $sql = preg_replace('/(?<!:):([a-zA-Z_]\w*):?(?!:)/', '?', $sql);
 
         /** @var Query $query */
         $query = new $queryClass($this->db);

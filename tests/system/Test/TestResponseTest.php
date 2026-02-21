@@ -15,7 +15,6 @@ namespace CodeIgniter\Test;
 
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
-use Config\App;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -154,7 +153,7 @@ final class TestResponseTest extends CIUnitTestCase
     public function testAssertRedirectSuccess(): void
     {
         $this->getTestResponse('<h1>Hello World</h1>');
-        $this->testResponse->setResponse(new RedirectResponse(new App()));
+        $this->testResponse->setResponse(new RedirectResponse());
 
         $this->assertInstanceOf(RedirectResponse::class, $this->testResponse->response());
         $this->assertTrue($this->testResponse->isRedirect());
@@ -175,7 +174,7 @@ final class TestResponseTest extends CIUnitTestCase
     public function testGetRedirectUrlReturnsUrl(): void
     {
         $this->getTestResponse('<h1>Hello World</h1>');
-        $this->testResponse->setResponse(new RedirectResponse(new App()));
+        $this->testResponse->setResponse(new RedirectResponse());
         $this->testResponse->response()->redirect('foo/bar');
 
         $this->assertSame('foo/bar', $this->testResponse->getRedirectUrl());
@@ -191,7 +190,7 @@ final class TestResponseTest extends CIUnitTestCase
     public function testRedirectToSuccess(): void
     {
         $this->getTestResponse('<h1>Hello World</h1>');
-        $this->testResponse->setResponse(new RedirectResponse(new App()));
+        $this->testResponse->setResponse(new RedirectResponse());
         $this->testResponse->response()->redirect('foo/bar');
 
         $this->testResponse->assertRedirectTo('foo/bar');
@@ -200,7 +199,7 @@ final class TestResponseTest extends CIUnitTestCase
     public function testRedirectToSuccessFullURL(): void
     {
         $this->getTestResponse('<h1>Hello World</h1>');
-        $this->testResponse->setResponse(new RedirectResponse(new App()));
+        $this->testResponse->setResponse(new RedirectResponse());
         $this->testResponse->response()->redirect('http://foo.com/bar');
 
         $this->testResponse->assertRedirectTo('http://foo.com/bar');
@@ -209,7 +208,7 @@ final class TestResponseTest extends CIUnitTestCase
     public function testRedirectToSuccessMixedURL(): void
     {
         $this->getTestResponse('<h1>Hello World</h1>');
-        $this->testResponse->setResponse(new RedirectResponse(new App()));
+        $this->testResponse->setResponse(new RedirectResponse());
         $this->testResponse->response()->redirect('bar');
 
         $this->testResponse->assertRedirectTo('http://example.com/index.php/bar');
@@ -434,7 +433,7 @@ final class TestResponseTest extends CIUnitTestCase
 
     protected function getTestResponse(?string $body = null, array $responseOptions = [], array $headers = []): void
     {
-        $this->response = new Response(new App());
+        $this->response = new Response();
         $this->response->setBody($body);
 
         foreach ($responseOptions as $key => $value) {

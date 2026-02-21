@@ -79,7 +79,6 @@ html_theme_options = {
 	'navigation_depth': 2,
 	'includehidden': False,
 	'logo_only': True,
-	'display_version': False,
 }
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,

@@ -30,6 +30,7 @@ $finder = Finder::create()
     ]);
 
 $overrides = [
+    'declare_strict_types'  => true,
     'phpdoc_to_return_type' => true,
     'void_return'           => true,
 ];

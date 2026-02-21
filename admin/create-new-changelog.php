@@ -9,81 +9,90 @@ function replace_file_content(string $path, string $pattern, string $replace): v
     file_put_contents($path, $output);
 }
 
-// Main.
 chdir(__DIR__ . '/..');
 
-if ($argc !== 3) {
-    echo "Usage: php {$argv[0]} <current_version> <new_version>" . PHP_EOL;
-    echo "E.g.,: php {$argv[0]} 4.4.3 4.4.4" . PHP_EOL;
+if (! isset($argv[1]) || ! isset($argv[2])) {
+    echo "Usage: php {$argv[0]} <current_version> <new_version> [--dry-run]\n";
+    echo "E.g. : php {$argv[0]} 4.4.3 4.4.4 --dry-run\n";
 
     exit(1);
 }
 
 // Gets version number from argument.
-$versionCurrent      = $argv[1]; // e.g., '4.4.3'
-$versionCurrentParts = explode('.', $versionCurrent);
-$minorCurrent        = $versionCurrentParts[0] . '.' . $versionCurrentParts[1];
-$version             = $argv[2]; // e.g., '4.4.4'
-$versionParts        = explode('.', $version);
-$minor               = $versionParts[0] . '.' . $versionParts[1];
-$isMinorUpdate       = ($minorCurrent !== $minor);
+$currentVersion      = $argv[1]; // e.g., '4.4.3'
+$currentVersionParts = explode('.', $currentVersion, 3);
+$currentMinorVersion = $currentVersionParts[0] . '.' . $currentVersionParts[1];
+$newVersion          = $argv[2]; // e.g., '4.4.4'
+$newVersionParts     = explode('.', $newVersion, 3);
+$newMinorVersion     = $newVersionParts[0] . '.' . $newVersionParts[1];
+$isMinorUpdate       = $currentMinorVersion !== $newMinorVersion;
 
-// Creates a branch for release.
-if (! $isMinorUpdate) {
-    system('git switch develop');
+// Creates a branch for release
+if (! in_array('--dry-run', $argv, true)) {
+    if (! $isMinorUpdate) {
+        system('git switch develop');
+    }
+
+    system("git switch -c docs-changelog-{$newVersion}");
+    system("git switch docs-changelog-{$newVersion}");
 }
-system('git switch -c docs-changelog-' . $version);
-system('git switch docs-changelog-' . $version);
 
 // Copy changelog
-$changelog      = "./user_guide_src/source/changelogs/v{$version}.rst";
+$newChangelog   = "./user_guide_src/source/changelogs/v{$newVersion}.rst";
 $changelogIndex = './user_guide_src/source/changelogs/index.rst';
+
 if ($isMinorUpdate) {
-    copy('./admin/next-changelog-minor.rst', $changelog);
+    copy('./admin/next-changelog-minor.rst', $newChangelog);
 } else {
-    copy('./admin/next-changelog-patch.rst', $changelog);
+    copy('./admin/next-changelog-patch.rst', $newChangelog);
 }
+
+// Replace version in CodeIgniter.php to {version}-dev.
+replace_file_content(
+    './system/CodeIgniter.php',
+    '/public const CI_VERSION = \'.*?\';/u',
+    "public const CI_VERSION = '{$newVersion}-dev';",
+);
+
 // Add changelog to index.rst.
 replace_file_content(
     $changelogIndex,
     '/\.\. toctree::\n    :titlesonly:\n/u',
-    ".. toctree::\n    :titlesonly:\n\n    v{$version}",
-);
-// Replace {version}
-$length    = mb_strlen("Version {$version}");
-$underline = str_repeat('#', $length);
-replace_file_content(
-    $changelog,
-    '/#################\nVersion {version}\n#################/u',
-    "{$underline}\nVersion {$version}\n{$underline}",
-);
-replace_file_content(
-    $changelog,
-    '/{version}/u',
-    "{$version}",
+    ".. toctree::\n    :titlesonly:\n\n    v{$newVersion}",
 );
 
+// Replace {version}
+$underline = str_repeat('#', mb_strlen("Version {$newVersion}"));
+replace_file_content(
+    $newChangelog,
+    '/#################\nVersion {version}\n#################/u',
+    "{$underline}\nVersion {$newVersion}\n{$underline}",
+);
+replace_file_content($newChangelog, '/{version}/u', $newVersion);
+
 // Copy upgrading
-$versionWithoutDots = str_replace('.', '', $version);
-$upgrading          = "./user_guide_src/source/installation/upgrade_{$versionWithoutDots}.rst";
+$versionWithoutDots = str_replace('.', '', $newVersion);
+$newUpgrading       = "./user_guide_src/source/installation/upgrade_{$versionWithoutDots}.rst";
 $upgradingIndex     = './user_guide_src/source/installation/upgrading.rst';
-copy('./admin/next-upgrading-guide.rst', $upgrading);
+copy('./admin/next-upgrading-guide.rst', $newUpgrading);
+
 // Add upgrading to upgrading.rst.
 replace_file_content(
     $upgradingIndex,
     '/    backward_compatibility_notes\n/u',
     "    backward_compatibility_notes\n\n    upgrade_{$versionWithoutDots}",
 );
+
 // Replace {version}
-$length    = mb_strlen("Upgrading from {$versionCurrent} to {$version}");
-$underline = str_repeat('#', $length);
+$underline = str_repeat('#', mb_strlen("Upgrading from {$currentVersion} to {$newVersion}"));
 replace_file_content(
-    $upgrading,
+    $newUpgrading,
     '/##############################\nUpgrading from {version} to {version}\n##############################/u',
-    "{$underline}\nUpgrading from {$versionCurrent} to {$version}\n{$underline}",
+    "{$underline}\nUpgrading from {$currentVersion} to {$newVersion}\n{$underline}",
 );
 
-// Commits
-system("git add {$changelog} {$changelogIndex}");
-system("git add {$upgrading} {$upgradingIndex}");
-system('git commit -m "docs: add changelog and upgrade for v' . $version . '"');
+if (! in_array('--dry-run', $argv, true)) {
+    system("git add {$newChangelog} {$changelogIndex}");
+    system("git add {$newUpgrading} {$upgradingIndex}");
+    system("git commit -m \"docs: add changelog and upgrade for v{$newVersion}\"");
+}

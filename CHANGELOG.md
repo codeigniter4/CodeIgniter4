@@ -87,10 +87,10 @@
 * refactor: cleanup `ContentSecurityPolicy` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9904
 * refactor: deprecate `CodeIgniter\HTTP\ContentSecurityPolicy::$nonces` since never used by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9905
 
-For the changelog of v4.6, see [CHANGELOG_4.6.md](./changelogs/CHANGELOG_4.6.md).
-For the changelog of v4.5, see [CHANGELOG_4.5.md](./changelogs/CHANGELOG_4.5.md).
-For the changelog of v4.4, see [CHANGELOG_4.5.md](./changelogs/CHANGELOG_4.4.md).
-For the changelog of v4.3, see [CHANGELOG_4.5.md](./changelogs/CHANGELOG_4.3.md).
-For the changelog of v4.2, see [CHANGELOG_4.5.md](./changelogs/CHANGELOG_4.2.md).
-For the changelog of v4.1, see [CHANGELOG_4.5.md](./changelogs/CHANGELOG_4.1.md).
-For the changelog of v4.0, see [CHANGELOG_4.5.md](./changelogs/CHANGELOG_4.0.md).
+For the changelog of v4.6, see [CHANGELOG_4.6.md](./changelogs/CHANGELOG_4.6.md).<br/>
+For the changelog of v4.5, see [CHANGELOG_4.5.md](./changelogs/CHANGELOG_4.5.md).<br/>
+For the changelog of v4.4, see [CHANGELOG_4.4.md](./changelogs/CHANGELOG_4.4.md).<br/>
+For the changelog of v4.3, see [CHANGELOG_4.3.md](./changelogs/CHANGELOG_4.3.md).<br/>
+For the changelog of v4.2, see [CHANGELOG_4.2.md](./changelogs/CHANGELOG_4.2.md).<br/>
+For the changelog of v4.1, see [CHANGELOG_4.1.md](./changelogs/CHANGELOG_4.1.md).<br/>
+For the changelog of v4.0, see [CHANGELOG_4.0.md](./changelogs/CHANGELOG_4.0.md).

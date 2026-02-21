@@ -424,7 +424,7 @@ The output is like the following:
 
     Config Caching: Disabled
 
-You can see if Config Caching is eabled or not.
+You can see if Config Caching is enabled or not.
 
 .. note:: If Config Caching is enabled, the cached values are used permanently.
     See :ref:`factories-config-caching` for details.

@@ -582,6 +582,7 @@ abstract class BaseModel
      * @return void
      *
      * @throws DataException
+     * @throws InvalidArgumentException if $size is not a positive integer
      */
     abstract public function chunk(int $size, Closure $userFunc);
 
@@ -1099,6 +1100,21 @@ abstract class BaseModel
     {
         if (is_array($set)) {
             foreach ($set as &$row) {
+                // Save the index value from the original row because
+                // transformDataToArray() may strip it when updateOnlyChanged
+                // is true.
+                $updateIndex = null;
+
+                if ($this->updateOnlyChanged) {
+                    if (is_array($row)) {
+                        $updateIndex = $row[$index] ?? null;
+                    } elseif ($row instanceof Entity) {
+                        $updateIndex = $row->toRawArray()[$index] ?? null;
+                    } elseif (is_object($row)) {
+                        $updateIndex = $row->{$index} ?? null;
+                    }
+                }
+
                 $row = $this->transformDataToArray($row, 'update');
 
                 // Validate data before saving.
@@ -1106,8 +1122,13 @@ abstract class BaseModel
                     return false;
                 }
 
-                // Save updateIndex for later
-                $updateIndex = $row[$index] ?? null;
+                // When updateOnlyChanged is true, restore the pre-extracted
+                // index into $row. Otherwise read it from the transformed row.
+                if ($updateIndex !== null) {
+                    $row[$index] = $updateIndex;
+                } else {
+                    $updateIndex = $row[$index] ?? null;
+                }
 
                 if ($updateIndex === null) {
                     throw new InvalidArgumentException(

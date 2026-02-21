@@ -199,6 +199,8 @@ class Services extends BaseService
      * The CURL Request class acts as a simple HTTP client for interacting
      * with other servers, typically through APIs.
      *
+     * @todo v4.8.0 Remove $config parameter since unused
+     *
      * @return CURLRequest
      */
     public static function curlrequest(array $options = [], ?ResponseInterface $response = null, ?App $config = null, bool $getShared = true)
@@ -208,7 +210,7 @@ class Services extends BaseService
         }
 
         $config ??= config(App::class);
-        $response ??= new Response($config);
+        $response ??= new Response();
 
         return new CURLRequest(
             $config,
@@ -577,6 +579,8 @@ class Services extends BaseService
     /**
      * The Response class models an HTTP response.
      *
+     * @todo v4.8.0 Remove $config parameter since unused
+     *
      * @return ResponseInterface
      */
     public static function response(?App $config = null, bool $getShared = true)
@@ -585,13 +589,13 @@ class Services extends BaseService
             return static::getSharedInstance('response', $config);
         }
 
-        $config ??= config(App::class);
-
-        return new Response($config);
+        return new Response();
     }
 
     /**
      * The Redirect class provides nice way of working with redirects.
+     *
+     * @todo v4.8.0 Remove $config parameter since unused
      *
      * @return RedirectResponse
      */
@@ -601,8 +605,7 @@ class Services extends BaseService
             return static::getSharedInstance('redirectresponse', $config);
         }
 
-        $config ??= config(App::class);
-        $response = new RedirectResponse($config);
+        $response = new RedirectResponse();
         $response->setProtocolVersion(AppServices::get('request')->getProtocolVersion());
 
         return $response;

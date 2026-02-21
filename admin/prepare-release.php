@@ -24,6 +24,9 @@ $version      = $argv[1]; // e.g., '4.4.3'
 $versionParts = explode('.', $version);
 $minor        = $versionParts[0] . '.' . $versionParts[1];
 
+// Note: Major version will change someday (4.x..5.x) - update manually.
+$nextMinor = $versionParts[0] . '.' . $versionParts[1] + 1;
+
 // Creates a branch for release.
 system('git switch develop');
 system('git branch -D release-' . $version);
@@ -66,6 +69,18 @@ replace_file_content(
     "./user_guide_src/source/changelogs/v{$version}.rst",
     '/^Release Date: .*/mu',
     "Release Date: {$date}",
+);
+
+// Update appstarter/builds script
+replace_file_content(
+    './admin/starter/builds',
+    '/define\(\'LATEST_RELEASE\', \'.*?\'\);/mu',
+    "define('LATEST_RELEASE', '^{$minor}');",
+);
+replace_file_content(
+    './admin/starter/builds',
+    '/define\(\'NEXT_MINOR\', \'.*?\'\);/mu',
+    "define('NEXT_MINOR', '^{$nextMinor}-dev');",
 );
 
 // Commits

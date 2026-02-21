@@ -1,4 +1,4 @@
-# total 1269 errors
+# total 1259 errors
 
 parameters:
     ignoreErrors:
@@ -1803,21 +1803,6 @@ parameters:
             path: ../../system/Debug/BaseExceptionHandler.php
 
         -
-            message: '#^Method CodeIgniter\\Debug\\BaseExceptionHandler\:\:maskData\(\) has parameter \$args with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/BaseExceptionHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Debug\\BaseExceptionHandler\:\:maskData\(\) has parameter \$keysToMask with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/BaseExceptionHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Debug\\BaseExceptionHandler\:\:maskData\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/BaseExceptionHandler.php
-
-        -
             message: '#^Method CodeIgniter\\Debug\\BaseExceptionHandler\:\:maskSensitiveData\(\) has parameter \$keysToMask with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Debug/BaseExceptionHandler.php
@@ -1833,42 +1818,7 @@ parameters:
             path: ../../system/Debug/BaseExceptionHandler.php
 
         -
-            message: '#^Method CodeIgniter\\Debug\\Exceptions\:\:collectVars\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/Exceptions.php
-
-        -
             message: '#^Method CodeIgniter\\Debug\\Exceptions\:\:determineCodes\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/Exceptions.php
-
-        -
-            message: '#^Method CodeIgniter\\Debug\\Exceptions\:\:maskData\(\) has parameter \$args with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/Exceptions.php
-
-        -
-            message: '#^Method CodeIgniter\\Debug\\Exceptions\:\:maskData\(\) has parameter \$keysToMask with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/Exceptions.php
-
-        -
-            message: '#^Method CodeIgniter\\Debug\\Exceptions\:\:maskData\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/Exceptions.php
-
-        -
-            message: '#^Method CodeIgniter\\Debug\\Exceptions\:\:maskSensitiveData\(\) has parameter \$keysToMask with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/Exceptions.php
-
-        -
-            message: '#^Method CodeIgniter\\Debug\\Exceptions\:\:maskSensitiveData\(\) has parameter \$trace with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/Exceptions.php
-
-        -
-            message: '#^Method CodeIgniter\\Debug\\Exceptions\:\:maskSensitiveData\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Debug/Exceptions.php
 

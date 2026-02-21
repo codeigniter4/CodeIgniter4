@@ -38,6 +38,10 @@ The available Handlers are as follows:
 
 .. note:: The ImageMagick handler requires the imagick extension.
 
+.. note::
+   On Windows, the ImageMagick handler requires **absolute file paths** when
+   loading images (for example, using ``WRITEPATH`` or ``FCPATH``).
+
 *******************
 Processing an Image
 *******************

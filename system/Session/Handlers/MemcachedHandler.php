@@ -63,7 +63,7 @@ class MemcachedHandler extends BaseHandler
 
         $this->sessionExpiration = $config->expiration;
 
-        if ($this->savePath !== '') {
+        if ($this->savePath === '') {
             throw SessionException::forEmptySavepath();
         }
 

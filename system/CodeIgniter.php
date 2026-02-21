@@ -19,10 +19,10 @@ use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\HTTP\CLIRequest;
-use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Method;
+use CodeIgniter\HTTP\NonBufferedResponseInterface;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\RequestInterface;
@@ -55,7 +55,7 @@ class CodeIgniter
     /**
      * The current version of CodeIgniter Framework
      */
-    public const CI_VERSION = '4.7.0';
+    public const CI_VERSION = '4.8.0-dev';
 
     /**
      * App startup time.
@@ -529,7 +529,7 @@ class CodeIgniter
 
         // Skip unnecessary processing for special Responses.
         if (
-            ! $this->response instanceof DownloadResponse
+            ! $this->response instanceof NonBufferedResponseInterface
             && ! $this->response instanceof RedirectResponse
         ) {
             // Save our current URI as the previous URI in the session
@@ -1018,7 +1018,7 @@ class CodeIgniter
     {
         $this->output = $this->outputBufferingEnd();
 
-        if ($returned instanceof DownloadResponse) {
+        if ($returned instanceof NonBufferedResponseInterface) {
             $this->response = $returned;
 
             return;
@@ -1064,7 +1064,7 @@ class CodeIgniter
         }
 
         // Ignore unroutable responses
-        if ($this->response instanceof DownloadResponse || $this->response instanceof RedirectResponse) {
+        if ($this->response instanceof NonBufferedResponseInterface || $this->response instanceof RedirectResponse) {
             return;
         }
 

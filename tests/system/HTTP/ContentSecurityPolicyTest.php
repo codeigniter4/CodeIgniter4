@@ -49,11 +49,10 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
     {
         $this->resetServices();
 
-        $config = config(App::class);
+        // Needed by CSP
+        config(App::class)->CSPEnabled = $CSPEnabled;
 
-        $config->CSPEnabled = $CSPEnabled;
-
-        $this->response = new Response($config);
+        $this->response = new Response();
         $this->response->pretend(false);
 
         $this->csp = $this->response->getCSP();
@@ -181,7 +180,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
         $csp = new ContentSecurityPolicy($config);
 
-        $response = new Response(new App());
+        $response = new Response();
         $response->pretend(true);
 
         $response->setBody('Blah blah blah blah');
@@ -738,7 +737,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $config->scriptNonceTag = '{custom-script-nonce-tag}';
         $csp                    = new ContentSecurityPolicy($config);
 
-        $response = new Response(new App());
+        $response = new Response();
         $response->pretend(true);
         $body = 'Blah blah {custom-script-nonce-tag} blah blah';
         $response->setBody($body);
@@ -754,7 +753,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $config->autoNonce = false;
         $csp               = new ContentSecurityPolicy($config);
 
-        $response = new Response(new App());
+        $response = new Response();
         $response->pretend(true);
         $body = 'Blah blah {csp-script-nonce} blah blah';
         $response->setBody($body);
@@ -773,7 +772,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $config->autoNonce = false;
         $csp               = new ContentSecurityPolicy($config);
 
-        $response = new Response(new App());
+        $response = new Response();
         $response->pretend(true);
         $body = 'Blah blah {csp-style-nonce} blah blah';
         $response->setBody($body);
@@ -817,7 +816,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $config->styleNonceTag = '{custom-style-nonce-tag}';
         $csp                   = new ContentSecurityPolicy($config);
 
-        $response = new Response(new App());
+        $response = new Response();
         $response->pretend(true);
         $body = 'Blah blah {custom-style-nonce-tag} blah blah';
         $response->setBody($body);
@@ -936,5 +935,41 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertNotContains('style-src css.example.com', $directives);
         $this->assertNotContains('report-uri http://example.com/csp/reports', $directives);
         $this->assertNotContains('report-to default', $directives);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testGenerateNoncesReplacesPlaceholdersInHtml(): void
+    {
+        $body = '<style {csp-style-nonce}>body{}</style><script {csp-script-nonce}>alert(1)</script>';
+
+        $this->response->setBody($body);
+        $this->csp->finalize($this->response);
+
+        $result = $this->response->getBody();
+
+        $this->assertMatchesRegularExpression('/<style nonce="[A-Za-z0-9+\/=]+">/', $result);
+        $this->assertMatchesRegularExpression('/<script nonce="[A-Za-z0-9+\/=]+">/', $result);
+        $this->assertIsString($result);
+        $this->assertStringNotContainsString('{csp-style-nonce}', $result);
+        $this->assertStringNotContainsString('{csp-script-nonce}', $result);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testGenerateNoncesEscapesQuotesInJsonResponse(): void
+    {
+        $data = json_encode(['html' => '<script {csp-script-nonce}>alert(1)</script>']);
+
+        $this->response->setContentType('application/json');
+        $this->response->setBody($data);
+        $this->csp->finalize($this->response);
+
+        $result = $this->response->getBody();
+        $parsed = json_decode($result, true);
+
+        $this->assertSame(JSON_ERROR_NONE, json_last_error());
+        $this->assertNotNull($parsed);
+        $this->assertMatchesRegularExpression('/nonce="[A-Za-z0-9+\/=]+"/', $parsed['html']);
     }
 }

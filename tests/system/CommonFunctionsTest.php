@@ -448,7 +448,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
             'zibble' => 'fritz',
         ]);
 
-        $response = new RedirectResponse(new App());
+        $response = new RedirectResponse();
         $response->withInput();
 
         $this->assertSame('bar', old('foo')); // regular parameter
@@ -482,7 +482,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
             'zibble' => serialize('fritz'),
         ]);
 
-        $response = new RedirectResponse(new App());
+        $response = new RedirectResponse();
         $response->withInput();
 
         // serialized parameters are only HTML-escaped.
@@ -522,7 +522,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $superglobals->setGetArray([]);
         $superglobals->setPostArray(['location' => $locations]);
 
-        $response = new RedirectResponse(new App());
+        $response = new RedirectResponse();
         $response->withInput();
 
         $this->assertSame($locations, old('location'));

@@ -265,6 +265,43 @@ final class UpdateModelTest extends LiveModelTestCase
         $this->assertSame(2, $model->updateBatch([$entity1, $entity2], 'id'));
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/9943
+     */
+    public function testUpdateBatchWithEntityAndUpdateOnlyChanged(): void
+    {
+        $entity1          = new User();
+        $entity1->id      = 1;
+        $entity1->name    = 'Derek Jones';
+        $entity1->email   = 'derek@world.com';
+        $entity1->country = 'US';
+        $entity1->syncOriginal();
+        $entity1->country = 'Greece';
+
+        $entity2          = new User();
+        $entity2->id      = 4;
+        $entity2->name    = 'Chris Martin';
+        $entity2->email   = 'chris@world.com';
+        $entity2->country = 'UK';
+        $entity2->syncOriginal();
+        $entity2->country = 'Finland';
+
+        // updateOnlyChanged is true by default. The index field 'id' is
+        // unchanged but must be preserved for the batch WHERE clause.
+        $model = $this->createModel(UserModel::class);
+        $this->assertTrue($this->getPrivateProperty($model, 'updateOnlyChanged'));
+        $this->assertSame(2, $model->updateBatch([$entity1, $entity2], 'id'));
+
+        $this->seeInDatabase('user', [
+            'name'    => 'Derek Jones',
+            'country' => 'Greece',
+        ]);
+        $this->seeInDatabase('user', [
+            'name'    => 'Chris Martin',
+            'country' => 'Finland',
+        ]);
+    }
+
     public function testUpdateNoPrimaryKey(): void
     {
         $this->db->table('secondary')->insert([
@@ -659,6 +696,7 @@ final class UpdateModelTest extends LiveModelTestCase
 
         $user           = $model->find(1);
         $updateAtBefore = $user->updated_at;
+        $this->assertInstanceOf(User::class, $user);
 
         // updates the Entity without changes.
         $result = $model->update(1, $user);

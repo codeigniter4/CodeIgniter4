@@ -34,8 +34,7 @@ final class CURLRequestShareOptionsTest extends CURLRequestTest
      */
     protected function getRequest(array $options = [], ?array $shareConnectionOptions = null): MockCURLRequest
     {
-        $uri = isset($options['baseURI']) ? new URI($options['baseURI']) : new URI();
-        $app = new App();
+        $uri = new URI($options['baseURI'] ?? null);
 
         $config               = new ConfigCURLRequest();
         $config->shareOptions = true;
@@ -46,7 +45,7 @@ final class CURLRequestShareOptionsTest extends CURLRequestTest
 
         Factories::injectMock('config', 'CURLRequest', $config);
 
-        return new MockCURLRequest(($app), $uri, new Response($app), $options);
+        return new MockCURLRequest(new App(), $uri, new Response(), $options);
     }
 
     public function testHeaderContentLengthNotSharedBetweenRequests(): void

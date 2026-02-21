@@ -202,8 +202,10 @@ class View implements RendererInterface
         $this->renderVars['file'] = $this->viewPath . $this->renderVars['view'];
 
         if (str_contains($this->renderVars['view'], '\\')) {
-            $overrideFolder = $this->config->appOverridesFolder !== ''
-                 ? trim($this->config->appOverridesFolder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR
+            $appOverridesFolder = $this->config->appOverridesFolder ?? 'overrides';
+
+            $overrideFolder = $appOverridesFolder !== ''
+                 ? trim($appOverridesFolder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR
                  : '';
 
             $this->renderVars['file'] = $this->viewPath

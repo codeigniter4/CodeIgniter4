@@ -323,7 +323,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $agent  = new UserAgent();
 
         $request  = new IncomingRequest($config, $uri, '', $agent);
-        $response = new Response($config);
+        $response = new Response();
         $logger   = new NullLogger();
 
         $resource->initController($request, $response, $logger);
@@ -351,7 +351,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $agent  = new UserAgent();
 
         $request  = new IncomingRequest($config, $uri, '', $agent);
-        $response = new Response($config);
+        $response = new Response();
         $logger   = new NullLogger();
 
         $resource->initController($request, $response, $logger);

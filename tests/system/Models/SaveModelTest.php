@@ -22,6 +22,7 @@ use stdClass;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SecondaryModel;
+use Tests\Support\Models\SimpleEntity;
 use Tests\Support\Models\UserModel;
 use Tests\Support\Models\ValidModel;
 use Tests\Support\Models\WithoutAutoIncrementModel;
@@ -173,6 +174,7 @@ final class SaveModelTest extends LiveModelTestCase
         $this->assertSame('Rocket Scientist', $job->name);
 
         $job->description = 'Some guitar description';
+        $this->assertInstanceOf(SimpleEntity::class, $job);
         $this->model->save($job);
         $this->seeInDatabase('job', [
             'id'   => $job->id,

@@ -19,9 +19,9 @@ use CodeIgniter\Debug\Toolbar\Collectors\Config;
 use CodeIgniter\Debug\Toolbar\Collectors\History;
 use CodeIgniter\Format\JSONFormatter;
 use CodeIgniter\Format\XMLFormatter;
-use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\Header;
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\NonBufferedResponseInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\I18n\Time;
@@ -382,8 +382,8 @@ class Toolbar
             /** @var ResponseInterface $response */
             $response ??= service('response');
 
-            // Disable the toolbar for downloads
-            if ($response instanceof DownloadResponse) {
+            // Disable the toolbar for non-buffered responses (downloads, SSE)
+            if ($response instanceof NonBufferedResponseInterface) {
                 return;
             }
 

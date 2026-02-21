@@ -46,7 +46,6 @@ use CodeIgniter\Typography\Typography;
 use CodeIgniter\Validation\Validation;
 use CodeIgniter\View\Cell;
 use CodeIgniter\View\Parser;
-use Config\App;
 use Config\Database as DatabaseConfig;
 use Config\Exceptions;
 use Config\Security as SecurityConfig;
@@ -334,11 +333,11 @@ final class ServicesTest extends CIUnitTestCase
     #[RunInSeparateProcess]
     public function testMockInjection(): void
     {
-        Services::injectMock('response', new MockResponse(new App()));
+        Services::injectMock('response', new MockResponse());
         $response = service('response');
         $this->assertInstanceOf(MockResponse::class, $response);
 
-        Services::injectMock('response', new MockResponse(new App()));
+        Services::injectMock('response', new MockResponse());
         $response2 = service('response');
         $this->assertInstanceOf(MockResponse::class, $response2);
 
@@ -354,13 +353,13 @@ final class ServicesTest extends CIUnitTestCase
     #[RunInSeparateProcess]
     public function testReset(): void
     {
-        Services::injectMock('response', new MockResponse(new App()));
+        Services::injectMock('response', new MockResponse());
         $response = service('response');
         $this->assertInstanceOf(MockResponse::class, $response);
 
         Services::reset(true); // reset mocks & shared instances
 
-        Services::injectMock('response', new MockResponse(new App()));
+        Services::injectMock('response', new MockResponse());
         $response2 = service('response');
         $this->assertInstanceOf(MockResponse::class, $response2);
 
@@ -371,7 +370,7 @@ final class ServicesTest extends CIUnitTestCase
     #[RunInSeparateProcess]
     public function testResetSingle(): void
     {
-        Services::injectMock('response', new MockResponse(new App()));
+        Services::injectMock('response', new MockResponse());
         Services::injectMock('security', new MockSecurity(new SecurityConfig()));
         $response = service('response');
         $security = service('security');
@@ -391,7 +390,7 @@ final class ServicesTest extends CIUnitTestCase
 
     public function testResetSingleCaseInsensitive(): void
     {
-        Services::injectMock('response', new MockResponse(new App()));
+        Services::injectMock('response', new MockResponse());
         $someService = service('response');
         $this->assertInstanceOf(MockResponse::class, $someService);
 
@@ -404,7 +403,7 @@ final class ServicesTest extends CIUnitTestCase
     #[RunInSeparateProcess]
     public function testResetServiceCache(): void
     {
-        Services::injectMock('response', new MockResponse(new App()));
+        Services::injectMock('response', new MockResponse());
         $response = service('response');
         $this->assertInstanceOf(MockResponse::class, $response);
         service('response')->setStatusCode(200);
