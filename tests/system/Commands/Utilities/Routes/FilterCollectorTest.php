@@ -34,12 +34,6 @@ final class FilterCollectorTest extends CIUnitTestCase
 
         $filters = $collector->get(Method::GET, '/');
 
-        $expected = [
-            'before' => [
-            ],
-            'after' => [
-            ],
-        ];
-        $this->assertSame($expected, $filters);
+        $this->assertSame(['before' => [], 'after' => []], $filters);
     }
 }

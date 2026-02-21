@@ -37,7 +37,8 @@ final readonly class FilterCollector
     }
 
     /**
-     * Returns filters for the URI
+     * Returns filters for the URI based on the HTTP method.
+     * The HTTP method is compared case-sensitively.
      *
      * @param string $method HTTP verb like `GET`,`POST` or `CLI`.
      * @param string $uri    URI path to find filters for
@@ -46,25 +47,8 @@ final readonly class FilterCollector
      */
     public function get(string $method, string $uri): array
     {
-        if ($method === strtolower($method)) {
-            @trigger_error(
-                'Passing lowercase HTTP method "' . $method . '" is deprecated.'
-                . ' Use uppercase HTTP method like "' . strtoupper($method) . '".',
-                E_USER_DEPRECATED,
-            );
-        }
-
-        /**
-         * @deprecated 4.5.0
-         * @TODO Remove this in the future.
-         */
-        $method = strtoupper($method);
-
         if ($method === 'CLI') {
-            return [
-                'before' => [],
-                'after'  => [],
-            ];
+            return ['before' => [], 'after' => []];
         }
 
         $request = service('incomingrequest', null, false);
@@ -79,7 +63,8 @@ final readonly class FilterCollector
     }
 
     /**
-     * Returns filter classes for the URI
+     * Returns filter classes for the URI based on the HTTP method.
+     * The HTTP method is compared case-sensitively.
      *
      * @param string $method HTTP verb like `GET`,`POST` or `CLI`.
      * @param string $uri    URI path to find filters for
@@ -88,25 +73,8 @@ final readonly class FilterCollector
      */
     public function getClasses(string $method, string $uri): array
     {
-        if ($method === strtolower($method)) {
-            @trigger_error(
-                'Passing lowercase HTTP method "' . $method . '" is deprecated.'
-                . ' Use uppercase HTTP method like "' . strtoupper($method) . '".',
-                E_USER_DEPRECATED,
-            );
-        }
-
-        /**
-         * @deprecated 4.5.0
-         * @TODO Remove this in the future.
-         */
-        $method = strtoupper($method);
-
         if ($method === 'CLI') {
-            return [
-                'before' => [],
-                'after'  => [],
-            ];
+            return ['before' => [], 'after' => []];
         }
 
         $request = service('incomingrequest', null, false);

@@ -23,6 +23,9 @@ BREAKING
 Behavior Changes
 ================
 
+- **Commands:** The ``get()`` and ``getClasses()`` methods of ``FilterCollector`` now compare the HTTP method case-sensitively.
+    This may affect filters defined for methods like `get`, `post`, etc., which should be updated to uppercase (e.g., `GET`, `POST`) to ensure they are applied correctly.
+
 Interface Changes
 =================
 
