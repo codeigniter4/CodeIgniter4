@@ -50,6 +50,7 @@ Removed Deprecated Items
 - **Autoloader:** Removed the following deprecated methods:
     - ``CodeIgniter\Autoloader\Autoloader::sanitizeFileName()``
     - ``CodeIgniter\Autoloader\Autoloader::discoverComposerNamespaces()``
+- **Bootstrap:** The deprecated **system/bootstrap.php** file has been removed.
 - **Cache:** Removed the following methods deprecated since v4.6.0:
     - ``CodeIgniter\Cache\Handlers\FileHandler::writeFile()``
     - ``CodeIgniter\Cache\Handlers\FileHandler::deleteFile()``

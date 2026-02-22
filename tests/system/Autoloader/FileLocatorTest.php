@@ -316,7 +316,7 @@ class FileLocatorTest extends CIUnitTestCase
     {
         $this->assertSame(
             '',
-            $this->locator->getClassname(SYSTEMPATH . 'bootstrap.php'),
+            $this->locator->getClassname(SYSTEMPATH . 'util_bootstrap.php'),
         );
     }
 
