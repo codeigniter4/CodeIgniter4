@@ -71,7 +71,6 @@ jobs:
       enable-coverage: ${{ matrix.php-version == needs.coverage-php-version.outputs.version }}
       enable-profiling: ${{ matrix.php-version == needs.coverage-php-version.outputs.version }}
       extra-extensions: imagick, redis, memcached
-      extra-composer-options: ${{ matrix.composer-option }}
 
   database-live-tests:
     name: DatabaseLive
@@ -112,7 +111,6 @@ jobs:
       enable-coverage: ${{ matrix.php-version == needs.coverage-php-version.outputs.version }}
       enable-profiling: ${{ matrix.php-version == needs.coverage-php-version.outputs.version }}
       extra-extensions: mysqli, oci8, pgsql, sqlsrv, sqlite3
-      extra-composer-options: ${{ matrix.composer-option }}
 
   separate-process-tests:
     name: SeparateProcess
@@ -138,7 +136,6 @@ jobs:
       enable-coverage: true # needs xdebug for assertHeaderEmitted() tests
       enable-profiling: ${{ matrix.php-version == needs.coverage-php-version.outputs.version }}
       extra-extensions: mysqli, oci8, pgsql, sqlsrv-5.10.1, sqlite3
-      extra-composer-options: ${{ matrix.composer-option }}
 
   cache-live-tests:
     name: CacheLive
@@ -165,7 +162,6 @@ jobs:
       enable-profiling: ${{ matrix.php-version == needs.coverage-php-version.outputs.version }}
       extra-extensions: redis, memcached, apcu
       extra-ini-options: apc.enable_cli=1
-      extra-composer-options: ${{ matrix.composer-option }}
 
   coveralls:
     name: Upload coverage results to Coveralls
