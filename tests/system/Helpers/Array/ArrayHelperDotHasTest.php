@@ -32,7 +32,7 @@ final class ArrayHelperDotHasTest extends CIUnitTestCase
         ],
     ];
 
-    public function testDotKeyExists(): void
+    public function testDotHas(): void
     {
         $this->assertFalse(ArrayHelper::dotHas('', $this->array));
         $this->assertTrue(ArrayHelper::dotHas('contacts', $this->array));
@@ -43,7 +43,7 @@ final class ArrayHelperDotHasTest extends CIUnitTestCase
         $this->assertFalse(ArrayHelper::dotHas('contacts.friends.1.name', $this->array));
     }
 
-    public function testDotKeyExistsWithEndingWildCard(): void
+    public function testDotHasWithEndingWildCard(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('You must set key right after "*". Invalid index: "contacts.*"');
@@ -51,7 +51,7 @@ final class ArrayHelperDotHasTest extends CIUnitTestCase
         $this->assertTrue(ArrayHelper::dotHas('contacts.*', $this->array));
     }
 
-    public function testDotKeyExistsWithDoubleWildCard(): void
+    public function testDotHasWithDoubleWildCard(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('You must set key right after "*". Invalid index: "contacts.*.*.age"');
@@ -59,7 +59,7 @@ final class ArrayHelperDotHasTest extends CIUnitTestCase
         $this->assertTrue(ArrayHelper::dotHas('contacts.*.*.age', $this->array));
     }
 
-    public function testDotKeyExistsWithWildCard(): void
+    public function testDotHasWithWildCard(): void
     {
         $this->assertTrue(ArrayHelper::dotHas('*.friends', $this->array));
         $this->assertTrue(ArrayHelper::dotHas('contacts.friends.*.age', $this->array));

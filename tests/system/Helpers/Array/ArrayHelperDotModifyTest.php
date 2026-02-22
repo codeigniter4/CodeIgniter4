@@ -54,8 +54,8 @@ final class ArrayHelperDotModifyTest extends CIUnitTestCase
     /**
      * @param array<array-key, mixed> $array
      */
-    #[DataProvider('provideDotKeyExists')]
-    public function testDotKeyExists(string $index, array $array, bool $expected): void
+    #[DataProvider('provideDotHas')]
+    public function testDotHas(string $index, array $array, bool $expected): void
     {
         $this->assertSame($expected, ArrayHelper::dotHas($index, $array));
     }
@@ -63,7 +63,7 @@ final class ArrayHelperDotModifyTest extends CIUnitTestCase
     /**
      * @return iterable<string, array{index: string, array: array<array-key, mixed>, expected: bool}>
      */
-    public static function provideDotKeyExists(): iterable
+    public static function provideDotHas(): iterable
     {
         yield from [
             'null value at leaf' => [
