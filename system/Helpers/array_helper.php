@@ -28,6 +28,72 @@ if (! function_exists('dot_array_search')) {
     }
 }
 
+if (! function_exists('dot_array_has')) {
+    /**
+     * Checks if an array key exists using dot syntax.
+     *
+     * @param array<array-key, mixed> $array
+     */
+    function dot_array_has(string $index, array $array): bool
+    {
+        return ArrayHelper::dotHas($index, $array);
+    }
+}
+
+if (! function_exists('dot_array_set')) {
+    /**
+     * Sets an array value using dot syntax.
+     *
+     * @param array<array-key, mixed> $array
+     */
+    function dot_array_set(array &$array, string $index, mixed $value): void
+    {
+        ArrayHelper::dotSet($array, $index, $value);
+    }
+}
+
+if (! function_exists('dot_array_unset')) {
+    /**
+     * Unsets an array value using dot syntax.
+     *
+     * @param array<array-key, mixed> $array
+     */
+    function dot_array_unset(array &$array, string $index): bool
+    {
+        return ArrayHelper::dotUnset($array, $index);
+    }
+}
+
+if (! function_exists('dot_array_only')) {
+    /**
+     * Gets only the specified keys using dot syntax.
+     *
+     * @param array<array-key, mixed> $array
+     * @param list<string>|string     $indexes
+     *
+     * @return array<array-key, mixed>
+     */
+    function dot_array_only(array $array, array|string $indexes): array
+    {
+        return ArrayHelper::dotOnly($array, $indexes);
+    }
+}
+
+if (! function_exists('dot_array_except')) {
+    /**
+     * Gets all keys except the specified ones using dot syntax.
+     *
+     * @param array<array-key, mixed> $array
+     * @param list<string>|string     $indexes
+     *
+     * @return array<array-key, mixed>
+     */
+    function dot_array_except(array $array, array|string $indexes): array
+    {
+        return ArrayHelper::dotExcept($array, $indexes);
+    }
+}
+
 if (! function_exists('array_deep_search')) {
     /**
      * Returns the value of an element at a key in an array of uncertain depth.

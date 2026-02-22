@@ -52,7 +52,7 @@ class Rules
         }
 
         if (str_contains($field, '.')) {
-            if (! ArrayHelper::dotKeyExists($field, $data)) {
+            if (! ArrayHelper::dotHas($field, $data)) {
                 return false;
             }
         } elseif (! array_key_exists($field, $data)) {
@@ -245,7 +245,7 @@ class Rules
         }
 
         if (str_contains($field, '.')) {
-            if (! ArrayHelper::dotKeyExists($field, $data)) {
+            if (! ArrayHelper::dotHas($field, $data)) {
                 return false;
             }
         } elseif (! array_key_exists($field, $data)) {
@@ -386,7 +386,7 @@ class Rules
         ?string $field = null,
     ): bool {
         if (str_contains($field, '.')) {
-            return ArrayHelper::dotKeyExists($field, $data);
+            return ArrayHelper::dotHas($field, $data);
         }
 
         return array_key_exists($field, $data);

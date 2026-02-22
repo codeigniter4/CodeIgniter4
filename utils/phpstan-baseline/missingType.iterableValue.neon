@@ -3063,11 +3063,6 @@ parameters:
             path: ../../system/Helpers/Array/ArrayHelper.php
 
         -
-            message: '#^Method CodeIgniter\\Helpers\\Array\\ArrayHelper\:\:dotKeyExists\(\) has parameter \$array with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Helpers/Array/ArrayHelper.php
-
-        -
             message: '#^Method CodeIgniter\\Helpers\\Array\\ArrayHelper\:\:dotSearch\(\) has parameter \$array with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Helpers/Array/ArrayHelper.php
@@ -5223,9 +5218,9 @@ parameters:
             path: ../../tests/system/HTTP/URITest.php
 
         -
-            message: '#^Property CodeIgniter\\Helpers\\Array\\ArrayHelperDotKeyExistsTest\:\:\$array type has no value type specified in iterable type array\.$#'
+            message: '#^Property CodeIgniter\\Helpers\\Array\\ArrayHelperDotHasTest\:\:\$array type has no value type specified in iterable type array\.$#'
             count: 1
-            path: ../../tests/system/Helpers/Array/ArrayHelperDotKeyExistsTest.php
+            path: ../../tests/system/Helpers/Array/ArrayHelperDotHasTest.php
 
         -
             message: '#^Property CodeIgniter\\Helpers\\Array\\ArrayHelperRecursiveDiffTest\:\:\$compareWith type has no value type specified in iterable type array\.$#'
