@@ -41,7 +41,7 @@ jobs:
   # in the caller workflow are not propagated to the called workflow.
   coverage-php-version:
     name: Setup PHP Version for Code Coverage
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     outputs:
       version: ${{ steps.coverage-php-version.outputs.version }}
     steps:

@@ -65,7 +65,7 @@ env:
 jobs:
   tests:
     name: ${{ inputs.job-name }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     # Service containers cannot be extracted to caller workflows yet
     services:
@@ -97,7 +97,7 @@ jobs:
           --health-retries=3
 
       mssql:
-        image: mcr.microsoft.com/mssql/server:2022-latest
+        image: mcr.microsoft.com/mssql/server:2025-CU2-ubuntu-24.04
         env:
           MSSQL_SA_PASSWORD: 1Secure*Password1
           ACCEPT_EULA: Y
@@ -140,15 +140,32 @@ jobs:
           - 11211:11211
 
     steps:
+      - name: Install mssql-tools on runner
+        if: ${{ inputs.db-platform == 'SQLSRV' }}
+        run: |
+          # Detect Ubuntu version used by the runner (fallback to 24.04)
+          DISTRO=$(lsb_release -rs 2>/dev/null || echo '24.04')
+          curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+          curl -sSL https://packages.microsoft.com/config/ubuntu/${DISTRO}/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
+          sudo apt-get update
+          sudo ACCEPT_EULA=Y apt-get install -y msodbcsql18 mssql-tools18 unixodbc-dev
+
+          # Make sqlcmd available to subsequent steps
+          echo "/opt/mssql-tools18/bin" >> $GITHUB_PATH
+
       - name: Create database for MSSQL Server
         if: ${{ inputs.db-platform == 'SQLSRV' }}
-        run: sqlcmd -S 127.0.0.1 -U sa -P 1Secure*Password1 -Q "CREATE DATABASE test COLLATE Latin1_General_100_CS_AS_SC_UTF8"
+        run: |
+          sqlcmd -S 127.0.0.1 \
+            -U sa -P 1Secure*Password1 \
+            -N -C \
+            -Q "CREATE DATABASE test COLLATE Latin1_General_100_CS_AS_SC_UTF8"
 
       - name: Install latest ImageMagick
         if: ${{ contains(inputs.extra-extensions, 'imagick') }}
         run: |
           sudo apt-get update
-          sudo apt-get install --reinstall libgs9-common fonts-noto-mono libgs9:amd64 libijs-0.35:amd64 fonts-urw-base35 ghostscript poppler-data libjbig2dec0:amd64 libopenjp2-7:amd64 fonts-droid-fallback fonts-dejavu-core
+          sudo apt-get install --reinstall fonts-noto-mono libijs-0.35:amd64 fonts-urw-base35 ghostscript poppler-data libjbig2dec0:amd64 libopenjp2-7:amd64 fonts-droid-fallback fonts-dejavu-core
           sudo apt-get install -y gsfonts libmagickwand-dev imagemagick
           sudo apt-get install --fix-broken
 
