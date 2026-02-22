@@ -45,7 +45,7 @@ class Services extends BaseServices
 
         if ($uri === null) {
             $appConfig = config(App::class);
-            $factory   = new SiteURIFactory($appConfig, Services::superglobals());
+            $factory   = new SiteURIFactory($appConfig, static::superglobals());
 
             return $factory->createFromGlobals();
         }
