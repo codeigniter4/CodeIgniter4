@@ -1,9 +1,7 @@
 <?php
 
-if ($context->hasHidden('api_key')) {
-    // API key is set
-}
+// Remove a single hidden value
+$context->removeHidden('api_key');
 
-if ($context->missingHidden('api_key')) {
-    // API key is not set
-}
+// Remove multiple hidden values
+$context->removeHidden(['api_key', 'api_secret']);

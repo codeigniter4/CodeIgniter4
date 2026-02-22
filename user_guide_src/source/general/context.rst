@@ -94,10 +94,6 @@ You can check if a key exists in the context:
 
 .. literalinclude:: context/010.php
 
-Or check if a key is missing (the opposite of ``has()``):
-
-.. literalinclude:: context/011.php
-
 *********************
 Removing Context Data
 *********************
@@ -107,21 +103,21 @@ Removing a Single Value
 
 You can remove data from the context using the ``remove()`` method:
 
-.. literalinclude:: context/012.php
+.. literalinclude:: context/011.php
 
 Removing Multiple Values
 =========================
 
 To remove multiple keys at once, pass an array:
 
-.. literalinclude:: context/013.php
+.. literalinclude:: context/012.php
 
 Clearing All Data
 =================
 
 To remove all context data:
 
-.. literalinclude:: context/014.php
+.. literalinclude:: context/013.php
 
 *********************
 Hidden Context Data
@@ -136,47 +132,47 @@ Setting Hidden Data
 
 Use the ``setHidden()`` method to store sensitive data:
 
-.. literalinclude:: context/015.php
+.. literalinclude:: context/014.php
 
 You can also set multiple hidden values at once:
 
-.. literalinclude:: context/016.php
+.. literalinclude:: context/015.php
 
 Getting Hidden Data
 ===================
 
 Retrieve hidden data using ``getHidden()``:
 
-.. literalinclude:: context/017.php
+.. literalinclude:: context/016.php
 
 The same methods available for regular data also work with hidden data:
 
-.. literalinclude:: context/018.php
+.. literalinclude:: context/017.php
 
 Checking Hidden Data
 ====================
 
 Check if a hidden key exists:
 
-.. literalinclude:: context/019.php
+.. literalinclude:: context/018.php
 
 Removing Hidden Data
 ====================
 
 Remove hidden data using ``removeHidden()``:
 
-.. literalinclude:: context/020.php
+.. literalinclude:: context/019.php
 
 Clearing Hidden Data
 ====================
 
 To clear all hidden data without affecting regular context data:
 
-.. literalinclude:: context/021.php
+.. literalinclude:: context/020.php
 
 To clear both regular and hidden data:
 
-.. literalinclude:: context/022.php
+.. literalinclude:: context/021.php
 
 .. important:: Regular data and hidden data are stored separately. A key can exist in both regular and hidden storage with different values. Use ``get()`` for regular data and ``getHidden()`` for hidden data.
 
@@ -193,11 +189,11 @@ Enabling Global Context Logging
 To enable automatic logging of context data, set the ``$logGlobalContext`` property to ``true`` in your
 **app/Config/Logger.php** file:
 
-.. literalinclude:: context/023.php
+.. literalinclude:: context/022.php
 
 When enabled, all context data (excluding hidden data) will be automatically appended to your log messages as JSON:
 
-.. literalinclude:: context/024.php
+.. literalinclude:: context/023.php
 
 This would produce a log entry like:
 

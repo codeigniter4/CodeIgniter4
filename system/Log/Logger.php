@@ -121,7 +121,7 @@ class Logger implements LoggerInterface
      *
      * @var bool
      */
-    protected $logGlobalContext;
+    protected bool $logGlobalContext = true;
 
     /**
      * Constructor.
@@ -164,7 +164,7 @@ class Logger implements LoggerInterface
             $this->logCache = [];
         }
 
-        $this->logGlobalContext = $config->logGlobalContext;
+        $this->logGlobalContext = $config->logGlobalContext ?? $this->logGlobalContext;
     }
 
     /**
@@ -265,7 +265,7 @@ class Logger implements LoggerInterface
 
         if ($this->logGlobalContext) {
             $globalContext = service('context')->getAll();
-            if (is_array($globalContext) && $globalContext !== []) {
+            if ($globalContext !== []) {
                 $message .= ' ' . json_encode($globalContext);
             }
         }

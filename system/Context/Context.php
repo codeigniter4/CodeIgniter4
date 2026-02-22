@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Context;
 
+use CodeIgniter\Helpers\Array\ArrayHelper;
+
 class Context
 {
     /**
@@ -82,6 +84,7 @@ class Context
 
     /**
      * Get a value from the context by its key, or return a default value if the key does not exist.
+     * Supports dot notation for nested arrays (e.g., 'user.profile.name' to access $data['user']['profile']['name']).
      *
      * @param string     $key     The key to identify the data.
      * @param mixed|null $default The default value to return if the key does not exist in the context.
@@ -90,7 +93,7 @@ class Context
      */
     public function get(string $key, mixed $default = null): mixed
     {
-        return $this->data[$key] ?? $default;
+        return ArrayHelper::dotSearch($key, $this->data) ?? $default;
     }
 
     /**
@@ -145,7 +148,7 @@ class Context
      */
     public function getHidden(string $key, mixed $default = null): mixed
     {
-        return $this->hiddenData[$key] ?? $default;
+        return ArrayHelper::dotSearch($key, $this->hiddenData) ?? $default;
     }
 
     /**
@@ -191,18 +194,6 @@ class Context
     }
 
     /**
-     * Check if a key does not exist in the context. Exactly the opposite of `has()`.
-     *
-     * @param string $key The key to check for non-existence in the context.
-     *
-     * @return bool True if the key does not exist in the context, false otherwise.
-     */
-    public function missing(string $key): bool
-    {
-        return ! $this->has($key);
-    }
-
-    /**
      * Check if a key exists in the context.
      *
      * @param string $key The key to check for existence in the context.
@@ -211,19 +202,7 @@ class Context
      */
     public function has(string $key): bool
     {
-        return array_key_exists($key, $this->data);
-    }
-
-    /**
-     * Check if a key does not exist in the hidden context. Exactly the opposite of `hasHidden()`.
-     *
-     * @param string $key The key to check for non-existence in the hidden context.
-     *
-     * @return bool True if the key does not exist in the hidden context, false otherwise.
-     */
-    public function missingHidden(string $key): bool
-    {
-        return ! $this->hasHidden($key);
+        return ArrayHelper::dotKeyExists($key, $this->data);
     }
 
     /**
@@ -235,7 +214,7 @@ class Context
      */
     public function hasHidden(string $key): bool
     {
-        return array_key_exists($key, $this->hiddenData);
+        return ArrayHelper::dotKeyExists($key, $this->hiddenData);
     }
 
     /**

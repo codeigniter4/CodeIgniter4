@@ -1,14 +1,7 @@
 <?php
 
-namespace Config;
+$context = service('context');
+$context->set('user_id', 123);
+$context->set('transaction_id', 'txn_12345');
 
-use CodeIgniter\Config\BaseConfig;
-
-class Logger extends BaseConfig
-{
-    // ...
-
-    public bool $logGlobalContext = true;
-
-    // ...
-}
+log_message('error', 'Payment processing failed');

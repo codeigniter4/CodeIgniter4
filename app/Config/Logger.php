@@ -65,7 +65,7 @@ class Logger extends BaseConfig
      * **NOTE:** This **DOES NOT** include any data that has been marked as hidden
      * using the `setHidden()` method of the Context class.
      */
-    public bool $logGlobalContext = false;
+    public bool $logGlobalContext = true;
 
     /**
      * --------------------------------------------------------------------------

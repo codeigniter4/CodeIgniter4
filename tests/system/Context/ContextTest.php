@@ -328,15 +328,6 @@ final class ContextTest extends CIUnitTestCase
         $this->assertTrue($context->has('user_id'));
     }
 
-    public function testMissingKey(): void
-    {
-        $context = service('context');
-        $this->assertTrue($context->missing('user_id'));
-
-        $context->set('user_id', 123);
-        $this->assertFalse($context->missing('user_id'));
-    }
-
     public function testHasHiddenKey(): void
     {
         $context = service('context');
@@ -344,15 +335,6 @@ final class ContextTest extends CIUnitTestCase
 
         $context->setHidden('api_key', 'secret');
         $this->assertTrue($context->hasHidden('api_key'));
-    }
-
-    public function testMissingHiddenKey(): void
-    {
-        $context = service('context');
-        $this->assertTrue($context->missingHidden('api_key'));
-
-        $context->setHidden('api_key', 'secret');
-        $this->assertFalse($context->missingHidden('api_key'));
     }
 
     public function testRemoveSingleValue(): void

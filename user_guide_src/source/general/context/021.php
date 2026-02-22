@@ -1,3 +1,3 @@
 <?php
 
-$context->clearHidden();
+$context->clearAll();
