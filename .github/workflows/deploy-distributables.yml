@@ -21,16 +21,17 @@ jobs:
           fetch-depth: 0 # fetch all tags
 
       - name: Get latest version
+        id: version
         run: |
-          echo 'LATEST_VERSION<<EOF' >> $GITHUB_ENV
-          echo $(git describe --tags --abbrev=0) | sed "s/v//" >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
+          echo 'LATEST_VERSION<<EOF' >> $GITHUB_OUTPUT
+          echo $(git describe --tags --abbrev=0) | sed "s/v//" >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
 
       - name: Search for updated version
-        if: ${{ env.LATEST_VERSION }}
+        if: ${{ steps.version.outputs.LATEST_VERSION }}
         run: |
           chmod +x ${GITHUB_WORKSPACE}/.github/scripts/validate-version
-          ${GITHUB_WORKSPACE}/.github/scripts/validate-version ${{ env.LATEST_VERSION }}
+          ${GITHUB_WORKSPACE}/.github/scripts/validate-version ${{ steps.version.outputs.LATEST_VERSION }}
 
   framework:
     name: Deploy to framework

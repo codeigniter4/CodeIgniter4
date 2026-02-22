@@ -39,13 +39,14 @@ jobs:
         working-directory: build/cov
 
       - name: Get composer cache directory
+        id: composer-cache
         run: |
-          echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
+          echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
       - name: Cache dependencies
         uses: actions/cache@v5
         with:
-          path: ${{ env.COMPOSER_CACHE_FILES_DIR }}
+          path: ${{ steps.composer-cache.outputs.COMPOSER_CACHE_FILES_DIR }}
           key: ${{ github.job }}-php-${{ inputs.php-version }}-${{ hashFiles('**/composer.*') }}
           restore-keys: |
             ${{ github.job }}-php-${{ inputs.php-version }}-
