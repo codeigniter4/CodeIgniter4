@@ -19,6 +19,7 @@ use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
+use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 
@@ -28,6 +29,20 @@ use stdClass;
 #[Group('Others')]
 final class TransformerTest extends CIUnitTestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Services::superglobals()->setGetArray([]);
+    }
+
+    protected function tearDown(): void
+    {
+        Services::superglobals()->setGetArray([]);
+
+        parent::tearDown();
+    }
+
     private function createMockRequest(string $query = ''): IncomingRequest
     {
         $config    = new MockAppConfig();
@@ -318,6 +333,9 @@ final class TransformerTest extends CIUnitTestCase
                 return $resource;
             }
 
+            /**
+             * @return list<array{id: int, title: string}>
+             */
             protected function includePosts(): array
             {
                 return [['id' => 1, 'title' => 'Post 1']];
@@ -341,6 +359,9 @@ final class TransformerTest extends CIUnitTestCase
                 return $resource;
             }
 
+            /**
+             * @return list<array{id: int, title: string}>
+             */
             protected function includePosts(): array
             {
                 return [['id' => 1, 'title' => 'Post 1']];
@@ -367,11 +388,17 @@ final class TransformerTest extends CIUnitTestCase
                 return $resource;
             }
 
+            /**
+             * @return list<array{id: int, title: string}>
+             */
             protected function includePosts(): array
             {
                 return [['id' => 1, 'title' => 'Post 1']];
             }
 
+            /**
+             * @return list<array{id: int, text: string}>
+             */
             protected function includeComments(): array
             {
                 return [['id' => 1, 'text' => 'Comment 1']];
@@ -399,6 +426,9 @@ final class TransformerTest extends CIUnitTestCase
                 return $resource;
             }
 
+            /**
+             * @return list<array{id: int, title: string}>
+             */
             protected function includePosts(): array
             {
                 return [['id' => 1, 'title' => 'Post 1']];
@@ -427,6 +457,9 @@ final class TransformerTest extends CIUnitTestCase
                 return [];
             }
 
+            /**
+             * @return list<array{id: int, title: string}>
+             */
             protected function includePosts(): array
             {
                 return [['id' => 1, 'title' => 'Post 1']];
@@ -450,6 +483,9 @@ final class TransformerTest extends CIUnitTestCase
                 return $resource;
             }
 
+            /**
+             * @return list<array{id: int, title: string}>
+             */
             protected function includePosts(): array
             {
                 return [['id' => 1, 'title' => 'Post 1']];
@@ -502,6 +538,9 @@ final class TransformerTest extends CIUnitTestCase
                 return $resource;
             }
 
+            /**
+             * @return list<array{id: int, title: string}>
+             */
             protected function includePosts(): array
             {
                 return [['id' => 1, 'title' => 'Post 1']];
@@ -561,6 +600,9 @@ final class TransformerTest extends CIUnitTestCase
                 return ['id' => $resource['id'], 'name' => $resource['name']];
             }
 
+            /**
+             * @return list<array{id: int, title: string}>
+             */
             protected function includePosts(): array
             {
                 return [['id' => 1, 'title' => 'Post 1']];
@@ -584,6 +626,9 @@ final class TransformerTest extends CIUnitTestCase
                 return ['id' => $resource['id'], 'name' => $resource['name']];
             }
 
+            /**
+             * @return list<array{id: int, title: string}>
+             */
             protected function includePosts(): array
             {
                 return [['id' => 1, 'title' => 'Post 1']];
