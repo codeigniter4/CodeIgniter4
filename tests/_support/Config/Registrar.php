@@ -60,7 +60,6 @@ class Registrar
             'swapPre'  => '',
             'encrypt'  => false,
             'compress' => false,
-            'strictOn' => true, // @todo 4.7.0 to remove in v4.8.0
             'failover' => [],
             'port'     => 5432,
         ],
@@ -79,7 +78,6 @@ class Registrar
             'swapPre'     => '',
             'encrypt'     => false,
             'compress'    => false,
-            'strictOn'    => true, // @todo 4.7.0 to remove in v4.8.0
             'failover'    => [],
             'port'        => 3306,
             'foreignKeys' => true,
@@ -100,7 +98,6 @@ class Registrar
             'swapPre'  => '',
             'encrypt'  => false,
             'compress' => false,
-            'strictOn' => true, // @todo 4.7.0 to remove in v4.8.0
             'failover' => [],
             'port'     => 1433,
         ],
@@ -119,7 +116,6 @@ class Registrar
             'swapPre'  => '',
             'encrypt'  => false,
             'compress' => false,
-            'strictOn' => true, // @todo 4.7.0 to remove in v4.8.0
             'failover' => [],
         ],
     ];

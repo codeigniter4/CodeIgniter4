@@ -23,7 +23,7 @@ class Database extends Config
         'swapPre'  => '',
         'compress' => false,
         'encrypt'  => false,
-        'strictOn' => false,
+        'strictOn' => true,
         'failover' => [],
     ];
 

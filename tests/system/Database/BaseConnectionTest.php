@@ -41,7 +41,6 @@ final class BaseConnectionTest extends CIUnitTestCase
         'swapPre'    => '',
         'encrypt'    => false,
         'compress'   => false,
-        'strictOn'   => true,
         'failover'   => [],
         'dateFormat' => [
             'date'     => 'Y-m-d',
@@ -64,7 +63,6 @@ final class BaseConnectionTest extends CIUnitTestCase
         'swapPre'  => '',
         'encrypt'  => false,
         'compress' => false,
-        'strictOn' => true,
         'failover' => [],
     ];
 
@@ -84,7 +82,6 @@ final class BaseConnectionTest extends CIUnitTestCase
         $this->assertSame('', $db->swapPre);
         $this->assertFalse($db->encrypt);
         $this->assertFalse($db->compress);
-        $this->assertTrue($db->strictOn);
         $this->assertSame([], $db->failover);
         $this->assertSame([
             'date'        => 'Y-m-d',

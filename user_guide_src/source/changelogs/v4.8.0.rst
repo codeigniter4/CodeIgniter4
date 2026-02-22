@@ -47,6 +47,8 @@ Method Signature Changes
     - ``CodeIgniter\CodeIgniter::gatherOutput()`` no longer accepts the deprecated ``$cacheConfig`` parameter.
        As this is the first parameter, custom uses of this method will need to be updated to remove the parameter.
 - **Config:** ``CodeIgniter\Config\Services::request()`` no longer accepts any parameter.
+- **Database:** The following methods have had their signatures updated to remove deprecated parameters:
+    - ``CodeIgniter\Database\Forge::_createTable()`` no longer accepts the deprecated ``$ifNotExists`` parameter. The method signature is now ``_createTable(string $table, array $attributes)``.
 
 Removed Deprecated Items
 ========================
@@ -84,6 +86,17 @@ Removed Deprecated Items
     - ``CodeIgniter\Test\MockCodeIgniter::callExit()``
 - **Config:** Removed the following property deprecated:
     - ``CodeIgniter\Config\BaseService::$services`` (deprecated since v4.5.0)
+- **Database:** Removed the following properties and methods deprecated:
+    - ``CodeIgniter\Database\BaseBuilder::setInsertBatch()``
+    - ``CodeIgniter\Database\BaseBuilder::setUpdateBatch()``
+    - ``CodeIgniter\Database\BaseBuilder::cleanClone()``
+    - ``CodeIgniter\Database\BaseConnection::$strictOn``
+    - ``CodeIgniter\Database\Forge::$createTableIfStr``
+    - ``CodeIgniter\Database\Seeder::$faker``
+    - ``CodeIgniter\Database\Seeder::faker()``
+    - ``CodeIgniter\Database\OCI8\Forge::$createTableIfStr``
+    - ``CodeIgniter\Database\OCI8\Forge::getError()``
+    - ``CodeIgniter\Database\SQLSRV\Forge::$createTableIfStr``
 - **Debug:** Removed the following deprecated properties and methods:
     - ``CodeIgniter\Debug\Toolbar\Collectors\BaseCollector::cleanPath()`` (deprecated since v4.2.0)
     - ``CodeIgniter\Debug\Exceptions::$ob_level`` (deprecated since v4.4.0)

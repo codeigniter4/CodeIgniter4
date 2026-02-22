@@ -95,15 +95,6 @@ class Forge extends BaseForge
     protected $fkAllowActions = ['CASCADE', 'SET NULL', 'NO ACTION', 'RESTRICT', 'SET DEFAULT'];
 
     /**
-     * CREATE TABLE IF statement
-     *
-     * @var string
-     *
-     * @deprecated This is no longer used.
-     */
-    protected $createTableIfStr;
-
-    /**
      * CREATE TABLE statement
      *
      * @var string

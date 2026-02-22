@@ -94,6 +94,11 @@ class Connection extends BaseConnection
     public $foundRows = false;
 
     /**
+     * Strict SQL mode
+     */
+    protected bool $strictOn = false;
+
+    /**
      * Connect to the database.
      *
      * @return false|mysqli
@@ -124,22 +129,19 @@ class Connection extends BaseConnection
             $this->mysqli->options(MYSQLI_OPT_INT_AND_FLOAT_NATIVE, 1);
         }
 
-        // Build init command for strictOn and timezone
         $initCommands = [];
 
-        if ($this->strictOn !== null) {
-            if ($this->strictOn) {
-                $initCommands[] = "sql_mode = CONCAT(@@sql_mode, ',', 'STRICT_ALL_TABLES')";
-            } else {
-                $initCommands[] = "sql_mode = REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
-                                    @@sql_mode,
-                                    'STRICT_ALL_TABLES,', ''),
-                                ',STRICT_ALL_TABLES', ''),
-                            'STRICT_ALL_TABLES', ''),
-                        'STRICT_TRANS_TABLES,', ''),
-                    ',STRICT_TRANS_TABLES', ''),
-                'STRICT_TRANS_TABLES', '')";
-            }
+        if ($this->strictOn) {
+            $initCommands[] = "sql_mode = CONCAT(@@sql_mode, ',', 'STRICT_ALL_TABLES')";
+        } else {
+            $initCommands[] = "sql_mode = REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
+                                @@sql_mode,
+                                'STRICT_ALL_TABLES,', ''),
+                            ',STRICT_ALL_TABLES', ''),
+                        'STRICT_ALL_TABLES', ''),
+                    'STRICT_TRANS_TABLES,', ''),
+                ',STRICT_TRANS_TABLES', ''),
+            'STRICT_TRANS_TABLES', '')";
         }
 
         // Set session timezone if configured
@@ -148,13 +150,10 @@ class Connection extends BaseConnection
             $initCommands[] = "time_zone = '{$timezoneOffset}'";
         }
 
-        // Set init command if we have any commands
-        if ($initCommands !== []) {
-            $this->mysqli->options(
-                MYSQLI_INIT_COMMAND,
-                'SET SESSION ' . implode(', ', $initCommands),
-            );
-        }
+        $this->mysqli->options(
+            MYSQLI_INIT_COMMAND,
+            'SET SESSION ' . implode(', ', $initCommands),
+        );
 
         if (is_array($this->encrypt)) {
             $ssl = [];

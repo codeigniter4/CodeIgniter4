@@ -2261,24 +2261,6 @@ class BaseBuilder
     }
 
     /**
-     * Allows key/value pairs to be set for batch inserts
-     *
-     * @param mixed $key
-     *
-     * @return $this|null
-     *
-     * @deprecated
-     */
-    public function setInsertBatch($key, string $value = '', ?bool $escape = null)
-    {
-        if (! is_array($key)) {
-            $key = [[$key => $value]];
-        }
-
-        return $this->setData($key, $escape);
-    }
-
-    /**
      * Compiles an insert query and returns the sql
      *
      * @return bool|string
@@ -2707,28 +2689,6 @@ class BaseBuilder
         }
 
         return str_replace('{:_table_:}', $data, $sql);
-    }
-
-    /**
-     * Allows key/value pairs to be set for batch updating
-     *
-     * @param array|object $key
-     *
-     * @return $this
-     *
-     * @throws DatabaseException
-     *
-     * @deprecated
-     */
-    public function setUpdateBatch($key, string $index = '', ?bool $escape = null)
-    {
-        if ($index !== '') {
-            $this->onConstraint($index);
-        }
-
-        $this->setData($key, $escape);
-
-        return $this;
     }
 
     /**
@@ -3548,18 +3508,6 @@ class BaseBuilder
         ];
 
         return $key . '.' . $count;
-    }
-
-    /**
-     * Returns a clone of a Base Builder with reset query builder values.
-     *
-     * @return $this
-     *
-     * @deprecated
-     */
-    protected function cleanClone()
-    {
-        return (clone $this)->from([], true)->resetQuery();
     }
 
     /**

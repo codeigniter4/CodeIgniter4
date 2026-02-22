@@ -566,40 +566,6 @@ class Connection extends BaseConnection
     }
 
     /**
-     * Returns the last error encountered by this connection.
-     *
-     * @return array<string, int|string>
-     *
-     * @deprecated Use `error()` instead.
-     */
-    public function getError()
-    {
-        $error = [
-            'code'    => '00000',
-            'message' => '',
-        ];
-
-        $sqlsrvErrors = sqlsrv_errors(SQLSRV_ERR_ERRORS);
-
-        if (! is_array($sqlsrvErrors)) {
-            return $error;
-        }
-
-        $sqlsrvError = array_shift($sqlsrvErrors);
-        if (isset($sqlsrvError['SQLSTATE'])) {
-            $error['code'] = isset($sqlsrvError['code']) ? $sqlsrvError['SQLSTATE'] . '/' . $sqlsrvError['code'] : $sqlsrvError['SQLSTATE'];
-        } elseif (isset($sqlsrvError['code'])) {
-            $error['code'] = $sqlsrvError['code'];
-        }
-
-        if (isset($sqlsrvError['message'])) {
-            $error['message'] = $sqlsrvError['message'];
-        }
-
-        return $error;
-    }
-
-    /**
      * The name of the platform in use (MySQLi, mssql, etc)
      */
     public function getPlatform(): string

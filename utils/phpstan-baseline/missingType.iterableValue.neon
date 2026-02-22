@@ -1,4 +1,4 @@
-# total 1248 errors
+# total 1245 errors
 
 parameters:
     ignoreErrors:
@@ -628,11 +628,6 @@ parameters:
             path: ../../system/Database/BaseBuilder.php
 
         -
-            message: '#^Method CodeIgniter\\Database\\BaseBuilder\:\:setUpdateBatch\(\) has parameter \$key with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseBuilder.php
-
-        -
             message: '#^Method CodeIgniter\\Database\\BaseBuilder\:\:set\(\) has parameter \$key with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/BaseBuilder.php
@@ -1129,11 +1124,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Database\\Forge\:\:_createTableAttributes\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Forge\:\:_createTable\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/Forge.php
 

@@ -45,7 +45,6 @@ use Throwable;
  * @property-read bool       $pretend
  * @property-read string     $queryClass
  * @property-read array      $reservedIdentifiers
- * @property-read bool       $strictOn
  * @property-read string     $subdriver
  * @property-read string     $swapPre
  * @property-read int        $transDepth
@@ -192,17 +191,6 @@ abstract class BaseConnection implements ConnectionInterface
      * @var bool
      */
     protected $compress = false;
-
-    /**
-     * Strict ON flag
-     *
-     * Whether we're running in strict SQL mode.
-     *
-     * @var bool|null
-     *
-     * @deprecated 4.5.0 Will move to MySQLi\Connection.
-     */
-    protected $strictOn;
 
     /**
      * Settings for a failover connection.

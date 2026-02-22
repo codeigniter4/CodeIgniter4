@@ -1,4 +1,4 @@
-# total 44 errors
+# total 42 errors
 
 parameters:
     ignoreErrors:
@@ -34,11 +34,6 @@ parameters:
 
         -
             message: '#^PHPDoc type false of property CodeIgniter\\Database\\OCI8\\Forge\:\:\$createDatabaseStr is not the same as PHPDoc type string\|false of overridden property CodeIgniter\\Database\\Forge\:\:\$createDatabaseStr\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/Forge.php
-
-        -
-            message: '#^PHPDoc type false of property CodeIgniter\\Database\\OCI8\\Forge\:\:\$createTableIfStr is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\Forge\:\:\$createTableIfStr\.$#'
             count: 1
             path: ../../system/Database/OCI8/Forge.php
 
@@ -99,11 +94,6 @@ parameters:
 
         -
             message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLSRV\\Forge\:\:\$createDatabaseStr is not the same as PHPDoc type string\|false of overridden property CodeIgniter\\Database\\Forge\:\:\$createDatabaseStr\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/Forge.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLSRV\\Forge\:\:\$createTableIfStr is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\Forge\:\:\$createTableIfStr\.$#'
             count: 1
             path: ../../system/Database/SQLSRV/Forge.php
 

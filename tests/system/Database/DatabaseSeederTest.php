@@ -15,7 +15,6 @@ namespace CodeIgniter\Database;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Database;
-use Faker\Generator;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Database\Seeds\SeederWithDBGroup;
 use Tests\Support\Database\Seeds\SeederWithoutDBGroup;
@@ -50,14 +49,6 @@ final class DatabaseSeederTest extends CIUnitTestCase
         $config            = new Database();
         $config->filesPath = APPPATH . 'Foo';
         new Seeder($config);
-    }
-
-    /**
-     * @TODO remove this when Seeder::faker() is removed
-     */
-    public function testFakerGet(): void
-    {
-        $this->assertInstanceOf(Generator::class, Seeder::faker());
     }
 
     public function testCallOnEmptySeeder(): void

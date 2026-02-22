@@ -109,15 +109,6 @@ class Forge
     protected $createTableStr = "%s %s (%s\n)";
 
     /**
-     * CREATE TABLE IF statement
-     *
-     * @var bool|string
-     *
-     * @deprecated This is no longer used.
-     */
-    protected $createTableIfStr = 'CREATE TABLE IF NOT EXISTS';
-
-    /**
      * CREATE TABLE keys flag
      *
      * Whether table keys are created from within the
@@ -565,7 +556,7 @@ class Forge
             return true;
         }
 
-        $sql = $this->_createTable($table, false, $attributes);
+        $sql = $this->_createTable($table, $attributes);
 
         if (($result = $this->db->query($sql)) !== false) {
             if (isset($this->db->dataCache['table_names']) && ! in_array($table, $this->db->dataCache['table_names'], true)) {
@@ -586,13 +577,11 @@ class Forge
     }
 
     /**
-     * @param array $attributes Table attributes
+     * @param array<string, mixed> $attributes Table attributes
      *
      * @return string SQL string
-     *
-     * @deprecated $ifNotExists is no longer used, and will be removed.
      */
-    protected function _createTable(string $table, bool $ifNotExists, array $attributes)
+    protected function _createTable(string $table, array $attributes)
     {
         $processedFields = $this->_processFields(true);
 

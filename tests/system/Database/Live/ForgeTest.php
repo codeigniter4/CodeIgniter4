@@ -373,7 +373,7 @@ final class ForgeTest extends CIUnitTestCase
 
         $createTable = self::getPrivateMethodInvoker($this->forge, '_createTable');
 
-        $sql = $createTable('forge_nullable_table', false, []);
+        $sql = $createTable('forge_nullable_table', []);
 
         if ($this->db->DBDriver !== 'SQLSRV') {
             // @see https://regex101.com/r/bIHVNw/1

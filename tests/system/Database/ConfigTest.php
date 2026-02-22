@@ -80,7 +80,6 @@ final class ConfigTest extends CIUnitTestCase
         'swapPre'  => '',
         'encrypt'  => false,
         'compress' => false,
-        'strictOn' => true,
         'failover' => [],
         'port'     => 5432,
     ];
@@ -99,7 +98,6 @@ final class ConfigTest extends CIUnitTestCase
         'swapPre'  => '',
         'encrypt'  => false,
         'compress' => false,
-        'strictOn' => true,
         'failover' => [],
         'port'     => 5432,
     ];
@@ -163,7 +161,6 @@ final class ConfigTest extends CIUnitTestCase
         $this->assertFalse($this->getPrivateProperty($conn, 'pConnect'));
         $this->assertSame('utf8mb4', $this->getPrivateProperty($conn, 'charset'));
         $this->assertSame('utf8mb4_general_ci', $this->getPrivateProperty($conn, 'DBCollat'));
-        $this->assertTrue($this->getPrivateProperty($conn, 'strictOn'));
         $this->assertSame([], $this->getPrivateProperty($conn, 'failover'));
         $this->assertSame('5', $this->getPrivateProperty($conn, 'connect_timeout'));
         $this->assertSame('1', $this->getPrivateProperty($conn, 'sslmode'));
@@ -191,7 +188,6 @@ final class ConfigTest extends CIUnitTestCase
         $this->assertFalse($this->getPrivateProperty($conn, 'pConnect'));
         $this->assertSame('utf8mb4', $this->getPrivateProperty($conn, 'charset'));
         $this->assertSame('utf8mb4_general_ci', $this->getPrivateProperty($conn, 'DBCollat'));
-        $this->assertTrue($this->getPrivateProperty($conn, 'strictOn'));
         $this->assertSame([], $this->getPrivateProperty($conn, 'failover'));
     }
 

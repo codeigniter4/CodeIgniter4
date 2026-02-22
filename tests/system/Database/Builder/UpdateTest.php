@@ -253,9 +253,7 @@ final class UpdateTest extends CIUnitTestCase
     public function testSetUpdateBatchWithoutEscape(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
-        $escape  = false;
-
-        $builder->setUpdateBatch([
+        $builder->setData([
             [
                 'id'          => 2,
                 'name'        => 'SUBSTRING(name, 1)',
@@ -266,7 +264,7 @@ final class UpdateTest extends CIUnitTestCase
                 'name'        => 'SUBSTRING(name, 2)',
                 'description' => 'SUBSTRING(description, 4)',
             ],
-        ], 'id', $escape);
+        ], false);
 
         $this->db->shouldReturn('execute', new class () {});
         $builder->updateBatch(null, 'id');
