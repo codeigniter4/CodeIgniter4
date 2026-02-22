@@ -26,6 +26,7 @@ use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\Validation\ValidationInterface;
 use Config\Database;
 use Config\Feature;
+use Generator;
 use stdClass;
 
 /**
@@ -525,7 +526,14 @@ class Model extends BaseModel
         return $this->builder()->testMode($test)->countAllResults($reset);
     }
 
-    private function iterateChunks(int $size): \Generator
+    /**
+     * Iterates over the result set in chunks of the specified size.
+     *
+     * @param int $size The number of records to retrieve in each chunk.
+     *
+     * @returns Generator<array<int, array|object>>
+     */
+    private function iterateChunks(int $size): Generator
     {
         if ($size <= 0) {
             throw new InvalidArgumentException('$size must be a positive integer.');
