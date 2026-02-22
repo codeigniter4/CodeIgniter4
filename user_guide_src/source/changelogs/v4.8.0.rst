@@ -24,6 +24,8 @@ Behavior Changes
 ================
 
 - **Commands:** The ``filter:check`` command now requires the HTTP method argument to be uppercase (e.g., ``spark filter:check GET /`` instead of ``spark filter:check get /``).
+- **Filters:** HTTP method matching for method-based filters is now case-sensitive. The keys in ``Config\Filters::$methods`` must exactly match the request method
+    (e.g., ``GET``, ``POST``). Lowercase method names (e.g., ``post``) will no longer match.
 
 Interface Changes
 =================
@@ -97,6 +99,10 @@ Removed Deprecated Items
     - ``CodeIgniter\HTTP\Exceptions\HTTPException::forInvalidSameSiteSetting()``
     - ``CodeIgniter\Security\Exceptions\SecurityException::forInvalidSameSite()``
     - ``CodeIgniter\Session\Exceptions\SessionException::forInvalidSameSiteSetting()``
+- **Filters:** Removed the following properties and methods deprecated:
+    - ``CodeIgniter\Filters\Filters::$arguments`` (deprecated since v4.6.0)
+    - ``CodeIgniter\Filters\Filters::$argumentsClass`` (deprecated since v4.6.0)
+    - ``CodeIgniter\Filters\Filters::getArguments()`` (deprecated since v4.6.0)
 - **Security:** Removed the following properties and methods deprecated:
     - ``CodeIgniter\Security\SecurityInterface::sanitizeFilename()`` (deprecated since v4.6.2)
     - ``CodeIgniter\Security\Security::sanitizeFilename()`` (deprecated since v4.6.2)
