@@ -595,12 +595,12 @@ abstract class BaseModel
      *
      * @param Closure(list<array<string, string>>|list<object>): mixed $userFunc
      *
-     * @returns void
+     * @return void
      *
      * @throws DataException
      * @throws InvalidArgumentException if $size is not a positive integer
      */
-    abstract public function chunkRows(int $size, Closure $userFunc): void;
+    abstract public function chunkRows(int $size, Closure $userFunc);
 
     /**
      * Fetches the row of database.

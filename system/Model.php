@@ -531,7 +531,7 @@ class Model extends BaseModel
      *
      * @param int $size The number of records to retrieve in each chunk.
      *
-     * @returns Generator<array<int, array|object>>
+     * @return Generator<list<array<string, string>>|list<object>>
      */
     private function iterateChunks(int $size): Generator
     {
@@ -564,10 +564,6 @@ class Model extends BaseModel
 
     /**
      * {@inheritDoc}
-     *
-     * Works with `$this->builder` to get the Compiled select to
-     * determine the rows to operate on.
-     * This method works only with dbCalls.
      */
     public function chunk(int $size, Closure $userFunc)
     {
@@ -582,10 +578,6 @@ class Model extends BaseModel
 
     /**
      * {@inheritDoc}
-     *
-     * Works with `$this->builder` to get the Compiled select to
-     * determine the rows to operate on.
-     * This method works only with dbCalls.
      */
     public function chunkRows(int $size, Closure $userFunc): void
     {
