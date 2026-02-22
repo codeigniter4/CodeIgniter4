@@ -517,17 +517,10 @@ class Services extends BaseService
      * createRequest() injects IncomingRequest or CLIRequest.
      *
      * @return CLIRequest|IncomingRequest
-     *
-     * @deprecated The parameter $config and $getShared are deprecated.
      */
-    public static function request(?App $config = null, bool $getShared = true)
+    public static function request()
     {
-        if ($getShared) {
-            return static::getSharedInstance('request', $config);
-        }
-
-        // @TODO remove the following code for backward compatibility
-        return AppServices::incomingrequest($config, $getShared);
+        return static::$instances['request'] ?? static::incomingrequest(getShared: false);
     }
 
     /**

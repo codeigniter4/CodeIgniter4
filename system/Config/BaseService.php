@@ -176,15 +176,6 @@ class BaseService
     protected static $discovered = false;
 
     /**
-     * A cache of other service classes we've found.
-     *
-     * @var array
-     *
-     * @deprecated 4.5.0 No longer used.
-     */
-    protected static $services = [];
-
-    /**
      * A cache of the names of services classes found.
      *
      * @var list<string>

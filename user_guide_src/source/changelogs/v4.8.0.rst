@@ -43,6 +43,7 @@ Method Signature Changes
        - The updated method signature is now ``handleRequest(?RouteCollectionInterface $routes, ?Cache $cacheConfig = null)``.
     - ``CodeIgniter\CodeIgniter::gatherOutput()`` no longer accepts the deprecated ``$cacheConfig`` parameter.
        As this is the first parameter, custom uses of this method will need to be updated to remove the parameter.
+- **Config:** ``CodeIgniter\Config\Services::request()`` no longer accepts any parameter.
 
 Removed Deprecated Items
 ========================
@@ -70,6 +71,8 @@ Removed Deprecated Items
     - ``CodeIgniter\CodeIgniter::determinePath()``
     - ``CodeIgniter\CodeIgniter::callExit()``
     - ``CodeIgniter\Test\MockCodeIgniter::callExit()``
+- **Config:** Removed the following property deprecated:
+    - ``CodeIgniter\Config\BaseService::$services`` (deprecated since v4.5.0)
 - **Debug:** Removed the following properties and methods deprecated since v4.4.0:
     - ``CodeIgniter\Debug\Exceptions::$ob_level``
     - ``CodeIgniter\Debug\Exceptions::$viewPath``

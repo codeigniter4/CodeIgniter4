@@ -1,4 +1,4 @@
-# total 1259 errors
+# total 1258 errors
 
 parameters:
     ignoreErrors:
@@ -234,11 +234,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Config\\BaseService\:\:getSharedInstance\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Config/BaseService.php
-
-        -
-            message: '#^Property CodeIgniter\\Config\\BaseService\:\:\$services type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Config/BaseService.php
 
