@@ -11,15 +11,14 @@ jobs:
 
     strategy:
       matrix:
-        php-versions: ['8.2', '8.4']
+        php-versions: ['8.2', '8.5']
 
     runs-on: ubuntu-latest
-
-    if: (! contains(github.event.head_commit.message, '[ci skip]'))
+    if: (! contains(github.event.pull_request.title, '[ci skip]'))
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
 
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@v2
@@ -31,17 +30,17 @@ jobs:
 
       - name: Get composer cache directory
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "COMPOSER_CACHE_DIR=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
       - name: Cache composer dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
-          path: ${{ steps.composer-cache.outputs.dir }}
+          path: ${{ steps.composer-cache.outputs.COMPOSER_CACHE_DIR }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Install dependencies
-        run: composer install --no-progress --no-interaction --prefer-dist --optimize-autoloader
+        run: composer install --no-progress --no-interaction
         # To prevent rate limiting you may need to supply an OAuth token in Settings > Secrets
         # env:
           # https://getcomposer.org/doc/articles/troubleshooting.md#api-rate-limit-and-oauth-tokens
