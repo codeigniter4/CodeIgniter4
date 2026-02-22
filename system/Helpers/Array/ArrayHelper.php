@@ -50,13 +50,22 @@ final class ArrayHelper
      */
     private static function convertToArray(string $index): array
     {
+        $trimmed = rtrim($index, '* ');
+
+        if ($trimmed === '') {
+            return [];
+        }
+
+        // Fast path: no escaped dots, skip the regex entirely.
+        if (! str_contains($trimmed, '\\.')) {
+            return array_values(array_filter(
+                explode('.', $trimmed),
+                static fn ($s): bool => $s !== '',
+            ));
+        }
+
         // See https://regex101.com/r/44Ipql/1
-        $segments = preg_split(
-            '/(?<!\\\\)\./',
-            rtrim($index, '* '),
-            0,
-            PREG_SPLIT_NO_EMPTY,
-        );
+        $segments = preg_split('/(?<!\\\\)\./', $trimmed, 0, PREG_SPLIT_NO_EMPTY);
 
         return array_map(
             static fn ($key): string => str_replace('\.', '.', $key),

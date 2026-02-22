@@ -96,6 +96,16 @@ final class ArrayHelperDotModifyTest extends CIUnitTestCase
                 'array'    => ['user' => ['code' => '0']],
                 'expected' => true,
             ],
+            'escaped dot in key' => [
+                'index'    => 'config.api\.version',
+                'array'    => ['config' => ['api.version' => 'v1']],
+                'expected' => true,
+            ],
+            'escaped dot key does not exist' => [
+                'index'    => 'config.api\.version',
+                'array'    => ['config' => ['api' => ['version' => 'v1']]],
+                'expected' => false,
+            ],
         ];
     }
 
@@ -401,6 +411,24 @@ final class ArrayHelperDotModifyTest extends CIUnitTestCase
         ];
 
         $this->assertSame($expected, ArrayHelper::dotExcept($array, 'user.*'));
+    }
+
+    public function testDotExceptWithEscapedDotKey(): void
+    {
+        $array = [
+            'config' => [
+                'api.version' => 'v1',
+                'region'      => 'eu',
+            ],
+        ];
+
+        $expected = [
+            'config' => [
+                'region' => 'eu',
+            ],
+        ];
+
+        $this->assertSame($expected, ArrayHelper::dotExcept($array, 'config.api\.version'));
     }
 
     public function testDotOnlyWithSingleWildcardReturnsWholeArray(): void

@@ -480,6 +480,11 @@ final class ArrayHelperTest extends CIUnitTestCase
                 'data'     => ['user' => ['score' => 0]],
                 'expected' => true,
             ],
+            'escaped dot in key' => [
+                'index'    => 'config.api\.version',
+                'data'     => ['config' => ['api.version' => 'v1']],
+                'expected' => true,
+            ],
         ];
     }
 
