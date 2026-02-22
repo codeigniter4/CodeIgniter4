@@ -55,6 +55,12 @@ Removed Deprecated Items
     - ``CodeIgniter\Cache\Handlers\FileHandler::deleteFile()``
     - ``CodeIgniter\Cache\Handlers\FileHandler::getDirFileInfo()``
     - ``CodeIgniter\Cache\Handlers\FileHandler::getFileInfo()``
+- **CLI:** Removed the following properties and methods deprecated:
+    - ``CodeIgniter\CLI\BaseCommand::getPad()``
+    - ``CodeIgniter\CLI\CLI::$readline_support``
+    - ``CodeIgniter\CLI\CLI::$wait_msg``
+    - ``CodeIgniter\CLI\CLI::isWindows()``
+    - ``CodeIgniter\CLI\GeneratorTrait::execute()``
 - **CodeIgniter:** Removed the following properties and methods deprecated:
     - ``CodeIgniter\CodeIgniter::$cacheTTL``
     - ``CodeIgniter\CodeIgniter::$returnResponse``
