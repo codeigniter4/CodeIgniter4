@@ -63,6 +63,8 @@ The following functions are available:
     :returns: ``true`` if the key exists, otherwise ``false``
     :rtype: bool
 
+    .. versionadded:: 4.8.0
+
     Checks if an array key exists using dot syntax.
     This method supports wildcard ``*`` in the same way as ``dot_array_search()``.
 
@@ -75,6 +77,8 @@ The following functions are available:
     :param  string  $search: The dot-notation string describing where to set the value
     :param  mixed   $value: The value to set
     :rtype: void
+
+    .. versionadded:: 4.8.0
 
     Sets an array value using dot syntax. Missing path segments are created automatically.
     Wildcard ``*`` is supported with the same rule as ``dot_array_has()``:
@@ -90,6 +94,8 @@ The following functions are available:
     :returns: ``true`` if a key was removed, otherwise ``false``
     :rtype: bool
 
+    .. versionadded:: 4.8.0
+
     Removes array values using dot syntax.
     Wildcard ``*`` is supported.
     You can target specific keys like ``users.*.id`` or clear all keys under a path with ``user.*``.
@@ -103,6 +109,8 @@ The following functions are available:
     :param  array|string     $indexes: One key or a list of keys using dot notation
     :returns: Nested array containing only the requested keys
     :rtype: array
+
+    .. versionadded:: 4.8.0
 
     Gets only the specified keys using dot syntax while preserving nested structure.
 
@@ -118,6 +126,8 @@ The following functions are available:
     :param  array|string     $indexes: One key or a list of keys using dot notation
     :returns: Nested array with the specified keys removed
     :rtype: array
+
+    .. versionadded:: 4.8.0
 
     Gets all keys except the specified ones using dot syntax.
 

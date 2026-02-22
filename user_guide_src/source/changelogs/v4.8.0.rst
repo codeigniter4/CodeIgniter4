@@ -145,6 +145,10 @@ Libraries
 Helpers and Functions
 =====================
 
+- :doc:`Array Helper </helpers/array_helper>` gained five new dot-path functions:
+  :php:func:`dot_array_has()`, :php:func:`dot_array_set()`, :php:func:`dot_array_unset()`,
+  :php:func:`dot_array_only()`, and :php:func:`dot_array_except()`.
+
 HTTP
 ====
 
