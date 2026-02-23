@@ -27,7 +27,7 @@ The Context class is particularly useful for:
 Accessing Context Class
 ***********************
 
-You can access the Context service anywhere in your application using the ``service()`` function:
+You can access the Context service anywhere in your application using the ``service()`` function or ``context()`` helper:
 
 .. literalinclude:: context/001.php
 
