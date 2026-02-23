@@ -97,7 +97,7 @@ class MemcachedHandler extends BaseHandler
                 throw new CriticalError('Cache: Not support Memcache(d) extension.');
             }
         } catch (Exception $e) {
-            throw new CriticalError('Cache: Memcache(d) connection refused (' . $e->getMessage() . ').');
+            throw new CriticalError('Cache: Memcache(d) connection refused (' . $e->getMessage() . ').', $e->getCode(), $e);
         }
     }
 

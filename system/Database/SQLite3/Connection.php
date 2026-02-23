@@ -115,7 +115,7 @@ class Connection extends BaseConnection
 
             return $sqlite;
         } catch (Exception $e) {
-            throw new DatabaseException('SQLite3 error: ' . $e->getMessage());
+            throw new DatabaseException('SQLite3 error: ' . $e->getMessage(), $e->getCode(), $e);
         }
     }
 

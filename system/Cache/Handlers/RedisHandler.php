@@ -94,7 +94,7 @@ class RedisHandler extends BaseHandler
                 throw new CriticalError('Cache: Redis select database failed.');
             }
         } catch (RedisException $e) {
-            throw new CriticalError('Cache: RedisException occurred with message (' . $e->getMessage() . ').');
+            throw new CriticalError('Cache: RedisException occurred with message (' . $e->getMessage() . ').', $e->getCode(), $e);
         }
     }
 

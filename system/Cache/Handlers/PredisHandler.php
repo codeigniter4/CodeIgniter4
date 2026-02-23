@@ -76,7 +76,7 @@ class PredisHandler extends BaseHandler
             $this->redis = new Client($this->config, ['prefix' => $this->prefix]);
             $this->redis->time();
         } catch (Exception $e) {
-            throw new CriticalError('Cache: Predis connection refused (' . $e->getMessage() . ').');
+            throw new CriticalError('Cache: Predis connection refused (' . $e->getMessage() . ').', $e->getCode(), $e);
         }
     }
 
