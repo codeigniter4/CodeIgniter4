@@ -118,8 +118,6 @@ class Logger implements LoggerInterface
      * Whether to log the global context data.
      *
      * Set in app/Config/Logger.php
-     *
-     * @var bool
      */
     protected bool $logGlobalContext = false;
 
