@@ -101,7 +101,7 @@ body:
     id: database
     attributes:
       label: Database
-      description: e.g. MySQL 5.6, MariaDB 10.2, PostgreSQL 9.6
+      description: e.g. MySQL 8.0, MariaDB 10.2, PostgreSQL 9.6
     validations:
       required: false
 

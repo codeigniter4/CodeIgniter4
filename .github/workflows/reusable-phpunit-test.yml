@@ -19,10 +19,6 @@ on:
         description: The database platform to be tested
         type: string
         required: false
-      mysql-version:
-        description: Version of the mysql Docker image
-        type: string
-        required: false
       group-name:
         description: The @group to test
         type: string
@@ -70,7 +66,7 @@ jobs:
     # Service containers cannot be extracted to caller workflows yet
     services:
       mysql:
-        image: mysql:${{ inputs.mysql-version || '8.0' }}
+        image: mysql:8.0
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: test
@@ -176,7 +172,7 @@ jobs:
         id: setup-env
         run: |
           echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-          echo "ARTIFACT_NAME=${{ inputs.job-id || github.job }}-php-${{ inputs.php-version }}-db-${{ inputs.db-platform || 'none' }}${{ inputs.mysql-version || '' }}" >> $GITHUB_OUTPUT
+          echo "ARTIFACT_NAME=${{ inputs.job-id || github.job }}-php-${{ inputs.php-version }}-db-${{ inputs.db-platform || 'none' }}" >> $GITHUB_OUTPUT
 
       - name: Cache dependencies
         uses: actions/cache@v5

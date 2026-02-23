@@ -63,7 +63,7 @@ Supported Databases
 A database is required for most web application programming.
 Currently supported databases are:
 
-  - MySQL via the ``MySQLi`` driver (version 5.1 and above only)
+  - MySQL via the ``MySQLi`` driver (version 8.0 and above only)
   - PostgreSQL via the ``Postgre`` driver (version 7.4 and above only)
   - SQLite3 via the ``SQLite3`` driver
   - Microsoft SQL Server via the ``SQLSRV`` driver (version 2012 and above only)
@@ -72,7 +72,7 @@ Currently supported databases are:
 Not all of the drivers have been converted/rewritten for CodeIgniter4.
 The list below shows the outstanding ones.
 
-  - MySQL (5.1+) via the *pdo* driver
+  - MySQL via the *pdo* driver
   - Oracle via the *pdo* drivers
   - PostgreSQL via the *pdo* driver
   - MSSQL via the *pdo* driver
