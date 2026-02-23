@@ -133,7 +133,7 @@ property in **app/Config/Logger.php**:
 When enabled, all regular context data (set via the :ref:`Context class <context>`) is automatically
 appended to every log message as a JSON string:
 
-.. literalinclude:: context/024.php
+.. literalinclude:: context/023.php
 
 This would produce a log entry like:
 
