@@ -121,7 +121,7 @@ class Logger implements LoggerInterface
      *
      * @var bool
      */
-    protected bool $logGlobalContext = true;
+    protected bool $logGlobalContext = false;
 
     /**
      * Constructor.
