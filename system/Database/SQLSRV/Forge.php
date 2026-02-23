@@ -169,6 +169,25 @@ class Forge extends BaseForge
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @see https://stackoverflow.com/questions/7469130/cannot-drop-database-because-it-is-currently-in-use
+     */
+    public function dropDatabase(string $dbName): bool
+    {
+        try {
+            $this->db->query(sprintf(
+                'ALTER DATABASE %s SET SINGLE_USER WITH ROLLBACK IMMEDIATE',
+                $this->db->escapeIdentifier($dbName),
+            ));
+        } catch (DatabaseException) {
+            // no-op
+        }
+
+        return parent::dropDatabase($dbName);
+    }
+
+    /**
      * CREATE TABLE attributes
      */
     protected function _createTableAttributes(array $attributes): string
