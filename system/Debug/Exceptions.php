@@ -34,6 +34,13 @@ class Exceptions
     use ResponseTrait;
 
     /**
+     * Config for debug exceptions.
+     *
+     * @var ExceptionsConfig
+     */
+    protected $config;
+
+    /**
      * The request.
      *
      * @var CLIRequest|IncomingRequest
@@ -49,9 +56,9 @@ class Exceptions
 
     private ?Throwable $exceptionCaughtByExceptionHandler = null;
 
-    public function __construct(
-        protected ExceptionsConfig $config,
-    ) {
+    public function __construct(ExceptionsConfig $config)
+    {
+        $this->config = $config;
     }
 
     /**

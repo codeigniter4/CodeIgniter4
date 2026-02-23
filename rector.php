@@ -125,11 +125,12 @@ return RectorConfig::configure()
         // use mt_rand instead of random_int on purpose on non-cryptographically random
         RandomFunctionRector::class,
 
-        // PHP 8.0 features but cause breaking changes
+        // CPP of untyped properties may break code of extended classes
         ClassPropertyAssignToConstructorPromotionRector::class => [
             __DIR__ . '/system/Database/BaseResult.php',
             __DIR__ . '/system/Database/RawSql.php',
             __DIR__ . '/system/Debug/BaseExceptionHandler.php',
+            __DIR__ . '/system/Debug/Exceptions.php',
             __DIR__ . '/system/Filters/Filters.php',
             __DIR__ . '/system/HTTP/CURLRequest.php',
             __DIR__ . '/system/HTTP/DownloadResponse.php',
