@@ -82,17 +82,18 @@ Removed Deprecated Items
     - ``CodeIgniter\Test\MockCodeIgniter::callExit()``
 - **Config:** Removed the following property deprecated:
     - ``CodeIgniter\Config\BaseService::$services`` (deprecated since v4.5.0)
-- **Debug:** Removed the following properties and methods deprecated since v4.4.0:
-    - ``CodeIgniter\Debug\Exceptions::$ob_level``
-    - ``CodeIgniter\Debug\Exceptions::$viewPath``
-    - ``CodeIgniter\Debug\Exceptions::determineView()``
-    - ``CodeIgniter\Debug\Exceptions::render()``
-    - ``CodeIgniter\Debug\Exceptions::collectVars()``
-    - ``CodeIgniter\Debug\Exceptions::maskSensitiveData()``
-    - ``CodeIgniter\Debug\Exceptions::maskData()``
-    - ``CodeIgniter\Debug\Exceptions::cleanPath()``
-    - ``CodeIgniter\Debug\Exceptions::describeMemory()``
-    - ``CodeIgniter\Debug\Exceptions::highlightFile()``
+- **Debug:** Removed the following deprecated properties and methods:
+    - ``CodeIgniter\Debug\Toolbar\Collectors\BaseCollector::cleanPath()`` (deprecated since v4.2.0)
+    - ``CodeIgniter\Debug\Exceptions::$ob_level`` (deprecated since v4.4.0)
+    - ``CodeIgniter\Debug\Exceptions::$viewPath`` (deprecated since v4.4.0)
+    - ``CodeIgniter\Debug\Exceptions::determineView()`` (deprecated since v4.4.0)
+    - ``CodeIgniter\Debug\Exceptions::render()`` (deprecated since v4.4.0)
+    - ``CodeIgniter\Debug\Exceptions::collectVars()`` (deprecated since v4.4.0)
+    - ``CodeIgniter\Debug\Exceptions::maskSensitiveData()`` (deprecated since v4.4.0)
+    - ``CodeIgniter\Debug\Exceptions::maskData()`` (deprecated since v4.4.0)
+    - ``CodeIgniter\Debug\Exceptions::cleanPath()`` (deprecated since v4.2.0)
+    - ``CodeIgniter\Debug\Exceptions::describeMemory()`` (deprecated since v4.4.0)
+    - ``CodeIgniter\Debug\Exceptions::highlightFile()`` (deprecated since v4.4.0)
 - **Exceptions:** Removed the following static constructors of ``FrameworkException`` and its child classes:
     - ``CodeIgniter\Exceptions\DownloadException::forCannotSetCache()``
     - ``CodeIgniter\Exceptions\FrameworkException::forMissingExtension()``

@@ -176,16 +176,6 @@ class BaseCollector
     }
 
     /**
-     * This makes nicer looking paths for the error output.
-     *
-     * @deprecated Use the dedicated `clean_path()` function.
-     */
-    public function cleanPath(string $file): string
-    {
-        return clean_path($file);
-    }
-
-    /**
      * Gets the "badge" value for the button.
      *
      * @return int|null
