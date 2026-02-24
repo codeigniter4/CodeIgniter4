@@ -37,6 +37,7 @@ final class ConsoleTest extends CIUnitTestCase
         parent::setUp();
 
         Services::injectMock('superglobals', new Superglobals());
+        CLI::init();
 
         $env = new DotEnv(ROOTPATH);
         $env->load();
@@ -48,6 +49,13 @@ final class ConsoleTest extends CIUnitTestCase
 
         $this->app = new MockCodeIgniter(new MockCLIConfig());
         $this->app->initialize();
+    }
+
+    protected function tearDown(): void
+    {
+        CLI::reset();
+
+        parent::tearDown();
     }
 
     public function testHeader(): void

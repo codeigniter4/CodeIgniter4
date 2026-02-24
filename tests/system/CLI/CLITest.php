@@ -36,6 +36,15 @@ final class CLITest extends CIUnitTestCase
         parent::setUp();
 
         Services::injectMock('superglobals', new Superglobals());
+
+        CLI::init();
+    }
+
+    protected function tearDown(): void
+    {
+        CLI::reset();
+
+        parent::tearDown();
     }
 
     public function testNew(): void
@@ -286,10 +295,6 @@ final class CLITest extends CIUnitTestCase
 
     public function testColor(): void
     {
-        // After the tests on NO_COLOR and TERM_PROGRAM above,
-        // the $isColored variable is rigged. So we reset this.
-        CLI::init();
-
         $this->assertSame(
             "\033[1;37m\033[42m\033[4mtest\033[0m",
             CLI::color('test', 'white', 'green', 'underline'),
@@ -330,6 +335,8 @@ final class CLITest extends CIUnitTestCase
 
     public function testWrite(): void
     {
+        CLI::resetLastWrite();
+
         CLI::write('test');
 
         $expected = PHP_EOL . 'test' . PHP_EOL;
