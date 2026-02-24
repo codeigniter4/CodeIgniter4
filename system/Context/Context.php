@@ -141,8 +141,8 @@ final class Context
      * Get a hidden value from the context by its key, or return a default value if the key does not exist.
      * Supports dot notation for nested arrays.
      *
-     * @param string     $key     The key to identify the data.
-     * @param mixed $default The default value to return if the key does not exist in the context.
+     * @param string $key     The key to identify the data.
+     * @param mixed  $default The default value to return if the key does not exist in the context.
      *
      * @return mixed The value associated with the key, or the default value if the key does not exist.
      */
@@ -306,6 +306,22 @@ final class Context
 
     public function __clone()
     {
+        $this->hiddenData = [];
+    }
+
+    public function __serialize(): array
+    {
+        return [
+            'data' => $this->data,
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    public function __unserialize(array $data): void
+    {
+        $this->data       = $data['data'] ?? [];
         $this->hiddenData = [];
     }
 }

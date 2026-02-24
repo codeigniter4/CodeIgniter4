@@ -817,4 +817,21 @@ final class ContextTest extends CIUnitTestCase
         $this->assertSame(123, $clonedContext->get('user_id')); // Normal value should be copied
         $this->assertNull($clonedContext->getHidden('credentials.api_key')); // Hidden value should not be copied
     }
+
+    public function testSerializationDoesNotIncludeHiddenValues(): void
+    {
+        $context = new Context();
+        $context->set('user_id', 123);
+        $context->setHidden('credentials.api_key', 'secret');
+
+        $serialized = serialize($context);
+
+        $this->assertStringContainsString('user_id', $serialized);
+        $this->assertStringNotContainsString('secret', $serialized);
+
+        $unserializedContext = unserialize($serialized);
+
+        $this->assertSame(123, $unserializedContext->get('user_id')); // Normal value should be preserved
+        $this->assertNull($unserializedContext->getHidden('credentials.api_key')); // Hidden value should not be preserved
+    }
 }
