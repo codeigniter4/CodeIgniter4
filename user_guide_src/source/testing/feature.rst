@@ -29,7 +29,7 @@ Requesting a Page
 Essentially, feature tests simply allows you to call an endpoint on your application and get the results back.
 To do this, you use the ``call()`` method.
 
-1. The first parameter is the HTTP method to use (most frequently either ``GET`` or ``POST``).
+1. The first parameter is the uppercase HTTP method to use (most frequently either ``GET`` or ``POST``).
 2. The second parameter is the URI path on your site to test.
 3. The third parameter ``$params`` accepts an array that is used to populate the
    superglobal variables for the HTTP verb you are using. So, a method of **GET**
@@ -60,7 +60,7 @@ override any existing routes in the system:
 .. literalinclude:: feature/004.php
    :lines: 2-
 
-Each of the "routes" is a 3 element array containing the HTTP verb (or "add" for all),
+Each of the "routes" is a 3 element array containing the uppercase HTTP verb (or "add" for all),
 the URI to match, and the routing destination.
 
 .. _feature-setting-session-values:

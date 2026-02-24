@@ -69,16 +69,7 @@ trait FeatureTestTrait
             $collection->resetRoutes();
 
             foreach ($routes as $route) {
-                if ($route[0] === strtolower($route[0])) {
-                    @trigger_error(
-                        'Passing lowercase HTTP method "' . $route[0] . '" is deprecated.'
-                        . ' Use uppercase HTTP method like "' . strtoupper($route[0]) . '".',
-                        E_USER_DEPRECATED,
-                    );
-                }
-
-                // @todo v4.7.1 Remove the strtoupper() and use 'add' in v4.8.0
-                if (! in_array(strtoupper($route[0]), ['ADD', 'CLI', ...Method::all()], true)) {
+                if (! in_array($route[0], ['add', 'CLI', ...Method::all()], true)) {
                     throw new RuntimeException(sprintf(
                         'Invalid HTTP method "%s" provided for route "%s".',
                         $route[0],
@@ -179,26 +170,12 @@ trait FeatureTestTrait
      * Calls a single URI, executes it, and returns a TestResponse
      * instance that can be used to run many assertions against.
      *
-     * @param string $method HTTP verb
+     * @param uppercase-string $method HTTP verb
      *
      * @return TestResponse
      */
     public function call(string $method, string $path, ?array $params = null)
     {
-        if ($method === strtolower($method)) {
-            @trigger_error(
-                'Passing lowercase HTTP method "' . $method . '" is deprecated.'
-                . ' Use uppercase HTTP method like "' . strtoupper($method) . '".',
-                E_USER_DEPRECATED,
-            );
-        }
-
-        /**
-         * @deprecated 4.5.0
-         * @TODO remove this in the future.
-         */
-        $method = strtoupper($method);
-
         // Simulate having a blank session
         $_SESSION = [];
         service('superglobals')->setServer('REQUEST_METHOD', $method);
