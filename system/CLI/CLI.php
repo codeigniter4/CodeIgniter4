@@ -1129,7 +1129,7 @@ class CLI
     /**
      * Testing purpose only
      *
-     * @testTag
+     * @internal
      */
     public static function reset(): void
     {
@@ -1147,7 +1147,7 @@ class CLI
     /**
      * Testing purpose only
      *
-     * @testTag
+     * @internal
      */
     public static function resetLastWrite(): void
     {
@@ -1157,7 +1157,7 @@ class CLI
     /**
      * Testing purpose only
      *
-     * @testTag
+     * @internal
      */
     public static function setInputOutput(InputOutput $io): void
     {
@@ -1167,7 +1167,7 @@ class CLI
     /**
      * Testing purpose only
      *
-     * @testTag
+     * @internal
      */
     public static function resetInputOutput(): void
     {
