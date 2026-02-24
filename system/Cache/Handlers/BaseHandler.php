@@ -25,17 +25,6 @@ use Config\Cache;
  */
 abstract class BaseHandler implements CacheInterface
 {
-    /**
-     * Reserved characters that cannot be used in a key or tag. May be overridden by the config.
-     * From https://github.com/symfony/cache-contracts/blob/c0446463729b89dd4fa62e9aeecc80287323615d/ItemInterface.php#L43
-     *
-     * @deprecated in favor of the Cache config
-     */
-    public const RESERVED_CHARACTERS = '{}()/\@:';
-
-    /**
-     * Maximum key length.
-     */
     public const MAX_KEY_LENGTH = PHP_INT_MAX;
 
     /**

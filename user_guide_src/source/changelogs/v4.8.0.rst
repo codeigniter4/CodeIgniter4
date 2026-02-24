@@ -54,11 +54,12 @@ Removed Deprecated Items
     - ``CodeIgniter\Autoloader\Autoloader::sanitizeFileName()``
     - ``CodeIgniter\Autoloader\Autoloader::discoverComposerNamespaces()``
 - **Bootstrap:** The deprecated **system/bootstrap.php** file has been removed.
-- **Cache:** Removed the following methods deprecated since v4.6.0:
-    - ``CodeIgniter\Cache\Handlers\FileHandler::writeFile()``
-    - ``CodeIgniter\Cache\Handlers\FileHandler::deleteFile()``
-    - ``CodeIgniter\Cache\Handlers\FileHandler::getDirFileInfo()``
-    - ``CodeIgniter\Cache\Handlers\FileHandler::getFileInfo()``
+- **Cache:** Removed the following deprecated methods and constant:
+    - ``CodeIgniter\Cache\Handlers\BaseHandler::RESERVED_CHARACTERS`` (deprecated since v4.1.5)
+    - ``CodeIgniter\Cache\Handlers\FileHandler::writeFile()`` (deprecated since v4.6.0)
+    - ``CodeIgniter\Cache\Handlers\FileHandler::deleteFile()`` (deprecated since v4.6.0)
+    - ``CodeIgniter\Cache\Handlers\FileHandler::getDirFileInfo()`` (deprecated since v4.6.0)
+    - ``CodeIgniter\Cache\Handlers\FileHandler::getFileInfo()`` (deprecated since v4.6.0)
 - **CLI:** Removed the following properties and methods deprecated:
     - ``CodeIgniter\CLI\BaseCommand::getPad()``
     - ``CodeIgniter\CLI\CLI::$readline_support``
