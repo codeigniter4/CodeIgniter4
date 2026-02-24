@@ -1621,6 +1621,10 @@ final class ForgeTest extends CIUnitTestCase
             $this->forge->addColumn('user', [
                 'text_with_constraint' => ['type' => 'nvarchar(max)', 'default' => ''],
             ]);
+        } elseif (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLite3'], true)) {
+            $this->forge->addColumn('user', [
+                'text_with_constraint' => ['type' => 'text'],
+            ]);
         } else {
             $this->forge->addColumn('user', [
                 'text_with_constraint' => ['type' => 'text', 'constraint' => 255, 'default' => ''],
