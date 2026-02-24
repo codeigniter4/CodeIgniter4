@@ -93,7 +93,10 @@ class Filters extends BaseFilters
      * permits any HTTP method to access a controller. Accessing the controller
      * with a method you don't expect could bypass the filter.
      *
-     * @var array<string, list<string>>
+     * **IMPORTANT:** HTTP methods are checked case-sensitively, so you should always
+     * use the uppercase form to avoid issues.
+     *
+     * @var array<uppercase-string, list<string>>
      */
     public array $methods = [];
 

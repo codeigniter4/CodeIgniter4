@@ -69,16 +69,4 @@ class SecurityException extends FrameworkException implements HTTPExceptionInter
             400,
         );
     }
-
-    /**
-     * @deprecated Use `CookieException::forInvalidSameSite()` instead.
-     *
-     * @codeCoverageIgnore
-     *
-     * @return static
-     */
-    public static function forInvalidSameSite(string $samesite)
-    {
-        return new static(lang('Security.invalidSameSite', [$samesite]));
-    }
 }

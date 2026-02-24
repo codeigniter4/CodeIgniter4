@@ -56,6 +56,87 @@ The following functions are available:
 .. note:: Prior to v4.2.0, ``dot_array_search('foo.bar.baz', ['foo' => ['bar' => 23]])`` returned ``23``
     due to a bug. v4.2.0 and later returns ``null``.
 
+..  php:function:: dot_array_has(string $search, array $values): bool
+
+    :param  string  $search: The dot-notation string describing how to search the array
+    :param  array   $values: The array to check
+    :returns: ``true`` if the key exists, otherwise ``false``
+    :rtype: bool
+
+    .. versionadded:: 4.8.0
+
+    Checks if an array key exists using dot syntax.
+    This method supports wildcard ``*`` in the same way as ``dot_array_search()``.
+
+    .. literalinclude:: array_helper/015.php
+        :lines: 2-
+
+..  php:function:: dot_array_set(array &$array, string $search, mixed $value): void
+
+    :param  array   $array: The array to modify (passed by reference)
+    :param  string  $search: The dot-notation string describing where to set the value
+    :param  mixed   $value: The value to set
+    :rtype: void
+
+    .. versionadded:: 4.8.0
+
+    Sets an array value using dot syntax. Missing path segments are created automatically.
+    Wildcard ``*`` is supported with the same rule as ``dot_array_has()``:
+    you must specify a key right after ``*``.
+
+    .. literalinclude:: array_helper/016.php
+        :lines: 2-
+
+..  php:function:: dot_array_unset(array &$array, string $search): bool
+
+    :param  array   $array: The array to modify (passed by reference)
+    :param  string  $search: The dot-notation string describing which key to remove
+    :returns: ``true`` if a key was removed, otherwise ``false``
+    :rtype: bool
+
+    .. versionadded:: 4.8.0
+
+    Removes array values using dot syntax.
+    Wildcard ``*`` is supported.
+    You can target specific keys like ``users.*.id`` or clear all keys under a path with ``user.*``.
+
+    .. literalinclude:: array_helper/017.php
+        :lines: 2-
+
+..  php:function:: dot_array_only(array $array, array|string $indexes): array
+
+    :param  array            $array: The source array
+    :param  array|string     $indexes: One key or a list of keys using dot notation
+    :returns: Nested array containing only the requested keys
+    :rtype: array
+
+    .. versionadded:: 4.8.0
+
+    Gets only the specified keys using dot syntax while preserving nested structure.
+
+    Wildcard ``*`` is supported. Unlike ``dot_array_set()`` and ``dot_array_unset()``,
+    this method also allows wildcard at the end (for example ``user.*``).
+
+    .. literalinclude:: array_helper/018.php
+        :lines: 2-
+
+..  php:function:: dot_array_except(array $array, array|string $indexes): array
+
+    :param  array            $array: The source array
+    :param  array|string     $indexes: One key or a list of keys using dot notation
+    :returns: Nested array with the specified keys removed
+    :rtype: array
+
+    .. versionadded:: 4.8.0
+
+    Gets all keys except the specified ones using dot syntax.
+
+    Wildcard ``*`` is supported. Unlike ``dot_array_set()`` and ``dot_array_unset()``,
+    this method also allows wildcard at the end (for example ``user.*``).
+
+    .. literalinclude:: array_helper/019.php
+        :lines: 2-
+
 ..  php:function:: array_deep_search($key, array $array)
 
     :param  mixed  $key: The target key

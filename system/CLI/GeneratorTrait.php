@@ -101,18 +101,6 @@ trait GeneratorTrait
     private $params = [];
 
     /**
-     * Execute the command.
-     *
-     * @param array<int|string, string|null> $params
-     *
-     * @deprecated use generateClass() instead
-     */
-    protected function execute(array $params): void
-    {
-        $this->generateClass($params);
-    }
-
-    /**
      * Generates a class file from an existing template.
      *
      * @param array<int|string, string|null> $params

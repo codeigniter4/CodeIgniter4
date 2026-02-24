@@ -587,6 +587,22 @@ abstract class BaseModel
     abstract public function chunk(int $size, Closure $userFunc);
 
     /**
+     * Loops over records in batches, allowing you to operate on each chunk at a time.
+     * This method works only with DB calls.
+     *
+     * This method calls the `$userFunc` with the chunk, instead of a single record as in `chunk()`.
+     * This allows you to operate on multiple records at once, which can be more efficient for certain operations.
+     *
+     * @param Closure(list<array<string, string>>|list<object>): mixed $userFunc
+     *
+     * @return void
+     *
+     * @throws DataException
+     * @throws InvalidArgumentException if $size is not a positive integer
+     */
+    abstract public function chunkRows(int $size, Closure $userFunc);
+
+    /**
      * Fetches the row of database.
      *
      * @param int|list<int|string>|string|null $id One primary key or an array of primary keys.

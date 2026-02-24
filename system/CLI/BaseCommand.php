@@ -194,26 +194,6 @@ abstract class BaseCommand
     }
 
     /**
-     * Get pad for $key => $value array output
-     *
-     * @param array<string, string> $array
-     *
-     * @deprecated Use setPad() instead.
-     *
-     * @codeCoverageIgnore
-     */
-    public function getPad(array $array, int $pad): int
-    {
-        $max = 0;
-
-        foreach (array_keys($array) as $key) {
-            $max = max($max, strlen($key));
-        }
-
-        return $max + $pad;
-    }
-
-    /**
      * Makes it simple to access our protected properties.
      *
      * @return array<string, string>|Commands|LoggerInterface|string|null

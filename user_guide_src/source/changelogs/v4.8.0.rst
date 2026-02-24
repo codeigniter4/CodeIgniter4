@@ -23,16 +23,66 @@ BREAKING
 Behavior Changes
 ================
 
+- **Commands:** The ``filter:check`` command now requires the HTTP method argument to be uppercase (e.g., ``spark filter:check GET /`` instead of ``spark filter:check get /``).
+- **Filters:** HTTP method matching for method-based filters is now case-sensitive. The keys in ``Config\Filters::$methods`` must exactly match the request method
+    (e.g., ``GET``, ``POST``). Lowercase method names (e.g., ``post``) will no longer match.
+
 Interface Changes
 =================
+
+**NOTE:** If you've implemented your own classes that implement these interfaces from scratch, you will need to
+        update your implementations to include the new methods or method changes to ensure compatibility.
+
+- **Security:** The ``SecurityInterface``'s ``verify()`` method now has a native return type of ``static``.
 
 Method Signature Changes
 ========================
 
+- **CodeIgniter:** The deprecated parameters in methods have been removed:
+    - ``CodeIgniter\CodeIgniter::handleRequest()`` no longer accepts the deprecated ``$cacheConfig`` and ``$returnResponse`` parameters.
+       - ``$cacheConfig`` is no longer used and is now hard deprecated. A deprecation notice will be triggered if this is passed to the method.
+       - ``$returnResponse`` is now removed since already deprecated and unused.
+       - The updated method signature is now ``handleRequest(?RouteCollectionInterface $routes, ?Cache $cacheConfig = null)``.
+    - ``CodeIgniter\CodeIgniter::gatherOutput()`` no longer accepts the deprecated ``$cacheConfig`` parameter.
+       As this is the first parameter, custom uses of this method will need to be updated to remove the parameter.
+- **Config:** ``CodeIgniter\Config\Services::request()`` no longer accepts any parameter.
+
 Removed Deprecated Items
 ========================
 
-- **Exceptions:** Removed the following properties and methods deprecated since v4.4.0:
+- **Autoloader:** Removed the following deprecated methods:
+    - ``CodeIgniter\Autoloader\Autoloader::sanitizeFileName()``
+    - ``CodeIgniter\Autoloader\Autoloader::discoverComposerNamespaces()``
+- **Bootstrap:** The deprecated **system/bootstrap.php** file has been removed.
+- **Cache:** Removed the following methods deprecated since v4.6.0:
+    - ``CodeIgniter\Cache\Handlers\FileHandler::writeFile()``
+    - ``CodeIgniter\Cache\Handlers\FileHandler::deleteFile()``
+    - ``CodeIgniter\Cache\Handlers\FileHandler::getDirFileInfo()``
+    - ``CodeIgniter\Cache\Handlers\FileHandler::getFileInfo()``
+- **CLI:** Removed the following properties and methods deprecated:
+    - ``CodeIgniter\CLI\BaseCommand::getPad()``
+    - ``CodeIgniter\CLI\CLI::$readline_support``
+    - ``CodeIgniter\CLI\CLI::$wait_msg``
+    - ``CodeIgniter\CLI\CLI::isWindows()``
+    - ``CodeIgniter\CLI\GeneratorTrait::execute()``
+- **CodeIgniter:** Removed the following properties and methods deprecated:
+    - ``CodeIgniter\CodeIgniter::$cacheTTL``
+    - ``CodeIgniter\CodeIgniter::$returnResponse``
+    - ``CodeIgniter\CodeIgniter::initializeKint()``
+    - ``CodeIgniter\CodeIgniter::detectEnvironment()``
+    - ``CodeIgniter\CodeIgniter::bootstrapEnvironment()``
+    - ``CodeIgniter\CodeIgniter::forceSecureAccess()``
+    - ``CodeIgniter\CodeIgniter::displayCache()``
+    - ``CodeIgniter\CodeIgniter::cache()``
+    - ``CodeIgniter\CodeIgniter::cachePage()``
+    - ``CodeIgniter\CodeIgniter::generateCacheName()``
+    - ``CodeIgniter\CodeIgniter::displayPerformanceMetrics()``
+    - ``CodeIgniter\CodeIgniter::determinePath()``
+    - ``CodeIgniter\CodeIgniter::callExit()``
+    - ``CodeIgniter\Test\MockCodeIgniter::callExit()``
+- **Config:** Removed the following property deprecated:
+    - ``CodeIgniter\Config\BaseService::$services`` (deprecated since v4.5.0)
+- **Debug:** Removed the following properties and methods deprecated since v4.4.0:
     - ``CodeIgniter\Debug\Exceptions::$ob_level``
     - ``CodeIgniter\Debug\Exceptions::$viewPath``
     - ``CodeIgniter\Debug\Exceptions::determineView()``
@@ -43,6 +93,28 @@ Removed Deprecated Items
     - ``CodeIgniter\Debug\Exceptions::cleanPath()``
     - ``CodeIgniter\Debug\Exceptions::describeMemory()``
     - ``CodeIgniter\Debug\Exceptions::highlightFile()``
+- **Exceptions:** Removed the following static constructors of ``FrameworkException`` and its child classes:
+    - ``CodeIgniter\Exceptions\DownloadException::forCannotSetCache()``
+    - ``CodeIgniter\Exceptions\FrameworkException::forMissingExtension()``
+    - ``CodeIgniter\Honeypot\Exceptions\HoneypotException::forNoHiddenValue()``
+    - ``CodeIgniter\HTTP\Exceptions\HTTPException::forInvalidSameSiteSetting()``
+    - ``CodeIgniter\Security\Exceptions\SecurityException::forInvalidSameSite()``
+    - ``CodeIgniter\Session\Exceptions\SessionException::forInvalidSameSiteSetting()``
+- **Filters:** Removed the following properties and methods deprecated:
+    - ``CodeIgniter\Filters\Filters::$arguments`` (deprecated since v4.6.0)
+    - ``CodeIgniter\Filters\Filters::$argumentsClass`` (deprecated since v4.6.0)
+    - ``CodeIgniter\Filters\Filters::getArguments()`` (deprecated since v4.6.0)
+- **Security:** Removed the following properties and methods deprecated:
+    - ``CodeIgniter\Security\SecurityInterface::sanitizeFilename()`` (deprecated since v4.6.2)
+    - ``CodeIgniter\Security\Security::sanitizeFilename()`` (deprecated since v4.6.2)
+    - ``CodeIgniter\Security\Security::$csrfProtection`` (deprecated since v4.4.0)
+    - ``CodeIgniter\Security\Security::$tokenRandomize`` (deprecated since v4.4.0)
+    - ``CodeIgniter\Security\Security::$tokenName`` (deprecated since v4.4.0)
+    - ``CodeIgniter\Security\Security::$headerName`` (deprecated since v4.4.0)
+    - ``CodeIgniter\Security\Security::$expires`` (deprecated since v4.4.0)
+    - ``CodeIgniter\Security\Security::$regenerate`` (deprecated since v4.4.0)
+    - ``CodeIgniter\Security\Security::$redirect`` (deprecated since v4.4.0)
+    - ``CodeIgniter\Security\Security::$sameSite`` (deprecated since v4.4.0)
 
 ************
 Enhancements
@@ -71,6 +143,8 @@ Others
 Model
 =====
 
+- Added new ``chunkRows()`` method to ``CodeIgniter\Model`` for processing large datasets in smaller chunks.
+
 Libraries
 =========
 
@@ -78,6 +152,10 @@ Libraries
 
 Helpers and Functions
 =====================
+
+- :doc:`Array Helper </helpers/array_helper>` gained five new dot-path functions:
+  :php:func:`dot_array_has()`, :php:func:`dot_array_set()`, :php:func:`dot_array_unset()`,
+  :php:func:`dot_array_only()`, and :php:func:`dot_array_except()`.
 
 HTTP
 ====
@@ -92,6 +170,13 @@ Others
 ***************
 Message Changes
 ***************
+
+- Removed deprecated language keys tied to removed exception constructors:
+    - ``Core.missingExtension`` (``FrameworkException::forMissingExtension()``)
+    - ``HTTP.cannotSetCache`` (``DownloadException::forCannotSetCache()``)
+    - ``HTTP.invalidSameSiteSetting`` (``HTTPException::forInvalidSameSiteSetting()``)
+    - ``Security.invalidSameSite`` (``SecurityException::forInvalidSameSite()``)
+    - ``Session.invalidSameSiteSetting`` (``SessionException::forInvalidSameSiteSetting()``)
 
 *******
 Changes

@@ -21,6 +21,7 @@ use ImagickDrawException;
 use ImagickException;
 use ImagickPixel;
 use ImagickPixelException;
+use RuntimeException;
 
 /**
  * Image handler for Imagick extension.
@@ -46,7 +47,10 @@ class ImageMagickHandler extends BaseHandler
         parent::__construct($config);
 
         if (! extension_loaded('imagick')) {
-            throw ImageException::forMissingExtension('IMAGICK');  // @codeCoverageIgnore
+            throw new RuntimeException(sprintf(
+                'The "%s" handler requires the "imagick" PHP extension.',
+                static::class,
+            ));
         }
     }
 

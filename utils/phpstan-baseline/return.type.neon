@@ -1,7 +1,12 @@
-# total 1 error
+# total 2 errors
 
 parameters:
     ignoreErrors:
+        -
+            message: '#^Method CodeIgniter\\Database\\BaseBuilder\:\:cleanClone\(\) should return \$this\(CodeIgniter\\Database\\BaseBuilder\) but returns static\(CodeIgniter\\Database\\BaseBuilder\)\.$#'
+            count: 1
+            path: ../../system/Database/BaseBuilder.php
+
         -
             message: '#^Method CodeIgniter\\Router\\Router\:\:getRouteAttributes\(\) should return array\{class\: list\<string\>, method\: list\<string\>\} but returns array\{class\: list\<CodeIgniter\\Router\\Attributes\\RouteAttributeInterface\>, method\: list\<CodeIgniter\\Router\\Attributes\\RouteAttributeInterface\>\}\.$#'
             count: 1

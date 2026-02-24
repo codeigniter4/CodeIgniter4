@@ -22,21 +22,17 @@ use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsPar
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\CodingStyle\Rector\FuncCall\VersionCompareFuncCallToConstantRector;
 use Rector\Config\RectorConfig;
-use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
-use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
 use Rector\DeadCode\Rector\MethodCall\RemoveNullArgOnNullDefaultParamRector;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
 use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
 use Rector\EarlyReturn\Rector\If_\RemoveAlwaysElseRector;
 use Rector\EarlyReturn\Rector\Return_\PreparedValueToEarlyReturnRector;
 use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
-use Rector\Php70\Rector\StaticCall\StaticCallOnNonStaticToInstanceCallRector;
 use Rector\Php71\Rector\FuncCall\RemoveExtraParametersRector;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
 use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
-use Rector\PHPUnit\CodeQuality\Rector\FuncCall\AssertFuncCallToPHPUnitAssertRector;
 use Rector\PHPUnit\CodeQuality\Rector\StmtsAwareInterface\DeclareStrictTypesTestsRector;
 use Rector\Privatization\Rector\Class_\FinalizeTestCaseClassRector;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
@@ -99,24 +95,9 @@ return RectorConfig::configure()
             __DIR__ . '/tests/_support/Test/TestForReflectionHelper.php',
         ],
 
-        RemoveUnusedConstructorParamRector::class => [
-            // there are deprecated parameters
-            __DIR__ . '/system/Debug/Exceptions.php',
-            // @TODO remove if deprecated $httpVerb is removed
-            __DIR__ . '/system/Router/AutoRouterImproved.php',
-            // @TODO remove if deprecated $config is removed
-            __DIR__ . '/system/HTTP/Request.php',
-            __DIR__ . '/system/HTTP/Response.php',
-        ],
-
         // Exclude test file because `is_cli()` is mocked and Rector might remove needed parameters.
         RemoveExtraParametersRector::class => [
             __DIR__ . '/tests/system/Debug/ToolbarTest.php',
-        ],
-
-        // check on constant compare
-        UnwrapFutureCompatibleIfPhpVersionRector::class => [
-            __DIR__ . '/system/Autoloader/Autoloader.php',
         ],
 
         UnderscoreToCamelCaseVariableNameRector::class => [
@@ -137,27 +118,27 @@ return RectorConfig::configure()
             __DIR__ . '/tests/system/Debug/ExceptionsTest.php',
         ],
 
+        DeclareStrictTypesTestsRector::class => [
+            __DIR__ . '/tests/system/Debug/ExceptionsTest.php',
+        ],
+
         // use mt_rand instead of random_int on purpose on non-cryptographically random
         RandomFunctionRector::class,
 
-        // PHP 8.0 features but cause breaking changes
+        // CPP of untyped properties may break code of extended classes
         ClassPropertyAssignToConstructorPromotionRector::class => [
             __DIR__ . '/system/Database/BaseResult.php',
             __DIR__ . '/system/Database/RawSql.php',
             __DIR__ . '/system/Debug/BaseExceptionHandler.php',
+            __DIR__ . '/system/Debug/Exceptions.php',
             __DIR__ . '/system/Filters/Filters.php',
             __DIR__ . '/system/HTTP/CURLRequest.php',
             __DIR__ . '/system/HTTP/DownloadResponse.php',
             __DIR__ . '/system/HTTP/IncomingRequest.php',
-            __DIR__ . '/system/Security/Security.php',
             __DIR__ . '/system/Session/Session.php',
         ],
 
         ReturnNeverTypeRector::class => [
-            __DIR__ . '/system/Cache/Handlers/BaseHandler.php',
-            __DIR__ . '/system/Cache/Handlers/MemcachedHandler.php',
-            __DIR__ . '/system/Cache/Handlers/WincacheHandler.php',
-            __DIR__ . '/system/CodeIgniter.php',
             __DIR__ . '/system/Database/MySQLi/Utils.php',
             __DIR__ . '/system/Database/OCI8/Utils.php',
             __DIR__ . '/system/Database/Postgre/Utils.php',
@@ -165,8 +146,6 @@ return RectorConfig::configure()
             __DIR__ . '/system/Database/SQLite3/Utils.php',
             __DIR__ . '/system/HTTP/DownloadResponse.php',
             __DIR__ . '/system/HTTP/SiteURI.php',
-            __DIR__ . '/system/Helpers/kint_helper.php',
-            __DIR__ . '/tests/_support/Autoloader/FatalLocator.php',
         ],
 
         // Unnecessary (string) is inserted
@@ -177,27 +156,14 @@ return RectorConfig::configure()
         // possibly isset() on purpose, on updated Config classes property accross versions
         IssetOnPropertyObjectToPropertyExistsRector::class,
 
-        AssertFuncCallToPHPUnitAssertRector::class => [
-            // use $this inside static closure
-            __DIR__ . '/tests/system/AutoReview/FrameworkCodeTest.php',
-        ],
-
         // some tests extended by other tests
         FinalizeTestCaseClassRector::class,
-
-        DeclareStrictTypesTestsRector::class => [
-            __DIR__ . '/tests/system/Debug/ExceptionsTest.php',
-        ],
 
         RemoveNullArgOnNullDefaultParamRector::class => [
             // skip form query usage, easier to read
             __DIR__ . '/system/Model.php',
             __DIR__ . '/tests/system/Database',
             __DIR__ . '/tests/system/Models',
-        ],
-
-        StaticCallOnNonStaticToInstanceCallRector::class => [
-            __DIR__ . '/tests/_support/Config/Services.php',
         ],
     ])
     // auto import fully qualified class names

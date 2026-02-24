@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Helpers;
 
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -39,6 +40,176 @@ final class ArrayHelperTest extends CIUnitTestCase
         ];
 
         $this->assertSame(23, dot_array_search('foo.bar', $data));
+    }
+
+    public function testDotArraySetAndHas(): void
+    {
+        $data = [];
+
+        dot_array_set($data, 'foo.bar', 23);
+
+        $this->assertSame(['foo' => ['bar' => 23]], $data);
+        $this->assertTrue(dot_array_has('foo.bar', $data));
+    }
+
+    public function testDotArraySetWithWildcard(): void
+    {
+        $data = [
+            'foo' => [
+                ['bar' => 23],
+                ['bar' => 42],
+            ],
+        ];
+
+        dot_array_set($data, 'foo.*.baz', 99);
+
+        $this->assertSame(99, $data['foo'][0]['baz']);
+        $this->assertSame(99, $data['foo'][1]['baz']);
+    }
+
+    public function testDotArrayHasSupportsWildcard(): void
+    {
+        $data = [
+            'foo' => [
+                ['bar' => 23],
+                ['bar' => 42],
+            ],
+        ];
+
+        $this->assertTrue(dot_array_has('foo.*.bar', $data));
+    }
+
+    public function testDotArrayUnset(): void
+    {
+        $data = ['foo' => ['bar' => 23, 'baz' => 42]];
+
+        $this->assertTrue(dot_array_unset($data, 'foo.bar'));
+
+        $this->assertFalse(dot_array_has('foo.bar', $data));
+        $this->assertTrue(dot_array_has('foo.baz', $data));
+    }
+
+    public function testDotArrayUnsetWithWildcard(): void
+    {
+        $data = [
+            'foo' => [
+                ['bar' => 23, 'baz' => 1],
+                ['bar' => 42, 'baz' => 2],
+            ],
+        ];
+
+        $this->assertTrue(dot_array_unset($data, 'foo.*.bar'));
+        $this->assertFalse(dot_array_has('foo.*.bar', $data));
+        $this->assertTrue(dot_array_has('foo.*.baz', $data));
+    }
+
+    public function testDotArrayUnsetSupportsEndingWildcard(): void
+    {
+        $data = [
+            'foo' => [
+                'bar' => 23,
+                'baz' => 42,
+            ],
+            'meta' => ['request_id' => 'abc'],
+        ];
+
+        $this->assertTrue(dot_array_unset($data, 'foo.*'));
+        $this->assertSame(['foo' => [], 'meta' => ['request_id' => 'abc']], $data);
+    }
+
+    public function testDotArraySetThrowsExceptionForInvalidWildcardPattern(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('You must set key right after "*". Invalid index: "users.*"');
+
+        $data = [];
+        dot_array_set($data, 'users.*', 'member');
+    }
+
+    public function testDotArrayUnsetThrowsExceptionForInvalidWildcardPattern(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('You must set key right after "*". Invalid index: "users.*.*.id"');
+
+        $data = [];
+        dot_array_unset($data, 'users.*.*.id');
+    }
+
+    public function testDotArrayOnly(): void
+    {
+        $data = [
+            'user' => [
+                'id'   => 123,
+                'name' => 'john',
+            ],
+            'meta' => ['request_id' => 'abc'],
+        ];
+
+        $expected = [
+            'user' => [
+                'id' => 123,
+            ],
+        ];
+
+        $this->assertSame($expected, dot_array_only($data, 'user.id'));
+    }
+
+    public function testDotArrayOnlySupportsEndingWildcard(): void
+    {
+        $data = [
+            'user' => [
+                'id'   => 123,
+                'name' => 'john',
+            ],
+            'meta' => ['request_id' => 'abc'],
+        ];
+
+        $expected = [
+            'user' => [
+                'id'   => 123,
+                'name' => 'john',
+            ],
+        ];
+
+        $this->assertSame($expected, dot_array_only($data, 'user.*'));
+    }
+
+    public function testDotArrayExcept(): void
+    {
+        $data = [
+            'user' => [
+                'id'   => 123,
+                'name' => 'john',
+            ],
+            'meta' => ['request_id' => 'abc'],
+        ];
+
+        $expected = [
+            'user' => [
+                'name' => 'john',
+            ],
+            'meta' => ['request_id' => 'abc'],
+        ];
+
+        $this->assertSame($expected, dot_array_except($data, 'user.id'));
+    }
+
+    public function testDotArrayExceptSupportsEndingWildcard(): void
+    {
+        $data = [
+            'user' => [
+                'id'   => 123,
+                'name' => 'john',
+            ],
+            'meta' => ['request_id' => 'abc'],
+        ];
+
+        $expected = [
+            'user' => [],
+            'meta' => ['request_id' => 'abc'],
+        ];
+
+        $this->assertSame($expected, dot_array_except($data, 'user.*'));
     }
 
     public function testArrayDotTooManyLevels(): void
@@ -272,6 +443,62 @@ final class ArrayHelperTest extends CIUnitTestCase
         $data = [];
 
         $this->assertNull(array_deep_search('key644', $data));
+    }
+
+    /**
+     * @param array<array-key, mixed> $data
+     */
+    #[DataProvider('provideDotArrayHas')]
+    public function testDotArrayHas(string $index, array $data, bool $expected): void
+    {
+        $this->assertSame($expected, dot_array_has($index, $data));
+    }
+
+    /**
+     * @return iterable<string, array{index: string, data: array<array-key, mixed>, expected: bool}>
+     */
+    public static function provideDotArrayHas(): iterable
+    {
+        yield from [
+            'non-existent numeric key' => [
+                'index'    => '0.name',
+                'data'     => ['other' => 'x'],
+                'expected' => false,
+            ],
+            'existing numeric key' => [
+                'index'    => '0.name',
+                'data'     => [['name' => 'a']],
+                'expected' => true,
+            ],
+            'null value at leaf' => [
+                'index'    => 'user.score',
+                'data'     => ['user' => ['score' => null]],
+                'expected' => true,
+            ],
+            'zero value at leaf' => [
+                'index'    => 'user.score',
+                'data'     => ['user' => ['score' => 0]],
+                'expected' => true,
+            ],
+            'escaped dot in key' => [
+                'index'    => 'config.api\.version',
+                'data'     => ['config' => ['api.version' => 'v1']],
+                'expected' => true,
+            ],
+        ];
+    }
+
+    public function testDotArraySetAndUnsetWithNumericKey(): void
+    {
+        $data = [['name' => 'a'], ['name' => 'b']];
+
+        dot_array_set($data, '0.role', 'admin');
+
+        $this->assertSame('admin', $data[0]['role']);
+        $this->assertFalse(dot_array_has('1.role', $data));
+
+        $this->assertTrue(dot_array_unset($data, '0.role'));
+        $this->assertFalse(dot_array_has('0.role', $data));
     }
 
     #[DataProvider('provideSortByMultipleKeys')]

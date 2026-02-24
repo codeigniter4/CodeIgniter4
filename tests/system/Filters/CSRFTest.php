@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Filters;
 
-use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
@@ -29,12 +28,7 @@ use PHPUnit\Framework\Attributes\Group;
 final class CSRFTest extends CIUnitTestCase
 {
     private \Config\Filters $config;
-
-    /**
-     * @var CLIRequest|IncomingRequest|null
-     */
-    private $request;
-
+    private CLIRequest|IncomingRequest $request;
     private ?Response $response = null;
 
     protected function setUp(): void
@@ -50,8 +44,8 @@ final class CSRFTest extends CIUnitTestCase
             'after'  => [],
         ];
 
-        $this->request  = Services::clirequest(null, false);
-        $this->response = service('response');
+        $this->request  = single_service('clirequest', null);
+        $this->response = single_service('response');
 
         $filters = new Filters($this->config, $this->request, $this->response);
         $uri     = 'admin/foo/bar';
@@ -68,8 +62,8 @@ final class CSRFTest extends CIUnitTestCase
             'after'  => [],
         ];
 
-        $this->request  = service('incomingrequest', null, false);
-        $this->response = service('response');
+        $this->request  = single_service('incomingrequest', null);
+        $this->response = single_service('response');
 
         $filters = new Filters($this->config, $this->request, $this->response);
         $uri     = 'admin/foo/bar';

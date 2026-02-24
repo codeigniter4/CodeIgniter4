@@ -57,27 +57,6 @@ class FrameworkException extends RuntimeException
 
     /**
      * @return static
-     *
-     * @deprecated 4.5.0 No longer used.
-     */
-    public static function forMissingExtension(string $extension)
-    {
-        if (str_contains($extension, 'intl')) {
-            // @codeCoverageIgnoreStart
-            $message = sprintf(
-                'The framework needs the following extension(s) installed and loaded: %s.',
-                $extension,
-            );
-            // @codeCoverageIgnoreEnd
-        } else {
-            $message = lang('Core.missingExtension', [$extension]);
-        }
-
-        return new static($message);
-    }
-
-    /**
-     * @return static
      */
     public static function forNoHandlers(string $class)
     {

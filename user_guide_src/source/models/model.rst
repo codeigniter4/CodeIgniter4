@@ -900,13 +900,26 @@ Processing Large Amounts of Data
 ================================
 
 Sometimes, you need to process large amounts of data and would run the risk of running out of memory.
-To make this simpler, you may use the chunk() method to get smaller chunks of data that you can then
+This is best used during cronjobs, data exports, or other large tasks. To make this simpler, you can
+process the data in smaller, manageable pieces using the methods below.
+
+chunk()
+-------
+
+You may use the ``chunk()`` method to get smaller chunks of data that you can then
 do your work on. The first parameter is the number of rows to retrieve in a single chunk. The second
 parameter is a Closure that will be called for each row of data.
 
-This is best used during cronjobs, data exports, or other large tasks.
-
 .. literalinclude:: model/049.php
+
+chunkRows()
+-----------
+
+.. versionadded:: 4.8.0
+
+On the other hand, if you want the entire chunk to be passed to the Closure at once, you can use the ``chunkRows()`` method.
+
+.. literalinclude:: model/064.php
 
 .. _model-events-callbacks:
 

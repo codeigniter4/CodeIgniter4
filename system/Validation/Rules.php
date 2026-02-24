@@ -460,7 +460,7 @@ class Rules
         ?string $field = null,
     ): bool {
         if (str_contains($field, '.')) {
-            return ArrayHelper::dotKeyExists($field, $data);
+            return ArrayHelper::dotHas($field, $data);
         }
 
         return array_key_exists($field, $data);

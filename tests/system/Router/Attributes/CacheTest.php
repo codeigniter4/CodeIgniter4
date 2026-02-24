@@ -22,6 +22,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
 use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @internal
@@ -33,9 +34,8 @@ final class CacheTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        // Clear cache before each test
         cache()->clean();
-
+        Services::resetSingle('response');
         Time::setTestNow('2026-01-10 12:00:00');
     }
 
@@ -43,6 +43,8 @@ final class CacheTest extends CIUnitTestCase
     {
         parent::tearDown();
 
+        cache()->clean();
+        Services::resetSingle('response');
         Time::setTestNow();
     }
 
@@ -215,11 +217,17 @@ final class CacheTest extends CIUnitTestCase
 
         $request = $this->getMockBuilder(IncomingRequest::class)
             ->setConstructorArgs([$config, $uri, null, $userAgent])
-            ->onlyMethods(['isCLI'])
+            ->onlyMethods(['isCLI', 'withMethod', 'getMethod'])
             ->getMock();
         $request->method('isCLI')->willReturn(false);
-        $request->setMethod($method);
+        $request->method('withMethod')->willReturnCallback(
+            static function (string $method) use ($request): MockObject&IncomingRequest {
+                $request->method('getMethod')->willReturn($method);
 
-        return $request;
+                return $request;
+            },
+        );
+
+        return $request->withMethod($method);
     }
 }

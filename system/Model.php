@@ -26,6 +26,7 @@ use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\Validation\ValidationInterface;
 use Config\Database;
 use Config\Feature;
+use Generator;
 use stdClass;
 
 /**
@@ -146,9 +147,7 @@ class Model extends BaseModel
 
     public function __construct(?ConnectionInterface $db = null, ?ValidationInterface $validation = null)
     {
-        /**
-         * @var BaseConnection|null $db
-         */
+        /** @var BaseConnection $db */
         $db ??= Database::connect($this->DBGroup);
 
         $this->db = $db;
@@ -526,16 +525,16 @@ class Model extends BaseModel
     }
 
     /**
-     * {@inheritDoc}
+     * Iterates over the result set in chunks of the specified size.
      *
-     * Works with `$this->builder` to get the Compiled select to
-     * determine the rows to operate on.
-     * This method works only with dbCalls.
+     * @param int $size The number of records to retrieve in each chunk.
+     *
+     * @return Generator<list<array<string, string>>|list<object>>
      */
-    public function chunk(int $size, Closure $userFunc)
+    private function iterateChunks(int $size): Generator
     {
         if ($size <= 0) {
-            throw new InvalidArgumentException('chunk() requires a positive integer for the $size argument.');
+            throw new InvalidArgumentException('$size must be a positive integer.');
         }
 
         $total  = $this->builder()->countAllResults(false);
@@ -557,10 +556,32 @@ class Model extends BaseModel
                 continue;
             }
 
+            yield $rows;
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function chunk(int $size, Closure $userFunc)
+    {
+        foreach ($this->iterateChunks($size) as $rows) {
             foreach ($rows as $row) {
                 if ($userFunc($row) === false) {
                     return;
                 }
+            }
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function chunkRows(int $size, Closure $userFunc): void
+    {
+        foreach ($this->iterateChunks($size) as $rows) {
+            if ($userFunc($rows) === false) {
+                return;
             }
         }
     }

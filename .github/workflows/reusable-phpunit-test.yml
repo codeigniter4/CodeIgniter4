@@ -173,14 +173,15 @@ jobs:
           COVERAGE_DRIVER: ${{ inputs.enable-coverage && 'xdebug' || 'none' }}
 
       - name: Setup global environment variables
+        id: setup-env
         run: |
-          echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
-          echo "ARTIFACT_NAME=${{ inputs.job-id || github.job }}-php-${{ inputs.php-version }}-db-${{ inputs.db-platform || 'none' }}${{ inputs.mysql-version || '' }}" >> $GITHUB_ENV
+          echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+          echo "ARTIFACT_NAME=${{ inputs.job-id || github.job }}-php-${{ inputs.php-version }}-db-${{ inputs.db-platform || 'none' }}${{ inputs.mysql-version || '' }}" >> $GITHUB_OUTPUT
 
       - name: Cache dependencies
         uses: actions/cache@v5
         with:
-          path: ${{ env.COMPOSER_CACHE_FILES_DIR }}
+          path: ${{ steps.setup-env.outputs.COMPOSER_CACHE_FILES_DIR }}
           key: ${{ inputs.job-id || github.job }}-php-${{ inputs.php-version }}-db-${{ inputs.db-platform || 'none' }}-${{ hashFiles('**/composer.*') }}
           restore-keys: |
             ${{ inputs.job-id || github.job }}-php-${{ inputs.php-version }}-db-${{ inputs.db-platform || 'none' }}-
@@ -202,14 +203,15 @@ jobs:
           composer update --ansi ${{ inputs.extra-composer-options }}
 
       - name: Compute additional PHPUnit options
+        id: phpunit-options
         run: |
-          echo "EXTRA_PHPUNIT_OPTIONS=${{ format('{0} {1} {2}', env.GROUP_OPTION, env.COVERAGE_OPTION, inputs.extra-phpunit-options) }}" >> $GITHUB_ENV
+          echo "EXTRA_PHPUNIT_OPTIONS=${{ format('{0} {1} {2}', env.GROUP_OPTION, env.COVERAGE_OPTION, inputs.extra-phpunit-options) }}" >> $GITHUB_OUTPUT
         env:
-          COVERAGE_OPTION: ${{ inputs.enable-coverage && format('--coverage-php build/cov/coverage-{0}.cov', env.ARTIFACT_NAME) || '--no-coverage' }}
+          COVERAGE_OPTION: ${{ inputs.enable-coverage && format('--coverage-php build/cov/coverage-{0}.cov', steps.setup-env.outputs.ARTIFACT_NAME) || '--no-coverage' }}
           GROUP_OPTION: ${{ inputs.group-name && format('--group {0}', inputs.group-name) || '' }}
 
       - name: Run tests
-        run: script -e -c "vendor/bin/phpunit --color=always ${{ env.EXTRA_PHPUNIT_OPTIONS }}"
+        run: script -e -c "vendor/bin/phpunit --color=always ${{ steps.phpunit-options.outputs.EXTRA_PHPUNIT_OPTIONS }}"
         env:
           DB: ${{ inputs.db-platform }}
           TACHYCARDIA_MONITOR_GA: ${{ inputs.enable-profiling && 'enabled' || '' }}
@@ -220,7 +222,7 @@ jobs:
         if: ${{ inputs.enable-artifact-upload }}
         uses: actions/upload-artifact@v6
         with:
-          name: ${{ env.ARTIFACT_NAME }}
-          path: build/cov/coverage-${{ env.ARTIFACT_NAME }}.cov
+          name: ${{ steps.setup-env.outputs.ARTIFACT_NAME }}
+          path: build/cov/coverage-${{ steps.setup-env.outputs.ARTIFACT_NAME }}.cov
           if-no-files-found: error
           retention-days: 1

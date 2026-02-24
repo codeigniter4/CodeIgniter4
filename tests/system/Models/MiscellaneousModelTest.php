@@ -44,7 +44,7 @@ final class MiscellaneousModelTest extends LiveModelTestCase
     public function testChunkThrowsOnZeroSize(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('chunk() requires a positive integer for the $size argument.');
+        $this->expectExceptionMessage('$size must be a positive integer.');
 
         $this->createModel(UserModel::class)->chunk(0, static function ($row): void {});
     }
@@ -52,7 +52,7 @@ final class MiscellaneousModelTest extends LiveModelTestCase
     public function testChunkThrowsOnNegativeSize(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('chunk() requires a positive integer for the $size argument.');
+        $this->expectExceptionMessage('$size must be a positive integer.');
 
         $this->createModel(UserModel::class)->chunk(-1, static function ($row): void {});
     }
@@ -91,6 +91,76 @@ final class MiscellaneousModelTest extends LiveModelTestCase
         $rowCount = 0;
 
         $this->createModel(UserModel::class)->chunk(2, static function ($row) use (&$rowCount): void {
+            $rowCount++;
+        });
+
+        $this->assertSame(0, $rowCount);
+    }
+
+    public function testChunkRows(): void
+    {
+        $chunkCount     = 0;
+        $numRowsInChunk = [];
+
+        $this->createModel(UserModel::class)->chunkRows(2, static function ($rows) use (&$chunkCount, &$numRowsInChunk): void {
+            $chunkCount++;
+            $numRowsInChunk[] = count($rows);
+        });
+
+        $this->assertSame(2, $chunkCount);
+        $this->assertSame([2, 2], $numRowsInChunk);
+    }
+
+    public function testChunkRowsThrowsOnZeroSize(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('$size must be a positive integer.');
+
+        $this->createModel(UserModel::class)->chunkRows(0, static function ($row): void {});
+    }
+
+    public function testChunkRowsThrowsOnNegativeSize(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('$size must be a positive integer.');
+
+        $this->createModel(UserModel::class)->chunkRows(-1, static function ($row): void {});
+    }
+
+    public function testChunkRowsEarlyExit(): void
+    {
+        $rowCount = 0;
+
+        $this->createModel(UserModel::class)->chunkRows(2, static function ($rows) use (&$rowCount): bool {
+            $rowCount++;
+
+            return false;
+        });
+
+        $this->assertSame(1, $rowCount);
+    }
+
+    public function testChunkRowsDoesNotRunExtraQuery(): void
+    {
+        $queryCount = 0;
+        $listener   = static function () use (&$queryCount): void {
+            $queryCount++;
+        };
+
+        Events::on('DBQuery', $listener);
+        $this->createModel(UserModel::class)->chunkRows(4, static function ($rows): void {});
+        Events::removeListener('DBQuery', $listener);
+
+        $this->assertSame(2, $queryCount);
+    }
+
+    public function testChunkRowsEmptyTable(): void
+    {
+        $this->db->table('user')->truncate();
+
+        $rowCount = 0;
+
+        $this->createModel(UserModel::class)->chunkRows(2, static function ($row) use (&$rowCount): void {
             $rowCount++;
         });
 

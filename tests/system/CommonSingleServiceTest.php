@@ -60,7 +60,13 @@ final class CommonSingleServiceTest extends CIUnitTestCase
         $params = [];
         $method = new ReflectionMethod(Services::class, $service);
 
-        $params[] = $method->getNumberOfParameters() === 1 ? true : $method->getParameters()[0]->getDefaultValue();
+        $count = $method->getNumberOfParameters();
+
+        if ($count === 0) {
+            $this->markTestSkipped("Service '{$service}' does not have any parameters.");
+        }
+
+        $params[] = $count === 1 ? true : $method->getParameters()[0]->getDefaultValue();
 
         $service1 = single_service($service, ...$params); // @phpstan-ignore codeigniter.unknownServiceMethod
         $service2 = single_service($service, ...$params); // @phpstan-ignore codeigniter.unknownServiceMethod

@@ -141,13 +141,3 @@ be familiar with when creating your own commands. It also has a :doc:`Logger </g
 
         .. literalinclude:: cli_commands/007.php
             :lines: 2-
-
-    .. php:method:: getPad($array, $pad)
-
-        .. deprecated:: 4.0.5
-            Use :php:meth:`CodeIgniter\\CLI\\BaseCommand::setPad()` instead.
-
-        :param array    $array: The  $key => $value array.
-        :param integer  $pad: The pad spaces.
-
-        A method to calculate padding for ``$key => $value`` array output. The padding can be used to output a will formatted table in CLI.

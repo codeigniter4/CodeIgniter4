@@ -53,7 +53,15 @@ final class ResponseTraitTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        Services::superglobals()->setGetArray([]);
         $this->formatter = new JSONFormatter();
+    }
+
+    protected function tearDown(): void
+    {
+        Services::superglobals()->setGetArray([]);
+
+        parent::tearDown();
     }
 
     private function createAppConfig(): App
@@ -826,7 +834,7 @@ final class ResponseTraitTest extends CIUnitTestCase
 
         // Create controller with page=2 in query string
         $controller = $this->makeController('/api/items?page=2');
-        Services::superglobals()->setGet('page', '2');
+        $this->request->setGlobal('get', ['page' => '2']);
 
         $this->invoke($controller, 'paginate', [$model, 20]);
 
@@ -847,8 +855,8 @@ final class ResponseTraitTest extends CIUnitTestCase
 
         $model = $this->createMockModelWithPager($data, 2, 20, 100, 5);
 
-        Services::superglobals()->setGet('page', '2');
         $controller = $this->makeController('/api/items?page=2');
+        $this->request->setGlobal('get', ['page' => '2']);
 
         $this->invoke($controller, 'paginate', [$model, 20]);
 
@@ -893,8 +901,8 @@ final class ResponseTraitTest extends CIUnitTestCase
 
         $model = $this->createMockModelWithPager($data, 3, 20, 50, 3);
 
-        Services::superglobals()->setGet('page', '3');
         $controller = $this->makeController('/api/items?page=3');
+        $this->request->setGlobal('get', ['page' => '3']);
 
         $this->invoke($controller, 'paginate', [$model, 20]);
 
@@ -912,8 +920,8 @@ final class ResponseTraitTest extends CIUnitTestCase
 
         $model = $this->createMockModelWithPager($data, 2, 20, 100, 5);
 
-        Services::superglobals()->setGet('page', '2');
         $controller = $this->makeController('/api/items?page=2');
+        $this->request->setGlobal('get', ['page' => '2']);
 
         $this->invoke($controller, 'paginate', [$model, 20]);
 
@@ -1018,9 +1026,8 @@ final class ResponseTraitTest extends CIUnitTestCase
 
         $model = $this->createMockModelWithPager($data, 1, 20, 50, 3);
 
-        Services::superglobals()->setGet('filter', 'active');
-        Services::superglobals()->setGet('sort', 'name');
         $controller = $this->makeController('/api/items?filter=active&sort=name');
+        $this->request->setGlobal('get', ['filter' => 'active', 'sort' => 'name']);
 
         $this->invoke($controller, 'paginate', [$model, 20]);
 

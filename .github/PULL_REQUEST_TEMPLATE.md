@@ -7,7 +7,7 @@ Each pull request should address a single issue and have a meaningful title.
 - If a pull request fixes an issue, reference the issue with a suitable keyword (e.g., Fixes <issue number>).
 - Your branch name and the target name should be different.
 - All bug fixes should be sent to the __"develop"__ branch, this is where the next bug fix version will be developed.
-- PRs with any enhancement should be sent to the next minor version branch, e.g. __"4.7"__
+- PRs with any enhancement should be sent to the next minor version branch.
 
 -->
 **Description**

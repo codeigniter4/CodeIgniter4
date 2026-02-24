@@ -33,24 +33,9 @@ use Throwable;
 class CLI
 {
     /**
-     * Is the readline library on the system?
-     *
-     * @var bool
-     *
-     * @deprecated 4.4.2 Should be protected, and no longer used.
-     * @TODO Fix to camelCase in the next major version.
-     */
-    public static $readline_support = false;
-
-    /**
      * The message displayed at prompts.
-     *
-     * @var string
-     *
-     * @deprecated 4.4.2 Should be protected.
-     * @TODO Fix to camelCase in the next major version.
      */
-    public static $wait_msg = 'Press any key to continue...';
+    protected static string $waitMsg = 'Press any key to continue...';
 
     /**
      * Has the class already been initialized?
@@ -159,11 +144,6 @@ class CLI
     public static function init()
     {
         if (is_cli()) {
-            // Readline is an extension for PHP that makes interactivity with PHP
-            // much more bash-like.
-            // http://www.php.net/manual/en/readline.installation.php
-            static::$readline_support = extension_loaded('readline');
-
             // clear segments & options to keep testing clean
             static::$segments = [];
             static::$options  = [];
@@ -522,19 +502,9 @@ class CLI
         } elseif ($seconds > 0) {
             sleep($seconds);
         } else {
-            static::write(static::$wait_msg);
+            static::write(static::$waitMsg);
             static::$io->input();
         }
-    }
-
-    /**
-     * if operating system === windows
-     *
-     * @deprecated 4.3.0 Use `is_windows()` instead
-     */
-    public static function isWindows(): bool
-    {
-        return is_windows();
     }
 
     /**

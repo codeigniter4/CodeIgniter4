@@ -16,12 +16,13 @@ namespace CodeIgniter\Helpers\Array;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 
 /**
- * @interal This is internal implementation for the framework.
+ * @internal This is internal implementation for the framework.
  *
  * If there are any methods that should be provided, make them
  * public APIs via helper functions.
  *
- * @see \CodeIgniter\Helpers\Array\ArrayHelperDotKeyExistsTest
+ * @see \CodeIgniter\Helpers\Array\ArrayHelperDotHasTest
+ * @see \CodeIgniter\Helpers\Array\ArrayHelperDotModifyTest
  * @see \CodeIgniter\Helpers\Array\ArrayHelperRecursiveDiffTest
  * @see \CodeIgniter\Helpers\Array\ArrayHelperSortValuesByNaturalTest
  */
@@ -49,13 +50,22 @@ final class ArrayHelper
      */
     private static function convertToArray(string $index): array
     {
+        $trimmed = rtrim($index, '* ');
+
+        if ($trimmed === '') {
+            return [];
+        }
+
+        // Fast path: no escaped dots, skip the regex entirely.
+        if (! str_contains($trimmed, '\\.')) {
+            return array_values(array_filter(
+                explode('.', $trimmed),
+                static fn ($s): bool => $s !== '',
+            ));
+        }
+
         // See https://regex101.com/r/44Ipql/1
-        $segments = preg_split(
-            '/(?<!\\\\)\./',
-            rtrim($index, '* '),
-            0,
-            PREG_SPLIT_NO_EMPTY,
-        );
+        $segments = preg_split('/(?<!\\\\)\./', $trimmed, 0, PREG_SPLIT_NO_EMPTY);
 
         return array_map(
             static fn ($key): string => str_replace('\.', '.', $key),
@@ -125,53 +135,174 @@ final class ArrayHelper
      * array_key_exists() with dot array syntax.
      *
      * If wildcard `*` is used, all items for the key after it must have the key.
+     *
+     * @param array<array-key, mixed> $array
      */
-    public static function dotKeyExists(string $index, array $array): bool
+    public static function dotHas(string $index, array $array): bool
     {
-        if (str_ends_with($index, '*') || str_contains($index, '*.*')) {
-            throw new InvalidArgumentException(
-                'You must set key right after "*". Invalid index: "' . $index . '"',
-            );
-        }
+        self::ensureValidWildcardPattern($index);
 
         $indexes = self::convertToArray($index);
 
-        // If indexes is empty, returns false.
         if ($indexes === []) {
             return false;
         }
 
-        $currentArray = $array;
+        return self::hasByDotPath($array, $indexes);
+    }
 
-        // Grab the current index
-        while ($currentIndex = array_shift($indexes)) {
-            if ($currentIndex === '*') {
-                $currentIndex = array_shift($indexes);
+    /**
+     * Recursively check key existence by dot path, including wildcard support.
+     *
+     * @param array<array-key, mixed> $array
+     * @param list<string>            $indexes
+     */
+    private static function hasByDotPath(array $array, array $indexes): bool
+    {
+        if ($indexes === []) {
+            return true;
+        }
 
-                foreach ($currentArray as $item) {
-                    if (! array_key_exists($currentIndex, $item)) {
-                        return false;
-                    }
+        $currentIndex = array_shift($indexes);
+
+        if ($currentIndex === '*') {
+            foreach ($array as $item) {
+                if (! is_array($item) || ! self::hasByDotPath($item, $indexes)) {
+                    return false;
                 }
+            }
 
-                // If indexes is empty, all elements are checked.
-                if ($indexes === []) {
-                    return true;
-                }
+            return true;
+        }
 
-                $currentArray = self::dotSearch('*.' . $currentIndex, $currentArray);
+        if (! array_key_exists($currentIndex, $array)) {
+            return false;
+        }
+
+        if ($indexes === []) {
+            return true;
+        }
+
+        if (! is_array($array[$currentIndex])) {
+            return false;
+        }
+
+        return self::hasByDotPath($array[$currentIndex], $indexes);
+    }
+
+    /**
+     * Sets a value by dot array syntax.
+     *
+     * @param array<array-key, mixed> $array
+     */
+    public static function dotSet(array &$array, string $index, mixed $value): void
+    {
+        self::ensureValidWildcardPattern($index);
+
+        $indexes = self::convertToArray($index);
+
+        if ($indexes === []) {
+            return;
+        }
+
+        self::setByDotPath($array, $indexes, $value);
+    }
+
+    /**
+     * Removes a value by dot array syntax.
+     *
+     * @param array<array-key, mixed> $array
+     */
+    public static function dotUnset(array &$array, string $index): bool
+    {
+        self::ensureValidWildcardPattern($index, true);
+
+        if ($index === '*') {
+            return self::clearByDotPath($array, []) > 0;
+        }
+
+        $indexes = self::convertToArray($index);
+
+        if ($indexes === []) {
+            return false;
+        }
+
+        if (str_ends_with($index, '*')) {
+            return self::clearByDotPath($array, $indexes) > 0;
+        }
+
+        return self::unsetByDotPath($array, $indexes) > 0;
+    }
+
+    /**
+     * Gets only the specified keys using dot syntax.
+     *
+     * @param array<array-key, mixed> $array
+     * @param list<string>|string     $indexes
+     *
+     * @return array<array-key, mixed>
+     */
+    public static function dotOnly(array $array, array|string $indexes): array
+    {
+        $indexes = is_string($indexes) ? [$indexes] : $indexes;
+        $result  = [];
+
+        foreach ($indexes as $index) {
+            self::ensureValidWildcardPattern($index, true);
+
+            if ($index === '*') {
+                $result = [...$result, ...$array];
 
                 continue;
             }
 
-            if (! array_key_exists($currentIndex, $currentArray)) {
-                return false;
+            $segments = self::convertToArray($index);
+            if ($segments === []) {
+                continue;
             }
 
-            $currentArray = $currentArray[$currentIndex];
+            self::projectByDotPath($array, $segments, $result);
         }
 
-        return true;
+        return $result;
+    }
+
+    /**
+     * Gets all keys except the specified ones using dot syntax.
+     *
+     * @param array<array-key, mixed> $array
+     * @param list<string>|string     $indexes
+     *
+     * @return array<array-key, mixed>
+     */
+    public static function dotExcept(array $array, array|string $indexes): array
+    {
+        $indexes = is_string($indexes) ? [$indexes] : $indexes;
+        $result  = $array;
+
+        foreach ($indexes as $index) {
+            self::ensureValidWildcardPattern($index, true);
+
+            if ($index === '*') {
+                $result = [];
+
+                continue;
+            }
+
+            if (str_ends_with($index, '*')) {
+                $segments = self::convertToArray($index);
+                self::clearByDotPath($result, $segments);
+
+                continue;
+            }
+
+            $segments = self::convertToArray($index);
+            if ($segments !== []) {
+                self::unsetByDotPath($result, $segments);
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -314,5 +445,182 @@ final class ArrayHelper
 
             return strnatcmp((string) $currentValue, (string) $nextValue);
         });
+    }
+
+    /**
+     * Throws exception for invalid wildcard patterns.
+     */
+    private static function ensureValidWildcardPattern(string $index, bool $allowTrailingWildcard = false): void
+    {
+        if ((! $allowTrailingWildcard && str_ends_with($index, '*')) || str_contains($index, '*.*')) {
+            throw new InvalidArgumentException(
+                'You must set key right after "*". Invalid index: "' . $index . '"',
+            );
+        }
+    }
+
+    /**
+     * Set value recursively by dot path, including wildcard support.
+     *
+     * @param array<array-key, mixed> $array
+     * @param list<string>            $indexes
+     */
+    private static function setByDotPath(array &$array, array $indexes, mixed $value): void
+    {
+        if ($indexes === []) {
+            return;
+        }
+
+        $currentIndex = array_shift($indexes);
+
+        if ($currentIndex === '*') {
+            foreach ($array as &$item) {
+                if (! is_array($item)) {
+                    continue;
+                }
+
+                self::setByDotPath($item, $indexes, $value);
+            }
+            unset($item);
+
+            return;
+        }
+
+        if ($indexes === []) {
+            $array[$currentIndex] = $value;
+
+            return;
+        }
+
+        if (! isset($array[$currentIndex]) || ! is_array($array[$currentIndex])) {
+            $array[$currentIndex] = [];
+        }
+
+        self::setByDotPath($array[$currentIndex], $indexes, $value);
+    }
+
+    /**
+     * Unset value recursively by dot path, including wildcard support.
+     *
+     * @param array<array-key, mixed> $array
+     * @param list<string>            $indexes
+     */
+    private static function unsetByDotPath(array &$array, array $indexes): int
+    {
+        if ($indexes === []) {
+            return 0;
+        }
+
+        $currentIndex = array_shift($indexes);
+
+        if ($currentIndex === '*') {
+            $removed = 0;
+
+            foreach ($array as &$item) {
+                if (! is_array($item)) {
+                    continue;
+                }
+
+                $removed += self::unsetByDotPath($item, $indexes);
+            }
+            unset($item);
+
+            return $removed;
+        }
+
+        if ($indexes === []) {
+            if (! array_key_exists($currentIndex, $array)) {
+                return 0;
+            }
+
+            unset($array[$currentIndex]);
+
+            return 1;
+        }
+
+        if (! isset($array[$currentIndex]) || ! is_array($array[$currentIndex])) {
+            return 0;
+        }
+
+        return self::unsetByDotPath($array[$currentIndex], $indexes);
+    }
+
+    /**
+     * Clears all children under the specified path.
+     *
+     * @param array<array-key, mixed> $array
+     * @param list<string>            $indexes
+     */
+    private static function clearByDotPath(array &$array, array $indexes): int
+    {
+        if ($indexes === []) {
+            $count = count($array);
+            $array = [];
+
+            return $count;
+        }
+
+        $currentIndex = array_shift($indexes);
+
+        if ($currentIndex === '*') {
+            $cleared = 0;
+
+            foreach ($array as &$item) {
+                if (! is_array($item)) {
+                    continue;
+                }
+
+                $cleared += self::clearByDotPath($item, $indexes);
+            }
+            unset($item);
+
+            return $cleared;
+        }
+
+        if (! array_key_exists($currentIndex, $array) || ! is_array($array[$currentIndex])) {
+            return 0;
+        }
+
+        return self::clearByDotPath($array[$currentIndex], $indexes);
+    }
+
+    /**
+     * Projects matching paths from source array into result with preserved structure.
+     *
+     * @param list<string>            $indexes
+     * @param list<string>            $prefix
+     * @param array<array-key, mixed> $result
+     */
+    private static function projectByDotPath(
+        mixed $source,
+        array $indexes,
+        array &$result,
+        array $prefix = [],
+    ): void {
+        if ($indexes === []) {
+            self::setByDotPath($result, $prefix, $source);
+
+            return;
+        }
+
+        $currentIndex = array_shift($indexes);
+
+        if ($currentIndex === '*') {
+            if (! is_array($source)) {
+                return;
+            }
+
+            foreach ($source as $key => $value) {
+                self::projectByDotPath($value, $indexes, $result, [...$prefix, (string) $key]);
+            }
+
+            return;
+        }
+
+        if (! is_array($source) || ! array_key_exists($currentIndex, $source)) {
+            return;
+        }
+
+        self::projectByDotPath($source[$currentIndex], $indexes, $result, [...$prefix, $currentIndex]);
     }
 }
