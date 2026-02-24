@@ -16,6 +16,7 @@ namespace CodeIgniter\Test;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
@@ -688,5 +689,34 @@ final class FeatureTestTraitTest extends CIUnitTestCase
 
         // Do not redirect.
         $response->assertStatus(200);
+    }
+
+    #[DataProvider('provideWithRoutesWithInvalidMethod')]
+    public function testWithRoutesWithInvalidMethod(string $method): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage(sprintf('Invalid HTTP method "%s" provided for route "home".', $method));
+
+        $this->withRoutes([
+            [
+                $method,
+                'home',
+                static fn (): string => 'Hello World',
+            ],
+        ]);
+    }
+
+    /**
+     * @return iterable<string, array{0: string}>
+     */
+    public static function provideWithRoutesWithInvalidMethod(): iterable
+    {
+        foreach (['ADD', 'CLI', ...Method::all()] as $method) {
+            yield "wrong {$method}" => [$method . 'S'];
+        }
+
+        yield 'route collection addRedirect' => ['addRedirect'];
+
+        yield 'route collection setHTTPVerb' => ['setHTTPVerb'];
     }
 }
