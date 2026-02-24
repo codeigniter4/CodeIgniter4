@@ -141,7 +141,7 @@ This would produce a log entry like:
 
     ERROR - 2026-02-18 --> Payment processing failed {"user_id":123,"transaction_id":"txn_12345"}
 
-.. note:: Hidden data set with ``setHidden()`` is **never** included in log output, even when
+.. note:: Hidden data set with ``setHidden()`` are **never** included in log output, even when
     ``$logGlobalContext`` is enabled. This protects sensitive information such as API keys
     and tokens from appearing in log files.
 

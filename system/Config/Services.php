@@ -872,10 +872,8 @@ class Services extends BaseService
 
     /**
      * The Context class provides a way to store and retrieve static data throughout requests.
-     *
-     * @return Context
      */
-    public static function context(bool $getShared = true)
+    public static function context(bool $getShared = true): Context
     {
         if ($getShared) {
             return static::getSharedInstance('context');
