@@ -400,6 +400,10 @@ class ContentSecurityPolicy
         if ($this->styleNonce === null) {
             $this->styleNonce = base64_encode(random_bytes(12));
             $this->addStyleSrc('nonce-' . $this->styleNonce);
+
+            if ($this->styleSrcElem !== []) {
+                $this->addStyleSrcElem('nonce-' . $this->styleNonce);
+            }
         }
 
         return $this->styleNonce;
@@ -413,6 +417,10 @@ class ContentSecurityPolicy
         if ($this->scriptNonce === null) {
             $this->scriptNonce = base64_encode(random_bytes(12));
             $this->addScriptSrc('nonce-' . $this->scriptNonce);
+
+            if ($this->scriptSrcElem !== []) {
+                $this->addScriptSrcElem('nonce-' . $this->scriptNonce);
+            }
         }
 
         return $this->scriptNonce;

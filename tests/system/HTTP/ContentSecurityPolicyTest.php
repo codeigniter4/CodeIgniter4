@@ -900,6 +900,48 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         );
     }
 
+    public function testGetScriptNonceAddsNonceToScriptSrcElemWhenConfigured(): void
+    {
+        $this->csp->clearDirective('script-src-elem');
+        $this->csp->addScriptSrcElem('cdn.example.com');
+        $nonce = $this->csp->getScriptNonce();
+        $this->csp->finalize($this->response);
+
+        $directives = $this->getCspDirectives($this->response->getHeaderLine('Content-Security-Policy'));
+        $this->assertContains("script-src-elem cdn.example.com 'nonce-{$nonce}'", $directives);
+    }
+
+    public function testGetScriptNonceDoesNotAddNonceToScriptSrcElemWhenCleared(): void
+    {
+        $this->csp->clearDirective('script-src-elem');
+        $this->csp->getScriptNonce();
+        $this->csp->finalize($this->response);
+
+        $header = $this->response->getHeaderLine('Content-Security-Policy');
+        $this->assertStringNotContainsString('script-src-elem', $header);
+    }
+
+    public function testGetStyleNonceAddsNonceToStyleSrcElemWhenConfigured(): void
+    {
+        $this->csp->clearDirective('style-src-elem');
+        $this->csp->addStyleSrcElem('cdn.example.com');
+        $nonce = $this->csp->getStyleNonce();
+        $this->csp->finalize($this->response);
+
+        $directives = $this->getCspDirectives($this->response->getHeaderLine('Content-Security-Policy'));
+        $this->assertContains("style-src-elem cdn.example.com 'nonce-{$nonce}'", $directives);
+    }
+
+    public function testGetStyleNonceDoesNotAddNonceToStyleSrcElemWhenCleared(): void
+    {
+        $this->csp->clearDirective('style-src-elem');
+        $this->csp->getStyleNonce();
+        $this->csp->finalize($this->response);
+
+        $header = $this->response->getHeaderLine('Content-Security-Policy');
+        $this->assertStringNotContainsString('style-src-elem', $header);
+    }
+
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testHeaderScriptNonceEmittedOnceGetScriptNonceCalled(): void
