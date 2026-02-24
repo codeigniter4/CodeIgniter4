@@ -142,7 +142,7 @@ final class Context
      * Supports dot notation for nested arrays.
      *
      * @param string     $key     The key to identify the data.
-     * @param mixed|null $default The default value to return if the key does not exist in the context.
+     * @param mixed $default The default value to return if the key does not exist in the context.
      *
      * @return mixed The value associated with the key, or the default value if the key does not exist.
      */
