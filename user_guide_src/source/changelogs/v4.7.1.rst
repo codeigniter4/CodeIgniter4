@@ -24,6 +24,15 @@ Message Changes
 Changes
 *******
 
+Events
+======
+
+- **Worker Mode:** :php:func:`Events::cleanupForWorkerMode()` now accepts an optional
+  ``$resetEventListeners`` array parameter, corresponding to the new
+  ``$resetEventListeners`` property in ``Config\WorkerMode``. This allows users to
+  declare event names that should be cleaned up between requests when listeners are
+  registered inside event callbacks. See :ref:`worker-mode-reset-event-listeners`.
+
 Others
 ======
 

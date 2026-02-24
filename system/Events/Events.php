@@ -289,10 +289,18 @@ class Events
      * Cleanup performance log and request-specific listeners for worker mode.
      *
      * Called at the END of each request to clean up state.
+     *
+     * @param list<string> $resetEventListeners Additional event names to reset.
      */
-    public static function cleanupForWorkerMode(): void
+    public static function cleanupForWorkerMode(array $resetEventListeners = []): void
     {
-        static::$performanceLog = [];
-        static::removeAllListeners('DBQuery');
+        if (CI_DEBUG) {
+            static::$performanceLog = [];
+            static::removeAllListeners('DBQuery');
+        }
+
+        foreach ($resetEventListeners as $event) {
+            static::removeAllListeners($event);
+        }
     }
 }

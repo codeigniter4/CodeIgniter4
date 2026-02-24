@@ -122,8 +122,10 @@ while (frankenphp_handle_request($handler)) {
     // Reset services except persistent ones
     Services::resetForWorkerMode($workerConfig);
 
+    // Reset event listeners
+    Events::cleanupForWorkerMode($workerConfig->resetEventListeners);
+
     if (CI_DEBUG) {
-        Events::cleanupForWorkerMode();
         Services::toolbar()->reset();
     }
 }

@@ -186,6 +186,10 @@ Option                      Type    Description
                                     in this list are destroyed after each request to prevent state leakage.
                                     Default: ``['autoloader', 'locator', 'exceptions', 'commands',
                                     'codeigniter', 'superglobals', 'routes', 'cache']``
+**$resetEventListeners**    array   Event names whose listeners are removed between requests. Use this
+                                    when you register event listeners inside other event callbacks rather
+                                    than at the top level of **Config/Events.php**, which would cause them
+                                    to accumulate across requests. Default: ``[]``
 **$forceGarbageCollection** bool    Whether to force garbage collection after each request.
                                     ``true`` (default, recommended): Prevents memory leaks.
                                     ``false``: Relies on PHP's automatic garbage collection.
@@ -213,6 +217,29 @@ Service          Purpose
 .. warning:: Adding services to ``$persistentServices`` without understanding their
     state management can cause data leakage between requests. Only persist services
     that are truly stateless or manage their own request isolation.
+
+.. _worker-mode-reset-event-listeners:
+
+Reset Event Listeners
+=====================
+
+.. versionadded:: 4.7.1
+
+Event listeners registered at the top level of **Config/Events.php** are loaded once
+at worker startup and persist correctly across requests. However, if you register a
+listener inside another event's callback, it will be re-registered on every request
+and accumulate:
+
+.. literalinclude:: worker_mode/001.php
+
+To clean up such listeners between requests, add the event name to
+``$resetEventListeners`` in **app/Config/WorkerMode.php**:
+
+.. literalinclude:: worker_mode/002.php
+
+.. note:: The recommended approach is to register listeners at the top level of
+    **Config/Events.php** instead of inside callbacks. Use ``$resetEventListeners``
+    only when registering inside a callback is unavoidable.
 
 **********************
 Optimize Configuration
