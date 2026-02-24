@@ -165,9 +165,7 @@ jobs:
         if: ${{ contains(inputs.extra-extensions, 'imagick') }}
         run: |
           sudo apt-get update
-          sudo apt-get install --reinstall fonts-noto-mono libijs-0.35:amd64 fonts-urw-base35 ghostscript poppler-data libjbig2dec0:amd64 libopenjp2-7:amd64 fonts-droid-fallback fonts-dejavu-core
-          sudo apt-get install -y gsfonts libmagickwand-dev imagemagick
-          sudo apt-get install --fix-broken
+          sudo apt-get install -y imagemagick libmagickwand-dev ghostscript poppler-data libjbig2dec0:amd64 libopenjp2-7:amd64
 
       - name: Checkout base branch for PR
         if: github.event_name == 'pull_request'
