@@ -1139,7 +1139,7 @@ class CLI
         static::$lastWrite   = 'write';
         static::$height      = null;
         static::$width       = null;
-        static::$isColored   = false;
+        static::$isColored   = static::hasColorSupport(STDOUT);
 
         static::resetInputOutput();
     }
