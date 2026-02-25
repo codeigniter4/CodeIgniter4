@@ -1850,9 +1850,9 @@ class ValidationTest extends CIUnitTestCase
         );
         $this->assertFalse($this->validation->run($data));
         $this->assertSame(
-            // The data for `contacts.*.name` does not exist. So it is interpreted
-            // as `null`, and this error message returns.
-            ['contacts.*.name' => 'The contacts.*.name field is required.'],
+            // `contacts.just` exists but has no `name` key, so null is injected
+            // and the error is reported on the concrete path.
+            ['contacts.just.name' => 'The contacts.*.name field is required.'],
             $this->validation->getErrors(),
         );
     }
@@ -1901,22 +1901,25 @@ class ValidationTest extends CIUnitTestCase
         );
     }
 
-    public function testWildcardNonRequiredRuleSkipsMissingElements(): void
+    public function testWildcardNonRequiredRuleFiresForMissingElements(): void
     {
-        // Without a required* rule, elements whose key does not exist must
-        // never be queued for validation - no false positives.
+        // A missing key is treated as null, consistent with non-wildcard behaviour.
+        // Use `if_exist` or `permit_empty` to explicitly skip absent keys.
         $data = [
             'contacts' => [
                 'friends' => [
                     ['name' => 'Fred'],  // passes in_list
-                    ['age' => 21],       // key absent, must be skipped entirely
+                    ['age' => 21],       // key absent - null injected, in_list fails
                 ],
             ],
         ];
 
         $this->validation->setRules(['contacts.friends.*.name' => 'in_list[Fred,Wilma]']);
-        $this->assertTrue($this->validation->run($data));
-        $this->assertSame([], $this->validation->getErrors());
+        $this->assertFalse($this->validation->run($data));
+        $this->assertSame(
+            ['contacts.friends.1.name' => 'The contacts.friends.*.name field must be one of: Fred,Wilma.'],
+            $this->validation->getErrors(),
+        );
     }
 
     public function testWildcardIfExistRequiredSkipsMissingElements(): void
@@ -1939,13 +1942,13 @@ class ValidationTest extends CIUnitTestCase
 
     public function testWildcardPermitEmptySkipsMissingElements(): void
     {
-        // `permit_empty` without any required* rule: an empty existing value
-        // passes and a missing element is never queued.
+        // `permit_empty` treats null as empty and short-circuits remaining rules,
+        // so both an explicitly empty value and an absent key (injected as null) pass.
         $data = [
             'contacts' => [
                 'friends' => [
                     ['name' => ''],  // exists but empty - permit_empty lets it through
-                    ['age' => 21],   // key absent - not queued (no required* rule)
+                    ['age' => 21],   // key absent - null injected, permit_empty lets it through
                 ],
             ],
         ];
@@ -1957,9 +1960,8 @@ class ValidationTest extends CIUnitTestCase
 
     public function testWildcardRequiredWithFailsForMissingElementWhenConditionMet(): void
     {
-        // `required_with` is a required* variant, so missing elements ARE queued.
-        // When the condition field is present the rule fires and the missing
-        // element generates an error.
+        // The missing key is injected as null. When the condition field is present
+        // the rule fires and the missing element generates an error.
         $data = [
             'has_friends' => '1',
             'contacts'    => [
@@ -1980,13 +1982,13 @@ class ValidationTest extends CIUnitTestCase
 
     public function testWildcardRequiredWithPassesForMissingElementWhenConditionNotMet(): void
     {
-        // Same structure but the condition field is absent, so required_with
-        // does not apply and the missing element generates no error.
+        // The missing key is injected as null, but required_with passes because
+        // the condition field is absent, so no error is generated.
         $data = [
             'contacts' => [
                 'friends' => [
                     ['name' => 'Fred', 'age' => 20],  // passes
-                    ['age' => 21],                    // missing name, but condition absent - ok
+                    ['age' => 21],                    // missing name, condition absent - ok
                 ],
             ],
         ];
@@ -2019,6 +2021,44 @@ class ValidationTest extends CIUnitTestCase
             ['users.0.contacts.1.name' => 'The users.*.contacts.*.name field is required.'],
             $this->validation->getErrors(),
         );
+    }
+
+    public function testWildcardFieldExistsFailsWhenSomeElementsMissingKey(): void
+    {
+        // field_exists uses dotKeyExists against the whole wildcard pattern, so
+        // it reports on the template field rather than individual concrete paths
+        // (unlike `required`, which reports per concrete path).
+        $data = [
+            'contacts' => [
+                'friends' => [
+                    ['name' => 'Fred', 'age' => 20],
+                    ['age' => 21],  // 'name' key absent
+                ],
+            ],
+        ];
+
+        $this->validation->setRules(['contacts.friends.*.name' => 'field_exists']);
+        $this->assertFalse($this->validation->run($data));
+        $this->assertSame(
+            ['contacts.friends.*.name' => 'The contacts.friends.*.name field must exist.'],
+            $this->validation->getErrors(),
+        );
+    }
+
+    public function testWildcardFieldExistsPassesWhenAllElementsHaveKey(): void
+    {
+        $data = [
+            'contacts' => [
+                'friends' => [
+                    ['name' => 'Fred', 'age' => 20],
+                    ['name' => 'Wilma', 'age' => 25],
+                ],
+            ],
+        ];
+
+        $this->validation->setRules(['contacts.friends.*.name' => 'field_exists']);
+        $this->assertTrue($this->validation->run($data));
+        $this->assertSame([], $this->validation->getErrors());
     }
 
     /**

@@ -178,14 +178,13 @@ class Validation implements ValidationInterface
                     ARRAY_FILTER_USE_KEY,
                 );
 
-                // For required* rules: when at least one sibling path already
-                // matched (partial-missing scenario), also emit null for array
-                // elements that are structurally present but lack the leaf key,
-                // so that the required rule can fire for each of them.
-                if ($values !== [] && $this->rulesHaveRequired($rules)) {
-                    foreach ($this->walkForAllPossiblePaths(explode('.', $field), $data, '') as $path) {
-                        $values[$path] = null;
-                    }
+                // Emit null for every leaf path that is structurally reachable
+                // but whose key is absent from the data. This mirrors the
+                // non-wildcard behaviour where a missing key is treated as null,
+                // so that all rules behave consistently regardless of whether
+                // the field uses a wildcard or not.
+                foreach ($this->walkForAllPossiblePaths(explode('.', $field), $data, '') as $path) {
+                    $values[$path] = null;
                 }
 
                 // if keys not found
@@ -995,30 +994,6 @@ class Validation implements ValidationInterface
         }
 
         return array_unique($rules);
-    }
-
-    /**
-     * Returns true if any rule in the set is required, required_with, or required_without.
-     * Used to decide whether to emit null for missing wildcard leaf keys.
-     *
-     * @param list<string> $rules
-     */
-    private function rulesHaveRequired(array $rules): bool
-    {
-        foreach ($rules as $rule) {
-            if (! is_string($rule)) {
-                continue;
-            }
-
-            $ruleName = strstr($rule, '[', true);
-            $name     = $ruleName !== false ? $ruleName : $rule;
-
-            if (in_array($name, ['required', 'required_with', 'required_without'], true)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**
