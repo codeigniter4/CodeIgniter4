@@ -1043,6 +1043,11 @@ valid_url_strict        Yes        Fails if field does not contain a valid URL. 
                                    ``FILTER_VALIDATE_URL``.
 ======================= ========== ============================================= ===================================================
 
+.. note:: When validating nested array data with the wildcard ``*`` syntax, use ``required``,
+    ``required_with``, or ``required_without`` to ensure that every array element is checked
+    for the presence of a key. Without one of these rules, elements whose key is absent are
+    silently skipped.
+
 .. note:: You can also use any native PHP functions that return boolean and
     permit at least one parameter, the field data to validate.
 

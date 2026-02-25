@@ -60,6 +60,7 @@ Bugs Fixed
 - **Toolbar:** Fixed a bug in the Routes panel where only the first route parameter was converted to an input field on hover.
 - **Testing:** Fixed a bug in ``FeatureTestTrait::withRoutes()`` where invalid HTTP methods were not properly validated, thus passing them all to ``RouteCollection``.
 - **Validation:** Rule ``valid_cc_number`` now has the correct translation.
+- **Validation:** Fixed a bug where rules did not fire for array elements missing a key when using wildcard fields (e.g., ``contacts.friends.*.name``).
 - **View:** Fixed a bug where ``View`` would throw an error if the ``appOverridesFolder`` config property was not defined.
 
 See the repo's
