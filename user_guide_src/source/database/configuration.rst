@@ -168,8 +168,7 @@ Description of Values
 **encrypt**                 (``MySQLi`` and ``SQLSRV`` only) Whether to use an encrypted connection.
                             See :ref:`MySQLi encrypt <mysqli-encrypt>` for ``MySQLi`` settings.
                             ``SQLSRV`` driver accepts true/false.
-**trustServerCertificate**
-                            (``SQLSRV`` only) true/false (boolean) - Whether to trust the server certificate
+**trustServerCertificate**  (``SQLSRV`` only) true/false (boolean) - Whether to trust the server certificate
                             without validating it against a trusted certificate authority.
 **compress**                (``MySQLi`` only) Whether to use client compression.
 **strictOn**                (``MySQLi`` only) true/false (boolean) - Whether to force "Strict Mode" connections, good for ensuring
