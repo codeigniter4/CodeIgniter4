@@ -67,6 +67,11 @@ class Connection extends BaseConnection
     public $schema = 'dbo';
 
     /**
+     * Trust server certificate.
+     */
+    public bool $trustServerCertificate = false;
+
+    /**
      * Quoted identifier flag
      *
      * Whether to use SQL-92 standard quoted identifier
@@ -110,13 +115,14 @@ class Connection extends BaseConnection
         $charset = in_array(strtolower($this->charset), ['utf-8', 'utf8'], true) ? 'UTF-8' : SQLSRV_ENC_CHAR;
 
         $connection = [
-            'UID'                  => empty($this->username) ? '' : $this->username,
-            'PWD'                  => empty($this->password) ? '' : $this->password,
-            'Database'             => $this->database,
-            'ConnectionPooling'    => $persistent ? 1 : 0,
-            'CharacterSet'         => $charset,
-            'Encrypt'              => $this->encrypt === true ? 1 : 0,
-            'ReturnDatesAsStrings' => 1,
+            'UID'                    => empty($this->username) ? '' : $this->username,
+            'PWD'                    => empty($this->password) ? '' : $this->password,
+            'Database'               => $this->database,
+            'ConnectionPooling'      => $persistent ? 1 : 0,
+            'CharacterSet'           => $charset,
+            'Encrypt'                => $this->encrypt === true ? 1 : 0,
+            'TrustServerCertificate' => $this->trustServerCertificate === true ? 1 : 0,
+            'ReturnDatesAsStrings'   => 1,
         ];
 
         // If the username and password are both empty, assume this is a

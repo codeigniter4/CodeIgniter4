@@ -132,6 +132,8 @@ Testing
 Database
 ========
 
+- Added ``trustServerCertificate`` option to ``SQLSRV`` database connections in ``Config\Database``. Set it to ``true`` to trust the server certificate without CA validation when using encrypted connections.
+
 Query Builder
 -------------
 

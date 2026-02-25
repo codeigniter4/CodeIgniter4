@@ -140,64 +140,67 @@ and decode it in the constructor in the Config class:
 Description of Values
 *********************
 
-================ ===========================================================================================================
- Config Name     Description
-================ ===========================================================================================================
-**DSN**          The DSN connect string (an all-in-one configuration sequence).
-**hostname**     The hostname of your database server. Often this is 'localhost'.
-**username**     The username used to connect to the database. (``SQLite3`` does not use this.)
-**password**     The password used to connect to the database. (``SQLite3`` does not use this.)
-**database**     The name of the database you want to connect to.
+=========================== =====================================================================================================
+ Config Name                Description
+=========================== =====================================================================================================
+**DSN**                     The DSN connect string (an all-in-one configuration sequence).
+**hostname**                The hostname of your database server. Often this is 'localhost'.
+**username**                The username used to connect to the database. (``SQLite3`` does not use this.)
+**password**                The password used to connect to the database. (``SQLite3`` does not use this.)
+**database**                The name of the database you want to connect to.
 
-                 .. note:: CodeIgniter doesn't support dots (``.``) in the table and column names.
-                    Since v4.5.0, database names with dots are supported.
-**DBDriver**     The database driver name. The case must match the driver name.
-                 You can set a fully qualified classname to use your custom driver.
-                 Supported drivers: ``MySQLi``, ``Postgre``, ``SQLite3``, ``SQLSRV``, and ``OCI8``.
-**DBPrefix**     An optional table prefix which will be added to the table name when running
-                 :doc:`Query Builder <query_builder>` queries. This permits multiple CodeIgniter
-                 installations to share one database.
-**pConnect**     true/false (boolean) - Whether to use a persistent connection.
-**DBDebug**      true/false (boolean) - Whether to throw exceptions when database errors occur.
-**charset**      The character set used in communicating with the database.
-**DBCollat**     (``MySQLi`` only) The character collation used in communicating with the database.
-**swapPre**      A default table prefix that should be swapped with ``DBPrefix``. This is useful for distributed
-                 applications where you might run manually written queries, and need the prefix to still be
-                 customizable by the end user.
-**schema**       (``Postgre`` and ``SQLSRV`` only) The database schema, default value varies by driver.
-**encrypt**      (``MySQLi`` and ``SQLSRV`` only) Whether to use an encrypted connection.
-                 See :ref:`MySQLi encrypt <mysqli-encrypt>` for ``MySQLi`` settings.
-                 ``SQLSRV`` driver accepts true/false.
-**compress**     (``MySQLi`` only) Whether to use client compression.
-**strictOn**     (``MySQLi`` only) true/false (boolean) - Whether to force "Strict Mode" connections, good for ensuring
-                 strict SQL while developing an application.
-**port**         The database port number - Empty string ``''`` for default port (or dynamic port with ``SQLSRV``).
-**foreignKeys**  (``SQLite3`` only) true/false (boolean) - Whether to enable Foreign Key constraint.
+                            .. note:: CodeIgniter doesn't support dots (``.``) in the table and column names.
+                               Since v4.5.0, database names with dots are supported.
+**DBDriver**                The database driver name. The case must match the driver name.
+                            You can set a fully qualified classname to use your custom driver.
+                            Supported drivers: ``MySQLi``, ``Postgre``, ``SQLite3``, ``SQLSRV``, and ``OCI8``.
+**DBPrefix**                An optional table prefix which will be added to the table name when running
+                            :doc:`Query Builder <query_builder>` queries. This permits multiple CodeIgniter
+                            installations to share one database.
+**pConnect**                true/false (boolean) - Whether to use a persistent connection.
+**DBDebug**                 true/false (boolean) - Whether to throw exceptions when database errors occur.
+**charset**                 The character set used in communicating with the database.
+**DBCollat**                (``MySQLi`` only) The character collation used in communicating with the database.
+**swapPre**                 A default table prefix that should be swapped with ``DBPrefix``. This is useful for distributed
+                            applications where you might run manually written queries, and need the prefix to still be
+                            customizable by the end user.
+**schema**                  (``Postgre`` and ``SQLSRV`` only) The database schema, default value varies by driver.
+**encrypt**                 (``MySQLi`` and ``SQLSRV`` only) Whether to use an encrypted connection.
+                            See :ref:`MySQLi encrypt <mysqli-encrypt>` for ``MySQLi`` settings.
+                            ``SQLSRV`` driver accepts true/false.
+**trustServerCertificate**
+                            (``SQLSRV`` only) true/false (boolean) - Whether to trust the server certificate
+                            without validating it against a trusted certificate authority.
+**compress**                (``MySQLi`` only) Whether to use client compression.
+**strictOn**                (``MySQLi`` only) true/false (boolean) - Whether to force "Strict Mode" connections, good for ensuring
+                            strict SQL while developing an application.
+**port**                    The database port number - Empty string ``''`` for default port (or dynamic port with ``SQLSRV``).
+**foreignKeys**             (``SQLite3`` only) true/false (boolean) - Whether to enable Foreign Key constraint.
 
-                 .. important:: SQLite3 Foreign Key constraint is disabled by default.
-                     See `SQLite documentation <https://www.sqlite.org/pragma.html#pragma_foreign_keys>`_.
-                     To enforce Foreign Key constraint, set this config item to true.
-**busyTimeout**  (``SQLite3`` only) milliseconds (int) - Sleeps for a specified amount of time when a table is locked.
-**synchronous**  (``SQLite3`` only) flag (int) - How strict SQLite will be at flushing to disk during transactions.
-                 Use `null` to stay with the default setting. This can be used since v4.6.0.
-**numberNative** (``MySQLi`` only) true/false (boolean) - Whether to enable MYSQLI_OPT_INT_AND_FLOAT_NATIVE.
-**foundRows**    (``MySQLi`` only) true/false (boolean) - Whether to enable MYSQLI_CLIENT_FOUND_ROWS.
-**dateFormat**   The default date/time formats as PHP's `DateTime format`_.
-                 * ``date``        - date format
-                 * ``datetime``    - date and time format
-                 * ``datetime-ms`` - date and time with millisecond format
-                 * ``datetime-us`` - date and time with microsecond format
-                 * ``time``        - time format
-                 This can be used since v4.5.0, and you can get the value, e.g., ``$db->dateFormat['datetime']``.
-                 Currently, the database drivers do not use these values directly,
-                 but :ref:`Model <model-saving-dates>` uses them.
-**timezone**     (``MySQLi``, ``Postgre``, and ``OCI8`` only) The database session timezone.
-                 * ``false``       - Don't set session timezone (default, backward compatible)
-                 * ``true``        - Automatically sync with ``App::$appTimezone``
-                 * ``string``      - Specific timezone offset (e.g., ``'+05:30'``) or named timezone (e.g., ``'America/New_York'``)
-                 Named timezones are automatically converted to offsets for database compatibility.
-                 See :ref:`database-config-timezone` for details.
-================ ===========================================================================================================
+                            .. important:: SQLite3 Foreign Key constraint is disabled by default.
+                                See `SQLite documentation <https://www.sqlite.org/pragma.html#pragma_foreign_keys>`_.
+                                To enforce Foreign Key constraint, set this config item to true.
+**busyTimeout**             (``SQLite3`` only) milliseconds (int) - Sleeps for a specified amount of time when a table is locked.
+**synchronous**             (``SQLite3`` only) flag (int) - How strict SQLite will be at flushing to disk during transactions.
+                            Use `null` to stay with the default setting. This can be used since v4.6.0.
+**numberNative**            (``MySQLi`` only) true/false (boolean) - Whether to enable MYSQLI_OPT_INT_AND_FLOAT_NATIVE.
+**foundRows**               (``MySQLi`` only) true/false (boolean) - Whether to enable MYSQLI_CLIENT_FOUND_ROWS.
+**dateFormat**              The default date/time formats as PHP's `DateTime format`_.
+                            * ``date``        - date format
+                            * ``datetime``    - date and time format
+                            * ``datetime-ms`` - date and time with millisecond format
+                            * ``datetime-us`` - date and time with microsecond format
+                            * ``time``        - time format
+                            This can be used since v4.5.0, and you can get the value, e.g., ``$db->dateFormat['datetime']``.
+                            Currently, the database drivers do not use these values directly,
+                            but :ref:`Model <model-saving-dates>` uses them.
+**timezone**                (``MySQLi``, ``Postgre``, and ``OCI8`` only) The database session timezone.
+                            * ``false``       - Don't set session timezone (default, backward compatible)
+                            * ``true``        - Automatically sync with ``App::$appTimezone``
+                            * ``string``      - Specific timezone offset (e.g., ``'+05:30'``) or named timezone (e.g., ``'America/New_York'``)
+                            Named timezones are automatically converted to offsets for database compatibility.
+                            See :ref:`database-config-timezone` for details.
+=========================== =====================================================================================================
 
 .. _DateTime format: https://www.php.net/manual/en/datetime.format.php
 
