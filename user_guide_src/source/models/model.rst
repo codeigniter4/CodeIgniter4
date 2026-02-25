@@ -633,6 +633,41 @@ model's ``save()`` method to inspect the class, grab any public and private prop
 .. note:: If you find yourself working with Entities a lot, CodeIgniter provides a built-in :doc:`Entity class </models/entities>`
     that provides several handy features that make developing Entities simpler.
 
+.. _model-first-or-insert:
+
+firstOrInsert()
+---------------
+
+.. versionadded:: 4.8.0
+
+Finds the first row matching the given ``$attributes``, or inserts a new row
+combining ``$attributes`` and ``$values`` when no match is found.
+
+Both parameters accept an array, a ``stdClass`` object, or an
+:doc:`Entity </models/entities>`:
+
+.. literalinclude:: model/065.php
+
+``$attributes`` is used as the WHERE condition for the lookup. If no record is
+found, a new row is inserted using the merged result of ``$attributes`` and
+``$values``. The ``$values`` data is only applied during insertion and is
+ignored when a matching record already exists.
+
+.. literalinclude:: model/066.php
+
+The method returns the found or newly inserted row in the format defined by
+`$returnType`_, or ``null`` on failure (e.g., validation error or database
+error when ``DBDebug`` is ``false``).
+
+.. note:: A database **unique constraint** on the lookup column(s) is required
+    for the method to be race-safe. Without it, two concurrent requests could
+    both pass the initial lookup and attempt to insert, resulting in duplicate
+    rows.
+
+    When a unique constraint is present, a concurrent insert is detected via
+    :php:class:`UniqueConstraintViolationException <CodeIgniter\\Database\\Exceptions\\UniqueConstraintViolationException>`
+    and resolved automatically by performing a second lookup.
+
 .. _model-saving-dates:
 
 Saving Dates

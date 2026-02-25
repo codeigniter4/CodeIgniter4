@@ -19,6 +19,7 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Database\Exceptions\UniqueConstraintViolationException;
 use CodeIgniter\Entity\Entity;
 use CodeIgniter\Exceptions\BadMethodCallException;
 use CodeIgniter\Exceptions\InvalidArgumentException;
@@ -713,6 +714,52 @@ class Model extends BaseModel
         }
 
         return $row;
+    }
+
+    /**
+     * Finds the first row matching attributes or inserts a new row.
+     *
+     * Note: without a DB unique constraint, this is not race-safe.
+     *
+     * @param array<string, mixed>|object $attributes
+     * @param array<string, mixed>|object $values
+     */
+    public function firstOrInsert(array|object $attributes, array|object $values = []): array|object|null
+    {
+        if (is_object($attributes)) {
+            $attributes = $this->transformDataToArray($attributes, 'insert');
+        }
+
+        if ($attributes === []) {
+            throw new InvalidArgumentException('firstOrInsert() requires non-empty $attributes.');
+        }
+
+        $row = $this->where($attributes)->first();
+        if ($row !== null) {
+            return $row;
+        }
+
+        if (is_object($values)) {
+            $values = $this->transformDataToArray($values, 'insert');
+        }
+
+        $data = array_merge($attributes, $values);
+
+        try {
+            $id = $this->insert($data);
+        } catch (UniqueConstraintViolationException) {
+            return $this->where($attributes)->first();
+        }
+
+        if ($id === false) {
+            if ($this->db->getLastException() instanceof UniqueConstraintViolationException) {
+                return $this->where($attributes)->first();
+            }
+
+            return null;
+        }
+
+        return $this->where($this->primaryKey, $id)->first();
     }
 
     public function update($id = null, $row = null): bool

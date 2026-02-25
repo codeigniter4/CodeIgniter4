@@ -168,6 +168,10 @@ Model
 =====
 
 - Added new ``chunkRows()`` method to ``CodeIgniter\Model`` for processing large datasets in smaller chunks.
+- Added new ``firstOrInsert()`` method to ``CodeIgniter\Model`` that finds the first row matching the given
+  attributes or inserts a new one. Uses an optimistic insert strategy to avoid race conditions, relying on
+  :php:class:`UniqueConstraintViolationException <CodeIgniter\\Database\\Exceptions\\UniqueConstraintViolationException>`
+  to detect concurrent inserts.
 
 Libraries
 =========
