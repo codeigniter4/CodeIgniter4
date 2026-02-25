@@ -121,7 +121,7 @@ class Connection extends BaseConnection
             'ConnectionPooling'      => $persistent ? 1 : 0,
             'CharacterSet'           => $charset,
             'Encrypt'                => $this->encrypt === true ? 1 : 0,
-            'TrustServerCertificate' => $this->trustServerCertificate === true ? 1 : 0,
+            'TrustServerCertificate' => $this->trustServerCertificate ? 1 : 0,
             'ReturnDatesAsStrings'   => 1,
         ];
 
