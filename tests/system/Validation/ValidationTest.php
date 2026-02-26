@@ -342,6 +342,35 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame([], $this->validation->getValidated());
     }
 
+    public function testClosureRuleWithParamErrorPlaceholders(): void
+    {
+        $this->validation->setRules([
+            'status' => [
+                'label' => 'Status',
+                'rules' => [
+                    static function ($value, $data, &$error, $field): bool {
+                        if ($value !== 'active') {
+                            $error = 'The field {field} must be one of: {param}. Received: {value}';
+
+                            return false;
+                        }
+
+                        return true;
+                    },
+                ],
+            ],
+        ]);
+
+        $data   = ['status' => 'invalid'];
+        $result = $this->validation->run($data);
+
+        $this->assertFalse($result);
+        $this->assertSame(
+            ['status' => 'The field Status must be one of: . Received: invalid'],
+            $this->validation->getErrors(),
+        );
+    }
+
     public function testClosureRuleWithLabel(): void
     {
         $this->validation->setRules([
@@ -415,6 +444,22 @@ class ValidationTest extends CIUnitTestCase
         return true;
     }
 
+    /**
+     * Validation rule3
+     *
+     * @param array<string, mixed> $data
+     */
+    public function rule3(mixed $value, array $data, ?string &$error, string $field): bool
+    {
+        if ($value !== 'active') {
+            $error = 'The field {field} must be one of: {param}. Received: {value}';
+
+            return false;
+        }
+
+        return true;
+    }
+
     public function testCallableRuleWithParamError(): void
     {
         $this->validation->setRules([
@@ -433,6 +478,68 @@ class ValidationTest extends CIUnitTestCase
             $this->validation->getErrors(),
         );
         $this->assertSame([], $this->validation->getValidated());
+    }
+
+    public function testCallableRuleWithParamErrorPlaceholders(): void
+    {
+        $this->validation->setRules([
+            'status' => [
+                'label' => 'Status',
+                'rules' => [$this->rule3(...)],
+            ],
+        ]);
+
+        $data   = ['status' => 'invalid'];
+        $result = $this->validation->run($data);
+
+        $this->assertFalse($result);
+        $this->assertSame(
+            ['status' => 'The field Status must be one of: . Received: invalid'],
+            $this->validation->getErrors(),
+        );
+    }
+
+    public function testRuleSetRuleWithParamErrorPlaceholders(): void
+    {
+        $this->validation->setRules([
+            'status' => [
+                'label' => 'Status',
+                'rules' => 'custom_error_with_param[active,inactive]',
+            ],
+        ]);
+
+        $data   = ['status' => 'invalid'];
+        $result = $this->validation->run($data);
+
+        $this->assertFalse($result);
+        $this->assertSame(
+            ['status' => 'The Status must be one of: active,inactive. Got: invalid'],
+            $this->validation->getErrors(),
+        );
+    }
+
+    public function testClosureRuleErrorWithUnknownPlaceholderPreserved(): void
+    {
+        $this->validation->setRules([
+            'status' => [
+                'rules' => [
+                    static function ($value, $data, &$error, $field): bool {
+                        $error = 'Value {value} is invalid. See {link} for details.';
+
+                        return false;
+                    },
+                ],
+            ],
+        ]);
+
+        $data   = ['status' => 'bad'];
+        $result = $this->validation->run($data);
+
+        $this->assertFalse($result);
+        $this->assertSame(
+            ['status' => 'Value bad is invalid. See {link} for details.'],
+            $this->validation->getErrors(),
+        );
     }
 
     public function testCallableRuleWithLabel(): void

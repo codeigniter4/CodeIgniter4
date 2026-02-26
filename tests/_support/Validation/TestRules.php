@@ -25,6 +25,16 @@ class TestRules
         return false;
     }
 
+    /**
+     * @param-out string $error
+     */
+    public function custom_error_with_param(mixed $str, string $param, array $data, ?string &$error = null, string $field = ''): bool
+    {
+        $error = 'The {field} must be one of: {param}. Got: {value}';
+
+        return false;
+    }
+
     public function check_object_rule(object $value, ?string $fields, array $data = [])
     {
         $find = false;

@@ -369,14 +369,16 @@ class Validation implements ValidationInterface
                 $fieldForErrors = ($rule === 'field_exists') ? $originalField : $field;
 
                 // @phpstan-ignore-next-line $error may be set by rule methods.
-                $this->errors[$fieldForErrors] = $error ?? $this->getErrorMessage(
-                    ($this->isClosure($rule) || $arrayCallable) ? (string) $i : $rule,
-                    $field,
-                    $label,
-                    $param,
-                    (string) $value,
-                    $originalField,
-                );
+                $this->errors[$fieldForErrors] = $error !== null
+                    ? $this->parseErrorMessage($error, $field, $label, $param, (string) $value)
+                    : $this->getErrorMessage(
+                        ($this->isClosure($rule) || $arrayCallable) ? (string) $i : $rule,
+                        $field,
+                        $label,
+                        $param,
+                        (string) $value,
+                        $originalField,
+                    );
 
                 return false;
             }
@@ -933,13 +935,7 @@ class Validation implements ValidationInterface
         ?string $value = null,
         ?string $originalField = null,
     ): string {
-        $param ??= '';
-
-        $args = [
-            'field' => ($label === null || $label === '') ? $field : lang($label),
-            'param' => isset($this->rules[$param]['label']) ? lang($this->rules[$param]['label']) : $param,
-            'value' => $value ?? '',
-        ];
+        $args = $this->buildErrorArgs($field, $label, $param, $value);
 
         // Check if custom message has been defined by user
         if (isset($this->customErrors[$field][$rule])) {
@@ -953,6 +949,49 @@ class Validation implements ValidationInterface
         // lang() will return the rule name back if not found,
         // so there will always be a string being returned.
         return lang('Validation.' . $rule, $args);
+    }
+
+    /**
+     * Substitutes {field}, {param}, and {value} placeholders in an error message
+     * set directly by a rule method via the $error reference parameter.
+     *
+     * Uses simple string replacement rather than lang() to avoid ICU MessageFormatter
+     * warnings on unrecognised patterns and to leave any other {xyz} content untouched.
+     */
+    private function parseErrorMessage(
+        string $message,
+        string $field,
+        ?string $label = null,
+        ?string $param = null,
+        ?string $value = null,
+    ): string {
+        $args = $this->buildErrorArgs($field, $label, $param, $value);
+
+        return str_replace(
+            ['{field}', '{param}', '{value}'],
+            [$args['field'], $args['param'], $args['value']],
+            $message,
+        );
+    }
+
+    /**
+     * Builds the placeholder arguments array used for error message substitution.
+     *
+     * @return array{field: string, param: string, value: string}
+     */
+    private function buildErrorArgs(
+        string $field,
+        ?string $label = null,
+        ?string $param = null,
+        ?string $value = null,
+    ): array {
+        $param ??= '';
+
+        return [
+            'field' => ($label === null || $label === '') ? $field : lang($label),
+            'param' => isset($this->rules[$param]['label']) ? lang($this->rules[$param]['label']) : $param,
+            'value' => $value ?? '',
+        ];
     }
 
     /**
