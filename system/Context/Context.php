@@ -24,20 +24,14 @@ final class Context
      *
      * @var array<string, mixed>
      */
-    private array $data;
+    private array $data = [];
 
     /**
      * The data that is stored but not included in logs.
      *
      * @var array<string, mixed>
      */
-    private array $hiddenData;
-
-    public function __construct()
-    {
-        $this->data       = [];
-        $this->hiddenData = [];
-    }
+    private array $hiddenData = [];
 
     /**
      * Set a key-value pair to the context.
