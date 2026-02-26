@@ -656,7 +656,7 @@ ignored when a matching record already exists.
 .. literalinclude:: model/066.php
 
 The method returns the found or newly inserted row in the format defined by
-`$returnType`_, or ``null`` on failure (e.g., validation error or database
+`$returnType`_, or ``false`` on failure (e.g., validation error or database
 error when ``DBDebug`` is ``false``).
 
 .. note:: A database **unique constraint** on the lookup column(s) is required

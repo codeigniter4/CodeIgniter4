@@ -66,7 +66,7 @@ final class FirstOrInsertModelTest extends LiveModelTestCase
             ['name' => 'Should Not Change', 'country' => 'XX'],
         );
 
-        $this->assertNotNull($row);
+        $this->assertNotFalse($row);
         $this->assertSame('Derek Jones', $row->name);
         $this->assertSame('US', $row->country);
     }
@@ -81,7 +81,7 @@ final class FirstOrInsertModelTest extends LiveModelTestCase
             'country' => 'US',
         ]);
 
-        $this->assertNotNull($row);
+        $this->assertNotFalse($row);
         $this->assertSame('new@example.com', $row->email);
         $this->seeInDatabase('user', ['email' => 'new@example.com', 'deleted_at' => null]);
     }
@@ -95,7 +95,7 @@ final class FirstOrInsertModelTest extends LiveModelTestCase
             ['name' => 'New User', 'country' => 'CA'],
         );
 
-        $this->assertNotNull($row);
+        $this->assertNotFalse($row);
         $this->assertSame('New User', $row->name);
         $this->assertSame('CA', $row->country);
         $this->seeInDatabase('user', [
@@ -119,7 +119,7 @@ final class FirstOrInsertModelTest extends LiveModelTestCase
             $values,
         );
 
-        $this->assertNotNull($row);
+        $this->assertNotFalse($row);
         $this->assertSame('Object User', $row->name);
         $this->assertSame('DE', $row->country);
         $this->seeInDatabase('user', ['email' => 'object@example.com', 'deleted_at' => null]);
@@ -134,7 +134,7 @@ final class FirstOrInsertModelTest extends LiveModelTestCase
 
         $row = $this->model->firstOrInsert($attributes);
 
-        $this->assertNotNull($row);
+        $this->assertNotFalse($row);
         $this->assertSame('Derek Jones', $row->name);
         $this->seeNumRecords(4, 'user', ['deleted_at' => null]);
     }
@@ -183,7 +183,7 @@ final class FirstOrInsertModelTest extends LiveModelTestCase
             ['name' => 'Race User', 'country' => 'US'],
         );
 
-        $this->assertNotNull($row);
+        $this->assertNotFalse($row);
         $this->assertSame('race@example.com', $row->email);
         // The "other process" inserted exactly one record.
         $this->seeNumRecords(1, 'user', ['email' => 'race@example.com', 'deleted_at' => null]);
@@ -218,12 +218,12 @@ final class FirstOrInsertModelTest extends LiveModelTestCase
             ['name' => 'Race User', 'country' => 'US'],
         );
 
-        $this->assertNotNull($row);
+        $this->assertNotFalse($row);
         $this->assertSame('race@example.com', $row->email);
         $this->seeNumRecords(1, 'user', ['email' => 'race@example.com', 'deleted_at' => null]);
     }
 
-    public function testReturnsNullOnNonUniqueErrorWithDebugDisabled(): void
+    public function testReturnsFalseOnNonUniqueErrorWithDebugDisabled(): void
     {
         $this->disableDBDebug();
 
@@ -245,11 +245,11 @@ final class FirstOrInsertModelTest extends LiveModelTestCase
             ['name' => 'Error User', 'country' => 'US'],
         );
 
-        $this->assertNull($result);
+        $this->assertFalse($result);
         $this->dontSeeInDatabase('user', ['email' => 'error@example.com']);
     }
 
-    public function testReturnsNullOnValidationFailure(): void
+    public function testReturnsFalseOnValidationFailure(): void
     {
         // Subclass with strict validation rules that the test data fails.
         $model = new class ($this->db) extends UserModel {
@@ -264,7 +264,7 @@ final class FirstOrInsertModelTest extends LiveModelTestCase
             ['name' => 'Too Short'],
         );
 
-        $this->assertNull($result);
+        $this->assertFalse($result);
         $this->dontSeeInDatabase('user', ['email' => 'not-a-valid-email']);
         $this->assertNotEmpty($model->errors());
     }

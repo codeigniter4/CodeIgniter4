@@ -724,7 +724,7 @@ class Model extends BaseModel
      * @param array<string, mixed>|object $attributes
      * @param array<string, mixed>|object $values
      */
-    public function firstOrInsert(array|object $attributes, array|object $values = []): array|object|null
+    public function firstOrInsert(array|object $attributes, array|object $values = []): array|object|false
     {
         if (is_object($attributes)) {
             $attributes = $this->transformDataToArray($attributes, 'insert');
@@ -748,18 +748,18 @@ class Model extends BaseModel
         try {
             $id = $this->insert($data);
         } catch (UniqueConstraintViolationException) {
-            return $this->where($attributes)->first();
+            return $this->where($attributes)->first() ?? false;
         }
 
         if ($id === false) {
             if ($this->db->getLastException() instanceof UniqueConstraintViolationException) {
-                return $this->where($attributes)->first();
+                return $this->where($attributes)->first() ?? false;
             }
 
-            return null;
+            return false;
         }
 
-        return $this->where($this->primaryKey, $id)->first();
+        return $this->where($this->primaryKey, $id)->first() ?? false;
     }
 
     public function update($id = null, $row = null): bool
