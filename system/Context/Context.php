@@ -52,8 +52,20 @@ final class Context
     {
         if (is_array($key)) {
             foreach ($key as $k => $v) {
+                if (! $this->hasDotNotation($k)) {
+                    $this->data[$k] = $v;
+
+                    continue;
+                }
+
                 ArrayHelper::dotSet($this->data, $k, $v);
             }
+
+            return $this;
+        }
+
+        if (! $this->hasDotNotation($key)) {
+            $this->data[$key] = $value;
 
             return $this;
         }
@@ -76,8 +88,20 @@ final class Context
     {
         if (is_array($key)) {
             foreach ($key as $k => $v) {
+                if (! $this->hasDotNotation($k)) {
+                    $this->hiddenData[$k] = $v;
+
+                    continue;
+                }
+
                 ArrayHelper::dotSet($this->hiddenData, $k, $v);
             }
+
+            return $this;
+        }
+
+        if (! $this->hasDotNotation($key)) {
+            $this->hiddenData[$key] = $value;
 
             return $this;
         }
@@ -98,7 +122,16 @@ final class Context
      */
     public function get(string $key, mixed $default = null): mixed
     {
-        return ArrayHelper::dotSearch($key, $this->data) ?? $default;
+        if (! $this->has($key)) {
+            return $default;
+        }
+
+        // Exit early if the key is not a dot notation to avoid unnecessary processing in the common case.
+        if (! $this->hasDotNotation($key)) {
+            return $this->data[$key];
+        }
+
+        return ArrayHelper::dotSearch($key, $this->data);
     }
 
     /**
@@ -148,7 +181,16 @@ final class Context
      */
     public function getHidden(#[SensitiveParameter] string $key, #[SensitiveParameter] mixed $default = null): mixed
     {
-        return ArrayHelper::dotSearch($key, $this->hiddenData) ?? $default;
+        if (! $this->hasHidden($key)) {
+            return $default;
+        }
+
+        // Exit early if the key is not a dot notation to avoid unnecessary processing in the common case.
+        if (! $this->hasDotNotation($key)) {
+            return $this->hiddenData[$key];
+        }
+
+        return ArrayHelper::dotSearch($key, $this->hiddenData);
     }
 
     /**
@@ -197,6 +239,10 @@ final class Context
      */
     public function has(string $key): bool
     {
+        if (! $this->hasDotNotation($key)) {
+            return array_key_exists($key, $this->data);
+        }
+
         return ArrayHelper::dotHas($key, $this->data);
     }
 
@@ -210,6 +256,10 @@ final class Context
      */
     public function hasHidden(string $key): bool
     {
+        if (! $this->hasDotNotation($key)) {
+            return array_key_exists($key, $this->hiddenData);
+        }
+
         return ArrayHelper::dotHas($key, $this->hiddenData);
     }
 
@@ -225,8 +275,20 @@ final class Context
     {
         if (is_array($key)) {
             foreach ($key as $k) {
+                if (! $this->hasDotNotation($k)) {
+                    unset($this->data[$k]);
+
+                    continue;
+                }
+
                 ArrayHelper::dotUnset($this->data, $k);
             }
+
+            return $this;
+        }
+
+        if (! $this->hasDotNotation($key)) {
+            unset($this->data[$key]);
 
             return $this;
         }
@@ -248,8 +310,20 @@ final class Context
     {
         if (is_array($key)) {
             foreach ($key as $k) {
+                if (! $this->hasDotNotation($k)) {
+                    unset($this->hiddenData[$k]);
+
+                    continue;
+                }
+
                 ArrayHelper::dotUnset($this->hiddenData, $k);
             }
+
+            return $this;
+        }
+
+        if (! $this->hasDotNotation($key)) {
+            unset($this->hiddenData[$key]);
 
             return $this;
         }
@@ -323,5 +397,10 @@ final class Context
     {
         $this->data       = $data['data'] ?? [];
         $this->hiddenData = [];
+    }
+
+    private function hasDotNotation(string $key): bool
+    {
+        return str_contains($key, '.');
     }
 }
