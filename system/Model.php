@@ -724,7 +724,7 @@ class Model extends BaseModel
      * @param array<string, mixed>|object $attributes
      * @param array<string, mixed>|object $values
      */
-    public function firstOrInsert(array|object $attributes, array|object $values = []): array|object|false
+    public function firstOrInsert(array|object $attributes, array|object $values = []): array|false|object
     {
         if (is_object($attributes)) {
             $attributes = $this->transformDataToArray($attributes, 'insert');
