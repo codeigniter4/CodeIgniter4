@@ -1,4 +1,4 @@
-# total 102 errors
+# total 101 errors
 
 parameters:
     ignoreErrors:
@@ -506,8 +506,3 @@ parameters:
             message: '#^Property CodeIgniter\\Entity\\Entity@anonymous/tests/system/Models/UpdateModelTest\.php\:401\:\:\$updated_at has no type specified\.$#'
             count: 1
             path: ../../tests/system/Models/UpdateModelTest.php
-
-        -
-            message: '#^Property Config\\Validation@anonymous/tests/system/Models/ValidationModelTest\.php\:245\:\:\$grouptest has no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Models/ValidationModelTest.php
