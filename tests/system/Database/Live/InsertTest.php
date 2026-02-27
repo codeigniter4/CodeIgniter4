@@ -275,4 +275,18 @@ final class InsertTest extends CIUnitTestCase
 
         $this->forge->dropTable('user2', true);
     }
+
+    public function testInsertWithTooLongCharactersThrowsError(): void
+    {
+        if ($this->db->DBDriver === 'SQLite3') {
+            $this->markTestSkipped('SQLite does not enforce VARCHAR length constraints.');
+        }
+
+        $this->expectException(DatabaseException::class);
+
+        $this->db->table('misc')->insert([
+            'key'   => 'too_long',
+            'value' => str_repeat('a', 401), // 'value' is VARCHAR(400), so this should throw an error
+        ]);
+    }
 }
