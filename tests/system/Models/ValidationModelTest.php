@@ -243,7 +243,7 @@ final class ValidationModelTest extends LiveModelTestCase
     public function testValidationWithGroupName(): void
     {
         $config = new class () extends Validation {
-            /** 
+            /**
              * @var array<string, array<int, string>|string>
              */
             public $grouptest = [
