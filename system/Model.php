@@ -723,6 +723,8 @@ class Model extends BaseModel
      *
      * @param array<string, mixed>|object $attributes
      * @param array<string, mixed>|object $values
+     *
+     * @return array<string, mixed>|false|object
      */
     public function firstOrInsert(array|object $attributes, array|object $values = []): array|false|object
     {

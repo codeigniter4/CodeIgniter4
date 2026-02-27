@@ -18,6 +18,7 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Database\Exceptions\UniqueConstraintViolationException;
 use CodeIgniter\Database\Query;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\DataCaster\Cast\CastInterface;
@@ -869,6 +870,7 @@ abstract class BaseModel
      * @return ($returnID is true ? false|int|string : bool)
      *
      * @throws ReflectionException
+     * @throws UniqueConstraintViolationException
      */
     public function insert($row = null, bool $returnID = true)
     {
