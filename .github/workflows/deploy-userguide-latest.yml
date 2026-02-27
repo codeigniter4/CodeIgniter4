@@ -57,7 +57,7 @@ jobs:
 
       # Create an artifact of the html output
       - name: Upload artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: HTML Documentation
           path: user_guide_src/build/html/
