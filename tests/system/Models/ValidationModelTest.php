@@ -244,7 +244,7 @@ final class ValidationModelTest extends LiveModelTestCase
     {
         $config = new class () extends Validation {
             /** 
-             * @var array<string, string|array<int, string>> @grouptest
+             * @var array<string, array<int, string>|string>
              */
             public $grouptest = [
                 'id'   => 'is_natural_no_zero',
