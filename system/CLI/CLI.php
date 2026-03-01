@@ -1136,7 +1136,7 @@ class CLI
         static::$initialized = false;
         static::$segments    = [];
         static::$options     = [];
-        static::$lastWrite   = 'write';
+        static::$lastWrite   = null;
         static::$height      = null;
         static::$width       = null;
         static::$isColored   = static::hasColorSupport(STDOUT);
