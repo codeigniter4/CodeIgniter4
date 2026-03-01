@@ -315,6 +315,7 @@
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">Message Changes</a><a class="headerlink" href="#message-changes" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>Updated <code class="docutils literal notranslate"><span class="pre">Images.unsupportedImageCreate</span></code>.</p></li>
+<li><p>Renamed the <code class="docutils literal notranslate"><span class="pre">Validation.valid_cc_num</span></code> key to <code class="docutils literal notranslate"><span class="pre">Validation.valid_cc_number</span></code>.</p></li>
 </ul>
 </section>
 <section id="changes">
@@ -354,6 +355,7 @@ to switch <code class="docutils literal notranslate"><span class="pre">4.7.x</sp
 <li><p><strong>Toolbar:</strong> Fixed a bug where the standalone toolbar page loaded from <code class="docutils literal notranslate"><span class="pre">?debugbar_time=...</span></code> was not interactive.</p></li>
 <li><p><strong>Toolbar:</strong> Fixed a bug in the Routes panel where only the first route parameter was converted to an input field on hover.</p></li>
 <li><p><strong>Testing:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">FeatureTestTrait::withRoutes()</span></code> where invalid HTTP methods were not properly validated, thus passing them all to <code class="docutils literal notranslate"><span class="pre">RouteCollection</span></code>.</p></li>
+<li><p><strong>Validation:</strong> Rule <code class="docutils literal notranslate"><span class="pre">valid_cc_number</span></code> now has the correct translation.</p></li>
 <li><p><strong>View:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">View</span></code> would throw an error if the <code class="docutils literal notranslate"><span class="pre">appOverridesFolder</span></code> config property was not defined.</p></li>
 </ul>
 <p>See the repo’s
@@ -374,7 +376,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 25, 2026.
+      <span class="lastupdated">Last updated on Mar 01, 2026.
       </span></p>
   </div>
 
