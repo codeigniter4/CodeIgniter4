@@ -38,6 +38,15 @@ final class ErrorlogHandlerTest extends CIUnitTestCase
         $this->assertTrue($logger->handle('error', 'Test message.'));
     }
 
+    public function testErrorLoggingAppendsContextAsJson(): void
+    {
+        $logger = $this->getMockedHandler(['handles' => ['critical', 'error']]);
+        $logger->method('errorLog')->willReturn(true);
+        $logger->expects($this->once())->method('errorLog')
+            ->with("ERROR --> Test message. {\"_ci_context\":{\"foo\":\"bar\"}}\n", 0);
+        $this->assertTrue($logger->handle('error', 'Test message.', [HandlerInterface::GLOBAL_CONTEXT_KEY => ['foo' => 'bar']]));
+    }
+
     /**
      * @param array{handles?: list<string>, messageType?: int} $config
      *

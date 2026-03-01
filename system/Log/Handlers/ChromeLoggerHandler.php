@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Log\Handlers;
 
 use CodeIgniter\HTTP\ResponseInterface;
+use JsonException;
 
 /**
  * Allows for logging items to the Chrome console for debugging.
@@ -99,10 +100,11 @@ class ChromeLoggerHandler extends BaseHandler
      * will stop. Any handlers that have not run, yet, will not
      * be run.
      *
-     * @param string $level
-     * @param string $message
+     * @param string               $level
+     * @param string               $message
+     * @param array<string, mixed> $context
      */
-    public function handle($level, $message): bool
+    public function handle($level, $message, array $context = []): bool
     {
         $message = $this->format($message);
 
@@ -121,7 +123,9 @@ class ChromeLoggerHandler extends BaseHandler
             $type = $this->levels[$level];
         }
 
-        $this->json['rows'][] = [[$message], $backtraceMessage, $type];
+        $logArgs = $context !== [] ? [$message, $context] : [$message];
+
+        $this->json['rows'][] = [$logArgs, $backtraceMessage, $type];
 
         $this->sendLogs();
 
@@ -162,8 +166,17 @@ class ChromeLoggerHandler extends BaseHandler
             $response = service('response', null, true);
         }
 
+        try {
+            $encoded = json_encode($this->json, JSON_THROW_ON_ERROR);
+        } catch (JsonException) {
+            $encoded = json_encode($this->json, JSON_PARTIAL_OUTPUT_ON_ERROR);
+            if ($encoded === false) {
+                return;
+            }
+        }
+
         $data = base64_encode(
-            mb_convert_encoding(json_encode($this->json), 'UTF-8', mb_list_encodings()),
+            mb_convert_encoding($encoded, 'UTF-8', mb_list_encodings()),
         );
 
         $response->setHeader($this->header, $data);

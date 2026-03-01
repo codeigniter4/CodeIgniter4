@@ -264,7 +264,7 @@ class Logger implements LoggerInterface
         if ($this->logGlobalContext) {
             $globalContext = service('context')->getAll();
             if ($globalContext !== []) {
-                $message .= ' ' . json_encode($globalContext);
+                $context[HandlerInterface::GLOBAL_CONTEXT_KEY] = $globalContext;
             }
         }
 
@@ -284,7 +284,7 @@ class Logger implements LoggerInterface
             }
 
             // If the handler returns false, then we don't execute any other handlers.
-            if (! $handler->setDateFormat($this->dateFormat)->handle($level, $message)) {
+            if (! $handler->setDateFormat($this->dateFormat)->handle($level, $message, $context)) {
                 break;
             }
         }

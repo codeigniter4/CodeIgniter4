@@ -66,11 +66,16 @@ class ErrorlogHandler extends BaseHandler
      * will stop. Any handlers that have not run, yet, will not
      * be run.
      *
-     * @param string $level
-     * @param string $message
+     * @param string               $level
+     * @param string               $message
+     * @param array<string, mixed> $context
      */
-    public function handle($level, $message): bool
+    public function handle($level, $message, array $context = []): bool
     {
+        if ($context !== []) {
+            $message .= ' ' . $this->encodeContext($context);
+        }
+
         $message = strtoupper($level) . ' --> ' . $message . "\n";
 
         return $this->errorLog($message, $this->messageType);

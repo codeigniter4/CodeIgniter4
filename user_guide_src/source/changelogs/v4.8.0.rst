@@ -37,6 +37,7 @@ Interface Changes
 **NOTE:** If you've implemented your own classes that implement these interfaces from scratch, you will need to
         update your implementations to include the new methods or method changes to ensure compatibility.
 
+- **Logging:** ``CodeIgniter\Log\Handlers\HandlerInterface::handle()`` now requires a third parameter ``array $context = []``. Any custom log handler that overrides ``handle()`` - whether implementing ``HandlerInterface`` directly or extending a built-in handler class - must add the parameter to its ``handle()`` method signature.
 - **Security:** The ``SecurityInterface``'s ``verify()`` method now has a native return type of ``static``.
 
 Method Signature Changes
@@ -174,6 +175,7 @@ Libraries
 =========
 
 - **Context**: This new feature allows you to easily set and retrieve normal or hidden contextual data for the current request. See :ref:`Context <context>` for details.
+- **Logging:** Log handlers now receive the full context array as a third argument to ``handle()``. When ``$logGlobalContext`` is enabled, the CI global context is available under the ``HandlerInterface::GLOBAL_CONTEXT_KEY`` key. Built-in handlers append it to the log output; custom handlers can use it for structured logging.
 
 Helpers and Functions
 =====================

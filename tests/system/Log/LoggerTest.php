@@ -452,14 +452,16 @@ final class LoggerTest extends CIUnitTestCase
 
         service('context')->set('foo', 'bar');
 
-        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message {"foo":"bar"}';
+        $expectedMessage = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message';
 
         $logger->log('debug', 'Test message');
 
-        $logs = TestHandler::getLogs();
+        $logs     = TestHandler::getLogs();
+        $contexts = TestHandler::getContexts();
 
         $this->assertCount(1, $logs);
-        $this->assertSame($expected, $logs[0]);
+        $this->assertSame($expectedMessage, $logs[0]);
+        $this->assertSame(['_ci_context' => ['foo' => 'bar']], $contexts[0]);
     }
 
     public function testDoesNotLogGlobalContext(): void

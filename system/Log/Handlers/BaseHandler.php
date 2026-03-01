@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Log\Handlers;
 
+use JsonException;
+
 /**
  * Base class for logging
  */
@@ -57,5 +59,21 @@ abstract class BaseHandler implements HandlerInterface
         $this->dateFormat = $format;
 
         return $this;
+    }
+
+    /**
+     * Encodes the context array as a JSON string.
+     * Returns the JSON string on success, or a descriptive error string if
+     * encoding fails (e.g. context contains a resource or invalid UTF-8).
+     *
+     * @param array<string, mixed> $context
+     */
+    protected function encodeContext(array $context): string
+    {
+        try {
+            return json_encode($context, JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
+        } catch (JsonException $e) {
+            return '[context: JSON encoding failed - ' . $e->getMessage() . ']';
+        }
     }
 }

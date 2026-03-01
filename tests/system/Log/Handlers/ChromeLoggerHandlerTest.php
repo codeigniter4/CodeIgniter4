@@ -74,6 +74,26 @@ final class ChromeLoggerHandlerTest extends CIUnitTestCase
         $this->assertSame('F j, Y', $this->getPrivateProperty($logger, 'dateFormat'));
     }
 
+    public function testHandleIncludesContextInRow(): void
+    {
+        Services::injectMock('response', new MockResponse());
+        $response = service('response');
+
+        $config                                                              = new LoggerConfig();
+        $config->handlers['CodeIgniter\Log\Handlers\TestHandler']['handles'] = ['debug'];
+
+        $logger = new ChromeLoggerHandler($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
+        $logger->handle('debug', 'Test message', [HandlerInterface::GLOBAL_CONTEXT_KEY => ['foo' => 'bar']]);
+
+        $this->assertTrue($response->hasHeader('X-ChromeLogger-Data'));
+
+        $decoded = json_decode(base64_decode($response->getHeaderLine('X-ChromeLogger-Data'), true), true);
+        $logArgs = $decoded['rows'][0][0];
+
+        $this->assertSame('Test message', $logArgs[0]);
+        $this->assertSame([HandlerInterface::GLOBAL_CONTEXT_KEY => ['foo' => 'bar']], $logArgs[1]);
+    }
+
     public function testChromeLoggerHeaderSent(): void
     {
         Services::injectMock('response', new MockResponse());

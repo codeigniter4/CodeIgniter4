@@ -31,6 +31,13 @@ class TestHandler extends FileHandler
      */
     protected static $logs = [];
 
+    /**
+     * Local storage for log contexts.
+     *
+     * @var array<int, array<string, mixed>>
+     */
+    protected static array $contexts = [];
+
     protected string $destination;
 
     /**
@@ -45,7 +52,8 @@ class TestHandler extends FileHandler
         $this->handles     = $config['handles'] ?? [];
         $this->destination = $this->path . 'log-' . Time::now()->format('Y-m-d') . '.' . $this->fileExtension;
 
-        self::$logs = [];
+        self::$logs     = [];
+        self::$contexts = [];
     }
 
     /**
@@ -54,14 +62,16 @@ class TestHandler extends FileHandler
      * will stop. Any handlers that have not run, yet, will not
      * be run.
      *
-     * @param string $level
-     * @param string $message
+     * @param string               $level
+     * @param string               $message
+     * @param array<string, mixed> $context
      */
-    public function handle($level, $message): bool
+    public function handle($level, $message, array $context = []): bool
     {
         $date = Time::now()->format($this->dateFormat);
 
-        self::$logs[] = strtoupper($level) . ' - ' . $date . ' --> ' . $message;
+        self::$logs[]     = strtoupper($level) . ' - ' . $date . ' --> ' . $message;
+        self::$contexts[] = $context;
 
         return true;
     }
@@ -69,5 +79,13 @@ class TestHandler extends FileHandler
     public static function getLogs()
     {
         return self::$logs;
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    public static function getContexts(): array
+    {
+        return self::$contexts;
     }
 }

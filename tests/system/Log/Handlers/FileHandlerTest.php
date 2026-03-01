@@ -79,6 +79,24 @@ final class FileHandlerTest extends CIUnitTestCase
         $this->assertStringContainsString($expectedResult, (string) $line);
     }
 
+    public function testHandleAppendsContextAsJson(): void
+    {
+        $config                                       = new LoggerConfig();
+        $config->handlers[TestHandler::class]['path'] = $this->start;
+        $logger                                       = new MockFileLogger($config->handlers[TestHandler::class]);
+
+        $logger->setDateFormat('Y-m-d');
+        $expected = 'log-' . date('Y-m-d') . '.log';
+        vfsStream::newFile($expected)->at(vfsStream::setup('root'))->withContent('');
+        $logger->handle('debug', 'Test message', [HandlerInterface::GLOBAL_CONTEXT_KEY => ['foo' => 'bar']]);
+
+        $fp   = fopen($config->handlers[TestHandler::class]['path'] . $expected, 'rb');
+        $line = fgets($fp);
+        fclose($fp);
+
+        $this->assertStringContainsString('Test message {"_ci_context":{"foo":"bar"}}', (string) $line);
+    }
+
     public function testHandleDateTimeCorrectly(): void
     {
         $config                                       = new LoggerConfig();

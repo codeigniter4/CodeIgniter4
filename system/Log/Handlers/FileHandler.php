@@ -69,12 +69,13 @@ class FileHandler extends BaseHandler
      * will stop. Any handlers that have not run, yet, will not
      * be run.
      *
-     * @param string $level
-     * @param string $message
+     * @param string               $level
+     * @param string               $message
+     * @param array<string, mixed> $context
      *
      * @throws Exception
      */
-    public function handle($level, $message): bool
+    public function handle($level, $message, array $context = []): bool
     {
         $filepath = $this->path . 'log-' . date('Y-m-d') . '.' . $this->fileExtension;
 
@@ -102,6 +103,10 @@ class FileHandler extends BaseHandler
             $date           = $date->format($this->dateFormat);
         } else {
             $date = date($this->dateFormat);
+        }
+
+        if ($context !== []) {
+            $message .= ' ' . $this->encodeContext($context);
         }
 
         $msg .= strtoupper($level) . ' - ' . $date . ' --> ' . $message . "\n";
