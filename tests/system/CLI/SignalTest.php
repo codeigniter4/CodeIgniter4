@@ -53,6 +53,13 @@ final class SignalTest extends CIUnitTestCase
         $this->command = new SignalCommand($this->logger, service('commands'));
     }
 
+    protected function tearDown(): void
+    {
+        CLI::reset();
+
+        parent::tearDown();
+    }
+
     public function testSignalRegistration(): void
     {
         $this->command->testRegisterSignals([SIGTERM, SIGINT], [SIGTERM => 'customTermHandler']);
