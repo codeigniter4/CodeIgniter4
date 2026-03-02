@@ -208,13 +208,44 @@ final class UpdateModelTest extends LiveModelTestCase
     public function testUpdateBatchWithEntity(): void
     {
         $entity1 = new class () extends Entity {
+            /**
+             * @var int
+             */
             protected $id;
+
+            /**
+             * @var string
+             */
             protected $name;
+
+            /**
+             * @var string
+             */
             protected $email;
+
+            /**
+             * @var string
+             */
             protected $country;
+
+            /**
+             * @var bool
+             */
             protected $deleted;
+
+            /**
+             * @var string|null
+             */
             protected $created_at;
+
+            /**
+             * @var string|null
+             */
             protected $updated_at;
+
+            /**
+             * @var array{'datamap': array{}, 'dates': array{string, string, string}, 'casts': array{}}|null
+             */
             protected $_options = [
                 'datamap' => [],
                 'dates'   => [
@@ -227,13 +258,44 @@ final class UpdateModelTest extends LiveModelTestCase
         };
 
         $entity2 = new class () extends Entity {
+            /**
+             * @var int
+             */
             protected $id;
+
+            /**
+             * @var string
+             */
             protected $name;
+
+            /**
+             * @var string
+             */
             protected $email;
+
+            /**
+             * @var string
+             */
             protected $country;
+
+            /**
+             * @var bool
+             */
             protected $deleted;
+
+            /**
+             * @var string|null
+             */
             protected $created_at;
+
+            /**
+             * @var string|null
+             */
             protected $updated_at;
+
+            /**
+             * @var array{'datamap': array{}, 'dates': array{string, string, string}, 'casts': array{}}|null
+             */
             protected $_options = [
                 'datamap' => [],
                 'dates'   => [
@@ -399,13 +461,44 @@ final class UpdateModelTest extends LiveModelTestCase
         $this->createModel(UserModel::class);
 
         $entity = new class () extends Entity {
+            /**
+             * @var int
+             */
             protected $id;
+
+            /**
+             * @var string
+             */
             protected $name;
+
+            /**
+             * @var string
+             */
             protected $email;
+
+            /**
+             * @var string
+             */
             protected $country;
+
+            /**
+             * @var bool
+             */
             protected $deleted;
+
+            /**
+             * @var int|null
+             */
             protected $created_at;
+
+            /**
+             * @var int|null
+             */
             protected $updated_at;
+
+            /**
+             * @var array{'datamap': array{}, 'dates': array{string, string, string}, 'casts': array{}}|null
+             */
             protected $_options = [
                 'datamap' => [],
                 'dates'   => [
