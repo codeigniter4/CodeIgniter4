@@ -1,0 +1,49 @@
+# CodeIgniter4 Components Verified for Random Test Execution
+# This file lists components that have been verified to pass all tests
+# when run in random order (--order-by=random)
+#
+# Format: One component directory name per line (matching tests/system/<component>/)
+# Comments start with #
+# Uncomment components as they are verified to work with random execution
+#
+# Reference: https://github.com/codeigniter4/CodeIgniter4/issues/9968
+
+API
+# AutoReview
+# Autoloader
+# Cache
+CLI
+# Commands
+# Config
+# Cookie
+# DataCaster
+# DataConverter
+# Database
+# Debug
+# Email
+# Encryption
+# Entity
+# Events
+# Files
+# Filters
+# Format
+# HTTP
+# Helpers
+# Honeypot
+# HotReloader
+# I18n
+# Images
+# Language
+# Log
+# Models
+# Pager
+# Publisher
+# RESTful
+# Router
+# Security
+# Session
+# Test
+# Throttle
+# Typography
+# Validation
+# View

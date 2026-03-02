@@ -1,0 +1,225 @@
+name: Random Test Execution Verification
+
+on:
+  push:
+    branches:
+      - develop
+      - '4.*'
+    paths:
+      - '.github/scripts/run-random-tests.sh'
+      - '.github/scripts/random-tests-config.txt'
+      - '.github/workflows/test-random-execution.yml'
+      - 'phpunit.xml.dist'
+      - 'system/**.php'
+      - 'tests/**.php'
+
+  pull_request:
+    branches:
+      - develop
+      - '4.*'
+    paths:
+      - '.github/scripts/run-random-tests.sh'
+      - '.github/scripts/random-tests-config.txt'
+      - '.github/workflows/test-random-execution.yml'
+      - 'phpunit.xml.dist'
+      - 'system/**.php'
+      - 'tests/**.php'
+
+  workflow_call:
+    inputs:
+      quiet:
+        description: Suppress debug output
+        type: boolean
+        required: false
+        default: false
+      component:
+        description: Test single component (overrides config file)
+        type: string
+        required: false
+        default: ''
+      max-jobs:
+        description: Limit concurrent test jobs (auto-detect if omitted)
+        type: string
+        required: false
+        default: ''
+      repeat:
+        description: Repeat full component run REPEAT times
+        type: string
+        required: false
+        default: '10'
+      timeout:
+        description: Per-component timeout in seconds (0 disables)
+        type: string
+        required: false
+        default: '300'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  random-tests:
+    name: PHP ${{ matrix.php-version }} - ${{ matrix.db-platform }}
+    runs-on: ubuntu-24.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version:
+          - '8.5'
+        db-platform:
+          - MySQLi
+          - Postgre
+          - SQLSRV
+          - SQLite3
+          - Oracle
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd=pg_isready
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+      mssql:
+        image: mcr.microsoft.com/mssql/server:2025-CU2-ubuntu-24.04
+        env:
+          MSSQL_SA_PASSWORD: 1Secure*Password1
+          ACCEPT_EULA: Y
+          MSSQL_PID: Developer
+        ports:
+          - 1433:1433
+        options: >-
+          --health-cmd="/opt/mssql-tools18/bin/sqlcmd -C -S 127.0.0.1 -U sa -P 1Secure*Password1 -Q 'SELECT @@VERSION'"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+      oracle:
+        image: gvenzl/oracle-xe:21
+        env:
+          ORACLE_RANDOM_PASSWORD: true
+          APP_USER: ORACLE
+          APP_USER_PASSWORD: ORACLE
+        ports:
+          - 1521:1521
+        options: >-
+          --health-cmd healthcheck.sh
+          --health-interval 20s
+          --health-timeout 10s
+          --health-retries 10
+
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+      memcached:
+        image: memcached:1.6-alpine
+        ports:
+          - 11211:11211
+
+    steps:
+      - name: Install mssql-tools on runner
+        if: ${{ matrix.db-platform == 'SQLSRV' }}
+        run: |
+          source /etc/os-release
+          curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor --batch --yes -o /usr/share/keyrings/microsoft-prod.gpg
+          echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft-prod.gpg] https://packages.microsoft.com/ubuntu/${VERSION_ID}/prod ${UBUNTU_CODENAME} main" | sudo tee /etc/apt/sources.list.d/mssql-release.list
+          sudo apt-get update
+          sudo ACCEPT_EULA=Y apt-get install -y msodbcsql18 mssql-tools18 unixodbc-dev
+          echo "/opt/mssql-tools18/bin" >> $GITHUB_PATH
+
+      - name: Create database for MSSQL Server
+        if: ${{ matrix.db-platform == 'SQLSRV' }}
+        run: |
+          sqlcmd -S 127.0.0.1 \
+            -U sa -P 1Secure*Password1 \
+            -N -C \
+            -Q "CREATE DATABASE test COLLATE Latin1_General_100_CS_AS_SC_UTF8"
+
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup PHP ${{ matrix.php-version }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: gd, curl, iconv, json, mbstring, openssl, sodium
+          coverage: none
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v5
+        with:
+          path: ${{ steps.composer-cache.outputs.COMPOSER_CACHE_FILES_DIR }}
+          key: PHP_${{ matrix.php-version }}-${{ hashFiles('**/composer.*') }}
+          restore-keys: |
+            PHP_${{ matrix.php-version }}-
+
+      - name: Install project dependencies
+        run: |
+          composer config --global github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
+          composer update --ansi
+
+      - name: Run random test execution verification
+        run: |
+          args=()
+
+          # Add --quiet flag if input is true
+          if [[ "${{ inputs.quiet }}" == "true" ]]; then
+            args+=("--quiet")
+          fi
+
+          # Add --component flag if component is specified
+          if [[ -n "${{ inputs.component }}" ]]; then
+            args+=("--component" "${{ inputs.component }}")
+          fi
+
+          # Add --max-jobs flag if specified (empty means auto-detect)
+          if [[ -n "${{ inputs.max-jobs }}" ]]; then
+            args+=("--max-jobs" "${{ inputs.max-jobs }}")
+          fi
+
+          # Add --repeat flag (always, default is 10)
+          args+=("--repeat" "${{ inputs.repeat || '10' }}")
+
+          # Add --timeout flag (always, default is 300)
+          args+=("--timeout" "${{ inputs.timeout || '300' }}")
+
+          .github/scripts/run-random-tests.sh "${args[@]}"
+        env:
+          DB: ${{ matrix.db-platform }}
+          TERM: xterm-256color
