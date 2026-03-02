@@ -1255,7 +1255,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Replaces the {locale} tag with the current application locale
      *
-     * @deprecated Unused.
+     * @deprecated 4.3.0 Unused.
      */
     protected function localizeRoute(string $route): string
     {
@@ -1309,7 +1309,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @throws RouterException
      *
-     * @deprecated Unused. Now uses buildReverseRoute().
+     * @deprecated 4.3.0 Unused. Now uses buildReverseRoute().
      */
     protected function fillRouteParams(string $from, ?array $params = null): string
     {

@@ -166,7 +166,7 @@ final class AutoRouter implements AutoRouterInterface
      * Tells the system whether we should translate URI dashes or not
      * in the URI from a dash to an underscore.
      *
-     * @deprecated This method should be removed.
+     * @deprecated 4.2.0 This method should be removed.
      */
     public function setTranslateURIDashes(bool $val = false): self
     {
@@ -238,7 +238,7 @@ final class AutoRouter implements AutoRouterInterface
      *
      * @param bool $validate if true, checks to make sure $dir consists of only PSR4 compliant segments
      *
-     * @deprecated This method should be removed.
+     * @deprecated 4.2.0 This method should be removed.
      *
      * @return void
      */
@@ -271,7 +271,7 @@ final class AutoRouter implements AutoRouterInterface
      * Returns the name of the sub-directory the controller is in,
      * if any. Relative to APPPATH.'Controllers'.
      *
-     * @deprecated This method should be removed.
+     * @deprecated 4.2.0 This method should be removed.
      */
     public function directory(): string
     {

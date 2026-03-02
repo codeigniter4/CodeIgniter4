@@ -657,7 +657,7 @@ class URI implements Stringable
      *
      * @return array{string, string}
      *
-     * @deprecated This method will be deleted.
+     * @deprecated 4.2.0 This method will be deleted.
      */
     private function changeSchemeAndPath(string $scheme, string $path): array
     {
@@ -840,7 +840,7 @@ class URI implements Stringable
      *
      * @interal
      *
-     * @deprecated Use SiteURI instead.
+     * @deprecated 4.4.0 Use SiteURI instead.
      */
     public function setBaseURL(string $baseURL): void
     {
@@ -852,7 +852,7 @@ class URI implements Stringable
      *
      * @interal
      *
-     * @deprecated Use SiteURI instead.
+     * @deprecated 4.4.0 Use SiteURI instead.
      */
     public function getBaseURL(): string
     {
@@ -868,7 +868,7 @@ class URI implements Stringable
      *
      * @return $this
      *
-     * @deprecated This method will be private.
+     * @deprecated 4.4.0 This method will be private.
      */
     public function refreshPath()
     {

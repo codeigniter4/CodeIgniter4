@@ -39,7 +39,7 @@ trait RequestTrait
      *
      * @var string
      *
-     * @deprecated Will become private in a future release
+     * @deprecated 4.0.5 Will become private in a future release
      */
     protected $ipAddress = '';
 

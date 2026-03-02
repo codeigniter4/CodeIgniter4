@@ -65,7 +65,7 @@ class Message implements MessageInterface
      *
      * @return array<string, Header> An array of the request headers
      *
-     * @deprecated Use Message::headers() to make room for PSR-7
+     * @deprecated 4.0.5 Use Message::headers() to make room for PSR-7
      *
      * @TODO Incompatible return value with PSR-7
      *
@@ -82,7 +82,7 @@ class Message implements MessageInterface
      *
      * @return array|Header|null
      *
-     * @deprecated Use Message::header() to make room for PSR-7
+     * @deprecated 4.0.5 Use Message::header() to make room for PSR-7
      *
      * @TODO Incompatible return value with PSR-7
      *

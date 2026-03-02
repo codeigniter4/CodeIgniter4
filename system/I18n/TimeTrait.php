@@ -292,7 +292,7 @@ trait TimeTrait
      *
      * @throws Exception
      *
-     * @deprecated         Use createFromInstance() instead
+     * @deprecated 4.3.0 Use createFromInstance() instead
      *
      * @codeCoverageIgnore
      */

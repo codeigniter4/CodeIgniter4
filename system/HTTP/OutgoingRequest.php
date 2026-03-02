@@ -82,7 +82,7 @@ class OutgoingRequest extends Message implements OutgoingRequestInterface
      *
      * @return $this
      *
-     * @deprecated Use withMethod() instead for immutability
+     * @deprecated 4.3.0 Use withMethod() instead for immutability
      */
     public function setMethod(string $method)
     {

@@ -384,7 +384,7 @@ class Router implements RouterInterface
      * Tells the system whether we should translate URI dashes or not
      * in the URI from a dash to an underscore.
      *
-     * @deprecated This method should be removed.
+     * @deprecated 4.2.0 This method should be removed.
      */
     public function setTranslateURIDashes(bool $val = false): self
     {
@@ -601,7 +601,7 @@ class Router implements RouterInterface
      *
      * @return array returns an array of remaining uri segments that don't map onto a directory
      *
-     * @deprecated this function name does not properly describe its behavior so it has been deprecated
+     * @deprecated 4.1.2 this function name does not properly describe its behavior so it has been deprecated
      *
      * @codeCoverageIgnore
      */
@@ -617,7 +617,7 @@ class Router implements RouterInterface
      *
      * @return array returns an array of remaining uri segments that don't map onto a directory
      *
-     * @deprecated Not used. Moved to AutoRouter class.
+     * @deprecated 4.2.0 Not used. Moved to AutoRouter class.
      */
     protected function scanControllers(array $segments): array
     {
@@ -665,7 +665,7 @@ class Router implements RouterInterface
      *
      * @return void
      *
-     * @deprecated This method should be removed.
+     * @deprecated 4.2.0 This method should be removed.
      */
     public function setDirectory(?string $dir = null, bool $append = false, bool $validate = true)
     {
@@ -683,7 +683,7 @@ class Router implements RouterInterface
      *
      * regex comes from https://www.php.net/manual/en/language.variables.basics.php
      *
-     * @deprecated Moved to AutoRouter class.
+     * @deprecated 4.2.0 Moved to AutoRouter class.
      */
     private function isValidSegment(string $segment): bool
     {
@@ -725,7 +725,7 @@ class Router implements RouterInterface
     /**
      * Sets the default controller based on the info set in the RouteCollection.
      *
-     * @deprecated This was an unnecessary method, so it is no longer used.
+     * @deprecated 4.2.0 This was an unnecessary method, so it is no longer used.
      *
      * @return void
      */

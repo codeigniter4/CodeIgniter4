@@ -58,7 +58,7 @@ return [
     'localeNotSupported' => 'Locale is not supported: {0}',
 
     // CSRF
-    // @deprecated use 'Security.disallowedAction'
+    // @deprecated 4.0.5 use 'Security.disallowedAction'
     'disallowedAction' => 'The action you requested is not allowed.',
 
     // Uploaded file moving

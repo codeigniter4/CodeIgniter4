@@ -70,7 +70,7 @@ class SiteURI extends URI
      *
      * @var array<int, string>
      *
-     * @deprecated This property will be private.
+     * @deprecated 4.4.0 This property will be private.
      */
     protected $segments;
 
@@ -220,7 +220,7 @@ class SiteURI extends URI
     }
 
     /**
-     * @deprecated
+     * @deprecated 4.4.0
      */
     public function setBaseURL(string $baseURL): void
     {
@@ -228,7 +228,7 @@ class SiteURI extends URI
     }
 
     /**
-     * @deprecated
+     * @deprecated 4.4.0
      */
     public function setURI(?string $uri = null)
     {
@@ -312,7 +312,7 @@ class SiteURI extends URI
      *
      * @return $this
      *
-     * @deprecated This method will be private.
+     * @deprecated 4.4.0 This method will be private.
      */
     public function refreshPath()
     {
