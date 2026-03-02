@@ -356,6 +356,7 @@ to switch <code class="docutils literal notranslate"><span class="pre">4.7.x</sp
 <li><p><strong>Toolbar:</strong> Fixed a bug in the Routes panel where only the first route parameter was converted to an input field on hover.</p></li>
 <li><p><strong>Testing:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">FeatureTestTrait::withRoutes()</span></code> where invalid HTTP methods were not properly validated, thus passing them all to <code class="docutils literal notranslate"><span class="pre">RouteCollection</span></code>.</p></li>
 <li><p><strong>Validation:</strong> Rule <code class="docutils literal notranslate"><span class="pre">valid_cc_number</span></code> now has the correct translation.</p></li>
+<li><p><strong>Validation:</strong> Fixed a bug where rules did not fire for array elements missing a key when using wildcard fields (e.g., <code class="docutils literal notranslate"><span class="pre">contacts.friends.*.name</span></code>).</p></li>
 <li><p><strong>View:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">View</span></code> would throw an error if the <code class="docutils literal notranslate"><span class="pre">appOverridesFolder</span></code> config property was not defined.</p></li>
 </ul>
 <p>See the repo’s
@@ -376,7 +377,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 01, 2026.
+      <span class="lastupdated">Last updated on Mar 02, 2026.
       </span></p>
   </div>
 
