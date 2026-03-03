@@ -444,7 +444,7 @@ searches.
     .. literalinclude:: query_builder/039.php
 
     If you want to control where the wildcard (**%**) is placed, you can use
-    an optional third argument. Your options are ``before``, ``after`` and
+    an optional third argument. Your options are ``none``, ``before``, ``after`` and
     ``both`` (which is the default).
 
     .. literalinclude:: query_builder/040.php
