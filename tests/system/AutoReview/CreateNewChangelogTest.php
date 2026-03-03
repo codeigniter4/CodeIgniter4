@@ -65,6 +65,12 @@ final class CreateNewChangelogTest extends TestCase
     #[DataProvider('provideCreateNewChangelog')]
     public function testCreateNewChangelog(string $mode): void
     {
+        $output = exec('git status --porcelain | wc -l');
+
+        if ($output !== '0') {
+            $this->markTestIncomplete('You may have uncommited changes.');
+        }
+
         $currentVersion = $this->currentVersion;
         $newVersion     = $this->incrementVersion($currentVersion, $mode);
 
