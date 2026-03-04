@@ -19,6 +19,7 @@ use CodeIgniter\Database\RawSql;
 use CodeIgniter\Entity\Entity;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use Config\Database;
+use DateTimeInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
@@ -213,8 +214,8 @@ final class UpdateModelTest extends LiveModelTestCase
             protected string $email;
             protected string $country;
             protected bool $deleted;
-            protected int $created_at;
-            protected int $updated_at;
+            protected DateTimeInterface $created_at;
+            protected DateTimeInterface $updated_at;
 
             /**
              * @var array{'datamap': array{}, 'dates': array{string, string, string}, 'casts': array{}}
@@ -236,8 +237,8 @@ final class UpdateModelTest extends LiveModelTestCase
             protected string $email;
             protected string $country;
             protected bool $deleted;
-            protected int $created_at;
-            protected int $updated_at;
+            protected DateTimeInterface $created_at;
+            protected DateTimeInterface $updated_at;
 
             /**
              * @var array{'datamap': array{}, 'dates': array{string, string, string}, 'casts': array{}}
@@ -412,8 +413,8 @@ final class UpdateModelTest extends LiveModelTestCase
             protected string $email;
             protected string $country;
             protected bool $deleted;
-            protected int $created_at;
-            protected int $updated_at;
+            protected DateTimeInterface $created_at;
+            protected DateTimeInterface $updated_at;
 
             /**
              * @var array{'datamap': array{}, 'dates': array{string, string, string}, 'casts': array{}}
