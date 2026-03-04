@@ -68,7 +68,7 @@ final class CreateNewChangelogTest extends TestCase
         $output = exec('git status --porcelain | wc -l');
 
         if ($output !== '0') {
-            $this->markTestIncomplete('You may have uncommited changes.');
+            $this->markTestSkipped('You have uncommitted operations that will be erased by this test.');
         }
 
         $currentVersion = $this->currentVersion;
