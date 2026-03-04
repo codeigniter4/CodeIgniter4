@@ -17,6 +17,7 @@ use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Entity\Entity;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
+use DateTimeInterface;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 use Tests\Support\Models\EntityModel;
@@ -239,13 +240,17 @@ final class SaveModelTest extends LiveModelTestCase
     public function testSaveNewEntityWithDateTime(): void
     {
         $entity = new class () extends Entity {
-            protected $id;
-            protected $name;
-            protected $email;
-            protected $country;
-            protected $deleted;
-            protected $created_at;
-            protected $updated_at;
+            protected int $id;
+            protected string $name;
+            protected string $email;
+            protected string $country;
+            protected bool $deleted;
+            protected DateTimeInterface $created_at;
+            protected DateTimeInterface $updated_at;
+
+            /**
+             * @var array{'datamap': array{}, 'dates': array{string, string, string}, 'casts': array{}}
+             */
             protected $_options = [
                 'datamap' => [],
                 'dates'   => [
@@ -272,10 +277,14 @@ final class SaveModelTest extends LiveModelTestCase
     public function testSaveNewEntityWithDate(): void
     {
         $entity = new class () extends Entity {
-            protected $id;
-            protected $name;
-            protected $created_at;
-            protected $updated_at;
+            protected int $id;
+            protected string $name;
+            protected DateTimeInterface $created_at;
+            protected DateTimeInterface $updated_at;
+
+            /**
+             * @var array{'datamap': array{}, 'dates': array{string, string, string}, 'casts': array{}}
+             */
             protected $_options = [
                 'datamap' => [],
                 'dates'   => [
@@ -295,7 +304,7 @@ final class SaveModelTest extends LiveModelTestCase
             protected $returnType     = 'object';
             protected $useSoftDeletes = true;
             protected $dateFormat     = 'date';
-            public $name              = '';
+            public string $name       = '';
         };
 
         $entity->name       = 'Mark';
