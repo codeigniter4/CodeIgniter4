@@ -159,6 +159,31 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router->getRoute('mycontroller/somemethod/a/b', Method::GET);
     }
 
+    public function testFormRequestParamDoesNotCountAsUriSegment(): void
+    {
+        $router = $this->createNewAutoRouter();
+
+        // FormRequest does not consume a URI segment, so this should route fine
+        // with zero URI params after the method name.
+        [$directory, $controller, $method, $params]
+            = $router->getRoute('mycontroller/formmethod', Method::GET);
+
+        $this->assertSame('\\' . Mycontroller::class, $controller);
+        $this->assertSame('getFormmethod', $method);
+        $this->assertSame([], $params);
+    }
+
+    public function testUriParamCountExceedsNonFormRequestParams(): void
+    {
+        $this->expectException(PageNotFoundException::class);
+
+        $router = $this->createNewAutoRouter();
+
+        // Only $id absorbs a URI segment; the FormRequest does not.
+        // Passing two segments after the method name must be rejected.
+        $router->getRoute('mycontroller/formmethodwithparam/42/extra', Method::GET);
+    }
+
     public function testAutoRouteFindsControllerWithFile(): void
     {
         $router = $this->createNewAutoRouter();

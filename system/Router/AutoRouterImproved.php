@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Router;
 
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\HTTP\FormRequest;
 use CodeIgniter\Router\Exceptions\MethodNotFoundException;
 use Config\Routing;
 use ReflectionClass;
@@ -442,7 +443,14 @@ final class AutoRouterImproved implements AutoRouterInterface
             throw new MethodNotFoundException();
         }
 
-        if (count($refParams) < count($this->params)) {
+        // FormRequest parameters are injected by the framework and do not
+        // consume URI segments, so exclude them from the count.
+        $uriParamCount = count(array_filter(
+            $refParams,
+            static fn ($p): bool => FormRequest::getFormRequestClass($p) === null,
+        ));
+
+        if ($uriParamCount < count($this->params)) {
             throw new PageNotFoundException(
                 'The param count in the URI are greater than the controller method params.'
                 . ' Handler:' . $this->controller . '::' . $this->method

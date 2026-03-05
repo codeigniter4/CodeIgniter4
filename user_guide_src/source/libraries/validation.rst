@@ -411,6 +411,8 @@ data to be validated:
 Working with Validation
 ***********************
 
+.. _validation-running:
+
 Running Validation
 ==================
 
@@ -761,6 +763,16 @@ When showing field-specific errors, you can pass the alias as the second paramet
 right after the name of the field the error should belong to::
 
     <?= $validation->showError('username', 'my_single') ?>
+
+*************
+Form Requests
+*************
+
+.. versionadded:: 4.8.0
+
+For a higher-level approach that encapsulates validation rules, custom error
+messages, and authorization logic in a dedicated class, see
+:doc:`Form Requests </incoming/form_requests>`.
 
 *********************
 Creating Custom Rules

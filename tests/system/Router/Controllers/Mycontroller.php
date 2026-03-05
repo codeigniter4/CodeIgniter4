@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Router\Controllers;
 
 use CodeIgniter\Controller;
+use CodeIgniter\Router\Controllers\Requests\MyFormRequest;
 
 class Mycontroller extends Controller
 {
@@ -22,6 +23,14 @@ class Mycontroller extends Controller
     }
 
     public function getSomemethod($first = ''): void
+    {
+    }
+
+    public function getFormmethod(MyFormRequest $request): void
+    {
+    }
+
+    public function getFormmethodWithParam(string $id, MyFormRequest $request): void
     {
     }
 }

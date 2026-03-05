@@ -1,7 +1,12 @@
-# total 12 errors
+# total 31 errors
 
 parameters:
     ignoreErrors:
+        -
+            message: '#^Property CodeIgniter\\CodeIgniter\:\:\$controller type has no signature specified for Closure\.$#'
+            count: 1
+            path: ../../system/CodeIgniter.php
+
         -
             message: '#^Class CodeIgniter\\Model has PHPDoc tag @method for method whenNot\(\) parameter \#2 \$callback with no signature specified for callable\.$#'
             count: 1
@@ -23,7 +28,67 @@ parameters:
             path: ../../system/Model.php
 
         -
+            message: '#^Method CodeIgniter\\Router\\RouteCollection\:\:add\(\) has parameter \$to with no signature specified for Closure\.$#'
+            count: 1
+            path: ../../system/Router/RouteCollection.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\RouteCollection\:\:cli\(\) has parameter \$to with no signature specified for Closure\.$#'
+            count: 1
+            path: ../../system/Router/RouteCollection.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\RouteCollection\:\:create\(\) has parameter \$to with no signature specified for Closure\.$#'
+            count: 1
+            path: ../../system/Router/RouteCollection.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\RouteCollection\:\:delete\(\) has parameter \$to with no signature specified for Closure\.$#'
+            count: 1
+            path: ../../system/Router/RouteCollection.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\RouteCollection\:\:getControllerName\(\) has parameter \$handler with no signature specified for Closure\.$#'
+            count: 1
+            path: ../../system/Router/RouteCollection.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\RouteCollection\:\:get\(\) has parameter \$to with no signature specified for Closure\.$#'
+            count: 1
+            path: ../../system/Router/RouteCollection.php
+
+        -
             message: '#^Method CodeIgniter\\Router\\RouteCollection\:\:group\(\) has parameter \$params with no signature specified for callable\.$#'
+            count: 1
+            path: ../../system/Router/RouteCollection.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\RouteCollection\:\:head\(\) has parameter \$to with no signature specified for Closure\.$#'
+            count: 1
+            path: ../../system/Router/RouteCollection.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\RouteCollection\:\:match\(\) has parameter \$to with no signature specified for Closure\.$#'
+            count: 1
+            path: ../../system/Router/RouteCollection.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\RouteCollection\:\:options\(\) has parameter \$to with no signature specified for Closure\.$#'
+            count: 1
+            path: ../../system/Router/RouteCollection.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\RouteCollection\:\:patch\(\) has parameter \$to with no signature specified for Closure\.$#'
+            count: 1
+            path: ../../system/Router/RouteCollection.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\RouteCollection\:\:post\(\) has parameter \$to with no signature specified for Closure\.$#'
+            count: 1
+            path: ../../system/Router/RouteCollection.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\RouteCollection\:\:put\(\) has parameter \$to with no signature specified for Closure\.$#'
             count: 1
             path: ../../system/Router/RouteCollection.php
 
@@ -33,14 +98,44 @@ parameters:
             path: ../../system/Router/RouteCollection.php
 
         -
+            message: '#^Method CodeIgniter\\Router\\RouteCollectionInterface\:\:add\(\) has parameter \$to with no signature specified for Closure\.$#'
+            count: 1
+            path: ../../system/Router/RouteCollectionInterface.php
+
+        -
             message: '#^Method CodeIgniter\\Router\\RouteCollectionInterface\:\:set404Override\(\) has parameter \$callable with no signature specified for callable\.$#'
             count: 1
             path: ../../system/Router/RouteCollectionInterface.php
 
         -
+            message: '#^Method CodeIgniter\\Router\\Router\:\:controllerName\(\) return type has no signature specified for Closure\.$#'
+            count: 1
+            path: ../../system/Router/Router.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\Router\:\:handle\(\) return type has no signature specified for Closure\.$#'
+            count: 1
+            path: ../../system/Router/Router.php
+
+        -
             message: '#^Method CodeIgniter\\Router\\Router\:\:setMatchedRoute\(\) has parameter \$handler with no signature specified for callable\.$#'
             count: 1
             path: ../../system/Router/Router.php
+
+        -
+            message: '#^Property CodeIgniter\\Router\\Router\:\:\$controller type has no signature specified for Closure\.$#'
+            count: 1
+            path: ../../system/Router/Router.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\RouterInterface\:\:controllerName\(\) return type has no signature specified for Closure\.$#'
+            count: 1
+            path: ../../system/Router/RouterInterface.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\RouterInterface\:\:handle\(\) return type has no signature specified for Closure\.$#'
+            count: 1
+            path: ../../system/Router/RouterInterface.php
 
         -
             message: '#^Method CodeIgniter\\View\\Parser\:\:addPlugin\(\) has parameter \$callback with no signature specified for callable\.$#'

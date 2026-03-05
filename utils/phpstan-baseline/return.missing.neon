@@ -1,0 +1,8 @@
+# total 1 error
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Method CodeIgniter\\Commands\\Generators\\FormRequestGenerator\:\:run\(\) should return int\|null but return statement is missing\.$#'
+            count: 1
+            path: ../../system/Commands/Generators/FormRequestGenerator.php

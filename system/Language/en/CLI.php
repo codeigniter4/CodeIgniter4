@@ -26,6 +26,7 @@ return [
             'default'     => 'Class name',
             'entity'      => 'Entity class name',
             'filter'      => 'Filter class name',
+            'request'     => 'FormRequest class name',
             'migration'   => 'Migration class name',
             'model'       => 'Model class name',
             'seeder'      => 'Seeder class name',

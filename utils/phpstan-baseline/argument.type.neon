@@ -1,4 +1,4 @@
-# total 78 errors
+# total 74 errors
 
 parameters:
     ignoreErrors:
@@ -26,26 +26,6 @@ parameters:
             message: '#^Parameter \#3 \.\.\.\$arrays of function array_map expects array, int\|string given\.$#'
             count: 1
             path: ../../system/Database/SQLite3/Builder.php
-
-        -
-            message: '#^Parameter \#2 \$to of method CodeIgniter\\Router\\RouteCollection\:\:add\(\) expects array\|\(Closure\(mixed \.\.\.\)\: \(CodeIgniter\\HTTP\\ResponseInterface\|string\|void\)\)\|string, Closure\(mixed\)\: CodeIgniter\\HTTP\\ResponseInterface given\.$#'
-            count: 1
-            path: ../../tests/system/CodeIgniterTest.php
-
-        -
-            message: '#^Parameter \#2 \$to of method CodeIgniter\\Router\\RouteCollection\:\:add\(\) expects array\|\(Closure\(mixed \.\.\.\)\: \(CodeIgniter\\HTTP\\ResponseInterface\|string\|void\)\)\|string, Closure\(mixed\)\: \(CodeIgniter\\HTTP\\DownloadResponse\|null\) given\.$#'
-            count: 1
-            path: ../../tests/system/CodeIgniterTest.php
-
-        -
-            message: '#^Parameter \#2 \$to of method CodeIgniter\\Router\\RouteCollection\:\:add\(\) expects array\|\(Closure\(mixed \.\.\.\)\: \(CodeIgniter\\HTTP\\ResponseInterface\|string\|void\)\)\|string, Closure\(mixed\)\: non\-falsy\-string given\.$#'
-            count: 1
-            path: ../../tests/system/CodeIgniterTest.php
-
-        -
-            message: '#^Parameter \#2 \$to of method CodeIgniter\\Router\\RouteCollection\:\:add\(\) expects array\|\(Closure\(mixed \.\.\.\)\: \(CodeIgniter\\HTTP\\ResponseInterface\|string\|void\)\)\|string, Closure\(mixed\)\: void given\.$#'
-            count: 1
-            path: ../../tests/system/CodeIgniterTest.php
 
         -
             message: '#^Parameter \#1 \$expected of method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) expects class\-string\<Config\\TestRegistrar\>, string given\.$#'

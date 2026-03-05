@@ -15,6 +15,7 @@ Controllers handle incoming requests.
     message
     request
     incomingrequest
+    form_requests
     content_negotiation
     methodspoofing
     restful

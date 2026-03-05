@@ -180,6 +180,7 @@ Commands
 - ``CLI`` now supports parsing array options written multiple times (e.g., ``--option=value1 --option=value2``) into an array of values. This allows you to easily pass multiple values for the same option without needing to use a comma-separated string.
     When used with ``CLI::getOption()``, an array option will return its last value (for example, in this case, ``value2``). To retrieve all values for an array option, use ``CLI::getRawOption()``.
 - Likewise, the ``command()`` function now also supports the above enhancements for command-line option parsing when using the function to run commands from code.
+- Added ``make:request`` generator command to scaffold :ref:`Form Request <form-requests>` classes.
 
 Testing
 =======
@@ -227,6 +228,7 @@ Helpers and Functions
 HTTP
 ====
 
+- Added :ref:`Form Requests <form-requests>` - a new ``FormRequest`` base class that encapsulates validation rules, custom error messages, and authorization logic for a single HTTP request.
 - Added ``SSEResponse`` class for streaming Server-Sent Events (SSE) over HTTP. See :ref:`server-sent-events`.
 - ``Response`` and its child classes no longer require ``Config\App`` passed to their constructors.
     Consequently, ``CURLRequest``'s ``$config`` parameter is unused and will be removed in a future release.
