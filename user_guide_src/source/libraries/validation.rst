@@ -802,6 +802,10 @@ fourth) parameter:
 
 .. literalinclude:: validation/035.php
 
+.. note:: Since v4.8.0, the ``{field}``, ``{param}``, and ``{value}`` placeholders are supported in ``$error``
+    messages and will be replaced with the field's human-readable label (or field name if no label is set),
+    the rule parameter, and the submitted value respectively.
+
 Using a Custom Rule
 -------------------
 
