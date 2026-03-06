@@ -189,6 +189,11 @@ HTTP
 - ``Response`` and its child classes no longer require ``Config\App`` passed to their constructors.
     Consequently, ``CURLRequest``'s ``$config`` parameter is unused and will be removed in a future release.
 
+Validation
+==========
+
+- Custom rule methods that set an error via the ``&$error`` reference parameter now support the ``{field}``, ``{param}``, and ``{value}`` placeholders, consistent with language-file and ``setRule()``/``setRules()`` error messages.
+
 Others
 ======
 
