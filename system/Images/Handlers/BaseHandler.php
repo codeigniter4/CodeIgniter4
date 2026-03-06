@@ -683,7 +683,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @return bool
      */
-    abstract public function save(?string $target = null, int $quality = 90, int $speed = -1);
+    abstract public function save(?string $target = null, int $quality = 90);
 
     /**
      * Does the driver-specific processing of the image.

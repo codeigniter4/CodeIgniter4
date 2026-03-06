@@ -202,7 +202,7 @@ class GDHandler extends BaseHandler
      *
      * @param non-empty-string|null $target
      */
-    public function save(?string $target = null, int $quality = 90, int $speed = -1): bool
+    public function save(?string $target = null, int $quality = 90): bool
     {
         $original = $target;
         $target   = ($target === null || $target === '') ? $this->image()->getPathname() : $target;
@@ -275,7 +275,7 @@ class GDHandler extends BaseHandler
                     throw ImageException::forInvalidImageCreate(lang('Images.avifNotSupported'));
                 }
 
-                if (! @imageavif($this->resource, $target, $quality, $speed)) {
+                if (! @imageavif($this->resource, $target, $quality)) {
                     throw ImageException::forSaveFailed();
                 }
                 break;
