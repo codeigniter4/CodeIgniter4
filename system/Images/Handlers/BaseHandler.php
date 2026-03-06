@@ -115,6 +115,7 @@ abstract class BaseHandler implements ImageHandlerInterface
     protected $supportTransparency = [
         IMAGETYPE_PNG,
         IMAGETYPE_WEBP,
+        IMAGETYPE_AVIF,
     ];
 
     /**
@@ -682,7 +683,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @return bool
      */
-    abstract public function save(?string $target = null, int $quality = 90);
+    abstract public function save(?string $target = null, int $quality = 90, int $speed = -1);
 
     /**
      * Does the driver-specific processing of the image.

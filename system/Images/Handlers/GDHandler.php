@@ -178,7 +178,7 @@ class GDHandler extends BaseHandler
 
         $dest = $create($this->width, $this->height);
 
-        // for png and webp we can actually preserve transparency
+        // for png, webp and avif we can actually preserve transparency
         if (in_array($this->image()->imageType, $this->supportTransparency, true)) {
             imagealphablending($dest, false);
             imagesavealpha($dest, true);
@@ -202,7 +202,7 @@ class GDHandler extends BaseHandler
      *
      * @param non-empty-string|null $target
      */
-    public function save(?string $target = null, int $quality = 90): bool
+    public function save(?string $target = null, int $quality = 90, int $speed = -1): bool
     {
         $original = $target;
         $target   = ($target === null || $target === '') ? $this->image()->getPathname() : $target;
@@ -222,7 +222,7 @@ class GDHandler extends BaseHandler
 
         $this->ensureResource();
 
-        // for png and webp we can actually preserve transparency
+        // for png, webp and avif we can actually preserve transparency
         if (in_array($this->image()->imageType, $this->supportTransparency, true)) {
             imagepalettetotruecolor($this->resource);
             imagealphablending($this->resource, false);
@@ -266,6 +266,16 @@ class GDHandler extends BaseHandler
                 }
 
                 if (! @imagewebp($this->resource, $target, $quality)) {
+                    throw ImageException::forSaveFailed();
+                }
+                break;
+
+            case IMAGETYPE_AVIF:
+                if (! function_exists('imageavif')) {
+                    throw ImageException::forInvalidImageCreate(lang('Images.avifNotSupported'));
+                }
+
+                if (! @imageavif($this->resource, $target, $quality, $speed)) {
                     throw ImageException::forSaveFailed();
                 }
                 break;
@@ -360,6 +370,13 @@ class GDHandler extends BaseHandler
                 }
 
                 return imagecreatefromwebp($path);
+
+            case IMAGETYPE_AVIF:
+                if (! function_exists('imagecreatefromavif')) {
+                    throw ImageException::forInvalidImageCreate(lang('Images.avifNotSupported'));
+                }
+
+                return imagecreatefromavif($path);
 
             default:
                 throw ImageException::forInvalidImageCreate('Ima');

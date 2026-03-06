@@ -259,6 +259,7 @@ class Mimes
             'image/x-png',
         ],
         'webp' => 'image/webp',
+        'avif' => 'image/avif',
         'tif'  => 'image/tiff',
         'tiff' => 'image/tiff',
         'css'  => [
