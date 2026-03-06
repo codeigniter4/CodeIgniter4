@@ -306,8 +306,38 @@ class ImageMagickHandler extends BaseHandler
             return;
         }
 
-        if ($this->image()->imageType === IMAGETYPE_WEBP && ! in_array('WEBP', Imagick::queryFormats(), true)) {
-            throw ImageException::forInvalidImageCreate(lang('Images.webpNotSupported'));
+        $supported = Imagick::queryFormats();
+
+        switch ($this->image()->imageType) {
+            case IMAGETYPE_GIF:
+                if (! in_array('GIF', $supported, true)) {
+                    throw ImageException::forInvalidImageCreate(lang('Images.gifNotSupported'));
+                }
+                break;
+
+            case IMAGETYPE_JPEG:
+                if (! in_array('JPEG', $supported, true)) {
+                    throw ImageException::forInvalidImageCreate(lang('Images.jpgNotSupported'));
+                }
+                break;
+
+            case IMAGETYPE_PNG:
+                if (! in_array('PNG', $supported, true)) {
+                    throw ImageException::forInvalidImageCreate(lang('Images.pngNotSupported'));
+                }
+                break;
+
+            case IMAGETYPE_WEBP:
+                if (! in_array('WEBP', $supported, true)) {
+                    throw ImageException::forInvalidImageCreate(lang('Images.webpNotSupported'));
+                }
+                break;
+
+            case IMAGETYPE_AVIF:
+                if (! in_array('AVIF', $supported, true)) {
+                    throw ImageException::forInvalidImageCreate(lang('Images.avifNotSupported'));
+                }
+                break;
         }
     }
 
