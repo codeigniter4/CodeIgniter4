@@ -858,6 +858,10 @@ Or you can use the following parameters:
 .. literalinclude:: validation/041.php
    :lines: 2-
 
+.. note:: Since v4.8.0, the ``{field}``, ``{param}``, and ``{value}`` placeholders are supported in ``$error``
+    messages and will be replaced with the field's human-readable label (or field name if no label is set),
+    the rule parameter, and the submitted value respectively.
+
 .. _validation-using-callable-rule:
 
 Using Callable Rule
@@ -880,6 +884,10 @@ Or you can use the following parameters:
 
 .. literalinclude:: validation/047.php
    :lines: 2-
+
+.. note:: Since v4.8.0, the ``{field}``, ``{param}``, and ``{value}`` placeholders are supported in ``$error``
+    messages and will be replaced with the field's human-readable label (or field name if no label is set),
+    the rule parameter, and the submitted value respectively.
 
 .. _validation-available-rules:
 

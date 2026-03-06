@@ -13,7 +13,7 @@ class Form extends BaseController
             return true;
         }
 
-        $error = 'The value is not even.';
+        $error = 'The value of {field} is not even.';
 
         return false;
     }
