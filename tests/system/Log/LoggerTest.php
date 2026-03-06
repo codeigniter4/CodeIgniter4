@@ -505,4 +505,155 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertCount(1, $logs);
         $this->assertSame($expected, $logs[0]);
     }
+
+    public function testContextNotPassedToHandlersByDefault(): void
+    {
+        $config = new LoggerConfig();
+        $logger = new Logger($config);
+
+        $logger->log('debug', 'Test message', ['foo' => 'bar', 'baz' => 'qux']);
+
+        $contexts = TestHandler::getContexts();
+
+        $this->assertSame([[]], $contexts);
+    }
+
+    public function testLogContextPassesNonInterpolatedKeysToHandlers(): void
+    {
+        $config             = new LoggerConfig();
+        $config->logContext = true;
+
+        $logger = new Logger($config);
+
+        $logger->log('debug', 'Hello {name}', ['name' => 'World', 'user_id' => 42]);
+
+        $contexts = TestHandler::getContexts();
+
+        $this->assertArrayNotHasKey('name', $contexts[0]);
+        $this->assertSame(42, $contexts[0]['user_id']);
+    }
+
+    public function testLogContextStripsInterpolatedKeysByDefault(): void
+    {
+        $config             = new LoggerConfig();
+        $config->logContext = true;
+
+        $logger = new Logger($config);
+
+        $logger->log('debug', 'Hello {name}', ['name' => 'World']);
+
+        $contexts = TestHandler::getContexts();
+
+        $this->assertSame([[]], $contexts);
+    }
+
+    public function testLogContextKeepsInterpolatedKeysWhenEnabled(): void
+    {
+        $config                     = new LoggerConfig();
+        $config->logContext         = true;
+        $config->logContextUsedKeys = true;
+
+        $logger = new Logger($config);
+
+        $logger->log('debug', 'Hello {name}', ['name' => 'World']);
+
+        $contexts = TestHandler::getContexts();
+
+        $this->assertArrayHasKey('name', $contexts[0]);
+        $this->assertSame('World', $contexts[0]['name']);
+    }
+
+    public function testLogContextNormalizesThrowable(): void
+    {
+        $config             = new LoggerConfig();
+        $config->logContext = true;
+
+        $logger = new Logger($config);
+
+        try {
+            throw new RuntimeException('Something went wrong', 42);
+        } catch (RuntimeException $e) {
+            $logger->log('error', 'An error occurred', ['exception' => $e]);
+        }
+
+        $contexts = TestHandler::getContexts();
+
+        $this->assertArrayHasKey('exception', $contexts[0]);
+
+        $normalized = $contexts[0]['exception'];
+
+        $this->assertSame(RuntimeException::class, $normalized['class']);
+        $this->assertSame('Something went wrong', $normalized['message']);
+        $this->assertSame(42, $normalized['code']);
+        $this->assertArrayHasKey('file', $normalized);
+        $this->assertArrayHasKey('line', $normalized);
+        $this->assertArrayNotHasKey('trace', $normalized);
+    }
+
+    public function testLogContextNormalizesThrowableWithTrace(): void
+    {
+        $config                  = new LoggerConfig();
+        $config->logContext      = true;
+        $config->logContextTrace = true;
+
+        $logger = new Logger($config);
+
+        try {
+            throw new RuntimeException('Something went wrong');
+        } catch (RuntimeException $e) {
+            $logger->log('error', 'An error occurred', ['exception' => $e]);
+        }
+
+        $contexts = TestHandler::getContexts();
+
+        $this->assertArrayHasKey('exception', $contexts[0]);
+        $this->assertArrayHasKey('trace', $contexts[0]['exception']);
+        $this->assertIsString($contexts[0]['exception']['trace']);
+    }
+
+    public function testLogContextNormalizesInterpolatedThrowableWhenUsedKeysEnabled(): void
+    {
+        $config                     = new LoggerConfig();
+        $config->logContext         = true;
+        $config->logContextUsedKeys = true;
+
+        $logger = new Logger($config);
+
+        try {
+            throw new RuntimeException('Something went wrong');
+        } catch (RuntimeException $e) {
+            $logger->log('error', '[ERROR] {exception}', ['exception' => $e]);
+        }
+
+        $contexts = TestHandler::getContexts();
+
+        $this->assertArrayHasKey('exception', $contexts[0]);
+
+        $normalized = $contexts[0]['exception'];
+
+        $this->assertIsArray($normalized);
+        $this->assertSame(RuntimeException::class, $normalized['class']);
+        $this->assertSame('Something went wrong', $normalized['message']);
+    }
+
+    public function testLogContextDisabledStillAllowsGlobalContext(): void
+    {
+        $config                   = new LoggerConfig();
+        $config->logContext       = false;
+        $config->logGlobalContext = true;
+
+        $logger = new Logger($config);
+
+        Time::setTestNow('2026-02-18 12:00:00');
+
+        service('context')->set('request_id', 'abc123');
+
+        $logger->log('debug', 'Test message', ['extra' => 'data']);
+
+        $contexts = TestHandler::getContexts();
+
+        $this->assertArrayNotHasKey('extra', $contexts[0]);
+        $this->assertArrayHasKey('_ci_context', $contexts[0]);
+        $this->assertSame(['request_id' => 'abc123'], $contexts[0]['_ci_context']);
+    }
 }

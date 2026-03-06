@@ -122,6 +122,27 @@ class Logger implements LoggerInterface
     protected bool $logGlobalContext = false;
 
     /**
+     * Whether to log per-call context data passed to log methods.
+     *
+     * Set in app/Config/Logger.php
+     */
+    protected bool $logContext = false;
+
+    /**
+     * Whether to include the stack trace when a Throwable is in the context.
+     *
+     * Set in app/Config/Logger.php
+     */
+    protected bool $logContextTrace = false;
+
+    /**
+     * Whether to keep context keys that were already used as placeholders.
+     *
+     * Set in app/Config/Logger.php
+     */
+    protected bool $logContextUsedKeys = false;
+
+    /**
      * Constructor.
      *
      * @param \Config\Logger $config
@@ -162,7 +183,10 @@ class Logger implements LoggerInterface
             $this->logCache = [];
         }
 
-        $this->logGlobalContext = $config->logGlobalContext ?? $this->logGlobalContext;
+        $this->logGlobalContext   = $config->logGlobalContext ?? $this->logGlobalContext;
+        $this->logContext         = $config->logContext ?? $this->logContext;
+        $this->logContextTrace    = $config->logContextTrace ?? $this->logContextTrace;
+        $this->logContextUsedKeys = $config->logContextUsedKeys ?? $this->logContextUsedKeys;
     }
 
     /**
@@ -259,7 +283,25 @@ class Logger implements LoggerInterface
             return;
         }
 
+        $interpolatedKeys = array_keys(array_filter(
+            $context,
+            static fn ($key): bool => str_contains((string) $message, '{' . $key . '}'),
+            ARRAY_FILTER_USE_KEY,
+        ));
+
         $message = $this->interpolate($message, $context);
+
+        if ($this->logContext) {
+            if (! $this->logContextUsedKeys) {
+                foreach ($interpolatedKeys as $key) {
+                    unset($context[$key]);
+                }
+            }
+
+            $context = $this->normalizeContext($context);
+        } else {
+            $context = [];
+        }
 
         if ($this->logGlobalContext) {
             $globalContext = service('context')->getAll();
@@ -288,6 +330,37 @@ class Logger implements LoggerInterface
                 break;
             }
         }
+    }
+
+    /**
+     * Normalizes context values for structured logging.
+     * Converts any Throwable instances into an array representation.
+     *
+     * @param array<string, mixed> $context
+     *
+     * @return array<string, mixed>
+     */
+    protected function normalizeContext(array $context): array
+    {
+        foreach ($context as $key => $value) {
+            if ($value instanceof Throwable) {
+                $normalized = [
+                    'class'   => $value::class,
+                    'message' => $value->getMessage(),
+                    'code'    => $value->getCode(),
+                    'file'    => clean_path($value->getFile()),
+                    'line'    => $value->getLine(),
+                ];
+
+                if ($this->logContextTrace) {
+                    $normalized['trace'] = $value->getTraceAsString();
+                }
+
+                $context[$key] = $normalized;
+            }
+        }
+
+        return $context;
     }
 
     /**

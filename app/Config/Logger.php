@@ -69,6 +69,41 @@ class Logger extends BaseConfig
 
     /**
      * --------------------------------------------------------------------------
+     * Whether to log per-call context data
+     * --------------------------------------------------------------------------
+     *
+     * When enabled, context keys not used as placeholders in the message are
+     * passed to handlers as structured data. Any Throwable instances found in
+     * the context are automatically normalized to an array representation.
+     */
+    public bool $logContext = false;
+
+    /**
+     * --------------------------------------------------------------------------
+     * Whether to include the stack trace for Throwables in context
+     * --------------------------------------------------------------------------
+     *
+     * When enabled, the stack trace is included when a Throwable is found in
+     * the context and normalized. Only relevant when $logContext is true.
+     */
+    public bool $logContextTrace = false;
+
+    /**
+     * --------------------------------------------------------------------------
+     * Whether to keep context keys that were used as placeholders
+     * --------------------------------------------------------------------------
+     *
+     * By default, context keys that were interpolated into the message as
+     * {placeholder} are stripped before passing context to handlers, since
+     * their values are already present in the message text. Set to true to
+     * keep them as structured data as well.
+     *
+     * Only relevant when $logContext is true.
+     */
+    public bool $logContextUsedKeys = false;
+
+    /**
+     * --------------------------------------------------------------------------
      * Log Handlers
      * --------------------------------------------------------------------------
      *
