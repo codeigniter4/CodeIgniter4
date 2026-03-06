@@ -319,10 +319,14 @@ final class GDHandlerTest extends CIUnitTestCase
 
     public function testImageCreation(): void
     {
-        foreach (['gif', 'jpeg', 'png', 'webp'] as $type) {
+        foreach (['gif', 'jpeg', 'png', 'webp', 'avif'] as $type) {
             if ($type === 'webp' && ! function_exists('imagecreatefromwebp')) {
                 $this->expectException(ImageException::class);
-                $this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
+                $this->expectExceptionMessage('Your server does not support the GD function required to process a webp image.');
+            }
+            if ($type === 'avif' && ! function_exists('imagecreatefromavif')) {
+                $this->expectException(ImageException::class);
+                $this->expectExceptionMessage('Your server does not support the GD function required to process an avif image.');
             }
 
             $this->handler->withFile($this->origin . 'ci-logo.' . $type);
@@ -334,10 +338,14 @@ final class GDHandlerTest extends CIUnitTestCase
 
     public function testImageCopy(): void
     {
-        foreach (['gif', 'jpeg', 'png', 'webp'] as $type) {
+        foreach (['gif', 'jpeg', 'png', 'webp', 'avif'] as $type) {
             if ($type === 'webp' && ! function_exists('imagecreatefromwebp')) {
                 $this->expectException(ImageException::class);
-                $this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
+                $this->expectExceptionMessage('Your server does not support the GD function required to process a webp image.');
+            }
+            if ($type === 'avif' && ! function_exists('imagecreatefromavif')) {
+                $this->expectException(ImageException::class);
+                $this->expectExceptionMessage('Your server does not support the GD function required to process an avif image.');
             }
 
             $this->handler->withFile($this->origin . 'ci-logo.' . $type);
@@ -353,9 +361,12 @@ final class GDHandlerTest extends CIUnitTestCase
 
     public function testImageCopyWithNoTargetAndMaxQuality(): void
     {
-        foreach (['gif', 'jpeg', 'png', 'webp'] as $type) {
+        foreach (['gif', 'jpeg', 'png', 'webp', 'avif'] as $type) {
             $this->handler->withFile($this->origin . 'ci-logo.' . $type);
-            $this->handler->save(null, 100);
+            if($type === 'avif')
+                $this->handler->save(null, 100, 10);
+            else
+                $this->handler->save(null, 100);
             $this->assertFileExists($this->origin . 'ci-logo.' . $type);
 
             $this->assertSame(
@@ -367,10 +378,14 @@ final class GDHandlerTest extends CIUnitTestCase
 
     public function testImageCompressionGetResource(): void
     {
-        foreach (['gif', 'jpeg', 'png', 'webp'] as $type) {
+        foreach (['gif', 'jpeg', 'png', 'webp', 'avif'] as $type) {
             if ($type === 'webp' && ! function_exists('imagecreatefromwebp')) {
                 $this->expectException(ImageException::class);
-                $this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
+                $this->expectExceptionMessage('Your server does not support the GD function required to process a webp image.');
+            }
+            if ($type === 'avif' && ! function_exists('imagecreatefromavif')) {
+                $this->expectException(ImageException::class);
+                $this->expectExceptionMessage('Your server does not support the GD function required to process an avif image.');
             }
 
             $this->handler->withFile($this->origin . 'ci-logo.' . $type);
@@ -387,10 +402,14 @@ final class GDHandlerTest extends CIUnitTestCase
 
     public function testImageCompressionWithResource(): void
     {
-        foreach (['gif', 'jpeg', 'png', 'webp'] as $type) {
+        foreach (['gif', 'jpeg', 'png', 'webp', 'avif'] as $type) {
             if ($type === 'webp' && ! function_exists('imagecreatefromwebp')) {
                 $this->expectException(ImageException::class);
-                $this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
+                $this->expectExceptionMessage('Your server does not support the GD function required to process a webp image.');
+            }
+            if ($type === 'avif' && ! function_exists('imagecreatefromavif')) {
+                $this->expectException(ImageException::class);
+                $this->expectExceptionMessage('Your server does not support the GD function required to process an avif image.');
             }
 
             $this->handler->withFile($this->origin . 'ci-logo.' . $type)
@@ -421,6 +440,15 @@ final class GDHandlerTest extends CIUnitTestCase
         $saved = $this->start . 'work/rocket.webp';
         $this->handler->save($saved);
         $this->assertSame(IMAGETYPE_WEBP, exif_imagetype($saved));
+    }
+
+    public function testImageConvertPngToAvif(): void
+    {
+        $this->handler->withFile($this->origin . 'rocket.png');
+        $this->handler->convert(IMAGETYPE_AVIF);
+        $saved = $this->start . 'work/rocket.avif';
+        $this->handler->save($saved);
+        $this->assertSame(IMAGETYPE_AVIF, exif_imagetype($saved));
     }
 
     public function testImageReorientLandscape(): void
