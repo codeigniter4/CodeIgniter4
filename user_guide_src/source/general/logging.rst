@@ -147,6 +147,40 @@ This would produce a log entry like:
 
 See :ref:`context` for full documentation on storing and managing context data.
 
+.. _logging-per-call-context:
+
+Per-Call Context Logging
+------------------------
+
+.. versionadded:: 4.8.0
+
+By default, context values passed to ``log_message()`` are only used for placeholder
+interpolation and are not stored anywhere. You can enable structured context logging
+by setting ``$logContext = true`` in **app/Config/Logger.php**:
+
+.. literalinclude:: logging/009.php
+
+When enabled, any context key that is **not** referenced as a ``{placeholder}`` in the
+message is passed to handlers as structured data. Keys that were interpolated into the
+message are stripped by default (since their values are already present in the message
+text), but you can keep them by setting ``$logContextUsedKeys = true``.
+
+.. literalinclude:: logging/007.php
+
+**Throwable normalization**
+
+Any ``Throwable`` instance (exception or error) found in the context is automatically
+normalized into a meaningful array instead of being serialized as an empty object:
+
+.. literalinclude:: logging/008.php
+
+The normalized array contains ``class``, ``message``, ``code``, ``file``, and ``line``.
+To also include the full stack trace, set ``$logContextTrace = true``.
+
+.. note:: ``$logContext`` and ``$logGlobalContext`` are independent. You can enable either
+    or both. When both are enabled, per-call context and global context are merged before
+    being passed to handlers.
+
 Using Third-Party Loggers
 =========================
 
