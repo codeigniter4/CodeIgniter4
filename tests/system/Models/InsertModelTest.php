@@ -194,21 +194,19 @@ final class InsertModelTest extends LiveModelTestCase
     public function testInsertBatchNewEntityWithDateTime(): void
     {
         $entity = new class () extends Entity {
-            protected $id;
-            protected $name;
-            protected $email;
-            protected $country;
-            protected $deleted;
-            protected $created_at;
-            protected $updated_at;
-            protected $_options = [
-                'datamap' => [],
-                'dates'   => [
-                    'created_at',
-                    'updated_at',
-                    'deleted_at',
-                ],
-                'casts' => [],
+            protected $attributes = [
+                'id'         => null,
+                'name'       => null,
+                'email'      => null,
+                'country'    => null,
+                'deleted_at' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ];
+            protected $dates = [
+                'created_at',
+                'updated_at',
+                'deleted_at',
             ];
         };
 
@@ -219,13 +217,13 @@ final class InsertModelTest extends LiveModelTestCase
         $entity->name       = 'Mark One';
         $entity->email      = 'markone@example.com';
         $entity->country    = 'India';
-        $entity->deleted    = 0;
+        $entity->deleted_at = null;
         $entity->created_at = new Time('now');
 
         $entityTwo->name       = 'Mark Two';
         $entityTwo->email      = 'marktwo@example.com';
         $entityTwo->country    = 'India';
-        $entityTwo->deleted    = 0;
+        $entityTwo->deleted_at = null;
         $entityTwo->created_at = $entity->created_at;
 
         $this->setPrivateProperty($this->model, 'useTimestamps', true);
@@ -288,21 +286,10 @@ final class InsertModelTest extends LiveModelTestCase
         $this->createModel(UserModel::class);
 
         $entity = new class () extends Entity {
-            protected $id;
-            protected $name;
-            protected $email;
-            protected $country;
-            protected $deleted;
-            protected $created_at;
-            protected $updated_at;
-            protected $_options = [
-                'datamap' => [],
-                'dates'   => [
-                    'created_at',
-                    'updated_at',
-                    'deleted_at',
-                ],
-                'casts' => [],
+            protected $dates = [
+                'created_at',
+                'updated_at',
+                'deleted_at',
             ];
         };
 
