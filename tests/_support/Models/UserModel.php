@@ -30,7 +30,4 @@ class UserModel extends Model
     protected $returnType     = 'object';
     protected $useSoftDeletes = true;
     protected $dateFormat     = 'datetime';
-    public $name              = '';
-    public $email             = '';
-    public $country           = '';
 }
