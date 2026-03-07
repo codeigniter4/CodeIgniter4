@@ -356,55 +356,43 @@ class ImageMagickHandler extends BaseHandler
      */
     public function save(?string $target = null, int $quality = 90): bool
     {
-        echo "\n\nstart of save() with target: " . $target . " and quality: " . $quality . "\n";
         $original = $target;
         $target   = ($target === null || $target === '') ? $this->image()->getPathname() : $target;
-        echo "target is now: " . $target . "\n";
+
         // If no new resource has been created, then we're
         // simply copy the existing one.
         if (! $this->resource instanceof Imagick && $quality === 100) {
-            echo "instance not Imagick, quality: " . $quality . "\n";
             if ($original === null) {
-                echo "original is null, return true\n";
                 return true;
             }
 
             $name = basename($target);
             $path = pathinfo($target, PATHINFO_DIRNAME);
-            echo "return result from image()->copy()\nend of save()\n";
+
             return $this->image()->copy($path, $name);
         }
-        echo "ensureResource() call\n";
+
         $this->ensureResource();
-        echo "setImageCompressionQuality() call\n";
+
         $this->resource->setImageCompressionQuality($quality);
-        echo "if target is not null\n";
-        var_dump($target);
+
         if ($target !== null) {
-            echo "target is not null\n";
             $extension = pathinfo($target, PATHINFO_EXTENSION);
-            echo "setImageFormat() call\n";
-            var_dump($extension);
             $this->resource->setImageFormat($extension);
         }
-        echo "try...\n";
+
         try {
-            echo "writeImage() call\n";
             $result = $this->resource->writeImage($target);
-            echo "result: \n";
-            var_dump($result);
 
             chmod($target, $this->filePermissions);
 
             $this->resource->clear();
             $this->resource = null;
-            echo "return result\nend of save()\n";
+
             return $result;
         } catch (ImagickException) {
-            echo "EXCEPTION\n";
             throw ImageException::forSaveFailed();
         }
-        echo "last end of save()\n";
     }
 
     /**

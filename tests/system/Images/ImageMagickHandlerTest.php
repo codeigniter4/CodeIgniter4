@@ -436,21 +436,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
     {
         $this->handler->withFile($this->origin . 'ci-logo.png');
         $this->handler->convert(IMAGETYPE_AVIF);
-        $rc = $this->handler->save($this->root . 'ci-logo.avif');
-
-        echo "\n\n";
-        var_dump($rc);
-        var_dump($this->root);
-        var_dump($this->root . 'ci-logo.avif');
-        if (is_file($this->root . 'ci-logo.avif')) {
-            echo "filesize: " . filesize($this->root . 'ci-logo.avif') . "\n";
-        } else {
-            echo "is_file fail\n";
-        }
-        var_dump(exif_imagetype($this->root . 'ci-logo.avif'));
-        var_dump( IMAGETYPE_AVIF );
-        echo "\n\n";
-
+        $this->handler->save($this->root . 'ci-logo.avif');
         $this->assertSame(IMAGETYPE_AVIF, exif_imagetype($this->root . 'ci-logo.avif'));
     }
 
