@@ -334,7 +334,9 @@ class Logger implements LoggerInterface
 
     /**
      * Normalizes context values for structured logging.
-     * Converts any Throwable instances into an array representation.
+     * Per PSR-3, if an Exception is given to produce a stack trace, it MUST be
+     * in a key named "exception". Only that key is converted into an array
+     * representation.
      *
      * @param array<string, mixed> $context
      *
@@ -342,22 +344,22 @@ class Logger implements LoggerInterface
      */
     protected function normalizeContext(array $context): array
     {
-        foreach ($context as $key => $value) {
-            if ($value instanceof Throwable) {
-                $normalized = [
-                    'class'   => $value::class,
-                    'message' => $value->getMessage(),
-                    'code'    => $value->getCode(),
-                    'file'    => clean_path($value->getFile()),
-                    'line'    => $value->getLine(),
-                ];
+        if (isset($context['exception']) && $context['exception'] instanceof Throwable) {
+            $value = $context['exception'];
 
-                if ($this->logContextTrace) {
-                    $normalized['trace'] = $value->getTraceAsString();
-                }
+            $normalized = [
+                'class'   => $value::class,
+                'message' => $value->getMessage(),
+                'code'    => $value->getCode(),
+                'file'    => clean_path($value->getFile()),
+                'line'    => $value->getLine(),
+            ];
 
-                $context[$key] = $normalized;
+            if ($this->logContextTrace) {
+                $normalized['trace'] = $value->getTraceAsString();
             }
+
+            $context['exception'] = $normalized;
         }
 
         return $context;

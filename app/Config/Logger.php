@@ -73,8 +73,8 @@ class Logger extends BaseConfig
      * --------------------------------------------------------------------------
      *
      * When enabled, context keys not used as placeholders in the message are
-     * passed to handlers as structured data. Any Throwable instances found in
-     * the context are automatically normalized to an array representation.
+     * passed to handlers as structured data. Per PSR-3, any ``Throwable`` instance
+     * in the ``exception`` key is automatically normalized to an array representation.
      */
     public bool $logContext = false;
 
@@ -83,8 +83,8 @@ class Logger extends BaseConfig
      * Whether to include the stack trace for Throwables in context
      * --------------------------------------------------------------------------
      *
-     * When enabled, the stack trace is included when a Throwable is found in
-     * the context and normalized. Only relevant when $logContext is true.
+     * When enabled, the stack trace is included when normalizing a Throwable
+     * in the ``exception`` context key. Only relevant when $logContext is true.
      */
     public bool $logContextTrace = false;
 

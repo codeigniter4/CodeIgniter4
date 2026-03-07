@@ -169,8 +169,9 @@ text), but you can keep them by setting ``$logContextUsedKeys = true``.
 
 **Throwable normalization**
 
-Any ``Throwable`` instance (exception or error) found in the context is automatically
-normalized into a meaningful array instead of being serialized as an empty object:
+Per PSR-3, a ``Throwable`` instance must be passed under the ``exception`` key to be
+handled specially. When found there, it is automatically normalized into a meaningful
+array instead of being serialized as an empty object:
 
 .. literalinclude:: logging/008.php
 

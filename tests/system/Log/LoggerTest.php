@@ -590,6 +590,25 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertArrayNotHasKey('trace', $normalized);
     }
 
+    public function testLogContextDoesNotNormalizeThrowableUnderArbitraryKey(): void
+    {
+        $config             = new LoggerConfig();
+        $config->logContext = true;
+
+        $logger = new Logger($config);
+
+        try {
+            throw new RuntimeException('Something went wrong');
+        } catch (RuntimeException $e) {
+            $logger->log('error', 'An error occurred', ['error' => $e]);
+        }
+
+        $contexts = TestHandler::getContexts();
+
+        // Per PSR-3, only the 'exception' key is normalized; other keys are left as-is.
+        $this->assertInstanceOf(RuntimeException::class, $contexts[0]['error']);
+    }
+
     public function testLogContextNormalizesThrowableWithTrace(): void
     {
         $config                  = new LoggerConfig();
