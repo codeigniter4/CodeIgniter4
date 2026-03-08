@@ -175,6 +175,7 @@ Libraries
 =========
 
 - **Context**: This new feature allows you to easily set and retrieve normal or hidden contextual data for the current request. See :ref:`Context <context>` for details.
+- **Images:**: Added support for the AVIF file format.
 - **Logging:** Log handlers now receive the full context array as a third argument to ``handle()``. When ``$logGlobalContext`` is enabled, the CI global context is available under the ``HandlerInterface::GLOBAL_CONTEXT_KEY`` key. Built-in handlers append it to the log output; custom handlers can use it for structured logging.
 - **Logging:** Added :ref:`per-call context logging <logging-per-call-context>` with three new ``Config\Logger`` options (``$logContext``, ``$logContextTrace``, ``$logContextUsedKeys``). Per PSR-3, a ``Throwable`` in the ``exception`` context key is automatically normalized to a meaningful array. All options default to ``false``.
 
