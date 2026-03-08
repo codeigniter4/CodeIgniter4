@@ -168,7 +168,16 @@ jobs:
         if: ${{ contains(inputs.extra-extensions, 'imagick') }}
         run: |
           sudo apt-get update
-          sudo apt-get install -y imagemagick libmagickwand-dev ghostscript poppler-data libjbig2dec0:amd64 libopenjp2-7:amd64
+          sudo apt-get install -y ghostscript poppler-data libmagickwand-dev
+
+          # Install ImageMagick 7 with AVIF rw+ support (vintagesucks/imagemagick-deb)
+          RELEASE_JSON=$(curl -fsSL https://api.github.com/repos/vintagesucks/imagemagick-deb/releases/latest)
+          mkdir -p /tmp/imagemagick-debs
+          while IFS= read -r url; do
+            curl -fsSL "$url" -o "/tmp/imagemagick-debs/$(basename "$url")"
+          done < <(echo "$RELEASE_JSON" | jq -r '.assets[] | select(.name | contains("noble_amd64")) | .browser_download_url')
+          sudo dpkg -i /tmp/imagemagick-debs/*.deb || true
+          sudo apt-get install -f -y
 
       - name: Checkout base branch for PR
         if: github.event_name == 'pull_request'
