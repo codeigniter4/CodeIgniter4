@@ -8,7 +8,6 @@
 .gitignore     export-ignore
 
 # admin files
-.ai/               export-ignore
 .github/           export-ignore
 admin/             export-ignore
 contributing/      export-ignore
