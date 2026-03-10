@@ -291,7 +291,7 @@ final class SaveModelTest extends LiveModelTestCase
             protected $returnType     = 'object';
             protected $useSoftDeletes = true;
             protected $dateFormat     = 'date';
-            public $name              = '';
+            public string $name       = '';
         };
 
         $entity->name       = 'Mark';
