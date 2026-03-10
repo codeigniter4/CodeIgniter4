@@ -291,7 +291,6 @@ final class SaveModelTest extends LiveModelTestCase
             protected $returnType     = 'object';
             protected $useSoftDeletes = true;
             protected $dateFormat     = 'date';
-            public string $name       = '';
         };
 
         $entity->name       = 'Mark';
@@ -370,7 +369,6 @@ final class SaveModelTest extends LiveModelTestCase
     public function testSaveNewEntityWithMappedPrimaryKey(): void
     {
         $entity = new class () extends Entity {
-            protected string $name;
             protected $attributes = [
                 'id'   => null,
                 'name' => null,
