@@ -33,7 +33,7 @@ Then, in **app/Config/Routing.php**, confirm auto-routing is **enabled**:
 
     public bool $autoRoute = true;
 
-That's all you need for CodeIgniter to automatically map your controller classes and to URIs like ``GET /api/pings`` or ``POST /api/pings``.
+That's all you need for CodeIgniter to automatically map your controller classes and to URIs like ``GET /api/ping`` or ``POST /api/ping``.
 
 Create a Ping Controller
 ========================
@@ -53,7 +53,7 @@ Edit the file so it looks like this:
 Here we:
 
 - Use the :php:class:`ResponseTrait`, which already includes REST helpers such as :php:meth:`respond()` and proper status codes.
-- Define a ``getIndex()`` method. The ``get`` prefix means it responds to ``GET`` requests, and the ``Index`` name means it matches the base URI (``/api/pings``).
+- Define a ``getIndex()`` method. The ``get`` prefix means it responds to ``GET`` requests, and the ``Index`` name means it matches the base URI (``/api/ping``).
 
 Test the route
 ==============
@@ -66,8 +66,8 @@ Start the development server if it isn't running:
 
 Now visit:
 
-- **Browser:** ``http://localhost:8080/api/pings``
-- **cURL:** ``curl http://localhost:8080/api/pings``
+- **Browser:** ``http://localhost:8080/api/ping``
+- **cURL:** ``curl http://localhost:8080/api/ping``
 
 Expected response:
 
@@ -82,9 +82,9 @@ Congratulations — that's your first working JSON endpoint!
 Understand how it works
 =======================
 
-When you request ``/api/pings``:
+When you request ``/api/ping``:
 
-1. The **Improved Auto Router** finds the ``App\Controllers\Api\Pings`` class.
+1. The **Improved Auto Router** finds the ``App\Controllers\Api\Ping`` class.
 2. It detects the HTTP verb (``GET``).
 3. It calls the corresponding method name: ``getIndex()``.
 4. :php:trait:`ResponseTrait` provides helper methods to produce consistent output.
@@ -94,9 +94,9 @@ Here's how other verbs would map if you added them later:
 +-----------------------+--------------------------------+
 | HTTP Verb             | Method Name                    |
 +=======================+================================+
-| ``GET /api/pings``    | ``getIndex()``                 |
-| ``POST /api/pings``   | ``postIndex()``                |
-| ``DELETE /api/pings`` | ``deleteIndex()``              |
+| ``GET /api/ping``    | ``getIndex()``                 |
+| ``POST /api/ping``   | ``postIndex()``                |
+| ``DELETE /api/ping`` | ``deleteIndex()``              |
 +-----------------------+--------------------------------+
 
 Content Negotiation with the Format Class
