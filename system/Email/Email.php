@@ -1708,7 +1708,7 @@ class Email
             $success = $this->{$method}();
         } catch (ErrorException $e) {
             $success = false;
-            log_message('error', 'Email: ' . $method . ' throwed ' . $e);
+            log_message('error', 'Email: ' . $method . ' threw ' . $e);
         }
 
         if (! $success) {
@@ -2265,7 +2265,7 @@ class Email
             } catch (ErrorException $e) {
                 $protocol = $this->getProtocol();
                 $method   = 'sendWith' . ucfirst($protocol);
-                log_message('error', 'Email: ' . $method . ' throwed ' . $e);
+                log_message('error', 'Email: ' . $method . ' threw ' . $e);
             }
         }
     }
