@@ -189,7 +189,7 @@ final class BaseConnectionTest extends CIUnitTestCase
 
     public function testCachesTypedPropertiesIncrementally(): void
     {
-        $factory = fn (array $options) => new class ($options) extends MockConnection {
+        $factory = static fn (array $options): MockConnection => new class ($options) extends MockConnection {
             protected ?int $synchronous = null;
             protected ?int $busyTimeout = null;
 
@@ -204,7 +204,7 @@ final class BaseConnectionTest extends CIUnitTestCase
             }
         };
 
-        $first = $factory([...$this->options, 'synchronous' => '1']);
+        $first  = $factory([...$this->options, 'synchronous' => '1']);
         $second = $factory([...$this->options, 'busyTimeout' => '4000']);
 
         $this->assertSame(1, $first->getSynchronous());
