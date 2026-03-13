@@ -187,6 +187,30 @@ final class BaseConnectionTest extends CIUnitTestCase
         $this->assertTrue($db->getWithTrue());
     }
 
+    public function testCachesTypedPropertiesIncrementally(): void
+    {
+        $factory = fn (array $options) => new class ($options) extends MockConnection {
+            protected ?int $synchronous = null;
+            protected ?int $busyTimeout = null;
+
+            public function getSynchronous(): ?int
+            {
+                return $this->synchronous;
+            }
+
+            public function getBusyTimeout(): ?int
+            {
+                return $this->busyTimeout;
+            }
+        };
+
+        $first = $factory([...$this->options, 'synchronous' => '1']);
+        $second = $factory([...$this->options, 'busyTimeout' => '4000']);
+
+        $this->assertSame(1, $first->getSynchronous());
+        $this->assertSame(4000, $second->getBusyTimeout());
+    }
+
     public function testInvalidStringValueForTypedPropertyThrowsTypeError(): void
     {
         $this->expectException(TypeError::class);

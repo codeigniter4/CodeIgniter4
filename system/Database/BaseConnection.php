@@ -468,17 +468,29 @@ abstract class BaseConnection implements ConnectionInterface
     private function getBuiltinPropertyTypesMap(array $properties): array
     {
         $className = static::class;
+        $requested = array_fill_keys($properties, true);
 
         if (! isset(self::$propertyBuiltinTypesCache[$className])) {
             self::$propertyBuiltinTypesCache[$className] = [];
+        }
 
+        // Fill only the properties requested by this call that are not cached yet.
+        $missing = array_diff_key($requested, self::$propertyBuiltinTypesCache[$className]);
+
+        if ($missing !== []) {
             $reflection = new ReflectionClass($className);
 
             foreach ($reflection->getProperties() as $property) {
+                $propertyName = $property->getName();
+
+                if (! isset($missing[$propertyName])) {
+                    continue;
+                }
+
                 $type = $property->getType();
 
                 if (! $type instanceof ReflectionType) {
-                    self::$propertyBuiltinTypesCache[$className][$property->getName()] = [];
+                    self::$propertyBuiltinTypesCache[$className][$propertyName] = [];
 
                     continue;
                 }
@@ -498,7 +510,12 @@ abstract class BaseConnection implements ConnectionInterface
                     $builtinTypes[] = 'null';
                 }
 
-                self::$propertyBuiltinTypesCache[$className][$property->getName()] = $builtinTypes;
+                self::$propertyBuiltinTypesCache[$className][$propertyName] = $builtinTypes;
+            }
+
+            // Untyped or unresolved properties are cached as empty to avoid re-reflecting them.
+            foreach (array_keys($missing) as $propertyName) {
+                self::$propertyBuiltinTypesCache[$className][$propertyName] ??= [];
             }
         }
 
