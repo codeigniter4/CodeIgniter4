@@ -22,7 +22,7 @@ jobs:
       # Allow ad-m/github-push-action to push commit to branch gh-pages
       contents: write
     if: (github.repository == 'codeigniter4/CodeIgniter4')
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v6

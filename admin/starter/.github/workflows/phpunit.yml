@@ -13,7 +13,7 @@ jobs:
       matrix:
         php-versions: ['8.2', '8.5']
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: (! contains(github.event.pull_request.title, '[ci skip]'))
 
     steps:

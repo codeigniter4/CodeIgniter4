@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   main:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Close PR with nice message
         run: gh pr close ${{ env.ISSUE }} -c "${{ env.COMMENT }}"

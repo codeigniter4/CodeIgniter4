@@ -14,7 +14,7 @@ permissions:
 jobs:
   permission-check:
     name: Check File Permission
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout
