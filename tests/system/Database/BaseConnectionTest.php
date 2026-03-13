@@ -98,19 +98,20 @@ final class BaseConnectionTest extends CIUnitTestCase
 
     public function testCastsStringConfigValuesToTypedProperties(): void
     {
-        $db = new class ([
-            ...$this->options,
-            'synchronous' => '1',
-            'typedBool'   => '0',
-            'nullInt'     => 'null',
-        ]) extends MockConnection {
+        $db = new class ([...$this->options, 'synchronous' => '1', 'busyTimeout' => '4000', 'typedBool' => '0', 'nullInt' => 'null']) extends MockConnection {
             protected ?int $synchronous = null;
-            protected bool $typedBool = true;
-            protected ?int $nullInt = 1;
+            protected ?int $busyTimeout = null;
+            protected bool $typedBool   = true;
+            protected ?int $nullInt     = 1;
 
             public function getSynchronous(): ?int
             {
                 return $this->synchronous;
+            }
+
+            public function getBusyTimeout(): ?int
+            {
+                return $this->busyTimeout;
             }
 
             public function isTypedBool(): bool
@@ -125,28 +126,38 @@ final class BaseConnectionTest extends CIUnitTestCase
         };
 
         $this->assertSame(1, $db->getSynchronous());
+        $this->assertSame(4000, $db->getBusyTimeout());
         $this->assertFalse($db->isTypedBool());
         $this->assertNull($db->getNullInt());
     }
 
     public function testCastsExtendedBoolStringsToBool(): void
     {
-        $db = new class ([
-            ...$this->options,
-            'enabledYes' => 'yes',
-            'enabledOn'  => 'on',
-            'disabledNo' => 'no',
-            'disabledOff' => 'off',
-        ]) extends MockConnection {
+        $db = new class ([...$this->options, 'enabledYes' => 'yes', 'enabledOn' => 'on', 'disabledNo' => 'no', 'disabledOff' => 'off']) extends MockConnection {
             protected bool $enabledYes  = false;
             protected bool $enabledOn   = false;
             protected bool $disabledNo  = true;
             protected bool $disabledOff = true;
 
-            public function isEnabledYes(): bool { return $this->enabledYes; }
-            public function isEnabledOn(): bool { return $this->enabledOn; }
-            public function isDisabledNo(): bool { return $this->disabledNo; }
-            public function isDisabledOff(): bool { return $this->disabledOff; }
+            public function isEnabledYes(): bool
+            {
+                return $this->enabledYes;
+            }
+
+            public function isEnabledOn(): bool
+            {
+                return $this->enabledOn;
+            }
+
+            public function isDisabledNo(): bool
+            {
+                return $this->disabledNo;
+            }
+
+            public function isDisabledOff(): bool
+            {
+                return $this->disabledOff;
+            }
         };
 
         $this->assertTrue($db->isEnabledYes());
@@ -157,16 +168,19 @@ final class BaseConnectionTest extends CIUnitTestCase
 
     public function testCastsFalseAndTrueStandaloneUnionTypes(): void
     {
-        $db = new class ([
-            ...$this->options,
-            'withFalse' => 'false',
-            'withTrue'  => 'true',
-        ]) extends MockConnection {
-            protected int|false $withFalse = 0;
+        $db = new class ([...$this->options, 'withFalse' => 'false', 'withTrue' => 'true']) extends MockConnection {
+            protected false|int $withFalse = 0;
             protected int|true $withTrue   = 0;
 
-            public function getWithFalse(): int|false { return $this->withFalse; }
-            public function getWithTrue(): int|true { return $this->withTrue; }
+            public function getWithFalse(): false|int
+            {
+                return $this->withFalse;
+            }
+
+            public function getWithTrue(): int|true
+            {
+                return $this->withTrue;
+            }
         };
 
         $this->assertFalse($db->getWithFalse());
@@ -177,10 +191,7 @@ final class BaseConnectionTest extends CIUnitTestCase
     {
         $this->expectException(TypeError::class);
 
-        new class ([
-            ...$this->options,
-            'synchronous' => 'not-an-int',
-        ]) extends MockConnection {
+        new class ([...$this->options, 'synchronous' => 'not-an-int']) extends MockConnection {
             protected ?int $synchronous = null;
         };
     }

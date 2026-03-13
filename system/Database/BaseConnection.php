@@ -16,8 +16,8 @@ namespace CodeIgniter\Database;
 use Closure;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Events\Events;
+use ReflectionClass;
 use ReflectionNamedType;
-use ReflectionProperty;
 use ReflectionType;
 use ReflectionUnionType;
 use stdClass;
@@ -383,9 +383,14 @@ abstract class BaseConnection implements ConnectionInterface
             unset($params['dateFormat']);
         }
 
+        $typedPropertyTypes = $this->getBuiltinPropertyTypesMap(array_keys($params));
+
         foreach ($params as $key => $value) {
             if (property_exists($this, $key)) {
-                $this->{$key} = $this->castScalarValueForTypedProperty($key, $value);
+                $this->{$key} = $this->castScalarValueForTypedProperty(
+                    $value,
+                    $typedPropertyTypes[$key] ?? [],
+                );
             }
         }
 
@@ -407,14 +412,14 @@ abstract class BaseConnection implements ConnectionInterface
      * Some config values (especially env overrides without clear source type)
      * can still reach us as strings. Coerce them for typed properties to keep
      * strict typing compatible.
+     *
+     * @param list<string> $types
      */
-    private function castScalarValueForTypedProperty(string $property, mixed $value): mixed
+    private function castScalarValueForTypedProperty(mixed $value, array $types): mixed
     {
         if (! is_string($value)) {
             return $value;
         }
-
-        $types = $this->getBuiltinPropertyTypes($property);
 
         if ($types === [] || in_array('string', $types, true) || in_array('mixed', $types, true)) {
             return $value;
@@ -456,39 +461,54 @@ abstract class BaseConnection implements ConnectionInterface
     }
 
     /**
-     * @return list<string>
+     * @param list<string> $properties
+     *
+     * @return array<string, list<string>>
      */
-    private function getBuiltinPropertyTypes(string $property): array
+    private function getBuiltinPropertyTypesMap(array $properties): array
     {
         $className = static::class;
 
-        if (isset(self::$propertyBuiltinTypesCache[$className][$property])) {
-            return self::$propertyBuiltinTypesCache[$className][$property];
-        }
+        if (! isset(self::$propertyBuiltinTypesCache[$className])) {
+            self::$propertyBuiltinTypesCache[$className] = [];
 
-        $type = (new ReflectionProperty($className, $property))->getType();
+            $reflection = new ReflectionClass($className);
 
-        if (! $type instanceof ReflectionType) {
-            return self::$propertyBuiltinTypesCache[$className][$property] = [];
-        }
+            foreach ($reflection->getProperties() as $property) {
+                $type = $property->getType();
 
-        $types = $type instanceof ReflectionUnionType ? $type->getTypes() : [$type];
+                if (! $type instanceof ReflectionType) {
+                    self::$propertyBuiltinTypesCache[$className][$property->getName()] = [];
 
-        $builtinTypes = [];
+                    continue;
+                }
 
-        foreach ($types as $namedType) {
-            if (! $namedType instanceof ReflectionNamedType || ! $namedType->isBuiltin()) {
-                continue;
+                $namedTypes   = $type instanceof ReflectionUnionType ? $type->getTypes() : [$type];
+                $builtinTypes = [];
+
+                foreach ($namedTypes as $namedType) {
+                    if (! $namedType instanceof ReflectionNamedType || ! $namedType->isBuiltin()) {
+                        continue;
+                    }
+
+                    $builtinTypes[] = $namedType->getName();
+                }
+
+                if ($type->allowsNull() && ! in_array('null', $builtinTypes, true)) {
+                    $builtinTypes[] = 'null';
+                }
+
+                self::$propertyBuiltinTypesCache[$className][$property->getName()] = $builtinTypes;
             }
-
-            $builtinTypes[] = $namedType->getName();
         }
 
-        if ($type->allowsNull() && ! in_array('null', $builtinTypes, true)) {
-            $builtinTypes[] = 'null';
+        $typedProperties = [];
+
+        foreach ($properties as $property) {
+            $typedProperties[$property] = self::$propertyBuiltinTypesCache[$className][$property] ?? [];
         }
 
-        return self::$propertyBuiltinTypesCache[$className][$property] = $builtinTypes;
+        return $typedProperties;
     }
 
     /**
@@ -532,10 +552,15 @@ abstract class BaseConnection implements ConnectionInterface
             if (! empty($this->failover) && is_array($this->failover)) {
                 // Go over all the failovers
                 foreach ($this->failover as $index => $failover) {
+                    $typedPropertyTypes = $this->getBuiltinPropertyTypesMap(array_keys($failover));
+
                     // Replace the current settings with those of the failover
                     foreach ($failover as $key => $val) {
                         if (property_exists($this, $key)) {
-                            $this->{$key} = $this->castScalarValueForTypedProperty($key, $val);
+                            $this->{$key} = $this->castScalarValueForTypedProperty(
+                                $val,
+                                $typedPropertyTypes[$key] ?? [],
+                            );
                         }
                     }
 

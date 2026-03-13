@@ -55,7 +55,7 @@ class Connection extends BaseConnection
      *
      * @see https://www.php.net/manual/en/sqlite3.busytimeout
      */
-    protected $busyTimeout;
+    protected ?int $busyTimeout = null;
 
     /**
      * The setting of the "synchronous" flag
