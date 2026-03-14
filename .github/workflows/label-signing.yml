@@ -19,10 +19,10 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Check signed commits in PR
-        uses: 1Password/check-signed-commits-action@v1
+        uses: 1Password/check-signed-commits-action@ed2885f3ed2577a4f5d3c3fe895432a557d23d52 # v1.2.0
         with:
           comment: |
             You must GPG-sign your work, certifying that you either wrote the work or otherwise have the right to pass it on to an open-source project. See Developer's Certificate of Origin. See [signing][1].

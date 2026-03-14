@@ -27,7 +27,9 @@ permissions:
 
 jobs:
   phpcpd:
-    uses: codeigniter4/.github/.github/workflows/phpcpd.yml@main
+    # Note: Reusable workflow SHA must be manually updated. Check for updates with:
+    # git ls-remote https://github.com/codeigniter4/.github main | head -1
+    uses: codeigniter4/.github/.github/workflows/phpcpd.yml@0ad5e1bc5620281e766d3267205dc4c22f4ac0ee # main
     with:
       dirs: "app/ public/ system/"
       options: >-
