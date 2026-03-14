@@ -20,6 +20,7 @@ use CodeIgniter\HTTP\Exceptions\BadRequestException;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Method;
+use CodeIgniter\Router\Attributes\Filter;
 use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
@@ -29,6 +30,7 @@ use Config\Routing;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Filters\Customfilter;
+use Tests\Support\Router\Controllers\InvalidAttributeController;
 
 /**
  * @internal
@@ -1002,5 +1004,28 @@ final class RouterTest extends CIUnitTestCase
         $this->assertSame('\Catalog', $router->controllerName());
         $this->assertSame('productLookup', $router->methodName());
         $this->assertSame(['123/456'], $router->params());
+    }
+
+    public function testLogsRouteAttributeInstantiationFailureWithContext(): void
+    {
+        $collection = clone $this->collection;
+        $collection->resetRoutes();
+        $collection->get(
+            'invalid-attribute',
+            'Tests\Support\Router\Controllers\InvalidAttributeController::invalidMultipleFilters',
+        );
+
+        $router = new Router($collection, $this->request);
+
+        $router->handle('invalid-attribute');
+
+        $this->assertSame(
+            '\\' . InvalidAttributeController::class,
+            $router->controllerName(),
+        );
+        $this->assertSame('invalidMultipleFilters', $router->methodName());
+        $this->assertSame([], $router->getFilters());
+        $this->assertLogContains('error', 'Failed to instantiate route attribute "' . Filter::class . '" on "\Tests\Support\Router\Controllers\InvalidAttributeController::invalidMultipleFilters()":');
+        $this->assertLogContains('error', 'must be of type string');
     }
 }

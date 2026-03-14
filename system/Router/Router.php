@@ -803,8 +803,8 @@ class Router implements RouterInterface
                 if ($instance instanceof RouteAttributeInterface) {
                     $this->routeAttributes['class'][] = $instance;
                 }
-            } catch (Throwable) {
-                log_message('error', 'Failed to instantiate attribute: ' . $attribute->getName());
+            } catch (Throwable $e) {
+                $this->logRouteAttributeInstantiationFailure($attribute->getName(), $this->controller, null, $e);
             }
         }
 
@@ -823,12 +823,41 @@ class Router implements RouterInterface
                     if ($instance instanceof RouteAttributeInterface) {
                         $this->routeAttributes['method'][] = $instance;
                     }
-                } catch (Throwable) {
-                    // Skip attributes that fail to instantiate
-                    log_message('error', 'Failed to instantiate attribute: ' . $attribute->getName());
+                } catch (Throwable $e) {
+                    $this->logRouteAttributeInstantiationFailure($attribute->getName(), $this->controller, $this->method, $e);
                 }
             }
         }
+    }
+
+    /**
+     * Logs an attribute instantiation failure with the resolved route context.
+     *
+     * @param string      $attributeName Fully qualified attribute class name.
+     * @param string      $controller    Resolved controller class name.
+     * @param string|null $method        Resolved controller method name, if applicable.
+     */
+    private function logRouteAttributeInstantiationFailure(
+        string $attributeName,
+        string $controller,
+        ?string $method,
+        Throwable $e,
+    ): void {
+        $location = $controller;
+
+        if ($method !== null && $method !== '') {
+            $location .= '::' . $method . '()';
+        }
+
+        log_message(
+            'error',
+            'Failed to instantiate route attribute "{attribute}" on "{location}": {message}',
+            [
+                'attribute' => $attributeName,
+                'location'  => $location,
+                'message'   => $e->getMessage(),
+            ],
+        );
     }
 
     /**

@@ -18,8 +18,9 @@ class HomeController extends BaseController
     {
     }
 
-    // Multiple filters can be applied
-    #[Filter(by: ['auth', 'csrf'])]
+    // Multiple filters can be applied by repeating the attribute
+    #[Filter(by: 'auth')]
+    #[Filter(by: 'csrf')]
     public function admin()
     {
     }
