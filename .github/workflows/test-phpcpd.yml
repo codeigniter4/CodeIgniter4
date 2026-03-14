@@ -22,6 +22,9 @@ on:
       - 'system/**.php'
       - '.github/workflows/test-phpcpd.yml'
 
+permissions:
+  contents: read
+
 jobs:
   phpcpd:
     uses: codeigniter4/.github/.github/workflows/phpcpd.yml@main

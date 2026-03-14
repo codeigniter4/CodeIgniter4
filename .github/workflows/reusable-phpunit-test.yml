@@ -56,6 +56,9 @@ on:
         type: string
         required: false
 
+permissions:
+  contents: read
+
 env:
   NLS_LANG: 'AMERICAN_AMERICA.UTF8'
   NLS_DATE_FORMAT: 'YYYY-MM-DD HH24:MI:SS'

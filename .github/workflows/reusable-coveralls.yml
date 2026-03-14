@@ -8,6 +8,9 @@ on:
         type: string
         required: true
 
+permissions:
+  contents: read
+
 jobs:
   coveralls:
     runs-on: ubuntu-24.04

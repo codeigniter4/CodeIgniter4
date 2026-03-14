@@ -50,6 +50,9 @@ on:
         type: string
         required: false
 
+permissions:
+  contents: read
+
 jobs:
   tests:
     name: ${{ inputs.job-name }}

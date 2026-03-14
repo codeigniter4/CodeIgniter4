@@ -20,6 +20,9 @@ on:
       - 'psalm*'
       - '.github/workflows/test-psalm.yml'
 
+permissions:
+  contents: read
+
 jobs:
   build:
     name: Psalm Analysis
