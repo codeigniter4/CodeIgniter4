@@ -6,13 +6,21 @@ updates:
     schedule:
       interval: 'daily'
     open-pull-requests-limit: 10
+    groups:
+      composer-dependencies:
+        patterns:
+          - '*'
 
   - package-ecosystem: 'github-actions'
-    directory: '/'
+    directories:
+      - '/'
+      - '/admin/framework'
+      - '/admin/starter'
+      - '/admin/userguide'
     schedule:
       interval: 'daily'
-    ignore:
-      - dependency-name: '*'
-        update-types:
-          - 'version-update:semver-minor'
-          - 'version-update:semver-patch'
+    groups:
+      github-actions:
+        patterns:
+          - '*'
+        group-by: dependency-name
