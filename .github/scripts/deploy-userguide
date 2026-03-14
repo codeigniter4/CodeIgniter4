@@ -58,4 +58,4 @@ touch ${TARGET}/docs/.nojekyll
 # Commit the changes
 git add .
 git commit -m "Release ${RELEASE}"
-git push
+bash ${SOURCE}/.github/scripts/secure-git-push https://github.com/codeigniter4/userguide.git HEAD:master

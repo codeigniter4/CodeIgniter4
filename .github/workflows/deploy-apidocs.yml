@@ -68,9 +68,11 @@ jobs:
 
       - name: Deploy to API repo
         working-directory: api
+        env:
+          PUSH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         run: |
           git add .
           if ! git diff-index --quiet HEAD; then
             git commit -m "Updated API for commit ${GITHUB_SHA}"
-            git push origin master
+            bash ${GITHUB_WORKSPACE}/.github/scripts/secure-git-push https://github.com/codeigniter4/api.git HEAD:master
           fi

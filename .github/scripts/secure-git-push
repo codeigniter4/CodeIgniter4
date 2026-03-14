@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [[ $# -ne 2 ]]; then
+    echo "Usage: secure-git-push <remote-url> <refspec>" >&2
+    exit 1
+fi
+
+if [[ -z "${PUSH_TOKEN:-}" ]]; then
+    echo "PUSH_TOKEN is required" >&2
+    exit 1
+fi
+
+REMOTE_URL="$1"
+REFSPEC="$2"
+AUTH_HEADER="$(printf 'x-access-token:%s' "${PUSH_TOKEN}" | base64 | tr -d '\n')"
+
+echo "::add-mask::${AUTH_HEADER}"
+git -c http.https://github.com/.extraheader="AUTHORIZATION: basic ${AUTH_HEADER}" push "${REMOTE_URL}" "${REFSPEC}"
+
+unset AUTH_HEADER PUSH_TOKEN

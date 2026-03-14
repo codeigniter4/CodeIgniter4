@@ -32,4 +32,4 @@ cp -Rf ${SOURCE}/admin/starter/. ./
 # Commit the changes
 git add .
 git commit -m "Release ${RELEASE}"
-git push
+bash ${SOURCE}/.github/scripts/secure-git-push https://github.com/codeigniter4/appstarter.git HEAD:master

@@ -34,4 +34,4 @@ cp -Rf ${SOURCE}/admin/starter/tests/. ./tests/
 # Commit the changes
 git add .
 git commit -m "Release ${RELEASE}"
-git push
+bash ${SOURCE}/.github/scripts/secure-git-push https://github.com/codeigniter4/framework.git HEAD:master

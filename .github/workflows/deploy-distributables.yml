@@ -67,6 +67,8 @@ jobs:
         run: chmod +x ./source/.github/scripts/deploy-framework
 
       - name: Deploy
+        env:
+          PUSH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         run: ./source/.github/scripts/deploy-framework ${GITHUB_WORKSPACE}/source ${GITHUB_WORKSPACE}/framework ${GITHUB_REF##*/}
 
       - name: Release
@@ -119,6 +121,8 @@ jobs:
         run: chmod +x ./source/.github/scripts/deploy-appstarter
 
       - name: Deploy
+        env:
+          PUSH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         run: ./source/.github/scripts/deploy-appstarter ${GITHUB_WORKSPACE}/source ${GITHUB_WORKSPACE}/appstarter ${GITHUB_REF##*/}
 
       - name: Release
@@ -181,6 +185,8 @@ jobs:
         run: chmod +x ./source/.github/scripts/deploy-userguide
 
       - name: Deploy
+        env:
+          PUSH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         run: ./source/.github/scripts/deploy-userguide ${GITHUB_WORKSPACE}/source ${GITHUB_WORKSPACE}/userguide ${GITHUB_REF##*/}
 
       - name: Release
