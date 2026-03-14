@@ -19,6 +19,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           fetch-depth: 0 # fetch all tags
+          persist-credentials: false
 
       - name: Get latest version
         id: version
@@ -52,6 +53,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           path: source
+          persist-credentials: false
 
       - name: Checkout target
         uses: actions/checkout@v6
@@ -59,6 +61,7 @@ jobs:
           repository: codeigniter4/framework
           token: ${{ secrets.ACCESS_TOKEN }}
           path: framework
+          persist-credentials: false
 
       - name: Chmod
         run: chmod +x ./source/.github/scripts/deploy-framework
@@ -102,6 +105,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           path: source
+          persist-credentials: false
 
       - name: Checkout target
         uses: actions/checkout@v6
@@ -109,6 +113,7 @@ jobs:
           repository: codeigniter4/appstarter
           token: ${{ secrets.ACCESS_TOKEN }}
           path: appstarter
+          persist-credentials: false
 
       - name: Chmod
         run: chmod +x ./source/.github/scripts/deploy-appstarter
@@ -152,6 +157,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           path: source
+          persist-credentials: false
 
       - name: Checkout target
         uses: actions/checkout@v6
@@ -159,6 +165,7 @@ jobs:
           repository: codeigniter4/userguide
           token: ${{ secrets.ACCESS_TOKEN }}
           path: userguide
+          persist-credentials: false
 
       - name: Setup Python
         uses: actions/setup-python@v6
