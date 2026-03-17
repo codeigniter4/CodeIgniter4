@@ -94,9 +94,9 @@ Here's how other verbs would map if you added them later:
 +-----------------------+--------------------------------+
 | HTTP Verb             | Method Name                    |
 +=======================+================================+
-| ``GET /api/ping``    | ``getIndex()``                 |
-| ``POST /api/ping``   | ``postIndex()``                |
-| ``DELETE /api/ping`` | ``deleteIndex()``              |
+| ``GET /api/ping``     | ``getIndex()``                 |
+| ``POST /api/ping``    | ``postIndex()``                |
+| ``DELETE /api/ping``  | ``deleteIndex()``              |
 +-----------------------+--------------------------------+
 
 Content Negotiation with the Format Class
