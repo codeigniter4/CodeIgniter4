@@ -504,14 +504,14 @@ class CURLRequest extends OutgoingRequest
                     $this->response->setHeader($title, $value);
                 }
             } elseif (str_starts_with($header, 'HTTP')) {
-                preg_match('#^HTTP\/([12](?:\.[01])?) (\d+) (.+)#', $header, $matches);
+                preg_match('#^HTTP\/([12](?:\.[01])?) (\d+)(?: (.+))?#', $header, $matches);
 
                 if (isset($matches[1])) {
                     $this->response->setProtocolVersion($matches[1]);
                 }
 
                 if (isset($matches[2])) {
-                    $this->response->setStatusCode((int) $matches[2], $matches[3] ?? null);
+                    $this->response->setStatusCode((int) $matches[2], $matches[3] ?? '');
                 }
             }
         }

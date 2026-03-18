@@ -1041,6 +1041,23 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
         $this->assertSame(235, $response->getStatusCode());
     }
 
+    public function testResponseHeadersWithoutReasonPhrase(): void
+    {
+        // HTTP/2 does not include a reason phrase per RFC 7540.
+        // curl synthesizes the status line as "HTTP/2 200" with no trailing reason.
+        $request = $this->getRequest([
+            'baseURI' => 'http://www.foo.com/api/v1/',
+            'delay'   => 100,
+        ]);
+
+        $request->setOutput("HTTP/2 200\x0d\x0aContent-Type: text/html\x0d\x0a\x0d\x0aHi there");
+        $response = $request->get('bogus');
+
+        $this->assertSame('2.0', $response->getProtocolVersion());
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame('OK', $response->getReasonPhrase());
+    }
+
     public function testPostFormEncoded(): void
     {
         $params = [

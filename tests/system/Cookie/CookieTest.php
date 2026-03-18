@@ -301,7 +301,7 @@ final class CookieTest extends CIUnitTestCase
         $this->assertSame($cookie['path'], $cookie->getPath());
 
         $this->expectException('InvalidArgumentException');
-        $cookie['expiry']; // @phpstan-ignore expr.resultUnused
+        $cookie['expiry'];
     }
 
     public function testCannotSetPropertyViaArrayAccess(): void
