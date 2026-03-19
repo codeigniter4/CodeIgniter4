@@ -87,7 +87,9 @@ Image Quality
 
 ``save()`` can take an additional parameter ``$quality`` to alter the resulting image
 quality. Values range from 0 to 100 with 90 being the framework default. This parameter
-only applies to JPEG and WebP images, will be ignored otherwise:
+only applies to JPEG, WebP and AVIF images, will be ignored otherwise:
+
+.. note:: For AVIF images, it is suggested to set the ``$quality`` parameter to 52. See also https://www.php.net/manual/en/function.imageavif.php
 
 .. note:: The parameter ``$quality`` for WebP can be used since v4.4.0.
 
