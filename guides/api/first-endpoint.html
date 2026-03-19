@@ -320,7 +320,7 @@
 <div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">public bool $autoRoute = true;</span>
 </pre></div>
 </div>
-<p>That’s all you need for CodeIgniter to automatically map your controller classes and to URIs like <code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/api/pings</span></code> or <code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/pings</span></code>.</p>
+<p>That’s all you need for CodeIgniter to automatically map your controller classes and to URIs like <code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/api/ping</span></code> or <code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/ping</span></code>.</p>
 </section>
 <section id="create-a-ping-controller">
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Create a Ping Controller</a><a class="headerlink" href="#create-a-ping-controller" title="Link to this heading"></a></h2>
@@ -352,7 +352,7 @@
 <p>Here we:</p>
 <ul class="simple">
 <li><p>Use the <code class="xref php php-class docutils literal notranslate"><span class="pre">ResponseTrait</span></code>, which already includes REST helpers such as <a class="reference internal" href="../../outgoing/api_responses.html#respond" title="respond"><code class="xref php php-meth docutils literal notranslate"><span class="pre">respond()</span></code></a> and proper status codes.</p></li>
-<li><p>Define a <code class="docutils literal notranslate"><span class="pre">getIndex()</span></code> method. The <code class="docutils literal notranslate"><span class="pre">get</span></code> prefix means it responds to <code class="docutils literal notranslate"><span class="pre">GET</span></code> requests, and the <code class="docutils literal notranslate"><span class="pre">Index</span></code> name means it matches the base URI (<code class="docutils literal notranslate"><span class="pre">/api/pings</span></code>).</p></li>
+<li><p>Define a <code class="docutils literal notranslate"><span class="pre">getIndex()</span></code> method. The <code class="docutils literal notranslate"><span class="pre">get</span></code> prefix means it responds to <code class="docutils literal notranslate"><span class="pre">GET</span></code> requests, and the <code class="docutils literal notranslate"><span class="pre">Index</span></code> name means it matches the base URI (<code class="docutils literal notranslate"><span class="pre">/api/ping</span></code>).</p></li>
 </ul>
 </section>
 <section id="test-the-route">
@@ -363,8 +363,8 @@
 </div>
 <p>Now visit:</p>
 <ul class="simple">
-<li><p><strong>Browser:</strong> <code class="docutils literal notranslate"><span class="pre">http://localhost:8080/api/pings</span></code></p></li>
-<li><p><strong>cURL:</strong> <code class="docutils literal notranslate"><span class="pre">curl</span> <span class="pre">http://localhost:8080/api/pings</span></code></p></li>
+<li><p><strong>Browser:</strong> <code class="docutils literal notranslate"><span class="pre">http://localhost:8080/api/ping</span></code></p></li>
+<li><p><strong>cURL:</strong> <code class="docutils literal notranslate"><span class="pre">curl</span> <span class="pre">http://localhost:8080/api/ping</span></code></p></li>
 </ul>
 <p>Expected response:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -376,9 +376,9 @@
 </section>
 <section id="understand-how-it-works">
 <h2><a class="toc-backref" href="#id5" role="doc-backlink">Understand how it works</a><a class="headerlink" href="#understand-how-it-works" title="Link to this heading"></a></h2>
-<p>When you request <code class="docutils literal notranslate"><span class="pre">/api/pings</span></code>:</p>
+<p>When you request <code class="docutils literal notranslate"><span class="pre">/api/ping</span></code>:</p>
 <ol class="arabic simple">
-<li><p>The <strong>Improved Auto Router</strong> finds the <code class="docutils literal notranslate"><span class="pre">App\Controllers\Api\Pings</span></code> class.</p></li>
+<li><p>The <strong>Improved Auto Router</strong> finds the <code class="docutils literal notranslate"><span class="pre">App\Controllers\Api\Ping</span></code> class.</p></li>
 <li><p>It detects the HTTP verb (<code class="docutils literal notranslate"><span class="pre">GET</span></code>).</p></li>
 <li><p>It calls the corresponding method name: <code class="docutils literal notranslate"><span class="pre">getIndex()</span></code>.</p></li>
 <li><p><code class="xref php php-trait docutils literal notranslate"><span class="pre">ResponseTrait</span></code> provides helper methods to produce consistent output.</p></li>
@@ -391,9 +391,9 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/api/pings</span></code>
-<code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/pings</span></code>
-<code class="docutils literal notranslate"><span class="pre">DELETE</span> <span class="pre">/api/pings</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/api/ping</span></code>
+<code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/ping</span></code>
+<code class="docutils literal notranslate"><span class="pre">DELETE</span> <span class="pre">/api/ping</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">getIndex()</span></code>
 <code class="docutils literal notranslate"><span class="pre">postIndex()</span></code>
 <code class="docutils literal notranslate"><span class="pre">deleteIndex()</span></code></p></td>
