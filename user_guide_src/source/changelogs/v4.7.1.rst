@@ -57,9 +57,9 @@ Bugs Fixed
 - **Model:** Fixed a bug where ``BaseModel::updateBatch()`` threw an exception when ``updateOnlyChanged`` was ``true`` and the index field value did not change.
 - **Model:** Fixed a bug where ``Model::chunk()`` ran an unnecessary extra database query at the end of iteration. ``chunk()`` now also throws ``InvalidArgumentException`` when called with a non-positive chunk size.
 - **Session:** Fixed a bug in ``MemcachedHandler`` where the constructor incorrectly threw an exception when ``savePath`` was not empty.
+- **Testing:** Fixed a bug in ``FeatureTestTrait::withRoutes()`` where invalid HTTP methods were not properly validated, thus passing them all to ``RouteCollection``.
 - **Toolbar:** Fixed a bug where the standalone toolbar page loaded from ``?debugbar_time=...`` was not interactive.
 - **Toolbar:** Fixed a bug in the Routes panel where only the first route parameter was converted to an input field on hover.
-- **Testing:** Fixed a bug in ``FeatureTestTrait::withRoutes()`` where invalid HTTP methods were not properly validated, thus passing them all to ``RouteCollection``.
 - **Validation:** Rule ``valid_cc_number`` now has the correct translation.
 - **Validation:** Fixed a bug where rules did not fire for array elements missing a key when using wildcard fields (e.g., ``contacts.friends.*.name``).
 - **View:** Fixed a bug where ``View`` would throw an error if the ``appOverridesFolder`` config property was not defined.
