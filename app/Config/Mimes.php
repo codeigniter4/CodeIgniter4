@@ -481,6 +481,10 @@ class Mimes
             'model/stl',
             'application/octet-stream',
         ],
+        'md' => [
+            'text/markdown',
+            'text/plain',
+        ],
     ];
 
     /**

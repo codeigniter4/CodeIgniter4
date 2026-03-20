@@ -215,6 +215,8 @@ Message Changes
 Changes
 *******
 
+- **Config:** Added the ``md`` key for ``Config\Mimes::$mimes`` for Markdown files.
+
 ************
 Deprecations
 ************

@@ -66,7 +66,8 @@ and it is recommended that you merge the updated versions with your application:
 Config
 ------
 
-- @TODO
+- app/Config/Mimes.php
+    - ``Config\Mimes::$mimes`` added a new key ``md`` for Markdown files.
 
 All Changes
 ===========
