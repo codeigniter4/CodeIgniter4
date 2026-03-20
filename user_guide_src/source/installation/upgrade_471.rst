@@ -34,6 +34,18 @@ Breaking Changes
 Breaking Enhancements
 *********************
 
+Database Connection Property Casting
+======================================
+
+``BaseConnection`` now casts string values coming from ``.env`` overrides to match
+the declared type of each connection property. This affects properties that are
+``null`` in the config array and then set via ``.env`` - such as SQLite3's
+``synchronous`` or ``busyTimeout`` - which previously arrived as strings and were
+stored without conversion.
+
+If you extended the SQLite3 handler, review your custom typed properties and update
+them if needed.
+
 *************
 Project Files
 *************
