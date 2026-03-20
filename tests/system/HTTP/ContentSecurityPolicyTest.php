@@ -731,6 +731,22 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString('nonce-', $header);
     }
 
+    public function testDisabledScriptNonce(): void
+    {
+        $this->csp->clearDirective('script-src');
+
+        $this->csp->setEnableScriptNonce(false);
+        $this->csp->addScriptSrc('self');
+        $this->csp->addScriptSrc('cdn.cloudy.com');
+
+        $this->assertTrue($this->work());
+
+        $header = $this->response->getHeaderLine('Content-Security-Policy');
+
+        $this->assertStringContainsString("script-src 'self' cdn.cloudy.com", $header);
+        $this->assertStringNotContainsString("script-src 'self' cdn.cloudy.com nonce-", $header);
+    }
+
     public function testBodyScriptNonceCustomScriptTag(): void
     {
         $config                 = new CSPConfig();
@@ -808,6 +824,22 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $header = $this->getHeaderEmitted('Content-Security-Policy');
         $this->assertIsString($header);
         $this->assertStringContainsString('nonce-', $header);
+    }
+
+    public function testDisabledStyleNonce(): void
+    {
+        $this->csp->clearDirective('style-src');
+
+        $this->csp->setEnableStyleNonce(false);
+        $this->csp->addStyleSrc('self');
+        $this->csp->addStyleSrc('cdn.cloudy.com');
+
+        $this->assertTrue($this->work());
+
+        $header = $this->response->getHeaderLine('Content-Security-Policy');
+
+        $this->assertStringContainsString("style-src 'self' cdn.cloudy.com", $header);
+        $this->assertStringNotContainsString("style-src 'self' cdn.cloudy.com nonce-", $header);
     }
 
     public function testBodyStyleNonceCustomStyleTag(): void
