@@ -6,7 +6,7 @@ The in-progress CI4 API docs, warts & all, are rebuilt and
 then copied to a nested
 repository clone (`build/api`), with the result
 optionally pushed to the `master` branch of the `api` repo.
-That would then be publically visible as the in-progress
+That would then be publicly visible as the in-progress
 version of the [API](https://codeigniter4.github.io/api/).
 
 ## Requirements
