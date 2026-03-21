@@ -570,7 +570,7 @@ which when used will display information about opcache settings.</p></li>
 <section id="negotiator">
 <h3><a class="toc-backref" href="#id24" role="doc-backlink">Negotiator</a><a class="headerlink" href="#negotiator" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li><p>Added a feature flag <code class="docutils literal notranslate"><span class="pre">Feature::$strictLocaleNegotiation</span></code> to enable strict locale comparision.
+<li><p>Added a feature flag <code class="docutils literal notranslate"><span class="pre">Feature::$strictLocaleNegotiation</span></code> to enable strict locale comparison.
 Previously, response with language headers <code class="docutils literal notranslate"><span class="pre">Accept-language:</span> <span class="pre">en-US,en-GB;q=0.9</span></code> returned the first allowed language <code class="docutils literal notranslate"><span class="pre">en</span></code> could instead of the exact language <code class="docutils literal notranslate"><span class="pre">en-US</span></code> or <code class="docutils literal notranslate"><span class="pre">en-GB</span></code>.
 Set the value to <code class="docutils literal notranslate"><span class="pre">true</span></code> to enable comparison not only by language code (‘en’ - ISO 639-1) but also by regional code (‘en-US’ - ISO 639-1 plus ISO 3166-1 alpha).</p></li>
 </ul>
