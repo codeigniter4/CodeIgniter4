@@ -306,11 +306,15 @@
 </ul>
 </li>
 <li><p><a class="reference internal" href="#breaking-changes" id="id3">Breaking Changes</a></p></li>
-<li><p><a class="reference internal" href="#breaking-enhancements" id="id4">Breaking Enhancements</a></p></li>
-<li><p><a class="reference internal" href="#project-files" id="id5">Project Files</a></p>
+<li><p><a class="reference internal" href="#breaking-enhancements" id="id4">Breaking Enhancements</a></p>
 <ul>
-<li><p><a class="reference internal" href="#content-changes" id="id6">Content Changes</a></p></li>
-<li><p><a class="reference internal" href="#all-changes" id="id7">All Changes</a></p></li>
+<li><p><a class="reference internal" href="#database-connection-property-casting" id="id5">Database Connection Property Casting</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#project-files" id="id6">Project Files</a></p>
+<ul>
+<li><p><a class="reference internal" href="#content-changes" id="id7">Content Changes</a></p></li>
+<li><p><a class="reference internal" href="#all-changes" id="id8">All Changes</a></p></li>
 </ul>
 </li>
 </ul>
@@ -331,9 +335,19 @@ upgrading. The easiest way is to re-run the install command:</p>
 </section>
 <section id="breaking-enhancements">
 <h2><a class="toc-backref" href="#id4" role="doc-backlink">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Link to this heading"></a></h2>
+<section id="database-connection-property-casting">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Database Connection Property Casting</a><a class="headerlink" href="#database-connection-property-casting" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">BaseConnection</span></code> now casts string values coming from <code class="docutils literal notranslate"><span class="pre">.env</span></code> overrides to match
+the declared type of each connection property. This affects properties that are
+<code class="docutils literal notranslate"><span class="pre">null</span></code> in the config array and then set via <code class="docutils literal notranslate"><span class="pre">.env</span></code> - such as SQLite3’s
+<code class="docutils literal notranslate"><span class="pre">synchronous</span></code> or <code class="docutils literal notranslate"><span class="pre">busyTimeout</span></code> - which previously arrived as strings and were
+stored without conversion.</p>
+<p>If you extended the SQLite3 handler, review your custom typed properties and update
+them if needed.</p>
+</section>
 </section>
 <section id="project-files">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Link to this heading"></a></h2>
 <p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to
 these files being outside of the <strong>system</strong> scope they will not be changed without your intervention.</p>
 <div class="admonition note">
@@ -343,7 +357,7 @@ with merging changes to the project space:
 <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
 </div>
 <section id="content-changes">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">Content Changes</a><a class="headerlink" href="#content-changes" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Content Changes</a><a class="headerlink" href="#content-changes" title="Link to this heading"></a></h3>
 <p>The following files received significant changes (including deprecations or visual adjustments)
 and it is recommended that you merge the updated versions with your application:</p>
 <section id="config">
@@ -361,7 +375,7 @@ value set to <code class="docutils literal notranslate"><span class="pre">[]</sp
 </section>
 </section>
 <section id="all-changes">
-<h3><a class="toc-backref" href="#id7" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Link to this heading"></a></h3>
 <p>This is a list of all files in the <strong>project space</strong> that received changes;
 many will be simple comments or formatting that have no effect on the runtime:</p>
 <ul class="simple">
@@ -383,7 +397,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 19, 2026.
+      <span class="lastupdated">Last updated on Mar 21, 2026.
       </span></p>
   </div>
 
