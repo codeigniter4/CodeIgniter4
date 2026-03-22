@@ -2,7 +2,7 @@
 Version 4.7.1
 #############
 
-Release Date: Unreleased
+Release Date: March 22, 2026
 
 **4.7.1 release of CodeIgniter4**
 
@@ -41,10 +41,6 @@ Others
 
 - **builds:** In the ``builds`` script (for ``codeigniter4/appstarter``), the ``next`` argument has been added
   to switch ``4.7.x`` to the next minor version ``4.8.x-dev``. See :ref:`Latest Dev<switch-to-dev-version>`.
-
-************
-Deprecations
-************
 
 **********
 Bugs Fixed

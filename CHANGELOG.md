@@ -1,5 +1,44 @@
 # Changelog
 
+## [v4.7.1](https://github.com/codeigniter4/CodeIgniter4/tree/v4.7.1) (2026-03-22)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.7.0...v4.7.1)
+
+### Breaking Changes
+
+* fix: SQLite3 config type handling for `.env` overrides by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/10037
+
+### Fixed Bugs
+
+* fix: escape CSP nonce attributes in JSON responses by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9938
+* fix: correct `savePath` check in `MemcachedHandler` constructor by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9941
+* fix: preserve index field in `updateBatch()` when `updateOnlyChanged` is `true` by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9944
+* fix: Hardcoded CSP Nonce Tags in ResponseTrait by @patel-vansh in https://github.com/codeigniter4/CodeIgniter4/pull/9937
+* fix: initialize standalone toolbar by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9950
+* fix: add fallback for `appOverridesFolder` config in View by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9958
+* fix: avoid double-prefixing in `BaseConnection::callFunction()` by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9959
+* fix: generate inputs for all route params in Debug Toolbar by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9964
+* fix: preserve Postgre casts when converting named placeholders in prepared queries by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9960
+* fix: prevent extra query and invalid size in `Model::chunk()` by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9961
+* fix: worker mode events cleanup by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9997
+* fix: add nonce to script-src-elem and style-src-elem when configured by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9999
+* fix: `FeatureTestTrait::withRoutes()` may throw all sorts of errors on invalid HTTP methods by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10004
+* fix: validation when key does not exists by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/10006
+* fix: handle HTTP/2 responses without a reason phrase in CURLRequest by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/10050
+
+### Refactoring
+
+* chore: signature for the `$headers` param in `FeatureTestTrait::withHeaders()` by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9932
+* refactor: implement development versions for `CodeIgniter::CI_VERSION` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9951
+* feat: Add `builds next` option by @neznaika0 in https://github.com/codeigniter4/CodeIgniter4/pull/9946
+* refactor: use `__unserialize` instead of `__wakeup` in `TimeTrait` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9957
+* refactor: remove `Exceptions::isImplicitNullableDeprecationError` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9965
+* refactor: fix `Security` test fail by itself by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9969
+* refactor: make random-order API tests deterministic by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9983
+* refactor: make random-order CLI tests deterministic by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9998
+* refactor: fix phpstan no type specified ValidationModelTest by @adiprsa in https://github.com/codeigniter4/CodeIgniter4/pull/10008
+* refactor: fix dependency on test execution order by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/10014
+* refactor: update tests with old entities definition by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/10026
+
 ## [v4.7.0](https://github.com/codeigniter4/CodeIgniter4/tree/v4.7.0) (2026-02-01)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.6.5...v4.7.0)
 

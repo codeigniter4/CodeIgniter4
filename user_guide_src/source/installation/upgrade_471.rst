@@ -26,10 +26,6 @@ upgrading. The easiest way is to re-run the install command:
 
     php spark worker:install --force
 
-****************
-Breaking Changes
-****************
-
 *********************
 Breaking Enhancements
 *********************
@@ -76,4 +72,5 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
+- app/Config/Database.php
 - app/Config/WorkerMode.php
