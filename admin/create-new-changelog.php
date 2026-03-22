@@ -92,6 +92,7 @@ replace_file_content(
 );
 
 if (! in_array('--dry-run', $argv, true)) {
+    system('git add ./system/CodeIgniter.php');
     system("git add {$newChangelog} {$changelogIndex}");
     system("git add {$newUpgrading} {$upgradingIndex}");
     system("git commit -m \"docs: add changelog and upgrade for v{$newVersion}\"");
