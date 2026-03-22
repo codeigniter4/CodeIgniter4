@@ -629,7 +629,7 @@ class URI implements Stringable
     /**
      * Formats the URI as a string.
      *
-     * Warning: For backwards-compatability this method
+     * Warning: For backwards-compatibility this method
      * assumes URIs with the same host as baseURL should
      * be relative to the project's configuration.
      * This aspect of __toString() is deprecated and should be avoided.

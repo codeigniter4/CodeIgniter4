@@ -174,7 +174,7 @@ return RectorConfig::configure()
 
         CompactToVariablesRector::class,
 
-        // possibly isset() on purpose, on updated Config classes property accross versions
+        // possibly isset() on purpose, on updated Config classes property across versions
         IssetOnPropertyObjectToPropertyExistsRector::class,
 
         AssertFuncCallToPHPUnitAssertRector::class => [

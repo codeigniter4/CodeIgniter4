@@ -5,7 +5,7 @@ Builds & deploys user guide.
 The in-progress CI4 user guide, warts & all, is rebuilt in a nested
 repository clone (`user_guide_src/build/html`), with the result
 optionally pushed to the `gh-pages` branch of the repo.
-That would then be publically visible as the in-progress
+That would then be publicly visible as the in-progress
 version of the [User Guide](https://codeigniter4.github.io/CodeIgniter4/).
 
 ## Requirements

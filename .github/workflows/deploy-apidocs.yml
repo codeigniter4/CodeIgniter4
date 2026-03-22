@@ -8,8 +8,9 @@ on:
     branches:
       - 'develop'
     paths:
-      - 'system/**'
+      - '.github/scripts/secure-git-push'
       - '.github/workflows/deploy-apidocs.yml'
+      - 'system/**'
 
 permissions:
   contents: read
@@ -72,7 +73,11 @@ jobs:
           PUSH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         run: |
           git add .
+
           if ! git diff-index --quiet HEAD; then
             git commit -m "Updated API for commit ${GITHUB_SHA}"
-            bash ${GITHUB_WORKSPACE}/.github/scripts/secure-git-push https://github.com/codeigniter4/api.git HEAD:master
+            bash "${GITHUB_WORKSPACE}/source/.github/scripts/secure-git-push" https://github.com/codeigniter4/api.git HEAD:master
+            echo "API documentation deployed successfully."
+          else
+            echo "No changes to deploy."
           fi

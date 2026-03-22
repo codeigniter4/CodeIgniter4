@@ -1,0 +1,23 @@
+# https://github.com/actions/labeler?tab=readme-ov-file#usage
+
+# Add the `4.8` label to PRs that target the `4.8` branch.
+'4.8': # @todo change value whenever the next minor version is changed
+- base-branch: '4.8'
+
+# Add the `github_actions` label to PRs that change any file in the `.github/workflows/` directory.
+'github_actions':
+- changed-files:
+  - any-glob-to-any-file:
+    - '.github/workflows/*'
+
+# Add the `documentation` label to PRs that change any file in the `user_guide_src/source/` directory.
+'documentation':
+- changed-files:
+  - any-glob-to-all-files:
+    - 'user_guide_src/source/*'
+
+# Add the `testing` label to PRs that change files in the `tests/` directory ONLY.
+'testing':
+- changed-files:
+  - any-glob-to-all-files:
+    - 'tests/*'

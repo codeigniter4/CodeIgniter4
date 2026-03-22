@@ -321,7 +321,7 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Add permision statements for index value inserts
+     * Add permission statements for index value inserts
      */
     private function addIdentity(string $fullTable, string $insert): string
     {

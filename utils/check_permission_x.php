@@ -31,6 +31,7 @@ function findExecutableFiles(string $dir, array $excludeDirs = []): array
 {
     static $execFileList = [
         '.github/scripts/deploy-userguide',
+        '.github/scripts/secure-git-push',
         'admin/release-userguide',
         'admin/release-deploy',
         'admin/apibot',
