@@ -251,6 +251,37 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
         $this->assertSame('{"foo":"bar"}', $request->getBody());
     }
 
+    public function testCSRFVerifyHeaderWithJsonBodyPreservesBody(): void
+    {
+        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
+
+        $request = $this->createIncomingRequest();
+        $body    = '{"foo":"bar"}';
+
+        $request->setHeader('X-CSRF-TOKEN', '8b9218a55906f9dcc1dc263dce7f005a');
+        $request->setBody($body);
+        $security = $this->createSecurity();
+
+        $this->assertInstanceOf(Security::class, $security->verify($request));
+        $this->assertLogged('info', 'CSRF token verified.');
+        $this->assertSame($body, $request->getBody());
+    }
+
+    public function testCSRFVerifyHeaderWithJsonBodyStripsTokenFromBody(): void
+    {
+        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
+
+        $request = $this->createIncomingRequest();
+
+        $request->setHeader('X-CSRF-TOKEN', '8b9218a55906f9dcc1dc263dce7f005a');
+        $request->setBody('{"csrf_test_name":"8b9218a55906f9dcc1dc263dce7f005a","foo":"bar"}');
+        $security = $this->createSecurity();
+
+        $this->assertInstanceOf(Security::class, $security->verify($request));
+        $this->assertLogged('info', 'CSRF token verified.');
+        $this->assertSame('{"foo":"bar"}', $request->getBody());
+    }
+
     public function testRegenerateWithFalseSecurityRegenerateProperty(): void
     {
         service('superglobals')

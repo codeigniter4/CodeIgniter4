@@ -204,6 +204,39 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertSame('{"foo":"bar"}', $request->getBody());
     }
 
+    public function testCsrfVerifyHeaderWithJsonBodyPreservesBody(): void
+    {
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setCookie('csrf_cookie_name', self::CORRECT_CSRF_HASH);
+
+        $security = $this->createMockSecurity();
+        $request  = $this->createIncomingRequest();
+        $body     = '{"foo":"bar"}';
+
+        $request->setHeader('X-CSRF-TOKEN', self::CORRECT_CSRF_HASH);
+        $request->setBody($body);
+
+        $this->assertInstanceOf(Security::class, $security->verify($request));
+        $this->assertSame($body, $request->getBody());
+    }
+
+    public function testCsrfVerifyHeaderWithJsonBodyStripsTokenFromBody(): void
+    {
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setCookie('csrf_cookie_name', self::CORRECT_CSRF_HASH);
+
+        $security = $this->createMockSecurity();
+        $request  = $this->createIncomingRequest();
+
+        $request->setHeader('X-CSRF-TOKEN', self::CORRECT_CSRF_HASH);
+        $request->setBody('{"csrf_test_name":"' . self::CORRECT_CSRF_HASH . '","foo":"bar"}');
+
+        $this->assertInstanceOf(Security::class, $security->verify($request));
+        $this->assertSame('{"foo":"bar"}', $request->getBody());
+    }
+
     public function testCsrfVerifyPutBodyThrowsExceptionOnNoMatch(): void
     {
         service('superglobals')

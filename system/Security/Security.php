@@ -307,6 +307,11 @@ class Security implements SecurityInterface
 
         // If the token is found in form-encoded data, we can safely remove it.
         parse_str($body, $result);
+
+        if (! array_key_exists($tokenName, $result)) {
+            return;
+        }
+
         unset($result[$tokenName]);
         $request->setBody(http_build_query($result));
     }
