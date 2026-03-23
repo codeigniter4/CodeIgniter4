@@ -30,6 +30,8 @@ Deprecations
 Bugs Fixed
 **********
 
+- **Security:** Fixed a bug where the CSRF filter could corrupt JSON request bodies after successful verification when the CSRF token was provided via the ``X-CSRF-TOKEN`` header. This caused ``IncomingRequest::getJSON()`` to fail on valid ``application/json`` requests.
+
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
 for a complete list of bugs fixed.
