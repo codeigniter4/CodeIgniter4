@@ -2,7 +2,7 @@
 Version 4.7.2
 #############
 
-Release Date: Unreleased
+Release Date: March 24, 2026
 
 **4.7.2 release of CodeIgniter4**
 
@@ -10,27 +10,13 @@ Release Date: Unreleased
     :local:
     :depth: 3
 
-********
-BREAKING
-********
-
-***************
-Message Changes
-***************
-
-*******
-Changes
-*******
-
-************
-Deprecations
-************
-
 **********
 Bugs Fixed
 **********
 
-- **Security:** Fixed a bug where the CSRF filter could corrupt JSON request bodies after successful verification when the CSRF token was provided via the ``X-CSRF-TOKEN`` header. This caused ``IncomingRequest::getJSON()`` to fail on valid ``application/json`` requests.
+- **Security:** Fixed a bug where the CSRF filter could corrupt JSON request bodies after successful
+    verification when the CSRF token was provided via the ``X-CSRF-TOKEN`` header.
+    This caused ``IncomingRequest::getJSON()`` to fail on valid ``application/json`` requests.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_

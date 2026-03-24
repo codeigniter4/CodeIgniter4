@@ -1,5 +1,12 @@
 # Changelog
 
+## [v4.7.2](https://github.com/codeigniter4/CodeIgniter4/tree/v4.7.2) (2026-03-24)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.7.1...v4.7.2)
+
+### Fixed Bugs
+
+* fix: preserve JSON body when CSRF token is sent in header by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/10064
+
 ## [v4.7.1](https://github.com/codeigniter4/CodeIgniter4/tree/v4.7.1) (2026-03-22)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.7.0...v4.7.1)
 
