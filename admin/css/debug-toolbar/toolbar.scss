@@ -10,8 +10,9 @@
 // IMPORTS
 // ========================================================================== */
 
-@import '_mixins';
-@import '_settings';
+@use "sass:meta";
+@use '_mixins';
+@use '_settings';
 
 // DEBUG ICON
 // ========================================================================== */
@@ -76,8 +77,8 @@
     line-height: 36px;
 
     // Typography
-    font-family: $base-font;
-    font-size: $base-size;
+    font-family: settings.$base-font;
+    font-size: settings.$base-size;
     font-weight: 400;
 
     // General elements
@@ -86,7 +87,7 @@
         font-weight: normal;
         margin: 0 0 0 auto;
         padding: 0;
-        font-family: $base-font;
+        font-family: settings.$base-font;
 
         svg {
             width: 16px;
@@ -96,7 +97,7 @@
 
     h2 {
         font-weight: bold;
-        font-size: $base-size;
+        font-size: settings.$base-size;
         margin: 0;
         padding: 5px 0 10px 0;
 
@@ -106,7 +107,7 @@
     }
 
     h3 {
-        font-size: $base-size - 4;
+        font-size: settings.$base-size - 4;
         font-weight: 200;
         margin: 0 0 0 10px;
         padding: 0;
@@ -114,7 +115,7 @@
     }
 
     p {
-        font-size: $base-size - 4;
+        font-size: settings.$base-size - 4;
         margin: 0 0 0 15px;
         padding: 0;
     }
@@ -129,7 +130,7 @@
 
     button {
         border: 1px solid;
-        @include border-radius(4px);
+        @include mixins.border-radius(4px);
         cursor: pointer;
         line-height: 15px;
 
@@ -140,7 +141,7 @@
 
     table {
         border-collapse: collapse;
-        font-size: $base-size - 2;
+        font-size: settings.$base-size - 2;
         line-height: normal;
 
         // Tables indentation
@@ -255,7 +256,7 @@
     // The toolbar menus
     .ci-label {
         display: inline-flex;
-        font-size: $base-size - 2;
+        font-size: settings.$base-size - 2;
 
         &:hover {
             cursor: pointer;
@@ -278,7 +279,7 @@
 
         // The toolbar notification badges
         .badge {
-            @include border-radius(12px);
+            @include mixins.border-radius(12px);
             display: inline-block;
             font-size: 75%;
             font-weight: bold;
@@ -316,7 +317,7 @@
 
         th {
             border-left: 1px solid;
-            font-size: $base-size - 4;
+            font-size: settings.$base-size - 4;
             font-weight: 200;
             padding: 5px 5px 10px 5px;
             position: relative;
@@ -355,7 +356,7 @@
         }
 
         .timer {
-            @include border-radius(4px);
+            @include mixins.border-radius(4px);
             display: inline-block;
             padding: 5px;
             position: absolute;
@@ -428,7 +429,7 @@
 
 .debug-view-path {
     font-family: monospace;
-    font-size: $base-size - 4;
+    font-size: settings.$base-size - 4;
     letter-spacing: normal;
     min-height: 16px;
     padding: 2px;
@@ -487,16 +488,16 @@
 // ========================================================================== */
 
 // Default theme is "Light"
-@import '_theme-light';
+@include meta.load-css('_theme-light');
 
 // If the browser supports "prefers-color-scheme" and the scheme is "Dark"
 @media (prefers-color-scheme: dark) {
-    @import '_theme-dark';
+    @include meta.load-css('_theme-dark');
 }
 
 // If we force the "Dark" theme
 #toolbarContainer.dark {
-    @import '_theme-dark';
+    @include meta.load-css('_theme-dark');
 
     td[data-debugbar-route] input[type=text] {
         background: #000;
@@ -506,7 +507,7 @@
 
 // If we force the "Light" theme
 #toolbarContainer.light {
-    @import '_theme-light';
+    @include meta.load-css('_theme-light');
 }
 
 // LAYOUT HELPERS

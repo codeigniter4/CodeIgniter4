@@ -358,6 +358,7 @@
   -moz-box-shadow: 0 0 4px #DFDFDF;
   -webkit-box-shadow: 0 0 4px #DFDFDF;
 }
+
 #debug-icon a:active,
 #debug-icon a:link,
 #debug-icon a:visited {
@@ -368,6 +369,7 @@
   background-color: #FFFFFF;
   color: #434343;
 }
+
 #debug-bar h1,
 #debug-bar h2,
 #debug-bar h3,
@@ -383,74 +385,93 @@
   background-color: transparent;
   color: #434343;
 }
+
 #debug-bar button {
   background-color: #FFFFFF;
 }
+
 #debug-bar table strong {
   color: #DD8615;
 }
+
 #debug-bar table tbody tr:hover {
   background-color: #DFDFDF;
 }
+
 #debug-bar table tbody tr.current {
   background-color: #FDC894;
 }
+
 #debug-bar table tbody tr.current:hover td {
   background-color: #DD4814;
   color: #FFFFFF;
 }
+
 #debug-bar .toolbar {
   background-color: #FFFFFF;
   box-shadow: 0 0 4px #DFDFDF;
   -moz-box-shadow: 0 0 4px #DFDFDF;
   -webkit-box-shadow: 0 0 4px #DFDFDF;
 }
+
 #debug-bar .toolbar img {
   filter: brightness(0) invert(0.4);
 }
+
 #debug-bar.fixed-top .toolbar {
   box-shadow: 0 0 4px #DFDFDF;
   -moz-box-shadow: 0 0 4px #DFDFDF;
   -webkit-box-shadow: 0 0 4px #DFDFDF;
 }
+
 #debug-bar.fixed-top .tab {
   box-shadow: 0 1px 4px #DFDFDF;
   -moz-box-shadow: 0 1px 4px #DFDFDF;
   -webkit-box-shadow: 0 1px 4px #DFDFDF;
 }
+
 #debug-bar .muted {
   color: #434343;
 }
+
 #debug-bar .muted td {
   color: #DFDFDF;
 }
+
 #debug-bar .muted:hover td {
   color: #434343;
 }
+
 #debug-bar #toolbar-position,
 #debug-bar #toolbar-theme {
   filter: brightness(0) invert(0.6);
 }
+
 #debug-bar .ci-label.active {
   background-color: #DFDFDF;
 }
+
 #debug-bar .ci-label:hover {
   background-color: #DFDFDF;
 }
+
 #debug-bar .ci-label .badge {
   background-color: #DD4814;
   color: #FFFFFF;
 }
+
 #debug-bar .tab {
   background-color: #FFFFFF;
   box-shadow: 0 -1px 4px #DFDFDF;
   -moz-box-shadow: 0 -1px 4px #DFDFDF;
   -webkit-box-shadow: 0 -1px 4px #DFDFDF;
 }
+
 #debug-bar .timeline th,
 #debug-bar .timeline td {
   border-color: #DFDFDF;
 }
+
 #debug-bar .timeline .timer {
   background-color: #DD8615;
 }

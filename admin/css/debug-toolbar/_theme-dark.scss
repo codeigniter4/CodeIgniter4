@@ -2,23 +2,23 @@
 // ========================================================================== */
 
 // The "box-shadow" mixin uses colors
-@import '_mixins';
+@use '_mixins';
 
 // Graphic charter
-@import '_graphic-charter';
+@use '_graphic-charter';
 
 
 // DEBUG ICON
 // ========================================================================== */
 
 #debug-icon {
-    background-color: $t-dark;
-    @include box-shadow(0, 0, 4px, $m-gray);
+    background-color: graphic-charter.$t-dark;
+    @include mixins.box-shadow(0, 0, 4px, graphic-charter.$m-gray);
 
     a:active,
     a:link,
     a:visited {
-        color: $g-orange;
+        color: graphic-charter.$g-orange;
     }
 }
 
@@ -27,8 +27,8 @@
 // ========================================================================== */
 
 #debug-bar {
-    background-color: $t-dark;
-    color: $m-gray;
+    background-color: graphic-charter.$t-dark;
+    color: graphic-charter.$m-gray;
 
     // Reset to prevent conflict with other CSS files
     h1,
@@ -44,35 +44,35 @@
     button,
     .toolbar {
         background-color: transparent;
-        color: $m-gray;
+        color: graphic-charter.$m-gray;
     }
 
     // Buttons
     button {
-        background-color: $t-dark;
+        background-color: graphic-charter.$t-dark;
     }
 
     // Tables
     table {
         strong {
-            color: $g-orange;
+            color: graphic-charter.$g-orange;
         }
 
         tbody tr {
             &:hover {
-                background-color: $g-gray;
+                background-color: graphic-charter.$g-gray;
             }
 
             &.current {
-                background-color: $m-orange;
+                background-color: graphic-charter.$m-orange;
 
                 td {
-                    color: $t-dark;
+                    color: graphic-charter.$t-dark;
                 }
 
                 &:hover td {
-                    background-color: $g-red;
-                    color: $t-light;
+                    background-color: graphic-charter.$g-red;
+                    color: graphic-charter.$t-light;
                 }
             }
         }
@@ -80,8 +80,8 @@
 
     // The toolbar
     .toolbar {
-        background-color: $g-gray;
-        @include box-shadow(0, 0, 4px, $g-gray);
+        background-color: graphic-charter.$g-gray;
+        @include mixins.box-shadow(0, 0, 4px, graphic-charter.$g-gray);
 
         img {
             filter: brightness(0) invert(1);
@@ -91,24 +91,24 @@
     // Fixed top
     &.fixed-top {
         .toolbar {
-            @include box-shadow(0, 0, 4px, $g-gray);
+            @include mixins.box-shadow(0, 0, 4px, graphic-charter.$g-gray);
         }
 
         .tab {
-            @include box-shadow(0, 1px, 4px, $g-gray);
+            @include mixins.box-shadow(0, 1px, 4px, graphic-charter.$g-gray);
         }
     }
 
     // "Muted" elements
     .muted {
-        color: $m-gray;
+        color: graphic-charter.$m-gray;
 
         td {
-            color: $g-gray;
+            color: graphic-charter.$g-gray;
         }
 
         &:hover td {
-            color: $m-gray;
+            color: graphic-charter.$m-gray;
         }
     }
 
@@ -121,34 +121,34 @@
     // The toolbar menus
     .ci-label {
         &.active {
-            background-color: $t-dark;
+            background-color: graphic-charter.$t-dark;
         }
 
         &:hover {
-            background-color: $t-dark;
+            background-color: graphic-charter.$t-dark;
         }
 
         .badge {
-            background-color: $g-red;
-            color: $t-light;
+            background-color: graphic-charter.$g-red;
+            color: graphic-charter.$t-light;
         }
     }
 
     // The tabs container
     .tab {
-        background-color: $t-dark;
-        @include box-shadow(0, -1px, 4px, $g-gray);
+        background-color: graphic-charter.$t-dark;
+        @include mixins.box-shadow(0, -1px, 4px, graphic-charter.$g-gray);
     }
 
     // The "Timeline" tab
     .timeline {
         th,
         td {
-            border-color: $g-gray;
+            border-color: graphic-charter.$g-gray;
         }
 
         .timer {
-            background-color: $g-orange;
+            background-color: graphic-charter.$g-orange;
         }
     }
 }
@@ -158,10 +158,10 @@
 // ========================================================================== */
 
 .debug-view.show-view {
-    border-color: $g-orange;
+    border-color: graphic-charter.$g-orange;
 }
 
 .debug-view-path {
-    background-color: $m-orange;
-    color: $g-gray;
+    background-color: graphic-charter.$m-orange;
+    color: graphic-charter.$g-gray;
 }
