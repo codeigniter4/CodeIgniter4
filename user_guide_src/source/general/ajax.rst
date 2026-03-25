@@ -25,6 +25,17 @@ Fetch API
         }
     });
 
+Axios
+=====
+
+If you are using Axios, it also does not include the ``X-Requested-With`` header by default.
+You can add it globally as follows:
+
+.. code-block:: javascript
+
+    axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+
 jQuery
 ======
 
