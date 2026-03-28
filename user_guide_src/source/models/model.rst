@@ -492,8 +492,8 @@ of just one:
 
 .. literalinclude:: model/007.php
 
-.. note:: If no parameters are passed in, ``find()`` will return all rows in that model's table,
-    effectively acting like ``findAll()``, though less explicit.
+.. note:: If ``find()`` is called without parameters or with ``null``, it will return all rows in
+    that model's table, effectively acting like ``findAll()``, though less explicit.
 
 findColumn()
 ------------
