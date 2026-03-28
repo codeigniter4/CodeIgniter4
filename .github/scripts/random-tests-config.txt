@@ -9,41 +9,41 @@
 # Reference: https://github.com/codeigniter4/CodeIgniter4/issues/9968
 
 API
-# AutoReview
-# Autoloader
+AutoReview
+Autoloader
 # Cache
 CLI
 # Commands
 # Config
-# Cookie
-# DataCaster
+Cookie
+DataCaster
 # DataConverter
 # Database
-# Debug
-# Email
-# Encryption
-# Entity
-# Events
-# Files
+Debug
+Email
+Encryption
+Entity
+Events
+Files
 # Filters
-# Format
+Format
 # HTTP
 # Helpers
 # Honeypot
-# HotReloader
-# I18n
+HotReloader
+I18n
 # Images
-# Language
-# Log
+Language
+Log
 # Models
-# Pager
-# Publisher
-# RESTful
+Pager
+Publisher
+RESTful
 # Router
-# Security
+Security
 # Session
 # Test
-# Throttle
-# Typography
+Throttle
+Typography
 # Validation
-# View
+View
