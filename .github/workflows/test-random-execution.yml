@@ -120,7 +120,7 @@ jobs:
           --health-retries=3
 
       oracle:
-        image: gvenzl/oracle-xe:21
+        image: gvenzl/oracle-free:latest
         env:
           ORACLE_RANDOM_PASSWORD: true
           APP_USER: ORACLE

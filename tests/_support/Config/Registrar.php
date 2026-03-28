@@ -105,7 +105,7 @@ class Registrar
             'port'     => 1433,
         ],
         'OCI8' => [
-            'DSN'      => 'localhost:1521/XEPDB1',
+            'DSN'      => 'localhost:1521/FREEPDB1',
             'hostname' => '',
             'username' => 'ORACLE',
             'password' => 'ORACLE',
