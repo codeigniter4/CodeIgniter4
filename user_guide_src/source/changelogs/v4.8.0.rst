@@ -143,6 +143,9 @@ Enhancements
 Commands
 ========
 
+- ``CLI`` now supports the ``--`` separator to mean that what follows are arguments, not options. This allows you to have arguments that start with ``-`` without them being treated as options.
+    For example: ``spark my:command -- --myarg`` will pass ``--myarg`` as an argument instead of an option.
+
 Testing
 =======
 
@@ -192,6 +195,8 @@ HTTP
 - Added ``SSEResponse`` class for streaming Server-Sent Events (SSE) over HTTP. See :ref:`server-sent-events`.
 - ``Response`` and its child classes no longer require ``Config\App`` passed to their constructors.
     Consequently, ``CURLRequest``'s ``$config`` parameter is unused and will be removed in a future release.
+- ``CLIRequest`` now supports the ``--`` separator to mean that what follows are arguments, not options. This allows you to have arguments that start with ``-`` without them being treated as options.
+    For example: ``php index.php command -- --myarg`` will pass ``--myarg`` as an argument instead of an option.
 
 Validation
 ==========
@@ -221,6 +226,9 @@ Changes
 ************
 Deprecations
 ************
+
+- **CLI:** The ``CLI::parseCommandLine()`` method is now deprecated and will be removed in a future release. The ``CLI`` class now uses the new ``CommandLineParser`` class to handle command-line argument parsing.
+- **HTTP:** The ``CLIRequest::parseCommand()`` method is now deprecated and will be removed in a future release. The ``CLIRequest`` class now uses the new ``CommandLineParser`` class to handle command-line argument parsing.
 
 **********
 Bugs Fixed

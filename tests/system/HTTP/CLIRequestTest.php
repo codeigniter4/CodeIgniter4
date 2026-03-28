@@ -178,7 +178,6 @@ final class CLIRequestTest extends CIUnitTestCase
             'param3',
         ]);
 
-        // reinstantiate it to force parsing
         $this->request = new CLIRequest(new App());
 
         $options = [

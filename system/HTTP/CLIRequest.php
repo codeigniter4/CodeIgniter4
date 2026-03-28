@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\CLI\CommandLineParser;
 use CodeIgniter\Exceptions\RuntimeException;
 use Config\App;
 use Locale;
@@ -74,7 +75,11 @@ class CLIRequest extends Request
         // Don't terminate the script when the cli's tty goes away
         ignore_user_abort(true);
 
-        $this->parseCommand();
+        $parser = new CommandLineParser($this->getServer('argv') ?? []);
+
+        $this->segments = $parser->getArguments();
+        $this->options  = $parser->getOptions();
+        $this->args     = $parser->getTokens();
 
         // Set SiteURI for this request
         $this->uri = new SiteURI($config, $this->getPath());
@@ -181,10 +186,14 @@ class CLIRequest extends Request
      * NOTE: I tried to use getopt but had it fail occasionally to find
      * any options, where argv has always had our back.
      *
+     * @deprecated 4.8.0 No longer used.
+     *
      * @return void
      */
     protected function parseCommand()
     {
+        @trigger_error(sprintf('The %s() method is deprecated and no longer used.', __METHOD__), E_USER_DEPRECATED);
+
         $args = $this->getServer('argv');
         array_shift($args); // Scrap index.php
 

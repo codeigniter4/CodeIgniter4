@@ -151,12 +151,14 @@ class CLI
             // Check our stream resource for color support
             static::$isColored = static::hasColorSupport(STDOUT);
 
-            static::parseCommandLine();
+            $parser = new CommandLineParser(service('superglobals')->server('argv', []));
+
+            static::$segments = $parser->getArguments();
+            static::$options  = $parser->getOptions();
 
             static::$initialized = true;
         } elseif (! defined('STDOUT')) {
-            // If the command is being called from a controller
-            // we need to define STDOUT ourselves
+            // If the command is being called from a controller we need to define STDOUT ourselves
             // For "! defined('STDOUT')" see: https://github.com/codeigniter4/CodeIgniter4/issues/7047
             define('STDOUT', 'php://output'); // @codeCoverageIgnore
         }
@@ -844,10 +846,14 @@ class CLI
      * Parses the command line it was called from and collects all
      * options and valid segments.
      *
+     * @deprecated 4.8.0 No longer used.
+     *
      * @return void
      */
     protected static function parseCommandLine()
     {
+        @trigger_error(sprintf('The static method %s() is deprecated and no longer used.', __METHOD__), E_USER_DEPRECATED);
+
         $args = $_SERVER['argv'] ?? [];
         array_shift($args); // scrap invoking program
         $optionValue = false;
