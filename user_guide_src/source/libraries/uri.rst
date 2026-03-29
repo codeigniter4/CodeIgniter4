@@ -238,8 +238,7 @@ You can also set a different default value for a particular segment by using the
 .. literalinclude:: uri/024.php
 
 .. note:: You can get the last +1 segment. When you try to get the last +2 or
-    more segment, an exception will be thrown by default. You could prevent
-    throwing exceptions with the ``setSilent()`` method.
+    more segment, an exception will be thrown by default.
 
 You can get a count of the total segments:
 
@@ -255,5 +254,9 @@ Disable Throwing Exceptions
 
 By default, some methods of this class may throw an exception. If you want to disable it, you can set a special flag
 that will prevent throwing exceptions.
+
+.. deprecated:: 4.4.0
+    This method is deprecated and will be removed in a future version.
+    It is recommended to handle exceptions properly instead of disabling them.
 
 .. literalinclude:: uri/027.php

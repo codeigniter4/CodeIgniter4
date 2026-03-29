@@ -1,4 +1,4 @@
-# total 22 errors
+# total 21 errors
 
 parameters:
     ignoreErrors:
@@ -46,11 +46,6 @@ parameters:
             message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsArray\(\) with array\{1\: array\{DETAIL\: ''asdf''\}, 2\: array\{DETAIL\: ''sdfg''\}\} will always evaluate to true\.$#'
             count: 1
             path: ../../tests/system/HTTP/RequestTest.php
-
-        -
-            message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with true will always evaluate to true\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/URITest.php
 
         -
             message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsString\(\) with string will always evaluate to true\.$#'

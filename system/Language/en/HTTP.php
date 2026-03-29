@@ -57,10 +57,6 @@ return [
     'methodNotFound'     => 'Controller method is not found: "{0}"',
     'localeNotSupported' => 'Locale is not supported: {0}',
 
-    // CSRF
-    // @deprecated 4.0.5 use 'Security.disallowedAction'
-    'disallowedAction' => 'The action you requested is not allowed.',
-
     // Uploaded file moving
     'alreadyMoved' => 'The uploaded file has already been moved.',
     'invalidFile'  => 'The original file is not a valid file.',

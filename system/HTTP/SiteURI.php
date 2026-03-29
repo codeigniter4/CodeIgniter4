@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
-use CodeIgniter\Exceptions\BadMethodCallException;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
@@ -53,26 +52,10 @@ class SiteURI extends URI
      *       1 => 'public',
      *       2 => 'index.php',
      *   ];
+     *
+     * @var list<string>
      */
     private array $baseSegments;
-
-    /**
-     * List of URI segments after indexPage.
-     *
-     * The word "URI Segments" originally means only the URI path part relative
-     * to the baseURL.
-     *
-     * If the URI is "http://localhost:8888/ci431/public/index.php/test?a=b",
-     * and the baseURL is "http://localhost:8888/ci431/public/", then:
-     *   $segments = [
-     *       0 => 'test',
-     *   ];
-     *
-     * @var array<int, string>
-     *
-     * @deprecated 4.4.0 This property will be private.
-     */
-    protected $segments;
 
     /**
      * URI path relative to baseURL.
@@ -149,9 +132,9 @@ class SiteURI extends URI
 
         // Update scheme
         if ($scheme !== null && $scheme !== '') {
-            $uri->setScheme($scheme);
+            $uri = $uri->withScheme($scheme);
         } elseif ($configApp->forceGlobalSecureRequests) {
-            $uri->setScheme('https');
+            $uri = $uri->withScheme('https');
         }
 
         // Update host
@@ -220,25 +203,9 @@ class SiteURI extends URI
     }
 
     /**
-     * @deprecated 4.4.0
-     */
-    public function setBaseURL(string $baseURL): void
-    {
-        throw new BadMethodCallException('Cannot use this method.');
-    }
-
-    /**
-     * @deprecated 4.4.0
-     */
-    public function setURI(?string $uri = null)
-    {
-        throw new BadMethodCallException('Cannot use this method.');
-    }
-
-    /**
      * Returns the baseURL.
      *
-     * @interal
+     * @internal
      */
     public function getBaseURL(): string
     {
@@ -298,23 +265,21 @@ class SiteURI extends URI
     }
 
     /**
-     * Converts path to segments
+     * @return list<string>
      */
     private function convertToSegments(string $path): array
     {
         $tempPath = trim($path, '/');
 
-        return ($tempPath === '') ? [] : explode('/', $tempPath);
+        return $tempPath === '' ? [] : explode('/', $tempPath);
     }
 
     /**
      * Sets the path portion of the URI based on segments.
      *
      * @return $this
-     *
-     * @deprecated 4.4.0 This method will be private.
      */
-    public function refreshPath()
+    protected function refreshPath(): self
     {
         $allSegments = array_merge($this->baseSegments, $this->segments);
         $this->path  = '/' . $this->filterPath(implode('/', $allSegments));
@@ -364,11 +329,7 @@ class SiteURI extends URI
             $this->fragment = $parts['fragment'];
         }
 
-        if (isset($parts['scheme'])) {
-            $this->setScheme(rtrim($parts['scheme'], ':/'));
-        } else {
-            $this->setScheme('http');
-        }
+        $this->scheme = $this->withScheme($parts['scheme'] ?? 'http')->getScheme();
 
         if (isset($parts['port'])) {
             // Valid port numbers are enforced by earlier parse_url or setPort()

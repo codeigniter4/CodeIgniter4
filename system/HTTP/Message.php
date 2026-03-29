@@ -61,39 +61,6 @@ class Message implements MessageInterface
     }
 
     /**
-     * Returns an array containing all headers.
-     *
-     * @return array<string, Header> An array of the request headers
-     *
-     * @deprecated 4.0.5 Use Message::headers() to make room for PSR-7
-     *
-     * @TODO Incompatible return value with PSR-7
-     *
-     * @codeCoverageIgnore
-     */
-    public function getHeaders(): array
-    {
-        return $this->headers();
-    }
-
-    /**
-     * Returns a single header object. If multiple headers with the same
-     * name exist, then will return an array of header objects.
-     *
-     * @return array|Header|null
-     *
-     * @deprecated 4.0.5 Use Message::header() to make room for PSR-7
-     *
-     * @TODO Incompatible return value with PSR-7
-     *
-     * @codeCoverageIgnore
-     */
-    public function getHeader(string $name)
-    {
-        return $this->header($name);
-    }
-
-    /**
      * Determines whether a header exists.
      */
     public function hasHeader(string $name): bool

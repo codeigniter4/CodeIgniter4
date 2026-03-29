@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
-use CodeIgniter\Exceptions\BadMethodCallException;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
@@ -36,22 +35,6 @@ class URI implements Stringable
      * Unreserved characters used in paths, query strings, and fragments.
      */
     public const CHAR_UNRESERVED = 'a-zA-Z0-9_\-\.~';
-
-    /**
-     * Current URI string
-     *
-     * @var string
-     *
-     * @deprecated 4.4.0 Not used.
-     */
-    protected $uriString;
-
-    /**
-     * The Current baseURL.
-     *
-     * @deprecated 4.4.0 Use SiteURI instead.
-     */
-    private ?string $baseURL = null;
 
     /**
      * List of URI segments.
@@ -260,9 +243,9 @@ class URI implements Stringable
      * @TODO null for param $uri should be removed.
      *      See https://www.php-fig.org/psr/psr-17/#26-urifactoryinterface
      */
-    public function __construct(?string $uri = null)
+    public function __construct(?string $uri = null, bool $useRawQueryString = false)
     {
-        $this->setURI($uri);
+        $this->useRawQueryString($useRawQueryString)->setUri($uri);
     }
 
     /**
@@ -275,6 +258,8 @@ class URI implements Stringable
      */
     public function setSilent(bool $silent = true)
     {
+        @trigger_error(sprintf('The %s method is deprecated and will be removed in CodeIgniter 5.0.', __METHOD__), E_USER_DEPRECATED);
+
         $this->silent = $silent;
 
         return $this;
@@ -298,13 +283,9 @@ class URI implements Stringable
     /**
      * Sets and overwrites any current URI information.
      *
-     * @return URI
-     *
      * @throws HTTPException
-     *
-     * @deprecated 4.4.0 This method will be private.
      */
-    public function setURI(?string $uri = null)
+    private function setUri(?string $uri = null): self
     {
         if ($uri === null) {
             return $this;
@@ -336,9 +317,7 @@ class URI implements Stringable
      * The trailing ":" character is not part of the scheme and MUST NOT be
      * added.
      *
-     * @see    https://tools.ietf.org/html/rfc3986#section-3.1
-     *
-     * @return string The URI scheme.
+     * @see https://tools.ietf.org/html/rfc3986#section-3.1
      */
     public function getScheme(): string
     {
@@ -712,26 +691,6 @@ class URI implements Stringable
     }
 
     /**
-     * Sets the scheme for this URI.
-     *
-     * Because of the large number of valid schemes we cannot limit this
-     * to only http or https.
-     *
-     * @see https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml
-     *
-     * @return $this
-     *
-     * @deprecated 4.4.0 Use `withScheme()` instead.
-     */
-    public function setScheme(string $str)
-    {
-        $str          = strtolower($str);
-        $this->scheme = preg_replace('#:(//)?$#', '', $str);
-
-        return $this;
-    }
-
-    /**
      * Return an instance with the specified scheme.
      *
      * This method MUST retain the state of the current instance, and return
@@ -836,41 +795,11 @@ class URI implements Stringable
     }
 
     /**
-     * Sets the current baseURL.
-     *
-     * @interal
-     *
-     * @deprecated 4.4.0 Use SiteURI instead.
-     */
-    public function setBaseURL(string $baseURL): void
-    {
-        $this->baseURL = $baseURL;
-    }
-
-    /**
-     * Returns the current baseURL.
-     *
-     * @interal
-     *
-     * @deprecated 4.4.0 Use SiteURI instead.
-     */
-    public function getBaseURL(): string
-    {
-        if ($this->baseURL === null) {
-            throw new BadMethodCallException('The $baseURL is not set.');
-        }
-
-        return $this->baseURL;
-    }
-
-    /**
      * Sets the path portion of the URI based on segments.
      *
      * @return $this
-     *
-     * @deprecated 4.4.0 This method will be private.
      */
-    public function refreshPath()
+    protected function refreshPath(): self
     {
         $this->path = $this->filterPath(implode('/', $this->segments));
 
@@ -1077,11 +1006,7 @@ class URI implements Stringable
             $this->fragment = $parts['fragment'];
         }
 
-        if (isset($parts['scheme'])) {
-            $this->setScheme(rtrim($parts['scheme'], ':/'));
-        } else {
-            $this->setScheme('http');
-        }
+        $this->scheme = $this->withScheme($parts['scheme'] ?? 'http')->getScheme();
 
         if (isset($parts['port'])) {
             // Valid port numbers are enforced by earlier parse_url or setPort()
@@ -1113,11 +1038,10 @@ class URI implements Stringable
          * NOTE: We don't use removeDotSegments in this
          * algorithm since it's already done by this line!
          */
-        $relative = new self();
-        $relative->setURI($uri);
+        $relative = new self($uri);
 
         if ($relative->getScheme() === $this->getScheme()) {
-            $relative->setScheme('');
+            $relative = $relative->withScheme('');
         }
 
         $transformed = clone $relative;
@@ -1150,8 +1074,7 @@ class URI implements Stringable
             $transformed->setAuthority($this->getAuthority());
         }
 
-        $transformed->setScheme($this->getScheme());
-
+        $transformed = $transformed->withScheme($this->getScheme());
         $transformed->setFragment($relative->getFragment());
 
         return $transformed;

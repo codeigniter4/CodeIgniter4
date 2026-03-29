@@ -1,4 +1,4 @@
-# total 1242 errors
+# total 1237 errors
 
 parameters:
     ignoreErrors:
@@ -2773,11 +2773,6 @@ parameters:
             path: ../../system/HTTP/IncomingRequest.php
 
         -
-            message: '#^Method CodeIgniter\\HTTP\\Message\:\:getHeader\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/Message.php
-
-        -
             message: '#^Method CodeIgniter\\HTTP\\Message\:\:setHeader\(\) has parameter \$value with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HTTP/Message.php
@@ -2893,16 +2888,6 @@ parameters:
             path: ../../system/HTTP/Request.php
 
         -
-            message: '#^Method CodeIgniter\\HTTP\\Request\:\:getEnv\(\) has parameter \$flags with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/Request.php
-
-        -
-            message: '#^Method CodeIgniter\\HTTP\\Request\:\:getEnv\(\) has parameter \$index with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/Request.php
-
-        -
             message: '#^Method CodeIgniter\\HTTP\\Request\:\:getServer\(\) has parameter \$flags with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HTTP/Request.php
@@ -2988,11 +2973,6 @@ parameters:
             path: ../../system/HTTP/SiteURI.php
 
         -
-            message: '#^Method CodeIgniter\\HTTP\\SiteURI\:\:convertToSegments\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/SiteURI.php
-
-        -
             message: '#^Method CodeIgniter\\HTTP\\SiteURI\:\:parseRelativePath\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HTTP/SiteURI.php
@@ -3004,11 +2984,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\HTTP\\SiteURI\:\:stringifyRelativePath\(\) has parameter \$relativePath with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/SiteURI.php
-
-        -
-            message: '#^Property CodeIgniter\\HTTP\\SiteURI\:\:\$baseSegments type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HTTP/SiteURI.php
 

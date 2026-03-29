@@ -35,28 +35,6 @@ Class Reference
         .. important:: This method takes into account the ``Config\App::$proxyIPs`` setting and will
             return the reported client IP address by the HTTP header for the allowed IP address.
 
-    .. php:method:: isValidIP($ip[, $which = ''])
-
-        .. deprecated:: 4.0.5
-           Use :doc:`../libraries/validation` instead.
-
-        .. important:: This method is deprecated. It will be removed in future releases.
-
-        :param    string $ip: IP address
-        :param    string $which: IP protocol (``ipv4`` or ``ipv6``)
-        :returns: true if the address is valid, false if not
-        :rtype:   bool
-
-        Takes an IP address as input and returns true or false (boolean) depending
-        on whether it is valid or not.
-
-        .. note:: The $request->getIPAddress() method above automatically validates the IP address.
-
-            .. literalinclude:: request/002.php
-
-        Accepts an optional second string parameter of ``ipv4`` or ``ipv6`` to specify
-        an IP format. The default checks for both formats.
-
     .. php:method:: getMethod()
 
         :returns: HTTP request method
@@ -100,27 +78,6 @@ Class Reference
         as an array.
 
         .. literalinclude:: request/005.php
-
-    .. php:method:: getEnv([$index = null[, $filter = null[, $flags = null]]])
-
-        .. deprecated:: 4.4.4 This method does not work from the beginning. Use
-            :php:func:`env()` instead.
-
-        :param    mixed     $index: Value name
-        :param    int       $filter: The type of filter to apply. A list of filters can be found in `PHP manual <https://www.php.net/manual/en/filters.php>`__.
-        :param    int|array $flags: Flags to apply. A list of flags can be found in `PHP manual <https://www.php.net/manual/en/filter.constants.php#filter.constants.flags.generic>`__.
-        :returns: ``$_ENV`` item value if found, null if not
-        :rtype:   mixed
-
-        This method is identical to the ``getPost()``, ``getGet()`` and ``getCookie()`` methods from the
-        :doc:`IncomingRequest Class <./incomingrequest>`, only it fetches env data (``$_ENV``):
-
-        .. literalinclude:: request/006.php
-
-        To return an array of multiple ``$_ENV`` values, pass all the required keys
-        as an array.
-
-        .. literalinclude:: request/007.php
 
     .. php:method:: setGlobal($method, $value)
 

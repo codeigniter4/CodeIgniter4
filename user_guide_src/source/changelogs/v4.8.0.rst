@@ -124,6 +124,21 @@ Removed Deprecated Items
     - ``CodeIgniter\Filters\Filters::$arguments`` (deprecated since v4.6.0)
     - ``CodeIgniter\Filters\Filters::$argumentsClass`` (deprecated since v4.6.0)
     - ``CodeIgniter\Filters\Filters::getArguments()`` (deprecated since v4.6.0)
+- **HTTP:** Removed the following properties and methods deprecated:
+    - ``CodeIgniter\HTTP\Message::getHeaders()`` (deprecated since v4.0.5)
+    - ``CodeIgniter\HTTP\Message::getHeader()`` (deprecated since v4.0.5)
+    - ``CodeIgniter\HTTP\RequestTrait::getEnv()`` (deprecated since v4.4.4)
+    - ``CodeIgniter\HTTP\URI::$uriString`` (deprecated since v4.4.0)
+    - ``CodeIgniter\HTTP\URI::$baseURL`` (deprecated since v4.4.0)
+    - ``CodeIgniter\HTTP\URI::setBaseURL()`` (deprecated since v4.4.0)
+    - ``CodeIgniter\HTTP\URI::getBaseURL()`` (deprecated since v4.4.0)
+    - ``CodeIgniter\HTTP\URI::setURI()`` (deprecated since v4.4.0)
+    - ``CodeIgniter\HTTP\URI::setScheme()`` (deprecated since v4.4.0)
+    - ``CodeIgniter\HTTP\URI::refreshPath()`` (deprecated since v4.4.0)
+    - ``CodeIgniter\HTTP\SiteURI::$segments`` (deprecated since v4.4.0)
+    - ``CodeIgniter\HTTP\SiteURI::setBaseURL()`` (deprecated since v4.4.0)
+    - ``CodeIgniter\HTTP\SiteURI::setURI()`` (deprecated since v4.4.0)
+    - ``CodeIgniter\HTTP\SiteURI::refreshPath()`` (deprecated since v4.4.0)
 - **Security:** Removed the following properties and methods deprecated:
     - ``CodeIgniter\Security\SecurityInterface::sanitizeFilename()`` (deprecated since v4.6.2)
     - ``CodeIgniter\Security\Security::sanitizeFilename()`` (deprecated since v4.6.2)
@@ -202,6 +217,9 @@ HTTP
 - ``CLIRequest`` now supports options with values specified using an equals sign (e.g., ``--option=value``) in addition to the existing space-separated syntax (e.g., ``--option value``).
     This provides more flexibility in how you can pass options to CLI requests.
 - Added ``$enableStyleNonce`` and ``$enableScriptNonce`` options to ``Config\App`` to automatically add nonces to control whether to add nonces to style-* and script-* directives in the Content Security Policy (CSP) header when CSP is enabled. See :ref:`csp-control-nonce-generation` for details.
+- ``URI`` now accepts an optional boolean second parameter in the constructor, defaulting to ``false``, to control how the query string is parsed in instantiation.
+    This is the behavior of ``->useRawQueryString()`` brought into the constructor for convenience. Previously, you need to call ``$uri->useRawQueryString(true)->setURI($uri)`` to get this behavior.
+    Now you can simply do ``new URI($uri, true)``.
 
 Validation
 ==========
@@ -218,6 +236,7 @@ Message Changes
 - Removed deprecated language keys tied to removed exception constructors:
     - ``Core.missingExtension`` (``FrameworkException::forMissingExtension()``)
     - ``HTTP.cannotSetCache`` (``DownloadException::forCannotSetCache()``)
+    - ``HTTP.disallowedAction``
     - ``HTTP.invalidSameSiteSetting`` (``HTTPException::forInvalidSameSiteSetting()``)
     - ``Security.invalidSameSite`` (``SecurityException::forInvalidSameSite()``)
     - ``Session.invalidSameSiteSetting`` (``SessionException::forInvalidSameSiteSetting()``)
@@ -234,6 +253,7 @@ Deprecations
 
 - **CLI:** The ``CLI::parseCommandLine()`` method is now deprecated and will be removed in a future release. The ``CLI`` class now uses the new ``CommandLineParser`` class to handle command-line argument parsing.
 - **HTTP:** The ``CLIRequest::parseCommand()`` method is now deprecated and will be removed in a future release. The ``CLIRequest`` class now uses the new ``CommandLineParser`` class to handle command-line argument parsing.
+- **HTTP:** ``URI::setSilent()`` is now hard deprecated. This method was only previously marked as deprecated. It will now trigger a deprecation notice when used.
 
 **********
 Bugs Fixed

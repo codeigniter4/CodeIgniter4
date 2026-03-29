@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
-use CodeIgniter\Exceptions\BadMethodCallException;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -386,17 +385,6 @@ final class SiteURITest extends CIUnitTestCase
         $uri->setSegment(4, 'four');
     }
 
-    public function testSetSegmentSilentOutOfRange(): void
-    {
-        $config = new App();
-        $uri    = new SiteURI($config);
-        $uri->setPath('one/method');
-        $uri->setSilent();
-
-        $uri->setSegment(4, 'four');
-        $this->assertSame(['one', 'method'], $uri->getSegments());
-    }
-
     public function testSetSegmentZero(): void
     {
         $this->expectException(HTTPException::class);
@@ -470,26 +458,6 @@ final class SiteURITest extends CIUnitTestCase
         $uri    = new SiteURI($config);
 
         $this->assertSame(0, $uri->getTotalSegments());
-    }
-
-    public function testSetURI(): void
-    {
-        $this->expectException(BadMethodCallException::class);
-
-        $config = new App();
-        $uri    = new SiteURI($config);
-
-        $uri->setURI('http://another.site.example.jp/');
-    }
-
-    public function testSetBaseURI(): void
-    {
-        $this->expectException(BadMethodCallException::class);
-
-        $config = new App();
-        $uri    = new SiteURI($config);
-
-        $uri->setBaseURL('http://another.site.example.jp/');
     }
 
     public function testGetBaseURL(): void

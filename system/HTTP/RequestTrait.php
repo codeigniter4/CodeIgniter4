@@ -36,12 +36,8 @@ trait RequestTrait
 
     /**
      * IP address of the current user.
-     *
-     * @var string
-     *
-     * @deprecated 4.0.5 Will become private in a future release
      */
-    protected $ipAddress = '';
+    private string $ipAddress = '';
 
     /**
      * Stores values we've retrieved from PHP globals.
@@ -78,11 +74,11 @@ trait RequestTrait
             );
         }
 
-        $this->ipAddress = $this->getServer('REMOTE_ADDR');
+        $this->ipAddress = $this->getServer('REMOTE_ADDR') ?? '0.0.0.0';
 
-        // If this is a CLI request, $this->ipAddress is null.
-        if ($this->ipAddress === null) {
-            return $this->ipAddress = '0.0.0.0';
+        // If this is a CLI request, $this->ipAddress is '0.0.0.0'.
+        if ($this->ipAddress === '0.0.0.0') {
+            return $this->ipAddress;
         }
 
         // @TODO Extract all this IP address logic to another class.
@@ -204,23 +200,6 @@ trait RequestTrait
     public function getServer($index = null, $filter = null, $flags = null)
     {
         return $this->fetchGlobal('server', $index, $filter, $flags);
-    }
-
-    /**
-     * Fetch an item from the $_ENV array.
-     *
-     * @param array|string|null $index  Index for item to be fetched from $_ENV
-     * @param int|null          $filter A filter name to be applied
-     * @param array|int|null    $flags
-     *
-     * @return mixed
-     *
-     * @deprecated 4.4.4 This method does not work from the beginning. Use `env()`.
-     */
-    public function getEnv($index = null, $filter = null, $flags = null)
-    {
-        // @phpstan-ignore-next-line
-        return $this->fetchGlobal('env', $index, $filter, $flags);
     }
 
     /**

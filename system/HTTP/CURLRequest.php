@@ -313,7 +313,7 @@ class CURLRequest extends OutgoingRequest
     protected function parseOptions(array $options)
     {
         if (array_key_exists('baseURI', $options)) {
-            $this->baseURI = $this->baseURI->setURI($options['baseURI']);
+            $this->baseURI = new URI($options['baseURI'], true);
             unset($options['baseURI']);
         }
 

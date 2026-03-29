@@ -174,16 +174,6 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertNull($this->request->getServer('TESTY'));
     }
 
-    public function testCanGrabEnvVars(): void
-    {
-        $server                = $this->getPrivateProperty($this->request, 'globals');
-        $server['env']['TEST'] = 5;
-        $this->setPrivateProperty($this->request, 'globals', $server);
-
-        $this->assertSame('5', $this->request->getEnv('TEST'));
-        $this->assertNull($this->request->getEnv('TESTY'));
-    }
-
     public function testCanGrabCookieVars(): void
     {
         service('superglobals')->setCookie('TEST', '5');

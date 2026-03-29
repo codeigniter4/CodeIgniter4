@@ -8,7 +8,3 @@ echo $uri->getSegment(3, 'foo');
 echo $uri->getSegment(4, 'bar');
 // will throw an exception
 echo $uri->getSegment(5, 'baz');
-// will print 'baz'
-echo $uri->setSilent()->getSegment(5, 'baz');
-// will print '' (empty string)
-echo $uri->setSilent()->getSegment(5);
