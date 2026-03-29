@@ -25,7 +25,7 @@ on:
       - 'system/**.php'
       - 'tests/**.php'
 
-  workflow_call:
+  workflow_dispatch:
     inputs:
       quiet:
         description: Suppress debug output
