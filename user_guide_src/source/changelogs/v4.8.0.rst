@@ -145,6 +145,8 @@ Commands
 
 - ``CLI`` now supports the ``--`` separator to mean that what follows are arguments, not options. This allows you to have arguments that start with ``-`` without them being treated as options.
     For example: ``spark my:command -- --myarg`` will pass ``--myarg`` as an argument instead of an option.
+- ``CLI`` now supports options with values specified using an equals sign (e.g., ``--option=value``) in addition to the existing space-separated syntax (e.g., ``--option value``).
+    This provides more flexibility in how you can pass options to commands.
 
 Testing
 =======
@@ -197,6 +199,8 @@ HTTP
     Consequently, ``CURLRequest``'s ``$config`` parameter is unused and will be removed in a future release.
 - ``CLIRequest`` now supports the ``--`` separator to mean that what follows are arguments, not options. This allows you to have arguments that start with ``-`` without them being treated as options.
     For example: ``php index.php command -- --myarg`` will pass ``--myarg`` as an argument instead of an option.
+- ``CLIRequest`` now supports options with values specified using an equals sign (e.g., ``--option=value``) in addition to the existing space-separated syntax (e.g., ``--option value``).
+    This provides more flexibility in how you can pass options to CLI requests.
 
 Validation
 ==========

@@ -107,5 +107,23 @@ final class CommandLineParserTest extends CIUnitTestCase
             ['b', 'c', 'd'],
             [],
         ];
+
+        yield 'options with equals sign' => [
+            ['--key=value', '--foo='],
+            [],
+            ['key' => 'value', 'foo' => ''],
+        ];
+
+        yield 'options with equals sign and double hyphen' => [
+            ['--key=value', '--foo=', 'bar', '--', 'b', 'c', 'd'],
+            ['bar', 'b', 'c', 'd'],
+            ['key' => 'value', 'foo' => ''],
+        ];
+
+        yield 'mixed options with and without equals sign' => [
+            ['--key=value', '--foo', 'bar', '--', 'b', 'c', 'd'],
+            ['b', 'c', 'd'],
+            ['key' => 'value', 'foo' => 'bar'],
+        ];
     }
 }

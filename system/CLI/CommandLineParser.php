@@ -83,7 +83,9 @@ final class CommandLineParser
                 $name  = ltrim($token, '-');
                 $value = null;
 
-                if (isset($tokens[$index + 1]) && ! str_starts_with($tokens[$index + 1], '-')) {
+                if (str_contains($name, '=')) {
+                    [$name, $value] = explode('=', $name, 2);
+                } elseif (isset($tokens[$index + 1]) && ! str_starts_with($tokens[$index + 1], '-')) {
                     $value = $tokens[$index + 1];
 
                     $optionValue = true;
