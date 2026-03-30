@@ -328,16 +328,16 @@ modify the existing Time instance, but will return a new instance.
 addCalendarMonths() / subCalendarMonths()
 -----------------------------------------
 
-Modifies the current Time by adding or subtracting whole calendar months. These methods can be useful if you 
-require no calendar months are skipped in recurring dates. Refer to the table below for a comparison between 
+Modifies the current Time by adding or subtracting whole calendar months. These methods can be useful if you
+require no calendar months are skipped in recurring dates. Refer to the table below for a comparison between
 ``addMonths()`` and ``addCalendarMonths()`` for an initial date of ``2025-01-31``.
 
-======= =========== =================== 
+======= =========== ===================
 $months addMonths() addCalendarMonths()
 ======= =========== ===================
-1       2025-03-03  2025-02-28          
-2       2025-03-31  2025-03-31          
-3       2025-05-01  2025-04-30       
+1       2025-03-03  2025-02-28
+2       2025-03-31  2025-03-31
+3       2025-05-01  2025-04-30
 4       2025-05-31  2025-05-31
 5       2025-07-01  2025-06-30
 6       2025-07-31  2025-07-31
@@ -401,7 +401,7 @@ isPast()
 .. versionadded:: 4.7.0
 
 Determines if the current instance's time is in the past, relative to "now".
-It returns a boolean true/false::
+It returns a boolean true/false:
 
 .. literalinclude:: time/043.php
 
@@ -413,7 +413,7 @@ isFuture()
 .. versionadded:: 4.7.0
 
 Determines if the current instance's time is in the future, relative to "now".
-It returns a boolean true/false::
+It returns a boolean true/false:
 
 .. literalinclude:: time/044.php
 
