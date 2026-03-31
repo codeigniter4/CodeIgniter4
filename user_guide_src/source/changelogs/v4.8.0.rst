@@ -43,6 +43,7 @@ Interface Changes
 Method Signature Changes
 ========================
 
+- **CLI:** The ``Console::run()`` method now accepts an optional ``array $tokens`` parameter. This allows you to pass an array of command tokens directly to the console runner, which is useful for testing or programmatically running commands. If not provided, it will default to using the global ``$argv``.
 - **CodeIgniter:** The deprecated parameters in methods have been removed:
     - ``CodeIgniter\CodeIgniter::handleRequest()`` no longer accepts the deprecated ``$cacheConfig`` and ``$returnResponse`` parameters.
        - ``$cacheConfig`` is no longer used and is now hard deprecated. A deprecation notice will be triggered if this is passed to the method.
@@ -175,6 +176,7 @@ Commands
     This provides more flexibility in how you can pass options to commands.
 - ``CLI`` now supports parsing array options written multiple times (e.g., ``--option=value1 --option=value2``) into an array of values. This allows you to easily pass multiple values for the same option without needing to use a comma-separated string.
     When used with ``CLI::getOption()``, an array option will return its last value (for example, in this case, ``value2``). To retrieve all values for an array option, use ``CLI::getRawOption()``.
+- Likewise, the ``command()`` function now also supports the above enhancements for command-line option parsing when using the function to run commands from code.
 
 Testing
 =======
@@ -266,7 +268,9 @@ Changes
 Deprecations
 ************
 
+- The ``Boot::initializeConsole()`` method is now deprecated and will be removed in a future release.
 - **CLI:** The ``CLI::parseCommandLine()`` method is now deprecated and will be removed in a future release. The ``CLI`` class now uses the new ``CommandLineParser`` class to handle command-line argument parsing.
+- **CLI:** Returning a non-integer exit code from a command is now deprecated and will trigger a deprecation notice. Command methods should return an integer exit code (e.g., ``0`` for success, non-zero for errors) to ensure proper behavior across all platforms.
 - **HTTP:** The ``CLIRequest::parseCommand()`` method is now deprecated and will be removed in a future release. The ``CLIRequest`` class now uses the new ``CommandLineParser`` class to handle command-line argument parsing.
 - **HTTP:** ``URI::setSilent()`` is now hard deprecated. This method was only previously marked as deprecated. It will now trigger a deprecation notice when used.
 

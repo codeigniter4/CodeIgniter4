@@ -20,6 +20,13 @@ Mandatory File Changes
 Breaking Changes
 ****************
 
+Console Exit Codes
+==================
+
+Previously, returning a non-integer value from a command run through ``spark`` would be treated as a successful execution (exit code ``0``).
+Starting with v4.8.0, this behavior is still supported but will trigger a deprecation notice. Commands should now return an integer exit code
+to ensure proper behavior across all platforms.
+
 *********************
 Breaking Enhancements
 *********************
