@@ -12,6 +12,7 @@ declare(strict_types=1);
  */
 
 use CodeIgniter\Cache\CacheInterface;
+use CodeIgniter\CLI\Console;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Context\Context;
@@ -127,7 +128,7 @@ if (! function_exists('command')) {
         $regexString = '([^\s]+?)(?:\s|(?<!\\\\)"|(?<!\\\\)\'|$)';
         $regexQuoted = '(?:"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)"|\'([^\'\\\\]*(?:\\\\.[^\'\\\\]*)*)\')';
 
-        $args   = [];
+        $tokens = [];
         $length = strlen($command);
         $cursor = 0;
 
@@ -140,9 +141,9 @@ if (! function_exists('command')) {
             if (preg_match('/\s+/A', $command, $match, 0, $cursor)) {
                 // nothing to do
             } elseif (preg_match('/' . $regexQuoted . '/A', $command, $match, 0, $cursor)) {
-                $args[] = stripcslashes(substr($match[0], 1, strlen($match[0]) - 2));
+                $tokens[] = stripcslashes(substr($match[0], 1, strlen($match[0]) - 2));
             } elseif (preg_match('/' . $regexString . '/A', $command, $match, 0, $cursor)) {
-                $args[] = stripcslashes($match[1]);
+                $tokens[] = stripcslashes($match[1]);
             } else {
                 // @codeCoverageIgnoreStart
                 throw new InvalidArgumentException(sprintf(
@@ -155,39 +156,21 @@ if (! function_exists('command')) {
             $cursor += strlen($match[0]);
         }
 
-        /** @var array<int|string, string|null> */
-        $params      = [];
-        $command     = array_shift($args);
-        $optionValue = false;
-
-        foreach ($args as $i => $arg) {
-            if (mb_strpos($arg, '-') !== 0) {
-                if ($optionValue) {
-                    // if this was an option value, it was already
-                    // included in the previous iteration
-                    $optionValue = false;
-                } else {
-                    // add to segments if not starting with '-'
-                    // and not an option value
-                    $params[] = $arg;
-                }
-
-                continue;
+        // Don't show the header as it is not needed when running commands from code.
+        if (! in_array('--no-header', $tokens, true)) {
+            if (! in_array('--', $tokens, true)) {
+                $tokens[] = '--no-header';
+            } else {
+                $index = (int) array_search('--', $tokens, true);
+                array_splice($tokens, $index, 0, '--no-header');
             }
-
-            $arg   = ltrim($arg, '-');
-            $value = null;
-
-            if (isset($args[$i + 1]) && mb_strpos($args[$i + 1], '-') !== 0) {
-                $value       = $args[$i + 1];
-                $optionValue = true;
-            }
-
-            $params[$arg] = $value;
         }
 
+        // Prepend an application name, as Console expects one.
+        array_unshift($tokens, 'spark');
+
         ob_start();
-        service('commands')->run($command, $params);
+        (new Console())->run($tokens);
 
         return ob_get_clean();
     }

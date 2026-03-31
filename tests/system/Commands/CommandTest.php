@@ -165,11 +165,11 @@ final class CommandTest extends CIUnitTestCase
             ],
             [
                 'reveal seg1 seg2 -opt1 val1 seg3',
-                ['seg1', 'seg2', 'opt1' => 'val1', 'seg3'],
+                ['seg1', 'seg2', 'seg3', 'opt1' => 'val1'],
             ],
             [
                 'reveal as df -gh -jk -qw 12 zx cv',
-                ['as', 'df', 'gh' => null, 'jk' => null, 'qw' => '12', 'zx', 'cv'],
+                ['as', 'df', 'zx', 'cv', 'gh' => null, 'jk' => null, 'qw' => '12'],
             ],
             [
                 'reveal as -df "some stuff" -jk 12 -sd "Some longer stuff" -fg \'using single quotes\'',
