@@ -1,4 +1,4 @@
-# total 1237 errors
+# total 1231 errors
 
 parameters:
     ignoreErrors:
@@ -2338,11 +2338,6 @@ parameters:
             path: ../../system/Filters/PerformanceMetrics.php
 
         -
-            message: '#^Method CodeIgniter\\HTTP\\CLIRequest\:\:getArgs\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/CLIRequest.php
-
-        -
             message: '#^Method CodeIgniter\\HTTP\\CLIRequest\:\:getCookie\(\) has parameter \$index with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HTTP/CLIRequest.php
@@ -2383,11 +2378,6 @@ parameters:
             path: ../../system/HTTP/CLIRequest.php
 
         -
-            message: '#^Method CodeIgniter\\HTTP\\CLIRequest\:\:getOptions\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/CLIRequest.php
-
-        -
             message: '#^Method CodeIgniter\\HTTP\\CLIRequest\:\:getPostGet\(\) has parameter \$flags with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HTTP/CLIRequest.php
@@ -2418,32 +2408,12 @@ parameters:
             path: ../../system/HTTP/CLIRequest.php
 
         -
-            message: '#^Method CodeIgniter\\HTTP\\CLIRequest\:\:getSegments\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/CLIRequest.php
-
-        -
             message: '#^Method CodeIgniter\\HTTP\\CLIRequest\:\:returnNullOrEmptyArray\(\) has parameter \$index with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HTTP/CLIRequest.php
 
         -
             message: '#^Method CodeIgniter\\HTTP\\CLIRequest\:\:returnNullOrEmptyArray\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/CLIRequest.php
-
-        -
-            message: '#^Property CodeIgniter\\HTTP\\CLIRequest\:\:\$args type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/CLIRequest.php
-
-        -
-            message: '#^Property CodeIgniter\\HTTP\\CLIRequest\:\:\$options type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/CLIRequest.php
-
-        -
-            message: '#^Property CodeIgniter\\HTTP\\CLIRequest\:\:\$segments type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HTTP/CLIRequest.php
 

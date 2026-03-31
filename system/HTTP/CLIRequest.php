@@ -36,21 +36,21 @@ class CLIRequest extends Request
     /**
      * Stores the segments of our cli "URI" command.
      *
-     * @var array
+     * @var list<string>
      */
     protected $segments = [];
 
     /**
      * Command line options and their values.
      *
-     * @var array
+     * @var array<string, list<string|null>|string|null>
      */
     protected $options = [];
 
     /**
      * Command line arguments (segments and options).
      *
-     * @var array
+     * @var array<int|string, list<string|null>|string|null>
      */
     protected $args = [];
 
@@ -106,6 +106,8 @@ class CLIRequest extends Request
     /**
      * Returns an associative array of all CLI options found, with
      * their values.
+     *
+     * @return array<string, list<string|null>|string|null>
      */
     public function getOptions(): array
     {
@@ -114,6 +116,8 @@ class CLIRequest extends Request
 
     /**
      * Returns an array of all CLI arguments (segments and options).
+     *
+     * @return array<int|string, list<string|null>|string|null>
      */
     public function getArgs(): array
     {
@@ -122,6 +126,8 @@ class CLIRequest extends Request
 
     /**
      * Returns the path segments.
+     *
+     * @return list<string>
      */
     public function getSegments(): array
     {
@@ -131,9 +137,27 @@ class CLIRequest extends Request
     /**
      * Returns the value for a single CLI option that was passed in.
      *
+     * If an option was passed in multiple times, this will return the last value passed in for that option.
+     *
      * @return string|null
      */
     public function getOption(string $key)
+    {
+        $value = $this->options[$key] ?? null;
+
+        if (! is_array($value)) {
+            return $value;
+        }
+
+        return $value[count($value) - 1];
+    }
+
+    /**
+     * Returns the value for a single CLI option that was passed in.
+     *
+     * @return list<string|null>|string|null
+     */
+    public function getRawOption(string $key): array|string|null
     {
         return $this->options[$key] ?? null;
     }
@@ -156,27 +180,31 @@ class CLIRequest extends Request
             return '';
         }
 
-        $out = '';
+        $out = [];
+
+        $valueCallback = static function (?string $value, string $name) use (&$out): void {
+            if ($value === null) {
+                $out[] = $name;
+            } elseif (str_contains($value, ' ')) {
+                $out[] = sprintf('%s "%s"', $name, $value);
+            } else {
+                $out[] = sprintf('%s %s', $name, $value);
+            }
+        };
 
         foreach ($this->options as $name => $value) {
-            if ($useLongOpts && mb_strlen($name) > 1) {
-                $out .= "--{$name} ";
-            } else {
-                $out .= "-{$name} ";
-            }
+            $name = $useLongOpts && mb_strlen($name) > 1 ? "--{$name}" : "-{$name}";
 
-            if ($value === null) {
-                continue;
-            }
-
-            if (mb_strpos($value, ' ') !== false) {
-                $out .= '"' . $value . '" ';
+            if (is_array($value)) {
+                foreach ($value as $val) {
+                    $valueCallback($val, $name);
+                }
             } else {
-                $out .= "{$value} ";
+                $valueCallback($value, $name);
             }
         }
 
-        return trim($out);
+        return trim(implode(' ', $out));
     }
 
     /**

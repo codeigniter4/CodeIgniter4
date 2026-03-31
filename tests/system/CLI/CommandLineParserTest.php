@@ -24,9 +24,9 @@ use PHPUnit\Framework\Attributes\Group;
 final class CommandLineParserTest extends CIUnitTestCase
 {
     /**
-     * @param list<string>               $tokens
-     * @param list<string>               $arguments
-     * @param array<string, string|null> $options
+     * @param list<string>                                 $tokens
+     * @param list<string>                                 $arguments
+     * @param array<string, list<string|null>|string|null> $options
      */
     #[DataProvider('provideParseCommand')]
     public function testParseCommand(array $tokens, array $arguments, array $options): void
@@ -38,7 +38,7 @@ final class CommandLineParserTest extends CIUnitTestCase
     }
 
     /**
-     * @return iterable<string, array{0: list<string>, 1: list<string>, 2: array<string, string|null>}>
+     * @return iterable<string, array{0: list<string>, 1: list<string>, 2: array<string, list<string|null>|string|null>}>
      */
     public static function provideParseCommand(): iterable
     {
@@ -124,6 +124,18 @@ final class CommandLineParserTest extends CIUnitTestCase
             ['--key=value', '--foo', 'bar', '--', 'b', 'c', 'd'],
             ['b', 'c', 'd'],
             ['key' => 'value', 'foo' => 'bar'],
+        ];
+
+        yield 'multiple options with same name' => [
+            ['--key=value1', '--key=value2', '--key', 'value3'],
+            [],
+            ['key' => ['value1', 'value2', 'value3']],
+        ];
+
+        yield 'array options dispersed among arguments' => [
+            ['--key=value1', 'arg1', '--key', 'value2', 'arg2', '--key', 'value3'],
+            ['arg1', 'arg2'],
+            ['key' => ['value1', 'value2', 'value3']],
         ];
     }
 }

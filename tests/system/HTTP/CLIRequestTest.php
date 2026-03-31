@@ -18,6 +18,7 @@ use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -270,6 +271,64 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame('-foo oops -baz "queue some stuff"', $this->request->getOptionString());
         $this->assertSame('--foo oops --baz "queue some stuff"', $this->request->getOptionString(true));
         $this->assertSame('users/21/profile/bar', $this->request->getPath());
+    }
+
+    public function testParsingWithArrayOptions(): void
+    {
+        service('superglobals')->setServer('argv', [
+            'index.php',
+            'users',
+            '21',
+            'profile',
+            '--foo',
+            'oops',
+            '--foo',
+            'bar',
+            '--baz',
+            'queue',
+        ]);
+        $this->request = new CLIRequest(new App());
+
+        $this->assertSame('users/21/profile', $this->request->getPath());
+        $this->assertSame('bar', $this->request->getOption('foo'));
+        $this->assertSame('queue', $this->request->getOption('baz'));
+        $this->assertSame(['oops', 'bar'], $this->request->getRawOption('foo'));
+        $this->assertSame('queue', $this->request->getRawOption('baz'));
+        $this->assertSame('-foo oops -foo bar -baz queue', $this->request->getOptionString());
+        $this->assertSame('--foo oops --foo bar --baz queue', $this->request->getOptionString(true));
+    }
+
+    /**
+     * @param list<string> $options
+     */
+    #[DataProvider('provideGetOptionString')]
+    public function testGetOptionString(array $options, string $optionString): void
+    {
+        service('superglobals')->setServer('argv', ['index.php', 'b', 'c', ...$options]);
+        $this->request = new CLIRequest(new App());
+
+        $this->assertSame($optionString, $this->request->getOptionString(true));
+    }
+
+    /**
+     * @return iterable<array{0: list<string>, 1: string}>
+     */
+    public static function provideGetOptionString(): iterable
+    {
+        yield [
+            ['--parm', 'pvalue'],
+            '--parm pvalue',
+        ];
+
+        yield [
+            ['--parm', 'p value'],
+            '--parm "p value"',
+        ];
+
+        yield [
+            ['--key', 'val1', '--key', 'val2', '--opt', '--bar'],
+            '--key val1 --key val2 --opt --bar',
+        ];
     }
 
     public function testFetchGlobalsSingleValue(): void

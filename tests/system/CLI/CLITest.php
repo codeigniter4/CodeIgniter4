@@ -563,6 +563,68 @@ final class CLITest extends CIUnitTestCase
         $this->assertSame(['b', 'c', 'd'], CLI::getSegments());
     }
 
+    public function testParseCommandMultipleAndArrayOptions(): void
+    {
+        service('superglobals')->setServer('argv', [
+            'ignored',
+            'b',
+            'c',
+            '--p1',
+            'value',
+            'd',
+            '--p2',
+            '--p3',
+            'value 3',
+            '--p3',
+            'value 3.1',
+        ]);
+        CLI::init();
+
+        $this->assertSame(['p1' => 'value', 'p2' => null, 'p3' => ['value 3', 'value 3.1']], CLI::getOptions());
+        $this->assertSame('value', CLI::getOption('p1'));
+        $this->assertTrue(CLI::getOption('p2'));
+        $this->assertSame('value 3.1', CLI::getOption('p3'));
+        $this->assertSame(['value 3', 'value 3.1'], CLI::getRawOption('p3'));
+        $this->assertSame('-p1 value -p2 -p3 "value 3" -p3 "value 3.1" ', CLI::getOptionString());
+        $this->assertSame('-p1 value -p2 -p3 "value 3" -p3 "value 3.1"', CLI::getOptionString(false, true));
+        $this->assertSame('--p1 value --p2 --p3 "value 3" --p3 "value 3.1" ', CLI::getOptionString(true));
+        $this->assertSame('--p1 value --p2 --p3 "value 3" --p3 "value 3.1"', CLI::getOptionString(true, true));
+        $this->assertSame(['b', 'c', 'd'], CLI::getSegments());
+    }
+
+    /**
+     * @param list<string> $options
+     */
+    #[DataProvider('provideGetOptionString')]
+    public function testGetOptionString(array $options, string $optionString): void
+    {
+        service('superglobals')->setServer('argv', ['spark', 'b', 'c', ...$options]);
+        CLI::init();
+
+        $this->assertSame($optionString, CLI::getOptionString(true, true));
+    }
+
+    /**
+     * @return iterable<array{0: list<string>, 1: string}>
+     */
+    public static function provideGetOptionString(): iterable
+    {
+        yield [
+            ['--parm', 'pvalue'],
+            '--parm pvalue',
+        ];
+
+        yield [
+            ['--parm', 'p value'],
+            '--parm "p value"',
+        ];
+
+        yield [
+            ['--key', 'val1', '--key', 'val2', '--opt', '--bar'],
+            '--key val1 --key val2 --opt --bar',
+        ];
+    }
+
     public function testWindow(): void
     {
         $height = new ReflectionProperty(CLI::class, 'height');

@@ -97,7 +97,7 @@ class CLI
     protected static $segments = [];
 
     /**
-     * @var array<string, string|null>
+     * @var array<string, list<string|null>|string|null>
      */
     protected static $options = [];
 
@@ -925,8 +925,11 @@ class CLI
     }
 
     /**
-     * Gets a single command-line option. Returns TRUE if the option
-     * exists, but doesn't have a value, and is simply acting as a flag.
+     * Gets the value of an individual option.
+     *
+     * * If the option was passed without a value, this will return `true`.
+     * * If the option was not passed at all, this will return `null`.
+     * * If the option was an array of values, this will return the last value passed for that option.
      *
      * @return string|true|null
      */
@@ -936,17 +939,34 @@ class CLI
             return null;
         }
 
-        // If the option didn't have a value, simply return TRUE
-        // so they know it was set, otherwise return the actual value.
-        $val = static::$options[$name] ?? true;
+        $value = static::$options[$name] ?? true;
 
-        return $val;
+        if (! is_array($value)) {
+            return $value;
+        }
+
+        return $value[count($value) - 1];
+    }
+
+    /**
+     * Gets the raw value of an individual option, which may be a string,
+     * a list of `string|null`, or `true` if the option was passed without a value.
+     *
+     * @return list<string|null>|string|true|null
+     */
+    public static function getRawOption(string $name): array|string|true|null
+    {
+        if (! array_key_exists($name, static::$options)) {
+            return null;
+        }
+
+        return static::$options[$name] ?? true;
     }
 
     /**
      * Returns the raw array of options found.
      *
-     * @return array<string, string|null>
+     * @return array<string, list<string|null>|string|null>
      */
     public static function getOptions(): array
     {
@@ -966,27 +986,33 @@ class CLI
             return '';
         }
 
-        $out = '';
+        $out = [];
+
+        $valueCallback = static function (?string $value, string $name) use (&$out): void {
+            if ($value === null) {
+                $out[] = $name;
+            } elseif (str_contains($value, ' ')) {
+                $out[] = sprintf('%s "%s"', $name, $value);
+            } else {
+                $out[] = sprintf('%s %s', $name, $value);
+            }
+        };
 
         foreach (static::$options as $name => $value) {
-            if ($useLongOpts && mb_strlen($name) > 1) {
-                $out .= "--{$name} ";
+            $name = $useLongOpts && mb_strlen($name) > 1 ? "--{$name}" : "-{$name}";
+
+            if (is_array($value)) {
+                foreach ($value as $val) {
+                    $valueCallback($val, $name);
+                }
             } else {
-                $out .= "-{$name} ";
-            }
-
-            if ($value === null) {
-                continue;
-            }
-
-            if (mb_strpos($value, ' ') !== false) {
-                $out .= "\"{$value}\" ";
-            } elseif ($value !== null) {
-                $out .= "{$value} ";
+                $valueCallback($value, $name);
             }
         }
 
-        return $trim ? trim($out) : $out;
+        $output = implode(' ', $out);
+
+        return $trim ? $output : "{$output} ";
     }
 
     /**

@@ -21,12 +21,12 @@ final class CommandLineParser
     private array $arguments = [];
 
     /**
-     * @var array<string, string|null>
+     * @var array<string, list<string|null>|string|null>
      */
     private array $options = [];
 
     /**
-     * @var array<int|string, string|null>
+     * @var array<int|string, list<string|null>|string|null>
      */
     private array $tokens = [];
 
@@ -47,7 +47,7 @@ final class CommandLineParser
     }
 
     /**
-     * @return array<string, string|null>
+     * @return array<string, list<string|null>|string|null>
      */
     public function getOptions(): array
     {
@@ -55,7 +55,7 @@ final class CommandLineParser
     }
 
     /**
-     * @return array<int|string, string|null>
+     * @return array<int|string, list<string|null>|string|null>
      */
     public function getTokens(): array
     {
@@ -91,8 +91,18 @@ final class CommandLineParser
                     $optionValue = true;
                 }
 
-                $this->tokens[$name]  = $value;
-                $this->options[$name] = $value;
+                if (array_key_exists($name, $this->options)) {
+                    if (! is_array($this->options[$name])) {
+                        $this->options[$name] = [$this->options[$name]];
+                        $this->tokens[$name]  = [$this->tokens[$name]];
+                    }
+
+                    $this->options[$name][] = $value;
+                    $this->tokens[$name][]  = $value;
+                } else {
+                    $this->options[$name] = $value;
+                    $this->tokens[$name]  = $value;
+                }
 
                 continue;
             }

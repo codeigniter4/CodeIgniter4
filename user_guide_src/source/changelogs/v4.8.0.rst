@@ -173,6 +173,8 @@ Commands
     For example: ``spark my:command -- --myarg`` will pass ``--myarg`` as an argument instead of an option.
 - ``CLI`` now supports options with values specified using an equals sign (e.g., ``--option=value``) in addition to the existing space-separated syntax (e.g., ``--option value``).
     This provides more flexibility in how you can pass options to commands.
+- ``CLI`` now supports parsing array options written multiple times (e.g., ``--option=value1 --option=value2``) into an array of values. This allows you to easily pass multiple values for the same option without needing to use a comma-separated string.
+    When used with ``CLI::getOption()``, an array option will return the its last value (for example, in this case, ``value2``). To retrieve all values for an array option, use ``CLI::getRawOption()``.
 
 Testing
 =======
@@ -231,6 +233,8 @@ HTTP
 - ``URI`` now accepts an optional boolean second parameter in the constructor, defaulting to ``false``, to control how the query string is parsed in instantiation.
     This is the behavior of ``->useRawQueryString()`` brought into the constructor for convenience. Previously, you need to call ``$uri->useRawQueryString(true)->setURI($uri)`` to get this behavior.
     Now you can simply do ``new URI($uri, true)``.
+- ``CLIRequest`` now supports parsing array options written multiple times (e.g., ``--option=value1 --option=value2``) into an array of values. This allows you to easily pass multiple values for the same option without needing to use a comma-separated string.
+    When used with ``CLIRequest::getOption()``, an array option will return the its last value (for example, in this case, ``value2``). To retrieve all values for an array option, use ``CLIRequest::getRawOption()``.
 
 Validation
 ==========
