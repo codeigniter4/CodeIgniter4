@@ -161,9 +161,8 @@ class Boot
         static::autoloadHelpers();
 
         static::initializeCodeIgniter();
-        $console = static::initializeConsole();
 
-        return static::runCommand($console);
+        return static::runCommand(new Console());
     }
 
     /**
@@ -422,8 +421,13 @@ class Boot
         $factoriesCache->save('config');
     }
 
+    /**
+     * @deprecated 4.8.0 No longer used.
+     */
     protected static function initializeConsole(): Console
     {
+        @trigger_error(sprintf('The static %s() method is deprecated and no longer used.', __METHOD__), E_USER_DEPRECATED);
+
         $console = new Console();
 
         // Show basic information before we do anything else.
@@ -439,8 +443,13 @@ class Boot
 
     protected static function runCommand(Console $console): int
     {
-        $exit = $console->run();
+        $exitCode = $console->initialize()->run();
 
-        return is_int($exit) ? $exit : EXIT_SUCCESS;
+        if (! is_int($exitCode)) {
+            @trigger_error(sprintf('Starting with CodeIgniter v4.8.0, commands must return an integer exit code. Last command exited with %s. Defaulting to EXIT_SUCCESS.', get_debug_type($exitCode)), E_USER_DEPRECATED);
+            $exitCode = EXIT_SUCCESS;
+        }
+
+        return $exitCode;
     }
 }
