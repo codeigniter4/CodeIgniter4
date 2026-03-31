@@ -1021,7 +1021,12 @@ a timezone string in as the second parameter. If no timezone is given, the syste
 </div>
 <p>Determines if the current instance’s time is in the past, relative to “now”.
 It returns a boolean true/false:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="nx">literalinclude</span><span class="o">::</span> <span class="na">time</span><span class="o">/</span><span class="mf">043.</span><span class="nx">php</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
+
+<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;yesterday&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">isPast</span><span class="p">();</span> <span class="c1">// true</span>
 </pre></div>
 </div>
 </section>
@@ -1032,7 +1037,12 @@ It returns a boolean true/false:</p>
 </div>
 <p>Determines if the current instance’s time is in the future, relative to “now”.
 It returns a boolean true/false:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="nx">literalinclude</span><span class="o">::</span> <span class="na">time</span><span class="o">/</span><span class="mf">044.</span><span class="nx">php</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
+
+<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;tomorrow&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">isFuture</span><span class="p">();</span> <span class="c1">// true</span>
 </pre></div>
 </div>
 </section>
@@ -1179,7 +1189,7 @@ If you want to overwrite them, create <strong>app/Language/{locale}/Time.php</st
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 29, 2026.
+      <span class="lastupdated">Last updated on Mar 31, 2026.
       </span></p>
   </div>
 
