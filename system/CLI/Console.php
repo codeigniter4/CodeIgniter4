@@ -16,35 +16,61 @@ namespace CodeIgniter\CLI;
 use CodeIgniter\CodeIgniter;
 use Config\App;
 use Config\Services;
-use Exception;
 
 /**
- * Console
- *
  * @see \CodeIgniter\CLI\ConsoleTest
  */
 class Console
 {
+    private const DEFAULT_COMMAND = 'list';
+
+    /**
+     * @var array<string, string|null>
+     */
+    private array $options = [];
+
     /**
      * Runs the current command discovered on the CLI.
      *
-     * @return int|void Exit code
+     * @param list<string> $tokens
      *
-     * @throws Exception
+     * @return int|null Exit code or null for legacy commands that don't return an exit code.
      */
-    public function run()
+    public function run(array $tokens = [])
     {
-        // Create CLIRequest
-        $appConfig = config(App::class);
-        Services::createRequest($appConfig, true);
-        // Load Routes
+        if ($tokens === []) {
+            $tokens = service('superglobals')->server('argv', []);
+        }
+
+        $parser = new CommandLineParser($tokens);
+
+        $arguments     = $parser->getArguments();
+        $this->options = $parser->getOptions();
+
+        $this->showHeader($this->hasParameterOption(['no-header']));
+        unset($this->options['no-header']);
+
+        if ($this->hasParameterOption(['help'])) {
+            unset($this->options['help']);
+
+            if ($arguments === []) {
+                $arguments = ['help', self::DEFAULT_COMMAND];
+            } elseif ($arguments[0] !== 'help') {
+                array_unshift($arguments, 'help');
+            }
+        }
+
+        $command = array_shift($arguments) ?? self::DEFAULT_COMMAND;
+
+        return service('commands')->run($command, array_merge($arguments, $this->options));
+    }
+
+    public function initialize(): static
+    {
+        Services::createRequest(config(App::class), true);
         service('routes')->loadRoutes();
 
-        $params  = array_merge(CLI::getSegments(), CLI::getOptions());
-        $params  = $this->parseParamsForHelpOption($params);
-        $command = array_shift($params) ?? 'list';
-
-        return service('commands')->run($command, $params);
+        return $this;
     }
 
     /**
@@ -67,24 +93,18 @@ class Console
     }
 
     /**
-     * Introspects the `$params` passed for presence of the
-     * `--help` option.
+     * Checks whether any of the options are present in the command line.
      *
-     * If present, it will be found as `['help' => null]`.
-     * We'll remove that as an option from `$params` and
-     * unshift it as argument instead.
-     *
-     * @param array<int|string, string|null> $params
+     * @param list<string> $options
      */
-    private function parseParamsForHelpOption(array $params): array
+    private function hasParameterOption(array $options): bool
     {
-        if (array_key_exists('help', $params)) {
-            unset($params['help']);
-
-            $params = $params === [] ? ['list'] : $params;
-            array_unshift($params, 'help');
+        foreach ($options as $option) {
+            if (array_key_exists($option, $this->options)) {
+                return true;
+            }
         }
 
-        return $params;
+        return false;
     }
 }

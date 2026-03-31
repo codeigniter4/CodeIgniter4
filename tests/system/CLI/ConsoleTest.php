@@ -39,13 +39,7 @@ final class ConsoleTest extends CIUnitTestCase
         Services::injectMock('superglobals', new Superglobals());
         CLI::init();
 
-        $env = new DotEnv(ROOTPATH);
-        $env->load();
-
-        // Set environment values that would otherwise stop the framework from functioning during tests.
-        if (service('superglobals')->server('app.baseURL') === null) {
-            service('superglobals')->setServer('app.baseURL', 'http://example.com/');
-        }
+        (new DotEnv(ROOTPATH))->load();
 
         $this->app = new MockCodeIgniter(new MockCLIConfig());
         $this->app->initialize();
@@ -53,39 +47,38 @@ final class ConsoleTest extends CIUnitTestCase
 
     protected function tearDown(): void
     {
-        CLI::reset();
-
         parent::tearDown();
+
+        CLI::reset();
     }
 
-    public function testHeader(): void
+    public function testHeaderShowsNormally(): void
     {
-        $console = new Console();
-        $console->showHeader();
-        $this->assertGreaterThan(
-            0,
-            strpos(
-                $this->getStreamFilterBuffer(),
-                sprintf('CodeIgniter v%s Command Line Tool', CodeIgniter::CI_VERSION),
-            ),
+        $this->initializeConsole();
+        (new Console())->run();
+
+        $this->assertStringContainsString(
+            sprintf('CodeIgniter v%s Command Line Tool', CodeIgniter::CI_VERSION),
+            $this->getStreamFilterBuffer(),
         );
     }
 
-    public function testNoHeader(): void
+    public function testHeaderDoesNotShowOnNoHeader(): void
     {
-        $console = new Console();
-        $console->showHeader(true);
-        $this->assertSame('', $this->getStreamFilterBuffer());
+        $this->initializeConsole('--no-header');
+        (new Console())->run();
+
+        $this->assertStringNotContainsString(
+            sprintf('CodeIgniter v%s Command Line Tool', CodeIgniter::CI_VERSION),
+            $this->getStreamFilterBuffer(),
+        );
     }
 
     public function testRun(): void
     {
-        $this->initCLI();
+        $this->initializeConsole();
+        (new Console())->run();
 
-        $console = new Console();
-        $console->run();
-
-        // make sure the result looks like a command list
         $this->assertStringContainsString('Lists the available commands.', $this->getStreamFilterBuffer());
         $this->assertStringContainsString('Displays basic usage information.', $this->getStreamFilterBuffer());
     }
@@ -97,10 +90,8 @@ final class ConsoleTest extends CIUnitTestCase
             $result = 'fired';
         });
 
-        $this->initCLI();
-
-        $console = new Console();
-        $console->run();
+        $this->initializeConsole();
+        (new Console())->run();
 
         $this->assertEventTriggered('pre_command');
         $this->assertSame('fired', $result);
@@ -113,10 +104,8 @@ final class ConsoleTest extends CIUnitTestCase
             $result = 'fired';
         });
 
-        $this->initCLI();
-
-        $console = new Console();
-        $console->run();
+        $this->initializeConsole();
+        (new Console())->run();
 
         $this->assertEventTriggered('post_command');
         $this->assertSame('fired', $result);
@@ -124,23 +113,17 @@ final class ConsoleTest extends CIUnitTestCase
 
     public function testBadCommand(): void
     {
-        $this->initCLI('bogus');
+        $this->initializeConsole('bogus');
+        (new Console())->run();
 
-        $console = new Console();
-        $console->run();
-
-        // make sure the result looks like a command list
         $this->assertStringContainsString('Command "bogus" not found', $this->getStreamFilterBuffer());
     }
 
     public function testHelpCommandDetails(): void
     {
-        $this->initCLI('help', 'make:migration');
+        $this->initializeConsole('help', 'make:migration');
+        (new Console())->run();
 
-        $console = new Console();
-        $console->run();
-
-        // make sure the result looks like more detailed help
         $this->assertStringContainsString('Description:', $this->getStreamFilterBuffer());
         $this->assertStringContainsString('Usage:', $this->getStreamFilterBuffer());
         $this->assertStringContainsString('Options:', $this->getStreamFilterBuffer());
@@ -148,8 +131,7 @@ final class ConsoleTest extends CIUnitTestCase
 
     public function testHelpCommandUsingHelpOption(): void
     {
-        $this->initCLI('env', '--help');
-
+        $this->initializeConsole('env', '--help');
         (new Console())->run();
 
         $this->assertStringContainsString('env [<environment>]', $this->getStreamFilterBuffer());
@@ -161,8 +143,7 @@ final class ConsoleTest extends CIUnitTestCase
 
     public function testHelpOptionIsOnlyPassed(): void
     {
-        $this->initCLI('--help');
-
+        $this->initializeConsole('--help');
         (new Console())->run();
 
         // Since calling `php spark` is the same as calling `php spark list`,
@@ -172,21 +153,18 @@ final class ConsoleTest extends CIUnitTestCase
 
     public function testHelpArgumentAndHelpOptionCombined(): void
     {
-        $this->initCLI('help', '--help');
-
+        $this->initializeConsole('help', '--help');
         (new Console())->run();
 
         // Same as calling `php spark help` only
         $this->assertStringContainsString('Displays basic usage information.', $this->getStreamFilterBuffer());
     }
 
-    /**
-     * @param string ...$command
-     */
-    protected function initCLI(...$command): void
+    private function initializeConsole(string ...$tokens): void
     {
-        service('superglobals')->setServer('argv', ['spark', ...$command]);
-        service('superglobals')->setServer('argc', count(service('superglobals')->server('argv')));
+        service('superglobals')
+            ->setServer('argv', ['spark', ...$tokens])
+            ->setServer('argc', count($tokens) + 1);
 
         CLI::init();
     }
