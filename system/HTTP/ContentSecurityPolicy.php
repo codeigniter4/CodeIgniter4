@@ -407,6 +407,22 @@ class ContentSecurityPolicy
     }
 
     /**
+     * Whether adding nonce in style-* directives is enabled or not.
+     */
+    public function styleNonceEnabled(): bool
+    {
+        return $this->enabled() && $this->enableStyleNonce;
+    }
+
+    /**
+     * Whether adding nonce in script-* directives is enabled or not.
+     */
+    public function scriptNonceEnabled(): bool
+    {
+        return $this->enabled() && $this->enableScriptNonce;
+    }
+
+    /**
      * Get the nonce for the style tag.
      */
     public function getStyleNonce(): string

@@ -335,7 +335,7 @@ if (! function_exists('csp_style_nonce')) {
     {
         $csp = service('csp');
 
-        if (! $csp->enabled()) {
+        if (! $csp->styleNonceEnabled()) {
             return '';
         }
 
@@ -351,7 +351,7 @@ if (! function_exists('csp_script_nonce')) {
     {
         $csp = service('csp');
 
-        if (! $csp->enabled()) {
+        if (! $csp->scriptNonceEnabled()) {
             return '';
         }
 
