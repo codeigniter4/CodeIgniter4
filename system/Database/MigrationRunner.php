@@ -145,9 +145,9 @@ class MigrationRunner
      */
     public function __construct(MigrationsConfig $config, $db = null)
     {
-        $this->enabled = $config->enabled ?? false;
-        $this->table   = $config->table ?? 'migrations';
-        $this->lock    = $config->lock ?? false;
+        $this->enabled = $config->enabled;
+        $this->table   = $config->table;
+        $this->lock    = $config->lock ?? false; // @phpstan-ignore nullCoalesce.property
 
         // Even if a DB connection is passed, since it is a test,
         // it is assumed to use the default group name

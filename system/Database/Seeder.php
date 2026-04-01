@@ -78,7 +78,7 @@ class Seeder
      */
     public function __construct(Database $config, ?BaseConnection $db = null)
     {
-        $this->seedPath = $config->filesPath ?? APPPATH . 'Database/';
+        $this->seedPath = $config->filesPath;
 
         if ($this->seedPath === '') {
             throw new InvalidArgumentException('Invalid filesPath set in the Config\Database.');

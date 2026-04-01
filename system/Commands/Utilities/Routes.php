@@ -122,7 +122,7 @@ class Routes extends BaseCommand
         }
 
         if ($collection->shouldAutoRoute()) {
-            $autoRoutesImproved = config(Feature::class)->autoRoutesImproved ?? false;
+            $autoRoutesImproved = config(Feature::class)->autoRoutesImproved;
 
             if ($autoRoutesImproved) {
                 $autoRouteCollector = new AutoRouteCollectorImproved(

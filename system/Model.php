@@ -232,7 +232,7 @@ class Model extends BaseModel
      */
     protected function doFindAll(?int $limit = null, int $offset = 0)
     {
-        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true;
+        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true; // @phpstan-ignore nullCoalesce.property
         if ($limitZeroAsAll) {
             $limit ??= 0;
         }

@@ -653,7 +653,7 @@ abstract class BaseModel
      */
     public function findAll(?int $limit = null, int $offset = 0)
     {
-        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true;
+        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true; // @phpstan-ignore nullCoalesce.property
         if ($limitZeroAsAll) {
             $limit ??= 0;
         }

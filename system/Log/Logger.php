@@ -138,9 +138,7 @@ class Logger implements LoggerInterface
             $this->loggableLevels[] = $stringLevel;
         }
 
-        if (isset($config->dateFormat)) {
-            $this->dateFormat = $config->dateFormat;
-        }
+        $this->dateFormat = $config->dateFormat;
 
         if ($config->handlers === []) {
             throw LogException::forNoHandlers('LoggerConfig');

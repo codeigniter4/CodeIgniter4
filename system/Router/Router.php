@@ -157,9 +157,7 @@ class Router implements RouterInterface
     {
         $config = config(App::class);
 
-        if (isset($config->permittedURIChars)) {
-            $this->permittedURIChars = $config->permittedURIChars;
-        }
+        $this->permittedURIChars = $config->permittedURIChars;
 
         $this->collection = $routes;
 
@@ -172,7 +170,7 @@ class Router implements RouterInterface
         $this->translateURIDashes = $this->collection->shouldTranslateURIDashes();
 
         if ($this->collection->shouldAutoRoute()) {
-            $autoRoutesImproved = config(Feature::class)->autoRoutesImproved ?? false;
+            $autoRoutesImproved = config(Feature::class)->autoRoutesImproved;
             if ($autoRoutesImproved) {
                 assert($this->collection instanceof RouteCollection);
 

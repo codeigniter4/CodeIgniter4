@@ -465,7 +465,7 @@ class Filters
         // Decode URL-encoded string
         $uri = urldecode($uri ?? '');
 
-        $oldFilterOrder = config(Feature::class)->oldFilterOrder ?? false;
+        $oldFilterOrder = config(Feature::class)->oldFilterOrder ?? false; // @phpstan-ignore nullCoalesce.property
         if ($oldFilterOrder) {
             $this->processGlobals($uri);
             $this->processMethods();
@@ -669,10 +669,6 @@ class Filters
      */
     protected function processGlobals(?string $uri = null)
     {
-        if (! isset($this->config->globals) || ! is_array($this->config->globals)) {
-            return;
-        }
-
         $uri = strtolower(trim($uri ?? '', '/ '));
 
         // Add any global filters, unless they are excluded for this URI
@@ -706,7 +702,7 @@ class Filters
         }
 
         if (isset($filters['before'])) {
-            $oldFilterOrder = config(Feature::class)->oldFilterOrder ?? false;
+            $oldFilterOrder = config(Feature::class)->oldFilterOrder ?? false; // @phpstan-ignore nullCoalesce.property
             if ($oldFilterOrder) {
                 $this->filters['before'] = array_merge($this->filters['before'], $filters['before']);
             } else {
@@ -726,10 +722,6 @@ class Filters
      */
     protected function processMethods()
     {
-        if (! isset($this->config->methods) || ! is_array($this->config->methods)) {
-            return;
-        }
-
         $method = $this->request->getMethod();
 
         $found = false;
@@ -752,7 +744,7 @@ class Filters
         }
 
         if ($found) {
-            $oldFilterOrder = config(Feature::class)->oldFilterOrder ?? false;
+            $oldFilterOrder = config(Feature::class)->oldFilterOrder ?? false; // @phpstan-ignore nullCoalesce.property
             if ($oldFilterOrder) {
                 $this->filters['before'] = array_merge($this->filters['before'], $this->config->methods[$method]);
             } else {
@@ -770,7 +762,7 @@ class Filters
      */
     protected function processFilters(?string $uri = null)
     {
-        if (! isset($this->config->filters) || $this->config->filters === []) {
+        if ($this->config->filters === []) {
             return;
         }
 
@@ -802,7 +794,7 @@ class Filters
             }
         }
 
-        $oldFilterOrder = config(Feature::class)->oldFilterOrder ?? false;
+        $oldFilterOrder = config(Feature::class)->oldFilterOrder ?? false; // @phpstan-ignore nullCoalesce.property
 
         if (isset($filters['before'])) {
             if ($oldFilterOrder) {

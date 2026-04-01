@@ -336,7 +336,7 @@ class Toolbar
      */
     protected function collectVarData(): array
     {
-        if (! ($this->config->collectVarData ?? true)) {
+        if (! $this->config->collectVarData) {
             return [];
         }
 
@@ -585,7 +585,7 @@ class Toolbar
     private function shouldDisableToolbar(IncomingRequest $request): bool
     {
         // Fallback for older installations where the config option is missing (e.g. after upgrading from a previous version).
-        $headers = $this->config->disableOnHeaders ?? ['X-Requested-With' => 'xmlhttprequest'];
+        $headers = $this->config->disableOnHeaders ?? ['X-Requested-With' => 'xmlhttprequest']; // @phpstan-ignore nullCoalesce.property
 
         foreach ($headers as $headerName => $expectedValue) {
             if (! $request->hasHeader($headerName)) {

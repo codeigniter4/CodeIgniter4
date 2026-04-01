@@ -186,10 +186,10 @@ class CodeIgniter
     public function initialize()
     {
         // Set default locale on the server
-        Locale::setDefault($this->config->defaultLocale ?? 'en');
+        Locale::setDefault($this->config->defaultLocale);
 
         // Set default timezone on the server
-        date_default_timezone_set($this->config->appTimezone ?? 'UTC');
+        date_default_timezone_set($this->config->appTimezone);
     }
 
     /**
@@ -452,7 +452,7 @@ class CodeIgniter
             if ($routeFilters !== null) {
                 $filters->enableFilters($routeFilters, 'before');
 
-                $oldFilterOrder = config(Feature::class)->oldFilterOrder ?? false;
+                $oldFilterOrder = config(Feature::class)->oldFilterOrder ?? false; // @phpstan-ignore nullCoalesce.property
                 if (! $oldFilterOrder) {
                     $routeFilters = array_reverse($routeFilters);
                 }
@@ -521,7 +521,7 @@ class CodeIgniter
         }
 
         // Execute controller attributes' after() methods AFTER framework filters
-        if ((config('Routing')->useControllerAttributes ?? true) === true) {
+        if ((config('Routing')->useControllerAttributes ?? true) === true) { // @phpstan-ignore nullCoalesce.property
             $this->benchmark->start('route_attributes_after');
             $this->response = $this->router->executeAfterAttributes($this->request, $this->response);
             $this->benchmark->stop('route_attributes_after');
@@ -887,7 +887,7 @@ class CodeIgniter
 
         // Execute route attributes' before() methods
         // This runs after routing/validation but BEFORE expensive controller instantiation
-        if ((config('Routing')->useControllerAttributes ?? true) === true) {
+        if ((config('Routing')->useControllerAttributes ?? true) === true) { // @phpstan-ignore nullCoalesce.property
             $this->benchmark->start('route_attributes_before');
             $attributeResponse = $this->router->executeBeforeAttributes($this->request);
             $this->benchmark->stop('route_attributes_before');

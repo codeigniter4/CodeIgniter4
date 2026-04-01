@@ -46,8 +46,6 @@ class Honeypot
             $this->config->container = '<div style="display:none">{template}</div>';
         }
 
-        $this->config->containerId ??= 'hpc';
-
         if ($this->config->template === '') {
             throw HoneypotException::forNoTemplate();
         }

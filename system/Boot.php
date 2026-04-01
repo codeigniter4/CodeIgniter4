@@ -205,7 +205,7 @@ class Boot
     protected static function loadDotEnv(Paths $paths): void
     {
         require_once $paths->systemDirectory . '/Config/DotEnv.php';
-        $envDirectory = $paths->envDirectory ?? $paths->appDirectory . '/../';
+        $envDirectory = $paths->envDirectory ?? $paths->appDirectory . '/../'; // @phpstan-ignore nullCoalesce.property
         (new DotEnv($envDirectory))->load();
     }
 

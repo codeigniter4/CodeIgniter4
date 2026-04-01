@@ -121,7 +121,7 @@ final class Environment extends BaseCommand
         putenv('CI_ENVIRONMENT');
         unset($_ENV['CI_ENVIRONMENT']);
         service('superglobals')->unsetServer('CI_ENVIRONMENT');
-        (new DotEnv((new Paths())->envDirectory ?? ROOTPATH))->load();
+        (new DotEnv((new Paths())->envDirectory ?? ROOTPATH))->load(); // @phpstan-ignore nullCoalesce.property
 
         CLI::write(sprintf('Environment is successfully changed to "%s".', $env), 'green');
         CLI::write('The ENVIRONMENT constant will be changed in the next script execution.');
@@ -136,7 +136,7 @@ final class Environment extends BaseCommand
     private function writeNewEnvironmentToEnvFile(string $newEnv): bool
     {
         $baseEnv = ROOTPATH . 'env';
-        $envFile = ((new Paths())->envDirectory ?? ROOTPATH) . '.env';
+        $envFile = ((new Paths())->envDirectory ?? ROOTPATH) . '.env'; // @phpstan-ignore nullCoalesce.property
 
         if (! is_file($envFile)) {
             if (! is_file($baseEnv)) {
