@@ -744,6 +744,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $header = $this->response->getHeaderLine('Content-Security-Policy');
         $body   = $this->response->getBody();
 
+        $this->assertIsString($body);
         $this->assertStringNotContainsString('nonce=', $body);
 
         $this->assertStringContainsString("script-src 'self' cdn.cloudy.com", $header);
@@ -842,6 +843,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $header = $this->response->getHeaderLine('Content-Security-Policy');
         $body   = $this->response->getBody();
 
+        $this->assertIsString($body);
         $this->assertStringNotContainsString('nonce=', $body);
 
         $this->assertStringContainsString("style-src 'self' cdn.cloudy.com", $header);
