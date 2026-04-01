@@ -1,4 +1,4 @@
-# total 84 errors
+# total 82 errors
 
 parameters:
     ignoreErrors:
@@ -161,11 +161,6 @@ parameters:
             message: '#^Parameter \#1 \$request of method CodeIgniter\\CodeIgniter\:\:setRequest\(\) expects CodeIgniter\\HTTP\\CLIRequest\|CodeIgniter\\HTTP\\IncomingRequest, CodeIgniter\\HTTP\\Request given\.$#'
             count: 1
             path: ../../tests/system/HomeTest.php
-
-        -
-            message: '#^Parameter \#1 \$config of class CodeIgniter\\Filters\\Filters constructor expects Config\\Filters, object\{aliases\: array\<string, string\>, globals\: array\<string, list\<string\>\>\}&stdClass given\.$#'
-            count: 2
-            path: ../../tests/system/Honeypot/HoneypotTest.php
 
         -
             message: '#^Parameter \#1 \$data of method CodeIgniter\\HTTP\\Message\:\:setBody\(\) expects string, null given\.$#'

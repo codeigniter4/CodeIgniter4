@@ -24,6 +24,7 @@ use CodeIgniter\HTTP\Response;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use Config\Filters as FiltersConfig;
 use Config\Honeypot as HoneypotConfig;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
@@ -162,15 +163,11 @@ final class HoneypotTest extends CIUnitTestCase
 
     public function testHoneypotFilterBefore(): void
     {
-        $config = [
-            'aliases' => ['trap' => \CodeIgniter\Filters\Honeypot::class],
-            'globals' => [
-                'before' => ['trap'],
-                'after'  => [],
-            ],
-        ];
+        $config          = new FiltersConfig();
+        $config->aliases = ['trap' => \CodeIgniter\Filters\Honeypot::class];
+        $config->globals = ['before' => ['trap'], 'after' => []];
 
-        $filters = new Filters((object) $config, $this->request, $this->response);
+        $filters = new Filters($config, $this->request, $this->response);
         $uri     = 'admin/foo/bar';
 
         $this->expectException(HoneypotException::class);
@@ -179,15 +176,11 @@ final class HoneypotTest extends CIUnitTestCase
 
     public function testHoneypotFilterAfter(): void
     {
-        $config = [
-            'aliases' => ['trap' => \CodeIgniter\Filters\Honeypot::class],
-            'globals' => [
-                'before' => [],
-                'after'  => ['trap'],
-            ],
-        ];
+        $config          = new FiltersConfig();
+        $config->aliases = ['trap' => \CodeIgniter\Filters\Honeypot::class];
+        $config->globals = ['before' => [], 'after' => ['trap']];
 
-        $filters = new Filters((object) $config, $this->request, $this->response);
+        $filters = new Filters($config, $this->request, $this->response);
         $uri     = 'admin/foo/bar';
 
         $this->response->setBody('<form></form>');
