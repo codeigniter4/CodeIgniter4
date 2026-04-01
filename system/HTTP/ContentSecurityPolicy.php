@@ -429,6 +429,7 @@ class ContentSecurityPolicy
     {
         if (! $this->enableStyleNonce) {
             $this->styleNonce = null;
+
             return '';
         }
 
@@ -451,6 +452,7 @@ class ContentSecurityPolicy
     {
         if (! $this->enableScriptNonce) {
             $this->scriptNonce = null;
+
             return '';
         }
 
@@ -997,7 +999,7 @@ class ContentSecurityPolicy
                 $nonce = $this->getScriptNonce();
             }
 
-            $attr  = 'nonce="' . $nonce . '"';
+            $attr = 'nonce="' . $nonce . '"';
 
             return $jsonEscape ? str_replace('"', '\\"', $attr) : $attr;
         }, $body);
