@@ -411,15 +411,17 @@ class ContentSecurityPolicy
      */
     public function getStyleNonce(): string
     {
+        if (! $this->enableStyleNonce) {
+            $this->styleNonce = null;
+            return '';
+        }
+
         if ($this->styleNonce === null) {
             $this->styleNonce = base64_encode(random_bytes(12));
+            $this->addStyleSrc('nonce-' . $this->styleNonce);
 
-            if ($this->enableStyleNonce) {
-                $this->addStyleSrc('nonce-' . $this->styleNonce);
-
-                if ($this->styleSrcElem !== []) {
-                    $this->addStyleSrcElem('nonce-' . $this->styleNonce);
-                }
+            if ($this->styleSrcElem !== []) {
+                $this->addStyleSrcElem('nonce-' . $this->styleNonce);
             }
         }
 
@@ -431,15 +433,17 @@ class ContentSecurityPolicy
      */
     public function getScriptNonce(): string
     {
+        if (! $this->enableScriptNonce) {
+            $this->scriptNonce = null;
+            return '';
+        }
+
         if ($this->scriptNonce === null) {
             $this->scriptNonce = base64_encode(random_bytes(12));
+            $this->addScriptSrc('nonce-' . $this->scriptNonce);
 
-            if ($this->enableScriptNonce) {
-                $this->addScriptSrc('nonce-' . $this->scriptNonce);
-
-                if ($this->scriptSrcElem !== []) {
-                    $this->addScriptSrcElem('nonce-' . $this->scriptNonce);
-                }
+            if ($this->scriptSrcElem !== []) {
+                $this->addScriptSrcElem('nonce-' . $this->scriptNonce);
             }
         }
 
@@ -963,7 +967,20 @@ class ContentSecurityPolicy
                 return '';
             }
 
-            $nonce = $match[0] === $this->styleNonceTag ? $this->getStyleNonce() : $this->getScriptNonce();
+            if ($match[0] === $this->styleNonceTag) {
+                if (! $this->enableStyleNonce) {
+                    return '';
+                }
+
+                $nonce = $this->getStyleNonce();
+            } else {
+                if (! $this->enableScriptNonce) {
+                    return '';
+                }
+
+                $nonce = $this->getScriptNonce();
+            }
+
             $attr  = 'nonce="' . $nonce . '"';
 
             return $jsonEscape ? str_replace('"', '\\"', $attr) : $attr;

@@ -739,9 +739,12 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->csp->addScriptSrc('self');
         $this->csp->addScriptSrc('cdn.cloudy.com');
 
-        $this->assertTrue($this->work());
+        $this->assertTrue($this->work('<script {csp-script-nonce}></script>'));
 
         $header = $this->response->getHeaderLine('Content-Security-Policy');
+        $body = $this->response->getBody();
+
+        $this->assertStringNotContainsString('nonce=', $body);
 
         $this->assertStringContainsString("script-src 'self' cdn.cloudy.com", $header);
         $this->assertStringNotContainsString("script-src 'self' cdn.cloudy.com nonce-", $header);
@@ -834,9 +837,12 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->csp->addStyleSrc('self');
         $this->csp->addStyleSrc('cdn.cloudy.com');
 
-        $this->assertTrue($this->work());
+        $this->assertTrue($this->work("<style {csp-style-nonce}></style>"));
 
         $header = $this->response->getHeaderLine('Content-Security-Policy');
+        $body = $this->response->getBody();
+
+        $this->assertStringNotContainsString('nonce=', $body);
 
         $this->assertStringContainsString("style-src 'self' cdn.cloudy.com", $header);
         $this->assertStringNotContainsString("style-src 'self' cdn.cloudy.com nonce-", $header);
