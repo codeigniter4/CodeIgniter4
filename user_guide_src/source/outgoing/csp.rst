@@ -171,3 +171,18 @@ In this case, you can use the functions, :php:func:`csp_script_nonce()` and :php
     <style <?= csp_style_nonce() ?>>
         . . .
     </style>
+
+.. _csp-control-nonce-generation:
+
+Control Nonce Generation
+====================
+
+.. versionadded:: 4.8.0
+
+By default, both the script and style nonces are generated automatically. If you want to only generate one of them,
+you can set ``$enableStyleNonce`` or ``$enableScriptNonce`` to false in **app/Config/ContentSecurityPolicy.php**:
+
+.. literalinclude:: csp/016.php
+
+By setting one of these to false, the corresponding nonce will not be generated, and the placeholder will be replaced with an empty string.
+This gives you the flexibility to use nonces for only one type of content if you choose, without affecting the other.
