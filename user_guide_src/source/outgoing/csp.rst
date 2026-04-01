@@ -175,7 +175,7 @@ In this case, you can use the functions, :php:func:`csp_script_nonce()` and :php
 .. _csp-control-nonce-generation:
 
 Control Nonce Generation
-====================
+========================
 
 .. versionadded:: 4.8.0
 
