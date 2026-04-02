@@ -367,17 +367,12 @@ final class AutoloaderTest extends CIUnitTestCase
 
     public function testFindsComposerRoutesWithComposerPathNotFound(): void
     {
-        $composerPath = COMPOSER_PATH;
-
         $config                      = new Autoload();
         $modules                     = new Modules();
         $modules->discoverInComposer = true;
 
-        $loader = new Autoloader();
-
-        rename(COMPOSER_PATH, COMPOSER_PATH . '.backup');
+        $loader = new Autoloader('/nonexistent/path/autoload.php');
         $loader->initialize($config, $modules);
-        rename(COMPOSER_PATH . '.backup', $composerPath);
 
         $namespaces = $loader->getNamespace();
         $this->assertArrayNotHasKey('Laminas\\Escaper', $namespaces);

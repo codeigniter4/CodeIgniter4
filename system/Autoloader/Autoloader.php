@@ -93,6 +93,10 @@ class Autoloader
      */
     protected $helpers = ['url'];
 
+    public function __construct(private string $composerPath = COMPOSER_PATH)
+    {
+    }
+
     /**
      * Reads in the configuration array (described above) and stores
      * the valid parts that we'll need.
@@ -127,7 +131,7 @@ class Autoloader
             $this->helpers = [...$this->helpers, ...$config->helpers];
         }
 
-        if (is_file(COMPOSER_PATH)) {
+        if (is_file($this->composerPath)) {
             $this->loadComposerAutoloader($modules);
         }
 
@@ -139,11 +143,11 @@ class Autoloader
         // The path to the vendor directory.
         // We do not want to enforce this, so set the constant if Composer was used.
         if (! defined('VENDORPATH')) {
-            define('VENDORPATH', dirname(COMPOSER_PATH) . DIRECTORY_SEPARATOR);
+            define('VENDORPATH', dirname($this->composerPath) . DIRECTORY_SEPARATOR);
         }
 
         /** @var ClassLoader $composer */
-        $composer = include COMPOSER_PATH;
+        $composer = include $this->composerPath;
 
         // Should we load through Composer's namespaces, also?
         if ($modules->discoverInComposer) {
@@ -451,14 +455,14 @@ class Autoloader
      */
     protected function discoverComposerNamespaces()
     {
-        if (! is_file(COMPOSER_PATH)) {
+        if (! is_file($this->composerPath)) {
             return;
         }
 
         /**
          * @var ClassLoader $composer
          */
-        $composer = include COMPOSER_PATH;
+        $composer = include $this->composerPath;
         $paths    = $composer->getPrefixesPsr4();
         $classes  = $composer->getClassMap();
 
