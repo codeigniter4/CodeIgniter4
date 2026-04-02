@@ -93,7 +93,7 @@ class Autoloader
      */
     protected $helpers = ['url'];
 
-    public function __construct(private string $composerPath = COMPOSER_PATH)
+    public function __construct(private readonly string $composerPath = COMPOSER_PATH)
     {
     }
 
