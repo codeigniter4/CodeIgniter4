@@ -461,7 +461,7 @@ class Autoloader
 
         $csp = service('csp');
         if ($csp->scriptNonceEnabled()) {
-            RichRenderer::$js_nonce  = $csp->getScriptNonce();
+            RichRenderer::$js_nonce = $csp->getScriptNonce();
         }
 
         if ($csp->styleNonceEnabled()) {
