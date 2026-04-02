@@ -9,7 +9,7 @@ class BookModel extends Model
     public function withAuthorInfo()
     {
         return $this
-            ->select('book.*, author.name as author_name')
-            ->join('author', 'book.author_id = author.id');
+            ->select('books.*, authors.name as author_name')
+            ->join('authors', 'books.author_id = authors.id');
     }
 }
