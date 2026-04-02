@@ -453,8 +453,8 @@ We’ll use <code class="xref php php-class docutils literal notranslate"><span 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">withAuthorInfo</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="nv">$this</span>
-            <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;book.*, author.name as author_name&#39;</span><span class="p">)</span>
-            <span class="o">-&gt;</span><span class="na">join</span><span class="p">(</span><span class="s1">&#39;author&#39;</span><span class="p">,</span> <span class="s1">&#39;book.author_id = author.id&#39;</span><span class="p">);</span>
+            <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;books.*, authors.name as author_name&#39;</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">join</span><span class="p">(</span><span class="s1">&#39;authors&#39;</span><span class="p">,</span> <span class="s1">&#39;books.author_id = authors.id&#39;</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -660,7 +660,7 @@ DELETE /api/books/delete/(:id) -&gt; deleteDelete($id)
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 31, 2026.
+      <span class="lastupdated">Last updated on Apr 02, 2026.
       </span></p>
   </div>
 
