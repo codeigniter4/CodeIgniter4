@@ -10,6 +10,7 @@
 # Usage: ./run-random-tests.sh [options]
 # Options:
 #   -q, --quiet                  Suppress debug output
+#   -f, --show-failures          Print failed test output in summary (auto-enabled in GitHub Actions)
 #   -c, --component COMPONENT    Test single COMPONENT (overrides config file)
 #   -n, --max-jobs MAX_JOBS      Limit concurrent test jobs (auto-detect if omitted)
 #   -r, --repeat REPEAT          Repeat full component run REPEAT times
@@ -52,6 +53,7 @@ component=""
 max_jobs=""
 repeat_count=1
 timeout_seconds=300
+show_failures=""
 first_result=true
 declare -a bg_pids=()
 
@@ -277,6 +279,10 @@ parse_arguments() {
                 quiet="--quiet"
                 shift
                 ;;
+            -f|--show-failures)
+                show_failures="--show-failures"
+                shift
+                ;;
             -c|--component)
                 if [[ $# -lt 2 ]]; then
                     print_error "Missing value for --component"
@@ -344,6 +350,7 @@ show_help() {
     echo ""
     echo -e "${YELLOW}Options:${RESET}"
     echo -e "  ${GREEN}-q, --quiet${RESET}                 Suppress debug output"
+    echo -e "  ${GREEN}-f, --show-failures${RESET}         Print failed test output in summary (auto-enabled in GitHub Actions)"
     echo -e "  ${GREEN}-c, --component COMPONENT${RESET}   Test single ${GREEN}COMPONENT${RESET} (overrides config file)"
     echo -e "  ${GREEN}-n, --max-jobs MAX_JOBS${RESET}     Limit concurrent test jobs (auto-detect if omitted)"
     echo -e "  ${GREEN}-r, --repeat REPEAT${RESET}         Repeat full component run ${GREEN}REPEAT${RESET} times"
@@ -758,6 +765,18 @@ print_summary() {
             fi
 
             echo -e "  ${RED}✗${RESET} ${BOLD}$failed_component${RESET} ($result_file)"
+
+            if [[ -n "${GITHUB_ACTIONS:-}" || "$show_failures" == "--show-failures" ]]; then
+                if [[ -f "$result_file" ]]; then
+                    if [[ -n "${GITHUB_ACTIONS:-}" ]]; then
+                        echo "::group::Output: $failed_component"
+                    fi
+                    cat "$result_file"
+                    if [[ -n "${GITHUB_ACTIONS:-}" ]]; then
+                        echo "::endgroup::"
+                    fi
+                fi
+            fi
         done < <(printf '%s\n' "${failed_components[@]}" | sort)
     fi
 
