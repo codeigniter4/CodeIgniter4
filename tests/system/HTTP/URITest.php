@@ -477,7 +477,16 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, (string) $uri);
     }
 
-    public function testSetQuerySetsValueWithUseRawQueryString(): void
+    public function testUseRawQueryStringAtConstructor(): void
+    {
+        $url = 'http://example.com/path?key=value&second.key=value.2';
+        $uri = new URI($url, true);
+
+        $this->assertSame('key=value&second.key=value.2', $uri->getQuery());
+        $this->assertSame($url, (string) $uri);
+    }
+
+    public function testUseRawQueryStringAtSetter(): void
     {
         $url = 'http://example.com/path';
         $uri = new URI($url);
@@ -485,8 +494,7 @@ final class URITest extends CIUnitTestCase
         $uri->useRawQueryString()->setQuery('?key=value&second.key=value.2');
 
         $this->assertSame('key=value&second.key=value.2', $uri->getQuery());
-        $expected = 'http://example.com/path?key=value&second.key=value.2';
-        $this->assertSame($expected, (string) $uri);
+        $this->assertSame('http://example.com/path?key=value&second.key=value.2', (string) $uri);
     }
 
     public function testSetQueryArraySetsValue(): void

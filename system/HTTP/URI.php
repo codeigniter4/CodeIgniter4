@@ -245,7 +245,13 @@ class URI implements Stringable
      */
     public function __construct(?string $uri = null, bool $useRawQueryString = false)
     {
-        $this->useRawQueryString($useRawQueryString)->setUri($uri);
+        $this->useRawQueryString($useRawQueryString);
+
+        if ($uri === null) {
+            return;
+        }
+
+        $this->setUri($uri);
     }
 
     /**
@@ -285,12 +291,8 @@ class URI implements Stringable
      *
      * @throws HTTPException
      */
-    private function setUri(?string $uri = null): self
+    private function setUri(string $uri): self
     {
-        if ($uri === null) {
-            return $this;
-        }
-
         $parts = parse_url($uri);
 
         if (is_array($parts)) {
