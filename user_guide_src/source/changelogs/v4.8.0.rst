@@ -54,6 +54,20 @@ Method Signature Changes
 - **Database:** The following methods have had their signatures updated to remove deprecated parameters:
     - ``CodeIgniter\Database\Forge::_createTable()`` no longer accepts the deprecated ``$ifNotExists`` parameter. The method signature is now ``_createTable(string $table, array $attributes)``.
 
+Property Scope Changes
+======================
+
+- **HTTP:** The following properties have changed their scope (visibility):
+    - ``CodeIgniter\HTTP\RequestTrait::$ipAddress`` is now private (previously protected).
+
+Method Scope Changes
+====================
+
+- **HTTP:** The following methods have changed their scope (visibility):
+    - ``CodeIgniter\HTTP\URI::setUri()`` is now private (previously public).
+    - ``CodeIgniter\HTTP\URI::refreshPath()`` is now protected (previously public).
+    - ``CodeIgniter\HTTP\SiteURI::refreshPath()`` is now protected (previously public).
+
 Removed Deprecated Items
 ========================
 
@@ -132,13 +146,10 @@ Removed Deprecated Items
     - ``CodeIgniter\HTTP\URI::$baseURL`` (deprecated since v4.4.0)
     - ``CodeIgniter\HTTP\URI::setBaseURL()`` (deprecated since v4.4.0)
     - ``CodeIgniter\HTTP\URI::getBaseURL()`` (deprecated since v4.4.0)
-    - ``CodeIgniter\HTTP\URI::setURI()`` (deprecated since v4.4.0)
     - ``CodeIgniter\HTTP\URI::setScheme()`` (deprecated since v4.4.0)
-    - ``CodeIgniter\HTTP\URI::refreshPath()`` (deprecated since v4.4.0)
     - ``CodeIgniter\HTTP\SiteURI::$segments`` (deprecated since v4.4.0)
     - ``CodeIgniter\HTTP\SiteURI::setBaseURL()`` (deprecated since v4.4.0)
     - ``CodeIgniter\HTTP\SiteURI::setURI()`` (deprecated since v4.4.0)
-    - ``CodeIgniter\HTTP\SiteURI::refreshPath()`` (deprecated since v4.4.0)
 - **Security:** Removed the following properties and methods deprecated:
     - ``CodeIgniter\Security\SecurityInterface::sanitizeFilename()`` (deprecated since v4.6.2)
     - ``CodeIgniter\Security\Security::sanitizeFilename()`` (deprecated since v4.6.2)
