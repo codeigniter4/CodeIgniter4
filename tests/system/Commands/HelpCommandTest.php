@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands;
 
+use CodeIgniter\CodeIgniter;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\Group;
@@ -62,5 +63,27 @@ final class HelpCommandTest extends CIUnitTestCase
         command('help clear');
         $this->assertStringContainsString('Command "clear" not found.', $this->getBuffer());
         $this->assertStringContainsString('Did you mean one of these?', $this->getBuffer());
+    }
+
+    public function testNormalHelpCommandHasNoBanner(): void
+    {
+        command('help');
+
+        $this->assertStringNotContainsString(
+            sprintf('CodeIgniter %s Command Line Tool', CodeIgniter::CI_VERSION),
+            $this->getBuffer(),
+        );
+        $this->assertStringContainsString('Displays basic usage information.', $this->getBuffer());
+    }
+
+    public function testHelpCommandWithDoubleHyphenStillRemovesBanner(): void
+    {
+        command('help -- list');
+
+        $this->assertStringNotContainsString(
+            sprintf('CodeIgniter %s Command Line Tool', CodeIgniter::CI_VERSION),
+            $this->getBuffer(),
+        );
+        $this->assertStringContainsString('Lists the available commands.', $this->getBuffer());
     }
 }
