@@ -94,6 +94,17 @@ class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('http://www.foo.com/api/v1/products', $options[CURLOPT_URL]);
     }
 
+    public function testGetPreservesDottedQueryKeysFromBaseURI(): void
+    {
+        $request = $this->getRequest(['baseURI' => 'https://api.example.com/resource?foo.bar=baz']);
+
+        $request->get('');
+
+        $options = $request->curl_options;
+
+        $this->assertSame('https://api.example.com/resource?foo.bar=baz', $options[CURLOPT_URL]);
+    }
+
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1029
      */

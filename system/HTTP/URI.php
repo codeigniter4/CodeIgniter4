@@ -1040,7 +1040,7 @@ class URI implements Stringable
          * NOTE: We don't use removeDotSegments in this
          * algorithm since it's already done by this line!
          */
-        $relative = new self($uri);
+        $relative = new self($uri, $this->rawQueryString);
 
         if ($relative->getScheme() === $this->getScheme()) {
             $relative = $relative->withScheme('');
