@@ -181,10 +181,10 @@ class Logger implements LoggerInterface
             $this->logCache = [];
         }
 
-        $this->logGlobalContext   = $config->logGlobalContext ?? $this->logGlobalContext;
-        $this->logContext         = $config->logContext ?? $this->logContext;
-        $this->logContextTrace    = $config->logContextTrace ?? $this->logContextTrace;
-        $this->logContextUsedKeys = $config->logContextUsedKeys ?? $this->logContextUsedKeys;
+        $this->logGlobalContext   = $config->logGlobalContext ?? $this->logGlobalContext; // @phpstan-ignore nullCoalesce.property
+        $this->logContext         = $config->logContext ?? $this->logContext; // @phpstan-ignore nullCoalesce.property
+        $this->logContextTrace    = $config->logContextTrace ?? $this->logContextTrace; // @phpstan-ignore nullCoalesce.property
+        $this->logContextUsedKeys = $config->logContextUsedKeys ?? $this->logContextUsedKeys; // @phpstan-ignore nullCoalesce.property
     }
 
     /**

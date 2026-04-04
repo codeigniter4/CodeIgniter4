@@ -2129,7 +2129,7 @@ abstract class BaseConnection implements ConnectionInterface
         // Auto-sync with app timezone
         if ($this->timezone === true) {
             $appConfig = config('App');
-            $timezone  = $appConfig->appTimezone ?? 'UTC';
+            $timezone  = $appConfig->appTimezone;
         } else {
             // Use specific timezone from config
             $timezone = $this->timezone;

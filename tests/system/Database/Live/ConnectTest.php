@@ -186,7 +186,7 @@ final class ConnectTest extends CIUnitTestCase
         $timezone = $this->getDatabaseTimezone($db, $driver);
 
         $appConfig      = config('App');
-        $appTimezone    = $appConfig->appTimezone ?? 'UTC';
+        $appTimezone    = $appConfig->appTimezone;
         $expectedOffset = $this->getPrivateMethodInvoker($db, 'convertTimezoneToOffset')($appTimezone);
 
         $this->assertSame($expectedOffset, $timezone);
