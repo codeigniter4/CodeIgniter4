@@ -1,4 +1,4 @@
-# total 1231 errors
+# total 1230 errors
 
 parameters:
     ignoreErrors:
@@ -56,11 +56,6 @@ parameters:
             message: '#^Method CodeIgniter\\CLI\\CLI\:\:validate\(\) has parameter \$rules with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/CLI/CLI.php
-
-        -
-            message: '#^Method CodeIgniter\\CLI\\Console\:\:parseParamsForHelpOption\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/CLI/Console.php
 
         -
             message: '#^Method CodeIgniter\\CodeIgniter\:\:getPerformanceStats\(\) return type has no value type specified in iterable type array\.$#'
