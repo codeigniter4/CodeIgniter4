@@ -23,6 +23,8 @@ BREAKING
 Behavior Changes
 ================
 
+- The static ``Boot::initializeConsole()`` method no longer handles the display of the console header. This is now handled within ``Console::run()``.
+    If you have overridden ``Boot::initializeConsole()``, you should remove any code related to displaying the console header, as this is now the responsibility of the ``Console`` class.
 - **Commands:** The ``filter:check`` command now requires the HTTP method argument to be uppercase (e.g., ``spark filter:check GET /`` instead of ``spark filter:check get /``).
 - **Database:** The Postgre driver's ``$db->error()['code']`` previously always returned ``''``. It now returns the 5-character SQLSTATE string for query and transaction failures (e.g., ``'42P01'``), or ``'08006'`` for connection-level failures. Code that relied on ``$db->error()['code'] === ''`` will need updating.
 - **Filters:** HTTP method matching for method-based filters is now case-sensitive. The keys in ``Config\Filters::$methods`` must exactly match the request method
@@ -268,7 +270,6 @@ Changes
 Deprecations
 ************
 
-- The ``Boot::initializeConsole()`` method is now deprecated and will be removed in a future release.
 - **CLI:** The ``CLI::parseCommandLine()`` method is now deprecated and will be removed in a future release. The ``CLI`` class now uses the new ``CommandLineParser`` class to handle command-line argument parsing.
 - **CLI:** Returning a non-integer exit code from a command is now deprecated and will trigger a deprecation notice. Command methods should return an integer exit code (e.g., ``0`` for success, non-zero for errors) to ensure proper behavior across all platforms.
 - **HTTP:** The ``CLIRequest::parseCommand()`` method is now deprecated and will be removed in a future release. The ``CLIRequest`` class now uses the new ``CommandLineParser`` class to handle command-line argument parsing.

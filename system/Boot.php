@@ -162,7 +162,7 @@ class Boot
 
         static::initializeCodeIgniter();
 
-        return static::runCommand(new Console());
+        return static::runCommand(static::initializeConsole());
     }
 
     /**
@@ -421,24 +421,9 @@ class Boot
         $factoriesCache->save('config');
     }
 
-    /**
-     * @deprecated 4.8.0 No longer used.
-     */
     protected static function initializeConsole(): Console
     {
-        @trigger_error(sprintf('The static %s() method is deprecated and no longer used.', __METHOD__), E_USER_DEPRECATED);
-
-        $console = new Console();
-
-        // Show basic information before we do anything else.
-        if (is_int($suppress = array_search('--no-header', $_SERVER['argv'], true))) {
-            unset($_SERVER['argv'][$suppress]);
-            $suppress = true;
-        }
-
-        $console->showHeader($suppress);
-
-        return $console;
+        return new Console();
     }
 
     protected static function runCommand(Console $console): int
