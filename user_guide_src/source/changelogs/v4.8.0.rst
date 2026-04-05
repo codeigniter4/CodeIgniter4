@@ -201,6 +201,7 @@ HTTP
     For example: ``php index.php command -- --myarg`` will pass ``--myarg`` as an argument instead of an option.
 - ``CLIRequest`` now supports options with values specified using an equals sign (e.g., ``--option=value``) in addition to the existing space-separated syntax (e.g., ``--option value``).
     This provides more flexibility in how you can pass options to CLI requests.
+- Added ``$enableStyleNonce`` and ``$enableScriptNonce`` options to ``Config\App`` to automatically add nonces to control whether to add nonces to style-* and script-* directives in the Content Security Policy (CSP) header when CSP is enabled. See :ref:`csp-control-nonce-generation` for details.
 
 Validation
 ==========
