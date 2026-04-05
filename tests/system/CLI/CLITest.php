@@ -592,6 +592,27 @@ final class CLITest extends CIUnitTestCase
         $this->assertSame(['b', 'c', 'd'], CLI::getSegments());
     }
 
+    public function testParseCommandRepeatedFlagOption(): void
+    {
+        service('superglobals')->setServer('argv', [
+            'ignored',
+            'b',
+            '--p1',
+            '--p2',
+            '--p2',
+        ]);
+        CLI::init();
+
+        $this->assertSame(['p1' => null, 'p2' => [null, null]], CLI::getOptions());
+        $this->assertTrue(CLI::getOption('p1'));
+        $this->assertTrue(CLI::getRawOption('p1'));
+        $this->assertTrue(CLI::getOption('p2'));
+        $this->assertSame([null, null], CLI::getRawOption('p2'));
+        $this->assertSame('-p1 -p2 -p2 ', CLI::getOptionString());
+        $this->assertSame('--p1 --p2 --p2', CLI::getOptionString(true, true));
+        $this->assertSame(['b'], CLI::getSegments());
+    }
+
     /**
      * @param list<string> $options
      */

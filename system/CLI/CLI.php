@@ -945,7 +945,7 @@ class CLI
             return $value;
         }
 
-        return $value[count($value) - 1];
+        return $value[count($value) - 1] ?? true;
     }
 
     /**
