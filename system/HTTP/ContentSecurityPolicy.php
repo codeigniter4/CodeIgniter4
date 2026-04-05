@@ -303,14 +303,14 @@ class ContentSecurityPolicy
      *
      * @var bool
      */
-    protected $enableStyleNonce = true;
+    protected bool $enableStyleNonce = true;
 
     /**
      * Whether to enable nonce to script-src and script-src-elem directives or not.
      *
      * @var bool
      */
-    protected $enableScriptNonce = true;
+    protected bool $enableScriptNonce = true;
 
     /**
      * Nonce placeholder for style tags.
