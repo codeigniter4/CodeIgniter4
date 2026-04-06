@@ -25,7 +25,7 @@ class Console
     private const DEFAULT_COMMAND = 'list';
 
     /**
-     * @var array<string, string|null>
+     * @var array<string, list<string|null>|string|null>
      */
     private array $options = [];
 
