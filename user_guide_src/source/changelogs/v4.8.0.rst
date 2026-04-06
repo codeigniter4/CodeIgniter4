@@ -172,6 +172,7 @@ Enhancements
 Commands
 ========
 
+- You can now retrieve the last executed command in the console using the new ``Console::getCommand()`` method. This is useful for logging, debugging, or any situation where you need to know which command was run.
 - ``CLI`` now supports the ``--`` separator to mean that what follows are arguments, not options. This allows you to have arguments that start with ``-`` without them being treated as options.
     For example: ``spark my:command -- --myarg`` will pass ``--myarg`` as an argument instead of an option.
 - ``CLI`` now supports options with values specified using an equals sign (e.g., ``--option=value``) in addition to the existing space-separated syntax (e.g., ``--option value``).

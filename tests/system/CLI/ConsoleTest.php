@@ -160,6 +160,20 @@ final class ConsoleTest extends CIUnitTestCase
         $this->assertStringContainsString('Displays basic usage information.', $this->getStreamFilterBuffer());
     }
 
+    public function testConsoleReturnsTheLastExecutedCommand(): void
+    {
+        $console = new Console();
+        $this->assertSame('', $console->getCommand());
+
+        $this->initializeConsole('help');
+        $console->run();
+        $this->assertSame('help', $console->getCommand());
+
+        $this->initializeConsole('list');
+        $console->run();
+        $this->assertSame('list', $console->getCommand());
+    }
+
     private function initializeConsole(string ...$tokens): void
     {
         service('superglobals')
