@@ -197,6 +197,62 @@ final class DataConverterTest extends CIUnitTestCase
                     'temp' => 15.9,
                 ],
             ],
+            'float precise' => [
+                [
+                    'id'   => 'int',
+                    'temp' => 'float[2]',
+                ],
+                [
+                    'id'   => '1',
+                    'temp' => '15.98765',
+                ],
+                [
+                    'id'   => 1,
+                    'temp' => 15.99,
+                ]
+            ],
+            'float precise-down' => [
+                [
+                    'id'   => 'int',
+                    'temp' => 'float[2,down]',
+                ],
+                [
+                    'id'   => '1',
+                    'temp' => '1.235',
+                ],
+                [
+                    'id'   => 1,
+                    'temp' => 1.23,
+                ]
+            ],
+            'float precise-even' => [
+                [
+                    'id'   => 'int',
+                    'temp' => 'float[2,even]',
+                ],
+                [
+                    'id'   => '1',
+                    'temp' => '20.005',
+                ],
+                [
+                    'id'   => 1,
+                    'temp' => 20.00,
+                ]
+            ],
+            'float precise-odd' => [
+                [
+                    'id'   => 'int',
+                    'temp' => 'float[2,odd]',
+                ],
+                [
+                    'id'   => '1',
+                    'temp' => '1.255',
+                ],
+                [
+                    'id'   => 1,
+                    'temp' => 1.25,
+                ]
+            ],
             'enum string-backed' => [
                 [
                     'id'     => 'int',

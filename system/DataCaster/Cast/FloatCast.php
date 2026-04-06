@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\DataCaster\Cast;
 
+use CodeIgniter\DataCaster\Exceptions\CastException;
+
 /**
  * Class FloatCast
  *
@@ -30,6 +32,31 @@ class FloatCast extends BaseCast
             self::invalidTypeValueError($value);
         }
 
-        return (float) $value;
+        $precision = isset($params[0]) ? (int) $params[0] : null;
+
+        if ($precision === null) {
+            return (float) $value;
+        }
+
+        // Map string flags to PHP constants
+        $modeMap = [
+            'up'   => PHP_ROUND_HALF_UP,
+            'down' => PHP_ROUND_HALF_DOWN,
+            'even' => PHP_ROUND_HALF_EVEN,
+            'odd'  => PHP_ROUND_HALF_ODD,
+        ];
+
+        $mode = PHP_ROUND_HALF_UP; // Default mode
+
+        if (isset($params[1])) {
+            $modeParam = strtolower($params[1]);
+            if (isset($modeMap[$modeParam])) {
+                $mode = $modeMap[$modeParam];
+            } else {
+                throw CastException::forInvalidFloatRoundingMode($params[1]);
+            }
+        }
+
+        return round((float) $value, $precision, $mode);
     }
 }
