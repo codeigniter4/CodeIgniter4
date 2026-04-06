@@ -31,7 +31,7 @@ class {class} extends FormRequest
     // /**
     //  * Determines if the current user is authorized to make this request.
     //  */
-    // public function authorize(): bool
+    // public function isAuthorized(): bool
     // {
     //     return true;
     // }

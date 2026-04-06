@@ -25,7 +25,7 @@ class UnauthorizedFormRequest extends FormRequest
         return ['title' => 'required'];
     }
 
-    public function authorize(): bool
+    public function isAuthorized(): bool
     {
         return false;
     }

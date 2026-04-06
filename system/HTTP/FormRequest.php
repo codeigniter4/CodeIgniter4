@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
-use CodeIgniter\Exceptions\RuntimeException;
 use ReflectionNamedType;
 use ReflectionParameter;
 
@@ -36,22 +35,12 @@ abstract class FormRequest
 
     /**
      * When called by the framework, the current IncomingRequest is injected
-     * explicitly. When instantiated manually (e.g. in tests or commands),
-     * the constructor falls back to service('request').
-     *
-     * @throws RuntimeException if used outside of an HTTP request context.
+     * explicitly. When instantiated manually (e.g. in tests), the constructor
+     * falls back to service('request').
      */
     final public function __construct(?IncomingRequest $request = null)
     {
-        $resolved = $request ?? service('request');
-
-        if (! $resolved instanceof IncomingRequest) {
-            throw new RuntimeException(
-                static::class . ' requires an IncomingRequest instance, got ' . $resolved::class . '.',
-            );
-        }
-
-        $this->request = $resolved;
+        $this->request = $request ?? service('request');
     }
 
     /**
@@ -88,12 +77,12 @@ abstract class FormRequest
      *
      * Override in subclasses to add authorization logic:
      *
-     *  public function authorize(): bool
+     *  public function isAuthorized(): bool
      *  {
      *      return auth()->user()->can('create-posts');
      *  }
      */
-    public function authorize(): bool
+    public function isAuthorized(): bool
     {
         return true;
     }
@@ -164,7 +153,7 @@ abstract class FormRequest
     }
 
     /**
-     * Called when the authorize() check returns false. Override to customize.
+     * Called when the isAuthorized() check returns false. Override to customize.
      */
     protected function failedAuthorization(): ResponseInterface
     {
@@ -261,7 +250,7 @@ abstract class FormRequest
      */
     final public function resolveRequest(): ?ResponseInterface
     {
-        if (! $this->authorize()) {
+        if (! $this->isAuthorized()) {
             return $this->failedAuthorization();
         }
 

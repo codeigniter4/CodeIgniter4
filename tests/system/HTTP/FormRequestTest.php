@@ -119,7 +119,7 @@ final class FormRequestTest extends CIUnitTestCase
     {
         $formRequest = $this->makeFormRequest($this->makeRequest());
 
-        $this->assertTrue($formRequest->authorize());
+        $this->assertTrue($formRequest->isAuthorized());
     }
 
     public function testValidatedReturnsEmptyArrayBeforeResolution(): void
@@ -338,7 +338,7 @@ final class FormRequestTest extends CIUnitTestCase
                 return [];
             }
 
-            public function authorize(): bool
+            public function isAuthorized(): bool
             {
                 return false;
             }
@@ -364,7 +364,7 @@ final class FormRequestTest extends CIUnitTestCase
                 return ['title' => 'required'];
             }
 
-            public function authorize(): bool
+            public function isAuthorized(): bool
             {
                 self::$order[] = 'authorize';
 
@@ -381,7 +381,7 @@ final class FormRequestTest extends CIUnitTestCase
 
         $formRequest->resolveRequest();
 
-        // authorize() must fire before prepareForValidation(); validation never runs.
+        // isAuthorized() must fire before prepareForValidation(); validation never runs.
         $this->assertSame(['authorize'], $formRequest::$order);
     }
 
@@ -443,7 +443,7 @@ final class FormRequestTest extends CIUnitTestCase
                 return [];
             }
 
-            public function authorize(): bool
+            public function isAuthorized(): bool
             {
                 return false;
             }

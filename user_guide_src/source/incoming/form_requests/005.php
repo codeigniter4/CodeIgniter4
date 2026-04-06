@@ -14,7 +14,7 @@ class StorePostRequest extends FormRequest
         ];
     }
 
-    public function authorize(): bool
+    public function isAuthorized(): bool
     {
         // Only authenticated users may submit posts.
         return auth()->loggedIn();

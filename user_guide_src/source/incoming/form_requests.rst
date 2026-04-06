@@ -131,14 +131,14 @@ identical to the ``$errors`` argument of :ref:`saving-validation-rules-to-config
 Authorization
 *************
 
-Override ``authorize()`` to control whether the current user is allowed to make
+Override ``isAuthorized()`` to control whether the current user is allowed to make
 this request. Return ``false`` to reject the request with a 403 Forbidden
 response before validation even runs.
 
 .. literalinclude:: form_requests/005.php
    :lines: 2-
 
-.. note:: The ``authorize()`` check runs before ``prepareForValidation()`` and
+.. note:: The ``isAuthorized()`` check runs before ``prepareForValidation()`` and
     before validation itself. An unauthorized request never reaches the
     validation stage.
 
@@ -223,7 +223,7 @@ whose type extends ``FormRequest``:
 
 #. A new instance is created with the current request injected via the
    constructor.
-#. ``authorize()`` is called. If it returns ``false``, ``failedAuthorization()``
+#. ``isAuthorized()`` is called. If it returns ``false``, ``failedAuthorization()``
    is called, and its response is returned to the client.
 #. ``validationData()`` collects the data to validate.
 #. ``prepareForValidation()`` receives that data and may modify it before the
