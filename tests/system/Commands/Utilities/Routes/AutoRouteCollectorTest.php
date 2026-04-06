@@ -36,6 +36,48 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
         $expected = [
             [
                 'auto',
+                'formRequestController',
+                '',
+                '\Tests\Support\Controllers\FormRequestController::index',
+            ],
+            [
+                'auto',
+                'formRequestController/index[/...]',
+                '',
+                '\Tests\Support\Controllers\FormRequestController::index',
+            ],
+            [
+                'auto',
+                'formRequestController/store[/...]',
+                '',
+                '\Tests\Support\Controllers\FormRequestController::store',
+            ],
+            [
+                'auto',
+                'formRequestController/update[/...]',
+                '',
+                '\Tests\Support\Controllers\FormRequestController::update',
+            ],
+            [
+                'auto',
+                'formRequestController/show[/...]',
+                '',
+                '\Tests\Support\Controllers\FormRequestController::show',
+            ],
+            [
+                'auto',
+                'formRequestController/search[/...]',
+                '',
+                '\Tests\Support\Controllers\FormRequestController::search',
+            ],
+            [
+                'auto',
+                'formRequestController/restricted[/...]',
+                '',
+                '\Tests\Support\Controllers\FormRequestController::restricted',
+            ],
+            [
+                'auto',
                 'hello',
                 '',
                 '\\Tests\\Support\\Controllers\\Hello::index',

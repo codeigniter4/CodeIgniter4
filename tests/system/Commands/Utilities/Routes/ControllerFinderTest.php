@@ -15,6 +15,7 @@ namespace CodeIgniter\Commands\Utilities\Routes;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use PHPUnit\Framework\Attributes\Group;
+use Tests\Support\Controllers\FormRequestController;
 use Tests\Support\Controllers\Hello;
 
 /**
@@ -30,7 +31,8 @@ final class ControllerFinderTest extends CIUnitTestCase
 
         $controllers = $finder->find();
 
-        $this->assertCount(4, $controllers);
-        $this->assertSame(Hello::class, $controllers[0]);
+        $this->assertCount(5, $controllers);
+        $this->assertSame(FormRequestController::class, $controllers[0]);
+        $this->assertSame(Hello::class, $controllers[1]);
     }
 }
