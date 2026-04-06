@@ -165,6 +165,10 @@ final class ConsoleTest extends CIUnitTestCase
         $console = new Console();
         $this->assertSame('', $console->getCommand());
 
+        $this->initializeConsole();
+        $console->run();
+        $this->assertSame(Console::DEFAULT_COMMAND, $console->getCommand());
+
         $this->initializeConsole('help');
         $console->run();
         $this->assertSame('help', $console->getCommand());

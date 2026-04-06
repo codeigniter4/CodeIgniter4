@@ -22,7 +22,10 @@ use Config\Services;
  */
 class Console
 {
-    private const DEFAULT_COMMAND = 'list';
+    /**
+     * @internal
+     */
+    public const DEFAULT_COMMAND = 'list';
 
     private string $command = '';
 
