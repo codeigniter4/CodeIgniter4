@@ -209,7 +209,7 @@ final class DataConverterTest extends CIUnitTestCase
                 [
                     'id'   => 1,
                     'temp' => 15.99,
-                ]
+                ],
             ],
             'float precise-down' => [
                 [
@@ -223,7 +223,7 @@ final class DataConverterTest extends CIUnitTestCase
                 [
                     'id'   => 1,
                     'temp' => 1.23,
-                ]
+                ],
             ],
             'float precise-even' => [
                 [
@@ -237,7 +237,7 @@ final class DataConverterTest extends CIUnitTestCase
                 [
                     'id'   => 1,
                     'temp' => 20.00,
-                ]
+                ],
             ],
             'float precise-odd' => [
                 [
@@ -251,7 +251,7 @@ final class DataConverterTest extends CIUnitTestCase
                 [
                     'id'   => 1,
                     'temp' => 1.25,
-                ]
+                ],
             ],
             'enum string-backed' => [
                 [
