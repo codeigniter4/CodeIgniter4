@@ -261,6 +261,7 @@ Add a question mark at the beginning of type to mark property as nullable, i.e.,
 
 .. note:: **int-bool** can be used since v4.3.0.
 .. note:: **enum** can be used since v4.7.0.
+.. note:: Since v4.8.0, you can also pass parameters to **float** and **double** types to specify the number of decimal places and rounding mode, i.e., **float[2,even]**.
 
 For example, if you had a User entity with an ``is_banned`` property, you can cast it as a boolean:
 
