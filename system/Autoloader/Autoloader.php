@@ -188,8 +188,8 @@ class Autoloader
         $this->registeredClosures[] = $loadClassmap;
         $this->registeredClosures[] = $loadClass;
 
-        spl_autoload_register($loadClassmap, true);
-        spl_autoload_register($loadClass, true);
+        spl_autoload_register($loadClassmap, prepend: true);
+        spl_autoload_register($loadClass, prepend: true);
 
         foreach ($this->files as $file) {
             $this->includeFile($file);
@@ -217,22 +217,24 @@ class Autoloader
      */
     public function addNamespace($namespace, ?string $path = null)
     {
-        if (is_array($namespace)) {
-            foreach ($namespace as $prefix => $namespacedPath) {
-                $prefix = trim($prefix, '\\');
-
-                if (is_array($namespacedPath)) {
-                    foreach ($namespacedPath as $dir) {
-                        $this->prefixes[$prefix][] = rtrim($dir, '\\/') . DIRECTORY_SEPARATOR;
-                    }
-
-                    continue;
-                }
-
-                $this->prefixes[$prefix][] = rtrim($namespacedPath, '\\/') . DIRECTORY_SEPARATOR;
+        if (is_string($namespace)) {
+            if ($path === null) {
+                return $this;
             }
-        } else {
-            $this->prefixes[trim($namespace, '\\')][] = rtrim($path, '\\/') . DIRECTORY_SEPARATOR;
+
+            $namespace = [$namespace => $path];
+        }
+
+        foreach ($namespace as $prefix => $paths) {
+            $prefix = trim($prefix, '\\');
+
+            if (is_string($paths)) {
+                $paths = [$paths];
+            }
+
+            foreach ($paths as $path) {
+                $this->prefixes[$prefix][] = rtrim($path, '\\/') . DIRECTORY_SEPARATOR;
+            }
         }
 
         return $this;

@@ -213,8 +213,8 @@ jobs:
             args+=("--max-jobs" "${{ inputs.max-jobs }}")
           fi
 
-          # Add --repeat flag (always, default is 10)
-          args+=("--repeat" "${{ inputs.repeat || '10' }}")
+          # Add --repeat flag (always, default is 50)
+          args+=("--repeat" "${{ inputs.repeat || '50' }}")
 
           # Add --timeout flag (always, default is 300)
           args+=("--timeout" "${{ inputs.timeout || '300' }}")
