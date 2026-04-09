@@ -16,13 +16,13 @@ CLI
 # Commands
 # Config
 Cookie
-DataCaster
+# DataCaster
 # DataConverter
 # Database
-Debug
-Email
-Encryption
-Entity
+# Debug
+# Email
+# Encryption
+# Entity
 Events
 Files
 # Filters
@@ -31,7 +31,7 @@ Format
 # Helpers
 # Honeypot
 HotReloader
-I18n
+# I18n
 # Images
 Language
 Log
