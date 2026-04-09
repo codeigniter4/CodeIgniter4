@@ -123,6 +123,45 @@ final class AutoloaderTest extends CIUnitTestCase
         $this->assertSame($expected, $actual);
     }
 
+    public function testUnregisterRemovesClosuresFromSplStack(): void
+    {
+        $countBefore = count(spl_autoload_functions());
+
+        $config                      = new Autoload();
+        $modules                     = new Modules();
+        $modules->discoverInComposer = false;
+        $config->psr4                = ['CodeIgniter' => SYSTEMPATH];
+
+        $loader = new Autoloader();
+        $loader->initialize($config, $modules)->register();
+
+        $this->assertCount($countBefore + 2, spl_autoload_functions());
+
+        $loader->unregister();
+
+        $this->assertCount($countBefore, spl_autoload_functions());
+    }
+
+    public function testUnregisterRemovesAllClosuresAfterMultipleRegistrations(): void
+    {
+        $countBefore = count(spl_autoload_functions());
+
+        $config                      = new Autoload();
+        $modules                     = new Modules();
+        $modules->discoverInComposer = false;
+        $config->psr4                = ['CodeIgniter' => SYSTEMPATH];
+
+        $loader = new Autoloader();
+        $loader->initialize($config, $modules)->register();
+        $loader->register();
+
+        $this->assertCount($countBefore + 4, spl_autoload_functions());
+
+        $loader->unregister();
+
+        $this->assertCount($countBefore, spl_autoload_functions());
+    }
+
     public function testServiceAutoLoader(): void
     {
         $autoloader = service('autoloader', false);

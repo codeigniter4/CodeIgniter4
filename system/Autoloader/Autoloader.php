@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Autoloader;
 
+use Closure;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Exceptions\RuntimeException;
@@ -93,6 +94,14 @@ class Autoloader
      */
     protected $helpers = ['url'];
 
+    /**
+     * Stores the closures registered with spl_autoload_register()
+     * so that unregister() can remove the exact same instances.
+     *
+     * @var list<Closure(string): void>
+     */
+    private array $registeredClosures = [];
+
     public function __construct(private readonly string $composerPath = COMPOSER_PATH)
     {
     }
@@ -170,8 +179,17 @@ class Autoloader
      */
     public function register()
     {
-        spl_autoload_register($this->loadClassmap(...), true);
-        spl_autoload_register($this->loadClass(...), true);
+        // Store the exact Closure instances so unregister() can remove them.
+        // First-class callable syntax (e.g. $this->loadClass(...)) creates a
+        // new Closure object on every call, so we must reuse the same instances.
+        $loadClassmap = $this->loadClassmap(...);
+        $loadClass    = $this->loadClass(...);
+
+        $this->registeredClosures[] = $loadClassmap;
+        $this->registeredClosures[] = $loadClass;
+
+        spl_autoload_register($loadClassmap, true);
+        spl_autoload_register($loadClass, true);
 
         foreach ($this->files as $file) {
             $this->includeFile($file);
@@ -183,8 +201,11 @@ class Autoloader
      */
     public function unregister(): void
     {
-        spl_autoload_unregister($this->loadClass(...));
-        spl_autoload_unregister($this->loadClassmap(...));
+        foreach ($this->registeredClosures as $closure) {
+            spl_autoload_unregister($closure);
+        }
+
+        $this->registeredClosures = [];
     }
 
     /**
