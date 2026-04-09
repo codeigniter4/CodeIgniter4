@@ -16,6 +16,7 @@ namespace CodeIgniter\Commands;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RequiresOperatingSystem;
 
 /**
  * @internal
@@ -31,10 +32,22 @@ final class ClearDebugbarTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        command('debugbar:clear');
+        $this->resetStreamFilterBuffer();
+
         $this->time = time();
+        $this->createDummyDebugbarJson();
     }
 
-    protected function createDummyDebugbarJson(): void
+    protected function tearDown(): void
+    {
+        command('debugbar:clear');
+        $this->resetStreamFilterBuffer();
+
+        parent::tearDown();
+    }
+
+    private function createDummyDebugbarJson(): void
     {
         $time = $this->time;
         $path = WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$time}.json";
@@ -50,18 +63,56 @@ final class ClearDebugbarTest extends CIUnitTestCase
 
     public function testClearDebugbarWorks(): void
     {
-        // test clean debugbar dir
-        $this->assertFileDoesNotExist(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$this->time}.json");
-
-        // test dir is now populated with json
-        $this->createDummyDebugbarJson();
         $this->assertFileExists(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$this->time}.json");
 
         command('debugbar:clear');
-        $result = $this->getStreamFilterBuffer();
 
         $this->assertFileDoesNotExist(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$this->time}.json");
         $this->assertFileExists(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . 'index.html');
-        $this->assertStringContainsString('Debugbar cleared.', $result);
+        $this->assertSame(
+            "Debugbar cleared.\n",
+            preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()),
+        );
+    }
+
+    #[RequiresOperatingSystem('Darwin|Linux')]
+    public function testClearDebugbarWithError(): void
+    {
+        $path = WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$this->time}.json";
+
+        // Attempt to make the file itself undeletable by setting the
+        // immutable/uchg flag on supported platforms.
+        $immutableSet = false;
+        if (str_starts_with(PHP_OS, 'Darwin')) {
+            @exec(sprintf('chflags uchg %s', escapeshellarg($path)), $output, $rc);
+            $immutableSet = $rc === 0;
+        } else {
+            // Try chattr on Linux with sudo (for containerized environments)
+            @exec('which chattr', $whichOut, $whichRc);
+
+            if ($whichRc === 0) {
+                @exec(sprintf('sudo chattr +i %s', escapeshellarg($path)), $output, $rc);
+                $immutableSet = $rc === 0;
+            }
+        }
+
+        if (! $immutableSet) {
+            $this->markTestSkipped('Cannot set file immutability in this environment');
+        }
+
+        command('debugbar:clear');
+
+        // Restore attributes so other tests are not affected.
+        if (str_starts_with(PHP_OS, 'Darwin')) {
+            @exec(sprintf('chflags nouchg %s', escapeshellarg($path)));
+        } else {
+            @exec(sprintf('sudo chattr -i %s', escapeshellarg($path)));
+        }
+
+        $this->assertFileExists($path);
+        $this->assertSame(
+            "Error deleting the debugbar JSON files.\n",
+            preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()),
+        );
     }
 }
