@@ -486,6 +486,7 @@ run_component_tests() {
         "$test_dir"
         "--colors=never"
         "--no-coverage"
+        "--do-not-cache-result"
         "--order-by=random"
         "--random-order-seed=${random_seed}"
         "--log-events-text"
