@@ -612,7 +612,7 @@ run_component_tests() {
         fi
 
         {
-            echo "> ${phpunit_args[@]:0:6}"
+            echo "> ${phpunit_args[@]:0:7}"
             echo ""
             echo "$output"
             echo "$predecessor_info"
