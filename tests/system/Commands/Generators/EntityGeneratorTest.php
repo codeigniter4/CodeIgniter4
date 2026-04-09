@@ -11,7 +11,7 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Commands;
+namespace CodeIgniter\Commands\Generators;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
@@ -21,32 +21,32 @@ use PHPUnit\Framework\Attributes\Group;
  * @internal
  */
 #[Group('Others')]
-final class SeederGeneratorTest extends CIUnitTestCase
+final class EntityGeneratorTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
     protected function tearDown(): void
     {
-        parent::tearDown();
-
         $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', $this->getStreamFilterBuffer());
         $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
+        $dir    = dirname($file);
         if (is_file($file)) {
             unlink($file);
         }
+        if (is_dir($dir)) {
+            rmdir($dir);
+        }
     }
 
-    public function testGenerateSeeder(): void
+    public function testGenerateEntity(): void
     {
-        command('make:seeder cars');
-        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
-        $this->assertFileExists(APPPATH . 'Database/Seeds/Cars.php');
+        command('make:entity user');
+        $this->assertFileExists(APPPATH . 'Entities/User.php');
     }
 
-    public function testGenerateSeederWithOptionSuffix(): void
+    public function testGenerateEntityWithOptionSuffix(): void
     {
-        command('make:seeder cars -suffix');
-        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
-        $this->assertFileExists(APPPATH . 'Database/Seeds/CarsSeeder.php');
+        command('make:entity user -suffix');
+        $this->assertFileExists(APPPATH . 'Entities/UserEntity.php');
     }
 }

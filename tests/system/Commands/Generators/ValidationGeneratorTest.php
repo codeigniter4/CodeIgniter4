@@ -11,7 +11,7 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Commands;
+namespace CodeIgniter\Commands\Generators;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
@@ -21,12 +21,14 @@ use PHPUnit\Framework\Attributes\Group;
  * @internal
  */
 #[Group('Others')]
-final class EntityGeneratorTest extends CIUnitTestCase
+final class ValidationGeneratorTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
     protected function tearDown(): void
     {
+        parent::tearDown();
+
         $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', $this->getStreamFilterBuffer());
         $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
         $dir    = dirname($file);
@@ -38,15 +40,15 @@ final class EntityGeneratorTest extends CIUnitTestCase
         }
     }
 
-    public function testGenerateEntity(): void
+    public function testGenerateValidation(): void
     {
-        command('make:entity user');
-        $this->assertFileExists(APPPATH . 'Entities/User.php');
+        command('make:validation user');
+        $this->assertFileExists(APPPATH . 'Validation/User.php');
     }
 
-    public function testGenerateEntityWithOptionSuffix(): void
+    public function testGenerateValidationWithOptionSuffix(): void
     {
-        command('make:entity user -suffix');
-        $this->assertFileExists(APPPATH . 'Entities/UserEntity.php');
+        command('make:validation admin -suffix');
+        $this->assertFileExists(APPPATH . 'Validation/AdminValidation.php');
     }
 }

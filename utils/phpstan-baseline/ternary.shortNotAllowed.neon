@@ -85,27 +85,27 @@ parameters:
         -
             message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
             count: 1
-            path: ../../tests/system/Commands/CellGeneratorTest.php
+            path: ../../tests/system/Commands/Generators/CellGeneratorTest.php
 
         -
             message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
             count: 1
-            path: ../../tests/system/Commands/CommandGeneratorTest.php
+            path: ../../tests/system/Commands/Generators/CommandGeneratorTest.php
 
         -
             message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
             count: 1
-            path: ../../tests/system/Commands/ControllerGeneratorTest.php
+            path: ../../tests/system/Commands/Generators/ControllerGeneratorTest.php
 
         -
             message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
             count: 1
-            path: ../../tests/system/Commands/ModelGeneratorTest.php
+            path: ../../tests/system/Commands/Generators/ModelGeneratorTest.php
 
         -
             message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
             count: 1
-            path: ../../tests/system/Commands/ScaffoldGeneratorTest.php
+            path: ../../tests/system/Commands/Generators/ScaffoldGeneratorTest.php
 
         -
             message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'

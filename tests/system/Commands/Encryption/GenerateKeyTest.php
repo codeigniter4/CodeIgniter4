@@ -11,7 +11,7 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Commands;
+namespace CodeIgniter\Commands\Encryption;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Superglobals;

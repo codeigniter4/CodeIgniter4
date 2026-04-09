@@ -11,7 +11,7 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Commands;
+namespace CodeIgniter\Commands\Generators;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
@@ -21,12 +21,14 @@ use PHPUnit\Framework\Attributes\Group;
  * @internal
  */
 #[Group('Others')]
-final class FilterGeneratorTest extends CIUnitTestCase
+final class SeederGeneratorTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
     protected function tearDown(): void
     {
+        parent::tearDown();
+
         $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', $this->getStreamFilterBuffer());
         $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
         if (is_file($file)) {
@@ -34,15 +36,17 @@ final class FilterGeneratorTest extends CIUnitTestCase
         }
     }
 
-    public function testGenerateFilter(): void
+    public function testGenerateSeeder(): void
     {
-        command('make:filter admin');
-        $this->assertFileExists(APPPATH . 'Filters/Admin.php');
+        command('make:seeder cars');
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
+        $this->assertFileExists(APPPATH . 'Database/Seeds/Cars.php');
     }
 
-    public function testGenerateFilterWithOptionSuffix(): void
+    public function testGenerateSeederWithOptionSuffix(): void
     {
-        command('make:filter admin -suffix');
-        $this->assertFileExists(APPPATH . 'Filters/AdminFilter.php');
+        command('make:seeder cars -suffix');
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
+        $this->assertFileExists(APPPATH . 'Database/Seeds/CarsSeeder.php');
     }
 }

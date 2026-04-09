@@ -50,7 +50,7 @@ parameters:
         -
             message: '#^Parameter \#2 \$mock of static method CodeIgniter\\Config\\BaseService\:\:injectMock\(\) expects object, null given\.$#'
             count: 4
-            path: ../../tests/system/Commands/RoutesTest.php
+            path: ../../tests/system/Commands/Utilities/RoutesTest.php
 
         -
             message: '#^Parameter \#1 \$expected of method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) expects class\-string\<Config\\TestRegistrar\>, string given\.$#'

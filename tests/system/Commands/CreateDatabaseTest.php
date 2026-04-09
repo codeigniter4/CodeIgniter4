@@ -22,6 +22,8 @@ use Config\Database;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
+ * @todo To figure out how to transfer this test to `tests/system/Commands/Database/` without breaking DatabaseLive group.
+ *
  * @internal
  */
 #[Group('DatabaseLive')]

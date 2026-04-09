@@ -11,7 +11,7 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Commands;
+namespace CodeIgniter\Commands\Generators;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
@@ -21,7 +21,7 @@ use PHPUnit\Framework\Attributes\Group;
  * @internal
  */
 #[Group('Others')]
-final class ConfigGeneratorTest extends CIUnitTestCase
+final class FilterGeneratorTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
@@ -34,15 +34,15 @@ final class ConfigGeneratorTest extends CIUnitTestCase
         }
     }
 
-    public function testGenerateConfig(): void
+    public function testGenerateFilter(): void
     {
-        command('make:config auth');
-        $this->assertFileExists(APPPATH . 'Config/Auth.php');
+        command('make:filter admin');
+        $this->assertFileExists(APPPATH . 'Filters/Admin.php');
     }
 
-    public function testGenerateConfigWithOptionSuffix(): void
+    public function testGenerateFilterWithOptionSuffix(): void
     {
-        command('make:config auth -suffix');
-        $this->assertFileExists(APPPATH . 'Config/AuthConfig.php');
+        command('make:filter admin -suffix');
+        $this->assertFileExists(APPPATH . 'Filters/AdminFilter.php');
     }
 }
