@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Cache\CacheFactory;
+use CodeIgniter\Cache\Handlers\FileHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Services;
@@ -31,15 +32,27 @@ final class ClearCacheTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        $this->resetServices();
+
         // Make sure we are testing with the correct handler (override injections)
         Services::injectMock('cache', CacheFactory::getHandler(config('Cache')));
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->resetServices();
     }
 
     public function testClearCacheInvalidHandler(): void
     {
         command('cache:clear junk');
 
-        $this->assertStringContainsString('junk is not a valid cache handler.', $this->getStreamFilterBuffer());
+        $this->assertSame(
+            "Cache driver \"junk\" is not a valid cache handler.\n",
+            preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()),
+        );
     }
 
     public function testClearCacheWorks(): void
@@ -51,5 +64,23 @@ final class ClearCacheTest extends CIUnitTestCase
 
         $this->assertNull(cache('foo'));
         $this->assertStringContainsString('Cache cleared.', $this->getStreamFilterBuffer());
+    }
+
+    public function testClearCacheFails(): void
+    {
+        $cache = $this->getMockBuilder(FileHandler::class)
+            ->setConstructorArgs([config('Cache')])
+            ->onlyMethods(['clean'])
+            ->getMock();
+        $cache->expects($this->once())->method('clean')->willReturn(false);
+
+        Services::injectMock('cache', $cache);
+
+        command('cache:clear');
+
+        $this->assertSame(
+            "Error while clearing the cache.\n",
+            preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()),
+        );
     }
 }

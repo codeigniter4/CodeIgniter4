@@ -18,6 +18,8 @@ BREAKING
 Message Changes
 ***************
 
+- The ``Cache.invalidHandler`` message string was added.
+
 *******
 Changes
 *******
