@@ -901,6 +901,49 @@ class ValidationTest extends CIUnitTestCase
         service('superglobals')->unsetServer('CONTENT_TYPE');
     }
 
+    /**
+     * @param array<string, string> $rules
+     * @param array<string, mixed>  $expectedValidated
+     */
+    #[DataProvider('provideGetValidatedWithNullValue')]
+    public function testGetValidatedWithNullValue(
+        array $rules,
+        bool $expectedResult,
+        array $expectedValidated,
+    ): void {
+        $data = [
+            'role' => null,
+        ];
+
+        $result = $this->validation->setRules($rules)->run($data);
+
+        $this->assertSame($expectedResult, $result);
+        $this->assertSame($expectedValidated, $this->validation->getValidated());
+        $this->assertSame($expectedResult ? [] : ['role'], array_keys($this->validation->getErrors()));
+    }
+
+    /**
+     * @return iterable<string, array{
+     *     0: array<string, string>,
+     *     1: bool,
+     *     2: array<string, mixed>
+     * }>
+     */
+    public static function provideGetValidatedWithNullValue(): iterable
+    {
+        yield 'permit_empty preserves null' => [
+            ['role' => 'permit_empty|string'],
+            true,
+            ['role' => null],
+        ];
+
+        yield 'string fails on null' => [
+            ['role' => 'string'],
+            false,
+            [],
+        ];
+    }
+
     public function testJsonInputInvalid(): void
     {
         $this->expectException(HTTPException::class);

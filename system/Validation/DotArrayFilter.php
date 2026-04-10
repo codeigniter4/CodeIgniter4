@@ -62,8 +62,9 @@ final class DotArrayFilter
         // Get the current index
         $currentIndex = array_shift($indexes);
 
-        // If the current index doesn't exist and is not a wildcard, return an empty array
-        if (! isset($array[$currentIndex]) && $currentIndex !== '*') {
+        // If the current index doesn't exist and is not a wildcard, return an empty array.
+        // Use array_key_exists() so explicit null values are preserved.
+        if ($currentIndex !== '*' && ! array_key_exists($currentIndex, $array)) {
             return [];
         }
 
@@ -88,9 +89,9 @@ final class DotArrayFilter
             return $result;
         }
 
-        // If this is the last index, return the value
+        // If this is the last index, return the value as-is, including null.
         if ($indexes === []) {
-            return [$currentIndex => $array[$currentIndex] ?? []];
+            return [$currentIndex => $array[$currentIndex]];
         }
 
         // If the current value is an array, recursively filter it

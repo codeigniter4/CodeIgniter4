@@ -197,4 +197,15 @@ final class DotArrayFilterTest extends CIUnitTestCase
 
         $this->assertSame($data, $result);
     }
+
+    public function testRunPreservesNullValue(): void
+    {
+        $data = [
+            'foo' => null,
+        ];
+
+        $result = DotArrayFilter::run(['foo'], $data);
+
+        $this->assertSame(['foo' => null], $result);
+    }
 }
