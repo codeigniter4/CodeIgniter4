@@ -19,6 +19,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use RuntimeException;
 use Tests\Support\Commands\AppInfo;
 use Tests\Support\Commands\ParamsReveal;
 
@@ -134,6 +135,13 @@ final class CommandTest extends CIUnitTestCase
         $this->assertStringContainsString('Command "clear" not found.', $this->getBuffer());
         $this->assertStringContainsString('Did you mean one of these?', $this->getBuffer());
         $this->assertStringContainsString(':clear', $this->getBuffer());
+    }
+
+    public function testDestructiveCommandIsNotRisky(): void
+    {
+        $this->expectException(RuntimeException::class);
+
+        command('app:destructive');
     }
 
     /**

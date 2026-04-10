@@ -185,10 +185,14 @@ if (! function_exists('command')) {
             $params[$arg] = $value;
         }
 
-        ob_start();
-        service('commands')->run($command, $params);
+        try {
+            ob_start();
+            service('commands')->run($command, $params);
 
-        return ob_get_clean();
+            return ob_get_contents();
+        } finally {
+            ob_end_clean();
+        }
     }
 }
 

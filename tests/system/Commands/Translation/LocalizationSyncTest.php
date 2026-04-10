@@ -171,7 +171,6 @@ final class LocalizationSyncTest extends CIUnitTestCase
             TEXT_WRAP;
 
         file_put_contents(self::$languageTestPath . self::$locale . '/SyncInvalid.php', $langWithNullValue);
-        ob_get_flush();
 
         $this->expectException(LogicException::class);
         $this->expectExceptionMessageMatches('/Only "array" or "string" is allowed/');
@@ -192,7 +191,6 @@ final class LocalizationSyncTest extends CIUnitTestCase
             TEXT_WRAP;
 
         file_put_contents(self::$languageTestPath . self::$locale . '/SyncInvalid.php', $langWithIntegerValue);
-        ob_get_flush();
 
         $this->expectException(LogicException::class);
         $this->expectExceptionMessageMatches('/Only "array" or "string" is allowed/');
