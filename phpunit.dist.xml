@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+    xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
     bootstrap="system/Test/bootstrap.php"
     backupGlobals="false"
     beStrictAboutOutputDuringTests="true"
@@ -12,27 +12,27 @@
     failOnRisky="true"
     failOnWarning="true"
 >
-    <coverage
-        pathCoverage="false"
-        ignoreDeprecatedCodeUnits="true"
-        disableCodeCoverageIgnore="true">
+    <coverage pathCoverage="false" ignoreDeprecatedCodeUnits="true">
         <report>
             <clover outputFile="build/logs/clover.xml"/>
             <html outputDirectory="build/coverage/html" highLowerBound="80"/>
             <text outputFile="build/coverage/coverage.txt"/>
         </report>
     </coverage>
+
     <extensions>
         <bootstrap class="Nexus\PHPUnit\Tachycardia\TachycardiaExtension">
             <parameter name="time-limit" value="0.50" />
             <parameter name="report-count" value="30" />
         </bootstrap>
     </extensions>
+
     <testsuites>
         <testsuite name="System">
             <directory>tests/system</directory>
         </testsuite>
     </testsuites>
+
     <source>
         <include>
             <directory suffix=".php">system</directory>
@@ -51,6 +51,7 @@
             <file>system/Test/FeatureTestCase.php</file>
         </exclude>
     </source>
+
     <php>
         <server name="app.baseURL" value="http://example.com/"/>
         <server name="CODEIGNITER_SCREAM_DEPRECATIONS" value="1"/>

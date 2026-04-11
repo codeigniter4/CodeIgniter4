@@ -54,7 +54,7 @@ final class FileTest extends CIUnitTestCase
         $file = new File(SYSTEMPATH . 'index.html');
         $this->assertSame('html', $file->guessExtension());
 
-        $file = new File(ROOTPATH . 'phpunit.xml.dist');
+        $file = new File(ROOTPATH . 'phpunit.dist.xml');
         $this->assertSame('xml', $file->guessExtension());
 
         $tmp  = tempnam(SUPPORTPATH, 'foo');

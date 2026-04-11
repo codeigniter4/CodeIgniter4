@@ -127,6 +127,6 @@ _modules/*
 .vscode/
 
 /results/
-/phpunit*.xml
+/phpunit.xml
 
 /.php-cs-fixer.php

@@ -123,4 +123,4 @@ _modules/*
 .vscode/
 
 /results/
-/phpunit*.xml
+/phpunit.xml
