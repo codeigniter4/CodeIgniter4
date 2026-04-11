@@ -64,8 +64,6 @@ class Commands
             return EXIT_ERROR;
         }
 
-        // The file would have already been loaded during the
-        // createCommandList function...
         $className = $this->commands[$command]['class'];
         $class     = new $className($this->logger, $this);
 
@@ -104,14 +102,10 @@ class Commands
         $locator = service('locator');
         $files   = $locator->listFiles('Commands/');
 
-        // If no matching command files were found, bail
-        // This should never happen in unit testing.
         if ($files === []) {
-            return; // @codeCoverageIgnore
+            return;
         }
 
-        // Loop over each file checking to see if a command with that
-        // alias exists in the class.
         foreach ($files as $file) {
             /** @var class-string<BaseCommand>|false */
             $className = $locator->findQualifiedNameFromPath($file);
@@ -159,21 +153,20 @@ class Commands
             return true;
         }
 
-        $message      = lang('CLI.commandNotFound', [$command]);
+        $message = lang('CLI.commandNotFound', [$command]);
+
         $alternatives = $this->getCommandAlternatives($command, $commands);
 
         if ($alternatives !== []) {
-            if (count($alternatives) === 1) {
-                $message .= "\n\n" . lang('CLI.altCommandSingular') . "\n    ";
-            } else {
-                $message .= "\n\n" . lang('CLI.altCommandPlural') . "\n    ";
-            }
-
-            $message .= implode("\n    ", $alternatives);
+            $message = sprintf(
+                "%s\n\n%s\n    %s",
+                $message,
+                count($alternatives) === 1 ? lang('CLI.altCommandSingular') : lang('CLI.altCommandPlural'),
+                implode("\n    ", $alternatives),
+            );
         }
 
         CLI::error($message);
-        CLI::newLine();
 
         return false;
     }

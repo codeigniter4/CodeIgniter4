@@ -13,36 +13,30 @@ declare(strict_types=1);
 
 namespace App\Commands;
 
+use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use CodeIgniter\Commands\ListCommands as BaseListCommands;
 
-class ListCommands extends BaseListCommands
+/**
+ * @internal
+ */
+final class ListCommands extends BaseCommand
 {
     /**
-     * The group the command is lumped under
-     * when listing commands.
-     *
      * @var string
      */
     protected $group = 'App';
 
     /**
-     * The Command's name
-     *
      * @var string
      */
     protected $name = 'list';
 
     /**
-     * the Command's short description
-     *
      * @var string
      */
     protected $description = 'This is testing to override `list` command.';
 
     /**
-     * the Command's usage
-     *
      * @var string
      */
     protected $usage = 'list';
