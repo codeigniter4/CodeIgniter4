@@ -4,16 +4,58 @@ name: Add Labels to PRs
 # in a PR, and then change it back to `pull_request_target` before merging.
 # @see https://github.com/actions/labeler?tab=readme-ov-file#updating-major-version-of-the-labeler
 on:
-  - pull_request_target
+  - pull_request
 
 jobs:
+  validate-source:
+    permissions:
+      contents: read
+      pull-requests: read
+    runs-on: ubuntu-24.04
+    outputs:
+      valid: ${{ steps.check.outputs.valid }}
+
+    steps:
+      - name: Check if PR is from the main repository
+        id: check
+        run: |
+          if [[ "$HEAD_REPO" == "codeigniter4/CodeIgniter4" ]]; then
+            echo "valid=true" >> $GITHUB_OUTPUT
+          else
+            echo "valid=false" >> $GITHUB_OUTPUT
+          fi
+        env:
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+
   add-labels:
+    needs: validate-source
     permissions:
       contents: read
       pull-requests: write
     runs-on: ubuntu-24.04
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Verify PR source for workflow file changes
+        run: |
+          # Get changed files in this PR
+          git fetch origin "refs/pull/${{ github.event.pull_request.number }}/merge"
+          CHANGED_FILES=$(git diff --name-only origin/develop FETCH_HEAD 2>/dev/null || echo "")
+
+          # Check if this workflow file is being modified
+          if echo "$CHANGED_FILES" | grep -q "\.github/workflows/label-pr\.yml"; then
+            if [[ "$IS_VALID" != "true" ]]; then
+              echo "::error::Changes to label-pr.yml can only be made from the main repository."
+              exit 1
+            fi
+          fi
+        env:
+          IS_VALID: ${{ needs.validate-source.outputs.valid }}
+
       - name: Add labels
         uses: actions/labeler@634933edcd8ababfe52f92936142cc22ac488b1b # v6.0.1
         with:

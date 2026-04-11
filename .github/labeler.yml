@@ -10,14 +10,14 @@
   - any-glob-to-any-file:
     - '.github/workflows/*'
 
-# Add the `documentation` label to PRs that change any file in the `user_guide_src/source/` directory.
+# Add the `documentation` label to PRs for documentation only.
 'documentation':
 - changed-files:
   - any-glob-to-all-files:
-    - 'user_guide_src/source/*'
+    - 'user_guide_src/source/**'
 
-# Add the `testing` label to PRs that change files in the `tests/` directory ONLY.
+# Add the `testing` label to PRs that changes tests only.
 'testing':
 - changed-files:
   - any-glob-to-all-files:
-    - 'tests/*'
+    - 'tests/**'
