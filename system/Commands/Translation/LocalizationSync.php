@@ -131,9 +131,7 @@ class LocalizationSync extends BaseCommand
             ),
         );
 
-        /**
-         * @var array<non-empty-string, SplFileInfo> $files
-         */
+        /** @var array<non-empty-string, SplFileInfo> $files */
         $files = iterator_to_array($iterator, true);
         ksort($files);
 

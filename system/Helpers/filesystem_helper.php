@@ -84,9 +84,7 @@ if (! function_exists('directory_mirror')) {
 
         $dirLen = strlen($originDir);
 
-        /**
-         * @var SplFileInfo $file
-         */
+        /** @var SplFileInfo $file */
         foreach (new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($originDir, FilesystemIterator::SKIP_DOTS),
             RecursiveIteratorIterator::SELF_FIRST,

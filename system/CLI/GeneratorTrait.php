@@ -303,9 +303,7 @@ trait GeneratorTrait
 
         $component = singular($this->component);
 
-        /**
-         * @see https://regex101.com/r/a5KNCR/2
-         */
+        /** @see https://regex101.com/r/a5KNCR/2 */
         $pattern = sprintf('/([a-z][a-z0-9_\/\\\\]+)(%s)$/i', $component);
 
         if (preg_match($pattern, $class, $matches) === 1) {

@@ -748,8 +748,8 @@ class RulesTest extends CIUnitTestCase
             [true, ['mustBeADate' => []]],
             // `otherField` and `mustBeADate` exist
             [true, ['mustBeADate' => '', 'otherField' => '']],
-            [true, ['mustBeADate' => '2023-06-12', 'otherField' => 'exists']],
-            [true, ['mustBeADate' => '2023-06-12', 'otherField' => '']],
+            [true, ['mustBeADate'  => '2023-06-12', 'otherField' => 'exists']],
+            [true, ['mustBeADate'  => '2023-06-12', 'otherField' => '']],
             [false, ['mustBeADate' => '', 'otherField' => 'exists']],
             [false, ['mustBeADate' => [], 'otherField' => 'exists']],
             [false, ['mustBeADate' => null, 'otherField' => 'exists']],
@@ -773,7 +773,7 @@ class RulesTest extends CIUnitTestCase
     {
         yield from [
             [true, ['married' => '0', 'partner_name' => '']],
-            [true, ['married' => '1', 'partner_name' => 'Foo']],
+            [true, ['married'  => '1', 'partner_name' => 'Foo']],
             [false, ['married' => '1', 'partner_name' => '']],
         ];
     }

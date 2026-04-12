@@ -20,9 +20,6 @@ use Psr\Log\LoggerInterface;
 /**
  * Class for parsing pseudo-vars
  *
- * @phpstan-type parser_callable (callable(mixed): mixed)
- * @phpstan-type parser_callable_string (callable(mixed): mixed)&string
- *
  * @see \CodeIgniter\View\ParserTest
  */
 class Parser extends View
@@ -63,8 +60,7 @@ class Parser extends View
     /**
      * Stores any plugins registered at run-time.
      *
-     * @var         array<string, callable|list<string>|string>
-     * @phpstan-var array<string, array<parser_callable_string>|parser_callable_string|parser_callable>
+     * @var array<string, (callable(mixed): mixed)|((callable(mixed): mixed)&string)|list<(callable(mixed): mixed)&string>>
      */
     protected $plugins = [];
 

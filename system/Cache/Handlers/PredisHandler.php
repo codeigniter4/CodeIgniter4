@@ -92,10 +92,9 @@ class PredisHandler extends BaseHandler
         }
 
         return match ($data['__ci_type']) {
-            'array', 'object' => unserialize($data['__ci_value']),
-            // Yes, 'double' is returned and NOT 'float'
+            'array', 'object'                                => unserialize($data['__ci_value']),
             'boolean', 'integer', 'double', 'string', 'NULL' => settype($data['__ci_value'], $data['__ci_type']) ? $data['__ci_value'] : null,
-            default => null,
+            default                                          => null,
         };
     }
 
@@ -111,7 +110,7 @@ class PredisHandler extends BaseHandler
 
             case 'boolean':
             case 'integer':
-            case 'double': // Yes, 'double' is returned and NOT 'float'
+            case 'double':
             case 'string':
             case 'NULL':
                 break;

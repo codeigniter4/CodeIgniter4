@@ -40,9 +40,7 @@ class DatetimeCast extends BaseCast
             throw new InvalidArgumentException($message);
         }
 
-        /**
-         * @see https://www.php.net/manual/en/datetimeimmutable.createfromformat.php#datetimeimmutable.createfromformat.parameters
-         */
+        /** @see https://www.php.net/manual/en/datetimeimmutable.createfromformat.php#datetimeimmutable.createfromformat.parameters */
         $format = self::getDateTimeFormat($params, $helper);
 
         return Time::createFromFormat($format, $value);

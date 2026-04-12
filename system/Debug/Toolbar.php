@@ -368,9 +368,7 @@ class Toolbar
      */
     public function prepare(?RequestInterface $request = null, ?ResponseInterface $response = null): void
     {
-        /**
-         * @var IncomingRequest|null $request
-         */
+        /** @var IncomingRequest|null $request */
         if (CI_DEBUG && ! is_cli()) {
             if ($this->hasNativeHeaderConflict()) {
                 return;

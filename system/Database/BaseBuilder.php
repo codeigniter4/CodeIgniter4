@@ -310,9 +310,7 @@ class BaseBuilder
             throw new DatabaseException('A table must be specified when creating a new Query Builder.');
         }
 
-        /**
-         * @var BaseConnection $db
-         */
+        /** @var BaseConnection $db */
         $this->db = $db;
 
         if ($tableName instanceof TableName) {

@@ -299,9 +299,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         service('superglobals')->setServer('REQUEST_METHOD', 'POST');
         service('superglobals')->setPost('csrf_test_name', $this->randomizedToken);
 
-        /**
-         * @var SecurityConfig
-         */
+        /** @var SecurityConfig */
         $config                 = Factories::config('Security');
         $config->tokenRandomize = true;
         $config->regenerate     = false;
@@ -322,9 +320,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         service('superglobals')->setServer('REQUEST_METHOD', 'POST');
         service('superglobals')->setPost('csrf_test_name', $this->randomizedToken);
 
-        /**
-         * @var SecurityConfig
-         */
+        /** @var SecurityConfig */
         $config                 = Factories::config('Security');
         $config->tokenRandomize = true;
         $config->regenerate     = true;

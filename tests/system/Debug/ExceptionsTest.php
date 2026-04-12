@@ -160,8 +160,7 @@ final class ExceptionsTest extends CIUnitTestCase
                 'function' => 'index',
                 'class'    => Home::class,
                 'type'     => '->',
-                'args'     => [
-                ],
+                'args'     => [],
             ],
         ];
         $keysToMask = ['password'];
@@ -186,8 +185,7 @@ final class ExceptionsTest extends CIUnitTestCase
                 'function' => 'f',
                 'class'    => Home::class,
                 'type'     => '->',
-                'args'     => [
-                ],
+                'args'     => [],
             ],
             1 => [
                 'file'     => '/var/www/CodeIgniter4/system/CodeIgniter.php',
@@ -195,8 +193,7 @@ final class ExceptionsTest extends CIUnitTestCase
                 'function' => 'index',
                 'class'    => Home::class,
                 'type'     => '->',
-                'args'     => [
-                ],
+                'args'     => [],
             ],
         ];
         $keysToMask = ['file'];

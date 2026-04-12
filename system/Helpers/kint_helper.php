@@ -69,18 +69,14 @@ if (! function_exists('trace')) {
         /**
          * Provides a backtrace to the current execution point, from Kint.
          */
-        /**
-         * trace function
-         */
         function trace(): void
         {
             Kint::$aliases[] = 'trace';
             Kint::trace();
         }
     } else {
-        // In case that Kint is not loaded.
         /**
-         * trace function
+         * Generic trace function in case that Kint is not loaded.
          *
          * @return int
          */

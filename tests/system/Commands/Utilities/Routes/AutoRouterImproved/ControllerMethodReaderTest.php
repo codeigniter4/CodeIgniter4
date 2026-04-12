@@ -128,8 +128,7 @@ final class ControllerMethodReaderTest extends CIUnitTestCase
                 'route'        => 'sub-dir/blog-controller',
                 'route_params' => '',
                 'handler'      => '\CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers\SubDir\BlogController::getIndex',
-                'params'       => [
-                ],
+                'params'       => [],
             ],
             [
                 'method'       => 'get',

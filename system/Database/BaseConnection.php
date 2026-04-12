@@ -795,9 +795,7 @@ abstract class BaseConnection implements ConnectionInterface
             $this->initialize();
         }
 
-        /**
-         * @var Query $query
-         */
+        /** @var Query $query */
         $query = new $queryClass($this);
 
         $query->setQuery($sql, $binds, $setEscapeFlags);

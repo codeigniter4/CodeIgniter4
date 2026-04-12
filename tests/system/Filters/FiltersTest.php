@@ -854,8 +854,7 @@ final class FiltersTest extends CIUnitTestCase
 
         $config = [
             'aliases' => ['role' => Role::class],
-            'globals' => [
-            ],
+            'globals' => [],
             'filters' => [
                 'role:admin,super' => [
                     'before' => ['admin/*'],

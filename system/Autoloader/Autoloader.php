@@ -480,9 +480,7 @@ class Autoloader
             return;
         }
 
-        /**
-         * @var ClassLoader $composer
-         */
+        /** @var ClassLoader $composer */
         $composer = include $this->composerPath;
         $paths    = $composer->getPrefixesPsr4();
         $classes  = $composer->getClassMap();

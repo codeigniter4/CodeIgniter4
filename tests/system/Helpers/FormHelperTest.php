@@ -945,8 +945,7 @@ final class FormHelperTest extends CIUnitTestCase
     {
         $_SESSION = [
             '_ci_old_input' => [
-                'post' => [
-                ],
+                'post' => [],
             ],
         ];
 
