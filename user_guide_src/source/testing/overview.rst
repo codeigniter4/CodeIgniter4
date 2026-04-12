@@ -60,7 +60,7 @@ Testing Your Application
 PHPUnit Configuration
 =====================
 
-In your CodeIgniter project root, there is the ``phpunit.xml.dist`` file. This
+In your CodeIgniter project root, there is the ``phpunit.dist.xml`` file. This
 controls unit testing of your application. If you provide your own ``phpunit.xml``,
 it will over-ride this.
 
