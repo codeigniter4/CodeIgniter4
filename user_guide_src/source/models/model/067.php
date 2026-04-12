@@ -8,9 +8,9 @@ class TransactionModel extends Model
 {
     // ...
     protected array $casts = [
-        'id'        => 'int',
-        'currency'  => 'string',
-        'amount'    => 'float[2,even]',
+        'id'       => 'int',
+        'currency' => 'string',
+        'amount'   => 'float[2,even]',
     ];
     // ...
 }
