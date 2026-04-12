@@ -110,6 +110,8 @@ Installation
 3. Configure your worker settings in **app/Config/WorkerMode.php** if needed.
    The defaults are recommended for most applications.
 
+.. note:: When changing the project directory, see the section :ref:`renaming-app-directory` and update your **public/frankenphp-worker.php**.
+
 Running the Worker
 ==================
 
