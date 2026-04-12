@@ -56,14 +56,12 @@ are silently discarded, protecting against mass-assignment.
 .. literalinclude:: form_requests/009.php
    :lines: 2-
 
-Individual fields can also be read as object properties. This is equivalent to
-``$request->validated()['field'] ?? null``:
+Use ``getValidated()`` to read a single validated field and ``hasValidated()``
+to check whether a validated key exists, including keys whose value is
+``null``. Both methods support dot-array syntax for nested validated data:
 
 .. literalinclude:: form_requests/014.php
    :lines: 2-
-
-``isset($request->field)`` returns ``true`` when the field was validated and
-has a non-null value, following standard PHP ``isset()`` semantics.
 
 Accessing Other Request Data
 ============================
@@ -230,7 +228,8 @@ whose type extends ``FormRequest``:
    rules are applied.
 #. ``run()`` executes the validation rules. If it fails, ``failedValidation()``
    is called, and its response is returned to the client.
-#. The validated data is stored internally and available via ``validated()``.
+#. The validated data is stored internally and available via ``validated()``,
+   ``getValidated()``, and ``hasValidated()``.
 #. The resolved FormRequest object is injected into the controller method or
    closure.
 

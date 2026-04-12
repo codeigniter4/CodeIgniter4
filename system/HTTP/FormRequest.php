@@ -174,30 +174,33 @@ abstract class FormRequest
     }
 
     /**
-     * Returns a single validated field value by name, or null if the field
-     * is not present in the validated data (either not declared in rules() or
-     * validation has not yet run).
+     * Returns a single validated field value by name, or the default value
+     * if the field is not present in the validated data.
      *
-     * Allows accessing individual fields as object properties:
-     *
-     *  $title = $request->title;
-     *
-     * @return mixed
+     * Supports dot-array syntax for nested validated data.
      */
-    public function __get(string $name)
+    public function getValidated(string $key, mixed $default = null): mixed
     {
-        return $this->validatedData[$name] ?? null;
+        helper('array');
+
+        if (! dot_array_has($key, $this->validatedData)) {
+            return $default;
+        }
+
+        return dot_array_search($key, $this->validatedData);
     }
 
     /**
-     * Returns true when the named field exists in the validated data and its
-     * value is not null. Mirrors standard PHP isset() semantics on properties:
+     * Returns true when the named field exists in the validated data, even if
+     * its value is null.
      *
-     *  if (isset($request->title)) { ... }
+     * Supports dot-array syntax for nested validated data.
      */
-    public function __isset(string $name): bool
+    public function hasValidated(string $key): bool
     {
-        return isset($this->validatedData[$name]);
+        helper('array');
+
+        return dot_array_has($key, $this->validatedData);
     }
 
     /**

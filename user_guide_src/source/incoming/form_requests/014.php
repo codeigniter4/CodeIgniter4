@@ -1,8 +1,8 @@
 <?php
 
-$title = $request->title;  // same as $request->validated()['title'] ?? null
-$body  = $request->body;
+$title = $request->getValidated('title');
+$slug  = $request->getValidated('post.meta.slug', 'draft');
 
-if (isset($request->note)) {
-    // 'note' was validated and has a non-null value
+if ($request->hasValidated('note')) {
+    // 'note' was validated, even if its value is null
 }

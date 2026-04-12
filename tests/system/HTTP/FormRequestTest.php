@@ -164,10 +164,10 @@ final class FormRequestTest extends CIUnitTestCase
     }
 
     // -------------------------------------------------------------------------
-    // __get / __isset - property-style access to validated fields
+    // Explicit access to validated fields
     // -------------------------------------------------------------------------
 
-    public function testMagicGetReturnsValidatedFieldValue(): void
+    public function testGetValidatedReturnsValidatedFieldValue(): void
     {
         service('superglobals')->setPost('title', 'Hello World');
         service('superglobals')->setPost('body', 'Some body text');
@@ -175,11 +175,11 @@ final class FormRequestTest extends CIUnitTestCase
         $formRequest = new ValidPostFormRequest($this->makeRequest());
         $formRequest->resolveRequest();
 
-        $this->assertSame('Hello World', $formRequest->title);
-        $this->assertSame('Some body text', $formRequest->body);
+        $this->assertSame('Hello World', $formRequest->getValidated('title'));
+        $this->assertSame('Some body text', $formRequest->getValidated('body'));
     }
 
-    public function testMagicGetReturnsNullForMissingField(): void
+    public function testGetValidatedReturnsNullForMissingField(): void
     {
         service('superglobals')->setPost('title', 'Hello World');
         service('superglobals')->setPost('body', 'Some body text');
@@ -187,17 +187,10 @@ final class FormRequestTest extends CIUnitTestCase
         $formRequest = new ValidPostFormRequest($this->makeRequest());
         $formRequest->resolveRequest();
 
-        $this->assertNull($formRequest->nonexistent); // @phpstan-ignore property.notFound
+        $this->assertNull($formRequest->getValidated('nonexistent'));
     }
 
-    public function testMagicGetReturnsNullBeforeValidationRuns(): void
-    {
-        $formRequest = new ValidPostFormRequest($this->makeRequest());
-
-        $this->assertNull($formRequest->title);
-    }
-
-    public function testMagicIssetReturnsTrueForValidatedField(): void
+    public function testGetValidatedReturnsDefaultForMissingField(): void
     {
         service('superglobals')->setPost('title', 'Hello World');
         service('superglobals')->setPost('body', 'Some body text');
@@ -205,10 +198,17 @@ final class FormRequestTest extends CIUnitTestCase
         $formRequest = new ValidPostFormRequest($this->makeRequest());
         $formRequest->resolveRequest();
 
-        $this->assertTrue(isset($formRequest->title));
+        $this->assertSame('fallback', $formRequest->getValidated('nonexistent', 'fallback'));
     }
 
-    public function testMagicIssetReturnsFalseForMissingField(): void
+    public function testGetValidatedReturnsNullBeforeValidationRuns(): void
+    {
+        $formRequest = new ValidPostFormRequest($this->makeRequest());
+
+        $this->assertNull($formRequest->getValidated('title'));
+    }
+
+    public function testHasValidatedReturnsTrueForValidatedField(): void
     {
         service('superglobals')->setPost('title', 'Hello World');
         service('superglobals')->setPost('body', 'Some body text');
@@ -216,7 +216,63 @@ final class FormRequestTest extends CIUnitTestCase
         $formRequest = new ValidPostFormRequest($this->makeRequest());
         $formRequest->resolveRequest();
 
-        $this->assertFalse(isset($formRequest->nonexistent)); // @phpstan-ignore property.notFound
+        $this->assertTrue($formRequest->hasValidated('title'));
+    }
+
+    public function testHasValidatedReturnsFalseForMissingField(): void
+    {
+        service('superglobals')->setPost('title', 'Hello World');
+        service('superglobals')->setPost('body', 'Some body text');
+
+        $formRequest = new ValidPostFormRequest($this->makeRequest());
+        $formRequest->resolveRequest();
+
+        $this->assertFalse($formRequest->hasValidated('nonexistent'));
+    }
+
+    public function testGetValidatedAndHasValidatedSupportDotSyntax(): void
+    {
+        service('superglobals')->setPost('post', [
+            'title' => 'Hello World',
+            'meta'  => [
+                'slug' => 'hello-world',
+            ],
+        ]);
+
+        $formRequest = new class ($this->makeRequest()) extends FormRequest {
+            public function rules(): array
+            {
+                return [
+                    'post.title'     => 'required',
+                    'post.meta.slug' => 'required',
+                ];
+            }
+        };
+
+        $formRequest->resolveRequest();
+
+        $this->assertSame('Hello World', $formRequest->getValidated('post.title'));
+        $this->assertSame('hello-world', $formRequest->getValidated('post.meta.slug'));
+        $this->assertTrue($formRequest->hasValidated('post.meta.slug'));
+    }
+
+    public function testHasValidatedReturnsTrueForNullValidatedField(): void
+    {
+        service('superglobals')->setServer('CONTENT_TYPE', 'application/json');
+
+        $formRequest = new class ($this->makeRequest('{"note":null}')) extends FormRequest {
+            public function rules(): array
+            {
+                return ['note' => 'permit_empty'];
+            }
+        };
+
+        $formRequest->resolveRequest();
+
+        $this->assertSame(['note' => null], $formRequest->validated());
+        $this->assertNull($formRequest->getValidated('note'));
+        $this->assertNull($formRequest->getValidated('note', 'fallback'));
+        $this->assertTrue($formRequest->hasValidated('note'));
     }
 
     // -------------------------------------------------------------------------
