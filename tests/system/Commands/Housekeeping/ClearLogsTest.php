@@ -143,34 +143,13 @@ final class ClearLogsTest extends CIUnitTestCase
         $path = WRITEPATH . 'logs' . DIRECTORY_SEPARATOR . "log-{$this->date}.log";
         file_put_contents($path, 'Lorem ipsum');
 
-        // Attempt to make the file itself undeletable by setting the
-        // immutable/uchg flag on supported platforms.
-        $immutableSet = false;
-        if (str_starts_with(PHP_OS, 'Darwin')) {
-            @exec(sprintf('chflags uchg %s', escapeshellarg($path)), $output, $rc);
-            $immutableSet = $rc === 0;
-        } else {
-            // Try chattr on Linux with sudo (for containerized environments)
-            @exec('which chattr', $whichOut, $whichRc);
-
-            if ($whichRc === 0) {
-                @exec(sprintf('sudo chattr +i %s', escapeshellarg($path)), $output, $rc);
-                $immutableSet = $rc === 0;
-            }
-        }
-
-        if (! $immutableSet) {
-            $this->markTestSkipped('Cannot set file immutability in this environment');
-        }
+        // Attempt to make the file itself undeletable
+        chmod(dirname($path), 0555);
 
         command('logs:clear --force');
 
         // Restore attributes so other tests are not affected.
-        if (str_starts_with(PHP_OS, 'Darwin')) {
-            @exec(sprintf('chflags nouchg %s', escapeshellarg($path)));
-        } else {
-            @exec(sprintf('sudo chattr -i %s', escapeshellarg($path)));
-        }
+        chmod(dirname($path), 0755);
 
         $this->assertFileExists($path);
         $this->assertSame("Error in deleting the logs files.\n", preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()));
