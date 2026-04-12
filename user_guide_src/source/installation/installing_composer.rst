@@ -166,10 +166,14 @@ Latest Dev
 The App Starter repo comes with a ``builds`` scripts to switch Composer sources between the
 current stable release and the latest development branch of the framework. Use this script
 for a developer who is willing to live with the latest unreleased changes, which may be unstable.
+This way you can help find bugs and improve new features.
 
 The `development user guide <https://codeigniter4.github.io/CodeIgniter4/>`_ is accessible online.
 Note that this differs from the released user guide, and will pertain to the
 develop branch explicitly.
+
+Before running the script, check ``$files``, which is the list of files to be changed.
+This is useful if you have additional places in the code that mention the directory with the framework.
 
 .. note:: You should not rely on the version of the framework in your project
     - the development code may contain an incorrect number.
@@ -247,7 +251,7 @@ Setting Up
 ----------
 
     1. Copy the **app**, **public**, **tests** and **writable** folders from **vendor/codeigniter4/framework** to your project root
-    2. Copy the **env**, **phpunit.xml.dist** and **spark** files, from **vendor/codeigniter4/framework** to your project root
+    2. Copy the **env**, **phpunit.dist.xml** and **spark** files, from **vendor/codeigniter4/framework** to your project root
     3. You will have to adjust the ``$systemDirectory`` property in **app/Config/Paths.php** to refer to the vendor one, e.g., ``__DIR__ . '/../../vendor/codeigniter4/framework/system'``.
 
 Initial Configuration
@@ -314,7 +318,7 @@ Translations Installation
 =========================
 
 If you want to take advantage of the system message translations,
-they can be added to your project in a similar fashion.
+they can be added to your project in a similar fashion. Copy the **vendor/codeigniter4/translations/Language** folder contents in it to your **app/Language** folder.
 
 From the command line inside your project root:
 
