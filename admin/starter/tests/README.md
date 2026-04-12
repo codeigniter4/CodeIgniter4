@@ -80,11 +80,11 @@ The HTML files can be viewed by opening **tests/coverage/index.html** in your fa
 
 ## PHPUnit XML Configuration
 
-The repository has a ``phpunit.xml.dist`` file in the project root that's used for
+The repository has a ``phpunit.dist.xml`` file in the project root that's used for
 PHPUnit configuration. This is used to provide a default configuration if you
 do not have your own configuration file in the project root.
 
-The normal practice would be to copy ``phpunit.xml.dist`` to ``phpunit.xml``
+The normal practice would be to copy ``phpunit.dist.xml`` to ``phpunit.xml``
 (which is git ignored), and to tailor it as you see fit.
 For instance, you might wish to exclude database tests, or automatically generate
 HTML code coverage reports.

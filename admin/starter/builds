@@ -94,7 +94,7 @@ if (is_file($file)) {
 
 $files = [
     __DIR__ . DIRECTORY_SEPARATOR . 'app/Config/Paths.php',
-    __DIR__ . DIRECTORY_SEPARATOR . 'phpunit.xml.dist',
+    __DIR__ . DIRECTORY_SEPARATOR . 'phpunit.dist.xml',
     __DIR__ . DIRECTORY_SEPARATOR . 'phpunit.xml',
 ];
 
