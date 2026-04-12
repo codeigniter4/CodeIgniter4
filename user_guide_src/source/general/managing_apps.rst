@@ -20,7 +20,7 @@ Renaming or Relocating the Application Directory
 If you would like to rename your application directory or even move
 it to a different location on your server, other than your project root, open
 your main **app/Config/Paths.php** and set a *full server path* in the
-``$appDirectory`` variable (at about line 44):
+``$appDirectory`` variable (at about line 45):
 
 .. literalinclude:: managing_apps/001.php
 
@@ -46,26 +46,26 @@ If you would like to share a common CodeIgniter framework installation, to manag
 several different applications, simply put all of the directories located
 inside your application directory into their own (sub)-directory.
 
-For example, let's say you want to create two applications, named **foo**
-and **bar**. You could structure your application project directories like this:
+For example, let's say you want to create two applications, named **blog**
+and **shop**. You could structure your application project directories like this:
 
 .. code-block:: text
 
-    foo/
+    blog/
         app/
         public/
         tests/
         writable/
         env
-        phpunit.xml.dist
+        phpunit.dist.xml
         spark
-    bar/
+    shop/
         app/
         public/
         tests/
         writable/
         env
-        phpunit.xml.dist
+        phpunit.dist.xml
         spark
     vendor/
         autoload.php
@@ -77,11 +77,11 @@ and **bar**. You could structure your application project directories like this:
 
     .. code-block:: text
 
-        foo/
-        bar/
+        blog/
+        shop/
         codeigniter4/system/
 
-This would have two apps, **foo** and **bar**, both having standard application directories
+This would have two apps, **blog** and **shop**, both having standard application directories
 and a **public** folder, and sharing a common **codeigniter4/framework**.
 
 The ``$systemDirectory`` variable in **app/Config/Paths.php** inside each
@@ -89,12 +89,13 @@ of those would be set to refer to the shared common **codeigniter4/framework** f
 
 .. literalinclude:: managing_apps/005.php
 
-.. note:: If you install CodeIgniter from the Zip file, the ``$systemDirectory`` would be ``__DIR__ . '/../../../codeigniter4/system'``.
-
 And modify the ``COMPOSER_PATH`` constant in **app/Config/Constants.php** inside each
 of those:
 
 .. literalinclude:: managing_apps/004.php
+
+.. note:: If you install CodeIgniter from the Zip file, the ``$systemDirectory`` would be ``__DIR__ . '/../../../codeigniter4/system'``.
+    If you don't use Composer, you don't have to edit the ``COMPOSER_PATH``.
 
 Only when you change the Application Directory, see :ref:`renaming-app-directory` and modify the paths in the **index.php** and **spark**.
 

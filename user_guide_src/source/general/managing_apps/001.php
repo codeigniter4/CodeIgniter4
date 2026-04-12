@@ -6,7 +6,7 @@ class Paths
 {
     // ...
 
-    public $appDirectory = '/path/to/your/app';
+    public string $appDirectory = '/path/to/your/app';
 
     // ...
 }
