@@ -38,17 +38,13 @@ class FloatCast extends BaseCast
             return (float) $value;
         }
 
-        $mode = PHP_ROUND_HALF_UP; // Default mode
-
-        if (isset($params[1])) {
-            $mode = match (strtolower($params[1])) {
-                'up'    => PHP_ROUND_HALF_UP,
-                'down'  => PHP_ROUND_HALF_DOWN,
-                'even'  => PHP_ROUND_HALF_EVEN,
-                'odd'   => PHP_ROUND_HALF_ODD,
-                default => throw CastException::forInvalidFloatRoundingMode($params[1]),
-            };
-        }
+        $mode = match (strtolower($params[1] ?? 'up')) {
+            'up'    => PHP_ROUND_HALF_UP,
+            'down'  => PHP_ROUND_HALF_DOWN,
+            'even'  => PHP_ROUND_HALF_EVEN,
+            'odd'   => PHP_ROUND_HALF_ODD,
+            default => throw CastException::forInvalidFloatRoundingMode($params[1]),
+        };
 
         return round((float) $value, $precision, $mode);
     }

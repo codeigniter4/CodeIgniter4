@@ -27,5 +27,5 @@ return [
     'jsonErrorSyntax'          => 'Syntax error, malformed JSON.',
     'jsonErrorUnknown'         => 'Unknown error.',
     'jsonErrorUtf8'            => 'Malformed UTF-8 characters, possibly incorrectly encoded.',
-    'floatInvalidRoundingMode' => 'Invalid rounding mode "{0}" for float casting.',
+    'invalidFloatRoundingMode' => 'Invalid rounding mode "{0}" for float casting.',
 ];

@@ -380,6 +380,20 @@ of type to mark the field as nullable, i.e., ``?int``, ``?datetime``.
 |``enum``       | Enum           | string/int type           |
 +---------------+----------------+---------------------------+
 
+float
+-----
+
+Casting as ``float`` will convert the value to a float type in PHP.
+This is best used with database columns that are of a float or numeric type.
+
+You can also pass arguments to the ``float`` type to specify the number
+of decimal places to round to as well as the rounding mode (up, down, even or odd).
+
+.. literalinclude:: model/067.php
+
+.. note:: Prior to v4.8.0 the ``float`` type did not support any parameters.
+    It simply converted the value to a float type in PHP without rounding.
+
 csv
 ---
 

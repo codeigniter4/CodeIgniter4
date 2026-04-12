@@ -246,13 +246,11 @@ Validation
 
 - Custom rule methods that set an error via the ``&$error`` reference parameter now support the ``{field}``, ``{param}``, and ``{value}`` placeholders, consistent with language-file and ``setRule()``/``setRules()`` error messages.
 
-Entities
-========
-
-- **Float and Double Casting:** Added support for precision and rounding mode when casting to float or double in entities.
-
 Others
 ======
+
+- **Float and Double Casting:** Added support for precision and rounding mode when casting to float or double in entities.
+- Float and Double casting now throws ``CastException::forInvalidFloatRoundingMode()`` if an rounding mode other than up, down, even or odd is provided.
 
 ***************
 Message Changes

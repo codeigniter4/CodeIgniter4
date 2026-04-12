@@ -125,11 +125,9 @@ class CastException extends FrameworkException implements HasExitCodeInterface
 
     /**
      * Thrown when an invalid rounding mode is provided for float casting.
-     *
-     * @return static
      */
-    public static function forInvalidFloatRoundingMode(string $mode)
+    public static function forInvalidFloatRoundingMode(string $mode): static
     {
-        return new static(lang('Cast.floatInvalidRoundingMode', [$mode]));
+        return new static(lang('Cast.invalidFloatRoundingMode', [$mode]));
     }
 }
