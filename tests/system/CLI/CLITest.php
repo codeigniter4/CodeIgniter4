@@ -37,6 +37,7 @@ final class CLITest extends CIUnitTestCase
 
         Services::injectMock('superglobals', new Superglobals());
 
+        CLI::reset();
         CLI::init();
     }
 
@@ -393,16 +394,33 @@ final class CLITest extends CIUnitTestCase
     {
         CLI::error('test');
 
-        // red expected cuz stderr
-        $expected = "\033[1;31mtest\033[0m" . PHP_EOL;
+        $expected = PHP_EOL . "\033[1;31mtest\033[0m" . PHP_EOL;
         $this->assertSame($expected, $this->getStreamFilterBuffer());
+    }
+
+    public function testMixedWriteError(): void
+    {
+        CLI::write('test 1');
+        CLI::error('test 2');
+        CLI::write('test 3');
+
+        $this->assertSame(
+            <<<'EOT'
+
+                test 1
+                test 2
+                test 3
+
+                EOT,
+            preg_replace('/\e\[[^m]+m/u', '', $this->getStreamFilterBuffer()),
+        );
     }
 
     public function testErrorForeground(): void
     {
         CLI::error('test', 'purple');
 
-        $expected = "\033[0;35mtest\033[0m" . PHP_EOL;
+        $expected = PHP_EOL . "\033[0;35mtest\033[0m" . PHP_EOL;
         $this->assertSame($expected, $this->getStreamFilterBuffer());
     }
 
@@ -410,7 +428,7 @@ final class CLITest extends CIUnitTestCase
     {
         CLI::error('test', 'purple', 'green');
 
-        $expected = "\033[0;35m\033[42mtest\033[0m" . PHP_EOL;
+        $expected = PHP_EOL . "\033[0;35m\033[42mtest\033[0m" . PHP_EOL;
         $this->assertSame($expected, $this->getStreamFilterBuffer());
     }
 

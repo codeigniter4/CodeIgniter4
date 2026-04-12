@@ -33,9 +33,6 @@ final class TestGeneratorTest extends CIUnitTestCase
         parent::setUp();
 
         $this->resetStreamFilterBuffer();
-
-        putenv('NO_COLOR=1');
-        CLI::init();
     }
 
     protected function tearDown(): void
@@ -44,14 +41,16 @@ final class TestGeneratorTest extends CIUnitTestCase
 
         $this->clearTestFiles();
         $this->resetStreamFilterBuffer();
+    }
 
-        putenv('NO_COLOR');
-        CLI::init();
+    private function getUndecoratedBuffer(): string
+    {
+        return preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer());
     }
 
     private function clearTestFiles(): void
     {
-        preg_match('/File created: (.*)/', $this->getStreamFilterBuffer(), $result);
+        preg_match('/File created: (.*)/', $this->getUndecoratedBuffer(), $result);
 
         $file = str_replace('ROOTPATH' . DIRECTORY_SEPARATOR, ROOTPATH, $result[1] ?? '');
         if (is_file($file)) {
@@ -71,7 +70,7 @@ final class TestGeneratorTest extends CIUnitTestCase
 
         $expectedTestFile = str_replace('/', DIRECTORY_SEPARATOR, sprintf('%stests/%s.php', ROOTPATH, $expectedClass));
         $expectedMessage  = sprintf('File created: %s', str_replace(ROOTPATH, 'ROOTPATH' . DIRECTORY_SEPARATOR, $expectedTestFile));
-        $this->assertStringContainsString($expectedMessage, $this->getStreamFilterBuffer());
+        $this->assertStringContainsString($expectedMessage, $this->getUndecoratedBuffer());
         $this->assertFileExists($expectedTestFile);
     }
 
@@ -93,6 +92,7 @@ final class TestGeneratorTest extends CIUnitTestCase
     public function testGenerateTestWithEmptyClassName(): void
     {
         $expectedFile = ROOTPATH . 'tests/FooTest.php';
+        CLI::reset();
 
         try {
             $io = new MockInputOutput();
@@ -106,7 +106,7 @@ final class TestGeneratorTest extends CIUnitTestCase
             $expectedOutput .= 'The "Test class name" field is required.' . PHP_EOL;
             $expectedOutput .= 'Test class name : Foo' . PHP_EOL . PHP_EOL;
             $expectedOutput .= 'File created: ROOTPATH/tests/FooTest.php' . PHP_EOL . PHP_EOL;
-            $this->assertSame($expectedOutput, $io->getOutput());
+            $this->assertSame($expectedOutput, preg_replace('/\e\[[^m]+m/', '', $io->getOutput()));
             $this->assertFileExists($expectedFile);
         } finally {
             if (is_file($expectedFile)) {

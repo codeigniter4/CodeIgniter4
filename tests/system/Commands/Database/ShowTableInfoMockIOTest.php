@@ -33,6 +33,8 @@ final class ShowTableInfoMockIOTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        CLI::reset();
+
         putenv('NO_COLOR=1');
         CLI::init();
     }
@@ -40,6 +42,8 @@ final class ShowTableInfoMockIOTest extends CIUnitTestCase
     protected function tearDown(): void
     {
         parent::tearDown();
+
+        CLI::reset();
 
         putenv('NO_COLOR');
         CLI::init();
@@ -58,17 +62,25 @@ final class ShowTableInfoMockIOTest extends CIUnitTestCase
 
         $result = $io->getOutput();
 
-        $expectedPattern = '/Which table do you want to see\? \[0, 1, 2, 3, 4, 5, 6, 7, 8, 9.*?\]: a
-The "Which table do you want to see\?" field must be one of: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9.*?./';
-        $this->assertMatchesRegularExpression($expectedPattern, $result);
-
-        $expected = 'Data of Table "db_migrations":';
-        $this->assertStringContainsString($expected, $result);
-
-        $expectedPattern = '/\| id[[:blank:]]+\| version[[:blank:]]+\| class[[:blank:]]+\| group[[:blank:]]+\| namespace[[:blank:]]+\| time[[:blank:]]+\| batch \|/';
-        $this->assertMatchesRegularExpression($expectedPattern, $result);
-
-        // Remove MockInputOutput.
-        CLI::resetInputOutput();
+        $this->assertMatchesRegularExpression(
+            '/Which table do you want to see\? \[[\d,\s]+\]\: a/',
+            $result,
+        );
+        $this->assertMatchesRegularExpression(
+            '/The "Which table do you want to see\?" field must be one of: [\d,\s]+./',
+            $result,
+        );
+        $this->assertMatchesRegularExpression(
+            '/Which table do you want to see\? \[[\d,\s]+\]\: 0/',
+            $result,
+        );
+        $this->assertMatchesRegularExpression(
+            '/Data of Table "db_migrations"\:/',
+            $result,
+        );
+        $this->assertMatchesRegularExpression(
+            '/\| id[[:blank:]]+\| version[[:blank:]]+\| class[[:blank:]]+\| group[[:blank:]]+\| namespace[[:blank:]]+\| time[[:blank:]]+\| batch \|/',
+            $result,
+        );
     }
 }

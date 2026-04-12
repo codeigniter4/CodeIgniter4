@@ -74,6 +74,7 @@ final class CommandsTest extends CIUnitTestCase
         $this->assertSame(EXIT_ERROR, $commands->run('app:inf', []));
         $this->assertSame(
             <<<'EOT'
+
                 Command "app:inf" not found.
 
                 Did you mean this?
@@ -91,6 +92,7 @@ final class CommandsTest extends CIUnitTestCase
         $this->assertSame(EXIT_ERROR, $commands->run('app:', []));
         $this->assertSame(
             <<<'EOT'
+
                 Command "app:" not found.
 
                 Did you mean one of these?

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Housekeeping;
 
+use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\Group;
@@ -35,6 +36,8 @@ final class ClearDebugbarTest extends CIUnitTestCase
         command('debugbar:clear');
         $this->resetStreamFilterBuffer();
 
+        CLI::reset();
+
         $this->time = time();
         $this->createDummyDebugbarJson();
     }
@@ -43,6 +46,8 @@ final class ClearDebugbarTest extends CIUnitTestCase
     {
         command('debugbar:clear');
         $this->resetStreamFilterBuffer();
+
+        CLI::reset();
 
         parent::tearDown();
     }
@@ -70,7 +75,7 @@ final class ClearDebugbarTest extends CIUnitTestCase
         $this->assertFileDoesNotExist(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$this->time}.json");
         $this->assertFileExists(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . 'index.html');
         $this->assertSame(
-            "Debugbar cleared.\n",
+            "\nDebugbar cleared.\n",
             preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()),
         );
     }
@@ -111,7 +116,7 @@ final class ClearDebugbarTest extends CIUnitTestCase
 
         $this->assertFileExists($path);
         $this->assertSame(
-            "Error deleting the debugbar JSON files.\n",
+            "\nError deleting the debugbar JSON files.\n",
             preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()),
         );
     }

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Commands\Utilities;
 
 use Closure;
+use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\App;
@@ -31,34 +32,38 @@ final class ConfigCheckTest extends CIUnitTestCase
 
     public static function setUpBeforeClass(): void
     {
+        parent::setUpBeforeClass();
+
         App::$override = false;
 
         putenv('NO_COLOR=1');
         CliRenderer::$cli_colors = false;
-
-        parent::setUpBeforeClass();
     }
 
     public static function tearDownAfterClass(): void
     {
+        parent::tearDownAfterClass();
+
         App::$override = true;
 
         putenv('NO_COLOR');
         CliRenderer::$cli_colors = true;
-
-        parent::tearDownAfterClass();
     }
 
     protected function setUp(): void
     {
-        $this->resetServices();
         parent::setUp();
+
+        $this->resetServices();
+        CLI::reset();
     }
 
     protected function tearDown(): void
     {
-        $this->resetServices();
         parent::tearDown();
+
+        $this->resetServices();
+        CLI::reset();
     }
 
     public function testCommandConfigCheckWithNoArgumentPassed(): void
@@ -67,13 +72,14 @@ final class ConfigCheckTest extends CIUnitTestCase
 
         $this->assertSame(
             <<<'EOF'
+
                 You must specify a Config classname.
                   Usage: config:check <classname>
                 Example: config:check App
                          config:check 'CodeIgniter\Shield\Config\Auth'
 
                 EOF,
-            str_replace("\n\n", "\n", $this->getStreamFilterBuffer()),
+            $this->getStreamFilterBuffer(),
         );
     }
 
@@ -82,7 +88,7 @@ final class ConfigCheckTest extends CIUnitTestCase
         command('config:check Nonexistent');
 
         $this->assertSame(
-            "No such Config class: Nonexistent\n",
+            "\nNo such Config class: Nonexistent\n",
             $this->getStreamFilterBuffer(),
         );
     }
@@ -98,7 +104,7 @@ final class ConfigCheckTest extends CIUnitTestCase
         command('config:check App');
 
         $this->assertSame(
-            $command(config('App')) . "\n",
+            "\n" . $command(config('App')) . "\n",
             preg_replace('/\s+Config Caching: \S+/', '', $this->getStreamFilterBuffer()),
         );
     }
@@ -110,19 +116,14 @@ final class ConfigCheckTest extends CIUnitTestCase
             new ConfigCheck(service('logger'), service('commands')),
             'getVarDump',
         );
-        $clean = static fn (string $input): string => trim(preg_replace(
-            '/(\033\[[0-9;]+m)|(\035\[[0-9;]+m)/u',
-            '',
-            $input,
-        ));
 
         try {
             Kint::$enabled_mode = false;
             command('config:check App');
 
             $this->assertSame(
-                $clean($command(config('App'))),
-                $clean(preg_replace('/\s+Config Caching: \S+/', '', $this->getStreamFilterBuffer())),
+                "\n" . $command(config('App')),
+                preg_replace('/\s+Config Caching: \S+/', '', $this->getStreamFilterBuffer()),
             );
         } finally {
             Kint::$enabled_mode = true;

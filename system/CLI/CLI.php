@@ -255,6 +255,7 @@ class CLI
         }
 
         static::fwrite(STDOUT, $field . (trim($field) !== '' ? ' ' : '') . $extraOutput . ': ');
+        static::$lastWrite = 'write';
 
         // Read the input from keyboard.
         $input = trim(static::$io->input());
@@ -458,7 +459,8 @@ class CLI
         }
 
         if (static::$lastWrite !== 'write') {
-            $text              = PHP_EOL . $text;
+            $text = PHP_EOL . $text;
+
             static::$lastWrite = 'write';
         }
 
@@ -473,11 +475,18 @@ class CLI
     public static function error(string $text, string $foreground = 'light_red', ?string $background = null)
     {
         // Check color support for STDERR
-        $stdout            = static::$isColored;
+        $stdout = static::$isColored;
+
         static::$isColored = static::hasColorSupport(STDERR);
 
         if ($foreground !== '' || (string) $background !== '') {
             $text = static::color($text, $foreground, $background);
+        }
+
+        if (static::$lastWrite !== 'write') {
+            $text = PHP_EOL . $text;
+
+            static::$lastWrite = 'write';
         }
 
         static::fwrite(STDERR, $text . PHP_EOL);

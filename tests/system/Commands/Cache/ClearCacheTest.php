@@ -15,6 +15,7 @@ namespace CodeIgniter\Commands\Cache;
 
 use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\Cache\Handlers\FileHandler;
+use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Services;
@@ -32,6 +33,7 @@ final class ClearCacheTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        CLI::reset();
         $this->resetServices();
 
         // Make sure we are testing with the correct handler (override injections)
@@ -42,6 +44,7 @@ final class ClearCacheTest extends CIUnitTestCase
     {
         parent::tearDown();
 
+        CLI::reset();
         $this->resetServices();
     }
 
@@ -50,7 +53,7 @@ final class ClearCacheTest extends CIUnitTestCase
         command('cache:clear junk');
 
         $this->assertSame(
-            "Cache driver \"junk\" is not a valid cache handler.\n",
+            "\nCache driver \"junk\" is not a valid cache handler.\n",
             preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()),
         );
     }
@@ -79,7 +82,7 @@ final class ClearCacheTest extends CIUnitTestCase
         command('cache:clear');
 
         $this->assertSame(
-            "Error while clearing the cache.\n",
+            "\nError while clearing the cache.\n",
             preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()),
         );
     }
