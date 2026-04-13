@@ -73,8 +73,8 @@ class Routes extends BaseCommand
      * @var array<string, string>
      */
     protected $options = [
-        '-h'     => 'Sort by Handler.',
-        '--host' => 'Specify hostname in request URI.',
+        '--handler' => 'Sort by Handler.',
+        '--host'    => 'Specify hostname in request URI.',
     ];
 
     /**
@@ -82,8 +82,17 @@ class Routes extends BaseCommand
      */
     public function run(array $params)
     {
-        $sortByHandler = array_key_exists('h', $params);
-        $host          = $params['host'] ?? null;
+        $sortByHandler = array_key_exists('handler', $params);
+
+        if (! $sortByHandler && array_key_exists('h', $params)) {
+            // Support -h as a shortcut but print a warning that it is not the intended use of -h.
+            CLI::write('Warning: -h will be used as shortcut for --help in v4.8.0. Please use --handler to sort by handler.', 'yellow');
+            CLI::newLine();
+
+            $sortByHandler = true;
+        }
+
+        $host = $params['host'] ?? null;
 
         // Set HTTP_HOST
         if ($host !== null) {

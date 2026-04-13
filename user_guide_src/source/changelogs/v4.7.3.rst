@@ -24,6 +24,10 @@ Message Changes
 Changes
 *******
 
+- **Commands:** The ``-h`` option for the ``routes`` command is renamed to ``--handler`` to avoid conflict with the common use of ``-h`` as a shortcut for ``--help``.
+    The old ``-h`` option will continue to work until v4.8.0, at which point it will be removed and repurposed as a shortcut for ``--help``.
+    A warning message is displayed when using the old ``-h`` option to encourage users to switch to the new ``--handler`` option.
+
 ************
 Deprecations
 ************

@@ -56,7 +56,7 @@ final class RoutesTest extends CIUnitTestCase
 
     public function testRoutesCommand(): void
     {
-        Services::injectMock('routes', null);
+        Services::resetSingle('routes');
 
         command('routes');
 
@@ -92,9 +92,9 @@ final class RoutesTest extends CIUnitTestCase
 
     public function testRoutesCommandSortByHandler(): void
     {
-        Services::injectMock('routes', null);
+        Services::resetSingle('routes');
 
-        command('routes -h');
+        command('routes --handler');
 
         $expected = <<<'EOL'
             +---------+---------+---------------+----------------------------------------+----------------+---------------+
@@ -117,9 +117,41 @@ final class RoutesTest extends CIUnitTestCase
         $this->assertStringContainsString($expected, $this->getBuffer());
     }
 
+    /**
+     * @todo To remove this test and the backward compatibility for -h in v4.8.0.
+     */
+    public function testRoutesCommandSortByHandlerUsingShortcutForBc(): void
+    {
+        Services::resetSingle('routes');
+
+        command('routes -h');
+
+        $expected = <<<'EOL'
+            Warning: -h will be used as shortcut for --help in v4.8.0. Please use --handler to sort by handler.
+
+            +---------+---------+---------------+----------------------------------------+----------------+---------------+
+            | Method  | Route   | Name          | Handler ↓                              | Before Filters | After Filters |
+            +---------+---------+---------------+----------------------------------------+----------------+---------------+
+            | GET     | closure | »             | (Closure)                              |                |               |
+            | GET     | /       | »             | \App\Controllers\Home::index           |                |               |
+            | GET     | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | HEAD    | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | POST    | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | PATCH   | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | PUT     | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | DELETE  | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | OPTIONS | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | TRACE   | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | CONNECT | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | CLI     | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            +---------+---------+---------------+----------------------------------------+----------------+---------------+
+            EOL;
+        $this->assertStringContainsString($expected, $this->getBuffer());
+    }
+
     public function testRoutesCommandHostHostname(): void
     {
-        Services::injectMock('routes', null);
+        Services::resetSingle('routes');
 
         command('routes --host blog.example.com');
 
@@ -148,7 +180,7 @@ final class RoutesTest extends CIUnitTestCase
 
     public function testRoutesCommandHostSubdomain(): void
     {
-        Services::injectMock('routes', null);
+        Services::resetSingle('routes');
 
         command('routes --host sub.example.com');
 
@@ -181,8 +213,7 @@ final class RoutesTest extends CIUnitTestCase
 
         $routes->setAutoRoute(true);
         config('Feature')->autoRoutesImproved = true;
-        $namespace                            = 'Tests\Support\Controllers';
-        $routes->setDefaultNamespace($namespace);
+        $routes->setDefaultNamespace('Tests\Support\Controllers');
 
         command('routes');
 
@@ -214,7 +245,8 @@ final class RoutesTest extends CIUnitTestCase
         $routes = $this->getCleanRoutes();
         $routes->loadRoutes();
 
-        $featureConfig                     = config(Feature::class);
+        $featureConfig = config(Feature::class);
+
         $featureConfig->autoRoutesImproved = false;
         $routes->setAutoRoute(true);
 
