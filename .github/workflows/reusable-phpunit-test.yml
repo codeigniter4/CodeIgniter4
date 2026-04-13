@@ -73,7 +73,7 @@ jobs:
     # Service containers cannot be extracted to caller workflows yet
     services:
       mysql:
-        image: mysql:${{ inputs.mysql-version || '8.0' }}
+        image: ${{ inputs.db-platform == 'MySQLi' && format('mysql:{0}', inputs.mysql-version || '8.0') || '' }}
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: test
@@ -86,7 +86,7 @@ jobs:
           --health-retries=3
 
       postgres:
-        image: postgres
+        image: ${{ inputs.db-platform == 'Postgre' && 'postgres' || '' }}
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -100,7 +100,7 @@ jobs:
           --health-retries=3
 
       mssql:
-        image: mcr.microsoft.com/mssql/server:2025-CU2-ubuntu-24.04
+        image: ${{ inputs.db-platform == 'SQLSRV' && 'mcr.microsoft.com/mssql/server:2025-CU3-ubuntu-24.04' || '' }}
         env:
           MSSQL_SA_PASSWORD: 1Secure*Password1
           ACCEPT_EULA: Y
@@ -114,7 +114,7 @@ jobs:
           --health-retries=3
 
       oracle:
-        image: gvenzl/oracle-free:latest
+        image: ${{ inputs.db-platform == 'OCI8' && 'gvenzl/oracle-free:latest' || '' }}
         env:
           ORACLE_RANDOM_PASSWORD: true
           APP_USER: ORACLE
@@ -146,10 +146,9 @@ jobs:
       - name: Install mssql-tools on runner
         if: ${{ inputs.db-platform == 'SQLSRV' }}
         run: |
-          # Detect Ubuntu version used by the runner (fallback to 24.04)
-          DISTRO=$(lsb_release -rs 2>/dev/null || echo '24.04')
-          curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-          curl -sSL https://packages.microsoft.com/config/ubuntu/${DISTRO}/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
+          source /etc/os-release
+          curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor --batch --yes -o /usr/share/keyrings/microsoft-prod.gpg
+          echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft-prod.gpg] https://packages.microsoft.com/ubuntu/${VERSION_ID}/prod ${UBUNTU_CODENAME} main" | sudo tee /etc/apt/sources.list.d/mssql-release.list
           sudo apt-get update
           sudo ACCEPT_EULA=Y apt-get install -y msodbcsql18 mssql-tools18 unixodbc-dev
 

@@ -79,7 +79,7 @@ jobs:
 
     services:
       mysql:
-        image: mysql:8.0
+        image: ${{ matrix.db-platform == 'MySQLi' && 'mysql:8.0' || '' }}
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: test
@@ -92,7 +92,7 @@ jobs:
           --health-retries=3
 
       postgres:
-        image: postgres
+        image: ${{ matrix.db-platform == 'Postgre' && 'postgres' || '' }}
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -106,7 +106,7 @@ jobs:
           --health-retries=3
 
       mssql:
-        image: mcr.microsoft.com/mssql/server:2025-CU2-ubuntu-24.04
+        image: ${{ matrix.db-platform == 'SQLSRV' && 'mcr.microsoft.com/mssql/server:2025-CU3-ubuntu-24.04' || '' }}
         env:
           MSSQL_SA_PASSWORD: 1Secure*Password1
           ACCEPT_EULA: Y
@@ -120,7 +120,7 @@ jobs:
           --health-retries=3
 
       oracle:
-        image: gvenzl/oracle-free:latest
+        image: ${{ matrix.db-platform == 'Oracle' && 'gvenzl/oracle-free:latest' || '' }}
         env:
           ORACLE_RANDOM_PASSWORD: true
           APP_USER: ORACLE
