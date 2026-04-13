@@ -82,5 +82,7 @@ class FormRequestGenerator extends BaseCommand
 
         $this->classNameLang = 'CLI.generator.className.request';
         $this->generateClass($params);
+
+        return EXIT_SUCCESS;
     }
 }
