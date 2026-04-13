@@ -4,7 +4,7 @@ name: Add Labels to PRs
 # in a PR, and then change it back to `pull_request_target` before merging.
 # @see https://github.com/actions/labeler?tab=readme-ov-file#updating-major-version-of-the-labeler
 on:
-  - pull_request
+  - pull_request_target
 
 jobs:
   add-labels:
