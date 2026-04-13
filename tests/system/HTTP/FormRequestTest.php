@@ -49,6 +49,13 @@ final class FormRequestTest extends CIUnitTestCase
         $this->codeigniter = new MockCodeIgniter(new App());
     }
 
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->resetServices();
+    }
+
     // -------------------------------------------------------------------------
     // Helpers
     // -------------------------------------------------------------------------
