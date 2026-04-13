@@ -428,17 +428,6 @@ class Boot
 
     protected static function runCommand(Console $console): int
     {
-        $exitCode = $console->initialize()->run();
-
-        if (! is_int($exitCode)) {
-            @trigger_error(sprintf(
-                'Since v4.8.0, commands must return an integer exit code. Last command "%s" exited with %s. Defaulting to EXIT_SUCCESS.',
-                $console->getCommand(),
-                get_debug_type($exitCode),
-            ), E_USER_DEPRECATED);
-            $exitCode = EXIT_SUCCESS;
-        }
-
-        return $exitCode;
+        return $console->initialize()->run();
     }
 }

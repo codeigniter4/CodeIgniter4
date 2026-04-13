@@ -101,7 +101,7 @@ abstract class BaseCommand
      *
      * @param array<int|string, string|null> $params
      *
-     * @return int|void
+     * @return int|null
      */
     abstract public function run(array $params);
 
@@ -110,7 +110,7 @@ abstract class BaseCommand
      *
      * @param array<int|string, string|null> $params
      *
-     * @return int|void
+     * @return int|null
      *
      * @throws ReflectionException
      */

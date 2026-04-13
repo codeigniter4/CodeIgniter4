@@ -69,11 +69,20 @@ class Commands
 
         Events::trigger('pre_command');
 
-        $exit = $class->run($params);
+        $exitCode = $class->run($params);
 
         Events::trigger('post_command');
 
-        return $exit;
+        if (! is_int($exitCode)) {
+            @trigger_error(sprintf(
+                'Since v4.8.0, commands must return an integer exit code. Last command "%s" exited with %s. Defaulting to EXIT_SUCCESS.',
+                $command,
+                get_debug_type($exitCode),
+            ), E_USER_DEPRECATED);
+            $exitCode = EXIT_SUCCESS;
+        }
+
+        return $exitCode;
     }
 
     /**

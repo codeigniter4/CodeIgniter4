@@ -39,7 +39,7 @@ class Console
      *
      * @param list<string> $tokens
      *
-     * @return int|null Exit code or null for legacy commands that don't return an exit code.
+     * @return int Exit code
      */
     public function run(array $tokens = [])
     {
