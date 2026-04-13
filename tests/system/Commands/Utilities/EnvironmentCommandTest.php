@@ -64,6 +64,13 @@ final class EnvironmentCommandTest extends CIUnitTestCase
         $this->assertStringContainsString(ENVIRONMENT, $this->getStreamFilterBuffer());
     }
 
+    public function testUsingCommandWithOptionsOnlyGivesCurrentEnvironment(): void
+    {
+        command('env --foo');
+        $this->assertStringContainsString('testing', $this->getStreamFilterBuffer());
+        $this->assertStringContainsString(ENVIRONMENT, $this->getStreamFilterBuffer());
+    }
+
     public function testProvidingTestingAsEnvGivesErrorMessage(): void
     {
         command('env testing');
