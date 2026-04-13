@@ -318,7 +318,7 @@ Translations Installation
 =========================
 
 If you want to take advantage of the system message translations,
-they can be added to your project in a similar fashion. Copy the **vendor/codeigniter4/translations/Language** folder contents in it to your **app/Language** folder.
+they can be added to your project in a similar fashion.
 
 From the command line inside your project root:
 
@@ -326,4 +326,5 @@ From the command line inside your project root:
 
     composer require codeigniter4/translations
 
+Copy the **vendor/codeigniter4/translations/Language** folder contents in it to your **app/Language** folder.
 These will be updated along with the framework whenever you do a ``composer update``.
