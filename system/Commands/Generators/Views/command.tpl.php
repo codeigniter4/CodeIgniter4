@@ -68,9 +68,11 @@ class {class} extends BaseCommand
         $this->directory = 'Commands';
         $this->template  = 'command.tpl.php';
 
-        $this->execute($params);
+        $this->generateClass($params);
 <?php else: ?>
-        //
+        // your command logic here
 <?php endif ?>
+
+        return EXIT_SUCCESS;
     }
 }

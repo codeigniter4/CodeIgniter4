@@ -89,7 +89,7 @@ class GenerateKey extends BaseCommand
             CLI::write($encodedKey, 'yellow');
             CLI::newLine();
 
-            return EXIT_ERROR;
+            return EXIT_SUCCESS;
         }
 
         if (! $this->setNewEncryptionKey($encodedKey, $params)) {
