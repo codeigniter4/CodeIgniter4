@@ -4,31 +4,10 @@ name: Add Labels to PRs
 # in a PR, and then change it back to `pull_request_target` before merging.
 # @see https://github.com/actions/labeler?tab=readme-ov-file#updating-major-version-of-the-labeler
 on:
-  - pull_request_target
+  - pull_request
 
 jobs:
-  validate-source:
-    permissions:
-      contents: read
-      pull-requests: read
-    runs-on: ubuntu-24.04
-    outputs:
-      valid: ${{ steps.check.outputs.valid }}
-
-    steps:
-      - name: Check if PR is from the main repository
-        id: check
-        run: |
-          if [[ "$HEAD_REPO" == "codeigniter4/CodeIgniter4" ]]; then
-            echo "valid=true" >> $GITHUB_OUTPUT
-          else
-            echo "valid=false" >> $GITHUB_OUTPUT
-          fi
-        env:
-          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
-
   add-labels:
-    needs: validate-source
     permissions:
       contents: read
       pull-requests: write
@@ -41,20 +20,26 @@ jobs:
           persist-credentials: false
 
       - name: Verify PR source for workflow file changes
-        run: |
-          # Get changed files in this PR
-          git fetch origin "refs/pull/${{ github.event.pull_request.number }}/merge"
-          CHANGED_FILES=$(git diff --name-only origin/develop FETCH_HEAD 2>/dev/null || echo "")
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const prFiles = await github.paginate(github.rest.pulls.listFiles.endpoint.merge({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+            }));
+            const workflowFileChanged = prFiles.some(file => file.filename === '.github/workflows/label-pr.yml');
 
-          # Check if this workflow file is being modified
-          if echo "$CHANGED_FILES" | grep -q "\.github/workflows/label-pr\.yml"; then
-            if [[ "$IS_VALID" != "true" ]]; then
-              echo "::error::Changes to label-pr.yml can only be made from the main repository."
-              exit 1
-            fi
-          fi
-        env:
-          IS_VALID: ${{ needs.validate-source.outputs.valid }}
+            if (workflowFileChanged) {
+              if (context.payload.pull_request.head.repo.full_name !== 'codeigniter4/CodeIgniter4') {
+                throw new Error('Changes to label-pr.yml are not allowed from forks.');
+              }
+
+              console.log('Workflow file changed, but PR is from the main repository. Proceeding with label addition.');
+              return;
+            }
+
+            console.log('No changes to workflow file detected, proceeding with label addition.');
 
       - name: Add labels
         uses: actions/labeler@634933edcd8ababfe52f92936142cc22ac488b1b # v6.0.1
