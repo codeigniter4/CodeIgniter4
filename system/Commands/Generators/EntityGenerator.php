@@ -82,5 +82,7 @@ class EntityGenerator extends BaseCommand
 
         $this->classNameLang = 'CLI.generator.className.entity';
         $this->generateClass($params);
+
+        return EXIT_SUCCESS;
     }
 }

@@ -82,5 +82,7 @@ class ValidationGenerator extends BaseCommand
 
         $this->classNameLang = 'CLI.generator.className.validation';
         $this->generateClass($params);
+
+        return EXIT_SUCCESS;
     }
 }

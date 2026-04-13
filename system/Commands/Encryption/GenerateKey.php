@@ -89,14 +89,14 @@ class GenerateKey extends BaseCommand
             CLI::write($encodedKey, 'yellow');
             CLI::newLine();
 
-            return;
+            return EXIT_ERROR;
         }
 
         if (! $this->setNewEncryptionKey($encodedKey, $params)) {
             CLI::write('Error in setting new encryption key to .env file.', 'light_gray', 'red');
             CLI::newLine();
 
-            return;
+            return EXIT_ERROR;
         }
 
         // force DotEnv to reload the new env vars
@@ -107,6 +107,8 @@ class GenerateKey extends BaseCommand
 
         CLI::write('Application\'s new encryption key was successfully set.', 'green');
         CLI::newLine();
+
+        return EXIT_SUCCESS;
     }
 
     /**

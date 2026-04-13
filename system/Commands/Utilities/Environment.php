@@ -89,7 +89,7 @@ final class Environment extends BaseCommand
             CLI::write(sprintf('Your environment is currently set as %s.', CLI::color(service('superglobals')->server('CI_ENVIRONMENT', ENVIRONMENT), 'green')));
             CLI::newLine();
 
-            return EXIT_ERROR;
+            return EXIT_SUCCESS;
         }
 
         $env = strtolower(array_shift($params));

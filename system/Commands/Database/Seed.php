@@ -77,8 +77,12 @@ class Seed extends BaseCommand
 
         try {
             $seeder->call($seedName);
+
+            return EXIT_SUCCESS;
         } catch (Throwable $e) {
             $this->showError($e);
+
+            return EXIT_ERROR;
         }
     }
 }

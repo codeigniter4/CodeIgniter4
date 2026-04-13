@@ -77,7 +77,7 @@ class MigrateRollback extends BaseCommand
             $force = array_key_exists('f', $params) || CLI::getOption('f');
 
             if (! $force && CLI::prompt(lang('Migrations.rollBackConfirm'), ['y', 'n']) === 'n') {
-                return null;
+                return EXIT_ERROR;
             }
             // @codeCoverageIgnoreEnd
         }
@@ -101,11 +101,19 @@ class MigrateRollback extends BaseCommand
 
             CLI::write(lang('Migrations.rollingBack') . ' ' . $batch, 'yellow');
 
-            $this->withSignalsBlocked(static function () use ($runner, $batch): void {
+            $exit = $this->withSignalsBlocked(static function () use ($runner, $batch): int {
                 if (! $runner->regress($batch)) {
                     CLI::error(lang('Migrations.generalFault'), 'light_gray', 'red'); // @codeCoverageIgnore
+
+                    return EXIT_ERROR;
                 }
+
+                return EXIT_SUCCESS;
             });
+
+            if ($exit !== EXIT_SUCCESS) {
+                return $exit;
+            }
 
             $messages = $runner->getCliMessages();
 
@@ -115,12 +123,13 @@ class MigrateRollback extends BaseCommand
 
             CLI::write('Done rolling back migrations.', 'green');
 
+            return EXIT_SUCCESS;
             // @codeCoverageIgnoreStart
         } catch (Throwable $e) {
             $this->showError($e);
+
+            return EXIT_ERROR;
             // @codeCoverageIgnoreEnd
         }
-
-        return null;
     }
 }

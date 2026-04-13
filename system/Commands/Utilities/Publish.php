@@ -86,8 +86,10 @@ class Publish extends BaseCommand
                 CLI::write(lang('Publisher.publishMissingNamespace', [$directory, $namespace]));
             }
 
-            return;
+            return EXIT_ERROR;
         }
+
+        $exit = EXIT_SUCCESS;
 
         foreach ($publishers as $publisher) {
             if ($publisher->publish()) {
@@ -96,18 +98,24 @@ class Publish extends BaseCommand
                     count($publisher->getPublished()),
                     $publisher->getDestination(),
                 ]), 'green');
-            } else {
-                CLI::error(lang('Publisher.publishFailure', [
-                    $publisher::class,
-                    $publisher->getDestination(),
-                ]), 'light_gray', 'red');
 
-                foreach ($publisher->getErrors() as $file => $exception) {
-                    CLI::write($file);
-                    CLI::error($exception->getMessage());
-                    CLI::newLine();
-                }
+                continue;
             }
+
+            CLI::error(lang('Publisher.publishFailure', [
+                $publisher::class,
+                $publisher->getDestination(),
+            ]), 'light_gray', 'red');
+
+            foreach ($publisher->getErrors() as $file => $exception) {
+                CLI::write($file);
+                CLI::error($exception->getMessage());
+                CLI::newLine();
+            }
+
+            $exit = EXIT_ERROR;
         }
+
+        return $exit;
     }
 }

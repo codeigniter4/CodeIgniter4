@@ -89,6 +89,8 @@ class TestGenerator extends BaseCommand
         $autoload->addNamespace('Tests', ROOTPATH . 'tests');
 
         $this->generateClass($params);
+
+        return EXIT_SUCCESS;
     }
 
     /**

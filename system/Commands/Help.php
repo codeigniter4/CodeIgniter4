@@ -78,10 +78,12 @@ class Help extends BaseCommand
         $commands = $this->commands->getCommands();
 
         if (! $this->commands->verifyCommand($command, $commands)) {
-            return;
+            return EXIT_ERROR;
         }
 
         $class = new $commands[$command]['class']($this->logger, $this->commands);
         $class->showHelp();
+
+        return EXIT_SUCCESS;
     }
 }

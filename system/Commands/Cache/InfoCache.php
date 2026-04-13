@@ -63,7 +63,7 @@ class InfoCache extends BaseCommand
         if ($config->handler !== 'file') {
             CLI::error('This command only supports the file cache handler.');
 
-            return;
+            return EXIT_ERROR;
         }
 
         $cache  = CacheFactory::getHandler($config);
@@ -87,5 +87,7 @@ class InfoCache extends BaseCommand
         ];
 
         CLI::table($tbody, $thead);
+
+        return EXIT_SUCCESS;
     }
 }

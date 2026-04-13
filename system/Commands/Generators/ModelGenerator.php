@@ -86,6 +86,8 @@ class ModelGenerator extends BaseCommand
 
         $this->classNameLang = 'CLI.generator.className.model';
         $this->generateClass($params);
+
+        return EXIT_SUCCESS;
     }
 
     /**

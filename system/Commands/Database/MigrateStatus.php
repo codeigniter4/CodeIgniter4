@@ -150,7 +150,7 @@ class MigrateStatus extends BaseCommand
             CLI::error(lang('Migrations.noneFound'), 'light_gray', 'red');
             CLI::newLine();
 
-            return;
+            return EXIT_ERROR;
             // @codeCoverageIgnoreEnd
         }
 
@@ -164,5 +164,7 @@ class MigrateStatus extends BaseCommand
         ];
 
         CLI::table($status, $headers);
+
+        return EXIT_SUCCESS;
     }
 }

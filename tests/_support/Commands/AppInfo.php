@@ -32,26 +32,24 @@ final class AppInfo extends BaseCommand
     {
         CLI::write(sprintf('CodeIgniter Version: %s', CodeIgniter::CI_VERSION));
 
-        return 0;
+        return EXIT_SUCCESS;
     }
 
     public function bomb(): int
     {
         try {
             CLI::color('test', 'white', 'Background');
+
+            return EXIT_SUCCESS;
         } catch (RuntimeException $e) {
             $this->showError($e);
 
-            return 1;
+            return EXIT_ERROR;
         }
-
-        return 0;
     }
 
     public function helpMe(): int
     {
-        $this->call('help');
-
-        return 0;
+        return $this->call('help');
     }
 }

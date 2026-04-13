@@ -202,10 +202,10 @@ class Routes extends BaseCommand
 
         CLI::table($tbody, $thead);
 
-        $this->showRequiredFilters();
+        return $this->showRequiredFilters();
     }
 
-    private function showRequiredFilters(): void
+    private function showRequiredFilters(): int
     {
         $filterCollector = new FilterCollector();
 
@@ -226,5 +226,7 @@ class Routes extends BaseCommand
         }
 
         CLI::write(' Required After Filters: ' . implode(', ', $filters));
+
+        return EXIT_SUCCESS;
     }
 }

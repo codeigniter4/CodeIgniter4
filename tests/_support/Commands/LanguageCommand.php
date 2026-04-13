@@ -29,7 +29,7 @@ class LanguageCommand extends BaseCommand
         '--sort' => 'Turn on/off the sortImports flag.',
     ];
 
-    public function run(array $params): void
+    public function run(array $params): int
     {
         $this->setHasClassName(false);
         $params[0] = 'Foobar';
@@ -42,6 +42,8 @@ class LanguageCommand extends BaseCommand
         $this->setSortImports($sort);
 
         $this->generateClass($params);
+
+        return EXIT_SUCCESS;
     }
 
     protected function prepare(string $class): string

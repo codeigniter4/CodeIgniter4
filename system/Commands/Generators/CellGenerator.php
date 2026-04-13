@@ -102,6 +102,6 @@ class CellGenerator extends BaseCommand
 
         $this->generateView($namespace . $viewName, $params);
 
-        return 0;
+        return EXIT_SUCCESS;
     }
 }

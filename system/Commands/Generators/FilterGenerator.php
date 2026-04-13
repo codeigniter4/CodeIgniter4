@@ -82,5 +82,7 @@ class FilterGenerator extends BaseCommand
 
         $this->classNameLang = 'CLI.generator.className.filter';
         $this->generateClass($params);
+
+        return EXIT_SUCCESS;
     }
 }

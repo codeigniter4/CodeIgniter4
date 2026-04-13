@@ -93,6 +93,8 @@ class MigrationGenerator extends BaseCommand
 
         $this->classNameLang = 'CLI.generator.className.migration';
         $this->generateClass($params);
+
+        return EXIT_SUCCESS;
     }
 
     /**

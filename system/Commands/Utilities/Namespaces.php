@@ -89,6 +89,8 @@ class Namespaces extends BaseCommand
         ];
 
         CLI::table($tbody, $thead);
+
+        return EXIT_SUCCESS;
     }
 
     private function outputAllNamespaces(array $params): array

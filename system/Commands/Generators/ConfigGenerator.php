@@ -82,6 +82,8 @@ class ConfigGenerator extends BaseCommand
 
         $this->classNameLang = 'CLI.generator.className.config';
         $this->generateClass($params);
+
+        return EXIT_SUCCESS;
     }
 
     /**

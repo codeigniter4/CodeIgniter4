@@ -82,6 +82,8 @@ class TransformerGenerator extends BaseCommand
 
         $this->classNameLang = 'CLI.generator.className.transformer';
         $this->generateClass($params);
+
+        return EXIT_SUCCESS;
     }
 
     /**

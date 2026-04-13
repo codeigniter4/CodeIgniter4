@@ -82,5 +82,7 @@ class SeederGenerator extends BaseCommand
 
         $this->classNameLang = 'CLI.generator.className.seeder';
         $this->generateClass($params);
+
+        return EXIT_SUCCESS;
     }
 }

@@ -29,8 +29,10 @@ class InvalidCommand extends BaseCommand
         throw new ReflectionException();
     }
 
-    public function run(array $params): void
+    public function run(array $params): int
     {
         CLI::write('CI Version: ' . CLI::color(CodeIgniter::CI_VERSION, 'red'));
+
+        return EXIT_SUCCESS;
     }
 }

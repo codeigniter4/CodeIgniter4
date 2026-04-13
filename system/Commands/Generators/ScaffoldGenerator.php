@@ -115,9 +115,13 @@ class ScaffoldGenerator extends BaseCommand
         $class = $params[0] ?? CLI::getSegment(2);
 
         // Call those commands!
-        $this->call('make:controller', array_merge([$class], $controllerOpts, $options));
-        $this->call('make:model', array_merge([$class], $modelOpts, $options));
-        $this->call('make:migration', array_merge([$class], $options));
-        $this->call('make:seeder', array_merge([$class], $options));
+        $exit1 = $this->call('make:controller', array_merge([$class], $controllerOpts, $options));
+        $exit2 = $this->call('make:model', array_merge([$class], $modelOpts, $options));
+        $exit3 = $this->call('make:migration', array_merge([$class], $options));
+        $exit4 = $this->call('make:seeder', array_merge([$class], $options));
+
+        assert(is_int($exit1) && is_int($exit2) && is_int($exit3) && is_int($exit4));
+
+        return $exit1 | $exit2 | $exit3 | $exit4;
     }
 }

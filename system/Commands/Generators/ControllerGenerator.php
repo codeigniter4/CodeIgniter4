@@ -88,6 +88,8 @@ class ControllerGenerator extends BaseCommand
 
         $this->classNameLang = 'CLI.generator.className.controller';
         $this->generateClass($params);
+
+        return EXIT_SUCCESS;
     }
 
     /**

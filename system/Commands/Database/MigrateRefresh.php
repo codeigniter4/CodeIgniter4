@@ -79,16 +79,15 @@ class MigrateRefresh extends BaseCommand
             $force = array_key_exists('f', $params) || CLI::getOption('f');
 
             if (! $force && CLI::prompt(lang('Migrations.refreshConfirm'), ['y', 'n']) === 'n') {
-                return;
+                return EXIT_ERROR;
             }
 
             $params['f'] = null;
             // @codeCoverageIgnoreEnd
         }
 
-        $this->withSignalsBlocked(function () use ($params): void {
-            $this->call('migrate:rollback', $params);
-            $this->call('migrate', $params);
-        });
+        return $this->withSignalsBlocked(
+            fn (): int => $this->call('migrate:rollback', $params) | $this->call('migrate', $params),
+        );
     }
 }

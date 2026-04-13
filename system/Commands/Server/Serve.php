@@ -113,7 +113,9 @@ class Serve extends BaseCommand
         if ($status !== EXIT_SUCCESS && $this->portOffset < $this->tries) {
             $this->portOffset++;
 
-            $this->run($params);
+            return $this->run($params);
         }
+
+        return $status;
     }
 }
