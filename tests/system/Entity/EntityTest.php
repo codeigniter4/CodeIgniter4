@@ -476,7 +476,7 @@ final class EntityTest extends CIUnitTestCase
 
         $entity = new class () extends Entity {
             protected $casts = [
-                'temp' => 'float[1,invalidMode]'
+                'temp' => 'float[1,invalidMode]',
             ];
         };
 
@@ -1803,22 +1803,22 @@ final class EntityTest extends CIUnitTestCase
 
             // 'bar' is db column, 'foo' is internal representation
             protected $casts = [
-                'first'      => 'integer',
-                'second'     => 'float',
-                'third'      => 'double',
-                'fourth'     => 'string',
-                'fifth'      => 'boolean',
-                'sixth'      => 'object',
-                'seventh'    => 'array',
-                'eighth'     => 'datetime',
-                'ninth'      => 'timestamp',
-                'tenth'      => 'json',
-                'eleventh'   => 'json-array',
-                'twelfth'    => 'csv',
-                'thirteenth' => 'uri',
-                'fourteenth' => 'float[2]',
-                'fifteenth'  => 'float[2,down]',
-                'sixteenth' => 'float[3,even]',
+                'first'       => 'integer',
+                'second'      => 'float',
+                'third'       => 'double',
+                'fourth'      => 'string',
+                'fifth'       => 'boolean',
+                'sixth'       => 'object',
+                'seventh'     => 'array',
+                'eighth'      => 'datetime',
+                'ninth'       => 'timestamp',
+                'tenth'       => 'json',
+                'eleventh'    => 'json-array',
+                'twelfth'     => 'csv',
+                'thirteenth'  => 'uri',
+                'fourteenth'  => 'float[2]',
+                'fifteenth'   => 'float[2,down]',
+                'sixteenth'   => 'float[3,even]',
                 'seventeenth' => 'float[1,odd]',
             ];
 

@@ -1047,13 +1047,13 @@ final class DataConverterTest extends CIUnitTestCase
         $this->expectExceptionMessage('Invalid rounding mode "wrong" for float casting.');
 
         $converter = $this->createDataConverter([
-            'id' => 'int',
+            'id'   => 'int',
             'temp' => 'float[2,wrong]',
         ]);
 
         $converter->fromDataSource([
-            'id' => '123456',
-            'temp' => 123.456
+            'id'   => '123456',
+            'temp' => 123.456,
         ]);
     }
 }
