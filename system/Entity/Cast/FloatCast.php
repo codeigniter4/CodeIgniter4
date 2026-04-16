@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Entity\Cast;
 
-use CodeIgniter\DataCaster\Exceptions\CastException;
+use CodeIgniter\Entity\Exceptions\CastException;
 
 class FloatCast extends BaseCast
 {
