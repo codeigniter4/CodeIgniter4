@@ -248,8 +248,6 @@ abstract class FormRequest
      *
      * Do not call this method directly unless you are inside a ``_remap()``
      * method, where automatic injection is not available.
-     *
-     * @internal
      */
     final public function resolveRequest(): ?ResponseInterface
     {
