@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Exceptions\RuntimeException;
 use ReflectionNamedType;
 use ReflectionParameter;
 
@@ -40,7 +41,15 @@ abstract class FormRequest
      */
     final public function __construct(?IncomingRequest $request = null)
     {
-        $this->request = $request ?? service('request');
+        $request ??= service('request');
+
+        if (! $request instanceof IncomingRequest) {
+            throw new RuntimeException(
+                sprintf('%s requires an IncomingRequest instance, got %s.', static::class, $request::class),
+            );
+        }
+
+        $this->request = $request;
     }
 
     /**

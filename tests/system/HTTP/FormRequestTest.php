@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
@@ -127,6 +128,21 @@ final class FormRequestTest extends CIUnitTestCase
         $formRequest = $this->makeFormRequest($this->makeRequest());
 
         $this->assertTrue($formRequest->isAuthorized());
+    }
+
+    public function testConstructorThrowsWhenFallbackRequestIsNotIncomingRequest(): void
+    {
+        Services::injectMock('request', new CLIRequest(new App()));
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('requires an IncomingRequest instance');
+
+        new class () extends FormRequest {
+            public function rules(): array
+            {
+                return [];
+            }
+        };
     }
 
     public function testValidatedReturnsEmptyArrayBeforeResolution(): void
