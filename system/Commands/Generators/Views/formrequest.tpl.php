@@ -30,6 +30,9 @@ class {class} extends FormRequest
 
     // /**
     //  * Determines if the current user is authorized to make this request.
+    //  *
+    //  * Defaults to true in FormRequest. Override only when authorization
+    //  * depends on application logic.
     //  */
     // public function isAuthorized(): bool
     // {
