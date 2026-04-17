@@ -135,7 +135,7 @@ final class FormRequestTest extends CIUnitTestCase
         Services::injectMock('request', new CLIRequest(new App()));
 
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('requires an IncomingRequest instance');
+        $this->expectExceptionMessage('requires an IncomingRequest instance, got CodeIgniter\HTTP\CLIRequest.');
 
         new class () extends FormRequest {
             public function rules(): array

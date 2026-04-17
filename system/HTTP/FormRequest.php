@@ -39,7 +39,7 @@ abstract class FormRequest
      * explicitly. When instantiated manually (e.g. in tests), the constructor
      * falls back to service('request').
      */
-    final public function __construct(?IncomingRequest $request = null)
+    final public function __construct(?Request $request = null)
     {
         $request ??= service('request');
 
