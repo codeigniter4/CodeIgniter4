@@ -33,4 +33,8 @@ class Mycontroller extends Controller
     public function getFormmethodWithParam(string $id, MyFormRequest $request): void
     {
     }
+
+    public function getFormmethodVariadic(MyFormRequest $request, string ...$tags): void
+    {
+    }
 }

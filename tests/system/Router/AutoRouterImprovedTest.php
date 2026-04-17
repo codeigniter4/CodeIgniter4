@@ -184,6 +184,30 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router->getRoute('mycontroller/formmethodwithparam/42/extra', Method::GET);
     }
 
+    public function testVariadicParamAlongsideFormRequestAcceptsMultipleUriSegments(): void
+    {
+        $router = $this->createNewAutoRouter();
+
+        [$directory, $controller, $method, $params]
+            = $router->getRoute('mycontroller/formmethod-variadic/php/ci4/tags', Method::GET);
+
+        $this->assertSame('\\' . Mycontroller::class, $controller);
+        $this->assertSame('getFormmethodVariadic', $method);
+        $this->assertSame(['php', 'ci4', 'tags'], $params);
+    }
+
+    public function testVariadicParamAlongsideFormRequestAcceptsZeroUriSegments(): void
+    {
+        $router = $this->createNewAutoRouter();
+
+        [$directory, $controller, $method, $params]
+            = $router->getRoute('mycontroller/formmethod-variadic', Method::GET);
+
+        $this->assertSame('\\' . Mycontroller::class, $controller);
+        $this->assertSame('getFormmethodVariadic', $method);
+        $this->assertSame([], $params);
+    }
+
     public function testAutoRouteFindsControllerWithFile(): void
     {
         $router = $this->createNewAutoRouter();

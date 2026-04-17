@@ -445,12 +445,20 @@ final class AutoRouterImproved implements AutoRouterInterface
 
         // FormRequest parameters are injected by the framework and do not
         // consume URI segments, so exclude them from the count.
-        $uriParamCount = count(array_filter(
+        $nonFormRequestParams = array_values(array_filter(
             $refParams,
             static fn ($p): bool => FormRequest::getFormRequestClass($p) === null,
         ));
 
-        if ($uriParamCount < count($this->params)) {
+        // A variadic parameter absorbs any number of trailing URI segments,
+        // so there is no upper bound to enforce.
+        foreach ($nonFormRequestParams as $p) {
+            if ($p->isVariadic()) {
+                return;
+            }
+        }
+
+        if (count($nonFormRequestParams) < count($this->params)) {
             throw new PageNotFoundException(
                 'The param count in the URI are greater than the controller method params.'
                 . ' Handler:' . $this->controller . '::' . $this->method

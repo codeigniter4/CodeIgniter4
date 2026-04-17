@@ -380,7 +380,8 @@ class CodeIgniter
         if ($returned instanceof ResponseInterface) {
             $this->gatherOutput($returned);
         }
-        // Closure controller has run in startController().
+        // Closure controller has run in startController() - benchmarks were
+        // stopped there as well.
         elseif (! is_callable($this->controller)) {
             $controller = $this->createController();
 
@@ -392,9 +393,6 @@ class CodeIgniter
             Events::trigger('post_controller_constructor');
 
             $returned = $this->runController($controller);
-        } else {
-            $this->benchmark->stop('controller_constructor');
-            $this->benchmark->stop('controller');
         }
 
         // If $returned is a string, then the controller output something,
@@ -589,9 +587,15 @@ class CodeIgniter
         // Is it routed to a Closure?
         if (is_object($this->controller) && ($this->controller::class === 'Closure')) {
             $controller = $this->controller;
-            $resolved   = $this->resolveCallableParams(new ReflectionFunction($controller), $this->router->params());
 
-            return $controller(...$resolved);
+            try {
+                $resolved = $this->resolveCallableParams(new ReflectionFunction($controller), $this->router->params());
+
+                return $controller(...$resolved);
+            } finally {
+                $this->benchmark->stop('controller_constructor');
+                $this->benchmark->stop('controller');
+            }
         }
 
         // No controller specified - we don't know what to do now.
@@ -668,17 +672,19 @@ class CodeIgniter
 
         // The controller method param types may not be string.
         // So cannot set `declare(strict_types=1)` in this file.
-        if (method_exists($class, '_remap')) {
-            // FormRequest injection is not supported for _remap() because its
-            // signature is fixed to ($method, ...$params). Instantiate the
-            // FormRequest manually inside _remap() if needed.
-            $output = $class->_remap($this->method, ...$params);
-        } else {
-            $resolved = $this->resolveMethodParams($class, $this->method, $params);
-            $output   = $class->{$this->method}(...$resolved);
+        try {
+            if (method_exists($class, '_remap')) {
+                // FormRequest injection is not supported for _remap() because its
+                // signature is fixed to ($method, ...$params). Instantiate the
+                // FormRequest manually inside _remap() if needed.
+                $output = $class->_remap($this->method, ...$params);
+            } else {
+                $resolved = $this->resolveMethodParams($class, $this->method, $params);
+                $output   = $class->{$this->method}(...$resolved);
+            }
+        } finally {
+            $this->benchmark->stop('controller');
         }
-
-        $this->benchmark->stop('controller');
 
         return $output;
     }
