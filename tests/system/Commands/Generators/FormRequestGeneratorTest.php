@@ -31,7 +31,6 @@ final class FormRequestGeneratorTest extends CIUnitTestCase
 
         $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', $this->getStreamFilterBuffer());
         $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
-        $dir    = dirname($file);
 
         if (is_file($file)) {
             unlink($file);
@@ -47,7 +46,7 @@ final class FormRequestGeneratorTest extends CIUnitTestCase
         $this->assertFileExists($file);
         $this->assertStringContainsString(
             'Defaults to true in FormRequest. Override only when authorization',
-            file_get_contents($file),
+            (string) file_get_contents($file),
         );
     }
 
