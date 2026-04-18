@@ -31,6 +31,8 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponsableInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\URI;
+use CodeIgniter\Router\CallableParamClassifier;
+use CodeIgniter\Router\ParamKind;
 use CodeIgniter\Router\RouteCollectionInterface;
 use CodeIgniter\Router\Router;
 use Config\App;
@@ -727,36 +729,37 @@ class CodeIgniter
         $routeIndex = 0;
 
         foreach ($reflection->getParameters() as $param) {
-            // Inject FormRequest subclasses regardless of position.
-            $formRequestClass = FormRequest::getFormRequestClass($param);
+            [$kind, $formRequestClass] = CallableParamClassifier::classify($param);
 
-            if ($formRequestClass !== null) {
-                $resolved[] = $this->resolveFormRequest($formRequestClass);
+            switch ($kind) {
+                case ParamKind::FormRequest:
+                    // Inject FormRequest subclasses regardless of position.
+                    $resolved[] = $this->resolveFormRequest($formRequestClass);
 
-                continue;
-            }
+                    continue 2;
 
-            // Variadic parameter - consume all remaining route segments.
-            if ($param->isVariadic()) {
-                while (array_key_exists($routeIndex, $routeParams)) {
-                    $resolved[] = $routeParams[$routeIndex++];
-                }
+                case ParamKind::Variadic:
+                    // Consume all remaining route segments.
+                    while (array_key_exists($routeIndex, $routeParams)) {
+                        $resolved[] = $routeParams[$routeIndex++];
+                    }
+                    break 2;
 
-                break;
-            }
+                case ParamKind::Scalar:
+                    // Consume the next route segment if one is available.
+                    if (array_key_exists($routeIndex, $routeParams)) {
+                        $resolved[] = $routeParams[$routeIndex++];
 
-            // Consume the next route segment if one is available.
-            if (array_key_exists($routeIndex, $routeParams)) {
-                $resolved[] = $routeParams[$routeIndex++];
+                        continue 2;
+                    }
 
-                continue;
-            }
-
-            // No more route segments. Required params stop iteration so that
-            // PHP throws an ArgumentCountError on the call site. Optional
-            // params are omitted - PHP then applies their declared default value.
-            if (! $param->isOptional()) {
-                break;
+                    // No more route segments. Required params stop iteration so
+                    // that PHP throws an ArgumentCountError on the call site.
+                    // Optional params are omitted - PHP then applies their
+                    // declared default value.
+                    if (! $param->isOptional()) {
+                        break 2;
+                    }
             }
         }
 

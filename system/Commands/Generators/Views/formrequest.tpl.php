@@ -21,7 +21,7 @@ class {class} extends FormRequest
     // /**
     //  * Custom error messages keyed by field.rule.
     //  *
-    //  * @return array<string, array<string, string>|string>
+    //  * @return array<string, array<string, string>>
     //  */
     // public function messages(): array
     // {

@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\Router;
 
 use CodeIgniter\Exceptions\PageNotFoundException;
-use CodeIgniter\HTTP\FormRequest;
 use CodeIgniter\Router\Exceptions\MethodNotFoundException;
 use Config\Routing;
 use ReflectionClass;
@@ -443,22 +442,24 @@ final class AutoRouterImproved implements AutoRouterInterface
             throw new MethodNotFoundException();
         }
 
-        // FormRequest parameters are injected by the framework and do not
-        // consume URI segments, so exclude them from the count.
-        $nonFormRequestParams = array_values(array_filter(
-            $refParams,
-            static fn ($p): bool => FormRequest::getFormRequestClass($p) === null,
-        ));
+        // Count only parameters that consume one URI segment each. A variadic
+        // parameter absorbs any number of trailing segments, so there is no
+        // upper bound to enforce.
+        $scalarCount = 0;
 
-        // A variadic parameter absorbs any number of trailing URI segments,
-        // so there is no upper bound to enforce.
-        foreach ($nonFormRequestParams as $p) {
-            if ($p->isVariadic()) {
+        foreach ($refParams as $param) {
+            [$kind] = CallableParamClassifier::classify($param);
+
+            if ($kind === ParamKind::Variadic) {
                 return;
+            }
+
+            if ($kind === ParamKind::Scalar) {
+                $scalarCount++;
             }
         }
 
-        if (count($nonFormRequestParams) < count($this->params)) {
+        if ($scalarCount < count($this->params)) {
             throw new PageNotFoundException(
                 'The param count in the URI are greater than the controller method params.'
                 . ' Handler:' . $this->controller . '::' . $this->method

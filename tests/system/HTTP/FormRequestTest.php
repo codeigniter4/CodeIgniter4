@@ -359,7 +359,6 @@ final class FormRequestTest extends CIUnitTestCase
         $response = $formRequest->resolveRequest();
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
-        $this->assertInstanceOf(ResponseInterface::class, $response);
     }
 
     public function testFailedValidationResponseContainsErrors(): void

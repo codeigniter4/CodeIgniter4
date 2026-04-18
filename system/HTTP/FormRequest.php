@@ -74,7 +74,7 @@ abstract class FormRequest
      *      'title' => ['required' => 'Post title cannot be empty.'],
      *  ];
      *
-     * @return array<string, array<string, string>|string>
+     * @return array<string, array<string, string>>
      */
     public function messages(): array
     {
