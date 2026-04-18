@@ -155,10 +155,6 @@ final class ConsoleTest extends CIUnitTestCase
 
     public function testHelpShortcutStripsOptionsMeantForTargetCommand(): void
     {
-        // Options like `--host` are declared by `serve`, not by `help`. Prior
-        // behavior forwarded them to `help`, tripping the modern pipeline's
-        // unknown-option validator. The fix clears options once `--help` is
-        // detected so `help serve` renders cleanly.
         $this->initializeConsole('serve', '--host=example.com', '--help');
         $exitCode = (new Console())->run();
 

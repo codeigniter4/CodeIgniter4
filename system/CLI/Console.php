@@ -69,8 +69,11 @@ class Console
 
         $this->command = array_shift($arguments) ?? self::DEFAULT_COMMAND;
 
-        if (array_key_exists($this->command, $commands->getCommands())) {
-            return $commands->runLegacy($this->command, array_merge($arguments, $this->options));
+        if ($commands->hasLegacyCommand($this->command)) {
+            $legacyOptions = $this->options;
+            unset($legacyOptions['no-header']);
+
+            return $commands->runLegacy($this->command, array_merge($arguments, $legacyOptions));
         }
 
         return $commands->runCommand($this->command, $arguments, $this->options);

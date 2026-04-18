@@ -217,7 +217,7 @@ abstract class AbstractCommand
     {
         $name = $argument->name;
 
-        if (array_key_exists($name, $this->argumentsDefinition)) {
+        if ($this->hasArgument($name)) {
             throw new InvalidArgumentDefinitionException(lang('Commands.duplicateArgument', [$name]));
         }
 
@@ -253,15 +253,19 @@ abstract class AbstractCommand
     {
         $name = $option->name;
 
-        if (array_key_exists($name, $this->optionsDefinition)) {
+        if ($this->hasOption($name)) {
             throw new InvalidOptionDefinitionException(lang('Commands.duplicateOption', [$name]));
         }
 
-        if ($option->shortcut !== null && array_key_exists($option->shortcut, $this->shortcuts)) {
+        if ($this->hasNegation($name)) {
+            throw new InvalidOptionDefinitionException(lang('Commands.optionClashesWithExistingNegation', [$name, $this->negations[$name]]));
+        }
+
+        if ($option->shortcut !== null && $this->hasShortcut($option->shortcut)) {
             throw new InvalidOptionDefinitionException(lang('Commands.duplicateShortcut', [$option->shortcut, $name, $this->shortcuts[$option->shortcut]]));
         }
 
-        if ($option->negation !== null && array_key_exists($option->negation, $this->optionsDefinition)) {
+        if ($option->negation !== null && $this->hasOption($option->negation)) {
             throw new InvalidOptionDefinitionException(lang('Commands.negatableOptionNegationExists', [$name]));
         }
 
@@ -347,9 +351,11 @@ abstract class AbstractCommand
      *   1. {@see initialize()} and {@see interact()} are handed the raw parsed
      *      input by reference, in that order. Both can mutate the tokens before
      *      the framework interprets them against the declared definitions.
-     *   2. The resulting raw input is snapshotted into `$unboundArguments` and
-     *      `$unboundOptions` so the unbound accessors can report what the user
-     *      actually typed (as opposed to what defaults resolved to).
+     *   2. The post-hook input is snapshotted into `$unboundArguments` and
+     *      `$unboundOptions` so the unbound accessors can report the tokens
+     *      carried into binding (as opposed to what defaults resolved to).
+     *      Any mutations performed in `initialize()` or `interact()` are
+     *      therefore reflected in the snapshot.
      *   3. {@see bind()} maps the raw tokens onto the declared arguments and
      *      options, applying defaults and coercing flag/negation values.
      *   4. {@see validate()} rejects the bound result if it violates any of the
@@ -485,7 +491,7 @@ abstract class AbstractCommand
 
     /**
      * Reads the raw (unbound) value of the option with the given declared name,
-     * resolving through its shortcut and negation. Returns `$default` when the
+     * resolving through its shortcut and negation. Returns `null` when the
      * option was not provided under any of those aliases.
      *
      * Inside {@see interact()}, pass the `$options` parameter explicitly because
@@ -493,21 +499,22 @@ abstract class AbstractCommand
      * `$options` to read from the instance state.
      *
      * @param array<string, list<string|null>|string|null>|null $options
-     * @param list<string|null>|string|null                     $default
      *
      * @return list<string|null>|string|null
      *
      * @throws LogicException
      */
-    protected function getUnboundOption(string $name, ?array $options = null, array|string|null $default = null): array|string|null
+    protected function getUnboundOption(string $name, ?array $options = null): array|string|null
     {
-        $definition = $this->getOptionDefinitionFor($name);
+        $this->assertOptionIsDefined($name);
 
         $options ??= $this->unboundOptions;
 
         if (array_key_exists($name, $options)) {
             return $options[$name];
         }
+
+        $definition = $this->optionsDefinition[$name];
 
         if ($definition->shortcut !== null && array_key_exists($definition->shortcut, $options)) {
             return $options[$definition->shortcut];
@@ -517,7 +524,7 @@ abstract class AbstractCommand
             return $options[$definition->negation];
         }
 
-        return $default;
+        return null;
     }
 
     /**
@@ -533,13 +540,15 @@ abstract class AbstractCommand
      */
     protected function hasUnboundOption(string $name, ?array $options = null): bool
     {
-        $definition = $this->getOptionDefinitionFor($name);
+        $this->assertOptionIsDefined($name);
 
         $options ??= $this->unboundOptions;
 
         if (array_key_exists($name, $options)) {
             return true;
         }
+
+        $definition = $this->optionsDefinition[$name];
 
         if ($definition->shortcut !== null && array_key_exists($definition->shortcut, $options)) {
             return true;
@@ -692,33 +701,38 @@ abstract class AbstractCommand
 
         // 4. If there are still options left that are not defined, we will mark them as extraneous.
         foreach ($options as $name => $value) {
-            if (array_key_exists($name, $this->shortcuts)) {
+            if ($this->hasShortcut($name)) {
                 // This scenario can happen when the command has an array option with a shortcut,
                 // and the shortcut is used alongside the long name, causing it to be not bound
-                // in the previous loop.
+                // in the previous loop. The leftover shortcut value can itself be an array when
+                // the shortcut was passed multiple times, so merge arrays and append scalars.
                 $option = $this->shortcuts[$name];
+                $values = is_array($value) ? $value : [$value];
 
                 if (array_key_exists($option, $boundOptions) && is_array($boundOptions[$option])) {
-                    $boundOptions[$option][] = $value;
+                    $boundOptions[$option] = [...$boundOptions[$option], ...$values];
                 } else {
-                    $boundOptions[$option] = [$boundOptions[$option], $value];
+                    $boundOptions[$option] = [$boundOptions[$option], ...$values];
                 }
 
                 continue;
             }
 
-            if (array_key_exists($name, $this->negations)) {
+            if ($this->hasNegation($name)) {
                 // This scenario can happen when the command has a negatable option,
                 // and both the option and its negation are used, causing the negation
-                // to be not bound in the previous loop.
+                // to be not bound in the previous loop. The leftover negation value can
+                // be scalar (including a string when the negation was passed with a value)
+                // or an array — normalise to an array before mapping null → false.
                 $option = $this->negations[$name];
-                $value  = array_map(static fn (mixed $v): mixed => $v ?? false, $value ?? [null]);
+                $values = is_array($value) ? $value : [$value];
+                $values = array_map(static fn (mixed $v): mixed => $v ?? false, $values);
 
                 if (! is_array($boundOptions[$option])) {
                     $boundOptions[$option] = [$boundOptions[$option]];
                 }
 
-                $boundOptions[$option] = [...$boundOptions[$option], ...$value];
+                $boundOptions[$option] = [...$boundOptions[$option], ...$values];
 
                 continue;
             }
@@ -816,8 +830,14 @@ abstract class AbstractCommand
             throw new OptionValueMismatchException(lang('Commands.nonArrayOptionWithArrayValue', [$name]));
         }
 
-        if ($definition->requiresValue && ! is_string($value) && ! is_array($value)) {
-            throw new OptionValueMismatchException(lang('Commands.optionRequiresValue', [$name]));
+        if ($definition->requiresValue) {
+            $elements = is_array($value) ? $value : [$value];
+
+            foreach ($elements as $element) {
+                if (! is_string($element)) {
+                    throw new OptionValueMismatchException(lang('Commands.optionRequiresValue', [$name]));
+                }
+            }
         }
 
         if (! $definition->negatable || is_bool($value)) {
@@ -843,7 +863,12 @@ abstract class AbstractCommand
             throw new OptionValueMismatchException(lang('Commands.negatedOptionNoValue', [$definition->negation]));
         }
 
-        if (array_values(array_intersect(array_unique($value), [true, false])) === [true, false]) {
+        // Both forms appearing together is the primary user mistake; flag it
+        // regardless of whether either form carried a value.
+        if (
+            array_key_exists($name, $this->unboundOptions)
+            && array_key_exists($definition->negation, $this->unboundOptions)
+        ) {
             throw new LogicException(lang('Commands.negatableOptionWithNegation', [$name, $definition->negation]));
         }
 
@@ -857,13 +882,11 @@ abstract class AbstractCommand
     /**
      * @throws LogicException
      */
-    private function getOptionDefinitionFor(string $name): Option
+    private function assertOptionIsDefined(string $name): void
     {
-        if (! array_key_exists($name, $this->optionsDefinition)) {
+        if (! $this->hasOption($name)) {
             throw new LogicException(sprintf('Option "%s" is not defined on this command.', $name));
         }
-
-        return $this->optionsDefinition[$name];
     }
 
     /**

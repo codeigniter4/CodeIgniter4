@@ -72,13 +72,12 @@ final class AppAboutCommand extends AbstractCommand
 
     /**
      * @param array<string, list<string|null>|string|null>|null $options
-     * @param list<string|null>|string|null                     $default
      *
      * @return list<string|null>|string|null
      */
-    public function callGetUnboundOption(string $name, ?array $options = null, array|string|null $default = null): array|string|null
+    public function callGetUnboundOption(string $name, ?array $options = null): array|string|null
     {
-        return $this->getUnboundOption($name, $options, $default);
+        return $this->getUnboundOption($name, $options);
     }
 
     /**

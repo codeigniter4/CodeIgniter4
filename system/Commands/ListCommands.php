@@ -43,10 +43,11 @@ class ListCommands extends AbstractCommand
 
     private function describeCommandsSimple(): int
     {
-        $commands = [
-            ...array_keys($this->getCommandRunner()->getCommands()),
-            ...array_keys($this->getCommandRunner()->getModernCommands()),
-        ];
+        // Legacy takes precedence on key collision so the listing reflects the
+        // command that would actually be invoked.
+        $commands = array_keys(
+            $this->getCommandRunner()->getCommands() + $this->getCommandRunner()->getModernCommands(),
+        );
         sort($commands);
 
         foreach ($commands as $command) {
@@ -64,10 +65,11 @@ class ListCommands extends AbstractCommand
         $entries = [];
         $maxPad  = 0;
 
-        foreach ([
-            ...$this->getCommandRunner()->getCommands(),
-            ...$this->getCommandRunner()->getModernCommands(),
-        ] as $command => $details) {
+        // Legacy takes precedence on key collision so the listing reflects the
+        // command that would actually be invoked.
+        $all = $this->getCommandRunner()->getCommands() + $this->getCommandRunner()->getModernCommands();
+
+        foreach ($all as $command => $details) {
             $maxPad = max($maxPad, strlen($command) + 4);
 
             $entries[] = [$details['group'], $command, $details['description']];
@@ -105,7 +107,7 @@ class ListCommands extends AbstractCommand
                 CLI::write(sprintf(
                     '%s%s',
                     CLI::color($this->addPadding($command[0], 2, $maxPad), 'green'),
-                    CLI::wrap($command[1]),
+                    CLI::wrap($command[1], 0, $maxPad),
                 ));
             }
         }

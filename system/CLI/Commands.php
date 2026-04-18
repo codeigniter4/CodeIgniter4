@@ -96,7 +96,7 @@ class Commands
 
         Events::trigger('pre_command');
 
-        $exitCode = $this->getCommand($command)->run($params);
+        $exitCode = $this->getCommand($command, legacy: true)->run($params);
 
         Events::trigger('post_command');
 
@@ -154,11 +154,31 @@ class Commands
     }
 
     /**
+     * Checks if a legacy command with the given name has been discovered.
+     */
+    public function hasLegacyCommand(string $name): bool
+    {
+        return array_key_exists($name, $this->commands);
+    }
+
+    /**
+     * Checks if a modern command with the given name has been discovered.
+     *
+     * A name present in both registries signals a collision; legacy wins
+     * at runtime. Callers can combine this with {@see hasLegacyCommand()}
+     * to detect that case.
+     */
+    public function hasModernCommand(string $name): bool
+    {
+        return array_key_exists($name, $this->modernCommands);
+    }
+
+    /**
      * @return ($legacy is true ? BaseCommand : AbstractCommand)
      *
      * @throws CommandNotFoundException
      */
-    public function getCommand(string $command, bool $legacy = true): AbstractCommand|BaseCommand
+    public function getCommand(string $command, bool $legacy = false): AbstractCommand|BaseCommand
     {
         if ($legacy && isset($this->commands[$command])) {
             $className = $this->commands[$command]['class'];
@@ -217,11 +237,13 @@ class Commands
 
         foreach (array_keys(array_intersect_key($this->commands, $this->modernCommands)) as $name) {
             CLI::write(
-                lang('Commands.duplicateCommandName', [
-                    $name,
-                    $this->commands[$name]['class'],
-                    $this->modernCommands[$name]['class'],
-                ]),
+                CLI::wrap(
+                    lang('Commands.duplicateCommandName', [
+                        $name,
+                        $this->commands[$name]['class'],
+                        $this->modernCommands[$name]['class'],
+                    ]),
+                ),
                 'yellow',
             );
         }
@@ -248,7 +270,7 @@ class Commands
 
         $message = lang('CLI.commandNotFound', [$command]);
 
-        $alternatives = $this->getCommandAlternatives($command, legacy: $legacy);
+        $alternatives = $this->getCommandAlternatives($command);
 
         if ($alternatives !== []) {
             $message = sprintf(
@@ -265,24 +287,22 @@ class Commands
     }
 
     /**
-     * Finds alternative of `$name` among collection of commands.
+     * Finds alternative of `$name` across both legacy and modern commands.
      *
      * @param legacy_commands $collection (no longer used)
      *
      * @return list<string>
      */
-    protected function getCommandAlternatives(string $name, array $collection = [], bool $legacy = true): array
+    protected function getCommandAlternatives(string $name, array $collection = []): array
     {
         if ($collection !== []) {
             @trigger_error(sprintf('Since v4.8.0, the $collection parameter of %s() is no longer used.', __METHOD__), E_USER_DEPRECATED);
         }
 
-        $commandCollection = $legacy ? $this->commands : $this->modernCommands;
-
         /** @var array<string, int> */
         $alternatives = [];
 
-        foreach (array_keys($commandCollection) as $commandName) {
+        foreach (array_keys($this->commands + $this->modernCommands) as $commandName) {
             $lev = levenshtein($name, $commandName);
 
             if ($lev <= strlen($commandName) / 3 || str_contains($commandName, $name)) {

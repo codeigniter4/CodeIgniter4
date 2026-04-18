@@ -28,6 +28,8 @@ Behavior Changes
 - **Commands:** The ``-h`` option to ``routes`` command which was mapped previously to the ``--handler`` option is now removed.
     Use ``--handler`` instead to sort the routes by handler when running the ``routes`` command.
 - **Commands:** The ``filter:check`` command now requires the HTTP method argument to be uppercase (e.g., ``spark filter:check GET /`` instead of ``spark filter:check get /``).
+- **Commands:** Several built-in commands have been migrated from ``BaseCommand`` to the modern ``AbstractCommand`` style. Applications that extend a built-in command to override
+    behaviour may need to re-implement against the modern API (``configure()`` + ``execute()`` and the ``#[Command]`` attribute) once the class it extends is migrated, or, preferably, compose instead of extending. Invocations on the command line are unaffected.
 - **Database:** The Postgre driver's ``$db->error()['code']`` previously always returned ``''``. It now returns the 5-character SQLSTATE string for query and transaction failures (e.g., ``'42P01'``), or ``'08006'`` for connection-level failures. Code that relied on ``$db->error()['code'] === ''`` will need updating.
 - **Filters:** HTTP method matching for method-based filters is now case-sensitive. The keys in ``Config\Filters::$methods`` must exactly match the request method
     (e.g., ``GET``, ``POST``). Lowercase method names (e.g., ``post``) will no longer match.

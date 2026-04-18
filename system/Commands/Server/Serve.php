@@ -20,53 +20,54 @@ use CodeIgniter\CLI\Input\Option;
 
 /**
  * Launches the CodeIgniter PHP-Development Server.
+ *
+ * @codeCoverageIgnore
  */
 #[Command(name: 'serve', description: 'Launches the CodeIgniter PHP-Development Server.', group: 'CodeIgniter')]
 class Serve extends AbstractCommand
 {
     /**
-     * The current port offset.
-     */
-    private int $portOffset = 0;
-
-    /**
      * The number of times to retry if the port is already in use.
      */
-    private int $retries = 10;
+    private const RETRIES = 10;
 
     protected function configure(): void
     {
         $this
-            ->addOption(new Option(name: 'php', description: 'The PHP binary to use.', acceptsValue: true, default: PHP_BINARY))
-            ->addOption(new Option(name: 'host', description: 'The host to serve on.', acceptsValue: true, default: 'localhost'))
-            ->addOption(new Option(name: 'port', description: 'The port to serve on.', acceptsValue: true, default: '8080'));
+            ->addOption(new Option(name: 'php', description: 'The PHP binary to use.', requiresValue: true, default: PHP_BINARY))
+            ->addOption(new Option(name: 'host', description: 'The host to serve on.', requiresValue: true, default: 'localhost'))
+            ->addOption(new Option(name: 'port', description: 'The port to serve on.', requiresValue: true, default: '8080'));
     }
 
     protected function execute(array $arguments, array $options): int
     {
-        $port = (int) $options['port'] + $this->portOffset;
+        $basePort = (int) $options['port'];
+        $status   = EXIT_SUCCESS;
 
-        CLI::write(sprintf('CodeIgniter development server started on http://%s:%s', $options['host'], $port), 'green');
-        CLI::write('Press Control-C to stop.');
-        CLI::newLine();
+        for ($offset = 0; $offset <= self::RETRIES; $offset++) {
+            $port = $basePort + $offset;
 
-        passthru(
-            sprintf(
-                '%s -S %s:%s -t %s %s',
-                escapeshellarg($options['php']),
-                escapeshellarg($options['host']),
-                escapeshellarg((string) $port),
-                escapeshellarg(FCPATH),
-                escapeshellarg(SYSTEMPATH . 'rewrite.php'),
-            ),
-            $status,
-        );
-
-        if ($status !== EXIT_SUCCESS && $this->portOffset < $this->retries) {
+            CLI::write(sprintf('CodeIgniter development server started on http://%s:%s', $options['host'], $port), 'green');
+            CLI::write('Press Control-C to stop.');
             CLI::newLine();
-            $this->portOffset++;
 
-            return $this->execute($arguments, $options);
+            passthru(
+                sprintf(
+                    '%s -S %s:%s -t %s %s',
+                    escapeshellarg($options['php']),
+                    escapeshellarg($options['host']),
+                    escapeshellarg((string) $port),
+                    escapeshellarg(FCPATH),
+                    escapeshellarg(SYSTEMPATH . 'rewrite.php'),
+                ),
+                $status,
+            );
+
+            if ($status === EXIT_SUCCESS) {
+                return $status;
+            }
+
+            CLI::newLine();
         }
 
         return $status;

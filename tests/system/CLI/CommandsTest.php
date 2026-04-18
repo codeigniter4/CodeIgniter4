@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\CLI;
 
+use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\CLI\Exceptions\CommandNotFoundException;
 use CodeIgniter\CodeIgniter;
@@ -26,9 +27,12 @@ use PHPUnit\Framework\Attributes\After;
 use PHPUnit\Framework\Attributes\Before;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use ReflectionClass;
 use RuntimeException;
 use Tests\Support\Commands\Legacy\AppInfo;
 use Tests\Support\Commands\Modern\AppAboutCommand;
+use Tests\Support\Duplicates\DuplicateLegacy;
+use Tests\Support\Duplicates\DuplicateModern;
 use Tests\Support\InvalidCommands\EmptyCommandName;
 use Tests\Support\InvalidCommands\NoAttributeCommand;
 
@@ -54,7 +58,7 @@ final class CommandsTest extends CIUnitTestCase
 
     private function getUndecoratedBuffer(): string
     {
-        return preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer());
+        return preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()) ?? '';
     }
 
     private function copyCommand(string $path): void
@@ -79,13 +83,14 @@ final class CommandsTest extends CIUnitTestCase
 
         $this->assertSame(EXIT_ERROR, $commands->runLegacy('app:unknown', []));
         $this->assertArrayNotHasKey('app:unknown', $commands->getCommands());
-        $this->assertStringContainsString('Command "app:unknown" not found', $this->getStreamFilterBuffer());
+        $this->assertSame("\nCommand \"app:unknown\" not found.\n", $this->getUndecoratedBuffer());
 
         $this->resetStreamFilterBuffer();
+        CLI::resetLastWrite();
 
         $this->assertSame(EXIT_ERROR, $commands->runCommand('app:unknown', [], []));
         $this->assertArrayNotHasKey('app:unknown', $commands->getModernCommands());
-        $this->assertStringContainsString('Command "app:unknown" not found', $this->getStreamFilterBuffer());
+        $this->assertSame("\nCommand \"app:unknown\" not found.\n", $this->getUndecoratedBuffer());
     }
 
     public function testRunOnUnknownLegacyCommandButWithOneAlternative(): void
@@ -135,7 +140,44 @@ final class CommandsTest extends CIUnitTestCase
                 Command "app:" not found.
 
                 Did you mean one of these?
+                    app:about
                     app:destructive
+                    app:info
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
+    }
+
+    public function testRunOnUnknownLegacyCommandAlsoSuggestsModernAlternatives(): void
+    {
+        $commands = new Commands();
+
+        $this->assertSame(EXIT_ERROR, $commands->runLegacy('app:ab', []));
+        $this->assertSame(
+            <<<'EOT'
+
+                Command "app:ab" not found.
+
+                Did you mean this?
+                    app:about
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
+    }
+
+    public function testRunOnUnknownModernCommandAlsoSuggestsLegacyAlternatives(): void
+    {
+        $commands = new Commands();
+
+        $this->assertSame(EXIT_ERROR, $commands->runCommand('app:inf', [], []));
+        $this->assertSame(
+            <<<'EOT'
+
+                Command "app:inf" not found.
+
+                Did you mean this?
                     app:info
 
                 EOT,
@@ -169,7 +211,7 @@ final class CommandsTest extends CIUnitTestCase
 
         $this->assertSame(EXIT_ERROR, $commands->runLegacy('app:pablo', []));
         $this->assertArrayNotHasKey('app:pablo', $commands->getCommands());
-        $this->assertStringContainsString('Command "app:pablo" not found', $this->getStreamFilterBuffer());
+        $this->assertSame("\nCommand \"app:pablo\" not found.\n", $this->getUndecoratedBuffer());
     }
 
     public function testRunOnKnownLegacyCommand(): void
@@ -178,7 +220,10 @@ final class CommandsTest extends CIUnitTestCase
 
         $this->assertSame(EXIT_SUCCESS, $commands->runLegacy('app:info', []));
         $this->assertArrayHasKey('app:info', $commands->getCommands());
-        $this->assertStringContainsString('CodeIgniter Version', $this->getStreamFilterBuffer());
+        $this->assertSame(
+            sprintf("\nCodeIgniter Version: %s\n", CodeIgniter::CI_VERSION),
+            $this->getUndecoratedBuffer(),
+        );
     }
 
     public function testRunOnKnownModernCommand(): void
@@ -211,25 +256,50 @@ final class CommandsTest extends CIUnitTestCase
 
     public function testDiscoveryWarnsWhenSameCommandNameExistsInBothRegistries(): void
     {
-        $legacyFixture = SUPPORTPATH . '_command/DuplicateLegacy.php';
-        $modernFixture = SUPPORTPATH . '_command/DuplicateModern.php';
+        $this->injectDuplicateLocator();
 
-        $this->copyCommand($legacyFixture);
-        $this->copyCommand($modernFixture);
+        $message = wordwrap(
+            sprintf(
+                'Warning: The "dup:test" command is defined as both legacy (%s) and modern (%s). The legacy command will be executed. Please rename or remove one.',
+                DuplicateLegacy::class,
+                DuplicateModern::class,
+            ),
+            CLI::getWidth(),
+        );
 
-        try {
-            $commands = new Commands();
+        $commands = new Commands();
 
-            $this->assertStringContainsString(
-                'Warning: command "dup:test" is defined as both legacy (App\\Commands\\DuplicateLegacy) and modern (App\\Commands\\DuplicateModern)',
-                $this->getUndecoratedBuffer(),
-            );
-            $this->assertArrayHasKey('dup:test', $commands->getCommands());
-            $this->assertArrayHasKey('dup:test', $commands->getModernCommands());
-        } finally {
-            $this->deleteCommand($legacyFixture);
-            $this->deleteCommand($modernFixture);
-        }
+        $this->assertSame("\n{$message}\n", $this->getUndecoratedBuffer());
+        $this->assertArrayHasKey('dup:test', $commands->getCommands());
+        $this->assertArrayHasKey('dup:test', $commands->getModernCommands());
+    }
+
+    public function testHasLegacyCommand(): void
+    {
+        $commands = new Commands();
+
+        $this->assertTrue($commands->hasLegacyCommand('app:info'));
+        $this->assertFalse($commands->hasLegacyCommand('app:about'));
+        $this->assertFalse($commands->hasLegacyCommand('app:unknown'));
+    }
+
+    public function testHasModernCommand(): void
+    {
+        $commands = new Commands();
+
+        $this->assertTrue($commands->hasModernCommand('app:about'));
+        $this->assertFalse($commands->hasModernCommand('app:info'));
+        $this->assertFalse($commands->hasModernCommand('app:unknown'));
+    }
+
+    public function testCollidingCommandNameIsDetectableFromBothRegistries(): void
+    {
+        $this->injectDuplicateLocator();
+
+        $commands = new Commands();
+
+        $this->assertTrue($commands->hasLegacyCommand('dup:test'));
+        $this->assertTrue($commands->hasModernCommand('dup:test'));
     }
 
     public function testDestructiveCommandIsNotRisky(): void
@@ -243,8 +313,8 @@ final class CommandsTest extends CIUnitTestCase
     {
         $commands = new Commands();
 
-        $this->assertInstanceOf(AppInfo::class, $commands->getCommand('app:info'));
-        $this->assertInstanceOf(AppAboutCommand::class, $commands->getCommand('app:about', false));
+        $this->assertInstanceOf(AppInfo::class, $commands->getCommand('app:info', legacy: true));
+        $this->assertInstanceOf(AppAboutCommand::class, $commands->getCommand('app:about'));
     }
 
     public function testGetCommandOnUnknownLegacyCommand(): void
@@ -252,7 +322,7 @@ final class CommandsTest extends CIUnitTestCase
         $this->expectException(CommandNotFoundException::class);
         $this->expectExceptionMessage('Command "app:unknown" not found.');
 
-        (new Commands())->getCommand('app:unknown');
+        (new Commands())->getCommand('app:unknown', legacy: true);
     }
 
     public function testGetCommandOnUnknownModernCommand(): void
@@ -260,7 +330,7 @@ final class CommandsTest extends CIUnitTestCase
         $this->expectException(CommandNotFoundException::class);
         $this->expectExceptionMessage('Command "app:unknown" not found.');
 
-        (new Commands())->getCommand('app:unknown', false);
+        (new Commands())->getCommand('app:unknown');
     }
 
     public function testDiscoverCommandsDoNotRunTwice(): void
@@ -293,10 +363,12 @@ final class CommandsTest extends CIUnitTestCase
 
         $locator = $this->createMock(FileLocatorInterface::class);
         $locator
+            ->expects($this->once())
             ->method('listFiles')
             ->with('Commands/')
             ->willReturn([$path]);
         $locator
+            ->expects($this->once())
             ->method('findQualifiedNameFromPath')
             ->with($path)
             ->willReturn(NoAttributeCommand::class);
@@ -314,10 +386,12 @@ final class CommandsTest extends CIUnitTestCase
 
         $locator = $this->createMock(FileLocatorInterface::class);
         $locator
+            ->expects($this->once())
             ->method('listFiles')
             ->with('Commands/')
             ->willReturn([$path]);
         $locator
+            ->expects($this->once())
             ->method('findQualifiedNameFromPath')
             ->with($path)
             ->willReturn(EmptyCommandName::class);
@@ -390,5 +464,27 @@ final class CommandsTest extends CIUnitTestCase
         $this->assertStringNotContainsString('CodeIgniter Version:', $this->getStreamFilterBuffer());
 
         $this->deleteCommand(SUPPORTPATH . '_command/AppAboutCommand.php');
+    }
+
+    private function injectDuplicateLocator(): void
+    {
+        $legacyFile = (new ReflectionClass(DuplicateLegacy::class))->getFileName();
+        $modernFile = (new ReflectionClass(DuplicateModern::class))->getFileName();
+
+        $locator = $this->getMockBuilder(FileLocator::class)
+            ->setConstructorArgs([service('autoloader')])
+            ->onlyMethods(['listFiles', 'findQualifiedNameFromPath'])
+            ->getMock();
+        $locator->expects($this->once())
+            ->method('listFiles')
+            ->with('Commands/')
+            ->willReturn([$legacyFile, $modernFile]);
+        $locator->expects($this->exactly(2))
+            ->method('findQualifiedNameFromPath')
+            ->willReturnMap([
+                [$legacyFile, DuplicateLegacy::class],
+                [$modernFile, DuplicateModern::class],
+            ]);
+        Services::injectMock('locator', $locator);
     }
 }

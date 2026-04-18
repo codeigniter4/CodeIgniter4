@@ -41,7 +41,7 @@ class Help extends AbstractCommand
         $commands = $this->getCommandRunner();
 
         if (array_key_exists($command, $commands->getCommands())) {
-            $commands->getCommand($command)->showHelp();
+            $commands->getCommand($command, legacy: true)->showHelp();
 
             return EXIT_SUCCESS;
         }

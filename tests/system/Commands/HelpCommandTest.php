@@ -173,6 +173,23 @@ final class HelpCommandTest extends CIUnitTestCase
         );
     }
 
+    public function testDescribeInexistentCommandSuggestsLegacyAlternatives(): void
+    {
+        command('help app:inf');
+
+        $this->assertSame(
+            <<<'EOT'
+
+                Command "app:inf" not found.
+
+                Did you mean this?
+                    app:info
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
+    }
+
     public function testDescribeUsingHelpOption(): void
     {
         command('cache:clear --help');

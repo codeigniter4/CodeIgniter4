@@ -26,6 +26,8 @@ use CodeIgniter\Commands\Help;
 use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
+use Config\App;
+use Config\Services;
 use PHPUnit\Framework\Attributes\After;
 use PHPUnit\Framework\Attributes\Before;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -193,6 +195,14 @@ final class AbstractCommandTest extends CIUnitTestCase
                 ['name' => 'test', 'negatable' => true, 'default' => false],
             ],
         ];
+
+        yield 'option name clashes with existing negation' => [
+            'Option "--no-test" clashes with the negation of negatable option "--test".',
+            [
+                ['name' => 'test', 'negatable' => true, 'default' => false],
+                ['name' => 'no-test'],
+            ],
+        ];
     }
 
     public function testRenderThrowable(): void
@@ -202,6 +212,21 @@ final class AbstractCommandTest extends CIUnitTestCase
         $this->assertSame(EXIT_ERROR, $command->bomb());
         $this->assertStringContainsString('[CodeIgniter\CLI\Exceptions\CLIException]', $this->getStreamFilterBuffer());
         $this->assertStringContainsString('Invalid "background" color: "Background".', $this->getStreamFilterBuffer());
+    }
+
+    public function testRenderThrowableSwapsNonCliRequestAndRestores(): void
+    {
+        // Seed the shared request with a non-CLI instance so renderThrowable()
+        // exercises the swap-and-restore branch.
+        Services::createRequest(config(App::class));
+        $incoming = Services::get('request');
+
+        $command = new AppAboutCommand(new Commands());
+
+        $this->assertSame(EXIT_ERROR, $command->bomb());
+        $this->assertStringContainsString('Invalid "background" color: "Background".', $this->getStreamFilterBuffer());
+
+        $this->assertSame($incoming, Services::get('request'));
     }
 
     public function testCheckingOfArgumentsAndOptions(): void
@@ -361,6 +386,12 @@ final class AbstractCommandTest extends CIUnitTestCase
             ['2', '1'], // long names of array options are recognised first
         ];
 
+        yield 'Array option with shortcut passed multiple times after long name [app:about a --baz 1 -b 2 -b 3]' => [
+            ['baz' => '1', 'b' => ['2', '3']],
+            'baz',
+            ['1', '2', '3'], // leftover shortcut values are flattened, not nested
+        ];
+
         yield 'Negatable option provided [app:about a --quux]' => [
             ['quux' => null],
             'quux',
@@ -509,6 +540,24 @@ final class AbstractCommandTest extends CIUnitTestCase
             ['foo' => null],
         ];
 
+        yield 'array option requiring value passed without value [app:about a --baz]' => [
+            OptionValueMismatchException::class,
+            'Option "--baz" requires a value to be provided.',
+            ['baz' => null],
+        ];
+
+        yield 'array option requiring value passed without value multiple times [app:about a --baz --baz]' => [
+            OptionValueMismatchException::class,
+            'Option "--baz" requires a value to be provided.',
+            ['baz' => [null, null]],
+        ];
+
+        yield 'array option requiring value mixing value and no-value [app:about a --baz=v1 --baz]' => [
+            OptionValueMismatchException::class,
+            'Option "--baz" requires a value to be provided.',
+            ['baz' => ['v1', null]],
+        ];
+
         yield 'option not accepting value passed with value [app:about a --no-header=value]' => [
             OptionValueMismatchException::class,
             'Option "--no-header" does not accept a value.',
@@ -579,6 +628,12 @@ final class AbstractCommandTest extends CIUnitTestCase
             LogicException::class,
             'Option "--quux" and its negation "--no-quux" cannot be used together.',
             ['quux' => null, 'no-quux' => null],
+        ];
+
+        yield 'negatable option passed with its negation carrying a value [app:about a --quux --no-quux=text]' => [
+            LogicException::class,
+            'Option "--quux" and its negation "--no-quux" cannot be used together.',
+            ['quux' => null, 'no-quux' => 'text'],
         ];
 
         yield 'negatable option passed with its negation multiple times [app:about a --quux --no-quux --no-quux]' => [
@@ -655,29 +710,28 @@ final class AbstractCommandTest extends CIUnitTestCase
 
     /**
      * @param array<string, list<string|null>|string|null> $options
-     * @param list<string|null>|string|null                $default
      * @param list<string|null>|string|null                $expected
      */
     #[DataProvider('provideGetUnboundOptionResolvesAlias')]
-    public function testGetUnboundOptionResolvesAlias(string $name, array $options, array|string|null $default, array|string|null $expected): void
+    public function testGetUnboundOptionResolvesAlias(string $name, array $options, array|string|null $expected): void
     {
         $command = new AppAboutCommand(new Commands());
 
-        $this->assertSame($expected, $command->callGetUnboundOption($name, $options, $default));
+        $this->assertSame($expected, $command->callGetUnboundOption($name, $options));
     }
 
     /**
-     * @return iterable<string, array{string, array<string, list<string|null>|string|null>, list<string|null>|string|null, list<string|null>|string|null}>
+     * @return iterable<string, array{string, array<string, list<string|null>|string|null>, list<string|null>|string|null}>
      */
     public static function provideGetUnboundOptionResolvesAlias(): iterable
     {
-        yield 'long name' => ['foo', ['foo' => 'bar'], null, 'bar'];
+        yield 'long name' => ['foo', ['foo' => 'bar'], 'bar'];
 
-        yield 'shortcut' => ['foo', ['f' => 'bar'], null, 'bar'];
+        yield 'shortcut' => ['foo', ['f' => 'bar'], 'bar'];
 
-        yield 'negation' => ['quux', ['no-quux' => null], null, null];
+        yield 'negation' => ['quux', ['no-quux' => null], null];
 
-        yield 'not provided' => ['foo', [], 'fallback', 'fallback'];
+        yield 'not provided' => ['foo', [], null];
     }
 
     public function testGetUnboundOptionThrowsForUndeclaredOption(): void

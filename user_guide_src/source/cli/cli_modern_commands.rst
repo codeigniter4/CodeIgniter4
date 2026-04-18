@@ -4,7 +4,7 @@ Modern Spark Commands
 
 .. versionadded:: 4.8.0
 
-Modern commands are a newer style of :doc:`Spark command <cli_commands>`.
+Modern commands are a newer style of :doc:`spark commands <cli_commands>`.
 Instead of declaring metadata through class properties, modern commands describe
 themselves through a ``#[Command]`` attribute and build their argument/option
 surface inside a ``configure()`` method. The framework then parses the command
@@ -141,6 +141,17 @@ A few quirks are worth knowing:
 
 Configuration-time violations raise ``InvalidOptionDefinitionException``.
 
+.. note::
+
+    The command-line parser does **not** understand bundled shortcuts or
+    shortcuts with a glued value:
+
+    - ``-abc`` is read as one option named ``abc``, *not* as ``-a -b -c``.
+    - ``-fvalue`` is read as one option named ``fvalue``; it is not split into
+      shortcut ``-f`` with value ``value``.
+
+    Pass shortcut values with ``-f=value`` or ``-f value`` instead.
+
 *************************
 Interacting With the User
 *************************
@@ -154,12 +165,12 @@ Because the raw input may be keyed by the long name, the shortcut, or the
 negation form, two helpers make lookups alias-aware:
 
 - ``hasUnboundOption(string $name, ?array $options = null): bool``
-- ``getUnboundOption(string $name, ?array $options = null, $default = null)``
+- ``getUnboundOption(string $name, ?array $options = null): array|string|null``
 
-Inside ``interact()`` pass ``$options`` explicitly — the instance state is not
-populated yet. Outside ``interact()`` (for example inside ``execute()``) you
-can omit ``$options`` and the helpers will read from the instance snapshot
-taken right before bind and validate.
+Inside ``initialize()`` and ``interact()`` pass ``$options`` explicitly — the
+instance snapshot is not populated yet. From ``execute()`` (or any helper
+reached from it) you can omit ``$options`` and the helpers will read from the
+snapshot taken right after ``interact()`` returns and before bind and validate.
 
 .. literalinclude:: cli_modern_commands/004.php
 
@@ -176,13 +187,15 @@ Inside execute()
 - ``$options`` contains every declared option plus the framework defaults
   (``help``, ``no-header``), bound to the provided value or the declared default.
 
-The same data is available through typed helpers so you don't have to sprinkle
-``is_string()`` / ``is_array()`` guards across your command:
+Within ``execute()`` itself, reaching into ``$arguments`` / ``$options`` directly
+is the simplest thing to do. The same data is also available through helpers
+so you can reach it from sub-methods without having to thread the two arrays
+through every signature:
 
 - ``getValidatedArgument(string $name)`` / ``getValidatedArguments()``
 - ``getValidatedOption(string $name)`` / ``getValidatedOptions()``
 - ``getUnboundArgument(int $index)`` / ``getUnboundArguments()``
-- ``getUnboundOption(string $name, ...)`` / ``getUnboundOptions()``
+- ``getUnboundOption(string $name, ?array $options = null)`` / ``getUnboundOptions()``
 
 The *validated* variants expose the bound values (what your definition says).
 The *unbound* variants expose the raw input snapshot — useful when forwarding
@@ -235,6 +248,79 @@ formatted output the framework uses for uncaught exceptions, call
 ``$this->renderThrowable($exception)``. The helper is safe to call from any
 command, and it will not disturb the currently shared request.
 
+**********************************
+Migrating From ``BaseCommand``
+**********************************
+
+The modern command system is a superset of the legacy ``BaseCommand`` API — the
+same capabilities are there, just expressed through an attribute and explicit
+definitions rather than class properties and ad-hoc lookups.
+
+**Identity**
+
+``protected $name``
+    Moves to ``name:`` on the ``#[Command]`` attribute.
+
+``protected $description``
+    Moves to ``description:`` on the ``#[Command]`` attribute.
+
+``protected $group``
+    Moves to ``group:`` on the ``#[Command]`` attribute. An empty group skips the command at discovery.
+
+**Input surface (declare inside** ``configure()`` **)**
+
+``protected $usage``
+    The default usage line is generated from the declared arguments. Register extras with ``addUsage()``.
+
+``protected $arguments``
+    One ``addArgument(new Argument(...))`` call per argument.
+
+``protected $options``
+    One ``addOption(new Option(...))`` call per option. A long name is required; a legacy ``-x``-style
+    option becomes ``new Option(name: 'something', shortcut: 'x')``.
+
+**Runtime**
+
+``run(array $params)``
+    No longer the extension point — ``run()`` is ``final`` on ``AbstractCommand`` and drives the lifecycle itself.
+    Move the body into ``execute(array $arguments, array $options): int``, which must return an ``EXIT_*`` status.
+
+``$params[0]``
+    Use ``$arguments['name']`` or ``$this->getValidatedArgument('name')``.
+
+``$params['name']`` / ``CLI::getOption('name')``
+    Use ``$options['name']`` or ``$this->getValidatedOption('name')``.
+    Call ``$this->hasUnboundOption('name')`` when you need to know whether the flag was actually passed.
+
+``$this->call('other', $params)``
+    Becomes ``$this->call('other', $arguments, $options)``; only from inside ``execute()``.
+    To forward the caller's own raw input, pass ``$this->getUnboundArguments()`` and ``$this->getUnboundOptions()``.
+
+``$this->showError($e)``
+    Becomes ``$this->renderThrowable($e)``.
+
+``showHelp()`` override
+    Gone. The built-in ``help`` command builds the help output itself from the declared arguments, options, and usages.
+
+Prompting the user mid-run stays with ``CLI::prompt()``, but the idiomatic spot moves from ``run()``
+to ``interact()`` so validation can see whatever the user provides interactively.
+
+A typical ``BaseCommand`` implementation:
+
+.. literalinclude:: cli_modern_commands/009.php
+
+…becomes, as a modern command:
+
+.. literalinclude:: cli_modern_commands/010.php
+
+Two behavioural changes are worth calling out explicitly:
+
+- **Validated, not raw.** Arguments and options are parsed, defaulted, and validated before ``execute()`` runs.
+  If a required argument is missing or a ``requiresValue`` option was passed without a value, the framework
+  raises a typed exception and your command is never entered.
+- **Exit codes are mandatory.** Legacy ``run()`` could return ``null``. The modern ``execute()`` must return an
+  integer; the framework emits a deprecation notice for any legacy command that still returns ``null``.
+
 ********************************
 Coexistence With Legacy Commands
 ********************************
@@ -243,6 +329,12 @@ Legacy ``BaseCommand`` classes are still supported, and they are discovered
 alongside modern commands. If the same name is claimed by both a legacy and a
 modern command, the legacy one is invoked and a warning is printed once at
 discovery time so you can rename or retire one of the two.
+
+To detect the collision programmatically — for example, in a migration script
+that verifies the legacy copy was removed — the ``Commands`` runner exposes two
+read-only checks:
+
+.. literalinclude:: cli_modern_commands/011.php
 
 The ``help`` command understands both styles — it delegates to the legacy
 ``showHelp()`` method for legacy commands and renders a structured view for
@@ -406,21 +498,22 @@ covered in the sections above and are not listed here.
         Returns the raw, parsed option map, keyed by long name, shortcut,
         or negation.
 
-    .. php:method:: getUnboundOption(string $name[, array|null $options = null, array|string|null $default = null]): array|string|null
+    .. php:method:: getUnboundOption(string $name[, array|null $options = null]): array|string|null
 
-        :param string                  $name:    The declared option name to look up.
-        :param array|null              $options: Raw option map to read from. Required inside ``interact()``, optional elsewhere.
-        :param array|string|null       $default: Value to return when the option was not provided.
+        :param string     $name:    The declared option name to look up.
+        :param array|null $options: Raw option map to read from. Required inside ``initialize()`` and ``interact()``, optional from ``execute()`` onwards.
 
         Returns the raw value the option was given, resolving its shortcut
-        and negation. Falls back to ``$default`` when the option was not
-        provided. Throws ``LogicException`` when the option is not declared
-        on this command.
+        and negation. Returns ``null`` when the option was not provided —
+        callers can use the ``??`` operator to supply a fallback, or
+        :php:meth:`hasUnboundOption` to disambiguate presence from a ``null``
+        value. Throws ``LogicException`` when the option is not declared on
+        this command.
 
     .. php:method:: hasUnboundOption(string $name[, array|null $options = null]): bool
 
         :param string     $name:    The declared option name to look up.
-        :param array|null $options: Raw option map to read from. Required inside ``interact()``, optional elsewhere.
+        :param array|null $options: Raw option map to read from. Required inside ``initialize()`` and ``interact()``, optional from ``execute()`` onwards.
 
         Returns ``true`` if the option was provided under its long name,
         shortcut, or negation. Throws ``LogicException`` when the option is
