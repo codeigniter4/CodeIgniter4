@@ -13,10 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
-use CodeIgniter\Cookie\Cookie;
-use CodeIgniter\Cookie\CookieStore;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
-use Config\Cookie as CookieConfig;
 
 /**
  * Representation of an outgoing, server-side response.
@@ -38,7 +35,7 @@ class Response extends Message implements ResponseInterface
     /**
      * HTTP status codes
      *
-     * @var array
+     * @var array<int, string>
      */
     protected static $statusCodes = [
         // 1xx: Informational
@@ -140,23 +137,12 @@ class Response extends Message implements ResponseInterface
      */
     protected $pretend = false;
 
+    /**
+     * Construct a non-caching response with a default content type of `text/html`.
+     */
     public function __construct()
     {
-        // Default to a non-caching page.
-        // Also ensures that a Cache-control header exists.
-        $this->noCache();
-
-        // We need CSP object even if not enabled to avoid calls to non existing methods
-        $this->CSP = service('csp');
-
-        $this->cookieStore = new CookieStore([]);
-
-        $cookie = config(CookieConfig::class);
-
-        Cookie::setDefaults($cookie);
-
-        // Default to an HTML Content-Type. Devs can override if needed.
-        $this->setContentType('text/html');
+        $this->noCache()->setContentType('text/html');
     }
 
     /**
@@ -168,7 +154,6 @@ class Response extends Message implements ResponseInterface
      * @return $this
      *
      * @internal For testing purposes only.
-     * @testTag only available to test code
      */
     public function pretend(bool $pretend = true)
     {

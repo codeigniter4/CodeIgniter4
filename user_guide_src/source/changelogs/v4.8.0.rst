@@ -232,6 +232,9 @@ HTTP
 - Added ``SSEResponse`` class for streaming Server-Sent Events (SSE) over HTTP. See :ref:`server-sent-events`.
 - ``Response`` and its child classes no longer require ``Config\App`` passed to their constructors.
     Consequently, ``CURLRequest``'s ``$config`` parameter is unused and will be removed in a future release.
+- ``Response`` now lazily loads the ``ContentSecurityPolicy``, ``Cookie``, and ``CookieStore`` classes only when used,
+    instead of instantiating them on every request in the constructor. Requests that do not touch CSP or cookies no longer
+    incur the cost of loading these classes.
 - ``CLIRequest`` now supports the ``--`` separator to mean that what follows are arguments, not options. This allows you to have arguments that start with ``-`` without them being treated as options.
     For example: ``php index.php command -- --myarg`` will pass ``--myarg`` as an argument instead of an option.
 - ``CLIRequest`` now supports options with values specified using an equals sign (e.g., ``--option=value``) in addition to the existing space-separated syntax (e.g., ``--option value``).

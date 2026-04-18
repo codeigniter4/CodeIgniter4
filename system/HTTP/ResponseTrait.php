@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Config\Services;
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\Cookie\CookieStore;
 use CodeIgniter\Cookie\Exceptions\CookieException;
@@ -21,6 +22,8 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\PagerInterface;
 use CodeIgniter\Security\Exceptions\SecurityException;
+use Config\App;
+use Config\ContentSecurityPolicy as ContentSecurityPolicyConfig;
 use Config\Cookie as CookieConfig;
 use DateTime;
 use DateTimeZone;
@@ -31,21 +34,30 @@ use DateTimeZone;
  * Additional methods to make a PSR-7 Response class
  * compliant with the framework's own ResponseInterface.
  *
+ * @property array<int, string> $statusCodes
+ * @property string|null        $body
+ *
  * @see https://github.com/php-fig/http-message/blob/master/src/ResponseInterface.php
  */
 trait ResponseTrait
 {
     /**
-     * Content security policy handler
+     * Content security policy handler.
      *
-     * @var ContentSecurityPolicy
+     * Lazily instantiated on first use via `self::getCSP()` so that the
+     * ContentSecurityPolicy class is not loaded on requests that do not use CSP.
+     *
+     * @var ContentSecurityPolicy|null
      */
     protected $CSP;
 
     /**
      * CookieStore instance.
      *
-     * @var CookieStore
+     * Lazily instantiated on first cookie-related call so that the Cookie and
+     * CookieStore classes are not loaded on requests that do not use cookies.
+     *
+     * @var CookieStore|null
      */
     protected $cookieStore;
 
@@ -77,19 +89,17 @@ trait ResponseTrait
      */
     public function setStatusCode(int $code, string $reason = '')
     {
-        // Valid range?
         if ($code < 100 || $code > 599) {
             throw HTTPException::forInvalidStatusCode($code);
         }
 
-        // Unknown and no message?
-        if (! array_key_exists($code, static::$statusCodes) && ($reason === '')) {
+        if (! array_key_exists($code, static::$statusCodes) && $reason === '') {
             throw HTTPException::forUnkownStatusCode($code);
         }
 
         $this->statusCode = $code;
 
-        $this->reason = ($reason !== '') ? $reason : static::$statusCodes[$code];
+        $this->reason = $reason !== '' ? $reason : static::$statusCodes[$code];
 
         return $this;
     }
@@ -366,14 +376,54 @@ trait ResponseTrait
     public function send()
     {
         // If we're enforcing a Content Security Policy,
-        // we need to give it a chance to build out it's headers.
-        $this->CSP->finalize($this);
+        // we need to give it a chance to build out its headers.
+        if ($this->shouldFinalizeCsp()) {
+            $this->getCSP()->finalize($this);
+        }
 
         $this->sendHeaders();
         $this->sendCookies();
         $this->sendBody();
 
         return $this;
+    }
+
+    /**
+     * Decides whether {@see ContentSecurityPolicy::finalize()} should run for
+     * this response. Keeping the CSP class unloaded on requests that do not
+     * need it avoids the cost of constructing a 1000+ line service on every
+     * request.
+     */
+    private function shouldFinalizeCsp(): bool
+    {
+        // Developer already touched CSP through getCSP(); respect it.
+        if ($this->CSP !== null) {
+            return true;
+        }
+
+        // A CSP instance has been registered (e.g., via Services::injectMock()
+        // or any earlier service('csp') call) — reuse it instead of skipping.
+        if (Services::has('csp')) {
+            return true;
+        }
+
+        if (config(App::class)->CSPEnabled) {
+            return true;
+        }
+
+        // Placeholders in the body still need to be stripped even when CSP
+        // is disabled, so the body is scanned for the configured nonce tags
+        // before committing to loading the full CSP class.
+        $body = (string) $this->body;
+
+        if ($body === '') {
+            return false;
+        }
+
+        $cspConfig = config(ContentSecurityPolicyConfig::class);
+
+        return str_contains($body, $cspConfig->scriptNonceTag)
+            || str_contains($body, $cspConfig->styleNonceTag);
     }
 
     /**
@@ -518,8 +568,10 @@ trait ResponseTrait
         $httponly = null,
         $samesite = null,
     ) {
+        $store = $this->initializeCookieStore();
+
         if ($name instanceof Cookie) {
-            $this->cookieStore = $this->cookieStore->put($name);
+            $this->cookieStore = $store->put($name);
 
             return $this;
         }
@@ -553,7 +605,7 @@ trait ResponseTrait
             'samesite' => $samesite ?? '',
         ]);
 
-        $this->cookieStore = $this->cookieStore->put($cookie);
+        $this->cookieStore = $store->put($cookie);
 
         return $this;
     }
@@ -565,7 +617,7 @@ trait ResponseTrait
      */
     public function getCookieStore()
     {
-        return $this->cookieStore;
+        return $this->initializeCookieStore();
     }
 
     /**
@@ -573,9 +625,10 @@ trait ResponseTrait
      */
     public function hasCookie(string $name, ?string $value = null, string $prefix = ''): bool
     {
+        $store  = $this->initializeCookieStore();
         $prefix = $prefix !== '' ? $prefix : Cookie::setDefaults()['prefix']; // to retain BC
 
-        return $this->cookieStore->has($name, $prefix, $value);
+        return $store->has($name, $prefix, $value);
     }
 
     /**
@@ -588,14 +641,16 @@ trait ResponseTrait
      */
     public function getCookie(?string $name = null, string $prefix = '')
     {
+        $store = $this->initializeCookieStore();
+
         if ((string) $name === '') {
-            return $this->cookieStore->display();
+            return $store->display();
         }
 
         try {
             $prefix = $prefix !== '' ? $prefix : Cookie::setDefaults()['prefix']; // to retain BC
 
-            return $this->cookieStore->get($name, $prefix);
+            return $store->get($name, $prefix);
         } catch (CookieException $e) {
             log_message('error', (string) $e);
 
@@ -614,10 +669,10 @@ trait ResponseTrait
             return $this;
         }
 
+        $store  = $this->initializeCookieStore();
         $prefix = $prefix !== '' ? $prefix : Cookie::setDefaults()['prefix']; // to retain BC
 
         $prefixed = $prefix . $name;
-        $store    = $this->cookieStore;
         $found    = false;
 
         /** @var Cookie $cookie */
@@ -653,6 +708,10 @@ trait ResponseTrait
      */
     public function getCookies()
     {
+        if ($this->cookieStore === null) {
+            return [];
+        }
+
         return $this->cookieStore->display();
     }
 
@@ -663,7 +722,7 @@ trait ResponseTrait
      */
     protected function sendCookies()
     {
-        if ($this->pretend) {
+        if ($this->pretend || $this->cookieStore === null) {
             return;
         }
 
@@ -753,6 +812,21 @@ trait ResponseTrait
 
     public function getCSP(): ContentSecurityPolicy
     {
-        return $this->CSP;
+        return $this->CSP ??= service('csp');
+    }
+
+    /**
+     * Lazily initializes the cookie store and the Cookie class defaults.
+     * Called by every cookie-related method so cookie machinery is only
+     * loaded when the developer actually interacts with cookies.
+     */
+    private function initializeCookieStore(): CookieStore
+    {
+        if ($this->cookieStore === null) {
+            Cookie::setDefaults(config(CookieConfig::class));
+            $this->cookieStore = new CookieStore([]);
+        }
+
+        return $this->cookieStore;
     }
 }

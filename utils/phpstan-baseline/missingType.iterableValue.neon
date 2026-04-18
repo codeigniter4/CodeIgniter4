@@ -1,4 +1,4 @@
-# total 1229 errors
+# total 1228 errors
 
 parameters:
     ignoreErrors:
@@ -2904,11 +2904,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\HTTP\\Response\:\:setXML\(\) has parameter \$body with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/Response.php
-
-        -
-            message: '#^Property CodeIgniter\\HTTP\\Response\:\:\$statusCodes type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HTTP/Response.php
 

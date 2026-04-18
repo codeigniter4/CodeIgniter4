@@ -15,6 +15,7 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
+use CodeIgniter\Cookie\CookieStore;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -24,6 +25,7 @@ use DateTime;
 use DateTimeZone;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use ReflectionClass;
 
 /**
  * @internal
@@ -684,5 +686,71 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertStringNotContainsString('{csp-style-nonce}', $actual);
         $this->assertStringContainsString('<script >test()</script>', $actual);
         $this->assertStringContainsString('<style >.x{}</style>', $actual);
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/8201
+     */
+    public function testConstructorDoesNotLoadCspAndCookieClasses(): void
+    {
+        $response = (new ReflectionClass(Response::class))->newInstance();
+
+        $this->assertNull(
+            $this->getPrivateProperty($response, 'CSP'),
+            'CSP must be lazily instantiated, not loaded in Response::__construct().',
+        );
+        $this->assertNull(
+            $this->getPrivateProperty($response, 'cookieStore'),
+            'CookieStore must be lazily instantiated, not loaded in Response::__construct().',
+        );
+    }
+
+    public function testSendWithoutCspOrCookiesDoesNotLoadThoseClasses(): void
+    {
+        $response = new Response();
+        $response->pretend(true);
+        $response->setBody('<html>No CSP or cookies here.</html>');
+
+        ob_start();
+        $response->send();
+        ob_end_clean();
+
+        $this->assertNull($this->getPrivateProperty($response, 'CSP'));
+        $this->assertNull($this->getPrivateProperty($response, 'cookieStore'));
+    }
+
+    public function testGetCspLazilyInstantiatesCsp(): void
+    {
+        $response = new Response();
+
+        $this->assertNull($this->getPrivateProperty($response, 'CSP'));
+
+        $csp = $response->getCSP();
+
+        $this->assertInstanceOf(ContentSecurityPolicy::class, $csp);
+        $this->assertSame($csp, $response->getCSP(), 'Subsequent getCSP() calls must return the same instance.');
+    }
+
+    public function testSetCookieLazilyInstantiatesCookieStore(): void
+    {
+        $response = new Response();
+
+        $this->assertNull($this->getPrivateProperty($response, 'cookieStore'));
+
+        $response->setCookie('foo', 'bar');
+
+        $this->assertInstanceOf(CookieStore::class, $this->getPrivateProperty($response, 'cookieStore'));
+        $this->assertTrue($response->hasCookie('foo'));
+    }
+
+    public function testGetCookiesReturnsEmptyArrayWhenCookieStoreNotInitialized(): void
+    {
+        $response = new Response();
+
+        $this->assertSame([], $response->getCookies());
+        $this->assertNull(
+            $this->getPrivateProperty($response, 'cookieStore'),
+            'getCookies() must not instantiate the store when no cookies have been set.',
+        );
     }
 }
