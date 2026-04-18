@@ -11,17 +11,17 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace Tests\Support\Commands;
+namespace Tests\Support\Commands\Legacy;
 
 /**
- * Mock command that simulates missing POSIX extension
+ * Mock command that simulates missing PCNTL extension
  */
-class SignalCommandNoPosix extends SignalCommand
+class SignalCommandNoPcntl extends SignalCommand
 {
     /**
-     * Override to simulate POSIX not being available
+     * Override to simulate PCNTL not being available
      */
-    protected function isPosixAvailable(): bool
+    protected function isPcntlAvailable(): bool
     {
         return false;
     }

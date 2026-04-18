@@ -11,7 +11,7 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace Tests\Support\Commands;
+namespace Tests\Support\Commands\Legacy;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
@@ -50,6 +50,6 @@ final class AppInfo extends BaseCommand
 
     public function helpMe(): int
     {
-        return $this->call('help');
+        return $this->call('help:legacy');
     }
 }

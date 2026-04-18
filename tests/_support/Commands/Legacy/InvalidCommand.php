@@ -11,7 +11,7 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace Tests\Support\Commands;
+namespace Tests\Support\Commands\Legacy;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
@@ -26,7 +26,7 @@ class InvalidCommand extends BaseCommand
 
     public function __construct()
     {
-        throw new ReflectionException();
+        throw new ReflectionException('This command is invalid and should not be instantiated.');
     }
 
     public function run(array $params): int

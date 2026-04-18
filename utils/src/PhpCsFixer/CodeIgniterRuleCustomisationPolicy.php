@@ -43,7 +43,7 @@ final class CodeIgniterRuleCustomisationPolicy implements RuleCustomisationPolic
             ),
             'ordered_imports' => static fn (SplFileInfo $file): bool => ! $normalisedStrEndsWith(
                 $file->getPathname(),
-                '/tests/_support/Commands/Foobar.php',
+                '/tests/_support/Commands/Legacy/Foobar.php',
             ),
         ];
     }

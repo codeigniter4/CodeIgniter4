@@ -19,7 +19,7 @@ use CodeIgniter\CLI\CLI;
 /**
  * @internal
  */
-final class ListCommands extends BaseCommand
+final class AppInfo extends BaseCommand
 {
     /**
      * @var string
@@ -29,17 +29,17 @@ final class ListCommands extends BaseCommand
     /**
      * @var string
      */
-    protected $name = 'list';
+    protected $name = 'app:info';
 
     /**
      * @var string
      */
-    protected $description = 'This is testing to override `list` command.';
+    protected $description = 'This is testing to override `app:info` command.';
 
     /**
      * @var string
      */
-    protected $usage = 'list';
+    protected $usage = 'app:info';
 
     /**
      * Displays the help for the spark cli script itself.

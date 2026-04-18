@@ -17,9 +17,9 @@ use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\Group;
-use Tests\Support\Commands\SignalCommand;
-use Tests\Support\Commands\SignalCommandNoPcntl;
-use Tests\Support\Commands\SignalCommandNoPosix;
+use Tests\Support\Commands\Legacy\SignalCommand;
+use Tests\Support\Commands\Legacy\SignalCommandNoPcntl;
+use Tests\Support\Commands\Legacy\SignalCommandNoPosix;
 
 /**
  * @internal

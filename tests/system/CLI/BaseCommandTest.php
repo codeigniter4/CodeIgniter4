@@ -22,7 +22,7 @@ use PHPUnit\Framework\Attributes\After;
 use PHPUnit\Framework\Attributes\Before;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
-use Tests\Support\Commands\AppInfo;
+use Tests\Support\Commands\Legacy\AppInfo;
 
 /**
  * @internal

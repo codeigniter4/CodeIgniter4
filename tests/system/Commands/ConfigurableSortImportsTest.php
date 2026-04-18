@@ -32,7 +32,7 @@ final class ConfigurableSortImportsTest extends CIUnitTestCase
         $file = APPPATH . 'Language/en/Foobar.php';
         $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists($file);
-        $this->assertNotSame(sha1_file(SUPPORTPATH . 'Commands/Foobar.php'), sha1_file($file));
+        $this->assertNotSame(sha1_file(SUPPORTPATH . 'Commands/Legacy/Foobar.php'), sha1_file($file));
         if (is_file($file)) {
             unlink($file);
         }
@@ -45,7 +45,7 @@ final class ConfigurableSortImportsTest extends CIUnitTestCase
         $file = APPPATH . 'Language/es/Foobar.php';
         $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists($file);
-        $this->assertNotSame(sha1_file(SUPPORTPATH . 'Commands/Foobar.php'), sha1_file($file));
+        $this->assertNotSame(sha1_file(SUPPORTPATH . 'Commands/Legacy/Foobar.php'), sha1_file($file));
         if (is_file($file)) {
             unlink($file);
         }
@@ -62,7 +62,7 @@ final class ConfigurableSortImportsTest extends CIUnitTestCase
         $file = APPPATH . 'Language/ar/Foobar.php';
         $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists($file);
-        $this->assertSame(sha1_file(SUPPORTPATH . 'Commands/Foobar.php'), sha1_file($file));
+        $this->assertSame(sha1_file(SUPPORTPATH . 'Commands/Legacy/Foobar.php'), sha1_file($file));
         if (is_file($file)) {
             unlink($file);
         }

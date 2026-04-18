@@ -83,7 +83,7 @@ return RectorConfig::configure()
         __DIR__ . '/system/ThirdParty',
         __DIR__ . '/tests/system/Config/fixtures',
         __DIR__ . '/tests/system/Filters/fixtures',
-        __DIR__ . '/tests/_support/Commands/Foobar.php',
+        __DIR__ . '/tests/_support/Commands/Legacy/Foobar.php',
         __DIR__ . '/tests/_support/View',
         __DIR__ . '/tests/system/View/Views',
 
