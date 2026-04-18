@@ -82,7 +82,7 @@ final class ClearCacheTest extends CIUnitTestCase
         command('cache:clear');
 
         $this->assertSame(
-            "\nError while clearing the cache.\n",
+            "\nError occurred while clearing the cache.\n",
             preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()),
         );
     }

@@ -13,77 +13,157 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
+use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Input\Argument;
 
 /**
- * CI Help command for the spark script.
- *
- * Lists the basic usage information for the spark script,
- * and provides a way to list help for other commands.
+ * Displays the basic usage information for a given command.
  */
-class Help extends BaseCommand
+#[Command(name: 'help', description: 'Displays basic usage information.', group: 'CodeIgniter')]
+class Help extends AbstractCommand
 {
-    /**
-     * The group the command is lumped under
-     * when listing commands.
-     *
-     * @var string
-     */
-    protected $group = 'CodeIgniter';
-
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'help';
-
-    /**
-     * the Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Displays basic usage information.';
-
-    /**
-     * the Command's usage
-     *
-     * @var string
-     */
-    protected $usage = 'help [<command_name>]';
-
-    /**
-     * the Command's Arguments
-     *
-     * @var array<string, string>
-     */
-    protected $arguments = [
-        'command_name' => 'The command name [default: "help"]',
-    ];
-
-    /**
-     * the Command's Options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [];
-
-    /**
-     * Displays the help for spark commands.
-     */
-    public function run(array $params)
+    protected function configure(): void
     {
-        $command = array_shift($params);
-        $command ??= 'help';
-        $commands = $this->commands->getCommands();
+        $this->addArgument(new Argument(
+            name: 'command_name',
+            description: 'The command name.',
+            default: $this->getName(),
+        ));
+    }
 
-        if (! $this->commands->verifyCommand($command, $commands)) {
+    protected function execute(array $arguments, array $options): int
+    {
+        $command = $arguments['command_name'];
+        assert(is_string($command));
+
+        $commands = $this->getCommandRunner();
+
+        if (array_key_exists($command, $commands->getCommands())) {
+            $commands->getCommand($command)->showHelp();
+
+            return EXIT_SUCCESS;
+        }
+
+        if (! $commands->verifyCommand($command, legacy: false)) {
             return EXIT_ERROR;
         }
 
-        $class = new $commands[$command]['class']($this->logger, $this->commands);
-        $class->showHelp();
+        $this->describeHelp($commands->getCommand($command, legacy: false));
 
         return EXIT_SUCCESS;
+    }
+
+    private function describeHelp(AbstractCommand $command): void
+    {
+        CLI::write(lang('CLI.helpUsage'), 'yellow');
+
+        foreach ($command->getUsages() as $usage) {
+            CLI::write($this->addPadding($usage));
+        }
+
+        if ($command->getDescription() !== '') {
+            CLI::newLine();
+            CLI::write(lang('CLI.helpDescription'), 'yellow');
+            CLI::write($this->addPadding($command->getDescription()));
+        }
+
+        $maxPadding = $this->getMaxPadding($command);
+
+        if ($command->getArgumentsDefinition() !== []) {
+            CLI::newLine();
+            CLI::write(lang('CLI.helpArguments'), 'yellow');
+
+            foreach ($command->getArgumentsDefinition() as $argument => $definition) {
+                $default = '';
+
+                if (! $definition->required) {
+                    $default = sprintf(' [default: %s]', $this->formatDefaultValue($definition->default));
+                }
+
+                CLI::write(sprintf(
+                    '%s%s%s',
+                    CLI::color($this->addPadding($argument, 2, $maxPadding), 'green'),
+                    $definition->description,
+                    CLI::color($default, 'yellow'),
+                ));
+            }
+        }
+
+        if ($command->getOptionsDefinition() !== []) {
+            CLI::newLine();
+            CLI::write(lang('CLI.helpOptions'), 'yellow');
+
+            $hasShortcuts = $command->getShortcuts() !== [];
+
+            foreach ($command->getOptionsDefinition() as $option => $definition) {
+                $value = '';
+
+                if ($definition->acceptsValue) {
+                    $value = sprintf('=%s', strtoupper($definition->valueLabel ?? ''));
+
+                    if (! $definition->requiresValue) {
+                        $value = sprintf('[%s]', $value);
+                    }
+                }
+
+                $optionString = sprintf(
+                    '%s--%s%s%s',
+                    $definition->shortcut !== null
+                        ? sprintf('-%s, ', $definition->shortcut)
+                        : ($hasShortcuts ? '    ' : ''),
+                    $option,
+                    $value,
+                    $definition->negation !== null ? sprintf('|--%s', $definition->negation) : '',
+                );
+
+                CLI::write(sprintf(
+                    '%s%s%s',
+                    CLI::color($this->addPadding($optionString, 2, $maxPadding), 'green'),
+                    $definition->description,
+                    $definition->isArray ? CLI::color(' (multiple values allowed)', 'yellow') : '',
+                ));
+            }
+        }
+    }
+
+    private function addPadding(string $item, int $before = 2, ?int $max = null): string
+    {
+        return str_pad(str_repeat(' ', $before) . $item, $max ?? (strlen($item) + $before));
+    }
+
+    private function getMaxPadding(AbstractCommand $command): int
+    {
+        $max = 0;
+
+        foreach (array_keys($command->getArgumentsDefinition()) as $argument) {
+            $max = max($max, strlen($argument));
+        }
+
+        $hasShortcuts = $command->getShortcuts() !== [];
+
+        foreach ($command->getOptionsDefinition() as $option => $definition) {
+            $optionLength = strlen($option) + 2 // Account for the "--" prefix on options.
+                + ($definition->acceptsValue ? strlen($definition->valueLabel ?? '') + ($definition->requiresValue ? 1 : 3) : 0) // Account for the "=%s" value notation if the option accepts a value.
+                + ($hasShortcuts ? 4 : 0) // Account for the "-%s, " shortcut notation if shortcuts are present.
+                + ($definition->negation !== null ? 3 + strlen($definition->negation) : 0); // Account for the "|--no-%s" negation notation if a negation exists for this option.
+
+            $max = max($max, $optionLength);
+        }
+
+        return $max + 4; // Account for the extra padding around the option/argument.
+    }
+
+    /**
+     * @param list<string>|string $value
+     */
+    private function formatDefaultValue(array|string $value): string
+    {
+        if (is_array($value)) {
+            return sprintf('[%s]', implode(', ', array_map($this->formatDefaultValue(...), $value)));
+        }
+
+        return sprintf('"%s"', $value);
     }
 }

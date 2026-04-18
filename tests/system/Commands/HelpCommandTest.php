@@ -13,9 +13,12 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands;
 
+use CodeIgniter\CLI\CLI;
 use CodeIgniter\CodeIgniter;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
+use PHPUnit\Framework\Attributes\After;
+use PHPUnit\Framework\Attributes\Before;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -26,43 +29,198 @@ final class HelpCommandTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
-    protected function getBuffer(): string
+    #[After]
+    #[Before]
+    protected function resetCli(): void
     {
-        return $this->getStreamFilterBuffer();
+        CLI::reset();
     }
 
-    public function testHelpCommand(): void
+    private function getUndecoratedBuffer(): string
+    {
+        return preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()) ?? '';
+    }
+
+    public function testNoArgumentDescribesItself(): void
     {
         command('help');
 
-        // make sure the result looks like a command list
-        $this->assertStringContainsString('Displays basic usage information.', $this->getBuffer());
-        $this->assertStringContainsString('command_name', $this->getBuffer());
+        $this->assertSame(
+            <<<'EOT'
+
+                Usage:
+                  help [options] [--] [<command_name>]
+
+                Description:
+                  Displays basic usage information.
+
+                Arguments:
+                  command_name     The command name. [default: "help"]
+
+                Options:
+                  -h, --help       Display help for the given command.
+                      --no-header  Do not display the banner when running the command.
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
     }
 
-    public function testHelpCommandWithMissingUsage(): void
+    public function testDescribeCommandNoArguments(): void
     {
-        command('help app:info');
-        $this->assertStringContainsString('app:info [arguments]', $this->getBuffer());
+        command('help app:about');
+
+        $this->assertSame(
+            <<<'EOT'
+
+                Usage:
+                  app:about [options] [--] <required> [<optional>] [<array>...]
+                  app:about required-value
+
+                Description:
+                  Displays basic application information.
+
+                Arguments:
+                  required              Unused required argument.
+                  optional              Unused optional argument. [default: "val"]
+                  array                 Unused array argument. [default: ["a", "b"]]
+
+                Options:
+                  -f, --foo=FOO         Option that requires a value.
+                  -a, --bar[=BAR]       Option that optionally accepts a value.
+                  -b, --baz=BAZ         Option that allows multiple values. (multiple values allowed)
+                      --quux|--no-quux  Negatable option.
+                  -h, --help            Display help for the given command.
+                      --no-header       Do not display the banner when running the command.
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
     }
 
-    public function testHelpCommandOnSpecificCommand(): void
+    public function testDescribeSpecificCommand(): void
     {
         command('help cache:clear');
-        $this->assertStringContainsString('Clears the current system caches.', $this->getBuffer());
+
+        $this->assertSame(
+            <<<'EOT'
+
+                Usage:
+                  cache:clear [options] [--] [<driver>]
+
+                Description:
+                  Clears the current system caches.
+
+                Arguments:
+                  driver           The cache driver to use. [default: "file"]
+
+                Options:
+                  -h, --help       Display help for the given command.
+                      --no-header  Do not display the banner when running the command.
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
     }
 
-    public function testHelpCommandOnInexistentCommand(): void
+    public function testDescribeLegacyCommandUsesLegacyShowHelp(): void
+    {
+        // `app:info` is a legacy BaseCommand fixture. Help must take the
+        // legacy branch and delegate to BaseCommand::showHelp() instead of
+        // rendering via the modern describeHelp() pipeline.
+        command('help app:info');
+
+        $this->assertSame(
+            <<<'EOT'
+
+                Usage:
+                  app:info [arguments]
+
+                Description:
+                  Displays basic application information.
+
+                Arguments:
+                  draft  unused
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
+    }
+
+    public function testDescribeInexistentCommand(): void
     {
         command('help fixme');
-        $this->assertStringContainsString('Command "fixme" not found', $this->getBuffer());
+
+        $this->assertSame("\nCommand \"fixme\" not found.\n", $this->getUndecoratedBuffer());
     }
 
-    public function testHelpCommandOnInexistentCommandButWithAlternatives(): void
+    public function testDescribeInexistentCommandButWithAlternatives(): void
     {
         command('help clear');
-        $this->assertStringContainsString('Command "clear" not found.', $this->getBuffer());
-        $this->assertStringContainsString('Did you mean one of these?', $this->getBuffer());
+
+        $this->assertSame(
+            <<<'EOT'
+
+                Command "clear" not found.
+
+                Did you mean one of these?
+                    cache:clear
+                    debugbar:clear
+                    logs:clear
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
+    }
+
+    public function testDescribeUsingHelpOption(): void
+    {
+        command('cache:clear --help');
+
+        $this->assertSame(
+            <<<'EOT'
+
+                Usage:
+                  cache:clear [options] [--] [<driver>]
+
+                Description:
+                  Clears the current system caches.
+
+                Arguments:
+                  driver           The cache driver to use. [default: "file"]
+
+                Options:
+                  -h, --help       Display help for the given command.
+                      --no-header  Do not display the banner when running the command.
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
+    }
+
+    public function testDescribeUsingHelpShortOption(): void
+    {
+        command('cache:clear -h');
+
+        $this->assertSame(
+            <<<'EOT'
+
+                Usage:
+                  cache:clear [options] [--] [<driver>]
+
+                Description:
+                  Clears the current system caches.
+
+                Arguments:
+                  driver           The cache driver to use. [default: "file"]
+
+                Options:
+                  -h, --help       Display help for the given command.
+                      --no-header  Do not display the banner when running the command.
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
     }
 
     public function testNormalHelpCommandHasNoBanner(): void
@@ -71,9 +229,9 @@ final class HelpCommandTest extends CIUnitTestCase
 
         $this->assertStringNotContainsString(
             sprintf('CodeIgniter %s Command Line Tool', CodeIgniter::CI_VERSION),
-            $this->getBuffer(),
+            $this->getStreamFilterBuffer(),
         );
-        $this->assertStringContainsString('Displays basic usage information.', $this->getBuffer());
+        $this->assertStringContainsString('Displays basic usage information.', $this->getStreamFilterBuffer());
     }
 
     public function testHelpCommandWithDoubleHyphenStillRemovesBanner(): void
@@ -82,8 +240,8 @@ final class HelpCommandTest extends CIUnitTestCase
 
         $this->assertStringNotContainsString(
             sprintf('CodeIgniter %s Command Line Tool', CodeIgniter::CI_VERSION),
-            $this->getBuffer(),
+            $this->getStreamFilterBuffer(),
         );
-        $this->assertStringContainsString('Lists the available commands.', $this->getBuffer());
+        $this->assertStringContainsString('Lists the available commands.', $this->getStreamFilterBuffer());
     }
 }

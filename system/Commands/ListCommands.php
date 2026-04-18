@@ -13,134 +13,108 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Input\Option;
 
 /**
- * CI Help command for the spark script.
- *
- * Lists the basic usage information for the spark script,
- * and provides a way to list help for other commands.
+ * Lists the available commands.
  */
-class ListCommands extends BaseCommand
+#[Command(name: 'list', description: 'Lists the available commands.', group: 'CodeIgniter')]
+class ListCommands extends AbstractCommand
 {
-    /**
-     * The group the command is lumped under
-     * when listing commands.
-     *
-     * @var string
-     */
-    protected $group = 'CodeIgniter';
-
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'list';
-
-    /**
-     * the Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Lists the available commands.';
-
-    /**
-     * the Command's usage
-     *
-     * @var string
-     */
-    protected $usage = 'list';
-
-    /**
-     * the Command's Arguments
-     *
-     * @var array<string, string>
-     */
-    protected $arguments = [];
-
-    /**
-     * the Command's Options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [
-        '--simple' => 'Prints a list of the commands with no other info',
-    ];
-
-    /**
-     * Displays the help for the spark cli script itself.
-     *
-     * @return int
-     */
-    public function run(array $params)
+    protected function configure(): void
     {
-        $commands = $this->commands->getCommands();
-        ksort($commands);
-
-        // Check for 'simple' format
-        return array_key_exists('simple', $params) || CLI::getOption('simple') === true
-            ? $this->listSimple($commands)
-            : $this->listFull($commands);
+        $this->addOption(new Option(
+            name: 'simple',
+            description: 'Prints a list of commands with no other information.',
+        ));
     }
 
-    /**
-     * Lists the commands with accompanying info.
-     *
-     * @return int
-     */
-    protected function listFull(array $commands)
+    protected function execute(array $arguments, array $options): int
     {
-        // Sort into buckets by group
+        if ($options['simple'] === true) {
+            return $this->describeCommandsSimple();
+        }
+
+        return $this->describeCommandsDetailed();
+    }
+
+    private function describeCommandsSimple(): int
+    {
+        $commands = [
+            ...array_keys($this->getCommandRunner()->getCommands()),
+            ...array_keys($this->getCommandRunner()->getModernCommands()),
+        ];
+        sort($commands);
+
+        foreach ($commands as $command) {
+            CLI::write($command);
+        }
+
+        return EXIT_SUCCESS;
+    }
+
+    private function describeCommandsDetailed(): int
+    {
+        CLI::write(lang('CLI.helpUsage'), 'yellow');
+        CLI::write($this->addPadding('command [options] [--] [arguments]'));
+
+        $entries = [];
+        $maxPad  = 0;
+
+        foreach ([
+            ...$this->getCommandRunner()->getCommands(),
+            ...$this->getCommandRunner()->getModernCommands(),
+        ] as $command => $details) {
+            $maxPad = max($maxPad, strlen($command) + 4);
+
+            $entries[] = [$details['group'], $command, $details['description']];
+        }
+
+        usort($entries, static function (array $a, array $b): int {
+            $cmp = strcmp($a[0], $b[0]);
+
+            if ($cmp !== 0) {
+                return $cmp;
+            }
+
+            return strcmp($a[1], $b[1]);
+        });
+
         $groups = [];
 
-        foreach ($commands as $title => $command) {
-            if (! isset($groups[$command['group']])) {
-                $groups[$command['group']] = [];
-            }
-
-            $groups[$command['group']][$title] = $command;
+        foreach ($entries as [$group, $command, $description]) {
+            $groups[$group][] = [$command, $description];
         }
 
-        $length = max(array_map(strlen(...), array_keys($commands)));
+        CLI::newLine();
+        CLI::write(lang('CLI.helpAvailableCommands'), 'yellow');
 
-        ksort($groups);
+        $firstGroup = array_key_first($groups);
 
-        // Display it all...
         foreach ($groups as $group => $commands) {
-            CLI::write($group, 'yellow');
-
-            foreach ($commands as $name => $command) {
-                $name   = $this->setPad($name, $length, 2, 2);
-                $output = CLI::color($name, 'green');
-
-                if (isset($command['description'])) {
-                    $output .= CLI::wrap($command['description'], 125, strlen($name));
-                }
-
-                CLI::write($output);
+            if ($group !== $firstGroup) {
+                CLI::newLine();
             }
 
-            if ($group !== array_key_last($groups)) {
-                CLI::newLine();
+            CLI::write($group, 'yellow');
+
+            foreach ($commands as $command) {
+                CLI::write(sprintf(
+                    '%s%s',
+                    CLI::color($this->addPadding($command[0], 2, $maxPad), 'green'),
+                    CLI::wrap($command[1]),
+                ));
             }
         }
 
         return EXIT_SUCCESS;
     }
 
-    /**
-     * Lists the commands only.
-     *
-     * @return int
-     */
-    protected function listSimple(array $commands)
+    private function addPadding(string $item, int $before = 2, ?int $max = null): string
     {
-        foreach (array_keys($commands) as $title) {
-            CLI::write($title);
-        }
-
-        return EXIT_SUCCESS;
+        return str_pad(str_repeat(' ', $before) . $item, $max ?? (strlen($item) + $before));
     }
 }

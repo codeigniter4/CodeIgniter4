@@ -13,60 +13,42 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Housekeeping;
 
-use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Input\Option;
 
 /**
- * ClearLogs command.
+ * Clears all log files.
  */
-class ClearLogs extends BaseCommand
+#[Command(name: 'logs:clear', description: 'Clears all log files.', group: 'Housekeeping')]
+class ClearLogs extends AbstractCommand
 {
-    /**
-     * The group the command is lumped under
-     * when listing commands.
-     *
-     * @var string
-     */
-    protected $group = 'Housekeeping';
-
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'logs:clear';
-
-    /**
-     * The Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Clears all log files.';
-
-    /**
-     * The Command's usage
-     *
-     * @var string
-     */
-    protected $usage = 'logs:clear [option';
-
-    /**
-     * The Command's options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [
-        '--force' => 'Force delete of all logs files without prompting.',
-    ];
-
-    /**
-     * Actually execute a command.
-     */
-    public function run(array $params)
+    protected function configure(): void
     {
-        $force = array_key_exists('force', $params) || CLI::getOption('force');
+        $this->addOption(new Option(
+            name: 'force',
+            shortcut: 'f',
+            description: 'Forces the clearing of log files without confirmation.',
+        ));
+    }
 
-        if (! $force && CLI::prompt('Are you sure you want to delete the logs?', ['n', 'y']) === 'n') {
+    protected function interact(array &$arguments, array &$options): void
+    {
+        if ($this->hasUnboundOption('force', $options)) {
+            return;
+        }
+
+        if (CLI::prompt('Are you sure you want to delete the logs?', ['n', 'y']) === 'n') {
+            return;
+        }
+
+        $options['force'] = null; // simulate the presence of the --force option
+    }
+
+    protected function execute(array $arguments, array $options): int
+    {
+        if ($options['force'] === false) {
             CLI::error('Deleting logs aborted.');
 
             // @todo to re-add under non-interactive mode
@@ -77,7 +59,7 @@ class ClearLogs extends BaseCommand
 
         helper('filesystem');
 
-        if (! delete_files(WRITEPATH . 'logs', false, true)) {
+        if (! delete_files(WRITEPATH . 'logs', htdocs: true)) {
             CLI::error('Error in deleting the logs files.');
 
             return EXIT_ERROR;

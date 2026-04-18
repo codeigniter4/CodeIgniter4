@@ -13,107 +13,60 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Server;
 
-use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Input\Option;
 
 /**
- * Launch the PHP development server
- *
- * Not testable, as it throws phpunit for a loop :-/
- *
- * @codeCoverageIgnore
+ * Launches the CodeIgniter PHP-Development Server.
  */
-class Serve extends BaseCommand
+#[Command(name: 'serve', description: 'Launches the CodeIgniter PHP-Development Server.', group: 'CodeIgniter')]
+class Serve extends AbstractCommand
 {
     /**
-     * Group
-     *
-     * @var string
-     */
-    protected $group = 'CodeIgniter';
-
-    /**
-     * Name
-     *
-     * @var string
-     */
-    protected $name = 'serve';
-
-    /**
-     * Description
-     *
-     * @var string
-     */
-    protected $description = 'Launches the CodeIgniter PHP-Development Server.';
-
-    /**
-     * Usage
-     *
-     * @var string
-     */
-    protected $usage = 'serve';
-
-    /**
-     * Arguments
-     *
-     * @var array<string, string>
-     */
-    protected $arguments = [];
-
-    /**
      * The current port offset.
-     *
-     * @var int
      */
-    protected $portOffset = 0;
+    private int $portOffset = 0;
 
     /**
-     * The max number of ports to attempt to serve from
-     *
-     * @var int
+     * The number of times to retry if the port is already in use.
      */
-    protected $tries = 10;
+    private int $retries = 10;
 
-    /**
-     * Options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [
-        '--php'  => 'The PHP Binary [default: "PHP_BINARY"]',
-        '--host' => 'The HTTP Host [default: "localhost"]',
-        '--port' => 'The HTTP Host Port [default: "8080"]',
-    ];
-
-    /**
-     * Run the server
-     */
-    public function run(array $params)
+    protected function configure(): void
     {
-        // Collect any user-supplied options and apply them.
-        $php  = escapeshellarg(CLI::getOption('php') ?? PHP_BINARY);
-        $host = CLI::getOption('host') ?? 'localhost';
-        $port = (int) (CLI::getOption('port') ?? 8080) + $this->portOffset;
+        $this
+            ->addOption(new Option(name: 'php', description: 'The PHP binary to use.', acceptsValue: true, default: PHP_BINARY))
+            ->addOption(new Option(name: 'host', description: 'The host to serve on.', acceptsValue: true, default: 'localhost'))
+            ->addOption(new Option(name: 'port', description: 'The port to serve on.', acceptsValue: true, default: '8080'));
+    }
 
-        // Get the party started.
-        CLI::write('CodeIgniter development server started on http://' . $host . ':' . $port, 'green');
+    protected function execute(array $arguments, array $options): int
+    {
+        $port = (int) $options['port'] + $this->portOffset;
+
+        CLI::write(sprintf('CodeIgniter development server started on http://%s:%s', $options['host'], $port), 'green');
         CLI::write('Press Control-C to stop.');
+        CLI::newLine();
 
-        // Set the Front Controller path as Document Root.
-        $docroot = escapeshellarg(FCPATH);
+        passthru(
+            sprintf(
+                '%s -S %s:%s -t %s %s',
+                escapeshellarg($options['php']),
+                escapeshellarg($options['host']),
+                escapeshellarg((string) $port),
+                escapeshellarg(FCPATH),
+                escapeshellarg(SYSTEMPATH . 'rewrite.php'),
+            ),
+            $status,
+        );
 
-        // Mimic Apache's mod_rewrite functionality with user settings.
-        $rewrite = escapeshellarg(SYSTEMPATH . 'rewrite.php');
-
-        // Call PHP's built-in webserver, making sure to set our
-        // base path to the public folder, and to use the rewrite file
-        // to ensure our environment is set and it simulates basic mod_rewrite.
-        passthru($php . ' -S ' . $host . ':' . $port . ' -t ' . $docroot . ' ' . $rewrite, $status);
-
-        if ($status !== EXIT_SUCCESS && $this->portOffset < $this->tries) {
+        if ($status !== EXIT_SUCCESS && $this->portOffset < $this->retries) {
+            CLI::newLine();
             $this->portOffset++;
 
-            return $this->run($params);
+            return $this->execute($arguments, $options);
         }
 
         return $status;
