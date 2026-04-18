@@ -116,7 +116,7 @@ abstract class BaseCommand
      */
     protected function call(string $command, array $params = [])
     {
-        return $this->commands->run($command, $params);
+        return $this->commands->runLegacy($command, $params);
     }
 
     /**

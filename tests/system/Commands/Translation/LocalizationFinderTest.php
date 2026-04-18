@@ -67,7 +67,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
         self::$locale = 'test_locale_incorrect';
         $this->makeLocaleDirectory();
 
-        $status = service('commands')->run('lang:find', [
+        $status = service('commands')->runLegacy('lang:find', [
             'dir'    => 'Translation',
             'locale' => self::$locale,
         ]);
@@ -88,7 +88,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
     {
         $this->makeLocaleDirectory();
 
-        $status = service('commands')->run('lang:find', [
+        $status = service('commands')->runLegacy('lang:find', [
             'dir' => 'Translation/NotExistFolder',
         ]);
 
