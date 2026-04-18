@@ -105,7 +105,7 @@ abstract class FormRequest
      *
      * @return class-string<self>|null
      */
-    public static function getFormRequestClass(ReflectionParameter $param): ?string
+    final public static function getFormRequestClass(ReflectionParameter $param): ?string
     {
         $type = $param->getType();
 
