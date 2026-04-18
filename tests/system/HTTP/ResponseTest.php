@@ -15,6 +15,7 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
+use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\Cookie\CookieStore;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Superglobals;
@@ -752,5 +753,30 @@ final class ResponseTest extends CIUnitTestCase
             $this->getPrivateProperty($response, 'cookieStore'),
             'getCookies() must not instantiate the store when no cookies have been set.',
         );
+    }
+
+    public function testGetCookieStillUsesSetCookieDefaultsWhenStoreNotInitialized(): void
+    {
+        $oldDefaults = Cookie::setDefaults();
+
+        config('Cookie')->prefix = 'test_';
+
+        try {
+            $response = new Response();
+
+            $this->assertNull($this->getPrivateProperty($response, 'cookieStore'));
+
+            $response->setCookie('foo', 'bar');
+
+            $this->assertInstanceOf(CookieStore::class, $this->getPrivateProperty($response, 'cookieStore'));
+            $this->assertTrue($response->hasCookie('foo'));
+
+            $cookie = $response->getCookie('foo');
+            $this->assertSame('test_', $cookie->getPrefix());
+            $this->assertSame('test_foo', $cookie->getPrefixedName());
+        } finally {
+            Cookie::setDefaults($oldDefaults);
+            Factories::reset('config');
+        }
     }
 }

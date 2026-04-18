@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 
 /**
@@ -142,6 +143,8 @@ class Response extends Message implements ResponseInterface
      */
     public function __construct()
     {
+        Cookie::setDefaults(config('Cookie'));
+
         $this->noCache()->setContentType('text/html');
     }
 

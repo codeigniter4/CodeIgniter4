@@ -568,7 +568,7 @@ trait ResponseTrait
         $httponly = null,
         $samesite = null,
     ) {
-        $store = $this->initializeCookieStore();
+        $store = $this->getCookieStore();
 
         if ($name instanceof Cookie) {
             $this->cookieStore = $store->put($name);
@@ -613,11 +613,16 @@ trait ResponseTrait
     /**
      * Returns the `CookieStore` instance.
      *
+     * Lazily instantiates the `CookieStore` on first call, so that the Cookie and
+     * CookieStore classes are not loaded on requests that do not use cookies.
+     *
      * @return CookieStore
      */
     public function getCookieStore()
     {
-        return $this->initializeCookieStore();
+        $this->cookieStore ??= new CookieStore([]);
+
+        return $this->cookieStore;
     }
 
     /**
@@ -625,7 +630,7 @@ trait ResponseTrait
      */
     public function hasCookie(string $name, ?string $value = null, string $prefix = ''): bool
     {
-        $store  = $this->initializeCookieStore();
+        $store  = $this->getCookieStore();
         $prefix = $prefix !== '' ? $prefix : Cookie::setDefaults()['prefix']; // to retain BC
 
         return $store->has($name, $prefix, $value);
@@ -641,7 +646,7 @@ trait ResponseTrait
      */
     public function getCookie(?string $name = null, string $prefix = '')
     {
-        $store = $this->initializeCookieStore();
+        $store = $this->getCookieStore();
 
         if ((string) $name === '') {
             return $store->display();
@@ -669,7 +674,7 @@ trait ResponseTrait
             return $this;
         }
 
-        $store  = $this->initializeCookieStore();
+        $store  = $this->getCookieStore();
         $prefix = $prefix !== '' ? $prefix : Cookie::setDefaults()['prefix']; // to retain BC
 
         $prefixed = $prefix . $name;
@@ -812,21 +817,8 @@ trait ResponseTrait
 
     public function getCSP(): ContentSecurityPolicy
     {
-        return $this->CSP ??= service('csp');
-    }
+        $this->CSP ??= service('csp');
 
-    /**
-     * Lazily initializes the cookie store and the Cookie class defaults.
-     * Called by every cookie-related method so cookie machinery is only
-     * loaded when the developer actually interacts with cookies.
-     */
-    private function initializeCookieStore(): CookieStore
-    {
-        if ($this->cookieStore === null) {
-            Cookie::setDefaults(config(CookieConfig::class));
-            $this->cookieStore = new CookieStore([]);
-        }
-
-        return $this->cookieStore;
+        return $this->CSP;
     }
 }
