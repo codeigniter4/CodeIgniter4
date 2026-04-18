@@ -22,10 +22,7 @@ use Config\Services;
  */
 class Console
 {
-    /**
-     * @internal
-     */
-    public const DEFAULT_COMMAND = 'list';
+    private const DEFAULT_COMMAND = 'list';
 
     private string $command = '';
 
@@ -53,21 +50,30 @@ class Console
         $this->options = $parser->getOptions();
 
         $this->showHeader($this->hasParameterOption(['no-header']));
-        unset($this->options['no-header']);
 
-        if ($this->hasParameterOption(['help'])) {
-            unset($this->options['help']);
-
+        if ($this->hasParameterOption(['help', 'h'])) {
             if ($arguments === []) {
                 $arguments = ['help', self::DEFAULT_COMMAND];
             } elseif ($arguments[0] !== 'help') {
                 array_unshift($arguments, 'help');
             }
+
+            // Options supplied alongside --help were meant for the target command,
+            // not for `help` itself. Dropping them avoids feeding unknown options
+            // into the modern command pipeline's validator.
+            $this->options = [];
         }
+
+        /** @var Commands $commands */
+        $commands = service('commands');
 
         $this->command = array_shift($arguments) ?? self::DEFAULT_COMMAND;
 
-        return service('commands')->run($this->command, array_merge($arguments, $this->options));
+        if (array_key_exists($this->command, $commands->getCommands())) {
+            return $commands->runLegacy($this->command, array_merge($arguments, $this->options));
+        }
+
+        return $commands->runCommand($this->command, $arguments, $this->options);
     }
 
     public function initialize(): static

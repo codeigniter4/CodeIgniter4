@@ -22,11 +22,13 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCLIConfig;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Test\StreamFilterTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
  */
+#[CoversClass(Console::class)]
 #[Group('Others')]
 final class ConsoleTest extends CIUnitTestCase
 {
@@ -151,6 +153,19 @@ final class ConsoleTest extends CIUnitTestCase
         $this->assertStringContainsString('Lists the available commands.', $this->getStreamFilterBuffer());
     }
 
+    public function testHelpShortcutStripsOptionsMeantForTargetCommand(): void
+    {
+        // Options like `--host` are declared by `serve`, not by `help`. Prior
+        // behavior forwarded them to `help`, tripping the modern pipeline's
+        // unknown-option validator. The fix clears options once `--help` is
+        // detected so `help serve` renders cleanly.
+        $this->initializeConsole('serve', '--host=example.com', '--help');
+        $exitCode = (new Console())->run();
+
+        $this->assertSame(EXIT_SUCCESS, $exitCode);
+        $this->assertStringContainsString('serve [options]', $this->getStreamFilterBuffer());
+    }
+
     public function testHelpArgumentAndHelpOptionCombined(): void
     {
         $this->initializeConsole('help', '--help');
@@ -160,6 +175,20 @@ final class ConsoleTest extends CIUnitTestCase
         $this->assertStringContainsString('Displays basic usage information.', $this->getStreamFilterBuffer());
     }
 
+    public function testRunRoutesDiscoveredLegacyCommandThroughRunLegacy(): void
+    {
+        // `app:info` is a legacy BaseCommand fixture. Console must take the
+        // legacy branch of run() and delegate to Commands::runLegacy().
+        $this->initializeConsole('app:info');
+        $exitCode = (new Console())->run();
+
+        $this->assertSame(EXIT_SUCCESS, $exitCode);
+        $this->assertStringContainsString(
+            sprintf('CodeIgniter Version: %s', CodeIgniter::CI_VERSION),
+            $this->getStreamFilterBuffer(),
+        );
+    }
+
     public function testConsoleReturnsTheLastExecutedCommand(): void
     {
         $console = new Console();
@@ -167,7 +196,7 @@ final class ConsoleTest extends CIUnitTestCase
 
         $this->initializeConsole();
         $console->run();
-        $this->assertSame(Console::DEFAULT_COMMAND, $console->getCommand());
+        $this->assertSame('list', $console->getCommand());
 
         $this->initializeConsole('help');
         $console->run();

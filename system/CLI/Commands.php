@@ -14,35 +14,47 @@ declare(strict_types=1);
 namespace CodeIgniter\CLI;
 
 use CodeIgniter\Autoloader\FileLocatorInterface;
+use CodeIgniter\CLI\Attributes\Command;
+use CodeIgniter\CLI\Exceptions\CommandNotFoundException;
 use CodeIgniter\Events\Events;
+use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Log\Logger;
+use ReflectionAttribute;
 use ReflectionClass;
 use ReflectionException;
 
 /**
- * Core functionality for running, listing, etc commands.
+ * Command discovery and execution class.
  *
- * @phpstan-type commands_list array<string, array{'class': class-string<BaseCommand>, 'file': string, 'group': string,'description': string}>
+ * @phpstan-type legacy_commands array<string, array{class: class-string<BaseCommand>, file: string, group: string, description: string}>
+ * @phpstan-type modern_commands array<string, array{class: class-string<AbstractCommand>, file: string, group: string, description: string}>
  */
 class Commands
 {
     /**
-     * The found commands.
-     *
-     * @var commands_list
+     * @var legacy_commands
      */
     protected $commands = [];
 
     /**
-     * Logger instance.
-     *
      * @var Logger
      */
     protected $logger;
 
     /**
-     * Constructor
+     * Discovered modern commands keyed by command name. Kept `private` so
+     * subclasses do not mutate the registry directly; use {@see getModernCommands()}.
      *
+     * @var modern_commands
+     */
+    private array $modernCommands = [];
+
+    /**
+     * Guards {@see discoverCommands()} from re-scanning the filesystem on repeat calls.
+     */
+    private bool $discovered = false;
+
+    /**
      * @param Logger|null $logger
      */
     public function __construct($logger = null)
@@ -52,24 +64,39 @@ class Commands
     }
 
     /**
-     * Runs a command given
+     * Runs a legacy command.
+     *
+     * @deprecated 4.8.0 Use {@see runLegacy()} instead.
      *
      * @param array<int|string, string|null> $params
      *
-     * @return int Exit code
+     * @return int
      */
     public function run(string $command, array $params)
     {
-        if (! $this->verifyCommand($command, $this->commands)) {
+        @trigger_error(sprintf(
+            'Since v4.8.0, "%s()" is deprecated. Use "%s::runLegacy()" instead.',
+            __METHOD__,
+            self::class,
+        ), E_USER_DEPRECATED);
+
+        return $this->runLegacy($command, $params);
+    }
+
+    /**
+     * Runs a legacy command.
+     *
+     * @param array<int|string, string|null> $params
+     */
+    public function runLegacy(string $command, array $params): int
+    {
+        if (! $this->verifyCommand($command)) {
             return EXIT_ERROR;
         }
 
-        $className = $this->commands[$command]['class'];
-        $class     = new $className($this->logger, $this);
-
         Events::trigger('pre_command');
 
-        $exitCode = $class->run($params);
+        $exitCode = $this->getCommand($command)->run($params);
 
         Events::trigger('post_command');
 
@@ -79,20 +106,73 @@ class Commands
                 $command,
                 get_debug_type($exitCode),
             ), E_USER_DEPRECATED);
-            $exitCode = EXIT_SUCCESS;
+            $exitCode = EXIT_SUCCESS; // @codeCoverageIgnore
         }
 
         return $exitCode;
     }
 
     /**
-     * Provide access to the list of commands.
+     * Runs a modern command.
      *
-     * @return commands_list
+     * @param list<string>                                 $arguments
+     * @param array<string, list<string|null>|string|null> $options
+     */
+    public function runCommand(string $command, array $arguments, array $options): int
+    {
+        if (! $this->verifyCommand($command, legacy: false)) {
+            return EXIT_ERROR;
+        }
+
+        Events::trigger('pre_command');
+
+        $exitCode = $this->getCommand($command, legacy: false)->run($arguments, $options);
+
+        Events::trigger('post_command');
+
+        return $exitCode;
+    }
+
+    /**
+     * Provide access to the list of legacy commands.
+     *
+     * @return legacy_commands
      */
     public function getCommands()
     {
         return $this->commands;
+    }
+
+    /**
+     * Provide access to the list of modern commands.
+     *
+     * @return modern_commands
+     */
+    public function getModernCommands(): array
+    {
+        return $this->modernCommands;
+    }
+
+    /**
+     * @return ($legacy is true ? BaseCommand : AbstractCommand)
+     *
+     * @throws CommandNotFoundException
+     */
+    public function getCommand(string $command, bool $legacy = true): AbstractCommand|BaseCommand
+    {
+        if ($legacy && isset($this->commands[$command])) {
+            $className = $this->commands[$command]['class'];
+
+            return new $className($this->logger, $this);
+        }
+
+        if (! $legacy && isset($this->modernCommands[$command])) {
+            $className = $this->modernCommands[$command]['class'];
+
+            return new $className($this);
+        }
+
+        throw new CommandNotFoundException($command);
     }
 
     /**
@@ -103,68 +183,72 @@ class Commands
      */
     public function discoverCommands()
     {
-        if ($this->commands !== []) {
+        if ($this->discovered) {
             return;
         }
 
-        /** @var FileLocatorInterface */
+        $this->discovered = true;
+
+        /** @var FileLocatorInterface $locator */
         $locator = service('locator');
-        $files   = $locator->listFiles('Commands/');
 
-        if ($files === []) {
-            return;
-        }
-
-        foreach ($files as $file) {
-            /** @var class-string<BaseCommand>|false */
+        foreach ($locator->listFiles('Commands/') as $file) {
             $className = $locator->findQualifiedNameFromPath($file);
 
             if ($className === false || ! class_exists($className)) {
                 continue;
             }
 
-            try {
-                $class = new ReflectionClass($className);
+            $class = new ReflectionClass($className);
 
-                if (! $class->isInstantiable() || ! $class->isSubclassOf(BaseCommand::class)) {
-                    continue;
-                }
+            if (! $class->isInstantiable()) {
+                continue;
+            }
 
-                $class = new $className($this->logger, $this);
-
-                if ($class->group !== null && ! isset($this->commands[$class->name])) {
-                    $this->commands[$class->name] = [
-                        'class'       => $className,
-                        'file'        => $file,
-                        'group'       => $class->group,
-                        'description' => $class->description,
-                    ];
-                }
-
-                unset($class);
-            } catch (ReflectionException $e) {
-                $this->logger->error($e->getMessage());
+            if ($class->isSubclassOf(BaseCommand::class)) {
+                $this->registerLegacyCommand($class, $file);
+            } elseif ($class->isSubclassOf(AbstractCommand::class)) {
+                $this->registerModernCommand($class, $file);
             }
         }
 
-        asort($this->commands);
+        ksort($this->commands);
+        ksort($this->modernCommands);
+
+        foreach (array_keys(array_intersect_key($this->commands, $this->modernCommands)) as $name) {
+            CLI::write(
+                lang('Commands.duplicateCommandName', [
+                    $name,
+                    $this->commands[$name]['class'],
+                    $this->modernCommands[$name]['class'],
+                ]),
+                'yellow',
+            );
+        }
     }
 
     /**
-     * Verifies if the command being sought is found
-     * in the commands list.
+     * Verifies if the command being sought is found in the commands list.
      *
-     * @param commands_list $commands
+     * @param legacy_commands $commands (no longer used)
      */
-    public function verifyCommand(string $command, array $commands): bool
+    public function verifyCommand(string $command, array $commands = [], bool $legacy = true): bool
     {
-        if (isset($commands[$command])) {
+        if ($commands !== []) {
+            @trigger_error(sprintf('Since v4.8.0, the $commands parameter of %s() is no longer used.', __METHOD__), E_USER_DEPRECATED);
+        }
+
+        if (isset($this->commands[$command]) && $legacy) {
+            return true;
+        }
+
+        if (isset($this->modernCommands[$command]) && ! $legacy) {
             return true;
         }
 
         $message = lang('CLI.commandNotFound', [$command]);
 
-        $alternatives = $this->getCommandAlternatives($command, $commands);
+        $alternatives = $this->getCommandAlternatives($command, legacy: $legacy);
 
         if ($alternatives !== []) {
             $message = sprintf(
@@ -181,20 +265,24 @@ class Commands
     }
 
     /**
-     * Finds alternative of `$name` among collection
-     * of commands.
+     * Finds alternative of `$name` among collection of commands.
      *
-     * @param commands_list $collection
+     * @param legacy_commands $collection (no longer used)
      *
      * @return list<string>
      */
-    protected function getCommandAlternatives(string $name, array $collection): array
+    protected function getCommandAlternatives(string $name, array $collection = [], bool $legacy = true): array
     {
+        if ($collection !== []) {
+            @trigger_error(sprintf('Since v4.8.0, the $collection parameter of %s() is no longer used.', __METHOD__), E_USER_DEPRECATED);
+        }
+
+        $commandCollection = $legacy ? $this->commands : $this->modernCommands;
+
         /** @var array<string, int> */
         $alternatives = [];
 
-        /** @var string $commandName */
-        foreach (array_keys($collection) as $commandName) {
+        foreach (array_keys($commandCollection) as $commandName) {
             $lev = levenshtein($name, $commandName);
 
             if ($lev <= strlen($commandName) / 3 || str_contains($commandName, $name)) {
@@ -205,5 +293,63 @@ class Commands
         ksort($alternatives, SORT_NATURAL | SORT_FLAG_CASE);
 
         return array_keys($alternatives);
+    }
+
+    /**
+     * @param ReflectionClass<BaseCommand> $class
+     */
+    private function registerLegacyCommand(ReflectionClass $class, string $file): void
+    {
+        try {
+            /** @var BaseCommand $instance */
+            $instance = $class->newInstance($this->logger, $this);
+        } catch (ReflectionException $e) {
+            $this->logger->error($e->getMessage());
+
+            return;
+        }
+
+        if ($instance->group === null || isset($this->commands[$instance->name])) {
+            return;
+        }
+
+        $this->commands[$instance->name] = [
+            'class'       => $class->getName(),
+            'file'        => $file,
+            'group'       => $instance->group,
+            'description' => $instance->description,
+        ];
+    }
+
+    /**
+     * @param ReflectionClass<AbstractCommand> $class
+     */
+    private function registerModernCommand(ReflectionClass $class, string $file): void
+    {
+        /** @var list<ReflectionAttribute<Command>> $attributes */
+        $attributes = $class->getAttributes(Command::class);
+
+        if ($attributes === []) {
+            return;
+        }
+
+        try {
+            $attribute = $attributes[0]->newInstance();
+        } catch (LogicException $e) {
+            $this->logger->error($e->getMessage());
+
+            return;
+        }
+
+        if ($attribute->group === '' || isset($this->modernCommands[$attribute->name])) {
+            return;
+        }
+
+        $this->modernCommands[$attribute->name] = [
+            'class'       => $class->getName(),
+            'file'        => $file,
+            'group'       => $attribute->group,
+            'description' => $attribute->description,
+        ];
     }
 }
