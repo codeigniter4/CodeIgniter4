@@ -63,16 +63,6 @@ parameters:
             path: ../../system/CodeIgniter.php
 
         -
-            message: '#^Method CodeIgniter\\Commands\\ListCommands\:\:listFull\(\) has parameter \$commands with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Commands/ListCommands.php
-
-        -
-            message: '#^Method CodeIgniter\\Commands\\ListCommands\:\:listSimple\(\) has parameter \$commands with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Commands/ListCommands.php
-
-        -
             message: '#^Method CodeIgniter\\Commands\\Translation\\LocalizationFinder\:\:arrayToTableRows\(\) has parameter \$array with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Commands/Translation/LocalizationFinder.php
