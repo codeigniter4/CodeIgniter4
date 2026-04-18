@@ -477,78 +477,105 @@ run_component_tests() {
 
     local output_file="$results_dir/random_test_output_${component}_$$.log"
     local events_file="$results_dir/random_test_events_${component}_$$.log"
-    local random_seed=$(generate_phpunit_random_seed)
     local exit_code=0
+    local attempt=1
+    local -r max_attempts=2
+    local random_seed
+    local -a phpunit_args
 
-    # Security: Use array to avoid eval and prevent command injection
-    local -a phpunit_args=(
-        "vendor/bin/phpunit"
-        "$test_dir"
-        "--colors=never"
-        "--no-coverage"
-        "--do-not-cache-result"
-        "--order-by=random"
-        "--random-order-seed=${random_seed}"
-        "--log-events-text"
-        "$events_file"
-    )
+    # Retry loop: the Composer classmap autoloader occasionally fails to load
+    # CodeIgniter\CodeIgniter under parallel CI load — a transient infra race,
+    # not a real test failure. Retry once on that signature with a fresh random
+    # seed; a second miss is reported as genuine failure.
+    while true; do
+        random_seed=$(generate_phpunit_random_seed)
 
-    if [[ $timeout_seconds -gt 0 ]] && command -v timeout >/dev/null 2>&1; then
-        (cd "$project_root" && timeout --kill-after=2s "${timeout_seconds}s" "${phpunit_args[@]}") > "$output_file" 2>&1
-        exit_code=$?
-    elif [[ $timeout_seconds -gt 0 ]] && command -v gtimeout >/dev/null 2>&1; then
-        (cd "$project_root" && gtimeout --kill-after=2s "${timeout_seconds}s" "${phpunit_args[@]}") > "$output_file" 2>&1
-        exit_code=$?
-    else
-        local timeout_marker="$output_file.timeout"
-        (cd "$project_root" && "${phpunit_args[@]}") > "$output_file" 2>&1 &
-        local test_pid=$!
+        # Security: Use array to avoid eval and prevent command injection
+        phpunit_args=(
+            "vendor/bin/phpunit"
+            "$test_dir"
+            "--colors=never"
+            "--no-coverage"
+            "--do-not-cache-result"
+            "--order-by=random"
+            "--random-order-seed=${random_seed}"
+            "--log-events-text"
+            "$events_file"
+        )
 
-        if [[ $timeout_seconds -gt 0 ]]; then
-            # Watchdog: monitors test process and kills it after timeout
-            # Uses 1-second sleep intervals to respond quickly when test finishes early
-            (
-                local elapsed=0
-                while [[ $elapsed -lt $timeout_seconds ]]; do
-                    sleep 1
-                    elapsed=$((elapsed + 1))
-                    kill -0 "$test_pid" 2>/dev/null || exit 0
-                done
+        if [[ $timeout_seconds -gt 0 ]] && command -v timeout >/dev/null 2>&1; then
+            (cd "$project_root" && timeout --kill-after=2s "${timeout_seconds}s" "${phpunit_args[@]}") > "$output_file" 2>&1
+            exit_code=$?
+        elif [[ $timeout_seconds -gt 0 ]] && command -v gtimeout >/dev/null 2>&1; then
+            (cd "$project_root" && gtimeout --kill-after=2s "${timeout_seconds}s" "${phpunit_args[@]}") > "$output_file" 2>&1
+            exit_code=$?
+        else
+            local timeout_marker="$output_file.timeout"
+            (cd "$project_root" && "${phpunit_args[@]}") > "$output_file" 2>&1 &
+            local test_pid=$!
 
-                if kill -0 "$test_pid" 2>/dev/null; then
-                    touch "$timeout_marker"
-                    local pids_to_kill=$(pgrep -P "$test_pid" 2>/dev/null)
-
-                    kill -TERM "$test_pid" 2>/dev/null || true
-                    if [[ -n "$pids_to_kill" ]]; then
-                        echo "$pids_to_kill" | xargs kill -TERM 2>/dev/null || true
-                    fi
-
-                    sleep 2
+            if [[ $timeout_seconds -gt 0 ]]; then
+                # Watchdog: monitors test process and kills it after timeout
+                # Uses 1-second sleep intervals to respond quickly when test finishes early
+                (
+                    local elapsed=0
+                    while [[ $elapsed -lt $timeout_seconds ]]; do
+                        sleep 1
+                        elapsed=$((elapsed + 1))
+                        kill -0 "$test_pid" 2>/dev/null || exit 0
+                    done
 
                     if kill -0 "$test_pid" 2>/dev/null; then
-                        kill -KILL "$test_pid" 2>/dev/null || true
+                        touch "$timeout_marker"
+                        local pids_to_kill=$(pgrep -P "$test_pid" 2>/dev/null)
+
+                        kill -TERM "$test_pid" 2>/dev/null || true
                         if [[ -n "$pids_to_kill" ]]; then
-                            echo "$pids_to_kill" | xargs kill -KILL 2>/dev/null || true
+                            echo "$pids_to_kill" | xargs kill -TERM 2>/dev/null || true
                         fi
-                        # Security: Quote and escape test_dir for safe pattern matching
-                        pkill -KILL -f "phpunit.*${test_dir//\//\\/}" 2>/dev/null || true
+
+                        sleep 2
+
+                        if kill -0 "$test_pid" 2>/dev/null; then
+                            kill -KILL "$test_pid" 2>/dev/null || true
+                            if [[ -n "$pids_to_kill" ]]; then
+                                echo "$pids_to_kill" | xargs kill -KILL 2>/dev/null || true
+                            fi
+                            # Security: Quote and escape test_dir for safe pattern matching
+                            pkill -KILL -f "phpunit.*${test_dir//\//\\/}" 2>/dev/null || true
+                        fi
                     fi
-                fi
-            ) &
-            disown $! 2>/dev/null || true
+                ) &
+                disown $! 2>/dev/null || true
+            fi
+
+            wait "$test_pid" 2>/dev/null
+            exit_code=$?
+
+            if [[ -f "$timeout_marker" ]]; then
+                exit_code=124
+                rm -f "$timeout_marker"
+            elif [[ $exit_code -eq 143 || $exit_code -eq 137 ]]; then
+                exit_code=124
+            fi
         fi
 
-        wait "$test_pid" 2>/dev/null
-        exit_code=$?
-
-        if [[ -f "$timeout_marker" ]]; then
-            exit_code=124
-            rm -f "$timeout_marker"
-        elif [[ $exit_code -eq 143 || $exit_code -eq 137 ]]; then
-            exit_code=124
+        # Success, exhausted attempts, or a non-infra failure: stop retrying.
+        if [[ $exit_code -eq 0 ]] || [[ $attempt -ge $max_attempts ]]; then
+            break
         fi
-    fi
+
+        # Only retry on the known transient autoload race signatures.
+        # Matching on error messages (not line numbers) so the pattern survives
+        # unrelated edits to MockCodeIgniter/CIUnitTestCase.
+        if ! grep -qE 'Failed to open stream: No such file or directory|Class "CodeIgniter.CodeIgniter" not found' "$output_file" 2>/dev/null; then
+            break
+        fi
+
+        print_debug "Transient autoload failure detected in $component; retrying (attempt $((attempt + 1))/${max_attempts})"
+        ((attempt++))
+        rm -f "$events_file"
+    done
 
     local elapsed=$((($(date +%s%N) - $start_time) / 1000000))
     local result_file="$results_dir/random_test_result_${elapsed}_${component}.txt"

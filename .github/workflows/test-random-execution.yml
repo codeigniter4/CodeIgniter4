@@ -175,6 +175,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           extensions: gd, curl, iconv, json, mbstring, openssl, sodium
+          ini-values: opcache.enable_cli=0
           coverage: none
 
       - name: Get composer cache directory
