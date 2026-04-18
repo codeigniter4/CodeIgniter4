@@ -117,41 +117,6 @@ final class RoutesTest extends CIUnitTestCase
         $this->assertStringContainsString($expected, $this->getBuffer());
     }
 
-    /**
-     * @todo To remove this test and the backward compatibility for -h in v4.8.0.
-     */
-    public function testRoutesCommandSortByHandlerUsingShortcutForBc(): void
-    {
-        Services::resetSingle('routes');
-
-        command('routes -h');
-
-        $expected = <<<'EOL'
-            Warning: -h will be used as shortcut for --help in v4.8.0. Please use --sort-by-handler to sort by handler.
-
-            +---------+---------+---------------+----------------------------------------+----------------+---------------+
-            | Method  | Route   | Name          | Handler ↓                              | Before Filters | After Filters |
-            +---------+---------+---------------+----------------------------------------+----------------+---------------+
-            | GET     | closure | »             | (Closure)                              |                |               |
-            | GET     | /       | »             | \App\Controllers\Home::index           |                |               |
-            | GET     | testing | testing-index | \App\Controllers\TestController::index |                |               |
-            | HEAD    | testing | testing-index | \App\Controllers\TestController::index |                |               |
-            | POST    | testing | testing-index | \App\Controllers\TestController::index |                |               |
-            | PATCH   | testing | testing-index | \App\Controllers\TestController::index |                |               |
-            | PUT     | testing | testing-index | \App\Controllers\TestController::index |                |               |
-            | DELETE  | testing | testing-index | \App\Controllers\TestController::index |                |               |
-            | OPTIONS | testing | testing-index | \App\Controllers\TestController::index |                |               |
-            | TRACE   | testing | testing-index | \App\Controllers\TestController::index |                |               |
-            | CONNECT | testing | testing-index | \App\Controllers\TestController::index |                |               |
-            | CLI     | testing | testing-index | \App\Controllers\TestController::index |                |               |
-            +---------+---------+---------------+----------------------------------------+----------------+---------------+
-            EOL;
-        $this->assertStringContainsString(
-            $expected,
-            (string) preg_replace('/\e\[[^m]+m/u', '', $this->getBuffer()),
-        );
-    }
-
     public function testRoutesCommandHostHostname(): void
     {
         Services::resetSingle('routes');

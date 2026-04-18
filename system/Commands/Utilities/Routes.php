@@ -84,15 +84,6 @@ class Routes extends BaseCommand
     {
         $sortByHandler = array_key_exists('sort-by-handler', $params);
 
-        if (! $sortByHandler && array_key_exists('h', $params)) {
-            // @todo to remove support in v4.8.0
-            // Support -h as a shortcut but print a warning that it is not the intended use of -h.
-            CLI::write('Warning: -h will be used as shortcut for --help in v4.8.0. Please use --sort-by-handler to sort by handler.', 'yellow');
-            CLI::newLine();
-
-            $sortByHandler = true;
-        }
-
         $host = $params['host'] ?? null;
 
         // Set HTTP_HOST
