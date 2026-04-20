@@ -37,6 +37,7 @@ Bugs Fixed
 **********
 
 - **Autoloader:** Fixed a bug where ``Autoloader::unregister()`` (used during tests) silently failed to remove handlers from the SPL autoload stack, causing closures to accumulate permanently.
+- **CLI:** Fixed a bug where ``CLI::generateDimensions()`` leaked ``stty`` error output (e.g., ``stty: 'standard input': Inappropriate ioctl for device``) to stderr when stdin was not a TTY.
 - **Commands:** Fixed a bug in the ``env`` command where passing options only would cause the command to throw a ``TypeError`` instead of showing the current environment.
 - **Common:** Fixed a bug where the ``command()`` helper function did not properly clean up output buffers, which could lead to risky tests when exceptions were thrown.
 - **Validation:** Fixed a bug where ``Validation::getValidated()`` dropped fields whose validated value was explicitly ``null``.

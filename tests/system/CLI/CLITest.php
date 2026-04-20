@@ -21,6 +21,7 @@ use CodeIgniter\Test\PhpStreamWrapper;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RequiresOperatingSystem;
 use ReflectionProperty;
 
 /**
@@ -592,6 +593,33 @@ final class CLITest extends CIUnitTestCase
         $width->setValue(null, null);
 
         $this->assertIsInt(CLI::getWidth());
+    }
+
+    #[RequiresOperatingSystem('Darwin|Linux')]
+    public function testGenerateDimensionsDoesNotLeakSttyErrorToStderr(): void
+    {
+        $code = <<<'PHP'
+            require __DIR__ . '/system/Test/bootstrap.php';
+            CodeIgniter\CLI\CLI::generateDimensions();
+            PHP;
+
+        $cmd = sprintf('%s -r %s < /dev/null', PHP_BINARY, escapeshellarg($code));
+
+        $proc = proc_open(
+            $cmd,
+            [1 => ['pipe', 'w'], 2 => ['pipe', 'w']],
+            $pipes,
+            ROOTPATH,
+        );
+        $this->assertIsResource($proc);
+
+        stream_get_contents($pipes[1]);
+        $stderr = stream_get_contents($pipes[2]);
+        fclose($pipes[1]);
+        fclose($pipes[2]);
+        proc_close($proc);
+
+        $this->assertSame('', $stderr);
     }
 
     /**
