@@ -94,7 +94,7 @@ final class RoutesTest extends CIUnitTestCase
     {
         Services::resetSingle('routes');
 
-        command('routes --handler');
+        command('routes --sort-by-handler');
 
         $expected = <<<'EOL'
             +---------+---------+---------------+----------------------------------------+----------------+---------------+
@@ -127,7 +127,7 @@ final class RoutesTest extends CIUnitTestCase
         command('routes -h');
 
         $expected = <<<'EOL'
-            Warning: -h will be used as shortcut for --help in v4.8.0. Please use --handler to sort by handler.
+            Warning: -h will be used as shortcut for --help in v4.8.0. Please use --sort-by-handler to sort by handler.
 
             +---------+---------+---------------+----------------------------------------+----------------+---------------+
             | Method  | Route   | Name          | Handler ↓                              | Before Filters | After Filters |
@@ -146,7 +146,10 @@ final class RoutesTest extends CIUnitTestCase
             | CLI     | testing | testing-index | \App\Controllers\TestController::index |                |               |
             +---------+---------+---------------+----------------------------------------+----------------+---------------+
             EOL;
-        $this->assertStringContainsString($expected, $this->getBuffer());
+        $this->assertStringContainsString(
+            $expected,
+            (string) preg_replace('/\e\[[^m]+m/u', '', $this->getBuffer()),
+        );
     }
 
     public function testRoutesCommandHostHostname(): void

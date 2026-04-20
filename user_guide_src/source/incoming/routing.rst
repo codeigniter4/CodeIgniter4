@@ -1001,11 +1001,11 @@ Sort by Handler
 
 .. versionadded:: 4.3.0
 
-You can sort the routes by *Handler*:
+You can sort the routes by *handler*:
 
 .. code-block:: console
 
-    php spark routes -h
+    php spark routes --sort-by-handler
 
 .. _routing-spark-routes-specify-host:
 
@@ -1060,4 +1060,3 @@ Additionally, if we use ``addRedirect()`` we can also expect the ``redirect`` ke
 To access the values of these parameters, we can call ``Router::getMatchedRouteOptions()``. Here is an example of the returned array:
 
 .. literalinclude:: routing/074.php
-
