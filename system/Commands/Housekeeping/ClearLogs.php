@@ -68,7 +68,9 @@ class ClearLogs extends BaseCommand
 
         if (! $force && CLI::prompt('Are you sure you want to delete the logs?', ['n', 'y']) === 'n') {
             CLI::error('Deleting logs aborted.');
-            CLI::error('If you want, use the "--force" option to force delete all log files.');
+
+            // @todo to re-add under non-interactive mode
+            // CLI::error('If you want, use the "--force" option to force delete all log files.');
 
             return EXIT_ERROR;
         }

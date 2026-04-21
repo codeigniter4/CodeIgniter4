@@ -98,7 +98,6 @@ final class ClearLogsTest extends CIUnitTestCase
             <<<'EOT'
                 Are you sure you want to delete the logs? [n, y]: n
                 Deleting logs aborted.
-                If you want, use the "--force" option to force delete all log files.
 
                 EOT,
             preg_replace('/\e\[[^m]+m/', '', $io->getOutput()),
@@ -122,7 +121,6 @@ final class ClearLogsTest extends CIUnitTestCase
             <<<EOT
                 Are you sure you want to delete the logs? [n, y]:{$space}
                 Deleting logs aborted.
-                If you want, use the "--force" option to force delete all log files.
 
                 EOT,
             preg_replace('/\e\[[^m]+m/', '', $io->getOutput()),
