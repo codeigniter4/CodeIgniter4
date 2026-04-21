@@ -107,17 +107,9 @@ final class FrameworkCodeTest extends TestCase
 
         $testClasses = array_map(
             static function (SplFileInfo $file) use ($directory): string {
-                $relativePath = substr_replace(
-                    $file->getPathname(),
-                    '',
-                    0,
-                    strlen($directory),
-                );
-                $relativePath = substr_replace(
-                    $relativePath,
-                    '',
-                    strlen($relativePath) - strlen(DIRECTORY_SEPARATOR . $file->getBasename()),
-                );
+                $relativePath = substr($file->getPathname(), strlen($directory));
+                $separatorPos = strrpos($relativePath, DIRECTORY_SEPARATOR);
+                $relativePath = $separatorPos === false ? '' : substr($relativePath, 0, $separatorPos);
 
                 return sprintf(
                     'CodeIgniter\\%s%s%s',
@@ -128,15 +120,13 @@ final class FrameworkCodeTest extends TestCase
             },
             array_filter(
                 iterator_to_array($iterator, false),
+                // Filename-based heuristic: avoids the is_subclass_of() cold-autoload issue
+                // by only considering files that end with "Test.php" or "TestCase.php".
                 static fn (SplFileInfo $file): bool => $file->isFile()
+                    && (str_ends_with($file->getBasename(), 'Test.php') || str_ends_with($file->getBasename(), 'TestCase.php'))
                     && ! str_contains($file->getPathname(), DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR)
                     && ! str_contains($file->getPathname(), DIRECTORY_SEPARATOR . 'Views' . DIRECTORY_SEPARATOR),
             ),
-        );
-
-        $testClasses = array_filter(
-            $testClasses,
-            static fn (string $class): bool => is_subclass_of($class, TestCase::class),
         );
 
         sort($testClasses);

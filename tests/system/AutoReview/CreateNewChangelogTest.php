@@ -27,23 +27,6 @@ final class CreateNewChangelogTest extends TestCase
 {
     private string $currentVersion;
 
-    public static function setUpBeforeClass(): void
-    {
-        parent::setUpBeforeClass();
-
-        if (getenv('GITHUB_ACTIONS') !== false) {
-            exec('git fetch --unshallow 2>&1', $output, $exitCode);
-            exec('git fetch --tags 2>&1', $output, $exitCode);
-
-            if ($exitCode !== 0) {
-                self::fail(sprintf(
-                    "Failed to fetch git history and tags.\nOutput: %s",
-                    implode("\n", $output),
-                ));
-            }
-        }
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
