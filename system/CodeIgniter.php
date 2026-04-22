@@ -18,6 +18,10 @@ use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Filters\Filters;
+use CodeIgniter\HTTP\Attributes\ParamSource\BaseParamSourceAttribute;
+use CodeIgniter\HTTP\Attributes\ParamSource\Cookie;
+use CodeIgniter\HTTP\Attributes\ParamSource\Header;
+use CodeIgniter\HTTP\Attributes\ParamSource\Query;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\Exceptions\FormRequestException;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
@@ -728,7 +732,32 @@ class CodeIgniter
         $resolved   = [];
         $routeIndex = 0;
 
+        $request = service('request');
+
         foreach ($reflection->getParameters() as $param) {
+            $attrs = $param->getAttributes();
+
+            if (count($attrs) > 0) {
+                foreach ($attrs as $attr) {
+                    $instance = $attr->newInstance();
+
+                    if (! $instance instanceof BaseParamSourceAttribute) {
+                        continue;
+                    }
+
+                    $key = $instance->getKey($param->getName());
+
+                    $resolved[] = match (true) {
+                        $instance instanceof Query  => $request->getGet($key),
+                        $instance instanceof Header => $request->getHeaderLine($key),
+                        $instance instanceof Cookie => $request->getCookie($key),
+                        default                     => throw new LogicException('Unsupported parameter attribute: ' . $instance::class),
+                    };
+
+                    continue 2;
+                }
+            }
+
             [$kind, $formRequestClass] = CallableParamClassifier::classify($param);
 
             switch ($kind) {
