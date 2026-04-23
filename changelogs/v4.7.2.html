@@ -302,12 +302,9 @@
 <section id="bugs-fixed">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><dl class="simple">
-<dt><strong>Security:</strong> Fixed a bug where the CSRF filter could corrupt JSON request bodies after successful</dt><dd><p>verification when the CSRF token was provided via the <code class="docutils literal notranslate"><span class="pre">X-CSRF-TOKEN</span></code> header.
-This caused <code class="docutils literal notranslate"><span class="pre">IncomingRequest::getJSON()</span></code> to fail on valid <code class="docutils literal notranslate"><span class="pre">application/json</span></code> requests.</p>
-</dd>
-</dl>
-</li>
+<li><p><strong>Security:</strong> Fixed a bug where the CSRF filter could corrupt JSON request bodies after successful
+verification when the CSRF token was provided via the <code class="docutils literal notranslate"><span class="pre">X-CSRF-TOKEN</span></code> header.
+This caused <code class="docutils literal notranslate"><span class="pre">IncomingRequest::getJSON()</span></code> to fail on valid <code class="docutils literal notranslate"><span class="pre">application/json</span></code> requests.</p></li>
 </ul>
 <p>See the repo’s
 <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a>
