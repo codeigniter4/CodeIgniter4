@@ -180,6 +180,10 @@ Commands
 - Added a new attribute-based command style built on :php:class:`AbstractCommand <CodeIgniter\\CLI\\AbstractCommand>` and the ``#[Command]`` attribute,
   with ``configure()`` / ``initialize()`` / ``interact()`` / ``execute()`` hooks and typed ``Argument`` / ``Option`` definitions.
   The legacy ``BaseCommand`` style continues to work. See :doc:`../cli/cli_modern_commands`.
+- Every modern command now ships with a ``--no-interaction`` / ``-N`` flag that skips the ``interact()`` hook, plus public
+  ``isInteractive()`` / ``setInteractive()`` methods on ``AbstractCommand``. ``isInteractive()`` also auto-detects piped or
+  CI environments by probing STDIN for a TTY, and the state cascades to sub-commands invoked via ``$this->call(...)``.
+  See :ref:`non-interactive-mode`.
 - You can now retrieve the last executed command in the console using the new ``Console::getCommand()`` method. This is useful for logging, debugging, or any situation where you need to know which command was run.
 - ``CLI`` now supports the ``--`` separator to mean that what follows are arguments, not options. This allows you to have arguments that start with ``-`` without them being treated as options.
   For example: ``spark my:command -- --myarg`` will pass ``--myarg`` as an argument instead of an option.

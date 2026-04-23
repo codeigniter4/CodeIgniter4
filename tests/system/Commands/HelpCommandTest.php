@@ -55,11 +55,12 @@ final class HelpCommandTest extends CIUnitTestCase
                   Displays basic usage information.
 
                 Arguments:
-                  command_name     The command name. [default: "help"]
+                  command_name          The command name. [default: "help"]
 
                 Options:
-                  -h, --help       Display help for the given command.
-                      --no-header  Do not display the banner when running the command.
+                  -h, --help            Display help for the given command.
+                      --no-header       Do not display the banner when running the command.
+                  -N, --no-interaction  Do not ask any interactive questions.
 
                 EOT,
             $this->getUndecoratedBuffer(),
@@ -92,6 +93,7 @@ final class HelpCommandTest extends CIUnitTestCase
                       --quux|--no-quux  Negatable option.
                   -h, --help            Display help for the given command.
                       --no-header       Do not display the banner when running the command.
+                  -N, --no-interaction  Do not ask any interactive questions.
 
                 EOT,
             $this->getUndecoratedBuffer(),
@@ -112,11 +114,12 @@ final class HelpCommandTest extends CIUnitTestCase
                   Clears the current system caches.
 
                 Arguments:
-                  driver           The cache driver to use. [default: "file"]
+                  driver                The cache driver to use. [default: "file"]
 
                 Options:
-                  -h, --help       Display help for the given command.
-                      --no-header  Do not display the banner when running the command.
+                  -h, --help            Display help for the given command.
+                      --no-header       Do not display the banner when running the command.
+                  -N, --no-interaction  Do not ask any interactive questions.
 
                 EOT,
             $this->getUndecoratedBuffer(),
@@ -204,11 +207,12 @@ final class HelpCommandTest extends CIUnitTestCase
                   Clears the current system caches.
 
                 Arguments:
-                  driver           The cache driver to use. [default: "file"]
+                  driver                The cache driver to use. [default: "file"]
 
                 Options:
-                  -h, --help       Display help for the given command.
-                      --no-header  Do not display the banner when running the command.
+                  -h, --help            Display help for the given command.
+                      --no-header       Do not display the banner when running the command.
+                  -N, --no-interaction  Do not ask any interactive questions.
 
                 EOT,
             $this->getUndecoratedBuffer(),
@@ -229,11 +233,12 @@ final class HelpCommandTest extends CIUnitTestCase
                   Clears the current system caches.
 
                 Arguments:
-                  driver           The cache driver to use. [default: "file"]
+                  driver                The cache driver to use. [default: "file"]
 
                 Options:
-                  -h, --help       Display help for the given command.
-                      --no-header  Do not display the banner when running the command.
+                  -h, --help            Display help for the given command.
+                      --no-header       Do not display the banner when running the command.
+                  -N, --no-interaction  Do not ask any interactive questions.
 
                 EOT,
             $this->getUndecoratedBuffer(),

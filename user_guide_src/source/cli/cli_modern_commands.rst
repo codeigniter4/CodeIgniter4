@@ -65,15 +65,17 @@ this order:
 
 1. **Construction.** The ``#[Command]`` attribute is read, then your
    ``configure(): void`` hook runs so you can register arguments, options, and
-   extra usage examples. A default ``--help``/ ``-h`` flag and ``--no-header``
-   flag are added automatically afterwards.
+   extra usage examples. A default ``--help``/ ``-h`` flag, ``--no-header``
+   flag, and ``--no-interaction``/ ``-N`` flag are added automatically
+   afterwards.
 2. ``initialize(array &$arguments, array &$options): void`` receives the raw
    arguments and options by reference. Useful when your command needs to
    massage input — for instance, to unfold an alias argument into the canonical
    form before anything else runs.
 3. ``interact(array &$arguments, array &$options): void`` also receives the
    raw arguments and options by reference. This is where you prompt the user
-   for missing input, set values conditionally, or abort early.
+   for missing input, set values conditionally, or abort early. This hook is
+   skipped when the command is non-interactive — see :ref:`non-interactive-mode`.
 4. **Bind & validate.** The framework maps the raw input to the definitions
    you declared in ``configure()``, applies defaults, and rejects input that
    violates the definitions (missing required argument, unknown option, array
@@ -137,7 +139,11 @@ A few quirks are worth knowing:
 - A negatable option cannot accept a value or be an array. Its default must be a boolean.
 - A negatable option's auto-generated ``--no-<name>`` form will clash if another option is already named ``no-<name>``.
 - Option names must match ``[A-Za-z0-9_-]+`` and the name ``extra_options`` is reserved.
-- ``--help`` / ``-h`` and ``--no-header`` are reserved for the framework and registered on every command automatically.
+- The following options are reserved for the framework and registered on every command automatically:
+
+  - ``--help`` / ``-h``
+  - ``--no-header``
+  - ``--no-interaction`` / ``-N``
 
 Configuration-time violations raise ``InvalidOptionDefinitionException``.
 
@@ -177,6 +183,46 @@ snapshot taken right after ``interact()`` returns and before bind and validate.
 Any change you make to ``$arguments`` or ``$options`` inside ``interact()``
 carries through to bind, validate, and ``execute()``.
 
+.. _non-interactive-mode:
+
+Non-Interactive Mode
+====================
+
+Every modern command accepts ``--no-interaction`` / ``-N`` out of the box.
+When the flag is present — or when the command is otherwise non-interactive —
+the ``interact()`` hook is skipped entirely and the command proceeds straight
+to bind, validate, and ``execute()``.
+
+Programmatically, the state is exposed through two public methods on
+``AbstractCommand``:
+
+- ``isInteractive(): bool`` — reports the current state.
+- ``setInteractive(bool $interactive): static`` — pins the state, overriding
+  both the CLI flag and TTY detection. Returns ``$this`` for chaining.
+
+The resolved state follows this precedence:
+
+1. An explicit ``setInteractive(bool)`` call wins — useful when a command
+   must force a specific mode for safety.
+2. Otherwise, the CLI flag ``--no-interaction`` / ``-N`` forces non-interactive state.
+3. Otherwise, **STDIN** is probed: if it is not a TTY (piped input, cron,
+   CI, ``nohup``), the command is non-interactive.
+4. Otherwise, the command is interactive.
+
+When the current command invokes another via ``$this->call(...)``, the
+parent's non-interactive state is propagated to the sub-command
+automatically. A caller that passes ``no-interaction`` (or ``N``) in the
+sub-command's ``$options`` wins over that propagation.
+
+The propagation can be overridden with the ``$noInteractionOverride``
+parameter of ``call()``:
+
+- ``null`` (default) — propagate the parent's state.
+- ``true`` — force the sub-command non-interactive regardless of the parent.
+- ``false`` — strip any inherited ``--no-interaction`` so the sub-command
+  resolves its own state. Note: TTY detection can still downgrade the
+  sub-command if STDIN is not a TTY.
+
 ******************
 Inside execute()
 ******************
@@ -185,7 +231,8 @@ Inside execute()
 
 - ``$arguments`` contains every declared argument, bound to the provided value or the declared default.
 - ``$options`` contains every declared option plus the framework defaults
-  (``help``, ``no-header``), bound to the provided value or the declared default.
+  (``help``, ``no-header``, ``no-interaction``), bound to the provided value
+  or the declared default.
 
 Within ``execute()`` itself, reaching into ``$arguments`` / ``$options`` directly
 is the simplest thing to do. The same data is also available through helpers
@@ -460,6 +507,20 @@ covered in the sections above and are not listed here.
         Returns ``true`` if the negation is registered by one of the
         declared options.
 
+    .. php:method:: isInteractive(): bool
+
+        Reports whether the command will prompt the user. See
+        :ref:`non-interactive-mode` for the resolution order.
+
+    .. php:method:: setInteractive(bool $interactive): static
+
+        :param bool $interactive: The state to pin.
+        :returns:                 The current command instance for chaining.
+
+        Overrides both the ``--no-interaction`` / ``-N`` flag and TTY
+        detection for this command instance. Typically called from
+        ``initialize()`` or by an outer caller.
+
     .. php:method:: run(array $arguments, array $options): int
 
         :param array $arguments: The raw positional arguments parsed from the command line.
@@ -471,12 +532,16 @@ covered in the sections above and are not listed here.
         on your behalf — you rarely invoke it directly, but you can when
         driving a command manually (for instance, from a test).
 
-    .. php:method:: call(string $command[, array $arguments = [], array $options = []]): int
+    .. php:method:: call(string $command[, array $arguments = [], array $options = [], ?bool $noInteractionOverride = null]): int
 
-        :param string        $command:   The name of the modern command to call.
-        :param array         $arguments: Positional arguments to forward.
-        :param array         $options:   Options to forward, keyed by long name, shortcut, or negation.
-        :returns:                        The exit code returned by the called command.
+        :param string    $command:                The name of the modern command to call.
+        :param array     $arguments:              Positional arguments to forward.
+        :param array     $options:                Options to forward, keyed by long name, shortcut, or negation.
+        :param bool|null $noInteractionOverride:  Override the sub-command's interactive state.
+                                                  ``null`` propagates the parent's state (default);
+                                                  ``true`` forces non-interactive; ``false`` strips
+                                                  any inherited ``--no-interaction`` flag.
+        :returns:                                 The exit code returned by the called command.
 
         Invokes another modern command. The arguments and options go through
         bind and validate on the target command, just like a user invocation.

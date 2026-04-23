@@ -114,6 +114,13 @@ abstract class AbstractCommand
     private ?string $lastArrayArgument    = null;
 
     /**
+     * Whether the command is in interactive mode. When `null`, the interactive state is resolved based
+     * on the presence of the `--no-interaction` option and whether STDIN is a TTY. If boolean, this value
+     * takes precedence over the flag and TTY detection.
+     */
+    private ?bool $interactive = null;
+
+    /**
      * @throws InvalidArgumentDefinitionException
      * @throws InvalidOptionDefinitionException
      * @throws LogicException
@@ -344,6 +351,41 @@ abstract class AbstractCommand
     }
 
     /**
+     * Reports whether the command is currently in interactive mode.
+     *
+     * Resolution order:
+     *   1. An explicit `setInteractive()` call wins.
+     *   2. Otherwise, the command is interactive when STDIN is a TTY.
+     *
+     * Non-CLI contexts (e.g., a controller invoking `command()`) don't expose
+     * `STDIN` at all — those always resolve as non-interactive.
+     *
+     * Note: the `--no-interaction` / `-N` flag is folded into the explicit state
+     * by `run()` before interactive hooks fire, so callers do not need to
+     * inspect the options array themselves.
+     */
+    public function isInteractive(): bool
+    {
+        if ($this->interactive !== null) {
+            return $this->interactive;
+        }
+
+        return defined('STDIN') && CLI::streamSupports('stream_isatty', \STDIN);
+    }
+
+    /**
+     * Pins the interactive state, overriding both the `--no-interaction` flag
+     * and STDIN TTY detection. Typically called from `initialize()` or by
+     * an outer caller that needs to force a specific mode.
+     */
+    public function setInteractive(bool $interactive): static
+    {
+        $this->interactive = $interactive;
+
+        return $this;
+    }
+
+    /**
      * Runs the command.
      *
      * The lifecycle is:
@@ -377,8 +419,13 @@ abstract class AbstractCommand
     {
         $this->initialize($arguments, $options);
 
-        // @todo add interactive mode check
-        $this->interact($arguments, $options);
+        if ($this->interactive === null && $this->hasUnboundOption('no-interaction', $options)) {
+            $this->interactive = false;
+        }
+
+        if ($this->isInteractive()) {
+            $this->interact($arguments, $options);
+        }
 
         $this->unboundArguments = $arguments;
         $this->unboundOptions   = $options;
@@ -447,12 +494,17 @@ abstract class AbstractCommand
     /**
      * Calls another command from the current command.
      *
-     * @param list<string>                            $arguments Parsed arguments from command line.
-     * @param array<string, list<string>|string|null> $options   Parsed options from command line.
+     * @param list<string>                            $arguments             Parsed arguments from command line.
+     * @param array<string, list<string>|string|null> $options               Parsed options from command line.
+     * @param bool|null                               $noInteractionOverride `null` (default) propagates the parent's non-interactive state;
+     *                                                                       `true` forces the sub-command non-interactive by injecting
+     *                                                                       `--no-interaction`; `false` strips any inherited
+     *                                                                       `--no-interaction` so the sub-command resolves its own state
+     *                                                                       (TTY detection may still downgrade it).
      */
-    protected function call(string $command, array $arguments = [], array $options = []): int
+    protected function call(string $command, array $arguments = [], array $options = [], ?bool $noInteractionOverride = null): int
     {
-        return $this->commands->runCommand($command, $arguments, $options);
+        return $this->commands->runCommand($command, $arguments, $this->resolveChildInteractiveState($options, $noInteractionOverride));
     }
 
     /**
@@ -609,11 +661,74 @@ abstract class AbstractCommand
         return $this->validatedOptions[$name];
     }
 
+    /**
+     * Registers the options that the framework injects into every modern
+     * command. Every option registered here is load-bearing:
+     *
+     * - `--help` / `-h`: `Console` detects it and routes to the `help` command.
+     * - `--no-header`: `Console` strips it before rendering the banner.
+     * - `--no-interaction` / `-N`: `run()` folds it into the interactive state
+     *   and `resolveChildInteractiveState()` reads it to drive the `call()` cascade.
+     *
+     * Subclasses that override this hook should re-register these options or
+     * accept that the corresponding framework features will be broken for
+     * the subclass.
+     */
     protected function provideDefaultOptions(): void
     {
         $this
             ->addOption(new Option(name: 'help', shortcut: 'h', description: 'Display help for the given command.'))
-            ->addOption(new Option(name: 'no-header', description: 'Do not display the banner when running the command.'));
+            ->addOption(new Option(name: 'no-header', description: 'Do not display the banner when running the command.'))
+            ->addOption(new Option(name: 'no-interaction', shortcut: 'N', description: 'Do not ask any interactive questions.'));
+    }
+
+    /**
+     * Reconciles the caller's explicit intent (`$noInteractionOverride`) with
+     * the parent command's own interactive state to produce the `$options`
+     * that `call()` should hand to the sub-command.
+     *
+     *  - `null` (default) propagates the parent's non-interactive state by
+     *    adding `--no-interaction` when the parent itself is non-interactive.
+     *    If the caller already supplied `--no-interaction` under any of its
+     *    aliases, their value is preserved.
+     *  - `true` forces the sub-command non-interactive regardless of the
+     *    parent, again deferring to a caller-supplied value if present.
+     *  - `false` strips any inherited or propagated `--no-interaction` so the
+     *    sub-command resolves its own state. TTY detection can still force
+     *    non-interactive if STDIN is not a TTY.
+     *
+     * @param array<string, list<string|null>|string|null> $options
+     *
+     * @return array<string, list<string|null>|string|null>
+     */
+    private function resolveChildInteractiveState(array $options, ?bool $noInteractionOverride): array
+    {
+        $this->assertOptionIsDefined('no-interaction');
+
+        if ($noInteractionOverride === false) {
+            $definition = $this->optionsDefinition['no-interaction'];
+
+            $aliases = array_filter(
+                [$definition->name, $definition->shortcut, $definition->negation],
+                static fn (?string $alias): bool => $alias !== null,
+            );
+
+            foreach ($aliases as $alias) {
+                unset($options[$alias]);
+            }
+
+            return $options;
+        }
+
+        if ($this->hasUnboundOption('no-interaction', $options)) {
+            return $options;
+        }
+
+        if ($noInteractionOverride === true || ! $this->isInteractive()) {
+            $options['no-interaction'] = null; // simulate --no-interaction being passed
+        }
+
+        return $options;
     }
 
     /**

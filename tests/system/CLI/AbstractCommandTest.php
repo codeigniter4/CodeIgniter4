@@ -36,6 +36,8 @@ use PHPUnit\Framework\Attributes\Group;
 use ReflectionClass;
 use Tests\Support\Commands\Modern\AppAboutCommand;
 use Tests\Support\Commands\Modern\InteractFixtureCommand;
+use Tests\Support\Commands\Modern\InteractiveStateProbeCommand;
+use Tests\Support\Commands\Modern\ParentCallsInteractFixtureCommand;
 use Tests\Support\Commands\Modern\TestFixtureCommand;
 use Throwable;
 
@@ -55,6 +57,8 @@ final class AbstractCommandTest extends CIUnitTestCase
         $this->resetServices();
 
         CLI::reset();
+
+        InteractiveStateProbeCommand::reset();
     }
 
     private function getUndecoratedBuffer(): string
@@ -93,14 +97,14 @@ final class AbstractCommandTest extends CIUnitTestCase
         $command = new Help(new Commands());
 
         $this->assertCount(1, $command->getArgumentsDefinition());
-        $this->assertCount(2, $command->getOptionsDefinition());
-        $this->assertCount(1, $command->getShortcuts());
+        $this->assertCount(3, $command->getOptionsDefinition());
+        $this->assertCount(2, $command->getShortcuts());
         $this->assertEmpty($command->getNegations());
     }
 
     public function testCommandHasDefaultOptions(): void
     {
-        $defaultOptions = ['help', 'no-header'];
+        $defaultOptions = ['help', 'no-header', 'no-interaction'];
 
         $this->assertSame($defaultOptions, array_keys((new Help(new Commands()))->getOptionsDefinition()));
     }
@@ -237,8 +241,10 @@ final class AbstractCommandTest extends CIUnitTestCase
         $this->assertFalse($command->hasArgument('lorem'));
         $this->assertTrue($command->hasOption('help'));
         $this->assertTrue($command->hasOption('no-header'));
+        $this->assertTrue($command->hasOption('no-interaction'));
         $this->assertFalse($command->hasOption('lorem'));
         $this->assertTrue($command->hasShortcut('h'));
+        $this->assertTrue($command->hasShortcut('N'));
         $this->assertFalse($command->hasShortcut('x'));
         $this->assertFalse($command->hasNegation('no-help'));
     }
@@ -673,6 +679,146 @@ final class AbstractCommandTest extends CIUnitTestCase
         $this->assertTrue($command->executedOptions['force']);
     }
 
+    public function testInteractIsSkippedWhenNoInteractionFlagIsPassed(): void
+    {
+        $command = new InteractFixtureCommand(new Commands());
+        $command->run([], ['no-interaction' => null]);
+
+        $this->assertSame(['name' => 'anonymous'], $command->executedArguments);
+        $this->assertFalse($command->executedOptions['force']);
+    }
+
+    public function testInteractIsSkippedWhenShortcutFlagIsPassed(): void
+    {
+        $command = new InteractFixtureCommand(new Commands());
+        $command->run([], ['N' => null]);
+
+        $this->assertSame(['name' => 'anonymous'], $command->executedArguments);
+        $this->assertFalse($command->executedOptions['force']);
+    }
+
+    public function testInteractIsSkippedWhenSetInteractiveFalseIsCalled(): void
+    {
+        $command = new InteractFixtureCommand(new Commands());
+        $command->setInteractive(false);
+        $command->run([], []);
+
+        $this->assertSame(['name' => 'anonymous'], $command->executedArguments);
+        $this->assertFalse($command->executedOptions['force']);
+    }
+
+    public function testSetInteractiveTrueOverridesNoInteractionFlag(): void
+    {
+        // Explicit caller intent wins over the CLI flag.
+        $command = new InteractFixtureCommand(new Commands());
+        $command->setInteractive(true);
+        $command->run([], ['no-interaction' => null]);
+
+        $this->assertSame(['name' => 'from-interact'], $command->executedArguments);
+        $this->assertTrue($command->executedOptions['force']);
+    }
+
+    public function testIsInteractiveReflectsExplicitState(): void
+    {
+        $command = new InteractFixtureCommand(new Commands());
+
+        // Default: in the testing env, `CLI::streamSupports('stream_isatty', STDIN)`
+        // resolves to `function_exists('stream_isatty')`, which is true on PHP 8.1+.
+        $this->assertTrue($command->isInteractive());
+
+        $command->setInteractive(false);
+        $this->assertFalse($command->isInteractive());
+
+        $command->setInteractive(true);
+        $this->assertTrue($command->isInteractive());
+    }
+
+    public function testNoInteractionCascadesToSubCommandsViaCall(): void
+    {
+        $command = new ParentCallsInteractFixtureCommand(new Commands());
+
+        $exitCode = $command->run([], ['no-interaction' => null]);
+
+        $this->assertSame(EXIT_SUCCESS, $exitCode);
+        $this->assertFalse(InteractiveStateProbeCommand::$interactCalled);
+        $this->assertFalse(InteractiveStateProbeCommand::$observedInteractive);
+    }
+
+    public function testSubCommandStaysInteractiveWhenParentIsInteractive(): void
+    {
+        $command = new ParentCallsInteractFixtureCommand(new Commands());
+
+        $exitCode = $command->run([], []);
+
+        $this->assertSame(EXIT_SUCCESS, $exitCode);
+        $this->assertTrue(InteractiveStateProbeCommand::$interactCalled);
+        $this->assertTrue(InteractiveStateProbeCommand::$observedInteractive);
+    }
+
+    public function testCallAllowsSubCommandInteractiveEvenWhenParentIsNonInteractive(): void
+    {
+        $command = new ParentCallsInteractFixtureCommand(new Commands());
+        $command->setInteractive(false);
+        $command->childNoInteractionOverride = false;
+
+        $exitCode = $command->run([], []);
+
+        $this->assertSame(EXIT_SUCCESS, $exitCode);
+        $this->assertTrue(InteractiveStateProbeCommand::$interactCalled);
+        $this->assertTrue(InteractiveStateProbeCommand::$observedInteractive);
+    }
+
+    public function testCallForcesSubCommandNonInteractiveEvenWhenParentIsInteractive(): void
+    {
+        $command = new ParentCallsInteractFixtureCommand(new Commands());
+
+        $command->childNoInteractionOverride = true;
+
+        $exitCode = $command->run([], []);
+
+        $this->assertSame(EXIT_SUCCESS, $exitCode);
+        $this->assertFalse(InteractiveStateProbeCommand::$interactCalled);
+        $this->assertFalse(InteractiveStateProbeCommand::$observedInteractive);
+    }
+
+    public function testCallStripsInheritedNoInteractionWhenCallerAllowsInteraction(): void
+    {
+        // Caller passes --no-interaction in the sub-command's options, but also
+        // sets noInteractionOverride to false: the explicit parameter wins and
+        // the inherited flag is stripped under both its long name and its shortcut.
+
+        $command = new ParentCallsInteractFixtureCommand(new Commands());
+
+        $command->childNoInteractionOverride = false;
+
+        $command->childOptions = ['no-interaction' => null, 'N' => null];
+
+        $exitCode = $command->run([], []);
+
+        $this->assertSame(EXIT_SUCCESS, $exitCode);
+        $this->assertTrue(InteractiveStateProbeCommand::$interactCalled);
+        $this->assertTrue(InteractiveStateProbeCommand::$observedInteractive);
+    }
+
+    public function testCallPreservesCallerFlagWhenForcingNonInteractive(): void
+    {
+        // When $noInteractionOverride is true and the caller already supplied the flag,
+        // the resolver must not touch the caller's entry — proved by the child
+        // still seeing a non-interactive state.
+
+        $command = new ParentCallsInteractFixtureCommand(new Commands());
+
+        $command->childNoInteractionOverride = true;
+
+        $command->childOptions = ['no-interaction' => null];
+
+        $exitCode = $command->run([], []);
+
+        $this->assertSame(EXIT_SUCCESS, $exitCode);
+        $this->assertFalse(InteractiveStateProbeCommand::$interactCalled);
+        $this->assertFalse(InteractiveStateProbeCommand::$observedInteractive);
+    }
+
     /**
      * @param array<string, list<string|null>|string|null> $options
      */
@@ -833,12 +979,13 @@ final class AbstractCommandTest extends CIUnitTestCase
 
         $this->assertSame(
             [
-                'foo'       => 'provided',
-                'bar'       => null,
-                'baz'       => ['a'],
-                'quux'      => false,
-                'help'      => false,
-                'no-header' => false,
+                'foo'            => 'provided',
+                'bar'            => null,
+                'baz'            => ['a'],
+                'quux'           => false,
+                'help'           => false,
+                'no-header'      => false,
+                'no-interaction' => false,
             ],
             $command->callGetValidatedOptions(),
         );

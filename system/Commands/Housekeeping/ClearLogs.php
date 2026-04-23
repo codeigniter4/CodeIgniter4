@@ -51,8 +51,9 @@ class ClearLogs extends AbstractCommand
         if ($options['force'] === false) {
             CLI::error('Deleting logs aborted.');
 
-            // @todo to re-add under non-interactive mode
-            // CLI::error('If you want, use the "--force" option to force delete all log files.');
+            if (! $this->isInteractive()) {
+                CLI::error('If you want, use the "--force" option to force delete all log files.');
+            }
 
             return EXIT_ERROR;
         }

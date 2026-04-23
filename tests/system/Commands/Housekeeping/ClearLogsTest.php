@@ -17,6 +17,7 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\StreamFilterTrait;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresOperatingSystem;
 
@@ -125,6 +126,35 @@ final class ClearLogsTest extends CIUnitTestCase
                 EOT,
             preg_replace('/\e\[[^m]+m/', '', $io->getOutput()),
         );
+    }
+
+    #[DataProvider('provideClearLogsAbortsNonInteractivelyAndHintsAboutForceFlag')]
+    public function testClearLogsAbortsNonInteractivelyAndHintsAboutForceFlag(string $flag): void
+    {
+        $this->assertFileExists(WRITEPATH . 'logs' . DIRECTORY_SEPARATOR . "log-{$this->date}.log");
+
+        command("logs:clear {$flag}");
+
+        $this->assertFileExists(WRITEPATH . 'logs' . DIRECTORY_SEPARATOR . "log-{$this->date}.log");
+        $this->assertSame(
+            <<<'EOT'
+
+                Deleting logs aborted.
+                If you want, use the "--force" option to force delete all log files.
+
+                EOT,
+            preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()),
+        );
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideClearLogsAbortsNonInteractivelyAndHintsAboutForceFlag(): iterable
+    {
+        yield 'long form' => ['--no-interaction'];
+
+        yield 'short form' => ['-N'];
     }
 
     public function testClearLogsWithoutForceButWithConfirmation(): void
