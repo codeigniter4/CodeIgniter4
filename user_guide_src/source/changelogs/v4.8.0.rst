@@ -24,24 +24,24 @@ Behavior Changes
 ================
 
 - The static ``Boot::initializeConsole()`` method no longer handles the display of the console header. This is now handled within ``Console::run()``.
-    If you have overridden ``Boot::initializeConsole()``, you should remove any code related to displaying the console header, as this is now the responsibility of the ``Console`` class.
-- **Commands:** The ``-h`` option to ``routes`` command which was mapped previously to the ``--handler`` option is now removed.
-    Use ``--handler`` instead to sort the routes by handler when running the ``routes`` command.
+  If you have overridden ``Boot::initializeConsole()``, you should remove any code related to displaying the console header, as this is now the responsibility of the ``Console`` class.
+- **Commands:** The ``-h`` option to ``routes`` command which was mapped previously to the ``--sort-by-handler`` option is now removed.
+  Use ``--sort-by-handler`` instead to sort the routes by handler when running the ``routes`` command.
 - **Commands:** The ``filter:check`` command now requires the HTTP method argument to be uppercase (e.g., ``spark filter:check GET /`` instead of ``spark filter:check get /``).
 - **Commands:** Several built-in commands have been migrated from ``BaseCommand`` to the modern ``AbstractCommand`` style. Applications that extend a built-in command to override
-    behaviour may need to re-implement against the modern API (``configure()`` + ``execute()`` and the ``#[Command]`` attribute) once the class it extends is migrated, or, preferably, compose instead of extending. Invocations on the command line are unaffected.
+  behaviour may need to re-implement against the modern API (``configure()`` + ``execute()`` and the ``#[Command]`` attribute) once the class it extends is migrated, or, preferably, compose instead of extending. Invocations on the command line are unaffected.
 - **Database:** The Postgre driver's ``$db->error()['code']`` previously always returned ``''``. It now returns the 5-character SQLSTATE string for query and transaction failures (e.g., ``'42P01'``), or ``'08006'`` for connection-level failures. Code that relied on ``$db->error()['code'] === ''`` will need updating.
 - **Filters:** HTTP method matching for method-based filters is now case-sensitive. The keys in ``Config\Filters::$methods`` must exactly match the request method
-    (e.g., ``GET``, ``POST``). Lowercase method names (e.g., ``post``) will no longer match.
+  (e.g., ``GET``, ``POST``). Lowercase method names (e.g., ``post``) will no longer match.
 - **Testing:** Tests using the ``FeatureTestTrait`` must now use uppercase HTTP method names when performing a request when using the ``call()`` method directly
-    (e.g., ``$this->call('GET', '/path')`` instead of ``$this->call('get', '/path')``). Additionally, setting method-based routes using ``withRoutes()`` must
-    also use uppercase method names (e.g., ``$this->withRoutes([['GET', 'home', 'Home::index']])``).
+  (e.g., ``$this->call('GET', '/path')`` instead of ``$this->call('get', '/path')``). Additionally, setting method-based routes using ``withRoutes()`` must
+  also use uppercase method names (e.g., ``$this->withRoutes([['GET', 'home', 'Home::index']])``).
 
 Interface Changes
 =================
 
 **NOTE:** If you've implemented your own classes that implement these interfaces from scratch, you will need to
-        update your implementations to include the new methods or method changes to ensure compatibility.
+update your implementations to include the new methods or method changes to ensure compatibility.
 
 - **Logging:** ``CodeIgniter\Log\Handlers\HandlerInterface::handle()`` now requires a third parameter ``array $context = []``. Any custom log handler that overrides ``handle()`` - whether implementing ``HandlerInterface`` directly or extending a built-in handler class - must add the parameter to its ``handle()`` method signature.
 - **Security:** The ``SecurityInterface``'s ``verify()`` method now has a native return type of ``static``.
@@ -52,11 +52,11 @@ Method Signature Changes
 - **CLI:** The ``Console::run()`` method now accepts an optional ``array $tokens`` parameter. This allows you to pass an array of command tokens directly to the console runner, which is useful for testing or programmatically running commands. If not provided, it will default to using the global ``$argv``.
 - **CodeIgniter:** The deprecated parameters in methods have been removed:
     - ``CodeIgniter\CodeIgniter::handleRequest()`` no longer accepts the deprecated ``$cacheConfig`` and ``$returnResponse`` parameters.
-       - ``$cacheConfig`` is no longer used and is now hard deprecated. A deprecation notice will be triggered if this is passed to the method.
-       - ``$returnResponse`` is now removed since already deprecated and unused.
-       - The updated method signature is now ``handleRequest(?RouteCollectionInterface $routes, ?Cache $cacheConfig = null)``.
+        - ``$cacheConfig`` is no longer used and is now hard deprecated. A deprecation notice will be triggered if this is passed to the method.
+        - ``$returnResponse`` is now removed since already deprecated and unused.
+        - The updated method signature is now ``handleRequest(?RouteCollectionInterface $routes, ?Cache $cacheConfig = null)``.
     - ``CodeIgniter\CodeIgniter::gatherOutput()`` no longer accepts the deprecated ``$cacheConfig`` parameter.
-       As this is the first parameter, custom uses of this method will need to be updated to remove the parameter.
+      As this is the first parameter, custom uses of this method will need to be updated to remove the parameter.
 - **Config:** ``CodeIgniter\Config\Services::request()`` no longer accepts any parameter.
 - **Database:** The following methods have had their signatures updated to remove deprecated parameters:
     - ``CodeIgniter\Database\Forge::_createTable()`` no longer accepts the deprecated ``$ifNotExists`` parameter. The method signature is now ``_createTable(string $table, array $attributes)``.
@@ -177,15 +177,15 @@ Commands
 ========
 
 - Added a new attribute-based command style built on :php:class:`AbstractCommand <CodeIgniter\\CLI\\AbstractCommand>` and the ``#[Command]`` attribute,
-    with ``configure()`` / ``initialize()`` / ``interact()`` / ``execute()`` hooks and typed ``Argument`` / ``Option`` definitions.
-    The legacy ``BaseCommand`` style continues to work. See :doc:`../cli/cli_modern_commands`.
+  with ``configure()`` / ``initialize()`` / ``interact()`` / ``execute()`` hooks and typed ``Argument`` / ``Option`` definitions.
+  The legacy ``BaseCommand`` style continues to work. See :doc:`../cli/cli_modern_commands`.
 - You can now retrieve the last executed command in the console using the new ``Console::getCommand()`` method. This is useful for logging, debugging, or any situation where you need to know which command was run.
 - ``CLI`` now supports the ``--`` separator to mean that what follows are arguments, not options. This allows you to have arguments that start with ``-`` without them being treated as options.
-    For example: ``spark my:command -- --myarg`` will pass ``--myarg`` as an argument instead of an option.
+  For example: ``spark my:command -- --myarg`` will pass ``--myarg`` as an argument instead of an option.
 - ``CLI`` now supports options with values specified using an equals sign (e.g., ``--option=value``) in addition to the existing space-separated syntax (e.g., ``--option value``).
-    This provides more flexibility in how you can pass options to commands.
+  This provides more flexibility in how you can pass options to commands.
 - ``CLI`` now supports parsing array options written multiple times (e.g., ``--option=value1 --option=value2``) into an array of values. This allows you to easily pass multiple values for the same option without needing to use a comma-separated string.
-    When used with ``CLI::getOption()``, an array option will return its last value (for example, in this case, ``value2``). To retrieve all values for an array option, use ``CLI::getRawOption()``.
+  When used with ``CLI::getOption()``, an array option will return its last value (for example, in this case, ``value2``). To retrieve all values for an array option, use ``CLI::getRawOption()``.
 - Likewise, the ``command()`` function now also supports the above enhancements for command-line option parsing when using the function to run commands from code.
 - Added ``make:request`` generator command to scaffold :ref:`Form Request <form-requests>` classes.
 
@@ -238,20 +238,20 @@ HTTP
 - Added :ref:`Form Requests <form-requests>` - a new ``FormRequest`` base class that encapsulates validation rules, custom error messages, and authorization logic for a single HTTP request.
 - Added ``SSEResponse`` class for streaming Server-Sent Events (SSE) over HTTP. See :ref:`server-sent-events`.
 - ``Response`` and its child classes no longer require ``Config\App`` passed to their constructors.
-    Consequently, ``CURLRequest``'s ``$config`` parameter is unused and will be removed in a future release.
+  Consequently, ``CURLRequest``'s ``$config`` parameter is unused and will be removed in a future release.
 - ``Response`` now lazily loads the ``ContentSecurityPolicy``, ``Cookie``, and ``CookieStore`` classes only when used,
-    instead of instantiating them on every request in the constructor. Requests that do not touch CSP or cookies no longer
-    incur the cost of loading these classes.
+  instead of instantiating them on every request in the constructor. Requests that do not touch CSP or cookies no longer
+  incur the cost of loading these classes.
 - ``CLIRequest`` now supports the ``--`` separator to mean that what follows are arguments, not options. This allows you to have arguments that start with ``-`` without them being treated as options.
-    For example: ``php index.php command -- --myarg`` will pass ``--myarg`` as an argument instead of an option.
+  For example: ``php index.php command -- --myarg`` will pass ``--myarg`` as an argument instead of an option.
 - ``CLIRequest`` now supports options with values specified using an equals sign (e.g., ``--option=value``) in addition to the existing space-separated syntax (e.g., ``--option value``).
-    This provides more flexibility in how you can pass options to CLI requests.
+  This provides more flexibility in how you can pass options to CLI requests.
 - Added ``$enableStyleNonce`` and ``$enableScriptNonce`` options to ``Config\App`` to automatically add nonces to control whether to add nonces to style-* and script-* directives in the Content Security Policy (CSP) header when CSP is enabled. See :ref:`csp-control-nonce-generation` for details.
 - ``URI`` now accepts an optional boolean second parameter in the constructor, defaulting to ``false``, to control how the query string is parsed in instantiation.
-    This is the behavior of ``->useRawQueryString()`` brought into the constructor for convenience. Previously, you need to call ``$uri->useRawQueryString(true)->setURI($uri)`` to get this behavior.
-    Now you can simply do ``new URI($uri, true)``.
+  This is the behavior of ``->useRawQueryString()`` brought into the constructor for convenience. Previously, you need to call ``$uri->useRawQueryString(true)->setURI($uri)`` to get this behavior.
+  Now you can simply do ``new URI($uri, true)``.
 - ``CLIRequest`` now supports parsing array options written multiple times (e.g., ``--option=value1 --option=value2``) into an array of values. This allows you to easily pass multiple values for the same option without needing to use a comma-separated string.
-    When used with ``CLIRequest::getOption()``, an array option will return its last value (for example, in this case, ``value2``). To retrieve all values for an array option, use ``CLIRequest::getRawOption()``.
+  When used with ``CLIRequest::getOption()``, an array option will return its last value (for example, in this case, ``value2``). To retrieve all values for an array option, use ``CLIRequest::getRawOption()``.
 
 Validation
 ==========
