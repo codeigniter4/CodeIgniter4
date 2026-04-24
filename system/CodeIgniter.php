@@ -208,6 +208,29 @@ class CodeIgniter
         // Reset timing
         $this->startTime = null;
         $this->totalTime = 0;
+
+        $this->resetKintForWorkerMode();
+    }
+
+    /**
+     * Resets Kint request-specific state for worker mode.
+     */
+    private function resetKintForWorkerMode(): void
+    {
+        if (! CI_DEBUG || ! class_exists(Kint::class, false)) {
+            return;
+        }
+
+        $csp = service('csp');
+        if ($csp->enabled()) {
+            RichRenderer::$js_nonce  = $csp->getScriptNonce();
+            RichRenderer::$css_nonce = $csp->getStyleNonce();
+        } else {
+            RichRenderer::$js_nonce  = null;
+            RichRenderer::$css_nonce = null;
+        }
+
+        RichRenderer::$needs_pre_render = true;
     }
 
     /**

@@ -30,6 +30,7 @@ use Config\Cache;
 use Config\Filters as FiltersConfig;
 use Config\Modules;
 use Config\Routing;
+use Kint\Renderer\RichRenderer;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -1273,6 +1274,15 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testResetForWorkerMode(): void
     {
+        $this->resetServices();
+
+        $appConfig             = config(App::class);
+        $appConfig->CSPEnabled = true;
+
+        RichRenderer::$js_nonce         = 'stale-script-nonce';
+        RichRenderer::$css_nonce        = 'stale-style-nonce';
+        RichRenderer::$needs_pre_render = false;
+
         $config      = new App();
         $codeigniter = new MockCodeIgniter($config);
 
@@ -1292,5 +1302,11 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertNull($this->getPrivateProperty($codeigniter, 'controller'));
         $this->assertNull($this->getPrivateProperty($codeigniter, 'method'));
         $this->assertNull($this->getPrivateProperty($codeigniter, 'output'));
+
+        $csp = service('csp');
+
+        $this->assertSame($csp->getScriptNonce(), RichRenderer::$js_nonce);
+        $this->assertSame($csp->getStyleNonce(), RichRenderer::$css_nonce);
+        $this->assertTrue(RichRenderer::$needs_pre_render);
     }
 }
