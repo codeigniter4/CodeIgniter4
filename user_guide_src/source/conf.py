@@ -111,7 +111,8 @@ html_css_files = [
 # A list of JS files.
 html_js_files = [
 	'js/citheme.js',
-	'js/carbon.js'
+	'js/carbon.js',
+	'js/version_switcher.js'
 ]
 
 # -- Options for LaTeX output --------------------------------------------------
