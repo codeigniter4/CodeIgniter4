@@ -358,7 +358,7 @@ abstract class AbstractCommand
      *   2. Otherwise, the command is interactive when STDIN is a TTY.
      *
      * Non-CLI contexts (e.g., a controller invoking `command()`) don't expose
-     * `STDIN` at all — those always resolve as non-interactive.
+     * `STDIN` at all; those always resolve as non-interactive.
      *
      * Note: the `--no-interaction` / `-N` flag is folded into the explicit state
      * by `run()` before interactive hooks fire, so callers do not need to
@@ -417,11 +417,11 @@ abstract class AbstractCommand
      */
     final public function run(array $arguments, array $options): int
     {
-        $this->initialize($arguments, $options);
-
         if ($this->interactive === null && $this->hasUnboundOption('no-interaction', $options)) {
             $this->interactive = false;
         }
+
+        $this->initialize($arguments, $options);
 
         if ($this->isInteractive()) {
             $this->interact($arguments, $options);
@@ -498,9 +498,9 @@ abstract class AbstractCommand
      * @param array<string, list<string>|string|null> $options               Parsed options from command line.
      * @param bool|null                               $noInteractionOverride `null` (default) propagates the parent's non-interactive state;
      *                                                                       `true` forces the sub-command non-interactive by injecting
-     *                                                                       `--no-interaction`; `false` strips any inherited
-     *                                                                       `--no-interaction` so the sub-command resolves its own state
-     *                                                                       (TTY detection may still downgrade it).
+     *                                                                       `--no-interaction`; `false` removes any forwarded
+     *                                                                       `--no-interaction` from `$options` so the sub-command
+     *                                                                       resolves its own state (TTY detection may still downgrade it).
      */
     protected function call(string $command, array $arguments = [], array $options = [], ?bool $noInteractionOverride = null): int
     {
@@ -693,9 +693,10 @@ abstract class AbstractCommand
      *    aliases, their value is preserved.
      *  - `true` forces the sub-command non-interactive regardless of the
      *    parent, again deferring to a caller-supplied value if present.
-     *  - `false` strips any inherited or propagated `--no-interaction` so the
-     *    sub-command resolves its own state. TTY detection can still force
-     *    non-interactive if STDIN is not a TTY.
+     *  - `false` removes any `--no-interaction` from `$options` (whether
+     *    caller-supplied or inherited) so the sub-command resolves its own
+     *    state. TTY detection can still force non-interactive if STDIN is
+     *    not a TTY.
      *
      * @param array<string, list<string|null>|string|null> $options
      *

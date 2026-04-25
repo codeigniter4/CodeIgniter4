@@ -75,7 +75,7 @@ this order:
 3. ``interact(array &$arguments, array &$options): void`` also receives the
    raw arguments and options by reference. This is where you prompt the user
    for missing input, set values conditionally, or abort early. This hook is
-   skipped when the command is non-interactive — see :ref:`non-interactive-mode`.
+   skipped when the command is non-interactive (see :ref:`non-interactive-mode`).
 4. **Bind & validate.** The framework maps the raw input to the definitions
    you declared in ``configure()``, applies defaults, and rejects input that
    violates the definitions (missing required argument, unknown option, array
@@ -189,20 +189,20 @@ Non-Interactive Mode
 ====================
 
 Every modern command accepts ``--no-interaction`` / ``-N`` out of the box.
-When the flag is present — or when the command is otherwise non-interactive —
+When the flag is present, or when the command is otherwise non-interactive,
 the ``interact()`` hook is skipped entirely and the command proceeds straight
 to bind, validate, and ``execute()``.
 
 Programmatically, the state is exposed through two public methods on
 ``AbstractCommand``:
 
-- ``isInteractive(): bool`` — reports the current state.
-- ``setInteractive(bool $interactive): static`` — pins the state, overriding
+- ``isInteractive(): bool``: reports the current state.
+- ``setInteractive(bool $interactive): static``: pins the state, overriding
   both the CLI flag and TTY detection. Returns ``$this`` for chaining.
 
 The resolved state follows this precedence:
 
-1. An explicit ``setInteractive(bool)`` call wins — useful when a command
+1. An explicit ``setInteractive(bool)`` call wins. Useful when a command
    must force a specific mode for safety.
 2. Otherwise, the CLI flag ``--no-interaction`` / ``-N`` forces non-interactive state.
 3. Otherwise, **STDIN** is probed: if it is not a TTY (piped input, cron,
@@ -217,11 +217,11 @@ sub-command's ``$options`` wins over that propagation.
 The propagation can be overridden with the ``$noInteractionOverride``
 parameter of ``call()``:
 
-- ``null`` (default) — propagate the parent's state.
-- ``true`` — force the sub-command non-interactive regardless of the parent.
-- ``false`` — strip any inherited ``--no-interaction`` so the sub-command
-  resolves its own state. Note: TTY detection can still downgrade the
-  sub-command if STDIN is not a TTY.
+- ``null`` (default): propagate the parent's state.
+- ``true``: force the sub-command non-interactive regardless of the parent.
+- ``false``: remove any forwarded ``--no-interaction`` / ``-N`` from the
+  child ``$options`` so the sub-command resolves its own state. Note: TTY
+  detection can still downgrade the sub-command if STDIN is not a TTY.
 
 ******************
 Inside execute()
@@ -539,8 +539,8 @@ covered in the sections above and are not listed here.
         :param array     $options:                Options to forward, keyed by long name, shortcut, or negation.
         :param bool|null $noInteractionOverride:  Override the sub-command's interactive state.
                                                   ``null`` propagates the parent's state (default);
-                                                  ``true`` forces non-interactive; ``false`` strips
-                                                  any inherited ``--no-interaction`` flag.
+                                                  ``true`` forces non-interactive; ``false`` removes
+                                                  any forwarded ``--no-interaction`` from ``$options``.
         :returns:                                 The exit code returned by the called command.
 
         Invokes another modern command. The arguments and options go through

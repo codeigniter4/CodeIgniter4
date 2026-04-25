@@ -803,8 +803,8 @@ final class AbstractCommandTest extends CIUnitTestCase
     public function testCallPreservesCallerFlagWhenForcingNonInteractive(): void
     {
         // When $noInteractionOverride is true and the caller already supplied the flag,
-        // the resolver must not touch the caller's entry — proved by the child
-        // still seeing a non-interactive state.
+        // the resolver must not touch the caller's entry. The child still sees a
+        // non-interactive state.
 
         $command = new ParentCallsInteractFixtureCommand(new Commands());
 

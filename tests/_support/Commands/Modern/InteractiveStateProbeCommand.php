@@ -20,7 +20,7 @@ use CodeIgniter\CLI\Attributes\Command;
 final class InteractiveStateProbeCommand extends AbstractCommand
 {
     /**
-     * Records whether `interact()` fired during the last run — a side-channel
+     * Records whether `interact()` fired during the last run. This is a side-channel
      * for asserting on a child fixture created anonymously by `Commands::runCommand()`.
      */
     public static bool $interactCalled = false;
