@@ -40,6 +40,17 @@ class Migration_Create_test_tables extends Migration
             'deleted_at'  => ['type' => 'INTEGER', 'constraint' => 11, 'null' => true],
         ])->addKey('id', true)->createTable('job', true);
 
+        // Task Table
+        $this->forge->addField([
+            'id'          => ['type' => 'INTEGER', 'constraint' => 3, 'auto_increment' => true],
+            'name'        => ['type' => 'VARCHAR', 'constraint' => 40],
+            'description' => ['type' => 'VARCHAR', 'constraint' => 400, 'null' => true],
+            'priority'    => ['type' => 'VARCHAR', 'constraint' => 40, 'null' => true],
+            'created_at'  => ['type' => 'INTEGER', 'constraint' => 11, 'null' => true],
+            'updated_at'  => ['type' => 'INTEGER', 'constraint' => 11, 'null' => true],
+            'deleted_at'  => ['type' => 'INTEGER', 'constraint' => 11, 'null' => true],
+        ])->addKey('id', true)->createTable('task', true);
+
         // Misc Table
         $this->forge->addField([
             'id'    => ['type' => 'INTEGER', 'constraint' => 3, 'auto_increment' => true],
@@ -182,6 +193,7 @@ class Migration_Create_test_tables extends Migration
     {
         $this->forge->dropTable('user', true);
         $this->forge->dropTable('job', true);
+        $this->forge->dropTable('task', true);
         $this->forge->dropTable('misc', true);
         $this->forge->dropTable('type_test', true);
         $this->forge->dropTable('empty', true);

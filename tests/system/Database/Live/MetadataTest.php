@@ -40,6 +40,7 @@ final class MetadataTest extends CIUnitTestCase
             $prefix . 'migrations',
             $prefix . 'user',
             $prefix . 'job',
+            $prefix . 'task',
             $prefix . 'misc',
             $prefix . 'team_members',
             $prefix . 'type_test',

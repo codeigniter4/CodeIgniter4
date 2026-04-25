@@ -51,6 +51,17 @@ final class IncrementTest extends CIUnitTestCase
         $this->seeInDatabase('job', ['name' => 'incremental', 'description' => '8']);
     }
 
+    public function testIncrementWithMultipleColumns(): void
+    {
+        $this->hasInDatabase('task', ['name' => 'task1', 'description' => '6', 'priority' => '1']);
+
+        $this->db->table('task')
+            ->where('name', 'task1')
+            ->increment(['description' => 2, 'priority' => 3]);
+
+        $this->seeInDatabase('task', ['name' => 'task1', 'description' => '8', 'priority' => '4']);
+    }
+
     public function testResetStateAfterIncrement(): void
     {
         $this->hasInDatabase('job', ['name' => 'account1', 'description' => '10']);
@@ -85,6 +96,17 @@ final class IncrementTest extends CIUnitTestCase
             ->decrement('description', 2);
 
         $this->seeInDatabase('job', ['name' => 'incremental', 'description' => '4']);
+    }
+
+    public function testDecrementWithMultipleColumns(): void
+    {
+        $this->hasInDatabase('task', ['name' => 'task2', 'description' => '6', 'priority' => '5']);
+
+        $this->db->table('task')
+            ->where('name', 'task2')
+            ->decrement(['description' => 2, 'priority' => 3]);
+
+        $this->seeInDatabase('task', ['name' => 'task2', 'description' => '4', 'priority' => '2']);
     }
 
     public function testResetStateAfterDecrement(): void
