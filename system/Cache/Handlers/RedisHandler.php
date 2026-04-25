@@ -15,6 +15,7 @@ namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Exceptions\CriticalError;
 use CodeIgniter\I18n\Time;
+use CodeIgniter\Lock\LockStoreInterface;
 use Config\Cache;
 use Redis;
 use RedisException;
@@ -24,7 +25,7 @@ use RedisException;
  *
  * @see \CodeIgniter\Cache\Handlers\RedisHandlerTest
  */
-class RedisHandler extends BaseHandler
+class RedisHandler extends BaseHandler implements LockStoreInterface
 {
     /**
      * Default config
@@ -183,6 +184,59 @@ class RedisHandler extends BaseHandler
     public function decrement(string $key, int $offset = 1): int
     {
         return $this->increment($key, -$offset);
+    }
+
+    public function acquireLock(string $key, string $owner, int $ttl): bool
+    {
+        $key = static::validateKey($key, $this->prefix);
+
+        return (bool) $this->redis->set($key, $owner, ['nx', 'ex' => $ttl]);
+    }
+
+    public function releaseLock(string $key, string $owner): bool
+    {
+        $key = static::validateKey($key, $this->prefix);
+
+        $script = <<<'LUA'
+            if redis.call("get", KEYS[1]) == ARGV[1] then
+                return redis.call("del", KEYS[1])
+            end
+
+            return 0
+            LUA;
+
+        return (int) $this->redis->eval($script, [$key, $owner], 1) === 1;
+    }
+
+    public function forceReleaseLock(string $key): bool
+    {
+        $key     = static::validateKey($key, $this->prefix);
+        $deleted = $this->redis->del($key);
+
+        return is_int($deleted) && $deleted >= 0;
+    }
+
+    public function refreshLock(string $key, string $owner, int $ttl): bool
+    {
+        $key = static::validateKey($key, $this->prefix);
+
+        $script = <<<'LUA'
+            if redis.call("get", KEYS[1]) == ARGV[1] then
+                return redis.call("expire", KEYS[1], ARGV[2])
+            end
+
+            return 0
+            LUA;
+
+        return (int) $this->redis->eval($script, [$key, $owner, $ttl], 1) === 1;
+    }
+
+    public function getLockOwner(string $key): ?string
+    {
+        $key   = static::validateKey($key, $this->prefix);
+        $owner = $this->redis->get($key);
+
+        return is_string($owner) ? $owner : null;
     }
 
     public function clean(): bool

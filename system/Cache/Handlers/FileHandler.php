@@ -15,6 +15,7 @@ namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\Exceptions\CacheException;
 use CodeIgniter\I18n\Time;
+use CodeIgniter\Lock\LockStoreInterface;
 use Config\Cache;
 use Throwable;
 
@@ -23,7 +24,7 @@ use Throwable;
  *
  * @see \CodeIgniter\Cache\Handlers\FileHandlerTest
  */
-class FileHandler extends BaseHandler
+class FileHandler extends BaseHandler implements LockStoreInterface
 {
     /**
      * Maximum key length.
@@ -155,6 +156,78 @@ class FileHandler extends BaseHandler
         return $this->increment($key, -$offset);
     }
 
+    public function acquireLock(string $key, string $owner, int $ttl): bool
+    {
+        return $this->withLockFile($key, static function ($handle) use ($owner, $ttl): bool {
+            $data = self::readLockData($handle);
+            $now  = Time::now()->getTimestamp();
+
+            if ($data !== null && $data['expires'] > $now) {
+                return false;
+            }
+
+            return self::writeLockData($handle, $owner, $now + $ttl);
+        });
+    }
+
+    public function releaseLock(string $key, string $owner): bool
+    {
+        return $this->withLockFile($key, static function ($handle) use ($owner): bool {
+            $data = self::readLockData($handle);
+
+            if ($data === null || $data['owner'] !== $owner) {
+                return false;
+            }
+
+            return self::clearLockFile($handle);
+        });
+    }
+
+    public function forceReleaseLock(string $key): bool
+    {
+        return ! is_file($this->path . static::validateKey($key, $this->prefix))
+            || $this->withLockFile($key, static fn ($handle): bool => self::clearLockFile($handle), false);
+    }
+
+    public function refreshLock(string $key, string $owner, int $ttl): bool
+    {
+        return $this->withLockFile($key, static function ($handle) use ($owner, $ttl): bool {
+            $data = self::readLockData($handle);
+            $now  = Time::now()->getTimestamp();
+
+            if ($data === null || $data['owner'] !== $owner || $data['expires'] <= $now) {
+                return false;
+            }
+
+            return self::writeLockData($handle, $owner, $now + $ttl);
+        });
+    }
+
+    public function getLockOwner(string $key): ?string
+    {
+        $owner = null;
+
+        $this->withLockFile($key, static function ($handle) use (&$owner): bool {
+            $data = self::readLockData($handle);
+
+            if ($data === null) {
+                return true;
+            }
+
+            if ($data['expires'] <= Time::now()->getTimestamp()) {
+                self::clearLockFile($handle);
+
+                return true;
+            }
+
+            $owner = $data['owner'];
+
+            return true;
+        }, false);
+
+        return $owner;
+    }
+
     public function clean(): bool
     {
         return delete_files($this->path, false, true);
@@ -228,5 +301,93 @@ class FileHandler extends BaseHandler
         }
 
         return $data;
+    }
+
+    /**
+     * @param callable(resource): bool $callback
+     */
+    private function withLockFile(string $key, callable $callback, bool $create = true): bool
+    {
+        $key    = static::validateKey($key, $this->prefix);
+        $handle = @fopen($this->path . $key, $create ? 'c+b' : 'r+b');
+
+        if ($handle === false) {
+            return false;
+        }
+
+        try {
+            if (! flock($handle, LOCK_EX)) {
+                return false;
+            }
+
+            return $callback($handle);
+        } finally {
+            flock($handle, LOCK_UN);
+            fclose($handle);
+
+            if (is_file($this->path . $key)) {
+                try {
+                    chmod($this->path . $key, $this->mode);
+                } catch (Throwable $e) {
+                    log_message('debug', 'Failed to set mode on cache lock file: ' . $e);
+                }
+            }
+        }
+    }
+
+    /**
+     * @param resource $handle
+     *
+     * @return array{owner: string, expires: int}|null
+     */
+    private static function readLockData($handle): ?array
+    {
+        rewind($handle);
+
+        $content = stream_get_contents($handle);
+
+        if ($content === false || $content === '') {
+            return null;
+        }
+
+        try {
+            $data = unserialize($content);
+        } catch (Throwable) {
+            return null;
+        }
+
+        if (! is_array($data) || ! isset($data['owner'], $data['expires']) || ! is_string($data['owner']) || ! is_int($data['expires'])) {
+            return null;
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param resource $handle
+     */
+    private static function writeLockData($handle, string $owner, int $expires): bool
+    {
+        rewind($handle);
+
+        if (! ftruncate($handle, 0)) {
+            return false;
+        }
+
+        if (fwrite($handle, serialize(['owner' => $owner, 'expires' => $expires])) === false) {
+            return false;
+        }
+
+        return fflush($handle);
+    }
+
+    /**
+     * @param resource $handle
+     */
+    private static function clearLockFile($handle): bool
+    {
+        rewind($handle);
+
+        return ftruncate($handle, 0) && fflush($handle);
     }
 }
