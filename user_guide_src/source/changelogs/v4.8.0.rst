@@ -209,6 +209,7 @@ Query Builder
 -------------
 
 - Added ``whereColumn()`` and ``orWhereColumn()`` to compare one column to another column while protecting identifiers by default. See :ref:`query-builder-where-column`.
+- Added support for incrementing/decrementing multiple columns in a single call to ``BaseBuilder::increment()`` and ``decrement()`` as well as driver-specific builders.
 
 Forge
 -----
