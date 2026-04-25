@@ -232,24 +232,20 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Increments a numeric column by the specified value.
+     * Increments multiple numeric columns by the specified values.
      *
-     * @return bool
+     * @param array<string, int> $columns An array of column => value pairs to increment.
      */
-    public function increment(array|string $column, int $value = 1)
+    public function incrementAll(array $columns): bool
     {
-        if (is_string($column)) {
-            $column = [$column => $value];
-        }
-
         $fields = [];
 
-        foreach ($column as $col => $val) {
-            $col = $this->db->protectIdentifiers($col);
+        foreach ($columns as $column => $value) {
+            $column = $this->db->protectIdentifiers($column);
             if ($this->castTextToInt) {
-                $fields[$col] = "CONVERT(VARCHAR(MAX),CONVERT(INT,CONVERT(VARCHAR(MAX), {$col})) + {$val})";
+                $fields[$column] = "CONVERT(VARCHAR(MAX),CONVERT(INT,CONVERT(VARCHAR(MAX), {$column})) + {$value})";
             } else {
-                $fields[$col] = "{$col} + {$val}";
+                $fields[$column] = "{$column} + {$value}";
             }
         }
 
@@ -265,24 +261,20 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Decrements a numeric column by the specified value.
+     * Decrements multiple numeric columns by the specified values.
      *
-     * @return bool
+     * @param array<string, int> $columns An array of column => value pairs to decrement.
      */
-    public function decrement(array|string $column, int $value = 1)
+    public function decrementAll(array $columns): bool
     {
-        if (is_string($column)) {
-            $column = [$column => $value];
-        }
-
         $fields = [];
 
-        foreach ($column as $col => $val) {
-            $col = $this->db->protectIdentifiers($col);
+        foreach ($columns as $column => $value) {
+            $column = $this->db->protectIdentifiers($column);
             if ($this->castTextToInt) {
-                $fields[$col] = "CONVERT(VARCHAR(MAX),CONVERT(INT,CONVERT(VARCHAR(MAX), {$col})) - {$val})";
+                $fields[$column] = "CONVERT(VARCHAR(MAX),CONVERT(INT,CONVERT(VARCHAR(MAX), {$column})) - {$value})";
             } else {
-                $fields[$col] = "{$col} - {$val}";
+                $fields[$column] = "{$column} - {$value}";
             }
         }
 

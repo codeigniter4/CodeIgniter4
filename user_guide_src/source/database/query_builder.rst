@@ -2087,25 +2087,41 @@ Class Reference
 
     .. php:method:: increment($column[, $value = 1])
 
-        :param array|string $column: The name of the column(s) to increment. If multiple, then should be an array of column names with their values.
-        :param int $value: The amount to increment in the column (will be ignored if $column is an array)
+        :param string $column: The name of the column to increment
+        :param int $value:  The amount to increment in the column
 
         Increments the value of a field by the specified amount. If the field
         is not a numeric field, like a ``VARCHAR``, it will likely be replaced
         with ``$value``.
 
-        .. note:: Prior to v4.8.0, only single columns could be incremented.
+    .. php:method:: incrementAll(array $columns)
+
+        .. versionadded:: 4.8.0
+
+        :param array $columns: An array of column names with their amounts to increment by
+
+        Increments the value of multiple fields by the specified amounts. If a field
+        is not a numeric field, like a ``VARCHAR``, it will likely be replaced
+        with the amount specified for that field.
 
     .. php:method:: decrement($column[, $value = 1])
 
-        :param array|string $column: The name of the column(s) to decrement. If multiple, then should be an array of column names with their values.
-        :param int $value:  The amount to decrement in the column (will be ignored if $column is an array)
+        :param string $column: The name of the column to decrement
+        :param int $value:  The amount to decrement in the column
 
         Decrements the value of a field by the specified amount. If the field
         is not a numeric field, like a ``VARCHAR``, it will likely be replaced
         with ``$value``.
 
-        .. note:: Prior to v4.8.0, only single columns could be decremented.
+    .. php:method:: decrementAll(array $columns)
+
+        .. versionadded:: 4.8.0
+
+        :param array $columns: An array of column names with their amounts to decrement by
+
+        Decrements the value of multiple fields by the specified amounts. If a field
+        is not a numeric field, like a ``VARCHAR``, it will likely be replaced
+        with the amount specified for that field.
 
     .. php:method:: truncate()
 

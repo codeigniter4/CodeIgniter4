@@ -87,23 +87,17 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Increments a numeric column by the specified value.
+     * Increments multiple numeric columns by the specified values.
      *
-     * @return mixed
-     *
-     * @throws DatabaseException
+     * @param array<string, int> $columns An array of column => value pairs to increment.
      */
-    public function increment(array|string $column, int $value = 1)
+    public function incrementAll(array $columns): bool
     {
-        if (is_string($column)) {
-            $column = [$column => $value];
-        }
-
         $fields = [];
 
-        foreach ($column as $col => $val) {
-            $col          = $this->db->protectIdentifiers($col);
-            $fields[$col] = "to_number({$col}, '9999999') + {$val}";
+        foreach ($columns as $column => $value) {
+            $column          = $this->db->protectIdentifiers($column);
+            $fields[$column] = "to_number({$column}, '9999999') + {$value}";
         }
 
         $sql = $this->_update($this->QBFrom[0], $fields);
@@ -118,23 +112,17 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Decrements a numeric column by the specified value.
+     * Decrements multiple numeric columns by the specified values.
      *
-     * @return mixed
-     *
-     * @throws DatabaseException
+     * @param array<string, int> $columns An array of column => value pairs to decrement.
      */
-    public function decrement(array|string $column, int $value = 1)
+    public function decrementAll(array $columns): bool
     {
-        if (is_string($column)) {
-            $column = [$column => $value];
-        }
-
         $fields = [];
 
-        foreach ($column as $col => $val) {
-            $col          = $this->db->protectIdentifiers($col);
-            $fields[$col] = "to_number({$col}, '9999999') - {$val}";
+        foreach ($columns as $column => $value) {
+            $column          = $this->db->protectIdentifiers($column);
+            $fields[$column] = "to_number({$column}, '9999999') - {$value}";
         }
 
         $sql = $this->_update($this->QBFrom[0], $fields);

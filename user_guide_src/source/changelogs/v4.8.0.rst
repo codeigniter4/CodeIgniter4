@@ -208,7 +208,7 @@ Database
 Query Builder
 -------------
 
-- Added support for incrementing/decrementing multiple columns in a single call to ``BaseBuilder::increment()`` and ``decrement()`` as well as driver-specific builders.
+- Added new ``incrementAll()`` and ``decrementAll()`` methods to ``CodeIgniter\Database\BaseBuilder`` for performing bulk increment/decrement operations.
 
 Forge
 -----

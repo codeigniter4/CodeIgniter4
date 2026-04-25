@@ -3017,20 +3017,23 @@ class BaseBuilder
     /**
      * Increments a numeric column by the specified value.
      *
-     * @param array<string, int>|string $column The column(s) to increment. Can be a string or an associative array of column => value pairs.
-     * @param int                       $value  The value to increment by (default is 1). Ignored if $column is an associative array.
-     *
      * @return bool
      */
-    public function increment(array|string $column, int $value = 1)
+    public function increment(string $column, int $value = 1)
     {
-        if (is_string($column)) {
-            $column = [$column => $value];
-        }
+        return $this->incrementAll([$column => $value]);
+    }
 
+    /**
+     * Increments multiple numeric columns by the specified values.
+     *
+     * @param array<string, int> $columns An array of column => value pairs to increment.
+     */
+    public function incrementAll(array $columns): bool
+    {
         $fields = [];
 
-        foreach ($column as $col => $val) {
+        foreach ($columns as $col => $val) {
             $col          = $this->db->protectIdentifiers($col);
             $fields[$col] = "{$col} + {$val}";
         }
@@ -3049,20 +3052,23 @@ class BaseBuilder
     /**
      * Decrements a numeric column by the specified value.
      *
-     * @param array<string, int>|string $column The column(s) to decrement. Can be a string or an associative array of column => value pairs.
-     * @param int                       $value  The value to decrement by (default is 1). Ignored if $column is an associative array.
-     *
      * @return bool
      */
-    public function decrement(array|string $column, int $value = 1)
+    public function decrement(string $column, int $value = 1)
     {
-        if (is_string($column)) {
-            $column = [$column => $value];
-        }
+        return $this->decrementAll([$column => $value]);
+    }
 
+    /**
+     * Decrements multiple numeric columns by the specified values.
+     *
+     * @param array<string, int> $columns An array of column => value pairs to decrement.
+     */
+    public function decrementAll(array $columns): bool
+    {
         $fields = [];
 
-        foreach ($column as $col => $val) {
+        foreach ($columns as $col => $val) {
             $col          = $this->db->protectIdentifiers($col);
             $fields[$col] = "{$col} - {$val}";
         }
