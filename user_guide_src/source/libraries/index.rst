@@ -15,6 +15,7 @@ Library Reference
     file_collections
     honeypot
     images
+    locks
     pagination
     publisher
     security
