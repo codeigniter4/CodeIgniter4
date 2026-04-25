@@ -195,6 +195,7 @@ Testing
 Database
 ========
 
+- Added ``afterCommit()`` and ``afterRollback()`` transaction callbacks to database connections. These callbacks run after the outermost transaction commits or rolls back.
 - Added ``trustServerCertificate`` option to ``SQLSRV`` database connections in ``Config\Database``. Set it to ``true`` to trust the server certificate without CA validation when using encrypted connections.
 
 Query Builder

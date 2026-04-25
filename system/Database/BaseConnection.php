@@ -359,6 +359,20 @@ abstract class BaseConnection implements ConnectionInterface
     protected bool $transException = false;
 
     /**
+     * Callbacks to run after the outermost transaction commits.
+     *
+     * @var list<callable(): void>
+     */
+    protected array $transCommitCallbacks = [];
+
+    /**
+     * Callbacks to run after the outermost transaction rolls back.
+     *
+     * @var list<callable(): void>
+     */
+    protected array $transRollbackCallbacks = [];
+
+    /**
      * Array of table aliases.
      *
      * @var list<string>
@@ -985,13 +999,15 @@ abstract class BaseConnection implements ConnectionInterface
 
         // The query() function will set this flag to FALSE in the event that a query failed
         if ($this->transStatus === false || $this->transFailure === true) {
-            $this->transRollback();
-
-            // If we are NOT running in strict mode, we will reset
-            // the _trans_status flag so that subsequent groups of
-            // transactions will be permitted.
-            if ($this->transStrict === false) {
-                $this->transStatus = true;
+            try {
+                $this->transRollback();
+            } finally {
+                // If we are NOT running in strict mode, we will reset
+                // the _trans_status flag so that subsequent groups of
+                // transactions will be permitted.
+                if ($this->transStrict === false) {
+                    $this->transStatus = true;
+                }
             }
 
             return false;
@@ -1006,6 +1022,48 @@ abstract class BaseConnection implements ConnectionInterface
     public function transStatus(): bool
     {
         return $this->transStatus;
+    }
+
+    /**
+     * Register a callback to run after the outermost transaction commits.
+     *
+     * If no transaction is active, the callback runs immediately.
+     *
+     * @param callable(): void $callback
+     *
+     * @return $this
+     */
+    public function afterCommit(callable $callback): static
+    {
+        if ($this->transDepth === 0) {
+            $callback();
+
+            return $this;
+        }
+
+        $this->transCommitCallbacks[] = $callback;
+
+        return $this;
+    }
+
+    /**
+     * Register a callback to run after the outermost transaction rolls back.
+     *
+     * If no transaction is active, the callback is not run.
+     *
+     * @param callable(): void $callback
+     *
+     * @return $this
+     */
+    public function afterRollback(callable $callback): static
+    {
+        if ($this->transDepth === 0) {
+            return $this;
+        }
+
+        $this->transRollbackCallbacks[] = $callback;
+
+        return $this;
     }
 
     /**
@@ -1055,6 +1113,11 @@ abstract class BaseConnection implements ConnectionInterface
         if ($this->transDepth > 1 || $this->_transCommit()) {
             $this->transDepth--;
 
+            if ($this->transDepth === 0) {
+                $this->transRollbackCallbacks = [];
+                $this->runTransCommitCallbacks();
+            }
+
             return true;
         }
 
@@ -1073,6 +1136,11 @@ abstract class BaseConnection implements ConnectionInterface
         // When transactions are nested we only begin/commit/rollback the outermost ones
         if ($this->transDepth > 1 || $this->_transRollback()) {
             $this->transDepth--;
+
+            if ($this->transDepth === 0) {
+                $this->transCommitCallbacks = [];
+                $this->runTransRollbackCallbacks();
+            }
 
             return true;
         }
@@ -1099,6 +1167,32 @@ abstract class BaseConnection implements ConnectionInterface
     {
         if ($this->transDepth !== 0) {
             $this->transStatus = false;
+        }
+    }
+
+    /**
+     * Run and clear callbacks registered for a successful transaction commit.
+     */
+    protected function runTransCommitCallbacks(): void
+    {
+        $callbacks                  = $this->transCommitCallbacks;
+        $this->transCommitCallbacks = [];
+
+        foreach ($callbacks as $callback) {
+            $callback();
+        }
+    }
+
+    /**
+     * Run and clear callbacks registered for a transaction rollback.
+     */
+    protected function runTransRollbackCallbacks(): void
+    {
+        $callbacks                    = $this->transRollbackCallbacks;
+        $this->transRollbackCallbacks = [];
+
+        foreach ($callbacks as $callback) {
+            $callback();
         }
     }
 
