@@ -870,8 +870,17 @@ trait TimeTrait
      */
     public function clamp(DateTimeInterface|self|string $start, DateTimeInterface|self|string $end): static
     {
-        $start = $start instanceof DateTimeInterface ? $start : new static($start, $this->timezone, $this->locale);
-        $end   = $end instanceof DateTimeInterface ? $end : new static($end, $this->timezone, $this->locale);
+        if ($start instanceof DateTimeInterface && ! $start instanceof self) {
+            $start = static::createFromInstance($start, $this->locale);
+        } elseif (is_string($start)) {
+            $start = new static($start, $this->getTimezone(), $this->locale);
+        }
+
+        if ($end instanceof DateTimeInterface && ! $end instanceof self) {
+            $end = static::createFromInstance($end, $this->locale);
+        } elseif (is_string($end)) {
+            $end = new static($end, $this->getTimezone(), $this->locale);
+        }
 
         if ($end->isBefore($start)) {
             throw I18nException::forInvalidClampRange($start->toDateTimeString(), $end->toDateTimeString());
