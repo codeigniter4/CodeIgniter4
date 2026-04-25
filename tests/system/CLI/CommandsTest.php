@@ -68,6 +68,7 @@ final class CommandsTest extends CIUnitTestCase
         }
 
         copy($path, APPPATH . 'Commands/' . basename($path));
+        clearstatcache(true);
     }
 
     private function deleteCommand(string $path): void
@@ -75,6 +76,8 @@ final class CommandsTest extends CIUnitTestCase
         if (is_file(APPPATH . 'Commands/' . basename($path))) {
             unlink(APPPATH . 'Commands/' . basename($path));
         }
+
+        clearstatcache(true);
     }
 
     public function testRunOnUnknownCommand(): void
