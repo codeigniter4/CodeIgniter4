@@ -669,12 +669,10 @@ final class AbstractCommandTest extends CIUnitTestCase
 
     public function testInteractMutationsCarryThroughToExecute(): void
     {
-        // Supply neither the positional argument nor the --force flag.
-        // interact() populates both; bind() and validate() run afterwards, so
-        // execute() should see the mutated values fully bound and validated.
         $command = new InteractFixtureCommand(new Commands());
         $command->run([], []);
 
+        $this->assertTrue($command->isInteractive());
         $this->assertSame(['name' => 'from-interact'], $command->executedArguments);
         $this->assertTrue($command->executedOptions['force']);
     }
@@ -684,6 +682,7 @@ final class AbstractCommandTest extends CIUnitTestCase
         $command = new InteractFixtureCommand(new Commands());
         $command->run([], ['no-interaction' => null]);
 
+        $this->assertFalse($command->isInteractive());
         $this->assertSame(['name' => 'anonymous'], $command->executedArguments);
         $this->assertFalse($command->executedOptions['force']);
     }
@@ -693,6 +692,7 @@ final class AbstractCommandTest extends CIUnitTestCase
         $command = new InteractFixtureCommand(new Commands());
         $command->run([], ['N' => null]);
 
+        $this->assertFalse($command->isInteractive());
         $this->assertSame(['name' => 'anonymous'], $command->executedArguments);
         $this->assertFalse($command->executedOptions['force']);
     }
@@ -701,8 +701,11 @@ final class AbstractCommandTest extends CIUnitTestCase
     {
         $command = new InteractFixtureCommand(new Commands());
         $command->setInteractive(false);
+        $this->assertFalse($command->isInteractive());
+
         $command->run([], []);
 
+        $this->assertFalse($command->isInteractive());
         $this->assertSame(['name' => 'anonymous'], $command->executedArguments);
         $this->assertFalse($command->executedOptions['force']);
     }
@@ -714,8 +717,39 @@ final class AbstractCommandTest extends CIUnitTestCase
         $command->setInteractive(true);
         $command->run([], ['no-interaction' => null]);
 
+        $this->assertTrue($command->isInteractive());
         $this->assertSame(['name' => 'from-interact'], $command->executedArguments);
         $this->assertTrue($command->executedOptions['force']);
+    }
+
+    public function testNoInteractionFlagDoesNotLeakAcrossRuns(): void
+    {
+        $command = new InteractFixtureCommand(new Commands());
+
+        $command->run([], ['no-interaction' => null]);
+        $this->assertFalse($command->isInteractive());
+        $this->assertSame(['name' => 'anonymous'], $command->executedArguments);
+        $this->assertFalse($command->executedOptions['force']);
+
+        $command->run([], []);
+        $this->assertTrue($command->isInteractive());
+        $this->assertSame(['name' => 'from-interact'], $command->executedArguments);
+        $this->assertTrue($command->executedOptions['force']);
+    }
+
+    public function testSetInteractiveCallPersistsAcrossRuns(): void
+    {
+        $command = new InteractFixtureCommand(new Commands());
+        $command->setInteractive(false);
+        $this->assertFalse($command->isInteractive());
+
+        $command->run([], []);
+        $this->assertFalse($command->isInteractive());
+        $this->assertSame(['name' => 'anonymous'], $command->executedArguments);
+
+        $command->run([], []);
+        $this->assertFalse($command->isInteractive());
+        $this->assertSame(['name' => 'anonymous'], $command->executedArguments);
     }
 
     public function testIsInteractiveReflectsExplicitState(): void
@@ -740,6 +774,7 @@ final class AbstractCommandTest extends CIUnitTestCase
         $exitCode = $command->run([], ['no-interaction' => null]);
 
         $this->assertSame(EXIT_SUCCESS, $exitCode);
+        $this->assertFalse($command->isInteractive());
         $this->assertFalse(InteractiveStateProbeCommand::$interactCalled);
         $this->assertFalse(InteractiveStateProbeCommand::$observedInteractive);
     }
@@ -751,6 +786,7 @@ final class AbstractCommandTest extends CIUnitTestCase
         $exitCode = $command->run([], []);
 
         $this->assertSame(EXIT_SUCCESS, $exitCode);
+        $this->assertTrue($command->isInteractive());
         $this->assertTrue(InteractiveStateProbeCommand::$interactCalled);
         $this->assertTrue(InteractiveStateProbeCommand::$observedInteractive);
     }
@@ -764,6 +800,7 @@ final class AbstractCommandTest extends CIUnitTestCase
         $exitCode = $command->run([], []);
 
         $this->assertSame(EXIT_SUCCESS, $exitCode);
+        $this->assertFalse($command->isInteractive());
         $this->assertTrue(InteractiveStateProbeCommand::$interactCalled);
         $this->assertTrue(InteractiveStateProbeCommand::$observedInteractive);
     }
@@ -777,16 +814,18 @@ final class AbstractCommandTest extends CIUnitTestCase
         $exitCode = $command->run([], []);
 
         $this->assertSame(EXIT_SUCCESS, $exitCode);
+        $this->assertTrue($command->isInteractive());
         $this->assertFalse(InteractiveStateProbeCommand::$interactCalled);
         $this->assertFalse(InteractiveStateProbeCommand::$observedInteractive);
     }
 
+    /**
+     * Caller passes --no-interaction in the sub-command's options, but also
+     * sets noInteractionOverride to false: the explicit parameter wins and
+     * the inherited flag is stripped under both its long name and its shortcut.
+     */
     public function testCallStripsInheritedNoInteractionWhenCallerAllowsInteraction(): void
     {
-        // Caller passes --no-interaction in the sub-command's options, but also
-        // sets noInteractionOverride to false: the explicit parameter wins and
-        // the inherited flag is stripped under both its long name and its shortcut.
-
         $command = new ParentCallsInteractFixtureCommand(new Commands());
 
         $command->childNoInteractionOverride = false;
@@ -796,16 +835,18 @@ final class AbstractCommandTest extends CIUnitTestCase
         $exitCode = $command->run([], []);
 
         $this->assertSame(EXIT_SUCCESS, $exitCode);
+        $this->assertTrue($command->isInteractive());
         $this->assertTrue(InteractiveStateProbeCommand::$interactCalled);
         $this->assertTrue(InteractiveStateProbeCommand::$observedInteractive);
     }
 
+    /**
+     * When $noInteractionOverride is true and the caller already supplied the flag,
+     * the resolver must not touch the caller's entry. The child still sees a
+     * non-interactive state.
+     */
     public function testCallPreservesCallerFlagWhenForcingNonInteractive(): void
     {
-        // When $noInteractionOverride is true and the caller already supplied the flag,
-        // the resolver must not touch the caller's entry. The child still sees a
-        // non-interactive state.
-
         $command = new ParentCallsInteractFixtureCommand(new Commands());
 
         $command->childNoInteractionOverride = true;
@@ -815,6 +856,7 @@ final class AbstractCommandTest extends CIUnitTestCase
         $exitCode = $command->run([], []);
 
         $this->assertSame(EXIT_SUCCESS, $exitCode);
+        $this->assertTrue($command->isInteractive());
         $this->assertFalse(InteractiveStateProbeCommand::$interactCalled);
         $this->assertFalse(InteractiveStateProbeCommand::$observedInteractive);
     }

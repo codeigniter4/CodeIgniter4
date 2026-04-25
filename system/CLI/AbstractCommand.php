@@ -114,11 +114,16 @@ abstract class AbstractCommand
     private ?string $lastArrayArgument    = null;
 
     /**
-     * Whether the command is in interactive mode. When `null`, the interactive state is resolved based
-     * on the presence of the `--no-interaction` option and whether STDIN is a TTY. If boolean, this value
-     * takes precedence over the flag and TTY detection.
+     * Interactive state pinned by `setInteractive()`. When boolean, it takes precedence over
+     * the per-run flag and TTY detection, and remains in effect across `run()` calls on
+     * the same instance.
      */
     private ?bool $interactive = null;
+
+    /**
+     * Per-run interactive state derived from `--no-interaction` / `-N` in the current `$options`.
+     */
+    private ?bool $runtimeInteractive = null;
 
     /**
      * @throws InvalidArgumentDefinitionException
@@ -355,28 +360,23 @@ abstract class AbstractCommand
      *
      * Resolution order:
      *   1. An explicit `setInteractive()` call wins.
-     *   2. Otherwise, the command is interactive when STDIN is a TTY.
+     *   2. Otherwise, the `--no-interaction` / `-N` flag from the current `run()`
+     *      forces non-interactive.
+     *   3. Otherwise, the command is interactive when STDIN is a TTY.
      *
      * Non-CLI contexts (e.g., a controller invoking `command()`) don't expose
      * `STDIN` at all; those always resolve as non-interactive.
-     *
-     * Note: the `--no-interaction` / `-N` flag is folded into the explicit state
-     * by `run()` before interactive hooks fire, so callers do not need to
-     * inspect the options array themselves.
      */
     public function isInteractive(): bool
     {
-        if ($this->interactive !== null) {
-            return $this->interactive;
-        }
-
-        return defined('STDIN') && CLI::streamSupports('stream_isatty', \STDIN);
+        return $this->interactive
+            ?? $this->runtimeInteractive
+            ?? (defined('STDIN') && CLI::streamSupports('stream_isatty', \STDIN));
     }
 
     /**
      * Pins the interactive state, overriding both the `--no-interaction` flag
-     * and STDIN TTY detection. Typically called from `initialize()` or by
-     * an outer caller that needs to force a specific mode.
+     * and STDIN TTY detection.
      */
     public function setInteractive(bool $interactive): static
     {
@@ -390,22 +390,20 @@ abstract class AbstractCommand
      *
      * The lifecycle is:
      *
-     *   1. {@see initialize()} and {@see interact()} are handed the raw parsed
-     *      input by reference, in that order. Both can mutate the tokens before
-     *      the framework interprets them against the declared definitions.
-     *   2. The post-hook input is snapshotted into `$unboundArguments` and
-     *      `$unboundOptions` so the unbound accessors can report the tokens
-     *      carried into binding (as opposed to what defaults resolved to).
-     *      Any mutations performed in `initialize()` or `interact()` are
-     *      therefore reflected in the snapshot.
-     *   3. {@see bind()} maps the raw tokens onto the declared arguments and
-     *      options, applying defaults and coercing flag/negation values.
-     *   4. {@see validate()} rejects the bound result if it violates any of the
-     *      declarations — missing required argument, unknown option, value/flag
-     *      mismatches, and so on.
-     *   5. The bound-and-validated values are snapshotted into
-     *      `$validatedArguments` / `$validatedOptions` and then passed to
-     *      {@see execute()}, whose integer return is the command's exit code.
+     *   1. `initialize()` and `interact()` are handed the raw parsed input by reference, in that order.
+     *      Both can mutate the tokens before the framework interprets them against the declared definitions.
+     *      Note: the per-run interactive state is captured from `$options` before `initialize()` runs, so
+     *      mutating `--no-interaction` from within `initialize()` will not affect this invocation. Use
+     *      `setInteractive()` instead.
+     *   2. The post-hook input is snapshotted into `$unboundArguments` and `$unboundOptions` so the unbound
+     *      accessors can report the tokens carried into binding (as opposed to what defaults resolved to).
+     *      Any mutations performed in `initialize()` or `interact()` are therefore reflected in the snapshot.
+     *   3. `bind()` maps the raw tokens onto the declared arguments and options, applying defaults and
+     *      coercing flag/negation values.
+     *   4. `validate()` rejects the bound result if it violates any of the declarations — missing required
+     *      argument, unknown option, value/flag mismatches, and so on.
+     *   5. The bound-and-validated values are snapshotted into `$validatedArguments` / `$validatedOptions`
+     *      and then passed to `execute()`, whose integer return is the command's exit code.
      *
      * @param list<string>                                 $arguments Parsed arguments from command line.
      * @param array<string, list<string|null>|string|null> $options   Parsed options from command line.
@@ -417,9 +415,8 @@ abstract class AbstractCommand
      */
     final public function run(array $arguments, array $options): int
     {
-        if ($this->interactive === null && $this->hasUnboundOption('no-interaction', $options)) {
-            $this->interactive = false;
-        }
+        // Reset per-run interactive state from the current options.
+        $this->runtimeInteractive = $this->hasUnboundOption('no-interaction', $options) ? false : null;
 
         $this->initialize($arguments, $options);
 
@@ -542,13 +539,11 @@ abstract class AbstractCommand
     }
 
     /**
-     * Reads the raw (unbound) value of the option with the given declared name,
-     * resolving through its shortcut and negation. Returns `null` when the
-     * option was not provided under any of those aliases.
+     * Reads the raw (unbound) value of the option with the given declared name, resolving through its
+     * shortcut and negation. Returns `null` when the option was not provided under any of those aliases.
      *
-     * Inside {@see interact()}, pass the `$options` parameter explicitly because
-     * the instance state is not yet populated at that point. Elsewhere, omit
-     * `$options` to read from the instance state.
+     * Inside `interact()`, pass the `$options` parameter explicitly because the instance state is not yet
+     * populated at that point. Elsewhere, omit `$options` to read from the instance state.
      *
      * @param array<string, list<string|null>|string|null>|null $options
      *
@@ -580,11 +575,11 @@ abstract class AbstractCommand
     }
 
     /**
-     * Returns whether the option with the given declared name was provided in
-     * the raw (unbound) input — under its long name, shortcut, or negation.
+     * Returns whether the option with the given declared name was provided in the raw (unbound) input —
+     * under its long name, shortcut, or negation.
      *
-     * Inside {@see interact()}, pass the `$options` parameter explicitly; elsewhere
-     * omit it to read from instance state.
+     * Inside `interact()`, pass the `$options` parameter explicitly; elsewhere omit it to read from
+     * instance state.
      *
      * @param array<string, list<string|null>|string|null>|null $options
      *
