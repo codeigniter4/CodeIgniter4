@@ -208,7 +208,7 @@ Database
 Query Builder
 -------------
 
-- Added support for incrementing/decrementing multiple columns in a single call to ``BaseBuilder::increment()`` and ``decrement()`` as well as driver-specific builders. See :ref:`query-builder-increment-decrement-multiple-columns` for details.
+- Added support for incrementing/decrementing multiple columns in a single call to ``BaseBuilder::increment()`` and ``decrement()`` as well as driver-specific builders.
 
 Forge
 -----
