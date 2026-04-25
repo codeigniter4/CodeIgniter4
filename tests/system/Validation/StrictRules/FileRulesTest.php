@@ -13,10 +13,14 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Validation\StrictRules;
 
+use CodeIgniter\Config\Services;
+use CodeIgniter\EnvironmentDetector;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Validation;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use Tests\Support\Validation\TestRules;
 
 /**
@@ -64,7 +68,7 @@ class FileRulesTest extends CIUnitTestCase
                 'name'     => 'my-avatar.png',
                 'size'     => 4614,
                 'type'     => 'image/png',
-                'error'    => 0,
+                'error'    => UPLOAD_ERR_OK,
                 'width'    => 640,
                 'height'   => 400,
             ],
@@ -152,28 +156,46 @@ class FileRulesTest extends CIUnitTestCase
     protected function tearDown(): void
     {
         parent::tearDown();
+
         service('superglobals')->setFilesArray([]);
+        Services::resetSingle('environment');
     }
 
-    public function testUploadedTrue(): void
+    public function testUploadedPassesForSingleValidFile(): void
     {
         $this->validation->setRules(['avatar' => 'uploaded[avatar]']);
         $this->assertTrue($this->validation->run([]));
     }
 
-    public function testUploadedFalse(): void
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testUploadedFailsInProductionWhenFileWasNotHttpUpload(): void
+    {
+        // Counterpart to testUploadedPassesForSingleValidFile: the same fixture
+        // passes in the testing env but must fail in production, where isValid()
+        // enforces is_uploaded_file(). Runs in a separate process because the
+        // namespace-level is_uploaded_file() override in FileMovingTest.php would
+        // otherwise leak in and make the fixture appear to be a valid upload.
+        Services::injectMock('environment', new EnvironmentDetector('production'));
+
+        $this->validation->setRules(['avatar' => 'uploaded[avatar]']);
+
+        $this->assertFalse($this->validation->run([]));
+    }
+
+    public function testUploadedFailsWhenFileIsMissingFromRequest(): void
     {
         $this->validation->setRules(['avatar' => 'uploaded[userfile]']);
         $this->assertFalse($this->validation->run([]));
     }
 
-    public function testUploadedArrayReturnsTrue(): void
+    public function testUploadedPassesWhenAllFilesInArrayAreValid(): void
     {
         $this->validation->setRules(['images' => 'uploaded[images]']);
         $this->assertTrue($this->validation->run([]));
     }
 
-    public function testUploadedArrayReturnsFalse(): void
+    public function testUploadedFailsWhenAnyFileInArrayHasUploadError(): void
     {
         $this->validation->setRules(['photos' => 'uploaded[photos]']);
         $this->assertFalse($this->validation->run([]));

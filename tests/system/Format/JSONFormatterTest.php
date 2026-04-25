@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Format;
 
+use CodeIgniter\Config\Services;
+use CodeIgniter\EnvironmentDetector;
 use CodeIgniter\Format\Exceptions\FormatException;
 use CodeIgniter\Test\CIUnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -30,6 +32,12 @@ final class JSONFormatterTest extends CIUnitTestCase
     {
         parent::setUp();
         $this->jsonFormatter = new JSONFormatter();
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        Services::resetSingle('environment');
     }
 
     /**
@@ -61,5 +69,12 @@ final class JSONFormatterTest extends CIUnitTestCase
         $this->expectExceptionMessage('Malformed UTF-8 characters, possibly incorrectly encoded');
 
         $this->assertSame('Boom', $this->jsonFormatter->format(["\xB1\x31"]));
+    }
+
+    public function testFormattingToJsonIsCompactInProduction(): void
+    {
+        Services::injectMock('environment', new EnvironmentDetector('production'));
+
+        $this->assertSame('{"foo":"bar"}', $this->jsonFormatter->format(['foo' => 'bar']));
     }
 }

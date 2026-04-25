@@ -703,7 +703,7 @@ if (! function_exists('validation_errors')) {
 
         // Check the session to see if any were
         // passed along from a redirect withErrors() request.
-        if ($errors !== null && (ENVIRONMENT === 'testing' || ! is_cli())) {
+        if ($errors !== null && (service('environment')->isTesting() || ! is_cli())) {
             return $errors;
         }
 

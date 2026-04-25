@@ -85,7 +85,7 @@ class LocalizationSync extends BaseCommand
             return EXIT_USER_INPUT;
         }
 
-        if (ENVIRONMENT === 'testing') {
+        if (service('environment')->isTesting()) {
             $this->languagePath = SUPPORTPATH . 'Language';
         }
 

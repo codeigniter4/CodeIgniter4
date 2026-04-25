@@ -28,6 +28,7 @@ use CodeIgniter\Debug\Toolbar;
 use CodeIgniter\Email\Email;
 use CodeIgniter\Encryption\EncrypterInterface;
 use CodeIgniter\Encryption\Encryption;
+use CodeIgniter\EnvironmentDetector;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\Format\Format;
 use CodeIgniter\Honeypot\Honeypot;
@@ -257,6 +258,23 @@ class Services extends BaseService
         $encryption = new Encryption($config);
 
         return $encryption->initialize($config);
+    }
+
+    /**
+     * Provides a simple way to determine the current environment
+     * of the application.
+     *
+     * Primarily intended for testing environment-specific branches by
+     * mocking this service. Mocking it does not modify the `ENVIRONMENT`
+     * constant. It only affects code paths that resolve and use this service.
+     */
+    public static function environment(?string $environment = null, bool $getShared = true): EnvironmentDetector
+    {
+        if ($getShared) {
+            return static::getSharedInstance('environment', $environment);
+        }
+
+        return new EnvironmentDetector($environment);
     }
 
     /**

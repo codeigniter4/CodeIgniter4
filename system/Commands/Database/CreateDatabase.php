@@ -87,7 +87,7 @@ class CreateDatabase extends BaseCommand
             $config = config(Database::class);
 
             // Set to an empty database to prevent connection errors.
-            $group = ENVIRONMENT === 'testing' ? 'tests' : $config->defaultGroup;
+            $group = service('environment')->isTesting() ? 'tests' : $config->defaultGroup;
 
             $config->{$group}['database'] = '';
 

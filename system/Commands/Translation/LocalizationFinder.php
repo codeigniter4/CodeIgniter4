@@ -61,7 +61,7 @@ class LocalizationFinder extends BaseCommand
         $currentDir         = APPPATH;
         $this->languagePath = $currentDir . 'Language';
 
-        if (ENVIRONMENT === 'testing') {
+        if (service('environment')->isTesting()) {
             $currentDir         = SUPPORTPATH . 'Services' . DIRECTORY_SEPARATOR;
             $this->languagePath = SUPPORTPATH . 'Language';
         }

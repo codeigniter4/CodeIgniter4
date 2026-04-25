@@ -69,7 +69,7 @@ class Restrict implements RouteAttributeInterface
             return;
         }
 
-        $currentEnv = ENVIRONMENT;
+        $currentEnv = service('environment')->get();
         $allowed    = [];
         $denied     = [];
 

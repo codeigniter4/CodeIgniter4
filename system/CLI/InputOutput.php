@@ -42,7 +42,7 @@ class InputOutput
     public function input(?string $prefix = null): string
     {
         // readline() can't be tested.
-        if ($this->readlineSupport && ENVIRONMENT !== 'testing') {
+        if ($this->readlineSupport && ! service('environment')->isTesting()) {
             return readline($prefix); // @codeCoverageIgnore
         }
 

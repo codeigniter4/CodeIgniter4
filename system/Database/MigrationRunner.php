@@ -446,9 +446,10 @@ class MigrationRunner
     {
         $namespaces = $this->namespace !== null ? [$this->namespace] : array_keys(service('autoloader')->getNamespace());
         $migrations = [];
+        $detector   = service('environment');
 
         foreach ($namespaces as $namespace) {
-            if (ENVIRONMENT !== 'testing' && $namespace === 'Tests\Support') {
+            if (! $detector->isTesting() && $namespace === 'Tests\Support') {
                 continue;
             }
 
@@ -985,7 +986,7 @@ class MigrationRunner
         $instance = new $class(Database::forge($this->db));
         $group    = $instance->getDBGroup() ?? $this->group;
 
-        if (ENVIRONMENT !== 'testing' && $group === 'tests' && $this->groupFilter !== 'tests') {
+        if (! service('environment')->isTesting() && $group === 'tests' && $this->groupFilter !== 'tests') {
             // @codeCoverageIgnoreStart
             $this->groupSkip = true;
 

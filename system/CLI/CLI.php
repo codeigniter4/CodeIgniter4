@@ -656,7 +656,7 @@ class CLI
      */
     public static function streamSupports(string $function, $resource): bool
     {
-        if (ENVIRONMENT === 'testing') {
+        if (service('environment')->isTesting()) {
             // In the current setup of the tests we cannot fully check
             // if the stream supports the function since we are using
             // filtered streams.

@@ -86,7 +86,7 @@ class Session implements SessionInterface
      */
     public function start()
     {
-        if (is_cli() && ENVIRONMENT !== 'testing') {
+        if (is_cli() && ! service('environment')->isTesting()) {
             // @codeCoverageIgnoreStart
             $this->logger->debug('Session: Initialization under CLI aborted.');
 
@@ -273,7 +273,7 @@ class Session implements SessionInterface
 
     public function destroy()
     {
-        if (ENVIRONMENT === 'testing') {
+        if (service('environment')->isTesting()) {
             return;
         }
 
@@ -287,7 +287,7 @@ class Session implements SessionInterface
      */
     public function close()
     {
-        if (ENVIRONMENT === 'testing') {
+        if (service('environment')->isTesting()) {
             return;
         }
 
@@ -616,7 +616,7 @@ class Session implements SessionInterface
      */
     protected function startSession()
     {
-        if (ENVIRONMENT === 'testing') {
+        if (service('environment')->isTesting()) {
             $_SESSION = [];
 
             return;

@@ -401,7 +401,7 @@ class Logger implements LoggerInterface
 
         $replace['{post_vars}'] = '$_POST: ' . print_r(service('superglobals')->getPostArray(), true);
         $replace['{get_vars}']  = '$_GET: ' . print_r(service('superglobals')->getGetArray(), true);
-        $replace['{env}']       = ENVIRONMENT;
+        $replace['{env}']       = service('environment')->get();
 
         // Allow us to log the file/line that we are logging from
         if (str_contains($message, '{file}') || str_contains($message, '{line}')) {

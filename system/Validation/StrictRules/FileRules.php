@@ -62,17 +62,14 @@ class FileRules
                 return false;
             }
 
-            if (ENVIRONMENT === 'testing') {
-                if ($file->getError() !== 0) {
-                    return false;
-                }
-            } else {
-                // Note: cannot unit test this; no way to over-ride ENVIRONMENT?
-                // @codeCoverageIgnoreStart
-                if (! $file->isValid()) {
-                    return false;
-                }
-                // @codeCoverageIgnoreEnd
+            // In the testing env is_uploaded_file() always returns false
+            // (fixtures aren't real HTTP uploads), so check the error code directly.
+            $isValid = service('environment')->isTesting()
+                ? $file->getError() === UPLOAD_ERR_OK
+                : $file->isValid();
+
+            if (! $isValid) {
+                return false;
             }
         }
 

@@ -94,7 +94,7 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
 
                 $this->respond($data, $statusCode)->send();
 
-                if (ENVIRONMENT !== 'testing') {
+                if (! service('environment')->isTesting()) {
                     exit($exitCode); // @codeCoverageIgnore
                 }
 
@@ -123,7 +123,7 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
         // Displays the HTML or CLI error code.
         $this->render($exception, $statusCode, $viewFile);
 
-        if (ENVIRONMENT !== 'testing') {
+        if (! service('environment')->isTesting()) {
             exit($exitCode); // @codeCoverageIgnore
         }
     }

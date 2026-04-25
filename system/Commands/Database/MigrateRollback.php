@@ -72,7 +72,7 @@ class MigrateRollback extends BaseCommand
      */
     public function run(array $params)
     {
-        if (ENVIRONMENT === 'production') {
+        if (service('environment')->isProduction()) {
             // @codeCoverageIgnoreStart
             $force = array_key_exists('f', $params) || CLI::getOption('f');
 

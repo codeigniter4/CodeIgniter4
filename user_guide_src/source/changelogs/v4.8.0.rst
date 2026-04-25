@@ -263,6 +263,8 @@ Others
 
 - **Float and Double Casting:** Added support for precision and rounding mode when casting to float or double in entities.
 - Float and Double casting now throws ``CastException::forInvalidFloatRoundingMode()`` if an rounding mode other than up, down, even or odd is provided.
+- **Environment:** Added ``CodeIgniter\EnvironmentDetector`` class and corresponding ``environment`` service as a mockable wrapper around the ``ENVIRONMENT`` constant.
+  Framework internals that previously compared ``ENVIRONMENT`` directly now go through this service, making environment-specific branches reachable in tests via ``Services::injectMock()``. See :ref:`environment-detector-service`.
 
 ***************
 Message Changes

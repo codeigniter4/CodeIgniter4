@@ -457,7 +457,7 @@ class Toolbar
      */
     public function respond(): void
     {
-        if (ENVIRONMENT === 'testing') {
+        if (service('environment')->isTesting()) {
             return;
         }
 

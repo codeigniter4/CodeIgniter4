@@ -32,7 +32,7 @@ class Config
             'ciVersion'   => CodeIgniter::CI_VERSION,
             'phpVersion'  => PHP_VERSION,
             'phpSAPI'     => PHP_SAPI,
-            'environment' => ENVIRONMENT,
+            'environment' => service('environment')->get(),
             'baseURL'     => $config->baseURL,
             'timezone'    => app_timezone(),
             'locale'      => service('request')->getLocale(),

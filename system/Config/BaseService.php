@@ -29,6 +29,7 @@ use CodeIgniter\Debug\Timer;
 use CodeIgniter\Debug\Toolbar;
 use CodeIgniter\Email\Email;
 use CodeIgniter\Encryption\EncrypterInterface;
+use CodeIgniter\EnvironmentDetector;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\Format\Format;
@@ -111,6 +112,7 @@ use Config\WorkerMode;
  * @method static CURLRequest                curlrequest($options = [], ResponseInterface $response = null, App $config = null, $getShared = true)
  * @method static Email                      email($config = null, $getShared = true)
  * @method static EncrypterInterface         encrypter(Encryption $config = null, $getShared = false)
+ * @method static EnvironmentDetector        environment(?string $environment = null, bool $getShared = true)
  * @method static Exceptions                 exceptions(ConfigExceptions $config = null, $getShared = true)
  * @method static Filters                    filters(ConfigFilters $config = null, $getShared = true)
  * @method static Format                     format(ConfigFormat $config = null, $getShared = true)
