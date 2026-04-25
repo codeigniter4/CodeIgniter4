@@ -27,6 +27,12 @@ support locks.
     storage. The File handler is suitable for a single server. For multiple
     application servers, use a shared handler such as Redis.
 
+.. important:: Locks are stored in the configured cache handler. Clearing or
+    flushing that cache storage, for example with ``cache()->clean()`` or a
+    Redis ``FLUSHDB``, may remove active locks. Avoid clearing shared lock
+    storage while lock-protected work is running, or use a dedicated cache
+    store for locks when that separation is important.
+
 *************
 Example Usage
 *************
