@@ -47,6 +47,7 @@ use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Images\Handlers\BaseHandler;
 use CodeIgniter\Language\Language;
+use CodeIgniter\Lock\LockManager;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Pager\Pager;
 use CodeIgniter\Router\RouteCollection;
@@ -129,6 +130,24 @@ class Services extends BaseService
         $config ??= config(Cache::class);
 
         return CacheFactory::getHandler($config);
+    }
+
+    /**
+     * The locks service provides atomic locks backed by supported cache handlers.
+     *
+     * @return LockManager
+     */
+    public static function locks(?CacheInterface $cache = null, bool $getShared = true)
+    {
+        if ($cache instanceof CacheInterface) {
+            return new LockManager($cache);
+        }
+
+        if ($getShared) {
+            return static::getSharedInstance('locks', null);
+        }
+
+        return new LockManager(AppServices::get('cache'));
     }
 
     /**
