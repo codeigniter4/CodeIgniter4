@@ -32,6 +32,7 @@ use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Images\ImageHandlerInterface;
 use CodeIgniter\Language\Language;
+use CodeIgniter\Lock\LockManager;
 use CodeIgniter\Pager\Pager;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Router\Router;
@@ -46,6 +47,7 @@ use CodeIgniter\Typography\Typography;
 use CodeIgniter\Validation\Validation;
 use CodeIgniter\View\Cell;
 use CodeIgniter\View\Parser;
+use Config\Cache;
 use Config\Database as DatabaseConfig;
 use Config\Exceptions;
 use Config\Security as SecurityConfig;
@@ -105,6 +107,32 @@ final class ServicesTest extends CIUnitTestCase
     {
         $actual = Services::locator();
         $this->assertInstanceOf(FileLocator::class, $actual);
+    }
+
+    public function testNewLocks(): void
+    {
+        $actual = Services::locks();
+        $this->assertInstanceOf(LockManager::class, $actual);
+    }
+
+    public function testLocksWithCustomCacheIsNotShared(): void
+    {
+        $config                    = new Cache();
+        $config->file['storePath'] = WRITEPATH . 'cache/ServicesLockTest';
+
+        if (! is_dir($config->file['storePath'])) {
+            mkdir($config->file['storePath'], 0777, true);
+        }
+
+        try {
+            $custom = Services::cache($config, false);
+
+            $this->assertInstanceOf(LockManager::class, Services::locks($custom));
+            $this->assertNotSame(Services::locks($custom), Services::locks());
+        } finally {
+            delete_files($config->file['storePath'], false, true);
+            rmdir($config->file['storePath']);
+        }
     }
 
     public function testNewUnsharedFileLocator(): void

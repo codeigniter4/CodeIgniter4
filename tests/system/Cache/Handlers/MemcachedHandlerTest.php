@@ -51,6 +51,10 @@ final class MemcachedHandlerTest extends AbstractHandlerTestCase
 
     protected function tearDown(): void
     {
+        if (! isset($this->handler)) {
+            return;
+        }
+
         foreach (self::getKeyArray() as $key) {
             $this->handler->delete($key);
         }

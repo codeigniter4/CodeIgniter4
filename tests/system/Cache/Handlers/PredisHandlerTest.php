@@ -16,6 +16,7 @@ namespace CodeIgniter\Cache\Handlers;
 use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\I18n\Time;
+use CodeIgniter\Lock\LockStoreInterface;
 use Config\Cache;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -45,10 +46,18 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
 
         $this->config  = new Cache();
         $this->handler = CacheFactory::getHandler($this->config, 'predis');
+
+        if ($this->handler::class !== PredisHandler::class) {
+            $this->markTestSkipped('Predis connection not available.');
+        }
     }
 
     protected function tearDown(): void
     {
+        if (! isset($this->handler)) {
+            return;
+        }
+
         foreach (self::getKeyArray() as $key) {
             $this->handler->delete($key);
         }
@@ -102,6 +111,21 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
     public function testSave(): void
     {
         $this->assertTrue($this->handler->save(self::$key1, 'value'));
+    }
+
+    public function testLockOperations(): void
+    {
+        $handler = $this->handler;
+
+        $this->assertInstanceOf(LockStoreInterface::class, $handler);
+        $this->assertTrue($handler->acquireLock(self::$key1, 'owner1', 60));
+        $this->assertFalse($handler->acquireLock(self::$key1, 'owner2', 60));
+        $this->assertSame('owner1', $handler->getLockOwner(self::$key1));
+        $this->assertFalse($handler->releaseLock(self::$key1, 'owner2'));
+        $this->assertTrue($handler->refreshLock(self::$key1, 'owner1', 120));
+        $this->assertTrue($handler->releaseLock(self::$key1, 'owner1'));
+        $this->assertNull($handler->getLockOwner(self::$key1));
+        $this->assertTrue($handler->forceReleaseLock(self::$key1));
     }
 
     public function testSavePermanent(): void
