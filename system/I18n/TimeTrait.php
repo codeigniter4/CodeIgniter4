@@ -862,6 +862,32 @@ trait TimeTrait
         return $time->sub(DateInterval::createFromDateString("{$years} years"));
     }
 
+    /**
+     * Returns a new Time instance with the time clamped between the two provided times.
+     * If the current instance is before the $start time, a new instance will be returned with the same time as $start.
+     * If the current instance is after the $end time, a new instance will be returned with the same time as $end.
+     * Otherwise, the current instance will be returned.
+     */
+    public function clamp(DateTimeInterface|self|string $start, DateTimeInterface|self|string $end): static
+    {
+        $start = $start instanceof DateTimeInterface ? $start : new static($start, $this->timezone, $this->locale);
+        $end   = $end instanceof DateTimeInterface ? $end : new static($end, $this->timezone, $this->locale);
+
+        if ($end->isBefore($start)) {
+            throw I18nException::forInvalidClampRange($start->toDateTimeString(), $end->toDateTimeString());
+        }
+
+        if ($this->isBefore($start)) {
+            return static::createFromInstance($start, $this->locale);
+        }
+
+        if ($this->isAfter($end)) {
+            return static::createFromInstance($end, $this->locale);
+        }
+
+        return $this;
+    }
+
     // --------------------------------------------------------------------
     // Formatters
     // --------------------------------------------------------------------

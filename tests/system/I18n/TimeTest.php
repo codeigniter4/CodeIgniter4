@@ -744,6 +744,35 @@ final class TimeTest extends CIUnitTestCase
         $this->assertSame('2017-03-31 19:00:00 -05:00', $time2->format('Y-m-d H:i:s P'));
     }
 
+    public function testClamp(): void
+    {
+        $time  = Time::parse('May 10, 2017', 'America/Chicago');
+        $time2 = $time->clamp('2017-05-01', '2017-05-31');
+
+        $this->assertInstanceOf(Time::class, $time2);
+        $this->assertSame($time, $time2);
+
+        $time3 = $time->clamp('2017-05-11', '2017-05-31');
+
+        $this->assertInstanceOf(Time::class, $time3);
+        $this->assertNotSame($time, $time3);
+        $this->assertSame('2017-05-11 00:00:00', $time3->toDateTimeString());
+
+        $time4 = $time->clamp('2017-05-01', '2017-05-09');
+
+        $this->assertInstanceOf(Time::class, $time4);
+        $this->assertNotSame($time, $time4);
+        $this->assertSame('2017-05-09 00:00:00', $time4->toDateTimeString());
+    }
+
+    public function testClampException(): void
+    {
+        $this->expectException(I18nException::class);
+
+        $time = Time::parse('May 10, 2017', 'America/Chicago');
+        $time->clamp('2017-05-31', '2017-05-01');
+    }
+
     public function testToDateString(): void
     {
         $time = Time::parse('May 10, 2017', 'America/Chicago');

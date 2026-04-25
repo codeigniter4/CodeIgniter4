@@ -96,4 +96,14 @@ class I18nException extends FrameworkException
     {
         return new static(lang('Time.invalidSeconds', [$seconds]));
     }
+
+    /**
+     * Thrown when the supplied clamp range is invalid.
+     *
+     * @return static
+     */
+    public static function forInvalidClampRange(string $start, string $end)
+    {
+        return new static(lang('Time.invalidClampRange', [$start, $end]));
+    }
 }

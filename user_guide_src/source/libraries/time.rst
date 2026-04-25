@@ -317,6 +317,20 @@ Returns a new instance with the date set to the new timestamp:
 .. note:: Prior to v4.6.0, due to a bug, this method might return incorrect
     date/time. See :ref:`Upgrading Guide <upgrade-460-time-set-timestamp>` for details.
 
+.. _time-setters-clamp:
+
+clamp()
+-------
+
+.. versionadded:: 4.8.0
+
+Returns a new Time instance with the time clamped between the two times passed in.
+If the current instance is before the $min time, new instance with $min time will be returned.
+If the current instance is after the $max time, new instance with $max time will be returned.
+Otherwise, the current instance will be returned.
+
+.. literalinclude:: time/045.php
+
 Modifying the Value
 ===================
 
