@@ -263,7 +263,7 @@ Others
 
 - **Float and Double Casting:** Added support for precision and rounding mode when casting to float or double in entities.
 - Float and Double casting now throws ``CastException::forInvalidFloatRoundingMode()`` if an rounding mode other than up, down, even or odd is provided.
-- Added new ``TimeTrait::clamp($min, $max)`` method which returns clamped time between two times. See :ref:`TimeTrait::clamp()`.
+- Added new ``TimeTrait::clamp($start, $end)`` method which returns clamped time between two times. See :ref:`time-setters-clamp` for details.
 
 ***************
 Message Changes
