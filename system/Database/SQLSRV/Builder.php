@@ -236,17 +236,24 @@ class Builder extends BaseBuilder
      *
      * @return bool
      */
-    public function increment(string $column, int $value = 1)
+    public function increment(array|string $column, int $value = 1)
     {
-        $column = $this->db->protectIdentifiers($column);
-
-        if ($this->castTextToInt) {
-            $values = [$column => "CONVERT(VARCHAR(MAX),CONVERT(INT,CONVERT(VARCHAR(MAX), {$column})) + {$value})"];
-        } else {
-            $values = [$column => "{$column} + {$value}"];
+        if (is_string($column)) {
+            $column = [$column => $value];
         }
 
-        $sql = $this->_update($this->QBFrom[0], $values);
+        $fields = [];
+
+        foreach ($column as $col => $val) {
+            $col = $this->db->protectIdentifiers($col);
+            if ($this->castTextToInt) {
+                $fields[$col] = "CONVERT(VARCHAR(MAX),CONVERT(INT,CONVERT(VARCHAR(MAX), {$col})) + {$val})";
+            } else {
+                $fields[$col] = "{$col} + {$val}";
+            }
+        }
+
+        $sql = $this->_update($this->QBFrom[0], $fields);
 
         if (! $this->testMode) {
             $this->resetWrite();
@@ -262,17 +269,24 @@ class Builder extends BaseBuilder
      *
      * @return bool
      */
-    public function decrement(string $column, int $value = 1)
+    public function decrement(array|string $column, int $value = 1)
     {
-        $column = $this->db->protectIdentifiers($column);
-
-        if ($this->castTextToInt) {
-            $values = [$column => "CONVERT(VARCHAR(MAX),CONVERT(INT,CONVERT(VARCHAR(MAX), {$column})) - {$value})"];
-        } else {
-            $values = [$column => "{$column} + {$value}"];
+        if (is_string($column)) {
+            $column = [$column => $value];
         }
 
-        $sql = $this->_update($this->QBFrom[0], $values);
+        $fields = [];
+
+        foreach ($column as $col => $val) {
+            $col = $this->db->protectIdentifiers($col);
+            if ($this->castTextToInt) {
+                $fields[$col] = "CONVERT(VARCHAR(MAX),CONVERT(INT,CONVERT(VARCHAR(MAX), {$col})) - {$val})";
+            } else {
+                $fields[$col] = "{$col} - {$val}";
+            }
+        }
+
+        $sql = $this->_update($this->QBFrom[0], $fields);
 
         if (! $this->testMode) {
             $this->resetWrite();

@@ -3017,13 +3017,25 @@ class BaseBuilder
     /**
      * Increments a numeric column by the specified value.
      *
+     * @param array<string, int>|string $column The column(s) to increment. Can be a string or an associative array of column => value pairs.
+     * @param int                       $value  The value to increment by (default is 1). Ignored if $column is an associative array.
+     *
      * @return bool
      */
-    public function increment(string $column, int $value = 1)
+    public function increment(array|string $column, int $value = 1)
     {
-        $column = $this->db->protectIdentifiers($column);
+        if (is_string($column)) {
+            $column = [$column => $value];
+        }
 
-        $sql = $this->_update($this->QBFrom[0], [$column => "{$column} + {$value}"]);
+        $fields = [];
+
+        foreach ($column as $col => $val) {
+            $col          = $this->db->protectIdentifiers($col);
+            $fields[$col] = "{$col} + {$val}";
+        }
+
+        $sql = $this->_update($this->QBFrom[0], $fields);
 
         if (! $this->testMode) {
             $this->resetWrite();
@@ -3037,13 +3049,25 @@ class BaseBuilder
     /**
      * Decrements a numeric column by the specified value.
      *
+     * @param array<string, int>|string $column The column(s) to decrement. Can be a string or an associative array of column => value pairs.
+     * @param int                       $value  The value to decrement by (default is 1). Ignored if $column is an associative array.
+     *
      * @return bool
      */
-    public function decrement(string $column, int $value = 1)
+    public function decrement(array|string $column, int $value = 1)
     {
-        $column = $this->db->protectIdentifiers($column);
+        if (is_string($column)) {
+            $column = [$column => $value];
+        }
 
-        $sql = $this->_update($this->QBFrom[0], [$column => "{$column}-{$value}"]);
+        $fields = [];
+
+        foreach ($column as $col => $val) {
+            $col          = $this->db->protectIdentifiers($col);
+            $fields[$col] = "{$col} - {$val}";
+        }
+
+        $sql = $this->_update($this->QBFrom[0], $fields);
 
         if (! $this->testMode) {
             $this->resetWrite();

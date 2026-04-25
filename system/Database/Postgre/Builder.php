@@ -93,11 +93,20 @@ class Builder extends BaseBuilder
      *
      * @throws DatabaseException
      */
-    public function increment(string $column, int $value = 1)
+    public function increment(array|string $column, int $value = 1)
     {
-        $column = $this->db->protectIdentifiers($column);
+        if (is_string($column)) {
+            $column = [$column => $value];
+        }
 
-        $sql = $this->_update($this->QBFrom[0], [$column => "to_number({$column}, '9999999') + {$value}"]);
+        $fields = [];
+
+        foreach ($column as $col => $val) {
+            $col          = $this->db->protectIdentifiers($col);
+            $fields[$col] = "to_number({$col}, '9999999') + {$val}";
+        }
+
+        $sql = $this->_update($this->QBFrom[0], $fields);
 
         if (! $this->testMode) {
             $this->resetWrite();
@@ -115,11 +124,20 @@ class Builder extends BaseBuilder
      *
      * @throws DatabaseException
      */
-    public function decrement(string $column, int $value = 1)
+    public function decrement(array|string $column, int $value = 1)
     {
-        $column = $this->db->protectIdentifiers($column);
+        if (is_string($column)) {
+            $column = [$column => $value];
+        }
 
-        $sql = $this->_update($this->QBFrom[0], [$column => "to_number({$column}, '9999999') - {$value}"]);
+        $fields = [];
+
+        foreach ($column as $col => $val) {
+            $col          = $this->db->protectIdentifiers($col);
+            $fields[$col] = "to_number({$col}, '9999999') - {$val}";
+        }
+
+        $sql = $this->_update($this->QBFrom[0], $fields);
 
         if (! $this->testMode) {
             $this->resetWrite();
