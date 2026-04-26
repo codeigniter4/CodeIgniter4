@@ -70,6 +70,22 @@ class TransactionCallbacksTest extends CIUnitTestCase
         $this->assertSame(['committed'], $callbacks);
     }
 
+    public function testAfterCommitRunsAfterManualTransactionCommit(): void
+    {
+        $callbacks = [];
+
+        $this->db->transBegin();
+        $this->db->afterCommit(static function () use (&$callbacks): void {
+            $callbacks[] = 'committed';
+        });
+
+        $this->assertSame([], $callbacks);
+
+        $this->db->transCommit();
+
+        $this->assertSame(['committed'], $callbacks);
+    }
+
     public function testAfterCommitDoesNotRunAfterTransactionRollsBack(): void
     {
         $callbacks = [];
@@ -153,6 +169,22 @@ class TransactionCallbacksTest extends CIUnitTestCase
         $this->assertSame([], $callbacks);
 
         $this->db->transComplete();
+
+        $this->assertSame(['rolled back'], $callbacks);
+    }
+
+    public function testAfterRollbackRunsAfterManualTransactionRollback(): void
+    {
+        $callbacks = [];
+
+        $this->db->transBegin();
+        $this->db->afterRollback(static function () use (&$callbacks): void {
+            $callbacks[] = 'rolled back';
+        });
+
+        $this->assertSame([], $callbacks);
+
+        $this->db->transRollback();
 
         $this->assertSame(['rolled back'], $callbacks);
     }

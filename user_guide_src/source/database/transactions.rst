@@ -111,6 +111,8 @@ If you want an exception to be thrown when a query error occurs, you can use
 If a query error occurs, all the queries will be rolled backed, and a
 ``DatabaseException`` will be thrown.
 
+.. _transactions-transaction-callbacks:
+
 Running Code after Commit or Rollback
 =====================================
 
@@ -131,6 +133,16 @@ If the transaction commits, ``afterCommit()`` callbacks run and
 If no transaction is active, ``afterCommit()`` callbacks run immediately, while
 ``afterRollback()`` callbacks are not run.
 
+For example:
+
+.. literalinclude:: transactions/011.php
+
+.. note:: When ``afterCommit()`` is called outside an active transaction, it runs
+    immediately. This includes calls from Model ``beforeInsert`` or
+    ``beforeUpdate`` events when the calling code has not already started a
+    transaction, so the callback may run before the Model's insert or update
+    query is executed.
+
 This is useful for side effects that should only happen after committed data is
 visible, such as dispatching a queued job or sending a notification, and for
 cleanup that should only happen after a real rollback.
@@ -138,6 +150,10 @@ cleanup that should only happen after a real rollback.
 Callbacks run after the database transaction has already committed or rolled
 back. If a callback throws an exception, that exception bubbles to the caller,
 but the transaction outcome is not changed.
+
+.. warning:: When multiple callbacks are registered for the same transaction
+    outcome, they run in registration order. If one callback throws an exception,
+    the subsequent callbacks are not run.
 
 Rollback callbacks also run when CodeIgniter automatically rolls back an active
 transaction while handling a transaction failure or cleaning up an unfinished

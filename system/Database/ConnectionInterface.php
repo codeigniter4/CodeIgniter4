@@ -116,6 +116,24 @@ interface ConnectionInterface
     public function simpleQuery(string $sql);
 
     /**
+     * Register a callback to run after the outermost transaction commits.
+     *
+     * @param callable(): void $callback
+     *
+     * @return $this
+     */
+    public function afterCommit(callable $callback): static;
+
+    /**
+     * Register a callback to run after the outermost transaction rolls back.
+     *
+     * @param callable(): void $callback
+     *
+     * @return $this
+     */
+    public function afterRollback(callable $callback): static;
+
+    /**
      * Returns an instance of the query builder for this connection.
      *
      * @param array|string $tableName Table name.
