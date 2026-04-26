@@ -43,9 +43,9 @@ Interface Changes
 **NOTE:** If you've implemented your own classes that implement these interfaces from scratch, you will need to
 update your implementations to include the new methods or method changes to ensure compatibility.
 
+- **Database:** ``CodeIgniter\Database\ConnectionInterface`` now requires the ``afterCommit()`` and ``afterRollback()`` methods.
 - **Logging:** ``CodeIgniter\Log\Handlers\HandlerInterface::handle()`` now requires a third parameter ``array $context = []``. Any custom log handler that overrides ``handle()`` - whether implementing ``HandlerInterface`` directly or extending a built-in handler class - must add the parameter to its ``handle()`` method signature.
 - **Security:** The ``SecurityInterface``'s ``verify()`` method now has a native return type of ``static``.
-- **Database:** ``CodeIgniter\Database\ConnectionInterface`` now requires the ``afterCommit()`` and ``afterRollback()`` methods.
 
 Method Signature Changes
 ========================
