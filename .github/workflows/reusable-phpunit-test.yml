@@ -163,20 +163,49 @@ jobs:
             -N -C \
             -Q "CREATE DATABASE test COLLATE Latin1_General_100_CS_AS_SC_UTF8"
 
+      - name: Resolve latest ImageMagick release tag
+        if: ${{ contains(inputs.extra-extensions, 'imagick') }}
+        id: imagemagick-release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag=$(gh release view --repo vintagesucks/imagemagick-deb --json tagName --jq .tagName)
+          echo "tag=${tag}" >> "$GITHUB_OUTPUT"
+
+      - name: Cache ImageMagick debs
+        if: ${{ contains(inputs.extra-extensions, 'imagick') }}
+        id: imagemagick-cache
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        with:
+          path: /tmp/imagemagick-debs
+          key: imagemagick-debs-noble-amd64-${{ steps.imagemagick-release.outputs.tag }}
+
       - name: Install latest ImageMagick
         if: ${{ contains(inputs.extra-extensions, 'imagick') }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          IMAGEMAGICK_TAG: ${{ steps.imagemagick-release.outputs.tag }}
+          IMAGEMAGICK_CACHE_HIT: ${{ steps.imagemagick-cache.outputs.cache-hit }}
         run: |
-          sudo apt-get update
-          sudo apt-get install -y ghostscript poppler-data libmagickwand-dev
+          if [ "$IMAGEMAGICK_CACHE_HIT" != 'true' ]; then
+            echo "::group::Download ImageMagick debs ($IMAGEMAGICK_TAG)"
+            mkdir -p /tmp/imagemagick-debs
+            gh release download "$IMAGEMAGICK_TAG" \
+              --repo vintagesucks/imagemagick-deb \
+              --pattern '*noble_amd64*' \
+              --dir /tmp/imagemagick-debs \
+              --clobber
+            echo "::endgroup::"
+          else
+            echo "Using cached ImageMagick debs ($IMAGEMAGICK_TAG)"
+          fi
 
-          # Install ImageMagick 7 with AVIF rw+ support (vintagesucks/imagemagick-deb)
-          RELEASE_JSON=$(curl -fsSL https://api.github.com/repos/vintagesucks/imagemagick-deb/releases/latest)
-          mkdir -p /tmp/imagemagick-debs
-          while IFS= read -r url; do
-            curl -fsSL "$url" -o "/tmp/imagemagick-debs/$(basename "$url")"
-          done < <(echo "$RELEASE_JSON" | jq -r '.assets[] | select(.name | contains("noble_amd64")) | .browser_download_url')
-          sudo dpkg -i /tmp/imagemagick-debs/*.deb || true
-          sudo apt-get install -f -y
+          echo "::group::Install ImageMagick 7 with AVIF rw+ support"
+          sudo apt-get update
+          sudo apt-get install -y \
+            ghostscript poppler-data libmagickwand-dev \
+            /tmp/imagemagick-debs/*.deb
+          echo "::endgroup::"
 
       - name: Checkout base branch for PR
         if: github.event_name == 'pull_request'
