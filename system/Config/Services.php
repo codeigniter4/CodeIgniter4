@@ -139,15 +139,13 @@ class Services extends BaseService
      */
     public static function locks(?CacheInterface $cache = null, bool $getShared = true)
     {
-        if ($cache instanceof CacheInterface) {
-            return new LockManager($cache);
-        }
-
         if ($getShared) {
-            return static::getSharedInstance('locks', null);
+            return static::getSharedInstance('locks', $cache);
         }
 
-        return new LockManager(AppServices::get('cache'));
+        $cache ??= AppServices::get('cache');
+
+        return new LockManager($cache);
     }
 
     /**

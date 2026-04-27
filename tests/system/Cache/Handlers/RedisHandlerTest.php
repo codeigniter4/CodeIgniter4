@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\CacheFactory;
+use CodeIgniter\Cache\LockStoreInterface;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\I18n\Time;
-use CodeIgniter\Lock\LockStoreInterface;
 use Config\Cache;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;

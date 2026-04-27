@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\Exceptions\CacheException;
+use CodeIgniter\Cache\LockStoreInterface;
 use CodeIgniter\I18n\Time;
-use CodeIgniter\Lock\LockStoreInterface;
 use Config\Cache;
 use Throwable;
 

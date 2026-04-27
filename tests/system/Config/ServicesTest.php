@@ -115,7 +115,7 @@ final class ServicesTest extends CIUnitTestCase
         $this->assertInstanceOf(LockManager::class, $actual);
     }
 
-    public function testLocksWithCustomCacheIsNotShared(): void
+    public function testNewUnsharedLocksWithCustomCache(): void
     {
         $config                    = new Cache();
         $config->file['storePath'] = WRITEPATH . 'cache/ServicesLockTest';
@@ -127,8 +127,8 @@ final class ServicesTest extends CIUnitTestCase
         try {
             $custom = Services::cache($config, false);
 
-            $this->assertInstanceOf(LockManager::class, Services::locks($custom));
-            $this->assertNotSame(Services::locks($custom), Services::locks());
+            $this->assertInstanceOf(LockManager::class, Services::locks($custom, false));
+            $this->assertNotSame(Services::locks($custom, false), Services::locks($custom, false));
         } finally {
             delete_files($config->file['storePath'], false, true);
             rmdir($config->file['storePath']);

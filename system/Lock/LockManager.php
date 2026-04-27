@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Lock;
 
 use CodeIgniter\Cache\CacheInterface;
+use CodeIgniter\Cache\LockStoreInterface;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Lock\Exceptions\LockException;
 

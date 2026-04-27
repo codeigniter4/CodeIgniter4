@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache\Handlers;
 
+use CodeIgniter\Cache\LockStoreInterface;
 use CodeIgniter\Exceptions\CriticalError;
 use CodeIgniter\I18n\Time;
-use CodeIgniter\Lock\LockStoreInterface;
 use Config\Cache;
 use Redis;
 use RedisException;

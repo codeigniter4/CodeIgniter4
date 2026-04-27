@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Lock;
 
 use Closure;
+use CodeIgniter\Cache\LockStoreInterface;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 
 class Lock implements LockInterface

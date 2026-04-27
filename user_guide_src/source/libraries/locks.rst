@@ -88,7 +88,7 @@ If the configured cache handler does not support locks, creating a lock throws a
 ``CodeIgniter\Lock\Exceptions\LockException``.
 
 Custom cache handlers can support locks by implementing
-``CodeIgniter\Lock\LockStoreInterface``. This keeps lock support opt-in and does
+``CodeIgniter\Cache\LockStoreInterface``. This keeps lock support opt-in and does
 not require all cache handlers to implement lock operations.
 
 ***************
