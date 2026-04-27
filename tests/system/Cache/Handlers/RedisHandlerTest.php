@@ -15,6 +15,7 @@ namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\Cache\LockStoreInterface;
+use CodeIgniter\Cache\LockStoreProvider;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
@@ -118,15 +119,19 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
     {
         $handler = $this->handler;
 
-        $this->assertInstanceOf(LockStoreInterface::class, $handler);
-        $this->assertTrue($handler->acquireLock(self::$key1, 'owner1', 60));
-        $this->assertFalse($handler->acquireLock(self::$key1, 'owner2', 60));
-        $this->assertSame('owner1', $handler->getLockOwner(self::$key1));
-        $this->assertFalse($handler->releaseLock(self::$key1, 'owner2'));
-        $this->assertTrue($handler->refreshLock(self::$key1, 'owner1', 120));
-        $this->assertTrue($handler->releaseLock(self::$key1, 'owner1'));
-        $this->assertNull($handler->getLockOwner(self::$key1));
-        $this->assertTrue($handler->forceReleaseLock(self::$key1));
+        $this->assertInstanceOf(LockStoreProvider::class, $handler);
+
+        $store = $handler->lockStore();
+
+        $this->assertInstanceOf(LockStoreInterface::class, $store);
+        $this->assertTrue($store->acquireLock(self::$key1, 'owner1', 60));
+        $this->assertFalse($store->acquireLock(self::$key1, 'owner2', 60));
+        $this->assertSame('owner1', $store->getLockOwner(self::$key1));
+        $this->assertFalse($store->releaseLock(self::$key1, 'owner2'));
+        $this->assertTrue($store->refreshLock(self::$key1, 'owner1', 120));
+        $this->assertTrue($store->releaseLock(self::$key1, 'owner1'));
+        $this->assertNull($store->getLockOwner(self::$key1));
+        $this->assertTrue($store->forceReleaseLock(self::$key1));
     }
 
     public function testSavePermanent(): void
@@ -261,11 +266,18 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
 
     public function testReconnect(): void
     {
-        $this->handler->save(self::$key1, 'value');
-        $this->assertSame('value', $this->handler->get(self::$key1));
+        $handler = $this->handler;
 
-        $this->assertTrue($this->handler->reconnect());
+        $this->assertInstanceOf(LockStoreProvider::class, $handler);
 
-        $this->assertSame('value', $this->handler->get(self::$key1));
+        $lockStore = $handler->lockStore();
+
+        $handler->save(self::$key1, 'value');
+        $this->assertSame('value', $handler->get(self::$key1));
+
+        $this->assertTrue($handler->reconnect());
+
+        $this->assertSame('value', $handler->get(self::$key1));
+        $this->assertNotSame($lockStore, $handler->lockStore());
     }
 }

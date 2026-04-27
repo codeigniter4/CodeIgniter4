@@ -191,12 +191,10 @@ final class LockTest extends CIUnitTestCase
 
     public function testUnsupportedCacheHandlerThrows(): void
     {
-        $locks = new LockManager(CacheFactory::getHandler($this->config, 'dummy'));
-
         $this->expectException(LockException::class);
         $this->expectExceptionMessage('does not support locks');
 
-        $locks->create('reports.daily-export');
+        new LockManager(CacheFactory::getHandler($this->config, 'dummy'));
     }
 
     private function lockFile(string $name): string

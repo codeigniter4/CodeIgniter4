@@ -84,12 +84,19 @@ Locks and Cache Handlers
 The default File cache handler supports locks, so locks work without additional
 configuration in a standard application.
 
-If the configured cache handler does not support locks, creating a lock throws a
+If the configured cache handler does not support locks, resolving the ``locks``
+service or constructing a lock manager throws a
 ``CodeIgniter\Lock\Exceptions\LockException``.
 
 Custom cache handlers can support locks by implementing
-``CodeIgniter\Cache\LockStoreInterface``. This keeps lock support opt-in and does
-not require all cache handlers to implement lock operations.
+``CodeIgniter\Cache\LockStoreProvider`` and returning a
+``CodeIgniter\Cache\LockStoreInterface`` instance. This keeps lock support
+opt-in and does not require all cache handlers to implement lock operations.
+
+Custom lock stores must implement owner-aware acquisition, release, refresh,
+force release, and owner lookup methods. The owner token is used to ensure
+``release()`` and ``refresh()`` only affect the process that currently owns the
+lock.
 
 ***************
 Class Reference

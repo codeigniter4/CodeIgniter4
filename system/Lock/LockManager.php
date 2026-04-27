@@ -15,6 +15,7 @@ namespace CodeIgniter\Lock;
 
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Cache\LockStoreInterface;
+use CodeIgniter\Cache\LockStoreProvider;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Lock\Exceptions\LockException;
 
@@ -22,8 +23,15 @@ class LockManager
 {
     private const KEY_PREFIX = 'lock_';
 
-    public function __construct(private readonly CacheInterface $cache)
+    private readonly LockStoreInterface $store;
+
+    public function __construct(CacheInterface $cache)
     {
+        if (! $cache instanceof LockStoreProvider) {
+            throw LockException::forUnsupportedStore($cache::class);
+        }
+
+        $this->store = $cache->lockStore();
     }
 
     public function create(string $name, int $ttl = 300, ?string $owner = null): LockInterface
@@ -32,24 +40,12 @@ class LockManager
             throw new InvalidArgumentException('Lock name cannot be empty.');
         }
 
-        $store = $this->store();
-        $key   = $this->key($name);
-
-        return new Lock($store, $key, $ttl, $owner ?? bin2hex(random_bytes(16)));
+        return new Lock($this->store, $this->key($name), $ttl, $owner ?? bin2hex(random_bytes(16)));
     }
 
     public function restore(string $name, string $owner, int $ttl = 300): LockInterface
     {
         return $this->create($name, $ttl, $owner);
-    }
-
-    private function store(): LockStoreInterface
-    {
-        if (! $this->cache instanceof LockStoreInterface) {
-            throw LockException::forUnsupportedStore($this->cache::class);
-        }
-
-        return $this->cache;
     }
 
     private function key(string $name): string

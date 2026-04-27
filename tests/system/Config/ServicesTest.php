@@ -111,8 +111,20 @@ final class ServicesTest extends CIUnitTestCase
 
     public function testNewLocks(): void
     {
-        $actual = Services::locks();
-        $this->assertInstanceOf(LockManager::class, $actual);
+        $config                    = new Cache();
+        $config->file['storePath'] = WRITEPATH . 'cache/ServicesLockTest';
+
+        if (! is_dir($config->file['storePath'])) {
+            mkdir($config->file['storePath'], 0777, true);
+        }
+
+        try {
+            $actual = Services::locks(Services::cache($config, false));
+            $this->assertInstanceOf(LockManager::class, $actual);
+        } finally {
+            delete_files($config->file['storePath'], false, true);
+            rmdir($config->file['storePath']);
+        }
     }
 
     public function testNewUnsharedLocksWithCustomCache(): void

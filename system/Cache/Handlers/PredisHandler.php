@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\LockStoreInterface;
+use CodeIgniter\Cache\LockStoreProvider;
+use CodeIgniter\Cache\LockStores\PredisLockStore;
 use CodeIgniter\Exceptions\CriticalError;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
@@ -27,7 +29,7 @@ use Predis\Response\Status;
  *
  * @see \CodeIgniter\Cache\Handlers\PredisHandlerTest
  */
-class PredisHandler extends BaseHandler implements LockStoreInterface
+class PredisHandler extends BaseHandler implements LockStoreProvider
 {
     /**
      * Default config
@@ -59,6 +61,8 @@ class PredisHandler extends BaseHandler implements LockStoreInterface
      */
     protected $redis;
 
+    private ?LockStoreInterface $lockStore = null;
+
     /**
      * Note: Use `CacheFactory::getHandler()` to instantiate.
      */
@@ -72,7 +76,8 @@ class PredisHandler extends BaseHandler implements LockStoreInterface
     public function initialize(): void
     {
         try {
-            $this->redis = new Client($this->config, ['prefix' => $this->prefix]);
+            $this->redis     = new Client($this->config, ['prefix' => $this->prefix]);
+            $this->lockStore = null;
             $this->redis->time();
         } catch (Exception $e) {
             throw new CriticalError('Cache: Predis connection refused (' . $e->getMessage() . ').', $e->getCode(), $e);
@@ -168,60 +173,6 @@ class PredisHandler extends BaseHandler implements LockStoreInterface
         return $this->redis->hincrby($key, 'data', -$offset);
     }
 
-    public function acquireLock(string $key, string $owner, int $ttl): bool
-    {
-        $key    = static::validateKey($key);
-        $result = $this->redis->set($key, $owner, 'EX', $ttl, 'NX');
-
-        return $result instanceof Status && $result->getPayload() === 'OK';
-    }
-
-    public function releaseLock(string $key, string $owner): bool
-    {
-        $key = static::validateKey($key);
-
-        $script = <<<'LUA'
-            if redis.call("get", KEYS[1]) == ARGV[1] then
-                return redis.call("del", KEYS[1])
-            end
-
-            return 0
-            LUA;
-
-        return $this->redis->eval($script, 1, $key, $owner) === 1;
-    }
-
-    public function forceReleaseLock(string $key): bool
-    {
-        $key     = static::validateKey($key);
-        $deleted = $this->redis->del($key);
-
-        return is_int($deleted) && $deleted >= 0;
-    }
-
-    public function refreshLock(string $key, string $owner, int $ttl): bool
-    {
-        $key = static::validateKey($key);
-
-        $script = <<<'LUA'
-            if redis.call("get", KEYS[1]) == ARGV[1] then
-                return redis.call("expire", KEYS[1], ARGV[2])
-            end
-
-            return 0
-            LUA;
-
-        return $this->redis->eval($script, 1, $key, $owner, (string) $ttl) === 1;
-    }
-
-    public function getLockOwner(string $key): ?string
-    {
-        $key   = static::validateKey($key);
-        $owner = $this->redis->get($key);
-
-        return is_string($owner) ? $owner : null;
-    }
-
     public function clean(): bool
     {
         return $this->redis->flushdb()->getPayload() === 'OK';
@@ -255,6 +206,11 @@ class PredisHandler extends BaseHandler implements LockStoreInterface
     public function isSupported(): bool
     {
         return class_exists(Client::class);
+    }
+
+    public function lockStore(): LockStoreInterface
+    {
+        return $this->lockStore ??= new PredisLockStore($this->redis);
     }
 
     public function ping(): bool
