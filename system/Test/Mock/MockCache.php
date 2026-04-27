@@ -16,10 +16,12 @@ namespace CodeIgniter\Test\Mock;
 use Closure;
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Cache\Handlers\BaseHandler;
+use CodeIgniter\Cache\LockStoreInterface;
+use CodeIgniter\Cache\LockStoreProvider;
 use CodeIgniter\I18n\Time;
 use PHPUnit\Framework\Assert;
 
-class MockCache extends BaseHandler implements CacheInterface
+class MockCache extends BaseHandler implements CacheInterface, LockStoreProvider
 {
     /**
      * Mock cache storage.
@@ -41,6 +43,8 @@ class MockCache extends BaseHandler implements CacheInterface
      * @var bool
      */
     protected $bypass = false;
+
+    private ?MockLockStore $lockStore = null;
 
     /**
      * Takes care of any handler-specific setup that must be done.
@@ -180,6 +184,7 @@ class MockCache extends BaseHandler implements CacheInterface
     {
         $this->cache       = [];
         $this->expirations = [];
+        $this->lockStore?->clean();
 
         return true;
     }
@@ -225,6 +230,11 @@ class MockCache extends BaseHandler implements CacheInterface
     public function isSupported(): bool
     {
         return true;
+    }
+
+    public function lockStore(): LockStoreInterface
+    {
+        return $this->lockStore ??= new MockLockStore();
     }
 
     // --------------------------------------------------------------------
