@@ -134,10 +134,8 @@ class Services extends BaseService
 
     /**
      * The locks service provides atomic locks backed by supported cache handlers.
-     *
-     * @return LockManager
      */
-    public static function locks(?CacheInterface $cache = null, bool $getShared = true)
+    public static function locks(?CacheInterface $cache = null, bool $getShared = true): LockManager
     {
         if ($getShared) {
             return static::getSharedInstance('locks', $cache);

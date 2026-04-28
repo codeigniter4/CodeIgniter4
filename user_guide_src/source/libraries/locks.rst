@@ -33,6 +33,11 @@ support locks.
     storage while lock-protected work is running, or use a dedicated cache
     store for locks when that separation is important.
 
+.. note:: File-backed locks clear released and expired lock contents, but may
+    leave empty lock files in the cache directory. These files do not represent
+    active locks and may be removed by normal cache cleanup when no
+    lock-protected work is running.
+
 *************
 Example Usage
 *************
@@ -89,14 +94,17 @@ service or constructing a lock manager throws a
 ``CodeIgniter\Lock\Exceptions\LockException``.
 
 Custom cache handlers can support locks by implementing
-``CodeIgniter\Cache\LockStoreProvider`` and returning a
+``CodeIgniter\Cache\LockStoreProviderInterface`` and returning a
 ``CodeIgniter\Cache\LockStoreInterface`` instance. This keeps lock support
 opt-in and does not require all cache handlers to implement lock operations.
 
 Custom lock stores must implement owner-aware acquisition, release, refresh,
-force release, and owner lookup methods. The owner token is used to ensure
-``release()`` and ``refresh()`` only affect the process that currently owns the
-lock.
+force release, and owner lookup methods. ``acquireLock()`` should atomically
+claim the lock for an owner token and TTL. ``releaseLock()`` and
+``refreshLock()`` must only affect the lock when the supplied owner token still
+matches the current owner. ``forceReleaseLock()`` intentionally ignores
+ownership, and ``getLockOwner()`` should return ``null`` when the lock is absent
+or expired.
 
 ***************
 Class Reference

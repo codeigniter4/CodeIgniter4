@@ -15,7 +15,7 @@ namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\Cache\LockStoreInterface;
-use CodeIgniter\Cache\LockStoreProvider;
+use CodeIgniter\Cache\LockStoreProviderInterface;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
@@ -119,7 +119,7 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
     {
         $handler = $this->handler;
 
-        $this->assertInstanceOf(LockStoreProvider::class, $handler);
+        $this->assertInstanceOf(LockStoreProviderInterface::class, $handler);
 
         $store = $handler->lockStore();
 
@@ -268,7 +268,7 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
     {
         $handler = $this->handler;
 
-        $this->assertInstanceOf(LockStoreProvider::class, $handler);
+        $this->assertInstanceOf(LockStoreProviderInterface::class, $handler);
 
         $lockStore = $handler->lockStore();
 

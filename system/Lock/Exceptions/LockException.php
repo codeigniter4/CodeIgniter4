@@ -19,6 +19,6 @@ class LockException extends FrameworkException
 {
     public static function forUnsupportedStore(string $class): self
     {
-        return new self(sprintf('The cache handler "%s" does not support locks.', $class));
+        return new self(lang('Lock.unsupportedStore', [$class]));
     }
 }

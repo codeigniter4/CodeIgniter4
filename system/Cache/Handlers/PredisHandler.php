@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\LockStoreInterface;
-use CodeIgniter\Cache\LockStoreProvider;
+use CodeIgniter\Cache\LockStoreProviderInterface;
 use CodeIgniter\Cache\LockStores\PredisLockStore;
 use CodeIgniter\Exceptions\CriticalError;
 use CodeIgniter\I18n\Time;
@@ -29,7 +29,7 @@ use Predis\Response\Status;
  *
  * @see \CodeIgniter\Cache\Handlers\PredisHandlerTest
  */
-class PredisHandler extends BaseHandler implements LockStoreProvider
+class PredisHandler extends BaseHandler implements LockStoreProviderInterface
 {
     /**
      * Default config
@@ -210,6 +210,7 @@ class PredisHandler extends BaseHandler implements LockStoreProvider
 
     public function lockStore(): LockStoreInterface
     {
+        // Predis applies the configured prefix at the client level.
         return $this->lockStore ??= new PredisLockStore($this->redis);
     }
 

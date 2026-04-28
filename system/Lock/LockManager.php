@@ -15,19 +15,19 @@ namespace CodeIgniter\Lock;
 
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Cache\LockStoreInterface;
-use CodeIgniter\Cache\LockStoreProvider;
+use CodeIgniter\Cache\LockStoreProviderInterface;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Lock\Exceptions\LockException;
 
-class LockManager
+final readonly class LockManager
 {
     private const KEY_PREFIX = 'lock_';
 
-    private readonly LockStoreInterface $store;
+    private LockStoreInterface $store;
 
     public function __construct(CacheInterface $cache)
     {
-        if (! $cache instanceof LockStoreProvider) {
+        if (! $cache instanceof LockStoreProviderInterface) {
             throw LockException::forUnsupportedStore($cache::class);
         }
 

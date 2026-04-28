@@ -15,7 +15,7 @@ namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\Exceptions\CacheException;
 use CodeIgniter\Cache\LockStoreInterface;
-use CodeIgniter\Cache\LockStoreProvider;
+use CodeIgniter\Cache\LockStoreProviderInterface;
 use CodeIgniter\Cache\LockStores\FileLockStore;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
@@ -26,7 +26,7 @@ use Throwable;
  *
  * @see \CodeIgniter\Cache\Handlers\FileHandlerTest
  */
-class FileHandler extends BaseHandler implements LockStoreProvider
+class FileHandler extends BaseHandler implements LockStoreProviderInterface
 {
     /**
      * Maximum key length.
@@ -50,7 +50,7 @@ class FileHandler extends BaseHandler implements LockStoreProvider
      */
     protected $mode;
 
-    private ?LockStoreInterface $lockStore = null;
+    private readonly LockStoreInterface $lockStore;
 
     /**
      * Note: Use `CacheFactory::getHandler()` to instantiate.
@@ -73,6 +73,8 @@ class FileHandler extends BaseHandler implements LockStoreProvider
 
         $this->mode   = $options['mode'];
         $this->prefix = $config->prefix;
+
+        $this->lockStore = new FileLockStore($this->path, $this->mode, $this->prefix);
 
         helper('filesystem');
     }
@@ -192,7 +194,7 @@ class FileHandler extends BaseHandler implements LockStoreProvider
 
     public function lockStore(): LockStoreInterface
     {
-        return $this->lockStore ??= new FileLockStore($this->path, $this->mode, $this->prefix);
+        return $this->lockStore;
     }
 
     /**

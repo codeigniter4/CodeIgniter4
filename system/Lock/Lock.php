@@ -17,13 +17,15 @@ use Closure;
 use CodeIgniter\Cache\LockStoreInterface;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 
-class Lock implements LockInterface
+final readonly class Lock implements LockInterface
 {
+    private const BLOCK_RETRY_MICROSECONDS = 100_000;
+
     public function __construct(
-        private readonly LockStoreInterface $store,
-        private readonly string $key,
-        private readonly int $ttl,
-        private readonly string $owner,
+        private LockStoreInterface $store,
+        private string $key,
+        private int $ttl,
+        private string $owner,
     ) {
         if ($ttl < 1) {
             throw new InvalidArgumentException('Lock TTL must be a positive integer.');
@@ -52,7 +54,7 @@ class Lock implements LockInterface
                 return true;
             }
 
-            usleep(100_000);
+            usleep(self::BLOCK_RETRY_MICROSECONDS);
         } while (microtime(true) < $expiresAt);
 
         return false;

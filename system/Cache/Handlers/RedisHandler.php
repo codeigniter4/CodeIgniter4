@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\LockStoreInterface;
-use CodeIgniter\Cache\LockStoreProvider;
+use CodeIgniter\Cache\LockStoreProviderInterface;
 use CodeIgniter\Cache\LockStores\RedisLockStore;
 use CodeIgniter\Exceptions\CriticalError;
 use CodeIgniter\I18n\Time;
@@ -27,7 +27,7 @@ use RedisException;
  *
  * @see \CodeIgniter\Cache\Handlers\RedisHandlerTest
  */
-class RedisHandler extends BaseHandler implements LockStoreProvider
+class RedisHandler extends BaseHandler implements LockStoreProviderInterface
 {
     /**
      * Default config

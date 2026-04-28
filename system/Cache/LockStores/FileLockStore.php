@@ -56,8 +56,7 @@ class FileLockStore implements LockStoreInterface
 
     public function forceReleaseLock(string $key): bool
     {
-        return ! is_file($this->path . FileHandler::validateKey($key, $this->prefix))
-            || $this->withLockFile($key, static fn ($handle): bool => self::clearLockFile($handle), false);
+        return $this->withLockFile($key, static fn ($handle): bool => self::clearLockFile($handle));
     }
 
     public function refreshLock(string $key, string $owner, int $ttl): bool

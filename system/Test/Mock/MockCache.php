@@ -17,11 +17,11 @@ use Closure;
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Cache\Handlers\BaseHandler;
 use CodeIgniter\Cache\LockStoreInterface;
-use CodeIgniter\Cache\LockStoreProvider;
+use CodeIgniter\Cache\LockStoreProviderInterface;
 use CodeIgniter\I18n\Time;
 use PHPUnit\Framework\Assert;
 
-class MockCache extends BaseHandler implements CacheInterface, LockStoreProvider
+class MockCache extends BaseHandler implements CacheInterface, LockStoreProviderInterface
 {
     /**
      * Mock cache storage.

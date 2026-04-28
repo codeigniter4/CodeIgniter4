@@ -13,7 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache;
 
-interface LockStoreProvider
+interface LockStoreProviderInterface
 {
+    /**
+     * Returns the atomic lock store for this cache handler.
+     */
     public function lockStore(): LockStoreInterface;
 }
