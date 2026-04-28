@@ -39,6 +39,8 @@ use Config\App;
 use Config\Cache;
 use Config\Feature;
 use Config\Services;
+use Kint\Kint;
+use Kint\Renderer\RichRenderer;
 use Locale;
 use ReflectionFunction;
 use ReflectionFunctionAbstract;
@@ -207,10 +209,17 @@ class CodeIgniter
             return;
         }
 
-        $csp = service('csp');
-        if ($csp->enabled()) {
-            RichRenderer::$js_nonce  = $csp->getScriptNonce();
-            RichRenderer::$css_nonce = $csp->getStyleNonce();
+        // Keep CSP lazy unless it was already initialized or explicitly enabled.
+        if (Services::has('csp') || config(App::class)->CSPEnabled) {
+            $csp = service('csp');
+
+            if ($csp->enabled()) {
+                RichRenderer::$js_nonce  = $csp->getScriptNonce();
+                RichRenderer::$css_nonce = $csp->getStyleNonce();
+            } else {
+                RichRenderer::$js_nonce  = null;
+                RichRenderer::$css_nonce = null;
+            }
         } else {
             RichRenderer::$js_nonce  = null;
             RichRenderer::$css_nonce = null;

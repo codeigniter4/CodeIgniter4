@@ -1306,4 +1306,26 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertSame($csp->getStyleNonce(), RichRenderer::$css_nonce);
         $this->assertTrue(RichRenderer::$needs_pre_render);
     }
+
+    public function testResetForWorkerModeDoesNotLoadCspWhenDisabled(): void
+    {
+        $this->resetServices();
+
+        config(App::class)->CSPEnabled = false;
+
+        RichRenderer::$js_nonce         = 'stale-script-nonce';
+        RichRenderer::$css_nonce        = 'stale-style-nonce';
+        RichRenderer::$needs_pre_render = false;
+
+        $codeigniter = new MockCodeIgniter(new App());
+
+        $this->assertFalse(Services::has('csp'));
+
+        $codeigniter->resetForWorkerMode();
+
+        $this->assertFalse(Services::has('csp'));
+        $this->assertNull(RichRenderer::$js_nonce);
+        $this->assertNull(RichRenderer::$css_nonce);
+        $this->assertTrue(RichRenderer::$needs_pre_render);
+    }
 }
