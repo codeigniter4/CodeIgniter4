@@ -25,6 +25,11 @@ final readonly class LockManager
 
     private LockStoreInterface $store;
 
+    /**
+     * @param CacheInterface $cache Cache handler that must also implement LockStoreProviderInterface.
+     *
+     * @throws LockException When the cache handler does not support locks.
+     */
     public function __construct(CacheInterface $cache)
     {
         if (! $cache instanceof LockStoreProviderInterface) {
@@ -50,6 +55,6 @@ final readonly class LockManager
 
     private function key(string $name): string
     {
-        return self::KEY_PREFIX . hash('sha256', $name);
+        return self::KEY_PREFIX . hash('xxh128', $name);
     }
 }

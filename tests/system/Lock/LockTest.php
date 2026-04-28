@@ -199,6 +199,6 @@ final class LockTest extends CIUnitTestCase
 
     private function lockFile(string $name): string
     {
-        return rtrim($this->config->file['storePath'], '\\/') . '/lock_' . hash('sha256', $name);
+        return rtrim($this->config->file['storePath'], '\\/') . '/lock_' . hash('xxh128', $name);
     }
 }
