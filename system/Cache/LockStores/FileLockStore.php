@@ -146,7 +146,7 @@ class FileLockStore implements LockStoreInterface
         }
 
         try {
-            $data = unserialize($content);
+            $data = json_decode($content, true, flags: JSON_THROW_ON_ERROR);
         } catch (Throwable) {
             return null;
         }
@@ -169,7 +169,13 @@ class FileLockStore implements LockStoreInterface
             return false;
         }
 
-        if (fwrite($handle, serialize(['owner' => $owner, 'expires' => $expires])) === false) {
+        try {
+            $content = json_encode(['owner' => $owner, 'expires' => $expires], JSON_THROW_ON_ERROR);
+        } catch (Throwable) {
+            return false;
+        }
+
+        if (fwrite($handle, $content) === false) {
             return false;
         }
 
