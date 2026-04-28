@@ -57,7 +57,7 @@ in a ``finally`` block.
 
 .. literalinclude:: locks/002.php
 
-If the lock cannot be acquired, ``run()`` returns ``null`` and the callback is
+If the lock cannot be acquired, ``run()`` returns ``false`` and the callback is
 not called.
 
 Blocking
@@ -143,7 +143,7 @@ Class Reference
 
         :param Closure $callback: The callback to run while the lock is held.
         :param int $waitSeconds: Maximum number of seconds to wait.
-        :returns: The callback result, or ``null`` if the lock was not acquired.
+        :returns: The callback result, or ``false`` if the lock was not acquired.
         :rtype: mixed
 
     .. php:method:: release()

@@ -51,6 +51,7 @@ The following is a list of the core system classes that are invoked every time C
 *  ``CodeIgniter\HTTP\SiteURIFactory``
 *  ``CodeIgniter\HTTP\URI``
 *  ``CodeIgniter\HTTP\UserAgent`` (if launched over HTTP)
+*  ``CodeIgniter\Lock\LockManager``
 *  ``CodeIgniter\Log\Logger``
 *  ``CodeIgniter\Log\Handlers\BaseHandler``
 *  ``CodeIgniter\Log\Handlers\FileHandler``

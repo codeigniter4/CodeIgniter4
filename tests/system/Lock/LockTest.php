@@ -157,13 +157,13 @@ final class LockTest extends CIUnitTestCase
         $this->assertTrue($this->locks->create('notifications.send', 60)->acquire());
     }
 
-    public function testRunReturnsNullWhenLockCannotBeAcquired(): void
+    public function testRunReturnsFalseWhenLockCannotBeAcquired(): void
     {
         $first  = $this->locks->create('notifications.send', 60);
         $second = $this->locks->create('notifications.send', 60);
 
         $this->assertTrue($first->acquire());
-        $this->assertNull($second->run(static fn (): string => 'sent'));
+        $this->assertFalse($second->run(static fn (): string => 'sent'));
     }
 
     public function testLogicalNamesCanContainReservedCacheCharacters(): void

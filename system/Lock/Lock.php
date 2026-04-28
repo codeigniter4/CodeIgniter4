@@ -66,7 +66,7 @@ class Lock implements LockInterface
         $acquired = $waitSeconds > 0 ? $this->block($waitSeconds) : $this->acquire();
 
         if (! $acquired) {
-            return null;
+            return false;
         }
 
         try {
