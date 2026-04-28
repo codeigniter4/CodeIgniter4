@@ -18,6 +18,7 @@ use CodeIgniter\Database\Config;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use PHPUnit\Framework\Attributes\Group;
+use RuntimeException;
 
 /**
  * @internal
@@ -46,6 +47,22 @@ final class WorkerModeTest extends CIUnitTestCase
 
         $this->assertSame(0, $conn->transDepth);
         $this->assertNotFalse($this->getPrivateProperty($conn, 'connID'));
+    }
+
+    public function testCleanupForWorkerModeLogsRollbackCallbackException(): void
+    {
+        $conn = Config::connect();
+        $this->assertInstanceOf(BaseConnection::class, $conn);
+
+        $conn->transStart();
+        $conn->afterRollback(static function (): void {
+            throw new RuntimeException('Rollback callback failed.');
+        });
+
+        Config::cleanupForWorkerMode();
+
+        $this->assertSame(0, $conn->transDepth);
+        $this->assertLogged('critical', 'Rollback callback failed.');
     }
 
     public function testReconnectForWorkerMode(): void

@@ -16,6 +16,7 @@ namespace CodeIgniter\Database;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use Config\Database as DbConfig;
+use Throwable;
 
 /**
  * @see \CodeIgniter\Database\ConfigTest
@@ -184,7 +185,12 @@ class Config extends BaseConfig
                 log_message('error', "Uncommitted transaction detected in database group '{$group}'. Transactions must be completed before request ends.");
 
                 while ($connection->transDepth > 0) {
-                    $connection->transRollback();
+                    try {
+                        $connection->transRollback();
+                    } catch (Throwable $e) {
+                        log_message('critical', $e->getMessage());
+                        break;
+                    }
                 }
             }
 
