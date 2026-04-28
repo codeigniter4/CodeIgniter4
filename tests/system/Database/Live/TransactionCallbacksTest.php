@@ -23,11 +23,9 @@ use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
  * @internal
- *
- * @no-final
  */
 #[Group('DatabaseLive')]
-class TransactionCallbacksTest extends CIUnitTestCase
+final class TransactionCallbacksTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
