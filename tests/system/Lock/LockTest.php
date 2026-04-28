@@ -194,6 +194,7 @@ final class LockTest extends CIUnitTestCase
         $this->expectException(LockException::class);
         $this->expectExceptionMessage('does not support locks');
 
+        // @phpstan-ignore argument.type
         new LockManager(CacheFactory::getHandler($this->config, 'dummy'));
     }
 

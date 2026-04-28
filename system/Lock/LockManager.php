@@ -26,7 +26,7 @@ final readonly class LockManager
     private LockStoreInterface $store;
 
     /**
-     * @param CacheInterface $cache Cache handler that must also implement LockStoreProviderInterface.
+     * @param CacheInterface&LockStoreProviderInterface $cache Cache handler that supports lock stores.
      *
      * @throws LockException When the cache handler does not support locks.
      */
