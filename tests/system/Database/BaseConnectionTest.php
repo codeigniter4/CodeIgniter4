@@ -558,6 +558,72 @@ final class BaseConnectionTest extends CIUnitTestCase
         $this->assertNull($result);
     }
 
+    public function testAfterCommitCallbacksRemainQueuedWhenDriverCommitFails(): void
+    {
+        $callbacks = [];
+
+        $db = new class ($this->options) extends MockConnection {
+            public int $commitAttempts = 0;
+
+            protected function _transCommit(): bool
+            {
+                $this->commitAttempts++;
+
+                return $this->commitAttempts > 1;
+            }
+        };
+
+        $this->assertTrue($db->transBegin());
+        $db->afterCommit(static function () use (&$callbacks): void {
+            $callbacks[] = 'committed';
+        });
+
+        $this->assertFalse($db->transCommit());
+        $this->assertSame([], $callbacks);
+        $this->assertSame(1, $db->transDepth);
+
+        $this->assertTrue($db->transCommit());
+        $this->assertSame(['committed'], $callbacks);
+        $this->assertSame(0, $db->transDepth);
+
+        $this->assertTrue($db->transBegin());
+        $this->assertTrue($db->transCommit());
+        $this->assertSame(['committed'], $callbacks);
+    }
+
+    public function testAfterRollbackCallbacksRemainQueuedWhenDriverRollbackFails(): void
+    {
+        $callbacks = [];
+
+        $db = new class ($this->options) extends MockConnection {
+            public int $rollbackAttempts = 0;
+
+            protected function _transRollback(): bool
+            {
+                $this->rollbackAttempts++;
+
+                return $this->rollbackAttempts > 1;
+            }
+        };
+
+        $this->assertTrue($db->transBegin());
+        $db->afterRollback(static function () use (&$callbacks): void {
+            $callbacks[] = 'rolled back';
+        });
+
+        $this->assertFalse($db->transRollback());
+        $this->assertSame([], $callbacks);
+        $this->assertSame(1, $db->transDepth);
+
+        $this->assertTrue($db->transRollback());
+        $this->assertSame(['rolled back'], $callbacks);
+        $this->assertSame(0, $db->transDepth);
+
+        $this->assertTrue($db->transBegin());
+        $this->assertTrue($db->transRollback());
+        $this->assertSame(['rolled back'], $callbacks);
+    }
+
     public function testCallFunctionDoesNotDoublePrefixAlreadyPrefixedName(): void
     {
         $db = new class ($this->options) extends MockConnection {
