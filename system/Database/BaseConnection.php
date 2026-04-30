@@ -1067,6 +1067,44 @@ abstract class BaseConnection implements ConnectionInterface
     }
 
     /**
+     * Run the callback inside a transaction.
+     *
+     * @param callable(self): mixed $callback
+     */
+    public function transaction(callable $callback): mixed
+    {
+        if (! $this->transEnabled) {
+            return $callback($this);
+        }
+
+        if (! $this->transBegin()) {
+            return false;
+        }
+
+        try {
+            $result = $callback($this);
+        } catch (Throwable $e) {
+            try {
+                $this->transRollback();
+            } finally {
+                if ($this->transDepth > 0) {
+                    $this->transStatus = false;
+                } elseif ($this->transStrict === false) {
+                    $this->transStatus = true;
+                }
+            }
+
+            throw $e;
+        }
+
+        if (! $this->transComplete()) {
+            return false;
+        }
+
+        return $result;
+    }
+
+    /**
      * Begin Transaction
      */
     public function transBegin(bool $testMode = false): bool

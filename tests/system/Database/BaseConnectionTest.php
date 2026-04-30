@@ -624,6 +624,40 @@ final class BaseConnectionTest extends CIUnitTestCase
         $this->assertSame(['rolled back'], $callbacks);
     }
 
+    public function testTransactionReturnsFalseWhenTransactionCannotBegin(): void
+    {
+        $callbackRan = false;
+
+        $db = new class ($this->options) extends MockConnection {
+            protected function _transBegin(): bool
+            {
+                return false;
+            }
+        };
+
+        $result = $db->transaction(static function () use (&$callbackRan): void {
+            $callbackRan = true;
+        });
+
+        $this->assertFalse($result);
+        $this->assertFalse($callbackRan);
+    }
+
+    public function testTransactionRunsCallbackWhenTransactionsAreDisabled(): void
+    {
+        $db = new MockConnection($this->options);
+        $db->transOff();
+
+        $result = $db->transaction(static function (BaseConnection $connection): string {
+            $connection->afterCommit(static function (): void {});
+
+            return 'not wrapped';
+        });
+
+        $this->assertSame('not wrapped', $result);
+        $this->assertSame(0, $db->transDepth);
+    }
+
     public function testCallFunctionDoesNotDoublePrefixAlreadyPrefixedName(): void
     {
         $db = new class ($this->options) extends MockConnection {

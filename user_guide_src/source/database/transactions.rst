@@ -49,6 +49,36 @@ You can run as many queries as you want between the ``transStart()``/``transComp
 methods and they will all be committed or rolled back based on the success
 or failure of any given query.
 
+.. _transactions-closure:
+
+Running Transactions with a Closure
+===================================
+
+.. versionadded:: 4.8.0
+
+You may also run a transaction with the ``transaction()`` method. It starts a
+transaction, runs the callback, commits when the callback completes
+successfully, and rolls back if the callback throws an exception:
+
+.. literalinclude:: transactions/012.php
+
+The callback receives the current database connection as its first argument.
+If the transaction commits successfully, ``transaction()`` returns the callback
+return value. If the transaction cannot begin, or if a query failure marks the
+transaction as failed without throwing an exception, ``transaction()`` rolls
+back and returns ``false``.
+
+If the callback throws an exception, ``transaction()`` rolls back and rethrows
+the original exception.
+
+If an ``afterRollback()`` callback throws while ``transaction()`` is rolling
+back, that callback exception bubbles to the caller instead of the normal
+``false`` return value or the original callback exception.
+
+Callbacks registered with ``afterCommit()`` or ``afterRollback()`` inside the
+transaction callback follow the same rules as other transaction callbacks: they
+run only after the outermost transaction commits or rolls back.
+
 Strict Mode
 ===========
 

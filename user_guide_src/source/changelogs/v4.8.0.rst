@@ -43,7 +43,7 @@ Interface Changes
 **NOTE:** If you've implemented your own classes that implement these interfaces from scratch, you will need to
 update your implementations to include the new methods or method changes to ensure compatibility.
 
-- **Database:** ``CodeIgniter\Database\ConnectionInterface`` now requires the ``afterCommit()`` and ``afterRollback()`` methods.
+- **Database:** ``CodeIgniter\Database\ConnectionInterface`` now requires the ``afterCommit()``, ``afterRollback()``, and ``transaction()`` methods.
 - **Logging:** ``CodeIgniter\Log\Handlers\HandlerInterface::handle()`` now requires a third parameter ``array $context = []``. Any custom log handler that overrides ``handle()`` - whether implementing ``HandlerInterface`` directly or extending a built-in handler class - must add the parameter to its ``handle()`` method signature.
 - **Security:** The ``SecurityInterface``'s ``verify()`` method now has a native return type of ``static``.
 
@@ -197,6 +197,7 @@ Database
 ========
 
 - Added ``afterCommit()`` and ``afterRollback()`` transaction callbacks to database connections. These callbacks run after the outermost transaction commits or rolls back. See :ref:`transactions-transaction-callbacks`.
+- Added the ``transaction()`` method to database connections to run a callback inside a transaction. See :ref:`transactions-closure`.
 - Added ``trustServerCertificate`` option to ``SQLSRV`` database connections in ``Config\Database``. Set it to ``true`` to trust the server certificate without CA validation when using encrypted connections.
 
 Query Builder
