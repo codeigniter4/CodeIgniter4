@@ -136,7 +136,11 @@ interface ConnectionInterface
     /**
      * Run the callback inside a transaction.
      *
-     * @param callable(self): mixed $callback
+     * @template TReturn
+     *
+     * @param callable(self): TReturn $callback
+     *
+     * @return false|TReturn
      */
     public function transaction(callable $callback): mixed;
 

@@ -62,7 +62,7 @@ successfully, and rolls back if the callback throws an exception:
 
 .. literalinclude:: transactions/012.php
 
-The callback receives the current database connection as its first argument.
+The callback receives the current database connection as its only argument.
 If the transaction commits successfully, ``transaction()`` returns the callback
 return value. If the transaction cannot begin, or if a query failure marks the
 transaction as failed without throwing an exception, ``transaction()`` rolls
