@@ -68,6 +68,9 @@ return value. If the transaction cannot begin, or if a query failure marks the
 transaction as failed without throwing an exception, ``transaction()`` rolls
 back and returns ``false``.
 
+If transactions are disabled, ``transaction()`` does not start a transaction.
+It runs the callback and returns the callback result.
+
 If the callback throws an exception, ``transaction()`` rolls back and rethrows
 the original exception.
 

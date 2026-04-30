@@ -42,8 +42,6 @@ final class TransactionClosureTest extends CIUnitTestCase
 
     /**
      * Sets $DBDebug to false.
-     *
-     * WARNING: this value will persist! take care to roll it back.
      */
     protected function disableDBDebug(): void
     {
@@ -211,6 +209,7 @@ final class TransactionClosureTest extends CIUnitTestCase
             $this->assertSame('Rollback callback failed.', $e->getMessage());
         }
 
+        $this->assertLogContains('error', 'Transaction callback failed.');
         $this->dontSeeInDatabase('job', ['name' => 'Rolled Back Job']);
     }
 

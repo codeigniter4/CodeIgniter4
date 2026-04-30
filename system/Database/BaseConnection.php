@@ -1090,6 +1090,10 @@ abstract class BaseConnection implements ConnectionInterface
         } catch (Throwable $e) {
             try {
                 $this->transRollback();
+            } catch (Throwable $rollbackException) {
+                log_message('error', 'Database: Transaction callback threw an exception before rollback failed: ' . $e);
+
+                throw $rollbackException;
             } finally {
                 if ($this->transDepth > 0) {
                     $this->transStatus = false;
