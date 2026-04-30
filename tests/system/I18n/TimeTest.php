@@ -1040,6 +1040,117 @@ final class TimeTest extends CIUnitTestCase
         $this->assertFalse($time2->isAfter($time1));
     }
 
+    public function testBetweenInclusive(): void
+    {
+        $time  = new Time('2024-01-01 12:00:00.123456');
+        $start = new Time('2024-01-01 12:00:00.123456');
+        $end   = new Time('2024-01-01 12:00:01.000000');
+
+        $this->assertTrue($time->between($start, $end));
+    }
+
+    public function testBetweenExclusive(): void
+    {
+        $time  = new Time('2024-01-01 12:00:00.123456');
+        $start = new Time('2024-01-01 12:00:00.123456');
+        $end   = new Time('2024-01-01 12:00:01.000000');
+
+        $this->assertFalse($time->between($start, $end, false));
+    }
+
+    public function testBetweenSwapsReversedBounds(): void
+    {
+        $time = Time::parse('2024-01-01 12:30:00', 'UTC');
+
+        $this->assertTrue($time->between('2024-01-01 13:00:00', '2024-01-01 12:00:00'));
+    }
+
+    public function testBetweenSupportsTimezoneForStringInputs(): void
+    {
+        $time = Time::parse('2024-01-01 12:30:00', 'UTC');
+
+        $this->assertTrue($time->between('2024-01-01 13:00:00', '2024-01-01 14:00:00', true, 'Europe/Warsaw'));
+    }
+
+    public function testBetweenSupportsDateTimeImmutable(): void
+    {
+        $time  = Time::parse('2024-01-01 12:30:00', 'UTC');
+        $start = new DateTimeImmutable('2024-01-01 12:00:00', new DateTimeZone('UTC'));
+        $end   = new DateTimeImmutable('2024-01-01 13:00:00', new DateTimeZone('UTC'));
+
+        $this->assertTrue($time->between($start, $end));
+    }
+
+    public function testMinReturnsEarlierTime(): void
+    {
+        $time  = new Time('2024-01-01 12:00:00');
+        $later = new Time('2024-01-01 12:00:01');
+
+        $this->assertSame($time, $time->min($later));
+        $this->assertTrue($later->min($time)->sameAs($time));
+    }
+
+    public function testMinReturnsCurrentInstanceOnEqualTime(): void
+    {
+        $time  = new Time('2024-01-01 12:00:00');
+        $equal = new Time('2024-01-01 12:00:00');
+
+        $this->assertSame($time, $time->min($equal));
+    }
+
+    public function testMinSupportsTimezoneForStringInputs(): void
+    {
+        $time = Time::parse('2024-01-01 12:30:00', 'UTC');
+
+        $this->assertTrue($time->min('2024-01-01 13:00:00', 'Europe/Warsaw')->sameAs('2024-01-01 13:00:00', 'Europe/Warsaw'));
+    }
+
+    public function testMinWithNullUsesNow(): void
+    {
+        Time::setTestNow('2024-01-01 12:00:00', 'UTC');
+
+        $past   = Time::parse('2024-01-01 11:59:59', 'UTC');
+        $future = Time::parse('2024-01-01 12:00:01', 'UTC');
+
+        $this->assertSame($past, $past->min());
+        $this->assertTrue($future->min()->sameAs(Time::now('UTC')));
+    }
+
+    public function testMaxReturnsLaterTime(): void
+    {
+        $time    = new Time('2024-01-01 12:00:00');
+        $earlier = new Time('2024-01-01 11:59:59');
+
+        $this->assertSame($time, $time->max($earlier));
+        $this->assertTrue($earlier->max($time)->sameAs($time));
+    }
+
+    public function testMaxReturnsCurrentInstanceOnEqualTime(): void
+    {
+        $time  = new Time('2024-01-01 12:00:00');
+        $equal = new Time('2024-01-01 12:00:00');
+
+        $this->assertSame($time, $time->max($equal));
+    }
+
+    public function testMaxSupportsTimezoneForStringInputs(): void
+    {
+        $time = Time::parse('2024-01-01 12:30:00', 'UTC');
+
+        $this->assertTrue($time->max('2024-01-01 13:00:00', 'Europe/Warsaw')->sameAs($time));
+    }
+
+    public function testMaxWithNullUsesNow(): void
+    {
+        Time::setTestNow('2024-01-01 12:00:00', 'UTC');
+
+        $past   = Time::parse('2024-01-01 11:59:59', 'UTC');
+        $future = Time::parse('2024-01-01 12:00:01', 'UTC');
+
+        $this->assertTrue($past->max()->sameAs(Time::now('UTC')));
+        $this->assertSame($future, $future->max());
+    }
+
     public function testIsPast(): void
     {
         Time::setTestNow('2025-12-30 12:00:00', 'Asia/Tehran');

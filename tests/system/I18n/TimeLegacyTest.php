@@ -923,6 +923,74 @@ final class TimeLegacyTest extends CIUnitTestCase
         $this->assertTrue($time2->isAfter($time1));
     }
 
+    public function testBetweenInclusive(): void
+    {
+        $time  = new TimeLegacy('2024-01-01 12:00:00.123456');
+        $start = new TimeLegacy('2024-01-01 12:00:00.123456');
+        $end   = new TimeLegacy('2024-01-01 12:00:01.000000');
+
+        $this->assertTrue($time->between($start, $end));
+    }
+
+    public function testBetweenExclusive(): void
+    {
+        $time  = new TimeLegacy('2024-01-01 12:00:00.123456');
+        $start = new TimeLegacy('2024-01-01 12:00:00.123456');
+        $end   = new TimeLegacy('2024-01-01 12:00:01.000000');
+
+        $this->assertFalse($time->between($start, $end, false));
+    }
+
+    public function testBetweenSwapsReversedBounds(): void
+    {
+        $time = TimeLegacy::parse('2024-01-01 12:30:00', 'UTC');
+
+        $this->assertTrue($time->between('2024-01-01 13:00:00', '2024-01-01 12:00:00'));
+    }
+
+    public function testBetweenSupportsTimezoneForStringInputs(): void
+    {
+        $time = TimeLegacy::parse('2024-01-01 12:30:00', 'UTC');
+
+        $this->assertTrue($time->between('2024-01-01 13:00:00', '2024-01-01 14:00:00', true, 'Europe/Warsaw'));
+    }
+
+    public function testMinWithNullUsesNow(): void
+    {
+        TimeLegacy::setTestNow('2024-01-01 12:00:00', 'UTC');
+
+        $past   = TimeLegacy::parse('2024-01-01 11:59:59', 'UTC');
+        $future = TimeLegacy::parse('2024-01-01 12:00:01', 'UTC');
+
+        $this->assertSame($past, $past->min());
+        $this->assertTrue($future->min()->sameAs(TimeLegacy::now('UTC')));
+    }
+
+    public function testMinSupportsTimezoneForStringInputs(): void
+    {
+        $time = TimeLegacy::parse('2024-01-01 12:30:00', 'UTC');
+
+        $this->assertTrue($time->min('2024-01-01 13:00:00', 'Europe/Warsaw')->sameAs('2024-01-01 13:00:00', 'Europe/Warsaw'));
+    }
+
+    public function testMaxWithNullUsesNow(): void
+    {
+        TimeLegacy::setTestNow('2024-01-01 12:00:00', 'UTC');
+
+        $past   = TimeLegacy::parse('2024-01-01 11:59:59', 'UTC');
+        $future = TimeLegacy::parse('2024-01-01 12:00:01', 'UTC');
+
+        $this->assertTrue($past->max()->sameAs(TimeLegacy::now('UTC')));
+        $this->assertSame($future, $future->max());
+    }
+
+    public function testMaxSupportsTimezoneForStringInputs(): void
+    {
+        $time = TimeLegacy::parse('2024-01-01 12:30:00', 'UTC');
+
+        $this->assertTrue($time->max('2024-01-01 13:00:00', 'Europe/Warsaw')->sameAs($time));
+    }
+
     public function testHumanizeYearsSingle(): void
     {
         TimeLegacy::setTestNow('March 10, 2017', 'America/Chicago');

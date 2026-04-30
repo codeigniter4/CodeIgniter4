@@ -393,6 +393,52 @@ Works exactly the same as ``isBefore()`` except checks if the time is after the 
 
 .. literalinclude:: time/037.php
 
+.. _time-comparing-two-times-between:
+
+between()
+---------
+
+.. versionadded:: 4.8.0
+
+Determines if the current instance is between two other times. By default, the start and end bounds are included.
+Pass ``false`` as the third argument to exclude both bounds:
+
+.. literalinclude:: time/045.php
+
+Like other comparison methods, the values can be ``Time`` instances, ``DateTimeInterface`` instances, or strings that
+``DateTime`` can parse. String values may use a timezone string as the fourth parameter. Otherwise, they are parsed
+using the current instance's timezone. If ``$start`` is after ``$end``, the arguments are swapped automatically.
+
+.. _time-comparing-two-times-min:
+
+min()
+-----
+
+.. versionadded:: 4.8.0
+
+Returns the earlier of the current instance and the provided time:
+
+.. literalinclude:: time/046.php
+
+If ``null`` is provided, it compares against ``Time::now()`` in the current instance's timezone. String values may use
+a timezone string as the second parameter. Otherwise, they are parsed using the current instance's timezone. If both
+times are equal, the current instance is returned.
+
+.. _time-comparing-two-times-max:
+
+max()
+-----
+
+.. versionadded:: 4.8.0
+
+Returns the later of the current instance and the provided time:
+
+.. literalinclude:: time/047.php
+
+If ``null`` is provided, it compares against ``Time::now()`` in the current instance's timezone. String values may use
+a timezone string as the second parameter. Otherwise, they are parsed using the current instance's timezone. If both
+times are equal, the current instance is returned.
+
 .. _time-comparing-two-times-isPast:
 
 isPast()
