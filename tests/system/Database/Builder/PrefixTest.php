@@ -55,6 +55,19 @@ final class PrefixTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
+    public function testPrefixesSetOnTableNamesWithWhereColumnClause(): void
+    {
+        $builder = $this->db->table('users');
+
+        $expectedSQL   = 'SELECT * FROM "ci_users" WHERE "ci_users"."created_at" < "ci_users"."updated_at"';
+        $expectedBinds = [];
+
+        $builder->whereColumn('users.created_at', '<', 'users.updated_at');
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
     public function testPrefixWithSubquery(): void
     {
         $expected = <<<'NOWDOC'

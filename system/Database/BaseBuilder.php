@@ -737,6 +737,94 @@ class BaseBuilder
     }
 
     /**
+     * Generates a WHERE clause that compares two columns.
+     *
+     * @param non-empty-string      $first    First column name
+     * @param non-empty-string|null $operator Comparison operator, or second column name when $second is null
+     * @param non-empty-string|null $second   Second column name
+     * @param bool|null             $escape   Whether to protect identifiers
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     */
+    public function whereColumn(string $first, ?string $operator = null, ?string $second = null, ?bool $escape = null)
+    {
+        return $this->whereColumnHaving('QBWhere', $first, $operator, $second, 'AND ', $escape);
+    }
+
+    /**
+     * Generates an OR WHERE clause that compares two columns.
+     *
+     * @param non-empty-string      $first    First column name
+     * @param non-empty-string|null $operator Comparison operator, or second column name when $second is null
+     * @param non-empty-string|null $second   Second column name
+     * @param bool|null             $escape   Whether to protect identifiers
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     */
+    public function orWhereColumn(string $first, ?string $operator = null, ?string $second = null, ?bool $escape = null)
+    {
+        return $this->whereColumnHaving('QBWhere', $first, $operator, $second, 'OR ', $escape);
+    }
+
+    /**
+     * @used-by whereColumn()
+     * @used-by orWhereColumn()
+     *
+     * @param 'QBHaving'|'QBWhere'  $qbKey
+     * @param non-empty-string      $first    First column name
+     * @param non-empty-string|null $operator Comparison operator, or second column name when $second is null
+     * @param non-empty-string|null $second   Second column name
+     * @param non-empty-string      $type
+     * @param bool|null             $escape   Whether to protect identifiers
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     */
+    protected function whereColumnHaving(string $qbKey, string $first, ?string $operator = null, ?string $second = null, string $type = 'AND ', ?bool $escape = null)
+    {
+        if ($second === null) {
+            $second   = $operator;
+            $operator = '=';
+        } elseif ($operator === null) {
+            $operator = '=';
+        }
+
+        $first    = trim($first);
+        $operator = trim($operator);
+        $second   = trim((string) $second);
+
+        if ($first === '' || $second === '') {
+            throw new InvalidArgumentException(sprintf('%s() expects $first and $second to be non-empty strings', debug_backtrace(0, 2)[1]['function']));
+        }
+
+        if (! in_array($operator, ['=', '!=', '<>', '<', '>', '<=', '>='], true)) {
+            throw new InvalidArgumentException(sprintf('%s() expects $operator to be one of: =, !=, <>, <, >, <=, >=', debug_backtrace(0, 2)[1]['function']));
+        }
+
+        if (! is_bool($escape)) {
+            $escape = $this->db->protectIdentifiers;
+        }
+
+        $prefix = $this->{$qbKey} === [] ? $this->groupGetType('') : $this->groupGetType($type);
+
+        $this->{$qbKey}[] = [
+            'columnComparison' => true,
+            'condition'        => $prefix,
+            'escape'           => $escape,
+            'first'            => $first,
+            'operator'         => $operator,
+            'second'           => $second,
+        ];
+
+        return $this;
+    }
+
+    /**
      * @used-by where()
      * @used-by orWhere()
      * @used-by having()
@@ -1383,6 +1471,7 @@ class BaseBuilder
      * @used-by _like()
      * @used-by whereHaving()
      * @used-by _whereIn()
+     * @used-by whereColumnHaving()
      * @used-by havingGroupStart()
      */
     protected function groupGetType(string $type): string
@@ -3114,6 +3203,12 @@ class BaseBuilder
                     continue;
                 }
 
+                if (($qbkey['columnComparison'] ?? false) === true) {
+                    $qbkey = $this->compileColumnComparison($qbkey);
+
+                    continue;
+                }
+
                 if ($qbkey['escape'] === false) {
                     $qbkey = $qbkey['condition'];
 
@@ -3175,6 +3270,19 @@ class BaseBuilder
         }
 
         return '';
+    }
+
+    /**
+     * @param array{columnComparison: true, condition: string, escape: bool, first: string, operator: string, second: string} $condition
+     */
+    private function compileColumnComparison(array $condition): string
+    {
+        if ($condition['escape']) {
+            $condition['first']  = $this->db->protectIdentifiers($condition['first'], false, true);
+            $condition['second'] = $this->db->protectIdentifiers($condition['second'], false, true);
+        }
+
+        return $condition['condition'] . $condition['first'] . ' ' . $condition['operator'] . ' ' . $condition['second'];
     }
 
     /**

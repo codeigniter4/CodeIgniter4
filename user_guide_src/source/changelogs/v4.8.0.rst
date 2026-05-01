@@ -202,6 +202,8 @@ Database
 Query Builder
 -------------
 
+- Added ``whereColumn()`` and ``orWhereColumn()`` to compare one column to another column while protecting identifiers by default. See :ref:`query-builder-where-column`.
+
 Forge
 -----
 
