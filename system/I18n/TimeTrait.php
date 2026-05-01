@@ -1212,14 +1212,14 @@ trait TimeTrait
      */
     private function normalizeTime($time, ?string $timezone = null): static
     {
+        if ($time instanceof DateTimeInterface) {
+            return static::createFromInstance($time, $this->locale);
+        }
+
         $timezone = in_array($timezone, [null, '', '0'], true) ? $this->timezone : $timezone;
 
         if ($time === null) {
             return static::now($timezone, $this->locale);
-        }
-
-        if ($time instanceof DateTimeInterface) {
-            return static::createFromInstance($time, $this->locale);
         }
 
         return new static($time, $timezone, $this->locale);
