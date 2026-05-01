@@ -739,71 +739,67 @@ class BaseBuilder
     /**
      * Generates a WHERE clause that compares two columns.
      *
-     * @param non-empty-string      $first    First column name
-     * @param non-empty-string|null $operator Comparison operator, or second column name when $second is null
-     * @param non-empty-string|null $second   Second column name
-     * @param bool|null             $escape   Whether to protect identifiers
+     * @param non-empty-string $first  First column name, optionally with comparison operator
+     * @param non-empty-string $second Second column name
+     * @param bool|null        $escape Whether to protect identifiers
      *
      * @return $this
      *
      * @throws InvalidArgumentException
      */
-    public function whereColumn(string $first, ?string $operator = null, ?string $second = null, ?bool $escape = null)
+    public function whereColumn(string $first, string $second, ?bool $escape = null)
     {
-        return $this->whereColumnHaving('QBWhere', $first, $operator, $second, 'AND ', $escape);
+        return $this->whereColumnHaving('QBWhere', $first, $second, 'AND ', $escape);
     }
 
     /**
      * Generates an OR WHERE clause that compares two columns.
      *
-     * @param non-empty-string      $first    First column name
-     * @param non-empty-string|null $operator Comparison operator, or second column name when $second is null
-     * @param non-empty-string|null $second   Second column name
-     * @param bool|null             $escape   Whether to protect identifiers
+     * @param non-empty-string $first  First column name, optionally with comparison operator
+     * @param non-empty-string $second Second column name
+     * @param bool|null        $escape Whether to protect identifiers
      *
      * @return $this
      *
      * @throws InvalidArgumentException
      */
-    public function orWhereColumn(string $first, ?string $operator = null, ?string $second = null, ?bool $escape = null)
+    public function orWhereColumn(string $first, string $second, ?bool $escape = null)
     {
-        return $this->whereColumnHaving('QBWhere', $first, $operator, $second, 'OR ', $escape);
+        return $this->whereColumnHaving('QBWhere', $first, $second, 'OR ', $escape);
     }
 
     /**
      * @used-by whereColumn()
      * @used-by orWhereColumn()
      *
-     * @param 'QBHaving'|'QBWhere'  $qbKey
-     * @param non-empty-string      $first    First column name
-     * @param non-empty-string|null $operator Comparison operator, or second column name when $second is null
-     * @param non-empty-string|null $second   Second column name
-     * @param non-empty-string      $type
-     * @param bool|null             $escape   Whether to protect identifiers
+     * @param 'QBHaving'|'QBWhere' $qbKey
+     * @param non-empty-string     $first  First column name, optionally with comparison operator
+     * @param non-empty-string     $second Second column name
+     * @param non-empty-string     $type
+     * @param bool|null            $escape Whether to protect identifiers
      *
      * @return $this
      *
      * @throws InvalidArgumentException
      */
-    protected function whereColumnHaving(string $qbKey, string $first, ?string $operator = null, ?string $second = null, string $type = 'AND ', ?bool $escape = null)
+    protected function whereColumnHaving(string $qbKey, string $first, string $second, string $type = 'AND ', ?bool $escape = null)
     {
-        if ($second === null) {
-            $second   = $operator;
-            $operator = '=';
-        } elseif ($operator === null) {
-            $operator = '=';
-        }
-
-        $first    = trim($first);
-        $operator = trim($operator);
-        $second   = trim((string) $second);
+        $caller             = debug_backtrace(0, 2)[1]['function'];
+        [$first, $operator] = $this->parseWhereColumnFirst($first, $caller);
+        $second             = trim($second);
 
         if ($first === '' || $second === '') {
-            throw new InvalidArgumentException(sprintf('%s() expects $first and $second to be non-empty strings', debug_backtrace(0, 2)[1]['function']));
+            throw new InvalidArgumentException(sprintf('%s() expects $first and $second to be non-empty strings', $caller));
         }
 
-        if (! in_array($operator, ['=', '!=', '<>', '<', '>', '<=', '>='], true)) {
-            throw new InvalidArgumentException(sprintf('%s() expects $operator to be one of: =, !=, <>, <, >, <=, >=', debug_backtrace(0, 2)[1]['function']));
+        // The second argument must be a column name, not an operator.
+        // This rejects likely missing-column mistakes like whereColumn('created_at', '>=').
+        if (in_array(
+            strtoupper($second),
+            ['=', '!=', '<>', '<', '>', '<=', '>=', 'LIKE', 'NOT LIKE', 'IN', 'NOT IN', 'BETWEEN', 'IS NULL', 'IS NOT NULL'],
+            true,
+        )) {
+            throw new InvalidArgumentException(sprintf('%s() expects $second to be a column name, not an operator', $caller));
         }
 
         if (! is_bool($escape)) {
@@ -822,6 +818,38 @@ class BaseBuilder
         ];
 
         return $this;
+    }
+
+    /**
+     * Extracts the operator from the first whereColumn() column.
+     *
+     * @param string $first  The first column, optionally ending with a comparison operator
+     * @param string $caller The public caller for exception messages
+     *
+     * @return array{string, string}
+     *
+     * @throws InvalidArgumentException
+     */
+    private function parseWhereColumnFirst(string $first, string $caller): array
+    {
+        $first = trim($first);
+
+        if (preg_match('/\s*(!=|<>|<=|>=|=|<|>)\s*$/', $first, $match) === 1) {
+            return [rtrim(substr($first, 0, -strlen($match[0]))), trim($match[1])];
+        }
+
+        $operator = $this->getOperatorFromWhereKey($first);
+
+        if ($operator !== false) {
+            end($operator);
+            $operator = trim(current($operator));
+
+            if ($operator !== '') {
+                throw new InvalidArgumentException(sprintf('%s() expects $first to contain one of: =, !=, <>, <, >, <=, >=', $caller));
+            }
+        }
+
+        return [$first, '='];
     }
 
     /**

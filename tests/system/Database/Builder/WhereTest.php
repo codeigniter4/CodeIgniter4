@@ -369,7 +369,7 @@ final class WhereTest extends CIUnitTestCase
     {
         $builder = $this->db->table('users');
 
-        $builder->whereColumn('updated_at', '>', 'created_at');
+        $builder->whereColumn('updated_at >', 'created_at');
 
         $expectedSQL   = 'SELECT * FROM "users" WHERE "updated_at" > "created_at"';
         $expectedBinds = [];
@@ -382,7 +382,7 @@ final class WhereTest extends CIUnitTestCase
     {
         $builder = $this->db->table('users u');
 
-        $builder->whereColumn('u.updated_at', '>', 'u.created_at');
+        $builder->whereColumn('u.updated_at >', 'u.created_at');
 
         $expectedSQL   = 'SELECT * FROM "users" "u" WHERE "u"."updated_at" > "u"."created_at"';
         $expectedBinds = [];
@@ -396,7 +396,7 @@ final class WhereTest extends CIUnitTestCase
         $builder = $this->db->table('users');
 
         $builder->where('active', 1)
-            ->orWhereColumn('updated_at', '>', 'created_at');
+            ->orWhereColumn('updated_at >', 'created_at');
 
         $expectedSQL   = 'SELECT * FROM "users" WHERE "active" = 1 OR "updated_at" > "created_at"';
         $expectedBinds = [
@@ -416,7 +416,7 @@ final class WhereTest extends CIUnitTestCase
 
         $builder->groupStart()
             ->whereColumn('created_at', 'updated_at')
-            ->orWhereColumn('updated_at', '>', 'created_at')
+            ->orWhereColumn('updated_at >', 'created_at')
             ->groupEnd()
             ->where('active', 1);
 
@@ -439,24 +439,23 @@ final class WhereTest extends CIUnitTestCase
     }
 
     #[DataProvider('provideWhereColumnInvalidColumnThrowInvalidArgumentException')]
-    public function testWhereColumnInvalidColumnThrowInvalidArgumentException(string $first, ?string $operator, ?string $second): void
+    public function testWhereColumnInvalidColumnThrowInvalidArgumentException(string $first, string $second): void
     {
         $this->expectException(InvalidArgumentException::class);
 
         $builder = $this->db->table('users');
-        $builder->whereColumn($first, $operator, $second);
+        $builder->whereColumn($first, $second);
     }
 
     /**
-     * @return iterable<string, array{string, ?string, ?string}>
+     * @return iterable<string, array{string, string}>
      */
     public static function provideWhereColumnInvalidColumnThrowInvalidArgumentException(): iterable
     {
         return [
-            'empty first column'                => ['', '=', 'updated_at'],
-            'empty second column'               => ['created_at', '= ', ''],
-            'empty second column as second arg' => ['created_at', '', null],
-            'missing second'                    => ['created_at', null, null],
+            'empty first column'  => ['', 'updated_at'],
+            'empty second column' => ['created_at =', ''],
+            'operator as second'  => ['created_at', '>='],
         ];
     }
 
@@ -465,7 +464,7 @@ final class WhereTest extends CIUnitTestCase
         $this->expectException(InvalidArgumentException::class);
 
         $builder = $this->db->table('users');
-        $builder->whereColumn('created_at', 'LIKE', 'updated_at');
+        $builder->whereColumn('created_at LIKE', 'updated_at');
     }
 
     public function testWhereIn(): void

@@ -72,7 +72,7 @@ use stdClass;
  * @method $this orNotHavingLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
  * @method $this orNotLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
  * @method $this orWhere($key, $value = null, ?bool $escape = null)
- * @method $this orWhereColumn(string $first, ?string $operator = null, ?string $second = null, ?bool $escape = null)
+ * @method $this orWhereColumn(string $first, string $second, ?bool $escape = null)
  * @method $this orWhereIn(?string $key = null, $values = null, ?bool $escape = null)
  * @method $this orWhereNotIn(?string $key = null, $values = null, ?bool $escape = null)
  * @method $this select($select = '*', ?bool $escape = null)
@@ -84,7 +84,7 @@ use stdClass;
  * @method $this when($condition, callable $callback, ?callable $defaultCallback = null)
  * @method $this whenNot($condition, callable $callback, ?callable $defaultCallback = null)
  * @method $this where($key, $value = null, ?bool $escape = null)
- * @method $this whereColumn(string $first, ?string $operator = null, ?string $second = null, ?bool $escape = null)
+ * @method $this whereColumn(string $first, string $second, ?bool $escape = null)
  * @method $this whereIn(?string $key = null, $values = null, ?bool $escape = null)
  * @method $this whereNotIn(?string $key = null, $values = null, ?bool $escape = null)
  *

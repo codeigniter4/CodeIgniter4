@@ -62,7 +62,7 @@ final class PrefixTest extends CIUnitTestCase
         $expectedSQL   = 'SELECT * FROM "ci_users" WHERE "ci_users"."created_at" < "ci_users"."updated_at"';
         $expectedBinds = [];
 
-        $builder->whereColumn('users.created_at', '<', 'users.updated_at');
+        $builder->whereColumn('users.created_at <', 'users.updated_at');
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
         $this->assertSame($expectedBinds, $builder->getBinds());
