@@ -558,6 +558,72 @@ final class BaseConnectionTest extends CIUnitTestCase
         $this->assertNull($result);
     }
 
+    public function testInTransactionReflectsManagedTransactionState(): void
+    {
+        $db = new MockConnection($this->options);
+
+        $this->assertFalse($db->inTransaction());
+
+        $this->assertTrue($db->transBegin());
+        $this->assertTrue($db->inTransaction());
+
+        $this->assertTrue($db->transBegin());
+        $this->assertTrue($db->inTransaction());
+
+        $this->assertTrue($db->transCommit());
+        $this->assertTrue($db->inTransaction());
+
+        $this->assertTrue($db->transCommit());
+        $this->assertFalse($db->inTransaction());
+    }
+
+    public function testInTransactionReturnsFalseWhenTransactionsAreDisabled(): void
+    {
+        $db = new MockConnection($this->options);
+
+        $db->transOff();
+
+        $this->assertFalse($db->transBegin());
+        $this->assertFalse($db->inTransaction());
+    }
+
+    public function testInTransactionReturnsTrueInsideTransactionCallback(): void
+    {
+        $db    = new MockConnection($this->options);
+        $state = null;
+
+        $result = $db->transaction(static function (BaseConnection $connection) use (&$state): string {
+            $state = $connection->inTransaction();
+
+            return 'done';
+        });
+
+        $this->assertSame('done', $result);
+        $this->assertTrue($state);
+        $this->assertFalse($db->inTransaction());
+    }
+
+    public function testInTransactionReturnsFalseInsideTransactionCallbacks(): void
+    {
+        $db            = new MockConnection($this->options);
+        $commitState   = null;
+        $rollbackState = null;
+
+        $this->assertTrue($db->transBegin());
+        $db->afterCommit(static function () use ($db, &$commitState): void {
+            $commitState = $db->inTransaction();
+        });
+        $this->assertTrue($db->transCommit());
+        $this->assertFalse($commitState);
+
+        $this->assertTrue($db->transBegin());
+        $db->afterRollback(static function () use ($db, &$rollbackState): void {
+            $rollbackState = $db->inTransaction();
+        });
+        $this->assertTrue($db->transRollback());
+        $this->assertFalse($rollbackState);
+    }
+
     public function testAfterCommitCallbacksRemainQueuedWhenDriverCommitFails(): void
     {
         $callbacks = [];
@@ -581,10 +647,12 @@ final class BaseConnectionTest extends CIUnitTestCase
         $this->assertFalse($db->transCommit());
         $this->assertSame([], $callbacks);
         $this->assertSame(1, $db->transDepth);
+        $this->assertTrue($db->inTransaction());
 
         $this->assertTrue($db->transCommit());
         $this->assertSame(['committed'], $callbacks);
         $this->assertSame(0, $db->transDepth);
+        $this->assertFalse($db->inTransaction());
 
         $this->assertTrue($db->transBegin());
         $this->assertTrue($db->transCommit());
@@ -614,10 +682,12 @@ final class BaseConnectionTest extends CIUnitTestCase
         $this->assertFalse($db->transRollback());
         $this->assertSame([], $callbacks);
         $this->assertSame(1, $db->transDepth);
+        $this->assertTrue($db->inTransaction());
 
         $this->assertTrue($db->transRollback());
         $this->assertSame(['rolled back'], $callbacks);
         $this->assertSame(0, $db->transDepth);
+        $this->assertFalse($db->inTransaction());
 
         $this->assertTrue($db->transBegin());
         $this->assertTrue($db->transRollback());

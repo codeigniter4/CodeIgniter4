@@ -1025,6 +1025,14 @@ abstract class BaseConnection implements ConnectionInterface
     }
 
     /**
+     * Checks whether this connection is inside an active transaction.
+     */
+    public function inTransaction(): bool
+    {
+        return $this->transDepth > 0;
+    }
+
+    /**
      * Register a callback to run after the outermost transaction commits.
      *
      * If no transaction is active, the callback runs immediately.

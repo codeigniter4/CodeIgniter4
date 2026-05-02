@@ -116,6 +116,11 @@ interface ConnectionInterface
     public function simpleQuery(string $sql);
 
     /**
+     * Checks whether this connection is inside an active CodeIgniter-managed transaction.
+     */
+    public function inTransaction(): bool;
+
+    /**
      * Register a callback to run after the outermost transaction commits.
      *
      * @param callable(): void $callback

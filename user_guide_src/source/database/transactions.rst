@@ -192,6 +192,27 @@ Rollback callbacks also run when CodeIgniter automatically rolls back an active
 transaction while handling a transaction failure or cleaning up an unfinished
 transaction.
 
+.. _transactions-checking-transaction-state:
+
+Checking Transaction State
+==========================
+
+.. versionadded:: 4.8.0
+
+You may use ``inTransaction()`` to check whether the connection is currently
+inside an active CodeIgniter-managed transaction.
+
+It returns ``false`` when no CodeIgniter-managed transaction is active,
+including when transactions are disabled.
+
+This is useful for services or libraries that need to adapt their behavior when
+they are called from inside an existing transaction.
+
+.. note:: ``inTransaction()`` reflects transactions started through
+    CodeIgniter's transaction methods. If you start or end transactions through
+    raw SQL or driver-specific APIs, CodeIgniter may not know about that
+    transaction state.
+
 Disabling Transactions
 ======================
 
