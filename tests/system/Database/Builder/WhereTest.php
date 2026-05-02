@@ -438,6 +438,32 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
+    public function testWhereColumnTreatsSecondArgumentAsColumnName(): void
+    {
+        $builder = $this->db->table('users');
+
+        $builder->whereColumn('created_at', 'like');
+
+        $expectedSQL   = 'SELECT * FROM "users" WHERE "created_at" = "like"';
+        $expectedBinds = [];
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    public function testWhereColumnIgnoresOperatorsInsideFirstArgument(): void
+    {
+        $builder = $this->db->table('users');
+
+        $builder->whereColumn("JSON_EXTRACT(data, '$.a>b')", 'updated_at', escape: false);
+
+        $expectedSQL   = 'SELECT * FROM "users" WHERE JSON_EXTRACT(data, \'$.a>b\') = updated_at';
+        $expectedBinds = [];
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
     #[DataProvider('provideWhereColumnInvalidColumnThrowInvalidArgumentException')]
     public function testWhereColumnInvalidColumnThrowInvalidArgumentException(string $first, string $second): void
     {
@@ -455,7 +481,6 @@ final class WhereTest extends CIUnitTestCase
         return [
             'empty first column'  => ['', 'updated_at'],
             'empty second column' => ['created_at =', ''],
-            'operator as second'  => ['created_at', '>='],
         ];
     }
 

@@ -379,8 +379,8 @@ used:
 
 You can include an operator in the first parameter in order to control the
 comparison. Supported operators are ``=``, ``!=``, ``<>``, ``<``, ``>``, ``<=``,
-and ``>=``. Empty column names, unsupported operators, or passing an operator
-as the second argument throw an ``InvalidArgumentException``.
+and ``>=``. Empty column names or unsupported operators throw an
+``InvalidArgumentException``.
 
 Column names are protected by default, unless the ``$escape`` parameter is
 ``false``.

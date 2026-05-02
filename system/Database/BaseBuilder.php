@@ -792,16 +792,6 @@ class BaseBuilder
             throw new InvalidArgumentException(sprintf('%s() expects $first and $second to be non-empty strings', $caller));
         }
 
-        // The second argument must be a column name, not an operator.
-        // This rejects likely missing-column mistakes like whereColumn('created_at', '>=').
-        if (in_array(
-            strtoupper($second),
-            ['=', '!=', '<>', '<', '>', '<=', '>=', 'LIKE', 'NOT LIKE', 'IN', 'NOT IN', 'BETWEEN', 'IS NULL', 'IS NOT NULL'],
-            true,
-        )) {
-            throw new InvalidArgumentException(sprintf('%s() expects $second to be a column name, not an operator', $caller));
-        }
-
         if (! is_bool($escape)) {
             $escape = $this->db->protectIdentifiers;
         }
@@ -838,15 +828,20 @@ class BaseBuilder
             return [rtrim(substr($first, 0, -strlen($match[0]))), trim($match[1])];
         }
 
-        $operator = $this->getOperatorFromWhereKey($first);
+        $unsupportedOperators = [
+            '\s+IS\s+NULL',
+            '\s+IS\s+NOT\s+NULL',
+            '\s+NOT\s+EXISTS',
+            '\s+EXISTS',
+            '\s+BETWEEN',
+            '\s+NOT\s+IN',
+            '\s+IN',
+            '\s+NOT\s+LIKE',
+            '\s+LIKE',
+        ];
 
-        if ($operator !== false) {
-            end($operator);
-            $operator = trim(current($operator));
-
-            if ($operator !== '') {
-                throw new InvalidArgumentException(sprintf('%s() expects $first to contain one of: =, !=, <>, <, >, <=, >=', $caller));
-            }
+        if (preg_match('/(?:' . implode('|', $unsupportedOperators) . ')\s*$/i', $first) === 1) {
+            throw new InvalidArgumentException(sprintf('%s() expects $first to contain one of: =, !=, <>, <, >, <=, >=', $caller));
         }
 
         return [$first, '='];
