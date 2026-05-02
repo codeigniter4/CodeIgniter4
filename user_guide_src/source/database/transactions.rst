@@ -180,6 +180,31 @@ This is useful for side effects that should only happen after committed data is
 visible, such as dispatching a queued job or sending a notification, and for
 cleanup that should only happen after a real rollback.
 
+Deferring Side Effects
+----------------------
+
+Code that changes external state should usually not run in the middle of a
+transaction. If the transaction rolls back after the side effect has already
+run, the application may send a notification for data that was never saved,
+invalidate a cache for a write that did not persist, or start background work
+that cannot find the committed row it expects.
+
+Register those side effects with ``afterCommit()`` instead:
+
+.. literalinclude:: transactions/013.php
+
+Use ``afterRollback()`` for cleanup that should happen only when the transaction
+does not commit, such as removing a temporary file created before the database
+write:
+
+.. literalinclude:: transactions/014.php
+
+Model callbacks such as ``afterInsert`` and ``afterUpdate`` run after the Model
+query has executed, but not necessarily after the surrounding transaction has
+committed. If a Model callback needs to run a side effect only after commit, it
+should register that work with the database connection's ``afterCommit()``
+method while an active transaction is already open.
+
 Callbacks run after the database transaction has already committed or rolled
 back. If a callback throws an exception, that exception bubbles to the caller,
 but the transaction outcome is not changed.
