@@ -484,14 +484,6 @@ final class WhereTest extends CIUnitTestCase
         ];
     }
 
-    public function testWhereColumnInvalidOperatorThrowInvalidArgumentException(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        $builder = $this->db->table('users');
-        $builder->whereColumn('created_at LIKE', 'updated_at');
-    }
-
     public function testWhereIn(): void
     {
         $builder = $this->db->table('jobs');

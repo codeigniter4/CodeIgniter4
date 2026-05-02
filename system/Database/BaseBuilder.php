@@ -785,7 +785,7 @@ class BaseBuilder
     protected function whereColumnHaving(string $qbKey, string $first, string $second, string $type = 'AND ', ?bool $escape = null)
     {
         $caller             = debug_backtrace(0, 2)[1]['function'];
-        [$first, $operator] = $this->parseWhereColumnFirst($first, $caller);
+        [$first, $operator] = $this->parseWhereColumnFirst($first);
         $second             = trim($second);
 
         if ($first === '' || $second === '') {
@@ -813,35 +813,16 @@ class BaseBuilder
     /**
      * Extracts the operator from the first whereColumn() column.
      *
-     * @param string $first  The first column, optionally ending with a comparison operator
-     * @param string $caller The public caller for exception messages
+     * @param string $first The first column, optionally ending with a comparison operator
      *
      * @return array{string, string}
-     *
-     * @throws InvalidArgumentException
      */
-    private function parseWhereColumnFirst(string $first, string $caller): array
+    private function parseWhereColumnFirst(string $first): array
     {
         $first = trim($first);
 
         if (preg_match('/\s*(!=|<>|<=|>=|=|<|>)\s*$/', $first, $match) === 1) {
             return [rtrim(substr($first, 0, -strlen($match[0]))), trim($match[1])];
-        }
-
-        $unsupportedOperators = [
-            '\s+IS\s+NULL',
-            '\s+IS\s+NOT\s+NULL',
-            '\s+NOT\s+EXISTS',
-            '\s+EXISTS',
-            '\s+BETWEEN',
-            '\s+NOT\s+IN',
-            '\s+IN',
-            '\s+NOT\s+LIKE',
-            '\s+LIKE',
-        ];
-
-        if (preg_match('/(?:' . implode('|', $unsupportedOperators) . ')\s*$/i', $first) === 1) {
-            throw new InvalidArgumentException(sprintf('%s() expects $first to contain one of: =, !=, <>, <, >, <=, >=', $caller));
         }
 
         return [$first, '='];

@@ -379,8 +379,8 @@ used:
 
 You can include an operator in the first parameter in order to control the
 comparison. Supported operators are ``=``, ``!=``, ``<>``, ``<``, ``>``, ``<=``,
-and ``>=``. Empty column names or unsupported operators throw an
-``InvalidArgumentException``.
+and ``>=``. If none of these operators is detected at the end of the first
+parameter, ``=`` is used. Empty column names throw an ``InvalidArgumentException``.
 
 Column names are protected by default, unless the ``$escape`` parameter is
 ``false``.
@@ -1572,9 +1572,8 @@ Class Reference
         :rtype:     ``BaseBuilder``
 
         Generates a ``WHERE`` clause that compares two columns. Separates multiple calls with ``AND``.
-        If ``$first`` does not include an operator, ``=`` is used as the comparison operator.
+        If ``$first`` does not end with a supported operator, ``=`` is used as the comparison operator.
         Supported operators are ``=``, ``!=``, ``<>``, ``<``, ``>``, ``<=``, and ``>=``.
-        Unsupported operators throw an ``InvalidArgumentException``.
 
     .. php:method:: orWhereColumn($first, $second[, $escape = null])
 
@@ -1585,9 +1584,8 @@ Class Reference
         :rtype:     ``BaseBuilder``
 
         Generates a ``WHERE`` clause that compares two columns. Separates multiple calls with ``OR``.
-        If ``$first`` does not include an operator, ``=`` is used as the comparison operator.
+        If ``$first`` does not end with a supported operator, ``=`` is used as the comparison operator.
         Supported operators are ``=``, ``!=``, ``<>``, ``<``, ``>``, ``<=``, and ``>=``.
-        Unsupported operators throw an ``InvalidArgumentException``.
 
     .. php:method:: orWhereIn([$key = null[, $values = null[, $escape = null]]])
 
