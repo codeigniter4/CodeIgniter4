@@ -16,6 +16,7 @@ namespace CodeIgniter\I18n;
 use CodeIgniter\I18n\Exceptions\I18nException;
 use DateInterval;
 use DateTime;
+use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 use Exception;
@@ -1184,15 +1185,25 @@ trait TimeTrait
      *
      * @param DateTimeInterface|self|string $time
      *
-     * @return DateTime
+     * @return DateTime|static
      *
      * @throws Exception
      */
     public function getUTCObject($time, ?string $timezone = null)
     {
-        return $this->normalizeTime($time, $timezone)
-            ->toDateTime()
-            ->setTimezone(new DateTimeZone('UTC'));
+        if ($time instanceof static) {
+            $time = $time->toDateTime();
+        } elseif (is_string($time)) {
+            $timezone = in_array($timezone, [null, '', '0'], true) ? $this->timezone : $timezone;
+            $timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
+            $time     = new DateTime($time, $timezone);
+        }
+
+        if ($time instanceof DateTime || $time instanceof DateTimeImmutable) {
+            return $time->setTimezone(new DateTimeZone('UTC'));
+        }
+
+        return $time;
     }
 
     /**

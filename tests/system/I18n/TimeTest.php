@@ -1081,6 +1081,17 @@ final class TimeTest extends CIUnitTestCase
         $this->assertTrue($time->between($start, $end));
     }
 
+    public function testGetUTCObjectPreservesDateTimeImmutable(): void
+    {
+        $time      = Time::parse('2024-01-01 12:30:00', 'Europe/Warsaw');
+        $immutable = new DateTimeImmutable('2024-01-01 13:30:00', new DateTimeZone('Europe/Warsaw'));
+        $utcTime   = $time->getUTCObject($immutable);
+
+        $this->assertInstanceOf(DateTimeImmutable::class, $utcTime);
+        $this->assertSame('UTC', $utcTime->getTimezone()->getName());
+        $this->assertSame('2024-01-01 12:30:00.000000', $utcTime->format('Y-m-d H:i:s.u'));
+    }
+
     public function testMinReturnsEarlierTime(): void
     {
         $time  = new Time('2024-01-01 12:00:00');
