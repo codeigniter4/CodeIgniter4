@@ -401,7 +401,7 @@ between()
 .. versionadded:: 4.8.0
 
 Determines if the current instance is between two other times. By default, the start and end bounds are included.
-Pass ``false`` as the third argument to exclude both bounds:
+Pass ``false`` as the third ``$inclusive`` argument to exclude both bounds:
 
 .. literalinclude:: time/045.php
 

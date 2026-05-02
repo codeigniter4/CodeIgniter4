@@ -1021,13 +1021,11 @@ trait TimeTrait
      *
      * If $start is after $end, the arguments are swapped.
      *
-     * @param DateTimeInterface|self|string $start
-     * @param DateTimeInterface|self|string $end
-     * @param string|null                   $timezone Used only when $start or $end is a string.
+     * @param string|null $timezone Used only when $start or $end is a string.
      *
      * @throws Exception
      */
-    public function between($start, $end, bool $equals = true, ?string $timezone = null): bool
+    public function between(DateTimeInterface|string $start, DateTimeInterface|string $end, bool $inclusive = true, ?string $timezone = null): bool
     {
         $start = $this->normalizeTime($start, $timezone);
         $end   = $this->normalizeTime($end, $timezone);
@@ -1036,7 +1034,7 @@ trait TimeTrait
             [$start, $end] = [$end, $start];
         }
 
-        if ($equals) {
+        if ($inclusive) {
             return ! $this->isBefore($start) && ! $this->isAfter($end);
         }
 
@@ -1048,12 +1046,11 @@ trait TimeTrait
      *
      * If null is provided, compares against now in the current timezone.
      *
-     * @param DateTimeInterface|self|string|null $time
-     * @param string|null                        $timezone Used only when $time is a string or null.
+     * @param string|null $timezone Used only when $time is a string or null.
      *
      * @throws Exception
      */
-    public function min($time = null, ?string $timezone = null): static
+    public function min(DateTimeInterface|string|null $time = null, ?string $timezone = null): static
     {
         $time = $this->normalizeTime($time, $timezone);
 
@@ -1065,12 +1062,11 @@ trait TimeTrait
      *
      * If null is provided, compares against now in the current timezone.
      *
-     * @param DateTimeInterface|self|string|null $time
-     * @param string|null                        $timezone Used only when $time is a string or null.
+     * @param string|null $timezone Used only when $time is a string or null.
      *
      * @throws Exception
      */
-    public function max($time = null, ?string $timezone = null): static
+    public function max(DateTimeInterface|string|null $time = null, ?string $timezone = null): static
     {
         $time = $this->normalizeTime($time, $timezone);
 
@@ -1206,11 +1202,9 @@ trait TimeTrait
      * or the current instance's timezone when omitted. If null is provided,
      * the current time is used in the same timezone.
      *
-     * @param DateTimeInterface|self|string|null $time
-     *
      * @throws Exception
      */
-    private function normalizeTime($time, ?string $timezone = null): static
+    private function normalizeTime(DateTimeInterface|string|null $time, ?string $timezone = null): static
     {
         if ($time instanceof DateTimeInterface) {
             return static::createFromInstance($time, $this->locale);
