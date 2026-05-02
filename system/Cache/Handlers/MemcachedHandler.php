@@ -13,6 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache\Handlers;
 
+use CodeIgniter\Cache\Exceptions\CacheException;
+use CodeIgniter\Cache\LockStoreInterface;
+use CodeIgniter\Cache\LockStoreProviderInterface;
+use CodeIgniter\Cache\LockStores\MemcachedLockStore;
 use CodeIgniter\Exceptions\BadMethodCallException;
 use CodeIgniter\Exceptions\CriticalError;
 use CodeIgniter\I18n\Time;
@@ -26,7 +30,7 @@ use Memcached;
  *
  * @see \CodeIgniter\Cache\Handlers\MemcachedHandlerTest
  */
-class MemcachedHandler extends BaseHandler
+class MemcachedHandler extends BaseHandler implements LockStoreProviderInterface
 {
     /**
      * The memcached object
@@ -34,6 +38,8 @@ class MemcachedHandler extends BaseHandler
      * @var Memcache|Memcached
      */
     protected $memcached;
+
+    private ?LockStoreInterface $lockStore = null;
 
     /**
      * Memcached Configuration
@@ -62,6 +68,7 @@ class MemcachedHandler extends BaseHandler
         try {
             if (class_exists(Memcached::class)) {
                 $this->memcached = new Memcached();
+                $this->lockStore = null;
 
                 if ($this->config['raw']) {
                     $this->memcached->setOption(Memcached::OPT_BINARY_PROTOCOL, true);
@@ -82,6 +89,7 @@ class MemcachedHandler extends BaseHandler
                 }
             } elseif (class_exists(Memcache::class)) {
                 $this->memcached = new Memcache();
+                $this->lockStore = null;
 
                 if (! $this->memcached->connect($this->config['host'], $this->config['port'])) {
                     throw new CriticalError('Cache: Memcache connection failed.');
@@ -217,6 +225,15 @@ class MemcachedHandler extends BaseHandler
     public function isSupported(): bool
     {
         return extension_loaded('memcached') || extension_loaded('memcache');
+    }
+
+    public function lockStore(): LockStoreInterface
+    {
+        if (! $this->memcached instanceof Memcached) {
+            throw CacheException::forUnsupportedLockStore();
+        }
+
+        return $this->lockStore ??= new MemcachedLockStore($this->memcached, $this->prefix);
     }
 
     public function ping(): bool

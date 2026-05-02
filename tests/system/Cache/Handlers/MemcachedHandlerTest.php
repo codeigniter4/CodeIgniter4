@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\CacheFactory;
+use CodeIgniter\Cache\LockStoreInterface;
+use CodeIgniter\Cache\LockStoreProviderInterface;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Exceptions\BadMethodCallException;
 use CodeIgniter\I18n\Time;
@@ -102,6 +104,53 @@ final class MemcachedHandlerTest extends AbstractHandlerTestCase
     public function testSave(): void
     {
         $this->assertTrue($this->handler->save(self::$key1, 'value'));
+    }
+
+    public function testLockOperations(): void
+    {
+        $handler = $this->handler;
+
+        $this->assertInstanceOf(LockStoreProviderInterface::class, $handler);
+
+        $store = $handler->lockStore();
+
+        $this->assertInstanceOf(LockStoreInterface::class, $store);
+        $this->assertTrue($store->acquireLock(self::$key1, 'owner1', 60));
+        $this->assertFalse($store->acquireLock(self::$key1, 'owner2', 60));
+        $this->assertSame('owner1', $store->getLockOwner(self::$key1));
+        $this->assertFalse($store->releaseLock(self::$key1, 'owner2'));
+        $this->assertFalse($store->refreshLock(self::$key1, 'owner2', 120));
+        $this->assertTrue($store->refreshLock(self::$key1, 'owner1', 120));
+        $this->assertTrue($store->releaseLock(self::$key1, 'owner1'));
+        $this->assertNull($store->getLockOwner(self::$key1));
+        $this->assertTrue($store->acquireLock(self::$key1, 'owner1', 60));
+        $this->assertTrue($store->forceReleaseLock(self::$key1));
+        $this->assertNull($store->getLockOwner(self::$key1));
+        $this->assertTrue($store->forceReleaseLock(self::$key1));
+    }
+
+    /**
+     * This test waits for 2 seconds before reacquiring the lock.
+     *
+     * @timeLimit 2.5
+     */
+    public function testExpiredLockCanBeAcquiredByNewOwner(): void
+    {
+        $handler = $this->handler;
+
+        $this->assertInstanceOf(LockStoreProviderInterface::class, $handler);
+
+        $store = $handler->lockStore();
+
+        $this->assertTrue($store->acquireLock(self::$key1, 'owner1', 1));
+
+        CLI::wait(2);
+
+        $this->assertTrue($store->acquireLock(self::$key1, 'owner2', 60));
+        $this->assertSame('owner2', $store->getLockOwner(self::$key1));
+        $this->assertFalse($store->releaseLock(self::$key1, 'owner1'));
+        $this->assertFalse($store->refreshLock(self::$key1, 'owner1', 120));
+        $this->assertTrue($store->releaseLock(self::$key1, 'owner2'));
     }
 
     public function testSavePermanent(): void
@@ -200,11 +249,18 @@ final class MemcachedHandlerTest extends AbstractHandlerTestCase
 
     public function testReconnect(): void
     {
+        $handler = $this->handler;
+
+        $this->assertInstanceOf(LockStoreProviderInterface::class, $handler);
+
+        $lockStore = $handler->lockStore();
+
         $this->handler->save(self::$key1, 'value');
         $this->assertSame('value', $this->handler->get(self::$key1));
 
         $this->assertTrue($this->handler->reconnect());
 
         $this->assertSame('value', $this->handler->get(self::$key1));
+        $this->assertNotSame($lockStore, $handler->lockStore());
     }
 }

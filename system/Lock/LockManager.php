@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Lock;
 
 use CodeIgniter\Cache\CacheInterface;
+use CodeIgniter\Cache\Exceptions\CacheException;
 use CodeIgniter\Cache\LockStoreInterface;
 use CodeIgniter\Cache\LockStoreProviderInterface;
 use CodeIgniter\Exceptions\InvalidArgumentException;
@@ -36,7 +37,11 @@ final readonly class LockManager
             throw LockException::forUnsupportedStore($cache::class);
         }
 
-        $this->store = $cache->lockStore();
+        try {
+            $this->store = $cache->lockStore();
+        } catch (CacheException) {
+            throw LockException::forUnsupportedStore($cache::class);
+        }
     }
 
     public function create(string $name, int $ttl = 300, ?string $owner = null): LockInterface

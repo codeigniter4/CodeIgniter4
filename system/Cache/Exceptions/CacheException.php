@@ -59,4 +59,14 @@ class CacheException extends RuntimeException
     {
         return new static(lang('Cache.handlerNotFound'));
     }
+
+    /**
+     * Thrown when the handler cannot provide a lock store.
+     *
+     * @return static
+     */
+    public static function forUnsupportedLockStore()
+    {
+        return new static(lang('Cache.unsupportedLockStore'));
+    }
 }

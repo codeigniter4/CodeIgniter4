@@ -14,6 +14,10 @@ declare(strict_types=1);
 namespace CodeIgniter\Lock;
 
 use CodeIgniter\Cache\CacheFactory;
+use CodeIgniter\Cache\Exceptions\CacheException;
+use CodeIgniter\Cache\Handlers\DummyHandler;
+use CodeIgniter\Cache\LockStoreInterface;
+use CodeIgniter\Cache\LockStoreProviderInterface;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Lock\Exceptions\LockException;
@@ -196,6 +200,21 @@ final class LockTest extends CIUnitTestCase
 
         // @phpstan-ignore argument.type
         new LockManager(CacheFactory::getHandler($this->config, 'dummy'));
+    }
+
+    public function testUnsupportedLockStoreProviderThrows(): void
+    {
+        $cache = new class () extends DummyHandler implements LockStoreProviderInterface {
+            public function lockStore(): LockStoreInterface
+            {
+                throw CacheException::forUnsupportedLockStore();
+            }
+        };
+
+        $this->expectException(LockException::class);
+        $this->expectExceptionMessage('does not support locks');
+
+        new LockManager($cache);
     }
 
     private function lockFile(string $name): string
