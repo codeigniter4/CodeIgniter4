@@ -269,7 +269,7 @@ class Builder extends BaseBuilder
         if ($this->castTextToInt) {
             $values = [$column => "CONVERT(VARCHAR(MAX),CONVERT(INT,CONVERT(VARCHAR(MAX), {$column})) - {$value})"];
         } else {
-            $values = [$column => "{$column} + {$value}"];
+            $values = [$column => "{$column} - {$value}"];
         }
 
         $sql = $this->_update($this->QBFrom[0], $values);

@@ -43,6 +43,7 @@ Bugs Fixed
 - **Kint:** Fixed a bug where stale Content Security Policy nonces were reused in worker mode, causing browser CSP violations for Debug Toolbar assets.
 - **Time:** Fixed a bug where ``Time::createFromTimestamp()`` could fail for microsecond timestamps when ``LC_NUMERIC`` used a comma decimal separator.
 - **Validation:** Fixed a bug where ``Validation::getValidated()`` dropped fields whose validated value was explicitly ``null``.
+- **SQLSRV Database Driver:** Fixed a bug where the SQLSRV driver's decrement method was adding instead of subtracting the decrement value when ``$castTextToInt`` was false.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
