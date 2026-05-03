@@ -18,7 +18,9 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Database\ResultInterface;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use Config\Feature;
+use TypeError;
 
 /**
  * Builder for SQLSRV
@@ -232,20 +234,37 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Increments multiple numeric columns by the specified values.
+     * Increments multiple numeric columns by the specified value(s).
      *
-     * @param array<string, int> $columns An array of column => value pairs to increment.
+     * @param array<string, int>|list<string> $columns A list of columns or array of column => value pairs to increment.
+     * @param int                             $value   The value to increment by if $columns is a list of column names.
      */
-    public function incrementAll(array $columns): bool
+    public function incrementMany(array $columns, int $value = 1): bool
     {
+        if ($columns === []) {
+            throw new InvalidArgumentException('Argument #1 ($columns) cannot be empty.');
+        }
+
+        if (array_is_list($columns)) {
+            $columns = array_fill_keys($columns, $value);
+        }
+
         $fields = [];
 
-        foreach ($columns as $column => $value) {
-            $column = $this->db->protectIdentifiers($column);
+        foreach ($columns as $col => $val) {
+            if (! is_int($val)) {
+                throw new TypeError(sprintf(
+                    'Argument #1 ($columns) must contain only int values, %s given for "%s".',
+                    get_debug_type($val),
+                    $col,
+                ));
+            }
+
+            $col = $this->db->protectIdentifiers($col);
             if ($this->castTextToInt) {
-                $fields[$column] = "CONVERT(VARCHAR(MAX),CONVERT(INT,CONVERT(VARCHAR(MAX), {$column})) + {$value})";
+                $fields[$col] = "CONVERT(VARCHAR(MAX),CONVERT(INT,CONVERT(VARCHAR(MAX), {$col})) + {$val})";
             } else {
-                $fields[$column] = "{$column} + {$value}";
+                $fields[$col] = "{$col} + {$val}";
             }
         }
 
@@ -261,20 +280,37 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Decrements multiple numeric columns by the specified values.
+     * Decrements multiple numeric columns by the specified value(s).
      *
-     * @param array<string, int> $columns An array of column => value pairs to decrement.
+     * @param array<string, int>|list<string> $columns A list of columns or array of column => value pairs to decrement.
+     * @param int                             $value   The value to decrement by if $columns is a list of column names.
      */
-    public function decrementAll(array $columns): bool
+    public function decrementMany(array $columns, int $value = 1): bool
     {
+        if ($columns === []) {
+            throw new InvalidArgumentException('Argument #1 ($columns) cannot be empty.');
+        }
+
+        if (array_is_list($columns)) {
+            $columns = array_fill_keys($columns, $value);
+        }
+
         $fields = [];
 
-        foreach ($columns as $column => $value) {
-            $column = $this->db->protectIdentifiers($column);
+        foreach ($columns as $col => $val) {
+            if (! is_int($val)) {
+                throw new TypeError(sprintf(
+                    'Argument #1 ($columns) must contain only int values, %s given for "%s".',
+                    get_debug_type($val),
+                    $col,
+                ));
+            }
+
+            $col = $this->db->protectIdentifiers($col);
             if ($this->castTextToInt) {
-                $fields[$column] = "CONVERT(VARCHAR(MAX),CONVERT(INT,CONVERT(VARCHAR(MAX), {$column})) - {$value})";
+                $fields[$col] = "CONVERT(VARCHAR(MAX),CONVERT(INT,CONVERT(VARCHAR(MAX), {$col})) - {$val})";
             } else {
-                $fields[$column] = "{$column} - {$value}";
+                $fields[$col] = "{$col} - {$val}";
             }
         }
 
