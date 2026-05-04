@@ -402,7 +402,7 @@ The available retry settings are:
   The default is ``1000``.
 - ``max_delay``: Maximum delay in milliseconds. This caps both the configured ``delay`` and a
   valid ``Retry-After`` header. Set to ``0`` for no maximum delay. The default is ``30000``.
-- ``status_codes``: HTTP status codes that should be retried. The default is ``[429, 503]``.
+- ``status_codes``: HTTP status codes that should be retried. The default is ``[429, 503, 504]``.
 - ``curl_errors``: Whether to retry transient cURL errors. The default is ``false``.
 - ``respect_retry_after``: Whether to use a valid ``Retry-After`` header instead of the configured
   ``delay``. The default is ``true``.

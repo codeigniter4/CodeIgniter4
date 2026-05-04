@@ -91,7 +91,7 @@ class CURLRequest extends OutgoingRequest
         'max_retries'         => 3,
         'delay'               => 1000,
         'max_delay'           => 30_000,
-        'status_codes'        => [429, 503],
+        'status_codes'        => [429, 503, 504],
         'curl_errors'         => false,
         'respect_retry_after' => true,
     ];
@@ -980,7 +980,7 @@ class CURLRequest extends OutgoingRequest
         if ($output === false) {
             $this->lastCurlError = curl_errno($ch);
 
-            throw HTTPException::forCurlError((string) curl_errno($ch), curl_error($ch));
+            throw HTTPException::forCurlError((string) $this->lastCurlError, curl_error($ch));
         }
 
         return $output;

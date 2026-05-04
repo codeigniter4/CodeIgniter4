@@ -72,6 +72,23 @@ final class CURLRequestRetryTest extends CIUnitTestCase
         $this->assertSame([1.0], $this->request->getSleeps());
     }
 
+    public function testRetryIntegerRetriesDefaultGatewayTimeoutStatusCode(): void
+    {
+        $this->request->setOutputs([
+            "HTTP/1.1 504 Gateway Timeout\r\n\r\nFirst failure",
+            "HTTP/1.1 200 OK\r\n\r\nSuccess",
+        ]);
+
+        $response = $this->request->get('http://example.com', [
+            'retry'       => 1,
+            'http_errors' => false,
+        ]);
+
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame('Success', $response->getBody());
+        $this->assertSame([1.0], $this->request->getSleeps());
+    }
+
     public function testRetryUsesCustomStatusCodes(): void
     {
         $this->request->setOutputs([
