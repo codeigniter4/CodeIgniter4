@@ -63,6 +63,40 @@ to check whether a validated key exists, including keys whose value is
 .. literalinclude:: form_requests/014.php
    :lines: 2-
 
+Typed Validated Accessors
+=========================
+
+FormRequest also provides small typed accessors for common controller inputs:
+
+.. literalinclude:: form_requests/015.php
+   :lines: 2-
+
+These methods read from the validated data only. They do not replace validation
+rules; they only make successfully validated values easier to consume in the
+controller. ``integer()``, ``boolean()``, and ``enum()`` return the provided
+default value when the field is missing, or ``null`` when no default is given.
+``date()`` returns ``null`` when the field is missing. Fields that are present
+with a ``null`` value return ``null``.
+
+If a present value cannot be read as the requested type, an
+``InvalidArgumentException`` is thrown. This usually means the validation rules
+and the controller's expected type do not match. Use validation rules such as
+``integer``, ``valid_date``, ``in_list``, or a custom rule to ensure the value
+matches the type you plan to read.
+
+The ``date()`` method returns a :php:class:`CodeIgniter\\I18n\\Time` instance.
+Pass a format when the value should be parsed with a specific date format. The
+method only parses the value; validation rules should enforce acceptable date
+formats and ranges. For strict calendar validation, add a rule such as
+``valid_date[Y-m-d]``.
+
+The ``enum()`` method accepts PHP enum class names. Backed enums are matched by
+their backing value, while unit enums are matched by case name.
+
+The ``boolean()`` method uses PHP's boolean validation behavior, so common form
+values like ``"1"``, ``"0"``, ``"true"``, ``"false"``, ``"yes"``, ``"no"``,
+``"on"``, and ``"off"`` are accepted.
+
 Accessing Other Request Data
 ============================
 
