@@ -372,15 +372,16 @@ $builder->whereColumn()
 
 .. versionadded:: 4.8.0
 
-Compares one column to another column. If no operator is provided, ``=`` is
-used:
+Compares one column to another column. If the first parameter does not end with
+a supported operator, ``=`` is used:
 
 .. literalinclude:: query_builder/123.php
 
-You can include an operator in the first parameter in order to control the
-comparison. Supported operators are ``=``, ``!=``, ``<>``, ``<``, ``>``, ``<=``,
-and ``>=``. If none of these operators is detected at the end of the first
-parameter, ``=`` is used. Empty column names throw an ``InvalidArgumentException``.
+You can include a supported operator at the end of the first parameter in order
+to control the comparison. Supported operators are ``=``, ``!=``, ``<>``, ``<``,
+``>``, ``<=``, and ``>=``. If none of these operators is detected at the end of the first
+parameter, ``=`` is used. Empty
+column names throw an ``InvalidArgumentException``.
 
 Column names are protected by default, unless the ``$escape`` parameter is
 ``false``.
@@ -1565,7 +1566,7 @@ Class Reference
 
     .. php:method:: whereColumn($first, $second[, $escape = null])
 
-        :param string $first: First column name, optionally with comparison operator
+        :param string $first: First column name, optionally ending with a supported comparison operator
         :param string $second: Second column name
         :param bool $escape: Whether to protect identifiers
         :returns:   ``BaseBuilder`` instance (method chaining)
@@ -1577,7 +1578,7 @@ Class Reference
 
     .. php:method:: orWhereColumn($first, $second[, $escape = null])
 
-        :param string $first: First column name, optionally with comparison operator
+        :param string $first: First column name, optionally ending with a supported comparison operator
         :param string $second: Second column name
         :param bool $escape: Whether to protect identifiers
         :returns:   ``BaseBuilder`` instance (method chaining)
