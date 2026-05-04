@@ -101,13 +101,7 @@ class CURLRequest extends OutgoingRequest
      *
      * @var list<int>
      */
-    protected $transientCurlErrors = [
-        CURLE_COULDNT_RESOLVE_HOST,
-        CURLE_COULDNT_CONNECT,
-        CURLE_OPERATION_TIMEDOUT,
-        CURLE_SEND_ERROR,
-        CURLE_RECV_ERROR,
-    ];
+    protected $transientCurlErrors = [];
 
     /**
      * The number of milliseconds to delay before
@@ -158,6 +152,14 @@ class CURLRequest extends OutgoingRequest
         if (! function_exists('curl_version')) {
             throw HTTPException::forMissingCurl(); // @codeCoverageIgnore
         }
+
+        $this->transientCurlErrors = [
+            CURLE_COULDNT_RESOLVE_HOST,
+            CURLE_COULDNT_CONNECT,
+            CURLE_OPERATION_TIMEDOUT,
+            CURLE_SEND_ERROR,
+            CURLE_RECV_ERROR,
+        ];
 
         parent::__construct(Method::GET, $uri);
 
