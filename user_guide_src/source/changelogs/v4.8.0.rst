@@ -274,6 +274,9 @@ Others
 Message Changes
 ***************
 
+- Added new language key:
+    - ``Cache.unsupportedLockStore`` (``CacheException::forUnsupportedLockStore()``)
+
 - Removed deprecated language keys tied to removed exception constructors:
     - ``Core.missingExtension`` (``FrameworkException::forMissingExtension()``)
     - ``HTTP.cannotSetCache`` (``DownloadException::forCannotSetCache()``)
