@@ -87,7 +87,7 @@ class CURLRequest extends OutgoingRequest
      *
      * @var array<string, bool|int|list<int>>
      */
-    protected $retryDefaults = [
+    protected array $retryDefaults = [
         'max_retries'         => 3,
         'delay'               => 1000,
         'max_delay'           => 30_000,
@@ -101,7 +101,7 @@ class CURLRequest extends OutgoingRequest
      *
      * @var list<int>
      */
-    protected $transientCurlErrors = [];
+    protected array $transientCurlErrors = [];
 
     /**
      * The number of milliseconds to delay before
