@@ -784,11 +784,12 @@ class BaseBuilder
      */
     protected function whereColumnHaving(string $qbKey, string $first, string $second, string $type = 'AND ', ?bool $escape = null)
     {
-        $caller             = debug_backtrace(0, 2)[1]['function'];
         [$first, $operator] = $this->parseWhereColumnFirst($first);
         $second             = trim($second);
 
         if ($first === '' || $second === '') {
+            $caller = debug_backtrace(0, 2)[1]['function'];
+
             throw new InvalidArgumentException(sprintf('%s() expects $first and $second to be non-empty strings', $caller));
         }
 
