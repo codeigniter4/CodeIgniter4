@@ -92,8 +92,13 @@ class Serve extends BaseCommand
     {
         // Collect any user-supplied options and apply them.
         $php  = escapeshellarg(CLI::getOption('php') ?? PHP_BINARY);
-        $host = escapeshellarg(CLI::getOption('host') ?? 'localhost');
+        $host = CLI::getOption('host') ?? 'localhost';
         $port = (int) (CLI::getOption('port') ?? 8080) + $this->portOffset;
+
+        // Build a single shell-escaped host:port argument so the resulting
+        // command is safe regardless of what the user passed via --host,
+        // while $host remains in its raw form for the display below.
+        $address = escapeshellarg($host . ':' . $port);
 
         // Get the party started.
         CLI::write('CodeIgniter development server started on http://' . $host . ':' . $port, 'green');
@@ -108,7 +113,7 @@ class Serve extends BaseCommand
         // Call PHP's built-in webserver, making sure to set our
         // base path to the public folder, and to use the rewrite file
         // to ensure our environment is set and it simulates basic mod_rewrite.
-        passthru($php . ' -S ' . $host . ':' . $port . ' -t ' . $docroot . ' ' . $rewrite, $status);
+        passthru($php . ' -S ' . $address . ' -t ' . $docroot . ' ' . $rewrite, $status);
 
         if ($status !== EXIT_SUCCESS && $this->portOffset < $this->tries) {
             $this->portOffset++;
