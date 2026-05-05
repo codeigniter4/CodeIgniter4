@@ -48,6 +48,20 @@ final class DummyHandlerTest extends CIUnitTestCase
         $this->assertNull($dummyHandler);
     }
 
+    public function testRememberWithTTLCallable(): void
+    {
+        $dummyHandler = $this->handler->remember('key', static fn (): int => 2, static fn (): string => 'value');
+
+        $this->assertNull($dummyHandler);
+    }
+
+    public function testRememberWithTTLCallableAndValuePassed(): void
+    {
+        $dummyHandler = $this->handler->remember('key', static fn ($value): int => $value[0], static fn (): array => [2, 3]);
+
+        $this->assertNull($dummyHandler);
+    }
+
     public function testSave(): void
     {
         $this->assertTrue($this->handler->save('key', 'value'));

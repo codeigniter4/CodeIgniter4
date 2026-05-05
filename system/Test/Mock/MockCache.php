@@ -20,6 +20,7 @@ use CodeIgniter\Cache\LockStoreInterface;
 use CodeIgniter\Cache\LockStoreProviderInterface;
 use CodeIgniter\I18n\Time;
 use PHPUnit\Framework\Assert;
+use ReflectionFunction;
 
 class MockCache extends BaseHandler implements CacheInterface, LockStoreProviderInterface
 {
@@ -72,7 +73,7 @@ class MockCache extends BaseHandler implements CacheInterface, LockStoreProvider
      *
      * @return bool|null
      */
-    public function remember(string $key, int $ttl, Closure $callback): mixed
+    public function remember(string $key, callable|int $ttl, Closure $callback): mixed
     {
         $value = $this->get($key);
 
@@ -80,7 +81,15 @@ class MockCache extends BaseHandler implements CacheInterface, LockStoreProvider
             return $value;
         }
 
-        $this->save($key, $value = $callback(), $ttl);
+        $value = $callback();
+
+        if (is_callable($ttl)) {
+            $ttl = (new ReflectionFunction($ttl(...)))->getNumberOfParameters() > 0
+                ? $ttl($value)
+                : $ttl();
+        }
+
+        $this->save($key, $value, $ttl);
 
         return $value;
     }

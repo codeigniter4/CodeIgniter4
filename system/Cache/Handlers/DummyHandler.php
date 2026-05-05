@@ -31,7 +31,7 @@ class DummyHandler extends BaseHandler
         return null;
     }
 
-    public function remember(string $key, int $ttl, Closure $callback): mixed
+    public function remember(string $key, callable|int $ttl, Closure $callback): mixed
     {
         return null;
     }

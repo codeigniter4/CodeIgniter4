@@ -17,6 +17,7 @@ use Closure;
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use Config\Cache;
+use ReflectionFunction;
 
 /**
  * Base class for cache handling
@@ -64,7 +65,7 @@ abstract class BaseHandler implements CacheInterface
         return strlen($prefix . $key) > static::MAX_KEY_LENGTH ? $prefix . md5($key) : $prefix . $key;
     }
 
-    public function remember(string $key, int $ttl, Closure $callback): mixed
+    public function remember(string $key, callable|int $ttl, Closure $callback): mixed
     {
         $value = $this->get($key);
 
@@ -72,7 +73,15 @@ abstract class BaseHandler implements CacheInterface
             return $value;
         }
 
-        $this->save($key, $value = $callback(), $ttl);
+        $value = $callback();
+
+        if (is_callable($ttl)) {
+            $ttl = (new ReflectionFunction($ttl(...)))->getNumberOfParameters() > 0
+                ? $ttl($value)
+                : $ttl();
+        }
+
+        $this->save($key, $value, $ttl);
 
         return $value;
     }
