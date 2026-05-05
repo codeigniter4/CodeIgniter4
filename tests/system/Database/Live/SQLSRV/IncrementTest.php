@@ -65,7 +65,7 @@ final class IncrementTest extends CIUnitTestCase
 
         $builder->castTextToInt = false;
 
-        $builder->where('name', 'incremental')
+        $builder->where('name', 'decremental')
             ->decrement('created_at');
 
         $this->seeInDatabase('job', ['name' => 'decremental', 'created_at' => 5]);
