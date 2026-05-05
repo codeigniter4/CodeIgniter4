@@ -2098,8 +2098,10 @@ Class Reference
 
         .. versionadded:: 4.8.0
 
-        :param array $columns: A list of columns or array of column => value pairs to decrement.
+        :param array $columns: A list of columns or array of column => value pairs to increment.
         :param int $value: The amount to increment in the columns, if $columns is a list of columns.
+        :returns: ``true`` on success, ``false`` on failure
+        :rtype:   bool
 
         Increments the value of multiple fields by the specified amounts. If a field
         is not a numeric field, like a ``VARCHAR``, it will likely be replaced
@@ -2120,6 +2122,8 @@ Class Reference
 
         :param array $columns: A list of columns or array of column => value pairs to decrement.
         :param int $value: The amount to decrement in the columns, if $columns is a list of columns.
+        :returns: ``true`` on success, ``false`` on failure
+        :rtype:   bool
 
         Decrements the value of multiple fields by the specified amounts. If a field
         is not a numeric field, like a ``VARCHAR``, it will likely be replaced
