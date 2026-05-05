@@ -2,7 +2,9 @@
 
 use App\Enums\PostStatus;
 
-$page        = $request->integer('page', 1);
-$active      = $request->boolean('active', false);
-$publishedAt = $request->date('published_at', 'Y-m-d');
-$status      = $request->enum('status', PostStatus::class);
+$input = $request->validatedInput();
+
+$page        = $input->integer('page', 1);
+$active      = $input->boolean('active', false);
+$publishedAt = $input->date('published_at', 'Y-m-d');
+$status      = $input->enum('status', PostStatus::class, PostStatus::DRAFT);

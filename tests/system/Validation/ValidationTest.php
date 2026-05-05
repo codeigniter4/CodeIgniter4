@@ -19,6 +19,7 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\HTTP\ValidatedInput;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Exceptions\ValidationException;
@@ -251,6 +252,17 @@ class ValidationTest extends CIUnitTestCase
         $this->validation->setRules([]);
         $this->assertFalse($this->validation->run([]));
         $this->assertSame([], $this->validation->getValidated());
+    }
+
+    public function testGetValidatedInputReturnsValidatedInputObject(): void
+    {
+        $this->validation->setRules(['role' => 'required']);
+        $this->assertTrue($this->validation->run(['role' => 'administrator']));
+
+        $input = $this->validation->getValidatedInput();
+
+        $this->assertInstanceOf(ValidatedInput::class, $input);
+        $this->assertSame('administrator', $input->get('role'));
     }
 
     public function testRuleClassesInstantiatedOnce(): void

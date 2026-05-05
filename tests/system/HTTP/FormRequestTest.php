@@ -14,9 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Config\Services;
-use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Exceptions\RuntimeException;
-use CodeIgniter\I18n\Time;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
@@ -25,9 +23,6 @@ use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use Tests\Support\Controllers\FormRequestController;
-use Tests\Support\Enum\ColorEnum;
-use Tests\Support\Enum\RoleEnum;
-use Tests\Support\Enum\StatusEnum;
 use Tests\Support\HTTP\Requests\ValidPostFormRequest;
 
 /**
@@ -303,270 +298,18 @@ final class FormRequestTest extends CIUnitTestCase
         $this->assertTrue($formRequest->hasValidated('note'));
     }
 
-    public function testIntegerReturnsValidatedInteger(): void
+    public function testValidatedInputReturnsValidatedInputObject(): void
     {
-        service('superglobals')->setPost('page', '15');
+        service('superglobals')->setPost('title', 'Hello World');
+        service('superglobals')->setPost('body', 'Some body text');
 
-        $formRequest = new class ($this->makeRequest()) extends FormRequest {
-            public function rules(): array
-            {
-                return ['page' => 'required'];
-            }
-        };
-
-        $formRequest->resolveRequest();
-
-        $this->assertSame(15, $formRequest->integer('page'));
-    }
-
-    public function testIntegerReturnsDefaultForMissingValidatedField(): void
-    {
         $formRequest = new ValidPostFormRequest($this->makeRequest());
-
-        $this->assertSame(1, $formRequest->integer('page', 1));
-    }
-
-    public function testIntegerSupportsDotSyntax(): void
-    {
-        service('superglobals')->setPost('filters', ['page' => '2']);
-
-        $formRequest = new class ($this->makeRequest()) extends FormRequest {
-            public function rules(): array
-            {
-                return ['filters.page' => 'required'];
-            }
-        };
-
         $formRequest->resolveRequest();
 
-        $this->assertSame(2, $formRequest->integer('filters.page'));
-    }
+        $input = $formRequest->validatedInput();
 
-    public function testIntegerThrowsForInvalidValidatedValue(): void
-    {
-        service('superglobals')->setPost('page', '1.5');
-
-        $formRequest = new class ($this->makeRequest()) extends FormRequest {
-            public function rules(): array
-            {
-                return ['page' => 'required'];
-            }
-        };
-
-        $formRequest->resolveRequest();
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The validated "page" value cannot be read as integer.');
-
-        $formRequest->integer('page');
-    }
-
-    public function testBooleanReturnsValidatedBoolean(): void
-    {
-        service('superglobals')->setPost('active', 'true');
-
-        $formRequest = new class ($this->makeRequest()) extends FormRequest {
-            public function rules(): array
-            {
-                return ['active' => 'required'];
-            }
-        };
-
-        $formRequest->resolveRequest();
-
-        $this->assertTrue($formRequest->boolean('active'));
-    }
-
-    public function testBooleanReturnsFalseForValidatedFalseString(): void
-    {
-        service('superglobals')->setPost('active', 'false');
-
-        $formRequest = new class ($this->makeRequest()) extends FormRequest {
-            public function rules(): array
-            {
-                return ['active' => 'required'];
-            }
-        };
-
-        $formRequest->resolveRequest();
-
-        $this->assertFalse($formRequest->boolean('active'));
-    }
-
-    public function testBooleanReturnsDefaultForMissingValidatedField(): void
-    {
-        $formRequest = new ValidPostFormRequest($this->makeRequest());
-
-        $this->assertFalse($formRequest->boolean('active', false));
-    }
-
-    public function testBooleanThrowsForInvalidValidatedValue(): void
-    {
-        service('superglobals')->setPost('active', 'sometimes');
-
-        $formRequest = new class ($this->makeRequest()) extends FormRequest {
-            public function rules(): array
-            {
-                return ['active' => 'required'];
-            }
-        };
-
-        $formRequest->resolveRequest();
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The validated "active" value cannot be read as boolean.');
-
-        $formRequest->boolean('active');
-    }
-
-    public function testDateReturnsValidatedTime(): void
-    {
-        service('superglobals')->setPost('published_at', '2026-05-04');
-
-        $formRequest = new class ($this->makeRequest()) extends FormRequest {
-            public function rules(): array
-            {
-                return ['published_at' => 'required'];
-            }
-        };
-
-        $formRequest->resolveRequest();
-
-        $this->assertInstanceOf(Time::class, $formRequest->date('published_at'));
-        $this->assertSame('2026-05-04', $formRequest->date('published_at')->toDateString());
-    }
-
-    public function testDateSupportsCustomFormat(): void
-    {
-        service('superglobals')->setPost('published_at', '04/05/2026');
-
-        $formRequest = new class ($this->makeRequest()) extends FormRequest {
-            public function rules(): array
-            {
-                return ['published_at' => 'required'];
-            }
-        };
-
-        $formRequest->resolveRequest();
-
-        $this->assertSame('2026-05-04', $formRequest->date('published_at', 'd/m/Y')->toDateString());
-    }
-
-    public function testDateThrowsForInvalidValidatedValue(): void
-    {
-        service('superglobals')->setPost('published_at', '');
-
-        $formRequest = new class ($this->makeRequest()) extends FormRequest {
-            public function rules(): array
-            {
-                return ['published_at' => 'permit_empty'];
-            }
-        };
-
-        $formRequest->resolveRequest();
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The validated "published_at" value cannot be read as date.');
-
-        $formRequest->date('published_at');
-    }
-
-    public function testEnumReturnsValidatedStringBackedEnum(): void
-    {
-        service('superglobals')->setPost('status', 'active');
-
-        $formRequest = new class ($this->makeRequest()) extends FormRequest {
-            public function rules(): array
-            {
-                return ['status' => 'required'];
-            }
-        };
-
-        $formRequest->resolveRequest();
-
-        $this->assertSame(StatusEnum::ACTIVE, $formRequest->enum('status', StatusEnum::class));
-    }
-
-    public function testEnumReturnsValidatedIntBackedEnum(): void
-    {
-        service('superglobals')->setPost('role', '2');
-
-        $formRequest = new class ($this->makeRequest()) extends FormRequest {
-            public function rules(): array
-            {
-                return ['role' => 'required'];
-            }
-        };
-
-        $formRequest->resolveRequest();
-
-        $this->assertSame(RoleEnum::ADMIN, $formRequest->enum('role', RoleEnum::class));
-    }
-
-    public function testEnumReturnsValidatedUnitEnum(): void
-    {
-        service('superglobals')->setPost('color', 'GREEN');
-
-        $formRequest = new class ($this->makeRequest()) extends FormRequest {
-            public function rules(): array
-            {
-                return ['color' => 'required'];
-            }
-        };
-
-        $formRequest->resolveRequest();
-
-        $this->assertSame(ColorEnum::GREEN, $formRequest->enum('color', ColorEnum::class));
-    }
-
-    public function testEnumReturnsDefaultForMissingValidatedField(): void
-    {
-        $formRequest = new ValidPostFormRequest($this->makeRequest());
-
-        $this->assertSame(StatusEnum::PENDING, $formRequest->enum('status', StatusEnum::class, StatusEnum::PENDING));
-    }
-
-    public function testEnumThrowsForInvalidValidatedValue(): void
-    {
-        service('superglobals')->setPost('status', 'archived');
-
-        $formRequest = new class ($this->makeRequest()) extends FormRequest {
-            public function rules(): array
-            {
-                return ['status' => 'required'];
-            }
-        };
-
-        $formRequest->resolveRequest();
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The validated "status" value cannot be read as Tests\Support\Enum\StatusEnum.');
-
-        $formRequest->enum('status', StatusEnum::class);
-    }
-
-    public function testTypedAccessorsReturnNullForNullValidatedFields(): void
-    {
-        service('superglobals')->setServer('CONTENT_TYPE', 'application/json');
-
-        $formRequest = new class ($this->makeRequest('{"page":null,"active":null,"published_at":null,"status":null}')) extends FormRequest {
-            public function rules(): array
-            {
-                return [
-                    'page'         => 'permit_empty',
-                    'active'       => 'permit_empty',
-                    'published_at' => 'permit_empty',
-                    'status'       => 'permit_empty',
-                ];
-            }
-        };
-
-        $formRequest->resolveRequest();
-
-        $this->assertNull($formRequest->integer('page', 1));
-        $this->assertNull($formRequest->boolean('active', false));
-        $this->assertNotInstanceOf(Time::class, $formRequest->date('published_at'));
-        $this->assertNotInstanceOf(StatusEnum::class, $formRequest->enum('status', StatusEnum::class, StatusEnum::PENDING));
+        $this->assertInstanceOf(ValidatedInput::class, $input);
+        $this->assertSame('Hello World', $input->get('title'));
     }
 
     // -------------------------------------------------------------------------

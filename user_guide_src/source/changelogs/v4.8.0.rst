@@ -46,6 +46,7 @@ update your implementations to include the new methods or method changes to ensu
 - **Database:** ``CodeIgniter\Database\ConnectionInterface`` now requires the ``afterCommit()``, ``afterRollback()``, ``inTransaction()``, and ``transaction()`` methods.
 - **Logging:** ``CodeIgniter\Log\Handlers\HandlerInterface::handle()`` now requires a third parameter ``array $context = []``. Any custom log handler that overrides ``handle()`` - whether implementing ``HandlerInterface`` directly or extending a built-in handler class - must add the parameter to its ``handle()`` method signature.
 - **Security:** The ``SecurityInterface``'s ``verify()`` method now has a native return type of ``static``.
+- **Validation:** ``CodeIgniter\Validation\ValidationInterface`` now requires the ``getValidatedInput()`` method.
 
 Method Signature Changes
 ========================
@@ -269,6 +270,7 @@ Validation
 ==========
 
 - Custom rule methods that set an error via the ``&$error`` reference parameter now support the ``{field}``, ``{param}``, and ``{value}`` placeholders, consistent with language-file and ``setRule()``/``setRules()`` error messages.
+- Added ``Validation::getValidatedInput()`` to access validated data through a typed input object.
 
 Others
 ======

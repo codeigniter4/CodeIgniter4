@@ -21,6 +21,7 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ValidatedInput;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use CodeIgniter\View\RendererInterface;
 
@@ -269,6 +270,14 @@ class Validation implements ValidationInterface
     public function getValidated(): array
     {
         return $this->validated;
+    }
+
+    /**
+     * Returns the actual validated data as a typed input object.
+     */
+    public function getValidatedInput(): ValidatedInput
+    {
+        return new ValidatedInput($this->validated);
     }
 
     /**

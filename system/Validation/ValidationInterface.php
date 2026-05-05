@@ -15,6 +15,7 @@ namespace CodeIgniter\Validation;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ValidatedInput;
 
 /**
  * Expected behavior of a validator
@@ -162,4 +163,9 @@ interface ValidationInterface
      * Returns the actual validated data.
      */
     public function getValidated(): array;
+
+    /**
+     * Returns the actual validated data as a typed input object.
+     */
+    public function getValidatedInput(): ValidatedInput;
 }
