@@ -231,7 +231,7 @@ Model
 Libraries
 =========
 
-- **Cache:** Added support for TTL callables in the ``remember()`` method of cache handlers. This allows you to specify a callable that returns a TTL value, which can be useful for dynamic TTL. See :ref:`cache-ttl-callables` for details.
+- **Cache:** Added support for TTL callables in the ``remember()`` method of cache handlers. This allows you to specify a callable that returns a TTL value, which can be useful for dynamic TTL.
 - **Context**: This new feature allows you to easily set and retrieve normal or hidden contextual data for the current request. See :ref:`Context <context>` for details.
 - **Images:**: Added support for the AVIF file format.
 - **Locks:** Added :doc:`Atomic Locks </libraries/locks>` for owner-aware, cross-process mutual exclusion backed by supported cache handlers: **File**, **Redis**, **Predis**, and **Memcached**. Memcached support has driver-specific release limitations because Memcached has no atomic compare-and-delete command.
