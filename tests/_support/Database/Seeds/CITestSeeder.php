@@ -60,23 +60,6 @@ class CITestSeeder extends Seeder
                     'description' => 'Only Coldplay can actually called Musician',
                 ],
             ],
-            'task' => [
-                [
-                    'name'        => 'Grocery',
-                    'description' => 'Go to the grocery store and buy some food',
-                    'priority'    => '1',
-                ],
-                [
-                    'name'        => 'Write Tests',
-                    'description' => 'Write tests for the application',
-                    'priority'    => '2',
-                ],
-                [
-                    'name'        => 'Fix Bug',
-                    'description' => 'Fix the bug and report to the manager',
-                    'priority'    => '3',
-                ],
-            ],
             'misc' => [
                 [
                     'key'   => '\\xxxfoo456',
