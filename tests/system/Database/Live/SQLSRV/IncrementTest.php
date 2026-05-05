@@ -45,10 +45,11 @@ final class IncrementTest extends CIUnitTestCase
 
         $this->assertInstanceOf(Builder::class, $this->db->table('job'));
 
-        $this->db->table('job')->castTextToInt = false;
+        $builder = $this->db->table('job');
 
-        $this->db->table('job')
-            ->where('name', 'incremental')
+        $builder->castTextToInt = false;
+
+        $builder->where('name', 'incremental')
             ->increment('created_at');
 
         $this->seeInDatabase('job', ['name' => 'incremental', 'created_at' => 7]);
@@ -60,10 +61,11 @@ final class IncrementTest extends CIUnitTestCase
 
         $this->assertInstanceOf(Builder::class, $this->db->table('job'));
 
-        $this->db->table('job')->castTextToInt = false;
+        $builder = $this->db->table('job');
 
-        $this->db->table('job')
-            ->where('name', 'decremental')
+        $builder->castTextToInt = false;
+
+        $builder->where('name', 'incremental')
             ->decrement('created_at');
 
         $this->seeInDatabase('job', ['name' => 'decremental', 'created_at' => 5]);
