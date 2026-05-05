@@ -69,73 +69,73 @@ final class IncrementTest extends CIUnitTestCase
 
     public function testIncrementMany(): void
     {
-        $this->hasInDatabase('task', ['name' => 'task1', 'description' => '6', 'priority' => '1']);
+        $this->hasInDatabase('job', ['name' => 'job1', 'description' => '6', 'created_at' => 1]);
 
-        $this->db->table('task')
-            ->where('name', 'task1')
-            ->incrementMany(['description' => 2, 'priority' => 3]);
+        $this->db->table('job')
+            ->where('name', 'job1')
+            ->incrementMany(['description' => 2, 'created_at' => 3]);
 
-        $this->seeInDatabase('task', ['name' => 'task1', 'description' => '8', 'priority' => '4']);
+        $this->seeInDatabase('job', ['name' => 'job1', 'description' => '8', 'created_at' => 4]);
     }
 
     public function testIncrementManyWithValue(): void
     {
-        $this->hasInDatabase('task', ['name' => 'task1', 'description' => '6', 'priority' => '1']);
+        $this->hasInDatabase('job', ['name' => 'job1', 'description' => '6', 'created_at' => 1]);
 
-        $this->db->table('task')
-            ->where('name', 'task1')
-            ->incrementMany(['description', 'priority'], 2);
+        $this->db->table('job')
+            ->where('name', 'job1')
+            ->incrementMany(['description', 'created_at'], 2);
 
-        $this->seeInDatabase('task', ['name' => 'task1', 'description' => '8', 'priority' => '3']);
+        $this->seeInDatabase('job', ['name' => 'job1', 'description' => '8', 'created_at' => 3]);
     }
 
     public function testIncrementManyWithNegativeValue(): void
     {
-        $this->hasInDatabase('task', ['name' => 'task1', 'description' => '6', 'priority' => '1']);
+        $this->hasInDatabase('job', ['name' => 'job1', 'description' => '6', 'created_at' => 1]);
 
-        $this->db->table('task')
-            ->where('name', 'task1')
-            ->incrementMany(['description' => 2, 'priority' => -1]);
+        $this->db->table('job')
+            ->where('name', 'job1')
+            ->incrementMany(['description' => 2, 'created_at' => -1]);
 
-        $this->seeInDatabase('task', ['name' => 'task1', 'description' => '8', 'priority' => '0']);
+        $this->seeInDatabase('job', ['name' => 'job1', 'description' => '8', 'created_at' => 0]);
     }
 
     public function testIncrementManyWithEmptyColumns(): void
     {
-        $this->hasInDatabase('task', ['name' => 'task1', 'description' => '6', 'priority' => '1']);
+        $this->hasInDatabase('job', ['name' => 'job1', 'description' => '6', 'created_at' => 1]);
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Argument #1 ($columns) cannot be empty.');
 
-        $this->db->table('task')
+        $this->db->table('job')
             ->where('name', 'task1')
             ->incrementMany([]);
     }
 
     public function testIncrementManyWithNonIntegerValues(): void
     {
-        $this->hasInDatabase('task', ['name' => 'task1', 'description' => '6', 'priority' => '1']);
+        $this->hasInDatabase('job', ['name' => 'job1', 'description' => '6', 'created_at' => 1]);
 
         $this->expectException(TypeError::class);
-        $this->expectExceptionMessage('Argument #1 ($columns) must contain only int values, string given for "priority".');
+        $this->expectExceptionMessage('Argument #1 ($columns) must contain only int values, string given for "created_at".');
 
-        $this->db->table('task')
-            ->where('name', 'task1')
-            ->incrementMany(['description' => 2, 'priority' => 'wrongValue']);
+        $this->db->table('job')
+            ->where('name', 'job1')
+            ->incrementMany(['description' => 2, 'created_at' => 'wrongValue']);
     }
 
     public function testResetStateAfterIncrementMany(): void
     {
-        $this->hasInDatabase('task', ['name' => 'task1', 'description' => '6', 'priority' => '1']);
-        $this->hasInDatabase('task', ['name' => 'task2', 'description' => '2', 'priority' => '4']);
+        $this->hasInDatabase('job', ['name' => 'job1', 'description' => '6', 'created_at' => 1]);
+        $this->hasInDatabase('job', ['name' => 'job2', 'description' => '2', 'created_at' => 4]);
 
-        $builder = $this->db->table('task');
+        $builder = $this->db->table('job');
 
-        $builder->where('name', 'task1')->incrementMany(['description', 'priority']);
-        $builder->where('name', 'task2')->incrementMany(['description', 'priority']);
+        $builder->where('name', 'job1')->incrementMany(['description', 'created_at']);
+        $builder->where('name', 'job2')->incrementMany(['description', 'created_at']);
 
-        $this->seeInDatabase('task', ['name' => 'task1', 'description' => '7', 'priority' => '2']);
-        $this->seeInDatabase('task', ['name' => 'task2', 'description' => '3', 'priority' => '5']);
+        $this->seeInDatabase('job', ['name' => 'job1', 'description' => '7', 'created_at' => 2]);
+        $this->seeInDatabase('job', ['name' => 'job2', 'description' => '3', 'created_at' => 5]);
     }
 
     public function testDecrement(): void
@@ -176,72 +176,72 @@ final class IncrementTest extends CIUnitTestCase
 
     public function testDecrementMany(): void
     {
-        $this->hasInDatabase('task', ['name' => 'task1', 'description' => '6', 'priority' => '1']);
+        $this->hasInDatabase('job', ['name' => 'job1', 'description' => '6', 'created_at' => 1]);
 
-        $this->db->table('task')
-            ->where('name', 'task1')
-            ->decrementMany(['description' => 2, 'priority' => 3]);
+        $this->db->table('job')
+            ->where('name', 'job1')
+            ->decrementMany(['description' => 2, 'created_at' => 3]);
 
-        $this->seeInDatabase('task', ['name' => 'task1', 'description' => '4', 'priority' => '-2']);
+        $this->seeInDatabase('job', ['name' => 'job1', 'description' => '4', 'created_at' => -2]);
     }
 
     public function testDecrementManyWithValue(): void
     {
-        $this->hasInDatabase('task', ['name' => 'task1', 'description' => '6', 'priority' => '1']);
+        $this->hasInDatabase('job', ['name' => 'job1', 'description' => '6', 'created_at' => 1]);
 
-        $this->db->table('task')
-            ->where('name', 'task1')
-            ->decrementMany(['description', 'priority'], 2);
+        $this->db->table('job')
+            ->where('name', 'job1')
+            ->decrementMany(['description', 'created_at'], 2);
 
-        $this->seeInDatabase('task', ['name' => 'task1', 'description' => '4', 'priority' => '-1']);
+        $this->seeInDatabase('job', ['name' => 'job1', 'description' => '4', 'created_at' => -1]);
     }
 
     public function testDecrementManyWithNegativeValues(): void
     {
-        $this->hasInDatabase('task', ['name' => 'task1', 'description' => '6', 'priority' => '1']);
+        $this->hasInDatabase('job', ['name' => 'job1', 'description' => '6', 'created_at' => 1]);
 
-        $this->db->table('task')
-            ->where('name', 'task1')
-            ->decrementMany(['description' => 2, 'priority' => -1]);
+        $this->db->table('job')
+            ->where('name', 'job1')
+            ->decrementMany(['description' => 2, 'created_at' => -1]);
 
-        $this->seeInDatabase('task', ['name' => 'task1', 'description' => '4', 'priority' => '2']);
+        $this->seeInDatabase('job', ['name' => 'job1', 'description' => '4', 'created_at' => 2]);
     }
 
     public function testDecrementManyWithEmptyColumns(): void
     {
-        $this->hasInDatabase('task', ['name' => 'task1', 'description' => '6', 'priority' => '1']);
+        $this->hasInDatabase('job', ['name' => 'job1', 'description' => '6', 'created_at' => 1]);
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Argument #1 ($columns) cannot be empty.');
 
-        $this->db->table('task')
+        $this->db->table('job')
             ->where('name', 'task1')
             ->decrementMany([]);
     }
 
     public function testDecrementManyWithNonIntegerValues(): void
     {
-        $this->hasInDatabase('task', ['name' => 'task1', 'description' => '6', 'priority' => '1']);
+        $this->hasInDatabase('job', ['name' => 'job1', 'description' => '6', 'created_at' => 1]);
 
         $this->expectException(TypeError::class);
-        $this->expectExceptionMessage('Argument #1 ($columns) must contain only int values, string given for "priority".');
+        $this->expectExceptionMessage('Argument #1 ($columns) must contain only int values, string given for "created_at".');
 
-        $this->db->table('task')
-            ->where('name', 'task1')
-            ->decrementMany(['description' => 2, 'priority' => 'wrongValue']);
+        $this->db->table('job')
+            ->where('name', 'job1')
+            ->decrementMany(['description' => 2, 'created_at' => 'wrongValue']);
     }
 
     public function testResetStateAfterDecrementMany(): void
     {
-        $this->hasInDatabase('task', ['name' => 'task1', 'description' => '6', 'priority' => '1']);
-        $this->hasInDatabase('task', ['name' => 'task2', 'description' => '2', 'priority' => '4']);
+        $this->hasInDatabase('job', ['name' => 'job1', 'description' => '6', 'created_at' => 1]);
+        $this->hasInDatabase('job', ['name' => 'job2', 'description' => '2', 'created_at' => 4]);
 
-        $builder = $this->db->table('task');
+        $builder = $this->db->table('job');
 
-        $builder->where('name', 'task1')->decrementMany(['description', 'priority']);
-        $builder->where('name', 'task2')->decrementMany(['description', 'priority']);
+        $builder->where('name', 'job1')->decrementMany(['description', 'created_at']);
+        $builder->where('name', 'job2')->decrementMany(['description', 'created_at']);
 
-        $this->seeInDatabase('task', ['name' => 'task1', 'description' => '5', 'priority' => '0']);
-        $this->seeInDatabase('task', ['name' => 'task2', 'description' => '1', 'priority' => '3']);
+        $this->seeInDatabase('job', ['name' => 'job1', 'description' => '5', 'created_at' => 0]);
+        $this->seeInDatabase('job', ['name' => 'job2', 'description' => '1', 'created_at' => 3]);
     }
 }
