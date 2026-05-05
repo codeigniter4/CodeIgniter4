@@ -43,7 +43,7 @@ final class IncrementTest extends CIUnitTestCase
     {
         $this->hasInDatabase('job', ['name' => 'incremental', 'created_at' => 6]);
 
-        $this->assertTrue($this->db->table('job') instanceof Builder);
+        $this->assertInstanceOf(Builder::class, $this->db->table('job'));
 
         $this->db->table('job')->castTextToInt = false;
 
@@ -58,7 +58,7 @@ final class IncrementTest extends CIUnitTestCase
     {
         $this->hasInDatabase('job', ['name' => 'decremental', 'created_at' => 6]);
 
-        $this->assertTrue($this->db->table('job') instanceof Builder);
+        $this->assertInstanceOf(Builder::class, $this->db->table('job'));
 
         $this->db->table('job')->castTextToInt = false;
 
