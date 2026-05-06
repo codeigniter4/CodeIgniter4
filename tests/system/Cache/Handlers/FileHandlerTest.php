@@ -16,6 +16,7 @@ namespace CodeIgniter\Cache\Handlers;
 use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\Cache\Exceptions\CacheException;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -176,6 +177,14 @@ final class FileHandlerTest extends AbstractHandlerTestCase
 
         CLI::wait(3);
         $this->assertNull($this->handler->get(self::$key1));
+    }
+
+    public function testRememberWithTTLCallableAndMultipleParameters(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Argument #2 ($ttl) must accept 0 or 1 parameter, 2 given.');
+
+        $this->handler->remember(self::$key1, static fn ($a, $b): int => 2, static fn (): string => 'value');
     }
 
     /**
