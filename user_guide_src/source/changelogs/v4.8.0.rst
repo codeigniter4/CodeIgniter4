@@ -43,10 +43,10 @@ Interface Changes
 **NOTE:** If you've implemented your own classes that implement these interfaces from scratch, you will need to
 update your implementations to include the new methods or method changes to ensure compatibility.
 
-- **Database:** ``CodeIgniter\Database\ConnectionInterface`` now requires the ``afterCommit()``, ``afterRollback()``, ``inTransaction()``, and ``transaction()`` methods.
+- **Cache:** ``CodeIgniter\Cache\CacheInterface::remember()`` now accepts a TTL callable. All built-in cache handlers inherit this method via ``BaseHandler``, so no changes are required for them.
+- **Database:** ``CodeIgniter\Database\ConnectionInterface`` now requires the ``afterCommit()``, ``afterRollback()``, and ``transaction()`` methods.
 - **Logging:** ``CodeIgniter\Log\Handlers\HandlerInterface::handle()`` now requires a third parameter ``array $context = []``. Any custom log handler that overrides ``handle()`` - whether implementing ``HandlerInterface`` directly or extending a built-in handler class - must add the parameter to its ``handle()`` method signature.
 - **Security:** The ``SecurityInterface``'s ``verify()`` method now has a native return type of ``static``.
-- **Cache:** ``CodeIgniter\Cache\CacheInterface::remember()`` now accepts a TTL callable. All built-in cache handlers inherit this method via ``BaseHandler``, so no changes are required for them.
 
 Method Signature Changes
 ========================
@@ -203,13 +203,10 @@ Database
 
 - Added ``afterCommit()`` and ``afterRollback()`` transaction callbacks to database connections. These callbacks run after the outermost transaction commits or rolls back. See :ref:`transactions-transaction-callbacks`.
 - Added the ``transaction()`` method to database connections to run a callback inside a transaction. See :ref:`transactions-closure`.
-- Added ``inTransaction()`` to database connections to check whether the connection is inside an active CodeIgniter-managed transaction. See :ref:`transactions-checking-transaction-state`.
 - Added ``trustServerCertificate`` option to ``SQLSRV`` database connections in ``Config\Database``. Set it to ``true`` to trust the server certificate without CA validation when using encrypted connections.
 
 Query Builder
 -------------
-
-- Added ``whereColumn()`` and ``orWhereColumn()`` to compare one column to another column while protecting identifiers by default. See :ref:`query-builder-where-column`.
 
 Forge
 -----
@@ -234,7 +231,7 @@ Libraries
 - **Cache:** Added support for TTL callables in the ``remember()`` method of cache handlers. This allows you to specify a callable that returns a TTL value, which can be useful for dynamic TTL.
 - **Context**: This new feature allows you to easily set and retrieve normal or hidden contextual data for the current request. See :ref:`Context <context>` for details.
 - **Images:**: Added support for the AVIF file format.
-- **Locks:** Added :doc:`Atomic Locks </libraries/locks>` for owner-aware, cross-process mutual exclusion backed by supported cache handlers: **File**, **Redis**, **Predis**, and **Memcached**. Memcached support has driver-specific release limitations because Memcached has no atomic compare-and-delete command.
+- **Locks:** Added :doc:`Atomic Locks </libraries/locks>` for owner-aware, cross-process mutual exclusion backed by supported cache handlers.
 - **Logging:** Log handlers now receive the full context array as a third argument to ``handle()``. When ``$logGlobalContext`` is enabled, the CI global context is available under the ``HandlerInterface::GLOBAL_CONTEXT_KEY`` key. Built-in handlers append it to the log output; custom handlers can use it for structured logging.
 - **Logging:** Added :ref:`per-call context logging <logging-per-call-context>` with three new ``Config\Logger`` options (``$logContext``, ``$logContextTrace``, ``$logContextUsedKeys``). Per PSR-3, a ``Throwable`` in the ``exception`` context key is automatically normalized to a meaningful array. All options default to ``false``.
 
@@ -283,9 +280,6 @@ Others
 ***************
 Message Changes
 ***************
-
-- Added new language key:
-    - ``Cache.unsupportedLockStore`` (``CacheException::forUnsupportedLockStore()``)
 
 - Removed deprecated language keys tied to removed exception constructors:
     - ``Core.missingExtension`` (``FrameworkException::forMissingExtension()``)
