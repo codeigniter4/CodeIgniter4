@@ -150,6 +150,7 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Argument #2 ($ttl) must accept 0 or 1 parameter, 2 given.');
 
+        /** @phpstan-ignore argument.type */
         $this->handler->remember(self::$key1, static fn ($a, $b): int => 2, static fn (): string => 'value');
     }
 
