@@ -76,7 +76,7 @@ abstract class BaseHandler implements CacheInterface
         $value = $callback();
 
         if (is_callable($ttl)) {
-            $ttl = (new ReflectionFunction($ttl(...)))->getNumberOfParameters() > 0
+            $ttl = (new ReflectionFunction(Closure::fromCallable($ttl)))->getNumberOfParameters() > 0
                 ? $ttl($value)
                 : $ttl();
         }
