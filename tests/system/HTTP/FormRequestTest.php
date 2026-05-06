@@ -18,6 +18,7 @@ use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
+use CodeIgniter\Validation\ValidatedInput;
 use Config\App;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;

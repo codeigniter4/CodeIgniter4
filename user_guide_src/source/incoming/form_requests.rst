@@ -78,8 +78,7 @@ controller:
 
 These typed methods do not replace validation rules. They only make accepted
 values easier to consume in the controller. See :ref:`validation-validated-input`
-for the full behavior of ``integer()``, ``boolean()``, ``date()``, and
-``enum()``.
+for the full behavior of the typed input methods.
 
 Accessing Other Request Data
 ============================

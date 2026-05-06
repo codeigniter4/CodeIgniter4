@@ -11,10 +11,11 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\HTTP;
+namespace CodeIgniter\Validation;
 
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\I18n\Time;
+use CodeIgniter\Input\InputData;
 use CodeIgniter\Test\CIUnitTestCase;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Enum\ColorEnum;
@@ -27,102 +28,12 @@ use Tests\Support\Enum\StatusEnum;
 #[Group('Others')]
 final class ValidatedInputTest extends CIUnitTestCase
 {
-    public function testGetReturnsValidatedFieldValue(): void
-    {
-        $input = new ValidatedInput(['title' => 'Hello World']);
-
-        $this->assertSame('Hello World', $input->get('title'));
-    }
-
-    public function testGetReturnsDefaultForMissingValidatedField(): void
-    {
-        $input = new ValidatedInput([]);
-
-        $this->assertSame('fallback', $input->get('title', 'fallback'));
-    }
-
-    public function testHasReturnsTrueForNullValidatedField(): void
-    {
-        $input = new ValidatedInput(['note' => null]);
-
-        $this->assertTrue($input->has('note'));
-        $this->assertNull($input->get('note', 'fallback'));
-    }
-
-    public function testGetAndHasSupportDotSyntax(): void
-    {
-        $input = new ValidatedInput([
-            'post' => [
-                'meta' => [
-                    'slug' => 'hello-world',
-                ],
-            ],
-        ]);
-
-        $this->assertSame('hello-world', $input->get('post.meta.slug'));
-        $this->assertTrue($input->has('post.meta.slug'));
-    }
-
-    public function testIntegerReturnsValidatedInteger(): void
+    public function testValidatedInputExtendsInputData(): void
     {
         $input = new ValidatedInput(['page' => '15']);
 
+        $this->assertInstanceOf(InputData::class, $input);
         $this->assertSame(15, $input->integer('page'));
-    }
-
-    public function testIntegerReturnsDefaultForMissingValidatedField(): void
-    {
-        $input = new ValidatedInput([]);
-
-        $this->assertSame(1, $input->integer('page', 1));
-    }
-
-    public function testIntegerSupportsDotSyntax(): void
-    {
-        $input = new ValidatedInput(['filters' => ['page' => '2']]);
-
-        $this->assertSame(2, $input->integer('filters.page'));
-    }
-
-    public function testIntegerThrowsForInvalidValidatedValue(): void
-    {
-        $input = new ValidatedInput(['page' => '1.5']);
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The validated "page" value cannot be read as integer.');
-
-        $input->integer('page');
-    }
-
-    public function testBooleanReturnsValidatedBoolean(): void
-    {
-        $input = new ValidatedInput(['active' => 'true']);
-
-        $this->assertTrue($input->boolean('active'));
-    }
-
-    public function testBooleanReturnsFalseForValidatedFalseString(): void
-    {
-        $input = new ValidatedInput(['active' => 'false']);
-
-        $this->assertFalse($input->boolean('active'));
-    }
-
-    public function testBooleanReturnsDefaultForMissingValidatedField(): void
-    {
-        $input = new ValidatedInput([]);
-
-        $this->assertFalse($input->boolean('active', false));
-    }
-
-    public function testBooleanThrowsForInvalidValidatedValue(): void
-    {
-        $input = new ValidatedInput(['active' => 'sometimes']);
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The validated "active" value cannot be read as boolean.');
-
-        $input->boolean('active');
     }
 
     public function testDateReturnsValidatedTime(): void
@@ -201,14 +112,10 @@ final class ValidatedInputTest extends CIUnitTestCase
     public function testTypedAccessorsReturnNullForNullValidatedFields(): void
     {
         $input = new ValidatedInput([
-            'page'         => null,
-            'active'       => null,
             'published_at' => null,
             'status'       => null,
         ]);
 
-        $this->assertNull($input->integer('page', 1));
-        $this->assertNull($input->boolean('active', false));
         $this->assertNotInstanceOf(Time::class, $input->date('published_at'));
         $this->assertNotInstanceOf(StatusEnum::class, $input->enum('status', StatusEnum::class, StatusEnum::PENDING));
     }

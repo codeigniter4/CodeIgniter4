@@ -483,9 +483,10 @@ the validation rules.
 Typed Validated Input
 ---------------------
 
-``getValidatedInput()`` returns the same validated data as a typed input object.
-Use it after validation succeeds when you want to read common controller values
-as integers, booleans, dates, or enums:
+``getValidatedInput()`` returns the same validated data as a
+``CodeIgniter\Validation\ValidatedInput`` object. Use it after validation
+succeeds when you want to read common controller values as strings, integers,
+booleans, arrays, dates, or enums:
 
 .. versionadded:: 4.8.0
 
@@ -497,6 +498,10 @@ helps you consume values that already passed validation. If a present value
 cannot be read as the requested type, an ``InvalidArgumentException`` is thrown.
 This usually means the validation rules and the expected type do not match.
 
+``ValidatedInput`` extends ``CodeIgniter\Input\InputData``. This keeps generic
+typed input access reusable while adding validation-specific readers for dates
+and enums.
+
 The typed input object has the following methods:
 
 All methods support dot-array syntax for nested validated data.
@@ -505,9 +510,13 @@ All methods support dot-array syntax for nested validated data.
   is missing, it returns the default value.
 * ``has($key)`` returns whether the field exists in the validated data, even if
   its value is ``null``.
+* ``string($key, $default = null)`` returns ``string|null``. If the field is
+  missing, it returns the default value or ``null``.
 * ``integer($key, $default = null)`` returns ``int|null``. If the field is
   missing, it returns the default value or ``null``.
 * ``boolean($key, $default = null)`` returns ``bool|null``. If the field is
+  missing, it returns the default value or ``null``.
+* ``array($key, $default = null)`` returns ``array|null``. If the field is
   missing, it returns the default value or ``null``.
 * ``date($key, $format = null, $timezone = null)`` returns
   :php:class:`CodeIgniter\\I18n\\Time` or ``null``. Pass a format when the value

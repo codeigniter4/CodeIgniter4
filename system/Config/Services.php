@@ -46,6 +46,7 @@ use CodeIgniter\HTTP\SiteURIFactory;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Images\Handlers\BaseHandler;
+use CodeIgniter\Input\InputData;
 use CodeIgniter\Language\Language;
 use CodeIgniter\Lock\LockManager;
 use CodeIgniter\Log\Logger;
@@ -62,6 +63,7 @@ use CodeIgniter\Session\Session;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Throttle\Throttler;
 use CodeIgniter\Typography\Typography;
+use CodeIgniter\Validation\ValidatedInput;
 use CodeIgniter\Validation\Validation;
 use CodeIgniter\Validation\ValidationInterface;
 use CodeIgniter\View\Cell;
@@ -385,6 +387,20 @@ class Services extends BaseService
         $class   = $config->handlers[$handler];
 
         return new $class($config);
+    }
+
+    /**
+     * Returns a typed input data object.
+     *
+     * @param array<string, mixed> $data
+     */
+    public static function inputdata(array $data = [], bool $getShared = false): InputData
+    {
+        if ($getShared) {
+            return static::getSharedInstance('inputdata', $data);
+        }
+
+        return new InputData($data);
     }
 
     /**
@@ -871,6 +887,20 @@ class Services extends BaseService
         $config ??= config(ValidationConfig::class);
 
         return new Validation($config, AppServices::get('renderer'));
+    }
+
+    /**
+     * Returns a typed validated input object.
+     *
+     * @param array<string, mixed> $data
+     */
+    public static function validatedinput(array $data = [], bool $getShared = false): ValidatedInput
+    {
+        if ($getShared) {
+            return static::getSharedInstance('validatedinput', $data);
+        }
+
+        return new ValidatedInput($data);
     }
 
     /**

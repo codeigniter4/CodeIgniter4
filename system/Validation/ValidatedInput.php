@@ -11,105 +11,21 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\HTTP;
+namespace CodeIgniter\Validation;
 
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\I18n\Time;
+use CodeIgniter\Input\InputData;
 use DateTimeZone;
 use Exception;
 use ReflectionEnum;
 use UnitEnum;
 
 /**
- * @see \CodeIgniter\HTTP\ValidatedInputTest
+ * @see \CodeIgniter\Validation\ValidatedInputTest
  */
-class ValidatedInput
+class ValidatedInput extends InputData
 {
-    /**
-     * @param array<string, mixed> $data
-     */
-    public function __construct(private readonly array $data)
-    {
-    }
-
-    /**
-     * Returns a single validated field value by name, or the default value
-     * if the field is not present in the validated data.
-     *
-     * Supports dot-array syntax for nested validated data.
-     */
-    public function get(string $key, mixed $default = null): mixed
-    {
-        helper('array');
-
-        if (! dot_array_has($key, $this->data)) {
-            return $default;
-        }
-
-        return dot_array_search($key, $this->data);
-    }
-
-    /**
-     * Returns true when the named field exists in the validated data, even if
-     * its value is null.
-     *
-     * Supports dot-array syntax for nested validated data.
-     */
-    public function has(string $key): bool
-    {
-        helper('array');
-
-        return dot_array_has($key, $this->data);
-    }
-
-    /**
-     * Returns a validated field as an integer.
-     *
-     * Supports dot-array syntax for nested validated data.
-     */
-    public function integer(string $key, ?int $default = null): ?int
-    {
-        $value = $this->get($key, $default);
-
-        if ($value === null || is_int($value)) {
-            return $value;
-        }
-
-        if (is_string($value)) {
-            $integer = filter_var($value, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
-
-            if ($integer !== null) {
-                return $integer;
-            }
-        }
-
-        throw $this->invalidType($key, 'integer');
-    }
-
-    /**
-     * Returns a validated field as a boolean.
-     *
-     * Supports dot-array syntax for nested validated data.
-     */
-    public function boolean(string $key, ?bool $default = null): ?bool
-    {
-        $value = $this->get($key, $default);
-
-        if ($value === null || is_bool($value)) {
-            return $value;
-        }
-
-        if (is_int($value) || is_string($value)) {
-            $boolean = filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
-
-            if ($boolean !== null) {
-                return $boolean;
-            }
-        }
-
-        throw $this->invalidType($key, 'boolean');
-    }
-
     /**
      * Returns a validated field as a Time instance.
      *
@@ -223,7 +139,7 @@ class ValidatedInput
         return $enum;
     }
 
-    private function invalidType(string $key, string $type): InvalidArgumentException
+    protected function invalidType(string $key, string $type): InvalidArgumentException
     {
         return new InvalidArgumentException(
             sprintf('The validated "%s" value cannot be read as %s.', $key, $type),

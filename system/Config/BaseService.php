@@ -46,6 +46,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\SiteURIFactory;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Images\Handlers\BaseHandler;
+use CodeIgniter\Input\InputData;
 use CodeIgniter\Language\Language;
 use CodeIgniter\Lock\LockManager;
 use CodeIgniter\Log\Logger;
@@ -58,6 +59,7 @@ use CodeIgniter\Session\Session;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Throttle\Throttler;
 use CodeIgniter\Typography\Typography;
+use CodeIgniter\Validation\ValidatedInput;
 use CodeIgniter\Validation\ValidationInterface;
 use CodeIgniter\View\Cell;
 use CodeIgniter\View\Parser;
@@ -120,6 +122,7 @@ use Config\WorkerMode;
  * @method static Honeypot                   honeypot(ConfigHoneyPot $config = null, $getShared = true)
  * @method static BaseHandler                image($handler = null, Images $config = null, $getShared = true)
  * @method static IncomingRequest            incomingrequest(?App $config = null, bool $getShared = true)
+ * @method static InputData                  inputdata(array<string, mixed> $data = [], bool $getShared = false)
  * @method static Iterator                   iterator($getShared = true)
  * @method static Language                   language($locale = null, $getShared = true)
  * @method static LockManager                locks(?CacheInterface $cache = null, bool $getShared = true)
@@ -144,6 +147,7 @@ use Config\WorkerMode;
  * @method static Toolbar                    toolbar(ConfigToolbar $config = null, $getShared = true)
  * @method static Typography                 typography($getShared = true)
  * @method static URI                        uri($uri = null, $getShared = true)
+ * @method static ValidatedInput             validatedinput(array<string, mixed> $data = [], bool $getShared = false)
  * @method static ValidationInterface        validation(ConfigValidation $config = null, $getShared = true)
  * @method static Cell                       viewcell($getShared = true)
  */
