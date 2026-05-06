@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
-use BackedEnum;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\I18n\Time;
 use DateTimeZone;
@@ -208,10 +207,6 @@ class ValidatedInput
                 throw $this->invalidType($key, $enumClass);
             }
         } elseif (! is_int($value) && ! is_string($value)) {
-            throw $this->invalidType($key, $enumClass);
-        }
-
-        if (! is_subclass_of($enumClass, BackedEnum::class)) {
             throw $this->invalidType($key, $enumClass);
         }
 
