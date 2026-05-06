@@ -2139,6 +2139,23 @@ abstract class BaseConnection implements ConnectionInterface
     }
 
     /**
+     * Checks whether the exception represents a retryable transaction failure.
+     */
+    public function isRetryableTransactionException(Throwable $exception): bool
+    {
+        return $exception instanceof DatabaseException
+            && $this->isRetryableTransactionErrorCode($exception->getDatabaseCode());
+    }
+
+    /**
+     * Checks whether the native database code represents a retryable transaction failure.
+     */
+    protected function isRetryableTransactionErrorCode(int|string $code): bool
+    {
+        return false;
+    }
+
+    /**
      * Insert ID
      *
      * @return int|string

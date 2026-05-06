@@ -91,6 +91,22 @@ class Connection extends BaseConnection
     protected $_reserved_identifiers = ['*'];
 
     /**
+     * Checks whether the native database code represents a retryable transaction failure.
+     */
+    protected function isRetryableTransactionErrorCode(int|string $code): bool
+    {
+        $vendorCode = (string) (is_string($code) && str_contains($code, '/')
+            ? substr($code, strrpos($code, '/') + 1)
+            : $code);
+
+        if (preg_match('/^\d+$/', $vendorCode) !== 1) {
+            return false;
+        }
+
+        return in_array((int) $vendorCode, [1205, 3960], true);
+    }
+
+    /**
      * Class constructor
      */
     public function __construct(array $params)

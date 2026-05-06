@@ -99,6 +99,15 @@ class Connection extends BaseConnection
     protected bool $strictOn = false;
 
     /**
+     * Checks whether the native database code represents a retryable transaction failure.
+     */
+    protected function isRetryableTransactionErrorCode(int|string $code): bool
+    {
+        // ER_LOCK_DEADLOCK: InnoDB rolls back the full transaction.
+        return $code === 1213;
+    }
+
+    /**
      * Connect to the database.
      *
      * @return false|mysqli

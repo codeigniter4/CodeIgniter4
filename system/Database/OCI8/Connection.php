@@ -116,6 +116,14 @@ class Connection extends BaseConnection
     public $lastInsertedTableName;
 
     /**
+     * Checks whether the native database code represents a retryable transaction failure.
+     */
+    protected function isRetryableTransactionErrorCode(int|string $code): bool
+    {
+        return in_array($code, [60, 8177], true);
+    }
+
+    /**
      * confirm DSN format.
      */
     private function isValidDSN(): bool

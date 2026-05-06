@@ -82,6 +82,32 @@ Callbacks registered with ``afterCommit()`` or ``afterRollback()`` inside the
 transaction callback follow the same rules as other transaction callbacks: they
 run only after the outermost transaction commits or rolls back.
 
+.. _transactions-retryable-exceptions:
+
+Classifying Retryable Transaction Failures
+==========================================
+
+.. versionadded:: 4.8.0
+
+Some database engines report transaction failures that may succeed when the
+entire transaction is attempted again, such as deadlocks or serialization
+failures. The ``isRetryableTransactionException()`` method checks whether a
+``DatabaseException`` represents one of these driver-specific failures so you
+can decide how your application should respond:
+
+.. literalinclude:: transactions/015.php
+
+This method is only a classifier. It does not retry the transaction
+automatically. If you retry, run the whole transaction again. Avoid
+non-transactional side effects inside transaction bodies that may be retried.
+For side effects such as queued jobs, emails, cache invalidation, or external
+API calls, register them with ``afterCommit()`` so they run only after the
+transaction commits.
+
+When ``DBDebug`` is ``false`` and a failed query returns ``false`` instead of
+throwing, inspect ``getLastException()`` immediately after the failed operation
+and pass that exception to ``isRetryableTransactionException()``.
+
 Strict Mode
 ===========
 

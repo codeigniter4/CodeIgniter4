@@ -68,6 +68,14 @@ class Connection extends BaseConnection
     protected ?int $synchronous = null;
 
     /**
+     * Checks whether the native database code represents a retryable transaction failure.
+     */
+    protected function isRetryableTransactionErrorCode(int|string $code): bool
+    {
+        return $code === 5;
+    }
+
+    /**
      * @return void
      */
     public function initialize()

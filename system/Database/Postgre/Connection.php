@@ -64,6 +64,14 @@ class Connection extends BaseConnection
     private ?PgSqlResult $lastFailedResult = null;
 
     /**
+     * Checks whether the native database code represents a retryable transaction failure.
+     */
+    protected function isRetryableTransactionErrorCode(int|string $code): bool
+    {
+        return in_array($code, ['40001', '40P01'], true);
+    }
+
+    /**
      * Connect to the database.
      *
      * @return false|PgSqlConnection
