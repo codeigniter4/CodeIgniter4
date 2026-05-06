@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\CacheFactory;
-use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
 use PHPUnit\Framework\Attributes\Group;
