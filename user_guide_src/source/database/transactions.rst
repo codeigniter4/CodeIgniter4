@@ -210,8 +210,8 @@ they are called from inside an existing transaction.
 
 .. note:: ``inTransaction()`` reflects transactions started through
     CodeIgniter's transaction methods. If you start or end transactions through
-    raw SQL or driver-specific APIs, CodeIgniter may not know about that
-    transaction state.
+    raw SQL or driver-specific APIs, CodeIgniter will not be aware of those
+    transactions.
 
 Disabling Transactions
 ======================
