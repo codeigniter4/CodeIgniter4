@@ -117,7 +117,7 @@ interface RouteCollectionInterface
      *
      * This setting is passed to the Router class and handled there.
      *
-     * @param callable|null $callable
+     * @param (callable(string): (ResponseInterface|string|void))|string|null $callable
      *
      * @TODO This method is not related to the route collection. So this should
      *      be removed in the future.

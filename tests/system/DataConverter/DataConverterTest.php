@@ -705,6 +705,10 @@ final class DataConverterTest extends CIUnitTestCase
         $converter->toDataSource($dbData);
     }
 
+    /**
+     * @param (Closure(array<string, mixed>): object)|string|null             $reconstructor
+     * @param (Closure(object, bool, bool): array<string, mixed>)|string|null $extractor
+     */
     private function createDataConverter(
         array $types,
         array $handlers = [],

@@ -479,7 +479,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * This setting is passed to the Router class and handled there.
      *
-     * @param callable|string|null $callable
+     * @param (callable(string): (ResponseInterface|string|void))|string|null $callable
      */
     public function set404Override($callable = null): RouteCollectionInterface
     {
@@ -762,8 +762,8 @@ class RouteCollection implements RouteCollectionInterface
      *            $route->resource('users');
      *     });
      *
-     * @param string         $name      The name to group/prefix the routes with.
-     * @param array|callable ...$params
+     * @param string                       $name      The name to group/prefix the routes with.
+     * @param array|(callable(self): void) ...$params
      *
      * @return void
      */

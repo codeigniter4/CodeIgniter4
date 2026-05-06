@@ -16,7 +16,6 @@ includes:
     - method.childParameterType.neon
     - method.childReturnType.neon
     - method.notFound.neon
-    - missingType.callable.neon
     - missingType.iterableValue.neon
     - missingType.parameter.neon
     - missingType.property.neon
