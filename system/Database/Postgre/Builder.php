@@ -115,7 +115,7 @@ class Builder extends BaseBuilder
             }
 
             $col          = $this->db->protectIdentifiers($col);
-            $fields[$col] = "to_number({$col}, '9999999') + {$val}";
+            $fields[$col] = "CAST({$col} AS numeric) + {$val}";
         }
 
         $sql = $this->_update($this->QBFrom[0], $fields);
@@ -157,7 +157,7 @@ class Builder extends BaseBuilder
             }
 
             $col          = $this->db->protectIdentifiers($col);
-            $fields[$col] = "to_number({$col}, '9999999') - {$val}";
+            $fields[$col] = "CAST({$col} AS numeric) - {$val}";
         }
 
         $sql = $this->_update($this->QBFrom[0], $fields);
