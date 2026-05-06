@@ -114,6 +114,37 @@ final class InputDataTest extends CIUnitTestCase
         $input->integer('page');
     }
 
+    public function testFloatReturnsInputFloat(): void
+    {
+        $input = new InputData(['price' => '15.50']);
+
+        $this->assertEqualsWithDelta(15.50, $input->float('price'), PHP_FLOAT_EPSILON);
+    }
+
+    public function testFloatReturnsInputIntegerAsFloat(): void
+    {
+        $input = new InputData(['price' => 15]);
+
+        $this->assertEqualsWithDelta(15.0, $input->float('price'), PHP_FLOAT_EPSILON);
+    }
+
+    public function testFloatReturnsDefaultForMissingInputField(): void
+    {
+        $input = new InputData([]);
+
+        $this->assertEqualsWithDelta(1.5, $input->float('price', 1.5), PHP_FLOAT_EPSILON);
+    }
+
+    public function testFloatThrowsForInvalidInputValue(): void
+    {
+        $input = new InputData(['price' => 'free']);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The input "price" value cannot be read as float.');
+
+        $input->float('price');
+    }
+
     public function testBooleanReturnsInputBoolean(): void
     {
         $input = new InputData(['active' => 'true']);
@@ -174,12 +205,14 @@ final class InputDataTest extends CIUnitTestCase
         $input = new InputData([
             'title'  => null,
             'page'   => null,
+            'price'  => null,
             'active' => null,
             'tags'   => null,
         ]);
 
         $this->assertNull($input->string('title', 'Untitled'));
         $this->assertNull($input->integer('page', 1));
+        $this->assertNull($input->float('price', 1.5));
         $this->assertNull($input->boolean('active', false));
         $this->assertNull($input->array('tags', ['draft']));
     }

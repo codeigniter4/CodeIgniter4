@@ -97,6 +97,34 @@ class InputData
     }
 
     /**
+     * Returns an input field as a float.
+     *
+     * Supports dot-array syntax for nested input data.
+     */
+    public function float(string $key, ?float $default = null): ?float
+    {
+        $value = $this->get($key, $default);
+
+        if ($value === null || is_float($value)) {
+            return $value;
+        }
+
+        if (is_int($value)) {
+            return (float) $value;
+        }
+
+        if (is_string($value)) {
+            $float = filter_var($value, FILTER_VALIDATE_FLOAT, FILTER_NULL_ON_FAILURE);
+
+            if ($float !== null) {
+                return $float;
+            }
+        }
+
+        throw $this->invalidType($key, 'float');
+    }
+
+    /**
      * Returns an input field as a boolean.
      *
      * Supports dot-array syntax for nested input data.

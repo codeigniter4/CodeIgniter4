@@ -486,7 +486,7 @@ Typed Validated Input
 ``getValidatedInput()`` returns the same validated data as a
 ``CodeIgniter\Validation\ValidatedInput`` object. Use it after validation
 succeeds when you want to read common controller values as strings, integers,
-booleans, arrays, dates, or enums:
+floats, booleans, arrays, dates, or enums:
 
 .. versionadded:: 4.8.0
 
@@ -514,6 +514,8 @@ All methods support dot-array syntax for nested validated data.
   missing, it returns the default value or ``null``.
 * ``integer($key, $default = null)`` returns ``int|null``. If the field is
   missing, it returns the default value or ``null``.
+* ``float($key, $default = null)`` returns ``float|null``. If the field is
+  missing, it returns the default value or ``null``.
 * ``boolean($key, $default = null)`` returns ``bool|null``. If the field is
   missing, it returns the default value or ``null``.
 * ``array($key, $default = null)`` returns ``array|null``. If the field is
@@ -529,8 +531,8 @@ Fields that are present with a ``null`` value return ``null``. This lets you
 distinguish a missing optional field from a field that was validated as
 ``null``.
 
-Use validation rules such as ``integer``, ``valid_date``, ``in_list``, or a
-custom rule to ensure the value matches the type you plan to read. The
+Use validation rules such as ``integer``, ``decimal``, ``valid_date``,
+``in_list``, or a custom rule to ensure the value matches the type you plan to read. The
 ``date()`` method only parses the value; validation rules should enforce
 acceptable date formats and ranges. For strict calendar validation, add a rule
 such as ``valid_date[Y-m-d]``.
