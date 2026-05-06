@@ -40,9 +40,9 @@ Bugs Fixed
 - **CLI:** Fixed a bug where ``CLI::generateDimensions()`` leaked ``stty`` error output (e.g., ``stty: 'standard input': Inappropriate ioctl for device``) to stderr when stdin was not a TTY.
 - **Commands:** Fixed a bug in the ``env`` command where passing options only would cause the command to throw a ``TypeError`` instead of showing the current environment.
 - **Common:** Fixed a bug where the ``command()`` helper function did not properly clean up output buffers, which could lead to risky tests when exceptions were thrown.
+- **Database:** Fixed a bug where the SQLSRV driver's decrement method was adding instead of subtracting the decrement value when ``$castTextToInt`` was false.
 - **Kint:** Fixed a bug where stale Content Security Policy nonces were reused in worker mode, causing browser CSP violations for Debug Toolbar assets.
 - **Time:** Fixed a bug where ``Time::createFromTimestamp()`` could fail for microsecond timestamps when ``LC_NUMERIC`` used a comma decimal separator.
-- **Database:** Fixed a bug where the SQLSRV driver's decrement method was adding instead of subtracting the decrement value when ``$castTextToInt`` was false.
 - **Validation:** Fixed a bug where ``Validation::getValidated()`` dropped fields whose validated value was explicitly ``null``.
 
 See the repo's
