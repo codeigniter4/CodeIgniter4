@@ -44,9 +44,9 @@ interface CacheInterface
      * Attempts to get an item from the cache, or executes the callback
      * and stores the result on cache miss.
      *
-     * @param string                                          $key      Cache item name
-     * @param callable(): int|callable(mixed $value): int|int $ttl      Time To Live, in seconds
-     * @param Closure(): mixed                                $callback Callback executed on cache miss
+     * @param string                                   $key      Cache item name
+     * @param callable(): int|callable(mixed): int|int $ttl      Time To Live, in seconds
+     * @param Closure(): mixed                         $callback Callback executed on cache miss
      */
     public function remember(string $key, callable|int $ttl, Closure $callback): mixed;
 

@@ -76,9 +76,22 @@ abstract class BaseHandler implements CacheInterface
         $value = $callback();
 
         if (is_callable($ttl)) {
-            $ttl = (new ReflectionFunction(Closure::fromCallable($ttl)))->getNumberOfParameters() > 0
-                ? $ttl($value)
-                : $ttl();
+            $ttlClosure = Closure::fromCallable($ttl);
+            $rf         = new ReflectionFunction($ttlClosure);
+            $params     = $rf->getNumberOfRequiredParameters();
+
+            if ($params === 0) {
+                /** @var Closure(): int $ttlClosure */
+                $ttl = $ttlClosure();
+            } elseif ($params === 1) {
+                /** @var Closure(mixed): int $ttlClosure */
+                $ttl = $ttlClosure($value);
+            } else {
+                throw new InvalidArgumentException(sprintf(
+                    'Argument #2 ($ttl) must accept 0 or 1 parameter, %d given.',
+                    $params,
+                ));
+            }
         }
 
         $this->save($key, $value, $ttl);
