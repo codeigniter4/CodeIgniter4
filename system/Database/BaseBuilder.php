@@ -747,7 +747,7 @@ class BaseBuilder
      *
      * @throws InvalidArgumentException
      */
-    public function whereColumn(string $first, string $second, ?bool $escape = null)
+    public function whereColumn(string $first, string $second, ?bool $escape = null): static
     {
         return $this->whereColumnHaving('QBWhere', $first, $second, 'AND ', $escape);
     }
@@ -763,7 +763,7 @@ class BaseBuilder
      *
      * @throws InvalidArgumentException
      */
-    public function orWhereColumn(string $first, string $second, ?bool $escape = null)
+    public function orWhereColumn(string $first, string $second, ?bool $escape = null): static
     {
         return $this->whereColumnHaving('QBWhere', $first, $second, 'OR ', $escape);
     }
@@ -782,7 +782,7 @@ class BaseBuilder
      *
      * @throws InvalidArgumentException
      */
-    protected function whereColumnHaving(string $qbKey, string $first, string $second, string $type = 'AND ', ?bool $escape = null)
+    protected function whereColumnHaving(string $qbKey, string $first, string $second, string $type = 'AND ', ?bool $escape = null): static
     {
         [$first, $operator] = $this->parseWhereColumnFirst($first);
         $second             = trim($second);
@@ -793,9 +793,7 @@ class BaseBuilder
             throw new InvalidArgumentException(sprintf('%s() expects $first and $second to be non-empty strings', $caller));
         }
 
-        if (! is_bool($escape)) {
-            $escape = $this->db->protectIdentifiers;
-        }
+        $escape ??= $this->db->protectIdentifiers;
 
         $prefix = $this->{$qbKey} === [] ? $this->groupGetType('') : $this->groupGetType($type);
 
@@ -3278,6 +3276,8 @@ class BaseBuilder
     }
 
     /**
+     * @used-by compileWhereHaving()
+     *
      * @param array{columnComparison: true, condition: string, escape: bool, first: string, operator: string, second: string} $condition
      */
     private function compileColumnComparison(array $condition): string

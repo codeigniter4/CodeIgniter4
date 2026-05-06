@@ -352,30 +352,35 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testWhereColumn(): void
+    #[DataProvider('provideWhereColumnWithOperators')]
+    public function testWhereColumnWithOperators(string $first, string $operator): void
     {
         $builder = $this->db->table('users');
 
-        $builder->whereColumn('created_at', 'updated_at');
+        $builder->whereColumn($first, 'updated_at');
 
-        $expectedSQL   = 'SELECT * FROM "users" WHERE "created_at" = "updated_at"';
+        $expectedSQL   = sprintf('SELECT * FROM "users" WHERE "created_at" %s "updated_at"', $operator);
         $expectedBinds = [];
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testWhereColumnWithOperator(): void
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function provideWhereColumnWithOperators(): iterable
     {
-        $builder = $this->db->table('users');
-
-        $builder->whereColumn('updated_at >', 'created_at');
-
-        $expectedSQL   = 'SELECT * FROM "users" WHERE "updated_at" > "created_at"';
-        $expectedBinds = [];
-
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-        $this->assertSame($expectedBinds, $builder->getBinds());
+        return [
+            'default' => ['created_at', '='],
+            '='       => ['created_at =', '='],
+            '!='      => ['created_at !=', '!='],
+            '<>'      => ['created_at <>', '<>'],
+            '<'       => ['created_at <', '<'],
+            '>'       => ['created_at >', '>'],
+            '<='      => ['created_at <=', '<='],
+            '>='      => ['created_at >=', '>='],
+        ];
     }
 
     public function testWhereColumnWithAlias(): void
