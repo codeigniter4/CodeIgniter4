@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Input;
 
-use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -73,14 +72,11 @@ final class InputDataTest extends CIUnitTestCase
         $this->assertSame('Untitled', $input->string('title', 'Untitled'));
     }
 
-    public function testStringThrowsForInvalidInputValue(): void
+    public function testStringReturnsDefaultForInvalidInputValue(): void
     {
         $input = new InputData(['title' => 123]);
 
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The input "title" value cannot be read as string.');
-
-        $input->string('title');
+        $this->assertSame('Untitled', $input->string('title', 'Untitled'));
     }
 
     public function testIntegerReturnsInputInteger(): void
@@ -104,14 +100,11 @@ final class InputDataTest extends CIUnitTestCase
         $this->assertSame(2, $input->integer('filters.page'));
     }
 
-    public function testIntegerThrowsForInvalidInputValue(): void
+    public function testIntegerReturnsDefaultForInvalidInputValue(): void
     {
         $input = new InputData(['page' => '1.5']);
 
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The input "page" value cannot be read as integer.');
-
-        $input->integer('page');
+        $this->assertSame(1, $input->integer('page', 1));
     }
 
     public function testFloatReturnsInputFloat(): void
@@ -135,14 +128,11 @@ final class InputDataTest extends CIUnitTestCase
         $this->assertEqualsWithDelta(1.5, $input->float('price', 1.5), PHP_FLOAT_EPSILON);
     }
 
-    public function testFloatThrowsForInvalidInputValue(): void
+    public function testFloatReturnsDefaultForInvalidInputValue(): void
     {
         $input = new InputData(['price' => 'free']);
 
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The input "price" value cannot be read as float.');
-
-        $input->float('price');
+        $this->assertEqualsWithDelta(1.5, $input->float('price', 1.5), PHP_FLOAT_EPSILON);
     }
 
     public function testBooleanReturnsInputBoolean(): void
@@ -166,14 +156,11 @@ final class InputDataTest extends CIUnitTestCase
         $this->assertFalse($input->boolean('active', false));
     }
 
-    public function testBooleanThrowsForInvalidInputValue(): void
+    public function testBooleanReturnsDefaultForInvalidInputValue(): void
     {
         $input = new InputData(['active' => 'sometimes']);
 
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The input "active" value cannot be read as boolean.');
-
-        $input->boolean('active');
+        $this->assertFalse($input->boolean('active', false));
     }
 
     public function testArrayReturnsInputArray(): void
@@ -190,14 +177,11 @@ final class InputDataTest extends CIUnitTestCase
         $this->assertSame(['draft'], $input->array('tags', ['draft']));
     }
 
-    public function testArrayThrowsForInvalidInputValue(): void
+    public function testArrayReturnsDefaultForInvalidInputValue(): void
     {
         $input = new InputData(['tags' => 'php']);
 
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The input "tags" value cannot be read as array.');
-
-        $input->array('tags');
+        $this->assertSame(['draft'], $input->array('tags', ['draft']));
     }
 
     public function testTypedAccessorsReturnNullForNullInputFields(): void

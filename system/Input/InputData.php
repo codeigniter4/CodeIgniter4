@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Input;
 
-use CodeIgniter\Exceptions\InvalidArgumentException;
-
 /**
  * @see \CodeIgniter\Input\InputDataTest
  */
@@ -69,7 +67,7 @@ class InputData
             return $value;
         }
 
-        throw $this->invalidType($key, 'string');
+        return $this->invalidValue($key, 'string', $default);
     }
 
     /**
@@ -93,7 +91,7 @@ class InputData
             }
         }
 
-        throw $this->invalidType($key, 'integer');
+        return $this->invalidValue($key, 'integer', $default);
     }
 
     /**
@@ -121,7 +119,7 @@ class InputData
             }
         }
 
-        throw $this->invalidType($key, 'float');
+        return $this->invalidValue($key, 'float', $default);
     }
 
     /**
@@ -145,7 +143,7 @@ class InputData
             }
         }
 
-        throw $this->invalidType($key, 'boolean');
+        return $this->invalidValue($key, 'boolean', $default);
     }
 
     /**
@@ -165,13 +163,11 @@ class InputData
             return $value;
         }
 
-        throw $this->invalidType($key, 'array');
+        return $this->invalidValue($key, 'array', $default);
     }
 
-    protected function invalidType(string $key, string $type): InvalidArgumentException
+    protected function invalidValue(string $key, string $type, mixed $default): mixed
     {
-        return new InvalidArgumentException(
-            sprintf('The input "%s" value cannot be read as %s.', $key, $type),
-        );
+        return $default;
     }
 }

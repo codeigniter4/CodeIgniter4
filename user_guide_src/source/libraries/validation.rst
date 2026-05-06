@@ -500,7 +500,8 @@ This usually means the validation rules and the expected type do not match.
 
 ``ValidatedInput`` extends ``CodeIgniter\Input\InputData``. This keeps generic
 typed input access reusable while adding validation-specific readers for dates
-and enums.
+and enums. ``InputData`` is fallback-friendly for raw input; ``ValidatedInput``
+is strict because it represents data that has already passed validation.
 
 The typed input object has the following methods:
 

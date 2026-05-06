@@ -43,7 +43,7 @@ class ValidatedInput extends InputData
         }
 
         if (! is_string($value) || $value === '') {
-            throw $this->invalidType($key, 'date');
+            return $this->invalidValue($key, 'date', null);
         }
 
         try {
@@ -53,7 +53,7 @@ class ValidatedInput extends InputData
 
             return Time::createFromFormat($format, $value, $timezone);
         } catch (Exception) {
-            throw $this->invalidType($key, 'date');
+            return $this->invalidValue($key, 'date', null);
         }
     }
 
@@ -76,7 +76,7 @@ class ValidatedInput extends InputData
         }
 
         if ($default instanceof UnitEnum && ! $default instanceof $enumClass) {
-            throw $this->invalidType($key, $enumClass);
+            return $this->invalidValue($key, $enumClass, $default);
         }
 
         $value = $this->get($key, $default);
@@ -90,7 +90,7 @@ class ValidatedInput extends InputData
                 return $value;
             }
 
-            throw $this->invalidType($key, $enumClass);
+            return $this->invalidValue($key, $enumClass, $default);
         }
 
         $reflection = new ReflectionEnum($enumClass);
@@ -107,7 +107,7 @@ class ValidatedInput extends InputData
             }
         }
 
-        throw $this->invalidType($key, $enumClass);
+        return $this->invalidValue($key, $enumClass, $default);
     }
 
     private function backedEnum(string $key, string $enumClass, ReflectionEnum $reflection, mixed $value): UnitEnum
@@ -120,10 +120,10 @@ class ValidatedInput extends InputData
             }
 
             if (! is_int($value)) {
-                throw $this->invalidType($key, $enumClass);
+                return $this->invalidValue($key, $enumClass, null);
             }
         } elseif (! is_int($value) && ! is_string($value)) {
-            throw $this->invalidType($key, $enumClass);
+            return $this->invalidValue($key, $enumClass, null);
         }
 
         if ($backingType === 'string') {
@@ -133,15 +133,15 @@ class ValidatedInput extends InputData
         $enum = $enumClass::tryFrom($value);
 
         if ($enum === null) {
-            throw $this->invalidType($key, $enumClass);
+            return $this->invalidValue($key, $enumClass, null);
         }
 
         return $enum;
     }
 
-    protected function invalidType(string $key, string $type): InvalidArgumentException
+    protected function invalidValue(string $key, string $type, mixed $default): never
     {
-        return new InvalidArgumentException(
+        throw new InvalidArgumentException(
             sprintf('The validated "%s" value cannot be read as %s.', $key, $type),
         );
     }

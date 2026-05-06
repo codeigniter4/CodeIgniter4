@@ -61,6 +61,56 @@ final class ValidatedInputTest extends CIUnitTestCase
         $input->date('published_at');
     }
 
+    public function testStringThrowsForInvalidValidatedValue(): void
+    {
+        $input = new ValidatedInput(['title' => 123]);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The validated "title" value cannot be read as string.');
+
+        $input->string('title', 'Untitled');
+    }
+
+    public function testIntegerThrowsForInvalidValidatedValue(): void
+    {
+        $input = new ValidatedInput(['page' => '1.5']);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The validated "page" value cannot be read as integer.');
+
+        $input->integer('page', 1);
+    }
+
+    public function testFloatThrowsForInvalidValidatedValue(): void
+    {
+        $input = new ValidatedInput(['price' => 'free']);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The validated "price" value cannot be read as float.');
+
+        $input->float('price', 1.5);
+    }
+
+    public function testBooleanThrowsForInvalidValidatedValue(): void
+    {
+        $input = new ValidatedInput(['active' => 'sometimes']);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The validated "active" value cannot be read as boolean.');
+
+        $input->boolean('active', false);
+    }
+
+    public function testArrayThrowsForInvalidValidatedValue(): void
+    {
+        $input = new ValidatedInput(['tags' => 'php']);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The validated "tags" value cannot be read as array.');
+
+        $input->array('tags', ['draft']);
+    }
+
     public function testEnumReturnsValidatedStringBackedEnum(): void
     {
         $input = new ValidatedInput(['status' => 'active']);
