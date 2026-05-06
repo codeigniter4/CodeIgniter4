@@ -139,7 +139,7 @@ class ImageMagickHandler extends BaseHandler
     /**
      * Handles the actual resizing of the image.
      *
-     * @return ImageMagickHandler
+     * @return $this
      *
      * @throws ImagickException
      */
