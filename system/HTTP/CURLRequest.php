@@ -480,7 +480,7 @@ class CURLRequest extends OutgoingRequest
 
             if (! $this->shouldRetryResponse($response, $retry, $attempt)) {
                 if ($httpErrors && $response->getStatusCode() >= 400) {
-                    throw HTTPException::forCurlError('22', 'The requested URL returned error: ' . $response->getStatusCode());
+                    throw HTTPException::forCurlError((string) CURLE_HTTP_RETURNED_ERROR, 'The requested URL returned error: ' . $response->getStatusCode());
                 }
 
                 return $response;
@@ -623,9 +623,9 @@ class CURLRequest extends OutgoingRequest
         $delay = $retry['delay'];
 
         if (is_array($delay)) {
-            $lastDelay = end($delay);
+            $lastDelay = $delay[array_key_last($delay)] ?? 0;
 
-            return $this->limitRetryDelay((int) ($delay[$attempt] ?? ($lastDelay !== false ? $lastDelay : 0)), $retry);
+            return $this->limitRetryDelay((int) ($delay[$attempt] ?? $lastDelay), $retry);
         }
 
         return $this->limitRetryDelay((int) $delay, $retry);
