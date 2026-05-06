@@ -100,6 +100,17 @@ final class IncrementTest extends CIUnitTestCase
         $this->seeInDatabase('job', ['name' => 'job1', 'description' => '8', 'created_at' => 0]);
     }
 
+    public function testIncrementManyWithInitialAndIncrementNegativeValues(): void
+    {
+        $this->hasInDatabase('job', ['name' => 'job2', 'description' => '10', 'created_at' => -1]);
+
+        $this->db->table('job')
+            ->where('name', 'job2')
+            ->incrementMany(['description' => 2, 'created_at' => -3]);
+
+        $this->seeInDatabase('job', ['name' => 'job2', 'description' => '12', 'created_at' => -4]);
+    }
+
     public function testIncrementManyWithEmptyColumns(): void
     {
         $this->hasInDatabase('job', ['name' => 'job1', 'description' => '6', 'created_at' => 1]);
@@ -196,7 +207,7 @@ final class IncrementTest extends CIUnitTestCase
         $this->seeInDatabase('job', ['name' => 'job1', 'description' => '4', 'created_at' => -1]);
     }
 
-    public function testDecrementManyWithNegativeValues(): void
+    public function testDecrementManyWithNegativeValue(): void
     {
         $this->hasInDatabase('job', ['name' => 'job1', 'description' => '6', 'created_at' => 1]);
 
@@ -205,6 +216,17 @@ final class IncrementTest extends CIUnitTestCase
             ->decrementMany(['description' => 2, 'created_at' => -1]);
 
         $this->seeInDatabase('job', ['name' => 'job1', 'description' => '4', 'created_at' => 2]);
+    }
+
+    public function testDecrementManyWithInitialAndIncrementNegativeValues(): void
+    {
+        $this->hasInDatabase('job', ['name' => 'job2', 'description' => '10', 'created_at' => -1]);
+
+        $this->db->table('job')
+            ->where('name', 'job2')
+            ->decrementMany(['description' => 2, 'created_at' => -3]);
+
+        $this->seeInDatabase('job', ['name' => 'job2', 'description' => '8', 'created_at' => 2]);
     }
 
     public function testDecrementManyWithEmptyColumns(): void
