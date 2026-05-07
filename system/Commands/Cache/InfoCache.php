@@ -13,52 +13,21 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Cache;
 
-use CodeIgniter\Cache\CacheFactory;
-use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
 
 /**
- * Shows information on the cache.
+ * Shows file cache information in the current system.
  */
-class InfoCache extends BaseCommand
+#[Command(name: 'cache:info', description: 'Shows file cache information in the current system.', group: 'Cache')]
+class InfoCache extends AbstractCommand
 {
-    /**
-     * Command grouping.
-     *
-     * @var string
-     */
-    protected $group = 'Cache';
-
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'cache:info';
-
-    /**
-     * the Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Shows file cache information in the current system.';
-
-    /**
-     * the Command's usage
-     *
-     * @var string
-     */
-    protected $usage = 'cache:info';
-
-    /**
-     * Clears the cache
-     */
-    public function run(array $params)
+    protected function execute(array $arguments, array $options): int
     {
         $config = config(Cache::class);
-        helper('number');
 
         if ($config->handler !== 'file') {
             CLI::error('This command only supports the file cache handler.');
@@ -66,11 +35,12 @@ class InfoCache extends BaseCommand
             return EXIT_ERROR;
         }
 
-        $cache  = CacheFactory::getHandler($config);
-        $caches = $cache->getCacheInfo();
-        $tbody  = [];
+        $cache = service('cache', $config);
+        $tbody = [];
 
-        foreach ($caches as $key => $field) {
+        helper('number');
+
+        foreach ($cache->getCacheInfo() as $key => $field) {
             $tbody[] = [
                 $key,
                 clean_path($field['server_path']),
@@ -79,14 +49,12 @@ class InfoCache extends BaseCommand
             ];
         }
 
-        $thead = [
+        CLI::table($tbody, [
             CLI::color('Name', 'green'),
             CLI::color('Server Path', 'green'),
             CLI::color('Size', 'green'),
             CLI::color('Date', 'green'),
-        ];
-
-        CLI::table($tbody, $thead);
+        ]);
 
         return EXIT_SUCCESS;
     }

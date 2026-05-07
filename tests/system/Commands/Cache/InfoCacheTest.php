@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Commands\Cache;
 
 use CodeIgniter\Cache\CacheFactory;
+use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Services;
@@ -31,28 +32,39 @@ final class InfoCacheTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        // Make sure we are testing with the correct handler (override injections)
+        CLI::resetLastWrite();
+        $this->resetServices();
         Services::injectMock('cache', CacheFactory::getHandler(config('Cache')));
     }
 
     protected function tearDown(): void
     {
-        // restore default cache handler
-        config('Cache')->handler = 'file';
+        parent::tearDown();
+
+        CLI::resetLastWrite();
+        $this->resetServices();
+        $this->resetFactories();
     }
 
-    protected function getBuffer(): string
+    private function getUndecoratedBuffer(): string
     {
-        return $this->getStreamFilterBuffer();
+        return preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()) ?? '';
     }
 
     public function testInfoCacheErrorsOnInvalidHandler(): void
     {
         config('Cache')->handler = 'redis';
-        cache()->save('foo', 'bar');
+
         command('cache:info');
 
-        $this->assertStringContainsString('This command only supports the file cache handler.', $this->getBuffer());
+        $this->assertSame(
+            <<<'EOT'
+
+                This command only supports the file cache handler.
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
     }
 
     public function testInfoCacheCanSeeFoo(): void
@@ -60,24 +72,29 @@ final class InfoCacheTest extends CIUnitTestCase
         cache()->save('foo', 'bar');
         command('cache:info');
 
-        $this->assertStringContainsString('foo', $this->getBuffer());
+        $this->assertStringContainsString('foo', $this->getStreamFilterBuffer());
     }
 
-    public function testInfoCacheCanSeeTable(): void
+    public function testInfoCacheCanSeeTheads(): void
     {
         command('cache:info');
 
-        $this->assertStringContainsString('Name', $this->getBuffer());
-        $this->assertStringContainsString('Server Path', $this->getBuffer());
-        $this->assertStringContainsString('Size', $this->getBuffer());
-        $this->assertStringContainsString('Date', $this->getBuffer());
+        $this->assertMatchesRegularExpression(
+            '/\|\sName[[:space:]]+\|\sServer Path[[:space:]]+\|\sSize[[:space:]]+\|\sDate[[:space:]]+\|/',
+            $this->getUndecoratedBuffer(),
+        );
     }
 
     public function testInfoCacheCannotSeeFoo(): void
     {
+        cache()->save('foo', 'bar');
+        command('cache:info');
+        $this->assertStringContainsString('foo', $this->getStreamFilterBuffer());
+
+        $this->resetStreamFilterBuffer();
+
         cache()->delete('foo');
         command('cache:info');
-
-        $this->assertStringNotContainsString('foo', $this->getBuffer());
+        $this->assertStringNotContainsString('foo', $this->getUndecoratedBuffer());
     }
 }
