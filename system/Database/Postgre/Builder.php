@@ -97,7 +97,7 @@ class Builder extends BaseBuilder
     {
         $column = $this->db->protectIdentifiers($column);
 
-        $sql = $this->_update($this->QBFrom[0], [$column => "to_number({$column}, '9999999') + {$value}"]);
+        $sql = $this->_update($this->QBFrom[0], [$column => "CAST({$column} AS numeric) + {$value}"]);
 
         if (! $this->testMode) {
             $this->resetWrite();
@@ -119,7 +119,7 @@ class Builder extends BaseBuilder
     {
         $column = $this->db->protectIdentifiers($column);
 
-        $sql = $this->_update($this->QBFrom[0], [$column => "to_number({$column}, '9999999') - {$value}"]);
+        $sql = $this->_update($this->QBFrom[0], [$column => "CAST({$column} AS numeric) - {$value}"]);
 
         if (! $this->testMode) {
             $this->resetWrite();
