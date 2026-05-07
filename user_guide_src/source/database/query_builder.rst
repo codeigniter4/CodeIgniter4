@@ -759,6 +759,9 @@ first parameter.
 Pessimistic Locking
 ********************
 
+Lock for Update
+===============
+
 $builder->lockForUpdate()
 -------------------------
 
