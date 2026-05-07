@@ -246,6 +246,7 @@ Helpers and Functions
 HTTP
 ====
 
+- Added the ``retry`` option to ``CURLRequest`` for retrying failed responses with configurable delays, retryable status codes, optional transient cURL error retries, and ``Retry-After`` support. See :ref:`curlrequest-request-options-retry`.
 - Added :ref:`Form Requests <form-requests>` - a new ``FormRequest`` base class that encapsulates validation rules, custom error messages, and authorization logic for a single HTTP request.
 - Added ``SSEResponse`` class for streaming Server-Sent Events (SSE) over HTTP. See :ref:`server-sent-events`.
 - ``Response`` and its child classes no longer require ``Config\App`` passed to their constructors.

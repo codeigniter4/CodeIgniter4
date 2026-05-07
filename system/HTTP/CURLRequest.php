@@ -83,12 +83,38 @@ class CURLRequest extends OutgoingRequest
     ];
 
     /**
+     * Default values for when 'retry' is enabled.
+     *
+     * @var array<string, bool|int|list<int>>
+     */
+    protected array $retryDefaults = [
+        'max_retries'         => 3,
+        'delay'               => 1000,
+        'max_delay'           => 30_000,
+        'status_codes'        => [429, 503, 504],
+        'curl_errors'         => false,
+        'respect_retry_after' => true,
+    ];
+
+    /**
+     * cURL error numbers that may succeed on another attempt.
+     *
+     * @var list<int>
+     */
+    protected array $transientCurlErrors = [];
+
+    /**
      * The number of milliseconds to delay before
      * sending the request.
      *
      * @var float
      */
     protected $delay = 0.0;
+
+    /**
+     * The last cURL error number.
+     */
+    protected int $lastCurlError = 0;
 
     /**
      * The default options from the constructor. Applied to all requests.
@@ -126,6 +152,14 @@ class CURLRequest extends OutgoingRequest
         if (! function_exists('curl_version')) {
             throw HTTPException::forMissingCurl(); // @codeCoverageIgnore
         }
+
+        $this->transientCurlErrors = [
+            CURLE_COULDNT_RESOLVE_HOST,
+            CURLE_COULDNT_CONNECT,
+            CURLE_OPERATION_TIMEDOUT,
+            CURLE_SEND_ERROR,
+            CURLE_RECV_ERROR,
+        ];
 
         parent::__construct(Method::GET, $uri);
 
@@ -374,6 +408,8 @@ class CURLRequest extends OutgoingRequest
     {
         // Reset our curl options so we're on a fresh slate.
         $curlOptions = [];
+        $config      = $this->config;
+        $retry       = $this->normalizeRetryOption($config['retry'] ?? false);
 
         if (! empty($this->config['query']) && is_array($this->config['query'])) {
             // This is likely too naive a solution.
@@ -394,14 +430,75 @@ class CURLRequest extends OutgoingRequest
         // Disable @file uploads in post data.
         $curlOptions[CURLOPT_SAFE_UPLOAD] = true;
 
-        $curlOptions = $this->setCURLOptions($curlOptions, $this->config);
+        $curlOptions = $this->setCURLOptions($curlOptions, $config);
         $curlOptions = $this->applyMethod($method, $curlOptions);
         $curlOptions = $this->applyRequestHeaders($curlOptions);
 
+        if ($retry !== null) {
+            $curlOptions[CURLOPT_FAILONERROR] = false;
+        }
+
         // Do we need to delay this request?
         if ($this->delay > 0) {
-            usleep((int) $this->delay * 1_000_000);
+            $this->sleep($this->delay);
         }
+
+        if ($retry === null) {
+            return $this->sendAttempt($curlOptions);
+        }
+
+        $httpErrors = array_key_exists('http_errors', $config) ? (bool) $config['http_errors'] : true;
+
+        return $this->sendWithRetries($curlOptions, $retry, $httpErrors);
+    }
+
+    /**
+     * Sends the request until it succeeds or retry attempts are exhausted.
+     *
+     * @param array<int, mixed>                 $curlOptions
+     * @param array<string, bool|int|list<int>> $retry
+     */
+    protected function sendWithRetries(array $curlOptions, array $retry, bool $httpErrors): ResponseInterface
+    {
+        $attempt = 0;
+
+        while (true) {
+            $this->response = clone $this->responseOrig;
+
+            try {
+                $response = $this->sendAttempt($curlOptions);
+            } catch (HTTPException $e) {
+                if (! $this->shouldRetryCurlError($retry, $attempt)) {
+                    throw $e;
+                }
+
+                $this->sleep($this->getRetryDelay($retry, $attempt) / 1000);
+                $attempt++;
+
+                continue;
+            }
+
+            if (! $this->shouldRetryResponse($response, $retry, $attempt)) {
+                if ($httpErrors && $response->getStatusCode() >= 400) {
+                    throw HTTPException::forCurlError((string) CURLE_HTTP_RETURNED_ERROR, 'The requested URL returned error: ' . $response->getStatusCode());
+                }
+
+                return $response;
+            }
+
+            $this->sleep($this->getRetryDelay($retry, $attempt, $response) / 1000);
+            $attempt++;
+        }
+    }
+
+    /**
+     * Sends a single cURL request attempt and populates the response.
+     *
+     * @param array<int, mixed> $curlOptions
+     */
+    protected function sendAttempt(array $curlOptions): ResponseInterface
+    {
+        $this->lastCurlError = 0;
 
         $output = $this->sendRequest($curlOptions);
 
@@ -428,6 +525,158 @@ class CURLRequest extends OutgoingRequest
         }
 
         return $this->response;
+    }
+
+    /**
+     * Normalizes the retry option into retry settings.
+     *
+     * @return array<string, bool|int|list<int>>|null
+     */
+    protected function normalizeRetryOption(mixed $retry): ?array
+    {
+        if (in_array($retry, [false, null, 0], true)) {
+            return null;
+        }
+
+        $config = $this->retryDefaults;
+
+        if (is_int($retry)) {
+            $config['max_retries'] = $retry;
+        } elseif (is_array($retry)) {
+            $config = array_merge($config, $retry);
+        } else {
+            return null;
+        }
+
+        $config['max_retries'] = max(0, (int) $config['max_retries']);
+
+        if ($config['max_retries'] === 0) {
+            return null;
+        }
+
+        $config['delay']               = $this->normalizeRetryDelay($config['delay']);
+        $config['max_delay']           = max(0, (int) $config['max_delay']);
+        $config['status_codes']        = array_map(intval(...), (array) $config['status_codes']);
+        $config['curl_errors']         = (bool) $config['curl_errors'];
+        $config['respect_retry_after'] = (bool) $config['respect_retry_after'];
+
+        return $config;
+    }
+
+    /**
+     * Normalizes the retry delay setting.
+     *
+     * @return int|list<int>
+     */
+    protected function normalizeRetryDelay(mixed $delay): array|int
+    {
+        if (is_array($delay)) {
+            return array_map(static fn ($value): int => max(0, (int) $value), $delay);
+        }
+
+        return max(0, (int) $delay);
+    }
+
+    /**
+     * Determines whether a response should be retried.
+     *
+     * @param array<string, bool|int|list<int>> $retry
+     */
+    protected function shouldRetryResponse(ResponseInterface $response, array $retry, int $attempt): bool
+    {
+        if ($attempt >= $retry['max_retries']) {
+            return false;
+        }
+
+        return in_array($response->getStatusCode(), $retry['status_codes'], true);
+    }
+
+    /**
+     * Determines whether a cURL error should be retried.
+     *
+     * @param array<string, bool|int|list<int>> $retry
+     */
+    protected function shouldRetryCurlError(array $retry, int $attempt): bool
+    {
+        if ($attempt >= $retry['max_retries'] || $retry['curl_errors'] === false) {
+            return false;
+        }
+
+        return in_array($this->lastCurlError, $this->transientCurlErrors, true);
+    }
+
+    /**
+     * Returns the delay before the next retry attempt.
+     *
+     * @param array<string, bool|int|list<int>> $retry
+     */
+    protected function getRetryDelay(array $retry, int $attempt, ?ResponseInterface $response = null): int
+    {
+        if ($response instanceof ResponseInterface && $retry['respect_retry_after'] === true) {
+            $retryAfter = $this->getRetryAfterDelay($response);
+
+            if ($retryAfter !== null) {
+                return $this->limitRetryDelay($retryAfter * 1000, $retry);
+            }
+        }
+
+        $delay = $retry['delay'];
+
+        if (is_array($delay)) {
+            $lastDelay = $delay[array_key_last($delay)] ?? 0;
+
+            return $this->limitRetryDelay((int) ($delay[$attempt] ?? $lastDelay), $retry);
+        }
+
+        return $this->limitRetryDelay((int) $delay, $retry);
+    }
+
+    /**
+     * Caps the retry delay when configured.
+     *
+     * @param array<string, bool|int|list<int>> $retry
+     */
+    protected function limitRetryDelay(int $delay, array $retry): int
+    {
+        $maxDelay = (int) $retry['max_delay'];
+
+        if ($maxDelay === 0) {
+            return $delay;
+        }
+
+        return min($delay, $maxDelay);
+    }
+
+    /**
+     * Returns the delay from a Retry-After header in seconds.
+     */
+    protected function getRetryAfterDelay(ResponseInterface $response): ?int
+    {
+        $retryAfter = $response->getHeaderLine('Retry-After');
+
+        if ($retryAfter === '') {
+            return null;
+        }
+
+        if (ctype_digit($retryAfter)) {
+            return (int) $retryAfter;
+        }
+
+        $timestamp = strtotime($retryAfter);
+
+        if ($timestamp === false) {
+            return null;
+        }
+
+        return max(0, $timestamp - time());
+    }
+
+    /**
+     * Sleeps for the configured number of seconds.
+     */
+    protected function sleep(float $seconds): void
+    {
+        usleep((int) ($seconds * 1_000_000));
     }
 
     /**
@@ -731,7 +980,9 @@ class CURLRequest extends OutgoingRequest
         $output = curl_exec($ch);
 
         if ($output === false) {
-            throw HTTPException::forCurlError((string) curl_errno($ch), curl_error($ch));
+            $this->lastCurlError = curl_errno($ch);
+
+            throw HTTPException::forCurlError((string) $this->lastCurlError, curl_error($ch));
         }
 
         return $output;

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\HTTP\CURLRequest;
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\URI;
 
 /**
@@ -34,6 +35,21 @@ class MockCURLRequest extends CURLRequest
     protected $output = '';
 
     /**
+     * @var list<string>
+     */
+    protected array $outputs = [];
+
+    /**
+     * @var list<array{0: int, 1: string}>
+     */
+    protected array $curlErrors = [];
+
+    /**
+     * @var list<float>
+     */
+    protected array $sleeps = [];
+
+    /**
      * @param string $output
      *
      * @return $this
@@ -41,6 +57,30 @@ class MockCURLRequest extends CURLRequest
     public function setOutput($output)
     {
         $this->output = $output;
+
+        return $this;
+    }
+
+    /**
+     * @param list<string> $outputs
+     *
+     * @return $this
+     */
+    public function setOutputs(array $outputs)
+    {
+        $this->outputs = $outputs;
+
+        return $this;
+    }
+
+    /**
+     * @param list<array{0: int, 1: string}> $curlErrors
+     *
+     * @return $this
+     */
+    public function setCurlErrors(array $curlErrors)
+    {
+        $this->curlErrors = $curlErrors;
 
         return $this;
     }
@@ -54,7 +94,28 @@ class MockCURLRequest extends CURLRequest
 
         $this->curl_options = $curlOptions;
 
-        return $this->output;
+        if ($this->curlErrors !== []) {
+            [$this->lastCurlError, $message] = array_shift($this->curlErrors);
+
+            throw HTTPException::forCurlError((string) $this->lastCurlError, $message);
+        }
+
+        return $this->outputs !== [] ? array_shift($this->outputs) : $this->output;
+    }
+
+    protected function sleep(float $seconds): void
+    {
+        $this->sleeps[] = $seconds;
+    }
+
+    /**
+     * for testing purposes only
+     *
+     * @return list<float>
+     */
+    public function getSleeps(): array
+    {
+        return $this->sleeps;
     }
 
     /**
