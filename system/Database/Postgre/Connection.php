@@ -282,7 +282,7 @@ class Connection extends BaseConnection
 
             $exception = $sqlstate === '23505'
                 ? new UniqueConstraintViolationException($message, $sqlstate)
-                : new DatabaseException($message, $sqlstate);
+                : $this->createDatabaseException($message, $sqlstate);
 
             if ($this->DBDebug) {
                 throw $exception;

@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Database;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use CodeIgniter\Database\Exceptions\UniqueConstraintViolationException;
+use CodeIgniter\Database\Exceptions\RetryableTransactionException;
 use CodeIgniter\Database\MySQLi\Connection as MySQLiConnection;
 use CodeIgniter\Database\OCI8\Connection as OCI8Connection;
 use CodeIgniter\Database\Postgre\Connection as PostgreConnection;
@@ -24,7 +24,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
-use RuntimeException;
+use ReflectionMethod;
 
 /**
  * @internal
@@ -32,18 +32,19 @@ use RuntimeException;
 #[Group('Others')]
 final class RetryableTransactionExceptionTest extends CIUnitTestCase
 {
-    #[DataProvider('provideRecognizesRetryableTransactionExceptions')]
-    public function testRecognizesRetryableTransactionExceptions(BaseConnection $db, int|string $code): void
+    #[DataProvider('provideCreatesRetryableTransactionExceptions')]
+    public function testCreatesRetryableTransactionExceptions(BaseConnection $db, int|string $code): void
     {
-        $exception = new DatabaseException('Retryable transaction failure.', $code);
+        $exception = self::createDatabaseException($db, 'Retryable transaction failure.', $code);
 
-        $this->assertTrue($db->isRetryableTransactionException($exception));
+        $this->assertInstanceOf(RetryableTransactionException::class, $exception);
+        $this->assertSame($code, $exception->getDatabaseCode());
     }
 
     /**
      * @return iterable<string, array{BaseConnection, int|string}>
      */
-    public static function provideRecognizesRetryableTransactionExceptions(): iterable
+    public static function provideCreatesRetryableTransactionExceptions(): iterable
     {
         yield 'MySQLi deadlock' => [self::connection(MySQLiConnection::class, 'MySQLi'), 1213];
 
@@ -66,18 +67,18 @@ final class RetryableTransactionExceptionTest extends CIUnitTestCase
         }
     }
 
-    #[DataProvider('provideRejectsNonRetryableTransactionExceptions')]
-    public function testRejectsNonRetryableTransactionExceptions(BaseConnection $db, int|string $code): void
+    #[DataProvider('provideCreatesBaseDatabaseExceptionsForNonRetryableErrors')]
+    public function testCreatesBaseDatabaseExceptionsForNonRetryableErrors(BaseConnection $db, int|string $code): void
     {
-        $exception = new DatabaseException('Non-retryable transaction failure.', $code);
+        $exception = self::createDatabaseException($db, 'Non-retryable transaction failure.', $code);
 
-        $this->assertFalse($db->isRetryableTransactionException($exception));
+        $this->assertNotInstanceOf(RetryableTransactionException::class, $exception);
     }
 
     /**
      * @return iterable<string, array{BaseConnection, int|string}>
      */
-    public static function provideRejectsNonRetryableTransactionExceptions(): iterable
+    public static function provideCreatesBaseDatabaseExceptionsForNonRetryableErrors(): iterable
     {
         yield 'Base connection default' => [self::connection(MockConnection::class, 'MockDriver'), 1213];
 
@@ -110,20 +111,21 @@ final class RetryableTransactionExceptionTest extends CIUnitTestCase
         }
     }
 
-    public function testRejectsNonDatabaseExceptions(): void
+    public function testQueryThrowsRetryableTransactionExceptionFromDriverExecutionPath(): void
     {
-        $db = self::connection(MySQLiConnection::class, 'MySQLi');
+        $db = $this->getMockBuilder(MySQLiConnection::class)
+            ->setConstructorArgs([self::config('MySQLi')])
+            ->onlyMethods(['connect', 'execute'])
+            ->getMock();
 
-        $this->assertFalse($db->isRetryableTransactionException(new RuntimeException('Not a database exception.')));
-    }
+        $db->method('connect')->willReturn(mysqli_init());
+        $db->method('execute')->willThrowException(
+            self::createDatabaseException($db, 'Deadlock found when trying to get lock.', 1213),
+        );
 
-    public function testRejectsUniqueConstraintViolationExceptions(): void
-    {
-        $db = self::connection(MySQLiConnection::class, 'MySQLi');
+        $this->expectException(RetryableTransactionException::class);
 
-        $this->assertFalse($db->isRetryableTransactionException(
-            new UniqueConstraintViolationException('Duplicate key.', 1062),
-        ));
+        $db->query('SELECT * FROM test');
     }
 
     /**
@@ -131,7 +133,15 @@ final class RetryableTransactionExceptionTest extends CIUnitTestCase
      */
     private static function connection(string $connectionClass, string $driver): BaseConnection
     {
-        return new $connectionClass([
+        return new $connectionClass(self::config($driver));
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private static function config(string $driver): array
+    {
+        return [
             'DSN'      => '',
             'hostname' => 'localhost',
             'username' => '',
@@ -145,6 +155,16 @@ final class RetryableTransactionExceptionTest extends CIUnitTestCase
             'encrypt'  => false,
             'compress' => false,
             'failover' => [],
-        ]);
+        ];
+    }
+
+    private static function createDatabaseException(
+        BaseConnection $db,
+        string $message,
+        int|string $code,
+    ): DatabaseException {
+        $method = new ReflectionMethod($db, 'createDatabaseException');
+
+        return $method->invoke($db, $message, $code);
     }
 }

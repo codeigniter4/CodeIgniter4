@@ -329,7 +329,7 @@ class Connection extends BaseConnection
             // MySQL error 1062: ER_DUP_ENTRY – duplicate key value
             $exception = $e->getCode() === 1062
                 ? new UniqueConstraintViolationException($e->getMessage(), $e->getCode(), $e)
-                : new DatabaseException($e->getMessage(), $e->getCode(), $e);
+                : $this->createDatabaseException($e->getMessage(), $e->getCode(), $e);
 
             if ($this->DBDebug) {
                 throw $exception;

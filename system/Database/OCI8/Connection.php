@@ -252,7 +252,7 @@ class Connection extends BaseConnection
                 $error     = $this->error();
                 $exception = $error['code'] === 1
                     ? new UniqueConstraintViolationException((string) $error['message'], $error['code'])
-                    : new DatabaseException((string) $error['message'], $error['code']);
+                    : $this->createDatabaseException((string) $error['message'], $error['code']);
 
                 if ($this->DBDebug) {
                     throw $exception;
@@ -284,7 +284,7 @@ class Connection extends BaseConnection
             $error     = $this->error();
             $exception = $error['code'] === 1
                 ? new UniqueConstraintViolationException((string) $error['message'], $error['code'], $e)
-                : new DatabaseException((string) $error['message'], $error['code'], $e);
+                : $this->createDatabaseException((string) $error['message'], $error['code'], $e);
 
             if ($this->DBDebug) {
                 throw $exception;

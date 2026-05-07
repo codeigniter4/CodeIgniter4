@@ -182,7 +182,7 @@ class Connection extends BaseConnection
             $error     = $this->error();
             $exception = $this->isUniqueConstraintViolation($e->getMessage())
                 ? new UniqueConstraintViolationException($e->getMessage(), $error['code'], $e)
-                : new DatabaseException($e->getMessage(), $error['code'], $e);
+                : $this->createDatabaseException($e->getMessage(), $error['code'], $e);
 
             if ($this->DBDebug) {
                 throw $exception;

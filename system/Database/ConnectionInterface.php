@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database;
 
-use Throwable;
-
 /**
  * @template TConnection
  * @template TResult
@@ -150,11 +148,6 @@ interface ConnectionInterface
      * @return false|TReturn
      */
     public function transaction(callable $callback): mixed;
-
-    /**
-     * Checks whether the exception represents a retryable transaction failure.
-     */
-    public function isRetryableTransactionException(Throwable $exception): bool;
 
     /**
      * Returns an instance of the query builder for this connection.

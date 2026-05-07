@@ -15,6 +15,7 @@ namespace CodeIgniter\Database;
 
 use Closure;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Exceptions\RetryableTransactionException;
 use CodeIgniter\Events\Events;
 use CodeIgniter\I18n\Time;
 use Exception;
@@ -2139,20 +2140,26 @@ abstract class BaseConnection implements ConnectionInterface
     }
 
     /**
-     * Checks whether the exception represents a retryable transaction failure.
-     */
-    public function isRetryableTransactionException(Throwable $exception): bool
-    {
-        return $exception instanceof DatabaseException
-            && $this->isRetryableTransactionErrorCode($exception->getDatabaseCode());
-    }
-
-    /**
      * Checks whether the native database code represents a retryable transaction failure.
      */
     protected function isRetryableTransactionErrorCode(int|string $code): bool
     {
         return false;
+    }
+
+    /**
+     * Creates the appropriate database exception for a native database error.
+     */
+    protected function createDatabaseException(
+        string $message,
+        int|string $code = 0,
+        ?Throwable $previous = null,
+    ): DatabaseException {
+        if ($this->isRetryableTransactionErrorCode($code)) {
+            return new RetryableTransactionException($message, $code, $previous);
+        }
+
+        return new DatabaseException($message, $code, $previous);
     }
 
     /**
