@@ -51,6 +51,28 @@ final class IncrementTest extends CIUnitTestCase
         $this->seeInDatabase('job', ['name' => 'incremental', 'description' => '8']);
     }
 
+    public function testIncrementWithNumericColumns(): void
+    {
+        $this->hasInDatabase('job', ['name' => 'incremental', 'created_at' => 6]);
+
+        $this->db->table('job')
+            ->where('name', 'incremental')
+            ->increment('created_at');
+
+        $this->seeInDatabase('job', ['name' => 'incremental', 'created_at' => 7]);
+    }
+
+    public function testIncrementWithNumericColumnsAndValue(): void
+    {
+        $this->hasInDatabase('job', ['name' => 'incremental', 'created_at' => 6]);
+
+        $this->db->table('job')
+            ->where('name', 'incremental')
+            ->increment('created_at', 2);
+
+        $this->seeInDatabase('job', ['name' => 'incremental', 'created_at' => 8]);
+    }
+
     public function testResetStateAfterIncrement(): void
     {
         $this->hasInDatabase('job', ['name' => 'account1', 'description' => '10']);
@@ -85,6 +107,28 @@ final class IncrementTest extends CIUnitTestCase
             ->decrement('description', 2);
 
         $this->seeInDatabase('job', ['name' => 'incremental', 'description' => '4']);
+    }
+
+    public function testDecrementWithNumericColumns(): void
+    {
+        $this->hasInDatabase('job', ['name' => 'incremental', 'created_at' => 6]);
+
+        $this->db->table('job')
+            ->where('name', 'incremental')
+            ->decrement('created_at');
+
+        $this->seeInDatabase('job', ['name' => 'incremental', 'created_at' => 5]);
+    }
+
+    public function testDecrementWithNumericColumnsAndValue(): void
+    {
+        $this->hasInDatabase('job', ['name' => 'incremental', 'created_at' => 6]);
+
+        $this->db->table('job')
+            ->where('name', 'incremental')
+            ->decrement('created_at', 2);
+
+        $this->seeInDatabase('job', ['name' => 'incremental', 'created_at' => 4]);
     }
 
     public function testResetStateAfterDecrement(): void
