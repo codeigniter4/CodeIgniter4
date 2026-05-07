@@ -13,10 +13,12 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Encryption;
 
+use CodeIgniter\CLI\CLI;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
@@ -39,6 +41,7 @@ final class GenerateKeyTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        CLI::resetLastWrite();
         Services::injectMock('superglobals', new Superglobals());
 
         $this->envPath       = ROOTPATH . '.env';
@@ -62,6 +65,9 @@ final class GenerateKeyTest extends CIUnitTestCase
         }
 
         $this->resetEnvironment();
+
+        CLI::resetLastWrite();
+        CLI::reset();
     }
 
     /**
@@ -168,5 +174,99 @@ final class GenerateKeyTest extends CIUnitTestCase
         command('key:generate --force');
         $this->assertStringContainsString('was successfully set.', $this->getBuffer());
         $this->assertNotSame($key, env('encryption.key', $key), 'Failed replacing the commented out key.');
+    }
+
+    /**
+     * Simulates a stale env cache: the `.env` file has a valid key, but
+     * `env('encryption.key')` resolves to '' because nothing has loaded it
+     * into the superglobals. The primary regex (built from `oldKey`) cannot
+     * locate the line, so the fallback regex must replace the existing entry.
+     */
+    public function testKeyGenerateReplacesUnloadedKeyInDotEnvFile(): void
+    {
+        $existingKey = 'hex2bin:' . str_repeat('a', 64);
+        file_put_contents($this->envPath, "encryption.key = {$existingKey}\n");
+
+        $this->assertSame('', env('encryption.key', ''));
+
+        command('key:generate --force');
+
+        $this->assertStringContainsString('was successfully set.', $this->getBuffer());
+
+        $contents = (string) file_get_contents($this->envPath);
+        $this->assertStringNotContainsString($existingKey, $contents);
+        $this->assertStringContainsString('encryption.key = ' . env('encryption.key'), $contents);
+    }
+
+    public function testKeyGenerateAbortsWhenOverwritePromptIsDeclined(): void
+    {
+        command('key:generate');
+        $key = env('encryption.key', '');
+        $this->assertNotSame('', $key);
+
+        $io = new MockInputOutput();
+        $io->setInputs(['n']);
+        CLI::setInputOutput($io);
+
+        command('key:generate');
+
+        $this->assertSame($key, env('encryption.key', ''), 'Existing key should not change.');
+        $this->assertStringContainsString($key, (string) file_get_contents($this->envPath));
+        $this->assertStringContainsString('Overwrite existing key?', $io->getOutput());
+        $this->assertStringContainsString('Setting new encryption key aborted.', $io->getOutput());
+    }
+
+    public function testKeyGenerateOverwritesWhenOverwritePromptIsConfirmed(): void
+    {
+        command('key:generate');
+        $oldKey = env('encryption.key', '');
+        $this->assertNotSame('', $oldKey);
+
+        $io = new MockInputOutput();
+        $io->setInputs(['y']);
+        CLI::setInputOutput($io);
+
+        command('key:generate --prefix base64');
+
+        $this->assertNotSame($oldKey, env('encryption.key', $oldKey));
+        $this->assertStringContainsString('base64:', (string) file_get_contents($this->envPath));
+        $this->assertStringContainsString('Overwrite existing key?', $io->getOutput());
+        $this->assertStringContainsString('successfully set.', $io->getOutput());
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testKeyGenerateAbortsNonInteractivelyWithExistingKey(): void
+    {
+        command('key:generate');
+        $key = env('encryption.key', '');
+        $this->assertNotSame('', $key);
+
+        $this->resetStreamFilterBuffer();
+
+        command('key:generate --no-interaction');
+
+        $this->assertSame($key, env('encryption.key', ''), 'Existing key should not change.');
+        $this->assertStringContainsString('Setting new encryption key aborted.', $this->getBuffer());
+        $this->assertStringContainsString('--force', $this->getBuffer());
+    }
+
+    public function testKeyGenerateErrorsOnInvalidPrefixNonInteractively(): void
+    {
+        command('key:generate --prefix invalid --show --no-interaction');
+
+        $this->assertStringContainsString('Invalid prefix "invalid"', $this->getBuffer());
+    }
+
+    public function testKeyGeneratePromptsForInvalidPrefix(): void
+    {
+        $io = new MockInputOutput();
+        $io->setInputs(['hex2bin']);
+        CLI::setInputOutput($io);
+
+        command('key:generate --prefix invalid --show');
+
+        $this->assertStringContainsString('Please provide a valid prefix to use.', $io->getOutput());
+        $this->assertStringContainsString('hex2bin:', $io->getOutput());
     }
 }
