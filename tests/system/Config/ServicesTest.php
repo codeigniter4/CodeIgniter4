@@ -31,7 +31,7 @@ use CodeIgniter\HTTP\Negotiate;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Images\ImageHandlerInterface;
-use CodeIgniter\Input\InputData;
+use CodeIgniter\Input\InputDataFactory;
 use CodeIgniter\Language\Language;
 use CodeIgniter\Lock\LockManager;
 use CodeIgniter\Pager\Pager;
@@ -45,7 +45,6 @@ use CodeIgniter\Test\Mock\MockResponse;
 use CodeIgniter\Test\Mock\MockSecurity;
 use CodeIgniter\Throttle\Throttler;
 use CodeIgniter\Typography\Typography;
-use CodeIgniter\Validation\ValidatedInput;
 use CodeIgniter\Validation\Validation;
 use CodeIgniter\View\Cell;
 use CodeIgniter\View\Parser;
@@ -277,22 +276,13 @@ final class ServicesTest extends CIUnitTestCase
         $this->assertInstanceOf(Validation::class, $actual);
     }
 
-    public function testNewInputData(): void
+    public function testNewInputDataFactory(): void
     {
-        $actual = Services::inputdata(['page' => '2']);
+        $actual = Services::inputdatafactory();
 
-        $this->assertInstanceOf(InputData::class, $actual);
-        $this->assertSame(2, $actual->integer('page'));
-        $this->assertNotSame($actual, Services::inputdata(['page' => '2']));
-    }
-
-    public function testNewValidatedInput(): void
-    {
-        $actual = Services::validatedinput(['page' => '2']);
-
-        $this->assertInstanceOf(ValidatedInput::class, $actual);
-        $this->assertSame(2, $actual->integer('page'));
-        $this->assertNotSame($actual, Services::validatedinput(['page' => '2']));
+        $this->assertInstanceOf(InputDataFactory::class, $actual);
+        $this->assertSame($actual, Services::inputdatafactory());
+        $this->assertNotSame($actual, Services::inputdatafactory(false));
     }
 
     public function testNewViewcellFromShared(): void

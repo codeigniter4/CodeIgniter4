@@ -276,7 +276,7 @@ class Validation implements ValidationInterface
      */
     public function getValidatedInput(): ValidatedInput
     {
-        return service('validatedinput', $this->validated, false);
+        return service('inputdatafactory')->createValidated($this->validated);
     }
 
     /**

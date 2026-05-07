@@ -46,7 +46,7 @@ use CodeIgniter\HTTP\SiteURIFactory;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Images\Handlers\BaseHandler;
-use CodeIgniter\Input\InputData;
+use CodeIgniter\Input\InputDataFactory;
 use CodeIgniter\Language\Language;
 use CodeIgniter\Lock\LockManager;
 use CodeIgniter\Log\Logger;
@@ -63,7 +63,6 @@ use CodeIgniter\Session\Session;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Throttle\Throttler;
 use CodeIgniter\Typography\Typography;
-use CodeIgniter\Validation\ValidatedInput;
 use CodeIgniter\Validation\Validation;
 use CodeIgniter\Validation\ValidationInterface;
 use CodeIgniter\View\Cell;
@@ -390,17 +389,15 @@ class Services extends BaseService
     }
 
     /**
-     * Returns a typed input data object.
-     *
-     * @param array<string, mixed> $data
+     * Returns the typed input data factory.
      */
-    public static function inputdata(array $data = [], bool $getShared = false): InputData
+    public static function inputdatafactory(bool $getShared = true): InputDataFactory
     {
         if ($getShared) {
-            return static::getSharedInstance('inputdata', $data);
+            return static::getSharedInstance('inputdatafactory');
         }
 
-        return new InputData($data);
+        return new InputDataFactory();
     }
 
     /**
@@ -887,20 +884,6 @@ class Services extends BaseService
         $config ??= config(ValidationConfig::class);
 
         return new Validation($config, AppServices::get('renderer'));
-    }
-
-    /**
-     * Returns a typed validated input object.
-     *
-     * @param array<string, mixed> $data
-     */
-    public static function validatedinput(array $data = [], bool $getShared = false): ValidatedInput
-    {
-        if ($getShared) {
-            return static::getSharedInstance('validatedinput', $data);
-        }
-
-        return new ValidatedInput($data);
     }
 
     /**

@@ -275,6 +275,8 @@ deptrac:
       - CodeIgniter\HTTP\URI
     CodeIgniter\HTTP\FormRequest:
       - CodeIgniter\Validation\ValidatedInput
+    CodeIgniter\Input\InputDataFactory:
+      - CodeIgniter\Validation\ValidatedInput
     CodeIgniter\Log\Handlers\ChromeLoggerHandler:
       - CodeIgniter\HTTP\ResponseInterface
     CodeIgniter\Security\CheckPhpIni:

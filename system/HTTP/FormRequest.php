@@ -188,7 +188,7 @@ abstract class FormRequest
      */
     public function validatedInput(): ValidatedInput
     {
-        return service('validatedinput', $this->validatedData, false);
+        return service('inputdatafactory')->createValidated($this->validatedData);
     }
 
     /**
