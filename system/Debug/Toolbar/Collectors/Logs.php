@@ -92,9 +92,13 @@ class Logs extends BaseCollector
             return $this->data;
         }
 
-        $cache = service('logger')->logCache;
+        $logger = service('logger');
 
-        $this->data = $cache ?? [];
+        if (! property_exists($logger, 'logCache')) {
+            return $this->data;
+        }
+
+        $this->data = $logger->logCache;
 
         return $this->data;
     }

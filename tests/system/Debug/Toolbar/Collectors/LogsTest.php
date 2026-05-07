@@ -18,6 +18,8 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\Logger as LoggerConfig;
 use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
+use Psr\Log\AbstractLogger;
+use Stringable;
 
 /**
  * @internal
@@ -67,5 +69,19 @@ final class LogsTest extends CIUnitTestCase
 
         $collector = new Logs();
         $this->assertFalse($collector->isEmpty());
+    }
+
+    public function testEmptyWithThirdPartyLogger(): void
+    {
+        Services::injectMock('logger', new class () extends AbstractLogger {
+            public function log($level, string|Stringable $message, array $context = []): void
+            {
+            }
+        });
+
+        $collector = new Logs();
+
+        $this->assertTrue($collector->isEmpty());
+        $this->assertSame(['logs' => []], $collector->display());
     }
 }
