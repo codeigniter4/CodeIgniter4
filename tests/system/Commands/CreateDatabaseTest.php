@@ -35,7 +35,7 @@ final class CreateDatabaseTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
-        $this->connection = Database::connect();
+        $this->connection = Database::connect(null, false);
 
         parent::setUp();
 
@@ -54,12 +54,31 @@ final class CreateDatabaseTest extends CIUnitTestCase
         if ($this->connection instanceof SQLite3Connection) {
             $file = WRITEPATH . 'database.db';
 
+            $this->closeDatabaseConnections();
+
             if (is_file($file)) {
                 unlink($file);
             }
-        } elseif (Database::utils('tests')->databaseExists('database')) {
+
+            return;
+        }
+
+        if (Database::utils('tests')->databaseExists('database')) {
             Database::forge()->dropDatabase('database');
         }
+
+        $this->closeDatabaseConnections();
+    }
+
+    private function closeDatabaseConnections(): void
+    {
+        $this->connection->close();
+
+        foreach (Database::getConnections() as $connection) {
+            $connection->close();
+        }
+
+        $this->setPrivateProperty(Database::class, 'instances', []);
     }
 
     protected function getBuffer(): string

@@ -21,11 +21,19 @@ final class FileVarExportHandler
     {
         $val = var_export($val, true);
 
+        if (! is_dir($this->path) && ! @mkdir($this->path, 0777, true) && ! is_dir($this->path)) {
+            return;
+        }
+
         // Write to temp file first to ensure atomicity
         $tmp = $this->path . "/{$key}." . uniqid('', true) . '.tmp';
-        file_put_contents($tmp, '<?php return ' . $val . ';', LOCK_EX);
+        if (file_put_contents($tmp, '<?php return ' . $val . ';', LOCK_EX) === false) {
+            return;
+        }
 
-        rename($tmp, $this->path . "/{$key}");
+        if (! @rename($tmp, $this->path . "/{$key}")) {
+            @unlink($tmp);
+        }
     }
 
     public function delete(string $key): void

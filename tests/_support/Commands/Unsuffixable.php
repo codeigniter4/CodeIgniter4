@@ -76,4 +76,14 @@ class Unsuffixable extends BaseCommand
         $this->setEnabledSuffixing(false);
         $this->generateClass($params);
     }
+
+    protected function prepare(string $class): string
+    {
+        return $this->parseTemplate(
+            $class,
+            ['{group}', '{command}'],
+            ['Generators', 'make:foo'],
+            ['type' => 'basic'],
+        );
+    }
 }

@@ -29,18 +29,36 @@ final class LocalizationFinderTest extends CIUnitTestCase
 
     private static string $locale;
     private static string $languageTestPath;
+    private string $originalLocale;
+
+    /**
+     * @var list<string>
+     */
+    private array $originalSupportedLocales;
 
     protected function setUp(): void
     {
         parent::setUp();
-        self::$locale           = Locale::getDefault();
+
+        $this->originalLocale = Locale::getDefault();
+        Locale::setDefault('en');
+
+        $appConfig                      = config(App::class);
+        $this->originalSupportedLocales = $appConfig->supportedLocales;
+        $appConfig->supportedLocales    = ['en', 'ru', 'de'];
+
+        self::$locale           = 'en';
         self::$languageTestPath = SUPPORTPATH . 'Language' . DIRECTORY_SEPARATOR;
+        $this->clearGeneratedFiles();
     }
 
     protected function tearDown(): void
     {
         parent::tearDown();
+
         $this->clearGeneratedFiles();
+        Locale::setDefault($this->originalLocale);
+        config(App::class)->supportedLocales = $this->originalSupportedLocales;
     }
 
     public function testUpdateDefaultLocale(): void

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -25,6 +26,7 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('DatabaseLive')]
 final class DatabaseCommandsTest extends CIUnitTestCase
 {
+    use DatabaseTestTrait;
     use StreamFilterTrait;
 
     protected function tearDown(): void
