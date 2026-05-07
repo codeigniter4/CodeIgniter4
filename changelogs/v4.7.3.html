@@ -334,6 +334,7 @@ A warning message is displayed when using the old <code class="docutils literal 
 <li><p><strong>Common:</strong> Fixed a bug where the <code class="docutils literal notranslate"><span class="pre">command()</span></code> helper function did not properly clean up output buffers, which could lead to risky tests when exceptions were thrown.</p></li>
 <li><p><strong>Database:</strong> Fixed a bug where the SQLSRV driver’s decrement method was adding instead of subtracting the decrement value when <code class="docutils literal notranslate"><span class="pre">$castTextToInt</span></code> was false.</p></li>
 <li><p><strong>Kint:</strong> Fixed a bug where stale Content Security Policy nonces were reused in worker mode, causing browser CSP violations for Debug Toolbar assets.</p></li>
+<li><p><strong>Toolbar:</strong> Fixed a bug where the Logs collector raised an undefined property error when using a third-party PSR-3 logger.</p></li>
 <li><p><strong>Time:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">Time::createFromTimestamp()</span></code> could fail for microsecond timestamps when <code class="docutils literal notranslate"><span class="pre">LC_NUMERIC</span></code> used a comma decimal separator.</p></li>
 <li><p><strong>Validation:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">Validation::getValidated()</span></code> dropped fields whose validated value was explicitly <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p></li>
 </ul>
