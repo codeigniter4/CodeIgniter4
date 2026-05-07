@@ -111,6 +111,13 @@ class BaseBuilder
     protected $QBOffset = false;
 
     /**
+     * QB FOR UPDATE flag
+     *
+     * @var bool
+     */
+    protected $QBLockForUpdate = false;
+
+    /**
      * QB ORDER BY data
      *
      * @var array|string|null
@@ -1621,6 +1628,16 @@ class BaseBuilder
     }
 
     /**
+     * Locks the selected rows for update.
+     */
+    public function lockForUpdate(): static
+    {
+        $this->QBLockForUpdate = true;
+
+        return $this;
+    }
+
+    /**
      * Sets the OFFSET value
      *
      * @return $this
@@ -1801,20 +1818,26 @@ class BaseBuilder
         }
 
         // We cannot use a LIMIT when getting the single row COUNT(*) result
-        $limit = $this->QBLimit;
+        $limit         = $this->QBLimit;
+        $lockForUpdate = $this->QBLockForUpdate;
 
-        $this->QBLimit = false;
+        $this->QBLimit         = false;
+        $this->QBLockForUpdate = false;
 
-        if ($this->QBDistinct === true || ! empty($this->QBGroupBy)) {
-            // We need to backup the original SELECT in case DBPrefix is used
-            $select = $this->QBSelect;
-            $sql    = $this->countString . $this->db->protectIdentifiers('numrows') . "\nFROM (\n" . $this->compileSelect() . "\n) CI_count_all_results";
+        try {
+            if ($this->QBDistinct === true || ! empty($this->QBGroupBy)) {
+                // We need to backup the original SELECT in case DBPrefix is used
+                $select = $this->QBSelect;
+                $sql    = $this->countString . $this->db->protectIdentifiers('numrows') . "\nFROM (\n" . $this->compileSelect() . "\n) CI_count_all_results";
 
-            // Restore SELECT part
-            $this->QBSelect = $select;
-            unset($select);
-        } else {
-            $sql = $this->compileSelect($this->countString . $this->db->protectIdentifiers('numrows'));
+                // Restore SELECT part
+                $this->QBSelect = $select;
+                unset($select);
+            } else {
+                $sql = $this->compileSelect($this->countString . $this->db->protectIdentifiers('numrows'));
+            }
+        } finally {
+            $this->QBLockForUpdate = $lockForUpdate;
         }
 
         if ($this->testMode) {
@@ -3223,7 +3246,17 @@ class BaseBuilder
             $sql = $this->_limit($sql . "\n");
         }
 
+        $sql .= $this->compileLockForUpdate();
+
         return $this->unionInjection($sql);
+    }
+
+    /**
+     * Compile the SELECT lock clause.
+     */
+    protected function compileLockForUpdate(): string
+    {
+        return $this->QBLockForUpdate ? "\nFOR UPDATE" : '';
     }
 
     /**
@@ -3533,17 +3566,18 @@ class BaseBuilder
     protected function resetSelect()
     {
         $this->resetRun([
-            'QBSelect'   => [],
-            'QBJoin'     => [],
-            'QBWhere'    => [],
-            'QBGroupBy'  => [],
-            'QBHaving'   => [],
-            'QBOrderBy'  => [],
-            'QBNoEscape' => [],
-            'QBDistinct' => false,
-            'QBLimit'    => false,
-            'QBOffset'   => false,
-            'QBUnion'    => [],
+            'QBSelect'        => [],
+            'QBJoin'          => [],
+            'QBWhere'         => [],
+            'QBGroupBy'       => [],
+            'QBHaving'        => [],
+            'QBOrderBy'       => [],
+            'QBNoEscape'      => [],
+            'QBDistinct'      => false,
+            'QBLimit'         => false,
+            'QBOffset'        => false,
+            'QBLockForUpdate' => false,
+            'QBUnion'         => [],
         ]);
 
         if ($this->db instanceof BaseConnection) {

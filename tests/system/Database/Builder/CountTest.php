@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 use PHPUnit\Framework\Attributes\Group;
@@ -53,6 +54,34 @@ final class CountTest extends CIUnitTestCase
         $expectedSQL = 'SELECT COUNT(*) AS "numrows" FROM "jobs" WHERE "id" > :id:';
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
+    }
+
+    public function testCountAllResultsDoesNotUseLockForUpdate(): void
+    {
+        $builder = new BaseBuilder('jobs', $this->db);
+        $builder->testMode();
+
+        $answer = $builder->where('id >', 3)->lockForUpdate()->countAllResults(false);
+
+        $expectedSQL = 'SELECT COUNT(*) AS "numrows" FROM "jobs" WHERE "id" > :id:';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
+        $this->assertSame('SELECT * FROM "jobs" WHERE "id" > 3 FOR UPDATE', str_replace("\n", ' ', $builder->getCompiledSelect(false)));
+    }
+
+    public function testCountAllResultsWithSQLSRVDoesNotUseLockForUpdate(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $builder = new SQLSRVBuilder('jobs', $this->db);
+        $builder->testMode();
+
+        $answer = $builder->where('id >', 3)->lockForUpdate()->countAllResults(false);
+
+        $expectedSQL = 'SELECT COUNT(*) AS "numrows" FROM "test"."dbo"."jobs" WHERE "id" > :id:';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
+        $this->assertSame('SELECT * FROM "test"."dbo"."jobs" WITH (UPDLOCK, ROWLOCK) WHERE "id" > 3', str_replace("\n", ' ', $builder->getCompiledSelect(false)));
     }
 
     public function testCountAllResultsWithGroupBy(): void

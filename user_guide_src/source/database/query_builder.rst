@@ -753,6 +753,38 @@ As is in ``countAllResult()`` method, this method resets any field values that y
 to ``select()`` as well. If you need to keep them, you can pass ``false`` as the
 first parameter.
 
+.. _query-builder-lock-for-update:
+
+********************
+Pessimistic Locking
+********************
+
+$builder->lockForUpdate()
+-------------------------
+
+.. versionadded:: 4.8.0
+
+Adds a pessimistic write lock to a ``SELECT`` query. This is useful when a row
+must be read and then updated safely while other transactions are prevented
+from modifying it first.
+
+.. literalinclude:: query_builder/124.php
+
+Use this method inside a database transaction. The exact locking behavior is
+determined by the database server and transaction isolation level.
+
+This method is supported by the **MySQLi**, **Postgre**, **OCI8**, and
+**SQLSRV** drivers. Unsupported drivers throw a ``DatabaseException``.
+
+SQLSRV uses SQL Server table hints instead of a trailing ``FOR UPDATE`` clause.
+The hint is applied to table references in the ``FROM`` clause; joined tables
+are not hinted. Its exact lock granularity depends on SQL Server's execution
+plan and transaction isolation level. SQLSRV does not support
+``lockForUpdate()`` without a ``FROM`` table or on subqueries.
+
+OCI8 does not support ``lockForUpdate()`` together with ``limit()`` or
+``offset()`` because Oracle does not allow ``FOR UPDATE`` with row limiting.
+
 .. _query-builder-union:
 
 *************
@@ -1428,6 +1460,13 @@ Class Reference
         :rtype:     ``\CodeIgniter\Database\ResultInterface``
 
         Same as ``get()``, but also allows the WHERE to be added directly.
+
+    .. php:method:: lockForUpdate()
+
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:   ``BaseBuilder``
+
+        Adds a pessimistic write lock to a ``SELECT`` query. See :ref:`query-builder-lock-for-update`.
 
     .. php:method:: select([$select = '*'[, $escape = null]])
 
