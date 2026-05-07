@@ -112,10 +112,8 @@ class BaseBuilder
 
     /**
      * QB FOR UPDATE flag
-     *
-     * @var bool
      */
-    protected $QBLockForUpdate = false;
+    protected bool $QBLockForUpdate = false;
 
     /**
      * QB ORDER BY data
