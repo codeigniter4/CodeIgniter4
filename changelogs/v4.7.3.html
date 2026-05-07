@@ -329,6 +329,7 @@ A warning message is displayed when using the old <code class="docutils literal 
 <ul class="simple">
 <li><p><strong>Autoloader:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">Autoloader::unregister()</span></code> (used during tests) silently failed to remove handlers from the SPL autoload stack, causing closures to accumulate permanently.</p></li>
 <li><p><strong>CLI:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">CLI::generateDimensions()</span></code> leaked <code class="docutils literal notranslate"><span class="pre">stty</span></code> error output (e.g., <code class="docutils literal notranslate"><span class="pre">stty:</span> <span class="pre">'standard</span> <span class="pre">input':</span> <span class="pre">Inappropriate</span> <span class="pre">ioctl</span> <span class="pre">for</span> <span class="pre">device</span></code>) to stderr when stdin was not a TTY.</p></li>
+<li><p><strong>CLI:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">CLI::generateDimensions()</span></code> leaked <code class="docutils literal notranslate"><span class="pre">tput</span></code> error output (<code class="docutils literal notranslate"><span class="pre">tput:</span> <span class="pre">No</span> <span class="pre">value</span> <span class="pre">for</span> <span class="pre">$TERM</span> <span class="pre">and</span> <span class="pre">no</span> <span class="pre">-T</span> <span class="pre">specified</span></code>) to stderr when the <code class="docutils literal notranslate"><span class="pre">stty</span></code> fallback was reached and the <code class="docutils literal notranslate"><span class="pre">TERM</span></code> environment variable was not set.</p></li>
 <li><p><strong>Commands:</strong> Fixed a bug in the <code class="docutils literal notranslate"><span class="pre">env</span></code> command where passing options only would cause the command to throw a <code class="docutils literal notranslate"><span class="pre">TypeError</span></code> instead of showing the current environment.</p></li>
 <li><p><strong>Common:</strong> Fixed a bug where the <code class="docutils literal notranslate"><span class="pre">command()</span></code> helper function did not properly clean up output buffers, which could lead to risky tests when exceptions were thrown.</p></li>
 <li><p><strong>Database:</strong> Fixed a bug where the SQLSRV driver’s decrement method was adding instead of subtracting the decrement value when <code class="docutils literal notranslate"><span class="pre">$castTextToInt</span></code> was false.</p></li>
@@ -354,7 +355,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 06, 2026.
+      <span class="lastupdated">Last updated on May 07, 2026.
       </span></p>
   </div>
 
