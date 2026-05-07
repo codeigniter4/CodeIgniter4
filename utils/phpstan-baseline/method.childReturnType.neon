@@ -1,4 +1,4 @@
-# total 28 errors
+# total 26 errors
 
 parameters:
     ignoreErrors:
@@ -38,17 +38,7 @@ parameters:
             path: ../../system/Database/Postgre/Builder.php
 
         -
-            message: '#^Return type \(mixed\) of method CodeIgniter\\Database\\Postgre\\Builder\:\:decrement\(\) should be covariant with return type \(bool\) of method CodeIgniter\\Database\\BaseBuilder\:\:decrement\(\)$#'
-            count: 1
-            path: ../../system/Database/Postgre/Builder.php
-
-        -
             message: '#^Return type \(mixed\) of method CodeIgniter\\Database\\Postgre\\Builder\:\:delete\(\) should be covariant with return type \(bool\|string\) of method CodeIgniter\\Database\\BaseBuilder\:\:delete\(\)$#'
-            count: 1
-            path: ../../system/Database/Postgre/Builder.php
-
-        -
-            message: '#^Return type \(mixed\) of method CodeIgniter\\Database\\Postgre\\Builder\:\:increment\(\) should be covariant with return type \(bool\) of method CodeIgniter\\Database\\BaseBuilder\:\:increment\(\)$#'
             count: 1
             path: ../../system/Database/Postgre/Builder.php
 

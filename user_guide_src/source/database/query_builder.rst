@@ -2094,14 +2094,40 @@ Class Reference
         is not a numeric field, like a ``VARCHAR``, it will likely be replaced
         with ``$value``.
 
+    .. php:method:: incrementMany($columns[, $value = 1])
+
+        .. versionadded:: 4.8.0
+
+        :param array $columns: A list of columns or array of column => value pairs to increment.
+        :param int $value: The amount to increment in the columns, if $columns is a list of columns.
+        :returns: ``true`` on success, ``false`` on failure
+        :rtype:   bool
+
+        Increments the value of multiple fields by the specified amounts. If a field
+        is not a numeric field, like a ``VARCHAR``, it will likely be replaced
+        with the amount specified for that field.
+
     .. php:method:: decrement($column[, $value = 1])
 
         :param string $column: The name of the column to decrement
-        :param int $value:  The amount to decrement in the column
+        :param int $value: The amount to decrement in the column
 
         Decrements the value of a field by the specified amount. If the field
         is not a numeric field, like a ``VARCHAR``, it will likely be replaced
         with ``$value``.
+
+    .. php:method:: decrementMany($columns[, $value = 1])
+
+        .. versionadded:: 4.8.0
+
+        :param array $columns: A list of columns or array of column => value pairs to decrement.
+        :param int $value: The amount to decrement in the columns, if $columns is a list of columns.
+        :returns: ``true`` on success, ``false`` on failure
+        :rtype:   bool
+
+        Decrements the value of multiple fields by the specified amounts. If a field
+        is not a numeric field, like a ``VARCHAR``, it will likely be replaced
+        with the amount specified for that field.
 
     .. php:method:: truncate()
 

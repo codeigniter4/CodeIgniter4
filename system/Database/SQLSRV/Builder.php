@@ -18,7 +18,9 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Database\ResultInterface;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use Config\Feature;
+use TypeError;
 
 /**
  * Builder for SQLSRV
@@ -232,21 +234,41 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Increments a numeric column by the specified value.
+     * Increments multiple numeric columns by the specified value(s).
      *
-     * @return bool
+     * @param array<string, int>|list<string> $columns A list of columns or array of column => value pairs to increment.
+     * @param int                             $value   The value to increment by if $columns is a list of column names.
      */
-    public function increment(string $column, int $value = 1)
+    public function incrementMany(array $columns, int $value = 1): bool
     {
-        $column = $this->db->protectIdentifiers($column);
-
-        if ($this->castTextToInt) {
-            $values = [$column => "CONVERT(VARCHAR(MAX),CONVERT(INT,CONVERT(VARCHAR(MAX), {$column})) + {$value})"];
-        } else {
-            $values = [$column => "{$column} + {$value}"];
+        if ($columns === []) {
+            throw new InvalidArgumentException('Argument #1 ($columns) cannot be empty.');
         }
 
-        $sql = $this->_update($this->QBFrom[0], $values);
+        if (array_is_list($columns)) {
+            $columns = array_fill_keys($columns, $value);
+        }
+
+        $fields = [];
+
+        foreach ($columns as $col => $val) {
+            if (! is_int($val)) {
+                throw new TypeError(sprintf(
+                    'Argument #1 ($columns) must contain only int values, %s given for "%s".',
+                    get_debug_type($val),
+                    $col,
+                ));
+            }
+
+            $col = $this->db->protectIdentifiers($col);
+            if ($this->castTextToInt) {
+                $fields[$col] = "CONVERT(VARCHAR(MAX),CONVERT(INT,CONVERT(VARCHAR(MAX), {$col})) + {$val})";
+            } else {
+                $fields[$col] = "{$col} + {$val}";
+            }
+        }
+
+        $sql = $this->_update($this->QBFrom[0], $fields);
 
         if (! $this->testMode) {
             $this->resetWrite();
@@ -258,21 +280,41 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Decrements a numeric column by the specified value.
+     * Decrements multiple numeric columns by the specified value(s).
      *
-     * @return bool
+     * @param array<string, int>|list<string> $columns A list of columns or array of column => value pairs to decrement.
+     * @param int                             $value   The value to decrement by if $columns is a list of column names.
      */
-    public function decrement(string $column, int $value = 1)
+    public function decrementMany(array $columns, int $value = 1): bool
     {
-        $column = $this->db->protectIdentifiers($column);
-
-        if ($this->castTextToInt) {
-            $values = [$column => "CONVERT(VARCHAR(MAX),CONVERT(INT,CONVERT(VARCHAR(MAX), {$column})) - {$value})"];
-        } else {
-            $values = [$column => "{$column} + {$value}"];
+        if ($columns === []) {
+            throw new InvalidArgumentException('Argument #1 ($columns) cannot be empty.');
         }
 
-        $sql = $this->_update($this->QBFrom[0], $values);
+        if (array_is_list($columns)) {
+            $columns = array_fill_keys($columns, $value);
+        }
+
+        $fields = [];
+
+        foreach ($columns as $col => $val) {
+            if (! is_int($val)) {
+                throw new TypeError(sprintf(
+                    'Argument #1 ($columns) must contain only int values, %s given for "%s".',
+                    get_debug_type($val),
+                    $col,
+                ));
+            }
+
+            $col = $this->db->protectIdentifiers($col);
+            if ($this->castTextToInt) {
+                $fields[$col] = "CONVERT(VARCHAR(MAX),CONVERT(INT,CONVERT(VARCHAR(MAX), {$col})) - {$val})";
+            } else {
+                $fields[$col] = "{$col} - {$val}";
+            }
+        }
+
+        $sql = $this->_update($this->QBFrom[0], $fields);
 
         if (! $this->testMode) {
             $this->resetWrite();

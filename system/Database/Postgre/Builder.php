@@ -17,6 +17,7 @@ use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Exceptions\InvalidArgumentException;
+use TypeError;
 
 /**
  * Builder for Postgre
@@ -87,17 +88,37 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Increments a numeric column by the specified value.
+     * Increments multiple numeric columns by the specified value(s).
      *
-     * @return mixed
-     *
-     * @throws DatabaseException
+     * @param array<string, int>|list<string> $columns A list of columns or array of column => value pairs to increment.
+     * @param int                             $value   The value to increment by if $columns is a list of column names.
      */
-    public function increment(string $column, int $value = 1)
+    public function incrementMany(array $columns, int $value = 1): bool
     {
-        $column = $this->db->protectIdentifiers($column);
+        if ($columns === []) {
+            throw new InvalidArgumentException('Argument #1 ($columns) cannot be empty.');
+        }
 
-        $sql = $this->_update($this->QBFrom[0], [$column => "to_number({$column}, '9999999') + {$value}"]);
+        if (array_is_list($columns)) {
+            $columns = array_fill_keys($columns, $value);
+        }
+
+        $fields = [];
+
+        foreach ($columns as $col => $val) {
+            if (! is_int($val)) {
+                throw new TypeError(sprintf(
+                    'Argument #1 ($columns) must contain only int values, %s given for "%s".',
+                    get_debug_type($val),
+                    $col,
+                ));
+            }
+
+            $col          = $this->db->protectIdentifiers($col);
+            $fields[$col] = "CAST({$col} AS numeric) + {$val}";
+        }
+
+        $sql = $this->_update($this->QBFrom[0], $fields);
 
         if (! $this->testMode) {
             $this->resetWrite();
@@ -109,17 +130,37 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Decrements a numeric column by the specified value.
+     * Decrements multiple numeric columns by the specified value(s).
      *
-     * @return mixed
-     *
-     * @throws DatabaseException
+     * @param array<string, int>|list<string> $columns A list of columns or array of column => value pairs to decrement.
+     * @param int                             $value   The value to decrement by if $columns is a list of column names.
      */
-    public function decrement(string $column, int $value = 1)
+    public function decrementMany(array $columns, int $value = 1): bool
     {
-        $column = $this->db->protectIdentifiers($column);
+        if ($columns === []) {
+            throw new InvalidArgumentException('Argument #1 ($columns) cannot be empty.');
+        }
 
-        $sql = $this->_update($this->QBFrom[0], [$column => "to_number({$column}, '9999999') - {$value}"]);
+        if (array_is_list($columns)) {
+            $columns = array_fill_keys($columns, $value);
+        }
+
+        $fields = [];
+
+        foreach ($columns as $col => $val) {
+            if (! is_int($val)) {
+                throw new TypeError(sprintf(
+                    'Argument #1 ($columns) must contain only int values, %s given for "%s".',
+                    get_debug_type($val),
+                    $col,
+                ));
+            }
+
+            $col          = $this->db->protectIdentifiers($col);
+            $fields[$col] = "CAST({$col} AS numeric) - {$val}";
+        }
+
+        $sql = $this->_update($this->QBFrom[0], $fields);
 
         if (! $this->testMode) {
             $this->resetWrite();

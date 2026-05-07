@@ -19,6 +19,7 @@ use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Traits\ConditionalTrait;
 use Config\Feature;
+use TypeError;
 
 /**
  * Class BaseBuilder
@@ -3021,9 +3022,41 @@ class BaseBuilder
      */
     public function increment(string $column, int $value = 1)
     {
-        $column = $this->db->protectIdentifiers($column);
+        return $this->incrementMany([$column], $value);
+    }
 
-        $sql = $this->_update($this->QBFrom[0], [$column => "{$column} + {$value}"]);
+    /**
+     * Increments multiple numeric columns by the specified value(s).
+     *
+     * @param array<string, int>|list<string> $columns A list of columns or array of column => value pairs to increment.
+     * @param int                             $value   The value to increment by if $columns is a list of column names.
+     */
+    public function incrementMany(array $columns, int $value = 1): bool
+    {
+        if ($columns === []) {
+            throw new InvalidArgumentException('Argument #1 ($columns) cannot be empty.');
+        }
+
+        if (array_is_list($columns)) {
+            $columns = array_fill_keys($columns, $value);
+        }
+
+        $fields = [];
+
+        foreach ($columns as $col => $val) {
+            if (! is_int($val)) {
+                throw new TypeError(sprintf(
+                    'Argument #1 ($columns) must contain only int values, %s given for "%s".',
+                    get_debug_type($val),
+                    $col,
+                ));
+            }
+
+            $col          = $this->db->protectIdentifiers($col);
+            $fields[$col] = "{$col} + {$val}";
+        }
+
+        $sql = $this->_update($this->QBFrom[0], $fields);
 
         if (! $this->testMode) {
             $this->resetWrite();
@@ -3041,9 +3074,41 @@ class BaseBuilder
      */
     public function decrement(string $column, int $value = 1)
     {
-        $column = $this->db->protectIdentifiers($column);
+        return $this->decrementMany([$column], $value);
+    }
 
-        $sql = $this->_update($this->QBFrom[0], [$column => "{$column}-{$value}"]);
+    /**
+     * Decrements multiple numeric columns by the specified value(s).
+     *
+     * @param array<string, int>|list<string> $columns A list of columns or array of column => value pairs to decrement.
+     * @param int                             $value   The value to decrement by if $columns is a list of column names.
+     */
+    public function decrementMany(array $columns, int $value = 1): bool
+    {
+        if ($columns === []) {
+            throw new InvalidArgumentException('Argument #1 ($columns) cannot be empty.');
+        }
+
+        if (array_is_list($columns)) {
+            $columns = array_fill_keys($columns, $value);
+        }
+
+        $fields = [];
+
+        foreach ($columns as $col => $val) {
+            if (! is_int($val)) {
+                throw new TypeError(sprintf(
+                    'Argument #1 ($columns) must contain only int values, %s given for "%s".',
+                    get_debug_type($val),
+                    $col,
+                ));
+            }
+
+            $col          = $this->db->protectIdentifiers($col);
+            $fields[$col] = "{$col} - {$val}";
+        }
+
+        $sql = $this->_update($this->QBFrom[0], $fields);
 
         if (! $this->testMode) {
             $this->resetWrite();

@@ -209,6 +209,7 @@ Query Builder
 -------------
 
 - Added ``whereColumn()`` and ``orWhereColumn()`` to compare one column to another column while protecting identifiers by default. See :ref:`query-builder-where-column`.
+- Added new ``incrementMany()`` and ``decrementMany()`` methods to ``CodeIgniter\Database\BaseBuilder`` for performing bulk increment/decrement operations.
 
 Forge
 -----
