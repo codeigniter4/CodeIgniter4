@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace CodeIgniter\Database\Live\Postgre;
 
 use CodeIgniter\Test\CIUnitTestCase;
@@ -7,8 +18,11 @@ use CodeIgniter\Test\DatabaseTestTrait;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
+/**
+ * @internal
+ */
 #[Group('DatabaseLive')]
-class IncrementTest extends CIUnitTestCase
+final class IncrementTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
