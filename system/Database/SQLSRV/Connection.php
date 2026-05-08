@@ -15,7 +15,6 @@ namespace CodeIgniter\Database\SQLSRV;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use CodeIgniter\Database\Exceptions\UniqueConstraintViolationException;
 use CodeIgniter\Database\TableName;
 use stdClass;
 
@@ -89,6 +88,28 @@ class Connection extends BaseConnection
      * @var list<string>
      */
     protected $_reserved_identifiers = ['*'];
+
+    /**
+     * Checks whether the native database error represents a unique constraint violation.
+     */
+    protected function isUniqueConstraintViolation(int|string $code, string $message): bool
+    {
+        $errors = sqlsrv_errors(SQLSRV_ERR_ERRORS);
+        if (! is_array($errors)) {
+            return false;
+        }
+
+        foreach ($errors as $error) {
+            // SQLSTATE 23000 (integrity constraint violation) with SQL Server error
+            // 2627 (UNIQUE CONSTRAINT or PRIMARY KEY violation) or 2601 (UNIQUE INDEX violation).
+            if (($error['SQLSTATE'] ?? '') === '23000'
+                && in_array($error['code'] ?? 0, [2627, 2601], true)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     /**
      * Checks whether the native database code represents a retryable transaction failure.
@@ -554,9 +575,7 @@ class Connection extends BaseConnection
             ]);
 
             $error     = $this->error();
-            $exception = $this->isUniqueConstraintViolation()
-                ? new UniqueConstraintViolationException($message, $error['code'])
-                : $this->createDatabaseException($message, $error['code']);
+            $exception = $this->createDatabaseException($message, $error['code']);
 
             if ($this->DBDebug) {
                 throw $exception;
@@ -566,25 +585,6 @@ class Connection extends BaseConnection
         }
 
         return $stmt;
-    }
-
-    private function isUniqueConstraintViolation(): bool
-    {
-        $errors = sqlsrv_errors(SQLSRV_ERR_ERRORS);
-        if (! is_array($errors)) {
-            return false;
-        }
-
-        foreach ($errors as $error) {
-            // SQLSTATE 23000 (integrity constraint violation) with SQL Server error
-            // 2627 (UNIQUE CONSTRAINT or PRIMARY KEY violation) or 2601 (UNIQUE INDEX violation).
-            if (($error['SQLSTATE'] ?? '') === '23000'
-                && in_array($error['code'] ?? 0, [2627, 2601], true)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**

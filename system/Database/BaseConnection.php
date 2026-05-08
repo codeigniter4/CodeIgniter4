@@ -16,6 +16,7 @@ namespace CodeIgniter\Database;
 use Closure;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\RetryableTransactionException;
+use CodeIgniter\Database\Exceptions\UniqueConstraintViolationException;
 use CodeIgniter\Events\Events;
 use CodeIgniter\I18n\Time;
 use Exception;
@@ -2140,6 +2141,14 @@ abstract class BaseConnection implements ConnectionInterface
     }
 
     /**
+     * Checks whether the native database error represents a unique constraint violation.
+     */
+    protected function isUniqueConstraintViolation(int|string $code, string $message): bool
+    {
+        return false;
+    }
+
+    /**
      * Checks whether the native database code represents a retryable transaction failure.
      */
     protected function isRetryableTransactionErrorCode(int|string $code): bool
@@ -2155,6 +2164,10 @@ abstract class BaseConnection implements ConnectionInterface
         int|string $code = 0,
         ?Throwable $previous = null,
     ): DatabaseException {
+        if ($this->isUniqueConstraintViolation($code, $message)) {
+            return new UniqueConstraintViolationException($message, $code, $previous);
+        }
+
         if ($this->isRetryableTransactionErrorCode($code)) {
             return new RetryableTransactionException($message, $code, $previous);
         }

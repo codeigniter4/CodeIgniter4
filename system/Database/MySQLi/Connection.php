@@ -15,7 +15,6 @@ namespace CodeIgniter\Database\MySQLi;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use CodeIgniter\Database\Exceptions\UniqueConstraintViolationException;
 use CodeIgniter\Database\TableName;
 use CodeIgniter\Exceptions\LogicException;
 use mysqli;
@@ -97,6 +96,15 @@ class Connection extends BaseConnection
      * Strict SQL mode
      */
     protected bool $strictOn = false;
+
+    /**
+     * Checks whether the native database error represents a unique constraint violation.
+     */
+    protected function isUniqueConstraintViolation(int|string $code, string $message): bool
+    {
+        // ER_DUP_ENTRY: duplicate key value.
+        return $code === 1062;
+    }
 
     /**
      * Checks whether the native database code represents a retryable transaction failure.
@@ -326,10 +334,7 @@ class Connection extends BaseConnection
                 'trace'   => render_backtrace($e->getTrace()),
             ]);
 
-            // MySQL error 1062: ER_DUP_ENTRY – duplicate key value
-            $exception = $e->getCode() === 1062
-                ? new UniqueConstraintViolationException($e->getMessage(), $e->getCode(), $e)
-                : $this->createDatabaseException($e->getMessage(), $e->getCode(), $e);
+            $exception = $this->createDatabaseException($e->getMessage(), $e->getCode(), $e);
 
             if ($this->DBDebug) {
                 throw $exception;
