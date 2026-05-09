@@ -229,7 +229,7 @@ final class RotateKeyTest extends CIUnitTestCase
         $this->assertStringNotContainsString('encryption.previousKeys', (string) file_get_contents($this->envPath));
     }
 
-    public function testRotateAbortsWhenOverwritePromptIsDeclined(): void
+    public function testRotateCancelsWhenOverwritePromptIsDeclined(): void
     {
         $this->seedEnv(self::SEED_KEY);
 
@@ -274,7 +274,7 @@ final class RotateKeyTest extends CIUnitTestCase
         $this->assertSame(self::SEED_KEY, env('encryption.previousKeys'));
     }
 
-    public function testRotateAbortsNonInteractivelyAndHintsAboutForceFlag(): void
+    public function testRotateAbortsNonInteractively(): void
     {
         $this->seedEnv(self::SEED_KEY);
 
@@ -283,8 +283,7 @@ final class RotateKeyTest extends CIUnitTestCase
         $this->assertSame(
             <<<'EOT'
 
-                Key rotation aborted.
-                If you want, use the "--force" option to force the rotation.
+                Key rotation aborted: pass --force to rotate the encryption key in non-interactive mode.
 
                 EOT,
             $this->getUndecoratedBuffer(),
@@ -525,11 +524,14 @@ final class RotateKeyTest extends CIUnitTestCase
             command('key:rotate --force');
 
             $this->assertSame(
-                <<<'EOT'
+                sprintf(
+                    <<<'EOT'
 
-                    Error in writing `encryption.previousKeys` to `.env` file.
+                        Failed to write `encryption.previousKeys` to %s.
 
-                    EOT,
+                        EOT,
+                    clean_path($this->envPath),
+                ),
                 $this->getUndecoratedBuffer(),
             );
             $this->assertSame(self::SEED_KEY, env('encryption.key'));

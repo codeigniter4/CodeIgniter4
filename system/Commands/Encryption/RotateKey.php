@@ -103,11 +103,12 @@ class RotateKey extends AbstractCommand
 
         if ($options['force'] === false) {
             if ($this->isInteractive()) {
-                CLI::error('Key rotation cancelled.');
-            } else {
-                CLI::error('Key rotation aborted.');
-                CLI::error('If you want, use the "--force" option to force the rotation.');
+                CLI::write('Key rotation cancelled.', 'yellow');
+
+                return EXIT_SUCCESS;
             }
+
+            CLI::error('Key rotation aborted: pass --force to rotate the encryption key in non-interactive mode.');
 
             return EXIT_ERROR;
         }
@@ -133,8 +134,10 @@ class RotateKey extends AbstractCommand
         // Write previousKeys first. If the subsequent `key:generate` call fails,
         // the worst case is a stale-but-still-decryptable `.env` (the rotated-out
         // key is preserved on disk).
-        if (! $this->writePreviousKeys($previousKeys)) {
-            CLI::error('Error in writing `encryption.previousKeys` to `.env` file.');
+        $envFile = ((new Paths())->envDirectory ?? ROOTPATH) . '.env'; // @phpstan-ignore nullCoalesce.property
+
+        if (! $this->writePreviousKeys($previousKeys, $envFile)) {
+            CLI::error(sprintf('Failed to write `encryption.previousKeys` to %s.', clean_path($envFile)));
 
             return EXIT_ERROR;
         }
@@ -225,10 +228,8 @@ class RotateKey extends AbstractCommand
      *
      * @param list<string> $previousKeys
      */
-    private function writePreviousKeys(array $previousKeys): bool
+    private function writePreviousKeys(array $previousKeys, string $envFile): bool
     {
-        $envFile = ((new Paths())->envDirectory ?? ROOTPATH) . '.env'; // @phpstan-ignore nullCoalesce.property
-
         if (! is_file($envFile)) {
             return false; // @codeCoverageIgnore
         }
@@ -259,11 +260,9 @@ class RotateKey extends AbstractCommand
         );
 
         if ($injected === $contents) {
-            // @codeCoverageIgnoreStart
             // Fallback: append to the end. Shouldn't trigger because `key:generate`
             // writes the `encryption.key` line just before this method runs.
-            $injected = $contents . "\nencryption.previousKeys = {$value}";
-            // @codeCoverageIgnoreEnd
+            $injected = $contents . "\nencryption.previousKeys = {$value}"; // @codeCoverageIgnore
         }
 
         return file_put_contents($envFile, $injected) !== false;
