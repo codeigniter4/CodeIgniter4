@@ -175,7 +175,7 @@ final class ValidatedInputTest extends CIUnitTestCase
         ]);
         $default = Time::parse('2026-05-04');
 
-        $this->assertNull($input->date('published_at', default: $default));
+        $this->assertNotInstanceOf(Time::class, $input->date('published_at', default: $default));
         $this->assertNotInstanceOf(StatusEnum::class, $input->enum('status', StatusEnum::class, StatusEnum::PENDING));
     }
 }
