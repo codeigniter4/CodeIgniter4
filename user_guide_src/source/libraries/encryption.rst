@@ -226,6 +226,32 @@ Key Rotation Workflow
     operations always use the current ``key``. If you pass an explicit key via the ``$params``
     argument to ``encrypt()`` or ``decrypt()``, the previousKeys fallback will not be used.
 
+.. _spark-key-rotate:
+
+Rotating with the ``key:rotate`` Command
+----------------------------------------
+
+.. versionadded:: 4.8.0
+
+Step 2 above (demoting the current ``key`` and generating a new one) can be performed with the
+``key:rotate`` spark command, which edits the **.env** file in place::
+
+    php spark key:rotate
+
+The command reads ``encryption.key`` from your environment, prepends it to
+``encryption.previousKeys`` (newest first, deduplicated), and writes a fresh ``encryption.key``.
+Useful options:
+
+- ``--prefix`` (``hex2bin`` or ``base64``, default ``hex2bin``) and ``--length`` (positive
+  integer, default ``32``) control how the new key is generated, mirroring ``key:generate``.
+- ``--keep=N`` caps the retained ``previousKeys`` list to the ``N`` most recent entries. ``N`` must
+  be a non-negative integer; ``0`` (the default) keeps every previous key.
+- ``--force`` / ``-f`` skips the interactive confirmation. Required when running with
+  ``--no-interaction``.
+
+All three options are validated up-front, so an invalid value cannot leave the **.env** file
+half-rotated.
+
 Padding
 =======
 
