@@ -524,7 +524,8 @@ All methods support dot-array syntax for nested validated data.
 * ``date($key, $format = null, $timezone = null, $default = null)`` returns
   :php:class:`CodeIgniter\\I18n\\Time` or ``null``. If the field is missing, it
   returns the default value or ``null``. Pass a format when the value should be
-  parsed with a specific date format.
+  parsed with a specific date format. The default value must be ``null`` or a
+  :php:class:`CodeIgniter\\I18n\\Time` instance.
 * ``enum($key, $enumClass, $default = null)`` returns an enum instance or
   ``null``. The default value must be ``null`` or an instance of the requested
   enum class.
