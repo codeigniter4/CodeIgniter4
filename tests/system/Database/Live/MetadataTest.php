@@ -78,7 +78,7 @@ final class MetadataTest extends CIUnitTestCase
         $oldPrefix = $this->db->getPrefix();
         $this->db->setPrefix('tmp_');
 
-        Database::forge($this->DBGroup)->dropTable('widgets');
+        Database::forge($this->DBGroup)->dropTable('widgets', true);
 
         $this->db->setPrefix($oldPrefix);
     }
@@ -136,6 +136,24 @@ final class MetadataTest extends CIUnitTestCase
             $this->assertSame(['tmp_widgets'], $tables);
         } finally {
             $this->db->setPrefix($oldPrefix);
+            $this->dropExtraneousTable();
+        }
+    }
+
+    public function testListTablesReturnsListAfterCachedTableIsDropped(): void
+    {
+        try {
+            $this->createExtraneousTable();
+
+            $tables = $this->db->listTables();
+            $this->assertSame(array_values($tables), $tables);
+
+            $this->dropExtraneousTable();
+
+            $tables = $this->db->listTables();
+            $this->assertSame(array_values($tables), $tables);
+            $this->assertNotContains('tmp_widgets', $tables);
+        } finally {
             $this->dropExtraneousTable();
         }
     }
