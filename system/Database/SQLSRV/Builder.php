@@ -79,10 +79,6 @@ class Builder extends BaseBuilder
 
         foreach ($this->QBFrom as $value) {
             if (str_starts_with($value, '(SELECT')) {
-                if ($this->QBLockForUpdate) {
-                    throw new DatabaseException('SQLSRV does not support lockForUpdate() on subqueries.');
-                }
-
                 $from[] = $value;
 
                 continue;
@@ -699,8 +695,18 @@ class Builder extends BaseBuilder
      */
     protected function compileLockForUpdate(): string
     {
-        if ($this->QBLockForUpdate && $this->QBFrom === []) {
+        if (! $this->QBLockForUpdate) {
+            return '';
+        }
+
+        if ($this->QBFrom === []) {
             throw new DatabaseException('SQLSRV does not support lockForUpdate() without a FROM table.');
+        }
+
+        foreach ($this->QBFrom as $value) {
+            if (str_starts_with($value, '(SELECT')) {
+                throw new DatabaseException('SQLSRV does not support lockForUpdate() on subqueries.');
+            }
         }
 
         return '';

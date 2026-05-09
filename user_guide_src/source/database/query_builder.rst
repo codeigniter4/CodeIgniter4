@@ -780,13 +780,13 @@ This method is supported by the **MySQLi**, **Postgre**, **OCI8**, and
 **SQLSRV** drivers. Unsupported drivers throw a ``DatabaseException``. See the
 following notes for OCI8 and SQLSRV driver-specific behavior.
 
-.. note:: SQLSRV uses SQL Server table hints instead of a trailing ``FOR UPDATE``
+.. warning:: SQLSRV uses SQL Server table hints instead of a trailing ``FOR UPDATE``
     clause. The hint is applied to table references in the ``FROM`` clause;
     joined tables are not hinted. Its exact lock granularity depends on SQL
     Server's execution plan and transaction isolation level. SQLSRV does not
     support ``lockForUpdate()`` without a ``FROM`` table or on subqueries.
 
-.. note:: OCI8 does not support ``lockForUpdate()`` together with ``limit()`` or
+.. warning:: OCI8 does not support ``lockForUpdate()`` together with ``limit()`` or
     ``offset()`` because Oracle does not allow ``FOR UPDATE`` with row
     limiting.
 
