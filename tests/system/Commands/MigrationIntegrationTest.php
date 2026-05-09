@@ -68,22 +68,19 @@ final class MigrationIntegrationTest extends CIUnitTestCase
 
     private function dropTestTables(): void
     {
-        $forge = Database::forge();
+        $db     = Database::connect();
+        $forge  = Database::forge();
+        $tables = $db->listTables();
 
-        foreach ([
-            'user',
-            'job',
-            'misc',
-            'team_members',
-            'type_test',
-            'empty',
-            'secondary',
-            'stringifypkey',
-            'without_auto_increment',
-            'ip_table',
-            'ci_sessions',
-            'migrations_lock',
-        ] as $table) {
+        if ($tables === false) {
+            return;
+        }
+
+        foreach ($tables as $table) {
+            if ($table === $db->DBPrefix . 'migrations') {
+                continue;
+            }
+
             $forge->dropTable($table, true);
         }
     }

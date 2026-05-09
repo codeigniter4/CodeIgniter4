@@ -35,6 +35,8 @@ final class ShowTableInfoTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        $this->db->resetDataCache();
+
         putenv('NO_COLOR=1');
         CLI::init();
     }

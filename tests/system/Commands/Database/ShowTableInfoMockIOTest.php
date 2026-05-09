@@ -34,6 +34,8 @@ final class ShowTableInfoMockIOTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        $this->db->resetDataCache();
+
         CLI::reset();
 
         putenv('NO_COLOR=1');

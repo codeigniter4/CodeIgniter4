@@ -83,8 +83,10 @@ final class MigrateStatusTest extends CIUnitTestCase
 
     private function assertMigrationStatusHasBothNamespaceMigrations(): void
     {
-        $result = str_replace(PHP_EOL, "\n", $this->getStreamFilterBuffer());
+        $result       = str_replace(PHP_EOL, "\n", $this->getStreamFilterBuffer());
+        $theadPattern = '/^\|[[:space:]]+Namespace[[:space:]]+\|[[:space:]]+Version[[:space:]]+\|[[:space:]]+Filename[[:space:]]+\|[[:space:]]+Group[[:space:]]+\|[[:space:]]+Migrated On[[:space:]]+\|[[:space:]]+Batch[[:space:]]+\|$/m';
 
+        $this->assertMatchesRegularExpression($theadPattern, $result);
         $this->assertStringContainsString($this->migrationNamespace, $result);
         $this->assertStringContainsString('2018-01-24-102301', $result);
         $this->assertStringContainsString('Some_migration', $result);
