@@ -81,10 +81,13 @@ final class ClearLogsTest extends CIUnitTestCase
 
         $this->assertFileDoesNotExist(WRITEPATH . 'logs' . DIRECTORY_SEPARATOR . "log-{$this->date}.log");
         $this->assertFileExists(WRITEPATH . 'logs' . DIRECTORY_SEPARATOR . 'index.html');
-        $this->assertSame("\nLogs cleared.\n", preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()));
+        $this->assertSame(
+            sprintf("\nLog files in %s cleared.\n", clean_path(WRITEPATH . 'logs')),
+            preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()),
+        );
     }
 
-    public function testClearLogsAbortsClearWithoutForce(): void
+    public function testClearLogsCancelsWithoutForce(): void
     {
         $this->assertFileExists(WRITEPATH . 'logs' . DIRECTORY_SEPARATOR . "log-{$this->date}.log");
 
@@ -96,16 +99,19 @@ final class ClearLogsTest extends CIUnitTestCase
 
         $this->assertFileExists(WRITEPATH . 'logs' . DIRECTORY_SEPARATOR . "log-{$this->date}.log");
         $this->assertSame(
-            <<<'EOT'
-                Are you sure you want to delete the logs? [n, y]: n
-                Deleting logs aborted.
+            sprintf(
+                <<<'EOT'
+                    Delete all log files in %s? [n, y]: n
+                    Log deletion cancelled.
 
-                EOT,
+                    EOT,
+                clean_path(WRITEPATH . 'logs'),
+            ),
             preg_replace('/\e\[[^m]+m/', '', $io->getOutput()),
         );
     }
 
-    public function testClearLogsAbortsClearWithoutForceWithDefaultAnswer(): void
+    public function testClearLogsCancelsWithoutForceWithDefaultAnswer(): void
     {
         $this->assertFileExists(WRITEPATH . 'logs' . DIRECTORY_SEPARATOR . "log-{$this->date}.log");
 
@@ -119,17 +125,20 @@ final class ClearLogsTest extends CIUnitTestCase
 
         $this->assertFileExists(WRITEPATH . 'logs' . DIRECTORY_SEPARATOR . "log-{$this->date}.log");
         $this->assertSame(
-            <<<EOT
-                Are you sure you want to delete the logs? [n, y]:{$space}
-                Deleting logs aborted.
+            sprintf(
+                <<<EOT
+                    Delete all log files in %s? [n, y]:{$space}
+                    Log deletion cancelled.
 
-                EOT,
+                    EOT,
+                clean_path(WRITEPATH . 'logs'),
+            ),
             preg_replace('/\e\[[^m]+m/', '', $io->getOutput()),
         );
     }
 
-    #[DataProvider('provideClearLogsAbortsNonInteractivelyAndHintsAboutForceFlag')]
-    public function testClearLogsAbortsNonInteractivelyAndHintsAboutForceFlag(string $flag): void
+    #[DataProvider('provideClearLogsAbortsNonInteractively')]
+    public function testClearLogsAbortsNonInteractively(string $flag): void
     {
         $this->assertFileExists(WRITEPATH . 'logs' . DIRECTORY_SEPARATOR . "log-{$this->date}.log");
 
@@ -139,8 +148,7 @@ final class ClearLogsTest extends CIUnitTestCase
         $this->assertSame(
             <<<'EOT'
 
-                Deleting logs aborted.
-                If you want, use the "--force" option to force delete all log files.
+                Log deletion aborted: pass --force to delete log files in non-interactive mode.
 
                 EOT,
             preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()),
@@ -150,7 +158,7 @@ final class ClearLogsTest extends CIUnitTestCase
     /**
      * @return iterable<string, array{string}>
      */
-    public static function provideClearLogsAbortsNonInteractivelyAndHintsAboutForceFlag(): iterable
+    public static function provideClearLogsAbortsNonInteractively(): iterable
     {
         yield 'long form' => ['--no-interaction'];
 
@@ -169,11 +177,14 @@ final class ClearLogsTest extends CIUnitTestCase
 
         $this->assertFileDoesNotExist(WRITEPATH . 'logs' . DIRECTORY_SEPARATOR . "log-{$this->date}.log");
         $this->assertSame(
-            <<<'EOT'
-                Are you sure you want to delete the logs? [n, y]: y
-                Logs cleared.
+            sprintf(
+                <<<'EOT'
+                    Delete all log files in %1$s? [n, y]: y
+                    Log files in %1$s cleared.
 
-                EOT,
+                    EOT,
+                clean_path(WRITEPATH . 'logs'),
+            ),
             preg_replace('/\e\[[^m]+m/', '', $io->getOutput()),
         );
     }
@@ -194,7 +205,7 @@ final class ClearLogsTest extends CIUnitTestCase
 
         $this->assertFileExists($path);
         $this->assertSame(
-            "\nError in deleting the logs files.\n",
+            sprintf("\nFailed to delete log files in %s.\n", clean_path(WRITEPATH . 'logs')),
             preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()),
         );
     }
