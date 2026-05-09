@@ -773,7 +773,7 @@ final class TableTest extends CIUnitTestCase
         $this->table->setHeading('Name', 'Color', 'Size');
         $this->table->addRow('Fred', '<strong>Blue</strong>', 'Small');
 
-        $this->table->function = 'ticklemyfancy';
+        $this->table->function = 'ticklemyfancy'; // @phpstan-ignore assign.propertyType (needed for testing)
 
         $generated = $this->table->generate();
 
