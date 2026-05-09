@@ -22,6 +22,11 @@ use ReflectionEnum;
 use UnitEnum;
 
 /**
+ * Represents validated input data.
+ *
+ * This class is stricter than InputData: missing values may use defaults and
+ * null values remain null, but invalid present values throw.
+ *
  * @see \CodeIgniter\Validation\ValidatedInputTest
  */
 class ValidatedInput extends InputData
@@ -30,12 +35,19 @@ class ValidatedInput extends InputData
      * Returns a validated field as a Time instance.
      *
      * Supports dot-array syntax for nested validated data.
+     *
+     * @throws InvalidArgumentException
      */
     public function date(
         string $key,
         ?string $format = null,
         DateTimeZone|string|null $timezone = null,
+        ?Time $default = null,
     ): ?Time {
+        if (! $this->has($key)) {
+            return $default;
+        }
+
         $value = $this->get($key);
 
         if ($value === null) {
@@ -68,6 +80,8 @@ class ValidatedInput extends InputData
      * @param TEnum|null          $default
      *
      * @return TEnum|null
+     *
+     * @throws InvalidArgumentException
      */
     public function enum(string $key, string $enumClass, ?UnitEnum $default = null): ?UnitEnum
     {

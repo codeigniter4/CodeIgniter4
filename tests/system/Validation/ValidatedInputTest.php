@@ -51,6 +51,14 @@ final class ValidatedInputTest extends CIUnitTestCase
         $this->assertSame('2026-05-04', $input->date('published_at', 'd/m/Y')->toDateString());
     }
 
+    public function testDateReturnsDefaultForMissingValidatedField(): void
+    {
+        $input   = new ValidatedInput([]);
+        $default = Time::parse('2026-05-04');
+
+        $this->assertSame($default, $input->date('published_at', default: $default));
+    }
+
     public function testDateThrowsForInvalidValidatedValue(): void
     {
         $input = new ValidatedInput(['published_at' => '']);
@@ -165,8 +173,9 @@ final class ValidatedInputTest extends CIUnitTestCase
             'published_at' => null,
             'status'       => null,
         ]);
+        $default = Time::parse('2026-05-04');
 
-        $this->assertNotInstanceOf(Time::class, $input->date('published_at'));
+        $this->assertNull($input->date('published_at', default: $default));
         $this->assertNotInstanceOf(StatusEnum::class, $input->enum('status', StatusEnum::class, StatusEnum::PENDING));
     }
 }
