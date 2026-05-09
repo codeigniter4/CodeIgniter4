@@ -391,6 +391,48 @@ final class CLITest extends CIUnitTestCase
         $this->assertSame($expected, $this->getStreamFilterBuffer());
     }
 
+    public function testGetLastWriteReturnsNullAfterReset(): void
+    {
+        CLI::resetLastWrite();
+
+        $this->assertNull(CLI::getLastWrite());
+    }
+
+    public function testGetLastWriteReflectsPriorWrite(): void
+    {
+        CLI::resetLastWrite();
+        CLI::write('hello');
+
+        $this->assertSame('write', CLI::getLastWrite());
+    }
+
+    public function testGetLastWriteReflectsPriorPrint(): void
+    {
+        CLI::resetLastWrite();
+        CLI::write('hello');
+        CLI::print('world');
+
+        $this->assertNull(CLI::getLastWrite());
+    }
+
+    public function testSetLastWriteRoundTrips(): void
+    {
+        CLI::setLastWrite('write');
+        $this->assertSame('write', CLI::getLastWrite());
+
+        CLI::setLastWrite(null);
+        $this->assertNull(CLI::getLastWrite());
+    }
+
+    public function testSetLastWriteSuppressesLeadingNewlineOnNextWrite(): void
+    {
+        CLI::setLastWrite('write');
+
+        CLI::write('hello');
+
+        $this->assertSame('hello' . PHP_EOL, $this->getStreamFilterBuffer());
+    }
+
     public function testError(): void
     {
         CLI::error('test');

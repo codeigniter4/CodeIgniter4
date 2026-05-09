@@ -505,6 +505,30 @@ abstract class AbstractCommand
     }
 
     /**
+     * Like `call()`, but suppresses the sub-command's output.
+     *
+     * @param list<string>                            $arguments             Parsed arguments from command line.
+     * @param array<string, list<string>|string|null> $options               Parsed options from command line.
+     * @param bool|null                               $noInteractionOverride See `call()` for the semantics.
+     */
+    protected function callSilently(string $command, array $arguments = [], array $options = [], ?bool $noInteractionOverride = true): int
+    {
+        $priorInputOutput = CLI::getInputOutput();
+        $priorLastWrite   = CLI::getLastWrite();
+
+        CLI::setInputOutput(new NullInputOutput());
+
+        try {
+            return $this->call($command, $arguments, $options, $noInteractionOverride);
+        } finally {
+            $priorInputOutput instanceof InputOutput
+                ? CLI::setInputOutput($priorInputOutput)
+                : CLI::resetInputOutput();
+            CLI::setLastWrite($priorLastWrite);
+        }
+    }
+
+    /**
      * Gets the unbound arguments that can be passed to other commands when called via the `call()` method.
      *
      * @return list<string>

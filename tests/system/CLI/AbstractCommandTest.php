@@ -34,6 +34,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use ReflectionClass;
+use ReflectionProperty;
 use Tests\Support\Commands\Modern\AppAboutCommand;
 use Tests\Support\Commands\Modern\InteractFixtureCommand;
 use Tests\Support\Commands\Modern\InteractiveStateProbeCommand;
@@ -255,6 +256,74 @@ final class AbstractCommandTest extends CIUnitTestCase
 
         $this->assertSame(0, $command->helpMe());
         $this->assertStringContainsString('help [options] [--] [<command_name>]', $this->getStreamFilterBuffer());
+    }
+
+    public function testCallSilentlySuppressesSubCommandOutputAndReturnsExitCode(): void
+    {
+        $command = new AppAboutCommand(new Commands());
+
+        $this->assertSame(EXIT_SUCCESS, $command->helpMeSilently());
+        $this->assertSame('', $this->getStreamFilterBuffer());
+    }
+
+    public function testCallSilentlyRestoresPriorIo(): void
+    {
+        $custom = new InputOutput();
+        CLI::setInputOutput($custom);
+
+        $command = new AppAboutCommand(new Commands());
+        $command->helpMeSilently();
+
+        $this->assertSame($custom, CLI::getInputOutput());
+    }
+
+    public function testCallSilentlyResetsToFreshInputOutputWhenPriorWasNull(): void
+    {
+        $property = new ReflectionProperty(CLI::class, 'io');
+        $property->setValue(null, null);
+
+        $command = new AppAboutCommand(new Commands());
+        $command->helpMeSilently();
+
+        $current = CLI::getInputOutput();
+        $this->assertInstanceOf(InputOutput::class, $current);
+        $this->assertNotInstanceOf(NullInputOutput::class, $current);
+    }
+
+    public function testCallSilentlyPropagatesSubCommandNonZeroExitCode(): void
+    {
+        $command = new AppAboutCommand(new Commands());
+
+        $this->assertSame(EXIT_ERROR, $command->callUnknownSilently());
+        $this->assertSame('', $this->getStreamFilterBuffer());
+    }
+
+    public function testCallSilentlyRestoresPriorLastWriteState(): void
+    {
+        CLI::setLastWrite(null);
+
+        $command = new AppAboutCommand(new Commands());
+        $command->helpMeSilently();
+
+        $this->assertNull(
+            CLI::getLastWrite(),
+            'callSilently() must not leak the silenced sub-command\'s $lastWrite mutation back to the parent.',
+        );
+    }
+
+    public function testCallSilentlyForwardsNoInteractionOverrideFalseToChild(): void
+    {
+        $command = new ParentCallsInteractFixtureCommand(new Commands());
+        $command->setInteractive(false);
+        $command->useCallSilently            = true;
+        $command->childNoInteractionOverride = false;
+
+        $exitCode = $command->run([], []);
+
+        $this->assertSame(EXIT_SUCCESS, $exitCode);
+        $this->assertFalse($command->isInteractive());
+        $this->assertTrue(InteractiveStateProbeCommand::$interactCalled);
+        $this->assertTrue(InteractiveStateProbeCommand::$observedInteractive);
     }
 
     public function testRunCommand(): void

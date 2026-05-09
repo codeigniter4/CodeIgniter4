@@ -196,6 +196,8 @@ Commands
   When used with ``CLI::getOption()``, an array option will return its last value (for example, in this case, ``value2``). To retrieve all values for an array option, use ``CLI::getRawOption()``.
 - Likewise, the ``command()`` function now also supports the above enhancements for command-line option parsing when using the function to run commands from code.
 - Added ``make:request`` generator command to scaffold :ref:`Form Request <form-requests>` classes.
+- Added ``AbstractCommand::callSilently()`` to invoke another command with its output discarded, restoring the prior IO afterwards. See :ref:`modern-commands-call-silently`.
+- Added :php:class:`NullInputOutput <CodeIgniter\\CLI\\NullInputOutput>`, an :php:class:`InputOutput <CodeIgniter\\CLI\\InputOutput>` sink that discards all writes and returns an empty string from ``input()``.
 
 Testing
 =======

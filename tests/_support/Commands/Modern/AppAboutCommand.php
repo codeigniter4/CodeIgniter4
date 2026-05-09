@@ -62,6 +62,16 @@ final class AppAboutCommand extends AbstractCommand
         return $this->call('help');
     }
 
+    public function helpMeSilently(): int
+    {
+        return $this->callSilently('help');
+    }
+
+    public function callUnknownSilently(): int
+    {
+        return $this->callSilently('does:not:exist');
+    }
+
     /**
      * @param array<string, list<string|null>|string|null>|null $options
      */
