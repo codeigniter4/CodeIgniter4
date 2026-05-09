@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Exceptions;
 
+/**
+ * Thrown when a transaction failure may succeed if the whole transaction is retried.
+ */
 class RetryableTransactionException extends DatabaseException
 {
 }
