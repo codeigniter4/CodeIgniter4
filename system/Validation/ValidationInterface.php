@@ -162,4 +162,9 @@ interface ValidationInterface
      * Returns the actual validated data.
      */
     public function getValidated(): array;
+
+    /**
+     * Returns the actual validated data as a typed input object.
+     */
+    public function getValidatedInput(): ValidatedInput;
 }

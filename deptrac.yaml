@@ -78,6 +78,10 @@ deptrac:
         - type: classNameRegex
           # includes the Filter
           value: '/^CodeIgniter\\.*Honeypot.*$/'
+    - name: Input
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\Input\\.*$/'
     - name: HTTP
       collectors:
         - type: bool
@@ -248,6 +252,8 @@ deptrac:
       - I18n
     Validation:
       - HTTP
+      - I18n
+      - Input
       - Database
     View:
       - Cache
@@ -267,6 +273,10 @@ deptrac:
       - CodeIgniter\Entity\Entity
     CodeIgniter\Entity\Cast\URICast:
       - CodeIgniter\HTTP\URI
+    CodeIgniter\HTTP\FormRequest:
+      - CodeIgniter\Validation\ValidatedInput
+    CodeIgniter\Input\InputDataFactory:
+      - CodeIgniter\Validation\ValidatedInput
     CodeIgniter\Log\Handlers\ChromeLoggerHandler:
       - CodeIgniter\HTTP\ResponseInterface
     CodeIgniter\Security\CheckPhpIni:

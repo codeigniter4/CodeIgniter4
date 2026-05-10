@@ -46,6 +46,7 @@ update your implementations to include the new methods or method changes to ensu
 - **Database:** ``CodeIgniter\Database\ConnectionInterface`` now requires the ``afterCommit()``, ``afterRollback()``, ``inTransaction()``, and ``transaction()`` methods.
 - **Logging:** ``CodeIgniter\Log\Handlers\HandlerInterface::handle()`` now requires a third parameter ``array $context = []``. Any custom log handler that overrides ``handle()`` - whether implementing ``HandlerInterface`` directly or extending a built-in handler class - must add the parameter to its ``handle()`` method signature.
 - **Security:** The ``SecurityInterface``'s ``verify()`` method now has a native return type of ``static``.
+- **Validation:** ``CodeIgniter\Validation\ValidationInterface`` now requires the ``getValidatedInput()`` method, which returns a ``CodeIgniter\Validation\ValidatedInput`` instance.
 
 Method Signature Changes
 ========================
@@ -270,11 +271,13 @@ Validation
 ==========
 
 - Custom rule methods that set an error via the ``&$error`` reference parameter now support the ``{field}``, ``{param}``, and ``{value}`` placeholders, consistent with language-file and ``setRule()``/``setRules()`` error messages.
+- Added ``Validation::getValidatedInput()`` to access validated data through a ``ValidatedInput`` object.
 
 Others
 ======
 
 - **Float and Double Casting:** Added support for precision and rounding mode when casting to float or double in entities.
+- Added ``CodeIgniter\Input\InputData`` and ``InputDataFactory`` for reusable typed input data objects.
 - Float and Double casting now throws ``CastException::forInvalidFloatRoundingMode()`` if an rounding mode other than up, down, even or odd is provided.
 - **Environment:** Added ``CodeIgniter\EnvironmentDetector`` class and corresponding ``environment`` service as a mockable wrapper around the ``ENVIRONMENT`` constant.
   Framework internals that previously compared ``ENVIRONMENT`` directly now go through this service, making environment-specific branches reachable in tests via ``Services::injectMock()``. See :ref:`environment-detector-service`.

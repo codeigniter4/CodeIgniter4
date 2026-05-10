@@ -63,6 +63,23 @@ to check whether a validated key exists, including keys whose value is
 .. literalinclude:: form_requests/014.php
    :lines: 2-
 
+Typed Validated Input
+=====================
+
+``validatedInput()`` returns the same validated data as a typed input object.
+This keeps the array-based APIs unchanged while making common controller values
+easier to read after validation has succeeded.
+
+After the FormRequest has been validated, read the successful values in the
+controller:
+
+.. literalinclude:: form_requests/015.php
+   :lines: 2-
+
+These typed methods do not replace validation rules. They only make accepted
+values easier to consume in the controller. See :ref:`validation-validated-input`
+for the full behavior of the typed input methods.
+
 Accessing Other Request Data
 ============================
 
@@ -229,7 +246,7 @@ whose type extends ``FormRequest``:
 #. ``run()`` executes the validation rules. If it fails, ``failedValidation()``
    is called, and its response is returned to the client.
 #. The validated data is stored internally and available via ``validated()``,
-   ``getValidated()``, and ``hasValidated()``.
+   ``validatedInput()``, ``getValidated()``, and ``hasValidated()``.
 #. The resolved FormRequest object is injected into the controller method or
    closure.
 

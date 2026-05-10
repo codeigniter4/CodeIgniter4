@@ -46,6 +46,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\SiteURIFactory;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Images\Handlers\BaseHandler;
+use CodeIgniter\Input\InputDataFactory;
 use CodeIgniter\Language\Language;
 use CodeIgniter\Lock\LockManager;
 use CodeIgniter\Log\Logger;
@@ -120,6 +121,7 @@ use Config\WorkerMode;
  * @method static Honeypot                   honeypot(ConfigHoneyPot $config = null, $getShared = true)
  * @method static BaseHandler                image($handler = null, Images $config = null, $getShared = true)
  * @method static IncomingRequest            incomingrequest(?App $config = null, bool $getShared = true)
+ * @method static InputDataFactory           inputdatafactory(bool $getShared = true)
  * @method static Iterator                   iterator($getShared = true)
  * @method static Language                   language($locale = null, $getShared = true)
  * @method static LockManager                locks(?CacheInterface $cache = null, bool $getShared = true)

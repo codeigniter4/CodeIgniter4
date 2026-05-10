@@ -253,6 +253,17 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame([], $this->validation->getValidated());
     }
 
+    public function testGetValidatedInputReturnsValidatedInputObject(): void
+    {
+        $this->validation->setRules(['role' => 'required']);
+        $this->assertTrue($this->validation->run(['role' => 'administrator']));
+
+        $input = $this->validation->getValidatedInput();
+
+        $this->assertInstanceOf(ValidatedInput::class, $input);
+        $this->assertSame('administrator', $input->get('role'));
+    }
+
     public function testRuleClassesInstantiatedOnce(): void
     {
         $this->validation->setRules([]);

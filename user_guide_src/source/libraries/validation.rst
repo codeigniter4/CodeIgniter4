@@ -478,6 +478,75 @@ the validation rules.
 .. literalinclude:: validation/045.php
    :lines: 2-
 
+.. _validation-validated-input:
+
+Typed Validated Input
+---------------------
+
+``getValidatedInput()`` returns the same validated data as a
+``CodeIgniter\Validation\ValidatedInput`` object. Use it after validation
+succeeds when you want to read common controller values as strings, integers,
+floats, booleans, arrays, dates, or enums:
+
+.. versionadded:: 4.8.0
+
+.. literalinclude:: validation/048.php
+   :lines: 2-
+
+Validation decides whether input is acceptable. The typed input object only
+helps you consume values that already passed validation. If a present value
+cannot be read as the requested type, an ``InvalidArgumentException`` is thrown.
+This usually means the validation rules and the expected type do not match.
+
+``ValidatedInput`` extends ``CodeIgniter\Input\InputData``. This keeps generic
+typed input access reusable while adding validation-specific readers for dates
+and enums. ``InputData`` is fallback-friendly for raw input; ``ValidatedInput``
+is strict because it represents data that has already passed validation.
+
+The typed input object has the following methods:
+
+All methods support dot-array syntax for nested validated data.
+
+* ``get($key, $default = null)`` returns the raw validated value. If the field
+  is missing, it returns the default value.
+* ``has($key)`` returns whether the field exists in the validated data, even if
+  its value is ``null``.
+* ``string($key, $default = null)`` returns ``string|null``. If the field is
+  missing, it returns the default value or ``null``.
+* ``integer($key, $default = null)`` returns ``int|null``. If the field is
+  missing, it returns the default value or ``null``.
+* ``float($key, $default = null)`` returns ``float|null``. If the field is
+  missing, it returns the default value or ``null``.
+* ``boolean($key, $default = null)`` returns ``bool|null``. If the field is
+  missing, it returns the default value or ``null``.
+* ``array($key, $default = null)`` returns ``array|null``. If the field is
+  missing, it returns the default value or ``null``.
+* ``date($key, $format = null, $timezone = null, $default = null)`` returns
+  :php:class:`CodeIgniter\\I18n\\Time` or ``null``. If the field is missing, it
+  returns the default value or ``null``. Pass a format when the value should be
+  parsed with a specific date format. The default value must be ``null`` or a
+  :php:class:`CodeIgniter\\I18n\\Time` instance.
+* ``enum($key, $enumClass, $default = null)`` returns an enum instance or
+  ``null``. The default value must be ``null`` or an instance of the requested
+  enum class.
+
+Fields that are present with a ``null`` value return ``null``. This lets you
+distinguish a missing optional field from a field that was validated as
+``null``.
+
+Use validation rules such as ``integer``, ``decimal``, ``valid_date``,
+``in_list``, or a custom rule to ensure the value matches the type you plan to read. The
+``date()`` method only parses the value; validation rules should enforce
+acceptable date formats and ranges. For strict calendar validation, add a rule
+such as ``valid_date[Y-m-d]``.
+
+The ``enum()`` method accepts PHP enum class names. Backed enums are matched by
+their backing value, while unit enums are matched by case name.
+
+The ``boolean()`` method uses PHP's boolean validation behavior, so common form
+values like ``"1"``, ``"0"``, ``"true"``, ``"false"``, ``"yes"``, ``"no"``,
+``"on"``, and ``"off"`` are accepted.
+
 .. _saving-validation-rules-to-config-file:
 
 Saving Sets of Validation Rules to the Config File

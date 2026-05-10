@@ -31,6 +31,7 @@ use CodeIgniter\HTTP\Negotiate;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Images\ImageHandlerInterface;
+use CodeIgniter\Input\InputDataFactory;
 use CodeIgniter\Language\Language;
 use CodeIgniter\Lock\LockManager;
 use CodeIgniter\Pager\Pager;
@@ -273,6 +274,15 @@ final class ServicesTest extends CIUnitTestCase
     {
         $actual = Services::validation();
         $this->assertInstanceOf(Validation::class, $actual);
+    }
+
+    public function testNewInputDataFactory(): void
+    {
+        $actual = Services::inputdatafactory();
+
+        $this->assertInstanceOf(InputDataFactory::class, $actual);
+        $this->assertSame($actual, Services::inputdatafactory());
+        $this->assertNotSame($actual, Services::inputdatafactory(false));
     }
 
     public function testNewViewcellFromShared(): void

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Exceptions\RuntimeException;
+use CodeIgniter\Validation\ValidatedInput;
 use ReflectionNamedType;
 use ReflectionParameter;
 
@@ -180,6 +181,14 @@ abstract class FormRequest
     public function validated(): array
     {
         return $this->validatedData;
+    }
+
+    /**
+     * Returns the validated data as a typed input object.
+     */
+    public function validatedInput(): ValidatedInput
+    {
+        return service('inputdatafactory')->createValidated($this->validatedData);
     }
 
     /**

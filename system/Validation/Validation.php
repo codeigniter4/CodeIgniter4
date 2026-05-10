@@ -272,6 +272,14 @@ class Validation implements ValidationInterface
     }
 
     /**
+     * Returns the actual validated data as a typed input object.
+     */
+    public function getValidatedInput(): ValidatedInput
+    {
+        return service('inputdatafactory')->createValidated($this->validated);
+    }
+
+    /**
      * Runs all of $rules against $field, until one fails, or
      * all of them have been processed. If one fails, it adds
      * the error to $this->errors and moves on to the next,

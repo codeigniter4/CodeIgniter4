@@ -46,6 +46,7 @@ use CodeIgniter\HTTP\SiteURIFactory;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Images\Handlers\BaseHandler;
+use CodeIgniter\Input\InputDataFactory;
 use CodeIgniter\Language\Language;
 use CodeIgniter\Lock\LockManager;
 use CodeIgniter\Log\Logger;
@@ -385,6 +386,18 @@ class Services extends BaseService
         $class   = $config->handlers[$handler];
 
         return new $class($config);
+    }
+
+    /**
+     * Returns the typed input data factory.
+     */
+    public static function inputdatafactory(bool $getShared = true): InputDataFactory
+    {
+        if ($getShared) {
+            return static::getSharedInstance('inputdatafactory');
+        }
+
+        return new InputDataFactory();
     }
 
     /**

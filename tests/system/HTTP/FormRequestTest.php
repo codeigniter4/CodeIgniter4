@@ -18,6 +18,7 @@ use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
+use CodeIgniter\Validation\ValidatedInput;
 use Config\App;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
@@ -296,6 +297,20 @@ final class FormRequestTest extends CIUnitTestCase
         $this->assertNull($formRequest->getValidated('note'));
         $this->assertNull($formRequest->getValidated('note', 'fallback'));
         $this->assertTrue($formRequest->hasValidated('note'));
+    }
+
+    public function testValidatedInputReturnsValidatedInputObject(): void
+    {
+        service('superglobals')->setPost('title', 'Hello World');
+        service('superglobals')->setPost('body', 'Some body text');
+
+        $formRequest = new ValidPostFormRequest($this->makeRequest());
+        $formRequest->resolveRequest();
+
+        $input = $formRequest->validatedInput();
+
+        $this->assertInstanceOf(ValidatedInput::class, $input);
+        $this->assertSame('Hello World', $input->get('title'));
     }
 
     // -------------------------------------------------------------------------
