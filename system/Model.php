@@ -20,8 +20,6 @@ use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\Exceptions\UniqueConstraintViolationException;
-use CodeIgniter\Database\JoinClause;
-use CodeIgniter\Database\RawSql;
 use CodeIgniter\Entity\Entity;
 use CodeIgniter\Exceptions\BadMethodCallException;
 use CodeIgniter\Exceptions\InvalidArgumentException;
@@ -53,6 +51,7 @@ use stdClass;
  * @method $this havingIn(?string $key = null, $values = null, ?bool $escape = null)
  * @method $this havingLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
  * @method $this havingNotIn(?string $key = null, $values = null, ?bool $escape = null)
+ * @method $this join(string $table, string $cond, string $type = '', ?bool $escape = null)
  * @method $this like($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
  * @method $this limit(?int $value = null, ?int $offset = 0)
  * @method $this notGroupStart()
@@ -82,7 +81,6 @@ use stdClass;
  * @method $this selectMax(string $select = '', string $alias = '')
  * @method $this selectMin(string $select = '', string $alias = '')
  * @method $this selectSum(string $select = '', string $alias = '')
- * @method $this join(string $table, string|Closure(JoinClause):void|RawSql $cond, string $type = '', ?bool $escape = null)
  * @method $this when($condition, callable $callback, ?callable $defaultCallback = null)
  * @method $this whenNot($condition, callable $callback, ?callable $defaultCallback = null)
  * @method $this where($key, $value = null, ?bool $escape = null)
