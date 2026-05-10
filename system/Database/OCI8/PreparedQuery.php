@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\OCI8;
 
 use CodeIgniter\Database\BasePreparedQuery;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Exceptions\BadMethodCallException;
 use ErrorException;
 use OCILob;
@@ -89,10 +90,10 @@ class PreparedQuery extends BasePreparedQuery
         try {
             $result = oci_execute($this->statement, $this->db->commitMode);
         } catch (ErrorException $e) {
-            $this->setDatabaseExceptionFromStatement($e);
+            $databaseException = $this->setDatabaseExceptionFromStatement($e);
 
             if ($this->db->DBDebug) {
-                throw $this->databaseException;
+                throw $databaseException;
             }
 
             return false;
@@ -103,10 +104,10 @@ class PreparedQuery extends BasePreparedQuery
         }
 
         if ($result === false) {
-            $this->setDatabaseExceptionFromStatement();
+            $databaseException = $this->setDatabaseExceptionFromStatement();
 
             if ($this->db->DBDebug) {
-                throw $this->databaseException;
+                throw $databaseException;
             }
         }
 
@@ -138,12 +139,14 @@ class PreparedQuery extends BasePreparedQuery
     /**
      * Captures the native OCI statement error for shared database exception classification.
      */
-    private function setDatabaseExceptionFromStatement(?ErrorException $previous = null): void
+    private function setDatabaseExceptionFromStatement(?ErrorException $previous = null): DatabaseException
     {
         $error                   = oci_error($this->statement);
         $this->errorCode         = $error['code'] ?? 0;
         $this->errorString       = $error['message'] ?? $previous?->getMessage() ?? '';
         $this->databaseException = $this->db->createDatabaseException($this->errorString, $this->errorCode, $previous);
+
+        return $this->databaseException;
     }
 
     /**
