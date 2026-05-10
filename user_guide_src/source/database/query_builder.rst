@@ -395,6 +395,40 @@ $builder->orWhereColumn()
 This method is identical to ``whereColumn()``, except that multiple instances
 are joined by **OR**.
 
+.. _query-builder-where-exists:
+
+$builder->whereExists()
+-----------------------
+
+.. versionadded:: 4.8.0
+
+Generates a ``WHERE EXISTS`` subquery. This method accepts either a Closure or
+a ``BaseBuilder`` instance:
+
+.. literalinclude:: query_builder/125.php
+
+.. warning:: Raw SQL strings are not accepted. If you need to write the
+    ``EXISTS`` clause yourself, use ``where()`` with a manually escaped
+    condition.
+
+$builder->orWhereExists()
+-------------------------
+
+This method is identical to ``whereExists()``, except that multiple instances
+are joined by **OR**.
+
+$builder->whereNotExists()
+--------------------------
+
+This method is identical to ``whereExists()``, except that it generates a
+``WHERE NOT EXISTS`` subquery.
+
+$builder->orWhereNotExists()
+----------------------------
+
+This method is identical to ``whereNotExists()``, except that multiple
+instances are joined by **OR**.
+
 $builder->whereIn()
 -------------------
 
@@ -1644,6 +1678,38 @@ Class Reference
         Generates a ``WHERE`` clause that compares two columns. Separates multiple calls with ``OR``.
         If ``$first`` does not end with a supported operator, ``=`` is used as the comparison operator.
         Supported operators are ``=``, ``!=``, ``<>``, ``<``, ``>``, ``<=``, and ``>=``.
+
+    .. php:method:: whereExists($subquery)
+
+        :param BaseBuilder|Closure $subquery: The subquery to check for matching rows
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Generates a ``WHERE EXISTS`` subquery, joined with ``AND`` if appropriate.
+
+    .. php:method:: orWhereExists($subquery)
+
+        :param BaseBuilder|Closure $subquery: The subquery to check for matching rows
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Generates a ``WHERE EXISTS`` subquery, joined with ``OR`` if appropriate.
+
+    .. php:method:: whereNotExists($subquery)
+
+        :param BaseBuilder|Closure $subquery: The subquery to check for matching rows
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Generates a ``WHERE NOT EXISTS`` subquery, joined with ``AND`` if appropriate.
+
+    .. php:method:: orWhereNotExists($subquery)
+
+        :param BaseBuilder|Closure $subquery: The subquery to check for matching rows
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Generates a ``WHERE NOT EXISTS`` subquery, joined with ``OR`` if appropriate.
 
     .. php:method:: orWhereIn([$key = null[, $values = null[, $escape = null]]])
 

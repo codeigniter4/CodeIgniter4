@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -487,6 +488,141 @@ final class WhereTest extends CIUnitTestCase
             'empty first column'  => ['', 'updated_at'],
             'empty second column' => ['created_at =', ''],
         ];
+    }
+
+    public function testWhereExistsSubQuery(): void
+    {
+        $expectedSQL = 'SELECT * FROM "users" WHERE EXISTS (SELECT 1 FROM "orders" WHERE "orders"."user_id" = "users"."id")';
+
+        // Closure
+        $builder = $this->db->table('users');
+
+        $builder->whereExists(static fn (BaseBuilder $builder) => $builder
+            ->select('1', false)
+            ->from('orders')
+            ->whereColumn('orders.user_id', 'users.id'));
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+
+        // Builder
+        $builder = $this->db->table('users');
+
+        $subQuery = $this->db->table('orders')
+            ->select('1', false)
+            ->whereColumn('orders.user_id', 'users.id');
+
+        $builder->whereExists($subQuery);
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    #[DataProvider('provideWhereExistsVariants')]
+    public function testWhereExistsVariants(string $method, string $expectedSQL): void
+    {
+        $builder = $this->db->table('users');
+
+        $builder->where('active', 1);
+
+        $builder->{$method}(static fn (BaseBuilder $builder) => $builder
+            ->select('1', false)
+            ->from('orders')
+            ->whereColumn('orders.user_id', 'users.id'));
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function provideWhereExistsVariants(): iterable
+    {
+        $exists    = '(SELECT 1 FROM "orders" WHERE "orders"."user_id" = "users"."id")';
+        $baseQuery = 'SELECT * FROM "users" WHERE "active" = 1';
+
+        return [
+            'whereExists'      => ['whereExists', "{$baseQuery} AND EXISTS {$exists}"],
+            'orWhereExists'    => ['orWhereExists', "{$baseQuery} OR EXISTS {$exists}"],
+            'whereNotExists'   => ['whereNotExists', "{$baseQuery} AND NOT EXISTS {$exists}"],
+            'orWhereNotExists' => ['orWhereNotExists', "{$baseQuery} OR NOT EXISTS {$exists}"],
+        ];
+    }
+
+    public function testWhereExistsWithGroupedConditions(): void
+    {
+        $builder = $this->db->table('users');
+
+        $builder->groupStart()
+            ->whereExists(static fn (BaseBuilder $builder) => $builder
+                ->select('1', false)
+                ->from('orders')
+                ->whereColumn('orders.user_id', 'users.id'))
+            ->orWhereNotExists(static fn (BaseBuilder $builder) => $builder
+                ->select('1', false)
+                ->from('jobs')
+                ->whereColumn('jobs.user_id', 'users.id'))
+            ->groupEnd()
+            ->where('active', 1);
+
+        $expectedSQL = 'SELECT * FROM "users" WHERE   ( EXISTS (SELECT 1 FROM "orders" WHERE "orders"."user_id" = "users"."id") OR NOT EXISTS (SELECT 1 FROM "jobs" WHERE "jobs"."user_id" = "users"."id")  ) AND "active" = 1';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testWhereExistsWithOuterAndInnerBinds(): void
+    {
+        $builder = $this->db->table('users');
+
+        $builder->where('active', 1)
+            ->whereExists(static fn (BaseBuilder $builder) => $builder
+                ->select('1', false)
+                ->from('orders')
+                ->where('orders.status', 'paid')
+                ->whereColumn('orders.user_id', 'users.id'));
+
+        $expectedSQL   = 'SELECT * FROM "users" WHERE "active" = 1 AND EXISTS (SELECT 1 FROM "orders" WHERE "orders"."status" = \'paid\' AND "orders"."user_id" = "users"."id")';
+        $expectedBinds = [
+            'active' => [
+                1,
+                true,
+            ],
+        ];
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    /**
+     * @param mixed $subquery
+     */
+    #[DataProvider('provideWhereExistsInvalidSubqueryThrowInvalidArgumentException')]
+    public function testWhereExistsInvalidSubqueryThrowInvalidArgumentException($subquery): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $builder = $this->db->table('users');
+        $builder->whereExists($subquery);
+    }
+
+    /**
+     * @return iterable<string, array{mixed}>
+     */
+    public static function provideWhereExistsInvalidSubqueryThrowInvalidArgumentException(): iterable
+    {
+        return [
+            'null'       => [null],
+            'array'      => [[]],
+            'stdClass'   => [new stdClass()],
+            'raw string' => ['SELECT 1'],
+        ];
+    }
+
+    public function testWhereExistsSameBaseBuilderObject(): void
+    {
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('The subquery cannot be the same object as the main query object.');
+
+        $builder = $this->db->table('users');
+        $builder->whereExists($builder);
     }
 
     public function testWhereIn(): void
