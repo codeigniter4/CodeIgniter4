@@ -60,7 +60,7 @@ final class InfoCacheTest extends CIUnitTestCase
         $this->assertSame(
             <<<'EOT'
 
-                This command only supports the file cache handler.
+                This command only supports the file cache handler. The configured handler is "redis".
 
                 EOT,
             $this->getUndecoratedBuffer(),
