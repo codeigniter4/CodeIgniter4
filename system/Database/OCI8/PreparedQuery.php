@@ -15,6 +15,7 @@ namespace CodeIgniter\Database\OCI8;
 
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Exceptions\BadMethodCallException;
+use ErrorException;
 use OCILob;
 
 /**
@@ -85,19 +86,27 @@ class PreparedQuery extends BasePreparedQuery
             }
         }
 
-        $result = oci_execute($this->statement, $this->db->commitMode);
+        try {
+            $result = oci_execute($this->statement, $this->db->commitMode);
+        } catch (ErrorException $e) {
+            $this->setDatabaseExceptionFromStatement($e);
 
-        if ($binaryData instanceof OCILob) {
-            $binaryData->free();
+            if ($this->db->DBDebug) {
+                throw $this->databaseException;
+            }
+
+            return false;
+        } finally {
+            if ($binaryData instanceof OCILob) {
+                $binaryData->free();
+            }
         }
 
         if ($result === false) {
-            $error             = oci_error($this->statement);
-            $this->errorCode   = $error['code'] ?? 0;
-            $this->errorString = $error['message'] ?? '';
+            $this->setDatabaseExceptionFromStatement();
 
             if ($this->db->DBDebug) {
-                throw $this->db->createDatabaseException($this->errorString, $this->errorCode);
+                throw $this->databaseException;
             }
         }
 
@@ -124,6 +133,17 @@ class PreparedQuery extends BasePreparedQuery
     protected function _close(): bool
     {
         return oci_free_statement($this->statement);
+    }
+
+    /**
+     * Captures the native OCI statement error for shared database exception classification.
+     */
+    private function setDatabaseExceptionFromStatement(?ErrorException $previous = null): void
+    {
+        $error                   = oci_error($this->statement);
+        $this->errorCode         = $error['code'] ?? 0;
+        $this->errorString       = $error['message'] ?? $previous?->getMessage() ?? '';
+        $this->databaseException = $this->db->createDatabaseException($this->errorString, $this->errorCode, $previous);
     }
 
     /**
