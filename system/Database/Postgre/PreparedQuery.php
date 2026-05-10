@@ -92,12 +92,41 @@ class PreparedQuery extends BasePreparedQuery
             }
         }
 
-        $this->result = pg_execute($this->db->connID, $this->name, $data);
+        $sent = pg_send_execute($this->db->connID, $this->name, $data);
 
-        if ($this->result instanceof PgSqlResult && pg_result_status($this->result) === PGSQL_FATAL_ERROR) {
-            $sqlstate                = (string) pg_result_error_field($this->result, PGSQL_DIAG_SQLSTATE);
+        if ($sent === false || $sent === 0) {
+            $this->errorCode   = 0;
+            $this->errorString = pg_last_error($this->db->connID);
+
+            return false;
+        }
+
+        $this->result = pg_get_result($this->db->connID);
+
+        if ($this->result === false) {
+            $this->errorCode   = 0;
+            $this->errorString = pg_last_error($this->db->connID);
+
+            return false;
+        }
+
+        $lastResult   = $this->result;
+        $failedResult = pg_result_status($this->result) === PGSQL_FATAL_ERROR ? $this->result : null;
+
+        while (($next = pg_get_result($this->db->connID)) !== false) {
+            $lastResult = $next;
+
+            if (! $failedResult instanceof PgSqlResult && pg_result_status($next) === PGSQL_FATAL_ERROR) {
+                $failedResult = $next;
+            }
+        }
+
+        $this->result = $lastResult;
+
+        if ($failedResult instanceof PgSqlResult) {
+            $sqlstate                = (string) pg_result_error_field($failedResult, PGSQL_DIAG_SQLSTATE);
             $this->errorCode         = 0;
-            $this->errorString       = (string) pg_result_error($this->result);
+            $this->errorString       = (string) pg_result_error($failedResult);
             $this->databaseException = $this->db->createDatabaseException($this->errorString, $sqlstate);
 
             if ($this->db->DBDebug) {
@@ -107,16 +136,7 @@ class PreparedQuery extends BasePreparedQuery
             return false;
         }
 
-        if ($this->result === false) {
-            $this->errorCode   = 0;
-            $this->errorString = pg_last_error($this->db->connID);
-
-            if ($this->db->DBDebug) {
-                throw $this->db->createDatabaseException($this->errorString, $this->errorCode);
-            }
-        }
-
-        return (bool) $this->result;
+        return true;
     }
 
     /**
