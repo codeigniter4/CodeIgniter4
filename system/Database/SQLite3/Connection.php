@@ -15,7 +15,6 @@ namespace CodeIgniter\Database\SQLite3;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use CodeIgniter\Database\Exceptions\UniqueConstraintViolationException;
 use CodeIgniter\Database\TableName;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use Exception;
@@ -66,6 +65,26 @@ class Connection extends BaseConnection
      * @see https://www.sqlite.org/pragma.html#pragma_synchronous
      */
     protected ?int $synchronous = null;
+
+    /**
+     * Checks whether the native database error represents a unique constraint violation.
+     */
+    protected function isUniqueConstraintViolation(int|string $code, string $message): bool
+    {
+        // SQLite3 reports unique violations in two formats depending on version:
+        // Modern:  "UNIQUE constraint failed: table.column"
+        // Legacy:  "column X is not unique"
+        return str_contains($message, 'UNIQUE constraint failed')
+            || str_contains($message, 'is not unique');
+    }
+
+    /**
+     * Checks whether the native database code represents a retryable transaction failure.
+     */
+    protected function isRetryableTransactionErrorCode(int|string $code): bool
+    {
+        return $code === 5;
+    }
 
     /**
      * @return void
@@ -172,9 +191,7 @@ class Connection extends BaseConnection
             ]);
 
             $error     = $this->error();
-            $exception = $this->isUniqueConstraintViolation($e->getMessage())
-                ? new UniqueConstraintViolationException($e->getMessage(), $error['code'], $e)
-                : new DatabaseException($e->getMessage(), $error['code'], $e);
+            $exception = $this->createDatabaseException($e->getMessage(), $error['code'], $e);
 
             if ($this->DBDebug) {
                 throw $exception;
@@ -184,15 +201,6 @@ class Connection extends BaseConnection
         }
 
         return false;
-    }
-
-    private function isUniqueConstraintViolation(string $message): bool
-    {
-        // SQLite3 reports unique violations in two formats depending on version:
-        // Modern:  "UNIQUE constraint failed: table.column"
-        // Legacy:  "column X is not unique"
-        return str_contains($message, 'UNIQUE constraint failed')
-            || str_contains($message, 'is not unique');
     }
 
     /**

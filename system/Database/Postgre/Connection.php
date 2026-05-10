@@ -15,7 +15,6 @@ namespace CodeIgniter\Database\Postgre;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use CodeIgniter\Database\Exceptions\UniqueConstraintViolationException;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Database\TableName;
 use ErrorException;
@@ -62,6 +61,22 @@ class Connection extends BaseConnection
      * via pg_result_error_field() without string parsing.
      */
     private ?PgSqlResult $lastFailedResult = null;
+
+    /**
+     * Checks whether the native database error represents a unique constraint violation.
+     */
+    protected function isUniqueConstraintViolation(int|string $code, string $message): bool
+    {
+        return $code === '23505';
+    }
+
+    /**
+     * Checks whether the native database code represents a retryable transaction failure.
+     */
+    protected function isRetryableTransactionErrorCode(int|string $code): bool
+    {
+        return in_array($code, ['40001', '40P01'], true);
+    }
 
     /**
      * Connect to the database.
@@ -272,9 +287,7 @@ class Connection extends BaseConnection
                 'trace'   => render_backtrace($trace),
             ]);
 
-            $exception = $sqlstate === '23505'
-                ? new UniqueConstraintViolationException($message, $sqlstate)
-                : new DatabaseException($message, $sqlstate);
+            $exception = $this->createDatabaseException($message, $sqlstate);
 
             if ($this->DBDebug) {
                 throw $exception;

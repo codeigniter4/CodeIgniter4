@@ -15,7 +15,6 @@ namespace CodeIgniter\Database\OCI8;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use CodeIgniter\Database\Exceptions\UniqueConstraintViolationException;
 use CodeIgniter\Database\Query;
 use CodeIgniter\Database\TableName;
 use ErrorException;
@@ -114,6 +113,23 @@ class Connection extends BaseConnection
      * @var string|null
      */
     public $lastInsertedTableName;
+
+    /**
+     * Checks whether the native database error represents a unique constraint violation.
+     */
+    protected function isUniqueConstraintViolation(int|string $code, string $message): bool
+    {
+        // ORA-00001: unique constraint violated.
+        return $code === 1;
+    }
+
+    /**
+     * Checks whether the native database code represents a retryable transaction failure.
+     */
+    protected function isRetryableTransactionErrorCode(int|string $code): bool
+    {
+        return in_array($code, [60, 8177], true);
+    }
 
     /**
      * confirm DSN format.
@@ -240,11 +256,8 @@ class Connection extends BaseConnection
             $result = oci_execute($this->stmtId, $this->commitMode) ? $this->stmtId : false;
 
             if ($result === false) {
-                // ORA-00001: unique constraint violated
                 $error     = $this->error();
-                $exception = $error['code'] === 1
-                    ? new UniqueConstraintViolationException((string) $error['message'], $error['code'])
-                    : new DatabaseException((string) $error['message'], $error['code']);
+                $exception = $this->createDatabaseException((string) $error['message'], $error['code']);
 
                 if ($this->DBDebug) {
                     throw $exception;
@@ -272,11 +285,8 @@ class Connection extends BaseConnection
                 'trace'   => render_backtrace($trace),
             ]);
 
-            // ORA-00001: unique constraint violated
             $error     = $this->error();
-            $exception = $error['code'] === 1
-                ? new UniqueConstraintViolationException((string) $error['message'], $error['code'], $e)
-                : new DatabaseException((string) $error['message'], $error['code'], $e);
+            $exception = $this->createDatabaseException((string) $error['message'], $error['code'], $e);
 
             if ($this->DBDebug) {
                 throw $exception;
