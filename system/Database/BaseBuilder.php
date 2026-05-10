@@ -625,21 +625,13 @@ class BaseBuilder
     /**
      * Generates the JOIN portion of the query
      *
-     * @param RawSql|string $cond
+     * @param Closure(JoinClause): void|RawSql|string $cond
      *
      * @return $this
      */
     public function join(string $table, $cond, string $type = '', ?bool $escape = null)
     {
-        if ($type !== '') {
-            $type = strtoupper(trim($type));
-
-            if (! in_array($type, $this->joinTypes, true)) {
-                $type = '';
-            } else {
-                $type .= ' ';
-            }
-        }
+        $type = $this->normalizeJoinType($type);
 
         // Extract any aliases that might exist. We use this information
         // in the protectIdentifiers to know whether to add a table prefix
@@ -654,10 +646,39 @@ class BaseBuilder
             $table = $this->db->protectIdentifiers($table, true, null, false);
         }
 
-        if ($cond instanceof RawSql) {
-            $this->QBJoin[] = $type . 'JOIN ' . $table . ' ON ' . $cond;
+        $cond = $this->compileJoinCondition($cond, $escape);
 
-            return $this;
+        // Assemble the JOIN statement
+        $this->QBJoin[] = $type . 'JOIN ' . $table . $cond;
+
+        return $this;
+    }
+
+    protected function normalizeJoinType(string $type): string
+    {
+        if ($type === '') {
+            return '';
+        }
+
+        $type = strtoupper(trim($type));
+
+        return in_array($type, $this->joinTypes, true) ? $type . ' ' : '';
+    }
+
+    /**
+     * @param Closure(JoinClause): void|RawSql|string $cond
+     */
+    protected function compileJoinCondition(Closure|RawSql|string $cond, bool $escape): string
+    {
+        if ($cond instanceof RawSql) {
+            return ' ON ' . $cond;
+        }
+
+        if ($cond instanceof Closure) {
+            $joinClause = new JoinClause($this->db, fn (string $key, mixed $value, bool $escape): string => $this->setBind($key, $value, $escape), $escape);
+            $cond($joinClause);
+
+            return $joinClause->compile();
         }
 
         if (! $this->hasOperator($cond)) {
@@ -701,10 +722,7 @@ class BaseBuilder
             }
         }
 
-        // Assemble the JOIN statement
-        $this->QBJoin[] = $type . 'JOIN ' . $table . $cond;
-
-        return $this;
+        return $cond;
     }
 
     /**

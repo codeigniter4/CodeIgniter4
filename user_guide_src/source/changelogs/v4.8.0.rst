@@ -211,6 +211,7 @@ Database
 Query Builder
 -------------
 
+- Added Closure-based ``join()`` conditions for building ``JOIN ON`` clauses with protected column comparisons, bound values, and grouped conditions. See :ref:`query-builder-join-closure`.
 - Added ``whereColumn()`` and ``orWhereColumn()`` to compare one column to another column while protecting identifiers by default. See :ref:`query-builder-where-column`.
 - Added new ``incrementMany()`` and ``decrementMany()`` methods to ``CodeIgniter\Database\BaseBuilder`` for performing bulk increment/decrement operations.
 

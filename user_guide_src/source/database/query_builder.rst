@@ -265,6 +265,37 @@ outer``, and ``right outer``.
 
 .. literalinclude:: query_builder/020.php
 
+.. _query-builder-join-closure:
+
+Closure Conditions
+^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 4.8.0
+
+You can pass a Closure as the second parameter to build the ``JOIN ON`` clause
+with protected column comparisons, bound values, and grouped conditions:
+
+.. literalinclude:: query_builder/125.php
+
+The Closure receives a ``CodeIgniter\Database\JoinClause`` instance. Use
+``on()`` and ``orOn()`` to compare columns, and ``where()`` and ``orWhere()``
+to compare a column to a value. Like ``whereColumn()``, ``on()`` uses ``=`` by
+default and accepts a supported comparison operator at the end of the first
+column.
+
+You can group join conditions with ``groupStart()``, ``orGroupStart()``,
+``notGroupStart()``, ``orNotGroupStart()``, and ``groupEnd()``:
+
+.. literalinclude:: query_builder/126.php
+
+.. note:: Groups need to be balanced; make sure every ``groupStart()`` is
+    matched by a ``groupEnd()``.
+
+.. warning:: Do not pass user-supplied data as column names. Values should use
+    ``where()`` or ``orWhere()`` so they can be bound by the Query Builder. The
+    Closure API does not accept raw SQL condition strings; use the existing
+    string or ``RawSql`` JOIN condition forms when raw SQL is required.
+
 .. _query-builder-join-rawsql:
 
 RawSql
@@ -1535,14 +1566,15 @@ Class Reference
     .. php:method:: join($table, $cond[, $type = ''[, $escape = null]])
 
         :param string $table: Table name to join
-        :param string|RawSql $cond: The JOIN ON condition
+        :param Closure|RawSql|string $cond: The JOIN ON condition
         :param string $type: The JOIN type
         :param bool    $escape: Whether to escape values and identifiers
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
 
-        Adds a ``JOIN`` clause to a query. Since v4.2.0, ``RawSql`` can be used
-        as the JOIN ON condition. See also :ref:`query-builder-join`.
+        Adds a ``JOIN`` clause to a query. Since v4.8.0, a Closure can be used
+        to build the JOIN ON condition. Since v4.2.0, ``RawSql`` can be used as
+        the JOIN ON condition. See also :ref:`query-builder-join`.
 
     .. php:method:: where($key[, $value = null[, $escape = null]])
 

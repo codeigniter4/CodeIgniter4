@@ -13,10 +13,12 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Postgre;
 
+use Closure;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Query;
+use CodeIgniter\Database\JoinClause;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use TypeError;
@@ -344,7 +346,7 @@ class Builder extends BaseBuilder
     /**
      * Generates the JOIN portion of the query
      *
-     * @param RawSql|string $cond
+     * @param Closure(JoinClause): void|RawSql|string $cond
      *
      * @return $this
      */
