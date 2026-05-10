@@ -104,17 +104,29 @@ class GenerateKey extends AbstractCommand
         $currentKey = env('encryption.key', '');
 
         if ($currentKey !== '' && $options['force'] === false) {
-            CLI::error('Setting new encryption key aborted.');
+            if ($this->isInteractive()) {
+                CLI::write('Setting new encryption key cancelled.', 'yellow');
 
-            if (! $this->isInteractive()) {
-                CLI::error('If you want, use the "--force" option to force overwrite the existing key.');
+                return EXIT_SUCCESS;
             }
+
+            CLI::error('Setting new encryption key aborted: pass --force to overwrite the existing key in non-interactive mode.');
 
             return EXIT_ERROR;
         }
 
-        if (! $this->writeNewEncryptionKeyToFile($currentKey, $encodedKey)) {
-            CLI::write('Error in setting new encryption key to .env file.');
+        $envFile = ((new Paths())->envDirectory ?? ROOTPATH) . '.env'; // @phpstan-ignore nullCoalesce.property
+        $baseEnv = ROOTPATH . 'env';
+
+        if (! is_file($envFile) && ! is_file($baseEnv)) {
+            CLI::write('Both default shipped `env` file and custom `.env` are missing.', 'yellow');
+            CLI::write(sprintf('Here\'s your new key instead: %s', CLI::color($encodedKey, 'yellow')));
+
+            return EXIT_ERROR;
+        }
+
+        if (! $this->writeNewEncryptionKeyToFile($encodedKey, $envFile, $baseEnv)) {
+            CLI::error(sprintf('Failed to write new encryption key to %s.', clean_path($envFile)));
 
             return EXIT_ERROR;
         }
@@ -125,7 +137,7 @@ class GenerateKey extends AbstractCommand
         $dotenv = new DotEnv((new Paths())->envDirectory ?? ROOTPATH); // @phpstan-ignore nullCoalesce.property
         $dotenv->load();
 
-        CLI::write('Application\'s new encryption key was successfully set.', 'green');
+        CLI::write(sprintf('New encryption key written to %s.', clean_path($envFile)), 'green');
         CLI::newLine();
 
         return EXIT_SUCCESS;
@@ -146,28 +158,23 @@ class GenerateKey extends AbstractCommand
     }
 
     /**
-     * Writes the new encryption key to .env file.
+     * Writes the new encryption key to .env file. The caller is responsible
+     * for ensuring at least one of `$envFile` or `$baseEnv` exists.
      */
-    private function writeNewEncryptionKeyToFile(string $oldKey, string $newKey): bool
+    private function writeNewEncryptionKeyToFile(string $newKey, string $envFile, string $baseEnv): bool
     {
-        $baseEnv = ROOTPATH . 'env';
-        $envFile = ((new Paths())->envDirectory ?? ROOTPATH) . '.env'; // @phpstan-ignore nullCoalesce.property
-
         if (! is_file($envFile)) {
-            if (! is_file($baseEnv)) {
-                CLI::write('Both default shipped `env` file and custom `.env` are missing.', 'yellow');
-                CLI::write('Here\'s your new key instead: ' . CLI::color($newKey, 'yellow'));
-
-                return false;
-            }
-
             copy($baseEnv, $envFile);
+        }
+
+        if (! is_writable($envFile)) {
+            return false;
         }
 
         $oldFileContents = (string) file_get_contents($envFile);
 
         // Match an active setting line, preserving any leading whitespace and `export` prefix.
-        $activePattern = $this->keyPattern($oldKey);
+        $activePattern = '/^(\h*(?:export\h+)?encryption\.key\h*=\h*)[^\r\n]*$/m';
 
         if (preg_match($activePattern, $oldFileContents) === 1) {
             $newFileContents = (string) preg_replace($activePattern, '$1' . $newKey, $oldFileContents, 1);
@@ -187,19 +194,5 @@ class GenerateKey extends AbstractCommand
 
         // No setting present (active or commented); append.
         return file_put_contents($envFile, "\nencryption.key = {$newKey}", FILE_APPEND) !== false;
-    }
-
-    /**
-     * Returns the regex used to locate an active `encryption.key = ...` setting in the `.env`
-     * contents. The single capture group spans everything up to (and including) the `=` and any
-     * separating whitespace, so a `preg_replace` substitution preserves an optional `export`
-     * prefix while rewriting only the value.
-     *
-     * The `$oldKey` parameter is retained for backward compatibility with subclasses that
-     * override this method; it is no longer consulted because the pattern matches any value.
-     */
-    private function keyPattern(string $oldKey): string
-    {
-        return '/^(\h*(?:export\h+)?encryption\.key\h*=\h*)[^\r\n]*$/m';
     }
 }
