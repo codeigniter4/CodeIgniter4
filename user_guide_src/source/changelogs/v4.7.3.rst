@@ -40,6 +40,7 @@ Bugs Fixed
 - **CLI:** Fixed a bug where ``CLI::generateDimensions()`` leaked ``stty`` error output (e.g., ``stty: 'standard input': Inappropriate ioctl for device``) to stderr when stdin was not a TTY.
 - **CLI:** Fixed a bug where ``CLI::generateDimensions()`` leaked ``tput`` error output (``tput: No value for $TERM and no -T specified``) to stderr when the ``stty`` fallback was reached and the ``TERM`` environment variable was not set.
 - **Commands:** Fixed a bug in the ``env`` command where passing options only would cause the command to throw a ``TypeError`` instead of showing the current environment.
+- **Commands:** Fixed a bug in ``key:generate`` command where the regex used to locate the ``encryption.key`` line was fooled by a comment containing the substring (silently writing nothing), and did not handle DotEnv's ``export encryption.key = ...`` syntax.
 - **Common:** Fixed a bug where the ``command()`` helper function did not properly clean up output buffers, which could lead to risky tests when exceptions were thrown.
 - **Database:** Fixed a bug where the SQLSRV driver's decrement method was adding instead of subtracting the decrement value when ``$castTextToInt`` was false.
 - **Database:** Fixed a bug where the PostgreSQL driver's ``increment()`` and ``decrement()`` methods were not working for numeric columns.

@@ -169,4 +169,40 @@ final class GenerateKeyTest extends CIUnitTestCase
         $this->assertStringContainsString('was successfully set.', $this->getBuffer());
         $this->assertNotSame($key, env('encryption.key', $key), 'Failed replacing the commented out key.');
     }
+
+    public function testKeyGenerateReplacesExportPrefixedEncryptionKey(): void
+    {
+        $existingKey = 'hex2bin:' . str_repeat('a', 64);
+        file_put_contents($this->envPath, "export encryption.key = {$existingKey}\n");
+
+        command('key:generate --force');
+
+        $contents = (string) file_get_contents($this->envPath);
+        $this->assertMatchesRegularExpression(
+            '/^export encryption\.key = hex2bin:[a-f0-9]{64}$/m',
+            $contents,
+            'The `export` prefix should be preserved and the value rewritten.',
+        );
+        $this->assertStringNotContainsString($existingKey, $contents, 'The old key value should be replaced.');
+    }
+
+    public function testKeyGenerateNotFooledByCommentMentioningEncryptionKey(): void
+    {
+        $envContents = "# Note: encryption.key is set automatically by spark key:generate.\n";
+        file_put_contents($this->envPath, $envContents);
+
+        command('key:generate --force');
+
+        $contents = (string) file_get_contents($this->envPath);
+        $this->assertStringContainsString(
+            $envContents,
+            $contents,
+            'The doc comment must be left intact.',
+        );
+        $this->assertMatchesRegularExpression(
+            '/^encryption\.key = hex2bin:[a-f0-9]{64}$/m',
+            $contents,
+            'A real `encryption.key` setting must be appended even when a comment mentions the name.',
+        );
+    }
 }

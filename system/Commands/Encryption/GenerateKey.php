@@ -171,36 +171,41 @@ class GenerateKey extends BaseCommand
         }
 
         $oldFileContents = (string) file_get_contents($envFile);
-        $replacementKey  = "\nencryption.key = {$newKey}";
 
-        if (! str_contains($oldFileContents, 'encryption.key')) {
-            return file_put_contents($envFile, $replacementKey, FILE_APPEND) !== false;
+        // Match an active setting line, preserving any leading whitespace and `export` prefix.
+        $activePattern = $this->keyPattern($oldKey);
+
+        if (preg_match($activePattern, $oldFileContents) === 1) {
+            $newFileContents = (string) preg_replace($activePattern, '$1' . $newKey, $oldFileContents, 1);
+
+            return file_put_contents($envFile, $newFileContents) !== false;
         }
 
-        $newFileContents = preg_replace($this->keyPattern($oldKey), $replacementKey, $oldFileContents);
+        // Match a commented-out setting line (e.g., from the shipped `env` template) and
+        // uncomment it. The optional `export` prefix is dropped on uncomment for predictability.
+        $commentedPattern = '/^\h*#\h*(?:export\h+)?encryption\.key\h*=\h*[^\r\n]*$/m';
 
-        if ($newFileContents === $oldFileContents) {
-            $newFileContents = preg_replace(
-                '/^[#\s]*encryption.key[=\s]*(?:hex2bin\:[a-f0-9]{64}|base64\:(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?)$/m',
-                $replacementKey,
-                $oldFileContents,
-            );
+        if (preg_match($commentedPattern, $oldFileContents) === 1) {
+            $newFileContents = (string) preg_replace($commentedPattern, "encryption.key = {$newKey}", $oldFileContents, 1);
+
+            return file_put_contents($envFile, $newFileContents) !== false;
         }
 
-        return file_put_contents($envFile, $newFileContents) !== false;
+        // No setting present (active or commented); append.
+        return file_put_contents($envFile, "\nencryption.key = {$newKey}", FILE_APPEND) !== false;
     }
 
     /**
-     * Get the regex of the current encryption key.
+     * Returns the regex used to locate an active `encryption.key = ...` setting in the `.env`
+     * contents. The single capture group spans everything up to (and including) the `=` and any
+     * separating whitespace, so a `preg_replace` substitution preserves an optional `export`
+     * prefix while rewriting only the value.
+     *
+     * The `$oldKey` parameter is retained for backward compatibility with subclasses that
+     * override this method; it is no longer consulted because the pattern matches any value.
      */
     protected function keyPattern(string $oldKey): string
     {
-        $escaped = preg_quote($oldKey, '/');
-
-        if ($escaped !== '') {
-            $escaped = "[{$escaped}]*";
-        }
-
-        return "/^[#\\s]*encryption.key[=\\s]*{$escaped}$/m";
+        return '/^(\h*(?:export\h+)?encryption\.key\h*=\h*)[^\r\n]*$/m';
     }
 }
