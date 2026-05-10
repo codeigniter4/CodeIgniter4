@@ -94,6 +94,12 @@ final class RetryableTransactionExceptionTest extends CIUnitTestCase
                 1,
                 'Unique constraint violated.',
             ];
+
+            yield 'OCI8 unique constraint string code' => [
+                self::connection(OCI8Connection::class, 'OCI8'),
+                '1',
+                'Unique constraint violated.',
+            ];
         }
     }
 
@@ -128,7 +134,11 @@ final class RetryableTransactionExceptionTest extends CIUnitTestCase
         if (defined('OCI_COMMIT_ON_SUCCESS')) {
             yield 'OCI8 deadlock' => [self::connection(OCI8Connection::class, 'OCI8'), 60];
 
+            yield 'OCI8 deadlock string code' => [self::connection(OCI8Connection::class, 'OCI8'), '60'];
+
             yield 'OCI8 serialization failure' => [self::connection(OCI8Connection::class, 'OCI8'), 8177];
+
+            yield 'OCI8 serialization failure string code' => [self::connection(OCI8Connection::class, 'OCI8'), '8177'];
         }
     }
 
