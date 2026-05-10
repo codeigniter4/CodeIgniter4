@@ -18,6 +18,7 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\BadMethodCallException;
 use ErrorException;
+use Throwable;
 
 /**
  * @template TConnection
@@ -48,6 +49,11 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      * @var string
      */
     protected $errorString;
+
+    /**
+     * The typed exception for the last failed prepared query, if any.
+     */
+    protected ?DatabaseException $databaseException = null;
 
     /**
      * Holds the prepared query object
@@ -121,8 +127,10 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 
         try {
             $exception = null;
-            $result    = $this->_execute($data);
-        } catch (ArgumentCountError|ErrorException $exception) {
+            $this->db->setLastException(null);
+            $this->databaseException = null;
+            $result                  = $this->_execute($data);
+        } catch (ArgumentCountError|DatabaseException|ErrorException $exception) {
             $result = false;
         }
 
@@ -135,6 +143,8 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 
             // This will trigger a rollback if transactions are being used
             $this->db->handleTransStatus();
+
+            $databaseException = $this->createDatabaseException($exception);
 
             if ($this->db->DBDebug) {
                 // We call this function in order to roll-back queries
@@ -154,8 +164,8 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
                 // Let others do something with this query.
                 Events::trigger('DBQuery', $query);
 
-                if ($exception !== null) {
-                    throw new DatabaseException($exception->getMessage(), $exception->getCode(), $exception);
+                if ($databaseException instanceof DatabaseException) {
+                    throw $databaseException;
                 }
 
                 return false;
@@ -163,6 +173,8 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 
             // Let others do something with this query.
             Events::trigger('DBQuery', $query);
+
+            $this->db->setLastException($databaseException);
 
             return false;
         }
@@ -195,6 +207,34 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      * @return object|resource|null
      */
     abstract public function _getResult();
+
+    /**
+     * Creates the database exception for a failed prepared query.
+     */
+    private function createDatabaseException(?Throwable $previous): ?DatabaseException
+    {
+        if ($previous instanceof DatabaseException) {
+            return $previous;
+        }
+
+        if ($this->databaseException instanceof DatabaseException) {
+            return $this->databaseException;
+        }
+
+        if ($previous instanceof Throwable) {
+            return $this->db->createDatabaseException(
+                $previous->getMessage(),
+                $previous->getCode(),
+                $previous,
+            );
+        }
+
+        if ($this->errorString === null || $this->errorString === '') {
+            return null;
+        }
+
+        return $this->db->createDatabaseException($this->errorString, $this->errorCode);
+    }
 
     /**
      * Explicitly closes the prepared statement.

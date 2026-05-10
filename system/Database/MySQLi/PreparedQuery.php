@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\MySQLi;
 
 use CodeIgniter\Database\BasePreparedQuery;
-use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Exceptions\BadMethodCallException;
 use mysqli;
 use mysqli_result;
@@ -49,7 +48,7 @@ class PreparedQuery extends BasePreparedQuery
             $this->errorString = $this->db->mysqli->error;
 
             if ($this->db->DBDebug) {
-                throw new DatabaseException($this->errorString . ' code: ' . $this->errorCode);
+                throw $this->db->createDatabaseException($this->errorString, $this->errorCode);
             }
         }
 
@@ -93,14 +92,29 @@ class PreparedQuery extends BasePreparedQuery
         }
 
         try {
-            return $this->statement->execute();
+            $result = $this->statement->execute();
         } catch (mysqli_sql_exception $e) {
+            $this->errorCode         = $e->getCode();
+            $this->errorString       = $e->getMessage();
+            $this->databaseException = $this->db->createDatabaseException($this->errorString, $this->errorCode, $e);
+
             if ($this->db->DBDebug) {
-                throw new DatabaseException($e->getMessage(), $e->getCode(), $e);
+                throw $this->databaseException;
             }
 
             return false;
         }
+
+        if ($result === false) {
+            $this->errorCode   = $this->statement->errno;
+            $this->errorString = $this->statement->error;
+
+            if ($this->db->DBDebug) {
+                throw $this->db->createDatabaseException($this->errorString, $this->errorCode);
+            }
+        }
+
+        return $result;
     }
 
     /**

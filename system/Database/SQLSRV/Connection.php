@@ -94,6 +94,16 @@ class Connection extends BaseConnection
      */
     protected function isUniqueConstraintViolation(int|string $code, string $message): bool
     {
+        $code = (string) $code;
+
+        if (str_contains($code, '/')) {
+            [$sqlstate, $vendorCode] = explode('/', $code, 2);
+
+            if ($sqlstate === '23000' && in_array((int) $vendorCode, [2627, 2601], true)) {
+                return true;
+            }
+        }
+
         $errors = sqlsrv_errors(SQLSRV_ERR_ERRORS);
         if (! is_array($errors)) {
             return false;

@@ -225,15 +225,16 @@ UniqueConstraintViolationException
 .. versionadded:: 4.8.0
 
 ``UniqueConstraintViolationException`` extends ``DatabaseException`` and is
-thrown specifically when a query fails due to a duplicate key or unique
-constraint violation. Catching it separately allows you to handle this case
-without inspecting raw driver-specific error codes.
+thrown specifically when a query or prepared query execution fails due to a
+duplicate key or unique constraint violation. Catching it separately allows you
+to handle this case without inspecting raw driver-specific error codes.
 
 DBDebug Disabled
 ================
 
-When ``DBDebug`` is ``false``, query failures return ``false`` instead of
-throwing. Two methods are available to inspect what went wrong.
+When ``DBDebug`` is ``false``, query and prepared query execution failures
+return ``false`` instead of throwing. Two methods are available to inspect what
+went wrong.
 
 $db->error()
 ------------
@@ -251,15 +252,16 @@ $db->getLastException()
 
 .. versionadded:: 4.8.0
 
-``getLastException()`` returns the typed exception that would have been
-thrown had ``DBDebug`` been ``true``. This is the recommended way to
-distinguish between failure types (e.g., a unique constraint violation vs.
-another database error) without enabling ``DBDebug``:
+``getLastException()`` returns the typed exception that would have been thrown
+had ``DBDebug`` been ``true``. This is the recommended way to distinguish
+between failure types (e.g., a unique constraint violation vs. another database
+error) without enabling ``DBDebug``:
 
 .. literalinclude:: queries/031.php
 
 .. note:: ``getLastException()`` is reset to ``null`` at the start of every
-    query. Inspect it immediately after the failed operation.
+    query or prepared query execution. Inspect it immediately after the failed
+    operation.
 
 ****************
 Prepared Queries

@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\SQLite3;
 
 use CodeIgniter\Database\BasePreparedQuery;
-use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Exceptions\BadMethodCallException;
 use Exception;
 use SQLite3;
@@ -52,7 +51,7 @@ class PreparedQuery extends BasePreparedQuery
             $this->errorString = $this->db->connID->lastErrorMsg();
 
             if ($this->db->DBDebug) {
-                throw new DatabaseException($this->errorString . ' code: ' . $this->errorCode);
+                throw $this->db->createDatabaseException($this->errorString, $this->errorCode);
             }
         }
 
@@ -88,11 +87,25 @@ class PreparedQuery extends BasePreparedQuery
         try {
             $this->result = $this->statement->execute();
         } catch (Exception $e) {
+            $error                   = $this->db->error();
+            $this->errorCode         = $error['code'];
+            $this->errorString       = $e->getMessage();
+            $this->databaseException = $this->db->createDatabaseException($this->errorString, $this->errorCode, $e);
+
             if ($this->db->DBDebug) {
-                throw new DatabaseException($e->getMessage(), $e->getCode(), $e);
+                throw $this->databaseException;
             }
 
             return false;
+        }
+
+        if ($this->result === false) {
+            $this->errorCode   = $this->db->connID->lastErrorCode();
+            $this->errorString = $this->db->connID->lastErrorMsg();
+
+            if ($this->db->DBDebug) {
+                throw $this->db->createDatabaseException($this->errorString, $this->errorCode);
+            }
         }
 
         return $this->result !== false;

@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\OCI8;
 
 use CodeIgniter\Database\BasePreparedQuery;
-use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Exceptions\BadMethodCallException;
 use OCILob;
 
@@ -55,7 +54,7 @@ class PreparedQuery extends BasePreparedQuery
             $this->errorString = $error['message'] ?? '';
 
             if ($this->db->DBDebug) {
-                throw new DatabaseException($this->errorString . ' code: ' . $this->errorCode);
+                throw $this->db->createDatabaseException($this->errorString, $this->errorCode);
             }
         }
 
@@ -90,6 +89,16 @@ class PreparedQuery extends BasePreparedQuery
 
         if ($binaryData instanceof OCILob) {
             $binaryData->free();
+        }
+
+        if ($result === false) {
+            $error             = oci_error($this->statement);
+            $this->errorCode   = $error['code'] ?? 0;
+            $this->errorString = $error['message'] ?? '';
+
+            if ($this->db->DBDebug) {
+                throw $this->db->createDatabaseException($this->errorString, $this->errorCode);
+            }
         }
 
         if ($result && $this->lastInsertTableName !== '') {

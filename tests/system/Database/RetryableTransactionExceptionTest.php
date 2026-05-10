@@ -21,11 +21,13 @@ use CodeIgniter\Database\OCI8\Connection as OCI8Connection;
 use CodeIgniter\Database\Postgre\Connection as PostgreConnection;
 use CodeIgniter\Database\SQLite3\Connection as SQLite3Connection;
 use CodeIgniter\Database\SQLSRV\Connection as SQLSRVConnection;
+use CodeIgniter\Events\Events;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use ErrorException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
-use ReflectionMethod;
+use Tests\Support\Mock\MockPreparedQuery;
 
 /**
  * @internal
@@ -72,6 +74,18 @@ final class RetryableTransactionExceptionTest extends CIUnitTestCase
             self::connection(SQLite3Connection::class, 'SQLite3'),
             19,
             'column email is not unique',
+        ];
+
+        yield 'SQLSRV unique constraint' => [
+            self::connection(SQLSRVConnection::class, 'SQLSRV'),
+            '23000/2627',
+            'Violation of UNIQUE KEY constraint.',
+        ];
+
+        yield 'SQLSRV unique index' => [
+            self::connection(SQLSRVConnection::class, 'SQLSRV'),
+            '23000/2601',
+            'Cannot insert duplicate key row.',
         ];
 
         if (defined('OCI_COMMIT_ON_SUCCESS')) {
@@ -179,6 +193,56 @@ final class RetryableTransactionExceptionTest extends CIUnitTestCase
         $db->query('SELECT * FROM test');
     }
 
+    public function testPreparedQueryThrowsRetryableTransactionExceptionFromBaseExecutionPath(): void
+    {
+        $preparedQuery                  = new MockPreparedQuery(self::connection(MySQLiConnection::class, 'MySQLi'));
+        $preparedQuery->thrownException = new ErrorException('Deadlock found when trying to get lock.', 1213);
+
+        $preparedQuery->prepare('SELECT 1');
+
+        $this->expectException(RetryableTransactionException::class);
+
+        $preparedQuery->execute();
+    }
+
+    public function testPreparedQueryRoutesDriverDatabaseExceptionThroughBaseExecutionPath(): void
+    {
+        $db                             = self::connection(MySQLiConnection::class, 'MySQLi');
+        $preparedQuery                  = new MockPreparedQuery($db);
+        $preparedQuery->thrownException = self::createDatabaseException($db, 'Deadlock found when trying to get lock.', 1213);
+        $queryCount                     = 0;
+        $listener                       = static function () use (&$queryCount): void {
+            $queryCount++;
+        };
+
+        $preparedQuery->prepare('SELECT 1');
+        Events::on('DBQuery', $listener);
+
+        try {
+            $preparedQuery->execute();
+            $this->fail('Expected retryable transaction exception was not thrown.');
+        } catch (RetryableTransactionException $e) {
+            $this->assertSame($preparedQuery->thrownException, $e);
+        } finally {
+            Events::removeListener('DBQuery', $listener);
+        }
+
+        $this->assertSame(1, $queryCount);
+    }
+
+    public function testPreparedQueryStoresRetryableTransactionExceptionWithDebugDisabled(): void
+    {
+        $db = new MySQLiConnection(self::config('MySQLi', false));
+
+        $preparedQuery                  = new MockPreparedQuery($db);
+        $preparedQuery->thrownException = new ErrorException('Deadlock found when trying to get lock.', 1213);
+
+        $preparedQuery->prepare('SELECT 1');
+
+        $this->assertFalse($preparedQuery->execute());
+        $this->assertInstanceOf(RetryableTransactionException::class, $db->getLastException());
+    }
+
     /**
      * @param class-string<BaseConnection> $connectionClass
      */
@@ -190,7 +254,7 @@ final class RetryableTransactionExceptionTest extends CIUnitTestCase
     /**
      * @return array<string, mixed>
      */
-    private static function config(string $driver): array
+    private static function config(string $driver, bool $debug = true): array
     {
         return [
             'DSN'      => '',
@@ -199,7 +263,7 @@ final class RetryableTransactionExceptionTest extends CIUnitTestCase
             'password' => '',
             'database' => 'test',
             'DBDriver' => $driver,
-            'DBDebug'  => true,
+            'DBDebug'  => $debug,
             'charset'  => 'utf8',
             'DBCollat' => 'utf8_general_ci',
             'swapPre'  => '',
@@ -209,13 +273,8 @@ final class RetryableTransactionExceptionTest extends CIUnitTestCase
         ];
     }
 
-    private static function createDatabaseException(
-        BaseConnection $db,
-        string $message,
-        int|string $code,
-    ): DatabaseException {
-        $method = new ReflectionMethod($db, 'createDatabaseException');
-
-        return $method->invoke($db, $message, $code);
+    private static function createDatabaseException(BaseConnection $db, string $message, int|string $code): DatabaseException
+    {
+        return $db->createDatabaseException($message, $code);
     }
 }
