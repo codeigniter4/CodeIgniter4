@@ -199,7 +199,7 @@ A CodeIgniter4 webapp is normally hosted on a web server.
 Apache HTTP Server is the "standard" platform, and assumed in much of our documentation.
 
 Apache is bundled with many platforms, but can also be downloaded in a bundle
-with a database engine and PHP from `Bitnami <https://bitnami.com/stacks/infrastructure>`_.
+with a database engine and PHP from `Bitnami <https://bitnami.com/stack/lamp>`_.
 
 Configure Main Config File
 ==========================
