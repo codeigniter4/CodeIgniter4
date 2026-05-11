@@ -2025,7 +2025,7 @@ final class EntityTest extends CIUnitTestCase
             ];
         };
 
-        $entity->data = new class ('original') implements JsonSerializable {
+        $data = new class ('original') implements JsonSerializable {
             public function __construct(private string $value)
             {
             }
@@ -2040,14 +2040,19 @@ final class EntityTest extends CIUnitTestCase
                 $this->value = $value;
             }
 
+            /**
+             * @return array<string, string>
+             */
             public function toArray(): array
             {
                 return ['array' => 'same'];
             }
         };
+
+        $entity->data = $data;
         $entity->syncOriginal();
 
-        $entity->data->setValue('modified');
+        $data->setValue('modified');
 
         $this->assertTrue($entity->hasChanged('data'));
     }
@@ -2363,15 +2368,20 @@ final class EntityTest extends CIUnitTestCase
             ];
         };
 
-        $entity->items = new class (['iterator' => 'original']) extends ArrayObject {
+        $items = new class (['iterator' => 'original']) extends ArrayObject {
+            /**
+             * @return array<string, string>
+             */
             public function toArray(): array
             {
                 return ['array' => 'same'];
             }
         };
+
+        $entity->items = $items;
         $entity->syncOriginal();
 
-        $entity->items->exchangeArray(['iterator' => 'modified']);
+        $items->exchangeArray(['iterator' => 'modified']);
 
         $this->assertFalse($entity->hasChanged('items'));
     }
@@ -2384,15 +2394,20 @@ final class EntityTest extends CIUnitTestCase
             ];
         };
 
-        $entity->date = new class ('2024-01-01 00:00:00') extends DateTime {
+        $date = new class ('2024-01-01 00:00:00') extends DateTime {
+            /**
+             * @return array<string, string>
+             */
             public function toArray(): array
             {
                 return ['date' => 'same'];
             }
         };
+
+        $entity->date = $date;
         $entity->syncOriginal();
 
-        $entity->date->modify('+1 day');
+        $date->modify('+1 day');
 
         $this->assertFalse($entity->hasChanged('date'));
     }
