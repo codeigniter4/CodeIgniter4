@@ -49,6 +49,7 @@ Bugs Fixed
 - **Toolbar:** Fixed a bug where the Logs collector raised an undefined property error when using a third-party PSR-3 logger.
 - **Time:** Fixed a bug where ``Time::createFromTimestamp()`` could fail for microsecond timestamps when ``LC_NUMERIC`` used a comma decimal separator.
 - **Validation:** Fixed a bug where ``Validation::getValidated()`` dropped fields whose validated value was explicitly ``null``.
+- **Worker Mode:** Fixed a bug where the ``frankenphp-worker.php`` template caused a ``Cannot redeclare class Config\Paths`` fatal error when FrankenPHP's watcher re-executed the worker script after a watched file changed.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_

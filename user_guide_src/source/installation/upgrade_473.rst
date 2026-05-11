@@ -16,6 +16,16 @@ Please refer to the upgrade instructions corresponding to your installation meth
 Mandatory File Changes
 **********************
 
+Worker Mode
+===========
+
+If you are using Worker Mode, you must update **public/frankenphp-worker.php** after
+upgrading. The easiest way is to re-run the install command:
+
+.. code-block:: console
+
+    php spark worker:install --force
+
 ****************
 Breaking Changes
 ****************
