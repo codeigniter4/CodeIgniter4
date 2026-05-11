@@ -64,9 +64,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           extensions: intl
-
-      - name: Use latest Composer
-        run: composer self-update
+          tools: composer
 
       - name: Validate composer.json
         run: composer validate --strict
