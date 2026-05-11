@@ -625,7 +625,7 @@ class BaseBuilder
     /**
      * Generates the JOIN portion of the query
      *
-     * @param Closure(JoinClause): void|RawSql|string $cond
+     * @param (Closure(JoinClause): void)|RawSql|string $cond
      *
      * @return $this
      */
@@ -666,7 +666,7 @@ class BaseBuilder
     }
 
     /**
-     * @param Closure(JoinClause): void|RawSql|string $cond
+     * @param (Closure(JoinClause): void)|RawSql|string $cond
      */
     protected function compileJoinCondition(Closure|RawSql|string $cond, bool $escape): string
     {

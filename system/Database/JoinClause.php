@@ -19,7 +19,7 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
 /**
  * Builds conditions for a JOIN ON clause.
  */
-class JoinClause
+final class JoinClause
 {
     /**
      * @var list<string>
@@ -220,7 +220,7 @@ class JoinClause
             $condition        = $this->protectIdentifier($key, $escape) . $operator . " :{$bind}:";
         } elseif (preg_match('/\s*(!=|<>|IS(?:\s+NOT)?)\s*$/i', $key, $match, PREG_OFFSET_CAPTURE) === 1) {
             $key       = substr($key, 0, $match[0][1]);
-            $operator  = $match[1][0] === '=' || strcasecmp($match[1][0], 'IS') === 0 ? ' IS NULL' : ' IS NOT NULL';
+            $operator  = strcasecmp($match[1][0], 'IS') === 0 ? ' IS NULL' : ' IS NOT NULL';
             $condition = $this->protectIdentifier($key, $escape) . $operator;
         } else {
             $condition = $this->protectIdentifier($key, $escape) . ' IS NULL';

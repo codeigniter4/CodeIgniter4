@@ -346,7 +346,7 @@ class Builder extends BaseBuilder
     /**
      * Generates the JOIN portion of the query
      *
-     * @param Closure(JoinClause): void|RawSql|string $cond
+     * @param (Closure(JoinClause): void)|RawSql|string $cond
      *
      * @return $this
      */
