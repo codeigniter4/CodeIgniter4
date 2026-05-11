@@ -95,8 +95,9 @@ class PreparedQuery extends BasePreparedQuery
         $sent = pg_send_execute($this->db->connID, $this->name, $data);
 
         if ($sent === false || $sent === 0) {
-            $this->errorCode   = 0;
-            $this->errorString = pg_last_error($this->db->connID);
+            $this->errorCode         = 0;
+            $this->errorString       = pg_last_error($this->db->connID);
+            $this->databaseException = $this->db->createDatabaseException($this->errorString, $this->errorCode);
 
             return false;
         }
@@ -104,8 +105,9 @@ class PreparedQuery extends BasePreparedQuery
         $this->result = pg_get_result($this->db->connID);
 
         if ($this->result === false) {
-            $this->errorCode   = 0;
-            $this->errorString = pg_last_error($this->db->connID);
+            $this->errorCode         = 0;
+            $this->errorString       = pg_last_error($this->db->connID);
+            $this->databaseException = $this->db->createDatabaseException($this->errorString, $this->errorCode);
 
             return false;
         }
