@@ -409,7 +409,7 @@ a ``BaseBuilder`` instance:
 
 .. warning:: Raw SQL strings are not accepted. If you need to write the
     ``EXISTS`` clause yourself, use ``where()`` with a manually escaped
-    condition.
+    condition. See :ref:`query-builder-where-rawsql`.
 
 $builder->orWhereExists()
 -------------------------

@@ -789,7 +789,7 @@ class BaseBuilder
      */
     public function whereExists($subquery): static
     {
-        return $this->_whereExists($subquery);
+        return $this->whereExistsSubquery($subquery);
     }
 
     /**
@@ -801,7 +801,7 @@ class BaseBuilder
      */
     public function orWhereExists($subquery): static
     {
-        return $this->_whereExists($subquery, false, 'OR ');
+        return $this->whereExistsSubquery($subquery, false, 'OR ');
     }
 
     /**
@@ -813,7 +813,7 @@ class BaseBuilder
      */
     public function whereNotExists($subquery): static
     {
-        return $this->_whereExists($subquery, true);
+        return $this->whereExistsSubquery($subquery, true);
     }
 
     /**
@@ -825,7 +825,7 @@ class BaseBuilder
      */
     public function orWhereNotExists($subquery): static
     {
-        return $this->_whereExists($subquery, true, 'OR ');
+        return $this->whereExistsSubquery($subquery, true, 'OR ');
     }
 
     /**
@@ -899,7 +899,7 @@ class BaseBuilder
      *
      * @throws InvalidArgumentException
      */
-    protected function _whereExists($subquery, bool $not = false, string $type = 'AND '): static
+    protected function whereExistsSubquery($subquery, bool $not = false, string $type = 'AND '): static
     {
         if (! $this->isSubquery($subquery)) {
             throw new InvalidArgumentException(sprintf('%s() expects $subquery to be of type BaseBuilder or closure', debug_backtrace(0, 2)[1]['function']));
