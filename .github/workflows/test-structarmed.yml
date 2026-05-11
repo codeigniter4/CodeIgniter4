@@ -47,8 +47,7 @@ jobs:
       matrix:
         php-version:
           - '8.2'
-        include:
-          - php-version: '8.5'
+          - '8.5'
 
     steps:
       - name: Checkout base branch for PR
