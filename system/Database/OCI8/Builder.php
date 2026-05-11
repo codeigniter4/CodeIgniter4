@@ -218,8 +218,16 @@ class Builder extends BaseBuilder
      */
     protected function compileLockForUpdate(): string
     {
-        if ($this->QBLockForUpdate && ($this->QBLimit !== false || $this->QBOffset)) {
+        if (! $this->QBLockForUpdate) {
+            return '';
+        }
+
+        if ($this->QBLimit !== false || $this->QBOffset) {
             throw new DatabaseException('OCI8 does not support lockForUpdate() with limit() or offset().');
+        }
+
+        if ($this->QBDistinct || $this->QBGroupBy !== [] || $this->QBHaving !== [] || $this->QBSelectUsesAggregate) {
+            throw new DatabaseException('OCI8 does not support lockForUpdate() with distinct(), groupBy(), having(), or aggregate helper selections.');
         }
 
         return parent::compileLockForUpdate();

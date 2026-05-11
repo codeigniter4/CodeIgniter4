@@ -777,8 +777,15 @@ Use this method inside a database transaction. The exact locking behavior is
 determined by the database server and transaction isolation level.
 
 This method is supported by the **MySQLi**, **Postgre**, **OCI8**, and
-**SQLSRV** drivers. Unsupported drivers throw a ``DatabaseException``. See the
-following notes for OCI8 and SQLSRV driver-specific behavior.
+**SQLSRV** drivers. Unsupported drivers throw a ``DatabaseException``.
+``lockForUpdate()`` is not supported with ``union()`` or ``unionAll()``.
+Some databases restrict which query shapes can be used with row locking. When
+CodeIgniter can detect an unsupported combination, it throws a
+``DatabaseException``. See the following warnings for driver-specific behavior.
+
+.. warning:: Postgre does not support ``lockForUpdate()`` with ``distinct()``,
+    ``groupBy()``, ``having()``, or aggregate helper selections such as
+    ``selectCount()``.
 
 .. warning:: SQLSRV uses SQL Server table hints instead of a trailing ``FOR UPDATE``
     clause. The hint is applied to table references in the ``FROM`` clause;
@@ -786,9 +793,9 @@ following notes for OCI8 and SQLSRV driver-specific behavior.
     Server's execution plan and transaction isolation level. SQLSRV does not
     support ``lockForUpdate()`` without a ``FROM`` table or on subqueries.
 
-.. warning:: OCI8 does not support ``lockForUpdate()`` together with ``limit()`` or
-    ``offset()`` because Oracle does not allow ``FOR UPDATE`` with row
-    limiting.
+.. warning:: OCI8 does not support ``lockForUpdate()`` together with
+    ``limit()``, ``offset()``, ``distinct()``, ``groupBy()``, ``having()``, or
+    aggregate helper selections such as ``selectCount()``.
 
 .. _query-builder-union:
 

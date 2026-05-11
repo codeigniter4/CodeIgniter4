@@ -17,6 +17,7 @@ use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\OCI8\Builder as OCI8Builder;
+use CodeIgniter\Database\Postgre\Builder as PostgreBuilder;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Database\SQLite3\Builder as SQLite3Builder;
 use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
@@ -417,6 +418,28 @@ final class SelectTest extends CIUnitTestCase
         $this->assertSame('SELECT * FROM "users"', str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
+    public function testLockForUpdateThrowsExceptionWithUnion(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('Query Builder does not support lockForUpdate() with union() or unionAll().');
+
+        $builder->union(new BaseBuilder('jobs', $this->db))->lockForUpdate()->getCompiledSelect();
+    }
+
+    public function testLockForUpdateThrowsExceptionWithSQLSRVUnion(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $builder = new SQLSRVBuilder('users', $this->db);
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('Query Builder does not support lockForUpdate() with union() or unionAll().');
+
+        $builder->union(new SQLSRVBuilder('jobs', $this->db))->lockForUpdate()->getCompiledSelect();
+    }
+
     public function testLockForUpdateWithOCI8(): void
     {
         $builder = new OCI8Builder('users', $this->db);
@@ -434,6 +457,66 @@ final class SelectTest extends CIUnitTestCase
         $this->expectExceptionMessage('OCI8 does not support lockForUpdate() with limit() or offset().');
 
         $builder->limit(1)->lockForUpdate()->getCompiledSelect();
+    }
+
+    #[DataProvider('provideLockForUpdateUnsupportedSelectClauses')]
+    public function testLockForUpdateThrowsExceptionWithOCI8SelectClause(string $clause): void
+    {
+        $builder = new OCI8Builder('users', $this->db);
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('OCI8 does not support lockForUpdate() with distinct(), groupBy(), having(), or aggregate helper selections.');
+
+        $this->applyLockForUpdateUnsupportedClause($builder, $clause)
+            ->lockForUpdate()
+            ->getCompiledSelect();
+    }
+
+    public function testLockForUpdateWithPostgre(): void
+    {
+        $builder = new PostgreBuilder('users', $this->db);
+
+        $expected = 'SELECT * FROM "users" FOR UPDATE';
+
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->lockForUpdate()->getCompiledSelect()));
+    }
+
+    #[DataProvider('provideLockForUpdateUnsupportedSelectClauses')]
+    public function testLockForUpdateThrowsExceptionWithPostgreSelectClause(string $clause): void
+    {
+        $builder = new PostgreBuilder('users', $this->db);
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('Postgre does not support lockForUpdate() with distinct(), groupBy(), having(), or aggregate helper selections.');
+
+        $this->applyLockForUpdateUnsupportedClause($builder, $clause)
+            ->lockForUpdate()
+            ->getCompiledSelect();
+    }
+
+    /**
+     * @return iterable<string, list<string>>
+     */
+    public static function provideLockForUpdateUnsupportedSelectClauses(): iterable
+    {
+        yield 'distinct' => ['distinct'];
+
+        yield 'groupBy' => ['groupBy'];
+
+        yield 'having' => ['having'];
+
+        yield 'aggregate selection' => ['aggregate'];
+    }
+
+    private function applyLockForUpdateUnsupportedClause(BaseBuilder $builder, string $clause): BaseBuilder
+    {
+        return match ($clause) {
+            'distinct'  => $builder->distinct(),
+            'groupBy'   => $builder->groupBy('role'),
+            'having'    => $builder->having('COUNT(id) >', 1, false),
+            'aggregate' => $builder->selectCount('id'),
+            default     => throw new DatabaseException('Unsupported clause: ' . $clause),
+        };
     }
 
     public function testLockForUpdateThrowsExceptionOnSQLite3(): void

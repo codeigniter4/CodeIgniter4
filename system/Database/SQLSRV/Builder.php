@@ -703,6 +703,10 @@ class Builder extends BaseBuilder
             throw new DatabaseException('SQLSRV does not support lockForUpdate() without a FROM table.');
         }
 
+        if ($this->QBUnion !== []) {
+            throw new DatabaseException('Query Builder does not support lockForUpdate() with union() or unionAll().');
+        }
+
         foreach ($this->QBFrom as $value) {
             if (str_starts_with($value, '(SELECT')) {
                 throw new DatabaseException('SQLSRV does not support lockForUpdate() on subqueries.');

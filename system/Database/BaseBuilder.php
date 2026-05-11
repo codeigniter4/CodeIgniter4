@@ -116,6 +116,11 @@ class BaseBuilder
     protected bool $QBLockForUpdate = false;
 
     /**
+     * QB SELECT aggregate helper flag
+     */
+    protected bool $QBSelectUsesAggregate = false;
+
+    /**
      * QB ORDER BY data
      *
      * @var array|string|null
@@ -547,8 +552,9 @@ class BaseBuilder
 
         $sql = $type . '(' . $this->db->protectIdentifiers(trim($select)) . ') AS ' . $this->db->escapeIdentifiers(trim($alias));
 
-        $this->QBSelect[]   = $sql;
-        $this->QBNoEscape[] = null;
+        $this->QBSelect[]            = $sql;
+        $this->QBNoEscape[]          = null;
+        $this->QBSelectUsesAggregate = true;
 
         return $this;
     }
@@ -3254,6 +3260,10 @@ class BaseBuilder
      */
     protected function compileLockForUpdate(): string
     {
+        if ($this->QBLockForUpdate && $this->QBUnion !== []) {
+            throw new DatabaseException('Query Builder does not support lockForUpdate() with union() or unionAll().');
+        }
+
         return $this->QBLockForUpdate ? "\nFOR UPDATE" : '';
     }
 
@@ -3564,18 +3574,19 @@ class BaseBuilder
     protected function resetSelect()
     {
         $this->resetRun([
-            'QBSelect'        => [],
-            'QBJoin'          => [],
-            'QBWhere'         => [],
-            'QBGroupBy'       => [],
-            'QBHaving'        => [],
-            'QBOrderBy'       => [],
-            'QBNoEscape'      => [],
-            'QBDistinct'      => false,
-            'QBLimit'         => false,
-            'QBOffset'        => false,
-            'QBLockForUpdate' => false,
-            'QBUnion'         => [],
+            'QBSelect'              => [],
+            'QBJoin'                => [],
+            'QBWhere'               => [],
+            'QBGroupBy'             => [],
+            'QBHaving'              => [],
+            'QBOrderBy'             => [],
+            'QBNoEscape'            => [],
+            'QBDistinct'            => false,
+            'QBLimit'               => false,
+            'QBOffset'              => false,
+            'QBLockForUpdate'       => false,
+            'QBSelectUsesAggregate' => false,
+            'QBUnion'               => [],
         ]);
 
         if ($this->db instanceof BaseConnection) {
