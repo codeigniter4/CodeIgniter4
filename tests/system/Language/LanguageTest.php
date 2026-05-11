@@ -381,6 +381,19 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertSame('e', $lang->getLine('Nested.a.b.c.d'));
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/10187
+     */
+    public function testLanguageNestedArrayDefinitionReturnsIntermediateArrays(): void
+    {
+        $lang = new SecondMockLanguage('en');
+        $lang->loadem('Nested', 'en');
+
+        $this->assertSame(['b' => ['c' => ['d' => 'e']]], $lang->getLine('Nested.a'));
+        $this->assertSame(['c' => ['d' => 'e']], $lang->getLine('Nested.a.b'));
+        $this->assertSame(['d' => 'e'], $lang->getLine('Nested.a.b.c'));
+    }
+
     public function testLanguageKeySeparatedByDot(): void
     {
         $lang = new SecondMockLanguage('en');

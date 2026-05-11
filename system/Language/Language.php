@@ -134,7 +134,7 @@ class Language
     }
 
     /**
-     * @return list<string>|string|null
+     * @return array<array-key, mixed>|string|null
      */
     protected function getTranslationOutput(string $locale, string $file, string $parsedLine)
     {
@@ -160,7 +160,7 @@ class Language
                 }
             }
 
-            if ($output !== null && ! is_array($output)) {
+            if ($output !== null) {
                 return $output;
             }
         }
