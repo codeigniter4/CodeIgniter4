@@ -2368,9 +2368,7 @@ final class EntityTest extends CIUnitTestCase
             ];
         };
 
-        /**
-         * @extends ArrayObject<string, string>
-         */
+        /** @extends ArrayObject<string, string> */
         $items = new class (['iterator' => 'original']) extends ArrayObject {
             /**
              * @return array<string, string>
