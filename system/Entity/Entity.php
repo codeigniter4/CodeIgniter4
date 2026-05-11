@@ -465,6 +465,8 @@ class Entity implements JsonSerializable
                 ];
             } elseif ($data instanceof JsonSerializable) {
                 $objectData = $data->jsonSerialize();
+            } elseif (method_exists($data, 'toArray')) {
+                $objectData = $data->toArray();
             } elseif ($data instanceof Traversable) {
                 $objectData = iterator_to_array($data);
             } elseif ($data instanceof DateTimeInterface) {
@@ -472,8 +474,6 @@ class Entity implements JsonSerializable
                     '__class'    => $data::class,
                     '__datetime' => $data->format(DATE_RFC3339_EXTENDED),
                 ];
-            } elseif (method_exists($data, 'toArray')) {
-                $objectData = $data->toArray();
             } else {
                 $objectData = get_object_vars($data);
 

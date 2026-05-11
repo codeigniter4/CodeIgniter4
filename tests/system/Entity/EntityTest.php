@@ -34,8 +34,10 @@ use Tests\Support\Entity\Cast\CastBase64;
 use Tests\Support\Entity\Cast\CastPassParameters;
 use Tests\Support\Entity\Cast\NotExtendsBaseCast;
 use Tests\Support\Enum\ColorEnum;
+use Tests\Support\Enum\JsonSerializableStateUnitEnum;
 use Tests\Support\Enum\RoleEnum;
 use Tests\Support\Enum\StateEnum;
+use Tests\Support\Enum\StateUnitEnum;
 use Tests\Support\Enum\StatusEnum;
 use Tests\Support\SomeEntity;
 
@@ -1049,13 +1051,39 @@ final class EntityTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/10136
      */
-    public function testInjectRawDataWithEnumThatHasToArrayMethod(): void
+    public function testInjectRawDataWithBackedEnumThatHasToArrayMethod(): void
     {
         $entity = new class () extends Entity {};
 
         $entity->injectRawData(['state' => StateEnum::DRAFT]);
 
         $this->assertSame(StateEnum::DRAFT, $entity->toRawArray()['state']);
+        $this->assertFalse($entity->hasChanged('state'));
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/10136
+     */
+    public function testInjectRawDataWithUnitEnumThatHasToArrayMethod(): void
+    {
+        $entity = new class () extends Entity {};
+
+        $entity->injectRawData(['state' => StateUnitEnum::DRAFT]);
+
+        $this->assertSame(StateUnitEnum::DRAFT, $entity->toRawArray()['state']);
+        $this->assertFalse($entity->hasChanged('state'));
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/10136
+     */
+    public function testInjectRawDataWithUnitEnumThatImplementsJsonSerializable(): void
+    {
+        $entity = new class () extends Entity {};
+
+        $entity->injectRawData(['state' => JsonSerializableStateUnitEnum::DRAFT]);
+
+        $this->assertSame(JsonSerializableStateUnitEnum::DRAFT, $entity->toRawArray()['state']);
         $this->assertFalse($entity->hasChanged('state'));
     }
 
@@ -1989,6 +2017,41 @@ final class EntityTest extends CIUnitTestCase
         $this->assertTrue($entity->hasChanged('data'));
     }
 
+    public function testHasChangedPrefersJsonSerializableOverToArray(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'data' => null,
+            ];
+        };
+
+        $entity->data = new class ('original') implements JsonSerializable {
+            public function __construct(private string $value)
+            {
+            }
+
+            public function jsonSerialize(): mixed
+            {
+                return ['json' => $this->value];
+            }
+
+            public function setValue(string $value): void
+            {
+                $this->value = $value;
+            }
+
+            public function toArray(): array
+            {
+                return ['array' => 'same'];
+            }
+        };
+        $entity->syncOriginal();
+
+        $entity->data->setValue('modified');
+
+        $this->assertTrue($entity->hasChanged('data'));
+    }
+
     public function testHasChangedDoesNotDetectUnchangedObject(): void
     {
         $entity = new class () extends Entity {
@@ -2290,6 +2353,48 @@ final class EntityTest extends CIUnitTestCase
         $entity->custom = $obj2;
 
         $this->assertTrue($entity->hasChanged('custom'));
+    }
+
+    public function testHasChangedPrefersToArrayOverTraversable(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'items' => null,
+            ];
+        };
+
+        $entity->items = new class (['iterator' => 'original']) extends ArrayObject {
+            public function toArray(): array
+            {
+                return ['array' => 'same'];
+            }
+        };
+        $entity->syncOriginal();
+
+        $entity->items->exchangeArray(['iterator' => 'modified']);
+
+        $this->assertFalse($entity->hasChanged('items'));
+    }
+
+    public function testHasChangedPrefersToArrayOverDateTimeInterface(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'date' => null,
+            ];
+        };
+
+        $entity->date = new class ('2024-01-01 00:00:00') extends DateTime {
+            public function toArray(): array
+            {
+                return ['date' => 'same'];
+            }
+        };
+        $entity->syncOriginal();
+
+        $entity->date->modify('+1 day');
+
+        $this->assertFalse($entity->hasChanged('date'));
     }
 
     public function testHasChangedScalarOptimizationWithNullValues(): void
