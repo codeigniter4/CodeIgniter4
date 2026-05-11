@@ -17,11 +17,11 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RequiresOperatingSystem;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 
@@ -70,14 +70,6 @@ final class GenerateKeyTest extends CIUnitTestCase
         CLI::reset();
     }
 
-    /**
-     * Gets buffer contents then releases it.
-     */
-    protected function getBuffer(): string
-    {
-        return $this->getStreamFilterBuffer();
-    }
-
     protected function resetEnvironment(): void
     {
         putenv('encryption.key');
@@ -88,13 +80,15 @@ final class GenerateKeyTest extends CIUnitTestCase
     public function testGenerateKeyShowsEncodedKey(): void
     {
         command('key:generate --show');
-        $this->assertStringContainsString('hex2bin:', $this->getBuffer());
+        $this->assertStringContainsString('hex2bin:', $this->getStreamFilterBuffer());
 
+        $this->resetStreamFilterBuffer();
         command('key:generate --prefix base64 --show');
-        $this->assertStringContainsString('base64:', $this->getBuffer());
+        $this->assertStringContainsString('base64:', $this->getStreamFilterBuffer());
 
+        $this->resetStreamFilterBuffer();
         command('key:generate --prefix hex2bin --show');
-        $this->assertStringContainsString('hex2bin:', $this->getBuffer());
+        $this->assertStringContainsString('hex2bin:', $this->getStreamFilterBuffer());
     }
 
     #[PreserveGlobalState(false)]
@@ -102,17 +96,19 @@ final class GenerateKeyTest extends CIUnitTestCase
     public function testGenerateKeyCreatesNewKey(): void
     {
         command('key:generate');
-        $this->assertStringContainsString('successfully set.', $this->getBuffer());
+        $this->assertStringContainsString(sprintf('New encryption key written to ROOTPATH%s.env.', DIRECTORY_SEPARATOR), $this->getStreamFilterBuffer());
         $this->assertStringContainsString(env('encryption.key'), (string) file_get_contents($this->envPath));
         $this->assertStringContainsString('hex2bin:', (string) file_get_contents($this->envPath));
 
+        $this->resetStreamFilterBuffer();
         command('key:generate --prefix base64 --force');
-        $this->assertStringContainsString('successfully set.', $this->getBuffer());
+        $this->assertStringContainsString(sprintf('New encryption key written to ROOTPATH%s.env.', DIRECTORY_SEPARATOR), $this->getStreamFilterBuffer());
         $this->assertStringContainsString(env('encryption.key'), (string) file_get_contents($this->envPath));
         $this->assertStringContainsString('base64:', (string) file_get_contents($this->envPath));
 
+        $this->resetStreamFilterBuffer();
         command('key:generate --prefix hex2bin --force');
-        $this->assertStringContainsString('successfully set.', $this->getBuffer());
+        $this->assertStringContainsString(sprintf('New encryption key written to ROOTPATH%s.env.', DIRECTORY_SEPARATOR), $this->getStreamFilterBuffer());
         $this->assertStringContainsString(env('encryption.key'), (string) file_get_contents($this->envPath));
         $this->assertStringContainsString('hex2bin:', (string) file_get_contents($this->envPath));
     }
@@ -123,8 +119,9 @@ final class GenerateKeyTest extends CIUnitTestCase
         command('key:generate');
         rename(ROOTPATH . 'lostenv', ROOTPATH . 'env');
 
-        $this->assertStringContainsString('Both default shipped', $this->getBuffer());
-        $this->assertStringContainsString('Error in setting', $this->getBuffer());
+        $this->assertStringContainsString('Both default shipped', $this->getStreamFilterBuffer());
+        $this->assertStringContainsString('Here\'s your new key instead:', $this->getStreamFilterBuffer());
+        $this->assertStringNotContainsString('Failed to write', $this->getStreamFilterBuffer());
     }
 
     /**
@@ -136,7 +133,7 @@ final class GenerateKeyTest extends CIUnitTestCase
 
         command('key:generate');
 
-        $this->assertStringContainsString('Application\'s new encryption key was successfully set.', $this->getBuffer());
+        $this->assertStringContainsString(sprintf('New encryption key written to ROOTPATH%s.env.', DIRECTORY_SEPARATOR), $this->getStreamFilterBuffer());
         $this->assertSame("\nencryption.key = " . env('encryption.key'), file_get_contents($this->envPath));
     }
 
@@ -152,9 +149,9 @@ final class GenerateKeyTest extends CIUnitTestCase
         ));
         $this->assertSame(1, $count, 'Failed commenting out the previously set application key.');
 
-        CITestStreamFilter::$buffer = '';
+        $this->resetStreamFilterBuffer();
         command('key:generate --force');
-        $this->assertStringContainsString('was successfully set.', $this->getBuffer());
+        $this->assertStringContainsString(sprintf('New encryption key written to ROOTPATH%s.env.', DIRECTORY_SEPARATOR), $this->getStreamFilterBuffer());
         $this->assertNotSame($key, env('encryption.key', $key), 'Failed replacing the commented out key.');
     }
 
@@ -170,9 +167,9 @@ final class GenerateKeyTest extends CIUnitTestCase
         ));
         $this->assertSame(1, $count, 'Failed commenting out the previously set application key.');
 
-        CITestStreamFilter::$buffer = '';
+        $this->resetStreamFilterBuffer();
         command('key:generate --force');
-        $this->assertStringContainsString('was successfully set.', $this->getBuffer());
+        $this->assertStringContainsString(sprintf('New encryption key written to ROOTPATH%s.env.', DIRECTORY_SEPARATOR), $this->getStreamFilterBuffer());
         $this->assertNotSame($key, env('encryption.key', $key), 'Failed replacing the commented out key.');
     }
 
@@ -190,10 +187,10 @@ final class GenerateKeyTest extends CIUnitTestCase
         $this->assertSame('', env('encryption.key', ''));
 
         command('key:generate --force');
+        $this->assertStringContainsString(sprintf('New encryption key written to ROOTPATH%s.env.', DIRECTORY_SEPARATOR), $this->getStreamFilterBuffer());
 
-        $this->assertStringContainsString('was successfully set.', $this->getBuffer());
-
-        $contents = (string) file_get_contents($this->envPath);
+        $contents = @file_get_contents($this->envPath);
+        $this->assertIsString($contents, 'Failed to read .env file contents.');
         $this->assertStringNotContainsString($existingKey, $contents);
         $this->assertStringContainsString('encryption.key = ' . env('encryption.key'), $contents);
     }
@@ -234,7 +231,7 @@ final class GenerateKeyTest extends CIUnitTestCase
         );
     }
 
-    public function testKeyGenerateAbortsWhenOverwritePromptIsDeclined(): void
+    public function testKeyGenerateCancelsWhenOverwritePromptIsDeclined(): void
     {
         command('key:generate');
         $key = env('encryption.key', '');
@@ -244,12 +241,13 @@ final class GenerateKeyTest extends CIUnitTestCase
         $io->setInputs(['n']);
         CLI::setInputOutput($io);
 
+        $this->resetStreamFilterBuffer();
         command('key:generate');
 
         $this->assertSame($key, env('encryption.key', ''), 'Existing key should not change.');
         $this->assertStringContainsString($key, (string) file_get_contents($this->envPath));
         $this->assertStringContainsString('Overwrite existing key?', $io->getOutput());
-        $this->assertStringContainsString('Setting new encryption key aborted.', $io->getOutput());
+        $this->assertStringContainsString('Setting new encryption key cancelled.', $io->getOutput());
     }
 
     public function testKeyGenerateOverwritesWhenOverwritePromptIsConfirmed(): void
@@ -262,12 +260,13 @@ final class GenerateKeyTest extends CIUnitTestCase
         $io->setInputs(['y']);
         CLI::setInputOutput($io);
 
+        $this->resetStreamFilterBuffer();
         command('key:generate --prefix base64');
 
         $this->assertNotSame($oldKey, env('encryption.key', $oldKey));
         $this->assertStringContainsString('base64:', (string) file_get_contents($this->envPath));
         $this->assertStringContainsString('Overwrite existing key?', $io->getOutput());
-        $this->assertStringContainsString('successfully set.', $io->getOutput());
+        $this->assertStringContainsString(sprintf('New encryption key written to ROOTPATH%s.env.', DIRECTORY_SEPARATOR), $io->getOutput());
     }
 
     #[PreserveGlobalState(false)]
@@ -279,19 +278,20 @@ final class GenerateKeyTest extends CIUnitTestCase
         $this->assertNotSame('', $key);
 
         $this->resetStreamFilterBuffer();
-
         command('key:generate --no-interaction');
 
         $this->assertSame($key, env('encryption.key', ''), 'Existing key should not change.');
-        $this->assertStringContainsString('Setting new encryption key aborted.', $this->getBuffer());
-        $this->assertStringContainsString('--force', $this->getBuffer());
+        $this->assertStringContainsString(
+            'Setting new encryption key aborted: pass --force to overwrite the existing key in non-interactive mode.',
+            $this->getStreamFilterBuffer(),
+        );
     }
 
     public function testKeyGenerateErrorsOnInvalidPrefixNonInteractively(): void
     {
         command('key:generate --prefix invalid --show --no-interaction');
 
-        $this->assertStringContainsString('Invalid prefix "invalid"', $this->getBuffer());
+        $this->assertStringContainsString('Invalid prefix "invalid"', $this->getStreamFilterBuffer());
     }
 
     public function testKeyGeneratePromptsForInvalidPrefix(): void
@@ -304,5 +304,21 @@ final class GenerateKeyTest extends CIUnitTestCase
 
         $this->assertStringContainsString('Please provide a valid prefix to use.', $io->getOutput());
         $this->assertStringContainsString('hex2bin:', $io->getOutput());
+    }
+
+    #[RequiresOperatingSystem('Linux|Darwin')]
+    public function testKeyGenerateErrorsWhenEnvFileIsNotWritable(): void
+    {
+        command('key:generate');
+        chmod($this->envPath, 0o444);
+
+        try {
+            $this->resetStreamFilterBuffer();
+            command('key:generate --force');
+
+            $this->assertStringContainsString(sprintf('Failed to write new encryption key to ROOTPATH%s.env.', DIRECTORY_SEPARATOR), $this->getStreamFilterBuffer());
+        } finally {
+            chmod($this->envPath, 0o644);
+        }
     }
 }
