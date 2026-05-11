@@ -30,6 +30,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use ReflectionException;
 use stdClass;
+use Tests\Support\Entity\ArrayObjectWithToArray;
 use Tests\Support\Entity\Cast\CastBase64;
 use Tests\Support\Entity\Cast\CastPassParameters;
 use Tests\Support\Entity\Cast\NotExtendsBaseCast;
@@ -2368,16 +2369,7 @@ final class EntityTest extends CIUnitTestCase
             ];
         };
 
-        /** @extends ArrayObject<string, string> */
-        $items = new class (['iterator' => 'original']) extends ArrayObject {
-            /**
-             * @return array<string, string>
-             */
-            public function toArray(): array
-            {
-                return ['array' => 'same'];
-            }
-        };
+        $items = new ArrayObjectWithToArray(['iterator' => 'original']);
 
         $entity->items = $items;
         $entity->syncOriginal();
