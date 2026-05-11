@@ -22,6 +22,13 @@ use Tests\Support\Test\TestForReflectionHelper;
 #[Group('Others')]
 final class ReflectionHelperTest extends CIUnitTestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        TestForReflectionHelper::resetStaticPrivate();
+    }
+
     public function testGetPrivatePropertyWithObject(): void
     {
         $obj    = new TestForReflectionHelper();

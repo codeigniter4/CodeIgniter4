@@ -50,6 +50,8 @@ final class HoneypotTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        $this->resetServices();
+        Factories::reset('config');
         Services::injectMock('superglobals', new Superglobals());
 
         $this->config   = new HoneypotConfig();

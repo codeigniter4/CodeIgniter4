@@ -291,11 +291,18 @@ final class TimeTest extends CIUnitTestCase
     public function testCreateFromTimestampWithMicroseconds(): void
     {
         $timestamp = 1489762800.654321;
+        $locale    = setlocale(LC_NUMERIC, '0');
 
-        // The timezone will be UTC if you don't specify.
-        $time = Time::createFromTimestamp($timestamp);
+        setlocale(LC_NUMERIC, 'de_DE.UTF-8', 'de_DE');
 
-        $this->assertSame('2017-03-17 15:00:00.654321', $time->format('Y-m-d H:i:s.u'));
+        try {
+            // The timezone will be UTC if you don't specify.
+            $time = Time::createFromTimestamp($timestamp);
+
+            $this->assertSame('2017-03-17 15:00:00.654321', $time->format('Y-m-d H:i:s.u'));
+        } finally {
+            setlocale(LC_NUMERIC, $locale);
+        }
     }
 
     public function testCreateFromTimestampWithTimezone(): void

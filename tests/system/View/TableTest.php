@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\View;
 
-use CodeIgniter\Database\MySQLi\Result;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockTable;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -774,7 +773,7 @@ final class TableTest extends CIUnitTestCase
         $this->table->setHeading('Name', 'Color', 'Size');
         $this->table->addRow('Fred', '<strong>Blue</strong>', 'Small');
 
-        $this->table->function = 'ticklemyfancy';
+        $this->table->function = 'ticklemyfancy'; // @phpstan-ignore assign.propertyType (needed for testing)
 
         $generated = $this->table->generate();
 
@@ -886,31 +885,5 @@ final class TableTest extends CIUnitTestCase
         $this->assertStringContainsString('<td>codigo1</td><td>2023-10-16 21:53:25</td><td>NENHUM</td><td></td>', $generated);
         $this->assertStringContainsString('<td>codigo2</td><td>2023-10-16 21:53:25</td><td>REAL</td><td>10</td>', $generated);
         $this->assertStringContainsString('<td>codigo3</td><td>2023-10-16 21:53:25</td><td>PERCENTUAL</td><td>10</td>', $generated);
-    }
-}
-
-// We need this for the _set_from_db_result() test
-class DBResultDummy extends Result
-{
-    public function getFieldNames(): array
-    {
-        return [
-            'name',
-            'email',
-        ];
-    }
-
-    public function getResultArray(): array
-    {
-        return [
-            [
-                'name'  => 'John Doe',
-                'email' => 'john@doe.com',
-            ],
-            [
-                'name'  => 'Foo Bar',
-                'email' => 'foo@bar.com',
-            ],
-        ];
     }
 }

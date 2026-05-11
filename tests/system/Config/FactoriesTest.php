@@ -244,7 +244,7 @@ final class FactoriesTest extends CIUnitTestCase
     {
         Factories::setOptions('widgets', ['instanceOf' => 'stdClass']);
 
-        $result = Factories::widgets('OtherWidget', ['instanceOf' => null]);
+        $result = Factories::widgets(OtherWidget::class, ['instanceOf' => null]);
         $this->assertInstanceOf(OtherWidget::class, $result);
     }
 

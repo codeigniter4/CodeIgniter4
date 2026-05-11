@@ -212,7 +212,7 @@ class DownloadResponse extends Response implements NonBufferedResponseInterface
      * Sets the Content Type header for this response with the mime type
      * and, optionally, the charset.
      *
-     * @return ResponseInterface
+     * @return $this
      */
     public function setContentType(string $mime, string $charset = 'UTF-8')
     {
@@ -282,7 +282,7 @@ class DownloadResponse extends Response implements NonBufferedResponseInterface
     /**
      * output download file text.
      *
-     * @return DownloadResponse
+     * @return $this
      *
      * @throws DownloadException
      */
@@ -302,7 +302,7 @@ class DownloadResponse extends Response implements NonBufferedResponseInterface
     /**
      * output download text by file.
      *
-     * @return DownloadResponse
+     * @return $this
      */
     private function sendBodyByFilePath()
     {
@@ -320,7 +320,7 @@ class DownloadResponse extends Response implements NonBufferedResponseInterface
     /**
      * output download text by binary
      *
-     * @return DownloadResponse
+     * @return $this
      */
     private function sendBodyByBinary()
     {

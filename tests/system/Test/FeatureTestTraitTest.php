@@ -671,6 +671,10 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $config->autoRoute = true;
         Factories::injectMock('config', Routing::class, $config);
 
+        $collection = service('routes');
+        $collection->setAutoRoute(true);
+        $collection->setDefaultNamespace('App\Controllers');
+
         $response = $this->get('home/index');
 
         $response->assertOK();

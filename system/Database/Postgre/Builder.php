@@ -14,7 +14,9 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\Postgre;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Query;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use TypeError;
@@ -65,7 +67,7 @@ class Builder extends BaseBuilder
      *
      * @param string $direction ASC, DESC or RANDOM
      *
-     * @return BaseBuilder
+     * @return $this
      */
     public function orderBy(string $orderBy, string $direction = '', ?bool $escape = null)
     {
@@ -179,7 +181,7 @@ class Builder extends BaseBuilder
      *
      * @param array|null $set An associative array of insert values
      *
-     * @return mixed
+     * @return BaseResult|false|Query|string
      *
      * @throws DatabaseException
      */
@@ -266,7 +268,7 @@ class Builder extends BaseBuilder
      *
      * @param mixed $where
      *
-     * @return mixed
+     * @return bool|string
      *
      * @throws DatabaseException
      */
@@ -344,7 +346,7 @@ class Builder extends BaseBuilder
      *
      * @param RawSql|string $cond
      *
-     * @return BaseBuilder
+     * @return $this
      */
     public function join(string $table, $cond, string $type = '', ?bool $escape = null)
     {

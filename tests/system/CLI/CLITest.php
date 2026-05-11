@@ -681,6 +681,28 @@ final class CLITest extends CIUnitTestCase
     #[RequiresOperatingSystem('Darwin|Linux')]
     public function testGenerateDimensionsDoesNotLeakSttyErrorToStderr(): void
     {
+        $this->assertSame('', $this->captureGenerateDimensionsStderr());
+    }
+
+    #[RequiresOperatingSystem('Darwin|Linux')]
+    public function testGenerateDimensionsDoesNotLeakTputErrorToStderrWhenTermIsUnset(): void
+    {
+        $env = getenv();
+        unset($env['TERM']);
+
+        $this->assertSame('', $this->captureGenerateDimensionsStderr($env));
+    }
+
+    /**
+     * Spawns a child PHP process that calls `CLI::generateDimensions()` with
+     * `STDIN` pointed at `/dev/null` (forcing the non-TTY code path), and
+     * returns whatever it wrote to stderr.
+     *
+     * @param array<string, string>|null $env Environment for the child process.
+     *                                        `null` inherits the parent env.
+     */
+    private function captureGenerateDimensionsStderr(?array $env = null): string
+    {
         $code = <<<'PHP'
             require __DIR__ . '/system/Test/bootstrap.php';
             CodeIgniter\CLI\CLI::generateDimensions();
@@ -693,6 +715,7 @@ final class CLITest extends CIUnitTestCase
             [1 => ['pipe', 'w'], 2 => ['pipe', 'w']],
             $pipes,
             ROOTPATH,
+            $env,
         );
         $this->assertIsResource($proc);
 
@@ -702,7 +725,7 @@ final class CLITest extends CIUnitTestCase
         fclose($pipes[2]);
         proc_close($proc);
 
-        $this->assertSame('', $stderr);
+        return $stderr;
     }
 
     /**

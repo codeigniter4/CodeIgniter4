@@ -28,6 +28,11 @@ class TestForReflectionHelper
         return self::$static_private;
     }
 
+    public static function resetStaticPrivate(): void
+    {
+        self::$static_private = 'xyz';
+    }
+
     private function privateMethod($param1, $param2) // @phpstan-ignore method.unused
     {
         return 'private ' . $param1 . $param2;

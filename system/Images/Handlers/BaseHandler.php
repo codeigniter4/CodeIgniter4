@@ -243,7 +243,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @param bool $maintainRatio If true, will get the closest match possible while keeping aspect ratio true.
      *
-     * @return BaseHandler
+     * @return $this
      */
     public function resize(int $width, int $height, bool $maintainRatio = false, string $masterDim = 'auto')
     {
@@ -537,7 +537,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *  - bottom
      *  - bottom-right
      *
-     * @return BaseHandler
+     * @return $this
      */
     public function fit(int $width, ?int $height = null, string $position = 'center')
     {

@@ -745,7 +745,7 @@ class Router implements RouterInterface
     }
 
     /**
-     * @param callable|string $handler
+     * @param (callable(mixed...): (ResponseInterface|string|void))|string $handler
      */
     protected function setMatchedRoute(string $route, $handler): void
     {

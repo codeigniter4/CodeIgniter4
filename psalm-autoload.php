@@ -24,7 +24,7 @@ foreach ($directories as $directory) {
     $iterator = new RecursiveIteratorIterator(
         new RecursiveDirectoryIterator(
             $directory,
-            RecursiveDirectoryIterator::UNIX_PATHS | RecursiveDirectoryIterator::CURRENT_AS_FILEINFO,
+            RecursiveDirectoryIterator::UNIX_PATHS | RecursiveDirectoryIterator::CURRENT_AS_FILEINFO | FilesystemIterator::SKIP_DOTS,
         ),
         RecursiveIteratorIterator::CHILD_FIRST,
     );

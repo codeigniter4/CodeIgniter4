@@ -1,4 +1,4 @@
-# total 29 errors
+# total 28 errors
 
 parameters:
     ignoreErrors:
@@ -96,8 +96,3 @@ parameters:
             message: '#^Property CodeIgniter\\View\\ParserPluginTest\:\:\$validator \(CodeIgniter\\Validation\\Validation\) does not accept CodeIgniter\\Validation\\ValidationInterface\.$#'
             count: 1
             path: ../../tests/system/View/ParserPluginTest.php
-
-        -
-            message: '#^Property CodeIgniter\\View\\Table\:\:\$function \(\(callable\(\)\: mixed\)\|null\) does not accept ''ticklemyfancy''\.$#'
-            count: 1
-            path: ../../tests/system/View/TableTest.php

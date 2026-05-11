@@ -14,8 +14,10 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\SQLSRV;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Database\Query;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Database\ResultInterface;
 use CodeIgniter\Exceptions\InvalidArgumentException;
@@ -400,7 +402,7 @@ class Builder extends BaseBuilder
     /**
      * Compiles a replace into string and runs the query
      *
-     * @return mixed
+     * @return BaseResult|false|Query|string
      *
      * @throws DatabaseException
      */
@@ -504,7 +506,7 @@ class Builder extends BaseBuilder
      *
      * Handle float return value
      *
-     * @return BaseBuilder
+     * @return $this
      */
     protected function maxMinAvgSum(string $select = '', string $alias = '', string $type = 'MAX')
     {
@@ -580,7 +582,7 @@ class Builder extends BaseBuilder
      *
      * @param mixed $where
      *
-     * @return mixed
+     * @return bool|string
      *
      * @throws DatabaseException
      */

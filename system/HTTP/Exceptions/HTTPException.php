@@ -23,7 +23,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
     /**
      * For CurlRequest
      *
-     * @return HTTPException
+     * @return static
      *
      * @codeCoverageIgnore
      */
@@ -35,7 +35,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
     /**
      * For CurlRequest
      *
-     * @return HTTPException
+     * @return static
      */
     public static function forSSLCertNotFound(string $cert)
     {
@@ -45,7 +45,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
     /**
      * For CurlRequest
      *
-     * @return HTTPException
+     * @return static
      */
     public static function forInvalidSSLKey(string $key)
     {
@@ -190,7 +190,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
     /**
      * For Uploaded file move
      *
-     * @return HTTPException
+     * @return static
      */
     public static function forAlreadyMoved()
     {
@@ -200,7 +200,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
     /**
      * For Uploaded file move
      *
-     * @return HTTPException
+     * @return static
      */
     public static function forInvalidFile(?string $path = null)
     {

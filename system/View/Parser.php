@@ -721,6 +721,8 @@ class Parser extends View
     /**
      * Makes a new plugin available during the parsing of the template.
      *
+     * @param (callable(array<int|string, string>): string)|(callable(string, array<int|string, string>): string) $callback
+     *
      * @return $this
      */
     public function addPlugin(string $alias, callable $callback, bool $isPair = false)

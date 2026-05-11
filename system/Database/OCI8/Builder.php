@@ -152,7 +152,7 @@ class Builder extends BaseBuilder
      *
      * @param mixed $where
      *
-     * @return mixed
+     * @return bool|string
      *
      * @throws DatabaseException
      */

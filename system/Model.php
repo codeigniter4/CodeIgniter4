@@ -88,6 +88,8 @@ use stdClass;
  * @method $this whereIn(?string $key = null, $values = null, ?bool $escape = null)
  * @method $this whereNotIn(?string $key = null, $values = null, ?bool $escape = null)
  *
+ * @phpstan-method $this when($condition, callable(BaseBuilder, mixed): mixed $callback, (callable(BaseBuilder): mixed)|null $defaultCallback = null)
+ * @phpstan-method $this whenNot($condition, callable(BaseBuilder, mixed): mixed $callback, (callable(BaseBuilder): mixed)|null $defaultCallback = null)
  * @phpstan-import-type row_array from BaseModel
  */
 class Model extends BaseModel

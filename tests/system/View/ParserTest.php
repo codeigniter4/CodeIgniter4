@@ -765,7 +765,7 @@ final class ParserTest extends CIUnitTestCase
 
     public function testCanAddAndRemovePlugins(): void
     {
-        $this->parser->addPlugin('first', static fn ($str) => $str);
+        $this->parser->addPlugin('first', static fn ($str): array|string => $str);
 
         $setParsers = $this->getPrivateProperty($this->parser, 'plugins');
 
