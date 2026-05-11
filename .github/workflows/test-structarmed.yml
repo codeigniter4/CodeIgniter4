@@ -49,7 +49,6 @@ jobs:
           - '8.2'
         include:
           - php-version: '8.5'
-            composer-option: '--ignore-platform-req=php'
 
     steps:
       - name: Checkout base branch for PR
