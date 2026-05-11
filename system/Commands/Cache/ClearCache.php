@@ -48,12 +48,12 @@ class ClearCache extends AbstractCommand
         $config->handler = $driver;
 
         if (! service('cache', $config)->clean()) {
-            CLI::error('Error occurred while clearing the cache.');
+            CLI::error(sprintf('Error occurred while clearing the cache using the "%s" driver.', $driver));
 
             return EXIT_ERROR;
         }
 
-        CLI::write('Cache cleared.', 'green');
+        CLI::write(sprintf('Cache cleared using the "%s" driver.', $driver), 'green');
 
         return EXIT_SUCCESS;
     }

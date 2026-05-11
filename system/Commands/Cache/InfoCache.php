@@ -30,7 +30,10 @@ class InfoCache extends AbstractCommand
         $config = config(Cache::class);
 
         if ($config->handler !== 'file') {
-            CLI::error('This command only supports the file cache handler.');
+            CLI::error(sprintf(
+                'This command only supports the file cache handler. The configured handler is "%s".',
+                $config->handler,
+            ));
 
             return EXIT_ERROR;
         }

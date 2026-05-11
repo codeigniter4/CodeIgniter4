@@ -75,7 +75,7 @@ final class ClearDebugbarTest extends CIUnitTestCase
         $this->assertFileDoesNotExist(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$this->time}.json");
         $this->assertFileExists(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . 'index.html');
         $this->assertSame(
-            "\nDebugbar cleared.\n",
+            sprintf("\nCleared debugbar JSON files in \"%s\".\n", clean_path(WRITEPATH . 'debugbar')),
             preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()),
         );
     }
@@ -95,7 +95,7 @@ final class ClearDebugbarTest extends CIUnitTestCase
 
         $this->assertFileExists($path);
         $this->assertSame(
-            "\nError deleting the debugbar JSON files.\n",
+            sprintf("\nError deleting the debugbar JSON files in \"%s\".\n", clean_path(WRITEPATH . 'debugbar')),
             preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()),
         );
     }

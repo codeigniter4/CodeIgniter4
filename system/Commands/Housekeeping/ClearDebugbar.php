@@ -27,13 +27,15 @@ class ClearDebugbar extends AbstractCommand
     {
         helper('filesystem');
 
+        $path = clean_path(WRITEPATH . 'debugbar');
+
         if (! delete_files(WRITEPATH . 'debugbar', htdocs: true)) {
-            CLI::error('Error deleting the debugbar JSON files.');
+            CLI::error(sprintf('Error deleting the debugbar JSON files in "%s".', $path));
 
             return EXIT_ERROR;
         }
 
-        CLI::write('Debugbar cleared.', 'green');
+        CLI::write(sprintf('Cleared debugbar JSON files in "%s".', $path), 'green');
 
         return EXIT_SUCCESS;
     }

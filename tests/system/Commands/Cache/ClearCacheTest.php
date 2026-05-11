@@ -66,7 +66,10 @@ final class ClearCacheTest extends CIUnitTestCase
         command('cache:clear');
 
         $this->assertNull(cache('foo'));
-        $this->assertStringContainsString('Cache cleared.', $this->getStreamFilterBuffer());
+        $this->assertStringContainsString(
+            sprintf('Cache cleared using the "%s" driver.', config('Cache')->handler),
+            $this->getStreamFilterBuffer(),
+        );
     }
 
     public function testClearCacheFails(): void
@@ -82,7 +85,7 @@ final class ClearCacheTest extends CIUnitTestCase
         command('cache:clear');
 
         $this->assertSame(
-            "\nError occurred while clearing the cache.\n",
+            sprintf("\nError occurred while clearing the cache using the \"%s\" driver.\n", config('Cache')->handler),
             preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()),
         );
     }
