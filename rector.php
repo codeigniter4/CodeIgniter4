@@ -71,6 +71,7 @@ return RectorConfig::configure()
         __DIR__ . '/tests',
         __DIR__ . '/utils/src',
     ])
+    ->withRootFiles()
     // do you need to include constants, class aliases or custom autoloader? files listed will be executed
     ->withBootstrapFiles([
         __DIR__ . '/phpstan-bootstrap.php',
