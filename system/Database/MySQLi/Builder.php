@@ -59,6 +59,24 @@ class Builder extends BaseBuilder
     }
 
     /**
+     * Compile the SELECT lock clause.
+     */
+    protected function compileLockForUpdate(): string
+    {
+        if (! $this->QBLockForUpdate) {
+            return '';
+        }
+
+        foreach ($this->QBFrom as $value) {
+            if (str_starts_with($value, '(SELECT')) {
+                throw new DatabaseException('MySQLi does not support lockForUpdate() with fromSubquery().');
+            }
+        }
+
+        return parent::compileLockForUpdate();
+    }
+
+    /**
      * Generates a platform-specific batch update string from the supplied data
      */
     protected function _updateBatch(string $table, array $keys, array $values): string

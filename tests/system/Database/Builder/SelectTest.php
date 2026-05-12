@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\Builder;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Database\MySQLi\Builder as MySQLiBuilder;
 use CodeIgniter\Database\OCI8\Builder as OCI8Builder;
 use CodeIgniter\Database\Postgre\Builder as PostgreBuilder;
 use CodeIgniter\Database\RawSql;
@@ -438,6 +439,21 @@ final class SelectTest extends CIUnitTestCase
         $this->expectExceptionMessage('Query Builder does not support lockForUpdate() with union() or unionAll().');
 
         $builder->union(new SQLSRVBuilder('jobs', $this->db))->lockForUpdate()->getCompiledSelect();
+    }
+
+    public function testLockForUpdateThrowsExceptionOnMySQLiSubquery(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'MySQLi']);
+
+        $subquery = new MySQLiBuilder('users', $this->db);
+        $builder  = new MySQLiBuilder('jobs', $this->db);
+
+        $builder->fromSubquery($subquery, 'users_1');
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('MySQLi does not support lockForUpdate() with fromSubquery().');
+
+        $builder->lockForUpdate()->getCompiledSelect();
     }
 
     public function testLockForUpdateWithOCI8(): void

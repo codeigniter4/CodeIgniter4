@@ -783,6 +783,10 @@ Some databases restrict which query shapes can be used with row locking. When
 CodeIgniter can detect an unsupported combination, it throws a
 ``DatabaseException``. See the following warnings for driver-specific behavior.
 
+.. warning:: MySQLi does not support ``lockForUpdate()`` with ``fromSubquery()``
+    because an outer locking read on a derived table does not lock the underlying
+    rows as users may expect.
+
 .. warning:: Postgre does not support ``lockForUpdate()`` with ``distinct()``,
     ``groupBy()``, ``having()``, or aggregate helper selections such as
     ``selectCount()``.
