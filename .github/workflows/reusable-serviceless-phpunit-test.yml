@@ -65,13 +65,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y imagemagick libmagickwand-dev ghostscript poppler-data libjbig2dec0:amd64 libopenjp2-7:amd64
 
-      - name: Checkout base branch for PR
-        if: github.event_name == 'pull_request'
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          ref: ${{ github.base_ref }}
-          persist-credentials: false
-
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
