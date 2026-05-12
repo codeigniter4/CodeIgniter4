@@ -341,6 +341,7 @@ A warning message is displayed when using the old <code class="docutils literal 
 <li><p><strong>Toolbar:</strong> Fixed a bug where the Logs collector raised an undefined property error when using a third-party PSR-3 logger.</p></li>
 <li><p><strong>Time:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">Time::createFromTimestamp()</span></code> could fail for microsecond timestamps when <code class="docutils literal notranslate"><span class="pre">LC_NUMERIC</span></code> used a comma decimal separator.</p></li>
 <li><p><strong>Validation:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">Validation::getValidated()</span></code> dropped fields whose validated value was explicitly <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p></li>
+<li><p><strong>Worker Mode:</strong> Fixed a bug where the <code class="docutils literal notranslate"><span class="pre">frankenphp-worker.php</span></code> template caused a <code class="docutils literal notranslate"><span class="pre">Cannot</span> <span class="pre">redeclare</span> <span class="pre">class</span> <span class="pre">Config\Paths</span></code> fatal error when FrankenPHP’s watcher re-executed the worker script after a watched file changed.</p></li>
 </ul>
 <p>See the repo’s
 <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a>
@@ -360,7 +361,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 11, 2026.
+      <span class="lastupdated">Last updated on May 12, 2026.
       </span></p>
   </div>
 
