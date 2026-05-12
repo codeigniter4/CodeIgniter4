@@ -105,10 +105,10 @@ side effects such as queued jobs, emails, cache invalidation, or external API
 calls, register them with ``afterCommit()`` so they run only after the transaction
 commits.
 
-When ``DBDebug`` is ``false`` and a failed query returns ``false`` instead of
-throwing, inspect ``getLastException()`` immediately after the failed operation.
-It will contain the ``RetryableTransactionException`` instance when the driver
-classifies the failure as retryable.
+When ``DBDebug`` is ``false`` and a failed query or prepared query returns
+``false`` instead of throwing, inspect ``getLastException()`` immediately after
+the failed operation. It will contain the ``RetryableTransactionException``
+instance when the driver classifies the failure as retryable.
 
 Strict Mode
 ===========

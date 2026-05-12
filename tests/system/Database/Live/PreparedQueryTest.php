@@ -15,6 +15,7 @@ namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Exceptions\UniqueConstraintViolationException;
 use CodeIgniter\Database\Query;
 use CodeIgniter\Database\ResultInterface;
 use CodeIgniter\Exceptions\BadMethodCallException;
@@ -222,12 +223,31 @@ final class PreparedQueryTest extends CIUnitTestCase
         $this->disableDBDebug();
 
         $this->assertTrue($this->query->execute('foo1', 'bar'));
+        $this->assertNotInstanceOf(DatabaseException::class, $this->db->getLastException());
+
         $this->assertFalse($this->query->execute('foo1', 'baz'));
+
+        $exception = $this->db->getLastException();
+        $this->assertInstanceOf(UniqueConstraintViolationException::class, $exception);
 
         $this->enableDBDebug();
 
         $this->seeInDatabase($this->db->DBPrefix . 'without_auto_increment', ['key' => 'foo1', 'value' => 'bar']);
         $this->dontSeeInDatabase($this->db->DBPrefix . 'without_auto_increment', ['key' => 'foo1', 'value' => 'baz']);
+    }
+
+    public function testExecuteThrowsUniqueConstraintViolationException(): void
+    {
+        $this->query = $this->db->prepare(static fn ($db) => $db->table('without_auto_increment')->insert([
+            'key'   => 'a',
+            'value' => 'b',
+        ]));
+
+        $this->assertTrue($this->query->execute('foo1', 'bar'));
+
+        $this->expectException(UniqueConstraintViolationException::class);
+
+        $this->query->execute('foo1', 'baz');
     }
 
     public function testExecuteRunsQueryManualAndReturnsFalse(): void

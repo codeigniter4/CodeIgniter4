@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Tests\Support\Mock;
 
 use CodeIgniter\Database\BasePreparedQuery;
+use Throwable;
 
 /**
  * @internal
@@ -22,7 +23,8 @@ use CodeIgniter\Database\BasePreparedQuery;
  */
 final class MockPreparedQuery extends BasePreparedQuery
 {
-    public string $preparedSql = '';
+    public string $preparedSql         = '';
+    public ?Throwable $thrownException = null;
 
     /**
      * @param array<string, mixed> $options
@@ -39,6 +41,10 @@ final class MockPreparedQuery extends BasePreparedQuery
      */
     public function _execute(array $data): bool
     {
+        if ($this->thrownException instanceof Throwable) {
+            throw $this->thrownException;
+        }
+
         return true;
     }
 

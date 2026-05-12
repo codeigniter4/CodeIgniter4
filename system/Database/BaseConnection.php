@@ -2143,6 +2143,16 @@ abstract class BaseConnection implements ConnectionInterface
     }
 
     /**
+     * Sets the exception for the last failed database operation.
+     *
+     * @internal This method is for internal database component use only.
+     */
+    public function setLastException(?DatabaseException $exception): void
+    {
+        $this->lastException = $exception;
+    }
+
+    /**
      * Checks whether the native database error represents a unique constraint violation.
      */
     protected function isUniqueConstraintViolation(int|string $code, string $message): bool
@@ -2160,8 +2170,10 @@ abstract class BaseConnection implements ConnectionInterface
 
     /**
      * Creates the appropriate database exception for a native database error.
+     *
+     * @internal This method is for internal database component use only.
      */
-    protected function createDatabaseException(
+    public function createDatabaseException(
         string $message,
         int|string $code = 0,
         ?Throwable $previous = null,

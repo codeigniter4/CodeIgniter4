@@ -120,7 +120,7 @@ class Connection extends BaseConnection
     protected function isUniqueConstraintViolation(int|string $code, string $message): bool
     {
         // ORA-00001: unique constraint violated.
-        return $code === 1;
+        return (int) $code === 1;
     }
 
     /**
@@ -128,7 +128,7 @@ class Connection extends BaseConnection
      */
     protected function isRetryableTransactionErrorCode(int|string $code): bool
     {
-        return in_array($code, [60, 8177], true);
+        return in_array((int) $code, [60, 8177], true);
     }
 
     /**

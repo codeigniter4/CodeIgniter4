@@ -65,12 +65,14 @@ class PreparedQuery extends BasePreparedQuery
         $this->statement = sqlsrv_prepare($this->db->connID, $sql, $parameters);
 
         if (! $this->statement) {
+            $info                    = $this->db->error();
+            $this->databaseException = $this->db->createDatabaseException($this->db->getAllErrorMessages(), $info['code']);
+
             if ($this->db->DBDebug) {
-                throw new DatabaseException($this->db->getAllErrorMessages());
+                throw $this->databaseException;
             }
 
-            $info              = $this->db->error();
-            $this->errorCode   = $info['code'];
+            $this->errorCode   = is_int($info['code']) ? $info['code'] : 0;
             $this->errorString = $info['message'];
         }
 
@@ -93,8 +95,16 @@ class PreparedQuery extends BasePreparedQuery
 
         $result = sqlsrv_execute($this->statement);
 
-        if ($result === false && $this->db->DBDebug) {
-            throw new DatabaseException($this->db->getAllErrorMessages());
+        if ($result === false) {
+            $error = $this->db->error();
+
+            $this->errorCode         = is_int($error['code']) ? $error['code'] : 0;
+            $this->errorString       = $this->db->getAllErrorMessages();
+            $this->databaseException = $this->db->createDatabaseException($this->errorString, $error['code']);
+
+            if ($this->db->DBDebug) {
+                throw $this->databaseException;
+            }
         }
 
         return $result;

@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\Postgre;
 
 use CodeIgniter\Database\BasePreparedQuery;
-use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Exceptions\BadMethodCallException;
 use Exception;
 use PgSql\Connection as PgSqlConnection;
@@ -70,7 +69,7 @@ class PreparedQuery extends BasePreparedQuery
             $this->errorString = pg_last_error($this->db->connID);
 
             if ($this->db->DBDebug) {
-                throw new DatabaseException($this->errorString . ' code: ' . $this->errorCode);
+                throw $this->db->createDatabaseException($this->errorString, $this->errorCode);
             }
         }
 
@@ -93,9 +92,53 @@ class PreparedQuery extends BasePreparedQuery
             }
         }
 
-        $this->result = pg_execute($this->db->connID, $this->name, $data);
+        $sent = pg_send_execute($this->db->connID, $this->name, $data);
 
-        return (bool) $this->result;
+        if ($sent === false || $sent === 0) {
+            $this->errorCode         = 0;
+            $this->errorString       = pg_last_error($this->db->connID);
+            $this->databaseException = $this->db->createDatabaseException($this->errorString, $this->errorCode);
+
+            return false;
+        }
+
+        $this->result = pg_get_result($this->db->connID);
+
+        if ($this->result === false) {
+            $this->errorCode         = 0;
+            $this->errorString       = pg_last_error($this->db->connID);
+            $this->databaseException = $this->db->createDatabaseException($this->errorString, $this->errorCode);
+
+            return false;
+        }
+
+        $lastResult   = $this->result;
+        $failedResult = pg_result_status($this->result) === PGSQL_FATAL_ERROR ? $this->result : null;
+
+        while (($next = pg_get_result($this->db->connID)) !== false) {
+            $lastResult = $next;
+
+            if (! $failedResult instanceof PgSqlResult && pg_result_status($next) === PGSQL_FATAL_ERROR) {
+                $failedResult = $next;
+            }
+        }
+
+        $this->result = $lastResult;
+
+        if ($failedResult instanceof PgSqlResult) {
+            $sqlstate                = (string) pg_result_error_field($failedResult, PGSQL_DIAG_SQLSTATE);
+            $this->errorCode         = 0;
+            $this->errorString       = (string) pg_result_error($failedResult);
+            $this->databaseException = $this->db->createDatabaseException($this->errorString, $sqlstate);
+
+            if ($this->db->DBDebug) {
+                throw $this->databaseException;
+            }
+
+            return false;
+        }
+
+        return true;
     }
 
     /**
