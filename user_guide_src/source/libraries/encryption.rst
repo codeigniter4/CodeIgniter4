@@ -252,6 +252,10 @@ Useful options:
 All three options are validated up-front, so an invalid value cannot leave the **.env** file
 half-rotated.
 
+.. warning:: ``key:rotate`` is not safe under concurrent execution. The command edits the
+    **.env** file without taking a file lock, so two operators (or two automation runs)
+    rotating at the same time can lose rotated-out keys.
+
 Padding
 =======
 

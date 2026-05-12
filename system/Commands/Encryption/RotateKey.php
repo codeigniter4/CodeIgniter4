@@ -115,7 +115,7 @@ class RotateKey extends AbstractCommand
 
         $keep = $options['keep'];
 
-        if (! is_numeric($keep) || (int) $keep < 0) {
+        if (! is_string($keep) || ! ctype_digit($keep)) {
             CLI::error('The --keep option must be a non-negative integer.');
 
             return EXIT_ERROR;
@@ -123,7 +123,7 @@ class RotateKey extends AbstractCommand
 
         $length = $options['length'];
 
-        if (! is_numeric($length) || (int) $length < 1) {
+        if (! is_string($length) || ! ctype_digit($length) || (int) $length < 1) {
             CLI::error('The --length option must be a positive integer.');
 
             return EXIT_ERROR;
@@ -136,10 +136,24 @@ class RotateKey extends AbstractCommand
         // key is preserved on disk).
         $envFile = ((new Paths())->envDirectory ?? ROOTPATH) . '.env'; // @phpstan-ignore nullCoalesce.property
 
+        if (! is_file($envFile)) {
+            CLI::error(sprintf('Cannot rotate: `.env` file not found at %s.', clean_path($envFile)));
+
+            return EXIT_ERROR;
+        }
+
+        if (! is_writable($envFile)) {
+            CLI::error(sprintf('Cannot rotate: `.env` file at %s is not writable.', clean_path($envFile)));
+
+            return EXIT_ERROR;
+        }
+
         if (! $this->writePreviousKeys($previousKeys, $envFile)) {
+            // @codeCoverageIgnoreStart
             CLI::error(sprintf('Failed to write `encryption.previousKeys` to %s.', clean_path($envFile)));
 
             return EXIT_ERROR;
+            // @codeCoverageIgnoreEnd
         }
 
         // Clear `encryption.previousKeys` from all env sources so the DotEnv
@@ -223,21 +237,13 @@ class RotateKey extends AbstractCommand
 
     /**
      * Replaces or inserts the `encryption.previousKeys` line in the `.env` file.
-     * `key:generate` is responsible for the file's existence and the
-     * `encryption.key` line; this method only touches `encryption.previousKeys`.
+     * The caller is responsible for ensuring `$envFile` exists and is writable;
+     * `key:generate` handles the `encryption.key` line.
      *
      * @param list<string> $previousKeys
      */
     private function writePreviousKeys(array $previousKeys, string $envFile): bool
     {
-        if (! is_file($envFile)) {
-            return false; // @codeCoverageIgnore
-        }
-
-        if (! is_writable($envFile)) {
-            return false;
-        }
-
         $contents = (string) file_get_contents($envFile);
         $value    = implode(',', $previousKeys);
 
@@ -260,8 +266,9 @@ class RotateKey extends AbstractCommand
         );
 
         if ($injected === $contents) {
-            // Fallback: append to the end. Shouldn't trigger because `key:generate`
-            // writes the `encryption.key` line just before this method runs.
+            // Fallback: append to the end. Reachable only when `encryption.key`
+            // is set via a non-`.env` source (e.g., server config / `putenv()`),
+            // so the regex cannot find it as a line in the file.
             $injected = $contents . "\nencryption.previousKeys = {$value}"; // @codeCoverageIgnore
         }
 

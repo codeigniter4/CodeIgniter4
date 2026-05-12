@@ -20,12 +20,15 @@ use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\StreamFilterTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RequiresOperatingSystem;
 use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 
 /**
  * @internal
  */
+#[CoversClass(RotateKey::class)]
 #[Group('Others')]
 final class RotateKeyTest extends CIUnitTestCase
 {
@@ -113,6 +116,7 @@ final class RotateKeyTest extends CIUnitTestCase
 
         $this->assertSame(
             <<<'EOT'
+
                 Encryption key rotated. 1 previous key retained for decryption fallback.
                 Re-encrypt existing data with the new key when ready.
 
@@ -140,6 +144,7 @@ final class RotateKeyTest extends CIUnitTestCase
 
         $this->assertSame(
             <<<'EOT'
+
                 Encryption key rotated. 3 previous keys retained for decryption fallback.
                 Re-encrypt existing data with the new key when ready.
 
@@ -396,6 +401,23 @@ final class RotateKeyTest extends CIUnitTestCase
         $this->assertSame(self::SEED_KEY, env('encryption.key'));
     }
 
+    public function testRotateRejectsFractionalKeepValue(): void
+    {
+        $this->seedEnv(self::SEED_KEY);
+
+        command('key:rotate --force --keep=3.5');
+
+        $this->assertSame(
+            <<<'EOT'
+
+                The --keep option must be a non-negative integer.
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
+        $this->assertSame(self::SEED_KEY, env('encryption.key'));
+    }
+
     public function testRotateRejectsNegativeLengthValue(): void
     {
         $this->seedEnv(self::SEED_KEY);
@@ -457,6 +479,57 @@ final class RotateKeyTest extends CIUnitTestCase
         $this->assertSame($envContentsBefore, (string) file_get_contents($this->envPath));
     }
 
+    public function testRotateRejectsFractionalLengthValue(): void
+    {
+        $this->seedEnv(self::SEED_KEY);
+        $envContentsBefore = (string) file_get_contents($this->envPath);
+
+        command('key:rotate --force --length=3.5');
+
+        $this->assertSame(
+            <<<'EOT'
+
+                The --length option must be a positive integer.
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
+        $this->assertSame(self::SEED_KEY, env('encryption.key'));
+        $this->assertSame($envContentsBefore, (string) file_get_contents($this->envPath));
+    }
+
+    public function testRotateErrorsWhenEnvFileIsMissing(): void
+    {
+        // No seedEnv() call: `.env` is absent. Populate the env var directly so
+        // the up-front `encryption.key` existence check passes.
+        putenv('encryption.key=' . self::SEED_KEY);
+        $_ENV['encryption.key'] = self::SEED_KEY;
+
+        command('key:rotate --force');
+
+        $this->assertStringContainsString('Cannot rotate: `.env` file not found at', $this->getUndecoratedBuffer());
+        $this->assertFileDoesNotExist($this->envPath, 'No `.env` file should have been created.');
+    }
+
+    #[RequiresOperatingSystem('Linux|Darwin')]
+    public function testRotateErrorsWhenEnvFileIsNotWritable(): void
+    {
+        $this->seedEnv(self::SEED_KEY);
+        $envContentsBefore = (string) file_get_contents($this->envPath);
+        chmod($this->envPath, 0o444);
+
+        try {
+            command('key:rotate --force');
+
+            $output = $this->getUndecoratedBuffer();
+            $this->assertStringContainsString('Cannot rotate: `.env` file at', $output);
+            $this->assertStringContainsString('is not writable', $output);
+            $this->assertSame($envContentsBefore, (string) file_get_contents($this->envPath));
+        } finally {
+            chmod($this->envPath, 0o644);
+        }
+    }
+
     public function testRotateIgnoresCommentMentioningPreviousKeysWhenInserting(): void
     {
         $envContents = "# encryption.previousKeys is for decryption fallback\nencryption.key = " . self::SEED_KEY . "\n";
@@ -513,30 +586,5 @@ final class RotateKeyTest extends CIUnitTestCase
             '`encryption.previousKeys` should be inserted on the line directly after an `export`-prefixed `encryption.key`.',
         );
         $this->assertSame(self::SEED_KEY, env('encryption.previousKeys'));
-    }
-
-    public function testRotateErrorsWhenEnvFileIsNotWritable(): void
-    {
-        $this->seedEnv(self::SEED_KEY);
-        chmod($this->envPath, 0o444);
-
-        try {
-            command('key:rotate --force');
-
-            $this->assertSame(
-                sprintf(
-                    <<<'EOT'
-
-                        Failed to write `encryption.previousKeys` to %s.
-
-                        EOT,
-                    clean_path($this->envPath),
-                ),
-                $this->getUndecoratedBuffer(),
-            );
-            $this->assertSame(self::SEED_KEY, env('encryption.key'));
-        } finally {
-            chmod($this->envPath, 0o644);
-        }
     }
 }
