@@ -39,7 +39,7 @@ class ClearLogs extends AbstractCommand
             return;
         }
 
-        if (CLI::prompt('Are you sure you want to delete the logs?', ['n', 'y']) === 'n') {
+        if (CLI::prompt(sprintf('Delete all log files in %s?', clean_path(WRITEPATH . 'logs')), ['n', 'y']) === 'n') {
             return;
         }
 
@@ -49,11 +49,13 @@ class ClearLogs extends AbstractCommand
     protected function execute(array $arguments, array $options): int
     {
         if ($options['force'] === false) {
-            CLI::error('Deleting logs aborted.');
+            if ($this->isInteractive()) {
+                CLI::write('Log deletion cancelled.', 'yellow');
 
-            if (! $this->isInteractive()) {
-                CLI::error('If you want, use the "--force" option to force delete all log files.');
+                return EXIT_SUCCESS;
             }
+
+            CLI::error('Log deletion aborted: pass --force to delete log files in non-interactive mode.');
 
             return EXIT_ERROR;
         }
@@ -61,12 +63,12 @@ class ClearLogs extends AbstractCommand
         helper('filesystem');
 
         if (! delete_files(WRITEPATH . 'logs', htdocs: true)) {
-            CLI::error('Error in deleting the logs files.');
+            CLI::error(sprintf('Failed to delete log files in %s.', clean_path(WRITEPATH . 'logs')));
 
             return EXIT_ERROR;
         }
 
-        CLI::write('Logs cleared.', 'green');
+        CLI::write(sprintf('Log files in %s cleared.', clean_path(WRITEPATH . 'logs')), 'green');
 
         return EXIT_SUCCESS;
     }
