@@ -273,6 +273,21 @@ To forward the caller's own input through to the target command, pass
 
 .. literalinclude:: cli_modern_commands/008.php
 
+.. _modern-commands-call-silently:
+
+Calling Silently
+================
+
+When a command delegates a step to another command but wants to emit its own
+consolidated message instead of letting the sub-command's output leak through,
+use ``$this->callSilently()``:
+
+.. literalinclude:: cli_modern_commands/012.php
+
+The sub-command's output is suppressed and ``$noInteractionOverride`` defaults
+to ``true``, since a silenced sub-command cannot meaningfully prompt. Pass an
+explicit value to override.
+
 **************
 Usage Examples
 **************
@@ -545,6 +560,16 @@ covered in the sections above and are not listed here.
 
         Invokes another modern command. The arguments and options go through
         bind and validate on the target command, just like a user invocation.
+
+    .. php:method:: callSilently(string $command[, array $arguments = [], array $options = [], ?bool $noInteractionOverride = true]): int
+
+        :param string    $command:                The name of the modern command to call.
+        :param array     $arguments:              Positional arguments to forward.
+        :param array     $options:                Options to forward, keyed by long name, shortcut, or negation.
+        :param bool|null $noInteractionOverride:  See :php:meth:`call`. Defaults to ``true``.
+        :returns:                                 The exit code returned by the called command.
+
+        Like :php:meth:`call`, but suppresses the sub-command's output.
 
     .. php:method:: getUnboundArguments(): array
 

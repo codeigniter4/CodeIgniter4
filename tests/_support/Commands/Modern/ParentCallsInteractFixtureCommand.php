@@ -33,8 +33,14 @@ final class ParentCallsInteractFixtureCommand extends AbstractCommand
      */
     public array $childOptions = [];
 
+    public bool $useCallSilently = false;
+
     protected function execute(array $arguments, array $options): int
     {
+        if ($this->useCallSilently) {
+            return $this->callSilently('test:probe', options: $this->childOptions, noInteractionOverride: $this->childNoInteractionOverride);
+        }
+
         return $this->call('test:probe', options: $this->childOptions, noInteractionOverride: $this->childNoInteractionOverride);
     }
 }

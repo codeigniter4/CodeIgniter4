@@ -1166,8 +1166,30 @@ class CLI
     }
 
     /**
-     * Testing purpose only
-     *
+     * @internal
+     */
+    public static function getLastWrite(): ?string
+    {
+        return static::$lastWrite;
+    }
+
+    /**
+     * @internal
+     */
+    public static function setLastWrite(?string $value): void
+    {
+        static::$lastWrite = $value;
+    }
+
+    /**
+     * @internal
+     */
+    public static function getInputOutput(): ?InputOutput
+    {
+        return static::$io;
+    }
+
+    /**
      * @internal
      */
     public static function setInputOutput(InputOutput $io): void
@@ -1176,8 +1198,6 @@ class CLI
     }
 
     /**
-     * Testing purpose only
-     *
      * @internal
      */
     public static function resetInputOutput(): void
