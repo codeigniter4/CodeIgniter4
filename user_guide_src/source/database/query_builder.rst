@@ -773,8 +773,10 @@ from modifying it first.
 
 .. literalinclude:: query_builder/124.php
 
-Use this method inside a database transaction. The exact locking behavior is
-determined by the database server and transaction isolation level.
+Use this method inside a database transaction. Without an explicit transaction,
+the lock is typically released when the ``SELECT`` statement finishes. The exact
+locking behavior is determined by the database server and transaction isolation
+level.
 
 This method is supported by the **MySQLi**, **Postgre**, **OCI8**, and
 **SQLSRV** drivers. Unsupported drivers throw a ``DatabaseException``.
