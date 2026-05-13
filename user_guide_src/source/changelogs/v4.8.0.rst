@@ -217,6 +217,7 @@ Database
 Query Builder
 -------------
 
+- Added ``whereBetween()``, ``orWhereBetween()``, ``whereNotBetween()``, and ``orWhereNotBetween()`` to Query Builder. See :ref:`query-builder-where-between`.
 - Added ``whereColumn()`` and ``orWhereColumn()`` to compare one column to another column while protecting identifiers by default. See :ref:`query-builder-where-column`.
 - Added ``whereExists()``, ``orWhereExists()``, ``whereNotExists()``, and ``orWhereNotExists()`` to add ``EXISTS`` and ``NOT EXISTS`` subquery conditions. See :ref:`query-builder-where-exists`.
 - Added new ``incrementMany()`` and ``decrementMany()`` methods to ``CodeIgniter\Database\BaseBuilder`` for performing bulk increment/decrement operations.
