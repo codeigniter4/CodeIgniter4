@@ -781,6 +781,54 @@ class BaseBuilder
     }
 
     /**
+     * Generates a WHERE EXISTS subquery.
+     *
+     * @param BaseBuilder|(Closure(BaseBuilder): BaseBuilder) $subquery
+     *
+     * @return $this
+     */
+    public function whereExists($subquery): static
+    {
+        return $this->whereExistsSubquery($subquery);
+    }
+
+    /**
+     * Generates an OR WHERE EXISTS subquery.
+     *
+     * @param BaseBuilder|(Closure(BaseBuilder): BaseBuilder) $subquery
+     *
+     * @return $this
+     */
+    public function orWhereExists($subquery): static
+    {
+        return $this->whereExistsSubquery($subquery, false, 'OR ');
+    }
+
+    /**
+     * Generates a WHERE NOT EXISTS subquery.
+     *
+     * @param BaseBuilder|(Closure(BaseBuilder): BaseBuilder) $subquery
+     *
+     * @return $this
+     */
+    public function whereNotExists($subquery): static
+    {
+        return $this->whereExistsSubquery($subquery, true);
+    }
+
+    /**
+     * Generates an OR WHERE NOT EXISTS subquery.
+     *
+     * @param BaseBuilder|(Closure(BaseBuilder): BaseBuilder) $subquery
+     *
+     * @return $this
+     */
+    public function orWhereNotExists($subquery): static
+    {
+        return $this->whereExistsSubquery($subquery, true, 'OR ');
+    }
+
+    /**
      * @used-by whereColumn()
      * @used-by orWhereColumn()
      *
@@ -837,6 +885,35 @@ class BaseBuilder
         }
 
         return [$first, '='];
+    }
+
+    /**
+     * @used-by whereExists()
+     * @used-by orWhereExists()
+     * @used-by whereNotExists()
+     * @used-by orWhereNotExists()
+     *
+     * @param BaseBuilder|(Closure(BaseBuilder): BaseBuilder) $subquery
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     */
+    protected function whereExistsSubquery($subquery, bool $not = false, string $type = 'AND '): static
+    {
+        if (! $this->isSubquery($subquery)) {
+            throw new InvalidArgumentException(sprintf('%s() expects $subquery to be of type BaseBuilder or closure', debug_backtrace(0, 2)[1]['function']));
+        }
+
+        $prefix   = $this->QBWhere === [] ? $this->groupGetType('') : $this->groupGetType($type);
+        $operator = $not ? 'NOT EXISTS' : 'EXISTS';
+
+        $this->QBWhere[] = [
+            'condition' => "{$prefix}{$operator} {$this->buildSubquery($subquery, true)}",
+            'escape'    => false,
+        ];
+
+        return $this;
     }
 
     /**
