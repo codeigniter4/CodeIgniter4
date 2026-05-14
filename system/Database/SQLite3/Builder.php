@@ -56,6 +56,18 @@ class Builder extends BaseBuilder
     ];
 
     /**
+     * Compile the SELECT lock clause.
+     */
+    protected function compileLockForUpdate(): string
+    {
+        if ($this->QBLockForUpdate) {
+            throw new DatabaseException('SQLite3 does not support lockForUpdate().');
+        }
+
+        return '';
+    }
+
+    /**
      * Replace statement
      *
      * Generates a platform-specific replace string from the supplied data

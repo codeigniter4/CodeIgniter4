@@ -33,6 +33,8 @@ use TypeError;
  */
 class Builder extends BaseBuilder
 {
+    private const LOCK_FOR_UPDATE_HINT = ' WITH (UPDLOCK, ROWLOCK)';
+
     /**
      * ORDER BY random keyword
      *
@@ -76,7 +78,13 @@ class Builder extends BaseBuilder
         $from = [];
 
         foreach ($this->QBFrom as $value) {
-            $from[] = str_starts_with($value, '(SELECT') ? $value : $this->getFullName($value);
+            if (str_starts_with($value, '(SELECT')) {
+                $from[] = $value;
+
+                continue;
+            }
+
+            $from[] = $this->getFullName($value) . ($this->QBLockForUpdate ? self::LOCK_FOR_UPDATE_HINT : '');
         }
 
         return implode(', ', $from);
@@ -677,7 +685,35 @@ class Builder extends BaseBuilder
             $sql = $this->_limit($sql . "\n");
         }
 
+        $sql .= $this->compileLockForUpdate();
+
         return $this->unionInjection($sql);
+    }
+
+    /**
+     * Compile the SELECT lock clause.
+     */
+    protected function compileLockForUpdate(): string
+    {
+        if (! $this->QBLockForUpdate) {
+            return '';
+        }
+
+        if ($this->QBFrom === []) {
+            throw new DatabaseException('SQLSRV does not support lockForUpdate() without a FROM table.');
+        }
+
+        if ($this->QBUnion !== []) {
+            throw new DatabaseException('Query Builder does not support lockForUpdate() with union() or unionAll().');
+        }
+
+        foreach ($this->QBFrom as $value) {
+            if (str_starts_with($value, '(SELECT')) {
+                throw new DatabaseException('SQLSRV does not support lockForUpdate() on subqueries.');
+            }
+        }
+
+        return '';
     }
 
     /**

@@ -214,6 +214,26 @@ class Builder extends BaseBuilder
     }
 
     /**
+     * Compile the SELECT lock clause.
+     */
+    protected function compileLockForUpdate(): string
+    {
+        if (! $this->QBLockForUpdate) {
+            return '';
+        }
+
+        if ($this->QBLimit !== false || $this->QBOffset) {
+            throw new DatabaseException('OCI8 does not support lockForUpdate() with limit() or offset().');
+        }
+
+        if ($this->QBDistinct || $this->QBGroupBy !== [] || $this->QBHaving !== [] || $this->QBSelectUsesAggregate) {
+            throw new DatabaseException('OCI8 does not support lockForUpdate() with distinct(), groupBy(), having(), or aggregate helper selections.');
+        }
+
+        return parent::compileLockForUpdate();
+    }
+
+    /**
      * Generates a platform-specific batch update string from the supplied data
      */
     protected function _updateBatch(string $table, array $keys, array $values): string

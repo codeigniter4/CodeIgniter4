@@ -753,6 +753,56 @@ As is in ``countAllResult()`` method, this method resets any field values that y
 to ``select()`` as well. If you need to keep them, you can pass ``false`` as the
 first parameter.
 
+.. _query-builder-lock-for-update:
+
+********************
+Pessimistic Locking
+********************
+
+Lock for Update
+===============
+
+$builder->lockForUpdate()
+-------------------------
+
+.. versionadded:: 4.8.0
+
+Adds a pessimistic write lock to a ``SELECT`` query. This is useful when a row
+must be read and then updated safely while other transactions are prevented
+from modifying it first.
+
+.. literalinclude:: query_builder/124.php
+
+Use this method inside a database transaction. Without an explicit transaction,
+the lock is typically released when the ``SELECT`` statement finishes. The exact
+locking behavior is determined by the database server and transaction isolation
+level.
+
+This method is supported by the **MySQLi**, **Postgre**, **OCI8**, and
+**SQLSRV** drivers. Unsupported drivers throw a ``DatabaseException``.
+``lockForUpdate()`` is not supported with ``union()`` or ``unionAll()``.
+Some databases restrict which query shapes can be used with row locking. When
+CodeIgniter can detect an unsupported combination, it throws a
+``DatabaseException``. See the following warnings for driver-specific behavior.
+
+.. warning:: MySQLi does not support ``lockForUpdate()`` with ``fromSubquery()``
+    because an outer locking read on a derived table does not lock the underlying
+    rows as users may expect.
+
+.. warning:: Postgre does not support ``lockForUpdate()`` with ``distinct()``,
+    ``groupBy()``, ``having()``, or aggregate helper selections such as
+    ``selectCount()``.
+
+.. warning:: SQLSRV uses SQL Server table hints instead of a trailing ``FOR UPDATE``
+    clause. The hint is applied to table references in the ``FROM`` clause;
+    joined tables are not hinted. Its exact lock granularity depends on SQL
+    Server's execution plan and transaction isolation level. SQLSRV does not
+    support ``lockForUpdate()`` without a ``FROM`` table or on subqueries.
+
+.. warning:: OCI8 does not support ``lockForUpdate()`` together with
+    ``limit()``, ``offset()``, ``distinct()``, ``groupBy()``, ``having()``, or
+    aggregate helper selections such as ``selectCount()``.
+
 .. _query-builder-union:
 
 *************
@@ -1428,6 +1478,13 @@ Class Reference
         :rtype:     ``\CodeIgniter\Database\ResultInterface``
 
         Same as ``get()``, but also allows the WHERE to be added directly.
+
+    .. php:method:: lockForUpdate()
+
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:   ``BaseBuilder``
+
+        Adds a pessimistic write lock to a ``SELECT`` query. See :ref:`query-builder-lock-for-update`.
 
     .. php:method:: select([$select = '*'[, $escape = null]])
 

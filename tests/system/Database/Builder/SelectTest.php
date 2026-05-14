@@ -14,8 +14,13 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Database\MySQLi\Builder as MySQLiBuilder;
+use CodeIgniter\Database\OCI8\Builder as OCI8Builder;
+use CodeIgniter\Database\Postgre\Builder as PostgreBuilder;
 use CodeIgniter\Database\RawSql;
+use CodeIgniter\Database\SQLite3\Builder as SQLite3Builder;
 use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
@@ -379,6 +384,242 @@ final class SelectTest extends CIUnitTestCase
         $expected = 'SELECT * FROM "test"."dbo"."users"';
 
         $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testLockForUpdate(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $builder->where('id', 1)->orderBy('id', 'ASC')->limit(1)->lockForUpdate();
+
+        $expected = 'SELECT * FROM "users" WHERE "id" = 1 ORDER BY "id" ASC  LIMIT 1 FOR UPDATE';
+
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testLockForUpdatePersistsWhenSelectIsNotReset(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $builder->lockForUpdate();
+
+        $expected = 'SELECT * FROM "users" FOR UPDATE';
+
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect(false)));
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect(false)));
+    }
+
+    public function testLockForUpdateResetsWithSelect(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $builder->lockForUpdate();
+
+        $this->assertSame('SELECT * FROM "users" FOR UPDATE', str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame('SELECT * FROM "users"', str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testLockForUpdateThrowsExceptionWithUnion(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('Query Builder does not support lockForUpdate() with union() or unionAll().');
+
+        $builder->union(new BaseBuilder('jobs', $this->db))->lockForUpdate()->getCompiledSelect();
+    }
+
+    public function testLockForUpdateThrowsExceptionWithSQLSRVUnion(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $builder = new SQLSRVBuilder('users', $this->db);
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('Query Builder does not support lockForUpdate() with union() or unionAll().');
+
+        $builder->union(new SQLSRVBuilder('jobs', $this->db))->lockForUpdate()->getCompiledSelect();
+    }
+
+    public function testLockForUpdateThrowsExceptionOnMySQLiSubquery(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'MySQLi']);
+
+        $subquery = new MySQLiBuilder('users', $this->db);
+        $builder  = new MySQLiBuilder('jobs', $this->db);
+
+        $builder->fromSubquery($subquery, 'users_1');
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('MySQLi does not support lockForUpdate() with fromSubquery().');
+
+        $builder->lockForUpdate()->getCompiledSelect();
+    }
+
+    public function testLockForUpdateWithOCI8(): void
+    {
+        $builder = new OCI8Builder('users', $this->db);
+
+        $expected = 'SELECT * FROM "users" FOR UPDATE';
+
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->lockForUpdate()->getCompiledSelect()));
+    }
+
+    public function testLockForUpdateThrowsExceptionWithOCI8Limit(): void
+    {
+        $builder = new OCI8Builder('users', $this->db);
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('OCI8 does not support lockForUpdate() with limit() or offset().');
+
+        $builder->limit(1)->lockForUpdate()->getCompiledSelect();
+    }
+
+    #[DataProvider('provideLockForUpdateUnsupportedSelectClauses')]
+    public function testLockForUpdateThrowsExceptionWithOCI8SelectClause(string $clause): void
+    {
+        $builder = new OCI8Builder('users', $this->db);
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('OCI8 does not support lockForUpdate() with distinct(), groupBy(), having(), or aggregate helper selections.');
+
+        $this->applyLockForUpdateUnsupportedClause($builder, $clause)
+            ->lockForUpdate()
+            ->getCompiledSelect();
+    }
+
+    public function testLockForUpdateWithPostgre(): void
+    {
+        $builder = new PostgreBuilder('users', $this->db);
+
+        $expected = 'SELECT * FROM "users" FOR UPDATE';
+
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->lockForUpdate()->getCompiledSelect()));
+    }
+
+    #[DataProvider('provideLockForUpdateUnsupportedSelectClauses')]
+    public function testLockForUpdateThrowsExceptionWithPostgreSelectClause(string $clause): void
+    {
+        $builder = new PostgreBuilder('users', $this->db);
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('Postgre does not support lockForUpdate() with distinct(), groupBy(), having(), or aggregate helper selections.');
+
+        $this->applyLockForUpdateUnsupportedClause($builder, $clause)
+            ->lockForUpdate()
+            ->getCompiledSelect();
+    }
+
+    /**
+     * @return iterable<string, list<string>>
+     */
+    public static function provideLockForUpdateUnsupportedSelectClauses(): iterable
+    {
+        yield 'distinct' => ['distinct'];
+
+        yield 'groupBy' => ['groupBy'];
+
+        yield 'having' => ['having'];
+
+        yield 'aggregate selection' => ['aggregate'];
+    }
+
+    private function applyLockForUpdateUnsupportedClause(BaseBuilder $builder, string $clause): BaseBuilder
+    {
+        return match ($clause) {
+            'distinct'  => $builder->distinct(),
+            'groupBy'   => $builder->groupBy('role'),
+            'having'    => $builder->having('COUNT(id) >', 1, false),
+            'aggregate' => $builder->selectCount('id'),
+            default     => throw new DatabaseException('Unsupported clause: ' . $clause),
+        };
+    }
+
+    public function testLockForUpdateThrowsExceptionOnSQLite3(): void
+    {
+        $builder = new SQLite3Builder('users', $this->db);
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('SQLite3 does not support lockForUpdate().');
+
+        $builder->lockForUpdate()->getCompiledSelect();
+    }
+
+    public function testLockForUpdateWithSQLSRV(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $builder = new SQLSRVBuilder('users', $this->db);
+
+        $expected = 'SELECT * FROM "test"."dbo"."users" WITH (UPDLOCK, ROWLOCK)';
+
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->lockForUpdate()->getCompiledSelect()));
+    }
+
+    public function testLockForUpdateWithSQLSRVAlias(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $builder = new SQLSRVBuilder('users u', $this->db);
+
+        $expected = 'SELECT * FROM "test"."dbo"."users" "u" WITH (UPDLOCK, ROWLOCK)';
+
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->lockForUpdate()->getCompiledSelect()));
+    }
+
+    public function testLockForUpdateWithSQLSRVLimit(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $builder = new SQLSRVBuilder('users', $this->db);
+
+        $builder->where('id', 1)->orderBy('id', 'ASC')->limit(1)->lockForUpdate();
+
+        $expected = 'SELECT * FROM "test"."dbo"."users" WITH (UPDLOCK, ROWLOCK) WHERE "id" = 1 ORDER BY "id" ASC  OFFSET 0  ROWS FETCH NEXT 1 ROWS ONLY';
+
+        $this->assertSame($expected, trim(str_replace("\n", ' ', $builder->getCompiledSelect())));
+    }
+
+    public function testLockForUpdateWithSQLSRVJoin(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $builder = new SQLSRVBuilder('jobs', $this->db);
+
+        $builder->join('users u', 'u.id = jobs.id', 'LEFT')->lockForUpdate();
+
+        $expected = 'SELECT * FROM "test"."dbo"."jobs" WITH (UPDLOCK, ROWLOCK) LEFT JOIN "test"."dbo"."users" "u" ON "u"."id" = "jobs"."id"';
+
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testLockForUpdateThrowsExceptionOnSQLSRVWithoutFromTable(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $builder = (new SQLSRVBuilder('users', $this->db))
+            ->from([], true)
+            ->select('1', false);
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('SQLSRV does not support lockForUpdate() without a FROM table.');
+
+        $builder->lockForUpdate()->getCompiledSelect();
+    }
+
+    public function testLockForUpdateThrowsExceptionOnSQLSRVSubquery(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $subquery = new SQLSRVBuilder('users', $this->db);
+        $builder  = new SQLSRVBuilder('jobs', $this->db);
+
+        $builder->fromSubquery($subquery, 'users_1');
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('SQLSRV does not support lockForUpdate() on subqueries.');
+
+        $builder->lockForUpdate()->getCompiledSelect();
     }
 
     public function testSelectSubquery(): void
