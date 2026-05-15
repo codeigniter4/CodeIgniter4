@@ -14,10 +14,13 @@ declare(strict_types=1);
 namespace CodeIgniter\Database;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use ErrorException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use Tests\Support\Mock\MockPreparedQuery;
 use Throwable;
 use TypeError;
 
@@ -713,6 +716,224 @@ final class BaseConnectionTest extends CIUnitTestCase
         $this->assertFalse($callbackRan);
     }
 
+    public function testTransactionRejectsInvalidAttempts(): void
+    {
+        $db = new MockConnection($this->options);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Transaction attempts must be a positive integer.');
+
+        $db->transaction(static function (): void {}, attempts: self::invalidTransactionAttempts());
+    }
+
+    public function testTransactionRetriesSuppressedRetryableQueryFailure(): void
+    {
+        $db = new class ($this->options) extends MockConnection {
+            public int $queries = 0;
+
+            public function query(string $sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = ''): bool
+            {
+                $this->queries++;
+
+                if ($this->queries === 1) {
+                    $exception = $this->createDatabaseException('Deadlock found when trying to get lock.', 1213);
+
+                    $this->setLastException($exception);
+                    $this->handleTransStatus($exception);
+
+                    return false;
+                }
+
+                return true;
+            }
+
+            protected function isRetryableTransactionErrorCode(int|string $code): bool
+            {
+                return $code === 1213;
+            }
+        };
+
+        $callbackRuns = 0;
+
+        $result = $db->transaction(static function (BaseConnection $connection) use (&$callbackRuns): string|false {
+            $callbackRuns++;
+            $result = $connection->query('INSERT INTO job (name) VALUES (\'Retried Job\')');
+
+            return $result === true ? 'committed' : false;
+        }, attempts: 2);
+
+        $this->assertSame('committed', $result);
+        $this->assertSame(2, $callbackRuns);
+        $this->assertSame(2, $db->queries);
+        $this->assertNotInstanceOf(DatabaseException::class, $db->getLastException());
+    }
+
+    public function testTransactionRetriesRetryableQueryFailureWhenTransExceptionRollsBack(): void
+    {
+        $db = new class ($this->options) extends MockConnection {
+            public int $queries = 0;
+
+            public function query(string $sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = '')
+            {
+                return BaseConnection::query($sql, $binds, $setEscapeFlags, $queryClass);
+            }
+
+            protected function execute(string $sql): object
+            {
+                $this->queries++;
+
+                if ($this->queries === 1) {
+                    throw $this->createDatabaseException('Deadlock found when trying to get lock.', 1213);
+                }
+
+                return (object) [];
+            }
+
+            protected function isRetryableTransactionErrorCode(int|string $code): bool
+            {
+                return $code === 1213;
+            }
+        };
+        $db->transException(true);
+
+        $callbackRuns = 0;
+
+        $result = $db->transaction(static function (BaseConnection $connection) use (&$callbackRuns): string {
+            $callbackRuns++;
+            $connection->query('INSERT INTO job (name) VALUES (\'Retried Job\')');
+
+            return 'committed';
+        }, attempts: 2);
+
+        $this->assertSame('committed', $result);
+        $this->assertSame(2, $callbackRuns);
+        $this->assertSame(2, $db->queries);
+        $this->assertSame(0, $db->transDepth);
+    }
+
+    public function testTransactionDoesNotRetrySuppressedNonRetryableQueryFailure(): void
+    {
+        $db = new class ($this->options) extends MockConnection {
+            public int $queries = 0;
+
+            public function query(string $sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = ''): bool
+            {
+                $this->queries++;
+                $this->handleTransStatus($this->createDatabaseException('Syntax error.', 1064));
+
+                return false;
+            }
+        };
+
+        $callbackRuns = 0;
+
+        $result = $db->transaction(static function (BaseConnection $connection) use (&$callbackRuns): string|false {
+            $callbackRuns++;
+            $result = $connection->query('INSERT INTO job (name) VALUES (\'Failed Job\')');
+
+            return $result === true ? 'not returned' : false;
+        }, attempts: 2);
+
+        $this->assertFalse($result);
+        $this->assertSame(1, $callbackRuns);
+        $this->assertSame(1, $db->queries);
+    }
+
+    public function testTransactionRetriesSuppressedRetryablePreparedQueryFailure(): void
+    {
+        $db = new class (array_merge($this->options, ['DBDebug' => false])) extends MockConnection {
+            protected function isRetryableTransactionErrorCode(int|string $code): bool
+            {
+                return $code === 1213;
+            }
+        };
+
+        $callbackRuns  = 0;
+        $preparedQuery = new MockPreparedQuery($db);
+        $preparedQuery->prepare('INSERT INTO job (name) VALUES (?)');
+
+        $result = $db->transaction(static function () use (&$callbackRuns, $preparedQuery): bool {
+            $callbackRuns++;
+            $preparedQuery->thrownException = $callbackRuns === 1
+                ? new ErrorException('Deadlock found when trying to get lock.', 1213)
+                : null;
+
+            return $preparedQuery->execute('Retried Job');
+        }, attempts: 2);
+
+        $this->assertTrue($result);
+        $this->assertSame(2, $callbackRuns);
+    }
+
+    public function testTransactionDoesNotRetryCallbackExceptionWhenRollbackFails(): void
+    {
+        $db = new class ($this->options) extends MockConnection {
+            protected function _transRollback(): bool
+            {
+                return false;
+            }
+
+            protected function isRetryableTransactionErrorCode(int|string $code): bool
+            {
+                return $code === 1213;
+            }
+        };
+
+        $callbackRuns = 0;
+
+        try {
+            $db->transaction(static function (BaseConnection $connection) use (&$callbackRuns): void {
+                $callbackRuns++;
+
+                throw $connection->createDatabaseException('Deadlock found when trying to get lock.', 1213);
+            }, attempts: 2);
+            $this->fail('Expected retryable transaction exception.');
+        } catch (DatabaseException $e) {
+            $this->assertSame('Deadlock found when trying to get lock.', $e->getMessage());
+        }
+
+        $this->assertSame(1, $callbackRuns);
+        $this->assertSame(1, $db->transDepth);
+    }
+
+    public function testTransactionDoesNotRetrySuppressedQueryFailureWhenRollbackFails(): void
+    {
+        $db = new class ($this->options) extends MockConnection {
+            public int $queries = 0;
+
+            public function query(string $sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = ''): bool
+            {
+                $this->queries++;
+                $this->handleTransStatus($this->createDatabaseException('Deadlock found when trying to get lock.', 1213));
+
+                return false;
+            }
+
+            protected function _transRollback(): bool
+            {
+                return false;
+            }
+
+            protected function isRetryableTransactionErrorCode(int|string $code): bool
+            {
+                return $code === 1213;
+            }
+        };
+
+        $callbackRuns = 0;
+
+        $result = $db->transaction(static function (BaseConnection $connection) use (&$callbackRuns): bool {
+            $callbackRuns++;
+
+            return $connection->query('INSERT INTO job (name) VALUES (\'Failed Job\')');
+        }, attempts: 2);
+
+        $this->assertFalse($result);
+        $this->assertSame(1, $callbackRuns);
+        $this->assertSame(1, $db->queries);
+        $this->assertSame(1, $db->transDepth);
+    }
+
     public function testTransactionRunsCallbackWhenTransactionsAreDisabled(): void
     {
         $db = new MockConnection($this->options);
@@ -750,5 +971,10 @@ final class BaseConnectionTest extends CIUnitTestCase
         };
 
         $this->assertTrue($db->callFunction('contains', 'CodeIgniter', 'Ignite'));
+    }
+
+    private static function invalidTransactionAttempts(): int
+    {
+        return 0;
     }
 }

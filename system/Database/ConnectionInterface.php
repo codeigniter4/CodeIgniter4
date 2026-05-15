@@ -144,10 +144,11 @@ interface ConnectionInterface
      * @template TReturn
      *
      * @param callable(self): TReturn $callback
+     * @param positive-int            $attempts
      *
      * @return false|TReturn
      */
-    public function transaction(callable $callback): mixed;
+    public function transaction(callable $callback, int $attempts = 1): mixed;
 
     /**
      * Returns an instance of the query builder for this connection.

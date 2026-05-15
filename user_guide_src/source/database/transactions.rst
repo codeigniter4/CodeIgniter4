@@ -72,7 +72,7 @@ If transactions are disabled, ``transaction()`` does not start a transaction.
 It runs the callback and returns the callback result.
 
 If the callback throws an exception, ``transaction()`` rolls back and rethrows
-the original exception.
+the original exception unless retry attempts remain, as described below.
 
 If an ``afterRollback()`` callback throws while ``transaction()`` is rolling
 back, that callback exception bubbles to the caller instead of the normal
@@ -81,6 +81,44 @@ back, that callback exception bubbles to the caller instead of the normal
 Callbacks registered with ``afterCommit()`` or ``afterRollback()`` inside the
 transaction callback follow the same rules as other transaction callbacks: they
 run only after the outermost transaction commits or rolls back.
+
+Retrying Transactions
+---------------------
+
+You may pass ``attempts`` when you want CodeIgniter to retry the whole
+transaction after retryable database concurrency failures, such as deadlocks or
+serialization failures. Retries happen when a ``RetryableTransactionException``
+occurs while the callback is running, including from query or prepared query
+execution:
+
+.. literalinclude:: transactions/016.php
+
+``attempts`` is the total number of times to try the transaction, including the
+first run, and must be greater than or equal to ``1``.
+
+Keep these rules in mind when using retry attempts:
+
+- The callback may run more than once, and retries run immediately without delay
+  or backoff.
+- Retries only apply when ``transaction()`` starts the outermost transaction. If
+  ``transaction()`` is called inside an active transaction, the callback runs
+  once using the existing nested transaction behavior.
+- Only ``RetryableTransactionException`` failures are retried. Other exceptions
+  are rolled back and rethrown without another attempt.
+- Retry attempts do not retry failures that are reported only while the
+  transaction is committing.
+- If an ``afterRollback()`` callback throws while a failed attempt is rolling
+  back, that callback exception bubbles to the caller and no further attempts are
+  made.
+
+Avoid non-transactional side effects inside callbacks that may be retried. For
+side effects such as queued jobs, emails, cache invalidation, events, or external
+API calls, register them with ``afterCommit()`` so they run only after the final
+successful commit.
+
+``afterRollback()`` callbacks may run for failed retry attempts even when a later
+attempt commits successfully, so use them only for cleanup that is safe to run
+per rolled-back attempt.
 
 .. _transactions-retryable-exceptions:
 
@@ -91,19 +129,20 @@ Classifying Retryable Transaction Failures
 
 Some database engines report transaction failures that may succeed when the
 entire transaction is attempted again, such as deadlocks or serialization
-failures. When a driver classifies a query execution failure as one of these
-retryable transaction failures, CodeIgniter throws
+failures. When a driver classifies a query or prepared query execution failure as
+one of these retryable transaction failures, CodeIgniter throws
 ``RetryableTransactionException`` so you can decide how your application should
 respond:
 
 .. literalinclude:: transactions/015.php
 
-This exception is only a classifier. CodeIgniter does not retry the transaction
-automatically. If you retry, run the whole transaction again. Avoid
-non-transactional side effects inside transaction bodies that may be retried. For
-side effects such as queued jobs, emails, cache invalidation, or external API
-calls, register them with ``afterCommit()`` so they run only after the transaction
-commits.
+``RetryableTransactionException`` is the classifier used by ``transaction()``
+retry attempts. If you are not using ``transaction()`` attempts, catch this
+exception and retry the whole transaction according to your application's policy.
+Avoid non-transactional side effects inside transaction bodies that may be
+retried. For side effects such as queued jobs, emails, cache invalidation, or
+external API calls, register them with ``afterCommit()`` so they run only after
+the transaction commits.
 
 When ``DBDebug`` is ``false`` and a failed query or prepared query returns
 ``false`` instead of throwing, inspect ``getLastException()`` immediately after

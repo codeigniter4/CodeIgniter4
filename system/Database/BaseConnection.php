@@ -18,6 +18,7 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\RetryableTransactionException;
 use CodeIgniter\Database\Exceptions\UniqueConstraintViolationException;
 use CodeIgniter\Events\Events;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\I18n\Time;
 use Exception;
 use ReflectionClass;
@@ -227,6 +228,11 @@ abstract class BaseConnection implements ConnectionInterface
      * this property is never set).
      */
     protected ?DatabaseException $lastException = null;
+
+    /**
+     * The first database exception that caused the current transaction to fail.
+     */
+    protected ?DatabaseException $transFailureException = null;
 
     /**
      * Connection ID
@@ -860,7 +866,7 @@ abstract class BaseConnection implements ConnectionInterface
             $query->setDuration($startTime, $startTime);
 
             // This will trigger a rollback if transactions are being used
-            $this->handleTransStatus();
+            $this->handleTransStatus($exception ?? $this->lastException);
 
             if (
                 $this->DBDebug
@@ -1082,44 +1088,67 @@ abstract class BaseConnection implements ConnectionInterface
      * @template TReturn
      *
      * @param callable(self): TReturn $callback
+     * @param positive-int            $attempts
      *
      * @return false|TReturn
      */
-    public function transaction(callable $callback): mixed
+    public function transaction(callable $callback, int $attempts = 1): mixed
     {
+        if ($attempts < 1) {
+            throw new InvalidArgumentException('Transaction attempts must be a positive integer.');
+        }
+
         if (! $this->transEnabled) {
             return $callback($this);
         }
 
-        if (! $this->transBegin()) {
-            return false;
-        }
+        $attempts = $this->transDepth === 0 ? $attempts : 1;
 
-        try {
-            $result = $callback($this);
-        } catch (Throwable $e) {
-            try {
-                $this->transRollback();
-            } catch (Throwable $rollbackException) {
-                log_message('error', 'Database: Transaction callback threw an exception before rollback failed: ' . $e);
-
-                throw $rollbackException;
-            } finally {
-                if ($this->transDepth > 0) {
-                    $this->transStatus = false;
-                } elseif ($this->transStrict === false) {
-                    $this->transStatus = true;
-                }
+        for ($attempt = 1; $attempt <= $attempts; $attempt++) {
+            if (! $this->transBegin()) {
+                return false;
             }
 
-            throw $e;
+            try {
+                $result = $callback($this);
+            } catch (Throwable $e) {
+                try {
+                    $this->transRollback();
+                } catch (Throwable $rollbackException) {
+                    log_message('error', 'Database: Transaction callback threw an exception before rollback failed: ' . $e);
+
+                    throw $rollbackException;
+                } finally {
+                    if ($this->transDepth > 0) {
+                        $this->transStatus = false;
+                    } elseif ($this->transStrict === false) {
+                        $this->transStatus = true;
+                    }
+                }
+
+                if ($this->transDepth === 0 && $e instanceof RetryableTransactionException && $attempt < $attempts) {
+                    $this->prepareTransactionRetry();
+
+                    continue;
+                }
+
+                throw $e;
+            }
+
+            if (! $this->transComplete()) {
+                if ($this->transDepth === 0 && $this->transFailureException instanceof RetryableTransactionException && $attempt < $attempts) {
+                    $this->prepareTransactionRetry();
+
+                    continue;
+                }
+
+                return false;
+            }
+
+            return $result;
         }
 
-        if (! $this->transComplete()) {
-            return false;
-        }
-
-        return $result;
+        return false;
     }
 
     /**
@@ -1145,7 +1174,8 @@ abstract class BaseConnection implements ConnectionInterface
         // Reset the transaction failure flag.
         // If the $testMode flag is set to TRUE transactions will be rolled back
         // even if the queries produce a successful result.
-        $this->transFailure = $testMode;
+        $this->transFailure          = $testMode;
+        $this->transFailureException = null;
 
         if ($this->_transBegin()) {
             $this->transDepth++;
@@ -1219,11 +1249,22 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @internal This method is for internal database component use only
      */
-    public function handleTransStatus(): void
+    public function handleTransStatus(?DatabaseException $exception = null): void
     {
         if ($this->transDepth !== 0) {
             $this->transStatus = false;
+            $this->transFailureException ??= $exception;
         }
+    }
+
+    /**
+     * Reset transaction state that should not leak into a retry attempt.
+     */
+    protected function prepareTransactionRetry(): void
+    {
+        $this->transStatus           = true;
+        $this->transFailureException = null;
+        $this->lastException         = null;
     }
 
     /**
