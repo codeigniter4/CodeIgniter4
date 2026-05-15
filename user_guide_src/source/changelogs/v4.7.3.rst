@@ -41,6 +41,7 @@ Bugs Fixed
 - **CLI:** Fixed a bug where ``CLI::generateDimensions()`` leaked ``tput`` error output (``tput: No value for $TERM and no -T specified``) to stderr when the ``stty`` fallback was reached and the ``TERM`` environment variable was not set.
 - **Commands:** Fixed a bug in the ``env`` command where passing options only would cause the command to throw a ``TypeError`` instead of showing the current environment.
 - **Commands:** Fixed a bug in ``key:generate`` command where the regex used to locate the ``encryption.key`` line was fooled by a comment containing the substring (silently writing nothing), and did not handle DotEnv's ``export encryption.key = ...`` syntax.
+- **Commands:** Fixed a bug in the ``serve`` command where the ``--host`` option was concatenated into the ``passthru()`` call without ``escapeshellarg()``, letting shell metacharacters in the locally-supplied argument be interpreted by ``/bin/sh``.
 - **Common:** Fixed a bug where the ``command()`` helper function did not properly clean up output buffers, which could lead to risky tests when exceptions were thrown.
 - **Database:** Fixed a bug where ``BaseConnection::listTables()`` could return a sparse array when using cached table names after a table was dropped.
 - **Database:** Fixed a bug where the PostgreSQL driver's ``increment()`` and ``decrement()`` methods were not working for numeric columns.

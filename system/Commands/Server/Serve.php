@@ -17,11 +17,7 @@ use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
 /**
- * Launch the PHP development server
- *
- * Not testable, as it throws phpunit for a loop :-/
- *
- * @codeCoverageIgnore
+ * Launch the PHP development server.
  */
 class Serve extends BaseCommand
 {
@@ -86,34 +82,43 @@ class Serve extends BaseCommand
     ];
 
     /**
-     * Run the server
+     * Run the server.
+     *
+     * @codeCoverageIgnore
      */
     public function run(array $params)
     {
-        // Collect any user-supplied options and apply them.
-        $php  = escapeshellarg(CLI::getOption('php') ?? PHP_BINARY);
+        $php  = CLI::getOption('php') ?? PHP_BINARY;
         $host = CLI::getOption('host') ?? 'localhost';
         $port = (int) (CLI::getOption('port') ?? 8080) + $this->portOffset;
 
-        // Get the party started.
         CLI::write('CodeIgniter development server started on http://' . $host . ':' . $port, 'green');
         CLI::write('Press Control-C to stop.');
 
-        // Set the Front Controller path as Document Root.
-        $docroot = escapeshellarg(FCPATH);
-
-        // Mimic Apache's mod_rewrite functionality with user settings.
-        $rewrite = escapeshellarg(SYSTEMPATH . 'rewrite.php');
-
-        // Call PHP's built-in webserver, making sure to set our
-        // base path to the public folder, and to use the rewrite file
-        // to ensure our environment is set and it simulates basic mod_rewrite.
-        passthru($php . ' -S ' . $host . ':' . $port . ' -t ' . $docroot . ' ' . $rewrite, $status);
+        passthru(
+            $this->buildServeCommand($php, $host, $port, FCPATH, SYSTEMPATH . 'rewrite.php'),
+            $status,
+        );
 
         if ($status !== EXIT_SUCCESS && $this->portOffset < $this->tries) {
             $this->portOffset++;
 
             $this->run($params);
         }
+    }
+
+    /**
+     * Builds the shell command passed to PHP's built-in webserver, escaping
+     * every user-influenced argument so it cannot be interpreted by /bin/sh.
+     */
+    protected function buildServeCommand(string $php, string $host, int $port, string $docroot, string $rewrite): string
+    {
+        return sprintf(
+            '%s -S %s -t %s %s',
+            escapeshellarg($php),
+            escapeshellarg($host . ':' . $port),
+            escapeshellarg($docroot),
+            escapeshellarg($rewrite),
+        );
     }
 }
