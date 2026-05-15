@@ -961,7 +961,7 @@ class BaseBuilder
      *
      * @throws InvalidArgumentException
      */
-    protected function whereBetweenHaving(string $qbKey, ?string $key = null, $values = null, bool $not = false, string $type = 'AND ', ?bool $escape = null): static
+    private function whereBetweenHaving(string $qbKey, ?string $key = null, $values = null, bool $not = false, string $type = 'AND ', ?bool $escape = null): static
     {
         if ($key === null || $key === '') {
             throw new InvalidArgumentException(sprintf('%s() expects $key to be a non-empty string', debug_backtrace(0, 2)[1]['function']));
@@ -973,10 +973,9 @@ class BaseBuilder
 
         $escape ??= $this->db->protectIdentifiers;
         $values = array_values($values);
-        $ok     = $key;
 
-        $lowerBind = $this->setBind($ok, $values[0], $escape);
-        $upperBind = $this->setBind($ok, $values[1], $escape);
+        $lowerBind = $this->setBind($key, $values[0], $escape);
+        $upperBind = $this->setBind($key, $values[1], $escape);
         $not       = $not ? ' NOT' : '';
         $prefix    = $this->{$qbKey} === [] ? $this->groupGetType('') : $this->groupGetType($type);
 
