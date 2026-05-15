@@ -45,6 +45,7 @@ Bugs Fixed
 - **Database:** Fixed a bug where ``BaseConnection::listTables()`` could return a sparse array when using cached table names after a table was dropped.
 - **Database:** Fixed a bug where the PostgreSQL driver's ``increment()`` and ``decrement()`` methods were not working for numeric columns.
 - **Database:** Fixed a bug where the SQLSRV driver's decrement method was adding instead of subtracting the decrement value when ``$castTextToInt`` was false.
+- **Config:** Fixed a bug where the app starter's ``zlib.output_compression`` guard rejected the valid disabled value ``Off``.
 - **Entity:** Fixed a bug where ``Entity::normalizeValue()`` did not handle ``UnitEnum`` before checking for ``toArray()``, causing enums implementing ``toArray()`` to be incorrectly normalized as generic objects instead of enums.
 - **Kint:** Fixed a bug where stale Content Security Policy nonces were reused in worker mode, causing browser CSP violations for Debug Toolbar assets.
 - **Language:** Fixed a bug where ``Language::getLine()`` returned the literal dot-notation key instead of the nested array value when the requested key resolved to an intermediate array three or more levels deep.
