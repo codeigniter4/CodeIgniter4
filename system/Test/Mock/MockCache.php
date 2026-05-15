@@ -18,10 +18,8 @@ use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Cache\Handlers\BaseHandler;
 use CodeIgniter\Cache\LockStoreInterface;
 use CodeIgniter\Cache\LockStoreProviderInterface;
-use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\I18n\Time;
 use PHPUnit\Framework\Assert;
-use ReflectionFunction;
 
 class MockCache extends BaseHandler implements CacheInterface, LockStoreProviderInterface
 {
@@ -85,22 +83,7 @@ class MockCache extends BaseHandler implements CacheInterface, LockStoreProvider
         $value = $callback();
 
         if (is_callable($ttl)) {
-            $ttlClosure = Closure::fromCallable($ttl);
-            $rf         = new ReflectionFunction($ttlClosure);
-            $params     = $rf->getNumberOfRequiredParameters();
-
-            if ($params === 0) {
-                /** @var Closure(): int $ttlClosure */
-                $ttl = $ttlClosure();
-            } elseif ($params === 1) {
-                /** @var Closure(mixed): int $ttlClosure */
-                $ttl = $ttlClosure($value);
-            } else {
-                throw new InvalidArgumentException(sprintf(
-                    'Argument #2 ($ttl) must accept 0 or 1 parameter, %d given.',
-                    $params,
-                ));
-            }
+            $ttl = $ttl($value);
         }
 
         $this->save($key, $value, $ttl);

@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache\Handlers;
 
+use ArgumentCountError;
 use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\Cache\LockStoreInterface;
 use CodeIgniter\Cache\LockStoreProviderInterface;
 use CodeIgniter\CLI\CLI;
-use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -147,8 +147,7 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
 
     public function testRememberWithTTLCallableAndMultipleParameters(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Argument #2 ($ttl) must accept 0 or 1 parameter, 2 given.');
+        $this->expectException(ArgumentCountError::class);
 
         /** @phpstan-ignore argument.type */
         $this->handler->remember(self::$key1, static fn ($a, $b): int => 2, static fn (): string => 'value');
