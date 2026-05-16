@@ -9,7 +9,7 @@ class Posts extends BaseController
     // Route parameters come first; FormRequest follows.
     public function update(int $id, UpdatePostRequest $request): string
     {
-        $data = $request->validated();
+        $data = $request->getValidated();
 
         // update post $id with $data
 

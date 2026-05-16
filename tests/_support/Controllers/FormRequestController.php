@@ -28,7 +28,7 @@ class FormRequestController extends Controller
      */
     public function index(string $id, ValidPostFormRequest $request, string $format = 'json'): string
     {
-        return json_encode(['id' => $id, 'format' => $format, 'data' => $request->validated()]);
+        return json_encode(['id' => $id, 'format' => $format, 'data' => $request->getValidated()]);
     }
 
     /**
@@ -36,7 +36,7 @@ class FormRequestController extends Controller
      */
     public function store(ValidPostFormRequest $request): string
     {
-        return json_encode($request->validated());
+        return json_encode($request->getValidated());
     }
 
     /**
@@ -44,7 +44,7 @@ class FormRequestController extends Controller
      */
     public function update(string $id, ValidPostFormRequest $request): string
     {
-        return json_encode(['id' => $id, 'data' => $request->validated()]);
+        return json_encode(['id' => $id, 'data' => $request->getValidated()]);
     }
 
     /**
@@ -61,7 +61,7 @@ class FormRequestController extends Controller
      */
     public function search(ValidPostFormRequest $request, string ...$tags): string
     {
-        return json_encode(['tags' => $tags, 'data' => $request->validated()]);
+        return json_encode(['tags' => $tags, 'data' => $request->getValidated()]);
     }
 
     /**

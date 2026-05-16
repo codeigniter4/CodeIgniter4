@@ -7,7 +7,7 @@ use App\Requests\UpdatePostRequest;
 
 // FormRequest only - no route parameters.
 $routes->post('posts', static function (StorePostRequest $request): string {
-    $data = $request->validated();
+    $data = $request->getValidated();
 
     // save to database
 
@@ -16,7 +16,7 @@ $routes->post('posts', static function (StorePostRequest $request): string {
 
 // Route parameter before a FormRequest - same convention as controller methods.
 $routes->post('posts/(:num)', static function (int $id, UpdatePostRequest $request): string {
-    $data = $request->validated();
+    $data = $request->getValidated();
 
     // update post $id with $data
 

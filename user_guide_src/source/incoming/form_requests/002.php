@@ -8,8 +8,8 @@ class Posts extends BaseController
 {
     public function store(StorePostRequest $request): string
     {
-        // $request->validated() returns only the fields declared in rules().
-        $data = $request->validated();
+        // $request->getValidated() returns only the fields declared in rules().
+        $data = $request->getValidated();
 
         // save to database
 

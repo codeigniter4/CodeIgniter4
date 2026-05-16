@@ -8,7 +8,7 @@ class Posts extends BaseController
 {
     public function store(StorePostRequest $request): string
     {
-        $data  = $request->validated();
+        $data  = $request->getValidated();
         $files = $this->request->getFiles();
 
         // ...

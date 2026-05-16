@@ -1,8 +1,10 @@
 <?php
 
-$title = $request->getValidated('title');
-$slug  = $request->getValidated('post.meta.slug', 'draft');
+$input = $request->getValidatedInput();
 
-if ($request->hasValidated('note')) {
+$title = $input->get('title');
+$slug  = $input->get('post.meta.slug', 'draft');
+
+if ($input->has('note')) {
     // 'note' was validated, even if its value is null
 }

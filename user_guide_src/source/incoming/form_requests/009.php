@@ -1,4 +1,4 @@
 <?php
 
-$data = $request->validated();
+$data = $request->getValidated();
 // ['title' => 'My post title', 'body' => 'Body text']
