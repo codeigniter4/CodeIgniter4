@@ -477,7 +477,10 @@ final class MigrationRunnerTest extends CIUnitTestCase
         }
     }
 
-    protected function resetTables($db = null): void
+    /**
+     * @param object $db
+     */
+    private function resetTables($db): void
     {
         $forge = Database::forge($db);
 

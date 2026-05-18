@@ -52,6 +52,9 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->request = $this->createRequest($config);
     }
 
+    /**
+     * @param string|null $body
+     */
     private function createRequest(?App $config = null, $body = null, ?string $path = null): IncomingRequest
     {
         $config ??= new App();

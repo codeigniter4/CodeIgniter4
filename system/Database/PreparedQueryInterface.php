@@ -28,6 +28,9 @@ interface PreparedQueryInterface
      *
      * @return bool|ResultInterface<TConnection, TResult>
      */
+    /**
+     * @param mixed ...$data
+     */
     public function execute(...$data);
 
     /**

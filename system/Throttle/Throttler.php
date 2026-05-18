@@ -54,10 +54,8 @@ class Throttler implements ThrottlerInterface
 
     /**
      * Timestamp to use (during testing)
-     *
-     * @var int
      */
-    protected $testTime;
+    protected ?int $testTime = null;
 
     /**
      * Constructor.

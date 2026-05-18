@@ -76,7 +76,10 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $this->injectSession($this->hash);
     }
 
-    private function createSession($options = []): Session
+    /**
+     * @param array<string, mixed> $options
+     */
+    protected function createSession(array $options = []): Session
     {
         $defaults = [
             'driver'            => FileHandler::class,

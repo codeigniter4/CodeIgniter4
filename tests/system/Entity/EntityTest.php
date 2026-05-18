@@ -1744,7 +1744,10 @@ final class EntityTest extends CIUnitTestCase
         };
     }
 
-    private function getCastEntity($data = null): object
+    /**
+     * @param array<string, mixed>|null $data
+     */
+    private function getCastEntity(?array $data = null)
     {
         return new class ($data) extends Entity {
             protected $attributes = [

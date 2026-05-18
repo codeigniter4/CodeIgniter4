@@ -65,10 +65,8 @@ class UploadedFile extends File implements UploadedFileInterface
     /**
      * The error constant of the upload
      * (one of PHP's UPLOADERRXXX constants)
-     *
-     * @var int
      */
-    protected $error;
+    protected ?int $error = null;
 
     /**
      * Whether the file has been moved already or not.

@@ -254,12 +254,39 @@ final class GetTest extends CIUnitTestCase
     public function testGetRowWithCustomReturnType(): void
     {
         $testClass = new class () {
+            /**
+             * @var int|null
+             */
             public $id;
+
+            /**
+             * @var string|null
+             */
             public $name;
+
+            /**
+             * @var string|null
+             */
             public $email;
+
+            /**
+             * @var string|null
+             */
             public $country;
+
+            /**
+             * @var string|null
+             */
             public $created_at;
+
+            /**
+             * @var string|null
+             */
             public $updated_at;
+
+            /**
+             * @var string|null
+             */
             public $deleted_at;
         };
 

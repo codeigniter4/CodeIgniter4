@@ -17,6 +17,10 @@ use CodeIgniter\Controller;
 
 class Home extends Controller
 {
+    /**
+     * @param string|null $p1
+     * @param string|null $p2
+     */
     public function getIndex($p1 = null, $p2 = null): void
     {
     }

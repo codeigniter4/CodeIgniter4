@@ -44,6 +44,9 @@ final class RouteCollectionTest extends CIUnitTestCase
         Services::injectMock('superglobals', new Superglobals());
     }
 
+    /**
+     * @param array<string, string>|null $moduleConfig
+     */
     protected function getCollector(array $config = [], array $files = [], $moduleConfig = null): RouteCollection
     {
         $defaults = [

@@ -27,7 +27,11 @@ final class NumberNativeTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
+    /**
+     * @var array<string, mixed>
+     */
     private $tests;
+
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
 

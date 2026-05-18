@@ -106,10 +106,8 @@ class URI implements Stringable
 
     /**
      * The name of any fragment.
-     *
-     * @var string
      */
-    protected $fragment = '';
+    protected ?string $fragment = null;
 
     /**
      * The query string.

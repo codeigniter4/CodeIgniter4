@@ -44,14 +44,14 @@ trait FilterTestTrait
     /**
      * The active IncomingRequest or CLIRequest
      *
-     * @var RequestInterface
+     * @var RequestInterface|null
      */
     protected $request;
 
     /**
      * The active Response instance
      *
-     * @var ResponseInterface
+     * @var ResponseInterface|null
      */
     protected $response;
 

@@ -110,6 +110,8 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      * Takes a new set of data and runs it against the currently
      * prepared query. Upon success, will return a Results object.
      *
+     * @param mixed ...$data
+     *
      * @return bool|ResultInterface<TConnection, TResult>
      *
      * @throws DatabaseException

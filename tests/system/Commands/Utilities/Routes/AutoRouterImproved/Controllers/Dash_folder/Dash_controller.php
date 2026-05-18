@@ -17,11 +17,18 @@ use CodeIgniter\Controller;
 
 class Dash_controller extends Controller
 {
+    /**
+     * @param string $p1
+     */
     public function getSomemethod($p1 = ''): void
     {
     }
 
-    public function getDash_method($p1, $p2 = ''): void
+    /**
+     * @param string|null $p1
+     * @param string|null $p2
+     */
+    public function getDash_method($p1, $p2 = null)
     {
     }
 }

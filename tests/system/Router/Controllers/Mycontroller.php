@@ -21,7 +21,10 @@ class Mycontroller extends Controller
     {
     }
 
-    public function getSomemethod($first = ''): void
+    /**
+     * @param string|null $first
+     */
+    public function getSomemethod($first = null)
     {
     }
 }

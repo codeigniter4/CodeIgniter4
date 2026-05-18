@@ -843,6 +843,9 @@ final class MiscUrlTest extends CIUnitTestCase
     }
 
     #[DataProvider('provideUrlTo')]
+    /**
+     * @param mixed ...$args
+     */
     public function testUrlTo(string $expected, string $input, ...$args): void
     {
         service('superglobals')->setServer('HTTP_HOST', 'example.com');

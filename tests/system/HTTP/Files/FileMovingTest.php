@@ -334,7 +334,15 @@ final class FileMovingTest extends CIUnitTestCase
  *
  * This overwrite is for testing the move operation.
  */
-function is_uploaded_file($filename): bool
+/**
+ * @param string $filename
+ * @param mixed  $destination
+ */
+/**
+ * @param string $filename
+ * @param string $destination
+ */
+function move_uploaded_file($filename, $destination): bool
 {
     if (! is_file($filename)) {
         file_put_contents($filename, 'data');
@@ -364,6 +372,9 @@ function move_uploaded_file($filename, $destination, ?bool $setReturnValue = nul
     return $return;
 }
 
+/**
+ * @param string $src
+ */
 function rrmdir($src): void
 {
     $dir = opendir($src);

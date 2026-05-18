@@ -18,7 +18,11 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 
 class Remap extends Controller
 {
-    public function _remap(string $method, ...$params): string
+    /**
+     * @param string $method
+     * @param mixed  ...$params
+     */
+    public function _remap($method, ...$params)
     {
         $method = 'process_' . $method;
 

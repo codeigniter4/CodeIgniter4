@@ -89,6 +89,9 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame('http://www.example.jp/public/index.php/', current_url());
     }
 
+    /**
+     * @param string|null $body
+     */
     private function createRequest(?App $config = null, $body = null, ?string $path = null): void
     {
         $config ??= new App();

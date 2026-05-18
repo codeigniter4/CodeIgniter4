@@ -21,7 +21,10 @@ class BlogController extends Controller
     {
     }
 
-    public function getSomeMethod($first = ''): void
+    /**
+     * @param string|null $first
+     */
+    public function getSomeMethod($first = null)
     {
     }
 }

@@ -27,7 +27,7 @@ class Message implements MessageInterface
     /**
      * Protocol version
      *
-     * @var string
+     * @var string|null
      */
     protected $protocolVersion;
 

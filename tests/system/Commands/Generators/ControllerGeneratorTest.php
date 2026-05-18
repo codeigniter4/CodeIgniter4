@@ -40,7 +40,9 @@ final class ControllerGeneratorTest extends CIUnitTestCase
             return '';
         }
 
-        return file_get_contents($filepath) ?: '';
+        $contents = file_get_contents($filepath);
+
+        return $contents ? $contents : '';
     }
 
     public function testGenerateController(): void

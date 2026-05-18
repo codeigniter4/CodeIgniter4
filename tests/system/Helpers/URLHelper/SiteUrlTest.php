@@ -55,6 +55,9 @@ final class SiteUrlTest extends CIUnitTestCase
         $_SERVER = [];
     }
 
+    /**
+     * @param string|null $body
+     */
     private function createRequest(?App $config = null, $body = null, ?string $path = null): void
     {
         $config ??= new App();

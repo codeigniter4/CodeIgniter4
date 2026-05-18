@@ -43,7 +43,9 @@ final class ModelGeneratorTest extends CIUnitTestCase
             return '';
         }
 
-        return file_get_contents($filepath) ?: '';
+        $contents = file_get_contents($filepath);
+
+        return $contents ? $contents : '';
     }
 
     public function testGenerateModel(): void

@@ -41,6 +41,9 @@ final class FactoriesTest extends CIUnitTestCase
         Factories::reset();
     }
 
+    /**
+     * @param scalar ...$params
+     */
     protected function getFactoriesStaticProperty(...$params): mixed
     {
         // First parameter is the actual property
@@ -87,6 +90,9 @@ final class FactoriesTest extends CIUnitTestCase
     {
         // Simulate having a $widgets property in App\Config\Factory
         $config = new class () extends Factory {
+            /**
+             * @var array<string, string>
+             */
             public $widgets = ['bar' => 'bam'];
         };
         Factories::injectMock('config', Factory::class, $config);

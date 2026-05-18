@@ -17,7 +17,10 @@ use CodeIgniter\Controller;
 
 class Index extends Controller
 {
-    public function getIndex($p1 = ''): void
+    /**
+     * @param string|null $p1
+     */
+    public function getIndex($p1 = null)
     {
     }
 

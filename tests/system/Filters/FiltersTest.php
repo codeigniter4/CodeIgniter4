@@ -24,6 +24,7 @@ use CodeIgniter\Filters\fixtures\Multiple1;
 use CodeIgniter\Filters\fixtures\Multiple2;
 use CodeIgniter\Filters\fixtures\Role;
 use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Superglobals;
@@ -74,7 +75,10 @@ final class FiltersTest extends CIUnitTestCase
         $this->response = service('response');
     }
 
-    private function createFilters(FiltersConfig $config, $request = null): Filters
+    /**
+     * @param Request|null $request
+     */
+    private function createFilters($request = null): Filters
     {
         $request ??= service('request');
 

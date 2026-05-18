@@ -17,11 +17,21 @@ class SimpleConfig extends BaseConfig
 {
     public $QZERO;
     public $QZEROSTR;
+
+    /**
+     * @var string
+     */
     public $QEMPTYSTR;
+
     public $QFALSE;
     public $first  = 'foo';
     public $second = 'bar';
+
+    /**
+     * @var string
+     */
     public $FOO;
+
     public $onedeep;
     public $default = [
         'name' => null,
