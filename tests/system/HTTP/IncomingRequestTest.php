@@ -19,6 +19,7 @@ use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\UploadedFile;
+use CodeIgniter\Input\InputData;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
@@ -84,6 +85,35 @@ final class IncomingRequestTest extends CIUnitTestCase
 
         $this->assertSame('5', $this->request->getPost('TEST'));
         $this->assertNull($this->request->getPost('TESTY'));
+    }
+
+    public function testGetQueryInputReadsQueryData(): void
+    {
+        service('superglobals')->setGet('page', '3');
+        service('superglobals')->setGet('filters', ['active' => 'true']);
+        service('superglobals')->setPost('page', '10');
+
+        $request = $this->createRequest();
+        $input   = $request->getQueryInput();
+
+        $this->assertInstanceOf(InputData::class, $input);
+        $this->assertSame(3, $input->integer('page'));
+        $this->assertTrue($input->boolean('filters.active'));
+        $this->assertSame(1, $input->integer('missing', 1));
+    }
+
+    public function testGetPostInputReadsPostData(): void
+    {
+        service('superglobals')->setGet('remember', '0');
+        service('superglobals')->setPost('remember', '1');
+        service('superglobals')->setPost('tags', ['php', 'ci4']);
+
+        $request = $this->createRequest();
+        $input   = $request->getPostInput();
+
+        $this->assertInstanceOf(InputData::class, $input);
+        $this->assertTrue($input->boolean('remember'));
+        $this->assertSame(['php', 'ci4'], $input->array('tags'));
     }
 
     public function testCanGrabPostBeforeGet(): void
@@ -570,6 +600,104 @@ final class IncomingRequestTest extends CIUnitTestCase
         $request = $this->createRequest($config, $rawstring);
 
         $this->assertSame($expected, $request->getRawInput());
+    }
+
+    public function testGetPayloadInputReadsJsonBody(): void
+    {
+        $json = json_encode([
+            'page'     => '4',
+            'filters'  => ['active' => 'true'],
+            'nullable' => null,
+        ]);
+
+        $request = $this->createRequest(new App(), $json);
+        $request->setHeader('Content-Type', 'application/json');
+
+        $input = $request->getPayloadInput();
+
+        $this->assertInstanceOf(InputData::class, $input);
+        $this->assertSame(4, $input->integer('page'));
+        $this->assertTrue($input->boolean('filters.active'));
+        $this->assertTrue($input->has('nullable'));
+    }
+
+    #[DataProvider('provideGetPayloadInputReadsRawBodyForWriteRequests')]
+    public function testGetPayloadInputReadsRawBodyForWriteRequests(string $method): void
+    {
+        $request = $this->createRequest(new App(), 'title=Hello&published=1')
+            ->withMethod($method);
+
+        $input = $request->getPayloadInput();
+
+        $this->assertSame('Hello', $input->string('title'));
+        $this->assertTrue($input->boolean('published'));
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideGetPayloadInputReadsRawBodyForWriteRequests(): iterable
+    {
+        yield 'PUT' => ['PUT'];
+
+        yield 'PATCH' => ['PATCH'];
+
+        yield 'DELETE' => ['DELETE'];
+    }
+
+    public function testGetPayloadInputReadsPostBodyForPostRequests(): void
+    {
+        service('superglobals')->setGet('title', 'Query title');
+        service('superglobals')->setPost('title', 'Post title');
+
+        $request = $this->createRequest()->withMethod('POST');
+        $input   = $request->getPayloadInput();
+
+        $this->assertSame('Post title', $input->string('title'));
+    }
+
+    public function testGetPayloadInputDoesNotReadQueryDataForGetRequests(): void
+    {
+        service('superglobals')->setGet('page', '2');
+
+        $request = $this->createRequest()->withMethod('GET');
+        $input   = $request->getPayloadInput();
+
+        $this->assertFalse($input->has('page'));
+        $this->assertSame(1, $input->integer('page', 1));
+    }
+
+    public function testGetPayloadInputReturnsEmptyInputForEmptyJsonBody(): void
+    {
+        $request = $this->createRequest(new App());
+        $request->setHeader('Content-Type', 'application/json');
+
+        $input = $request->getPayloadInput();
+
+        $this->assertInstanceOf(InputData::class, $input);
+        $this->assertFalse($input->has('name'));
+    }
+
+    public function testGetPayloadInputRejectsScalarJsonBody(): void
+    {
+        $this->expectException(HTTPException::class);
+        $this->expectExceptionMessage('The provided JSON format is not supported.');
+
+        $request = $this->createRequest(new App(), '"hello"');
+        $request->setHeader('Content-Type', 'application/json');
+
+        $request->getPayloadInput();
+    }
+
+    public function testGetPayloadInputKeepsInvalidJsonError(): void
+    {
+        $this->expectException(HTTPException::class);
+        $this->expectExceptionMessage('Failed to parse JSON string. Error: Syntax error');
+
+        $request = $this->createRequest(new App(), 'Invalid JSON string');
+        $request->setHeader('Content-Type', 'application/json');
+
+        $request->getPayloadInput();
     }
 
     /**
