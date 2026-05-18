@@ -948,10 +948,74 @@ class BaseBuilder
     }
 
     /**
+     * Generates a HAVING field BETWEEN minimum AND maximum SQL query,
+     * joined with 'AND' if appropriate.
+     *
+     * @param array<array-key, mixed>|null $values The range values searched on
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     */
+    public function havingBetween(?string $key = null, $values = null, ?bool $escape = null): static
+    {
+        return $this->whereBetweenHaving('QBHaving', $key, $values, false, 'AND ', $escape);
+    }
+
+    /**
+     * Generates a HAVING field BETWEEN minimum AND maximum SQL query,
+     * joined with 'OR' if appropriate.
+     *
+     * @param array<array-key, mixed>|null $values The range values searched on
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     */
+    public function orHavingBetween(?string $key = null, $values = null, ?bool $escape = null): static
+    {
+        return $this->whereBetweenHaving('QBHaving', $key, $values, false, 'OR ', $escape);
+    }
+
+    /**
+     * Generates a HAVING field NOT BETWEEN minimum AND maximum SQL query,
+     * joined with 'AND' if appropriate.
+     *
+     * @param array<array-key, mixed>|null $values The range values searched on
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     */
+    public function havingNotBetween(?string $key = null, $values = null, ?bool $escape = null): static
+    {
+        return $this->whereBetweenHaving('QBHaving', $key, $values, true, 'AND ', $escape);
+    }
+
+    /**
+     * Generates a HAVING field NOT BETWEEN minimum AND maximum SQL query,
+     * joined with 'OR' if appropriate.
+     *
+     * @param array<array-key, mixed>|null $values The range values searched on
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     */
+    public function orHavingNotBetween(?string $key = null, $values = null, ?bool $escape = null): static
+    {
+        return $this->whereBetweenHaving('QBHaving', $key, $values, true, 'OR ', $escape);
+    }
+
+    /**
      * @used-by whereBetween()
      * @used-by orWhereBetween()
      * @used-by whereNotBetween()
      * @used-by orWhereNotBetween()
+     * @used-by havingBetween()
+     * @used-by orHavingBetween()
+     * @used-by havingNotBetween()
+     * @used-by orHavingNotBetween()
      *
      * @param 'QBHaving'|'QBWhere'         $qbKey
      * @param non-empty-string|null        $key

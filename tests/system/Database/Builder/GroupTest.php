@@ -14,8 +14,10 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -69,6 +71,135 @@ final class GroupTest extends CIUnitTestCase
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" > 3 OR SUM(id) > 2';
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    #[DataProvider('provideHavingBetweenMethods')]
+    public function testHavingBetweenMethods(string $method, string $sql): void
+    {
+        $builder = new BaseBuilder('user', $this->db);
+
+        $builder->select('name')
+            ->groupBy('name')
+            ->{$method}('total', [10, 20]);
+
+        $expectedSQL   = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "total" ' . $sql . ' 10 AND 20';
+        $expectedBinds = [
+            'total' => [
+                10,
+                true,
+            ],
+            'total.1' => [
+                20,
+                true,
+            ],
+        ];
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function provideHavingBetweenMethods(): iterable
+    {
+        return [
+            'between'     => ['havingBetween', 'BETWEEN'],
+            'not between' => ['havingNotBetween', 'NOT BETWEEN'],
+        ];
+    }
+
+    #[DataProvider('provideOrHavingBetweenMethods')]
+    public function testOrHavingBetweenMethods(string $method, string $sql): void
+    {
+        $builder = new BaseBuilder('user', $this->db);
+
+        $builder->select('name')
+            ->groupBy('name')
+            ->having('active', 1)
+            ->{$method}('total', [10, 20]);
+
+        $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "active" = 1 OR "total" ' . $sql . ' 10 AND 20';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function provideOrHavingBetweenMethods(): iterable
+    {
+        return [
+            'or between'     => ['orHavingBetween', 'BETWEEN'],
+            'or not between' => ['orHavingNotBetween', 'NOT BETWEEN'],
+        ];
+    }
+
+    public function testHavingBetweenWithGroupedConditions(): void
+    {
+        $builder = new BaseBuilder('user', $this->db);
+
+        $builder->select('name')
+            ->groupBy('name')
+            ->havingGroupStart()
+            ->havingBetween('total', [10, 20])
+            ->orHavingNotBetween('score', [30, 40])
+            ->havingGroupEnd()
+            ->having('active', 1);
+
+        $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING   ( "total" BETWEEN 10 AND 20 OR "score" NOT BETWEEN 30 AND 40  ) AND "active" = 1';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testHavingBetweenNoEscape(): void
+    {
+        $builder = new BaseBuilder('user', $this->db);
+
+        $builder->select('name')
+            ->groupBy('name')
+            ->havingBetween('SUM(id)', [10, 20], escape: false);
+
+        $expectedSQL   = 'SELECT "name" FROM "user" GROUP BY "name" HAVING SUM(id) BETWEEN 10 AND 20';
+        $expectedBinds = [
+            'SUM(id)' => [
+                10,
+                false,
+            ],
+            'SUM(id).1' => [
+                20,
+                false,
+            ],
+        ];
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    /**
+     * @param mixed $values
+     */
+    #[DataProvider('provideHavingBetweenInvalidValuesThrowInvalidArgumentException')]
+    public function testHavingBetweenInvalidValuesThrowInvalidArgumentException($values): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $builder = new BaseBuilder('user', $this->db);
+        $builder->havingBetween('total', $values);
+    }
+
+    /**
+     * @return iterable<string, array{mixed}>
+     */
+    public static function provideHavingBetweenInvalidValuesThrowInvalidArgumentException(): iterable
+    {
+        return [
+            'null'         => [null],
+            'not array'    => ['not array'],
+            'empty array'  => [[]],
+            'one value'    => [[10]],
+            'three values' => [[10, 20, 30]],
+        ];
     }
 
     public function testHavingIn(): void
