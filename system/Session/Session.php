@@ -622,7 +622,10 @@ class Session implements SessionInterface
             return;
         }
 
-        session_start(); // @codeCoverageIgnore
+        // Error suppression is used to prevent warnings when
+        // concurrent requests cause session lock conflicts.
+        // This is a known PHP limitation with custom session handlers.
+        @session_start(); // @codeCoverageIgnore
     }
 
     /**

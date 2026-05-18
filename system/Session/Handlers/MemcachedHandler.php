@@ -225,6 +225,8 @@ class MemcachedHandler extends BaseHandler
         if (isset($this->memcached)) {
             if (isset($this->lockKey)) {
                 $this->memcached->delete($this->lockKey);
+                $this->lockKey = null;
+                $this->lock    = false;
             }
 
             return true;
