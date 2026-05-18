@@ -42,8 +42,6 @@ use stdClass;
  *
  * @property-read BaseConnection $db
  *
- * @method bool  doesntExist(bool $reset = true)
- * @method bool  exists(bool $reset = true)
  * @method $this groupBy($by, ?bool $escape = null)
  * @method $this groupEnd()
  * @method $this groupStart()
@@ -529,6 +527,40 @@ class Model extends BaseModel
 
     public function countAllResults(bool $reset = true, bool $test = false)
     {
+        $this->prepareSoftDeleteQuery($reset);
+
+        return $this->builder()->testMode($test)->countAllResults($reset);
+    }
+
+    /**
+     * Determines whether the current Model query would return at least one row.
+     *
+     * @return bool|string Returns a SQL string if in test mode.
+     */
+    public function exists(bool $reset = true, bool $test = false)
+    {
+        $this->prepareSoftDeleteQuery($reset);
+
+        return $this->builder()->testMode($test)->exists($reset);
+    }
+
+    /**
+     * Determines whether the current Model query would not return any rows.
+     *
+     * @return bool|string Returns a SQL string if in test mode.
+     */
+    public function doesntExist(bool $reset = true, bool $test = false)
+    {
+        $this->prepareSoftDeleteQuery($reset);
+
+        return $this->builder()->testMode($test)->doesntExist($reset);
+    }
+
+    /**
+     * Applies the Model soft-delete constraint before terminal Builder operations.
+     */
+    private function prepareSoftDeleteQuery(bool $reset): void
+    {
         if ($this->tempUseSoftDeletes) {
             $this->builder()->where($this->table . '.' . $this->deletedField, null);
         }
@@ -539,8 +571,6 @@ class Model extends BaseModel
         $this->tempUseSoftDeletes = $reset
             ? $this->useSoftDeletes
             : ($this->useSoftDeletes ? false : $this->useSoftDeletes);
-
-        return $this->builder()->testMode($test)->countAllResults($reset);
     }
 
     /**

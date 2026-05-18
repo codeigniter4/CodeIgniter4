@@ -858,15 +858,18 @@ $builder->exists()
 
 .. versionadded:: 4.8.0
 
-Permits you to determine whether the current Query Builder conditions match
-any rows:
+Permits you to determine whether the current Query Builder query would return
+at least one row:
 
 .. literalinclude:: query_builder/128.php
 
-This method returns ``true`` when at least one row exists and ``false`` when no
-rows match. It respects any existing ``limit()`` and ``offset()`` clauses, and
-resets the current Query Builder state by default. If you need to keep the
-current Query Builder state, you can pass ``false`` as the first parameter.
+This method returns ``true`` when the query would return at least one row and
+``false`` when it would not. It respects any existing ``limit()`` and
+``offset()`` clauses, and resets the current Query Builder state by default. If
+you need to keep the current Query Builder state, you can pass ``false`` as the
+first parameter.
+If the existence query fails and ``DBDebug`` is ``false``, both methods return
+``false``.
 
 $builder->doesntExist()
 -----------------------
@@ -874,7 +877,7 @@ $builder->doesntExist()
 .. versionadded:: 4.8.0
 
 This method is identical to ``exists()``, except that it returns ``true`` when
-no rows match.
+the query would not return any rows.
 
 .. note:: These methods execute the current Query Builder query to check for
     rows. To add an SQL ``EXISTS`` predicate to a query, use
@@ -1599,18 +1602,18 @@ Class Reference
     .. php:method:: exists([$reset = true])
 
         :param bool $reset: Whether to reset values for SELECTs
-        :returns:   Whether the query has any matching rows
+        :returns:   Whether the query would return at least one row
         :rtype:     bool
 
-        Determines whether the current Query Builder conditions match any rows.
+        Determines whether the current Query Builder query would return at least one row.
 
     .. php:method:: doesntExist([$reset = true])
 
         :param bool $reset: Whether to reset values for SELECTs
-        :returns:   Whether the query has no matching rows
+        :returns:   Whether the query would not return any rows
         :rtype:     bool
 
-        Determines whether the current Query Builder conditions do not match any rows.
+        Determines whether the current Query Builder query would not return any rows.
 
     .. php:method:: get([$limit = null[, $offset = null[, $reset = true]]]])
 

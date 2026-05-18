@@ -157,6 +157,24 @@ final class ExistsTest extends CIUnitTestCase
         );
     }
 
+    public function testExistsWithAggregateSelection(): void
+    {
+        $builder = new BaseBuilder('jobs', $this->db);
+        $builder->testMode();
+
+        $answer = $builder->selectCount('id', 'total')
+            ->where('id >', 3)
+            ->exists(false);
+
+        $expectedSQL = 'SELECT 1 FROM ( SELECT COUNT("id") AS "total" FROM "jobs" WHERE "id" > :id: ) CI_exists  LIMIT 1';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
+        $this->assertSame(
+            'SELECT COUNT("id") AS "total" FROM "jobs" WHERE "id" > 3',
+            str_replace("\n", ' ', $builder->getCompiledSelect(false)),
+        );
+    }
+
     public function testExistsWithUnion(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);

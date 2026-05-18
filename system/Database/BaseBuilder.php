@@ -2049,7 +2049,7 @@ class BaseBuilder
     }
 
     /**
-     * Determines whether the current Query Builder conditions match any rows.
+     * Determines whether the current Query Builder query would return at least one row.
      *
      * @return bool|string SQL string when test mode is enabled.
      */
@@ -2061,7 +2061,7 @@ class BaseBuilder
     }
 
     /**
-     * Determines whether the current Query Builder conditions do not match any rows.
+     * Determines whether the current Query Builder query would not return any rows.
      *
      * @return bool|string SQL string when test mode is enabled.
      */
@@ -2117,7 +2117,7 @@ class BaseBuilder
         $lockForUpdate = $this->QBLockForUpdate;
         $select        = $this->QBSelect;
         $noEscape      = $this->QBNoEscape;
-        $needsSubquery = $this->QBUnion !== [] || $this->QBGroupBy !== [] || $this->QBHaving !== [] || $this->QBOffset !== false;
+        $needsSubquery = $this->QBSelectUsesAggregate || $this->QBUnion !== [] || $this->QBGroupBy !== [] || $this->QBHaving !== [] || $this->QBOffset !== false;
 
         $this->QBOrderBy       = null;
         $this->QBLockForUpdate = false;
