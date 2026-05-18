@@ -1475,23 +1475,29 @@ class RouteCollection implements RouteCollectionInterface
         }
 
         // Hostname limiting?
+        $matchedByHostname = false;
+
         if (! empty($options['hostname'])) {
             // @todo determine if there's a way to whitelist hosts?
             if (! $this->checkHostname($options['hostname'])) {
                 return;
             }
 
-            $overwrite = true;
+            $overwrite         = true;
+            $matchedByHostname = true;
         }
         // Limiting to subdomains?
-        elseif (! empty($options['subdomain'])) {
+        $matchedBySubdomain = false;
+
+        if (! empty($options['subdomain'])) {
             // If we don't match the current subdomain, then
             // we don't need to add the route.
             if (! $this->checkSubdomains($options['subdomain'])) {
                 return;
             }
 
-            $overwrite = true;
+            $overwrite          = true;
+            $matchedBySubdomain = true;
         }
 
         // Are we offsetting the binds?
@@ -1541,6 +1547,17 @@ class RouteCollection implements RouteCollectionInterface
         // this works only because discovered routes are added just prior
         // to attempting to route the request.
         $routeKeyExists = isset($this->routes[$verb][$routeKey]);
+
+        // Prevent a subdomain-only route from overwriting a hostname-matched route,
+        // since hostname is more specific than subdomain.
+        if ($routeKeyExists && $matchedBySubdomain && ! $matchedByHostname) {
+            $existingOptions = $this->routesOptions[$verb][$routeKey] ?? [];
+
+            if (! empty($existingOptions['hostname'])) {
+                return;
+            }
+        }
+
         if ((isset($this->routesNames[$verb][$name]) || $routeKeyExists) && ! $overwrite) {
             return;
         }
