@@ -233,6 +233,11 @@ class Entity implements JsonSerializable
     public function toRawArray(bool $onlyChanged = false, bool $recursive = false): array
     {
         $convert = static function ($value) use (&$convert, $recursive) {
+            // Always convert DateTime objects to string for raw output
+            if ($value instanceof DateTimeInterface) {
+                return (string) $value;
+            }
+
             if (! $recursive) {
                 return $value;
             }
@@ -261,9 +266,7 @@ class Entity implements JsonSerializable
 
         // When returning everything
         if (! $onlyChanged) {
-            return $recursive
-                ? array_map($convert, $this->attributes)
-                : $this->attributes;
+            return array_map($convert, $this->attributes);
         }
 
         // When filtering by changed values only
@@ -335,7 +338,7 @@ class Entity implements JsonSerializable
             }
 
             // non-recursive changed value
-            $return[$key] = $value;
+            $return[$key] = $convert($value);
         }
 
         return $return;
