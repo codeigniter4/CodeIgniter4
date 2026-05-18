@@ -173,6 +173,9 @@ final readonly class SiteURIFactory
         parse_str($this->superglobals->server('QUERY_STRING'), $get);
         $this->superglobals->setGetArray($get);
 
+        // Sync $_REQUEST so that getVar() works correctly
+        $this->superglobals->syncRequest();
+
         return URI::removeDotSegments($path);
     }
 
@@ -204,6 +207,9 @@ final readonly class SiteURIFactory
         // Update our global GET for values likely to have been changed
         parse_str($this->superglobals->server('QUERY_STRING'), $get);
         $this->superglobals->setGetArray($get);
+
+        // Sync $_REQUEST so that getVar() works correctly
+        $this->superglobals->syncRequest();
 
         return URI::removeDotSegments($path);
     }

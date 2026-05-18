@@ -456,4 +456,34 @@ final class Superglobals
             ),
         };
     }
+
+    /**
+     * Rebuilds $_REQUEST from $_GET, $_POST, and $_COOKIE according to PHP's
+     * request_order / variables_order ini setting.
+     *
+     * This is necessary when superglobals like $_GET are modified after the
+     * initial request population, since PHP does not automatically keep
+     * $_REQUEST in sync.
+     *
+     * @see https://www.php.net/manual/en/ini.core.php#ini.request-order
+     */
+    public function syncRequest(): self
+    {
+        $requestOrder = ini_get('request_order') ?: ini_get('variables_order');
+
+        $this->request = [];
+
+        foreach (str_split($requestOrder) as $type) {
+            match ($type) {
+                'G'     => $this->request = array_replace($this->request, $this->get),
+                'P'     => $this->request = array_replace($this->request, $this->post),
+                'C'     => $this->request = array_replace($this->request, $this->cookie),
+                default => null,
+            };
+        }
+
+        $_REQUEST = $this->request;
+
+        return $this;
+    }
 }
