@@ -2051,7 +2051,7 @@ class BaseBuilder
     /**
      * Determines whether the current Query Builder conditions match any rows.
      *
-     * @return bool|string
+     * @return bool|string SQL string when test mode is enabled.
      */
     public function exists(bool $reset = true)
     {
@@ -2063,7 +2063,7 @@ class BaseBuilder
     /**
      * Determines whether the current Query Builder conditions do not match any rows.
      *
-     * @return bool|string
+     * @return bool|string SQL string when test mode is enabled.
      */
     public function doesntExist(bool $reset = true)
     {
@@ -2075,7 +2075,7 @@ class BaseBuilder
     /**
      * Runs an existence probe for the current Query Builder query.
      *
-     * @return bool|string|null
+     * @return bool|string|null SQL string when test mode is enabled, or null when the query fails.
      */
     protected function doExists(bool $reset = true)
     {
