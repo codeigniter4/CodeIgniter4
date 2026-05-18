@@ -395,6 +395,44 @@ $builder->orWhereColumn()
 This method is identical to ``whereColumn()``, except that multiple instances
 are joined by **OR**.
 
+.. _query-builder-where-between:
+
+$builder->whereBetween()
+------------------------
+
+.. versionadded:: 4.8.0
+
+Generates a **WHERE** field ``BETWEEN`` minimum and maximum value SQL query.
+``BETWEEN`` includes both values:
+
+.. literalinclude:: query_builder/126.php
+
+The range array must contain exactly two values: the lower and upper bounds.
+These values are bound and escaped automatically. The ``$escape`` parameter
+controls value escaping and identifier protection.
+
+.. warning:: Do not pass user-supplied data as field names. If you need a more
+    complex SQL expression, use ``where()`` with :ref:`RawSql <query-builder-where-rawsql>`
+    and escape values manually.
+
+$builder->orWhereBetween()
+--------------------------
+
+This method is identical to ``whereBetween()``, except that multiple instances
+are joined by **OR**.
+
+$builder->whereNotBetween()
+---------------------------
+
+This method is identical to ``whereBetween()``, except that it generates
+``NOT BETWEEN``.
+
+$builder->orWhereNotBetween()
+-----------------------------
+
+This method is identical to ``whereNotBetween()``, except that multiple
+instances are joined by **OR**.
+
 .. _query-builder-where-exists:
 
 $builder->whereExists()
@@ -1678,6 +1716,46 @@ Class Reference
         Generates a ``WHERE`` clause that compares two columns. Separates multiple calls with ``OR``.
         If ``$first`` does not end with a supported operator, ``=`` is used as the comparison operator.
         Supported operators are ``=``, ``!=``, ``<>``, ``<``, ``>``, ``<=``, and ``>=``.
+
+    .. php:method:: whereBetween([$key = null[, $values = null[, $escape = null]]])
+
+        :param string $key: Name of field to examine
+        :param array $values: Two values defining the inclusive range
+        :param bool $escape: Whether to escape values and protect identifiers
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Generates a ``WHERE`` field ``BETWEEN`` minimum and maximum value SQL query, joined with ``AND`` if appropriate.
+
+    .. php:method:: orWhereBetween([$key = null[, $values = null[, $escape = null]]])
+
+        :param string $key: The field to search
+        :param array $values: Two values defining the inclusive range
+        :param bool $escape: Whether to escape values and protect identifiers
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Generates a ``WHERE`` field ``BETWEEN`` minimum and maximum value SQL query, joined with ``OR`` if appropriate.
+
+    .. php:method:: whereNotBetween([$key = null[, $values = null[, $escape = null]]])
+
+        :param string $key: Name of field to examine
+        :param array $values: Two values defining the inclusive range
+        :param bool $escape: Whether to escape values and protect identifiers
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Generates a ``WHERE`` field ``NOT BETWEEN`` minimum and maximum value SQL query, joined with ``AND`` if appropriate.
+
+    .. php:method:: orWhereNotBetween([$key = null[, $values = null[, $escape = null]]])
+
+        :param string $key: The field to search
+        :param array $values: Two values defining the inclusive range
+        :param bool $escape: Whether to escape values and protect identifiers
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Generates a ``WHERE`` field ``NOT BETWEEN`` minimum and maximum value SQL query, joined with ``OR`` if appropriate.
 
     .. php:method:: whereExists($subquery)
 

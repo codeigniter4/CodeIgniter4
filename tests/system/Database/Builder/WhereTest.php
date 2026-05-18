@@ -625,6 +625,153 @@ final class WhereTest extends CIUnitTestCase
         $builder->whereExists($builder);
     }
 
+    #[DataProvider('provideWhereBetweenMethods')]
+    public function testWhereBetweenMethods(string $method, string $sql): void
+    {
+        $builder = $this->db->table('jobs');
+
+        $builder->{$method}('created_at', ['2026-01-01', '2026-01-31']);
+
+        $expectedSQL   = 'SELECT * FROM "jobs" WHERE "created_at" ' . $sql . " '2026-01-01' AND '2026-01-31'";
+        $expectedBinds = [
+            'created_at' => [
+                '2026-01-01',
+                true,
+            ],
+            'created_at.1' => [
+                '2026-01-31',
+                true,
+            ],
+        ];
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function provideWhereBetweenMethods(): iterable
+    {
+        return [
+            'between'     => ['whereBetween', 'BETWEEN'],
+            'not between' => ['whereNotBetween', 'NOT BETWEEN'],
+        ];
+    }
+
+    #[DataProvider('provideOrWhereBetweenMethods')]
+    public function testOrWhereBetweenMethods(string $method, string $sql): void
+    {
+        $builder = $this->db->table('jobs');
+
+        $builder->where('active', 1)
+            ->{$method}('created_at', ['2026-01-01', '2026-01-31']);
+
+        $expectedSQL = 'SELECT * FROM "jobs" WHERE "active" = 1 OR "created_at" ' . $sql . " '2026-01-01' AND '2026-01-31'";
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function provideOrWhereBetweenMethods(): iterable
+    {
+        return [
+            'or between'     => ['orWhereBetween', 'BETWEEN'],
+            'or not between' => ['orWhereNotBetween', 'NOT BETWEEN'],
+        ];
+    }
+
+    public function testWhereBetweenWithGroupedConditions(): void
+    {
+        $builder = $this->db->table('jobs');
+
+        $builder->groupStart()
+            ->whereBetween('created_at', ['2026-01-01', '2026-01-31'])
+            ->orWhereNotBetween('updated_at', ['2026-02-01', '2026-02-28'])
+            ->groupEnd()
+            ->where('active', 1);
+
+        $expectedSQL = 'SELECT * FROM "jobs" WHERE   ( "created_at" BETWEEN \'2026-01-01\' AND \'2026-01-31\' OR "updated_at" NOT BETWEEN \'2026-02-01\' AND \'2026-02-28\'  ) AND "active" = 1';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testWhereBetweenNoEscape(): void
+    {
+        $builder = $this->db->table('jobs');
+
+        $builder->whereBetween('DATE(created_at)', ['20260101', '20260131'], escape: false);
+
+        $expectedSQL   = 'SELECT * FROM "jobs" WHERE DATE(created_at) BETWEEN 20260101 AND 20260131';
+        $expectedBinds = [
+            'DATE(created_at)' => [
+                '20260101',
+                false,
+            ],
+            'DATE(created_at).1' => [
+                '20260131',
+                false,
+            ],
+        ];
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    public function testWhereBetweenWithAliasBeforeFrom(): void
+    {
+        $builder = $this->db->newQuery();
+
+        $builder->whereBetween('u.created_at', ['2026-01-01', '2026-01-31'])
+            ->from('users u');
+
+        $expectedSQL = 'SELECT * FROM "users" "u" WHERE "u"."created_at" BETWEEN \'2026-01-01\' AND \'2026-01-31\'';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    /**
+     * @param mixed $key
+     */
+    #[DataProvider('provideWhereInvalidKeyThrowInvalidArgumentException')]
+    public function testWhereBetweenInvalidKeyThrowInvalidArgumentException($key): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $builder = $this->db->table('jobs');
+        $builder->whereBetween($key, ['2026-01-01', '2026-01-31']);
+    }
+
+    /**
+     * @param mixed $values
+     */
+    #[DataProvider('provideWhereBetweenInvalidValuesThrowInvalidArgumentException')]
+    public function testWhereBetweenInvalidValuesThrowInvalidArgumentException($values): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $builder = $this->db->table('jobs');
+        $builder->whereBetween('created_at', $values);
+    }
+
+    /**
+     * @return iterable<string, array{mixed}>
+     */
+    public static function provideWhereBetweenInvalidValuesThrowInvalidArgumentException(): iterable
+    {
+        return [
+            'null'         => [null],
+            'not array'    => ['not array'],
+            'empty array'  => [[]],
+            'one value'    => [['2026-01-01']],
+            'three values' => [
+                ['2026-01-01', '2026-01-31', '2026-02-28'],
+            ],
+        ];
+    }
+
     public function testWhereIn(): void
     {
         $builder = $this->db->table('jobs');

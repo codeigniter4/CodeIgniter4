@@ -68,6 +68,28 @@ final class PrefixTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
+    public function testPrefixesSetOnTableNamesWithWhereBetweenClause(): void
+    {
+        $builder = $this->db->table('users');
+
+        $expectedSQL   = 'SELECT * FROM "ci_users" WHERE "ci_users"."created_at" BETWEEN 1 AND 10';
+        $expectedBinds = [
+            'users.created_at' => [
+                1,
+                true,
+            ],
+            'users.created_at.1' => [
+                10,
+                true,
+            ],
+        ];
+
+        $builder->whereBetween('users.created_at', [1, 10]);
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
     public function testPrefixWithSubquery(): void
     {
         $expected = <<<'NOWDOC'

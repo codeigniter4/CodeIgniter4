@@ -888,6 +888,111 @@ class BaseBuilder
     }
 
     /**
+     * Generates a WHERE field BETWEEN minimum AND maximum SQL query,
+     * joined with 'AND' if appropriate.
+     *
+     * @param array<array-key, mixed>|null $values The range values searched on
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     */
+    public function whereBetween(?string $key = null, $values = null, ?bool $escape = null): static
+    {
+        return $this->whereBetweenHaving('QBWhere', $key, $values, false, 'AND ', $escape);
+    }
+
+    /**
+     * Generates a WHERE field BETWEEN minimum AND maximum SQL query,
+     * joined with 'OR' if appropriate.
+     *
+     * @param array<array-key, mixed>|null $values The range values searched on
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     */
+    public function orWhereBetween(?string $key = null, $values = null, ?bool $escape = null): static
+    {
+        return $this->whereBetweenHaving('QBWhere', $key, $values, false, 'OR ', $escape);
+    }
+
+    /**
+     * Generates a WHERE field NOT BETWEEN minimum AND maximum SQL query,
+     * joined with 'AND' if appropriate.
+     *
+     * @param array<array-key, mixed>|null $values The range values searched on
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     */
+    public function whereNotBetween(?string $key = null, $values = null, ?bool $escape = null): static
+    {
+        return $this->whereBetweenHaving('QBWhere', $key, $values, true, 'AND ', $escape);
+    }
+
+    /**
+     * Generates a WHERE field NOT BETWEEN minimum AND maximum SQL query,
+     * joined with 'OR' if appropriate.
+     *
+     * @param array<array-key, mixed>|null $values The range values searched on
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     */
+    public function orWhereNotBetween(?string $key = null, $values = null, ?bool $escape = null): static
+    {
+        return $this->whereBetweenHaving('QBWhere', $key, $values, true, 'OR ', $escape);
+    }
+
+    /**
+     * @used-by whereBetween()
+     * @used-by orWhereBetween()
+     * @used-by whereNotBetween()
+     * @used-by orWhereNotBetween()
+     *
+     * @param 'QBHaving'|'QBWhere'         $qbKey
+     * @param non-empty-string|null        $key
+     * @param array<array-key, mixed>|null $values The range values searched on
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     */
+    private function whereBetweenHaving(string $qbKey, ?string $key = null, $values = null, bool $not = false, string $type = 'AND ', ?bool $escape = null): static
+    {
+        if ($key === null || $key === '') {
+            throw new InvalidArgumentException(sprintf('%s() expects $key to be a non-empty string', debug_backtrace(0, 2)[1]['function']));
+        }
+
+        if (! is_array($values) || count($values) !== 2) {
+            throw new InvalidArgumentException(sprintf('%s() expects $values to be an array containing exactly two values', debug_backtrace(0, 2)[1]['function']));
+        }
+
+        $escape ??= $this->db->protectIdentifiers;
+        $values = array_values($values);
+
+        $lowerBind = $this->setBind($key, $values[0], $escape);
+        $upperBind = $this->setBind($key, $values[1], $escape);
+        $not       = $not ? ' NOT' : '';
+        $prefix    = $this->{$qbKey} === [] ? $this->groupGetType('') : $this->groupGetType($type);
+
+        $this->{$qbKey}[] = [
+            'betweenComparison' => true,
+            'condition'         => $prefix,
+            'escape'            => $escape,
+            'key'               => $key,
+            'lowerBind'         => $lowerBind,
+            'not'               => $not,
+            'upperBind'         => $upperBind,
+        ];
+
+        return $this;
+    }
+
+    /**
      * @used-by whereExists()
      * @used-by orWhereExists()
      * @used-by whereNotExists()
@@ -3395,6 +3500,12 @@ class BaseBuilder
                     continue;
                 }
 
+                if (($qbkey['betweenComparison'] ?? false) === true) {
+                    $qbkey = $this->compileBetweenComparison($qbkey);
+
+                    continue;
+                }
+
                 if ($qbkey['escape'] === false) {
                     $qbkey = $qbkey['condition'];
 
@@ -3471,6 +3582,20 @@ class BaseBuilder
         }
 
         return $condition['condition'] . $condition['first'] . ' ' . $condition['operator'] . ' ' . $condition['second'];
+    }
+
+    /**
+     * @used-by compileWhereHaving()
+     *
+     * @param array{betweenComparison: true, condition: string, escape: bool, key: string, lowerBind: string, not: string, upperBind: string} $condition
+     */
+    private function compileBetweenComparison(array $condition): string
+    {
+        if ($condition['escape']) {
+            $condition['key'] = $this->db->protectIdentifiers($condition['key'], false, true);
+        }
+
+        return $condition['condition'] . $condition['key'] . $condition['not'] . ' BETWEEN :' . $condition['lowerBind'] . ': AND :' . $condition['upperBind'] . ':';
     }
 
     /**
