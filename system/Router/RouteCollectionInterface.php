@@ -44,12 +44,16 @@ interface RouteCollectionInterface
      * You can pass an associative array as $placeholder, and have
      * multiple placeholders added at once.
      *
+     * The $sample parameter provides a representative value for the
+     * placeholder, used by 'php spark routes' to generate valid sample URIs.
+     *
      * @param array|string $placeholder
      * @param string|null  $pattern     The regex pattern
+     * @param string|null  $sample      A sample value that matches the pattern
      *
      * @return RouteCollectionInterface
      */
-    public function addPlaceholder($placeholder, ?string $pattern = null);
+    public function addPlaceholder($placeholder, ?string $pattern = null, ?string $sample = null);
 
     /**
      * Sets the default namespace to use for Controllers when no other

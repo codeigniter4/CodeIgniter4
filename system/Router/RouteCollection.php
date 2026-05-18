@@ -115,6 +115,14 @@ class RouteCollection implements RouteCollectionInterface
     ];
 
     /**
+     * Sample values for custom placeholders, used by SampleURIGenerator
+     * to produce valid sample URIs for 'php spark routes'.
+     *
+     * @var array<string, string>
+     */
+    protected $placeholderSamples = [];
+
+    /**
      * An array of all routes and their mappings.
      *
      * @var array
@@ -384,15 +392,28 @@ class RouteCollection implements RouteCollectionInterface
      * You can pass an associative array as $placeholder, and have
      * multiple placeholders added at once.
      *
+     * The $sample parameter provides a representative value for the
+     * placeholder, used by 'php spark routes' to generate valid sample URIs.
+     * When omitted, the system attempts to infer a sample from the pattern.
+     *
      * @param array|string $placeholder
      */
-    public function addPlaceholder($placeholder, ?string $pattern = null): RouteCollectionInterface
+    public function addPlaceholder($placeholder, ?string $pattern = null, ?string $sample = null): RouteCollectionInterface
     {
         if (! is_array($placeholder)) {
             $placeholder = [$placeholder => $pattern];
         }
 
         $this->placeholders = array_merge($this->placeholders, $placeholder);
+
+        if ($sample !== null) {
+            $name = is_string($placeholder) ? [$placeholder => $sample] : [];
+
+            // When array format is used with a single key, extract the name
+            foreach ($placeholder as $name => $pat) {
+                $this->placeholderSamples[$name] = $sample;
+            }
+        }
 
         return $this;
     }
@@ -407,6 +428,18 @@ class RouteCollection implements RouteCollectionInterface
     public function getPlaceholders(): array
     {
         return $this->placeholders;
+    }
+
+    /**
+     * Returns sample values for placeholders, used by SampleURIGenerator.
+     *
+     * @return array<string, string>
+     *
+     * @internal
+     */
+    public function getPlaceholderSamples(): array
+    {
+        return $this->placeholderSamples;
     }
 
     /**

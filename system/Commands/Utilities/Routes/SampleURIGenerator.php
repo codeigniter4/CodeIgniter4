@@ -62,7 +62,10 @@ final class SampleURIGenerator
         }
 
         foreach ($this->routes->getPlaceholders() as $placeholder => $regex) {
-            $sample = $this->samples[$placeholder] ?? '::unknown::';
+            // Priority: 1) user-provided sample, 2) built-in sample, 3) placeholder name
+            $sample = $this->routes->getPlaceholderSamples()[$placeholder]
+                ?? $this->samples[$placeholder]
+                ?? $placeholder;
 
             $sampleUri = str_replace('(' . $regex . ')', $sample, $sampleUri);
         }
