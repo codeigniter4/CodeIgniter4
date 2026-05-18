@@ -145,8 +145,8 @@ Class Reference
         calculation.
 
         When a callable is provided, it will only be executed on a cache miss,
-        after the callback has been invoked. The callable may optionally accept
-        the computed value as its first argument:
+        after the callback has been invoked. The callable always receives the
+        computed value as its first argument:
 
         .. literalinclude:: caching/015.php
 

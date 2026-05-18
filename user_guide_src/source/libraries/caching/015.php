@@ -1,7 +1,7 @@
 <?php
 
 // Simple dynamic TTL
-$cache->remember('key', static fn () => 60, static fn () => fetchData());
+$cache->remember('key', static fn ($value) => 60, static fn () => fetchData());
 
 // Value-aware TTL
 $cache->remember(
