@@ -42,6 +42,8 @@ use stdClass;
  *
  * @property-read BaseConnection $db
  *
+ * @method bool  doesntExist(bool $reset = true)
+ * @method bool  exists(bool $reset = true)
  * @method $this groupBy($by, ?bool $escape = null)
  * @method $this groupEnd()
  * @method $this groupStart()

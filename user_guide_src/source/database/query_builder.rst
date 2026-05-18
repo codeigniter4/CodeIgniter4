@@ -851,6 +851,35 @@ first parameter.
 
 .. literalinclude:: query_builder/073.php
 
+.. _query-builder-exists:
+
+$builder->exists()
+------------------
+
+.. versionadded:: 4.8.0
+
+Permits you to determine whether the current Query Builder conditions match
+any rows:
+
+.. literalinclude:: query_builder/128.php
+
+This method returns ``true`` when at least one row exists and ``false`` when no
+rows match. It respects any existing ``limit()`` and ``offset()`` clauses, and
+resets the current Query Builder state by default. If you need to keep the
+current Query Builder state, you can pass ``false`` as the first parameter.
+
+$builder->doesntExist()
+-----------------------
+
+.. versionadded:: 4.8.0
+
+This method is identical to ``exists()``, except that it returns ``true`` when
+no rows match.
+
+.. note:: These methods execute the current Query Builder query to check for
+    rows. To add an SQL ``EXISTS`` predicate to a query, use
+    :ref:`query-builder-where-exists`.
+
 $builder->countAll()
 --------------------
 
@@ -1566,6 +1595,22 @@ Class Reference
 
         Generates a platform-specific query string that counts
         all records in the particular table.
+
+    .. php:method:: exists([$reset = true])
+
+        :param bool $reset: Whether to reset values for SELECTs
+        :returns:   Whether the query has any matching rows
+        :rtype:     bool
+
+        Determines whether the current Query Builder conditions match any rows.
+
+    .. php:method:: doesntExist([$reset = true])
+
+        :param bool $reset: Whether to reset values for SELECTs
+        :returns:   Whether the query has no matching rows
+        :rtype:     bool
+
+        Determines whether the current Query Builder conditions do not match any rows.
 
     .. php:method:: get([$limit = null[, $offset = null[, $reset = true]]]])
 
