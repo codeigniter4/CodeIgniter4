@@ -178,7 +178,7 @@ abstract class FormRequest
      *
      * @return array<string, mixed>
      */
-    public function validated(): array
+    public function getValidated(): array
     {
         return $this->validatedData;
     }
@@ -186,39 +186,9 @@ abstract class FormRequest
     /**
      * Returns the validated data as a typed input object.
      */
-    public function validatedInput(): ValidatedInput
+    public function getValidatedInput(): ValidatedInput
     {
         return service('inputdatafactory')->createValidated($this->validatedData);
-    }
-
-    /**
-     * Returns a single validated field value by name, or the default value
-     * if the field is not present in the validated data.
-     *
-     * Supports dot-array syntax for nested validated data.
-     */
-    public function getValidated(string $key, mixed $default = null): mixed
-    {
-        helper('array');
-
-        if (! dot_array_has($key, $this->validatedData)) {
-            return $default;
-        }
-
-        return dot_array_search($key, $this->validatedData);
-    }
-
-    /**
-     * Returns true when the named field exists in the validated data, even if
-     * its value is null.
-     *
-     * Supports dot-array syntax for nested validated data.
-     */
-    public function hasValidated(string $key): bool
-    {
-        helper('array');
-
-        return dot_array_has($key, $this->validatedData);
     }
 
     /**

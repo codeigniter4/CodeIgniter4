@@ -146,11 +146,11 @@ final class FormRequestTest extends CIUnitTestCase
         };
     }
 
-    public function testValidatedReturnsEmptyArrayBeforeResolution(): void
+    public function testGetValidatedReturnsEmptyArrayBeforeResolution(): void
     {
         $formRequest = $this->makeFormRequest($this->makeRequest());
 
-        $this->assertSame([], $formRequest->validated());
+        $this->assertSame([], $formRequest->getValidated());
     }
 
     // -------------------------------------------------------------------------
@@ -167,11 +167,11 @@ final class FormRequestTest extends CIUnitTestCase
 
         $this->assertSame(
             ['title' => 'Hello World', 'body' => 'Some body text'],
-            $formRequest->validated(),
+            $formRequest->getValidated(),
         );
     }
 
-    public function testValidatedReturnsOnlyFieldsCoveredByRules(): void
+    public function testGetValidatedReturnsOnlyFieldsCoveredByRules(): void
     {
         service('superglobals')->setPost('title', 'Hello World');
         service('superglobals')->setPost('body', 'Some body text');
@@ -180,81 +180,14 @@ final class FormRequestTest extends CIUnitTestCase
         $formRequest = $this->makeFormRequest($this->makeRequest());
         $formRequest->resolveRequest();
 
-        $validated = $formRequest->validated();
+        $validated = $formRequest->getValidated();
 
         $this->assertArrayHasKey('title', $validated);
         $this->assertArrayHasKey('body', $validated);
         $this->assertArrayNotHasKey('extra_field', $validated);
     }
 
-    // -------------------------------------------------------------------------
-    // Explicit access to validated fields
-    // -------------------------------------------------------------------------
-
-    public function testGetValidatedReturnsValidatedFieldValue(): void
-    {
-        service('superglobals')->setPost('title', 'Hello World');
-        service('superglobals')->setPost('body', 'Some body text');
-
-        $formRequest = new ValidPostFormRequest($this->makeRequest());
-        $formRequest->resolveRequest();
-
-        $this->assertSame('Hello World', $formRequest->getValidated('title'));
-        $this->assertSame('Some body text', $formRequest->getValidated('body'));
-    }
-
-    public function testGetValidatedReturnsNullForMissingField(): void
-    {
-        service('superglobals')->setPost('title', 'Hello World');
-        service('superglobals')->setPost('body', 'Some body text');
-
-        $formRequest = new ValidPostFormRequest($this->makeRequest());
-        $formRequest->resolveRequest();
-
-        $this->assertNull($formRequest->getValidated('nonexistent'));
-    }
-
-    public function testGetValidatedReturnsDefaultForMissingField(): void
-    {
-        service('superglobals')->setPost('title', 'Hello World');
-        service('superglobals')->setPost('body', 'Some body text');
-
-        $formRequest = new ValidPostFormRequest($this->makeRequest());
-        $formRequest->resolveRequest();
-
-        $this->assertSame('fallback', $formRequest->getValidated('nonexistent', 'fallback'));
-    }
-
-    public function testGetValidatedReturnsNullBeforeValidationRuns(): void
-    {
-        $formRequest = new ValidPostFormRequest($this->makeRequest());
-
-        $this->assertNull($formRequest->getValidated('title'));
-    }
-
-    public function testHasValidatedReturnsTrueForValidatedField(): void
-    {
-        service('superglobals')->setPost('title', 'Hello World');
-        service('superglobals')->setPost('body', 'Some body text');
-
-        $formRequest = new ValidPostFormRequest($this->makeRequest());
-        $formRequest->resolveRequest();
-
-        $this->assertTrue($formRequest->hasValidated('title'));
-    }
-
-    public function testHasValidatedReturnsFalseForMissingField(): void
-    {
-        service('superglobals')->setPost('title', 'Hello World');
-        service('superglobals')->setPost('body', 'Some body text');
-
-        $formRequest = new ValidPostFormRequest($this->makeRequest());
-        $formRequest->resolveRequest();
-
-        $this->assertFalse($formRequest->hasValidated('nonexistent'));
-    }
-
-    public function testGetValidatedAndHasValidatedSupportDotSyntax(): void
+    public function testGetValidatedReturnsNestedValidatedData(): void
     {
         service('superglobals')->setPost('post', [
             'title' => 'Hello World',
@@ -275,12 +208,20 @@ final class FormRequestTest extends CIUnitTestCase
 
         $formRequest->resolveRequest();
 
-        $this->assertSame('Hello World', $formRequest->getValidated('post.title'));
-        $this->assertSame('hello-world', $formRequest->getValidated('post.meta.slug'));
-        $this->assertTrue($formRequest->hasValidated('post.meta.slug'));
+        $this->assertSame(
+            [
+                'post' => [
+                    'title' => 'Hello World',
+                    'meta'  => [
+                        'slug' => 'hello-world',
+                    ],
+                ],
+            ],
+            $formRequest->getValidated(),
+        );
     }
 
-    public function testHasValidatedReturnsTrueForNullValidatedField(): void
+    public function testGetValidatedReturnsNullValidatedField(): void
     {
         service('superglobals')->setServer('CONTENT_TYPE', 'application/json');
 
@@ -293,13 +234,10 @@ final class FormRequestTest extends CIUnitTestCase
 
         $formRequest->resolveRequest();
 
-        $this->assertSame(['note' => null], $formRequest->validated());
-        $this->assertNull($formRequest->getValidated('note'));
-        $this->assertNull($formRequest->getValidated('note', 'fallback'));
-        $this->assertTrue($formRequest->hasValidated('note'));
+        $this->assertSame(['note' => null], $formRequest->getValidated());
     }
 
-    public function testValidatedInputReturnsValidatedInputObject(): void
+    public function testGetValidatedInputReturnsValidatedInputObject(): void
     {
         service('superglobals')->setPost('title', 'Hello World');
         service('superglobals')->setPost('body', 'Some body text');
@@ -307,7 +245,7 @@ final class FormRequestTest extends CIUnitTestCase
         $formRequest = new ValidPostFormRequest($this->makeRequest());
         $formRequest->resolveRequest();
 
-        $input = $formRequest->validatedInput();
+        $input = $formRequest->getValidatedInput();
 
         $this->assertInstanceOf(ValidatedInput::class, $input);
         $this->assertSame('Hello World', $input->get('title'));
@@ -343,7 +281,7 @@ final class FormRequestTest extends CIUnitTestCase
         $this->assertNotInstanceOf(ResponseInterface::class, $formRequest->resolveRequest());
 
         $this->assertTrue($formRequest::$prepareCalled);
-        $this->assertSame('Hi extended', $formRequest->validated()['title']);
+        $this->assertSame('Hi extended', $formRequest->getValidated()['title']);
     }
 
     // -------------------------------------------------------------------------
@@ -499,7 +437,7 @@ final class FormRequestTest extends CIUnitTestCase
 
         $this->assertNotInstanceOf(ResponseInterface::class, $formRequest->resolveRequest());
 
-        $this->assertSame('Injected Title', $formRequest->validated()['title']);
+        $this->assertSame('Injected Title', $formRequest->getValidated()['title']);
     }
 
     public function testCustomFailedValidationIsRespected(): void
@@ -708,7 +646,7 @@ final class FormRequestTest extends CIUnitTestCase
 
         $routes = service('routes');
         $routes->setAutoRoute(false);
-        $routes->add('closure/(:segment)', static fn (string $id, ValidPostFormRequest $request): string => json_encode(['id' => $id, 'data' => $request->validated()]));
+        $routes->add('closure/(:segment)', static fn (string $id, ValidPostFormRequest $request): string => json_encode(['id' => $id, 'data' => $request->getValidated()]));
 
         $router = service('router', $routes, service('incomingrequest'));
         Services::injectMock('router', $router);
@@ -781,7 +719,7 @@ final class FormRequestTest extends CIUnitTestCase
     }
 
     // -------------------------------------------------------------------------
-    // Integration: validated() only returns fields declared in rules()
+    // Integration: getValidated() only returns fields declared in rules()
     // -------------------------------------------------------------------------
 
     #[RunInSeparateProcess]

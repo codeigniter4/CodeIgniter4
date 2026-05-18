@@ -28,7 +28,7 @@ class Posts extends BaseController
 
     private function update(UpdatePostRequest $request, string $id): string
     {
-        $data = $request->validated();
+        $data = $request->getValidated();
 
         // update post $id with $data
 

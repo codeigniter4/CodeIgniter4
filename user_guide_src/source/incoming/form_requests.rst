@@ -49,16 +49,16 @@ JSON/AJAX requests - the method body is never reached.
 Accessing Validated Data
 ************************
 
-``validated()`` returns an array containing only the fields that were declared
+``getValidated()`` returns an array containing only the fields that were declared
 in ``rules()``. Fields submitted by the client that are not covered by a rule
 are silently discarded, protecting against mass-assignment.
 
 .. literalinclude:: form_requests/009.php
    :lines: 2-
 
-Use ``getValidated()`` to read a single validated field and ``hasValidated()``
-to check whether a validated key exists, including keys whose value is
-``null``. Both methods support dot-array syntax for nested validated data:
+Use ``getValidatedInput()`` when you want to read a single validated field or
+check whether a validated key exists, including keys whose value is ``null``.
+The input object supports dot-array syntax for nested validated data:
 
 .. literalinclude:: form_requests/014.php
    :lines: 2-
@@ -66,9 +66,9 @@ to check whether a validated key exists, including keys whose value is
 Typed Validated Input
 =====================
 
-``validatedInput()`` returns the same validated data as a typed input object.
-This keeps the array-based APIs unchanged while making common controller values
-easier to read after validation has succeeded.
+``getValidatedInput()`` returns the same validated data as a typed input object.
+This complements ``getValidated()`` by making common controller values easier
+to read after validation has succeeded.
 
 After the FormRequest has been validated, read the successful values in the
 controller:
@@ -83,7 +83,7 @@ for the full behavior of the typed input methods.
 Accessing Other Request Data
 ============================
 
-For anything not covered by ``validated()`` - uploaded files, request headers,
+For anything not covered by ``getValidated()`` - uploaded files, request headers,
 the client IP address, raw input, and so on - use ``$this->request`` as usual.
 It is the same :doc:`IncomingRequest </incoming/incomingrequest>` instance that
 the FormRequest uses internally:
@@ -171,7 +171,7 @@ normalized phone numbers, or trimmed strings.
    :lines: 2-
 
 .. note:: ``old()`` returns the original submitted input, not the normalized
-    values. Use ``validated()`` to access the processed data after a successful
+    values. Use ``getValidated()`` to access the processed data after a successful
     request. If you need ``old()`` to reflect normalized values, see
     :ref:`form-request-flash-normalized`.
 
@@ -245,8 +245,8 @@ whose type extends ``FormRequest``:
    rules are applied.
 #. ``run()`` executes the validation rules. If it fails, ``failedValidation()``
    is called, and its response is returned to the client.
-#. The validated data is stored internally and available via ``validated()``,
-   ``validatedInput()``, ``getValidated()``, and ``hasValidated()``.
+#. The validated data is stored internally and available via ``getValidated()``
+   and ``getValidatedInput()``.
 #. The resolved FormRequest object is injected into the controller method or
    closure.
 

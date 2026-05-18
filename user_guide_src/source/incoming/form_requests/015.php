@@ -2,7 +2,7 @@
 
 use App\Enums\PostStatus;
 
-$input = $request->validatedInput();
+$input = $request->getValidatedInput();
 
 $page        = $input->integer('page', 1);
 $rating      = $input->float('rating', 0.0);
