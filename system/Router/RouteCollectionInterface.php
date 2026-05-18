@@ -264,4 +264,16 @@ interface RouteCollectionInterface
      * @return list<string> filter_name or filter_name:arguments like 'role:admin,manager'
      */
     public function getFiltersForRoute(string $search, ?string $verb = null): array;
+
+    /**
+     * Get all controllers in Route Handlers
+     *
+     * @param string|null $verb HTTP verb like `GET`,`POST` or `*` or `CLI`.
+     *                          `'*'` returns all controllers in any verb.
+     *
+     * @return list<string> controller name list
+     *
+     * @internal
+     */
+    public function getRegisteredControllers(?string $verb = '*'): array;
 }

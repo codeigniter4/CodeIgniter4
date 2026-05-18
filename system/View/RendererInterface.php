@@ -71,4 +71,19 @@ interface RendererInterface
      * @return RendererInterface
      */
     public function resetData();
+
+    /**
+     * Returns the rendered data from all views, organized by view name.
+     *
+     * @return array<string, array>
+     */
+    public function getData(): array;
+
+    /**
+     * Returns the performance data that might have been collected
+     * during the execution. Used by the Debug Toolbar.
+     *
+     * @return array<int, array>
+     */
+    public function getPerformanceData(): array;
 }
