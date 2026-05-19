@@ -60,7 +60,7 @@ class Parser extends View
     /**
      * Stores any plugins registered at run-time.
      *
-     * @var array<string, (callable(mixed): mixed)|((callable(mixed): mixed)&string)|list<(callable(mixed): mixed)&string>>
+     * @var array<string, (callable(mixed...): mixed)|((callable(mixed...): mixed)&string)|list<(callable(mixed...): mixed)&string>>
      */
     protected $plugins = [];
 

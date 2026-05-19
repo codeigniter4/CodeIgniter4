@@ -48,7 +48,7 @@ class View extends BaseConfig
      *
      * @psalm-suppress UndefinedDocblockClass
      *
-     * @var array<string, (callable(mixed): mixed)|((callable(mixed): mixed)&string)|list<(callable(mixed): mixed)&string>>
+     * @var array<string, (callable(mixed...): mixed)|((callable(mixed...): mixed)&string)|list<(callable(mixed...): mixed)&string>>
      */
     public $plugins = [];
 
@@ -84,7 +84,7 @@ class View extends BaseConfig
     /**
      * Built-in View plugins.
      *
-     * @var array<string, (callable(mixed): mixed)|((callable(mixed): mixed)&string)|list<(callable(mixed): mixed)&string>>
+     * @var array<string, (callable(mixed...): mixed)|((callable(mixed...): mixed)&string)|list<(callable(mixed...): mixed)&string>>
      */
     protected $corePlugins = [
         'csp_script_nonce'  => '\CodeIgniter\View\Plugins::cspScriptNonce',
