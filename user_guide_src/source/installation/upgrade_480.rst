@@ -76,6 +76,18 @@ Config
 - app/Config/Mimes.php
     - ``Config\Mimes::$mimes`` added a new key ``md`` for Markdown files.
 
+Error Views
+-----------
+
+- app/Views/errors/html/debug.css
+    - Added styles for the **Copy Details** button.
+- app/Views/errors/html/debug.js
+    - Added clipboard handling for the **Copy Details** button.
+- app/Views/errors/html/error_exception.php
+    - Added a **Copy Details** button to detailed HTML exception pages.
+- app/Views/errors/html/error_report.php
+    - Added a Markdown error report partial used by the **Copy Details** button.
+
 All Changes
 ===========
 

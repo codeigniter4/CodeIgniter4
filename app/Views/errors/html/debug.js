@@ -114,3 +114,53 @@ function toggle(elem)
 
     return false;
 }
+
+function copyErrorReport(reportId, button)
+{
+    var report = document.getElementById(reportId);
+
+    if (navigator.clipboard && window.isSecureContext)
+    {
+        navigator.clipboard
+            .writeText(report.value)
+            .then(() => showCopiedButton(button))
+            .catch(() => copyErrorReportWithFallback(report.value, button));
+
+        return false;
+    }
+
+    copyErrorReportWithFallback(report.value, button);
+
+    return false;
+}
+
+function copyErrorReportWithFallback(text, button)
+{
+    var textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'fixed';
+    textarea.style.top = '-1000px';
+    textarea.style.left = '-1000px';
+
+    document.body.appendChild(textarea);
+    textarea.select();
+
+    if (document.execCommand('copy'))
+    {
+        showCopiedButton(button);
+    }
+
+    document.body.removeChild(textarea);
+}
+
+function showCopiedButton(button)
+{
+    button.defaultHtml = button.defaultHtml || button.innerHTML;
+    button.innerHTML   = 'Copied!';
+
+    window.clearTimeout(button.copyResetTimer);
+    button.copyResetTimer = window.setTimeout(() => {
+        button.innerHTML = button.defaultHtml;
+    }, 1500);
+}

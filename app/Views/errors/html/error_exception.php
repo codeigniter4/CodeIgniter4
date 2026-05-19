@@ -3,6 +3,7 @@ use CodeIgniter\HTTP\Header;
 use CodeIgniter\CodeIgniter;
 
 $errorId = uniqid('error', true);
+$copyableErrorReportId = $errorId . 'copyableErrorReport';
 ?>
 <!doctype html>
 <html>
@@ -30,7 +31,38 @@ $errorId = uniqid('error', true);
             Environment: <?= ENVIRONMENT ?>
         </div>
         <div class="container">
-            <h1><?= esc($title), esc($exception->getCode() ? ' #' . $exception->getCode() : '') ?></h1>
+            <div class="header-title">
+                <h1><?= esc($title), esc($exception->getCode() ? ' #' . $exception->getCode() : '') ?></h1>
+                <div class="error-report">
+                    <button
+                        class="error-report-button"
+                        type="button"
+                        aria-live="polite"
+                        onclick="return copyErrorReport('<?= esc($copyableErrorReportId, 'attr') ?>', this);"
+                    >
+                        <svg
+                            aria-hidden="true"
+                            class="error-report-icon"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+                            <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+                        </svg>
+                        <span class="error-report-label">Copy Details</span>
+                    </button>
+                    <textarea
+                        id="<?= esc($copyableErrorReportId, 'attr') ?>"
+                        readonly
+                        hidden
+                    ><?php include __DIR__ . '/error_report.php'; ?></textarea>
+                </div>
+            </div>
             <p>
                 <?= nl2br(esc($exception->getMessage())) ?>
                 <a href="https://www.duckduckgo.com/?q=<?= urlencode($title . ' ' . preg_replace('#\'.*\'|".*"#Us', '', $exception->getMessage())) ?>"
@@ -342,8 +374,9 @@ $errorId = uniqid('error', true);
 
             <!-- Response -->
             <?php
-                $response = service('response');
-                $response->setStatusCode(http_response_code());
+                $response           = service('response');
+                $responseStatusCode = http_response_code();
+                $response->setStatusCode($responseStatusCode === false || $responseStatusCode === 0 ? $code : $responseStatusCode);
             ?>
             <div class="content" id="response">
                 <table>
