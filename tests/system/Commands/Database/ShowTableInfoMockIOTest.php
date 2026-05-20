@@ -17,6 +17,7 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\Mock\MockInputOutput;
+use Config\Database;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -32,6 +33,8 @@ final class ShowTableInfoMockIOTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->db->resetDataCache();
 
         CLI::reset();
 
@@ -51,12 +54,16 @@ final class ShowTableInfoMockIOTest extends CIUnitTestCase
 
     public function testDbTableWithInputs(): void
     {
+        $tableIndex = array_search('db_migrations', Database::connect()->listTables(), true);
+
+        $this->assertIsInt($tableIndex);
+
         // Set MockInputOutput to CLI.
         $io = new MockInputOutput();
         CLI::setInputOutput($io);
 
-        // User will input "a" (invalid value) and "0".
-        $io->setInputs(['a', '0']);
+        // User will input "a" (invalid value) and then select db_migrations.
+        $io->setInputs(['a', (string) $tableIndex]);
 
         command('db:table');
 
@@ -71,7 +78,7 @@ final class ShowTableInfoMockIOTest extends CIUnitTestCase
             $result,
         );
         $this->assertMatchesRegularExpression(
-            '/Which table do you want to see\? \[[\d,\s]+\]\: 0/',
+            '/Which table do you want to see\? \[[\d,\s]+\]\: ' . $tableIndex . '/',
             $result,
         );
         $this->assertMatchesRegularExpression(

@@ -83,6 +83,7 @@ final class ClearCacheTest extends CIUnitTestCase
         Services::injectMock('cache', $cache);
 
         command('cache:clear');
+        Services::resetSingle('cache');
 
         $this->assertSame(
             sprintf("\nError occurred while clearing the cache using the \"%s\" driver.\n", config('Cache')->handler),

@@ -73,9 +73,11 @@ final class DirectoryHasher
 
         foreach ($iterator as $file) {
             if ($file->isFile()) {
-                $hashes[] = md5_file($file->getRealPath());
+                $hashes[$file->getRealPath()] = md5_file($file->getRealPath());
             }
         }
+
+        ksort($hashes);
 
         return md5(implode('', $hashes));
     }

@@ -458,6 +458,11 @@ class Entity implements JsonSerializable
             // Check for Entity instance (use raw values, recursive)
             if ($data instanceof self) {
                 $objectData = $data->toRawArray(false, true);
+            } elseif ($data instanceof UnitEnum) {
+                return [
+                    '__class' => $data::class,
+                    '__enum'  => $data instanceof BackedEnum ? $data->value : $data->name,
+                ];
             } elseif ($data instanceof JsonSerializable) {
                 $objectData = $data->jsonSerialize();
             } elseif (method_exists($data, 'toArray')) {
@@ -468,11 +473,6 @@ class Entity implements JsonSerializable
                 return [
                     '__class'    => $data::class,
                     '__datetime' => $data->format(DATE_RFC3339_EXTENDED),
-                ];
-            } elseif ($data instanceof UnitEnum) {
-                return [
-                    '__class' => $data::class,
-                    '__enum'  => $data instanceof BackedEnum ? $data->value : $data->name,
                 ];
             } else {
                 $objectData = get_object_vars($data);

@@ -17,7 +17,6 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\StreamFilterTrait;
-use Config\Database;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
@@ -30,11 +29,13 @@ final class ShowTableInfoTest extends CIUnitTestCase
     use DatabaseTestTrait;
     use StreamFilterTrait;
 
-    protected $migrateOnce = true;
+    protected $seed = CITestSeeder::class;
 
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->db->resetDataCache();
 
         putenv('NO_COLOR=1');
         CLI::init();
@@ -121,9 +122,6 @@ final class ShowTableInfoTest extends CIUnitTestCase
 
     public function testDbTableDesc(): void
     {
-        $seeder = Database::seeder();
-        $seeder->call(CITestSeeder::class);
-
         command('db:table db_user --desc');
 
         $result = $this->getNormalizedResult();

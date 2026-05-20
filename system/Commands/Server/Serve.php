@@ -52,14 +52,7 @@ class Serve extends AbstractCommand
             CLI::newLine();
 
             passthru(
-                sprintf(
-                    '%s -S %s:%s -t %s %s',
-                    escapeshellarg($options['php']),
-                    escapeshellarg($options['host']),
-                    escapeshellarg((string) $port),
-                    escapeshellarg(FCPATH),
-                    escapeshellarg(SYSTEMPATH . 'rewrite.php'),
-                ),
+                $this->buildServeCommand($options['php'], $options['host'], $port, FCPATH, SYSTEMPATH . 'rewrite.php'),
                 $status,
             );
 
@@ -71,5 +64,20 @@ class Serve extends AbstractCommand
         }
 
         return $status;
+    }
+
+    /**
+     * Builds the shell command passed to PHP's built-in webserver, escaping
+     * every user-influenced argument so it cannot be interpreted by /bin/sh.
+     */
+    protected function buildServeCommand(string $php, string $host, int $port, string $docroot, string $rewrite): string
+    {
+        return sprintf(
+            '%s -S %s -t %s %s',
+            escapeshellarg($php),
+            escapeshellarg($host . ':' . $port),
+            escapeshellarg($docroot),
+            escapeshellarg($rewrite),
+        );
     }
 }

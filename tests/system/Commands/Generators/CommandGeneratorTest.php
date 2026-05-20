@@ -27,15 +27,21 @@ final class CommandGeneratorTest extends CIUnitTestCase
 
     protected function tearDown(): void
     {
-        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', $this->getStreamFilterBuffer());
-        $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
-        $dir    = dirname($file);
+        preg_match_all('/File (?:created|overwritten): (APPPATH[^\r\n\x1b]+)/', $this->getStreamFilterBuffer(), $matches);
 
-        if (is_file($file)) {
-            unlink($file);
-        }
-        if (is_dir($dir) && str_contains($dir, 'Commands')) {
-            rmdir($dir);
+        foreach ($matches[1] as $file) {
+            $path = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, $file);
+
+            if (is_file($path)) {
+                unlink($path);
+            }
+
+            $dir      = dirname($path);
+            $dirFiles = is_dir($dir) ? scandir($dir) : false;
+
+            if (str_starts_with($dir, APPPATH . 'Commands') && $dirFiles !== false && count($dirFiles) === 2) {
+                rmdir($dir);
+            }
         }
     }
 

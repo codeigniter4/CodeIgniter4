@@ -15,6 +15,7 @@ namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
+use Config\Database;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -27,51 +28,60 @@ final class MigrationIntegrationTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
-    private string $migrationFileFrom = SUPPORTPATH . 'Database/Migrations/20160428212500_Create_test_tables.php';
-    private string $migrationFileTo   = APPPATH . 'Database/Migrations/20160428212500_Create_test_tables.php';
-
     protected function setUp(): void
     {
+        $this->resetServices();
+
         parent::setUp();
 
-        if (! is_file($this->migrationFileFrom)) {
-            $this->fail(clean_path($this->migrationFileFrom) . ' is not found.');
-        }
-
-        if (is_file($this->migrationFileTo)) {
-            @unlink($this->migrationFileTo);
-        }
-
-        copy($this->migrationFileFrom, $this->migrationFileTo);
-
-        $contents = file_get_contents($this->migrationFileTo);
-        $contents = str_replace('namespace Tests\Support\Database\Migrations;', 'namespace App\Database\Migrations;', $contents);
-        file_put_contents($this->migrationFileTo, $contents);
+        service('migrations')->clearHistory();
+        $this->dropTestTables();
     }
 
     protected function tearDown(): void
     {
-        parent::tearDown();
+        service('migrations')->clearHistory();
+        $this->dropTestTables();
 
-        if (is_file($this->migrationFileTo)) {
-            @unlink($this->migrationFileTo);
-        }
+        $this->resetServices();
+
+        parent::tearDown();
     }
 
     public function testMigrationWithRollbackHasSameNameFormat(): void
     {
-        command('migrate -n App');
+        command('migrate -n Tests\\\\Support');
         $this->assertStringContainsString(
-            '(App) 20160428212500_App\Database\Migrations\Migration_Create_test_tables',
+            '(Tests\Support) 20160428212500_Tests\Support\Database\Migrations\Migration_Create_test_tables',
             $this->getStreamFilterBuffer(),
         );
 
         $this->resetStreamFilterBuffer();
+        $this->resetServices();
 
-        command('migrate:rollback -n App');
+        command('migrate:rollback');
         $this->assertStringContainsString(
-            '(App) 20160428212500_App\Database\Migrations\Migration_Create_test_tables',
+            '(Tests\Support) 20160428212500_Tests\Support\Database\Migrations\Migration_Create_test_tables',
             $this->getStreamFilterBuffer(),
         );
+    }
+
+    private function dropTestTables(): void
+    {
+        $db     = Database::connect();
+        $forge  = Database::forge();
+        $tables = $db->listTables();
+
+        if ($tables === false) {
+            return;
+        }
+
+        foreach ($tables as $table) {
+            if ($table === $db->DBPrefix . 'migrations') {
+                continue;
+            }
+
+            $forge->dropTable($table, true);
+        }
     }
 }

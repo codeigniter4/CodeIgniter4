@@ -107,7 +107,7 @@ the existing content.
     ```
     git diff --name-status upstream/master -- . ':!.github/' ':!admin/' ':!changelogs/' ':!contributing/' \
         ':!system/' ':!tests/' ':!user_guide_src/' ':!utils/' \
-        ':!*.json' ':!*.xml' ':!*.dist' ':!rector.php' ':!deptrac.yml' \
+        ':!*.json' ':!*.xml' ':!*.dist' ':!rector.php' ':!structarmed.php' \
         ':!phpstan*' ':!psalm*' ':!.php-cs-fixer.*' ':!LICENSE' ':!CHANGELOG.md'
     ```
     * Note: `tests/` is not used for distribution repos. See `admin/starter/tests/`.

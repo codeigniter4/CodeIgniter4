@@ -1,6 +1,6 @@
 # When a PR is opened or a push is made, perform
-# a static analysis check on the code using PHPStan.
-name: PHPStan
+# a static analysis check on the code using Structarmed.
+name: Structarmed
 
 on:
   pull_request:
@@ -12,10 +12,10 @@ on:
       - 'system/**.php'
       - 'tests/**.php'
       - 'utils/**.php'
+      - '.github/workflows/test-structarmed.yml'
       - composer.json
-      - phpstan.neon.dist
-      - phpstan-baseline.php
-      - '.github/workflows/test-phpstan.yml'
+      - structarmed.php
+      - '**.neon.dist'
 
   push:
     branches:
@@ -26,10 +26,10 @@ on:
       - 'system/**.php'
       - 'tests/**.php'
       - 'utils/**.php'
+      - '.github/workflows/test-structarmed.yml'
       - composer.json
-      - phpstan.neon.dist
-      - phpstan-baseline.php
-      - '.github/workflows/test-phpstan.yml'
+      - structarmed.php
+      - '**.neon.dist'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
@@ -40,10 +40,15 @@ permissions:
 
 jobs:
   build:
-    name: PHP ${{ matrix.php-versions }} Static Analysis
+    name: PHP ${{ matrix.php-version }} Analyze code (Structarmed)
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
+      matrix:
+        php-version:
+          - '8.2'
+          - '8.5'
+
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -51,12 +56,9 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@7c071dfe9dc99bdf297fa79cb49ea005b9fcadbc # 2.37.1
         with:
-          php-version: '8.2'
+          php-version: ${{ matrix.php-version }}
           extensions: intl
-          coverage: none
-
-      - name: Use latest Composer
-        run: composer self-update
+          tools: composer
 
       - name: Validate composer.json
         run: composer validate --strict
@@ -72,18 +74,17 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
           restore-keys: ${{ runner.os }}-composer-
 
-      - name: Create PHPStan result cache directory
-        run: mkdir -p build/phpstan
-
-      - name: Cache PHPStan result cache directory
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
-        with:
-          path: build/phpstan
-          key: ${{ runner.os }}-phpstan-${{ github.sha }}
-          restore-keys: ${{ runner.os }}-phpstan-
-
       - name: Install dependencies
         run: composer update --ansi --no-interaction
 
+      - name: Structarmed Cache
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        with:
+          path: /tmp/structarmed
+          key: ${{ runner.os }}-structarmed-${{ github.run_id }}
+          restore-keys: ${{ runner.os }}-structarmed-
+
+      - run: mkdir -p /tmp/structarmed
+
       - name: Run static analysis
-        run: composer phpstan:check
+        run: vendor/bin/structarmed analyze

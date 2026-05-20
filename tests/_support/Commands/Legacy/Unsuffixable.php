@@ -78,4 +78,14 @@ class Unsuffixable extends BaseCommand
 
         return EXIT_SUCCESS;
     }
+
+    protected function prepare(string $class): string
+    {
+        return $this->parseTemplate(
+            $class,
+            ['{group}', '{command}'],
+            ['Generators', 'make:foo'],
+            ['type' => 'basic'],
+        );
+    }
 }

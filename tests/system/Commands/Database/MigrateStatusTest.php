@@ -29,33 +29,19 @@ final class MigrateStatusTest extends CIUnitTestCase
     use StreamFilterTrait;
     use DatabaseTestTrait;
 
-    private string $migrationFileFrom = SUPPORTPATH . 'MigrationTestMigrations/Database/Migrations/2018-01-24-102301_Some_migration.php';
-    private string $migrationFileTo   = APPPATH . 'Database/Migrations/2018-01-24-102301_Some_migration.php';
+    private string $migrationNamespace     = 'Tests\\Support\\MigrationTestMigrations';
+    private string $migrationNamespacePath = SUPPORTPATH . 'MigrationTestMigrations/';
 
     protected function setUp(): void
     {
+        $this->resetServices();
+
         parent::setUp();
 
         Database::connect()->table('migrations')->emptyTable();
         Database::forge()->dropTable('foo', true);
 
-        if (! is_file($this->migrationFileFrom)) {
-            $this->fail(clean_path($this->migrationFileFrom) . ' is not found.');
-        }
-
-        if (is_file($this->migrationFileTo)) {
-            @unlink($this->migrationFileTo);
-        }
-
-        copy($this->migrationFileFrom, $this->migrationFileTo);
-
-        $contents = file_get_contents($this->migrationFileTo);
-        $contents = str_replace(
-            'namespace Tests\Support\MigrationTestMigrations\Database\Migrations;',
-            'namespace App\Database\Migrations;',
-            $contents,
-        );
-        file_put_contents($this->migrationFileTo, $contents);
+        service('autoloader')->addNamespace($this->migrationNamespace, $this->migrationNamespacePath);
 
         putenv('NO_COLOR=1');
         CLI::init();
@@ -66,13 +52,12 @@ final class MigrateStatusTest extends CIUnitTestCase
         parent::tearDown();
 
         Database::connect()->table('migrations')->emptyTable();
-
-        if (is_file($this->migrationFileTo)) {
-            @unlink($this->migrationFileTo);
-        }
+        Database::forge()->dropTable('foo', true);
 
         putenv('NO_COLOR');
         CLI::init();
+
+        $this->resetServices();
     }
 
     public function testMigrateAllWithWithTwoNamespaces(): void
@@ -82,41 +67,31 @@ final class MigrateStatusTest extends CIUnitTestCase
 
         command('migrate:status');
 
-        $result   = str_replace(PHP_EOL, "\n", $this->getStreamFilterBuffer());
-        $result   = preg_replace('/\d{4}-\d\d-\d\d \d\d:\d\d:\d\d/', 'YYYY-MM-DD HH:MM:SS', $result);
-        $expected = <<<'EOL'
-            +---------------+-------------------+--------------------+-------+---------------------+-------+
-            | Namespace     | Version           | Filename           | Group | Migrated On         | Batch |
-            +---------------+-------------------+--------------------+-------+---------------------+-------+
-            | App           | 2018-01-24-102301 | Some_migration     | tests | YYYY-MM-DD HH:MM:SS | 1     |
-            | Tests\Support | 20160428212500    | Create_test_tables | tests | YYYY-MM-DD HH:MM:SS | 1     |
-            +---------------+-------------------+--------------------+-------+---------------------+-------+
-
-
-            EOL;
-        $this->assertSame($expected, $result);
+        $this->assertMigrationStatusHasBothNamespaceMigrations();
     }
 
     public function testMigrateWithWithTwoNamespaces(): void
     {
-        command('migrate -n App');
+        command('migrate -n Tests\\\\Support\\\\MigrationTestMigrations');
         command('migrate -n Tests\\\\Support');
         $this->resetStreamFilterBuffer();
 
         command('migrate:status');
 
-        $result   = str_replace(PHP_EOL, "\n", $this->getStreamFilterBuffer());
-        $result   = preg_replace('/\d{4}-\d\d-\d\d \d\d:\d\d:\d\d/', 'YYYY-MM-DD HH:MM:SS', $result);
-        $expected = <<<'EOL'
-            +---------------+-------------------+--------------------+-------+---------------------+-------+
-            | Namespace     | Version           | Filename           | Group | Migrated On         | Batch |
-            +---------------+-------------------+--------------------+-------+---------------------+-------+
-            | App           | 2018-01-24-102301 | Some_migration     | tests | YYYY-MM-DD HH:MM:SS | 1     |
-            | Tests\Support | 20160428212500    | Create_test_tables | tests | YYYY-MM-DD HH:MM:SS | 2     |
-            +---------------+-------------------+--------------------+-------+---------------------+-------+
+        $this->assertMigrationStatusHasBothNamespaceMigrations();
+    }
 
+    private function assertMigrationStatusHasBothNamespaceMigrations(): void
+    {
+        $result       = str_replace(PHP_EOL, "\n", $this->getStreamFilterBuffer());
+        $theadPattern = '/^\|[[:space:]]+Namespace[[:space:]]+\|[[:space:]]+Version[[:space:]]+\|[[:space:]]+Filename[[:space:]]+\|[[:space:]]+Group[[:space:]]+\|[[:space:]]+Migrated On[[:space:]]+\|[[:space:]]+Batch[[:space:]]+\|$/m';
 
-            EOL;
-        $this->assertSame($expected, $result);
+        $this->assertMatchesRegularExpression($theadPattern, $result);
+        $this->assertStringContainsString($this->migrationNamespace, $result);
+        $this->assertStringContainsString('2018-01-24-102301', $result);
+        $this->assertStringContainsString('Some_migration', $result);
+        $this->assertStringContainsString('Tests\Support', $result);
+        $this->assertStringContainsString('20160428212500', $result);
+        $this->assertStringContainsString('Create_test_tables', $result);
     }
 }

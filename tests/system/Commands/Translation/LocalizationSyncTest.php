@@ -32,6 +32,12 @@ final class LocalizationSyncTest extends CIUnitTestCase
 
     private static string $locale;
     private static string $languageTestPath;
+    private string $originalLocale;
+
+    /**
+     * @var list<string>
+     */
+    private array $originalSupportedLocales;
 
     /**
      * @var array<string, array<string,mixed>|string|null>
@@ -56,10 +62,16 @@ final class LocalizationSyncTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        config(App::class)->supportedLocales = ['en', 'ru', 'de'];
+        $this->originalLocale = Locale::getDefault();
+        Locale::setDefault('en');
 
-        self::$locale           = Locale::getDefault();
+        $appConfig                      = config(App::class);
+        $this->originalSupportedLocales = $appConfig->supportedLocales;
+        $appConfig->supportedLocales    = ['en', 'ru', 'de'];
+
+        self::$locale           = 'en';
         self::$languageTestPath = SUPPORTPATH . 'Language/';
+        $this->clearGeneratedFiles();
         $this->makeLanguageFiles();
     }
 
@@ -68,6 +80,8 @@ final class LocalizationSyncTest extends CIUnitTestCase
         parent::tearDown();
 
         $this->clearGeneratedFiles();
+        Locale::setDefault($this->originalLocale);
+        config(App::class)->supportedLocales = $this->originalSupportedLocales;
     }
 
     public function testSyncDefaultLocale(): void
@@ -246,6 +260,9 @@ final class LocalizationSyncTest extends CIUnitTestCase
                 ],
             ];
             TEXT_WRAP;
+
+        @mkdir(self::$languageTestPath . self::$locale, 0777, true);
+        @mkdir(self::$languageTestPath . 'ru', 0777, true);
 
         file_put_contents(self::$languageTestPath . self::$locale . '/Sync.php', $lang);
         file_put_contents(self::$languageTestPath . 'ru/Sync.php', $lang);
