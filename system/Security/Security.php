@@ -256,9 +256,7 @@ class Security implements SecurityInterface
      */
     private function fetchMetadataDecision(IncomingRequest $request): string
     {
-        $config = get_object_vars($this->config);
-
-        if (($config['csrfUseFetchMetadata'] ?? false) !== true) {
+        if (! ($this->config->csrfUseFetchMetadata ?? false)) { // @phpstan-ignore nullCoalesce.initializedProperty
             return self::FETCH_METADATA_FALLBACK;
         }
 
@@ -273,7 +271,7 @@ class Security implements SecurityInterface
         }
 
         if ($fetchSite === 'same-site') {
-            return ($config['csrfAllowSameSite'] ?? false) === true
+            return $this->config->csrfAllowSameSite ?? false // @phpstan-ignore nullCoalesce.initializedProperty
                 ? self::FETCH_METADATA_ALLOW
                 : self::FETCH_METADATA_REJECT;
         }

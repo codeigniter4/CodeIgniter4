@@ -82,8 +82,8 @@ class CSRF implements FilterInterface
 
     private function addFetchMetadataVaryHeader(IncomingRequest $request, ResponseInterface $response): void
     {
-        $config           = get_object_vars(config(SecurityConfig::class));
-        $useFetchMetadata = ($config['csrfUseFetchMetadata'] ?? false) === true;
+        $config           = config(SecurityConfig::class);
+        $useFetchMetadata = ($config->csrfUseFetchMetadata ?? false) === true; // @phpstan-ignore nullCoalesce.property
         $isUnsafeMethod   = in_array($request->getMethod(), [Method::POST, Method::PUT, Method::DELETE, Method::PATCH], true);
 
         if ($useFetchMetadata && $isUnsafeMethod) {
