@@ -248,6 +248,7 @@ Libraries
 - **Locks:** Added :doc:`Atomic Locks </libraries/locks>` for owner-aware, cross-process mutual exclusion backed by supported cache handlers: **File**, **Redis**, **Predis**, and **Memcached**. Memcached support has driver-specific release limitations because Memcached has no atomic compare-and-delete command.
 - **Logging:** Log handlers now receive the full context array as a third argument to ``handle()``. When ``$logGlobalContext`` is enabled, the CI global context is available under the ``HandlerInterface::GLOBAL_CONTEXT_KEY`` key. Built-in handlers append it to the log output; custom handlers can use it for structured logging.
 - **Logging:** Added :ref:`per-call context logging <logging-per-call-context>` with three new ``Config\Logger`` options (``$logContext``, ``$logContextTrace``, ``$logContextUsedKeys``). Per PSR-3, a ``Throwable`` in the ``exception`` context key is automatically normalized to a meaningful array. All options default to ``false``.
+- **Security:** Added :ref:`Fetch Metadata based CSRF protection <csrf-fetch-metadata>` with token fallback.
 
 Helpers and Functions
 =====================

@@ -89,6 +89,47 @@ You can set to use the Session based CSRF protection by editing the following co
 
 .. literalinclude:: security/002.php
 
+.. _csrf-fetch-metadata:
+
+Fetch Metadata CSRF Protection
+------------------------------
+
+.. versionadded:: 4.8.0
+
+CodeIgniter can use Fetch Metadata request headers as a first-line CSRF check for unsafe browser requests.
+Fetch Metadata is a browser-supplied signal that helps the framework allow same-origin requests and reject
+cross-site requests before checking the CSRF token.
+
+When CSRF protection is enabled, new applications use Fetch Metadata first by default. You can configure
+this behavior in **app/Config/Security.php**:
+
+.. literalinclude:: security/011.php
+
+When it is enabled, unsafe requests with ``Sec-Fetch-Site: same-origin`` are allowed without a token.
+Requests with ``Sec-Fetch-Site: cross-site`` are rejected. Requests with a missing ``Sec-Fetch-Site`` header,
+``Sec-Fetch-Site: none``, or an unknown value fall back to token verification. This keeps protection working
+for browsers or clients that do not send Fetch Metadata headers. Requests with ``Sec-Fetch-Site: same-site``
+are rejected unless same-site requests are explicitly allowed.
+
+Upgraded applications without this config value continue to use token verification. You may also disable
+Fetch Metadata protection by setting ``$csrfUseFetchMetadata`` to ``false``.
+
+When an unsafe request passes with Fetch Metadata, the CSRF token is not regenerated. Token regeneration only
+runs when token verification is used.
+
+.. warning:: Fetch Metadata protects browser-based requests. Browsers only send these headers for
+    potentially trustworthy URLs, and non-browser clients can send their own headers. It is not API
+    authentication.
+
+.. warning:: Same-site is not the same as same-origin, because sibling subdomains are considered same-site.
+    Same-site requests are rejected by default. If all same-site origins are trusted, you may allow them
+    in **app/Config/Security.php**:
+
+    .. literalinclude:: security/012.php
+
+If your application receives legitimate cross-origin POST requests, such as webhooks, callbacks, or
+OAuth/SAML responses, use :ref:`CSRF route exclusions <csrf-exclude-uris>` and verify those routes another way.
+
 Token Randomization
 -------------------
 
@@ -161,6 +202,8 @@ You can enable CSRF protection by altering your **app/Config/Filters.php**
 and enabling the `csrf` filter globally:
 
 .. literalinclude:: security/006.php
+
+.. _csrf-exclude-uris:
 
 Select URIs can be whitelisted from CSRF protection (for example API
 endpoints expecting externally POSTed content). You can add these URIs

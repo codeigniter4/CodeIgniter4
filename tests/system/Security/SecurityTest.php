@@ -237,6 +237,154 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertSame('{"foo":"bar"}', $request->getBody());
     }
 
+    public function testCsrfVerifyFetchMetadataSameOriginReturnsSelf(): void
+    {
+        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
+
+        $security = $this->createMockSecurity();
+        $request  = $this->createIncomingRequest()->setHeader('Sec-Fetch-Site', 'same-origin');
+
+        $this->assertInstanceOf(Security::class, $security->verify($request));
+        $this->assertLogged('info', 'CSRF Fetch Metadata verified.');
+    }
+
+    public function testCsrfVerifyFetchMetadataRemovesTokenButDoesNotRegenerate(): void
+    {
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('foo', 'bar')
+            ->setPost('csrf_test_name', self::CORRECT_CSRF_HASH)
+            ->setCookie('csrf_cookie_name', self::CORRECT_CSRF_HASH);
+
+        $security = $this->createMockSecurity();
+        $request  = $this->createIncomingRequest()->setHeader('Sec-Fetch-Site', 'same-origin');
+
+        $oldHash = $security->getHash();
+        $security->verify($request);
+        $newHash = $security->getHash();
+
+        $this->assertSame($oldHash, $newHash);
+        $this->assertSame(['foo' => 'bar'], service('superglobals')->getPostArray());
+    }
+
+    public function testCsrfVerifyFetchMetadataPreservesRawBodyWithoutToken(): void
+    {
+        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
+
+        $security = $this->createMockSecurity();
+        $request  = $this->createIncomingRequest()
+            ->setHeader('Sec-Fetch-Site', 'same-origin')
+            ->setBody('<payload><value>unchanged</value></payload>');
+
+        $security->verify($request);
+
+        $this->assertSame('<payload><value>unchanged</value></payload>', $request->getBody());
+    }
+
+    public function testCsrfVerifyFetchMetadataSameSiteThrowsExceptionByDefault(): void
+    {
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('csrf_test_name', self::CORRECT_CSRF_HASH)
+            ->setCookie('csrf_cookie_name', self::CORRECT_CSRF_HASH);
+
+        $security = $this->createMockSecurity();
+        $request  = $this->createIncomingRequest()->setHeader('Sec-Fetch-Site', 'same-site');
+
+        $this->expectException(SecurityException::class);
+        $security->verify($request);
+    }
+
+    public function testCsrfVerifyFetchMetadataSameSiteReturnsSelfWhenAllowed(): void
+    {
+        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
+
+        $config                    = new SecurityConfig();
+        $config->csrfAllowSameSite = true;
+        $security                  = $this->createMockSecurity($config);
+        $request                   = $this->createIncomingRequest()->setHeader('Sec-Fetch-Site', 'same-site');
+
+        $this->assertInstanceOf(Security::class, $security->verify($request));
+    }
+
+    public function testCsrfVerifyFetchMetadataCrossSiteThrowsExceptionEvenWithValidToken(): void
+    {
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('csrf_test_name', self::CORRECT_CSRF_HASH)
+            ->setCookie('csrf_cookie_name', self::CORRECT_CSRF_HASH);
+
+        $security = $this->createMockSecurity();
+        $request  = $this->createIncomingRequest()->setHeader('Sec-Fetch-Site', 'cross-site');
+
+        $this->expectException(SecurityException::class);
+        $security->verify($request);
+    }
+
+    #[DataProvider('provideCsrfVerifyFetchMetadataFallsBackToToken')]
+    public function testCsrfVerifyFetchMetadataFallsBackToToken(?string $fetchSite): void
+    {
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('csrf_test_name', self::CORRECT_CSRF_HASH)
+            ->setCookie('csrf_cookie_name', self::CORRECT_CSRF_HASH);
+
+        $security = $this->createMockSecurity();
+        $request  = $this->createIncomingRequest();
+
+        if ($fetchSite !== null) {
+            $request->setHeader('Sec-Fetch-Site', $fetchSite);
+        }
+
+        $this->assertInstanceOf(Security::class, $security->verify($request));
+        $this->assertLogged('info', 'CSRF token verified.');
+    }
+
+    /**
+     * @return iterable<string, array{string|null}>
+     */
+    public static function provideCsrfVerifyFetchMetadataFallsBackToToken(): iterable
+    {
+        yield 'missing' => [null];
+
+        yield 'none' => ['none'];
+
+        yield 'unknown' => ['future-value'];
+    }
+
+    public function testCsrfVerifyTokenOnlyIgnoresFetchMetadata(): void
+    {
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('csrf_test_name', self::CORRECT_CSRF_HASH)
+            ->setCookie('csrf_cookie_name', self::CORRECT_CSRF_HASH);
+
+        $config                       = new SecurityConfig();
+        $config->csrfUseFetchMetadata = false;
+        $security                     = $this->createMockSecurity($config);
+        $request                      = $this->createIncomingRequest()->setHeader('Sec-Fetch-Site', 'cross-site');
+
+        $this->assertInstanceOf(Security::class, $security->verify($request));
+        $this->assertLogged('info', 'CSRF token verified.');
+    }
+
+    public function testCsrfVerifyMissingFetchMetadataConfigFallsBackToTokenOnly(): void
+    {
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('csrf_test_name', self::CORRECT_CSRF_HASH)
+            ->setCookie('csrf_cookie_name', self::CORRECT_CSRF_HASH);
+
+        $config = new SecurityConfig();
+        unset($config->csrfUseFetchMetadata);
+
+        $security = $this->createMockSecurity($config);
+        $request  = $this->createIncomingRequest()->setHeader('Sec-Fetch-Site', 'cross-site');
+
+        $this->assertInstanceOf(Security::class, $security->verify($request));
+        $this->assertLogged('info', 'CSRF token verified.');
+    }
+
     public function testCsrfVerifyPutBodyThrowsExceptionOnNoMatch(): void
     {
         service('superglobals')
