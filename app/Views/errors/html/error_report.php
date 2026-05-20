@@ -2,7 +2,6 @@
 
 use CodeIgniter\CodeIgniter;
 use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\URI;
 
 $reportMessage = str_replace(["\r\n", "\r"], "\n", $message);
@@ -10,7 +9,7 @@ $reportTitle   = trim($reportMessage);
 $reportTitle   = $reportTitle === '' ? $title : explode("\n", $reportTitle, 2)[0];
 $messageLines  = str_contains($reportMessage, "\n");
 
-$reportResponse = new Response();
+$reportResponse = service('response', null, false);
 $reportResponse->setStatusCode($code);
 
 $report = [
