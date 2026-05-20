@@ -297,24 +297,36 @@
 <p><strong>4.7.3 release of CodeIgniter4</strong></p>
 <nav class="contents local" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#breaking" id="id1">BREAKING</a></p></li>
-<li><p><a class="reference internal" href="#message-changes" id="id2">Message Changes</a></p></li>
-<li><p><a class="reference internal" href="#changes" id="id3">Changes</a></p></li>
-<li><p><a class="reference internal" href="#deprecations" id="id4">Deprecations</a></p></li>
-<li><p><a class="reference internal" href="#bugs-fixed" id="id5">Bugs Fixed</a></p></li>
+<li><p><a class="reference internal" href="#security" id="id1">SECURITY</a></p></li>
+<li><p><a class="reference internal" href="#breaking" id="id2">BREAKING</a></p></li>
+<li><p><a class="reference internal" href="#message-changes" id="id3">Message Changes</a></p></li>
+<li><p><a class="reference internal" href="#changes" id="id4">Changes</a></p></li>
+<li><p><a class="reference internal" href="#deprecations" id="id5">Deprecations</a></p></li>
+<li><p><a class="reference internal" href="#bugs-fixed" id="id6">Bugs Fixed</a></p></li>
 </ul>
 </nav>
+<section id="security">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">SECURITY</a><a class="headerlink" href="#security" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Validation:</strong> The <code class="docutils literal notranslate"><span class="pre">ext_in</span></code> file upload validation rule now validates the
+client filename extension and verifies that it matches the detected MIME type.
+Previously, <code class="docutils literal notranslate"><span class="pre">ext_in</span></code> only checked the MIME-derived guessed extension, so a
+file with a mismatched client extension could pass validation.
+See the <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-2gr4-ppc7-7mhx">Security advisory GHSA-2gr4-ppc7-7mhx</a>
+for more information.</p></li>
+</ul>
+</section>
 <section id="breaking">
-<h2><a class="toc-backref" href="#id1" role="doc-backlink">BREAKING</a><a class="headerlink" href="#breaking" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">BREAKING</a><a class="headerlink" href="#breaking" title="Link to this heading"></a></h2>
 </section>
 <section id="message-changes">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">Message Changes</a><a class="headerlink" href="#message-changes" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Message Changes</a><a class="headerlink" href="#message-changes" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>The <code class="docutils literal notranslate"><span class="pre">Cache.invalidHandler</span></code> message string was added.</p></li>
 </ul>
 </section>
 <section id="changes">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Changes</a><a class="headerlink" href="#changes" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Changes</a><a class="headerlink" href="#changes" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>Commands:</strong> The <code class="docutils literal notranslate"><span class="pre">-h</span></code> option for the <code class="docutils literal notranslate"><span class="pre">routes</span></code> command is renamed to <code class="docutils literal notranslate"><span class="pre">--sort-by-handler</span></code> to avoid conflict with the common use of <code class="docutils literal notranslate"><span class="pre">-h</span></code> as a shortcut for <code class="docutils literal notranslate"><span class="pre">--help</span></code>.
 The old <code class="docutils literal notranslate"><span class="pre">-h</span></code> option will continue to work until v4.8.0, at which point it will be removed and repurposed as a shortcut for <code class="docutils literal notranslate"><span class="pre">--help</span></code>.
@@ -322,10 +334,10 @@ A warning message is displayed when using the old <code class="docutils literal 
 </ul>
 </section>
 <section id="deprecations">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Deprecations</a><a class="headerlink" href="#deprecations" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Deprecations</a><a class="headerlink" href="#deprecations" title="Link to this heading"></a></h2>
 </section>
 <section id="bugs-fixed">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>Autoloader:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">Autoloader::unregister()</span></code> (used during tests) silently failed to remove handlers from the SPL autoload stack, causing closures to accumulate permanently.</p></li>
 <li><p><strong>CLI:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">CLI::generateDimensions()</span></code> leaked <code class="docutils literal notranslate"><span class="pre">stty</span></code> error output (e.g., <code class="docutils literal notranslate"><span class="pre">stty:</span> <span class="pre">'standard</span> <span class="pre">input':</span> <span class="pre">Inappropriate</span> <span class="pre">ioctl</span> <span class="pre">for</span> <span class="pre">device</span></code>) to stderr when stdin was not a TTY.</p></li>
@@ -364,7 +376,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 16, 2026.
+      <span class="lastupdated">Last updated on May 20, 2026.
       </span></p>
   </div>
 

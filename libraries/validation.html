@@ -2123,8 +2123,10 @@ listed in the parameters.</p></td>
 </tr>
 <tr class="row-odd"><td><p>ext_in</p></td>
 <td><p>Yes</p></td>
-<td><p>Fails if the file’s extension is not one
-listed in the parameters.</p></td>
+<td><p>Fails if the client filename’s extension is
+not one listed in the parameters, or if the
+detected MIME type does not match the MIME
+types associated with the extension.</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">ext_in[field_name,png,jpg,gif]</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>is_image</p></td>
@@ -2152,7 +2154,7 @@ an image based on the mime type.</p></td>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 16, 2026.
+      <span class="lastupdated">Last updated on May 20, 2026.
       </span></p>
   </div>
 
