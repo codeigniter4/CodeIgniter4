@@ -25,7 +25,6 @@ use CodeIgniter\DataConverter\DataConverter;
 use CodeIgniter\Entity\Entity;
 use CodeIgniter\Entity\Cast\URICast;
 use CodeIgniter\HTTP\URI;
-use CodeIgniter\Input\InputDataFactory;
 use CodeIgniter\Log\Handlers\ChromeLoggerHandler;
 use CodeIgniter\Security\CheckPhpIni;
 use CodeIgniter\Validation\ValidatedInput;
