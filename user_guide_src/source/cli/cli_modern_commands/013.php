@@ -4,12 +4,11 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 
 #[Command(name: 'dev:only', description: 'A dev only command', group: 'Dev')]
 class DevOnly extends AbstractCommand
 {
-    public function isAvailable(): bool
+    protected function isAvailable(): bool
     {
         // Only allow this command in the development environment
         return ENVIRONMENT === 'development';
