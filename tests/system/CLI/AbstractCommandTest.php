@@ -15,6 +15,7 @@ namespace CodeIgniter\CLI;
 
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Exceptions\ArgumentCountMismatchException;
+use CodeIgniter\CLI\Exceptions\CommandNotAvailableException;
 use CodeIgniter\CLI\Exceptions\InvalidArgumentDefinitionException;
 use CodeIgniter\CLI\Exceptions\InvalidOptionDefinitionException;
 use CodeIgniter\CLI\Exceptions\OptionValueMismatchException;
@@ -40,6 +41,7 @@ use Tests\Support\Commands\Modern\InteractFixtureCommand;
 use Tests\Support\Commands\Modern\InteractiveStateProbeCommand;
 use Tests\Support\Commands\Modern\ParentCallsInteractFixtureCommand;
 use Tests\Support\Commands\Modern\TestFixtureCommand;
+use Tests\Support\Commands\Modern\UnavailableFixtureCommand;
 use Throwable;
 
 /**
@@ -60,6 +62,7 @@ final class AbstractCommandTest extends CIUnitTestCase
         CLI::reset();
 
         InteractiveStateProbeCommand::reset();
+        UnavailableFixtureCommand::reset();
     }
 
     private function getUndecoratedBuffer(): string
@@ -928,6 +931,45 @@ final class AbstractCommandTest extends CIUnitTestCase
         $this->assertTrue($command->isInteractive());
         $this->assertFalse(InteractiveStateProbeCommand::$interactCalled);
         $this->assertFalse(InteractiveStateProbeCommand::$observedInteractive);
+    }
+
+    public function testRunThrowsWhenCommandIsUnavailable(): void
+    {
+        $command                              = new UnavailableFixtureCommand(new Commands());
+        UnavailableFixtureCommand::$available = false;
+
+        $this->expectException(CommandNotAvailableException::class);
+        $this->expectExceptionMessage('Command "test:unavailable" is not available in the current environment.');
+
+        $command->run([], []);
+    }
+
+    public function testRunExecutesWhenCommandIsAvailable(): void
+    {
+        $command                              = new UnavailableFixtureCommand(new Commands());
+        UnavailableFixtureCommand::$available = true;
+
+        $exitCode = $command->run([], []);
+
+        $this->assertSame(EXIT_SUCCESS, $exitCode);
+        $this->assertTrue(UnavailableFixtureCommand::$initializeCalled);
+        $this->assertTrue(UnavailableFixtureCommand::$interactCalled);
+        $this->assertTrue(UnavailableFixtureCommand::$executeCalled);
+    }
+
+    public function testRunChecksAvailabilityBeforeInitializeInteractAndExecute(): void
+    {
+        $command                              = new UnavailableFixtureCommand(new Commands());
+        UnavailableFixtureCommand::$available = false;
+
+        try {
+            $command->run([], []);
+            $this->fail('Expected CommandNotAvailableException was not thrown.');
+        } catch (CommandNotAvailableException) {
+            $this->assertFalse(UnavailableFixtureCommand::$initializeCalled);
+            $this->assertFalse(UnavailableFixtureCommand::$interactCalled);
+            $this->assertFalse(UnavailableFixtureCommand::$executeCalled);
+        }
     }
 
     /**

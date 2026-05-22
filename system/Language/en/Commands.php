@@ -59,4 +59,5 @@ return [
     'reservedOptionName'                    => 'Option name "--extra_options" is reserved and cannot be used.',
     'tooManyArguments'                      => '{1, plural, =1{One unexpected argument was} other{Multiple unexpected arguments were}} provided to "{0}" command: "{2}".',
     'unknownOptions'                        => 'The following {0, plural, =1{option} other{options}} {0, plural, =1{is} other{are}} unknown in the "{1}" command: {2}.',
+    'notAvailable'                          => 'Command "{0}" is not available in the current environment.',
 ];
