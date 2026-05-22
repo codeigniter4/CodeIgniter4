@@ -68,19 +68,23 @@ this order:
    extra usage examples. A default ``--help``/ ``-h`` flag, ``--no-header``
    flag, and ``--no-interaction``/ ``-N`` flag are added automatically
    afterwards.
-2. ``initialize(array &$arguments, array &$options): void`` receives the raw
+2. ``isAvailable(): bool`` is called to check whether the command should run.
+   By default it returns ``true``, but you can override it to prevent command execution
+   based on environment, configuration, or any other condition. When it returns ``false``,
+   the command execution is skipped entirely and ``CommandNotAvailableException`` is thrown.
+3. ``initialize(array &$arguments, array &$options): void`` receives the raw
    arguments and options by reference. Useful when your command needs to
    massage input — for instance, to unfold an alias argument into the canonical
    form before anything else runs.
-3. ``interact(array &$arguments, array &$options): void`` also receives the
+4. ``interact(array &$arguments, array &$options): void`` also receives the
    raw arguments and options by reference. This is where you prompt the user
    for missing input, set values conditionally, or abort early. This hook is
    skipped when the command is non-interactive (see :ref:`non-interactive-mode`).
-4. **Bind & validate.** The framework maps the raw input to the definitions
+5. **Bind & validate.** The framework maps the raw input to the definitions
    you declared in ``configure()``, applies defaults, and rejects input that
    violates the definitions (missing required argument, unknown option, array
    option passed without a value, and so on).
-5. ``execute(array $arguments, array $options): int`` receives the bound and
+6. ``execute(array $arguments, array $options): int`` receives the bound and
    validated arguments and options, and returns an exit code.
 
 You only have to implement ``execute()``; the other hooks are optional.
@@ -222,6 +226,24 @@ parameter of ``call()``:
 - ``false``: remove any forwarded ``--no-interaction`` / ``-N`` from the
   child ``$options`` so the sub-command resolves its own state. Note: TTY
   detection can still downgrade the sub-command if STDIN is not a TTY.
+
+*****************************
+Restricting Command Execution
+*****************************
+
+Sometimes a command should not run in a specific runtime context. For example,
+development-only commands may need to be blocked in the ``production`` environment.
+
+You can override ``isAvailable()`` to decide at runtime whether the command may execute.
+By default, this method returns ``true``.
+
+.. literalinclude:: cli_modern_commands/013.php
+
+The availability check runs before ``initialize()``, ``interact()``, argument and
+option binding, validation, and ``execute()``. If the command is not available,
+a ``CommandNotAvailableException`` is thrown immediately.
+
+.. note:: This method prevents execution of the command, but does not remove it from help output or command discovery.
 
 ******************
 Inside execute()
