@@ -411,10 +411,10 @@ abstract class AbstractCommand
      * @param array<string, list<string|null>|string|null> $options   Parsed options from command line.
      *
      * @throws ArgumentCountMismatchException
+     * @throws CommandNotAvailableException
      * @throws LogicException
      * @throws OptionValueMismatchException
      * @throws UnknownOptionException
-     * @throws CommandNotAvailableException
      */
     final public function run(array $arguments, array $options): int
     {
