@@ -338,6 +338,20 @@ class FileRulesTest extends CIUnitTestCase
         $this->assertTrue($this->validation->run([]));
     }
 
+    public function testExtensionOkWithMatchingClientExtensionAndMimeType(): void
+    {
+        $payload = $this->createGifPayload();
+
+        try {
+            $this->setUploadedAvatar($payload, 'my-avatar.gif');
+
+            $this->validation->setRules(['avatar' => 'ext_in[avatar,gif]']);
+            $this->assertTrue($this->validation->run([]));
+        } finally {
+            unlink($payload);
+        }
+    }
+
     public function testExtensionNotOk(): void
     {
         $this->validation->setRules(['avatar' => 'ext_in[avatar,xls,doc,ppt]']);
@@ -348,5 +362,73 @@ class FileRulesTest extends CIUnitTestCase
     {
         $this->validation->setRules(['avatar' => 'ext_in[unknown,xls,doc,ppt]']);
         $this->assertFalse($this->validation->run([]));
+    }
+
+    public function testExtensionFailsForMismatchedClientExtension(): void
+    {
+        $payload = $this->createGifPayload();
+
+        try {
+            $this->setUploadedAvatar($payload, 'shell.php');
+
+            $this->validation->setRules(['avatar' => 'ext_in[avatar,gif]']);
+            $this->assertFalse($this->validation->run([]));
+        } finally {
+            unlink($payload);
+        }
+    }
+
+    public function testExtensionFailsForAllowedButMimeIncompatibleClientExtension(): void
+    {
+        $payload = $this->createGifPayload();
+
+        try {
+            $this->setUploadedAvatar($payload, 'my-avatar.jpg');
+
+            $this->validation->setRules(['avatar' => 'ext_in[avatar,jpg,gif]']);
+            $this->assertFalse($this->validation->run([]));
+        } finally {
+            unlink($payload);
+        }
+    }
+
+    public function testExtensionFailsForExtensionlessClientFilename(): void
+    {
+        $payload = $this->createGifPayload();
+
+        try {
+            $this->setUploadedAvatar($payload, 'my-avatar');
+
+            $this->validation->setRules(['avatar' => 'ext_in[avatar,gif]']);
+            $this->assertFalse($this->validation->run([]));
+        } finally {
+            unlink($payload);
+        }
+    }
+
+    private function createGifPayload(): string
+    {
+        $payload = tempnam(sys_get_temp_dir(), 'ci4-upload-poc-');
+        $this->assertIsString($payload);
+
+        $gif = base64_decode('R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==', true);
+        $this->assertIsString($gif);
+
+        file_put_contents($payload, $gif);
+
+        return $payload;
+    }
+
+    private function setUploadedAvatar(string $payload, string $name): void
+    {
+        service('superglobals')->setFilesArray([
+            'avatar' => [
+                'tmp_name' => $payload,
+                'name'     => $name,
+                'size'     => filesize($payload),
+                'type'     => 'image/gif',
+                'error'    => UPLOAD_ERR_OK,
+            ],
+        ]);
     }
 }

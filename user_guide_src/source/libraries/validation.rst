@@ -1201,8 +1201,10 @@ min_dims                Yes         Fails if the minimum width and height of an 
                                     v4.6.0.)
 mime_in                 Yes         Fails if the file's mime type is not one     ``mime_in[field_name,image/png,image/jpeg]``
                                     listed in the parameters.
-ext_in                  Yes         Fails if the file's extension is not one     ``ext_in[field_name,png,jpg,gif]``
-                                    listed in the parameters.
+ext_in                  Yes         Fails if the client filename's extension is  ``ext_in[field_name,png,jpg,gif]``
+                                    not one listed in the parameters, or if the
+                                    detected MIME type does not match the MIME
+                                    types associated with the extension.
 is_image                Yes         Fails if the file cannot be determined to be ``is_image[field_name]``
                                     an image based on the mime type.
 ======================= ========== ============================================= ===================================================

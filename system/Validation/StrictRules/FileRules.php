@@ -208,7 +208,14 @@ class FileRules
                 return true;
             }
 
-            if (! in_array($file->guessExtension(), $params, true)) {
+            // Check the real filename extension, not only the guessed extension.
+            $clientExtension = strtolower($file->getClientExtension());
+
+            if ($clientExtension === '' || ! in_array($clientExtension, $params, true)) {
+                return false;
+            }
+
+            if ($file->guessExtension() !== $clientExtension) {
                 return false;
             }
         }
