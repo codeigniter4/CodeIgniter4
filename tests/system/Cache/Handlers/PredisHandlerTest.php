@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache\Handlers;
 
+use ArgumentCountError;
 use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\Cache\LockStoreInterface;
 use CodeIgniter\Cache\LockStoreProviderInterface;
@@ -107,6 +108,48 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
 
         CLI::wait(3);
         $this->assertNull($this->handler->get(self::$key1));
+    }
+
+    /**
+     * This test waits for 3 seconds before last assertion so this
+     * is naturally a "slow" test on the perspective of the default limit.
+     *
+     * @timeLimit 3.5
+     */
+    public function testRememberWithTTLCallable(): void
+    {
+        $this->handler->remember(self::$key1, static fn (): int => 2, static fn (): string => 'value');
+
+        $this->assertSame('value', $this->handler->get(self::$key1));
+        $this->assertNull($this->handler->get(self::$dummy));
+
+        CLI::wait(3);
+        $this->assertNull($this->handler->get(self::$key1));
+    }
+
+    /**
+     * This test waits for 3 seconds before last assertion so this
+     * is naturally a "slow" test on the perspective of the default limit.
+     *
+     * @timeLimit 3.5
+     */
+    public function testRememberWithTTLCallableAndValuePassed(): void
+    {
+        $this->handler->remember(self::$key1, static fn ($value): int => $value[0], static fn (): array => [2, 3]);
+
+        $this->assertSame([2, 3], $this->handler->get(self::$key1));
+        $this->assertNull($this->handler->get(self::$dummy));
+
+        CLI::wait(3);
+        $this->assertNull($this->handler->get(self::$key1));
+    }
+
+    public function testRememberWithTTLCallableAndMultipleParameters(): void
+    {
+        $this->expectException(ArgumentCountError::class);
+
+        /** @phpstan-ignore argument.type */
+        $this->handler->remember(self::$key1, static fn ($a, $b): int => 2, static fn (): string => 'value');
     }
 
     public function testSave(): void

@@ -72,7 +72,7 @@ class MockCache extends BaseHandler implements CacheInterface, LockStoreProvider
      *
      * @return bool|null
      */
-    public function remember(string $key, int $ttl, Closure $callback): mixed
+    public function remember(string $key, callable|int $ttl, Closure $callback): mixed
     {
         $value = $this->get($key);
 
@@ -80,7 +80,13 @@ class MockCache extends BaseHandler implements CacheInterface, LockStoreProvider
             return $value;
         }
 
-        $this->save($key, $value = $callback(), $ttl);
+        $value = $callback();
+
+        if (is_callable($ttl)) {
+            $ttl = $ttl($value);
+        }
+
+        $this->save($key, $value, $ttl);
 
         return $value;
     }

@@ -55,8 +55,12 @@ class ApcuHandler extends BaseHandler
         return apcu_store($key, $value, $ttl);
     }
 
-    public function remember(string $key, int $ttl, Closure $callback): mixed
+    public function remember(string $key, callable|int $ttl, Closure $callback): mixed
     {
+        if (is_callable($ttl)) {
+            return parent::remember($key, $ttl, $callback);
+        }
+
         $key = static::validateKey($key, $this->prefix);
 
         return apcu_entry($key, $callback, $ttl);

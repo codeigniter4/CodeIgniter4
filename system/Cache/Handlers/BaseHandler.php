@@ -64,7 +64,7 @@ abstract class BaseHandler implements CacheInterface
         return strlen($prefix . $key) > static::MAX_KEY_LENGTH ? $prefix . md5($key) : $prefix . $key;
     }
 
-    public function remember(string $key, int $ttl, Closure $callback): mixed
+    public function remember(string $key, callable|int $ttl, Closure $callback): mixed
     {
         $value = $this->get($key);
 
@@ -72,7 +72,13 @@ abstract class BaseHandler implements CacheInterface
             return $value;
         }
 
-        $this->save($key, $value = $callback(), $ttl);
+        $value = $callback();
+
+        if (is_callable($ttl)) {
+            $ttl = $ttl($value);
+        }
+
+        $this->save($key, $value, $ttl);
 
         return $value;
     }
