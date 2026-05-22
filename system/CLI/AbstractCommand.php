@@ -457,7 +457,7 @@ abstract class AbstractCommand
     }
 
     /**
-     * Checks whether this command is available to execute in the current environment
+     * Checks whether this command is available to execute in the current environment.
      */
     protected function isAvailable(): bool
     {
