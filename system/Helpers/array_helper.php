@@ -20,9 +20,11 @@ if (! function_exists('dot_array_search')) {
      * Searches an array through dot syntax. Supports
      * wildcard searches, like foo.*.bar
      *
-     * @return array|bool|int|object|string|null
+     * @param array<array-key, mixed>|object $array
+     *
+     * @return array<array-key, mixed>|bool|int|object|string|null
      */
-    function dot_array_search(string $index, array $array)
+    function dot_array_search(string $index, array|object $array)
     {
         return ArrayHelper::dotSearch($index, $array);
     }
@@ -32,9 +34,9 @@ if (! function_exists('dot_array_has')) {
     /**
      * Checks if an array key exists using dot syntax.
      *
-     * @param array<array-key, mixed> $array
+     * @param array<array-key, mixed>|object $array
      */
-    function dot_array_has(string $index, array $array): bool
+    function dot_array_has(string $index, array|object $array): bool
     {
         return ArrayHelper::dotHas($index, $array);
     }

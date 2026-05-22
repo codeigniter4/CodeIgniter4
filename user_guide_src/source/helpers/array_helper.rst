@@ -22,15 +22,15 @@ Available Functions
 
 The following functions are available:
 
-..  php:function:: dot_array_search(string $search, array $values)
+..  php:function:: dot_array_search(string $search, array|object $values)
 
     :param  string  $search: The dot-notation string describing how to search the array
-    :param  array   $values: The array to search
+    :param  array|object $values: The array or object to search
     :returns: The value found within the array, or null
     :rtype: mixed
 
-    This method allows you to use dot-notation to search through an array for a specific-key,
-    and allows the use of a the ``*`` wildcard. Given the following array:
+    This method allows you to use dot-notation to search through arrays and objects for a specific
+    key or property, and allows the use of the ``*`` wildcard. Given the following array:
 
     .. literalinclude:: array_helper/002.php
         :lines: 2-
@@ -56,16 +56,18 @@ The following functions are available:
 .. note:: Prior to v4.2.0, ``dot_array_search('foo.bar.baz', ['foo' => ['bar' => 23]])`` returned ``23``
     due to a bug. v4.2.0 and later returns ``null``.
 
-..  php:function:: dot_array_has(string $search, array $values): bool
+.. note:: Prior to v4.8.0, only arrays were supported. Support for objects was added in v4.8.0.
+
+..  php:function:: dot_array_has(string $search, array|object $values): bool
 
     :param  string  $search: The dot-notation string describing how to search the array
-    :param  array   $values: The array to check
+    :param  array|object $values: The array or object to check
     :returns: ``true`` if the key exists, otherwise ``false``
     :rtype: bool
 
     .. versionadded:: 4.8.0
 
-    Checks if an array key exists using dot syntax.
+    Checks if an array key or object property exists using dot syntax.
     This method supports wildcard ``*`` in the same way as ``dot_array_search()``.
 
     .. literalinclude:: array_helper/015.php
@@ -113,6 +115,7 @@ The following functions are available:
     .. versionadded:: 4.8.0
 
     Gets only the specified keys using dot syntax while preserving nested structure.
+    Nested object properties can be selected in the same way as array keys.
 
     Wildcard ``*`` is supported. Unlike ``dot_array_set()`` and ``dot_array_unset()``,
     this method also allows wildcard at the end (for example ``user.*``).
@@ -214,6 +217,7 @@ The following functions are available:
 
     This function allows you to group data rows together by index values.
     The depth of returned array equals the number of indexes passed as parameter.
+    Data rows may be arrays or objects, and dot syntax can read nested array keys or object properties.
 
     The example shows some data (i.e. loaded from an API) with nested arrays.
 

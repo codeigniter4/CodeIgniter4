@@ -2943,47 +2943,12 @@ parameters:
             path: ../../system/HTTP/URI.php
 
         -
-            message: '#^Method CodeIgniter\\Helpers\\Array\\ArrayHelper\:\:arrayAttachIndexedValue\(\) has parameter \$indexes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Helpers/Array/ArrayHelper.php
-
-        -
             message: '#^Method CodeIgniter\\Helpers\\Array\\ArrayHelper\:\:arrayAttachIndexedValue\(\) has parameter \$result with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Helpers/Array/ArrayHelper.php
 
         -
-            message: '#^Method CodeIgniter\\Helpers\\Array\\ArrayHelper\:\:arrayAttachIndexedValue\(\) has parameter \$row with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Helpers/Array/ArrayHelper.php
-
-        -
             message: '#^Method CodeIgniter\\Helpers\\Array\\ArrayHelper\:\:arrayAttachIndexedValue\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Helpers/Array/ArrayHelper.php
-
-        -
-            message: '#^Method CodeIgniter\\Helpers\\Array\\ArrayHelper\:\:arraySearchDot\(\) has parameter \$array with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Helpers/Array/ArrayHelper.php
-
-        -
-            message: '#^Method CodeIgniter\\Helpers\\Array\\ArrayHelper\:\:arraySearchDot\(\) has parameter \$indexes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Helpers/Array/ArrayHelper.php
-
-        -
-            message: '#^Method CodeIgniter\\Helpers\\Array\\ArrayHelper\:\:arraySearchDot\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Helpers/Array/ArrayHelper.php
-
-        -
-            message: '#^Method CodeIgniter\\Helpers\\Array\\ArrayHelper\:\:dotSearch\(\) has parameter \$array with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Helpers/Array/ArrayHelper.php
-
-        -
-            message: '#^Method CodeIgniter\\Helpers\\Array\\ArrayHelper\:\:dotSearch\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Helpers/Array/ArrayHelper.php
 
@@ -3064,16 +3029,6 @@ parameters:
 
         -
             message: '#^Function array_sort_by_multiple_keys\(\) has parameter \$sortColumns with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Helpers/array_helper.php
-
-        -
-            message: '#^Function dot_array_search\(\) has parameter \$array with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Helpers/array_helper.php
-
-        -
-            message: '#^Function dot_array_search\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Helpers/array_helper.php
 
