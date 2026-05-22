@@ -68,10 +68,8 @@ this order:
    extra usage examples. A default ``--help``/ ``-h`` flag, ``--no-header``
    flag, and ``--no-interaction``/ ``-N`` flag are added automatically
    afterwards.
-2. ``isAvailable(): bool`` is called to check whether the command should run.
-   By default it returns ``true``, but you can override it to prevent command execution
-   based on environment, configuration, or any other condition. When it returns ``false``,
-   the command execution is skipped entirely and ``CommandNotAvailableException`` is thrown.
+2. ``isAvailable(): bool`` is called to check whether the command should execute
+   (see :ref:`restricting-execution`).
 3. ``initialize(array &$arguments, array &$options): void`` receives the raw
    arguments and options by reference. Useful when your command needs to
    massage input — for instance, to unfold an alias argument into the canonical
@@ -226,6 +224,8 @@ parameter of ``call()``:
 - ``false``: remove any forwarded ``--no-interaction`` / ``-N`` from the
   child ``$options`` so the sub-command resolves its own state. Note: TTY
   detection can still downgrade the sub-command if STDIN is not a TTY.
+
+.. _restricting-execution:
 
 *****************************
 Restricting Command Execution

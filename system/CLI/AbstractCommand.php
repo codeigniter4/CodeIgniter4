@@ -391,7 +391,7 @@ abstract class AbstractCommand
      *
      * The lifecycle is:
      *
-     *   1. Run `isAvailable()` to check if the command can be run in the current state.
+     *   1. Run `isAvailable()` to check if the command can be run in the current environment.
      *   2. `initialize()` and `interact()` are handed the raw parsed input by reference, in that order.
      *      Both can mutate the tokens before the framework interprets them against the declared definitions.
      *      Note: the per-run interactive state is captured from `$options` before `initialize()` runs, so
@@ -457,7 +457,7 @@ abstract class AbstractCommand
     }
 
     /**
-     * Check whether this command is available to execute in the current system state
+     * Check whether this command is available to execute in the current environment
      */
     protected function isAvailable(): bool
     {
