@@ -29,18 +29,6 @@ final class HelpCommandTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
-    #[After]
-    #[Before]
-    protected function resetCli(): void
-    {
-        CLI::reset();
-    }
-
-    private function getUndecoratedBuffer(): string
-    {
-        return preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()) ?? '';
-    }
-
     public function testNoArgumentDescribesItself(): void
     {
         command('help');
@@ -65,6 +53,11 @@ final class HelpCommandTest extends CIUnitTestCase
                 EOT,
             $this->getUndecoratedBuffer(),
         );
+    }
+
+    private function getUndecoratedBuffer(): string
+    {
+        return preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()) ?? '';
     }
 
     public function testDescribeCommandNoArguments(): void
@@ -115,6 +108,29 @@ final class HelpCommandTest extends CIUnitTestCase
 
                 Arguments:
                   driver                The cache driver to use. [default: "file"]
+
+                Options:
+                  -h, --help            Display help for the given command.
+                      --no-header       Do not display the banner when running the command.
+                  -N, --no-interaction  Do not ask any interactive questions.
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
+    }
+
+    public function testDescribeUnavailableCommand(): void
+    {
+        command('help test:unavailable');
+
+        $this->assertSame(
+            <<<'EOT'
+
+                Usage:
+                  test:unavailable [options]
+
+                Description:
+                  Fixture command to test runtime availability checks.
 
                 Options:
                   -h, --help            Display help for the given command.
@@ -265,5 +281,12 @@ final class HelpCommandTest extends CIUnitTestCase
             $this->getStreamFilterBuffer(),
         );
         $this->assertStringContainsString('Lists the available commands.', $this->getStreamFilterBuffer());
+    }
+
+    #[After]
+    #[Before]
+    protected function resetCli(): void
+    {
+        CLI::reset();
     }
 }
