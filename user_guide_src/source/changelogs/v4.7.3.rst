@@ -2,7 +2,7 @@
 Version 4.7.3
 #############
 
-Release Date: Unreleased
+Release Date: May 22, 2026
 
 **4.7.3 release of CodeIgniter4**
 
@@ -21,10 +21,6 @@ SECURITY
   See the `Security advisory GHSA-2gr4-ppc7-7mhx <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-2gr4-ppc7-7mhx>`_
   for more information.
 
-********
-BREAKING
-********
-
 ***************
 Message Changes
 ***************
@@ -38,10 +34,6 @@ Changes
 - **Commands:** The ``-h`` option for the ``routes`` command is renamed to ``--sort-by-handler`` to avoid conflict with the common use of ``-h`` as a shortcut for ``--help``.
   The old ``-h`` option will continue to work until v4.8.0, at which point it will be removed and repurposed as a shortcut for ``--help``.
   A warning message is displayed when using the old ``-h`` option to encourage users to switch to the new ``--sort-by-handler`` option.
-
-************
-Deprecations
-************
 
 **********
 Bugs Fixed

@@ -44,10 +44,6 @@ validation. If your application intentionally accepts such files, remove
 ``ext_in`` from those validation rules and use a custom validation rule that
 matches your application's requirements.
 
-*********************
-Breaking Enhancements
-*********************
-
 *************
 Project Files
 *************
@@ -68,7 +64,10 @@ and it is recommended that you merge the updated versions with your application:
 Config
 ------
 
-- @TODO
+- app/Config/Database.php
+- app/Config/Events.php
+- app/Config/Routes.php
+- app/Config/View.php
 
 All Changes
 ===========
@@ -76,4 +75,7 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- @TODO
+- app/Config/Database.php
+- app/Config/Events.php
+- app/Config/Routes.php
+- app/Config/View.php

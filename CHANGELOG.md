@@ -1,5 +1,53 @@
 # Changelog
 
+## [v4.7.3](https://github.com/codeigniter4/CodeIgniter4/tree/v4.7.3) (2026-05-22)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.7.2...v4.7.3)
+
+### Security
+
+* **Validation**: *Uploaded file extension validation bypass in `ext_in` rule*
+    The ``ext_in`` file upload validation rule now validates the client filename extension and verifies that it
+    matches the detected MIME type. Previously, ``ext_in`` only checked the MIME-derived guessed extension, so
+    a file with a mismatched client extension could pass validation.
+
+    See the [GHSA-2gr4-ppc7-7mhx security advisory](https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-2gr4-ppc7-7mhx) for more information. Credits to @z3moo and @teebow1e for reporting the issue.
+
+### Fixed Bugs
+
+* fix: make Autoloader composer path injectable to fix parallel test race condition by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/10082
+* fix: store SPL closures in `register()` so `unregister()` can remove them by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/10097
+* fix: ensure output buffer is closed after use of `command()` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10099
+* fix: preserve null values in Validation::getValidated() by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/10101
+* fix: refactor inconsistent behavior on `CLI::write()` and `CLI::error()` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10106
+* fix: ensure calling `env` command with options only would not throw by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10114
+* fix: suppress stty stderr leak in `CLI::generateDimensions()` when stdin is not a TTY by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10124
+* fix: reset Kint CSP state in worker mode by @memleakd in https://github.com/codeigniter4/CodeIgniter4/pull/10139
+* fix: make `Time::createFromTimestamp` locale-independent by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/10151
+* fix: SQLSRV driver's `decrement()` method by @patel-vansh in https://github.com/codeigniter4/CodeIgniter4/pull/10155
+* fix: suppress tput stderr leak when TERM is not present by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10167
+* fix: support third-party loggers in toolbar logs collector by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/10173
+* fix: PostgreSQL Builder's `increment()` and `decrement()` methods not working for numeric columns by @patel-vansh in https://github.com/codeigniter4/CodeIgniter4/pull/10172
+* fix: preserve cached table list shape by @memleakd in https://github.com/codeigniter4/CodeIgniter4/pull/10179
+* fix: harden regex matching on `key:generate` command by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10183
+* fix: restore deep dot-notation traversal in `Language::getLine()` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10189
+* fix: make frankenphp-worker.php template idempotent on watcher restart by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10191
+* fix: `Entity::normalizeValue()` must handle `UnitEnum` before `toArray()` by @maniaba in https://github.com/codeigniter4/CodeIgniter4/pull/10137
+* fix: recognize off zlib output compression value by @memleakd in https://github.com/codeigniter4/CodeIgniter4/pull/10193
+* fix: escape `--host` option in `serve` command by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10203
+
+### Refactoring
+
+* refactor: add full testing for `logs:clear` command by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10090
+* refactor: add full testing for `debugbar:clear` command by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10093
+* refactor: pass `--do-not-cache-result` to prevent shared cache corruption by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/10098
+* refactor: add full testing for `cache:clear` command by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10094
+* refactor: rename `-h` option of `routes` command as `--handler` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10113
+* refactor: further rename `--handler` to `--sort-by-handler` for `routes` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10125
+* refactor: UX: `ClearLogs::execute()` error message is misleading after interactive `'n'` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10126
+* refactor: simplify `FileLocator::listFiles()` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10142
+* refactor: reduce PHPStan child return type baseline by @memleakd in https://github.com/codeigniter4/CodeIgniter4/pull/10165
+* refactor: remove PHPStan callable signature baseline by @memleakd in https://github.com/codeigniter4/CodeIgniter4/pull/10166
+
 ## [v4.7.2](https://github.com/codeigniter4/CodeIgniter4/tree/v4.7.2) (2026-03-24)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.7.1...v4.7.2)
 
