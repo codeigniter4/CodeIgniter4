@@ -935,7 +935,8 @@ final class AbstractCommandTest extends CIUnitTestCase
 
     public function testRunThrowsWhenCommandIsUnavailable(): void
     {
-        $command                              = new UnavailableFixtureCommand(new Commands());
+        $command = new UnavailableFixtureCommand(new Commands());
+
         UnavailableFixtureCommand::$available = false;
 
         $this->expectException(CommandNotAvailableException::class);
@@ -946,7 +947,8 @@ final class AbstractCommandTest extends CIUnitTestCase
 
     public function testRunExecutesWhenCommandIsAvailable(): void
     {
-        $command                              = new UnavailableFixtureCommand(new Commands());
+        $command = new UnavailableFixtureCommand(new Commands());
+
         UnavailableFixtureCommand::$available = true;
 
         $exitCode = $command->run([], []);
@@ -959,7 +961,8 @@ final class AbstractCommandTest extends CIUnitTestCase
 
     public function testRunChecksAvailabilityBeforeInitializeInteractAndExecute(): void
     {
-        $command                              = new UnavailableFixtureCommand(new Commands());
+        $command = new UnavailableFixtureCommand(new Commands());
+
         UnavailableFixtureCommand::$available = false;
 
         try {
