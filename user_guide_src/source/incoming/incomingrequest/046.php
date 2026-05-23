@@ -1,5 +1,5 @@
 <?php
 
-$page     = $request->getQueryInput()->integer('page', 1);
+$page     = $request->getGetInput()->integer('page', 1);
 $remember = $request->getPostInput()->boolean('remember', false);
-$name     = $request->getPayloadInput()->string('name');
+$name     = $request->getJSONInput()->string('name');

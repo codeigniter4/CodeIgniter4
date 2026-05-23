@@ -87,14 +87,14 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertNull($this->request->getPost('TESTY'));
     }
 
-    public function testGetQueryInputReadsQueryData(): void
+    public function testGetGetInputReadsGetData(): void
     {
         service('superglobals')->setGet('page', '3');
         service('superglobals')->setGet('filters', ['active' => 'true']);
         service('superglobals')->setPost('page', '10');
 
         $request = $this->createRequest();
-        $input   = $request->getQueryInput();
+        $input   = $request->getGetInput();
 
         $this->assertInstanceOf(InputData::class, $input);
         $this->assertSame(3, $input->integer('page'));
@@ -602,7 +602,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame($expected, $request->getRawInput());
     }
 
-    public function testGetPayloadInputReadsJsonBody(): void
+    public function testGetJSONInputReadsJsonBody(): void
     {
         $json = json_encode([
             'page'     => '4',
@@ -611,9 +611,8 @@ final class IncomingRequestTest extends CIUnitTestCase
         ]);
 
         $request = $this->createRequest(new App(), $json);
-        $request->setHeader('Content-Type', 'application/json');
 
-        $input = $request->getPayloadInput();
+        $input = $request->getJSONInput();
 
         $this->assertInstanceOf(InputData::class, $input);
         $this->assertSame(4, $input->integer('page'));
@@ -621,83 +620,34 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertTrue($input->has('nullable'));
     }
 
-    #[DataProvider('provideGetPayloadInputReadsRawBodyForWriteRequests')]
-    public function testGetPayloadInputReadsRawBodyForWriteRequests(string $method): void
-    {
-        $request = $this->createRequest(new App(), 'title=Hello&published=1')
-            ->withMethod($method);
-
-        $input = $request->getPayloadInput();
-
-        $this->assertSame('Hello', $input->string('title'));
-        $this->assertTrue($input->boolean('published'));
-    }
-
-    /**
-     * @return iterable<string, array{string}>
-     */
-    public static function provideGetPayloadInputReadsRawBodyForWriteRequests(): iterable
-    {
-        yield 'PUT' => ['PUT'];
-
-        yield 'PATCH' => ['PATCH'];
-
-        yield 'DELETE' => ['DELETE'];
-    }
-
-    public function testGetPayloadInputReadsPostBodyForPostRequests(): void
-    {
-        service('superglobals')->setGet('title', 'Query title');
-        service('superglobals')->setPost('title', 'Post title');
-
-        $request = $this->createRequest()->withMethod('POST');
-        $input   = $request->getPayloadInput();
-
-        $this->assertSame('Post title', $input->string('title'));
-    }
-
-    public function testGetPayloadInputDoesNotReadQueryDataForGetRequests(): void
-    {
-        service('superglobals')->setGet('page', '2');
-
-        $request = $this->createRequest()->withMethod('GET');
-        $input   = $request->getPayloadInput();
-
-        $this->assertFalse($input->has('page'));
-        $this->assertSame(1, $input->integer('page', 1));
-    }
-
-    public function testGetPayloadInputReturnsEmptyInputForEmptyJsonBody(): void
+    public function testGetJSONInputReturnsEmptyInputForEmptyJsonBody(): void
     {
         $request = $this->createRequest(new App());
-        $request->setHeader('Content-Type', 'application/json');
 
-        $input = $request->getPayloadInput();
+        $input = $request->getJSONInput();
 
         $this->assertInstanceOf(InputData::class, $input);
         $this->assertFalse($input->has('name'));
     }
 
-    public function testGetPayloadInputRejectsScalarJsonBody(): void
+    public function testGetJSONInputRejectsScalarJsonBody(): void
     {
         $this->expectException(HTTPException::class);
         $this->expectExceptionMessage('The provided JSON format is not supported.');
 
         $request = $this->createRequest(new App(), '"hello"');
-        $request->setHeader('Content-Type', 'application/json');
 
-        $request->getPayloadInput();
+        $request->getJSONInput();
     }
 
-    public function testGetPayloadInputKeepsInvalidJsonError(): void
+    public function testGetJSONInputKeepsInvalidJsonError(): void
     {
         $this->expectException(HTTPException::class);
         $this->expectExceptionMessage('Failed to parse JSON string. Error: Syntax error');
 
         $request = $this->createRequest(new App(), 'Invalid JSON string');
-        $request->setHeader('Content-Type', 'application/json');
 
-        $request->getPayloadInput();
+        $request->getJSONInput();
     }
 
     /**

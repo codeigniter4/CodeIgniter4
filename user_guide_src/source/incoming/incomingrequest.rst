@@ -161,27 +161,25 @@ The ``getVar()`` method will pull from ``$_REQUEST``, so will return any data fr
 .. note:: If the incoming request has a ``Content-Type`` header set to ``application/json``,
     the ``getVar()`` method returns the JSON data instead of ``$_REQUEST`` data.
 
-.. _incomingrequest-typed-source-input:
+.. _incomingrequest-typed-request-input:
 
-Typed Source Input
-==================
+Typed Request Input
+===================
 
 .. versionadded:: 4.8.0
 
-``getQueryInput()``, ``getPostInput()``, and ``getPayloadInput()`` return
-request data as a ``CodeIgniter\Input\InputData`` object. Use these methods
-when you want source-explicit access with typed fallback helpers:
+``getGetInput()``, ``getPostInput()``, and ``getJSONInput()`` return
+request data as a ``CodeIgniter\Input\InputData`` object. Use these methods to
+read values from a specific part of the request with typed fallback helpers:
 
 .. literalinclude:: incomingrequest/046.php
    :lines: 2-
 
-``getQueryInput()`` reads query-string parameters. ``getPostInput()`` reads
-POST body parameters. ``getPayloadInput()`` reads the request body payload:
-JSON requests use the decoded JSON body, ``PUT``, ``PATCH``, and ``DELETE``
-requests use ``getRawInput()`` when they are not multipart requests, and
-ordinary form requests use POST body parameters.
-For non-JSON ``GET`` and ``HEAD`` requests, use ``getQueryInput()``;
-``getPayloadInput()`` returns an empty input object.
+``getGetInput()`` reads query-string parameters. ``getPostInput()`` reads
+POST body parameters. ``getJSONInput()`` reads JSON request body parameters.
+These methods keep GET, POST, and JSON data separate. They do not combine
+multiple request sources for you. For raw ``PUT``, ``PATCH``, or ``DELETE``
+data, continue using ``getRawInput()`` or ``getRawInputVar()``.
 
 These methods do not validate input. They are fallback-friendly helpers for
 reading raw request data. Use Validation or :ref:`form-requests` when input
@@ -432,7 +430,7 @@ The methods provided by the parent classes that are available are:
 
         .. literalinclude:: incomingrequest/045.php
 
-    .. php:method:: getQueryInput()
+    .. php:method:: getGetInput()
 
         :returns:       Query-string parameters as a typed input object.
         :rtype: CodeIgniter\\Input\\InputData
@@ -454,9 +452,9 @@ The methods provided by the parent classes that are available are:
         :returns:       POST body parameters as a typed input object.
         :rtype: CodeIgniter\\Input\\InputData
 
-    .. php:method:: getPayloadInput()
+    .. php:method:: getJSONInput()
 
-        :returns:       Request body payload parameters as a typed input object.
+        :returns:       JSON body parameters as a typed input object.
         :rtype: CodeIgniter\\Input\\InputData
 
     .. php:method:: getPostGet([$index = null[, $filter = null[, $flags = null]]])

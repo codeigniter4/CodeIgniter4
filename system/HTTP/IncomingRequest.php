@@ -557,9 +557,9 @@ class IncomingRequest extends Request
     }
 
     /**
-     * Returns query-string parameters as a typed input object.
+     * Returns GET parameters as a typed input object.
      */
-    public function getQueryInput(): InputData
+    public function getGetInput(): InputData
     {
         $data = $this->getGet();
 
@@ -577,36 +577,17 @@ class IncomingRequest extends Request
     }
 
     /**
-     * Returns request body payload parameters as a typed input object.
+     * Returns JSON body parameters as a typed input object.
      */
-    public function getPayloadInput(): InputData
+    public function getJSONInput(): InputData
     {
-        $contentType = $this->getHeaderLine('Content-Type');
+        $data = $this->getJSON(true) ?? [];
 
-        if (str_contains($contentType, 'application/json')) {
-            $data = $this->getJSON(true) ?? [];
-
-            if (! is_array($data)) {
-                throw HTTPException::forUnsupportedJSONFormat();
-            }
-
-            return service('inputdatafactory')->create($data);
+        if (! is_array($data)) {
+            throw HTTPException::forUnsupportedJSONFormat();
         }
 
-        if (
-            in_array($this->getMethod(), [Method::PUT, Method::PATCH, Method::DELETE], true)
-            && ! str_contains($contentType, 'multipart/form-data')
-        ) {
-            return service('inputdatafactory')->create($this->getRawInput());
-        }
-
-        if (in_array($this->getMethod(), [Method::GET, Method::HEAD], true)) {
-            return service('inputdatafactory')->create([]);
-        }
-
-        $data = $this->getPost();
-
-        return service('inputdatafactory')->create(is_array($data) ? $data : []);
+        return service('inputdatafactory')->create($data);
     }
 
     /**
