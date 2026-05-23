@@ -126,6 +126,29 @@ final class HelpCommandTest extends CIUnitTestCase
         );
     }
 
+    public function testDescribeUnavailableCommand(): void
+    {
+        command('help test:unavailable');
+
+        $this->assertSame(
+            <<<'EOT'
+
+                Usage:
+                  test:unavailable [options]
+
+                Description:
+                  Fixture command to test runtime availability checks.
+
+                Options:
+                  -h, --help            Display help for the given command.
+                      --no-header       Do not display the banner when running the command.
+                  -N, --no-interaction  Do not ask any interactive questions.
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
+    }
+
     public function testDescribeLegacyCommandUsesLegacyShowHelp(): void
     {
         // `app:info` is a legacy BaseCommand fixture. Help must take the

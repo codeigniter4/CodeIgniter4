@@ -15,6 +15,7 @@ namespace CodeIgniter\CLI;
 
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Exceptions\ArgumentCountMismatchException;
+use CodeIgniter\CLI\Exceptions\CommandNotAvailableException;
 use CodeIgniter\CLI\Exceptions\InvalidArgumentDefinitionException;
 use CodeIgniter\CLI\Exceptions\InvalidOptionDefinitionException;
 use CodeIgniter\CLI\Exceptions\OptionValueMismatchException;
@@ -390,31 +391,37 @@ abstract class AbstractCommand
      *
      * The lifecycle is:
      *
-     *   1. `initialize()` and `interact()` are handed the raw parsed input by reference, in that order.
+     *   1. Run `isAvailable()` to check if the command can be run in the current environment.
+     *   2. `initialize()` and `interact()` are handed the raw parsed input by reference, in that order.
      *      Both can mutate the tokens before the framework interprets them against the declared definitions.
      *      Note: the per-run interactive state is captured from `$options` before `initialize()` runs, so
      *      mutating `--no-interaction` from within `initialize()` will not affect this invocation. Use
      *      `setInteractive()` instead.
-     *   2. The post-hook input is snapshotted into `$unboundArguments` and `$unboundOptions` so the unbound
+     *   3. The post-hook input is snapshotted into `$unboundArguments` and `$unboundOptions` so the unbound
      *      accessors can report the tokens carried into binding (as opposed to what defaults resolved to).
      *      Any mutations performed in `initialize()` or `interact()` are therefore reflected in the snapshot.
-     *   3. `bind()` maps the raw tokens onto the declared arguments and options, applying defaults and
+     *   4. `bind()` maps the raw tokens onto the declared arguments and options, applying defaults and
      *      coercing flag/negation values.
-     *   4. `validate()` rejects the bound result if it violates any of the declarations — missing required
+     *   5. `validate()` rejects the bound result if it violates any of the declarations — missing required
      *      argument, unknown option, value/flag mismatches, and so on.
-     *   5. The bound-and-validated values are snapshotted into `$validatedArguments` / `$validatedOptions`
+     *   6. The bound-and-validated values are snapshotted into `$validatedArguments` / `$validatedOptions`
      *      and then passed to `execute()`, whose integer return is the command's exit code.
      *
      * @param list<string>                                 $arguments Parsed arguments from command line.
      * @param array<string, list<string|null>|string|null> $options   Parsed options from command line.
      *
      * @throws ArgumentCountMismatchException
+     * @throws CommandNotAvailableException
      * @throws LogicException
      * @throws OptionValueMismatchException
      * @throws UnknownOptionException
      */
     final public function run(array $arguments, array $options): int
     {
+        if (! $this->isAvailable()) {
+            throw new CommandNotAvailableException(lang('Commands.notAvailable', [$this->name]));
+        }
+
         // Reset per-run interactive state from the current options.
         $this->runtimeInteractive = $this->hasUnboundOption('no-interaction', $options) ? false : null;
 
@@ -447,6 +454,14 @@ abstract class AbstractCommand
      */
     protected function configure(): void
     {
+    }
+
+    /**
+     * Checks whether this command is available to execute in the current environment.
+     */
+    protected function isAvailable(): bool
+    {
+        return true;
     }
 
     /**

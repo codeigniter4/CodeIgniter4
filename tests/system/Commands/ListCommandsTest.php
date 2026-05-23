@@ -58,6 +58,14 @@ final class ListCommandsTest extends CIUnitTestCase
         $this->assertStringNotContainsString('Clears the current system caches.', $this->getStreamFilterBuffer());
     }
 
+    public function testUnavailableCommandIsStillListed(): void
+    {
+        command('list');
+
+        $this->assertStringContainsString('test:unavailable', $this->getStreamFilterBuffer());
+        $this->assertStringContainsString('Fixture command to test runtime availability checks.', $this->getStreamFilterBuffer());
+    }
+
     public function testDuplicateCommandNameListedOnceInSimpleOutput(): void
     {
         $list = new ListCommands($this->mockRunnerWithDuplicate());

@@ -183,7 +183,7 @@ Commands
 ========
 
 - Added a new attribute-based command style built on :php:class:`AbstractCommand <CodeIgniter\\CLI\\AbstractCommand>` and the ``#[Command]`` attribute,
-  with ``configure()`` / ``initialize()`` / ``interact()`` / ``execute()`` hooks and typed ``Argument`` / ``Option`` definitions.
+  with ``configure()`` / ``isAvailable()`` / ``initialize()`` / ``interact()`` / ``execute()`` hooks and typed ``Argument`` / ``Option`` definitions.
   The legacy ``BaseCommand`` style continues to work. See :doc:`../cli/cli_modern_commands`.
 - Every modern command now ships with a ``--no-interaction`` / ``-N`` flag that skips the ``interact()`` hook, plus public
   ``isInteractive()`` / ``setInteractive()`` methods on ``AbstractCommand``. ``isInteractive()`` also auto-detects piped or

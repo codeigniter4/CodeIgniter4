@@ -47,6 +47,7 @@ return [
     'noArgumentsExpected'                   => 'No arguments expected for "{0}" command. Received: "{1}".',
     'nonArrayArgumentWithArrayDefault'      => 'Argument "{0}" does not accept an array default value.',
     'nonArrayOptionWithArrayValue'          => 'Option "--{0}" does not accept an array value.',
+    'notAvailable'                          => 'Command "{0}" is not available in the current environment.',
     'optionClashesWithExistingNegation'     => 'Option "--{0}" clashes with the negation of negatable option "--{1}".',
     'optionNoValueAndNoDefault'             => 'Option "--{0}" does not accept a value and cannot have a default value.',
     'optionNotAcceptingValue'               => 'Option "--{0}" does not accept a value.',
