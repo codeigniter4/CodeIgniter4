@@ -1100,7 +1100,12 @@ class BaseBuilder
             $condition = $k . $op . $v;
 
             if ($v instanceof RawSql) {
-                $condition = $v->with($condition);
+                $this->{$qbKey}[] = [
+                    'condition' => $v->with($this->getWhereHavingPrefix($qbKey, $type) . $condition),
+                    'escape'    => $escape,
+                ];
+
+                continue;
             }
 
             $this->addWhereHavingCondition($qbKey, [
@@ -1113,21 +1118,19 @@ class BaseBuilder
     }
 
     /**
+     * @param 'QBHaving'|'QBWhere' $clause
      * @param array<string, mixed> $condition
      */
     private function addWhereHavingCondition(string $clause, array $condition, string $type): void
     {
-        $prefix = $this->getWhereHavingPrefix($clause, $type);
-
-        if ($condition['condition'] instanceof RawSql) {
-            $condition['condition'] = $condition['condition']->with($prefix . $condition['condition']);
-        } else {
-            $condition['condition'] = $prefix . $condition['condition'];
-        }
+        $condition['condition'] = $this->getWhereHavingPrefix($clause, $type) . $condition['condition'];
 
         $this->{$clause}[] = $condition;
     }
 
+    /**
+     * @param 'QBHaving'|'QBWhere' $clause
+     */
     private function getWhereHavingPrefix(string $clause, string $type): string
     {
         return $this->{$clause} === [] ? $this->groupGetType('') : $this->groupGetType($type);
