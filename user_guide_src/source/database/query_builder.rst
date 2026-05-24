@@ -634,6 +634,44 @@ $builder->orHaving()
 
 Identical to ``having()``, only separates multiple clauses with **OR**.
 
+.. _query-builder-having-between:
+
+$builder->havingBetween()
+-------------------------
+
+.. versionadded:: 4.8.0
+
+Generates a **HAVING** field ``BETWEEN`` minimum and maximum value SQL query.
+``BETWEEN`` includes both values:
+
+.. literalinclude:: query_builder/127.php
+
+The range array must contain exactly two values: the lower and upper bounds.
+These values are bound and escaped automatically. The ``$escape`` parameter
+controls value escaping and identifier protection.
+
+.. warning:: Do not pass user-supplied data as field names. If you need a more
+    complex SQL expression, use ``having()`` with :ref:`RawSql <query-builder-where-rawsql>`
+    and escape values manually.
+
+$builder->orHavingBetween()
+---------------------------
+
+This method is identical to ``havingBetween()``, except that multiple instances
+are joined by **OR**.
+
+$builder->havingNotBetween()
+----------------------------
+
+This method is identical to ``havingBetween()``, except that it generates
+``NOT BETWEEN``.
+
+$builder->orHavingNotBetween()
+------------------------------
+
+This method is identical to ``havingNotBetween()``, except that multiple
+instances are joined by **OR**.
+
 $builder->havingIn()
 --------------------
 
@@ -1931,6 +1969,46 @@ Class Reference
         :rtype:     ``BaseBuilder``
 
         Adds a ``HAVING`` clause to a query, separating multiple calls with ``OR``.
+
+    .. php:method:: havingBetween([$key = null[, $values = null[, $escape = null]]])
+
+        :param string $key: Name of field to examine
+        :param array $values: Two values defining the inclusive range
+        :param bool $escape: Whether to escape values and protect identifiers
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Generates a ``HAVING`` field ``BETWEEN`` minimum and maximum value SQL query, joined with ``AND`` if appropriate.
+
+    .. php:method:: orHavingBetween([$key = null[, $values = null[, $escape = null]]])
+
+        :param string $key: The field to search
+        :param array $values: Two values defining the inclusive range
+        :param bool $escape: Whether to escape values and protect identifiers
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Generates a ``HAVING`` field ``BETWEEN`` minimum and maximum value SQL query, joined with ``OR`` if appropriate.
+
+    .. php:method:: havingNotBetween([$key = null[, $values = null[, $escape = null]]])
+
+        :param string $key: Name of field to examine
+        :param array $values: Two values defining the inclusive range
+        :param bool $escape: Whether to escape values and protect identifiers
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Generates a ``HAVING`` field ``NOT BETWEEN`` minimum and maximum value SQL query, joined with ``AND`` if appropriate.
+
+    .. php:method:: orHavingNotBetween([$key = null[, $values = null[, $escape = null]]])
+
+        :param string $key: The field to search
+        :param array $values: Two values defining the inclusive range
+        :param bool $escape: Whether to escape values and protect identifiers
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Generates a ``HAVING`` field ``NOT BETWEEN`` minimum and maximum value SQL query, joined with ``OR`` if appropriate.
 
     .. php:method:: orHavingIn([$key = null[, $values = null[, $escape = null]]])
 
