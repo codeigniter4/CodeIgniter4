@@ -1120,6 +1120,7 @@ class BaseBuilder
     /**
      * @param 'QBHaving'|'QBWhere' $clause
      * @param array<string, mixed> $condition
+     * @param non-empty-string     $type
      */
     private function addWhereHavingCondition(string $clause, array $condition, string $type): void
     {
