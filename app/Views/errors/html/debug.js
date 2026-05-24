@@ -117,41 +117,17 @@ function toggle(elem)
 
 function copyErrorReport(reportId, button)
 {
-    var report = document.getElementById(reportId);
-
-    if (navigator.clipboard && window.isSecureContext)
+    if (! navigator.clipboard || ! window.isSecureContext)
     {
-        navigator.clipboard
-            .writeText(report.value)
-            .then(() => showCopiedButton(button))
-            .catch(() => copyErrorReportWithFallback(report.value, button));
-
         return false;
     }
 
-    copyErrorReportWithFallback(report.value, button);
+    var report = document.getElementById(reportId);
+    navigator.clipboard.writeText(report.value).then(function () {
+        showCopiedButton(button);
+    });
 
     return false;
-}
-
-function copyErrorReportWithFallback(text, button)
-{
-    var textarea = document.createElement('textarea');
-    textarea.value = text;
-    textarea.setAttribute('readonly', '');
-    textarea.style.position = 'fixed';
-    textarea.style.top = '-1000px';
-    textarea.style.left = '-1000px';
-
-    document.body.appendChild(textarea);
-    textarea.select();
-
-    if (document.execCommand('copy'))
-    {
-        showCopiedButton(button);
-    }
-
-    document.body.removeChild(textarea);
 }
 
 function showCopiedButton(button)
@@ -160,7 +136,7 @@ function showCopiedButton(button)
     button.innerHTML   = 'Copied!';
 
     window.clearTimeout(button.copyResetTimer);
-    button.copyResetTimer = window.setTimeout(() => {
+    button.copyResetTimer = window.setTimeout(function () {
         button.innerHTML = button.defaultHtml;
     }, 1500);
 }
