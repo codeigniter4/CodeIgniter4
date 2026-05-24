@@ -851,6 +851,38 @@ first parameter.
 
 .. literalinclude:: query_builder/073.php
 
+.. _query-builder-exists:
+
+$builder->exists()
+------------------
+
+.. versionadded:: 4.8.0
+
+Permits you to determine whether the current Query Builder query would return
+at least one row:
+
+.. literalinclude:: query_builder/128.php
+
+This method returns ``true`` when the query would return at least one row and
+``false`` when it would not. It respects any existing ``limit()`` and
+``offset()`` clauses, and resets the current Query Builder state by default. If
+you need to keep the current Query Builder state, you can pass ``false`` as the
+first parameter.
+If the existence query fails and ``DBDebug`` is ``false``, both methods return
+``false``.
+
+$builder->doesntExist()
+-----------------------
+
+.. versionadded:: 4.8.0
+
+This method is identical to ``exists()``, except that it returns ``true`` when
+the query would not return any rows.
+
+.. note:: These methods execute the current Query Builder query to check for
+    rows. To add an SQL ``EXISTS`` predicate to a query, use
+    :ref:`query-builder-where-exists`.
+
 $builder->countAll()
 --------------------
 
@@ -1566,6 +1598,22 @@ Class Reference
 
         Generates a platform-specific query string that counts
         all records in the particular table.
+
+    .. php:method:: exists([$reset = true])
+
+        :param bool $reset: Whether to reset values for SELECTs
+        :returns:   Whether the query would return at least one row
+        :rtype:     bool
+
+        Determines whether the current Query Builder query would return at least one row.
+
+    .. php:method:: doesntExist([$reset = true])
+
+        :param bool $reset: Whether to reset values for SELECTs
+        :returns:   Whether the query would not return any rows
+        :rtype:     bool
+
+        Determines whether the current Query Builder query would not return any rows.
 
     .. php:method:: get([$limit = null[, $offset = null[, $reset = true]]]])
 

@@ -2049,6 +2049,105 @@ class BaseBuilder
     }
 
     /**
+     * Determines whether the current Query Builder query would return at least one row.
+     *
+     * @return bool|string SQL string when test mode is enabled.
+     */
+    public function exists(bool $reset = true)
+    {
+        $exists = $this->doExists($reset);
+
+        return $exists ?? false;
+    }
+
+    /**
+     * Determines whether the current Query Builder query would not return any rows.
+     *
+     * @return bool|string SQL string when test mode is enabled.
+     */
+    public function doesntExist(bool $reset = true)
+    {
+        $exists = $this->doExists($reset);
+
+        return is_string($exists) ? $exists : $exists === false;
+    }
+
+    /**
+     * Runs an existence probe for the current Query Builder query.
+     *
+     * @return bool|string|null SQL string when test mode is enabled, or null when the query fails.
+     */
+    protected function doExists(bool $reset = true)
+    {
+        $sql = $this->compileExists();
+
+        if ($this->testMode) {
+            if ($reset) {
+                $this->resetSelect();
+
+                // Clear our binds so we don't eat up memory
+                $this->binds = [];
+            }
+
+            return $sql;
+        }
+
+        $result = $this->db->query($sql, $this->binds, false);
+
+        if ($reset) {
+            $this->resetSelect();
+
+            // Clear our binds so we don't eat up memory
+            $this->binds = [];
+        }
+
+        return $result instanceof ResultInterface ? $result->getRow() !== null : null;
+    }
+
+    /**
+     * Compiles an existence probe for the current Query Builder query.
+     */
+    protected function compileExists(): string
+    {
+        // ORDER BY and FOR UPDATE are unnecessary for checking row existence,
+        // and can produce invalid or surprising SQL on some drivers.
+        $orderBy       = $this->QBOrderBy;
+        $limit         = $this->QBLimit;
+        $offset        = $this->QBOffset;
+        $lockForUpdate = $this->QBLockForUpdate;
+        $select        = $this->QBSelect;
+        $noEscape      = $this->QBNoEscape;
+        $needsSubquery = $this->QBSelectUsesAggregate || $this->QBUnion !== [] || $this->QBGroupBy !== [] || $this->QBHaving !== [] || $this->QBOffset !== false;
+
+        $this->QBOrderBy       = null;
+        $this->QBLockForUpdate = false;
+
+        if (! $needsSubquery && $this->QBLimit !== 0) {
+            $this->QBLimit = 1;
+        }
+
+        try {
+            if ($needsSubquery) {
+                $sql = "SELECT 1 FROM (\n" . $this->compileSelect() . "\n) CI_exists";
+
+                $this->QBLimit  = 1;
+                $this->QBOffset = false;
+
+                return $this->_limit($sql . "\n");
+            }
+
+            return $this->compileSelect('SELECT 1');
+        } finally {
+            $this->QBOrderBy       = $orderBy;
+            $this->QBLimit         = $limit;
+            $this->QBOffset        = $offset;
+            $this->QBLockForUpdate = $lockForUpdate;
+            $this->QBSelect        = $select;
+            $this->QBNoEscape      = $noEscape;
+        }
+    }
+
+    /**
      * Generates a platform-specific query string that counts all records
      * returned by an Query Builder query.
      *
