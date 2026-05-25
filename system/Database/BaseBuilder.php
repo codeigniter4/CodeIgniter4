@@ -855,16 +855,14 @@ class BaseBuilder
 
         $escape ??= $this->db->protectIdentifiers;
 
-        $prefix = $this->{$qbKey} === [] ? $this->groupGetType('') : $this->groupGetType($type);
-
-        $this->{$qbKey}[] = [
+        $this->addWhereHavingCondition($qbKey, [
             'columnComparison' => true,
-            'condition'        => $prefix,
+            'condition'        => '',
             'escape'           => $escape,
             'first'            => $first,
             'operator'         => $operator,
             'second'           => $second,
-        ];
+        ], $type);
 
         return $this;
     }
@@ -1041,17 +1039,15 @@ class BaseBuilder
         $lowerBind = $this->setBind($key, $values[0], $escape);
         $upperBind = $this->setBind($key, $values[1], $escape);
         $not       = $not ? ' NOT' : '';
-        $prefix    = $this->{$qbKey} === [] ? $this->groupGetType('') : $this->groupGetType($type);
-
-        $this->{$qbKey}[] = [
+        $this->addWhereHavingCondition($qbKey, [
             'betweenComparison' => true,
-            'condition'         => $prefix,
+            'condition'         => '',
             'escape'            => $escape,
             'key'               => $key,
             'lowerBind'         => $lowerBind,
             'not'               => $not,
             'upperBind'         => $upperBind,
-        ];
+        ], $type);
 
         return $this;
     }
@@ -1074,13 +1070,12 @@ class BaseBuilder
             throw new InvalidArgumentException(sprintf('%s() expects $subquery to be of type BaseBuilder or closure', debug_backtrace(0, 2)[1]['function']));
         }
 
-        $prefix   = $this->QBWhere === [] ? $this->groupGetType('') : $this->groupGetType($type);
         $operator = $not ? 'NOT EXISTS' : 'EXISTS';
 
-        $this->QBWhere[] = [
-            'condition' => "{$prefix}{$operator} {$this->buildSubquery($subquery, true)}",
+        $this->addWhereHavingCondition('QBWhere', [
+            'condition' => "{$operator} {$this->buildSubquery($subquery, true)}",
             'escape'    => false,
-        ];
+        ], $type);
 
         return $this;
     }
@@ -1119,8 +1114,6 @@ class BaseBuilder
         }
 
         foreach ($keyValue as $k => $v) {
-            $prefix = empty($this->{$qbKey}) ? $this->groupGetType('') : $this->groupGetType($type);
-
             if ($rawSqlOnly) {
                 $k  = '';
                 $op = '';
@@ -1168,20 +1161,44 @@ class BaseBuilder
                 $op = '';
             }
 
+            $condition = $k . $op . $v;
+
             if ($v instanceof RawSql) {
                 $this->{$qbKey}[] = [
-                    'condition' => $v->with($prefix . $k . $op . $v),
+                    'condition' => $v->with($this->getWhereHavingPrefix($qbKey, $type) . $condition),
                     'escape'    => $escape,
                 ];
-            } else {
-                $this->{$qbKey}[] = [
-                    'condition' => $prefix . $k . $op . $v,
-                    'escape'    => $escape,
-                ];
+
+                continue;
             }
+
+            $this->addWhereHavingCondition($qbKey, [
+                'condition' => $condition,
+                'escape'    => $escape,
+            ], $type);
         }
 
         return $this;
+    }
+
+    /**
+     * @param 'QBHaving'|'QBWhere' $clause
+     * @param array<string, mixed> $condition
+     * @param non-empty-string     $type
+     */
+    private function addWhereHavingCondition(string $clause, array $condition, string $type): void
+    {
+        $condition['condition'] = $this->getWhereHavingPrefix($clause, $type) . $condition['condition'];
+
+        $this->{$clause}[] = $condition;
+    }
+
+    /**
+     * @param 'QBHaving'|'QBWhere' $clause
+     */
+    private function getWhereHavingPrefix(string $clause, string $type): string
+    {
+        return $this->{$clause} === [] ? $this->groupGetType('') : $this->groupGetType($type);
     }
 
     /**
@@ -1332,14 +1349,10 @@ class BaseBuilder
 
         $ok = $this->setBind($ok, $whereIn, $escape);
 
-        $prefix = empty($this->{$clause}) ? $this->groupGetType('') : $this->groupGetType($type);
-
-        $whereIn = [
-            'condition' => "{$prefix}{$key}{$not} IN :{$ok}:",
+        $this->addWhereHavingCondition($clause, [
+            'condition' => "{$key}{$not} IN :{$ok}:",
             'escape'    => false,
-        ];
-
-        $this->{$clause}[] = $whereIn;
+        ], $type);
 
         return $this;
     }
@@ -1472,7 +1485,7 @@ class BaseBuilder
             $v                 = $match;
             $insensitiveSearch = false;
 
-            $prefix = empty($this->{$clause}) ? $this->groupGetType('') : $this->groupGetType($type);
+            $prefix = $this->getWhereHavingPrefix($clause, $type);
 
             if ($side === 'none') {
                 $bind = $this->setBind($field->getBindingKey(), $v, $escape);
@@ -1506,7 +1519,7 @@ class BaseBuilder
                 $v = mb_strtolower($v, 'UTF-8');
             }
 
-            $prefix = empty($this->{$clause}) ? $this->groupGetType('') : $this->groupGetType($type);
+            $prefix = $this->getWhereHavingPrefix($clause, $type);
 
             if ($side === 'none') {
                 $bind = $this->setBind($k, $v, $escape);
@@ -3642,87 +3655,7 @@ class BaseBuilder
     {
         if (! empty($this->{$qbKey})) {
             foreach ($this->{$qbKey} as &$qbkey) {
-                // Is this condition already compiled?
-                if (is_string($qbkey)) {
-                    continue;
-                }
-
-                if ($qbkey instanceof RawSql) {
-                    continue;
-                }
-
-                if ($qbkey['condition'] instanceof RawSql) {
-                    $qbkey = $qbkey['condition'];
-
-                    continue;
-                }
-
-                if (($qbkey['columnComparison'] ?? false) === true) {
-                    $qbkey = $this->compileColumnComparison($qbkey);
-
-                    continue;
-                }
-
-                if (($qbkey['betweenComparison'] ?? false) === true) {
-                    $qbkey = $this->compileBetweenComparison($qbkey);
-
-                    continue;
-                }
-
-                if ($qbkey['escape'] === false) {
-                    $qbkey = $qbkey['condition'];
-
-                    continue;
-                }
-
-                // Split multiple conditions
-                $conditions = preg_split(
-                    '/((?:^|\s+)AND\s+|(?:^|\s+)OR\s+)/i',
-                    $qbkey['condition'],
-                    -1,
-                    PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY,
-                );
-
-                foreach ($conditions as &$condition) {
-                    $op = $this->getOperator($condition);
-                    if (
-                        $op === false
-                        || preg_match(
-                            '/^(\(?)(.*)(' . preg_quote($op, '/') . ')\s*(.*(?<!\)))?(\)?)$/i',
-                            $condition,
-                            $matches,
-                        ) !== 1
-                    ) {
-                        continue;
-                    }
-
-                    // $matches = [
-                    //  0 => '(test <= foo)',   /* the whole thing */
-                    //  1 => '(',               /* optional */
-                    //  2 => 'test',            /* the field name */
-                    //  3 => ' <= ',            /* $op */
-                    //  4 => 'foo',	            /* optional, if $op is e.g. 'IS NULL' */
-                    //  5 => ')'                /* optional */
-                    // ];
-
-                    if ($matches[4] !== '') {
-                        $protectIdentifiers = false;
-                        if (str_contains($matches[4], '.')) {
-                            $protectIdentifiers = true;
-                        }
-
-                        if (! str_contains($matches[4], ':')) {
-                            $matches[4] = $this->db->protectIdentifiers(trim($matches[4]), false, $protectIdentifiers);
-                        }
-
-                        $matches[4] = ' ' . $matches[4];
-                    }
-
-                    $condition = $matches[1] . $this->db->protectIdentifiers(trim($matches[2]))
-                        . ' ' . trim($matches[3]) . $matches[4] . $matches[5];
-                }
-
-                $qbkey = implode('', $conditions);
+                $qbkey = $this->compileWhereHavingCondition($qbkey);
             }
 
             return ($qbKey === 'QBHaving' ? "\nHAVING " : "\nWHERE ")
@@ -3734,6 +3667,92 @@ class BaseBuilder
 
     /**
      * @used-by compileWhereHaving()
+     *
+     * @param array<string, mixed>|RawSql|string $condition
+     */
+    private function compileWhereHavingCondition(array|RawSql|string $condition): RawSql|string
+    {
+        // Is this condition already compiled?
+        if (is_string($condition) || $condition instanceof RawSql) {
+            return $condition;
+        }
+
+        if ($condition['condition'] instanceof RawSql) {
+            return $condition['condition'];
+        }
+
+        if (($condition['columnComparison'] ?? false) === true) {
+            return $this->compileColumnComparison($condition);
+        }
+
+        if (($condition['betweenComparison'] ?? false) === true) {
+            return $this->compileBetweenComparison($condition);
+        }
+
+        if ($condition['escape'] === false) {
+            return $condition['condition'];
+        }
+
+        return $this->compileEscapedCondition($condition['condition']);
+    }
+
+    /**
+     * @used-by compileWhereHavingCondition()
+     */
+    private function compileEscapedCondition(string $condition): string
+    {
+        // Split multiple conditions
+        $conditions = preg_split(
+            '/((?:^|\s+)AND\s+|(?:^|\s+)OR\s+)/i',
+            $condition,
+            -1,
+            PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY,
+        );
+
+        foreach ($conditions as &$condition) {
+            $op = $this->getOperator($condition);
+            if (
+                $op === false
+                || preg_match(
+                    '/^(\(?)(.*)(' . preg_quote($op, '/') . ')\s*(.*(?<!\)))?(\)?)$/i',
+                    $condition,
+                    $matches,
+                ) !== 1
+            ) {
+                continue;
+            }
+
+            // $matches = [
+            //  0 => '(test <= foo)',   /* the whole thing */
+            //  1 => '(',               /* optional */
+            //  2 => 'test',            /* the field name */
+            //  3 => ' <= ',            /* $op */
+            //  4 => 'foo',             /* optional, if $op is e.g. 'IS NULL' */
+            //  5 => ')'                /* optional */
+            // ];
+
+            if ($matches[4] !== '') {
+                $protectIdentifiers = false;
+                if (str_contains($matches[4], '.')) {
+                    $protectIdentifiers = true;
+                }
+
+                if (! str_contains($matches[4], ':')) {
+                    $matches[4] = $this->db->protectIdentifiers(trim($matches[4]), false, $protectIdentifiers);
+                }
+
+                $matches[4] = ' ' . $matches[4];
+            }
+
+            $condition = $matches[1] . $this->db->protectIdentifiers(trim($matches[2]))
+                . ' ' . trim($matches[3]) . $matches[4] . $matches[5];
+        }
+
+        return implode('', $conditions);
+    }
+
+    /**
+     * @used-by compileWhereHavingCondition()
      *
      * @param array{columnComparison: true, condition: string, escape: bool, first: string, operator: string, second: string} $condition
      */
@@ -3748,7 +3767,7 @@ class BaseBuilder
     }
 
     /**
-     * @used-by compileWhereHaving()
+     * @used-by compileWhereHavingCondition()
      *
      * @param array{betweenComparison: true, condition: string, escape: bool, key: string, lowerBind: string, not: string, upperBind: string} $condition
      */

@@ -151,6 +151,53 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
+    /**
+     * @param mixed                             $value
+     * @param array<string, array{mixed, bool}> $expectedBinds
+     */
+    #[DataProvider('provideWhereOperatorRegressionCases')]
+    public function testWhereOperatorRegressionCases(string $key, $value, string $expectedSQL, array $expectedBinds): void
+    {
+        $builder = $this->db->table('jobs job');
+
+        $builder->where($key, $value);
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    /**
+     * @return iterable<string, array{string, mixed, string, array<string, array{mixed, bool}>}>
+     */
+    public static function provideWhereOperatorRegressionCases(): iterable
+    {
+        return [
+            'like operator with value' => [
+                'job.status LIKE',
+                'p%',
+                'SELECT * FROM "jobs" "job" WHERE "job"."status" LIKE \'p%\'',
+                [
+                    'job.status' => [
+                        'p%',
+                        true,
+                    ],
+                ],
+            ],
+            'equals operator with null' => [
+                'job.deleted_at =',
+                null,
+                'SELECT * FROM "jobs" "job" WHERE "job"."deleted_at" IS NULL',
+                [],
+            ],
+            'not equals operator with null' => [
+                'job.deleted_at !=',
+                null,
+                'SELECT * FROM "jobs" "job" WHERE "job"."deleted_at" IS NOT NULL',
+                [],
+            ],
+        ];
+    }
+
     public function testWhereCustomString(): void
     {
         $builder = $this->db->table('jobs');
