@@ -642,15 +642,7 @@ class BaseBuilder
      */
     public function join(string $table, $cond, string $type = '', ?bool $escape = null)
     {
-        if ($type !== '') {
-            $type = strtoupper(trim($type));
-
-            if (! in_array($type, $this->joinTypes, true)) {
-                $type = '';
-            } else {
-                $type .= ' ';
-            }
-        }
+        $type = $this->compileJoinType($type);
 
         // Extract any aliases that might exist. We use this information
         // in the protectIdentifiers to know whether to add a table prefix
@@ -660,62 +652,96 @@ class BaseBuilder
             $escape = $this->db->protectIdentifiers;
         }
 
-        // Do we want to escape the table name?
-        if ($escape === true) {
-            $table = $this->db->protectIdentifiers($table, true, null, false);
-        }
-
-        if ($cond instanceof RawSql) {
-            $this->QBJoin[] = $type . 'JOIN ' . $table . ' ON ' . $cond;
-
-            return $this;
-        }
-
-        if (! $this->hasOperator($cond)) {
-            $cond = ' USING (' . ($escape ? $this->db->escapeIdentifiers($cond) : $cond) . ')';
-        } elseif ($escape === false) {
-            $cond = ' ON ' . $cond;
-        } else {
-            // Split multiple conditions
-            // @TODO This does not parse `BETWEEN a AND b` correctly.
-            if (preg_match_all('/\sAND\s|\sOR\s/i', $cond, $joints, PREG_OFFSET_CAPTURE) >= 1) {
-                $conditions = [];
-                $joints     = $joints[0];
-                array_unshift($joints, ['', 0]);
-
-                for ($i = count($joints) - 1, $pos = strlen($cond); $i >= 0; $i--) {
-                    $joints[$i][1] += strlen($joints[$i][0]); // offset
-                    $conditions[$i] = substr($cond, $joints[$i][1], $pos - $joints[$i][1]);
-                    $pos            = $joints[$i][1] - strlen($joints[$i][0]);
-                    $joints[$i]     = $joints[$i][0];
-                }
-                ksort($conditions);
-            } else {
-                $conditions = [$cond];
-                $joints     = [''];
-            }
-
-            $cond = ' ON ';
-
-            foreach ($conditions as $i => $condition) {
-                $operator = $this->getOperator($condition);
-
-                // Workaround for BETWEEN
-                if ($operator === false) {
-                    $cond .= $joints[$i] . $condition;
-
-                    continue;
-                }
-
-                $cond .= $joints[$i];
-                $cond .= preg_match('/(\(*)?([\[\]\w\.\'-]+)' . preg_quote($operator, '/') . '(.*)/i', $condition, $match) ? $match[1] . $this->db->protectIdentifiers($match[2]) . $operator . $this->db->protectIdentifiers($match[3]) : $condition;
-            }
-        }
+        $table = $this->compileJoinTable($table, $escape);
+        $cond  = $this->compileJoinCondition($cond, $escape);
 
         // Assemble the JOIN statement
         $this->QBJoin[] = $type . 'JOIN ' . $table . $cond;
 
         return $this;
+    }
+
+    /**
+     * Compiles the JOIN table name.
+     */
+    protected function compileJoinTable(string $table, bool $escape): string
+    {
+        if ($escape) {
+            return $this->db->protectIdentifiers($table, true, null, false);
+        }
+
+        return $table;
+    }
+
+    private function compileJoinType(string $type): string
+    {
+        if ($type === '') {
+            return '';
+        }
+
+        $type = strtoupper(trim($type));
+
+        return in_array($type, $this->joinTypes, true) ? $type . ' ' : '';
+    }
+
+    /**
+     * Compiles the JOIN ON or USING condition.
+     */
+    private function compileJoinCondition(RawSql|string $condition, bool $escape): string
+    {
+        if ($condition instanceof RawSql) {
+            return ' ON ' . $condition;
+        }
+
+        if (! $this->hasOperator($condition)) {
+            return ' USING (' . ($escape ? $this->db->escapeIdentifiers($condition) : $condition) . ')';
+        }
+
+        if ($escape === false) {
+            return ' ON ' . $condition;
+        }
+
+        return $this->compileProtectedJoinCondition($condition);
+    }
+
+    private function compileProtectedJoinCondition(string $condition): string
+    {
+        // Split multiple conditions
+        // @TODO This does not parse `BETWEEN a AND b` correctly.
+        if (preg_match_all('/\sAND\s|\sOR\s/i', $condition, $joints, PREG_OFFSET_CAPTURE) >= 1) {
+            $conditions = [];
+            $joints     = $joints[0];
+            array_unshift($joints, ['', 0]);
+
+            for ($i = count($joints) - 1, $pos = strlen($condition); $i >= 0; $i--) {
+                $joints[$i][1] += strlen($joints[$i][0]); // offset
+                $conditions[$i] = substr($condition, $joints[$i][1], $pos - $joints[$i][1]);
+                $pos            = $joints[$i][1] - strlen($joints[$i][0]);
+                $joints[$i]     = $joints[$i][0];
+            }
+            ksort($conditions);
+        } else {
+            $conditions = [$condition];
+            $joints     = [''];
+        }
+
+        $condition = ' ON ';
+
+        foreach ($conditions as $i => $conditionPart) {
+            $operator = $this->getOperator($conditionPart);
+
+            // Workaround for BETWEEN
+            if ($operator === false) {
+                $condition .= $joints[$i] . $conditionPart;
+
+                continue;
+            }
+
+            $condition .= $joints[$i];
+            $condition .= preg_match('/(\(*)?([\[\]\w\.\'-]+)' . preg_quote($operator, '/') . '(.*)/i', $conditionPart, $match) ? $match[1] . $this->db->protectIdentifiers($match[2]) . $operator . $this->db->protectIdentifiers($match[3]) : $conditionPart;
+        }
+
+        return $condition;
     }
 
     /**
