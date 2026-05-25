@@ -129,8 +129,9 @@ If the query fails and ``DBDebug`` is ``false``, it returns ``false``.
 The method resets the current Query Builder state by default. If you need to keep
 the current Query Builder state, you can pass ``false`` as the first parameter.
 
-This method is currently supported by MySQLi, Postgre, and SQLite3. SQLite3 uses
-``EXPLAIN QUERY PLAN``. SQLSRV and OCI8 are not supported by this method.
+.. note:: This method is currently supported by MySQLi, Postgre, and SQLite3.
+    SQLite3 uses ``EXPLAIN QUERY PLAN``. SQLSRV and OCI8 are not supported by
+    this method.
 
 $builder->getWhere()
 --------------------
