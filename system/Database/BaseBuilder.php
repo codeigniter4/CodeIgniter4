@@ -2589,6 +2589,13 @@ class BaseBuilder
      */
     public function updateBatch($set = null, $constraints = null, int $batchSize = 100)
     {
+        if ($this->QBWhere !== []) {
+            throw new DatabaseException(
+                'updateBatch() cannot be safely combined with existing Query Builder WHERE conditions. '
+                . 'Use updateBatch($data, $constraints), onConstraint(), or include all required constraint fields in the batch data.',
+            );
+        }
+
         $this->onConstraint($constraints);
 
         if (isset($this->QBOptions['setQueryAsData'])) {

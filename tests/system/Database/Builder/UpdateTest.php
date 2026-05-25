@@ -299,6 +299,24 @@ final class UpdateTest extends CIUnitTestCase
         $builder->updateBatch(null, 'id');
     }
 
+    public function testUpdateBatchThrowsExceptionWithWhere(): void
+    {
+        $builder = new BaseBuilder('jobs', $this->db);
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage(
+            'updateBatch() cannot be safely combined with existing Query Builder WHERE conditions. '
+            . 'Use updateBatch($data, $constraints), onConstraint(), or include all required constraint fields in the batch data.',
+        );
+
+        $builder->where('description', 'old')->updateBatch([
+            [
+                'id'   => 2,
+                'name' => 'Comedian',
+            ],
+        ], 'id');
+    }
+
     public function testUpdateBatchThrowsExceptionWithNoID(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
