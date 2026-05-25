@@ -68,6 +68,14 @@ class Builder extends BaseBuilder
     }
 
     /**
+     * Compiles an execution-plan query for the current SELECT query.
+     */
+    protected function compileExplain(string $sql): string
+    {
+        return 'EXPLAIN QUERY PLAN ' . $sql;
+    }
+
+    /**
      * Replace statement
      *
      * Generates a platform-specific replace string from the supplied data

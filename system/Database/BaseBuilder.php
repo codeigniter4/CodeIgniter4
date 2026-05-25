@@ -2030,6 +2030,47 @@ class BaseBuilder
     }
 
     /**
+     * Explains the select statement based on the other functions called
+     * and runs the query.
+     *
+     * @return BaseResult|false|Query|string SQL string when test mode is enabled.
+     */
+    public function explain(bool $reset = true)
+    {
+        $this->assertExplainSupported();
+
+        $sql = $this->compileExplain($this->compileSelect());
+
+        $result = $this->testMode
+            ? $this->compileFinalQuery($sql)
+            : $this->db->query($sql, $this->binds, false);
+
+        if ($reset) {
+            $this->resetSelect();
+
+            // Clear our binds so we don't eat up memory
+            $this->binds = [];
+        }
+
+        return $result;
+    }
+
+    /**
+     * Ensures the current driver supports explaining Query Builder selects.
+     */
+    protected function assertExplainSupported(): void
+    {
+    }
+
+    /**
+     * Compiles an execution-plan query for the current SELECT query.
+     */
+    protected function compileExplain(string $sql): string
+    {
+        return 'EXPLAIN ' . $sql;
+    }
+
+    /**
      * Generates a platform-specific query string that counts all records in
      * the particular table
      *

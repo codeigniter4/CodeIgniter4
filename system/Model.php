@@ -16,10 +16,12 @@ namespace CodeIgniter;
 use Closure;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\Exceptions\UniqueConstraintViolationException;
+use CodeIgniter\Database\Query;
 use CodeIgniter\Entity\Entity;
 use CodeIgniter\Exceptions\BadMethodCallException;
 use CodeIgniter\Exceptions\InvalidArgumentException;
@@ -530,6 +532,18 @@ class Model extends BaseModel
         $this->prepareSoftDeleteQuery($reset);
 
         return $this->builder()->testMode($test)->countAllResults($reset);
+    }
+
+    /**
+     * Explains the current Model query.
+     *
+     * @return BaseResult|false|Query|string Returns a SQL string if in test mode.
+     */
+    public function explain(bool $reset = true, bool $test = false)
+    {
+        $this->prepareSoftDeleteQuery($reset);
+
+        return $this->builder()->testMode($test)->explain($reset);
     }
 
     /**
