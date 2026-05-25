@@ -14,8 +14,9 @@ declare(strict_types=1);
 namespace CodeIgniter\Helpers\Array;
 
 use ArrayAccess;
+use CodeIgniter\Entity\Entity;
 use CodeIgniter\Exceptions\InvalidArgumentException;
-use ReflectionMethod;
+use Traversable;
 
 /**
  * @internal This is internal implementation for the framework.
@@ -102,9 +103,10 @@ final class ArrayHelper
 
         // Handle Wildcard (*)
         if ($currentIndex === '*') {
-            $answer = [];
+            $answer   = [];
+            $iterable = is_object($array) ? self::toIterable($array) : $array;
 
-            foreach ($array as $value) {
+            foreach ($iterable as $value) {
                 if (! is_array($value) && ! is_object($value)) {
                     return null;
                 }
@@ -144,9 +146,9 @@ final class ArrayHelper
      *
      * If wildcard `*` is used, all items for the key after it must have the key.
      *
-     * @param array<array-key, mixed>|object $array
+     * @param array<array-key, mixed> $array
      */
-    public static function dotHas(string $index, array|object $array): bool
+    public static function dotHas(string $index, array $array): bool
     {
         self::ensureValidWildcardPattern($index);
 
@@ -162,10 +164,10 @@ final class ArrayHelper
     /**
      * Recursively check key existence by dot path, including wildcard support.
      *
-     * @param array<array-key, mixed>|object $array
-     * @param list<string>                   $indexes
+     * @param array<array-key, mixed> $array
+     * @param list<string>            $indexes
      */
-    private static function hasByDotPath(array|object $array, array $indexes): bool
+    private static function hasByDotPath(array $array, array $indexes): bool
     {
         if ($indexes === []) {
             return true;
@@ -175,7 +177,7 @@ final class ArrayHelper
 
         if ($currentIndex === '*') {
             foreach ($array as $item) {
-                if ((! is_array($item) && ! is_object($item)) || ! self::hasByDotPath($item, $indexes)) {
+                if (! is_array($item) || ! self::hasByDotPath($item, $indexes)) {
                     return false;
                 }
             }
@@ -183,7 +185,7 @@ final class ArrayHelper
             return true;
         }
 
-        if (! self::keyExists($array, $currentIndex)) {
+        if (! array_key_exists($currentIndex, $array)) {
             return false;
         }
 
@@ -191,13 +193,11 @@ final class ArrayHelper
             return true;
         }
 
-        $value = self::value($array, $currentIndex);
-
-        if (! is_array($value) && ! is_object($value)) {
+        if (! is_array($array[$currentIndex])) {
             return false;
         }
 
-        return self::hasByDotPath($value, $indexes);
+        return self::hasByDotPath($array[$currentIndex], $indexes);
     }
 
     /**
@@ -463,32 +463,6 @@ final class ArrayHelper
     /**
      * @param array<array-key, mixed>|object $data
      */
-    private static function keyExists(array|object $data, string $key): bool
-    {
-        if (is_array($data)) {
-            return array_key_exists($key, $data);
-        }
-
-        $array = self::objectToArray($data);
-
-        if ($array !== null) {
-            return array_key_exists($key, $array);
-        }
-
-        if ($data instanceof ArrayAccess && $data->offsetExists($key)) {
-            return true;
-        }
-
-        if (array_key_exists($key, get_object_vars($data))) {
-            return true;
-        }
-
-        return isset($data->{$key});
-    }
-
-    /**
-     * @param array<array-key, mixed>|object $data
-     */
     private static function valueExists(array|object $data, string $key): bool
     {
         if (is_array($data)) {
@@ -545,31 +519,35 @@ final class ArrayHelper
      */
     private static function objectToArray(object $data): ?array
     {
-        if (method_exists($data, 'toRawArray')) {
-            $method = new ReflectionMethod($data, 'toRawArray');
-
-            if ($method->isPublic() && $method->getNumberOfRequiredParameters() === 0) {
-                $array = $data->toRawArray();
-
-                if (is_array($array)) {
-                    return $array;
-                }
-            }
-        }
-
-        if (method_exists($data, 'toArray')) {
-            $method = new ReflectionMethod($data, 'toArray');
-
-            if ($method->isPublic() && $method->getNumberOfRequiredParameters() === 0) {
-                $array = $data->toArray();
-
-                if (is_array($array)) {
-                    return $array;
-                }
-            }
+        if ($data instanceof Entity) {
+            return $data->toArray();
         }
 
         return null;
+    }
+
+    /**
+     * Normalize an object to an array safe to iterate with foreach.
+     *
+     * Entities are converted via toArray() so internal properties like
+     * `_options` or `_cast` are not exposed. Other Traversable objects are
+     * materialized; plain objects fall back to their public properties.
+     *
+     * @return array<array-key, mixed>
+     */
+    private static function toIterable(object $data): array
+    {
+        $array = self::objectToArray($data);
+
+        if ($array !== null) {
+            return $array;
+        }
+
+        if ($data instanceof Traversable) {
+            return iterator_to_array($data);
+        }
+
+        return get_object_vars($data);
     }
 
     /**
@@ -731,7 +709,7 @@ final class ArrayHelper
         $currentIndex = array_shift($indexes);
 
         if ($currentIndex === '*') {
-            if (! is_array($source) && ! is_object($source)) {
+            if (! is_array($source)) {
                 return;
             }
 
@@ -742,10 +720,10 @@ final class ArrayHelper
             return;
         }
 
-        if ((! is_array($source) && ! is_object($source)) || ! self::keyExists($source, $currentIndex)) {
+        if (! is_array($source) || ! array_key_exists($currentIndex, $source)) {
             return;
         }
 
-        self::projectByDotPath(self::value($source, $currentIndex), $indexes, $result, [...$prefix, $currentIndex]);
+        self::projectByDotPath($source[$currentIndex], $indexes, $result, [...$prefix, $currentIndex]);
     }
 }

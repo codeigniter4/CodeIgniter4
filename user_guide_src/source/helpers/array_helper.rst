@@ -58,16 +58,16 @@ The following functions are available:
 
 .. note:: Prior to v4.8.0, only arrays were supported. Support for objects was added in v4.8.0.
 
-..  php:function:: dot_array_has(string $search, array|object $values): bool
+..  php:function:: dot_array_has(string $search, array $values): bool
 
     :param  string  $search: The dot-notation string describing how to search the array
-    :param  array|object $values: The array or object to check
+    :param  array   $values: The array to check
     :returns: ``true`` if the key exists, otherwise ``false``
     :rtype: bool
 
     .. versionadded:: 4.8.0
 
-    Checks if an array key or object property exists using dot syntax.
+    Checks if an array key exists using dot syntax.
     This method supports wildcard ``*`` in the same way as ``dot_array_search()``.
 
     .. literalinclude:: array_helper/015.php
@@ -115,7 +115,6 @@ The following functions are available:
     .. versionadded:: 4.8.0
 
     Gets only the specified keys using dot syntax while preserving nested structure.
-    Nested object properties can be selected in the same way as array keys.
 
     Wildcard ``*`` is supported. Unlike ``dot_array_set()`` and ``dot_array_unset()``,
     this method also allows wildcard at the end (for example ``user.*``).

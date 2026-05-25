@@ -264,9 +264,9 @@ Helpers and Functions
 - :doc:`Array Helper </helpers/array_helper>` gained five new dot-path functions:
   :php:func:`dot_array_has()`, :php:func:`dot_array_set()`, :php:func:`dot_array_unset()`,
   :php:func:`dot_array_only()`, and :php:func:`dot_array_except()`.
-- :doc:`Array Helper </helpers/array_helper>` dot-path read operations now support object properties
-  in :php:func:`dot_array_search()`, :php:func:`dot_array_has()`, :php:func:`dot_array_only()`,
-  and :php:func:`array_group_by()`.
+- :doc:`Array Helper </helpers/array_helper>` dot-path read operations now support
+  object rows (including ``Entity``) in :php:func:`dot_array_search()` and
+  :php:func:`array_group_by()`.
 
 HTTP
 ====

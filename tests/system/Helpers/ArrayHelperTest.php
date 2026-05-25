@@ -19,7 +19,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
-use Tests\Support\Entity\ArrayObjectWithToArray;
+use Tests\Support\SomeEntity;
 use ValueError;
 
 /**
@@ -395,8 +395,6 @@ final class ArrayHelperTest extends CIUnitTestCase
         ];
 
         $this->assertSame('Jane', dot_array_search('user.profile.name', $data));
-        $this->assertTrue(dot_array_has('user.profile.name', $data));
-        $this->assertFalse(dot_array_has('user.profile.email', $data));
     }
 
     public function testArrayDotWithMagicObjectValues(): void
@@ -425,7 +423,6 @@ final class ArrayHelperTest extends CIUnitTestCase
         ];
 
         $this->assertSame('Jane', dot_array_search('user.profile.name', $data));
-        $this->assertTrue(dot_array_has('user.profile.name', $data));
     }
 
     public function testArrayDotWithArrayAccessValues(): void
@@ -439,51 +436,14 @@ final class ArrayHelperTest extends CIUnitTestCase
         ];
 
         $this->assertSame('Jane', dot_array_search('user.profile.name', $data));
-        $this->assertTrue(dot_array_has('user.profile.name', $data));
     }
 
-    public function testArrayDotWithObjectToRawArrayValues(): void
+    public function testArrayDotWithEntityValues(): void
     {
-        $data = [
-            'user' => new class () {
-                /**
-                 * @return array<string, array<string, string>>
-                 */
-                public function toRawArray(): array
-                {
-                    return [
-                        'profile' => [
-                            'name' => 'Raw',
-                        ],
-                    ];
-                }
+        $entity = new SomeEntity();
+        $entity->foo = 'value';
 
-                /**
-                 * @return array<string, array<string, string>>
-                 */
-                public function toArray(): array
-                {
-                    return [
-                        'profile' => [
-                            'name' => 'Array',
-                        ],
-                    ];
-                }
-            },
-        ];
-
-        $this->assertSame('Raw', dot_array_search('user.profile.name', $data));
-        $this->assertTrue(dot_array_has('user.profile.name', $data));
-    }
-
-    public function testArrayDotWithObjectToArrayValues(): void
-    {
-        $data = [
-            'user' => new ArrayObjectWithToArray(),
-        ];
-
-        $this->assertSame('same', dot_array_search('user.array', $data));
-        $this->assertTrue(dot_array_has('user.array', $data));
+        $this->assertSame('value', dot_array_search('user.foo', ['user' => $entity]));
     }
 
     public function testArrayDotWildcardWithObjectValues(): void
@@ -496,32 +456,6 @@ final class ArrayHelperTest extends CIUnitTestCase
         ];
 
         $this->assertSame(['John', 'Maria'], dot_array_search('users.*.name', $data));
-        $this->assertTrue(dot_array_has('users.*.name', $data));
-    }
-
-    public function testArrayDotOnlyWithObjectValues(): void
-    {
-        $data = [
-            'users' => [
-                (object) [
-                    'id'   => 1,
-                    'name' => 'John',
-                ],
-                (object) [
-                    'id'   => 2,
-                    'name' => 'Maria',
-                ],
-            ],
-        ];
-
-        $expected = [
-            'users' => [
-                ['id' => 1],
-                ['id' => 2],
-            ],
-        ];
-
-        $this->assertSame($expected, dot_array_only($data, 'users.*.id'));
     }
 
     /**
@@ -1705,5 +1639,31 @@ final class ArrayHelperTest extends CIUnitTestCase
             ],
             $actual,
         );
+    }
+
+    public function testArrayGroupByWithEntityRows(): void
+    {
+        $a      = new SomeEntity();
+        $a->foo = 'A';
+        $a->bar = 'x';
+
+        $b      = new SomeEntity();
+        $b->foo = 'B';
+        $b->bar = 'y';
+
+        $c      = new SomeEntity();
+        $c->foo = 'A';
+        $c->bar = 'z';
+
+        $actual = array_group_by([$a, $b, $c], ['foo']);
+
+        $this->assertSame(
+            [
+                'A' => [$a, $c],
+                'B' => [$b],
+            ],
+            $actual,
+        );
+        $this->assertSame($a, $actual['A'][0]);
     }
 }
