@@ -14,12 +14,14 @@ declare(strict_types=1);
 namespace CodeIgniter\Filters;
 
 use CodeIgniter\Config\Factories;
+use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Security\Exceptions\SecurityException;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Mock\MockSecurity;
 use Config\Security as SecurityConfig;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
@@ -144,16 +146,16 @@ final class CSRFTest extends CIUnitTestCase
         }
     }
 
-    public function testBeforeDoesNotAddVaryHeaderForTokenVerification(): void
+    public function testBeforeUsesSecurityServiceConfigForVaryHeader(): void
     {
         service('superglobals')
             ->setServer('REQUEST_METHOD', 'POST')
             ->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005a')
             ->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
 
-        $config                       = new SecurityConfig();
-        $config->csrfUseFetchMetadata = false;
-        Factories::injectMock('config', 'Security', $config);
+        $config                    = new SecurityConfig();
+        $config->csrfFetchMetadata = false;
+        Services::injectMock('security', new MockSecurity($config));
 
         $filter  = new CSRF();
         $request = single_service('incomingrequest', null)

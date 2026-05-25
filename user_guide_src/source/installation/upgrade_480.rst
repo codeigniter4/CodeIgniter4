@@ -76,7 +76,7 @@ Config
 - app/Config/Mimes.php
     - ``Config\Mimes::$mimes`` added a new key ``md`` for Markdown files.
 - app/Config/Security.php
-    - ``Config\Security::$csrfUseFetchMetadata`` and ``Config\Security::$csrfAllowSameSite`` were added for Fetch Metadata based CSRF protection.
+    - ``Config\Security::$csrfFetchMetadata`` and ``Config\Security::$csrfFetchMetadataRejectSameSite`` were added for Fetch Metadata based CSRF protection.
 
 All Changes
 ===========

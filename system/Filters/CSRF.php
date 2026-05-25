@@ -20,7 +20,6 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Security\Exceptions\SecurityException;
 use CodeIgniter\Security\Security;
-use Config\Security as SecurityConfig;
 
 /**
  * CSRF filter.
@@ -55,17 +54,17 @@ class CSRF implements FilterInterface
         } catch (SecurityException $e) {
             if ($security->shouldRedirect() && ! $request->isAJAX()) {
                 $response = redirect()->back()->with('error', $e->getMessage());
-                $this->addFetchMetadataVaryHeader($request, $response);
+                $this->addFetchMetadataVaryHeader($request, $response, $security);
 
                 return $response;
             }
 
-            $this->addFetchMetadataVaryHeader($request, service('response'));
+            $this->addFetchMetadataVaryHeader($request, service('response'), $security);
 
             throw $e;
         }
 
-        $this->addFetchMetadataVaryHeader($request, service('response'));
+        $this->addFetchMetadataVaryHeader($request, service('response'), $security);
 
         return null;
     }
@@ -80,13 +79,11 @@ class CSRF implements FilterInterface
         return null;
     }
 
-    private function addFetchMetadataVaryHeader(IncomingRequest $request, ResponseInterface $response): void
+    private function addFetchMetadataVaryHeader(IncomingRequest $request, ResponseInterface $response, Security $security): void
     {
-        $config           = config(SecurityConfig::class);
-        $useFetchMetadata = ($config->csrfUseFetchMetadata ?? false) === true; // @phpstan-ignore nullCoalesce.property
-        $isUnsafeMethod   = in_array($request->getMethod(), [Method::POST, Method::PUT, Method::DELETE, Method::PATCH], true);
+        $isUnsafeMethod = in_array($request->getMethod(), [Method::POST, Method::PUT, Method::DELETE, Method::PATCH], true);
 
-        if ($useFetchMetadata && $isUnsafeMethod) {
+        if ($security->shouldUseFetchMetadata() && $isUnsafeMethod) {
             $response->appendHeader('Vary', 'Sec-Fetch-Site');
         }
     }

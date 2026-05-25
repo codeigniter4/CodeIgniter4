@@ -281,7 +281,7 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertSame('<payload><value>unchanged</value></payload>', $request->getBody());
     }
 
-    public function testCsrfVerifyFetchMetadataSameSiteThrowsExceptionByDefault(): void
+    public function testCsrfVerifyFetchMetadataSameSiteFallsBackToTokenByDefault(): void
     {
         service('superglobals')
             ->setServer('REQUEST_METHOD', 'POST')
@@ -291,20 +291,54 @@ final class SecurityTest extends CIUnitTestCase
         $security = $this->createMockSecurity();
         $request  = $this->createIncomingRequest()->setHeader('Sec-Fetch-Site', 'same-site');
 
+        $this->assertInstanceOf(Security::class, $security->verify($request));
+        $this->assertLogged('info', 'CSRF token verified.');
+    }
+
+    #[DataProvider('provideCsrfVerifyFetchMetadataSameSiteFallsBackToTokenFailureByDefault')]
+    public function testCsrfVerifyFetchMetadataSameSiteFallsBackToTokenFailureByDefault(?string $token, ?string $cookie): void
+    {
+        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
+
+        if ($token !== null) {
+            service('superglobals')->setPost('csrf_test_name', $token);
+        }
+
+        if ($cookie !== null) {
+            service('superglobals')->setCookie('csrf_cookie_name', $cookie);
+        }
+
+        $security = $this->createMockSecurity();
+        $request  = $this->createIncomingRequest()->setHeader('Sec-Fetch-Site', 'same-site');
+
         $this->expectException(SecurityException::class);
         $security->verify($request);
     }
 
-    public function testCsrfVerifyFetchMetadataSameSiteReturnsSelfWhenAllowed(): void
+    /**
+     * @return iterable<string, array{string|null, string|null}>
+     */
+    public static function provideCsrfVerifyFetchMetadataSameSiteFallsBackToTokenFailureByDefault(): iterable
     {
-        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
+        yield 'missing' => [null, null];
 
-        $config                    = new SecurityConfig();
-        $config->csrfAllowSameSite = true;
-        $security                  = $this->createMockSecurity($config);
-        $request                   = $this->createIncomingRequest()->setHeader('Sec-Fetch-Site', 'same-site');
+        yield 'invalid' => [self::INVALID_CSRF_HASH, self::CORRECT_CSRF_HASH];
+    }
 
-        $this->assertInstanceOf(Security::class, $security->verify($request));
+    public function testCsrfVerifyFetchMetadataSameSiteThrowsExceptionWhenRejected(): void
+    {
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('csrf_test_name', self::CORRECT_CSRF_HASH)
+            ->setCookie('csrf_cookie_name', self::CORRECT_CSRF_HASH);
+
+        $config                                  = new SecurityConfig();
+        $config->csrfFetchMetadataRejectSameSite = true;
+        $security                                = $this->createMockSecurity($config);
+        $request                                 = $this->createIncomingRequest()->setHeader('Sec-Fetch-Site', 'same-site');
+
+        $this->expectException(SecurityException::class);
+        $security->verify($request);
     }
 
     public function testCsrfVerifyFetchMetadataCrossSiteThrowsExceptionEvenWithValidToken(): void
@@ -359,10 +393,10 @@ final class SecurityTest extends CIUnitTestCase
             ->setPost('csrf_test_name', self::CORRECT_CSRF_HASH)
             ->setCookie('csrf_cookie_name', self::CORRECT_CSRF_HASH);
 
-        $config                       = new SecurityConfig();
-        $config->csrfUseFetchMetadata = false;
-        $security                     = $this->createMockSecurity($config);
-        $request                      = $this->createIncomingRequest()->setHeader('Sec-Fetch-Site', 'cross-site');
+        $config                    = new SecurityConfig();
+        $config->csrfFetchMetadata = false;
+        $security                  = $this->createMockSecurity($config);
+        $request                   = $this->createIncomingRequest()->setHeader('Sec-Fetch-Site', 'cross-site');
 
         $this->assertInstanceOf(Security::class, $security->verify($request));
         $this->assertLogged('info', 'CSRF token verified.');
@@ -376,7 +410,7 @@ final class SecurityTest extends CIUnitTestCase
             ->setCookie('csrf_cookie_name', self::CORRECT_CSRF_HASH);
 
         $config = new SecurityConfig();
-        unset($config->csrfUseFetchMetadata);
+        unset($config->csrfFetchMetadata);
 
         $security = $this->createMockSecurity($config);
         $request  = $this->createIncomingRequest()->setHeader('Sec-Fetch-Site', 'cross-site');

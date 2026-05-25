@@ -24,17 +24,17 @@ class Security extends BaseConfig
      *
      * Whether to use Fetch Metadata request headers as a first-line CSRF check.
      */
-    public bool $csrfUseFetchMetadata = true;
+    public bool $csrfFetchMetadata = true;
 
     /**
      * --------------------------------------------------------------------------
-     * CSRF Allow Same Site
+     * CSRF Fetch Metadata Reject Same Site
      * --------------------------------------------------------------------------
      *
-     * Whether requests with the Sec-Fetch-Site: same-site header should pass
-     * Fetch Metadata verification.
+     * Whether requests with the Sec-Fetch-Site: same-site header should be
+     * rejected instead of falling back to token verification.
      */
-    public bool $csrfAllowSameSite = false;
+    public bool $csrfFetchMetadataRejectSameSite = false;
 
     /**
      * --------------------------------------------------------------------------

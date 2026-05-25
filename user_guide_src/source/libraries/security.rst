@@ -109,10 +109,10 @@ When it is enabled, unsafe requests with ``Sec-Fetch-Site: same-origin`` are all
 Requests with ``Sec-Fetch-Site: cross-site`` are rejected. Requests with a missing ``Sec-Fetch-Site`` header,
 ``Sec-Fetch-Site: none``, or an unknown value fall back to token verification. This keeps protection working
 for browsers or clients that do not send Fetch Metadata headers. Requests with ``Sec-Fetch-Site: same-site``
-are rejected unless same-site requests are explicitly allowed.
+also fall back to token verification by default.
 
 Upgraded applications without this config value continue to use token verification. You may also disable
-Fetch Metadata protection by setting ``$csrfUseFetchMetadata`` to ``false``.
+Fetch Metadata protection by setting ``$csrfFetchMetadata`` to ``false``.
 
 When an unsafe request passes with Fetch Metadata, the CSRF token is not regenerated. Token regeneration only
 runs when token verification is used.
@@ -122,8 +122,8 @@ runs when token verification is used.
     authentication.
 
 .. warning:: Same-site is not the same as same-origin, because sibling subdomains are considered same-site.
-    Same-site requests are rejected by default. If all same-site origins are trusted, you may allow them
-    in **app/Config/Security.php**:
+    Same-site requests fall back to token verification by default. If sibling subdomains are not trusted,
+    you may reject same-site requests before token verification in **app/Config/Security.php**:
 
     .. literalinclude:: security/012.php
 
