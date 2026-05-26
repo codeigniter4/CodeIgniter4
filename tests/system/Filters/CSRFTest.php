@@ -100,6 +100,22 @@ final class CSRFTest extends CIUnitTestCase
         $this->assertSame('Sec-Fetch-Site', service('response')->getHeaderLine('Vary'));
     }
 
+    public function testBeforeAddsVaryHeaderWhenFetchMetadataFallsBackToToken(): void
+    {
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005a')
+            ->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
+
+        $filter  = new CSRF();
+        $request = single_service('incomingrequest', null)
+            ->withMethod('POST');
+
+        $filter->before($request);
+
+        $this->assertSame('Sec-Fetch-Site', service('response')->getHeaderLine('Vary'));
+    }
+
     public function testBeforeAppendsVaryHeaderForFetchMetadataVerification(): void
     {
         $filter  = new CSRF();
