@@ -40,7 +40,8 @@ Type-hint the FormRequest class as a parameter of your controller method. The
 framework instantiates it, runs authorization and validation, and passes the
 resolved object to your method. If validation fails, the default behavior
 redirects back with errors for web requests or returns a 422 JSON response for
-JSON/AJAX requests - the method body is never reached.
+JSON request bodies or requests that prefer ``application/json`` - the method
+body is never reached.
 
 .. literalinclude:: form_requests/002.php
    :lines: 2-
@@ -209,10 +210,14 @@ control of what happens when a request is rejected. Both methods return a
 .. literalinclude:: form_requests/008.php
    :lines: 2-
 
-The default ``failedValidation()`` already detects JSON and AJAX requests and
-returns the appropriate 422 response automatically. Override it only when you
-need a different behavior, such as always responding with JSON even for ordinary
-browser requests.
+The default ``failedValidation()`` returns a 422 JSON response for JSON request
+bodies or requests that prefer ``application/json`` through the ``Accept``
+header. Otherwise, it redirects back with input and validation errors.
+
+.. note:: The ``X-Requested-With: XMLHttpRequest`` header alone does not select
+    a JSON response. If an AJAX client expects JSON validation errors, send an
+    ``Accept: application/json`` header. If your application needs HTML
+    fragments for AJAX form failures, override ``failedValidation()``.
 
 .. _form-request-flash-normalized:
 

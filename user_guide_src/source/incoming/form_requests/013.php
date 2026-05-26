@@ -25,7 +25,10 @@ class StorePostRequest extends FormRequest
     // Override so that old() reflects the normalized values on redirect.
     protected function failedValidation(array $errors): ResponseInterface
     {
-        if ($this->request->is('json') || $this->request->isAJAX()) {
+        if (
+            $this->request->is('json')
+            || $this->request->negotiate('media', ['text/html', 'application/json'], true) === 'application/json'
+        ) {
             return service('response')->setStatusCode(422)->setJSON(['errors' => $errors]);
         }
 

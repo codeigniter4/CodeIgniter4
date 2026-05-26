@@ -149,17 +149,27 @@ abstract class FormRequest
      * The default implementation redirects back with input and flashes validation
      * errors via the standard ``_ci_validation_errors`` channel (the same channel
      * used by controller-level validation and readable by ``validation_errors()``
-     * helpers). For JSON/AJAX requests it returns a 422 JSON response instead.
+     * helpers). For JSON requests or requests that prefer JSON responses, it
+     * returns a 422 JSON response instead.
      *
      * @param array<string, string> $errors
      */
     protected function failedValidation(array $errors): ResponseInterface
     {
-        if ($this->request->is('json') || $this->request->isAJAX()) {
+        if ($this->shouldReturnJsonResponse()) {
             return service('response')->setStatusCode(422)->setJSON(['errors' => $errors]);
         }
 
         return redirect()->back()->withInput();
+    }
+
+    /**
+     * Determine whether the default validation failure response should be JSON.
+     */
+    private function shouldReturnJsonResponse(): bool
+    {
+        return $this->request->is('json')
+            || $this->request->negotiate('media', ['text/html', 'application/json'], true) === 'application/json';
     }
 
     /**
