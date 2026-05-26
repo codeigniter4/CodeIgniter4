@@ -236,7 +236,7 @@ class Builder extends BaseBuilder
     /**
      * Ensures the current driver supports explaining Query Builder selects.
      */
-    protected function assertExplainSupported(): void
+    protected function assertExplainSupported(): never
     {
         throw new DatabaseException('OCI8 does not support explain().');
     }

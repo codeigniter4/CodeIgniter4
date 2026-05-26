@@ -719,7 +719,7 @@ class Builder extends BaseBuilder
     /**
      * Ensures the current driver supports explaining Query Builder selects.
      */
-    protected function assertExplainSupported(): void
+    protected function assertExplainSupported(): never
     {
         throw new DatabaseException('SQLSRV does not support explain().');
     }
