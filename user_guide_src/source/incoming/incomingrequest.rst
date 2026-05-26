@@ -168,18 +168,18 @@ Typed Request Input
 
 .. versionadded:: 4.8.0
 
-``getGetInput()``, ``getPostInput()``, and ``getJSONInput()`` return
-request data as a ``CodeIgniter\Input\InputData`` object. Use these methods to
-read values from a specific part of the request with typed fallback helpers:
+``input()`` returns a ``CodeIgniter\HTTP\RequestInput`` object. Use it to read
+values from a specific part of the request with typed fallback helpers:
 
 .. literalinclude:: incomingrequest/046.php
    :lines: 2-
 
-``getGetInput()`` reads query-string parameters. ``getPostInput()`` reads
-POST body parameters. ``getJSONInput()`` reads JSON request body parameters.
-These methods keep GET, POST, and JSON data separate. They do not combine
-multiple request sources for you. For raw ``PUT``, ``PATCH``, or ``DELETE``
-data, continue using ``getRawInput()`` or ``getRawInputVar()``.
+``input()->get()`` reads query-string parameters. ``input()->post()`` reads
+POST body parameters. ``input()->json()`` reads JSON request body parameters.
+``input()->raw()`` reads raw input parameters, like ``getRawInput()``.
+
+These methods keep GET, POST, JSON, and raw data separate. They do not combine
+multiple request sources for you.
 
 These methods do not validate input. They are fallback-friendly helpers for
 reading raw request data. Use Validation or :ref:`form-requests` when input
@@ -430,10 +430,10 @@ The methods provided by the parent classes that are available are:
 
         .. literalinclude:: incomingrequest/045.php
 
-    .. php:method:: getGetInput()
+    .. php:method:: input()
 
-        :returns:       Query-string parameters as a typed input object.
-        :rtype: CodeIgniter\\Input\\InputData
+        :returns:       A typed input data selector.
+        :rtype: CodeIgniter\\HTTP\\RequestInput
 
     .. php:method:: getPost([$index = null[, $filter = null[, $flags = null]]])
 
@@ -446,16 +446,6 @@ The methods provided by the parent classes that are available are:
         :rtype: array|bool|float|int|object|string|null
 
         This method is identical to ``getGet()``, only it fetches POST data.
-
-    .. php:method:: getPostInput()
-
-        :returns:       POST body parameters as a typed input object.
-        :rtype: CodeIgniter\\Input\\InputData
-
-    .. php:method:: getJSONInput()
-
-        :returns:       JSON body parameters as a typed input object.
-        :rtype: CodeIgniter\\Input\\InputData
 
     .. php:method:: getPostGet([$index = null[, $filter = null[, $flags = null]]])
 

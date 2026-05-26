@@ -1,5 +1,6 @@
 <?php
 
-$page     = $request->getGetInput()->integer('page', 1);
-$remember = $request->getPostInput()->boolean('remember', false);
-$name     = $request->getJSONInput()->string('name');
+$page      = $request->input()->get()->integer('page', 1);
+$remember  = $request->input()->post()->boolean('remember', false);
+$name      = $request->input()->json()->string('name');
+$published = $request->input()->raw()->boolean('published', false);

@@ -17,7 +17,6 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\FileCollection;
 use CodeIgniter\HTTP\Files\UploadedFile;
-use CodeIgniter\Input\InputData;
 use Config\App;
 use Config\Services;
 use Locale;
@@ -557,40 +556,6 @@ class IncomingRequest extends Request
     }
 
     /**
-     * Returns GET parameters as a typed input object.
-     */
-    public function getGetInput(): InputData
-    {
-        $data = $this->getGet();
-
-        return service('inputdatafactory')->create(is_array($data) ? $data : []);
-    }
-
-    /**
-     * Returns POST body parameters as a typed input object.
-     */
-    public function getPostInput(): InputData
-    {
-        $data = $this->getPost();
-
-        return service('inputdatafactory')->create(is_array($data) ? $data : []);
-    }
-
-    /**
-     * Returns JSON body parameters as a typed input object.
-     */
-    public function getJSONInput(): InputData
-    {
-        $data = $this->getJSON(true) ?? [];
-
-        if (! is_array($data)) {
-            throw HTTPException::forUnsupportedJSONFormat();
-        }
-
-        return service('inputdatafactory')->create($data);
-    }
-
-    /**
      * Fetch an item from GET data.
      *
      * @param array|string|null $index  Index for item to fetch from $_GET.
@@ -602,6 +567,14 @@ class IncomingRequest extends Request
     public function getGet($index = null, $filter = null, $flags = null)
     {
         return $this->fetchGlobal('get', $index, $filter, $flags);
+    }
+
+    /**
+     * Returns a typed input data selector.
+     */
+    public function input(): RequestInput
+    {
+        return new RequestInput($this, service('inputdatafactory'));
     }
 
     /**
