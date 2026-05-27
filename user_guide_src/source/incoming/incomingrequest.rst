@@ -251,6 +251,7 @@ Filtering a POST variable would look like this:
 
 All of the methods mentioned above support the filter type passed in as the second parameter, with the
 exception of ``getJSON()`` and ``getRawInput()``.
+The typed input helpers returned by ``input()`` do not accept filter parameters.
 
 Retrieving Headers
 ******************

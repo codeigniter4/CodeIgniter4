@@ -56,6 +56,23 @@ final class RequestInputTest extends CIUnitTestCase
         $this->assertInstanceOf(RequestInput::class, $input);
     }
 
+    public function testInputReturnsSameRequestInputInstance(): void
+    {
+        $request = $this->createRequest();
+
+        $this->assertSame($request->input(), $request->input());
+    }
+
+    public function testClonedRequestGetsNewRequestInputInstance(): void
+    {
+        $request = $this->createRequest();
+        $input   = $request->input();
+
+        $clonedRequest = $request->withMethod(Method::POST);
+
+        $this->assertNotSame($input, $clonedRequest->input());
+    }
+
     public function testGetReadsGetData(): void
     {
         service('superglobals')->setGet('page', '3');

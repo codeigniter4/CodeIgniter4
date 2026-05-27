@@ -124,6 +124,11 @@ class IncomingRequest extends Request
     protected $userAgent;
 
     /**
+     * Typed input data selector.
+     */
+    protected ?RequestInput $input = null;
+
+    /**
      * Constructor
      *
      * @param App         $config
@@ -167,6 +172,11 @@ class IncomingRequest extends Request
         }
 
         $this->detectLocale($config);
+    }
+
+    public function __clone()
+    {
+        $this->input = null;
     }
 
     private function getPostMaxSize(): int
@@ -574,7 +584,7 @@ class IncomingRequest extends Request
      */
     public function input(): RequestInput
     {
-        return new RequestInput($this, service('inputdatafactory'));
+        return $this->input ??= new RequestInput($this, service('inputdatafactory'));
     }
 
     /**
