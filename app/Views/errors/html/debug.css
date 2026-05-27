@@ -46,9 +46,16 @@ p.lead {
 .header .container {
     padding: 1rem;
 }
+.header-title {
+    align-items: flex-start;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+}
 .header h1 {
     font-size: 2.5rem;
     font-weight: 500;
+    min-width: 0;
 }
 .header p {
     font-size: 1.2rem;
@@ -65,14 +72,84 @@ p.lead {
     display: inline;
 }
 
+.error-report {
+    flex: 0 0 auto;
+    margin-top: 0.35rem;
+}
+
+.error-report-button {
+    align-items: center;
+    background: rgba(255,255,255,0.35);
+    border: 1px solid rgba(0,0,0,0.14);
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: var(--main-text-color);
+    cursor: pointer;
+    display: inline-flex;
+    font-size: 0.82rem;
+    font-weight: 500;
+    gap: 0.35rem;
+    height: 1.875rem;
+    justify-content: center;
+    line-height: 1;
+    padding: 0 0.65rem;
+    transition: background-color 160ms ease-in-out, border-color 160ms ease-in-out, color 160ms ease-in-out, box-shadow 160ms ease-in-out;
+    white-space: nowrap;
+    width: 7.15rem;
+}
+
+.error-report-button:hover {
+    background: rgba(255,255,255,0.6);
+    border-color: rgba(0,0,0,0.22);
+    color: var(--dark-text-color);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.error-report-button:focus-visible {
+    border-color: rgba(0,0,0,0.35);
+    outline: 0;
+    box-shadow: 0 0 0 2px rgba(220,72,20,0.16);
+}
+
+.error-report-button:active {
+    background: rgba(255,255,255,0.75);
+}
+
+.error-report-icon {
+    flex: 0 0 auto;
+    height: 0.72rem;
+    width: 0.72rem;
+}
+
 .environment {
     background: var(--brand-primary-color);
+    box-sizing: border-box;
     color: var(--main-bg-color);
     text-align: center;
     padding: calc(4px + 0.2083vw);
     width: 100%;
     top: 0;
     position: fixed;
+}
+
+@media (max-width: 40rem) {
+    .header {
+        margin-top: 0;
+    }
+
+    .header p {
+        font-size: 1.1rem;
+        line-height: 1.45;
+        margin-top: 0.35rem;
+        overflow-wrap: anywhere;
+    }
+
+    .environment {
+        font-size: 0.9rem;
+        line-height: 1.25;
+        padding: 0.45rem 0.75rem;
+        position: static;
+    }
 }
 
 .source {

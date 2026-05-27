@@ -237,6 +237,11 @@ Others
 - Added ``$db->getLastException()`` which returns the typed exception even when ``DBDebug`` is ``false``. See :ref:`database-get-last-exception`.
 - Added ``DatabaseException::getDatabaseCode()`` returning the native driver error code as ``int|string``; ``getCode()`` is constrained to ``int`` by PHP's ``Throwable`` interface and cannot carry string SQLSTATE codes.
 
+Debug
+=====
+
+- Added a **Copy Details** button to detailed HTML exception pages.
+
 Model
 =====
 

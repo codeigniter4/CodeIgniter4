@@ -16,9 +16,13 @@ namespace CodeIgniter\Debug;
 use App\Controllers\Home;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Exceptions\RuntimeException;
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\SiteURI;
+use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\IniTestTrait;
 use CodeIgniter\Test\StreamFilterTrait;
+use Config\App;
 use Config\Exceptions as ExceptionsConfig;
 use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
@@ -104,6 +108,65 @@ final class ExceptionHandlerTest extends CIUnitTestCase
         foreach (['title', 'type', 'code', 'message', 'file', 'line', 'trace'] as $key) {
             $this->assertArrayHasKey($key, $vars);
         }
+
+        $this->assertArrayNotHasKey('copyableErrorReport', $vars);
+    }
+
+    public function testCopyErrorReportIncludesPreviousExceptions(): void
+    {
+        $previous  = new RuntimeException('Root cause.');
+        $exception = new RuntimeException('Top level.', 0, $previous);
+
+        $report = $this->extractCopyableErrorReport($this->renderHtmlException($exception));
+
+        $this->assertStringContainsString('## Previous Exceptions', $report);
+        $this->assertStringContainsString('* CodeIgniter\Exceptions\RuntimeException - Root cause.', $report);
+    }
+
+    public function testCopyErrorReportOmitsSensitiveRequestDataAndTraceArgs(): void
+    {
+        $exception = $this->createExceptionWithSensitiveTraceArgument();
+
+        $_COOKIE['debug_cookie'] = 'cookie-secret';
+        $_POST['debug_post']     = 'post-secret';
+
+        try {
+            $report = $this->extractCopyableErrorReport($this->renderHtmlException($exception));
+
+            $this->assertStringNotContainsString('secret-token', $report);
+            $this->assertStringNotContainsString('cookie-secret', $report);
+            $this->assertStringNotContainsString('post-secret', $report);
+            $this->assertStringNotContainsString('$_COOKIE', $report);
+            $this->assertStringNotContainsString('$_POST', $report);
+        } finally {
+            unset($_COOKIE['debug_cookie'], $_POST['debug_post']);
+        }
+    }
+
+    public function testCopyErrorReportOmitsQueryStringFromUrl(): void
+    {
+        $config  = new App();
+        $secret  = 'query-secret';
+        $token   = '?token=';
+        $request = new IncomingRequest(
+            $config,
+            new SiteURI($config, '/orders?token=' . $secret, 'example.test', 'https'),
+            null,
+            new UserAgent(),
+        );
+
+        Services::injectMock('request', $request);
+
+        try {
+            $report = $this->extractCopyableErrorReport($this->renderHtmlException(new RuntimeException('Query test.')));
+
+            $this->assertStringContainsString('- Path: /orders', $report);
+            $this->assertStringContainsString('- URL: https://example.test/orders', $report);
+            $this->assertStringNotContainsString($secret, $report);
+            $this->assertStringNotContainsString($token, $report);
+        } finally {
+            $this->resetServices();
+        }
     }
 
     public function testHandleWebPageNotFoundExceptionDoNotAcceptHTML(): void
@@ -139,6 +202,27 @@ final class ExceptionHandlerTest extends CIUnitTestCase
         $output = ob_get_clean();
 
         $this->assertStringContainsString('<title>404 - Page Not Found</title>', (string) $output);
+    }
+
+    public function testHandleWebRuntimeExceptionAcceptHTMLIncludesCopyErrorReport(): void
+    {
+        $output = $this->renderHtmlException(new RuntimeException('Something went wrong.'));
+        $report = $this->extractCopyableErrorReport($output);
+
+        $this->assertStringContainsString('Copy Details', $output);
+        $this->assertStringContainsString('# Something went wrong.', $report);
+
+        foreach (['## Exception', '## Environment', '## Request', '## Source', '## Stack Trace'] as $section) {
+            $this->assertStringContainsString($section, $report);
+        }
+    }
+
+    public function testHandleWebRuntimeExceptionEscapesCopyErrorReport(): void
+    {
+        $output = $this->renderHtmlException(new RuntimeException('</textarea><script>alert(1)</script>'));
+
+        $this->assertStringNotContainsString('</textarea><script>alert(1)</script>', $output);
+        $this->assertStringContainsString('&lt;/textarea&gt;&lt;script&gt;alert(1)&lt;/script&gt;', $output);
     }
 
     public function testHandleCLIPageNotFoundException(): void
@@ -384,5 +468,36 @@ final class ExceptionHandlerTest extends CIUnitTestCase
         $this->assertTrue($sanitizeData(true));
         $this->assertFalse($sanitizeData(false));
         $this->assertNull($sanitizeData(null));
+    }
+
+    private function createExceptionWithSensitiveTraceArgument(): RuntimeException
+    {
+        return new RuntimeException('Trace argument test.');
+    }
+
+    private function extractCopyableErrorReport(string $output): string
+    {
+        $this->assertSame(1, preg_match('#<textarea[^>]*>\K.*?(?=</textarea>)#s', $output, $matches));
+
+        return html_entity_decode($matches[0], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    }
+
+    private function renderHtmlException(RuntimeException $exception): string
+    {
+        $this->backupIniValues([
+            'highlight.comment', 'highlight.default', 'highlight.html', 'highlight.keyword', 'highlight.string',
+        ]);
+
+        $render = self::getPrivateMethodInvoker($this->handler, 'render');
+
+        ob_start();
+
+        try {
+            $render($exception, 500, APPPATH . 'Views/errors/html/error_exception.php');
+
+            return ob_get_clean();
+        } finally {
+            $this->restoreIniValues();
+        }
     }
 }

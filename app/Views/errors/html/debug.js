@@ -114,3 +114,29 @@ function toggle(elem)
 
     return false;
 }
+
+function copyErrorReport(reportId, button)
+{
+    if (! navigator.clipboard || ! window.isSecureContext)
+    {
+        return false;
+    }
+
+    var report = document.getElementById(reportId);
+    navigator.clipboard.writeText(report.value).then(function () {
+        showCopiedButton(button);
+    });
+
+    return false;
+}
+
+function showCopiedButton(button)
+{
+    button.defaultHtml = button.defaultHtml || button.innerHTML;
+    button.innerHTML   = 'Copied!';
+
+    window.clearTimeout(button.copyResetTimer);
+    button.copyResetTimer = window.setTimeout(function () {
+        button.innerHTML = button.defaultHtml;
+    }, 1500);
+}
