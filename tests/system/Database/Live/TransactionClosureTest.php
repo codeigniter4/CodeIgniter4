@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\RetryableTransactionException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
@@ -100,6 +101,25 @@ final class TransactionClosureTest extends CIUnitTestCase
         $this->assertSame([2], $callbacks);
         $this->dontSeeInDatabase('job', ['name' => 'Retried Job 1']);
         $this->seeInDatabase('job', ['name' => 'Retried Job 2']);
+    }
+
+    public function testTransactionScopedTransExceptionRestoresAfterRetryAttempts(): void
+    {
+        $attempts = 0;
+
+        $result = $this->db->transaction(static function () use (&$attempts): string {
+            $attempts++;
+
+            if ($attempts === 1) {
+                throw new RetryableTransactionException('Deadlock found when trying to get lock.', 1213);
+            }
+
+            return 'committed';
+        }, attempts: 2, transException: true);
+
+        $this->assertSame('committed', $result);
+        $this->assertSame(2, $attempts);
+        $this->assertFalse($this->getPrivateProperty($this->db, 'transException'));
     }
 
     public function testRollbackCallbacksRunForFailedRetryAttempts(): void
@@ -239,6 +259,121 @@ final class TransactionClosureTest extends CIUnitTestCase
 
         $this->assertFalse($result);
         $this->dontSeeInDatabase('job', ['name' => 'Rolled Back Job']);
+
+        $this->enableDBDebug();
+    }
+
+    public function testTransactionScopedTransExceptionRestoresAfterSuccess(): void
+    {
+        $result = $this->db->transaction(static function (BaseConnection $db): string {
+            $db->table('job')->insert([
+                'name'        => 'Scoped Exception Mode Job',
+                'description' => 'The transaction should commit.',
+            ]);
+
+            return 'committed';
+        }, transException: true);
+
+        $this->assertSame('committed', $result);
+        $this->assertFalse($this->getPrivateProperty($this->db, 'transException'));
+    }
+
+    public function testTransactionScopedTransExceptionRestoresAfterQueryFailure(): void
+    {
+        try {
+            $this->db->transaction(static function (BaseConnection $db): void {
+                $db->table('job')->insert([
+                    'id'          => 1,
+                    'name'        => 'Duplicate Job',
+                    'description' => 'This should fail.',
+                ]);
+            }, transException: true);
+            $this->fail('Expected database exception.');
+        } catch (DatabaseException) {
+            // The scoped transaction exception mode should be restored after failure.
+        }
+
+        $this->assertFalse($this->getPrivateProperty($this->db, 'transException'));
+    }
+
+    public function testTransactionScopedTransExceptionCanTemporarilyDisableExistingMode(): void
+    {
+        $this->db->transException(true);
+
+        $result = $this->db->transaction(static function (BaseConnection $db): string {
+            $db->table('job')->insert([
+                'id'          => 1,
+                'name'        => 'Duplicate Job',
+                'description' => 'This should fail.',
+            ]);
+
+            return 'not returned';
+        }, transException: false);
+
+        $this->assertFalse($result);
+        $this->assertTrue($this->getPrivateProperty($this->db, 'transException'));
+    }
+
+    public function testTransactionResetTransStatusRestartsAfterStrictModeFailure(): void
+    {
+        $this->disableDBDebug();
+
+        $failed = $this->db->transaction(static function (BaseConnection $db): string {
+            $db->table('job')->insert([
+                'id'          => 1,
+                'name'        => 'Duplicate Job',
+                'description' => 'This should fail.',
+            ]);
+
+            return 'not returned';
+        });
+
+        $this->assertFalse($failed);
+        $this->assertFalse($this->db->transStatus());
+
+        $result = $this->db->transaction(static function (BaseConnection $db): string {
+            $db->table('job')->insert([
+                'name'        => 'Restarted Job',
+                'description' => 'The transaction should commit.',
+            ]);
+
+            return 'committed';
+        }, resetTransStatus: true);
+
+        $this->assertSame('committed', $result);
+        $this->assertTrue($this->db->transStatus());
+        $this->seeInDatabase('job', ['name' => 'Restarted Job']);
+
+        $this->enableDBDebug();
+    }
+
+    public function testTransactionWithoutResetTransStatusPreservesStrictModeFailure(): void
+    {
+        $this->disableDBDebug();
+
+        $failed = $this->db->transaction(static function (BaseConnection $db): string {
+            $db->table('job')->insert([
+                'id'          => 1,
+                'name'        => 'Duplicate Job',
+                'description' => 'This should fail.',
+            ]);
+
+            return 'not returned';
+        });
+
+        $this->assertFalse($failed);
+
+        $result = $this->db->transaction(static function (BaseConnection $db): string {
+            $db->table('job')->insert([
+                'name'        => 'Still Rolled Back Job',
+                'description' => 'The strict-mode failure should still apply.',
+            ]);
+
+            return 'not returned';
+        });
+
+        $this->assertFalse($result);
+        $this->dontSeeInDatabase('job', ['name' => 'Still Rolled Back Job']);
 
         $this->enableDBDebug();
     }
@@ -410,6 +545,27 @@ final class TransactionClosureTest extends CIUnitTestCase
 
         $this->dontSeeInDatabase('job', ['name' => 'Outer Job']);
         $this->dontSeeInDatabase('job', ['name' => 'Inner Job']);
+    }
+
+    public function testNestedTransactionResetTransStatusDoesNotClearOuterFailure(): void
+    {
+        $this->disableDBDebug();
+
+        $this->db->transStart();
+        $this->db->table('job')->insert([
+            'id'          => 1,
+            'name'        => 'Duplicate Job',
+            'description' => 'This should fail.',
+        ]);
+
+        $result = $this->db->transaction(static fn (): string => 'not returned', resetTransStatus: true);
+
+        $this->assertFalse($result);
+        $this->assertFalse($this->db->transStatus());
+
+        $this->db->transComplete();
+
+        $this->enableDBDebug();
     }
 
     public function testNestedTransactionRetryAttemptsRunOnce(): void

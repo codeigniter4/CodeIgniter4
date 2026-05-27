@@ -212,7 +212,7 @@ Database
 - Added ``inTransaction()`` to database connections to check whether the connection is inside an active CodeIgniter-managed transaction. See :ref:`transactions-checking-transaction-state`.
 - Prepared query execution failures now throw or store typed database exceptions such as ``UniqueConstraintViolationException`` and ``RetryableTransactionException`` when applicable, matching normal query failures.
 - Added ``RetryableTransactionException`` for driver-specific retryable transaction failures such as deadlocks and serialization failures. See :ref:`transactions-retryable-exceptions`.
-- Added the ``transaction()`` method to database connections to run a callback inside a transaction, with optional retry attempts for retryable transaction failures. See :ref:`transactions-closure`.
+- Added the ``transaction()`` method to database connections to run a callback inside a transaction, with optional retry attempts for retryable transaction failures and scoped ``transException`` and ``resetTransStatus`` options. See :ref:`transactions-closure`.
 - Added ``trustServerCertificate`` option to ``SQLSRV`` database connections in ``Config\Database``. Set it to ``true`` to trust the server certificate without CA validation when using encrypted connections.
 
 Query Builder

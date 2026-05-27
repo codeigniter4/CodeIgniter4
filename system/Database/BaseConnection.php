@@ -1089,66 +1089,91 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @param callable(self): TReturn $callback
      * @param positive-int            $attempts
+     * @param bool|null               $transException   Temporarily override transaction exception mode.
+     * @param bool                    $resetTransStatus Reset transaction status before an outermost transaction starts.
      *
      * @return false|TReturn
      */
-    public function transaction(callable $callback, int $attempts = 1): mixed
-    {
+    public function transaction(
+        callable $callback,
+        int $attempts = 1,
+        ?bool $transException = null,
+        bool $resetTransStatus = false,
+    ): mixed {
         if ($attempts < 1) {
             throw new InvalidArgumentException('Transaction attempts must be a positive integer.');
         }
 
-        if (! $this->transEnabled) {
-            return $callback($this);
+        $restoreTransException  = $transException !== null;
+        $previousTransException = $this->transException;
+
+        if ($restoreTransException) {
+            $this->transException = $transException;
         }
 
-        $attempts = $this->transDepth === 0 ? $attempts : 1;
-
-        for ($attempt = 1; $attempt <= $attempts; $attempt++) {
-            if (! $this->transBegin()) {
-                return false;
+        try {
+            if (! $this->transEnabled) {
+                return $callback($this);
             }
 
-            try {
-                $result = $callback($this);
-            } catch (Throwable $e) {
+            $outermostTransaction = $this->transDepth === 0;
+
+            if ($resetTransStatus && $outermostTransaction) {
+                $this->resetTransStatus();
+            }
+
+            $attempts = $outermostTransaction ? $attempts : 1;
+
+            for ($attempt = 1; $attempt <= $attempts; $attempt++) {
+                if (! $this->transBegin()) {
+                    return false;
+                }
+
                 try {
-                    $this->transRollback();
-                } catch (Throwable $rollbackException) {
-                    log_message('error', 'Database: Transaction callback threw an exception before rollback failed: ' . $e);
+                    $result = $callback($this);
+                } catch (Throwable $e) {
+                    try {
+                        $this->transRollback();
+                    } catch (Throwable $rollbackException) {
+                        log_message('error', 'Database: Transaction callback threw an exception before rollback failed: ' . $e);
 
-                    throw $rollbackException;
-                } finally {
-                    if ($this->transDepth > 0) {
-                        $this->transStatus = false;
-                    } elseif ($this->transStrict === false) {
-                        $this->transStatus = true;
+                        throw $rollbackException;
+                    } finally {
+                        if ($this->transDepth > 0) {
+                            $this->transStatus = false;
+                        } elseif ($this->transStrict === false) {
+                            $this->transStatus = true;
+                        }
                     }
+
+                    if ($this->transDepth === 0 && $e instanceof RetryableTransactionException && $attempt < $attempts) {
+                        $this->prepareTransactionRetry();
+
+                        continue;
+                    }
+
+                    throw $e;
                 }
 
-                if ($this->transDepth === 0 && $e instanceof RetryableTransactionException && $attempt < $attempts) {
-                    $this->prepareTransactionRetry();
+                if (! $this->transComplete()) {
+                    if ($this->transDepth === 0 && $this->transFailureException instanceof RetryableTransactionException && $attempt < $attempts) {
+                        $this->prepareTransactionRetry();
 
-                    continue;
+                        continue;
+                    }
+
+                    return false;
                 }
 
-                throw $e;
+                return $result;
             }
 
-            if (! $this->transComplete()) {
-                if ($this->transDepth === 0 && $this->transFailureException instanceof RetryableTransactionException && $attempt < $attempts) {
-                    $this->prepareTransactionRetry();
-
-                    continue;
-                }
-
-                return false;
+            return false;
+        } finally {
+            if ($restoreTransException) {
+                $this->transException = $previousTransException;
             }
-
-            return $result;
         }
-
-        return false;
     }
 
     /**
