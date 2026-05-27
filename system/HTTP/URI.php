@@ -876,6 +876,56 @@ class URI implements Stringable
     }
 
     /**
+     * Return an instance with one query var added, replaced, or removed.
+     *
+     * Note: Method not in PSR-7
+     *
+     * @param int|string|null $value Null removes the query var.
+     *
+     * @return static
+     */
+    public function withQueryVar(string $key, $value)
+    {
+        $uri = clone $this;
+
+        if ($value === null) {
+            unset($uri->query[$key]);
+
+            return $uri;
+        }
+
+        $uri->query[$key] = $value;
+
+        return $uri;
+    }
+
+    /**
+     * Return an instance with multiple query vars added, replaced, or removed.
+     *
+     * Note: Method not in PSR-7
+     *
+     * @param array<string, int|string|null> $params Null values remove query vars.
+     *
+     * @return static
+     */
+    public function withQueryVars(array $params)
+    {
+        $uri = clone $this;
+
+        foreach ($params as $key => $value) {
+            if ($value === null) {
+                unset($uri->query[$key]);
+
+                continue;
+            }
+
+            $uri->query[$key] = $value;
+        }
+
+        return $uri;
+    }
+
+    /**
      * Removes one or more query vars from the URI.
      *
      * Note: Method not in PSR-7

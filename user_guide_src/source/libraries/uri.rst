@@ -188,6 +188,19 @@ parameter is the name of the variable, and the second parameter is the value:
 
 .. literalinclude:: uri/019.php
 
+Changing Query Values Without Mutation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 4.8.0
+
+You can return a new URI instance with one or more query variables changed by using the ``withQueryVar()``
+and ``withQueryVars()`` methods. Existing query variables are preserved unless they are replaced or removed.
+Passing ``null`` removes a query variable:
+
+.. literalinclude:: uri/028.php
+
+The original URI instance is not modified.
+
 Filtering Query Values
 ^^^^^^^^^^^^^^^^^^^^^^
 

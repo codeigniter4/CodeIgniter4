@@ -835,6 +835,65 @@ final class URITest extends CIUnitTestCase
         $this->assertSame('http://example.com/foo?bar=baz&baz=foz', (string) $uri);
     }
 
+    public function testWithQueryVarAddsQueryVarWithoutMutatingOriginal(): void
+    {
+        $base = 'http://example.com/foo';
+        $uri  = new URI($base);
+
+        $new = $uri->withQueryVar('bar', 'baz');
+
+        $this->assertSame('http://example.com/foo?bar=baz', (string) $new);
+        $this->assertSame('http://example.com/foo', (string) $uri);
+    }
+
+    public function testWithQueryVarReplacesQueryVarAndPreservesFragment(): void
+    {
+        $base = 'http://example.com/foo?bar=baz#section';
+        $uri  = new URI($base);
+
+        $new = $uri->withQueryVar('bar', 'foz');
+
+        $this->assertSame('http://example.com/foo?bar=foz#section', (string) $new);
+        $this->assertSame('http://example.com/foo?bar=baz#section', (string) $uri);
+    }
+
+    public function testWithQueryVarRemovesQueryVarWhenValueIsNull(): void
+    {
+        $base = 'http://example.com/foo?foo=bar&bar=baz&baz=foz';
+        $uri  = new URI($base);
+
+        $new = $uri->withQueryVar('bar', null);
+
+        $this->assertSame('http://example.com/foo?foo=bar&baz=foz', (string) $new);
+        $this->assertSame('http://example.com/foo?foo=bar&bar=baz&baz=foz', (string) $uri);
+    }
+
+    public function testWithQueryVarKeepsEmptyStringQueryVar(): void
+    {
+        $base = 'http://example.com/foo?bar=baz';
+        $uri  = new URI($base);
+
+        $new = $uri->withQueryVar('bar', '');
+
+        $this->assertSame('http://example.com/foo?bar=', (string) $new);
+        $this->assertSame('http://example.com/foo?bar=baz', (string) $uri);
+    }
+
+    public function testWithQueryVarsAddsReplacesAndRemovesWithoutMutatingOriginal(): void
+    {
+        $base = 'http://example.com/foo?foo=bar&bar=baz&baz=foz#section';
+        $uri  = new URI($base);
+
+        $new = $uri->withQueryVars([
+            'bar' => null,
+            'baz' => 'updated',
+            'new' => 'value',
+        ]);
+
+        $this->assertSame('http://example.com/foo?foo=bar&baz=updated&new=value#section', (string) $new);
+        $this->assertSame('http://example.com/foo?foo=bar&bar=baz&baz=foz#section', (string) $uri);
+    }
+
     public function testStripQueryVars(): void
     {
         $base = 'http://example.com/foo?foo=bar&bar=baz&baz=foz';
