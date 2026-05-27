@@ -105,7 +105,8 @@ this behavior in **app/Config/Security.php**:
 
 .. literalinclude:: security/011.php
 
-When it is enabled, unsafe requests with ``Sec-Fetch-Site: same-origin`` are allowed without a token.
+When it is enabled, requests using unsafe HTTP methods with ``Sec-Fetch-Site: same-origin`` are allowed
+without a token.
 Requests with ``Sec-Fetch-Site: cross-site`` are rejected. Requests with a missing ``Sec-Fetch-Site`` header,
 ``Sec-Fetch-Site: none``, or an unknown value fall back to token verification. This keeps protection working
 for browsers or clients that do not send Fetch Metadata headers. Requests with ``Sec-Fetch-Site: same-site``
