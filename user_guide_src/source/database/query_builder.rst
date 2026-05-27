@@ -123,6 +123,8 @@ Runs an execution-plan query for the current Query Builder ``SELECT`` query:
 
 This method returns a database result object. The result columns are driver-specific
 because each database reports execution plans in its own format.
+You can read the result with ``getResultArray()`` or ``getResultObject()``, the
+same as any other query result.
 If test mode is enabled, it returns the compiled execution-plan SQL string.
 If the query fails and ``DBDebug`` is ``false``, it returns ``false``.
 
