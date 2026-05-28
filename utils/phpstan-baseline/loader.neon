@@ -1,4 +1,4 @@
-# total 2015 errors
+# total 2010 errors
 
 includes:
     - argument.type.neon
@@ -10,8 +10,6 @@ includes:
     - codeigniter.superglobalAccessAssign.neon
     - deadCode.unreachable.neon
     - empty.notAllowed.neon
-    - function.alreadyNarrowedType.neon
-    - function.impossibleType.neon
     - method.alreadyNarrowedType.neon
     - method.childParameterType.neon
     - method.childReturnType.neon
