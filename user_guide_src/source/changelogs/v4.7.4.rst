@@ -1,0 +1,37 @@
+#############
+Version 4.7.4
+#############
+
+Release Date: Unreleased
+
+**4.7.4 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+********
+BREAKING
+********
+
+***************
+Message Changes
+***************
+
+*******
+Changes
+*******
+
+************
+Deprecations
+************
+
+**********
+Bugs Fixed
+**********
+
+- **Database:** Fixed a bug where ``updateBatch()`` could be called after Query Builder ``where()`` conditions, even though it's not supported. In this situation, now the ``DatabaseException`` is thrown.
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.
