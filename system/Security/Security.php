@@ -35,8 +35,11 @@ use SensitiveParameter;
  */
 class Security implements SecurityInterface
 {
-    public const CSRF_PROTECTION_COOKIE  = 'cookie';
-    public const CSRF_PROTECTION_SESSION = 'session';
+    public const CSRF_PROTECTION_COOKIE   = 'cookie';
+    public const CSRF_PROTECTION_SESSION  = 'session';
+    private const FETCH_METADATA_ALLOW    = 'allow';
+    private const FETCH_METADATA_FALLBACK = 'fallback';
+    private const FETCH_METADATA_REJECT   = 'reject';
 
     /**
      * CSRF hash length in bytes.
@@ -118,6 +121,27 @@ class Security implements SecurityInterface
 
         assert($request instanceof IncomingRequest);
 
+        $decision = $this->fetchMetadataDecision($request);
+
+        if ($decision === self::FETCH_METADATA_ALLOW) {
+            $this->removeTokenInRequest($request);
+
+            log_message('info', 'CSRF Fetch Metadata verified.');
+
+            return $this;
+        }
+
+        if ($decision === self::FETCH_METADATA_REJECT) {
+            throw SecurityException::forDisallowedAction();
+        }
+
+        $this->verifyToken($request);
+
+        return $this;
+    }
+
+    private function verifyToken(IncomingRequest $request): void
+    {
         $postedToken = $this->getPostedToken($request);
 
         try {
@@ -139,8 +163,6 @@ class Security implements SecurityInterface
         }
 
         log_message('info', 'CSRF token verified.');
-
-        return $this;
     }
 
     public function getHash(): ?string
@@ -168,6 +190,11 @@ class Security implements SecurityInterface
     public function shouldRedirect(): bool
     {
         return $this->config->redirect;
+    }
+
+    public function shouldUseFetchMetadata(): bool
+    {
+        return $this->config->csrfFetchMetadata ?? false; // @phpstan-ignore nullCoalesce.initializedProperty
     }
 
     /**
@@ -230,6 +257,34 @@ class Security implements SecurityInterface
     }
 
     /**
+     * @return self::FETCH_METADATA_*
+     */
+    private function fetchMetadataDecision(IncomingRequest $request): string
+    {
+        if (! $this->shouldUseFetchMetadata()) {
+            return self::FETCH_METADATA_FALLBACK;
+        }
+
+        $fetchSite = strtolower($request->getHeaderLine('Sec-Fetch-Site'));
+
+        if ($fetchSite === 'same-origin') {
+            return self::FETCH_METADATA_ALLOW;
+        }
+
+        if ($fetchSite === 'cross-site') {
+            return self::FETCH_METADATA_REJECT;
+        }
+
+        if ($fetchSite === 'same-site') {
+            return ($this->config->csrfFetchMetadataRejectSameSite ?? false) // @phpstan-ignore nullCoalesce.initializedProperty
+                ? self::FETCH_METADATA_REJECT
+                : self::FETCH_METADATA_FALLBACK;
+        }
+
+        return self::FETCH_METADATA_FALLBACK;
+    }
+
+    /**
      * @phpstan-assert SessionInterface $this->session
      */
     private function configureSession(): void
@@ -284,6 +339,10 @@ class Security implements SecurityInterface
 
         // If the token is found in form-encoded data, we can safely remove it.
         parse_str($body, $result);
+
+        if (! array_key_exists($tokenName, $result)) {
+            return;
+        }
 
         unset($result[$tokenName]);
         $request->setBody(http_build_query($result));

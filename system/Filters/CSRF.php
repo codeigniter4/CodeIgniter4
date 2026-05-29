@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Filters;
 
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -52,11 +53,18 @@ class CSRF implements FilterInterface
             $security->verify($request);
         } catch (SecurityException $e) {
             if ($security->shouldRedirect() && ! $request->isAJAX()) {
-                return redirect()->back()->with('error', $e->getMessage());
+                $response = redirect()->back()->with('error', $e->getMessage());
+                $this->addFetchMetadataVaryHeader($request, $response, $security);
+
+                return $response;
             }
+
+            $this->addFetchMetadataVaryHeader($request, service('response'), $security);
 
             throw $e;
         }
+
+        $this->addFetchMetadataVaryHeader($request, service('response'), $security);
 
         return null;
     }
@@ -69,5 +77,14 @@ class CSRF implements FilterInterface
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
         return null;
+    }
+
+    private function addFetchMetadataVaryHeader(IncomingRequest $request, ResponseInterface $response, Security $security): void
+    {
+        $isUnsafeMethod = in_array($request->getMethod(), [Method::POST, Method::PUT, Method::DELETE, Method::PATCH], true);
+
+        if ($security->shouldUseFetchMetadata() && $isUnsafeMethod) {
+            $response->appendHeader('Vary', 'Sec-Fetch-Site');
+        }
     }
 }
