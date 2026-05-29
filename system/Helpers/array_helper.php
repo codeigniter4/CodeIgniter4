@@ -34,9 +34,9 @@ if (! function_exists('dot_array_has')) {
     /**
      * Checks if an array key exists using dot syntax.
      *
-     * @param array<array-key, mixed>|object $array
+     * @param array<array-key, mixed> $array
      */
-    function dot_array_has(string $index, array|object $array): bool
+    function dot_array_has(string $index, array $array): bool
     {
         return ArrayHelper::dotHas($index, $array);
     }
