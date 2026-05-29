@@ -440,7 +440,7 @@ final class ArrayHelperTest extends CIUnitTestCase
 
     public function testArrayDotWithEntityValues(): void
     {
-        $entity = new SomeEntity();
+        $entity      = new SomeEntity();
         $entity->foo = 'value';
 
         $this->assertSame('value', dot_array_search('user.foo', ['user' => $entity]));

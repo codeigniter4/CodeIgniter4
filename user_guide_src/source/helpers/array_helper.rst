@@ -218,6 +218,8 @@ The following functions are available:
     The depth of returned array equals the number of indexes passed as parameter.
     Data rows may be arrays or objects, and dot syntax can read nested array keys or object properties.
 
+    .. note:: Prior to v4.8.0, only arrays were supported. Support for objects was added in v4.8.0.
+
     The example shows some data (i.e. loaded from an API) with nested arrays.
 
     .. literalinclude:: array_helper/012.php
