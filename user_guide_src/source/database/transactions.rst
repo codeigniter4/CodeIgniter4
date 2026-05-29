@@ -95,7 +95,9 @@ exception mode configured by ``transException()``. The previous mode is restored
 after ``transaction()`` finishes, even if the callback throws an exception.
 If ``transaction()`` is called inside an active transaction, the temporary mode
 applies while the nested callback runs, then the previous mode is restored for
-the outer transaction.
+the outer transaction. When ``transException`` is set to ``true`` in a nested
+transaction and a query fails, CodeIgniter's existing transaction exception
+handling rolls back the outer transaction as well.
 
 Set ``resetTransStatus`` to reset the transaction status before the helper starts
 an outermost transaction. This is equivalent to calling ``resetTransStatus()``

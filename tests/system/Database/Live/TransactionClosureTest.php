@@ -568,6 +568,31 @@ final class TransactionClosureTest extends CIUnitTestCase
         $this->enableDBDebug();
     }
 
+    public function testNestedTransactionScopedTransExceptionQueryFailureRollsBackOuterTransaction(): void
+    {
+        $this->db->transStart();
+        $this->db->table('job')->insert([
+            'name'        => 'Outer Job',
+            'description' => 'The outer transaction should roll back.',
+        ]);
+
+        try {
+            $this->db->transaction(static function (BaseConnection $db): void {
+                $db->table('job')->insert([
+                    'id'          => 1,
+                    'name'        => 'Duplicate Job',
+                    'description' => 'This should fail.',
+                ]);
+            }, transException: true);
+            $this->fail('Expected database exception.');
+        } catch (DatabaseException) {
+            // Existing transaction exception handling rolls back the full stack.
+        }
+
+        $this->assertSame(0, $this->db->transDepth);
+        $this->dontSeeInDatabase('job', ['name' => 'Outer Job']);
+    }
+
     public function testNestedTransactionRetryAttemptsRunOnce(): void
     {
         $attempts = 0;
