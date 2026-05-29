@@ -469,7 +469,7 @@ final class ArrayHelper
             return isset($data[$key]);
         }
 
-        $array = self::objectToArray($data);
+        $array = self::entityToArray($data);
 
         if ($array !== null) {
             return isset($array[$key]);
@@ -495,7 +495,7 @@ final class ArrayHelper
             return $data[$key];
         }
 
-        $array = self::objectToArray($data);
+        $array = self::entityToArray($data);
 
         if ($array !== null) {
             return $array[$key];
@@ -517,7 +517,7 @@ final class ArrayHelper
     /**
      * @return array<array-key, mixed>|null
      */
-    private static function objectToArray(object $data): ?array
+    private static function entityToArray(object $data): ?array
     {
         if ($data instanceof Entity) {
             return $data->toArray();
@@ -537,14 +537,14 @@ final class ArrayHelper
      */
     private static function toIterable(object $data): array
     {
-        $array = self::objectToArray($data);
+        $array = self::entityToArray($data);
 
         if ($array !== null) {
             return $array;
         }
 
         if ($data instanceof Traversable) {
-            return iterator_to_array($data);
+            return iterator_to_array($data, false);
         }
 
         return get_object_vars($data);
