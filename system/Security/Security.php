@@ -295,6 +295,7 @@ class Security implements SecurityInterface
         try {
             $json = json_decode($body, flags: JSON_THROW_ON_ERROR);
         } catch (JsonException) {
+            log_message('error', 'Invalid JSON in request body during CSRF token removal');
             $json = null;
         }
 
@@ -346,6 +347,7 @@ class Security implements SecurityInterface
         try {
             $json = json_decode($body, flags: JSON_THROW_ON_ERROR);
         } catch (JsonException) {
+            log_message('error', 'Invalid JSON in request body during CSRF token retrieval');
             $json = null;
         }
 
