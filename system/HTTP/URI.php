@@ -884,7 +884,7 @@ class URI implements Stringable
      *
      * @return static
      */
-    public function withAddedQueryVar(string $key, $value)
+    public function withQueryVar(string $key, $value)
     {
         $uri = clone $this;
 
@@ -902,7 +902,7 @@ class URI implements Stringable
      *
      * @return static
      */
-    public function withAddedQueryVars(array $params)
+    public function withQueryVars(array $params)
     {
         $uri = clone $this;
 

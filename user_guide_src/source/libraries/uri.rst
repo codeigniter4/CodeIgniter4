@@ -194,7 +194,7 @@ Changing Query Values Without Mutation
 .. versionadded:: 4.8.0
 
 You can return a new URI instance with one or more query variables added or replaced by using the
-``withAddedQueryVar()`` and ``withAddedQueryVars()`` methods. Existing query variables are preserved unless they
+``withQueryVar()`` and ``withQueryVars()`` methods. Existing query variables are preserved unless they
 are replaced:
 
 .. literalinclude:: uri/028.php
