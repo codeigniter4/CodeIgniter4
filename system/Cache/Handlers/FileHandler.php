@@ -112,9 +112,20 @@ class FileHandler extends BaseHandler
 
     public function delete(string $key): bool
     {
-        $key = static::validateKey($key, $this->prefix);
+        $key  = static::validateKey($key, $this->prefix);
+        $file = $this->path . $key;
 
-        return is_file($this->path . $key) && unlink($this->path . $key);
+        if (! is_file($file)) {
+            return false;
+        }
+
+        $result = @unlink($file);
+
+        if ($result === false) {
+            log_message('error', 'Failed to delete cache file: ' . $file);
+        }
+
+        return $result;
     }
 
     public function deleteMatching(string $pattern): int
@@ -122,8 +133,12 @@ class FileHandler extends BaseHandler
         $deleted = 0;
 
         foreach (glob($this->path . $pattern, GLOB_NOSORT) as $filename) {
-            if (is_file($filename) && @unlink($filename)) {
-                $deleted++;
+            if (is_file($filename)) {
+                if (@unlink($filename)) {
+                    $deleted++;
+                } else {
+                    log_message('error', 'Failed to delete cache file: ' . $filename);
+                }
             }
         }
 
@@ -200,6 +215,8 @@ class FileHandler extends BaseHandler
         $content = @file_get_contents($this->path . $filename);
 
         if ($content === false) {
+            log_message('error', 'Failed to read cache file: ' . $this->path . $filename);
+
             return false;
         }
 
@@ -222,7 +239,11 @@ class FileHandler extends BaseHandler
         }
 
         if ($data['ttl'] > 0 && Time::now()->getTimestamp() > $data['time'] + $data['ttl']) {
-            @unlink($this->path . $filename);
+            $file = $this->path . $filename;
+
+            if (is_file($file) && ! @unlink($file)) {
+                log_message('error', 'Failed to delete expired cache file: ' . $file);
+            }
 
             return false;
         }
@@ -242,6 +263,8 @@ class FileHandler extends BaseHandler
     protected function writeFile($path, $data, $mode = 'wb'): bool
     {
         if (($fp = @fopen($path, $mode)) === false) {
+            log_message('error', 'Failed to open cache file for writing: ' . $path);
+
             return false;
         }
 
@@ -280,6 +303,8 @@ class FileHandler extends BaseHandler
         $path = rtrim($path, '/\\');
 
         if (! $currentDir = @opendir($path)) {
+            log_message('error', 'Failed to open cache directory: ' . $path);
+
             return false;
         }
 
@@ -288,14 +313,27 @@ class FileHandler extends BaseHandler
                 if (is_dir($path . DIRECTORY_SEPARATOR . $filename) && $filename[0] !== '.') {
                     $this->deleteFiles($path . DIRECTORY_SEPARATOR . $filename, $delDir, $htdocs, $_level + 1);
                 } elseif (! $htdocs || preg_match('/^(\.htaccess|index\.(html|htm|php)|web\.config)$/i', $filename) !== 1) {
-                    @unlink($path . DIRECTORY_SEPARATOR . $filename);
+                    $file = $path . DIRECTORY_SEPARATOR . $filename;
+                    if (! @unlink($file)) {
+                        log_message('error', 'Failed to delete cache file: ' . $file);
+                    }
                 }
             }
         }
 
         closedir($currentDir);
 
-        return ($delDir && $_level > 0) ? @rmdir($path) : true;
+        if ($delDir && $_level > 0) {
+            $result = @rmdir($path);
+
+            if (! $result) {
+                log_message('error', 'Failed to remove cache directory: ' . $path);
+            }
+
+            return $result;
+        }
+
+        return true;
     }
 
     /**

@@ -398,4 +398,87 @@ final class FileHandlerTest extends AbstractHandlerTestCase
     {
         $this->assertTrue($this->handler->reconnect());
     }
+
+    public function testDeleteReturnsTrueForExistingFile(): void
+    {
+        $this->handler->save(self::$key1, 'value');
+
+        $this->assertTrue($this->handler->delete(self::$key1));
+        $this->assertNull($this->handler->get(self::$key1));
+    }
+
+    public function testDeleteReturnsFalseForNonExistentFile(): void
+    {
+        $this->assertFalse($this->handler->delete(self::$dummy));
+    }
+
+    public function testGetItemWithCorruptedDataDoesNotLogError(): void
+    {
+        $filePath = $this->config->file['storePath'] . DIRECTORY_SEPARATOR
+            . $this->config->prefix . self::$key2;
+
+        file_put_contents($filePath, 'corrupted_serialized_data_that_cannot_be_unserialized');
+
+        $this->assertNull($this->handler->get(self::$key2));
+
+        // Verify it did not log a "read cache file" error
+        $this->assertNull($this->handler->getMetaData(self::$key2));
+    }
+
+    public function testGetItemWithExpiredFileDeletesWithoutError(): void
+    {
+        // Save with 0 TTL (permanent) then manually modify the file to have a past time
+        $this->handler->save(self::$key3, 'value', 0);
+
+        $filePath = $this->config->file['storePath'] . DIRECTORY_SEPARATOR
+            . $this->config->prefix . self::$key3;
+
+        // Overwrite with expired data
+        $expiredData = serialize(['data' => 'value', 'ttl' => 1, 'time' => 100]);
+        file_put_contents($filePath, $expiredData);
+
+        $this->assertNull($this->handler->get(self::$key3));
+        $this->assertFileDoesNotExist($filePath);
+    }
+
+    #[RequiresOperatingSystem('Linux|Darwin')]
+    public function testDeleteWithUnwritableDirectoryLogsError(): void
+    {
+        $this->handler->save(self::$key1, 'value');
+
+        // Make the cache directory read-only so unlink fails
+        chmod($this->config->file['storePath'], 0555);
+
+        $this->handler->delete(self::$key1);
+
+        // Restore permissions before assertions
+        chmod($this->config->file['storePath'], 0777);
+
+        // Verify log message was recorded
+        $this->assertLogContains('error', 'Failed to delete cache file');
+    }
+
+    #[RequiresOperatingSystem('Linux|Darwin')]
+    public function testDeleteMatchingWithUnwritableDirectoryLogsError(): void
+    {
+        $this->handler->save(self::$key1, 'value');
+        $this->handler->save(self::$key2, 'value');
+
+        chmod($this->config->file['storePath'], 0555);
+
+        $this->handler->deleteMatching('*');
+
+        chmod($this->config->file['storePath'], 0777);
+
+        $this->assertLogContains('error', 'Failed to delete cache file');
+    }
+
+    public function testCleanRemovesAllFiles(): void
+    {
+        $this->handler->save(self::$key1, 'value');
+        $this->handler->save(self::$key2, 'value');
+
+        $this->assertTrue($this->handler->clean());
+        $this->assertCount(0, $this->handler->getCacheInfo());
+    }
 }
