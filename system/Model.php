@@ -162,6 +162,7 @@ class Model extends BaseModel
         'getCompiledInsert',
         'getCompiledSelect',
         'getCompiledUpdate',
+        'insertGetID',
     ];
 
     public function __construct(?ConnectionInterface $db = null, ?ValidationInterface $validation = null)

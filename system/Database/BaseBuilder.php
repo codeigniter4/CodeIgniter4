@@ -2879,6 +2879,26 @@ class BaseBuilder
     }
 
     /**
+     * Inserts a row and returns the insert ID.
+     *
+     * @param array<array-key, mixed>|object|null $set
+     *
+     * @return false|int|string
+     *
+     * @throws DatabaseException
+     */
+    public function insertGetID($set = null, ?bool $escape = null)
+    {
+        $result = $this->insert($set, $escape);
+
+        if ($result === false || $result instanceof Query || $this->db->affectedRows() < 1) {
+            return false;
+        }
+
+        return $this->db->insertID();
+    }
+
+    /**
      * @internal This is a temporary solution.
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/pull/5376

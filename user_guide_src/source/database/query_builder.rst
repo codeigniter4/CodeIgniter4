@@ -1099,6 +1099,20 @@ Here is an example using an object:
 
 The first parameter is an object.
 
+.. _query-builder-insert-get-id:
+
+$builder->insertGetID()
+-----------------------
+
+.. versionadded:: 4.8.0
+
+Inserts a row and returns the insert ID reported by the database driver:
+
+.. literalinclude:: query_builder/130.php
+
+This method returns ``false`` if the insert fails, no row is inserted, or the
+builder is in test mode. It uses the same insert ID behavior as ``$db->insertID()``.
+
 $builder->ignore()
 ------------------
 
@@ -2283,6 +2297,15 @@ Class Reference
         :rtype:     bool
 
         Compiles and executes an ``INSERT`` statement.
+
+    .. php:method:: insertGetID([$set = null[, $escape = null]])
+
+        :param array $set: An associative array of field/value pairs
+        :param bool $escape: Whether to escape values
+        :returns: The insert ID reported by the database driver, or ``false`` on failure
+        :rtype:    int|string|false
+
+        Compiles and executes an ``INSERT`` statement and returns the insert ID.
 
     .. php:method:: insertBatch([$set = null[, $escape = null[, $batch_size = 100]]])
 

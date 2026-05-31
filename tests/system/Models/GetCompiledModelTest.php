@@ -70,4 +70,17 @@ final class GetCompiledModelTest extends CIUnitTestCase
             ->set('email', 'mark@example.com')
             ->getCompiledUpdate();
     }
+
+    public function testInsertGetID(): void
+    {
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage('You cannot use "insertGetID()" in "Tests\Support\Models\UserObjModel".');
+
+        $this->createModel(UserObjModel::class);
+
+        $this->model->insertGetID([
+            'name'  => 'Mark',
+            'email' => 'mark@example.com',
+        ]);
+    }
 }

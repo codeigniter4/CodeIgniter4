@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Builder;
 
+use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Query;
 use CodeIgniter\Database\RawSql;
@@ -37,6 +38,51 @@ final class InsertTest extends CIUnitTestCase
         parent::setUp();
 
         $this->db = new MockConnection([]);
+    }
+
+    private function insertGetIDConnection(int $affectedRows = 1, int $insertID = 123): MockConnection
+    {
+        return new class ($affectedRows, $insertID) extends MockConnection {
+            public function __construct(
+                private readonly int $affectedRowCount,
+                private readonly int $lastInsertID,
+            ) {
+                parent::__construct([]);
+            }
+
+            /**
+             * @param mixed|null $binds
+             */
+            public function query(string $sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = ''): bool|Query
+            {
+                $query = new Query($this);
+                $query->setQuery($sql, $binds, $setEscapeFlags);
+
+                $this->lastQuery = $query;
+
+                if ($this->pretend) {
+                    return $query;
+                }
+
+                $this->resultID = $this->simpleQuery($query->getQuery());
+
+                if ($this->resultID === false) {
+                    return false;
+                }
+
+                return $query->isWriteType();
+            }
+
+            public function affectedRows(): int
+            {
+                return $this->affectedRowCount;
+            }
+
+            public function insertID(): int
+            {
+                return $this->lastInsertID;
+            }
+        };
     }
 
     public function testInsertArray(): void
@@ -143,6 +189,65 @@ final class InsertTest extends CIUnitTestCase
         $this->expectExceptionMessage('You must use the "set" method to insert an entry.');
 
         $builder->testMode()->insert(null, true);
+    }
+
+    public function testInsertGetIDReturnsInsertID(): void
+    {
+        $db = $this->insertGetIDConnection(insertID: 456);
+        $db->shouldReturn('execute', new class () {});
+
+        $insertID = (new BaseBuilder('jobs', $db))->insertGetID([
+            'name' => 'Grocery Sales',
+        ]);
+
+        $this->assertSame(456, $insertID);
+    }
+
+    public function testInsertGetIDReturnsFalseWhenInsertFails(): void
+    {
+        $db = $this->insertGetIDConnection();
+        $db->shouldReturn('execute', false);
+
+        $insertID = (new BaseBuilder('jobs', $db))->insertGetID([
+            'name' => 'Grocery Sales',
+        ]);
+
+        $this->assertFalse($insertID);
+    }
+
+    public function testInsertGetIDReturnsFalseWhenNoRowsAreInserted(): void
+    {
+        $db = $this->insertGetIDConnection(affectedRows: 0);
+        $db->shouldReturn('execute', new class () {});
+
+        $insertID = (new BaseBuilder('jobs', $db))->insertGetID([
+            'name' => 'Grocery Sales',
+        ]);
+
+        $this->assertFalse($insertID);
+    }
+
+    public function testInsertGetIDReturnsFalseInTestMode(): void
+    {
+        $db = $this->insertGetIDConnection();
+
+        $insertID = (new BaseBuilder('jobs', $db))->testMode()->insertGetID([
+            'name' => 'Grocery Sales',
+        ]);
+
+        $this->assertFalse($insertID);
+    }
+
+    public function testInsertGetIDReturnsFalseInPretendMode(): void
+    {
+        $db = $this->insertGetIDConnection();
+        $db->pretend();
+
+        $insertID = (new BaseBuilder('jobs', $db))->insertGetID([
+            'name' => 'Grocery Sales',
+        ]);
+
+        $this->assertFalse($insertID);
     }
 
     public function testInsertBatch(): void
