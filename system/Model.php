@@ -22,6 +22,7 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\Exceptions\UniqueConstraintViolationException;
 use CodeIgniter\Database\Query;
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\Entity\Entity;
 use CodeIgniter\Exceptions\BadMethodCallException;
 use CodeIgniter\Exceptions\InvalidArgumentException;
@@ -57,6 +58,7 @@ use stdClass;
  * @method $this havingNotIn(?string $key = null, $values = null, ?bool $escape = null)
  * @method $this join(string $table, string $cond, string $type = '', ?bool $escape = null)
  * @method $this like($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
+ * @method $this likeAny(list<RawSql|string> $fields, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
  * @method $this limit(?int $value = null, ?int $offset = 0)
  * @method $this notGroupStart()
  * @method $this notHavingGroupStart()
@@ -73,6 +75,7 @@ use stdClass;
  * @method $this orHavingNotBetween(?string $key = null, $values = null, ?bool $escape = null)
  * @method $this orHavingNotIn(?string $key = null, $values = null, ?bool $escape = null)
  * @method $this orLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
+ * @method $this orLikeAny(list<RawSql|string> $fields, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
  * @method $this orNotGroupStart()
  * @method $this orNotHavingGroupStart()
  * @method $this orNotHavingLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)

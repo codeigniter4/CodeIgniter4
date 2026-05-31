@@ -594,10 +594,28 @@ searches.
 
     .. warning:: When you use ``RawSql``, you MUST escape the values and protect the identifiers manually. Failure to do so could result in SQL injections.
 
+.. _query-builder-like-any:
+
+$builder->likeAny()
+-------------------
+
+.. versionadded:: 4.8.0
+
+This method generates a grouped set of **LIKE** clauses joined by **OR**.
+Use it when you want to search for one value across multiple fields:
+
+.. literalinclude:: query_builder/130.php
+
+Unlike the associative array form of ``like()``, the field list must be a
+non-empty list of field names. The same match value is used for every field.
+The field list may also contain ``RawSql`` instances; see :ref:`query-builder-like-rawsql`.
+Use ``orLikeAny()`` when the grouped search should be separated from previous
+conditions with **OR**.
+
 $builder->orLike()
 ------------------
 
-This method is identical to the one above, except that multiple
+This method is identical to ``like()``, except that multiple
 instances are joined by **OR**:
 
 .. literalinclude:: query_builder/042.php
@@ -1995,6 +2013,18 @@ Class Reference
 
         Adds a ``LIKE`` clause to a query, separating multiple calls with ``AND``.
 
+    .. php:method:: likeAny($fields[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
+
+        :param array $fields: List of field names or RawSql instances
+        :param string $match: Text portion to match
+        :param string $side: Which side of the expression to put the '%' wildcard on
+        :param bool    $escape: Whether to escape values and identifiers
+        :param bool $insensitiveSearch: Whether to force a case-insensitive search
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Adds grouped ``LIKE`` clauses joined with ``OR``.
+
     .. php:method:: orLike($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
 
         :param string $field: Field name
@@ -2006,6 +2036,18 @@ Class Reference
         :rtype:     ``BaseBuilder``
 
         Adds a ``LIKE`` clause to a query, separating multiple class with ``OR``.
+
+    .. php:method:: orLikeAny($fields[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
+
+        :param array $fields: List of field names or RawSql instances
+        :param string $match: Text portion to match
+        :param string $side: Which side of the expression to put the '%' wildcard on
+        :param bool    $escape: Whether to escape values and identifiers
+        :param bool $insensitiveSearch: Whether to force a case-insensitive search
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Adds grouped ``LIKE`` clauses joined with ``OR``, separating the group from previous conditions with ``OR``.
 
     .. php:method:: notLike($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
 

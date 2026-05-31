@@ -76,6 +76,18 @@ final class LikeTest extends CIUnitTestCase
         $this->assertSame('Developer', $job->name);
     }
 
+    public function testLikeAny(): void
+    {
+        $jobs = $this->db->table('job')
+            ->likeAny(['name', 'description'], 'bor', 'both', null, true)
+            ->get()
+            ->getResult();
+
+        $this->assertCount(2, $jobs);
+        $this->assertSame('Developer', $jobs[0]->name);
+        $this->assertSame('Accountant', $jobs[1]->name);
+    }
+
     #[DataProvider('provideLikeCaseInsensitiveWithMultibyteCharacter')]
     public function testLikeCaseInsensitiveWithMultibyteCharacter(string $match, string $result): void
     {

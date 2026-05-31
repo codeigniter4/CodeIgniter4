@@ -221,6 +221,7 @@ Query Builder
 - Added ``exists()`` and ``doesntExist()`` to Query Builder to check whether the current Query Builder query would return at least one row. See :ref:`query-builder-exists`.
 - Added ``explain()`` to Query Builder to run execution-plan queries for the current ``SELECT`` query. See :ref:`query-builder-explain`.
 - Added ``havingBetween()``, ``orHavingBetween()``, ``havingNotBetween()``, and ``orHavingNotBetween()`` to Query Builder. See :ref:`query-builder-having-between`.
+- Added ``likeAny()`` and ``orLikeAny()`` to Query Builder to search one value across multiple fields with grouped ``OR`` ``LIKE`` conditions. See :ref:`query-builder-like-any`.
 - Added ``whereBetween()``, ``orWhereBetween()``, ``whereNotBetween()``, and ``orWhereNotBetween()`` to Query Builder. See :ref:`query-builder-where-between`.
 - Added ``whereColumn()`` and ``orWhereColumn()`` to compare one column to another column while protecting identifiers by default. See :ref:`query-builder-where-column`.
 - Added ``whereExists()``, ``orWhereExists()``, ``whereNotExists()``, and ``orWhereNotExists()`` to add ``EXISTS`` and ``NOT EXISTS`` subquery conditions. See :ref:`query-builder-where-exists`.

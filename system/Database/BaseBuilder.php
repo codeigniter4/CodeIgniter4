@@ -1397,6 +1397,20 @@ class BaseBuilder
     }
 
     /**
+     * Generates grouped LIKE portions of the query joined with OR.
+     *
+     * @param list<non-empty-string|RawSql> $fields
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     */
+    public function likeAny(array $fields, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false): static
+    {
+        return $this->likeAnyGroup($fields, $match, 'AND ', $side, $escape, $insensitiveSearch, __FUNCTION__);
+    }
+
+    /**
      * Generates a NOT LIKE portion of the query.
      * Separates multiple calls with 'AND'.
      *
@@ -1420,6 +1434,20 @@ class BaseBuilder
     public function orLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
     {
         return $this->_like($field, $match, 'OR ', $side, '', $escape, $insensitiveSearch);
+    }
+
+    /**
+     * Generates grouped LIKE portions of the query joined with OR.
+     *
+     * @param list<non-empty-string|RawSql> $fields
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     */
+    public function orLikeAny(array $fields, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false): static
+    {
+        return $this->likeAnyGroup($fields, $match, 'OR ', $side, $escape, $insensitiveSearch, __FUNCTION__);
     }
 
     /**
@@ -1488,8 +1516,52 @@ class BaseBuilder
     }
 
     /**
+     * @param list<non-empty-string|RawSql> $fields
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     */
+    private function likeAnyGroup(array $fields, string $match, string $type, string $side, ?bool $escape, bool $insensitiveSearch, string $caller): static
+    {
+        $this->validateLikeAnyFields($fields, $caller);
+
+        $this->groupStartPrepare('', $type);
+
+        foreach ($fields as $index => $field) {
+            $this->_like($field, $match, $index === 0 ? 'AND ' : 'OR ', $side, '', $escape, $insensitiveSearch);
+        }
+
+        return $this->groupEndPrepare();
+    }
+
+    /**
+     * @param list<non-empty-string|RawSql> $fields
+     *
+     * @throws InvalidArgumentException
+     */
+    private function validateLikeAnyFields(array $fields, string $caller): void
+    {
+        if ($fields === [] || ! array_is_list($fields)) {
+            throw new InvalidArgumentException(sprintf('%s() expects $fields to be a non-empty list of field names', $caller));
+        }
+
+        foreach ($fields as $field) {
+            if ($field instanceof RawSql) {
+                continue;
+            }
+
+            if (! is_string($field) || trim($field) === '') {
+                throw new InvalidArgumentException(sprintf('%s() expects $fields to contain only non-empty strings or RawSql instances', $caller));
+            }
+        }
+    }
+
+    /**
      * @used-by like()
+     * @used-by likeAny()
      * @used-by orLike()
+     * @used-by orLikeAny()
      * @used-by notLike()
      * @used-by orNotLike()
      * @used-by havingLike()
