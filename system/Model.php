@@ -535,6 +535,30 @@ class Model extends BaseModel
     }
 
     /**
+     * Returns the value from a single column in the first row.
+     *
+     * @return mixed Returns a SQL string if in test mode.
+     */
+    public function value(string $column, bool $reset = true, bool $test = false)
+    {
+        $this->prepareSoftDeleteQuery($reset);
+
+        return $this->builder()->testMode($test)->value($column, $reset);
+    }
+
+    /**
+     * Returns the values from a single column.
+     *
+     * @return array<int|string, mixed>|string Returns a SQL string if in test mode.
+     */
+    public function pluck(string $column, ?string $key = null, bool $reset = true, bool $test = false)
+    {
+        $this->prepareSoftDeleteQuery($reset);
+
+        return $this->builder()->testMode($test)->pluck($column, $key, $reset);
+    }
+
+    /**
      * Explains the current Model query.
      *
      * @return BaseResult|false|Query|string Returns a SQL string if in test mode.

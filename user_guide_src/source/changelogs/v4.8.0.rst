@@ -221,11 +221,12 @@ Query Builder
 - Added ``exists()`` and ``doesntExist()`` to Query Builder to check whether the current Query Builder query would return at least one row. See :ref:`query-builder-exists`.
 - Added ``explain()`` to Query Builder to run execution-plan queries for the current ``SELECT`` query. See :ref:`query-builder-explain`.
 - Added ``havingBetween()``, ``orHavingBetween()``, ``havingNotBetween()``, and ``orHavingNotBetween()`` to Query Builder. See :ref:`query-builder-having-between`.
+- Added ``incrementMany()`` and ``decrementMany()`` methods to ``CodeIgniter\Database\BaseBuilder`` for performing bulk increment/decrement operations.
+- Added ``lockForUpdate()`` to add pessimistic write locks to ``SELECT`` queries on supported drivers. See :ref:`query-builder-lock-for-update`.
+- Added ``pluck()`` and ``value()`` to Query Builder to retrieve scalar column values without fetching full rows. See :ref:`query-builder-pluck` and :ref:`query-builder-value`.
 - Added ``whereBetween()``, ``orWhereBetween()``, ``whereNotBetween()``, and ``orWhereNotBetween()`` to Query Builder. See :ref:`query-builder-where-between`.
 - Added ``whereColumn()`` and ``orWhereColumn()`` to compare one column to another column while protecting identifiers by default. See :ref:`query-builder-where-column`.
 - Added ``whereExists()``, ``orWhereExists()``, ``whereNotExists()``, and ``orWhereNotExists()`` to add ``EXISTS`` and ``NOT EXISTS`` subquery conditions. See :ref:`query-builder-where-exists`.
-- Added new ``incrementMany()`` and ``decrementMany()`` methods to ``CodeIgniter\Database\BaseBuilder`` for performing bulk increment/decrement operations.
-- Added ``lockForUpdate()`` to add pessimistic write locks to ``SELECT`` queries on supported drivers. See :ref:`query-builder-lock-for-update`.
 
 Forge
 -----

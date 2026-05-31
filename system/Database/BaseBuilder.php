@@ -2056,6 +2056,139 @@ class BaseBuilder
     }
 
     /**
+     * Returns the value from a single column in the first row.
+     *
+     * @return mixed SQL string when test mode is enabled.
+     */
+    public function value(string $column, bool $reset = true)
+    {
+        $result = $this->getColumnSelectResult([
+            $this->prepareColumnSelect($column, 'CI_value'),
+        ], $reset, true);
+
+        if (is_string($result)) {
+            return $result;
+        }
+
+        if (! $result instanceof ResultInterface) {
+            return null;
+        }
+
+        return $result->getRow('CI_value');
+    }
+
+    /**
+     * Returns the values from a single column.
+     *
+     * @return array<int|string, mixed>|string SQL string when test mode is enabled.
+     */
+    public function pluck(string $column, ?string $key = null, bool $reset = true)
+    {
+        $select = [
+            $this->prepareColumnSelect($column, 'CI_value'),
+        ];
+
+        if ($key !== null) {
+            $select[] = $this->prepareColumnSelect($key, 'CI_key');
+        }
+
+        $result = $this->getColumnSelectResult($select, $reset);
+
+        if (is_string($result)) {
+            return $result;
+        }
+
+        if (! $result instanceof ResultInterface) {
+            return [];
+        }
+
+        $values = [];
+
+        foreach ($result->getResultArray() as $row) {
+            if ($key === null) {
+                $values[] = $row['CI_value'] ?? null;
+
+                continue;
+            }
+
+            $values[$row['CI_key'] ?? null] = $row['CI_value'] ?? null;
+        }
+
+        return $values;
+    }
+
+    /**
+     * Runs a SELECT query for temporary scalar column selection.
+     *
+     * @param list<string> $select
+     *
+     * @return false|ResultInterface|string
+     */
+    private function getColumnSelectResult(array $select, bool $reset, bool $limitToOne = false)
+    {
+        $qbSelect              = $this->QBSelect;
+        $qbNoEscape            = $this->QBNoEscape;
+        $qbSelectUsesAggregate = $this->QBSelectUsesAggregate;
+        $qbLimit               = $this->QBLimit;
+        $qbOffset              = $this->QBOffset;
+
+        $this->QBSelect              = [];
+        $this->QBNoEscape            = [];
+        $this->QBSelectUsesAggregate = false;
+
+        foreach ($select as $column) {
+            $this->select($column);
+        }
+
+        if ($limitToOne && $this->QBLimit !== 0) {
+            $this->QBLimit = 1;
+        }
+
+        try {
+            $result = $this->testMode
+                ? $this->getCompiledSelect($reset)
+                : $this->db->query($this->compileSelect(), $this->binds, false);
+
+            if ($reset) {
+                $this->resetSelect();
+
+                // Clear our binds so we don't eat up memory
+                $this->binds = [];
+            }
+
+            return $result;
+        } finally {
+            if (! $reset) {
+                $this->QBSelect              = $qbSelect;
+                $this->QBNoEscape            = $qbNoEscape;
+                $this->QBSelectUsesAggregate = $qbSelectUsesAggregate;
+                $this->QBLimit               = $qbLimit;
+                $this->QBOffset              = $qbOffset;
+            }
+        }
+    }
+
+    /**
+     * Prepares a single column for scalar selection.
+     *
+     * @throws DataException
+     */
+    private function prepareColumnSelect(string $column, string $alias): string
+    {
+        $column = trim($column);
+
+        if ($column === '') {
+            throw DataException::forEmptyInputGiven('Select');
+        }
+
+        if (preg_match('/(^|\\.)\\*$|[\\s(),]/', $column) === 1) {
+            throw DataException::forInvalidArgument('column name');
+        }
+
+        return $column . ' AS ' . $alias;
+    }
+
+    /**
      * Explains the select statement based on the other functions called
      * and runs the query.
      *

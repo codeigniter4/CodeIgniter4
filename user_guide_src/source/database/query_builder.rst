@@ -876,6 +876,57 @@ first parameter.
 
 .. literalinclude:: query_builder/073.php
 
+.. _query-builder-value:
+
+$builder->value()
+-----------------
+
+.. versionadded:: 4.8.0
+
+Permits you to retrieve a single column value from the first row of the current
+Query Builder query:
+
+.. literalinclude:: query_builder/130.php
+
+The ``value()`` method returns the column value, or ``null`` when no row matches.
+
+This method respects existing Query Builder clauses such as ``where()``,
+``join()``, ``orderBy()``, and ``offset()``. It returns the value from the first
+matching row and resets the current Query Builder state by default. If you need to
+keep the current Query Builder state, you can pass ``false`` as the final
+parameter.
+It temporarily selects only the requested column, so existing
+``select()`` clauses are not used.
+
+.. warning:: Raw SQL strings are not accepted. If you need to retrieve a custom
+    SQL expression, use ``select()`` with ``get()`` instead.
+    Do not pass user-supplied data as column names.
+
+.. _query-builder-pluck:
+
+$builder->pluck()
+-----------------
+
+.. versionadded:: 4.8.0
+
+Permits you to retrieve a list of values from a single column:
+
+.. literalinclude:: query_builder/131.php
+
+The ``pluck()`` method returns a list of values for a single column. If you pass
+a second column name to ``pluck()``, that column will be used as the array key.
+
+This method respects existing Query Builder clauses such as ``where()``,
+``join()``, ``orderBy()``, ``limit()``, and ``offset()``, and resets the current
+Query Builder state by default. If you need to keep the current Query Builder
+state, you can pass ``false`` as the final parameter.
+It temporarily selects only the requested column or columns, so existing
+``select()`` clauses are not used.
+
+.. warning:: Raw SQL strings are not accepted. If you need to retrieve a custom
+    SQL expression, use ``select()`` with ``get()`` instead.
+    Do not pass user-supplied data as column names.
+
 .. _query-builder-exists:
 
 $builder->exists()
@@ -1669,6 +1720,25 @@ Class Reference
         :rtype:     ``\CodeIgniter\Database\ResultInterface``
 
         Same as ``get()``, but also allows the WHERE to be added directly.
+
+    .. php:method:: value($column[, $reset = true])
+
+        :param string $column: Column name
+        :param bool $reset: Whether to reset values for SELECTs
+        :returns:   The column value from the first row, SQL string when test mode is enabled, or ``null`` when no row matches
+        :rtype:     mixed
+
+        Returns a single column value from the first row of the current Query Builder query.
+
+    .. php:method:: pluck($column[, $key = null[, $reset = true]])
+
+        :param string $column: Column name
+        :param string|null $key: Optional column name to use as array keys
+        :param bool $reset: Whether to reset values for SELECTs
+        :returns:   Column values, optionally keyed by another column, or SQL string when test mode is enabled
+        :rtype:     array|string
+
+        Returns the values from a single column of the current Query Builder query.
 
     .. php:method:: lockForUpdate()
 
