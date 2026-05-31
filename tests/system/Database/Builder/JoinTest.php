@@ -144,4 +144,30 @@ final class JoinTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
+
+    public function testSqlsrvJoinMultipleConditions(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $builder = new SQLSRVBuilder('jobs', $this->db);
+        $builder->testMode();
+        $builder->join('users u', "u.id = jobs.id AND u.status = 'active'", 'LEFT');
+
+        $expectedSQL = 'SELECT * FROM "test"."dbo"."jobs" LEFT JOIN "test"."dbo"."users" "u" ON "u"."id" = "jobs"."id" AND "u"."status" = \'active\'';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testSqlsrvJoinRawSql(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $builder = new SQLSRVBuilder('jobs', $this->db);
+        $builder->testMode();
+        $builder->join('users u', new RawSql('u.id = jobs.id AND u.deleted_at IS NULL'), 'LEFT');
+
+        $expectedSQL = 'SELECT * FROM "test"."dbo"."jobs" LEFT JOIN "test"."dbo"."users" "u" ON u.id = jobs.id AND u.deleted_at IS NULL';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 }
