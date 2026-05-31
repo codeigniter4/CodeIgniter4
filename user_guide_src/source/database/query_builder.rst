@@ -110,6 +110,31 @@ The key thing to notice in the above example is that the second query did not
 utilize ``limit(10, 20)`` but the generated SQL query has ``LIMIT 20, 10``.
 The reason for this outcome is because the parameter in the first query is set to ``false``, ``limit(10, 20)`` remained in the second query.
 
+.. _query-builder-explain:
+
+$builder->explain()
+-------------------
+
+.. versionadded:: 4.8.0
+
+Runs an execution-plan query for the current Query Builder ``SELECT`` query:
+
+.. literalinclude:: query_builder/129.php
+
+This method returns a database result object. The result columns are driver-specific
+because each database reports execution plans in its own format.
+You can read the result with ``getResultArray()`` or ``getResultObject()``, the
+same as any other query result.
+If test mode is enabled, it returns the compiled execution-plan SQL string.
+If the query fails and ``DBDebug`` is ``false``, it returns ``false``.
+
+The method resets the current Query Builder state by default. If you need to keep
+the current Query Builder state, you can pass ``false`` as the first parameter.
+
+.. note:: This method is currently supported by MySQLi, Postgre, and SQLite3.
+    SQLite3 uses ``EXPLAIN QUERY PLAN``. SQLSRV and OCI8 are not supported by
+    this method.
+
 $builder->getWhere()
 --------------------
 
@@ -1598,6 +1623,14 @@ Class Reference
 
         Generates a platform-specific query string that counts
         all records in the particular table.
+
+    .. php:method:: explain([$reset = true])
+
+        :param bool $reset: Whether to reset values for SELECTs
+        :returns:   The execution-plan result, SQL string when test mode is enabled, or ``false`` on failure
+        :rtype:     ResultInterface|false|string
+
+        Runs an execution-plan query for the current Query Builder ``SELECT`` query.
 
     .. php:method:: exists([$reset = true])
 

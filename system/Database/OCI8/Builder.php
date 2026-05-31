@@ -234,6 +234,14 @@ class Builder extends BaseBuilder
     }
 
     /**
+     * Ensures the current driver supports explaining Query Builder selects.
+     */
+    protected function assertExplainSupported(): never
+    {
+        throw new DatabaseException('OCI8 does not support explain().');
+    }
+
+    /**
      * Generates a platform-specific batch update string from the supplied data
      */
     protected function _updateBatch(string $table, array $keys, array $values): string
