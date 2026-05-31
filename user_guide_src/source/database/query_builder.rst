@@ -322,6 +322,13 @@ methods:
 .. note:: ``$builder->where()`` accepts an optional third parameter. If you set it to
     ``false``, CodeIgniter will not try to protect your field or table names.
 
+.. versionadded:: 4.8.0
+    Query Builder methods that bind and escape field values or value lists,
+    such as ``where()``, ``whereIn()``, ``having()``, ``set()``, ``insert()``,
+    and ``update()``, accept PHP ``BackedEnum`` instances and use their backing
+    values. Raw SQL values, such as values passed with escaping disabled, are
+    not converted.
+
 1. Simple key/value method
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 

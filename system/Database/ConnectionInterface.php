@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database;
 
+use BackedEnum;
+
 /**
  * @template TConnection
  * @template TResult
@@ -179,7 +181,7 @@ interface ConnectionInterface
      * Escapes data based on type.
      * Sets boolean and null types.
      *
-     * @param array|bool|float|int|object|string|null $str
+     * @param array|BackedEnum|bool|float|int|object|string|null $str
      *
      * @return ($str is array ? array : float|int|string)
      */

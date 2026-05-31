@@ -17,6 +17,8 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use Tests\Support\Enum\RoleEnum;
+use Tests\Support\Enum\StatusEnum;
 
 /**
  * @internal
@@ -238,6 +240,17 @@ final class BaseQueryTest extends CIUnitTestCase
         $query->setQuery('SELECT * FROM users WHERE name = ?', ["O'Reilly"]);
 
         $expected = "SELECT * FROM users WHERE name = 'O''Reilly'";
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    public function testBindingBackedEnum(): void
+    {
+        $query = new Query($this->db);
+
+        $query->setQuery('SELECT * FROM users WHERE status = ? AND role = ?', [StatusEnum::ACTIVE, RoleEnum::ADMIN]);
+
+        $expected = "SELECT * FROM users WHERE status = 'active' AND role = 2";
 
         $this->assertSame($expected, $query->getQuery());
     }

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database;
 
+use BackedEnum;
 use Closure;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\RetryableTransactionException;
@@ -1758,7 +1759,7 @@ abstract class BaseConnection implements ConnectionInterface
      * Escapes data based on type.
      * Sets boolean and null types
      *
-     * @param array|bool|float|int|object|string|null $str
+     * @param array|BackedEnum|bool|float|int|object|string|null $str
      *
      * @return ($str is array ? array : float|int|string)
      */
@@ -1766,6 +1767,10 @@ abstract class BaseConnection implements ConnectionInterface
     {
         if (is_array($str)) {
             return array_map($this->escape(...), $str);
+        }
+
+        if ($str instanceof BackedEnum) {
+            $str = $str->value;
         }
 
         if ($str instanceof Stringable) {

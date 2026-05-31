@@ -138,6 +138,10 @@ don't have to:
 
 .. literalinclude:: queries/009.php
 
+.. versionadded:: 4.8.0
+    ``$db->escape()`` accepts PHP ``BackedEnum`` values and escapes their backing
+    values.
+
 2. $db->escapeString()
 ======================
 
@@ -187,6 +191,13 @@ The resulting query will be::
 The secondary benefit of using binds is that the values are
 automatically escaped producing safer queries.
 You don't have to remember to manually escape data - the engine does it automatically for you.
+
+.. versionadded:: 4.8.0
+    Query bindings and Query Builder bound values accept PHP ``BackedEnum``
+    values. CodeIgniter uses the enum backing value when escaping the bound
+    value.
+
+.. literalinclude:: queries/032.php
 
 Named Bindings
 ==============
