@@ -247,6 +247,7 @@ Model
 =====
 
 - Added new ``chunkRows()`` method to ``CodeIgniter\Model`` for processing large datasets in smaller chunks.
+- Added new ``existsById()`` method to ``CodeIgniter\Model`` to check whether a row exists for a primary key without fetching it. See :ref:`model-exists-by-id`.
 - Added new ``firstOrInsert()`` method to ``CodeIgniter\Model`` that finds the first row matching the given attributes or inserts a new one. See :ref:`model-first-or-insert`.
 
 Libraries

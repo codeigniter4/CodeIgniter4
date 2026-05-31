@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Models;
 
 use PHPUnit\Framework\Attributes\Group;
+use Tests\Support\Models\EventModel;
 use Tests\Support\Models\UserModel;
 
 /**
@@ -22,6 +23,46 @@ use Tests\Support\Models\UserModel;
 #[Group('DatabaseLive')]
 final class ExistsModelTest extends LiveModelTestCase
 {
+    public function testExistsByIdReturnsTrueForExistingPrimaryKey(): void
+    {
+        $this->createModel(UserModel::class);
+
+        $this->assertTrue($this->model->existsById(1));
+    }
+
+    public function testExistsByIdReturnsFalseForMissingPrimaryKey(): void
+    {
+        $this->createModel(UserModel::class);
+
+        $this->assertFalse($this->model->existsById(999));
+    }
+
+    public function testExistsByIdRespectsSoftDeletes(): void
+    {
+        $this->createModel(UserModel::class);
+        $this->model->delete(1);
+
+        $this->assertFalse($this->model->existsById(1));
+        $this->assertTrue($this->model->withDeleted()->existsById(1));
+    }
+
+    public function testExistsByIdWorksWithCurrentModelQuery(): void
+    {
+        $this->createModel(UserModel::class);
+
+        $this->assertTrue($this->model->where('country', 'US')->existsById(1));
+        $this->assertFalse($this->model->where('country', 'UK')->existsById(1));
+    }
+
+    public function testExistsByIdDoesNotTriggerFindCallbacks(): void
+    {
+        $model = $this->createModel(EventModel::class);
+
+        $this->assertTrue($model->existsById(1));
+        $this->assertFalse($model->hasToken('beforeFind'));
+        $this->assertFalse($model->hasToken('afterFind'));
+    }
+
     public function testExistsRespectsSoftDeletes(): void
     {
         $this->createModel(UserModel::class);

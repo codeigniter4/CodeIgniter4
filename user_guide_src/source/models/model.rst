@@ -509,6 +509,23 @@ of just one:
 .. note:: If ``find()`` is called without parameters or with ``null``, it will return all rows in
     that model's table, effectively acting like ``findAll()``, though less explicit.
 
+.. _model-exists-by-id:
+
+existsById()
+------------
+
+.. versionadded:: 4.8.0
+
+Checks whether a row exists where the model's `$primaryKey`_ matches the
+given value, without fetching or hydrating the row:
+
+.. literalinclude:: model/068.php
+
+This method respects soft deletes. Use ``withDeleted()`` first if you need to
+check deleted rows. It can also be combined with Query Builder methods like
+``where()``. For condition-based existence checks that are not tied to a
+primary key, use ``exists()`` or ``doesntExist()``.
+
 findColumn()
 ------------
 

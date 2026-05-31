@@ -559,6 +559,14 @@ class Model extends BaseModel
     }
 
     /**
+     * Determines whether the given primary key value exists.
+     */
+    public function existsById(int|string $id): bool
+    {
+        return $this->where($this->table . '.' . $this->primaryKey, $id)->exists();
+    }
+
+    /**
      * Determines whether the current Model query would not return any rows.
      *
      * @return bool|string Returns a SQL string if in test mode.
