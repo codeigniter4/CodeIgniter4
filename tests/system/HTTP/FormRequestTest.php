@@ -346,7 +346,22 @@ final class FormRequestTest extends CIUnitTestCase
         $this->assertSame(422, $response->getStatusCode());
     }
 
-    public function testResolveRequestReturns422ForAjaxRequest(): void
+    public function testResolveRequestReturns422WhenJsonIsPreferred(): void
+    {
+        service('superglobals')->setServer('HTTP_ACCEPT', 'application/json');
+        $formRequest = $this->makeFormRequest($this->makeRequest());
+
+        $response = $formRequest->resolveRequest();
+
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertSame(422, $response->getStatusCode());
+
+        $body = json_decode($response->getBody(), true);
+        $this->assertArrayHasKey('errors', $body);
+        $this->assertArrayHasKey('title', $body['errors']);
+    }
+
+    public function testResolveRequestRedirectsForAjaxRequest(): void
     {
         service('superglobals')->setServer('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');
         $formRequest = $this->makeFormRequest($this->makeRequest());
@@ -354,7 +369,30 @@ final class FormRequestTest extends CIUnitTestCase
         $response = $formRequest->resolveRequest();
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertSame(303, $response->getStatusCode());
+    }
+
+    public function testResolveRequestReturns422ForAjaxRequestThatPrefersJson(): void
+    {
+        service('superglobals')->setServer('HTTP_ACCEPT', 'application/json');
+        service('superglobals')->setServer('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');
+        $formRequest = $this->makeFormRequest($this->makeRequest());
+
+        $response = $formRequest->resolveRequest();
+
+        $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertSame(422, $response->getStatusCode());
+    }
+
+    public function testResolveRequestRedirectsForWildcardAcceptHeader(): void
+    {
+        service('superglobals')->setServer('HTTP_ACCEPT', '*/*');
+        $formRequest = $this->makeFormRequest($this->makeRequest());
+
+        $response = $formRequest->resolveRequest();
+
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertSame(303, $response->getStatusCode());
     }
 
     // -------------------------------------------------------------------------
@@ -678,7 +716,7 @@ final class FormRequestTest extends CIUnitTestCase
     }
 
     // -------------------------------------------------------------------------
-    // Integration: validation failure - JSON / AJAX
+    // Integration: validation failure - JSON
     // -------------------------------------------------------------------------
 
     #[RunInSeparateProcess]
@@ -697,13 +735,28 @@ final class FormRequestTest extends CIUnitTestCase
     }
 
     #[RunInSeparateProcess]
-    public function testInvalidFormRequestReturns422ForAjaxRequest(): void
+    public function testInvalidFormRequestReturns422WhenJsonIsPreferred(): void
     {
-        service('superglobals')->setServer('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');
+        service('superglobals')->setServer('HTTP_ACCEPT', 'application/json');
 
         $response = $this->runRequest('/posts', 'store', 'POST');
 
         $this->assertSame(422, $response->getStatusCode());
+
+        $body = json_decode((string) $response->getBody(), true);
+        $this->assertArrayHasKey('errors', $body);
+        $this->assertArrayHasKey('title', $body['errors']);
+    }
+
+    #[RunInSeparateProcess]
+    public function testInvalidFormRequestRedirectsForAjaxRequest(): void
+    {
+        service('superglobals')->setServer('HTTP_REFERER', 'http://example.com/posts/create');
+        service('superglobals')->setServer('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');
+
+        $response = $this->runRequest('/posts', 'store', 'POST');
+
+        $this->assertSame(303, $response->getStatusCode());
     }
 
     // -------------------------------------------------------------------------
