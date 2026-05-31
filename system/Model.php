@@ -713,7 +713,7 @@ class Model extends BaseModel
 
     protected function objectToRawArray($object, bool $onlyChanged = true, bool $recursive = false): array
     {
-        return parent::objectToRawArray($object, $onlyChanged);
+        return parent::objectToRawArray($object, $onlyChanged, $recursive);
     }
 
     /**
