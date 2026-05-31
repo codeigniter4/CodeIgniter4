@@ -226,12 +226,19 @@ Flashing Normalized Input
 
 If your ``prepareForValidation()`` transforms visible form fields (for example,
 trimming strings or canonicalizing values), ``old()`` will return the original
-submitted input because the redirect flashes the raw superglobals. To make
-``old()`` reflect the normalized values instead, override ``failedValidation()``
-and flash the normalized payload manually:
+submitted input because the redirect flashes the raw superglobals.
+
+To make ``old()`` reflect the normalized values instead, override
+``failedValidation()`` and flash the data returned from
+``prepareForValidation()``:
 
 .. literalinclude:: form_requests/013.php
    :lines: 2-
+
+Use ``getPreparedValidationData()`` inside ``failedValidation()`` to read that
+prepared data without running ``prepareForValidation()`` again. The prepared
+data has not passed validation. After successful validation, use
+``getValidated()`` or ``getValidatedInput()`` for trusted values.
 
 *****************************************
 How the Framework Resolves Form Requests

@@ -395,6 +395,48 @@ final class FormRequestTest extends CIUnitTestCase
         $this->assertSame(303, $response->getStatusCode());
     }
 
+    public function testPreparedValidationDataIsAvailableDuringFailedValidationWithoutPreparingAgain(): void
+    {
+        service('superglobals')->setPost('title', ' Hello World ');
+
+        $formRequest = new class ($this->makeRequest()) extends FormRequest {
+            public int $prepareCount = 0;
+
+            /**
+             * @var array<string, mixed>
+             */
+            public array $preparedData = [];
+
+            public function rules(): array
+            {
+                return [
+                    'title' => 'required',
+                    'body'  => 'required',
+                ];
+            }
+
+            protected function prepareForValidation(array $data): array
+            {
+                $this->prepareCount++;
+                $data['title'] = trim($data['title'] ?? '');
+
+                return $data;
+            }
+
+            protected function failedValidation(array $errors): ResponseInterface
+            {
+                $this->preparedData = $this->getPreparedValidationData();
+
+                return service('response')->setStatusCode(422)->setJSON(['errors' => $errors]);
+            }
+        };
+
+        $formRequest->resolveRequest();
+
+        $this->assertSame(1, $formRequest->prepareCount);
+        $this->assertSame(['title' => 'Hello World'], $formRequest->preparedData);
+    }
+
     // -------------------------------------------------------------------------
     // Authorization failure
     // -------------------------------------------------------------------------

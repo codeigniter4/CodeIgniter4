@@ -36,6 +36,13 @@ abstract class FormRequest
     private array $validatedData = [];
 
     /**
+     * Data after prepareForValidation() and before validation rules run.
+     *
+     * @var array<string, mixed>
+     */
+    private array $preparedValidationData = [];
+
+    /**
      * When called by the framework, the current IncomingRequest is injected
      * explicitly. When instantiated manually (e.g. in tests), the constructor
      * falls back to service('request').
@@ -144,6 +151,21 @@ abstract class FormRequest
     }
 
     /**
+     * Returns the data after prepareForValidation() has run.
+     *
+     * This is useful in failedValidation() when a custom failure response needs
+     * the same prepared data that was passed to validation. This data has not
+     * passed validation; use getValidated() or getValidatedInput() after
+     * successful validation for trusted values.
+     *
+     * @return array<string, mixed>
+     */
+    protected function getPreparedValidationData(): array
+    {
+        return $this->preparedValidationData;
+    }
+
+    /**
      * Called when validation fails. Override to customize the failure response.
      *
      * The default implementation redirects back with input and flashes validation
@@ -249,16 +271,19 @@ abstract class FormRequest
      */
     final public function resolveRequest(): ?ResponseInterface
     {
+        $this->validatedData          = [];
+        $this->preparedValidationData = [];
+
         if (! $this->isAuthorized()) {
             return $this->failedAuthorization();
         }
 
-        $data = $this->prepareForValidation($this->validationData());
+        $this->preparedValidationData = $this->prepareForValidation($this->validationData());
 
         $validation = service('validation')
             ->setRules($this->rules(), $this->messages());
 
-        if (! $validation->run($data)) {
+        if (! $validation->run($this->preparedValidationData)) {
             return $this->failedValidation($validation->getErrors());
         }
 

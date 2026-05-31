@@ -32,14 +32,14 @@ class StorePostRequest extends FormRequest
             return service('response')->setStatusCode(422)->setJSON(['errors' => $errors]);
         }
 
-        // withInput() flashes the original superglobals and the validation
-        // errors. We then overwrite old input with the normalized payload so
-        // that old() returns the same values that were validated.
+        // withInput() flashes the original superglobals and validation errors.
+        // Then we overwrite old input with the prepared data so old() returns
+        // the same values that were passed to validation.
         $redirect = redirect()->back()->withInput();
 
         service('session')->setFlashdata('_ci_old_input', [
             'get'  => [],
-            'post' => $this->prepareForValidation($this->validationData()),
+            'post' => $this->getPreparedValidationData(),
         ]);
 
         return $redirect;
