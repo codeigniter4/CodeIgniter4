@@ -100,7 +100,7 @@ return Architecture::define()
         'Files'         => ['I18n'],
         'Filters'       => ['HTTP'],
         'Honeypot'      => ['Filters', 'HTTP'],
-        'HTTP'          => ['Cookie', 'Files', 'I18n', 'Security', 'URI'],
+        'HTTP'          => ['Cookie', 'Files', 'I18n', 'Input', 'Security', 'URI'],
         'Images'        => ['Files', 'I18n'],
         'Lock'          => ['Cache'],
         'Model'         => ['Database', 'DataCaster', 'DataConverter', 'Entity', 'I18n', 'Pager', 'Validation'],

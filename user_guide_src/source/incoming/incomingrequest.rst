@@ -161,6 +161,30 @@ The ``getVar()`` method will pull from ``$_REQUEST``, so will return any data fr
 .. note:: If the incoming request has a ``Content-Type`` header set to ``application/json``,
     the ``getVar()`` method returns the JSON data instead of ``$_REQUEST`` data.
 
+.. _incomingrequest-typed-request-input:
+
+Typed Request Input
+===================
+
+.. versionadded:: 4.8.0
+
+``input()`` returns a ``CodeIgniter\HTTP\RequestInput`` object. Use it to read
+values from a specific part of the request with typed fallback helpers:
+
+.. literalinclude:: incomingrequest/046.php
+   :lines: 2-
+
+``input()->get()`` reads query-string parameters. ``input()->post()`` reads
+POST body parameters. ``input()->json()`` reads JSON request body parameters.
+``input()->raw()`` reads raw input parameters, like ``getRawInput()``.
+
+These methods keep GET, POST, JSON, and raw data separate. They do not combine
+multiple request sources for you.
+
+These methods do not validate input. They are fallback-friendly helpers for
+reading raw request data. Use Validation or :ref:`form-requests` when input
+must satisfy application rules before it is consumed.
+
 .. _incomingrequest-getting-json-data:
 
 Getting JSON Data
@@ -227,6 +251,7 @@ Filtering a POST variable would look like this:
 
 All of the methods mentioned above support the filter type passed in as the second parameter, with the
 exception of ``getJSON()`` and ``getRawInput()``.
+The typed input helpers returned by ``input()`` do not accept filter parameters.
 
 Retrieving Headers
 ******************
@@ -406,6 +431,11 @@ The methods provided by the parent classes that are available are:
 
         .. literalinclude:: incomingrequest/045.php
 
+    .. php:method:: input()
+
+        :returns:       A typed input data selector.
+        :rtype: CodeIgniter\\HTTP\\RequestInput
+
     .. php:method:: getPost([$index = null[, $filter = null[, $flags = null]]])
 
         :param  string  $index: The name of the variable/key to look for.
@@ -519,4 +549,3 @@ The methods provided by the parent classes that are available are:
         .. note:: Prior to v4.4.0, this was the safest method to determine the
             "current URI", since ``IncomingRequest::$uri`` might not be aware of
             the complete App configuration for base URLs.
-
