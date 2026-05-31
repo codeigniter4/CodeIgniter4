@@ -145,10 +145,17 @@ interface ConnectionInterface
      *
      * @param callable(self): TReturn $callback
      * @param positive-int            $attempts
+     * @param bool|null               $transException   Temporarily override transaction exception mode.
+     * @param bool                    $resetTransStatus Reset transaction status before an outermost transaction starts.
      *
      * @return false|TReturn
      */
-    public function transaction(callable $callback, int $attempts = 1): mixed;
+    public function transaction(
+        callable $callback,
+        int $attempts = 1,
+        ?bool $transException = null,
+        bool $resetTransStatus = false,
+    ): mixed;
 
     /**
      * Returns an instance of the query builder for this connection.

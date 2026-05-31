@@ -82,6 +82,35 @@ Callbacks registered with ``afterCommit()`` or ``afterRollback()`` inside the
 transaction callback follow the same rules as other transaction callbacks: they
 run only after the outermost transaction commits or rolls back.
 
+Scoped Transaction Options
+--------------------------
+
+The ``transaction()`` method can temporarily override existing transaction
+options for the duration of the helper call:
+
+.. literalinclude:: transactions/017.php
+
+Set ``transException`` to temporarily enable or disable the same transaction
+exception mode configured by ``transException()``. The previous mode is restored
+after ``transaction()`` finishes, even if the callback throws an exception.
+If ``transaction()`` is called inside an active transaction, the temporary mode
+applies while the nested callback runs, then the previous mode is restored for
+the outer transaction. When ``transException`` is set to ``true`` in a nested
+transaction and a query fails, CodeIgniter's existing transaction exception
+handling rolls back the outer transaction as well.
+
+Set ``resetTransStatus`` to reset the transaction status before the helper starts
+an outermost transaction. This is equivalent to calling ``resetTransStatus()``
+before the transaction, and is useful when strict mode has marked the connection
+as failed from an earlier transaction.
+
+``resetTransStatus`` only applies when ``transaction()`` starts the outermost
+transaction. If ``transaction()`` is called inside an active transaction, it does
+not reset the outer transaction status.
+
+The ``transException`` option follows CodeIgniter's existing transaction
+exception behavior, including the current ``DBDebug`` setting.
+
 Retrying Transactions
 ---------------------
 
