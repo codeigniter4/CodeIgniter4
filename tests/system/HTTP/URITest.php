@@ -842,6 +842,7 @@ final class URITest extends CIUnitTestCase
 
         $new = $uri->withQueryVar('bar', 'baz');
 
+        $this->assertNotSame($uri, $new);
         $this->assertSame('http://example.com/foo?bar=baz', (string) $new);
         $this->assertSame('http://example.com/foo', (string) $uri);
     }
@@ -853,6 +854,7 @@ final class URITest extends CIUnitTestCase
 
         $new = $uri->withQueryVar('bar', 'foz');
 
+        $this->assertNotSame($uri, $new);
         $this->assertSame('http://example.com/foo?bar=foz#section', (string) $new);
         $this->assertSame('http://example.com/foo?bar=baz#section', (string) $uri);
     }
@@ -864,6 +866,7 @@ final class URITest extends CIUnitTestCase
 
         $new = $uri->withQueryVar('bar', '');
 
+        $this->assertNotSame($uri, $new);
         $this->assertSame('http://example.com/foo?bar=', (string) $new);
         $this->assertSame('http://example.com/foo?bar=baz', (string) $uri);
     }
@@ -878,6 +881,7 @@ final class URITest extends CIUnitTestCase
             'new' => 'value',
         ]);
 
+        $this->assertNotSame($uri, $new);
         $this->assertSame('http://example.com/foo?foo=bar&bar=baz&baz=updated&new=value#section', (string) $new);
         $this->assertSame('http://example.com/foo?foo=bar&bar=baz&baz=foz#section', (string) $uri);
     }

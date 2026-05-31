@@ -876,15 +876,11 @@ class URI implements Stringable
     }
 
     /**
-     * Return an instance with one query var added or replaced.
+     * Returns an instance with one query var added or replaced.
      *
      * Note: Method not in PSR-7
-     *
-     * @param int|string|null $value
-     *
-     * @return static
      */
-    public function withQueryVar(string $key, $value)
+    public function withQueryVar(string $key, int|string|null $value): static
     {
         $uri = clone $this;
 
@@ -894,15 +890,13 @@ class URI implements Stringable
     }
 
     /**
-     * Return an instance with multiple query vars added or replaced.
+     * Returns an instance with multiple query vars added or replaced.
      *
      * Note: Method not in PSR-7
      *
      * @param array<string, int|string|null> $params
-     *
-     * @return static
      */
-    public function withQueryVars(array $params)
+    public function withQueryVars(array $params): static
     {
         $uri = clone $this;
 
