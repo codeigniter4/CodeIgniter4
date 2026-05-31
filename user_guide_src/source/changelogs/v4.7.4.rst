@@ -30,6 +30,9 @@ Deprecations
 Bugs Fixed
 **********
 
+- **Security:** ``RedisHandler::get()`` and ``PredisHandler::get()`` now pass ``['allowed_classes' => false]`` to ``unserialize()`` when restoring cached arrays, preventing PHP Object Injection via a poisoned cache backend. See `Security Advisory <https://github.com/codeigniter4/CodeIgniter4/security>`_.
+- **Security:** ``ResponseCache::get()`` now passes ``['allowed_classes' => false]`` to ``unserialize()``, preventing PHP Object Injection via the page cache.
+- **Security:** ``Entity/Cast/ArrayCast::get()`` now passes ``['allowed_classes' => false]`` to ``unserialize()``, preventing PHP Object Injection via a poisoned database column value.
 - **Database:** Fixed a bug where ``updateBatch()`` could be called after Query Builder ``where()`` conditions, even though it's not supported. In this situation, now the ``DatabaseException`` is thrown.
 
 See the repo's

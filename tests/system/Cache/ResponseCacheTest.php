@@ -257,4 +257,37 @@ final class ResponseCacheTest extends CIUnitTestCase
         // Check cache with a request with the same URI path.
         $pageCache->get($request, new Response(new App()));
     }
+
+    public function testGetResponseCacheRejectsObjectsInSerializedData(): void
+    {
+        /** @var MockCache $mockCache */
+        $mockCache = mock(CacheFactory::class);
+        $pageCache = new ResponseCache(new Cache(), $mockCache);
+
+        $request = $this->createIncomingRequest('foo/bar');
+
+        $response = new Response(new App());
+        $response->setHeader('ETag', 'abcd1234');
+        $response->setBody('The response body.');
+
+        $pageCache->make($request, $response);
+
+        $cacheKey = $pageCache->generateCacheKey($request);
+
+        // Inject a serialized object (PHP Object Injection simulation).
+        // With allowed_classes => false, unserialize() returns an
+        // __PHP_Incomplete_Class and the subsequent is_array() check rejects it.
+        $malicious = serialize([
+            'output'  => serialize(new \stdClass()),
+            'headers' => [],
+            'status'  => 200,
+            'reason'  => 'OK',
+        ]);
+        $mockCache->save($cacheKey, $malicious);
+
+        // The cache entry contains a nested serialized object; get() should
+        // return false (cache miss) rather than instantiating the object.
+        $result = $pageCache->get($request, new Response(new App()));
+        $this->assertFalse($result);
+    }
 }

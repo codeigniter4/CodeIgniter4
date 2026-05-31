@@ -606,6 +606,26 @@ final class EntityTest extends CIUnitTestCase
         $this->assertSame([1, 2, 3], $entity->seventh);
     }
 
+    public function testCastArrayRejectsSerializedObjects(): void
+    {
+        // A serialized object injected as a database column value should not
+        // be instantiated. With allowed_classes => false the object becomes
+        // a __PHP_Incomplete_Class, which is then cast to an array — the
+        // important thing is no real class is instantiated.
+        $entity = $this->getCastEntity();
+
+        // Store a serialized stdClass directly into the raw attribute
+        // (simulating a poisoned DB column value).
+        $this->setPrivateProperty($entity, 'attributes', array_merge(
+            $this->getPrivateProperty($entity, 'attributes'),
+            ['seventh' => serialize(new \stdClass())]
+        ));
+
+        // Accessing the cast attribute must NOT instantiate stdClass.
+        $result = $entity->seventh;
+        $this->assertNotInstanceOf(\stdClass::class, $result);
+    }
+
     public function testCastNullable(): void
     {
         $entity = $this->getCastNullableEntity();
