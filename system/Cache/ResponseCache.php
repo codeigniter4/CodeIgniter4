@@ -120,7 +120,7 @@ final class ResponseCache
         $cachedResponse = $this->cache->get($this->generateCacheKey($request));
 
         if (is_string($cachedResponse) && $cachedResponse !== '') {
-            $cachedResponse = unserialize($cachedResponse);
+            $cachedResponse = unserialize($cachedResponse, ['allowed_classes' => false]);
 
             if (
                 ! is_array($cachedResponse)
