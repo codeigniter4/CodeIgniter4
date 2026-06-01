@@ -1,12 +1,7 @@
-# total 210 errors
+# total 209 errors
 
 parameters:
     ignoreErrors:
-        -
-            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-            count: 1
-            path: ../../system/Commands/Database/CreateDatabase.php
-
         -
             message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
             count: 1
