@@ -36,13 +36,6 @@ abstract class FormRequest
     private array $validatedData = [];
 
     /**
-     * Data after prepareForValidation() and before validation rules run.
-     *
-     * @var array<string, mixed>
-     */
-    private array $preparedValidationData = [];
-
-    /**
      * When called by the framework, the current IncomingRequest is injected
      * explicitly. When instantiated manually (e.g. in tests), the constructor
      * falls back to service('request').
@@ -151,21 +144,6 @@ abstract class FormRequest
     }
 
     /**
-     * Returns the data after prepareForValidation() has run.
-     *
-     * This is useful in failedValidation() when a custom failure response needs
-     * the same prepared data that was passed to validation. This data has not
-     * passed validation; use getValidated() or getValidatedInput() after
-     * successful validation for trusted values.
-     *
-     * @return array<string, mixed>
-     */
-    protected function getPreparedValidationData(): array
-    {
-        return $this->preparedValidationData;
-    }
-
-    /**
      * Called when validation fails. Override to customize the failure response.
      *
      * The default implementation redirects back with input and flashes validation
@@ -175,14 +153,27 @@ abstract class FormRequest
      * returns a 422 JSON response instead.
      *
      * @param array<string, string> $errors
+     * @param array<string, mixed>  $preparedData
      */
-    protected function failedValidation(array $errors): ResponseInterface
+    protected function failedValidation(array $errors, array $preparedData): ResponseInterface
     {
         if ($this->shouldReturnJsonResponse()) {
             return service('response')->setStatusCode(422)->setJSON(['errors' => $errors]);
         }
 
-        return redirect()->back()->withInput();
+        $redirect = redirect()->back()->withInput();
+
+        $key = in_array($this->request->getMethod(), [Method::GET, Method::HEAD], true)
+            ? 'get'
+            : 'post';
+
+        service('session')->setFlashdata('_ci_old_input', [
+            'get'  => [],
+            'post' => [],
+            $key   => $preparedData,
+        ]);
+
+        return $redirect;
     }
 
     /**
@@ -271,20 +262,19 @@ abstract class FormRequest
      */
     final public function resolveRequest(): ?ResponseInterface
     {
-        $this->validatedData          = [];
-        $this->preparedValidationData = [];
+        $this->validatedData = [];
 
         if (! $this->isAuthorized()) {
             return $this->failedAuthorization();
         }
 
-        $this->preparedValidationData = $this->prepareForValidation($this->validationData());
+        $data = $this->prepareForValidation($this->validationData());
 
         $validation = service('validation')
             ->setRules($this->rules(), $this->messages());
 
-        if (! $validation->run($this->preparedValidationData)) {
-            return $this->failedValidation($validation->getErrors());
+        if (! $validation->run($data)) {
+            return $this->failedValidation($validation->getErrors(), $data);
         }
 
         $this->validatedData = $validation->getValidated();
