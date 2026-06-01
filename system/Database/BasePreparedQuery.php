@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Database;
 
 use ArgumentCountError;
+use BackedEnum;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\BadMethodCallException;
@@ -122,6 +123,12 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      */
     public function execute(...$data)
     {
+        foreach ($data as $key => $value) {
+            if ($value instanceof BackedEnum) {
+                $data[$key] = $value->value;
+            }
+        }
+
         // Execute the Query.
         $startTime = microtime(true);
 

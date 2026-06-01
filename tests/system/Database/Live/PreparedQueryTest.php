@@ -23,6 +23,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Database\Seeds\CITestSeeder;
+use Tests\Support\Enum\StatusEnum;
 
 /**
  * @internal
@@ -284,6 +285,19 @@ final class PreparedQueryTest extends CIUnitTestCase
 
         $expectedRow = ['name' => 'Derek Jones', 'email' => 'derek@world.com', 'country' => 'US'];
         $this->assertSame($expectedRow, $result->getRowArray());
+    }
+
+    public function testExecuteWithBackedEnum(): void
+    {
+        $this->query = $this->db->prepare(static fn ($db) => $db->table('team_members')
+            ->select('person_id')
+            ->where('status', StatusEnum::PENDING)
+            ->get());
+
+        $result = $this->query->execute(StatusEnum::ACTIVE);
+
+        $this->assertInstanceOf(ResultInterface::class, $result);
+        $this->assertCount(2, $result->getResultArray());
     }
 
     public function testExecuteSelectQueryManualAndCheckTypeAndResult(): void

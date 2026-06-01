@@ -80,6 +80,20 @@ final class InsertTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));
     }
 
+    public function testInsertObjectWithBackedEnum(): void
+    {
+        $builder = $this->db->table('jobs');
+
+        $builder->testMode()->insert((object) [
+            'id'     => 1,
+            'status' => StatusEnum::ACTIVE,
+        ], true);
+
+        $expectedSQL = 'INSERT INTO "jobs" ("id", "status") VALUES (1, \'active\')';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));
+    }
+
     public function testInsertObject(): void
     {
         $builder = $this->db->table('jobs');
