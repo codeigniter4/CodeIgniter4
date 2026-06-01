@@ -193,11 +193,21 @@ Changing Query Values Without Mutation
 
 .. versionadded:: 4.8.0
 
+You can return a new URI instance with its query variables replaced by using the
+``withQuery()`` and ``withQueryArray()`` methods:
+
+.. literalinclude:: uri/029.php
+
 You can return a new URI instance with one or more query variables added or replaced by using the
 ``withQueryVar()`` and ``withQueryVars()`` methods. Existing query variables are preserved unless they
 are replaced:
 
 .. literalinclude:: uri/028.php
+
+You can also return a new URI instance with query variables removed or filtered by using the
+``withoutQueryVars()`` and ``withOnlyQueryVars()`` methods:
+
+.. literalinclude:: uri/030.php
 
 The original URI instance is not modified.
 

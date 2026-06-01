@@ -817,8 +817,6 @@ class URI implements Stringable
      * to clean the various parts of the query keys and values.
      *
      * @return $this
-     *
-     * @TODO PSR-7: Should be `withQuery($query)`.
      */
     public function setQuery(string $query)
     {
@@ -845,18 +843,44 @@ class URI implements Stringable
     }
 
     /**
+     * Returns an instance with the specified query string.
+     */
+    public function withQuery(string $query): static
+    {
+        $uri = clone $this;
+
+        $uri->setQuery($query);
+
+        return $uri;
+    }
+
+    /**
      * A convenience method to pass an array of items in as the Query
      * portion of the URI.
      *
-     * @return URI
-     *
-     * @TODO: PSR-7: Should be `withQueryParams(array $query)`
+     * @return $this
      */
     public function setQueryArray(array $query)
     {
         $query = http_build_query($query);
 
         return $this->setQuery($query);
+    }
+
+    /**
+     * Returns an instance with the specified query vars.
+     *
+     * Note: Method not in PSR-7
+     *
+     * @param array<string, mixed> $query
+     */
+    public function withQueryArray(array $query): static
+    {
+        $uri = clone $this;
+
+        $uri->setQueryArray($query);
+
+        return $uri;
     }
 
     /**
@@ -926,6 +950,20 @@ class URI implements Stringable
     }
 
     /**
+     * Returns an instance without the specified query vars.
+     *
+     * Note: Method not in PSR-7
+     */
+    public function withoutQueryVars(string ...$params): static
+    {
+        $uri = clone $this;
+
+        $uri->stripQuery(...$params);
+
+        return $uri;
+    }
+
+    /**
      * Filters the query variables so that only the keys passed in
      * are kept. The rest are removed from the object.
      *
@@ -950,6 +988,20 @@ class URI implements Stringable
         $this->query = $temp;
 
         return $this;
+    }
+
+    /**
+     * Returns an instance with only the specified query vars.
+     *
+     * Note: Method not in PSR-7
+     */
+    public function withOnlyQueryVars(string ...$params): static
+    {
+        $uri = clone $this;
+
+        $uri->keepQuery(...$params);
+
+        return $uri;
     }
 
     /**
