@@ -97,8 +97,8 @@ final class SampleURIGenerator
             return $this->resolvedCache[$placeholder];
         }
 
-        $sample = $this->configuredSample($placeholder, $regex)
-            ?? $this->samples[$placeholder]
+        $sample = $this->matchingSample($this->config->placeholderSamples[$placeholder] ?? null, $regex)
+            ?? $this->matchingSample($this->samples[$placeholder] ?? null, $regex)
             ?? $this->sampleGenerator->generate($regex)
             ?? self::UNKNOWN_SAMPLE;
 
@@ -108,14 +108,14 @@ final class SampleURIGenerator
     }
 
     /**
-     * Returns the configured sample for the placeholder when one is set and it
-     * matches the placeholder regex, otherwise ``null`` so resolution falls
-     * through to the built-in, auto-generated, or unknown sample.
+     * Returns the given sample when it is set and matches the placeholder
+     * regex, otherwise ``null`` so resolution falls through to the next source.
+     * Guards both the configured and built-in samples, since a built-in
+     * placeholder name may be redefined with a different regex via
+     * ``RouteCollection::addPlaceholder()``.
      */
-    private function configuredSample(string $placeholder, string $regex): ?string
+    private function matchingSample(?string $sample, string $regex): ?string
     {
-        $sample = $this->config->placeholderSamples[$placeholder] ?? null;
-
         if ($sample === null) {
             return null;
         }

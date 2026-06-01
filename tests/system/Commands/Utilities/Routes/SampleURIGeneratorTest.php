@@ -190,4 +190,18 @@ final class SampleURIGeneratorTest extends CIUnitTestCase
 
         $this->assertSame('test/AAA0', $uri);
     }
+
+    public function testOverriddenBuiltInPlaceholderIgnoresStaleSample(): void
+    {
+        $routes = service('routes');
+        // Redefining a built-in name with a new regex must not reuse the stale
+        // built-in sample (123), which no longer matches.
+        $routes->addPlaceholder('num', '[A-Z]+');
+
+        $generator = new SampleURIGenerator();
+
+        $uri = $generator->get('shop/product/([A-Z]+)');
+
+        $this->assertSame('shop/product/A', $uri);
+    }
 }
