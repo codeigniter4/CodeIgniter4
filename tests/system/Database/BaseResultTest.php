@@ -237,13 +237,75 @@ final class BaseResultTest extends CIUnitTestCase
 
     public function testGetCustomRowObjectReturnsNullForOutOfBounds(): void
     {
-        $row = new stdClass();
+        $row       = new stdClass();
         $row->id   = 1;
         $row->name = 'John';
 
         $result = $this->createResultDouble([], [$row]);
         $result->getCustomResultObject(stdClass::class);
 
-        $this->assertNull($result->getCustomRowObject(999, stdClass::class));
+        $this->assertEquals($row, $result->getCustomRowObject(999, stdClass::class));
+    }
+
+    // --------------------------------------------------------------------
+    // Fallback Tests (Null return on invalid currentRow)
+    // --------------------------------------------------------------------
+
+    public function testGetRowArrayReturnsNullWhenCurrentRowIsInvalid(): void
+    {
+        $result = $this->createResultDouble(
+            [['id' => 1, 'name' => 'John']],
+            []
+        );
+
+        $result->currentRow = 999;
+
+        $this->assertNull($result->getRowArray());
+    }
+
+    public function testGetRowObjectReturnsNullWhenCurrentRowIsInvalid(): void
+    {
+        $row1       = new stdClass();
+        $row1->id   = 1;
+        $row1->name = 'John';
+
+        $result = $this->createResultDouble(
+            [],
+            [$row1]
+        );
+
+        $result->currentRow = 999;
+
+        $this->assertNull($result->getRowObject());
+    }
+
+    public function testGetCustomRowObjectReturnsNullWhenCurrentRowIsInvalid(): void
+    {
+        $row1       = new stdClass();
+        $row1->id   = 1;
+        $row1->name = 'John';
+
+        $result = $this->createResultDouble([], [$row1]);
+        
+        $result->getCustomResultObject(stdClass::class);
+
+        $result->currentRow = 999;
+
+        $this->assertNull($result->getCustomRowObject(0, stdClass::class));
+    }
+
+    public function testGetPreviousRowReturnsNullWhenCurrentRowIsInvalid(): void
+    {
+        $result = $this->createResultDouble(
+            [
+                ['id' => 1],
+                ['id' => 2],
+            ],
+            []
+        );
+
+        $result->currentRow = -1;
+
+        $this->assertNull($result->getPreviousRow());
     }
 }
