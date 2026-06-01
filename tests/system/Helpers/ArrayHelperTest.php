@@ -13,10 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Helpers;
 
+use ArrayObject;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use stdClass;
+use Tests\Support\SomeEntity;
 use ValueError;
 
 /**
@@ -379,6 +382,80 @@ final class ArrayHelperTest extends CIUnitTestCase
         ];
 
         $this->assertSame(['baz' => 23], dot_array_search('foo.bar.*', $data));
+    }
+
+    public function testArrayDotWithObjectValues(): void
+    {
+        $data = [
+            'user' => (object) [
+                'profile' => (object) [
+                    'name' => 'Jane',
+                ],
+            ],
+        ];
+
+        $this->assertSame('Jane', dot_array_search('user.profile.name', $data));
+    }
+
+    public function testArrayDotWithMagicObjectValues(): void
+    {
+        $data = [
+            'user' => new class () {
+                /**
+                 * @var array<string, array<string, string>>
+                 */
+                private array $values = [
+                    'profile' => [
+                        'name' => 'Jane',
+                    ],
+                ];
+
+                public function __isset(string $key): bool
+                {
+                    return array_key_exists($key, $this->values);
+                }
+
+                public function __get(string $key): mixed
+                {
+                    return $this->values[$key];
+                }
+            },
+        ];
+
+        $this->assertSame('Jane', dot_array_search('user.profile.name', $data));
+    }
+
+    public function testArrayDotWithArrayAccessValues(): void
+    {
+        $data = [
+            'user' => new ArrayObject([
+                'profile' => [
+                    'name' => 'Jane',
+                ],
+            ]),
+        ];
+
+        $this->assertSame('Jane', dot_array_search('user.profile.name', $data));
+    }
+
+    public function testArrayDotWithEntityValues(): void
+    {
+        $entity      = new SomeEntity();
+        $entity->foo = 'value';
+
+        $this->assertSame('value', dot_array_search('user.foo', ['user' => $entity]));
+    }
+
+    public function testArrayDotWildcardWithObjectValues(): void
+    {
+        $data = [
+            'users' => [
+                (object) ['name' => 'John'],
+                (object) ['name' => 'Maria'],
+            ],
+        ];
+
+        $this->assertSame(['John', 'Maria'], dot_array_search('users.*.name', $data));
     }
 
     /**
@@ -1500,5 +1577,93 @@ final class ArrayHelperTest extends CIUnitTestCase
                 ],
             ],
         ];
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/10225
+     */
+    public function testArrayGroupByWithObjectRows(): void
+    {
+        $json = <<<'JSON'
+            [
+                { "id": 1, "name": "Giraffe", "group": "Mammals" },
+                { "id": 2, "name": "Zebra", "group": "Mammals" },
+                { "id": 3, "name": "Crow", "group": "Birds" }
+            ]
+            JSON;
+        $data = json_decode($json);
+
+        $this->assertIsArray($data);
+
+        $actual = array_group_by($data, ['group']);
+
+        $this->assertSame(
+            [
+                'Mammals' => [$data[0], $data[1]],
+                'Birds'   => [$data[2]],
+            ],
+            $actual,
+        );
+        $this->assertInstanceOf(stdClass::class, $actual['Mammals'][0]);
+    }
+
+    public function testArrayGroupByWithNestedObjectRows(): void
+    {
+        $data = [
+            (object) [
+                'id' => 1,
+                'hr' => (object) [
+                    'department' => 'Engineering',
+                ],
+            ],
+            (object) [
+                'id' => 2,
+                'hr' => (object) [
+                    'department' => 'Marketing',
+                ],
+            ],
+            (object) [
+                'id' => 3,
+                'hr' => (object) [
+                    'department' => 'Engineering',
+                ],
+            ],
+        ];
+
+        $actual = array_group_by($data, ['hr.department']);
+
+        $this->assertSame(
+            [
+                'Engineering' => [$data[0], $data[2]],
+                'Marketing'   => [$data[1]],
+            ],
+            $actual,
+        );
+    }
+
+    public function testArrayGroupByWithEntityRows(): void
+    {
+        $a      = new SomeEntity();
+        $a->foo = 'A';
+        $a->bar = 'x';
+
+        $b      = new SomeEntity();
+        $b->foo = 'B';
+        $b->bar = 'y';
+
+        $c      = new SomeEntity();
+        $c->foo = 'A';
+        $c->bar = 'z';
+
+        $actual = array_group_by([$a, $b, $c], ['foo']);
+
+        $this->assertSame(
+            [
+                'A' => [$a, $c],
+                'B' => [$b],
+            ],
+            $actual,
+        );
+        $this->assertSame($a, $actual['A'][0]);
     }
 }

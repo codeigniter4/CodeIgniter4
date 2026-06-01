@@ -13,7 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Helpers\Array;
 
+use ArrayAccess;
+use CodeIgniter\Entity\Entity;
 use CodeIgniter\Exceptions\InvalidArgumentException;
+use Traversable;
 
 /**
  * @internal This is internal implementation for the framework.
@@ -34,11 +37,12 @@ final class ArrayHelper
      *
      * @used-by dot_array_search()
      *
-     * @param string $index The index as dot array syntax.
+     * @param string                         $index The index as dot array syntax.
+     * @param array<array-key, mixed>|object $array
      *
-     * @return array|bool|int|object|string|null
+     * @return array<array-key, mixed>|bool|int|object|string|null
      */
-    public static function dotSearch(string $index, array $array)
+    public static function dotSearch(string $index, array|object $array)
     {
         return self::arraySearchDot(self::convertToArray($index), $array);
     }
@@ -78,9 +82,12 @@ final class ArrayHelper
      *
      * @used-by dotSearch()
      *
-     * @return array|bool|float|int|object|string|null
+     * @param list<string>                   $indexes
+     * @param array<array-key, mixed>|object $array
+     *
+     * @return array<array-key, mixed>|bool|float|int|object|string|null
      */
-    private static function arraySearchDot(array $indexes, array $array)
+    private static function arraySearchDot(array $indexes, array|object $array)
     {
         // If index is empty, returns null.
         if ($indexes === []) {
@@ -90,16 +97,17 @@ final class ArrayHelper
         // Grab the current index
         $currentIndex = array_shift($indexes);
 
-        if (! isset($array[$currentIndex]) && $currentIndex !== '*') {
+        if (! self::valueExists($array, $currentIndex) && $currentIndex !== '*') {
             return null;
         }
 
         // Handle Wildcard (*)
         if ($currentIndex === '*') {
-            $answer = [];
+            $answer   = [];
+            $iterable = is_object($array) ? self::toIterable($array) : $array;
 
-            foreach ($array as $value) {
-                if (! is_array($value)) {
+            foreach ($iterable as $value) {
+                if (! is_array($value) && ! is_object($value)) {
                     return null;
                 }
 
@@ -119,12 +127,14 @@ final class ArrayHelper
         // If this is the last index, make sure to return it now,
         // and not try to recurse through things.
         if ($indexes === []) {
-            return $array[$currentIndex];
+            return self::value($array, $currentIndex);
         }
 
+        $value = self::value($array, $currentIndex);
+
         // Do we need to recursively search this value?
-        if (is_array($array[$currentIndex]) && $array[$currentIndex] !== []) {
-            return self::arraySearchDot($indexes, $array[$currentIndex]);
+        if ((is_array($value) && $value !== []) || is_object($value)) {
+            return self::arraySearchDot($indexes, $value);
         }
 
         // Otherwise, not found.
@@ -333,13 +343,16 @@ final class ArrayHelper
 
     /**
      * Recursively attach $row to the $indexes path of values found by
-     * `dot_array_search()`.
+     * dot syntax.
      *
      * @used-by groupBy()
+     *
+     * @param array<array-key, mixed>|object $row
+     * @param list<string>                   $indexes
      */
     private static function arrayAttachIndexedValue(
         array $result,
-        array $row,
+        array|object $row,
         array $indexes,
         bool $includeEmpty,
     ): array {
@@ -349,7 +362,7 @@ final class ArrayHelper
             return $result;
         }
 
-        $value = dot_array_search($index, $row);
+        $value = self::dotSearch($index, $row);
 
         if (! is_scalar($value)) {
             $value = '';
@@ -445,6 +458,96 @@ final class ArrayHelper
 
             return strnatcmp((string) $currentValue, (string) $nextValue);
         });
+    }
+
+    /**
+     * @param array<array-key, mixed>|object $data
+     */
+    private static function valueExists(array|object $data, string $key): bool
+    {
+        if (is_array($data)) {
+            return isset($data[$key]);
+        }
+
+        $array = self::entityToArray($data);
+
+        if ($array !== null) {
+            return isset($array[$key]);
+        }
+
+        if ($data instanceof ArrayAccess && $data->offsetExists($key)) {
+            return true;
+        }
+
+        if (isset(get_object_vars($data)[$key])) {
+            return true;
+        }
+
+        return isset($data->{$key});
+    }
+
+    /**
+     * @param array<array-key, mixed>|object $data
+     */
+    private static function value(array|object $data, string $key): mixed
+    {
+        if (is_array($data)) {
+            return $data[$key];
+        }
+
+        $array = self::entityToArray($data);
+
+        if ($array !== null) {
+            return $array[$key];
+        }
+
+        if ($data instanceof ArrayAccess && $data->offsetExists($key)) {
+            return $data->offsetGet($key);
+        }
+
+        $properties = get_object_vars($data);
+
+        if (array_key_exists($key, $properties)) {
+            return $properties[$key];
+        }
+
+        return $data->{$key};
+    }
+
+    /**
+     * @return array<array-key, mixed>|null
+     */
+    private static function entityToArray(object $data): ?array
+    {
+        if ($data instanceof Entity) {
+            return $data->toArray();
+        }
+
+        return null;
+    }
+
+    /**
+     * Normalize an object to an array safe to iterate with foreach.
+     *
+     * Entities are converted via toArray() so internal properties like
+     * `_options` or `_cast` are not exposed. Other Traversable objects are
+     * materialized; plain objects fall back to their public properties.
+     *
+     * @return array<array-key, mixed>
+     */
+    private static function toIterable(object $data): array
+    {
+        $array = self::entityToArray($data);
+
+        if ($array !== null) {
+            return $array;
+        }
+
+        if ($data instanceof Traversable) {
+            return iterator_to_array($data, false);
+        }
+
+        return get_object_vars($data);
     }
 
     /**

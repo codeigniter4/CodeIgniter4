@@ -22,15 +22,15 @@ Available Functions
 
 The following functions are available:
 
-..  php:function:: dot_array_search(string $search, array $values)
+..  php:function:: dot_array_search(string $search, array|object $values)
 
     :param  string  $search: The dot-notation string describing how to search the array
-    :param  array   $values: The array to search
+    :param  array|object $values: The array or object to search
     :returns: The value found within the array, or null
     :rtype: mixed
 
-    This method allows you to use dot-notation to search through an array for a specific-key,
-    and allows the use of a the ``*`` wildcard. Given the following array:
+    This method allows you to use dot-notation to search through arrays and objects for a specific
+    key or property, and allows the use of the ``*`` wildcard. Given the following array:
 
     .. literalinclude:: array_helper/002.php
         :lines: 2-
@@ -55,6 +55,8 @@ The following functions are available:
 
 .. note:: Prior to v4.2.0, ``dot_array_search('foo.bar.baz', ['foo' => ['bar' => 23]])`` returned ``23``
     due to a bug. v4.2.0 and later returns ``null``.
+
+.. note:: Prior to v4.8.0, only arrays were supported. Support for objects was added in v4.8.0.
 
 ..  php:function:: dot_array_has(string $search, array $values): bool
 
@@ -214,6 +216,9 @@ The following functions are available:
 
     This function allows you to group data rows together by index values.
     The depth of returned array equals the number of indexes passed as parameter.
+    Data rows may be arrays or objects, and dot syntax can read nested array keys or object properties.
+
+    .. note:: Prior to v4.8.0, only arrays were supported. Support for objects was added in v4.8.0.
 
     The example shows some data (i.e. loaded from an API) with nested arrays.
 
