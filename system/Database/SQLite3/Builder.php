@@ -76,6 +76,33 @@ class Builder extends BaseBuilder
     }
 
     /**
+     * Compiles a driver-specific SQL expression for Query Builder date helpers.
+     *
+     * @param 'date'|'day'|'month'|'year' $part
+     */
+    protected function compileDatePartExpression(string $part, string $field): string
+    {
+        return match ($part) {
+            'date'  => 'DATE(' . $field . ')',
+            'year'  => "CAST(STRFTIME('%Y', " . $field . ') AS INTEGER)',
+            'month' => "CAST(STRFTIME('%m', " . $field . ') AS INTEGER)',
+            'day'   => "CAST(STRFTIME('%d', " . $field . ') AS INTEGER)',
+        };
+    }
+
+    /**
+     * Compiles the value side for Query Builder date helpers.
+     *
+     * @param 'date'|'day'|'month'|'year' $part
+     */
+    protected function compileDatePartValue(string $part, string $bind, bool $rawValue): string
+    {
+        $value = parent::compileDatePartValue($part, $bind, $rawValue);
+
+        return $part === 'date' || $rawValue ? $value : 'CAST(' . $value . ' AS INTEGER)';
+    }
+
+    /**
      * Replace statement
      *
      * Generates a platform-specific replace string from the supplied data

@@ -111,6 +111,20 @@ class Builder extends BaseBuilder
     }
 
     /**
+     * Compiles a driver-specific SQL expression for Query Builder date helpers.
+     *
+     * @param 'date'|'day'|'month'|'year' $part
+     */
+    protected function compileDatePartExpression(string $part, string $field): string
+    {
+        if ($part === 'date') {
+            return 'CAST(' . $field . ' AS DATE)';
+        }
+
+        return 'DATEPART(' . strtoupper($part) . ', ' . $field . ')';
+    }
+
+    /**
      * Generates a platform-specific insert string from the supplied data
      *
      * @todo implement check for this instead static $insertKeyPermission

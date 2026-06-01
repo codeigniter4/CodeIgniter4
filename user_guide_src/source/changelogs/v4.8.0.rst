@@ -241,6 +241,7 @@ Query Builder
 - Added ``likeAny()`` and ``orLikeAny()`` to Query Builder to search one value across multiple fields with grouped ``OR`` ``LIKE`` conditions. See :ref:`query-builder-like-any`.
 - Added ``whereBetween()``, ``orWhereBetween()``, ``whereNotBetween()``, and ``orWhereNotBetween()`` to Query Builder. See :ref:`query-builder-where-between`.
 - Added ``whereColumn()`` and ``orWhereColumn()`` to compare one column to another column while protecting identifiers by default. See :ref:`query-builder-where-column`.
+- Added ``whereDate()``, ``orWhereDate()``, ``whereDay()``, ``orWhereDay()``, ``whereMonth()``, ``orWhereMonth()``, ``whereYear()``, and ``orWhereYear()`` to Query Builder. See :ref:`query-builder-where-date`.
 - Added ``whereExists()``, ``orWhereExists()``, ``whereNotExists()``, and ``orWhereNotExists()`` to add ``EXISTS`` and ``NOT EXISTS`` subquery conditions. See :ref:`query-builder-where-exists`.
 - Added new ``incrementMany()`` and ``decrementMany()`` methods to ``CodeIgniter\Database\BaseBuilder`` for performing bulk increment/decrement operations.
 - Added ``lockForUpdate()`` to add pessimistic write locks to ``SELECT`` queries on supported drivers. See :ref:`query-builder-lock-for-update`.

@@ -77,6 +77,21 @@ class Builder extends BaseBuilder
     }
 
     /**
+     * Compiles a driver-specific SQL expression for Query Builder date helpers.
+     *
+     * @param 'date'|'day'|'month'|'year' $part
+     */
+    protected function compileDatePartExpression(string $part, string $field): string
+    {
+        return match ($part) {
+            'date'  => 'DATE(' . $field . ')',
+            'year'  => 'YEAR(' . $field . ')',
+            'month' => 'MONTH(' . $field . ')',
+            'day'   => 'DAY(' . $field . ')',
+        };
+    }
+
+    /**
      * Generates a platform-specific batch update string from the supplied data
      */
     protected function _updateBatch(string $table, array $keys, array $values): string

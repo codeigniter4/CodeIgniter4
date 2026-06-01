@@ -20,6 +20,7 @@ use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Traits\ConditionalTrait;
 use Config\Feature;
+use DateTimeInterface;
 use TypeError;
 
 /**
@@ -773,6 +774,246 @@ class BaseBuilder
     public function orWhere($key, $value = null, ?bool $escape = null)
     {
         return $this->whereHaving('QBWhere', $key, $value, 'OR ', $escape);
+    }
+
+    /**
+     * Generates a WHERE clause that compares the date portion of a field.
+     *
+     * @param non-empty-string $key   Field name, optionally with comparison operator
+     * @param mixed            $value
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     */
+    public function whereDate(string $key, $value, ?bool $escape = null): static
+    {
+        return $this->whereDatePart('date', $key, $value, 'AND ', $escape);
+    }
+
+    /**
+     * Generates an OR WHERE clause that compares the date portion of a field.
+     *
+     * @param non-empty-string $key   Field name, optionally with comparison operator
+     * @param mixed            $value
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     */
+    public function orWhereDate(string $key, $value, ?bool $escape = null): static
+    {
+        return $this->whereDatePart('date', $key, $value, 'OR ', $escape);
+    }
+
+    /**
+     * Generates a WHERE clause that compares the year portion of a field.
+     *
+     * @param non-empty-string $key   Field name, optionally with comparison operator
+     * @param mixed            $value
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     */
+    public function whereYear(string $key, $value, ?bool $escape = null): static
+    {
+        return $this->whereDatePart('year', $key, $value, 'AND ', $escape);
+    }
+
+    /**
+     * Generates an OR WHERE clause that compares the year portion of a field.
+     *
+     * @param non-empty-string $key   Field name, optionally with comparison operator
+     * @param mixed            $value
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     */
+    public function orWhereYear(string $key, $value, ?bool $escape = null): static
+    {
+        return $this->whereDatePart('year', $key, $value, 'OR ', $escape);
+    }
+
+    /**
+     * Generates a WHERE clause that compares the month portion of a field.
+     *
+     * @param non-empty-string $key   Field name, optionally with comparison operator
+     * @param mixed            $value
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     */
+    public function whereMonth(string $key, $value, ?bool $escape = null): static
+    {
+        return $this->whereDatePart('month', $key, $value, 'AND ', $escape);
+    }
+
+    /**
+     * Generates an OR WHERE clause that compares the month portion of a field.
+     *
+     * @param non-empty-string $key   Field name, optionally with comparison operator
+     * @param mixed            $value
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     */
+    public function orWhereMonth(string $key, $value, ?bool $escape = null): static
+    {
+        return $this->whereDatePart('month', $key, $value, 'OR ', $escape);
+    }
+
+    /**
+     * Generates a WHERE clause that compares the day portion of a field.
+     *
+     * @param non-empty-string $key   Field name, optionally with comparison operator
+     * @param mixed            $value
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     */
+    public function whereDay(string $key, $value, ?bool $escape = null): static
+    {
+        return $this->whereDatePart('day', $key, $value, 'AND ', $escape);
+    }
+
+    /**
+     * Generates an OR WHERE clause that compares the day portion of a field.
+     *
+     * @param non-empty-string $key   Field name, optionally with comparison operator
+     * @param mixed            $value
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     */
+    public function orWhereDay(string $key, $value, ?bool $escape = null): static
+    {
+        return $this->whereDatePart('day', $key, $value, 'OR ', $escape);
+    }
+
+    /**
+     * @used-by whereDate()
+     * @used-by orWhereDate()
+     * @used-by whereYear()
+     * @used-by orWhereYear()
+     * @used-by whereMonth()
+     * @used-by orWhereMonth()
+     * @used-by whereDay()
+     * @used-by orWhereDay()
+     *
+     * @param 'date'|'day'|'month'|'year' $part
+     * @param non-empty-string            $key   Field name, optionally with comparison operator
+     * @param mixed                       $value
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     */
+    private function whereDatePart(string $part, string $key, $value, string $type = 'AND ', ?bool $escape = null): static
+    {
+        [$key, $operator] = $this->parseDatePartKey($key);
+
+        if ($key === '') {
+            throw new InvalidArgumentException(sprintf('%s() expects $key to be a non-empty string', debug_backtrace(0, 2)[1]['function']));
+        }
+
+        $escape ??= $this->db->protectIdentifiers;
+
+        if (is_array($value) || $this->isSubquery($value)) {
+            throw new InvalidArgumentException(sprintf('%s() does not accept array or subquery values', debug_backtrace(0, 2)[1]['function']));
+        }
+
+        if ($value === null) {
+            $nullOperator = match ($operator) {
+                '='        => 'IS NULL',
+                '!=', '<>' => 'IS NOT NULL',
+                default    => throw new InvalidArgumentException(sprintf('%s() supports null values only with =, !=, or <> operators', debug_backtrace(0, 2)[1]['function'])),
+            };
+
+            $this->addWhereHavingCondition('QBWhere', [
+                'condition'          => '',
+                'datePartComparison' => true,
+                'escape'             => $escape,
+                'key'                => $key,
+                'nullComparison'     => true,
+                'nullOperator'       => $nullOperator,
+                'part'               => $part,
+            ], $type);
+
+            return $this;
+        }
+
+        $value = $this->normalizeDatePartValue($part, $value);
+        $bind  = $this->setBind($key, $value, $escape);
+
+        $this->addWhereHavingCondition('QBWhere', [
+            'condition'          => '',
+            'datePartComparison' => true,
+            'escape'             => $escape,
+            'key'                => $key,
+            'operator'           => $operator,
+            'part'               => $part,
+            'rawValue'           => $value instanceof RawSql,
+            'valueBind'          => $bind,
+        ], $type);
+
+        return $this;
+    }
+
+    /**
+     * Extracts the comparison operator from date helper keys.
+     *
+     * @return array{string, string}
+     *
+     * @throws InvalidArgumentException
+     */
+    private function parseDatePartKey(string $key): array
+    {
+        $key = trim($key);
+
+        if (
+            preg_match('/\s+(?:IS(?:\s+NOT)?(?:\s+NULL)?|(?:NOT\s+)?(?:LIKE|IN|BETWEEN|EXISTS|REGEXP|RLIKE))(?:\s+.*|\s*\(.*\))?$/i', $key) === 1
+            || preg_match('/\s*<=>\s*$/', $key) === 1
+        ) {
+            throw new InvalidArgumentException(sprintf('%s() supports only comparison operators: =, !=, <>, <, >, <=, >=', debug_backtrace(0, 3)[2]['function']));
+        }
+
+        if (preg_match('/\s*(!=|<>|<=|>=|=|<|>)\s*$/', $key, $match) === 1) {
+            return [rtrim(substr($key, 0, -strlen($match[0]))), trim($match[1])];
+        }
+
+        return [$key, '='];
+    }
+
+    /**
+     * Converts DateTime values into deterministic date helper comparison values.
+     *
+     * @param 'date'|'day'|'month'|'year' $part
+     * @param mixed                       $value
+     *
+     * @return mixed
+     */
+    private function normalizeDatePartValue(string $part, $value)
+    {
+        if ($value instanceof DateTimeInterface) {
+            return match ($part) {
+                'date'  => $value->format('Y-m-d'),
+                'year'  => (int) $value->format('Y'),
+                'month' => (int) $value->format('m'),
+                'day'   => (int) $value->format('d'),
+            };
+        }
+
+        if (! $value instanceof RawSql && $part !== 'date' && (is_int($value) || (is_string($value) && preg_match('/^-?\d+$/', $value) === 1))) {
+            return (int) $value;
+        }
+
+        return $value;
     }
 
     /**
@@ -3836,6 +4077,10 @@ class BaseBuilder
             return $this->compileBetweenComparison($condition);
         }
 
+        if (($condition['datePartComparison'] ?? false) === true) {
+            return $this->compileDatePartComparison($condition);
+        }
+
         if ($condition['escape'] === false) {
             return $condition['condition'];
         }
@@ -3925,6 +4170,56 @@ class BaseBuilder
         }
 
         return $condition['condition'] . $condition['key'] . $condition['not'] . ' BETWEEN :' . $condition['lowerBind'] . ': AND :' . $condition['upperBind'] . ':';
+    }
+
+    /**
+     * @used-by compileWhereHavingCondition()
+     *
+     * @param array{condition: string, datePartComparison: true, escape: bool, key: string, nullComparison?: true, nullOperator?: string, operator?: string, part: 'date'|'day'|'month'|'year', rawValue?: bool, valueBind?: string} $condition
+     */
+    private function compileDatePartComparison(array $condition): string
+    {
+        if ($condition['escape']) {
+            $condition['key'] = $this->db->protectIdentifiers($condition['key'], false, true);
+        }
+
+        $expression = $this->compileDatePartExpression($condition['part'], $condition['key']);
+
+        if (($condition['nullComparison'] ?? false) === true) {
+            return $condition['condition']
+                . $expression
+                . ' ' . $condition['nullOperator'];
+        }
+
+        return $condition['condition']
+            . $expression
+            . ' ' . $condition['operator'] . ' '
+            . $this->compileDatePartValue($condition['part'], $condition['valueBind'], $condition['rawValue']);
+    }
+
+    /**
+     * Compiles a driver-specific SQL expression for Query Builder date helpers.
+     *
+     * @param 'date'|'day'|'month'|'year' $part
+     */
+    protected function compileDatePartExpression(string $part, string $field): string
+    {
+        return match ($part) {
+            'date'  => 'CAST(' . $field . ' AS DATE)',
+            'year'  => 'EXTRACT(YEAR FROM ' . $field . ')',
+            'month' => 'EXTRACT(MONTH FROM ' . $field . ')',
+            'day'   => 'EXTRACT(DAY FROM ' . $field . ')',
+        };
+    }
+
+    /**
+     * Compiles the value side for Query Builder date helpers.
+     *
+     * @param 'date'|'day'|'month'|'year' $part
+     */
+    protected function compileDatePartValue(string $part, string $bind, bool $rawValue): string
+    {
+        return ':' . $bind . ':';
     }
 
     /**

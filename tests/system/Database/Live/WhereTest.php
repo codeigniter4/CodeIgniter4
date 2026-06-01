@@ -69,6 +69,27 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame('Musician', $job->name);
     }
 
+    public function testWhereDatePartHelpers(): void
+    {
+        $this->db->table('user')->insert([
+            'name'       => 'Date Helper',
+            'email'      => 'date-helper@example.com',
+            'country'    => 'US',
+            'created_at' => '2026-05-31 12:34:56',
+        ]);
+
+        $users = $this->db->table('user')
+            ->whereDate('created_at', '2026-05-31')
+            ->whereYear('created_at', 2026)
+            ->whereMonth('created_at', 5)
+            ->whereDay('created_at', 31)
+            ->get()
+            ->getResult();
+
+        $this->assertCount(1, $users);
+        $this->assertSame('Date Helper', $users[0]->name);
+    }
+
     public function testOrWhere(): void
     {
         $jobs = $this->db->table('job')

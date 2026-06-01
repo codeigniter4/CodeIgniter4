@@ -148,6 +148,32 @@ class Builder extends BaseBuilder
     }
 
     /**
+     * Compiles a driver-specific SQL expression for Query Builder date helpers.
+     *
+     * @param 'date'|'day'|'month'|'year' $part
+     */
+    protected function compileDatePartExpression(string $part, string $field): string
+    {
+        if ($part === 'date') {
+            return 'TRUNC(' . $field . ')';
+        }
+
+        return 'EXTRACT(' . strtoupper($part) . ' FROM ' . $field . ')';
+    }
+
+    /**
+     * Compiles the value side for Query Builder date helpers.
+     *
+     * @param 'date'|'day'|'month'|'year' $part
+     */
+    protected function compileDatePartValue(string $part, string $bind, bool $rawValue): string
+    {
+        $value = parent::compileDatePartValue($part, $bind, $rawValue);
+
+        return $part === 'date' && ! $rawValue ? "TO_DATE({$value}, 'YYYY-MM-DD')" : $value;
+    }
+
+    /**
      * Compiles a delete string and runs the query
      *
      * @param mixed $where

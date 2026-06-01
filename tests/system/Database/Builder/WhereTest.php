@@ -15,7 +15,12 @@ namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\MySQLi\Builder as MySQLiBuilder;
+use CodeIgniter\Database\OCI8\Builder as OCI8Builder;
+use CodeIgniter\Database\Postgre\Builder as PostgreBuilder;
 use CodeIgniter\Database\RawSql;
+use CodeIgniter\Database\SQLite3\Builder as SQLite3Builder;
+use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
@@ -694,6 +699,276 @@ final class WhereTest extends CIUnitTestCase
 
         $builder = $this->db->table('users');
         $builder->whereExists($builder);
+    }
+
+    #[DataProvider('provideWhereDatePartMethods')]
+    public function testWhereDatePartMethods(string $method, string $expression, int|string $value): void
+    {
+        $builder = $this->db->table('jobs');
+
+        $builder->{$method}('created_at', $value);
+
+        $expectedSQL   = 'SELECT * FROM "jobs" WHERE ' . $expression . ' = ' . (is_int($value) ? $value : "'{$value}'");
+        $expectedBinds = [
+            'created_at' => [
+                $value,
+                true,
+            ],
+        ];
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    /**
+     * @return iterable<string, array{string, string, int|string}>
+     */
+    public static function provideWhereDatePartMethods(): iterable
+    {
+        return [
+            'date'  => ['whereDate', 'CAST("created_at" AS DATE)', '2026-01-31'],
+            'year'  => ['whereYear', 'EXTRACT(YEAR FROM "created_at")', 2026],
+            'month' => ['whereMonth', 'EXTRACT(MONTH FROM "created_at")', 1],
+            'day'   => ['whereDay', 'EXTRACT(DAY FROM "created_at")', 31],
+        ];
+    }
+
+    public function testWhereDatePartWithOperator(): void
+    {
+        $builder = $this->db->table('jobs');
+
+        $builder->whereDate('created_at >=', '2026-01-01');
+
+        $expectedSQL   = 'SELECT * FROM "jobs" WHERE CAST("created_at" AS DATE) >= \'2026-01-01\'';
+        $expectedBinds = [
+            'created_at' => [
+                '2026-01-01',
+                true,
+            ],
+        ];
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    public function testWhereDatePartWithNull(): void
+    {
+        $builder = $this->db->table('jobs');
+
+        $builder->whereDate('created_at', null)
+            ->orWhereDate('deleted_at !=', null);
+
+        $expectedSQL = 'SELECT * FROM "jobs" WHERE CAST("created_at" AS DATE) IS NULL OR CAST("deleted_at" AS DATE) IS NOT NULL';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame([], $builder->getBinds());
+    }
+
+    public function testWhereDatePartWithInvalidNullOperatorThrowInvalidArgumentException(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $builder = $this->db->table('jobs');
+        $builder->whereDate('created_at >', null);
+    }
+
+    #[DataProvider('provideWhereDatePartInvalidValueThrowInvalidArgumentException')]
+    public function testWhereDatePartInvalidValueThrowInvalidArgumentException(mixed $value): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $builder = $this->db->table('jobs');
+        $builder->whereDate('created_at', $value);
+    }
+
+    /**
+     * @return iterable<string, array{mixed}>
+     */
+    public static function provideWhereDatePartInvalidValueThrowInvalidArgumentException(): iterable
+    {
+        return [
+            'array'    => [['2026-01-01', '2026-01-31']],
+            'subquery' => [static fn (BaseBuilder $builder): BaseBuilder => $builder],
+        ];
+    }
+
+    public function testOrWhereDatePart(): void
+    {
+        $builder = $this->db->table('jobs');
+
+        $builder->where('active', 1)
+            ->orWhereYear('created_at', 2026);
+
+        $expectedSQL = 'SELECT * FROM "jobs" WHERE "active" = 1 OR EXTRACT(YEAR FROM "created_at") = 2026';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testWhereDatePartWithGroupedConditions(): void
+    {
+        $builder = $this->db->table('jobs');
+
+        $builder->groupStart()
+            ->whereYear('created_at', 2026)
+            ->orWhereMonth('created_at', 5)
+            ->groupEnd()
+            ->where('active', 1);
+
+        $expectedSQL = 'SELECT * FROM "jobs" WHERE   ( EXTRACT(YEAR FROM "created_at") = 2026 OR EXTRACT(MONTH FROM "created_at") = 5  ) AND "active" = 1';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testWhereDatePartWithAliasBeforeFrom(): void
+    {
+        $builder = $this->db->newQuery();
+
+        $builder->whereDate('u.created_at', '2026-01-31')
+            ->from('users u');
+
+        $expectedSQL = 'SELECT * FROM "users" "u" WHERE CAST("u"."created_at" AS DATE) = \'2026-01-31\'';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testWhereDatePartWithDateTimeValue(): void
+    {
+        $builder = $this->db->table('jobs');
+
+        $builder->whereDate('created_at', new DateTime('2026-05-31 12:34:56'))
+            ->whereMonth('created_at', new DateTime('2026-05-31 12:34:56'));
+
+        $expectedSQL   = 'SELECT * FROM "jobs" WHERE CAST("created_at" AS DATE) = \'2026-05-31\' AND EXTRACT(MONTH FROM "created_at") = 5';
+        $expectedBinds = [
+            'created_at' => [
+                '2026-05-31',
+                true,
+            ],
+            'created_at.1' => [
+                5,
+                true,
+            ],
+        ];
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    public function testWhereDatePartNoEscape(): void
+    {
+        $builder = $this->db->table('jobs');
+
+        $builder->whereDate('DATE_ADD(created_at, INTERVAL 1 DAY)', new RawSql("'2026-01-31'"), escape: false);
+
+        $expectedSQL = 'SELECT * FROM "jobs" WHERE CAST(DATE_ADD(created_at, INTERVAL 1 DAY) AS DATE) = \'2026-01-31\'';
+        $binds       = $builder->getBinds();
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertInstanceOf(RawSql::class, $binds['DATE_ADD(created_at, INTERVAL 1 DAY)'][0]);
+        $this->assertFalse($binds['DATE_ADD(created_at, INTERVAL 1 DAY)'][1]);
+    }
+
+    /**
+     * @param class-string<BaseBuilder> $builderClass
+     * @param array<string, mixed>      $params
+     */
+    #[DataProvider('provideWhereDatePartDriverCompilation')]
+    public function testWhereDatePartDriverCompilation(string $builderClass, array $params, string $method, int|string $value, string $expectedSQL): void
+    {
+        $builder = new $builderClass('jobs', new MockConnection($params));
+
+        $builder->{$method}('created_at', $value);
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    /**
+     * @return iterable<string, array{class-string<BaseBuilder>, array<string, mixed>, string, int|string, string}>
+     */
+    public static function provideWhereDatePartDriverCompilation(): iterable
+    {
+        return [
+            'mysql date' => [
+                MySQLiBuilder::class,
+                ['DBDriver' => 'MySQLi', 'escapeChar' => '`'],
+                'whereDate',
+                '2026-01-31',
+                'SELECT * FROM `jobs` WHERE DATE(`created_at`) = \'2026-01-31\'',
+            ],
+            'postgres year' => [
+                PostgreBuilder::class,
+                ['DBDriver' => 'Postgre'],
+                'whereYear',
+                2026,
+                'SELECT * FROM "jobs" WHERE EXTRACT(YEAR FROM "created_at") = 2026',
+            ],
+            'sqlsrv month' => [
+                SQLSRVBuilder::class,
+                ['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo'],
+                'whereMonth',
+                5,
+                'SELECT * FROM "test"."dbo"."jobs" WHERE DATEPART(MONTH, "created_at") = 5',
+            ],
+            'sqlite day' => [
+                SQLite3Builder::class,
+                ['DBDriver' => 'SQLite3', 'escapeChar' => '`'],
+                'whereDay',
+                31,
+                "SELECT * FROM `jobs` WHERE CAST(STRFTIME('%d', `created_at`) AS INTEGER) = CAST(31 AS INTEGER)",
+            ],
+            'oci8 date' => [
+                OCI8Builder::class,
+                ['DBDriver' => 'OCI8'],
+                'whereDate',
+                '2026-01-31',
+                'SELECT * FROM "jobs" WHERE TRUNC("created_at") = TO_DATE(\'2026-01-31\', \'YYYY-MM-DD\')',
+            ],
+        ];
+    }
+
+    #[DataProvider('provideWhereDatePartInvalidKeyThrowInvalidArgumentException')]
+    public function testWhereDatePartInvalidKeyThrowInvalidArgumentException(string $key): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $builder = $this->db->table('jobs');
+        $builder->whereDate($key, '2026-01-31');
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideWhereDatePartInvalidKeyThrowInvalidArgumentException(): iterable
+    {
+        return [
+            'empty string' => [''],
+        ];
+    }
+
+    #[DataProvider('provideWhereDatePartUnsupportedOperatorThrowInvalidArgumentException')]
+    public function testWhereDatePartUnsupportedOperatorThrowInvalidArgumentException(string $key): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $builder = $this->db->table('jobs');
+        $builder->whereDate($key, '2026-01-31');
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideWhereDatePartUnsupportedOperatorThrowInvalidArgumentException(): iterable
+    {
+        return [
+            'between'          => ['created_at BETWEEN'],
+            'in'               => ['created_at IN'],
+            'is'               => ['created_at IS'],
+            'is null'          => ['created_at IS NULL'],
+            'is distinct from' => ['created_at IS DISTINCT FROM'],
+            'like'             => ['created_at LIKE'],
+            'regexp'           => ['created_at REGEXP'],
+            'spaceship'        => ['created_at <=>'],
+        ];
     }
 
     #[DataProvider('provideWhereBetweenMethods')]

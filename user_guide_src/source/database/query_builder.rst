@@ -465,6 +465,41 @@ $builder->orWhereNotBetween()
 This method is identical to ``whereNotBetween()``, except that multiple
 instances are joined by **OR**.
 
+.. _query-builder-where-date:
+
+$builder->whereDate()
+---------------------
+
+.. versionadded:: 4.8.0
+
+Generates a **WHERE** clause that compares only the date portion of a field:
+
+.. literalinclude:: query_builder/130.php
+
+The ``whereYear()``, ``whereMonth()``, and ``whereDay()`` methods compare the
+corresponding date part. The ``orWhereDate()``, ``orWhereYear()``,
+``orWhereMonth()``, and ``orWhereDay()`` methods are identical, except that
+multiple instances are joined by **OR**.
+
+You can include a supported operator at the end of the field name. Supported
+operators are ``=``, ``!=``, ``<>``, ``<``, ``>``, ``<=``, and ``>=``. If none
+of these operators is detected, ``=`` is used. Passing ``null`` with ``=`` uses
+``IS NULL``; passing ``null`` with ``!=`` or ``<>`` uses ``IS NOT NULL``.
+
+By default, values are bound and escaped automatically. ``DateTimeInterface``
+values are converted to ISO date or numeric date-part values before binding.
+Field names are protected by default. The ``$escape`` parameter controls both
+value escaping and identifier protection. Array values and subqueries are not
+accepted.
+
+.. warning:: Do not pass user-supplied data as field names. If you need a more
+    complex SQL expression, use ``where()`` with :ref:`RawSql <query-builder-where-rawsql>`
+    and escape values manually.
+
+.. warning:: These helpers may apply SQL functions or casts to the field. For
+    large indexed timestamp columns, an explicit range condition such as
+    ``whereBetween()`` can be more efficient.
+
 .. _query-builder-where-exists:
 
 $builder->whereExists()
@@ -1900,6 +1935,86 @@ Class Reference
         :rtype:     ``BaseBuilder``
 
         Generates a ``WHERE`` field ``NOT BETWEEN`` minimum and maximum value SQL query, joined with ``OR`` if appropriate.
+
+    .. php:method:: whereDate($key, $value[, $escape = null])
+
+        :param string $key: Name of field to examine, optionally with comparison operator
+        :param mixed $value: Date value or ``null`` to compare
+        :param bool $escape: Whether to escape values and protect identifiers
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Generates a ``WHERE`` clause that compares the date portion of a field, joined with ``AND`` if appropriate.
+
+    .. php:method:: orWhereDate($key, $value[, $escape = null])
+
+        :param string $key: Name of field to examine, optionally with comparison operator
+        :param mixed $value: Date value or ``null`` to compare
+        :param bool $escape: Whether to escape values and protect identifiers
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Generates a ``WHERE`` clause that compares the date portion of a field, joined with ``OR`` if appropriate.
+
+    .. php:method:: whereYear($key, $value[, $escape = null])
+
+        :param string $key: Name of field to examine, optionally with comparison operator
+        :param mixed $value: Year value or ``null`` to compare
+        :param bool $escape: Whether to escape values and protect identifiers
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Generates a ``WHERE`` clause that compares the year portion of a field, joined with ``AND`` if appropriate.
+
+    .. php:method:: orWhereYear($key, $value[, $escape = null])
+
+        :param string $key: Name of field to examine, optionally with comparison operator
+        :param mixed $value: Year value or ``null`` to compare
+        :param bool $escape: Whether to escape values and protect identifiers
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Generates a ``WHERE`` clause that compares the year portion of a field, joined with ``OR`` if appropriate.
+
+    .. php:method:: whereMonth($key, $value[, $escape = null])
+
+        :param string $key: Name of field to examine, optionally with comparison operator
+        :param mixed $value: Month value or ``null`` to compare
+        :param bool $escape: Whether to escape values and protect identifiers
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Generates a ``WHERE`` clause that compares the month portion of a field, joined with ``AND`` if appropriate.
+
+    .. php:method:: orWhereMonth($key, $value[, $escape = null])
+
+        :param string $key: Name of field to examine, optionally with comparison operator
+        :param mixed $value: Month value or ``null`` to compare
+        :param bool $escape: Whether to escape values and protect identifiers
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Generates a ``WHERE`` clause that compares the month portion of a field, joined with ``OR`` if appropriate.
+
+    .. php:method:: whereDay($key, $value[, $escape = null])
+
+        :param string $key: Name of field to examine, optionally with comparison operator
+        :param mixed $value: Day value or ``null`` to compare
+        :param bool $escape: Whether to escape values and protect identifiers
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Generates a ``WHERE`` clause that compares the day portion of a field, joined with ``AND`` if appropriate.
+
+    .. php:method:: orWhereDay($key, $value[, $escape = null])
+
+        :param string $key: Name of field to examine, optionally with comparison operator
+        :param mixed $value: Day value or ``null`` to compare
+        :param bool $escape: Whether to escape values and protect identifiers
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Generates a ``WHERE`` clause that compares the day portion of a field, joined with ``OR`` if appropriate.
 
     .. php:method:: whereExists($subquery)
 
