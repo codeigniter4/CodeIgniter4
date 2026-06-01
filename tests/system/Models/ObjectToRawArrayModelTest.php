@@ -45,9 +45,9 @@ final class ObjectToRawArrayModelTest extends CIUnitTestCase
      */
     private function callObjectToRawArray(Model $model, object $object, bool $onlyChanged, bool $recursive): array
     {
-        $method = new ReflectionMethod(Model::class, 'objectToRawArray');
+        $method = self::getPrivateMethodInvoker($model, 'objectToRawArray');
 
-        return $method->invoke($model, $object, $onlyChanged, $recursive);
+        return $method($object, $onlyChanged, $recursive);
     }
 
     public function testObjectToRawArrayPassesRecursiveTrue(): void
