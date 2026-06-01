@@ -167,11 +167,13 @@ abstract class FormRequest
             ? 'get'
             : 'post';
 
-        service('session')->setFlashdata('_ci_old_input', [
+        $oldInput = [
             'get'  => [],
             'post' => [],
-            $key   => $preparedData,
-        ]);
+        ];
+        $oldInput[$key] = $preparedData;
+
+        service('session')->setFlashdata('_ci_old_input', $oldInput);
 
         return $redirect;
     }
