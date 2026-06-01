@@ -1,12 +1,7 @@
-# total 74 errors
+# total 72 errors
 
 parameters:
     ignoreErrors:
-        -
-            message: '#^Parameter \#2 \$params of method CodeIgniter\\CLI\\BaseCommand\:\:call\(\) expects array\<int\|string, string\|null\>, array\<int\|string, int\|string\|null\> given\.$#'
-            count: 2
-            path: ../../system/Commands/Database/MigrateRefresh.php
-
         -
             message: '#^Parameter \#3 \.\.\.\$arrays of function array_map expects array, int\|string given\.$#'
             count: 1

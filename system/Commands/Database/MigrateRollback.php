@@ -13,89 +13,78 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Database;
 
-use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Input\Option;
 use CodeIgniter\CLI\SignalTrait;
 use CodeIgniter\Database\MigrationRunner;
 use Throwable;
 
 /**
- * Runs all of the migrations in reverse order, until they have
- * all been unapplied.
+ * Runs the "down" method for all migrations in the last batch.
  */
-class MigrateRollback extends BaseCommand
+#[Command(
+    name: 'migrate:rollback',
+    description: 'Runs the "down" method for all migrations in the last batch.',
+    group: 'Database',
+)]
+class MigrateRollback extends AbstractCommand
 {
     use SignalTrait;
 
-    /**
-     * The group the command is lumped under
-     * when listing commands.
-     *
-     * @var string
-     */
-    protected $group = 'Database';
-
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'migrate:rollback';
-
-    /**
-     * the Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Runs the "down" method for all migrations in the last batch.';
-
-    /**
-     * the Command's usage
-     *
-     * @var string
-     */
-    protected $usage = 'migrate:rollback [options]';
-
-    /**
-     * the Command's Options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [
-        '-b' => 'Specify a batch to roll back to; e.g. "3" to return to batch #3',
-        '-f' => 'Force command - this option allows you to bypass the confirmation question when running this command in a production environment',
-    ];
-
-    /**
-     * Runs all of the migrations in reverse order, until they have
-     * all been unapplied.
-     */
-    public function run(array $params)
+    protected function configure(): void
     {
-        if (service('environment')->isProduction()) {
-            // @codeCoverageIgnoreStart
-            $force = array_key_exists('f', $params) || CLI::getOption('f');
+        $this
+            ->addOption(new Option(
+                name: 'batch',
+                shortcut: 'b',
+                description: 'Specify a batch to roll back to.',
+                requiresValue: true,
+                default: '',
+            ))
+            ->addOption(new Option(
+                name: 'force',
+                shortcut: 'f',
+                description: 'Bypass the confirmation question when running this command in a production environment.',
+            ));
+    }
 
-            if (! $force && CLI::prompt(lang('Migrations.rollBackConfirm'), ['y', 'n']) === 'n') {
-                return EXIT_ERROR;
-            }
-            // @codeCoverageIgnoreEnd
+    protected function interact(array &$arguments, array &$options): void
+    {
+        if (! service('environment')->isProduction()) {
+            return;
+        }
+
+        if ($this->hasUnboundOption('force', $options)) {
+            return;
+        }
+
+        if (CLI::prompt(lang('Migrations.rollBackConfirm'), ['y', 'n']) === 'y') {
+            $options['force'] = null; // simulate the presence of the --force option
+        }
+    }
+
+    protected function execute(array $arguments, array $options): int
+    {
+        if (service('environment')->isProduction() && $options['force'] === false) {
+            return EXIT_ERROR;
         }
 
         /** @var MigrationRunner $runner */
         $runner = service('migrations');
 
         try {
-            $batch = $params['b'] ?? CLI::getOption('b') ?? $runner->getLastBatch() - 1;
+            $batch = $options['batch'];
+            assert(is_string($batch));
 
-            if (is_string($batch)) {
-                if (! ctype_digit($batch)) {
-                    CLI::error('Invalid batch number: ' . $batch, 'light_gray', 'red');
-                    CLI::newLine();
+            if ($batch === '') {
+                $batch = $runner->getLastBatch() - 1;
+            } elseif (! ctype_digit($batch)) {
+                CLI::error('Invalid batch number: ' . $batch, 'light_gray', 'red');
 
-                    return EXIT_ERROR;
-                }
-
+                return EXIT_ERROR;
+            } else {
                 $batch = (int) $batch;
             }
 
@@ -103,7 +92,7 @@ class MigrateRollback extends BaseCommand
 
             $exit = $this->withSignalsBlocked(static function () use ($runner, $batch): int {
                 if (! $runner->regress($batch)) {
-                    CLI::error(lang('Migrations.generalFault'), 'light_gray', 'red'); // @codeCoverageIgnore
+                    CLI::error(lang('Migrations.generalFault'), 'light_gray', 'red');
 
                     return EXIT_ERROR;
                 }
@@ -124,12 +113,10 @@ class MigrateRollback extends BaseCommand
             CLI::write('Done rolling back migrations.', 'green');
 
             return EXIT_SUCCESS;
-            // @codeCoverageIgnoreStart
         } catch (Throwable $e) {
-            $this->showError($e);
+            $this->renderThrowable($e);
 
             return EXIT_ERROR;
-            // @codeCoverageIgnoreEnd
         }
     }
 }
