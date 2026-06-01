@@ -201,6 +201,8 @@ Commands
 - Added ``key:rotate`` command to demote the current ``encryption.key`` to ``encryption.previousKeys`` in **.env** and generate a new key. See :ref:`spark-key-rotate`.
 - Added ``AbstractCommand::callSilently()`` to invoke another command with its output discarded, restoring the prior IO afterwards. See :ref:`modern-commands-call-silently`.
 - Added :php:class:`NullInputOutput <CodeIgniter\\CLI\\NullInputOutput>`, an :php:class:`InputOutput <CodeIgniter\\CLI\\InputOutput>` sink that discards all writes and returns an empty string from ``input()``.
+- The ``spark routes`` command now resolves the Before/After Filters columns for routes that use custom placeholders registered via ``$routes->addPlaceholder()``.
+  Sample URIs for custom placeholders are derived from the placeholder regex when possible, and can be overridden through the new ``$placeholderSamples`` property in ``Config\Routing``. See :ref:`placeholder-samples-for-spark-routes`.
 
 Testing
 =======

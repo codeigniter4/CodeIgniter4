@@ -237,6 +237,35 @@ This must be called before you add the route:
 
 .. literalinclude:: routing/017.php
 
+.. _placeholder-samples-for-spark-routes:
+
+Sample Values for ``spark routes``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 4.8.0
+
+The :doc:`spark routes </cli/spark_commands>` command needs a concrete URI that matches each route in order
+to resolve the filters that would run for it. For the built-in placeholders (``num``, ``segment``,
+``alpha``, and so on) it uses a hardcoded sample value. For custom placeholders it now attempts to generate
+a value from the placeholder's regular expression, so common patterns like ``[A-Z]{3}[0-9]+`` or the UUID
+example above work without any extra configuration.
+
+If the regex uses features the generator cannot reverse (lookarounds, backreferences, complex alternations,
+etc.), the Before/After Filters columns fall back to showing ``<unknown>``. You can fix that by providing an
+explicit sample in ``app/Config/Routing.php``:
+
+.. literalinclude:: routing/075.php
+
+Each value must match its placeholder's regular expression. A value that does not match is ignored. Entries
+override the samples for the built-in placeholders too, not only custom ones.
+
+The resolution order is: a matching value declared in ``$placeholderSamples``, then the built-in sample for
+standard placeholders, then an auto-generated value, then ``<unknown>`` as a last resort.
+
+.. note:: This configuration only affects the ``spark routes`` display.
+    Filter execution at request time already honors custom placeholders
+    without any setup.
+
 Regular Expressions
 -------------------
 
