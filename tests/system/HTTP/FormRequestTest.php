@@ -499,6 +499,38 @@ final class FormRequestTest extends CIUnitTestCase
         $this->assertSame([], $_SESSION['_ci_old_input']['post']);
     }
 
+    #[RunInSeparateProcess]
+    public function testDefaultFailedValidationPreservesGetDataWhenPostDataIsPrepared(): void
+    {
+        /** @var array<string, mixed> $_SESSION */
+        $_SESSION = [];
+
+        service('superglobals')->setGet('category', '2');
+        service('superglobals')->setPost('title', ' Hello World ');
+
+        $formRequest = new class ($this->makeRequest()) extends FormRequest {
+            public function rules(): array
+            {
+                return [
+                    'title' => 'required',
+                    'body'  => 'required',
+                ];
+            }
+
+            protected function prepareForValidation(array $data): array
+            {
+                $data['title'] = trim($data['title'] ?? '');
+
+                return $data;
+            }
+        };
+
+        $formRequest->resolveRequest();
+
+        $this->assertSame(['category' => '2'], $_SESSION['_ci_old_input']['get']);
+        $this->assertSame(['title' => 'Hello World'], $_SESSION['_ci_old_input']['post']);
+    }
+
     // -------------------------------------------------------------------------
     // Authorization failure
     // -------------------------------------------------------------------------

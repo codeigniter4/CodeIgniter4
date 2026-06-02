@@ -168,8 +168,8 @@ abstract class FormRequest
             : 'post';
 
         $oldInput = [
-            'get'  => [],
-            'post' => [],
+            'get'  => service('superglobals')->getGetArray(),
+            'post' => service('superglobals')->getPostArray(),
         ];
         $oldInput[$key] = $preparedData;
 
