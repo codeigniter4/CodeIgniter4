@@ -58,10 +58,10 @@ The following functions are available:
 
 .. note:: Prior to v4.8.0, only arrays were supported. Support for objects was added in v4.8.0.
 
-..  php:function:: dot_array_has(string $search, array $values): bool
+..  php:function:: dot_array_has(string $search, array|object $values): bool
 
     :param  string  $search: The dot-notation string describing how to search the array
-    :param  array   $values: The array to check
+    :param  array|object $values: The array or object to check
     :returns: ``true`` if the key exists, otherwise ``false``
     :rtype: bool
 
@@ -69,6 +69,8 @@ The following functions are available:
 
     Checks if an array key exists using dot syntax.
     This method supports wildcard ``*`` in the same way as ``dot_array_search()``.
+
+    .. note:: Prior to v4.8.0, only arrays were supported. Support for objects was added in v4.8.0.
 
     .. literalinclude:: array_helper/015.php
         :lines: 2-
@@ -105,9 +107,9 @@ The following functions are available:
     .. literalinclude:: array_helper/017.php
         :lines: 2-
 
-..  php:function:: dot_array_only(array $array, array|string $indexes): array
+..  php:function:: dot_array_only(array|object $array, array|string $indexes): array
 
-    :param  array            $array: The source array
+    :param  array|object     $array: The source array or object
     :param  array|string     $indexes: One key or a list of keys using dot notation
     :returns: Nested array containing only the requested keys
     :rtype: array
@@ -119,12 +121,14 @@ The following functions are available:
     Wildcard ``*`` is supported. Unlike ``dot_array_set()`` and ``dot_array_unset()``,
     this method also allows wildcard at the end (for example ``user.*``).
 
+    .. note:: Prior to v4.8.0, only arrays were supported. Support for objects was added in v4.8.0.
+
     .. literalinclude:: array_helper/018.php
         :lines: 2-
 
-..  php:function:: dot_array_except(array $array, array|string $indexes): array
+..  php:function:: dot_array_except(array|object $array, array|string $indexes): array
 
-    :param  array            $array: The source array
+    :param  array|object     $array: The source array or object
     :param  array|string     $indexes: One key or a list of keys using dot notation
     :returns: Nested array with the specified keys removed
     :rtype: array
@@ -135,6 +139,8 @@ The following functions are available:
 
     Wildcard ``*`` is supported. Unlike ``dot_array_set()`` and ``dot_array_unset()``,
     this method also allows wildcard at the end (for example ``user.*``).
+
+    .. note:: Prior to v4.8.0, only arrays were supported. Support for objects was added in v4.8.0.
 
     .. literalinclude:: array_helper/019.php
         :lines: 2-

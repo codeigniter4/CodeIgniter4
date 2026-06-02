@@ -146,9 +146,9 @@ final class ArrayHelper
      *
      * If wildcard `*` is used, all items for the key after it must have the key.
      *
-     * @param array<array-key, mixed> $array
+     * @param array<array-key, mixed>|object $array
      */
-    public static function dotHas(string $index, array $array): bool
+    public static function dotHas(string $index, array|object $array): bool
     {
         self::ensureValidWildcardPattern($index);
 
@@ -164,10 +164,10 @@ final class ArrayHelper
     /**
      * Recursively check key existence by dot path, including wildcard support.
      *
-     * @param array<array-key, mixed> $array
-     * @param list<string>            $indexes
+     * @param array<array-key, mixed>|object $array
+     * @param list<string>                   $indexes
      */
-    private static function hasByDotPath(array $array, array $indexes): bool
+    private static function hasByDotPath(array|object $array, array $indexes): bool
     {
         if ($indexes === []) {
             return true;
@@ -176,8 +176,10 @@ final class ArrayHelper
         $currentIndex = array_shift($indexes);
 
         if ($currentIndex === '*') {
-            foreach ($array as $item) {
-                if (! is_array($item) || ! self::hasByDotPath($item, $indexes)) {
+            $iterable = is_object($array) ? self::toIterable($array) : $array;
+
+            foreach ($iterable as $item) {
+                if ((! is_array($item) && ! is_object($item)) || ! self::hasByDotPath($item, $indexes)) {
                     return false;
                 }
             }
@@ -185,7 +187,7 @@ final class ArrayHelper
             return true;
         }
 
-        if (! array_key_exists($currentIndex, $array)) {
+        if (! self::valueExists($array, $currentIndex)) {
             return false;
         }
 
@@ -193,11 +195,13 @@ final class ArrayHelper
             return true;
         }
 
-        if (! is_array($array[$currentIndex])) {
+        $value = self::value($array, $currentIndex);
+
+        if (! is_array($value) && ! is_object($value)) {
             return false;
         }
 
-        return self::hasByDotPath($array[$currentIndex], $indexes);
+        return self::hasByDotPath($value, $indexes);
     }
 
     /**
@@ -247,12 +251,12 @@ final class ArrayHelper
     /**
      * Gets only the specified keys using dot syntax.
      *
-     * @param array<array-key, mixed> $array
-     * @param list<string>|string     $indexes
+     * @param array<array-key, mixed>|object $array
+     * @param list<string>|string            $indexes
      *
      * @return array<array-key, mixed>
      */
-    public static function dotOnly(array $array, array|string $indexes): array
+    public static function dotOnly(array|object $array, array|string $indexes): array
     {
         $indexes = is_string($indexes) ? [$indexes] : $indexes;
         $result  = [];
@@ -261,7 +265,7 @@ final class ArrayHelper
             self::ensureValidWildcardPattern($index, true);
 
             if ($index === '*') {
-                $result = [...$result, ...$array];
+                $result = [...$result, ...(is_object($array) ? self::toIterable($array) : $array)];
 
                 continue;
             }
@@ -280,15 +284,15 @@ final class ArrayHelper
     /**
      * Gets all keys except the specified ones using dot syntax.
      *
-     * @param array<array-key, mixed> $array
-     * @param list<string>|string     $indexes
+     * @param array<array-key, mixed>|object $array
+     * @param list<string>|string            $indexes
      *
      * @return array<array-key, mixed>
      */
-    public static function dotExcept(array $array, array|string $indexes): array
+    public static function dotExcept(array|object $array, array|string $indexes): array
     {
         $indexes = is_string($indexes) ? [$indexes] : $indexes;
-        $result  = $array;
+        $result  = self::toArrayView($array);
 
         foreach ($indexes as $index) {
             self::ensureValidWildcardPattern($index, true);
@@ -466,20 +470,20 @@ final class ArrayHelper
     private static function valueExists(array|object $data, string $key): bool
     {
         if (is_array($data)) {
-            return isset($data[$key]);
+            return array_key_exists($key, $data);
         }
 
         $array = self::entityToArray($data);
 
         if ($array !== null) {
-            return isset($array[$key]);
+            return array_key_exists($key, $array);
         }
 
         if ($data instanceof ArrayAccess && $data->offsetExists($key)) {
             return true;
         }
 
-        if (isset(get_object_vars($data)[$key])) {
+        if (array_key_exists($key, get_object_vars($data))) {
             return true;
         }
 
@@ -548,6 +552,26 @@ final class ArrayHelper
         }
 
         return get_object_vars($data);
+    }
+
+    /**
+     * Normalize arrays or objects to an array view safe for dotExcept().
+     *
+     * @param array<array-key, mixed>|object $data
+     *
+     * @return array<array-key, mixed>
+     */
+    private static function toArrayView(array|object $data): array
+    {
+        $array = is_object($data) ? self::toIterable($data) : $data;
+
+        foreach ($array as $key => $value) {
+            if (is_array($value) || is_object($value)) {
+                $array[$key] = self::toArrayView($value);
+            }
+        }
+
+        return $array;
     }
 
     /**
@@ -688,14 +712,15 @@ final class ArrayHelper
     }
 
     /**
-     * Projects matching paths from source array into result with preserved structure.
+     * Projects matching paths from source into result with preserved structure.
      *
-     * @param list<string>            $indexes
-     * @param list<string>            $prefix
-     * @param array<array-key, mixed> $result
+     * @param array<array-key, mixed>|object $source
+     * @param list<string>                   $indexes
+     * @param list<string>                   $prefix
+     * @param array<array-key, mixed>        $result
      */
     private static function projectByDotPath(
-        mixed $source,
+        array|object $source,
         array $indexes,
         array &$result,
         array $prefix = [],
@@ -709,21 +734,37 @@ final class ArrayHelper
         $currentIndex = array_shift($indexes);
 
         if ($currentIndex === '*') {
-            if (! is_array($source)) {
-                return;
-            }
+            $iterable = is_object($source) ? self::toIterable($source) : $source;
 
-            foreach ($source as $key => $value) {
+            foreach ($iterable as $key => $value) {
+                if (! is_array($value) && ! is_object($value)) {
+                    if ($indexes === []) {
+                        self::setByDotPath($result, [...$prefix, (string) $key], $value);
+                    }
+
+                    continue;
+                }
+
                 self::projectByDotPath($value, $indexes, $result, [...$prefix, (string) $key]);
             }
 
             return;
         }
 
-        if (! is_array($source) || ! array_key_exists($currentIndex, $source)) {
+        if (! self::valueExists($source, $currentIndex)) {
             return;
         }
 
-        self::projectByDotPath($source[$currentIndex], $indexes, $result, [...$prefix, $currentIndex]);
+        $value = self::value($source, $currentIndex);
+
+        if (! is_array($value) && ! is_object($value)) {
+            if ($indexes === []) {
+                self::setByDotPath($result, [...$prefix, $currentIndex], $value);
+            }
+
+            return;
+        }
+
+        self::projectByDotPath($value, $indexes, $result, [...$prefix, $currentIndex]);
     }
 }

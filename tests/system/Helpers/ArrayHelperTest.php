@@ -177,6 +177,50 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertSame($expected, dot_array_only($data, 'user.*'));
     }
 
+    public function testDotArrayOnlyWithObjectValues(): void
+    {
+        $data = (object) [
+            'user' => (object) [
+                'id'      => 123,
+                'profile' => (object) [
+                    'name' => 'john',
+                ],
+            ],
+            'meta' => ['request_id' => 'abc'],
+        ];
+
+        $expected = [
+            'user' => [
+                'profile' => [
+                    'name' => 'john',
+                ],
+            ],
+        ];
+
+        $this->assertSame($expected, dot_array_only($data, 'user.profile.name'));
+    }
+
+    public function testDotArrayOnlyWildcardWithEntityRows(): void
+    {
+        $a      = new SomeEntity();
+        $a->foo = 1;
+        $a->bar = 2;
+
+        $b      = new SomeEntity();
+        $b->foo = 3;
+        $b->bar = 4;
+
+        $this->assertSame(
+            [
+                'rows' => [
+                    ['foo' => 1],
+                    ['foo' => 3],
+                ],
+            ],
+            dot_array_only(['rows' => [$a, $b]], 'rows.*.foo'),
+        );
+    }
+
     public function testDotArrayExcept(): void
     {
         $data = [
@@ -201,6 +245,44 @@ final class ArrayHelperTest extends CIUnitTestCase
     {
         $data = [
             'user' => [
+                'id'   => 123,
+                'name' => 'john',
+            ],
+            'meta' => ['request_id' => 'abc'],
+        ];
+
+        $expected = [
+            'user' => [],
+            'meta' => ['request_id' => 'abc'],
+        ];
+
+        $this->assertSame($expected, dot_array_except($data, 'user.*'));
+    }
+
+    public function testDotArrayExceptWithObjectValues(): void
+    {
+        $data = (object) [
+            'user' => (object) [
+                'id'   => 123,
+                'name' => 'john',
+            ],
+            'meta' => (object) ['request_id' => 'abc'],
+        ];
+
+        $expected = [
+            'user' => [
+                'name' => 'john',
+            ],
+            'meta' => ['request_id' => 'abc'],
+        ];
+
+        $this->assertSame($expected, dot_array_except($data, 'user.id'));
+    }
+
+    public function testDotArrayExceptWildcardWithObjectValues(): void
+    {
+        $data = (object) [
+            'user' => (object) [
                 'id'   => 123,
                 'name' => 'john',
             ],
@@ -456,6 +538,82 @@ final class ArrayHelperTest extends CIUnitTestCase
         ];
 
         $this->assertSame(['John', 'Maria'], dot_array_search('users.*.name', $data));
+    }
+
+    public function testDotArrayHasWithObjectValues(): void
+    {
+        $data = [
+            'user' => (object) [
+                'profile' => (object) [
+                    'name' => 'Jane',
+                ],
+            ],
+        ];
+
+        $this->assertTrue(dot_array_has('user.profile.name', $data));
+        $this->assertFalse(dot_array_has('user.profile.email', $data));
+    }
+
+    public function testDotArrayHasWithMagicObjectValues(): void
+    {
+        $data = [
+            'user' => new class () {
+                /**
+                 * @var array<string, array<string, string>>
+                 */
+                private array $values = [
+                    'profile' => [
+                        'name' => 'Jane',
+                    ],
+                ];
+
+                public function __isset(string $key): bool
+                {
+                    return array_key_exists($key, $this->values);
+                }
+
+                public function __get(string $key): mixed
+                {
+                    return $this->values[$key];
+                }
+            },
+        ];
+
+        $this->assertTrue(dot_array_has('user.profile.name', $data));
+    }
+
+    public function testDotArrayHasWithArrayAccessValues(): void
+    {
+        $data = [
+            'user' => new ArrayObject([
+                'profile' => [
+                    'name' => 'Jane',
+                ],
+            ]),
+        ];
+
+        $this->assertTrue(dot_array_has('user.profile.name', $data));
+    }
+
+    public function testDotArrayHasWithEntityValues(): void
+    {
+        $entity      = new SomeEntity();
+        $entity->foo = 'value';
+
+        $this->assertTrue(dot_array_has('user.foo', ['user' => $entity]));
+        $this->assertFalse(dot_array_has('user._options', ['user' => $entity]));
+    }
+
+    public function testDotArrayHasWildcardWithEntityValues(): void
+    {
+        $a      = new SomeEntity();
+        $a->foo = 1;
+
+        $b      = new SomeEntity();
+        $b->foo = 2;
+
+        $this->assertTrue(dot_array_has('rows.*.foo', ['rows' => [$a, $b]]));
+        $this->assertFalse(dot_array_has('rows.*._cast', ['rows' => [$a, $b]]));
     }
 
     /**
