@@ -21,7 +21,7 @@ use PHPUnit\Framework\Attributes\Group;
 /**
  * @internal
  */
-#[Group('Models')]
+#[Group('Others')]
 final class ObjectToRawArrayModelTest extends CIUnitTestCase
 {
     private function createModel(): Model
