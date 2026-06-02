@@ -1113,6 +1113,9 @@ Inserts a row and returns the insert ID reported by the database driver:
 This method returns ``false`` if the insert fails, no row is inserted, or the
 builder is in test mode. It uses the same insert ID behavior as ``$db->insertID()``.
 
+.. note:: This method cannot be used when preparing queries with ``$db->prepare()``
+    because prepared queries require the builder method to return a query object.
+
 $builder->ignore()
 ------------------
 
