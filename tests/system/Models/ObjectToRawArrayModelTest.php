@@ -17,7 +17,6 @@ use CodeIgniter\Entity\Entity;
 use CodeIgniter\Model;
 use CodeIgniter\Test\CIUnitTestCase;
 use PHPUnit\Framework\Attributes\Group;
-use ReflectionMethod;
 
 /**
  * @internal
