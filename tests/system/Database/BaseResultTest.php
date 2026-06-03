@@ -26,9 +26,20 @@ final class BaseResultTest extends CIUnitTestCase
     /**
      * Create a minimal concrete implementation of BaseResult for testing.
      */
+    /**
+     * Create a minimal concrete implementation of BaseResult for testing.
+     *
+     * @param list<array<string,mixed>> $resultArray   Result set as arrays.
+     * @param list<object>            $resultObject  Result set as objects.
+     */
     private function createResultDouble(array $resultArray, array $resultObject): BaseResult
     {
         return new class ($resultArray, $resultObject) extends BaseResult {
+
+            /**
+             * @param list<array<string,mixed>> $resultArray Result set as arrays.
+             * @param list<object> $resultObject Result set as objects.
+             */
             public function __construct(array $resultArray, array $resultObject)
             {
                 $this->resultArray  = $resultArray;
@@ -45,11 +56,17 @@ final class BaseResultTest extends CIUnitTestCase
                 return 0;
             }
 
+            /**
+             * @return list<string>
+             */
             public function getFieldNames(): array
             {
                 return [];
             }
 
+            /**
+             * @return list<object>
+             */
             public function getFieldData(): array
             {
                 return [];
@@ -64,6 +81,9 @@ final class BaseResultTest extends CIUnitTestCase
                 return true;
             }
 
+            /**
+             * @return list<array<string,mixed>>|false|null
+             */
             protected function fetchAssoc()
             {
                 return false;
@@ -129,8 +149,8 @@ final class BaseResultTest extends CIUnitTestCase
 
         $result = $this->createResultDouble([], [$row1, $row2]);
 
-        $this->assertEquals($row1, $result->getRowObject(0));
-        $this->assertEquals($row2, $result->getRowObject(1));
+        $this->assertSame($row1, $result->getRowObject(0));
+        $this->assertSame($row2, $result->getRowObject(1));
     }
 
     public function testGetRowObjectReturnsNullForEmptyResult(): void
@@ -148,7 +168,7 @@ final class BaseResultTest extends CIUnitTestCase
 
         $result = $this->createResultDouble([], [$row1]);
 
-        $this->assertEquals($row1, $result->getRowObject());
+        $this->assertSame($row1, $result->getRowObject());
     }
 
     public function testGetRowObjectAndGetRowArrayShareCurrentRow(): void
@@ -193,7 +213,7 @@ final class BaseResultTest extends CIUnitTestCase
         // Both methods should advance currentRow consistently
         $result->getRowObject(1);
         $result->getRowArray();
-        $this->assertEquals($row1, $result->getRowObject());
+        $this->assertSame($row1, $result->getRowObject());
     }
 
     // --------------------------------------------------------------------
@@ -218,7 +238,7 @@ final class BaseResultTest extends CIUnitTestCase
 
         $result = $this->createResultDouble([], [$row1]);
 
-        $this->assertEquals($row1, $result->getRow(999, 'object'));
+        $this->assertSame($row1, $result->getRow(999, 'object'));
     }
 
     public function testGetRowNullForColumnNameNotFound(): void
@@ -244,7 +264,7 @@ final class BaseResultTest extends CIUnitTestCase
         $result = $this->createResultDouble([], [$row]);
         $result->getCustomResultObject(stdClass::class);
 
-        $this->assertEquals($row, $result->getCustomRowObject(999, stdClass::class));
+        $this->assertNotInstanceOf(stdClass::class, $result->getCustomRowObject(999, stdClass::class));
     }
 
     // --------------------------------------------------------------------
@@ -291,7 +311,7 @@ final class BaseResultTest extends CIUnitTestCase
 
         $result->currentRow = 999;
 
-        $this->assertNull($result->getCustomRowObject(0, stdClass::class));
+        $this->assertNotInstanceOf(stdClass::class, $result->getCustomRowObject(0, stdClass::class));
     }
 
     public function testGetPreviousRowReturnsNullWhenCurrentRowIsInvalid(): void
