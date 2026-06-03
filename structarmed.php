@@ -101,7 +101,7 @@ return Architecture::define()
         'Pager'         => ['URI', 'View'],
         'Publisher'     => ['Files', 'URI'],
         // +API = API + its allowed layers; +Controller = Controller + its allowed layers
-        'RESTful'       => ['API', 'Controller', 'Database', 'Format', 'HTTP', 'Model', 'Pager', 'URI', 'Validation'],
+        'RESTful'       => ['+API', '+Controller'],
         'Router'        => ['HTTP', 'I18n'],
         'Security'      => ['Cookie', 'HTTP', 'I18n', 'Session'],
         'Session'       => ['Cookie', 'Database', 'HTTP', 'I18n'],
