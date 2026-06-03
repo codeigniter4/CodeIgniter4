@@ -25,9 +25,6 @@ final class BaseResultTest extends CIUnitTestCase
 {
     /**
      * Create a minimal concrete implementation of BaseResult for testing.
-     */
-    /**
-     * Create a minimal concrete implementation of BaseResult for testing.
      *
      * @param list<array<string,mixed>> $resultArray   Result set as arrays.
      * @param list<object>            $resultObject  Result set as objects.
@@ -264,7 +261,7 @@ final class BaseResultTest extends CIUnitTestCase
         $result = $this->createResultDouble([], [$row]);
         $result->getCustomResultObject(stdClass::class);
 
-        $this->assertNotInstanceOf(stdClass::class, $result->getCustomRowObject(999, stdClass::class));
+        $this->assertNull($result->getCustomRowObject(999, stdClass::class));
     }
 
     // --------------------------------------------------------------------
@@ -311,7 +308,7 @@ final class BaseResultTest extends CIUnitTestCase
 
         $result->currentRow = 999;
 
-        $this->assertNotInstanceOf(stdClass::class, $result->getCustomRowObject(0, stdClass::class));
+        $this->assertNull($result->getCustomRowObject(0, stdClass::class));
     }
 
     public function testGetPreviousRowReturnsNullWhenCurrentRowIsInvalid(): void
