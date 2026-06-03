@@ -295,6 +295,7 @@ HTTP
   Now you can simply do ``new URI($uri, true)``.
 - ``CLIRequest`` now supports parsing array options written multiple times (e.g., ``--option=value1 --option=value2``) into an array of values. This allows you to easily pass multiple values for the same option without needing to use a comma-separated string.
   When used with ``CLIRequest::getOption()``, an array option will return its last value (for example, in this case, ``value2``). To retrieve all values for an array option, use ``CLIRequest::getRawOption()``.
+- ``IncomingRequest`` now generates a unique request ID for each request and provides it via the new ``getRequestId()`` method. If the request includes an ``X-Request-ID`` header, that value will be used as the request ID instead of generating a new one. See :ref:`request-id` for details.
 
 Validation
 ==========
