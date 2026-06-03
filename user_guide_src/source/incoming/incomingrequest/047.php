@@ -1,3 +1,0 @@
-<?php
-
-$requestId = $request->getRequestId();
