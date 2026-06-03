@@ -11,7 +11,7 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Models;
+namespace CodeIgniter\Models; // Fixed model-recursive behavior
 
 use CodeIgniter\Entity\Entity;
 use CodeIgniter\Model;
