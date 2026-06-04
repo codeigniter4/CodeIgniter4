@@ -309,7 +309,7 @@ abstract class BaseResult implements ResultInterface
         }
 
         // Return null if the requested index is out of bounds
-        if (!isset($this->customResultObject[$className][$n])) {
+        if (! isset($this->customResultObject[$className][$n])) {
             return null;
         }
         if ($n !== $this->currentRow && isset($this->customResultObject[$className][$n])) {
@@ -335,7 +335,7 @@ abstract class BaseResult implements ResultInterface
 
         // If default call (n = 0) but currentRow was previously set to an invalid index,
         // return null instead of silently falling back to the first row.
-        if ($n === 0 && $this->currentRow !== 0 && !isset($result[$this->currentRow])) {
+        if ($n === 0 && $this->currentRow !== 0 && ! isset($result[$this->currentRow])) {
             return null;
         }
         if ($n !== $this->currentRow && isset($result[$n])) {
@@ -360,7 +360,7 @@ abstract class BaseResult implements ResultInterface
         }
 
         // Similar safeguard for object rows
-        if ($n === 0 && $this->currentRow !== 0 && !isset($result[$this->currentRow])) {
+        if ($n === 0 && $this->currentRow !== 0 && ! isset($result[$this->currentRow])) {
             return null;
         }
         if ($n !== $this->currentRow && isset($result[$n])) {
