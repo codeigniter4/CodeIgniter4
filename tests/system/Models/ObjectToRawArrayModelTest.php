@@ -41,6 +41,8 @@ final class ObjectToRawArrayModelTest extends CIUnitTestCase
 
     /**
      * Call protected objectToRawArray via reflection.
+     *
+     * @return array<string, mixed>
      */
     private function callObjectToRawArray(Model $model, object $object, bool $onlyChanged, bool $recursive): array
     {
@@ -53,12 +55,12 @@ final class ObjectToRawArrayModelTest extends CIUnitTestCase
     {
         $model = $this->createModel();
 
-        $inner       = new class () extends Entity {
+        $inner = new class () extends Entity {
             protected $attributes = ['name' => 'inner'];
             protected $original   = ['name' => 'inner'];
         };
 
-        $outer            = new class () extends Entity {
+        $outer = new class () extends Entity {
             protected $attributes = ['name' => 'outer', 'nested' => null];
             protected $original   = ['name' => 'outer', 'nested' => null];
         };
@@ -77,12 +79,12 @@ final class ObjectToRawArrayModelTest extends CIUnitTestCase
     {
         $model = $this->createModel();
 
-        $inner       = new class () extends Entity {
+        $inner = new class () extends Entity {
             protected $attributes = ['name' => 'inner'];
             protected $original   = ['name' => 'inner'];
         };
 
-        $outer            = new class () extends Entity {
+        $outer = new class () extends Entity {
             protected $attributes = ['name' => 'outer', 'nested' => null];
             protected $original   = ['name' => 'outer', 'nested' => null];
         };
@@ -113,8 +115,7 @@ final class ObjectToRawArrayModelTest extends CIUnitTestCase
 
     public function testObjectToRawArrayOnlyChanged(): void
     {
-        $model = $this->createModel();
-
+        $model  = $this->createModel();
         $entity = new class () extends Entity {
             protected $attributes = ['name' => 'original', 'value' => 'keep'];
             protected $original   = ['name' => 'original', 'value' => 'keep'];
