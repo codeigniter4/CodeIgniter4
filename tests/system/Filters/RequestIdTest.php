@@ -20,7 +20,7 @@ use PHPUnit\Framework\Attributes\Group;
  * @internal
  */
 #[Group('Others')]
-final class RequestIdFilter extends CIUnitTestCase
+final class RequestIdTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {
