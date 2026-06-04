@@ -50,15 +50,6 @@ use stdClass;
 class IncomingRequest extends Request
 {
     /**
-     * The Request ID associated with this request useful for
-     * debugging, traceability, and logging.
-     *
-     * Incoming request's X-Request-Id header will get priority
-     * over automatically generated request ids.
-     */
-    protected string $requestId;
-
-    /**
      * The URI for this request.
      *
      * Note: This WILL NOT match the actual URL in the browser since for
@@ -167,7 +158,6 @@ class IncomingRequest extends Request
             $body = null;
         }
 
-        $this->requestId    = $this->hasHeader('X-Request-ID') ? $this->getHeaderLine('X-Request-ID') : $this->generateRequestId();
         $this->uri          = $uri;
         $this->body         = $body;
         $this->userAgent    = $userAgent;
@@ -189,11 +179,6 @@ class IncomingRequest extends Request
         $this->input = null;
     }
 
-    private function generateRequestId(): string
-    {
-        return bin2hex(random_bytes(16));
-    }
-
     private function getPostMaxSize(): int
     {
         $postMaxSize = ini_get('post_max_size');
@@ -204,11 +189,6 @@ class IncomingRequest extends Request
             'K'     => (int) str_replace('K', '', $postMaxSize) * 1024,
             default => (int) $postMaxSize,
         };
-    }
-
-    public function getRequestId(): string
-    {
-        return $this->requestId;
     }
 
     /**
