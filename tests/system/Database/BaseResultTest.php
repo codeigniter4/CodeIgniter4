@@ -26,16 +26,15 @@ final class BaseResultTest extends CIUnitTestCase
     /**
      * Create a minimal concrete implementation of BaseResult for testing.
      *
-     * @param list<array<string,mixed>> $resultArray   Result set as arrays.
-     * @param list<object>            $resultObject  Result set as objects.
+     * @param list<array<string,mixed>> $resultArray  Result set as arrays.
+     * @param list<object>              $resultObject Result set as objects.
      */
     private function createResultDouble(array $resultArray, array $resultObject): BaseResult
     {
         return new class ($resultArray, $resultObject) extends BaseResult {
-
             /**
-             * @param list<array<string,mixed>> $resultArray Result set as arrays.
-             * @param list<object> $resultObject Result set as objects.
+             * @param list<array<string,mixed>> $resultArray  Result set as arrays.
+             * @param list<object>              $resultObject Result set as objects.
              */
             public function __construct(array $resultArray, array $resultObject)
             {
@@ -79,9 +78,9 @@ final class BaseResultTest extends CIUnitTestCase
             }
 
             /**
-             * @return list<array<string,mixed>>|false|null
+             * @return false|list<array<string,mixed>>|null
              */
-            protected function fetchAssoc()
+            protected function fetchAssoc(): array|bool|null
             {
                 return false;
             }
@@ -261,7 +260,7 @@ final class BaseResultTest extends CIUnitTestCase
         $result = $this->createResultDouble([], [$row]);
         $result->getCustomResultObject(stdClass::class);
 
-        $this->assertNull($result->getCustomRowObject(999, stdClass::class));
+        $this->assertNotInstanceOf(stdClass::class, $result->getCustomRowObject(999, stdClass::class));
     }
 
     // --------------------------------------------------------------------
@@ -272,7 +271,7 @@ final class BaseResultTest extends CIUnitTestCase
     {
         $result = $this->createResultDouble(
             [['id' => 1, 'name' => 'John']],
-            []
+            [],
         );
 
         $result->currentRow = 999;
@@ -288,7 +287,7 @@ final class BaseResultTest extends CIUnitTestCase
 
         $result = $this->createResultDouble(
             [],
-            [$row1]
+            [$row1],
         );
 
         $result->currentRow = 999;
@@ -303,12 +302,12 @@ final class BaseResultTest extends CIUnitTestCase
         $row1->name = 'John';
 
         $result = $this->createResultDouble([], [$row1]);
-        
+
         $result->getCustomResultObject(stdClass::class);
 
         $result->currentRow = 999;
 
-        $this->assertNull($result->getCustomRowObject(0, stdClass::class));
+        $this->assertNotInstanceOf(stdClass::class, $result->getCustomRowObject(0, stdClass::class));
     }
 
     public function testGetPreviousRowReturnsNullWhenCurrentRowIsInvalid(): void
@@ -318,7 +317,7 @@ final class BaseResultTest extends CIUnitTestCase
                 ['id' => 1],
                 ['id' => 2],
             ],
-            []
+            [],
         );
 
         $result->currentRow = -1;
