@@ -34,6 +34,8 @@ class RequestId implements FilterInterface
 
         context()->set('request_id', $requestId);
 
+        $request->setHeader('X-Request-ID', $requestId);
+
         return null;
     }
 
@@ -42,7 +44,9 @@ class RequestId implements FilterInterface
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null): ?ResponseInterface
     {
-        $response->setHeader('X-Request-ID', context()->get('request_id'));
+        if (context()->has('request_id')) {
+            $response->setHeader('X-Request-ID', context()->get('request_id'));
+        }
 
         return null;
     }
