@@ -35,12 +35,14 @@ final class TransformerTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        Services::resetSingle('request');
         Services::superglobals()->setGetArray([]);
     }
 
     protected function tearDown(): void
     {
         Services::superglobals()->setGetArray([]);
+        Services::resetSingle('request');
 
         parent::tearDown();
     }
