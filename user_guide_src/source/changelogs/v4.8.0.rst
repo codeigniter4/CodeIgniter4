@@ -237,6 +237,7 @@ Others
 - Added :php:class:`UniqueConstraintViolationException <CodeIgniter\\Database\\Exceptions\\UniqueConstraintViolationException>` which extends ``DatabaseException`` and is thrown on duplicate key (unique constraint) violations across all database drivers. See :ref:`database-unique-constraint-violation`.
 - Added ``$db->getLastException()`` which returns the typed exception even when ``DBDebug`` is ``false``. See :ref:`database-get-last-exception`.
 - Added ``DatabaseException::getDatabaseCode()`` returning the native driver error code as ``int|string``; ``getCode()`` is constrained to ``int`` by PHP's ``Throwable`` interface and cannot carry string SQLSTATE codes.
+- Added the ``transformRelated()`` method to ``CodeIgniter\API\BaseTransformer`` to safely transform related/nested resources. This prevents global request state leakage (like ``?include=`` and ``?fields=`` query parameters) from the parent request into child transformers, and intelligently routes the data to ``transform()`` or ``transformMany()`` based on the input type.
 
 Debug
 =====
