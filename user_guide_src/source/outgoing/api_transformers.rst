@@ -72,7 +72,7 @@ The ``make:transformer`` command supports several options:
 
     .. code-block:: console
 
-        php spark make:transformer User --namespace="MyCompany\\API"
+        php spark make:transformer User --namespace MyCompany\API
 
 **--force**
     Forces overwriting an existing file:
