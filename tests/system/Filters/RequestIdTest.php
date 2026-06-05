@@ -78,8 +78,8 @@ final class RequestIdTest extends CIUnitTestCase
 
     public function testAfter(): void
     {
-        $filter  = new RequestId();
-        $request = service('request', null, false);
+        $filter   = new RequestId();
+        $request  = service('request', null, false);
         $response = service('response', null, false);
 
         context()->set('request_id', 'test-request-id-123');
@@ -92,8 +92,8 @@ final class RequestIdTest extends CIUnitTestCase
 
     public function testAfterWithoutRequestId(): void
     {
-        $filter  = new RequestId();
-        $request = service('request', null, false);
+        $filter   = new RequestId();
+        $request  = service('request', null, false);
         $response = service('response', null, false);
 
         context()->remove('request_id');
@@ -105,8 +105,8 @@ final class RequestIdTest extends CIUnitTestCase
 
     public function testResponseOutputsRequestIdFromRequestHeader(): void
     {
-        $filter  = new RequestId();
-        $request = service('request', null, false);
+        $filter   = new RequestId();
+        $request  = service('request', null, false);
         $response = service('response', null, false);
 
         $existingRequestId = 'test-request-id-123';
@@ -122,8 +122,8 @@ final class RequestIdTest extends CIUnitTestCase
 
     public function testResponseOutputsGeneratedRequestId(): void
     {
-        $filter  = new RequestId();
-        $request = service('request', null, false);
+        $filter   = new RequestId();
+        $request  = service('request', null, false);
         $response = service('response', null, false);
 
         context()->remove('request_id');
