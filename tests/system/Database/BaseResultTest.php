@@ -20,7 +20,7 @@ use stdClass;
 /**
  * @internal
  */
-#[Group('DatabaseLive')]
+#[Group('Others')]
 final class BaseResultTest extends CIUnitTestCase
 {
     /**
