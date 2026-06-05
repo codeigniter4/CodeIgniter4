@@ -126,7 +126,6 @@ final class ConfigCheck extends BaseCommand
     private function getKintD(object $config): string
     {
         ob_start();
-        // @phpstan-ignore function.resultUnused
         d($config);
         $output = ob_get_clean();
 

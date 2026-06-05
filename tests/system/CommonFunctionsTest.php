@@ -738,7 +738,6 @@ final class CommonFunctionsTest extends CIUnitTestCase
         Kint::$cli_detection = false;
 
         $this->expectOutputRegex('/<script class="kint-rich-script" nonce="[a-zA-Z0-9+\/-_]+[=]{0,2}">/u');
-        // @phpstan-ignore function.resultUnused
         d('string');
 
         // Restore settings
