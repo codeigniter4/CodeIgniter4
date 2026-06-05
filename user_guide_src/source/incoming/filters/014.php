@@ -14,8 +14,8 @@ class Filters extends BaseConfig
             'pagecache',  // Web Page Caching
         ],
         'after' => [
-            'requestid',   // Request ID for each request
             'pagecache',   // Web Page Caching
+            'requestid',   // Request ID for each request
             'performance', // Performance Metrics
             'toolbar',     // Debug Toolbar
         ],
