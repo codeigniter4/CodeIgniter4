@@ -48,7 +48,10 @@ use InvalidArgumentException;
  *   protected function includePosts(): array
  *   {
  *       $posts = model('PostModel')->where('user_id', $this->resource['id'])->findAll();
- *       return (new PostTransformer())->transformMany($posts);
+ *
+ *       // Use transformRelated() to safely transform nested resources
+ *       // without leaking the parent's request state (fields/includes).
+ *       return $this->transformRelated(PostTransformer::class, $posts);
  *   }
  * }
  */
@@ -122,6 +125,32 @@ abstract class BaseTransformer implements TransformerInterface
     public function transformMany(array $resources): array
     {
         return array_map($this->transform(...), $resources);
+    }
+
+    /**
+     * Transforms related resources using a fresh, isolated transformer.
+     * Automatically determines whether to use transform() or transformMany().
+     *
+     * @param class-string<TransformerInterface>|TransformerInterface $transformer
+     * @param array<int|string, mixed>|object|null                    $resources
+     *
+     * @return array<int, array<string, mixed>>|array<string, mixed>
+     */
+    protected function transformRelated(string|TransformerInterface $transformer, mixed $resources): array
+    {
+        $instance = is_string($transformer) ? new $transformer() : $transformer;
+
+        if ($instance instanceof self) {
+            // Prevent Global State Leakage silently.
+            $instance->fields   = null;
+            $instance->includes = null;
+        }
+
+        if (is_array($resources) && array_is_list($resources)) {
+            return $instance->transformMany($resources);
+        }
+
+        return $instance->transform($resources);
     }
 
     /**
