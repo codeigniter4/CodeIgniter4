@@ -696,7 +696,6 @@ final class TransformerTest extends CIUnitTestCase
 
         $result = $transformer->transformMany($parents);
 
-        $this->assertIsArray($result);
         $this->assertCount(2, $result);
 
         $this->assertSame(1, $result[0]['parent_id']);
@@ -704,7 +703,6 @@ final class TransformerTest extends CIUnitTestCase
         $this->assertSame(99, $result[0]['child']['child_id']);
 
         $this->assertSame(2, $result[1]['parent_id']);
-        $this->assertIsArray($result[1]['child']);
         $this->assertSame(99, $result[1]['child']['child_id']);
     }
 }
