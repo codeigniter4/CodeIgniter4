@@ -75,4 +75,66 @@ final class RequestIdTest extends CIUnitTestCase
         $this->assertSame(32, strlen($requestId));
         $this->assertMatchesRegularExpression('/^[A-Za-z0-9._:-]+$/', $requestId);
     }
+
+    public function testAfter(): void
+    {
+        $filter  = new RequestId();
+        $request = service('request', null, false);
+        $response = service('response', null, false);
+
+        context()->set('request_id', 'test-request-id-123');
+
+        $filter->after($request, $response);
+
+        $this->assertTrue($response->hasHeader('X-Request-ID'));
+        $this->assertSame('test-request-id-123', $response->getHeaderLine('X-Request-ID'));
+    }
+
+    public function testAfterWithoutRequestId(): void
+    {
+        $filter  = new RequestId();
+        $request = service('request', null, false);
+        $response = service('response', null, false);
+
+        context()->remove('request_id');
+
+        $filter->after($request, $response);
+
+        $this->assertFalse($response->hasHeader('X-Request-ID'));
+    }
+
+    public function testResponseOutputsRequestIdFromRequestHeader(): void
+    {
+        $filter  = new RequestId();
+        $request = service('request', null, false);
+        $response = service('response', null, false);
+
+        $existingRequestId = 'test-request-id-123';
+        $request->setHeader('X-Request-ID', $existingRequestId);
+
+        $filter->before($request);
+
+        $filter->after($request, $response);
+
+        $this->assertTrue($response->hasHeader('X-Request-ID'));
+        $this->assertSame($existingRequestId, $response->getHeaderLine('X-Request-ID'));
+    }
+
+    public function testResponseOutputsGeneratedRequestId(): void
+    {
+        $filter  = new RequestId();
+        $request = service('request', null, false);
+        $response = service('response', null, false);
+
+        context()->remove('request_id');
+
+        $filter->before($request);
+
+        $generatedRequestId = context()->get('request_id');
+
+        $filter->after($request, $response);
+
+        $this->assertTrue($response->hasHeader('X-Request-ID'));
+        $this->assertSame($generatedRequestId, $response->getHeaderLine('X-Request-ID'));
+    }
 }
