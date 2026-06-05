@@ -22,6 +22,7 @@ use CodeIgniter\Test\Mock\MockAppConfig;
 use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
+use Tests\Support\API\ParentTransformer;
 
 /**
  * @internal
@@ -640,5 +641,70 @@ final class TransformerTest extends CIUnitTestCase
 
         $this->assertArrayHasKey('posts', $result);
         $this->assertSame([['id' => 1, 'title' => 'Post 1']], $result['posts']);
+    }
+
+    public function testTransformRelatedPreventsGlobalStateLeakage(): void
+    {
+        $request = $this->createMockRequest('include=child');
+
+        $transformer = new ParentTransformer($request);
+        $result      = $transformer->transform(['id' => 1]);
+
+        $this->assertSame([
+            'parent_id' => 1,
+            'child'     => [
+                'child_id' => 99,
+                'status'   => 'transformed',
+            ],
+        ], $result);
+    }
+
+    public function testTransformRelatedSmartRoutingForSingleItem(): void
+    {
+        $request = $this->createMockRequest('include=child');
+
+        $transformer = new ParentTransformer($request);
+        $result      = $transformer->transform(['id' => 1]);
+
+        $this->assertIsArray($result['child']);
+        $this->assertArrayHasKey('child_id', $result['child']);
+        $this->assertSame(99, $result['child']['child_id']);
+    }
+
+    public function testTransformRelatedSmartRoutingForCollection(): void
+    {
+        $request = $this->createMockRequest('include=childrenCollection');
+
+        $transformer = new ParentTransformer($request);
+        $result      = $transformer->transform(['id' => 1]);
+
+        $this->assertIsArray($result['childrenCollection']);
+        $this->assertCount(2, $result['childrenCollection']);
+        $this->assertSame(77, $result['childrenCollection'][0]['child_id']);
+        $this->assertSame(88, $result['childrenCollection'][1]['child_id']);
+    }
+
+    public function testTransformRelatedWorksWhenParentUsesTransformMany(): void
+    {
+        $request     = $this->createMockRequest('include=child');
+        $transformer = new ParentTransformer($request);
+
+        $parents = [
+            ['id' => 1],
+            ['id' => 2],
+        ];
+
+        $result = $transformer->transformMany($parents);
+
+        $this->assertIsArray($result);
+        $this->assertCount(2, $result);
+
+        $this->assertSame(1, $result[0]['parent_id']);
+        $this->assertIsArray($result[0]['child']);
+        $this->assertSame(99, $result[0]['child']['child_id']);
+
+        $this->assertSame(2, $result[1]['parent_id']);
+        $this->assertIsArray($result[1]['child']);
+        $this->assertSame(99, $result[1]['child']['child_id']);
     }
 }
