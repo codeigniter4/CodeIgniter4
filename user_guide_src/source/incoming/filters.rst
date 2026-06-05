@@ -394,7 +394,7 @@ It is added to the request's context and can be accessed via the ``request_id`` 
 
 The ID is generated via ``bin2hex(random_bytes(16))``, so it is a 32-character hexadecimal string.
 
-To enable this filter, simply un-comment the ``requestid`` alias in the ``$required['before']`` and ``$required['after']`` array in **app/Config/Filters.php**:
+To enable this filter, simply add/uncomment the ``requestid`` alias in the ``$required['before']`` and ``$required['after']`` array in **app/Config/Filters.php**:
 
 .. literalinclude:: filters/014.php
 
