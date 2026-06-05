@@ -28,10 +28,12 @@ final class BaseResultTest extends CIUnitTestCase
      *
      * @param list<array<string,mixed>> $resultArray  Result set as arrays.
      * @param list<object>              $resultObject Result set as objects.
+     *
+     * @return BaseResult<mixed, mixed>
      */
     private function createResultDouble(array $resultArray, array $resultObject): BaseResult
     {
-        return new class ($resultArray, $resultObject) extends BaseResult {
+        return new /** @extends BaseResult<mixed, mixed> */ class ($resultArray, $resultObject) extends BaseResult {
             /**
              * @param list<array<string,mixed>> $resultArray  Result set as arrays.
              * @param list<object>              $resultObject Result set as objects.
