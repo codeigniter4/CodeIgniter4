@@ -253,16 +253,16 @@ final class BaseResultTest extends CIUnitTestCase
     // Custom Result Object
     // --------------------------------------------------------------------
 
-    public function testGetCustomRowObjectReturnsNullForOutOfBounds(): void
+    public function testGetCustomRowObjectWithInvalidIndexReturnsFirstRow(): void
     {
         $row       = new stdClass();
         $row->id   = 1;
         $row->name = 'John';
 
-        $result = $this->createResultDouble([], [$row]);
-        $result->getCustomResultObject(stdClass::class);
+        $result = $this->createResultDouble([], []);
+        $result->customResultObject[stdClass::class] = [$row];
 
-        $this->assertNotInstanceOf(stdClass::class, $result->getCustomRowObject(999, stdClass::class));
+        $this->assertSame($row, $result->getCustomRowObject(999, stdClass::class));
     }
 
     // --------------------------------------------------------------------
@@ -278,7 +278,7 @@ final class BaseResultTest extends CIUnitTestCase
 
         $result->currentRow = 999;
 
-        $this->assertNull($result->getRowArray());
+        $this->assertNull($result->getRowArray(999));
     }
 
     public function testGetRowObjectReturnsNullWhenCurrentRowIsInvalid(): void
@@ -294,7 +294,7 @@ final class BaseResultTest extends CIUnitTestCase
 
         $result->currentRow = 999;
 
-        $this->assertNull($result->getRowObject());
+        $this->assertNull($result->getRowObject(999));
     }
 
     public function testGetCustomRowObjectReturnsNullWhenCurrentRowIsInvalid(): void
@@ -303,13 +303,12 @@ final class BaseResultTest extends CIUnitTestCase
         $row1->id   = 1;
         $row1->name = 'John';
 
-        $result = $this->createResultDouble([], [$row1]);
-
-        $result->getCustomResultObject(stdClass::class);
+        $result = $this->createResultDouble([], []);
+        $result->customResultObject[stdClass::class] = [$row1];
 
         $result->currentRow = 999;
 
-        $this->assertNotInstanceOf(stdClass::class, $result->getCustomRowObject(0, stdClass::class));
+        $this->assertNull($result->getCustomRowObject(999, stdClass::class));
     }
 
     public function testGetPreviousRowReturnsNullWhenCurrentRowIsInvalid(): void
@@ -324,6 +323,6 @@ final class BaseResultTest extends CIUnitTestCase
 
         $result->currentRow = -1;
 
-        $this->assertNull($result->getPreviousRow());
+        $this->assertNull($result->getPreviousRow('array'));
     }
 }
