@@ -20,13 +20,13 @@ class UserTransformer extends BaseTransformer
         // Use $this->resource to access the current resource being transformed
         $posts = model('PostModel')->where('user_id', $this->resource['id'])->findAll();
 
-        return (new PostTransformer())->transformMany($posts);
+        return $this->transformRelated(PostTransformer::class, $posts);
     }
 
     protected function includeComments(): array
     {
         $comments = model('CommentModel')->where('user_id', $this->resource['id'])->findAll();
 
-        return (new CommentTransformer())->transformMany($comments);
+        return $this->transformRelated(CommentTransformer::class, $comments);
     }
 }

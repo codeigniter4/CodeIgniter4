@@ -147,6 +147,14 @@ resource name. Inside these methods, you can access the current resource being t
 
 .. literalinclude:: api_transformers/009.php
 
+.. important::
+    When transforming related resources inside an include method, always use ``$this->transformRelated()`` instead of manually instantiating a new transformer (e.g., ``new PostTransformer()``). 
+    
+    The ``transformRelated()`` method provides two major benefits:
+
+    1. It automatically determines whether to transform a single item or a collection based on the provided data.
+    2. It prevents **Global State Leakage**, ensuring that the parent request's query parameters (like ``?include=`` or ``?fields=``) do not accidentally bleed into the child transformer and cause unexpected infinite loops or `ApiException`.
+
 Note how the include methods use ``$this->resource['id']`` to access the ID of the user being transformed.
 The ``$this->resource`` property is automatically set by the transformer when ``transform()`` is called.
 
@@ -300,6 +308,20 @@ Class Reference
         includes are applied consistently to all items.
 
         .. literalinclude:: api_transformers/019.php
+
+    .. php:method:: transformRelated(string|TransformerInterface $transformer, mixed $resources)
+
+        :param class-string<TransformerInterface>|TransformerInterface $transformer: The class name or instance of the transformer to use
+        :param mixed $resources: The related resource data (Entity, array, object, or collection of these)
+        :returns: The transformed array (either a single item or a collection)
+        :rtype: array
+
+        Transforms related resources safely by isolating the new transformer from the parent's request state.
+        This prevents nested transformers from incorrectly inheriting the ``fields`` or ``includes`` requested for the parent resource.
+
+        It automatically uses ``transform()`` for single resources and ``transformMany()`` for collections (lists) by inspecting the provided ``$resources``.
+
+        .. literalinclude:: api_transformers/024.php
 
     .. php:method:: getAllowedFields()
 
