@@ -13,10 +13,12 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands;
 
+use CodeIgniter\CLI\CLI;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\OCI8\Connection as OCI8Connection;
 use CodeIgniter\Database\SQLite3\Connection as SQLite3Connection;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Database;
 use PHPUnit\Framework\Attributes\Group;
@@ -39,6 +41,7 @@ final class CreateDatabaseTest extends CIUnitTestCase
 
         parent::setUp();
 
+        CLI::resetLastWrite();
         $this->dropDatabase();
     }
 
@@ -46,6 +49,7 @@ final class CreateDatabaseTest extends CIUnitTestCase
     {
         parent::tearDown();
 
+        CLI::reset();
         $this->dropDatabase();
     }
 
@@ -81,9 +85,9 @@ final class CreateDatabaseTest extends CIUnitTestCase
         $this->setPrivateProperty(Database::class, 'instances', []);
     }
 
-    protected function getBuffer(): string
+    private function getUndecoratedBuffer(): string
     {
-        return $this->getStreamFilterBuffer();
+        return preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()) ?? '';
     }
 
     public function testCreateDatabase(): void
@@ -92,8 +96,17 @@ final class CreateDatabaseTest extends CIUnitTestCase
             $this->markTestSkipped('Needs to run on non-OCI8 drivers.');
         }
 
+        $name = $this->connection instanceof SQLite3Connection ? 'database.db' : 'database';
+
         command('db:create database');
-        $this->assertStringContainsString('successfully created.', $this->getBuffer());
+        $this->assertSame(
+            <<<EOT
+
+                Database "{$name}" successfully created.
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
     }
 
     public function testSqliteDatabaseDuplicated(): void
@@ -104,9 +117,19 @@ final class CreateDatabaseTest extends CIUnitTestCase
 
         command('db:create database');
         $this->resetStreamFilterBuffer();
+        CLI::resetLastWrite();
+
+        $database = WRITEPATH . 'database.db';
 
         command('db:create database --ext db');
-        $this->assertStringContainsString('already exists.', $this->getBuffer());
+        $this->assertSame(
+            <<<EOT
+
+                Database "{$database}" already exists.
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
     }
 
     public function testOtherDriverDuplicatedDatabase(): void
@@ -119,6 +142,69 @@ final class CreateDatabaseTest extends CIUnitTestCase
         $this->resetStreamFilterBuffer();
 
         command('db:create database');
-        $this->assertStringContainsString('Unable to create the specified database.', $this->getBuffer());
+        $this->assertStringContainsString('Unable to create the specified database.', $this->getUndecoratedBuffer());
+    }
+
+    public function testOtherDriverCreationFailsWithoutDebug(): void
+    {
+        if ($this->connection instanceof SQLite3Connection || $this->connection instanceof OCI8Connection) {
+            $this->markTestSkipped('Needs to run on non-SQLite3 and non-OCI8 drivers.');
+        }
+
+        command('db:create database');
+        $this->resetStreamFilterBuffer();
+
+        $this->connection = Database::connect();
+        $this->setPrivateProperty($this->connection, 'DBDebug', false);
+
+        CLI::resetLastWrite();
+        command('db:create database');
+        $this->assertSame(
+            <<<'EOT'
+
+                Database creation failed.
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
+    }
+
+    public function testSqlitePromptsForInvalidExtension(): void
+    {
+        if (! $this->connection instanceof SQLite3Connection) {
+            $this->markTestSkipped('Needs to run on SQLite3.');
+        }
+
+        $io = new MockInputOutput();
+        $io->setInputs(['db']);
+        CLI::setInputOutput($io);
+
+        command('db:create database --ext txt');
+
+        $this->assertSame(
+            <<<'EOT'
+                Please choose a valid file extension [db, sqlite]: db
+                Database "database.db" successfully created.
+
+                EOT,
+            preg_replace('/\e\[[^m]+m/', '', $io->getOutput()) ?? '',
+        );
+    }
+
+    public function testSqliteRejectsInvalidExtensionWhenNonInteractive(): void
+    {
+        if (! $this->connection instanceof SQLite3Connection) {
+            $this->markTestSkipped('Needs to run on SQLite3.');
+        }
+
+        command('db:create database --ext txt --no-interaction');
+        $this->assertSame(
+            <<<'EOT'
+
+                Invalid file extension "txt". Use either `db` or `sqlite`.
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
     }
 }

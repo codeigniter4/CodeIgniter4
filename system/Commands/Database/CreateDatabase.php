@@ -13,75 +13,60 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Database;
 
-use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Input\Argument;
+use CodeIgniter\CLI\Input\Option;
 use CodeIgniter\Config\Factories;
-use CodeIgniter\Database\SQLite3\Connection;
+use CodeIgniter\Database\SQLite3\Connection as SQLite3Connection;
 use Config\Database;
 use Throwable;
 
 /**
  * Creates a new database.
  */
-class CreateDatabase extends BaseCommand
+#[Command(name: 'db:create', description: 'Create a new database schema.', group: 'Database')]
+class CreateDatabase extends AbstractCommand
 {
     /**
-     * The group the command is lumped under
-     * when listing commands.
-     *
-     * @var string
+     * @var list<string>
      */
-    protected $group = 'Database';
+    private const VALID_EXTENSIONS = ['db', 'sqlite'];
 
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'db:create';
-
-    /**
-     * the Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Create a new database schema.';
-
-    /**
-     * the Command's usage
-     *
-     * @var string
-     */
-    protected $usage = 'db:create <db_name> [options]';
-
-    /**
-     * The Command's arguments
-     *
-     * @var array<string, string>
-     */
-    protected $arguments = [
-        'db_name' => 'The database name to use',
-    ];
-
-    /**
-     * The Command's options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [
-        '--ext' => 'File extension of the database file for SQLite3. Can be `db` or `sqlite`. Defaults to `db`.',
-    ];
-
-    /**
-     * Creates a new database.
-     */
-    public function run(array $params)
+    protected function configure(): void
     {
-        $name = array_shift($params);
+        $this
+            ->addArgument(new Argument(
+                name: 'db_name',
+                description: 'The database name to use.',
+                required: true,
+            ))
+            ->addOption(new Option(
+                name: 'ext',
+                description: 'File extension of the database file for SQLite3. Can be `db` or `sqlite`.',
+                requiresValue: true,
+                default: 'db',
+            ));
+    }
 
-        if (empty($name)) {
-            $name = CLI::prompt('Database name', null, 'required'); // @codeCoverageIgnore
+    protected function interact(array &$arguments, array &$options): void
+    {
+        if ($arguments === []) {
+            $arguments[] = CLI::prompt('Database name', null, 'required');
         }
+
+        $ext = $this->getUnboundOption('ext', $options);
+
+        if (is_string($ext) && ! in_array($ext, self::VALID_EXTENSIONS, true)) {
+            $options['ext'] = CLI::prompt('Please choose a valid file extension', self::VALID_EXTENSIONS, 'required');
+        }
+    }
+
+    protected function execute(array $arguments, array $options): int
+    {
+        $name = $arguments['db_name'];
+        assert(is_string($name));
 
         try {
             $config = config(Database::class);
@@ -93,12 +78,14 @@ class CreateDatabase extends BaseCommand
 
             $db = Database::connect();
 
-            // Special SQLite3 handling
-            if ($db instanceof Connection) {
-                $ext = $params['ext'] ?? CLI::getOption('ext') ?? 'db';
+            if ($db instanceof SQLite3Connection) {
+                $ext = $options['ext'];
+                assert(is_string($ext));
 
-                if (! in_array($ext, ['db', 'sqlite'], true)) {
-                    $ext = CLI::prompt('Please choose a valid file extension', ['db', 'sqlite']); // @codeCoverageIgnore
+                if (! in_array($ext, self::VALID_EXTENSIONS, true)) {
+                    CLI::error(sprintf('Invalid file extension "%s". Use either `db` or `sqlite`.', $ext), 'light_gray', 'red');
+
+                    return EXIT_ERROR;
                 }
 
                 if ($name !== ':memory:') {
@@ -113,7 +100,6 @@ class CreateDatabase extends BaseCommand
 
                     if (is_file($dbName)) {
                         CLI::error("Database \"{$dbName}\" already exists.", 'light_gray', 'red');
-                        CLI::newLine();
 
                         return EXIT_ERROR;
                     }
@@ -128,26 +114,21 @@ class CreateDatabase extends BaseCommand
                 if (! is_file($db->getDatabase()) && $name !== ':memory:') {
                     // @codeCoverageIgnoreStart
                     CLI::error('Database creation failed.', 'light_gray', 'red');
-                    CLI::newLine();
 
                     return EXIT_ERROR;
                     // @codeCoverageIgnoreEnd
                 }
             } elseif (! Database::forge()->createDatabase($name)) {
-                // @codeCoverageIgnoreStart
                 CLI::error('Database creation failed.', 'light_gray', 'red');
-                CLI::newLine();
 
                 return EXIT_ERROR;
-                // @codeCoverageIgnoreEnd
             }
 
             CLI::write("Database \"{$name}\" successfully created.", 'green');
-            CLI::newLine();
 
             return EXIT_SUCCESS;
         } catch (Throwable $e) {
-            $this->showError($e);
+            $this->renderThrowable($e);
 
             return EXIT_ERROR;
         } finally {
