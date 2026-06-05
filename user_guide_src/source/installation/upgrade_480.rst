@@ -75,6 +75,8 @@ Config
 
 - app/Config/Mimes.php
     - ``Config\Mimes::$mimes`` added a new key ``md`` for Markdown files.
+- app/Config/Routing.php
+    - ``Config\Routing::$placeholderSamples`` was added to provide sample values for custom route placeholders so the ``spark routes`` command can resolve their filters.
 - app/Config/Security.php
     - ``Config\Security::$csrfFetchMetadata`` and ``Config\Security::$csrfFetchMetadataRejectSameSite`` were added for Fetch Metadata based CSRF protection.
 

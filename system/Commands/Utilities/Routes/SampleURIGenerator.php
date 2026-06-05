@@ -15,6 +15,7 @@ namespace CodeIgniter\Commands\Utilities\Routes;
 
 use CodeIgniter\Router\RouteCollection;
 use Config\App;
+use Config\Routing;
 
 /**
  * Generate a sample URI path from route key regex.
@@ -23,10 +24,20 @@ use Config\App;
  */
 final class SampleURIGenerator
 {
+    /**
+     * Placeholder inserted into a sample URI segment when no sample can be
+     * resolved. The resulting URI matches no route, so the ``spark routes``
+     * command reports that route's filters as ``<unknown>``.
+     */
+    public const UNKNOWN_SAMPLE = '::unknown::';
+
     private readonly RouteCollection $routes;
+    private readonly Routing $config;
+    private readonly PlaceholderSampleGenerator $sampleGenerator;
 
     /**
-     * Sample URI path for placeholder.
+     * Built-in sample URI paths for the standard placeholders shipped with
+     * ``RouteCollection``.
      *
      * @var array<string, string>
      */
@@ -39,9 +50,18 @@ final class SampleURIGenerator
         'hash'     => 'abc_123',
     ];
 
-    public function __construct(?RouteCollection $routes = null)
+    /**
+     * Memoized resolved samples, keyed by placeholder name.
+     *
+     * @var array<string, string>
+     */
+    private array $resolvedCache = [];
+
+    public function __construct(?RouteCollection $routes = null, ?Routing $config = null)
     {
-        $this->routes = $routes ?? service('routes');
+        $this->routes          = $routes ?? service('routes');
+        $this->config          = $config ?? config(Routing::class);
+        $this->sampleGenerator = new PlaceholderSampleGenerator();
     }
 
     /**
@@ -62,12 +82,44 @@ final class SampleURIGenerator
         }
 
         foreach ($this->routes->getPlaceholders() as $placeholder => $regex) {
-            $sample = $this->samples[$placeholder] ?? '::unknown::';
+            $sample = $this->resolveSample($placeholder, $regex);
 
             $sampleUri = str_replace('(' . $regex . ')', $sample, $sampleUri);
         }
 
         // auto route
         return str_replace('[/...]', '/1/2/3/4/5', $sampleUri);
+    }
+
+    private function resolveSample(string $placeholder, string $regex): string
+    {
+        if (isset($this->resolvedCache[$placeholder])) {
+            return $this->resolvedCache[$placeholder];
+        }
+
+        $sample = $this->matchingSample($this->config->placeholderSamples[$placeholder] ?? null, $regex)
+            ?? $this->matchingSample($this->samples[$placeholder] ?? null, $regex)
+            ?? $this->sampleGenerator->generate($regex)
+            ?? self::UNKNOWN_SAMPLE;
+
+        $this->resolvedCache[$placeholder] = $sample;
+
+        return $sample;
+    }
+
+    /**
+     * Returns the given sample when it is set and matches the placeholder
+     * regex, otherwise ``null`` so resolution falls through to the next source.
+     * Guards both the configured and built-in samples, since a built-in
+     * placeholder name may be redefined with a different regex via
+     * ``RouteCollection::addPlaceholder()``.
+     */
+    private function matchingSample(?string $sample, string $regex): ?string
+    {
+        if ($sample === null) {
+            return null;
+        }
+
+        return @preg_match('#^(?:' . $regex . ')$#', $sample) === 1 ? $sample : null;
     }
 }

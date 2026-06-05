@@ -146,4 +146,14 @@ class Routing extends BaseRouting
      * Default: false
      */
     public bool $translateUriToCamelCase = true;
+
+    /**
+     * Sample values for the ``spark routes`` command, keyed by placeholder
+     * name without the ``(:...)`` wrapper. Each value must match the
+     * placeholder's regular expression and overrides the built-in or
+     * auto-generated sample for that placeholder.
+     *
+     * @var array<string, string>
+     */
+    public array $placeholderSamples = [];
 }
