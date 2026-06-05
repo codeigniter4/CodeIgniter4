@@ -55,6 +55,11 @@ use InvalidArgumentException;
 abstract class BaseTransformer implements TransformerInterface
 {
     /**
+     * Nesting depth of the transformation currently in progress (0 = root).
+     */
+    private static int $depth = 0;
+
+    /**
      * @var list<string>|null
      */
     private ?array $fields = null;
@@ -69,17 +74,24 @@ abstract class BaseTransformer implements TransformerInterface
     public function __construct(
         private ?IncomingRequest $request = null,
     ) {
+        // An explicitly provided request is always honored - its scope is
+        // intentional. Only the implicit global fallback is suppressed for
+        // nested transformers, which is the actual leak vector.
+        $explicitRequest = $request instanceof IncomingRequest;
+
         $this->request = $request ?? request();
 
-        $fields       = $this->request->getGet('fields');
-        $this->fields = is_string($fields)
-            ? array_map(trim(...), explode(',', $fields))
-            : $fields;
+        if ($explicitRequest || self::$depth === 0) {
+            $fields       = $this->request->getGet('fields');
+            $this->fields = is_string($fields)
+                ? array_map(trim(...), explode(',', $fields))
+                : $fields;
 
-        $includes       = $this->request->getGet('include');
-        $this->includes = is_string($includes)
-            ? array_map(trim(...), explode(',', $includes))
-            : $includes;
+            $includes       = $this->request->getGet('include');
+            $this->includes = is_string($includes)
+                ? array_map(trim(...), explode(',', $includes))
+                : $includes;
+        }
     }
 
     /**
@@ -207,13 +219,19 @@ abstract class BaseTransformer implements TransformerInterface
             }
         }
 
-        foreach ($this->includes as $include) {
-            $method = 'include' . ucfirst($include);
-            if (method_exists($this, $method)) {
-                $data[$include] = $this->{$method}();
-            } else {
-                throw ApiException::forMissingInclude($include);
+        self::$depth++;
+
+        try {
+            foreach ($this->includes as $include) {
+                $method = 'include' . ucfirst($include);
+                if (method_exists($this, $method)) {
+                    $data[$include] = $this->{$method}();
+                } else {
+                    throw ApiException::forMissingInclude($include);
+                }
             }
+        } finally {
+            self::$depth--;
         }
 
         return $data;
