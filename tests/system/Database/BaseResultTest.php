@@ -33,7 +33,9 @@ final class BaseResultTest extends CIUnitTestCase
      */
     private function createResultDouble(array $resultArray, array $resultObject): BaseResult
     {
-        return new /** @extends BaseResult<mixed, mixed> */ class ($resultArray, $resultObject) extends BaseResult {
+        return new /**
+         * @extends BaseResult<mixed, mixed>
+         */ class ($resultArray, $resultObject) extends BaseResult {
             /**
              * @param list<array<string,mixed>> $resultArray  Result set as arrays.
              * @param list<object>              $resultObject Result set as objects.
@@ -259,7 +261,7 @@ final class BaseResultTest extends CIUnitTestCase
         $row->id   = 1;
         $row->name = 'John';
 
-        $result = $this->createResultDouble([], []);
+        $result                                      = $this->createResultDouble([], []);
         $result->customResultObject[stdClass::class] = [$row];
 
         $this->assertSame($row, $result->getCustomRowObject(999, stdClass::class));
@@ -303,7 +305,7 @@ final class BaseResultTest extends CIUnitTestCase
         $row1->id   = 1;
         $row1->name = 'John';
 
-        $result = $this->createResultDouble([], []);
+        $result                                      = $this->createResultDouble([], []);
         $result->customResultObject[stdClass::class] = [$row1];
 
         $result->currentRow = 999;
