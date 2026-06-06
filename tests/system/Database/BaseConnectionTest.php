@@ -367,12 +367,16 @@ final class BaseConnectionTest extends CIUnitTestCase
             'table.column'        => [false, true, true, 'users.id', '"test_users"."id"'], // Prefixed because it has segments
             'table.column prefix' => [true, true, true, 'users.id', '"test_users"."id"'],
             'table.column AS'     => [
-                false, true, true,
+                false,
+                true,
+                true,
                 'users.id AS user_id',
                 '"test_users"."id" AS "user_id"', // Prefixed because it has segments
             ],
             'table.column AS prefix' => [
-                true, true, true,
+                true,
+                true,
+                true,
                 'users.id AS user_id',
                 '"test_users"."id" AS "user_id"',
             ],
@@ -384,42 +388,78 @@ final class BaseConnectionTest extends CIUnitTestCase
             'function column' => [false, true, true, 'SUM(id)', 'SUM(id)'],
 
             'function column AS' => [
-                false, true, true,
+                false,
+                true,
+                true,
                 'COUNT(payments) AS myAlias',
                 'COUNT(payments) AS myAlias',
             ],
             'function column AS prefix' => [
-                true, true, true,
+                true,
+                true,
+                true,
                 'COUNT(payments) AS myAlias',
                 'COUNT(payments) AS myAlias',
             ],
 
             'function quoted table column AS' => [
-                false, true, true,
+                false,
+                true,
+                true,
                 'MAX("db"."payments") AS "payments"',
                 'MAX("db"."payments") AS "payments"',
             ],
 
             'quoted column operator AS' => [
-                false, true, true,
+                false,
+                true,
+                true,
                 '"numericValue1" + "numericValue2" AS "numericResult"',
                 '"numericValue1"" + ""numericValue2" AS "numericResult"', // Cannot process correctly
             ],
             'quoted column operator AS no-protect' => [
-                false, false, true,
+                false,
+                false,
+                true,
                 '"numericValue1" + "numericValue2" AS "numericResult"',
                 '"numericValue1" + "numericValue2" AS "numericResult"',
             ],
 
             'sub query' => [
-                false, true, true,
+                false,
+                true,
+                true,
                 '(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid)',
-                '(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid)',
+                '(SELECT SUM(payments.test_amount) FROM payments WHERE payments.invoice_id=4) AS "amount_paid)"',
             ],
             'sub query with missing `)` at the end' => [
-                false, true, true,
+                false,
+                true,
+                true,
                 '(SELECT MAX(advance_amount) FROM "orders" WHERE "id" > 2',
-                '(SELECT MAX(advance_amount) FROM "orders" WHERE "id" > 2',
+                '"(SELECT MAX(advance_amount) FROM ""orders"" WHERE ""id"" >" 2',
+            ],
+
+            'SQLi: Trailing operators after valid function' => [
+                false,
+                true,
+                true,
+                'COUNT(id) OR 1=1',
+                'COUNT(id) OR "1=1"',
+            ],
+            'SQLi: Unbalanced parenthesis attack' => [
+                false,
+                true,
+                true,
+                'id) OR (1=1',
+                '"id) OR" "(1=1"',
+            ],
+            'SQLi: String literal bypass attempt' => [
+                false,
+                true,
+                true,
+                "'admin' OR 1=1",
+                '"\'admin\' OR" "1=1"',
             ],
         ];
     }
@@ -446,6 +486,11 @@ final class BaseConnectionTest extends CIUnitTestCase
             // $item, $expected
             'simple'    => ['test', '"test"'],
             'with dots' => ['com.sitedb.web', '"com"."sitedb"."web"'],
+
+            // Security Tests: SQL Injection Bypasses in escapeIdentifiers
+            'SQLi: Trailing operators after valid function' => ['COUNT(id) OR 1=1', '"COUNT(id) OR 1=1"'],
+            'SQLi: Unbalanced parenthesis attack'           => ['id) OR (1=1', '"id) OR (1=1"'],
+            'SQLi: String literal bypass attempt'           => ["'admin' OR 1=1", '"\'admin\' OR 1=1"'],
         ];
     }
 

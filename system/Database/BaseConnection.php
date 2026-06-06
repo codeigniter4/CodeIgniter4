@@ -1281,8 +1281,9 @@ abstract class BaseConnection implements ConnectionInterface
         // Added exception for single quotes as well, we don't want to alter
         // literal strings.
         if (strcspn($item, "()'") !== strlen($item)) {
-            /** @psalm-suppress NoValue I don't know why ERROR. */
-            return $item;
+            if ($this->isSafeToBypassEscape($item)) {
+                return $item;
+            }
         }
 
         // Do not protect identifiers and do not prefix, no swap prefix, there is nothing to do
@@ -1434,6 +1435,34 @@ abstract class BaseConnection implements ConnectionInterface
     }
 
     /**
+     * Checks if an identifier with parentheses or quotes is a safe function call or a string literal.
+     */
+    private function isSafeToBypassEscape(string $item): bool
+    {
+        $item = trim($item);
+
+        // String literals starting and ending with single quotes
+        if ($item[0] === "'" && preg_match('/^\'(?:[^\']|\'\')*\'$/s', $item)) {
+            return true;
+        }
+
+        // String literals (for PostgreSQL it can be double quotes)
+        if ($this->escapeChar !== '"' && $item[0] === '"' && preg_match('/^"(?:[^"]|"")*"$/s', $item)) {
+            return true;
+        }
+
+        // SQL functions or subqueries (e.g. MAX(id), (SELECT ...)) with an optional alias
+        if (str_contains($item, '(')) {
+            // Regex matching balanced parentheses (from start to end or with a safe alias)
+            if (preg_match('/^(?:[a-zA-Z0-9_.]+\s*)?(?P<parens>\((?:[^()]+|(?&parens))*\))(?:\s+(?:AS\s+)?(?:[a-zA-Z0-9_.]+|"[^"]*"|\'[^\']*\'|`[^`]*`))?$/is', $item)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Returns escaped table name with alias.
      */
     private function escapeTableName(TableName $tableName): string
@@ -1467,11 +1496,7 @@ abstract class BaseConnection implements ConnectionInterface
             return $item;
         }
 
-        // Avoid breaking functions and literal values inside queries
-        if (ctype_digit($item)
-            || $item[0] === "'"
-            || ($this->escapeChar !== '"' && $item[0] === '"')
-            || str_contains($item, '(')) {
+        if (ctype_digit($item) || $this->isSafeToBypassEscape($item)) {
             return $item;
         }
 
