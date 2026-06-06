@@ -100,6 +100,38 @@ final class FileMovingTest extends CIUnitTestCase
         $this->assertTrue($this->root->hasChild('destination/' . $finalFilename . '_1.txt'));
     }
 
+    public function testMovePathTraversal(): void
+    {
+        service('superglobals')->setFilesArray([
+            'userfile1' => [
+                'name'     => '../../public/shell.php',
+                'type'     => 'text/plain',
+                'size'     => 124,
+                'tmp_name' => '/tmp/fileA.php',
+                'error'    => 0,
+            ],
+        ]);
+
+        $collection = new FileCollection();
+
+        $this->assertTrue($collection->hasFile('userfile1'));
+
+        $destination = $this->destination;
+        // Create the destination if not exists
+        if (! is_dir($destination)) {
+            mkdir($destination, 0777, true);
+        }
+
+        $file = $collection->getFile('userfile1');
+        $this->assertInstanceOf(UploadedFile::class, $file);
+
+        $file->move($destination);
+
+        $this->assertTrue($this->root->hasChild('destination/publicshell.php'));
+        $this->assertFalse($this->root->hasChild('public/shell.php'));
+    }
+
+
     public function testMoveOverwriting(): void
     {
         $finalFilename = 'file_with_delimiters_underscore';
