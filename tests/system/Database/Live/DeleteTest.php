@@ -100,6 +100,27 @@ final class DeleteTest extends CIUnitTestCase
         $this->dontSeeInDatabase('user', ['email' => 'ahmadinejad@world.com', 'name' => 'Ahmadinejad']);
     }
 
+    public function testDeleteBatchSQLInjection(): void
+    {
+        $data = [
+            ['userid' => 1, 'username' => 'Derek J'],
+        ];
+
+        $builder = $this->db->table('user')
+            ->setData($data, null, 'data')
+            ->onConstraint(['id' => 'userid']);
+
+        if ($this->db->DBDriver !== 'SQLite3') {
+            $builder->where('data.username', "1' OR 1=1 --");
+        }
+
+        $sql = $builder->testMode()->deleteBatch();
+
+        if ($this->db->DBDriver !== 'SQLite3') {
+            $this->assertStringContainsString("'1'' OR 1=1 --'", $sql);
+        }
+    }
+
     public function testDeleteBatchConstraintsDate(): void
     {
         $table = 'type_test';

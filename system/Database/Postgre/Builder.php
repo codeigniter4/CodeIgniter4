@@ -599,7 +599,8 @@ class Builder extends BaseBuilder
             // convert binds in where
             foreach ($this->QBWhere as $key => $where) {
                 foreach ($this->binds as $field => $bind) {
-                    $this->QBWhere[$key]['condition'] = str_replace(':' . $field . ':', $bind[0], $where['condition']);
+                    $value                            = $bind[1] ? $this->db->escape($bind[0]) : $bind[0];
+                    $this->QBWhere[$key]['condition'] = str_replace(':' . $field . ':', (string) $value, $where['condition']);
                 }
             }
 

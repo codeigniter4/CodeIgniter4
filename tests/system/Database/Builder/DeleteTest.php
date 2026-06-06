@@ -90,4 +90,20 @@ final class DeleteTest extends CIUnitTestCase
             EOL;
         $this->assertSame($expectedSQL, $sql);
     }
+
+    public function testDeleteBatchSQLInjection(): void
+    {
+        $builder = $this->db->table('jobs');
+
+        $data = [
+            ['id' => 1, 'name' => 'John'],
+        ];
+
+        $builder->where('name', "1' OR true --");
+
+        $sql = $builder->onConstraint('id')->testMode()->deleteBatch($data);
+
+        $expected = "WHERE \"name\" = '1'' OR true --'";
+        $this->assertStringContainsString($expected, $sql[0]);
+    }
 }
