@@ -131,7 +131,6 @@ final class FileMovingTest extends CIUnitTestCase
         $this->assertFalse($this->root->hasChild('public/shell.php'));
     }
 
-
     public function testMoveOverwriting(): void
     {
         $finalFilename = 'file_with_delimiters_underscore';
