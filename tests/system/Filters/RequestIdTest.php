@@ -38,7 +38,10 @@ final class RequestIdTest extends CIUnitTestCase
 
         $requestId = context()->get('request_id');
 
+        $requestIdFromHeader = $request->getHeaderLine('X-Request-ID');
+
         $this->assertNotEmpty($requestId);
+        $this->assertSame($requestId, $requestIdFromHeader);
         $this->assertSame(32, strlen($requestId));
         $this->assertMatchesRegularExpression('/^[A-Za-z0-9._:-]+$/', $requestId);
     }
@@ -55,7 +58,10 @@ final class RequestIdTest extends CIUnitTestCase
 
         $requestId = context()->get('request_id');
 
+        $requestIdFromHeader = $request->getHeaderLine('X-Request-ID');
+
         $this->assertSame($existingRequestId, $requestId);
+        $this->assertSame($existingRequestId, $requestIdFromHeader);
         $this->assertMatchesRegularExpression('/^[A-Za-z0-9._:-]+$/', $requestId);
     }
 
@@ -71,7 +77,30 @@ final class RequestIdTest extends CIUnitTestCase
 
         $requestId = context()->get('request_id');
 
+        $requestIdFromHeader = $request->getHeaderLine('X-Request-ID');
+
         $this->assertNotSame($existingRequestId, $requestId);
+        $this->assertSame($requestId, $requestIdFromHeader);
+        $this->assertSame(32, strlen($requestId));
+        $this->assertMatchesRegularExpression('/^[A-Za-z0-9._:-]+$/', $requestId);
+    }
+
+    public function testBeforeWithExistingLongRequestId(): void
+    {
+        $filter  = new RequestId();
+        $request = service('request', null, false);
+
+        $existingRequestId = str_repeat('a', 65);
+        $request->setHeader('X-Request-ID', $existingRequestId);
+
+        $filter->before($request);
+
+        $requestId = context()->get('request_id');
+
+        $requestIdFromHeader = $request->getHeaderLine('X-Request-ID');
+
+        $this->assertNotSame($existingRequestId, $requestId);
+        $this->assertSame($requestId, $requestIdFromHeader);
         $this->assertSame(32, strlen($requestId));
         $this->assertMatchesRegularExpression('/^[A-Za-z0-9._:-]+$/', $requestId);
     }

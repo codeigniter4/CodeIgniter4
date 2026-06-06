@@ -57,7 +57,7 @@ class RequestId implements FilterInterface
             return false;
         }
 
-        if (strlen($requestId) > 255) {
+        if (strlen($requestId) > 64) {
             return false;
         }
 
