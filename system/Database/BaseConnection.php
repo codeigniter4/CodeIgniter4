@@ -1437,7 +1437,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Checks if an identifier with parentheses or quotes is a safe function call or a string literal.
      */
-    private function isSafeToBypassEscape(string $item): bool
+    private function isIdentifierEscapeExempt()(string $item): bool
     {
         $item = trim($item);
         
