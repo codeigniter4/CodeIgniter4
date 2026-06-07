@@ -25,6 +25,11 @@ use InvalidArgumentException;
  * - fields: Comma-separated list of fields to include in the response
  *      (e.g., ?fields=id,name,email)
  *      If not provided, all fields from toArray() are included.
+ *      Since v4.8.0, per-type sparse fieldsets are also supported via the
+ *      bracketed form (e.g., ?fields[posts]=id,slug). A transformer reads the
+ *      fieldset that matches its declared $resourceType, so a nested
+ *      PostTransformer with $resourceType = 'posts' applies ?fields[posts]=...
+ *      while the root resource is unaffected.
  * - include: Comma-separated list of related resources to include
  *      (e.g., ?include=posts,comments)
  *      This looks for methods named `include{Resource}()` on the transformer,
@@ -69,6 +74,11 @@ abstract class BaseTransformer implements TransformerInterface
      */
     private ?array $includes = null;
 
+    /**
+     * Resource type used to resolve per-type sparse fieldsets.
+     */
+    protected ?string $resourceType = null;
+
     protected mixed $resource = null;
 
     public function __construct(
@@ -82,16 +92,65 @@ abstract class BaseTransformer implements TransformerInterface
         $this->request = $request ?? request();
 
         if ($explicitRequest || self::$depth === 0) {
-            $fields       = $this->request->getGet('fields');
-            $this->fields = is_string($fields)
-                ? array_map(trim(...), explode(',', $fields))
-                : $fields;
-
-            $includes       = $this->request->getGet('include');
-            $this->includes = is_string($includes)
-                ? array_map(trim(...), explode(',', $includes))
-                : $includes;
+            $this->fields   = $this->resolveFields(true);
+            $this->includes = $this->resolveIncludes();
+        } elseif ($this->resourceType !== null) {
+            $this->fields = $this->resolveFields(false);
         }
+    }
+
+    /**
+     * Resolves the requested field list for this transformer from the request.
+     *
+     * Supports both the flat `?fields=a,b` form and the per-type sparse
+     * fieldset form `?fields[<type>]=a,b`. The flat form is only honored when
+     * $allowFlat is true (i.e. for the root transformer); a type-specific
+     * fieldset is matched against this transformer's $resourceType at any
+     * nesting level.
+     *
+     * @return list<string>|null
+     */
+    private function resolveFields(bool $allowFlat): ?array
+    {
+        $fields = $this->request->getGet('fields');
+
+        // Sparse fieldsets: ?fields[posts]=id,slug -> ['posts' => 'id,slug']
+        if (is_array($fields)) {
+            $scoped = ($this->resourceType !== null && is_string($fields[$this->resourceType] ?? null))
+                ? $fields[$this->resourceType]
+                : null;
+
+            return $scoped !== null ? $this->splitList($scoped) : null;
+        }
+
+        // Flat fieldset: ?fields=id,slug (applies to the root only)
+        if ($allowFlat && is_string($fields)) {
+            return $this->splitList($fields);
+        }
+
+        return null;
+    }
+
+    /**
+     * Resolves the requested include list from the request's `include` param.
+     *
+     * @return list<string>|null
+     */
+    private function resolveIncludes(): ?array
+    {
+        $includes = $this->request->getGet('include');
+
+        return is_string($includes) ? $this->splitList($includes) : $includes;
+    }
+
+    /**
+     * Splits a comma-separated query value into a list of trimmed strings.
+     *
+     * @return list<string>
+     */
+    private function splitList(string $value): array
+    {
+        return array_map(trim(...), explode(',', $value));
     }
 
     /**

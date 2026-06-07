@@ -129,6 +129,47 @@ fields are allowed by overriding the ``getAllowedFields()`` method:
 Now, even if a client requests ``/users/1?fields=email``, an ``ApiException`` will be thrown because
 ``email`` is not in the allowed fields list.
 
+Sparse Fieldsets (Per-Type Filtering)
+=====================================
+
+.. versionadded:: 4.8.0
+
+The flat ``fields`` parameter filters the root resource. When a response also embeds
+:ref:`related resources <api_transformers_includes>`, you can filter each related type
+independently using the bracketed *sparse fieldset* form ``fields[<type>]=...``.
+
+To opt a transformer into this, declare its resource type via the ``$resourceType`` property:
+
+.. literalinclude:: api_transformers/024.php
+
+A matching ``fields[<type>]`` fieldset applies whether the transformer is used as the root resource or
+as an included resource. The flat ``fields=...`` form still applies to the root transformer only.
+
+Each transformer reads the fieldset that matches its own ``$resourceType``. Given the ``UserTransformer``
+from :ref:`Including Related Resources <api_transformers_includes>` (which includes posts), a request:
+
+.. code-block:: text
+
+    /users/1?include=posts&fields[posts]=id,slug
+
+scopes the fields **only** for the embedded posts, leaving the user fields untouched:
+
+.. code-block:: json
+
+    {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john@example.com",
+        "posts": [
+            {
+                "id": 1,
+                "slug": "first-post"
+            }
+        ]
+    }
+
+.. _api_transformers_includes:
+
 ***************************
 Including Related Resources
 ***************************
@@ -174,10 +215,11 @@ The response would include:
         ]
     }
 
-.. note:: The ``fields`` and ``include`` query parameters describe the **root** resource only.
+.. note:: The flat ``fields=...`` and ``include`` query parameters describe the **root** resource only.
     Transformers instantiated inside an ``include*()`` method (such as ``PostTransformer`` above)
     are treated as nested resources: when created **without an explicit request** they do **not**
-    inherit the root request's ``fields``/``include`` state. This prevents the parent's query
+    inherit the root request's flat ``fields``/``include`` state. Use ``fields[<type>]=...`` with
+    a matching ``$resourceType`` to filter a nested resource. This prevents the parent's query
     parameters from leaking into related resources, which could otherwise cause incorrect field
     filtering or unexpected/recursive includes. If you deliberately pass a request to a nested
     transformer, that request's scope is honored.
@@ -263,6 +305,17 @@ Class Reference
 .. php:namespace:: CodeIgniter\API
 
 .. php:class:: BaseTransformer
+
+    .. php:attr:: $resourceType
+
+        :type: string|null
+
+        .. versionadded:: 4.8.0
+
+        The resource type this transformer represents. Used to resolve per-type sparse fieldsets from
+        the request (e.g. a type of ``'posts'`` reads ``?fields[posts]=...``). Defaults to ``null``,
+        in which case only the flat ``?fields=...`` parameter applies, and only to the root transformer.
+        See `Sparse Fieldsets (Per-Type Filtering)`_.
 
     .. php:method:: __construct(?IncomingRequest $request = null)
 
