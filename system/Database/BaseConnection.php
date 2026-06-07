@@ -1440,6 +1440,10 @@ abstract class BaseConnection implements ConnectionInterface
     private function isSafeToBypassEscape(string $item): bool
     {
         $item = trim($item);
+        
+        if ($item === '') {
+            return false;
+        }
 
         // String literals starting and ending with single quotes
         if ($item[0] === "'" && preg_match('/^\'(?:[^\']|\'\')*\'$/s', $item)) {
