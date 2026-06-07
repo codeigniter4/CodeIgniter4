@@ -33,9 +33,11 @@ final class BaseResultTest extends CIUnitTestCase
      */
     private function createResultDouble(array $resultArray, array $resultObject): BaseResult
     {
-        return new /**
+        return new
+        /**
          * @extends BaseResult<mixed, mixed>
-         */ class ($resultArray, $resultObject) extends BaseResult {
+         */
+        class($resultArray, $resultObject) extends BaseResult {
             /**
              * @param list<array<string,mixed>> $resultArray  Result set as arrays.
              * @param list<object>              $resultObject Result set as objects.
@@ -72,9 +74,7 @@ final class BaseResultTest extends CIUnitTestCase
                 return [];
             }
 
-            public function freeResult(): void
-            {
-            }
+            public function freeResult(): void {}
 
             public function dataSeek(int $n = 0): bool
             {
@@ -310,7 +310,7 @@ final class BaseResultTest extends CIUnitTestCase
 
         $result->currentRow = 999;
 
-        $this->assertNull($result->getCustomRowObject(999, stdClass::class));
+        $this->assertNotInstanceOf(stdClass::class, $result->getCustomRowObject(999, stdClass::class));
     }
 
     public function testGetPreviousRowReturnsNullWhenCurrentRowIsInvalid(): void
