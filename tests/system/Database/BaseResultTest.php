@@ -37,7 +37,7 @@ final class BaseResultTest extends CIUnitTestCase
         /**
          * @extends BaseResult<mixed, mixed>
          */
-        class($resultArray, $resultObject) extends BaseResult {
+        class ($resultArray, $resultObject) extends BaseResult {
             /**
              * @param list<array<string,mixed>> $resultArray  Result set as arrays.
              * @param list<object>              $resultObject Result set as objects.
@@ -74,7 +74,9 @@ final class BaseResultTest extends CIUnitTestCase
                 return [];
             }
 
-            public function freeResult(): void {}
+            public function freeResult(): void
+            {
+            }
 
             public function dataSeek(int $n = 0): bool
             {
