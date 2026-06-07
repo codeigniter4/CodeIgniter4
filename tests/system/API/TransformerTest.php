@@ -22,6 +22,8 @@ use CodeIgniter\Test\Mock\MockAppConfig;
 use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
+use Tests\Support\API\ChildTransformer;
+use Tests\Support\API\ParentTransformer;
 
 /**
  * @internal
@@ -33,12 +35,14 @@ final class TransformerTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        Services::resetSingle('request');
         Services::superglobals()->setGetArray([]);
     }
 
     protected function tearDown(): void
     {
         Services::superglobals()->setGetArray([]);
+        Services::resetSingle('request');
 
         parent::tearDown();
     }
@@ -640,5 +644,161 @@ final class TransformerTest extends CIUnitTestCase
 
         $this->assertArrayHasKey('posts', $result);
         $this->assertSame([['id' => 1, 'title' => 'Post 1']], $result['posts']);
+    }
+
+    public function testNestedTransformerDoesNotInheritIncludeState(): void
+    {
+        // The child transformer has no includeChildren() method. If the root
+        // request's `include=children` leaked into it, transforming the child
+        // would raise an ApiException for the missing include method.
+        $request = $this->createMockRequest('include=children');
+        Services::injectMock('request', $request);
+
+        $transformer = new ParentTransformer($request);
+
+        $result = $transformer->transform(['id' => 1]);
+
+        $this->assertSame([
+            'parent_id' => 1,
+            'children'  => ['child_id' => 99, 'status' => 'transformed'],
+        ], $result);
+    }
+
+    public function testNestedTransformerDoesNotInheritFieldFilter(): void
+    {
+        // `fields=parent_id` applies to the root only. If it leaked into the
+        // child, array_intersect_key would strip every child field, leaving [].
+        $request = $this->createMockRequest('include=children&fields=parent_id');
+        Services::injectMock('request', $request);
+
+        $transformer = new ParentTransformer($request);
+
+        $result = $transformer->transform(['id' => 1]);
+
+        $this->assertSame([
+            'parent_id' => 1,
+            'children'  => ['child_id' => 99, 'status' => 'transformed'],
+        ], $result);
+    }
+
+    public function testNestedCollectionTransformerDoesNotInheritState(): void
+    {
+        $request = $this->createMockRequest('include=childrenCollection&fields=parent_id');
+        Services::injectMock('request', $request);
+
+        $transformer = new ParentTransformer($request);
+
+        $result = $transformer->transform(['id' => 1]);
+
+        $this->assertSame([
+            'parent_id'          => 1,
+            'childrenCollection' => [
+                ['child_id' => 77, 'status' => 'transformed'],
+                ['child_id' => 88, 'status' => 'transformed'],
+            ],
+        ], $result);
+    }
+
+    public function testBareNestedInstantiationDoesNotInheritState(): void
+    {
+        // Reproduces the exact leak vector: a child created with a bare
+        // `new ChildTransformer()` (no request passed) inside an include
+        // method must not pick up the root request's scope from request().
+        $request = $this->createMockRequest('include=children&fields=parent_id');
+        Services::injectMock('request', $request);
+
+        $root = new ParentTransformer();
+
+        $result = $root->transform(['id' => 5]);
+
+        $this->assertSame([
+            'parent_id' => 5,
+            'children'  => ['child_id' => 99, 'status' => 'transformed'],
+        ], $result);
+    }
+
+    public function testNestedTransformerHonorsExplicitRequest(): void
+    {
+        // A child created with an explicitly passed request must honor that
+        // request's scope even while nested - the isolation only suppresses
+        // the implicit global fallback, not deliberate developer intent.
+        $request = $this->createMockRequest('include=explicitChild&fields=child_id,parent_id');
+        Services::injectMock('request', $request);
+
+        $transformer = new ParentTransformer($request);
+
+        $result = $transformer->transform(['id' => 1]);
+
+        $this->assertSame([
+            'parent_id'     => 1,
+            'explicitChild' => ['child_id' => 99],
+        ], $result);
+    }
+
+    public function testRootScopeStillAppliesAfterNesting(): void
+    {
+        // Sanity check that the root transformer keeps applying its own scope
+        // while nested children are isolated.
+        $request = $this->createMockRequest('include=children&fields=parent_id');
+        Services::injectMock('request', $request);
+
+        $transformer = new ParentTransformer($request);
+
+        $result = $transformer->transform(['id' => 1, 'secret' => 'hidden']);
+
+        // Root keeps only parent_id (plus the include key), the child is intact.
+        $this->assertArrayHasKey('parent_id', $result);
+        $this->assertArrayNotHasKey('secret', $result);
+        $this->assertSame(['child_id' => 99, 'status' => 'transformed'], $result['children']);
+    }
+
+    public function testDepthIsRestoredAfterIncludeThrows(): void
+    {
+        $request = $this->createMockRequest('include=nonexistent');
+        Services::injectMock('request', $request);
+
+        $throwingRoot = new class ($request) extends BaseTransformer {
+            public function toArray(mixed $resource): array
+            {
+                return $resource;
+            }
+        };
+
+        try {
+            $throwingRoot->transform(['id' => 1, 'name' => 'Test']);
+            $this->fail('Expected ApiException was not thrown.');
+        } catch (ApiException) {
+            // expected
+        }
+
+        // The nesting depth must be balanced after the exception, so a fresh
+        // root transformer still applies the request scope (depth back to 0).
+        $fieldsRequest = $this->createMockRequest('fields=id');
+        Services::injectMock('request', $fieldsRequest);
+
+        $nextRoot = new class ($fieldsRequest) extends BaseTransformer {
+            public function toArray(mixed $resource): array
+            {
+                return $resource;
+            }
+        };
+
+        $result = $nextRoot->transform(['id' => 1, 'name' => 'Test']);
+
+        $this->assertSame(['id' => 1], $result);
+    }
+
+    public function testBareNestedTransformerStillUsedByChildTransformerDirectly(): void
+    {
+        // When ChildTransformer is itself the root (no parent), it must apply
+        // request scope as usual - the isolation only affects nesting.
+        $request = $this->createMockRequest('fields=child_id');
+        Services::injectMock('request', $request);
+
+        $transformer = new ChildTransformer($request);
+
+        $result = $transformer->transform(['id' => 42]);
+
+        $this->assertSame(['child_id' => 42], $result);
     }
 }

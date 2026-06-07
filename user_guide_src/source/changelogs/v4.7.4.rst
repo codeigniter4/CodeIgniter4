@@ -30,6 +30,7 @@ Deprecations
 Bugs Fixed
 **********
 
+- **API:** Fixed a bug in Transformers where the root request's ``fields`` and ``include`` query parameters leaked into nested transformers created inside ``include*()`` methods, causing incorrect field filtering, unexpected includes, or infinite recursion.
 - **Database:** Fixed a bug where ``updateBatch()`` could be called after Query Builder ``where()`` conditions, even though it's not supported. In this situation, now the ``DatabaseException`` is thrown.
 - **HTTP:** Fixed a bug where the User Agent library reported Safari's WebKit version instead of the browser version from the ``Version`` token.
 
