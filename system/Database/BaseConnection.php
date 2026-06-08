@@ -1280,10 +1280,8 @@ abstract class BaseConnection implements ConnectionInterface
         //
         // Added exception for single quotes as well, we don't want to alter
         // literal strings.
-        if (strcspn($item, "()'") !== strlen($item)) {
-            if ($this->isIdentifierEscapeExempt($item)) {
-                return $item;
-            }
+        if (strcspn($item, "()'") !== strlen($item) && $this->isIdentifierEscapeExempt($item)) {
+            return $item;
         }
 
         // Do not protect identifiers and do not prefix, no swap prefix, there is nothing to do
@@ -1456,14 +1454,8 @@ abstract class BaseConnection implements ConnectionInterface
         }
 
         // SQL functions or subqueries (e.g. MAX(id), (SELECT ...)) with an optional alias
-        if (str_contains($item, '(')) {
-            // Regex matching balanced parentheses (from start to end or with a safe alias)
-            if (preg_match('/^(?:[a-zA-Z0-9_.]+\s*)?(?P<parens>\((?:[^()]+|(?&parens))*\))(?:\s+AS\s+(?:[a-zA-Z0-9_.]+|"[^"]*"|\'[^\']*\'|`[^`]*`))?$/is', $item)) {
-                return true;
-            }
-        }
-
-        return false;
+        // Regex matching balanced parentheses (from start to end or with a safe alias)
+        return str_contains($item, '(') && preg_match('/^(?:[a-zA-Z0-9_.]+\s*)?(?P<parens>\((?:[^()]+|(?&parens))*\))(?:\s+AS\s+(?:[a-zA-Z0-9_.]+|"[^"]*"|\'[^\']*\'|`[^`]*`))?$/is', $item);
     }
 
     /**
