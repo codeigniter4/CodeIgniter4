@@ -87,9 +87,9 @@ final class HelpCommandTest extends CIUnitTestCase
                   array                 Unused array argument. [default: ["a", "b"]]
 
                 Options:
-                  -f, --foo=FOO         Option that requires a value.
+                  -f, --foo=FOO         Option that requires a value. [default: "qux"]
                   -a, --bar[=BAR]       Option that optionally accepts a value.
-                  -b, --baz=BAZ         Option that allows multiple values. (multiple values allowed)
+                  -b, --baz=BAZ         Option that allows multiple values. [default: ["a"]] (multiple values allowed)
                       --quux|--no-quux  Negatable option.
                   -h, --help            Display help for the given command.
                       --no-header       Do not display the banner when running the command.
@@ -117,6 +117,32 @@ final class HelpCommandTest extends CIUnitTestCase
                   driver                The cache driver to use. [default: "file"]
 
                 Options:
+                  -h, --help            Display help for the given command.
+                      --no-header       Do not display the banner when running the command.
+                  -N, --no-interaction  Do not ask any interactive questions.
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
+    }
+
+    public function testEmptyStringOptionDefaultIsNotDisplayed(): void
+    {
+        // `migrate:status` declares `--group` with an empty-string default,
+        // which must be suppressed the same way a null default is.
+        command('help migrate:status');
+
+        $this->assertSame(
+            <<<'EOT'
+
+                Usage:
+                  migrate:status [options]
+
+                Description:
+                  Displays a list of all migrations and whether they've been run or not.
+
+                Options:
+                  -g, --group=GROUP     Set database group.
                   -h, --help            Display help for the given command.
                       --no-header       Do not display the banner when running the command.
                   -N, --no-interaction  Do not ask any interactive questions.
