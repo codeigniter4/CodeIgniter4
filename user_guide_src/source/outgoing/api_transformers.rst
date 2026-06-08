@@ -168,6 +168,9 @@ scopes the fields **only** for the embedded posts, leaving the user fields untou
         ]
     }
 
+When filtering multiple resource types in one request, use the bracketed form for each type, such as
+``fields[users]=id,name&fields[posts]=id,slug``.
+
 .. _api_transformers_includes:
 
 ***************************
