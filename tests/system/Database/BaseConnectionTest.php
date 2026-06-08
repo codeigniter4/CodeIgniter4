@@ -445,7 +445,7 @@ final class BaseConnectionTest extends CIUnitTestCase
                 true,
                 true,
                 'COUNT(id) OR 1=1',
-                'COUNT(id) OR "1=1"',
+                '"COUNT(id) OR" "1=1"',
             ],
             'SQLi: Unbalanced parenthesis attack' => [
                 false,

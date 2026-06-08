@@ -1440,7 +1440,7 @@ abstract class BaseConnection implements ConnectionInterface
     private function isIdentifierEscapeExempt(string $item): bool
     {
         $item = trim($item);
-        
+
         if ($item === '') {
             return false;
         }
@@ -1458,7 +1458,7 @@ abstract class BaseConnection implements ConnectionInterface
         // SQL functions or subqueries (e.g. MAX(id), (SELECT ...)) with an optional alias
         if (str_contains($item, '(')) {
             // Regex matching balanced parentheses (from start to end or with a safe alias)
-            if (preg_match('/^(?:[a-zA-Z0-9_.]+\s*)?(?P<parens>\((?:[^()]+|(?&parens))*\))(?:\s+(?:AS\s+)?(?:[a-zA-Z0-9_.]+|"[^"]*"|\'[^\']*\'|`[^`]*`))?$/is', $item)) {
+            if (preg_match('/^(?:[a-zA-Z0-9_.]+\s*)?(?P<parens>\((?:[^()]+|(?&parens))*\))(?:\s+AS\s+(?:[a-zA-Z0-9_.]+|"[^"]*"|\'[^\']*\'|`[^`]*`))?$/is', $item)) {
                 return true;
             }
         }
