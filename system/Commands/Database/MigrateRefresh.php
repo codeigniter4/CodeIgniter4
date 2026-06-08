@@ -13,81 +13,102 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Database;
 
-use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Input\Option;
 use CodeIgniter\CLI\SignalTrait;
 
 /**
- * Does a rollback followed by a latest to refresh the current state
- * of the database.
+ * Does a rollback followed by a latest to refresh the current state of the database.
  */
-class MigrateRefresh extends BaseCommand
+#[Command(
+    name: 'migrate:refresh',
+    description: 'Does a rollback followed by a latest to refresh the current state of the database.',
+    group: 'Database',
+)]
+class MigrateRefresh extends AbstractCommand
 {
     use SignalTrait;
 
-    /**
-     * The group the command is lumped under
-     * when listing commands.
-     *
-     * @var string
-     */
-    protected $group = 'Database';
-
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'migrate:refresh';
-
-    /**
-     * the Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Does a rollback followed by a latest to refresh the current state of the database.';
-
-    /**
-     * the Command's usage
-     *
-     * @var string
-     */
-    protected $usage = 'migrate:refresh [options]';
-
-    /**
-     * the Command's Options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [
-        '-n'    => 'Set migration namespace',
-        '-g'    => 'Set database group',
-        '--all' => 'Set latest for all namespace, will ignore (-n) option',
-        '-f'    => 'Force command - this option allows you to bypass the confirmation question when running this command in a production environment',
-    ];
-
-    /**
-     * Does a rollback followed by a latest to refresh the current state
-     * of the database.
-     */
-    public function run(array $params)
+    protected function configure(): void
     {
-        $params['b'] = 0;
+        $this
+            ->addOption(new Option(
+                name: 'namespace',
+                shortcut: 'n',
+                description: 'Set migration namespace.',
+                requiresValue: true,
+                default: '',
+            ))
+            ->addOption(new Option(
+                name: 'group',
+                shortcut: 'g',
+                description: 'Set database group.',
+                requiresValue: true,
+                default: '',
+            ))
+            ->addOption(new Option(
+                name: 'all',
+                description: 'Set latest for all namespaces. This will ignore the `--namespace` option.',
+            ))
+            ->addOption(new Option(
+                name: 'force',
+                shortcut: 'f',
+                description: 'Bypass the confirmation question when running this command in a production environment.',
+            ));
+    }
 
-        if (service('environment')->isProduction()) {
-            // @codeCoverageIgnoreStart
-            $force = array_key_exists('f', $params) || CLI::getOption('f');
+    protected function interact(array &$arguments, array &$options): void
+    {
+        if (! service('environment')->isProduction()) {
+            return;
+        }
 
-            if (! $force && CLI::prompt(lang('Migrations.refreshConfirm'), ['y', 'n']) === 'n') {
-                return EXIT_ERROR;
-            }
+        if ($this->hasUnboundOption('force', $options)) {
+            return;
+        }
 
-            $params['f'] = null;
-            // @codeCoverageIgnoreEnd
+        if (CLI::prompt(lang('Migrations.refreshConfirm'), ['y', 'n']) === 'y') {
+            $options['force'] = null; // simulate the presence of the --force option
+        }
+    }
+
+    protected function execute(array $arguments, array $options): int
+    {
+        if (service('environment')->isProduction() && $options['force'] === false) {
+            return EXIT_ERROR;
+        }
+
+        $namespace = $options['namespace'];
+        assert(is_string($namespace));
+
+        $group = $options['group'];
+        assert(is_string($group));
+
+        // A target batch of 0 rolls everything back before re-applying.
+        $rollbackOptions = ['batch' => '0'];
+        $migrateOptions  = [];
+
+        if ($options['force'] === true) {
+            $rollbackOptions['force'] = null;
+        }
+
+        if ($namespace !== '') {
+            $migrateOptions['namespace'] = $namespace;
+        }
+
+        if ($group !== '') {
+            $migrateOptions['group'] = $group;
+        }
+
+        if ($options['all'] === true) {
+            $migrateOptions['all'] = null;
         }
 
         return $this->withSignalsBlocked(
-            fn (): int => $this->call('migrate:rollback', $params) | $this->call('migrate', $params),
+            fn (): int => $this->call('migrate:rollback', options: $rollbackOptions)
+                | $this->call('migrate', options: $migrateOptions),
         );
     }
 }

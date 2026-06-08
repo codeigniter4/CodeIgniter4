@@ -13,60 +13,28 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Database;
 
-use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Input\Option;
+use CodeIgniter\Database\MigrationRunner;
 
 /**
  * Displays a list of all migrations and whether they've been run or not.
- *
- * @see \CodeIgniter\Commands\Database\MigrateStatusTest
  */
-class MigrateStatus extends BaseCommand
+#[Command(
+    name: 'migrate:status',
+    description: 'Displays a list of all migrations and whether they\'ve been run or not.',
+    group: 'Database',
+)]
+class MigrateStatus extends AbstractCommand
 {
-    /**
-     * The group the command is lumped under
-     * when listing commands.
-     *
-     * @var string
-     */
-    protected $group = 'Database';
-
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'migrate:status';
-
-    /**
-     * the Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Displays a list of all migrations and whether they\'ve been run or not.';
-
-    /**
-     * the Command's usage
-     *
-     * @var string
-     */
-    protected $usage = 'migrate:status [options]';
-
-    /**
-     * the Command's Options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [
-        '-g' => 'Set database group',
-    ];
-
     /**
      * Namespaces to ignore when looking for migrations.
      *
      * @var list<string>
      */
-    protected $ignoredNamespaces = [
+    protected array $ignoredNamespaces = [
         'CodeIgniter',
         'Config',
         'Kint',
@@ -75,26 +43,33 @@ class MigrateStatus extends BaseCommand
         'Psr\Log',
     ];
 
-    /**
-     * Displays a list of all migrations and whether they've been run or not.
-     *
-     * @param array<string, mixed> $params
-     */
-    public function run(array $params)
+    protected function configure(): void
     {
-        $runner     = service('migrations');
-        $paramGroup = $params['g'] ?? CLI::getOption('g');
+        $this->addOption(new Option(
+            name: 'group',
+            shortcut: 'g',
+            description: 'Set database group.',
+            requiresValue: true,
+            default: '',
+        ));
+    }
 
-        // Get all namespaces
+    protected function execute(array $arguments, array $options): int
+    {
+        /** @var MigrationRunner $runner */
+        $runner = service('migrations');
+
+        $groupOption = $options['group'];
+        assert(is_string($groupOption));
+
         $namespaces = service('autoloader')->getNamespace();
 
-        // Collection of migration status
         $status = [];
 
         foreach (array_keys($namespaces) as $namespace) {
             if (! service('environment')->isTesting()) {
                 // Make Tests\\Support discoverable for testing
-                $this->ignoredNamespaces[] = 'Tests\Support'; // @codeCoverageIgnore
+                $this->ignoredNamespaces[] = 'Tests\Support';
             }
 
             if (in_array($namespace, $this->ignoredNamespaces, true)) {
@@ -107,12 +82,12 @@ class MigrateStatus extends BaseCommand
 
             $migrations = $runner->findNamespaceMigrations($namespace);
 
-            if (empty($migrations)) {
+            if ($migrations === []) {
                 continue;
             }
 
             $runner->setNamespace($namespace);
-            $history = $runner->getHistory((string) $paramGroup);
+            $history = $runner->getHistory($groupOption);
             ksort($migrations);
 
             foreach ($migrations as $uid => $migration) {
@@ -123,7 +98,6 @@ class MigrateStatus extends BaseCommand
                 $batch = '---';
 
                 foreach ($history as $row) {
-                    // @codeCoverageIgnoreStart
                     if ($runner->getObjectUid($row) !== $migration->uid) {
                         continue;
                     }
@@ -131,7 +105,6 @@ class MigrateStatus extends BaseCommand
                     $date  = date('Y-m-d H:i:s', (int) $row->time);
                     $group = $row->group;
                     $batch = $row->batch;
-                    // @codeCoverageIgnoreEnd
                 }
 
                 $status[] = [
@@ -146,12 +119,9 @@ class MigrateStatus extends BaseCommand
         }
 
         if ($status === []) {
-            // @codeCoverageIgnoreStart
             CLI::error(lang('Migrations.noneFound'), 'light_gray', 'red');
-            CLI::newLine();
 
             return EXIT_ERROR;
-            // @codeCoverageIgnoreEnd
         }
 
         $headers = [

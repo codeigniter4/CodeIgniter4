@@ -13,81 +13,75 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Database;
 
-use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Input\Option;
 use CodeIgniter\CLI\SignalTrait;
+use CodeIgniter\Database\MigrationRunner;
 use Throwable;
 
 /**
- * Runs all new migrations.
+ * Locates and runs all new migrations against the database.
  */
-class Migrate extends BaseCommand
+#[Command(
+    name: 'migrate',
+    description: 'Locates and runs all new migrations against the database.',
+    group: 'Database',
+)]
+class Migrate extends AbstractCommand
 {
     use SignalTrait;
 
-    /**
-     * The group the command is lumped under
-     * when listing commands.
-     *
-     * @var string
-     */
-    protected $group = 'Database';
-
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'migrate';
-
-    /**
-     * the Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Locates and runs all new migrations against the database.';
-
-    /**
-     * the Command's usage
-     *
-     * @var string
-     */
-    protected $usage = 'migrate [options]';
-
-    /**
-     * the Command's Options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [
-        '-n'    => 'Set migration namespace',
-        '-g'    => 'Set database group',
-        '--all' => 'Set for all namespaces, will ignore (-n) option',
-    ];
-
-    /**
-     * Ensures that all migrations have been run.
-     */
-    public function run(array $params)
+    protected function configure(): void
     {
+        $this
+            ->addOption(new Option(
+                name: 'namespace',
+                shortcut: 'n',
+                description: 'Set migration namespace.',
+                requiresValue: true,
+                default: '',
+            ))
+            ->addOption(new Option(
+                name: 'group',
+                shortcut: 'g',
+                description: 'Set database group.',
+                requiresValue: true,
+                default: '',
+            ))
+            ->addOption(new Option(
+                name: 'all',
+                description: 'Set for all namespaces. This will ignore the `--namespace` option.',
+            ));
+    }
+
+    protected function execute(array $arguments, array $options): int
+    {
+        /** @var MigrationRunner $runner */
         $runner = service('migrations');
         $runner->clearCliMessages();
 
         CLI::write(lang('Migrations.latest'), 'yellow');
 
-        $namespace = $params['n'] ?? CLI::getOption('n');
-        $group     = $params['g'] ?? CLI::getOption('g');
+        $namespace = $options['namespace'];
+        assert(is_string($namespace));
+
+        $group = $options['group'];
+        assert(is_string($group));
+
+        $group = $group !== '' ? $group : null;
 
         try {
-            if (array_key_exists('all', $params) || CLI::getOption('all')) {
+            if ($options['all'] === true) {
                 $runner->setNamespace(null);
-            } elseif ($namespace) {
+            } elseif ($namespace !== '') {
                 $runner->setNamespace($namespace);
             }
 
             $this->withSignalsBlocked(static function () use ($runner, $group): void {
                 if (! $runner->latest($group)) {
-                    CLI::error(lang('Migrations.generalFault'), 'light_gray', 'red'); // @codeCoverageIgnore
+                    CLI::error(lang('Migrations.generalFault'), 'light_gray', 'red');
                 }
             });
 
@@ -100,12 +94,10 @@ class Migrate extends BaseCommand
             CLI::write(lang('Migrations.migrated'), 'green');
 
             return EXIT_SUCCESS;
-            // @codeCoverageIgnoreStart
         } catch (Throwable $e) {
-            $this->showError($e);
+            $this->renderThrowable($e);
 
             return EXIT_ERROR;
-            // @codeCoverageIgnoreEnd
         }
     }
 }
