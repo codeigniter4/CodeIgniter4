@@ -1281,7 +1281,7 @@ abstract class BaseConnection implements ConnectionInterface
         // Added exception for single quotes as well, we don't want to alter
         // literal strings.
         if (strcspn($item, "()'") !== strlen($item)) {
-            if ($this->isSafeToBypassEscape($item)) {
+            if ($this->isIdentifierEscapeExempt($item)) {
                 return $item;
             }
         }
@@ -1437,7 +1437,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Checks if an identifier with parentheses or quotes is a safe function call or a string literal.
      */
-    private function isIdentifierEscapeExempt()(string $item): bool
+    private function isIdentifierEscapeExempt(string $item): bool
     {
         $item = trim($item);
         
@@ -1500,7 +1500,7 @@ abstract class BaseConnection implements ConnectionInterface
             return $item;
         }
 
-        if (ctype_digit($item) || $this->isSafeToBypassEscape($item)) {
+        if (ctype_digit($item) || $this->isIdentifierEscapeExempt($item)) {
             return $item;
         }
 
