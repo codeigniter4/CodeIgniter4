@@ -13,13 +13,17 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands;
 
+use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Exceptions\ArgumentCountMismatchException;
 use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\EnvironmentDetector;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
+use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
  * @todo To figure out how to transfer this test to `tests/system/Commands/Database/` without breaking DatabaseLive group.
@@ -214,5 +218,31 @@ final class DatabaseCommandsTest extends CIUnitTestCase
 
         command('db:seed Foobar.php');
         $this->assertStringContainsString('The specified seeder is not a valid file:', $this->getStreamFilterBuffer());
+    }
+
+    public function testSeedPromptsForSeederNameWhenMissing(): void
+    {
+        command('migrate --all');
+        $this->resetStreamFilterBuffer();
+
+        $io = new MockInputOutput();
+        $io->setInputs([CITestSeeder::class]);
+        CLI::setInputOutput($io);
+
+        command('db:seed');
+
+        CLI::resetInputOutput();
+
+        $output = $io->getOutput();
+        $this->assertStringContainsString(lang('Migrations.migSeeder'), $output);
+        $this->assertStringContainsString('Seeded', $output);
+    }
+
+    public function testSeedAbortsWhenSeederNameMissingAndNonInteractive(): void
+    {
+        $this->expectException(ArgumentCountMismatchException::class);
+        $this->expectExceptionMessage('Command "db:seed" is missing the following required argument: seeder_name.');
+
+        command('db:seed --no-interaction');
     }
 }
