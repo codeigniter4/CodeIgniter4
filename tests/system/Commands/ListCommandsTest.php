@@ -42,6 +42,11 @@ final class ListCommandsTest extends CIUnitTestCase
         CLI::reset();
     }
 
+    private function getUndecoratedBuffer(): string
+    {
+        return preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()) ?? '';
+    }
+
     public function testRunCommand(): void
     {
         command('list');
@@ -64,6 +69,40 @@ final class ListCommandsTest extends CIUnitTestCase
 
         $this->assertStringContainsString('test:unavailable', $this->getStreamFilterBuffer());
         $this->assertStringContainsString('Fixture command to test runtime availability checks.', $this->getStreamFilterBuffer());
+    }
+
+    public function testAliasIsListedAsItsOwnRowInDetailedOutput(): void
+    {
+        command('list');
+
+        $buffer = $this->getUndecoratedBuffer();
+
+        // The canonical command keeps its description on its own row...
+        $this->assertMatchesRegularExpression(
+            '/\n {2}fixture:aliased\s+Fixture command exercising command aliases\.\n/',
+            $buffer,
+        );
+        // ...and each alias renders as a separate row pointing back to it.
+        $this->assertMatchesRegularExpression(
+            '/\n {2}fixture:alias\s+\[alias of fixture:aliased\]\n/',
+            $buffer,
+        );
+        $this->assertMatchesRegularExpression(
+            '/\n {2}fa\s+\[alias of fixture:aliased\]\n/',
+            $buffer,
+        );
+    }
+
+    public function testAliasIsListedInSimpleOutput(): void
+    {
+        command('list --simple');
+
+        $buffer = $this->getUndecoratedBuffer();
+
+        // The canonical command and each alias are emitted as their own lines.
+        $this->assertStringContainsString("fixture:aliased\n", $buffer);
+        $this->assertStringContainsString("fixture:alias\n", $buffer);
+        $this->assertStringContainsString("fa\n", $buffer);
     }
 
     public function testDuplicateCommandNameListedOnceInSimpleOutput(): void
@@ -108,8 +147,10 @@ final class ListCommandsTest extends CIUnitTestCase
                     'file'        => 'irrelevant',
                     'group'       => 'Duplicates',
                     'description' => 'Modern dup description',
+                    'aliases'     => [],
                 ],
             ]);
+        $runner->method('getCommandAliases')->willReturn([]);
 
         return $runner;
     }
