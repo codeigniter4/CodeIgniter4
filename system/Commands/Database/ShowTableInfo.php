@@ -13,311 +13,286 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Database;
 
-use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Input\Argument;
+use CodeIgniter\CLI\Input\Option;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\TableName;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use Config\Database;
 
 /**
- * Get table data if it exists in the database.
- *
- * @see \CodeIgniter\Commands\Database\ShowTableInfoTest
+ * Retrieves information on the selected table.
  */
-class ShowTableInfo extends BaseCommand
+#[Command(
+    name: 'db:table',
+    description: 'Retrieves information on the selected table.',
+    group: 'Database',
+)]
+class ShowTableInfo extends AbstractCommand
 {
-    /**
-     * The group the command is lumped under
-     * when listing commands.
-     *
-     * @var string
-     */
-    protected $group = 'Database';
-
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'db:table';
-
-    /**
-     * the Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Retrieves information on the selected table.';
-
-    /**
-     * the Command's usage
-     *
-     * @var string
-     */
-    protected $usage = <<<'EOL'
-        db:table [<table_name>] [options]
-
-          Examples:
-            db:table --show
-            db:table --metadata
-            db:table my_table --metadata
-            db:table my_table
-            db:table my_table --limit-rows 5 --limit-field-value 10 --desc
-        EOL;
-
-    /**
-     * The Command's arguments
-     *
-     * @var array<string, string>
-     */
-    protected $arguments = [
-        'table_name' => 'The table name to show info',
-    ];
-
-    /**
-     * The Command's options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [
-        '--show'              => 'Lists the names of all database tables.',
-        '--metadata'          => 'Retrieves list containing field information.',
-        '--desc'              => 'Sorts the table rows in DESC order.',
-        '--limit-rows'        => 'Limits the number of rows. Default: 10.',
-        '--limit-field-value' => 'Limits the length of field values. Default: 15.',
-        '--dbgroup'           => 'Database group to show.',
-    ];
-
-    /**
-     * @var list<list<int|string>> Table Data.
-     */
-    private array $tbody;
-
     private ?BaseConnection $db = null;
 
     /**
-     * @var bool Sort the table rows in DESC order or not.
+     * @var string The sort order for table rows.
      */
-    private bool $sortDesc = false;
+    private string $sortOrder = 'ASC';
 
-    private string $DBPrefix;
+    private string $dbPrefix;
 
-    public function run(array $params)
+    protected function configure(): void
     {
-        $dbGroup = $params['dbgroup'] ?? CLI::getOption('dbgroup');
+        $this
+            ->addArgument(new Argument(
+                name: 'table_name',
+                description: 'The table name to show info.',
+                default: '',
+            ))
+            ->addOption(new Option(
+                name: 'show',
+                description: 'Lists the names of all database tables.',
+            ))
+            ->addOption(new Option(
+                name: 'metadata',
+                description: 'Retrieves list containing field information.',
+            ))
+            ->addOption(new Option(
+                name: 'desc',
+                description: 'Sorts the table rows in DESC order.',
+            ))
+            ->addOption(new Option(
+                name: 'limit-rows',
+                description: 'Limits the number of rows.',
+                requiresValue: true,
+                default: '10',
+                valueLabel: 'rows',
+            ))
+            ->addOption(new Option(
+                name: 'limit-field-value',
+                description: 'Limits the length of field values.',
+                requiresValue: true,
+                default: '15',
+                valueLabel: 'value',
+            ))
+            ->addOption(new Option(
+                name: 'dbgroup',
+                description: 'Database group to show.',
+                requiresValue: true,
+                default: '',
+                valueLabel: 'group',
+            ))
+            ->addUsage('db:table --show')
+            ->addUsage('db:table --metadata')
+            ->addUsage('db:table my_table --metadata')
+            ->addUsage('db:table my_table')
+            ->addUsage('db:table my_table --limit-rows 5 --limit-field-value 10 --desc');
+    }
+
+    protected function interact(array &$arguments, array &$options): void
+    {
+        if ($this->hasUnboundOption('show', $options)) {
+            return;
+        }
 
         try {
-            $this->db = Database::connect($dbGroup);
-        } catch (InvalidArgumentException $e) {
-            CLI::error($e->getMessage());
-
-            return EXIT_ERROR;
+            $db = Database::connect($this->resolveDbGroup($this->getUnboundOption('dbgroup', $options)));
+        } catch (InvalidArgumentException) {
+            return;
         }
 
-        $this->DBPrefix = $this->db->getPrefix();
+        $tables = $db->listTables();
 
-        $this->showDBConfig();
-
-        $tables = $this->db->listTables();
-
-        if (array_key_exists('desc', $params)) {
-            $this->sortDesc = true;
+        if ($tables === false || $tables === []) {
+            return;
         }
 
-        if ($tables === []) {
-            CLI::error('Database has no tables!', 'light_gray', 'red');
-            CLI::newLine();
-
-            return EXIT_ERROR;
-        }
-
-        if (array_key_exists('show', $params)) {
-            $this->showAllTables($tables);
-
-            return EXIT_ERROR;
-        }
-
-        $tableName       = $params[0] ?? null;
-        $limitRows       = (int) ($params['limit-rows'] ?? 10);
-        $limitFieldValue = (int) ($params['limit-field-value'] ?? 15);
-
-        while (! in_array($tableName, $tables, true)) {
-            $tableNameNo = CLI::promptByKey(
+        while (! in_array($arguments[0] ?? '', $tables, true)) {
+            $tableKey = CLI::promptByKey(
                 ['Here is the list of your database tables:', 'Which table do you want to see?'],
                 $tables,
                 'required',
             );
             CLI::newLine();
 
-            $tableName = $tables[$tableNameNo] ?? null;
+            $arguments[0] = $tables[$tableKey] ?? '';
+        }
+    }
+
+    protected function execute(array $arguments, array $options): int
+    {
+        try {
+            $this->db = Database::connect($this->resolveDbGroup($options['dbgroup']));
+        } catch (InvalidArgumentException $e) {
+            CLI::error($e->getMessage());
+
+            return EXIT_ERROR;
         }
 
-        if (array_key_exists('metadata', $params)) {
+        $this->dbPrefix = $this->db->getPrefix();
+
+        $this->showDbConfig();
+
+        $tables = $this->db->listTables();
+
+        $this->sortOrder = $options['desc'] === true ? 'DESC' : 'ASC';
+
+        if ($tables === false || $tables === []) {
+            CLI::error('Database has no tables!', 'light_gray', 'red');
+
+            return EXIT_ERROR;
+        }
+
+        if ($options['show'] === true) {
+            $this->showAllTables($tables);
+
+            return EXIT_SUCCESS;
+        }
+
+        $tableName = $arguments['table_name'];
+        assert(is_string($tableName));
+
+        if (! in_array($tableName, $tables, true)) {
+            CLI::error(
+                $tableName === ''
+                    ? 'No table name was specified.'
+                    : sprintf('Table "%s" was not found in the database.', $tableName),
+                'light_gray',
+                'red',
+            );
+
+            return EXIT_ERROR;
+        }
+
+        if ($options['metadata'] === true) {
             $this->showFieldMetaData($tableName);
 
             return EXIT_SUCCESS;
         }
 
-        $this->showDataOfTable($tableName, $limitRows, $limitFieldValue);
+        $limitRows       = $options['limit-rows'];
+        $limitFieldValue = $options['limit-field-value'];
+        assert(is_string($limitRows) && is_string($limitFieldValue));
+
+        $this->showDataOfTable($tableName, (int) $limitRows, (int) $limitFieldValue);
 
         return EXIT_SUCCESS;
     }
 
-    private function showDBConfig(): void
+    private function resolveDbGroup(mixed $group): ?string
     {
-        $data = [[
-            'hostname' => $this->db->hostname,
-            'database' => $this->db->getDatabase(),
-            'username' => $this->db->username,
-            'DBDriver' => $this->db->getPlatform(),
-            'DBPrefix' => $this->DBPrefix,
-            'port'     => $this->db->port,
-        ]];
-        CLI::table(
-            $data,
-            ['hostname', 'database', 'username', 'DBDriver', 'DBPrefix', 'port'],
-        );
+        return is_string($group) && $group !== '' ? $group : null;
     }
 
-    private function removeDBPrefix(): void
+    private function showDbConfig(): void
+    {
+        CLI::table([[
+            $this->db->hostname,
+            $this->db->getDatabase(),
+            $this->db->username,
+            $this->db->getPlatform(),
+            $this->dbPrefix,
+            $this->db->port,
+        ]], ['Hostname', 'Database', 'Username', 'DB Driver', 'DB Prefix', 'Port']);
+    }
+
+    private function removeDbPrefix(): void
     {
         $this->db->setPrefix('');
     }
 
-    private function restoreDBPrefix(): void
+    private function restoreDbPrefix(): void
     {
-        $this->db->setPrefix($this->DBPrefix);
+        $this->db->setPrefix($this->dbPrefix);
     }
 
-    /**
-     * Show Data of Table
-     *
-     * @return void
-     */
-    private function showDataOfTable(string $tableName, int $limitRows, int $limitFieldValue)
+    private function showDataOfTable(string $tableName, int $limitRows, int $limitFieldValue): void
     {
-        CLI::write("Data of Table \"{$tableName}\":", 'black', 'yellow');
+        CLI::write(sprintf('Data of "%s" table:', $tableName), 'black', 'yellow');
         CLI::newLine();
 
-        $this->removeDBPrefix();
-        $thead = $this->db->getFieldNames(TableName::fromActualName($this->db->DBPrefix, $tableName));
-        $this->restoreDBPrefix();
+        $this->removeDbPrefix();
+
+        $table      = TableName::fromActualName($this->db->getPrefix(), $tableName);
+        $fieldNames = $this->db->getFieldNames($table);
 
         // If there is a field named `id`, sort by it.
-        $sortField = null;
-        if (in_array('id', $thead, true)) {
-            $sortField = 'id';
+        $sortField = in_array('id', $fieldNames, true) ? 'id' : '';
+
+        $builder = $this->db->table($table)->limit($limitRows);
+
+        if ($sortField !== '') {
+            $builder->orderBy($sortField, $this->sortOrder);
         }
 
-        $this->tbody = $this->makeTableRows($tableName, $limitRows, $limitFieldValue, $sortField);
-        CLI::table($this->tbody, $thead);
-    }
-
-    /**
-     * Show All Tables
-     *
-     * @param list<string> $tables
-     *
-     * @return void
-     */
-    private function showAllTables(array $tables)
-    {
-        CLI::write('The following is a list of the names of all database tables:', 'black', 'yellow');
-        CLI::newLine();
-
-        $thead       = ['ID', 'Table Name', 'Num of Rows', 'Num of Fields'];
-        $this->tbody = $this->makeTbodyForShowAllTables($tables);
-
-        CLI::table($this->tbody, $thead);
-        CLI::newLine();
-    }
-
-    /**
-     * Make body for table
-     *
-     * @param list<string> $tables
-     *
-     * @return list<list<int|string>>
-     */
-    private function makeTbodyForShowAllTables(array $tables): array
-    {
-        $this->tbody = [];
-
-        $this->removeDBPrefix();
-
-        foreach ($tables as $id => $tableName) {
-            $table = $this->db->protectIdentifiers($tableName);
-            $db    = $this->db->query("SELECT * FROM {$table}");
-
-            $this->tbody[] = [
-                $id + 1,
-                $tableName,
-                $db->getNumRows(),
-                $db->getFieldCount(),
-            ];
-        }
-
-        $this->restoreDBPrefix();
-
-        if ($this->sortDesc) {
-            krsort($this->tbody);
-        }
-
-        return $this->tbody;
-    }
-
-    /**
-     * Make table rows
-     *
-     * @return list<list<int|string>>
-     */
-    private function makeTableRows(
-        string $tableName,
-        int $limitRows,
-        int $limitFieldValue,
-        ?string $sortField = null,
-    ): array {
-        $this->tbody = [];
-
-        $this->removeDBPrefix();
-        $builder = $this->db->table(TableName::fromActualName($this->db->DBPrefix, $tableName));
-        $builder->limit($limitRows);
-        if ($sortField !== null) {
-            $builder->orderBy($sortField, $this->sortDesc ? 'DESC' : 'ASC');
-        }
         $rows = $builder->get()->getResultArray();
-        $this->restoreDBPrefix();
+
+        $this->restoreDbPrefix();
+
+        $thead = array_map(ucfirst(...), $fieldNames);
+
+        $tbody = [];
 
         foreach ($rows as $row) {
-            $row = array_map(
+            $tbody[] = array_map(
                 static fn ($item): string => mb_strlen((string) $item) > $limitFieldValue
                     ? mb_substr((string) $item, 0, $limitFieldValue) . '...'
                     : (string) $item,
                 $row,
             );
-            $this->tbody[] = $row;
         }
 
-        if ($sortField === null && $this->sortDesc) {
-            krsort($this->tbody);
+        if ($sortField === '' && $this->sortOrder === 'DESC') {
+            $tbody = array_reverse($tbody);
         }
 
-        return $this->tbody;
+        CLI::table($tbody, $thead);
+    }
+
+    /**
+     * @param list<string> $tables
+     */
+    private function showAllTables(array $tables): void
+    {
+        CLI::write('The following is a list of the names of all database tables:', 'black', 'yellow');
+        CLI::newLine();
+
+        $this->removeDbPrefix();
+
+        $tbody = [];
+
+        foreach ($tables as $id => $tableName) {
+            $tbody[] = [
+                $id + 1,
+                $tableName,
+                $this->db->table($tableName)->countAllResults(),
+                count($this->db->getFieldData($tableName)),
+            ];
+        }
+
+        $this->restoreDbPrefix();
+
+        $thead = ['Id', 'Table Name', 'Num of Rows', 'Num of Fields'];
+
+        CLI::table($this->sortOrder === 'DESC' ? array_reverse($tbody) : $tbody, $thead);
     }
 
     private function showFieldMetaData(string $tableName): void
     {
-        CLI::write("List of Metadata Information in Table \"{$tableName}\":", 'black', 'yellow');
+        CLI::write(sprintf('List of metadata information in "%s" table:', $tableName), 'black', 'yellow');
         CLI::newLine();
 
-        $thead = ['Field Name', 'Type', 'Max Length', 'Nullable', 'Default', 'Primary Key'];
+        $thead = ['Field Name', 'Type', 'Max Length', 'Nullable?', 'Default', 'Primary Key?'];
 
-        $this->removeDBPrefix();
+        $this->removeDbPrefix();
         $fields = $this->db->getFieldData($tableName);
-        $this->restoreDBPrefix();
+        $this->restoreDbPrefix();
+
+        $tbody = [];
 
         foreach ($fields as $row) {
-            $this->tbody[] = [
+            $tbody[] = [
                 $row->name,
                 $row->type,
                 $row->max_length,
@@ -327,22 +302,13 @@ class ShowTableInfo extends BaseCommand
             ];
         }
 
-        if ($this->sortDesc) {
-            krsort($this->tbody);
-        }
-
-        CLI::table($this->tbody, $thead);
+        CLI::table($this->sortOrder === 'DESC' ? array_reverse($tbody) : $tbody, $thead);
     }
 
-    /**
-     * @param bool|int|string|null $fieldValue
-     */
-    private function setYesOrNo($fieldValue): string
+    private function setYesOrNo(mixed $fieldValue): string
     {
-        if ((bool) $fieldValue) {
-            return CLI::color('Yes', 'green');
-        }
-
-        return CLI::color('No', 'red');
+        return filter_var($fieldValue, FILTER_VALIDATE_BOOL)
+            ? CLI::color('Yes', 'green')
+            : CLI::color('No', 'red');
     }
 }

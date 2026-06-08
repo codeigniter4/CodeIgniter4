@@ -82,11 +82,11 @@ final class ShowTableInfoMockIOTest extends CIUnitTestCase
             $result,
         );
         $this->assertMatchesRegularExpression(
-            '/Data of Table "db_migrations"\:/',
+            '/Data of "db_migrations" table:/',
             $result,
         );
         $this->assertMatchesRegularExpression(
-            '/\| id[[:blank:]]+\| version[[:blank:]]+\| class[[:blank:]]+\| group[[:blank:]]+\| namespace[[:blank:]]+\| time[[:blank:]]+\| batch \|/',
+            '/\| Id[[:blank:]]+\| Version[[:blank:]]+\| Class[[:blank:]]+\| Group[[:blank:]]+\| Namespace[[:blank:]]+\| Time[[:blank:]]+\| Batch \|/',
             $result,
         );
     }
