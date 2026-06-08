@@ -395,6 +395,142 @@ final class FormRequestTest extends CIUnitTestCase
         $this->assertSame(303, $response->getStatusCode());
     }
 
+    public function testPreparedValidationDataIsPassedToFailedValidationWithoutPreparingAgain(): void
+    {
+        service('superglobals')->setPost('title', ' Hello World ');
+
+        $formRequest = new class ($this->makeRequest()) extends FormRequest {
+            public int $prepareCount = 0;
+
+            /**
+             * @var array<string, mixed>
+             */
+            public array $preparedData = [];
+
+            public function rules(): array
+            {
+                return [
+                    'title' => 'required',
+                    'body'  => 'required',
+                ];
+            }
+
+            protected function prepareForValidation(array $data): array
+            {
+                $this->prepareCount++;
+                $data['title'] = trim($data['title'] ?? '');
+
+                return $data;
+            }
+
+            protected function failedValidation(array $errors, array $preparedData): ResponseInterface
+            {
+                $this->preparedData = $preparedData;
+
+                return service('response')->setStatusCode(422)->setJSON(['errors' => $errors]);
+            }
+        };
+
+        $formRequest->resolveRequest();
+
+        $this->assertSame(1, $formRequest->prepareCount);
+        $this->assertSame(['title' => 'Hello World'], $formRequest->preparedData);
+    }
+
+    #[RunInSeparateProcess]
+    public function testDefaultFailedValidationFlashesPreparedValidationDataAsOldInput(): void
+    {
+        /** @var array<string, mixed> $_SESSION */
+        $_SESSION = [];
+
+        service('superglobals')->setPost('title', ' Hello World ');
+
+        $formRequest = new class ($this->makeRequest()) extends FormRequest {
+            public function rules(): array
+            {
+                return [
+                    'title' => 'required',
+                    'body'  => 'required',
+                ];
+            }
+
+            protected function prepareForValidation(array $data): array
+            {
+                $data['title'] = trim($data['title'] ?? '');
+
+                return $data;
+            }
+        };
+
+        $formRequest->resolveRequest();
+
+        $this->assertSame(['title' => 'Hello World'], $_SESSION['_ci_old_input']['post']);
+    }
+
+    #[RunInSeparateProcess]
+    public function testDefaultFailedValidationFlashesPreparedGetDataAsOldInput(): void
+    {
+        /** @var array<string, mixed> $_SESSION */
+        $_SESSION = [];
+
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
+        service('superglobals')->setGet('title', ' Hello World ');
+
+        $formRequest = new class ($this->makeRequest()) extends FormRequest {
+            public function rules(): array
+            {
+                return [
+                    'title' => 'required',
+                    'body'  => 'required',
+                ];
+            }
+
+            protected function prepareForValidation(array $data): array
+            {
+                $data['title'] = trim($data['title'] ?? '');
+
+                return $data;
+            }
+        };
+
+        $formRequest->resolveRequest();
+
+        $this->assertSame(['title' => 'Hello World'], $_SESSION['_ci_old_input']['get']);
+        $this->assertSame([], $_SESSION['_ci_old_input']['post']);
+    }
+
+    #[RunInSeparateProcess]
+    public function testDefaultFailedValidationPreservesGetDataWhenPostDataIsPrepared(): void
+    {
+        /** @var array<string, mixed> $_SESSION */
+        $_SESSION = [];
+
+        service('superglobals')->setGet('category', '2');
+        service('superglobals')->setPost('title', ' Hello World ');
+
+        $formRequest = new class ($this->makeRequest()) extends FormRequest {
+            public function rules(): array
+            {
+                return [
+                    'title' => 'required',
+                    'body'  => 'required',
+                ];
+            }
+
+            protected function prepareForValidation(array $data): array
+            {
+                $data['title'] = trim($data['title'] ?? '');
+
+                return $data;
+            }
+        };
+
+        $formRequest->resolveRequest();
+
+        $this->assertSame(['category' => '2'], $_SESSION['_ci_old_input']['get']);
+        $this->assertSame(['title' => 'Hello World'], $_SESSION['_ci_old_input']['post']);
+    }
+
     // -------------------------------------------------------------------------
     // Authorization failure
     // -------------------------------------------------------------------------
@@ -488,7 +624,7 @@ final class FormRequestTest extends CIUnitTestCase
                 return ['title' => 'required'];
             }
 
-            protected function failedValidation(array $errors): ResponseInterface
+            protected function failedValidation(array $errors, array $preparedData): ResponseInterface
             {
                 self::$called = true;
 

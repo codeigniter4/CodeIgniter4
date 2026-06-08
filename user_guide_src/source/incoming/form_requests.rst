@@ -171,10 +171,9 @@ normalized phone numbers, or trimmed strings.
 .. literalinclude:: form_requests/006.php
    :lines: 2-
 
-.. note:: ``old()`` returns the original submitted input, not the normalized
-    values. Use ``getValidated()`` to access the processed data after a successful
-    request. If you need ``old()`` to reflect normalized values, see
-    :ref:`form-request-flash-normalized`.
+.. note:: When validation fails and the default redirect response is used,
+    ``old()`` returns the prepared validation data. Use ``getValidated()`` to
+    access the processed data after a successful request.
 
 .. _form-request-validation-data:
 
@@ -225,13 +224,18 @@ Flashing Normalized Input
 =========================
 
 If your ``prepareForValidation()`` transforms visible form fields (for example,
-trimming strings or canonicalizing values), ``old()`` will return the original
-submitted input because the redirect flashes the raw superglobals. To make
-``old()`` reflect the normalized values instead, override ``failedValidation()``
-and flash the normalized payload manually:
+trimming strings or canonicalizing values), the default redirect response flashes
+the prepared validation data as old input.
+
+If you override ``failedValidation()`` and still need to flash normalized input,
+use the second ``$preparedData`` argument. It contains the same data that was
+passed to validation:
 
 .. literalinclude:: form_requests/013.php
    :lines: 2-
+
+The prepared data has not passed validation. After successful validation, use
+``getValidated()`` or ``getValidatedInput()`` for trusted values.
 
 *****************************************
 How the Framework Resolves Form Requests

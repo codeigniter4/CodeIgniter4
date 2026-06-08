@@ -16,7 +16,7 @@ class StorePostRequest extends FormRequest
     }
 
     // Always respond with JSON, regardless of the request type.
-    protected function failedValidation(array $errors): ResponseInterface
+    protected function failedValidation(array $errors, array $preparedData): ResponseInterface
     {
         return service('response')->setStatusCode(422)->setJSON(['errors' => $errors]);
     }

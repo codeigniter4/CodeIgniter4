@@ -22,8 +22,8 @@ class StorePostRequest extends FormRequest
         return $data;
     }
 
-    // Override so that old() reflects the normalized values on redirect.
-    protected function failedValidation(array $errors): ResponseInterface
+    // Override while still flashing the prepared values on redirect.
+    protected function failedValidation(array $errors, array $preparedData): ResponseInterface
     {
         if (
             $this->request->is('json')
@@ -32,14 +32,13 @@ class StorePostRequest extends FormRequest
             return service('response')->setStatusCode(422)->setJSON(['errors' => $errors]);
         }
 
-        // withInput() flashes the original superglobals and the validation
-        // errors. We then overwrite old input with the normalized payload so
-        // that old() returns the same values that were validated.
+        // withInput() flashes validation errors. Then we replace old input with
+        // the same prepared values that were passed to validation.
         $redirect = redirect()->back()->withInput();
 
         service('session')->setFlashdata('_ci_old_input', [
             'get'  => [],
-            'post' => $this->prepareForValidation($this->validationData()),
+            'post' => $preparedData,
         ]);
 
         return $redirect;

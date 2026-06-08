@@ -153,14 +153,29 @@ abstract class FormRequest
      * returns a 422 JSON response instead.
      *
      * @param array<string, string> $errors
+     * @param array<string, mixed>  $preparedData
      */
-    protected function failedValidation(array $errors): ResponseInterface
+    protected function failedValidation(array $errors, array $preparedData): ResponseInterface
     {
         if ($this->shouldReturnJsonResponse()) {
             return service('response')->setStatusCode(422)->setJSON(['errors' => $errors]);
         }
 
-        return redirect()->back()->withInput();
+        $redirect = redirect()->back()->withInput();
+
+        $key = in_array($this->request->getMethod(), [Method::GET, Method::HEAD], true)
+            ? 'get'
+            : 'post';
+
+        $oldInput = [
+            'get'  => service('superglobals')->getGetArray(),
+            'post' => service('superglobals')->getPostArray(),
+        ];
+        $oldInput[$key] = $preparedData;
+
+        service('session')->setFlashdata('_ci_old_input', $oldInput);
+
+        return $redirect;
     }
 
     /**
@@ -249,6 +264,8 @@ abstract class FormRequest
      */
     final public function resolveRequest(): ?ResponseInterface
     {
+        $this->validatedData = [];
+
         if (! $this->isAuthorized()) {
             return $this->failedAuthorization();
         }
@@ -259,7 +276,7 @@ abstract class FormRequest
             ->setRules($this->rules(), $this->messages());
 
         if (! $validation->run($data)) {
-            return $this->failedValidation($validation->getErrors());
+            return $this->failedValidation($validation->getErrors(), $data);
         }
 
         $this->validatedData = $validation->getValidated();
