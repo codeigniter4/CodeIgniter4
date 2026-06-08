@@ -430,7 +430,7 @@ final class BaseConnectionTest extends CIUnitTestCase
                 true,
                 true,
                 '(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid)',
-                '(SELECT SUM(payments.test_amount) FROM payments WHERE payments.invoice_id=4) AS "amount_paid)"',
+                '(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS "amount_paid)"',
             ],
             'sub query with missing `)` at the end' => [
                 false,

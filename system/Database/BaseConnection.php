@@ -1306,6 +1306,10 @@ abstract class BaseConnection implements ConnectionInterface
             $alias = '';
         }
 
+        if ($alias !== '' && strcspn($item, "()'") !== strlen($item) && $this->isIdentifierEscapeExempt($item)) {
+            return $item . $alias;
+        }
+
         // Break the string apart if it contains periods, then insert the table prefix
         // in the correct location, assuming the period doesn't indicate that we're dealing
         // with an alias. While we're at it, we will escape the components
