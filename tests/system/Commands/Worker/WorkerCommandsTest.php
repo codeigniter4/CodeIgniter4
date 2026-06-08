@@ -13,8 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Worker;
 
+use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\StreamFilterTrait;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -38,6 +41,13 @@ final class WorkerCommandsTest extends CIUnitTestCase
         parent::tearDown();
 
         $this->cleanupFiles();
+
+        CLI::reset();
+    }
+
+    private function getUndecoratedOutput(string $output): string
+    {
+        return preg_replace('/\e\[[^m]+m/', '', $output) ?? '';
     }
 
     private function cleanupFiles(): void
@@ -139,6 +149,68 @@ final class WorkerCommandsTest extends CIUnitTestCase
         $this->assertStringContainsString('The following files will be removed:', $output);
         $this->assertStringContainsString('public/frankenphp-worker.php', $output);
         $this->assertStringContainsString('Caddyfile', $output);
+    }
+
+    public function testWorkerUninstallCancelsWithoutForce(): void
+    {
+        command('worker:install');
+
+        $io = new MockInputOutput();
+        $io->setInputs(['n']);
+        CLI::setInputOutput($io);
+
+        command('worker:uninstall');
+
+        $this->assertFileExists(ROOTPATH . 'public/frankenphp-worker.php');
+        $this->assertFileExists(ROOTPATH . 'Caddyfile');
+
+        $output = $this->getUndecoratedOutput($io->getOutput());
+        $this->assertStringContainsString('Remove the FrankenPHP worker mode files? [y, n]: n', $output);
+        $this->assertStringContainsString('Uninstall cancelled.', $output);
+    }
+
+    public function testWorkerUninstallWithoutForceButConfirmed(): void
+    {
+        command('worker:install');
+
+        $io = new MockInputOutput();
+        $io->setInputs(['y']);
+        CLI::setInputOutput($io);
+
+        command('worker:uninstall');
+
+        $this->assertFileDoesNotExist(ROOTPATH . 'public/frankenphp-worker.php');
+        $this->assertFileDoesNotExist(ROOTPATH . 'Caddyfile');
+
+        $output = $this->getUndecoratedOutput($io->getOutput());
+        $this->assertStringContainsString('Remove the FrankenPHP worker mode files? [y, n]: y', $output);
+        $this->assertStringContainsString('Worker mode files removed successfully!', $output);
+    }
+
+    #[DataProvider('provideWorkerUninstallAbortsNonInteractively')]
+    public function testWorkerUninstallAbortsNonInteractively(string $flag): void
+    {
+        command('worker:install');
+        $this->resetStreamFilterBuffer();
+
+        command("worker:uninstall {$flag}");
+
+        $this->assertFileExists(ROOTPATH . 'public/frankenphp-worker.php');
+        $this->assertFileExists(ROOTPATH . 'Caddyfile');
+        $this->assertStringContainsString(
+            'Uninstall aborted: pass --force to remove worker mode files in non-interactive mode.',
+            $this->getStreamFilterBuffer(),
+        );
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideWorkerUninstallAbortsNonInteractively(): iterable
+    {
+        yield 'long form' => ['--no-interaction'];
+
+        yield 'short form' => ['-N'];
     }
 
     public function testWorkerInstallAndUninstallCycle(): void

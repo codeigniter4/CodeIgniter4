@@ -13,27 +13,23 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Worker;
 
-use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Input\Option;
 
 /**
- * Install Worker Mode for FrankenPHP.
- *
- * This command sets up the necessary files to run CodeIgniter 4
- * in FrankenPHP worker mode for improved performance.
+ * Installs the files needed to run CodeIgniter 4 in FrankenPHP worker mode.
  */
-class WorkerInstall extends BaseCommand
+#[Command(
+    name: 'worker:install',
+    description: 'Install FrankenPHP worker mode by creating necessary configuration files',
+    group: 'Worker Mode',
+)]
+class WorkerInstall extends AbstractCommand
 {
-    protected $group       = 'Worker Mode';
-    protected $name        = 'worker:install';
-    protected $description = 'Install FrankenPHP worker mode by creating necessary configuration files';
-    protected $usage       = 'worker:install [options]';
-    protected $options     = [
-        '--force' => 'Overwrite existing files',
-    ];
-
     /**
-     * Template file mappings (template => destination path)
+     * Template file mappings (template => destination path).
      *
      * @var array<string, string>
      */
@@ -42,9 +38,18 @@ class WorkerInstall extends BaseCommand
         'Caddyfile.tpl'             => 'Caddyfile',
     ];
 
-    public function run(array $params)
+    protected function configure(): void
     {
-        $force = array_key_exists('force', $params) || CLI::getOption('force');
+        $this->addOption(new Option(
+            name: 'force',
+            shortcut: 'f',
+            description: 'Overwrite existing files.',
+        ));
+    }
+
+    protected function execute(array $arguments, array $options): int
+    {
+        $force = $options['force'] === true;
 
         CLI::write('Setting up FrankenPHP Worker Mode', 'yellow');
         CLI::newLine();
@@ -53,63 +58,46 @@ class WorkerInstall extends BaseCommand
 
         $created = [];
 
-        // Process each template
         foreach ($this->templates as $template => $destination) {
             $source = SYSTEMPATH . 'Commands/Worker/Views/' . $template;
             $target = ROOTPATH . $destination;
 
             $isFile = is_file($target);
 
-            // Skip if file exists and not forcing overwrite
             if (! $force && $isFile) {
                 continue;
             }
 
-            // Read template content
             $content = file_get_contents($source);
+
             if ($content === false) {
-                CLI::error(
-                    "Failed to read template: {$template}",
-                    'light_gray',
-                    'red',
-                );
-                CLI::newLine();
+                CLI::error(sprintf('Failed to read template: %s', $template), 'light_gray', 'red');
 
                 return EXIT_ERROR;
             }
 
-            // Write file to destination
             if (! write_file($target, $content)) {
-                CLI::error(
-                    'Failed to create file: ' . clean_path($target),
-                    'light_gray',
-                    'red',
-                );
-                CLI::newLine();
+                CLI::error(sprintf('Failed to create file: %s', clean_path($target)), 'light_gray', 'red');
 
                 return EXIT_ERROR;
             }
 
             if ($force && $isFile) {
-                CLI::write('  File overwritten: ' . clean_path($target), 'yellow');
+                CLI::write(sprintf('  File overwritten: %s', clean_path($target)), 'yellow');
             } else {
-                CLI::write('  File created: ' . clean_path($target), 'green');
+                CLI::write(sprintf('  File created: %s', clean_path($target)), 'green');
             }
 
             $created[] = $destination;
         }
 
-        // No files were created
         if ($created === []) {
-            CLI::newLine();
             CLI::write('Worker mode files already exist.', 'yellow');
             CLI::write('Use --force to overwrite existing files.', 'yellow');
-            CLI::newLine();
 
             return EXIT_ERROR;
         }
 
-        // Success message
         CLI::newLine();
         CLI::write('Worker mode files created successfully!', 'green');
         CLI::newLine();
@@ -119,10 +107,7 @@ class WorkerInstall extends BaseCommand
         return EXIT_SUCCESS;
     }
 
-    /**
-     * Display next steps to the user
-     */
-    protected function showNextSteps(): void
+    private function showNextSteps(): void
     {
         CLI::write('Next Steps:', 'yellow');
         CLI::newLine();
@@ -133,6 +118,5 @@ class WorkerInstall extends BaseCommand
 
         CLI::write('2. Test your application:', 'white');
         CLI::write('   curl http://localhost:8080/', 'green');
-        CLI::newLine();
     }
 }

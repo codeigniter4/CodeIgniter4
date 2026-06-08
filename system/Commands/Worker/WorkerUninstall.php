@@ -13,26 +13,23 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Worker;
 
-use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Input\Option;
 
 /**
- * Uninstall Worker Mode for FrankenPHP.
- *
- * This command removes the files created by the worker:install command.
+ * Removes the files created by the worker:install command.
  */
-class WorkerUninstall extends BaseCommand
+#[Command(
+    name: 'worker:uninstall',
+    description: 'Remove FrankenPHP worker mode configuration files',
+    group: 'Worker Mode',
+)]
+class WorkerUninstall extends AbstractCommand
 {
-    protected $group       = 'Worker Mode';
-    protected $name        = 'worker:uninstall';
-    protected $description = 'Remove FrankenPHP worker mode configuration files';
-    protected $usage       = 'worker:uninstall [options]';
-    protected $options     = [
-        '--force' => 'Skip confirmation prompt',
-    ];
-
     /**
-     * Files to remove (must match Install command)
+     * Files to remove (must match the worker:install command).
      *
      * @var list<string>
      */
@@ -41,80 +38,103 @@ class WorkerUninstall extends BaseCommand
         'Caddyfile',
     ];
 
-    public function run(array $params)
+    protected function configure(): void
     {
-        $force = array_key_exists('force', $params) || CLI::getOption('force');
+        $this->addOption(new Option(
+            name: 'force',
+            shortcut: 'f',
+            description: 'Skip the confirmation prompt.',
+        ));
+    }
 
-        CLI::write('Uninstalling FrankenPHP Worker Mode', 'yellow');
-        CLI::newLine();
-
-        // Find existing files
-        $existing = [];
-
-        foreach ($this->files as $file) {
-            $path = ROOTPATH . $file;
-            if (is_file($path)) {
-                $existing[] = $file;
-            }
+    protected function interact(array &$arguments, array &$options): void
+    {
+        if ($this->hasUnboundOption('force', $options)) {
+            return;
         }
 
-        // No files to remove
+        if ($this->existingFiles() === []) {
+            return;
+        }
+
+        if (CLI::prompt('Remove the FrankenPHP worker mode files?', ['y', 'n']) === 'y') {
+            $options['force'] = null; // simulate the presence of the --force option
+        }
+    }
+
+    protected function execute(array $arguments, array $options): int
+    {
+        $existing = $this->existingFiles();
+
         if ($existing === []) {
             CLI::write('No worker mode files found to remove.', 'yellow');
-            CLI::newLine();
 
             return EXIT_SUCCESS;
         }
 
-        // Show files that will be removed
+        if ($options['force'] === false) {
+            if ($this->isInteractive()) {
+                CLI::write('Uninstall cancelled.', 'yellow');
+
+                return EXIT_SUCCESS;
+            }
+
+            CLI::error('Uninstall aborted: pass --force to remove worker mode files in non-interactive mode.', 'light_gray', 'red');
+
+            return EXIT_ERROR;
+        }
+
+        CLI::newLine();
         CLI::write('The following files will be removed:', 'yellow');
 
         foreach ($existing as $file) {
-            CLI::write('  - ' . $file, 'white');
+            CLI::write(sprintf('  - %s', $file), 'white');
         }
+
         CLI::newLine();
-
-        // Confirm deletion unless --force is used
-        if (! $force) {
-            $confirm = CLI::prompt('Are you sure you want to remove these files?', ['y', 'n']);
-            CLI::newLine();
-
-            if ($confirm !== 'y') {
-                CLI::write('Uninstall cancelled.', 'yellow');
-                CLI::newLine();
-
-                return EXIT_ERROR;
-            }
-        }
 
         $removed = [];
 
-        // Remove each file
         foreach ($existing as $file) {
             $path = ROOTPATH . $file;
 
             if (! @unlink($path)) {
-                CLI::error('Failed to remove file: ' . clean_path($path), 'light_gray', 'red');
+                CLI::error(sprintf('Failed to remove file: %s', clean_path($path)), 'light_gray', 'red');
 
                 continue;
             }
 
-            CLI::write('  File removed: ' . clean_path($path), 'green');
+            CLI::write(sprintf('  File removed: %s', clean_path($path)), 'green');
+
             $removed[] = $file;
         }
 
-        // Summary
         CLI::newLine();
+
         if ($removed === []) {
-            CLI::error('No files were removed.');
-            CLI::newLine();
+            CLI::error('No files were removed.', 'light_gray', 'red');
 
             return EXIT_ERROR;
         }
 
         CLI::write('Worker mode files removed successfully!', 'green');
-        CLI::newLine();
 
         return EXIT_SUCCESS;
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function existingFiles(): array
+    {
+        $existing = [];
+
+        foreach ($this->files as $file) {
+            if (is_file(ROOTPATH . $file)) {
+                $existing[] = $file;
+            }
+        }
+
+        return $existing;
     }
 }
