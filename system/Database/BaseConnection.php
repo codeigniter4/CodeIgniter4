@@ -1280,6 +1280,7 @@ abstract class BaseConnection implements ConnectionInterface
         //
         // Added exception for single quotes as well, we don't want to alter
         // literal strings.
+        /** @psalm-suppress NoValue */
         if (strcspn($item, "()'") !== strlen($item) && $this->isIdentifierEscapeExempt($item)) {
             return $item;
         }
@@ -1306,6 +1307,7 @@ abstract class BaseConnection implements ConnectionInterface
             $alias = '';
         }
 
+        /** @psalm-suppress NoValue */
         if ($alias !== '' && strcspn($item, "()'") !== strlen($item) && $this->isIdentifierEscapeExempt($item)) {
             return $item . $alias;
         }
@@ -1496,6 +1498,7 @@ abstract class BaseConnection implements ConnectionInterface
             return $item;
         }
 
+        /** @psalm-suppress NoValue */
         if (ctype_digit($item) || $this->isIdentifierEscapeExempt($item)) {
             return $item;
         }

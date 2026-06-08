@@ -410,6 +410,14 @@ final class BaseConnectionTest extends CIUnitTestCase
                 'MAX("db"."payments") AS "payments"',
             ],
 
+            'function with multiple arguments AS' => [
+                false,
+                true,
+                true,
+                "CONCAT(first_name, ' ', last_name) AS name",
+                "CONCAT(first_name, ' ', last_name) AS name",
+            ],
+
             'quoted column operator AS' => [
                 false,
                 true,

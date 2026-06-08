@@ -410,7 +410,7 @@ class BaseBuilder
         }
 
         if (is_string($select)) {
-            $select = ($escape === false) ? [$select] : explode(',', $select);
+            $select = ($escape === false) ? [$select] : preg_split('/,(?![^(]*\))/', $select);
         }
 
         foreach ($select as $val) {
