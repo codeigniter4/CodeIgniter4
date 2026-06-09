@@ -303,6 +303,10 @@ class Session implements SessionInterface
         }
 
         foreach ($data as $sessionKey => $sessionValue) {
+            if (is_string($sessionKey) && str_starts_with($sessionKey, '__ci_')) {
+                continue;
+            }
+
             $_SESSION[$sessionKey] = $sessionValue;
         }
     }
@@ -370,6 +374,10 @@ class Session implements SessionInterface
      */
     public function __set(string $key, $value)
     {
+        if (str_starts_with($key, '__ci_')) {
+            return;
+        }
+
         $_SESSION[$key] = $value;
     }
 

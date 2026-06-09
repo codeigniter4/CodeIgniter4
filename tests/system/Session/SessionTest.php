@@ -328,6 +328,30 @@ final class SessionTest extends CIUnitTestCase
         $this->assertSame('bar', $_SESSION['foo']);
     }
 
+    public function testSetIgnoresCiVars(): void
+    {
+        $session = $this->getInstance();
+        $session->start();
+
+        $session->set('__ci_vars', 'malicious');
+        $session->set('__ci_last_regenerate', 'malicious');
+
+        $this->assertArrayNotHasKey('__ci_vars', $_SESSION);
+        $this->assertNotSame('malicious', $_SESSION['__ci_last_regenerate']);
+    }
+
+    public function testSetMagicMethodIgnoresCiVars(): void
+    {
+        $session = $this->getInstance();
+        $session->start();
+
+        $session->__ci_vars = 'malicious'; // @phpstan-ignore property.notFound
+        $session->__ci_last_regenerate = 'malicious'; // @phpstan-ignore property.notFound
+
+        $this->assertArrayNotHasKey('__ci_vars', $_SESSION);
+        $this->assertNotSame('malicious', $_SESSION['__ci_last_regenerate']);
+    }
+
     public function testCanFlashData(): void
     {
         $session = $this->getInstance();
