@@ -345,7 +345,7 @@ final class SessionTest extends CIUnitTestCase
         $session = $this->getInstance();
         $session->start();
 
-        $session->__ci_vars = 'malicious'; // @phpstan-ignore property.notFound
+        $session->__ci_vars            = 'malicious'; // @phpstan-ignore property.notFound
         $session->__ci_last_regenerate = 'malicious'; // @phpstan-ignore property.notFound
 
         $this->assertArrayNotHasKey('__ci_vars', $_SESSION);
