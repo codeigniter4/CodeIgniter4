@@ -304,6 +304,9 @@ class Session implements SessionInterface
 
         foreach ($data as $sessionKey => $sessionValue) {
             if (is_string($sessionKey) && str_starts_with($sessionKey, '__ci_')) {
+                log_message('warning', 'Session key "{key}" is reserved for framework use and was not set.', [
+                    'key' => $key,
+                ]);
                 continue;
             }
 
