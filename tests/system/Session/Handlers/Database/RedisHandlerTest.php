@@ -374,7 +374,7 @@ final class RedisHandlerTest extends CIUnitTestCase
         $handler2 = $this->getInstance($options);
         $handler2->open($this->sessionSavePath, $this->sessionName);
 
-        // Before the fix, this would incorrectly return true or empty string (since it falls through).
+        // Before the fix, this would incorrectly return true (since $attempt === 3 !== 300).
         // With the fix, it should return false after 3 attempts.
         $this->assertFalse($handler2->read('lock_test_session'));
 
