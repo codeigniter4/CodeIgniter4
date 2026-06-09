@@ -15,8 +15,8 @@ namespace CodeIgniter\Helpers;
 
 use ArrayObject;
 use CodeIgniter\Exceptions\InvalidArgumentException;
-use DateTimeImmutable;
 use CodeIgniter\Test\CIUnitTestCase;
+use DateTimeImmutable;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
