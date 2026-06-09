@@ -414,30 +414,44 @@ class Rules
         // Still here? Then we fail this test if
         // any of the fields are not present in $data
         foreach (explode(',', $otherFields) as $otherField) {
-            if (
-                (! str_contains($otherField, '.'))
-                && (! array_key_exists($otherField, $data)
-                    || empty($data[$otherField]))
-            ) {
-                return false;
+            if (! str_contains($otherField, '.')) {
+                if (! array_key_exists($otherField, $data) || empty($data[$otherField])) {
+                    return false;
+                }
+
+                continue;
             }
 
-            if (str_contains($otherField, '.')) {
-                if ($field === null) {
-                    throw new InvalidArgumentException('You must supply the parameters: field.');
+            if ($field === null) {
+                throw new InvalidArgumentException('You must supply the parameters: field.');
+            }
+
+            $fieldSplitArray = explode('.', $field);
+            $fieldKey        = $fieldSplitArray[1] ?? null;
+
+            if ($fieldKey === null) {
+                throw new InvalidArgumentException('Invalid field format for dot-path required_without.');
+            }
+
+            $fieldData = dot_array_search($otherField, $data);
+
+            if (is_array($fieldData)) {
+                $searched = dot_array_search($otherField, $data);
+
+                if (! is_array($searched) || ! array_key_exists($fieldKey, $searched)) {
+                    return false;
                 }
 
-                $fieldData       = dot_array_search($otherField, $data);
-                $fieldSplitArray = explode('.', $field);
-                $fieldKey        = $fieldSplitArray[1];
-
-                if (is_array($fieldData)) {
-                    return ! empty(dot_array_search($otherField, $data)[$fieldKey]);
+                if (empty($searched[$fieldKey])) {
+                    return false;
                 }
+            } else {
                 $nowField      = str_replace('*', $fieldKey, $otherField);
-                $nowFieldVaule = dot_array_search($nowField, $data);
+                $nowFieldValue = dot_array_search($nowField, $data);
 
-                return null !== $nowFieldVaule;
+                if ($nowFieldValue === null) {
+                    return false;
+                }
             }
         }
 
