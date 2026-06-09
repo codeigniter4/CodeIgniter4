@@ -421,7 +421,10 @@ Coexistence With Legacy Commands
 Legacy ``BaseCommand`` classes are still supported, and they are discovered
 alongside modern commands. If the same name is claimed by both a legacy and a
 modern command, the legacy one is invoked and a warning is printed once at
-discovery time so you can rename or retire one of the two.
+discovery time so you can rename or retire one of the two. Any aliases declared
+by the shadowed modern command are dropped at discovery, so they are neither
+listed nor runnable. Resolve the collision and the modern command, along with
+its aliases, becomes reachable again.
 
 To detect the collision programmatically — for example, in a migration script
 that verifies the legacy copy was removed — the ``Commands`` runner exposes two

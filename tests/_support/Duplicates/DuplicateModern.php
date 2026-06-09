@@ -22,7 +22,12 @@ use CodeIgniter\CLI\Attributes\Command;
  *
  * @internal
  */
-#[Command(name: 'dup:test', description: 'Modern fixture that collides with a legacy command of the same name.', group: 'Duplicates')]
+#[Command(
+    name: 'dup:test',
+    description: 'Modern fixture that collides with a legacy command of the same name.',
+    group: 'Duplicates',
+    aliases: ['dup:alias'],
+)]
 final class DuplicateModern extends AbstractCommand
 {
     protected function execute(array $arguments, array $options): int

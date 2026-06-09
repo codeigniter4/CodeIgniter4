@@ -310,6 +310,18 @@ final class CommandsTest extends CIUnitTestCase
         $this->assertTrue($commands->hasModernCommand('dup:test'));
     }
 
+    public function testShadowedModernCommandAliasesAreNotRegistered(): void
+    {
+        $this->injectDuplicateLocator();
+
+        $commands = new Commands();
+
+        // The legacy command owns the name, so the shadowed modern command's
+        // alias is dropped: neither listed nor resolvable.
+        $this->assertSame([], $commands->getCommandAliases());
+        $this->assertFalse($commands->hasModernCommand('dup:alias'));
+    }
+
     public function testModernCommandAliasesAreRegistered(): void
     {
         $aliases = (new Commands())->getCommandAliases();

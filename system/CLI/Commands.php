@@ -296,6 +296,13 @@ class Commands
     private function registerAliases(): void
     {
         foreach ($this->modernCommands as $name => $details) {
+            // A legacy command of the same name shadows this modern command at
+            // dispatch, so its aliases would resolve to a command `spark <name>`
+            // never reaches. Drop them entirely.
+            if (isset($this->commands[$name])) {
+                continue;
+            }
+
             foreach ($details['aliases'] as $alias) {
                 if (isset($this->commands[$alias]) || isset($this->modernCommands[$alias])) {
                     throw new LogicException(lang('Commands.aliasClashesWithCommandName', [$alias, $name]));
