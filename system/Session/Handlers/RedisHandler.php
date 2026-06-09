@@ -386,10 +386,10 @@ class RedisHandler extends BaseHandler
             break;
         } while (++$attempt < $this->lockMaxRetries);
 
-        if ($attempt === 300) {
+        if ($attempt === $this->lockMaxRetries) {
             $this->logger->error(
                 'Session: Unable to obtain lock for ' . $this->keyPrefix . $sessionID
-                . ' after 300 attempts, aborting.',
+                . ' after ' . $this->lockMaxRetries . ' attempts, aborting.',
             );
 
             return false;

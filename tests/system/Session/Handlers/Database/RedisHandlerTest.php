@@ -359,4 +359,26 @@ final class RedisHandlerTest extends CIUnitTestCase
         $handler1->close();
         $handler2->close();
     }
+
+    public function testLockMaxRetries(): void
+    {
+        $options = [
+            'lockWait'     => 10_000, // 10ms
+            'lockAttempts' => 3,
+        ];
+
+        $handler1 = $this->getInstance($options);
+        $handler1->open($this->sessionSavePath, $this->sessionName);
+        $handler1->read('lock_test_session'); // Acquires lock
+
+        $handler2 = $this->getInstance($options);
+        $handler2->open($this->sessionSavePath, $this->sessionName);
+
+        // Before the fix, this would incorrectly return true or empty string (since it falls through).
+        // With the fix, it should return false after 3 attempts.
+        $this->assertFalse($handler2->read('lock_test_session'));
+
+        $handler1->close();
+        $handler2->close();
+    }
 }
