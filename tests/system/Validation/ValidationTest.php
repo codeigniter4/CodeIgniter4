@@ -1854,6 +1854,46 @@ class ValidationTest extends CIUnitTestCase
         );
     }
 
+    public function testRequireWithoutWithMultipleAsterisk(): void
+    {
+        $data = [
+            'a' => [
+                ['b' => 1, 'c' => 2, 'd' => 3],
+                ['c' => '', 'd' => 4],
+                ['b' => 5],
+            ],
+        ];
+
+        $this->validation->setRules([
+            'a.*.c' => 'required_without[a.*.b, a.*.d]',
+        ])->run($data);
+
+        $this->assertSame(
+            'The a.*.c field is required when a.*.b, a.*.d is not present.',
+            $this->validation->getError('a.1.c'),
+        );
+        $this->assertArrayNotHasKey('a.0.c', $this->validation->getErrors(), 'Row 0: both b and d present');
+        $this->assertArrayHasKey('a.2.c', $this->validation->getErrors(), 'Row 2: c missing, d missing → field required');
+    }
+
+    public function testRequireWithoutWithMultipleAsteriskLastMissing(): void
+    {
+        $data = [
+            'a' => [
+                ['b' => 1, 'c' => ''],
+            ],
+        ];
+
+        $this->validation->setRules([
+            'a.*.c' => 'required_without[a.*.b, a.*.nonexistent]',
+        ])->run($data);
+
+        $this->assertSame(
+            'The a.*.c field is required when a.*.b, a.*.nonexistent is not present.',
+            $this->validation->getError('a.0.c'),
+        );
+    }
+
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/8128
      */
