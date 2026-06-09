@@ -15,6 +15,8 @@ namespace CodeIgniter\Session\Handlers\Database;
 
 use CodeIgniter\Session\Handlers\RedisHandler;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\TestLogger;
+use Config\Logger as LoggerConfig;
 use Config\Session as SessionConfig;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -54,7 +56,10 @@ final class RedisHandlerTest extends CIUnitTestCase
             $sessionConfig->{$key} = $value;
         }
 
-        return new RedisHandler($sessionConfig, $this->userIpAddress);
+        $handler = new RedisHandler($sessionConfig, $this->userIpAddress);
+        $handler->setLogger(new TestLogger(new LoggerConfig()));
+
+        return $handler;
     }
 
     protected function tearDown(): void
