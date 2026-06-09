@@ -98,8 +98,8 @@ class RedisHandler extends BaseHandler
             $this->keyPrefix .= $this->ipAddress . ':';
         }
 
-        $this->lockRetryInterval = $config->lockWait ?? $this->lockRetryInterval;
-        $this->lockMaxRetries    = $config->lockAttempts ?? $this->lockMaxRetries;
+        $this->lockRetryInterval = $config->lockRetryInterval;
+        $this->lockMaxRetries    = $config->lockMaxRetries;
     }
 
     protected function setSavePath(): void

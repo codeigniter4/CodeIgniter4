@@ -363,8 +363,8 @@ final class RedisHandlerTest extends CIUnitTestCase
     public function testLockMaxRetries(): void
     {
         $options = [
-            'lockWait'     => 10_000, // 10ms
-            'lockAttempts' => 3,
+            'lockRetryInterval' => 10_000, // 10ms
+            'lockMaxRetries'    => 3,
         ];
 
         $handler1 = $this->getInstance($options);
