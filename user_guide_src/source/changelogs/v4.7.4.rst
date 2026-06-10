@@ -33,6 +33,7 @@ Bugs Fixed
 - **API:** Fixed a bug in Transformers where the root request's ``fields`` and ``include`` query parameters leaked into nested transformers created inside ``include*()`` methods, causing incorrect field filtering, unexpected includes, or infinite recursion.
 - **Database:** Fixed a bug where ``updateBatch()`` could be called after Query Builder ``where()`` conditions, even though it's not supported. In this situation, now the ``DatabaseException`` is thrown.
 - **HTTP:** Fixed a bug where the User Agent library reported Safari's WebKit version instead of the browser version from the ``Version`` token.
+- **Session:** Fixed a bug in ``RedisHandler`` where missing ``$lockRetryInterval`` and ``$lockMaxRetries`` properties in a custom ``Session`` configuration file could trigger an ``Undefined property`` warning or error.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
