@@ -240,17 +240,19 @@ class FileHandler extends BaseHandler
      */
     public function destroy($id): bool
     {
+        $filePath = $this->filePath . $id;
+
         if ($this->close()) {
-            return is_file($this->filePath . $id)
-                ? (unlink($this->filePath . $id) && $this->destroyCookie())
+            return (! is_link($filePath) && is_file($filePath))
+                ? (@unlink($filePath) && $this->destroyCookie())
                 : true;
         }
 
         if ($this->filePath !== null) {
             clearstatcache();
 
-            return is_file($this->filePath . $id)
-                ? (unlink($this->filePath . $id) && $this->destroyCookie())
+            return (! is_link($filePath) && is_file($filePath))
+                ? (@unlink($filePath) && $this->destroyCookie())
                 : true;
         }
 
@@ -284,15 +286,19 @@ class FileHandler extends BaseHandler
 
         while (($file = readdir($directory)) !== false) {
             // If the filename doesn't match this pattern, it's either not a session file or is not ours
-            if (preg_match($pattern, $file) !== 1
-                || ! is_file($this->savePath . DIRECTORY_SEPARATOR . $file)
-                || ($mtime = filemtime($this->savePath . DIRECTORY_SEPARATOR . $file)) === false
-                || $mtime > $ts
-            ) {
+            if (preg_match($pattern, $file) !== 1) {
                 continue;
             }
 
-            unlink($this->savePath . DIRECTORY_SEPARATOR . $file);
+            $filePath = $this->savePath . DIRECTORY_SEPARATOR . $file;
+
+            $stat = @lstat($filePath);
+
+            if ($stat === false || is_link($filePath) || ! is_file($filePath) || $stat['mtime'] > $ts) {
+                continue;
+            }
+
+            @unlink($filePath);
             $collected++;
         }
 
