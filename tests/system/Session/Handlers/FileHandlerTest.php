@@ -98,7 +98,7 @@ final class FileHandlerTest extends CIUnitTestCase
 
         $this->assertTrue(is_link($sessionFile));
 
-        $result = $handler->destroy($sessionId);
+        $handler->destroy($sessionId);
 
         $this->assertTrue(is_link($sessionFile));
     }
