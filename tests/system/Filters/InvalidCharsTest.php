@@ -127,6 +127,9 @@ final class InvalidCharsTest extends CIUnitTestCase
         $this->invalidChars->before($this->request);
     }
 
+    /**
+     * @return iterable<string, list<string>>
+     */
     public static function provideBeforeInvalidControlCharCausesException(): iterable
     {
         yield 'null byte' => ["String with null char \0"];
