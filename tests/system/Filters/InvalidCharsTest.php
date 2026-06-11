@@ -116,15 +116,24 @@ final class InvalidCharsTest extends CIUnitTestCase
         $this->invalidChars->before($this->request);
     }
 
-    public function testBeforeInvalidControlCharCausesException(): void
+    #[DataProvider('provideBeforeInvalidControlCharCausesException')]
+    public function testBeforeInvalidControlCharCausesException(string $invalidString): void
     {
         $this->expectException(SecurityException::class);
         $this->expectExceptionMessage('Invalid Control characters in cookie:');
 
-        $stringWithNullChar = "String contains null char and line break.\0\n";
-        service('superglobals')->setCookie('val', $stringWithNullChar);
+        service('superglobals')->setCookie('val', $invalidString);
 
         $this->invalidChars->before($this->request);
+    }
+
+    public static function provideBeforeInvalidControlCharCausesException(): iterable
+    {
+        yield 'null byte' => ["String with null char \0"];
+
+        yield 'backspace' => ["String with backspace \x08"];
+
+        yield 'escape' => ["String with escape \x1b"];
     }
 
     public function testBeforeInvalidControlCharInArrayKeyCausesException(): void
