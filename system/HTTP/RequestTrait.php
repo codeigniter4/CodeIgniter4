@@ -125,8 +125,8 @@ trait RequestTrait
             return false;
         }
 
-        $toBits = static fn (string $packed) => implode('', array_map(
-            static fn ($byte) => str_pad(decbin(ord($byte)), 8, '0', STR_PAD_LEFT),
+        $toBits = static fn (string $packed): string => implode('', array_map(
+            static fn ($byte): string => str_pad(decbin(ord($byte)), 8, '0', STR_PAD_LEFT),
             str_split($packed),
         ));
 
