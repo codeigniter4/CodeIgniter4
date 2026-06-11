@@ -750,22 +750,133 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertTrue($this->request->isAJAX());
     }
 
-    public function testIsSecure(): void
+    #[DataProvider('provideIsSecure')]
+    public function testIsSecure(array $server, array $proxyIPs, array $headers, bool $expected): void
     {
-        service('superglobals')->setServer('HTTPS', 'on');
-        $this->assertTrue($this->request->isSecure());
+        $superglobals = new Superglobals();
+
+        foreach ($server as $key => $value) {
+            $superglobals->setServer($key, $value);
+        }
+        Services::injectMock('superglobals', $superglobals);
+
+        $config           = new App();
+        $config->proxyIPs = $proxyIPs;
+        $request          = $this->createRequest($config);
+
+        foreach ($headers as $name => $value) {
+            $request->appendHeader($name, $value);
+        }
+
+        $this->assertSame($expected, $request->isSecure());
     }
 
-    public function testIsSecureFrontEnd(): void
+    public static function provideIsSecure(): iterable
     {
-        $this->request->appendHeader('Front-End-Https', 'on');
-        $this->assertTrue($this->request->isSecure());
-    }
-
-    public function testIsSecureForwarded(): void
-    {
-        $this->request->appendHeader('X-Forwarded-Proto', 'https');
-        $this->assertTrue($this->request->isSecure());
+        yield from [
+            'HTTPS on' => [
+                'server'   => ['HTTPS' => 'on'],
+                'proxyIPs' => [],
+                'headers'  => [],
+                'expected' => true,
+            ],
+            'HTTPS ON case insensitive' => [
+                'server'   => ['HTTPS' => 'ON'],
+                'proxyIPs' => [],
+                'headers'  => [],
+                'expected' => true,
+            ],
+            'HTTPS 1' => [
+                'server'   => ['HTTPS' => '1'],
+                'proxyIPs' => [],
+                'headers'  => [],
+                'expected' => true,
+            ],
+            'HTTPS off' => [
+                'server'   => ['HTTPS' => 'off'],
+                'proxyIPs' => [],
+                'headers'  => [],
+                'expected' => false,
+            ],
+            'HTTPS not set' => [
+                'server'   => [],
+                'proxyIPs' => [],
+                'headers'  => [],
+                'expected' => false,
+            ],
+            'Front-End-Https on with trusted proxy' => [
+                'server'   => ['REMOTE_ADDR' => '10.0.1.200'],
+                'proxyIPs' => ['10.0.1.200' => 'Front-End-Https'],
+                'headers'  => ['Front-End-Https' => 'on'],
+                'expected' => true,
+            ],
+            'Front-End-Https off with trusted proxy' => [
+                'server'   => ['REMOTE_ADDR' => '10.0.1.200'],
+                'proxyIPs' => ['10.0.1.200' => 'Front-End-Https'],
+                'headers'  => ['Front-End-Https' => 'off'],
+                'expected' => false,
+            ],
+            'Front-End-Https on with untrusted proxy' => [
+                'server'   => ['REMOTE_ADDR' => '10.0.1.201'],
+                'proxyIPs' => ['10.0.1.200' => 'Front-End-Https'],
+                'headers'  => ['Front-End-Https' => 'on'],
+                'expected' => false,
+            ],
+            'X-Forwarded-Proto https with trusted proxy' => [
+                'server'   => ['REMOTE_ADDR' => '10.0.1.200'],
+                'proxyIPs' => ['10.0.1.200' => 'X-Forwarded-Proto'],
+                'headers'  => ['X-Forwarded-Proto' => 'https'],
+                'expected' => true,
+            ],
+            'X-Forwarded-Proto http with trusted proxy' => [
+                'server'   => ['REMOTE_ADDR' => '10.0.1.200'],
+                'proxyIPs' => ['10.0.1.200' => 'X-Forwarded-Proto'],
+                'headers'  => ['X-Forwarded-Proto' => 'http'],
+                'expected' => false,
+            ],
+            'X-Forwarded-Proto https with untrusted proxy' => [
+                'server'   => ['REMOTE_ADDR' => '10.0.1.201'],
+                'proxyIPs' => ['10.0.1.200' => 'X-Forwarded-Proto'],
+                'headers'  => ['X-Forwarded-Proto' => 'https'],
+                'expected' => false,
+            ],
+            'Front-End-Https on with trusted proxy subnet IPv4' => [
+                'server'   => ['REMOTE_ADDR' => '192.168.5.25'],
+                'proxyIPs' => ['192.168.5.0/24' => 'Front-End-Https'],
+                'headers'  => ['Front-End-Https' => 'on'],
+                'expected' => true,
+            ],
+            'Front-End-Https on with untrusted proxy subnet IPv4' => [
+                'server'   => ['REMOTE_ADDR' => '192.168.6.25'],
+                'proxyIPs' => ['192.168.5.0/24' => 'Front-End-Https'],
+                'headers'  => ['Front-End-Https' => 'on'],
+                'expected' => false,
+            ],
+            'X-Forwarded-Proto https with trusted proxy subnet IPv6' => [
+                'server'   => ['REMOTE_ADDR' => '2001:db8:1234::1'],
+                'proxyIPs' => ['2001:db8:1234::/48' => 'X-Forwarded-Proto'],
+                'headers'  => ['X-Forwarded-Proto' => 'https'],
+                'expected' => true,
+            ],
+            'X-Forwarded-Proto https with untrusted proxy subnet IPv6' => [
+                'server'   => ['REMOTE_ADDR' => '2001:db8:1235::1'],
+                'proxyIPs' => ['2001:db8:1234::/48' => 'X-Forwarded-Proto'],
+                'headers'  => ['X-Forwarded-Proto' => 'https'],
+                'expected' => false,
+            ],
+            'IPv4 client IP against IPv6 proxy subnet' => [
+                'server'   => ['REMOTE_ADDR' => '192.168.5.25'],
+                'proxyIPs' => ['2001:db8:1234::/48' => 'X-Forwarded-Proto'],
+                'headers'  => ['X-Forwarded-Proto' => 'https'],
+                'expected' => false,
+            ],
+            'IPv6 client IP against IPv4 proxy subnet' => [
+                'server'   => ['REMOTE_ADDR' => '2001:db8:1234::1'],
+                'proxyIPs' => ['192.168.5.0/24' => 'X-Forwarded-Proto'],
+                'headers'  => ['X-Forwarded-Proto' => 'https'],
+                'expected' => false,
+            ],
+        ];
     }
 
     public function testUserAgent(): void

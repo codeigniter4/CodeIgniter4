@@ -85,69 +85,8 @@ trait RequestTrait
             return $this->ipAddress = '0.0.0.0';
         }
 
-        // @TODO Extract all this IP address logic to another class.
         foreach ($proxyIPs as $proxyIP => $header) {
-            // Check if we have an IP address or a subnet
-            if (! str_contains($proxyIP, '/')) {
-                // An IP address (and not a subnet) is specified.
-                // We can compare right away.
-                if ($proxyIP === $this->ipAddress) {
-                    $spoof = $this->getClientIP($header);
-
-                    if ($spoof !== null) {
-                        $this->ipAddress = $spoof;
-                        break;
-                    }
-                }
-
-                continue;
-            }
-
-            // We have a subnet ... now the heavy lifting begins
-            if (! isset($separator)) {
-                $separator = $ipValidator($this->ipAddress, 'ipv6') ? ':' : '.';
-            }
-
-            // If the proxy entry doesn't match the IP protocol - skip it
-            if (! str_contains($proxyIP, $separator)) {
-                continue;
-            }
-
-            // Convert the REMOTE_ADDR IP address to binary, if needed
-            if (! isset($ip, $sprintf)) {
-                if ($separator === ':') {
-                    // Make sure we're having the "full" IPv6 format
-                    $ip = explode(':', str_replace('::', str_repeat(':', 9 - substr_count($this->ipAddress, ':')), $this->ipAddress));
-
-                    for ($j = 0; $j < 8; $j++) {
-                        $ip[$j] = intval($ip[$j], 16);
-                    }
-
-                    $sprintf = '%016b%016b%016b%016b%016b%016b%016b%016b';
-                } else {
-                    $ip      = explode('.', $this->ipAddress);
-                    $sprintf = '%08b%08b%08b%08b';
-                }
-
-                $ip = vsprintf($sprintf, $ip);
-            }
-
-            // Split the netmask length off the network address
-            sscanf($proxyIP, '%[^/]/%d', $netaddr, $masklen);
-
-            // Again, an IPv6 address is most likely in a compressed form
-            if ($separator === ':') {
-                $netaddr = explode(':', str_replace('::', str_repeat(':', 9 - substr_count($netaddr, ':')), $netaddr));
-
-                for ($i = 0; $i < 8; $i++) {
-                    $netaddr[$i] = intval($netaddr[$i], 16);
-                }
-            } else {
-                $netaddr = explode('.', $netaddr);
-            }
-
-            // Convert to binary and finally compare
-            if (strncmp($ip, vsprintf($sprintf, $netaddr), $masklen) === 0) {
+            if ($this->checkIPAgainstProxy($this->ipAddress, (string) $proxyIP)) {
                 $spoof = $this->getClientIP($header);
 
                 if ($spoof !== null) {
@@ -162,6 +101,36 @@ trait RequestTrait
         }
 
         return $this->ipAddress;
+    }
+
+    /**
+     * Checks if the given IP address matches the proxy IP/subnet.
+     */
+    protected function checkIPAgainstProxy(string $ipAddress, string $proxyIP): bool
+    {
+        if (! str_contains($proxyIP, '/')) {
+            return $proxyIP === $ipAddress;
+        }
+
+        [$netAddr, $maskLen] = explode('/', $proxyIP, 2);
+
+        if (str_contains($ipAddress, ':') !== str_contains($netAddr, ':')) {
+            return false;
+        }
+
+        $ipPacked  = inet_pton($ipAddress);
+        $netPacked = inet_pton($netAddr);
+
+        if ($ipPacked === false || $netPacked === false) {
+            return false;
+        }
+
+        $toBits = static fn (string $packed) => implode('', array_map(
+            static fn ($byte) => str_pad(decbin(ord($byte)), 8, '0', STR_PAD_LEFT),
+            str_split($packed),
+        ));
+
+        return strncmp($toBits($ipPacked), $toBits($netPacked), (int) $maskLen) === 0;
     }
 
     /**

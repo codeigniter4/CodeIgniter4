@@ -272,11 +272,31 @@ class IncomingRequest extends Request
             return true;
         }
 
-        if ($this->hasHeader('X-Forwarded-Proto') && $this->header('X-Forwarded-Proto')->getValue() === 'https') {
-            return true;
+        if ($this->hasHeader('X-Forwarded-Proto') || $this->hasHeader('Front-End-Https')) {
+            $isFromTrustedProxy = false;
+            $remoteAddr         = $this->getServer('REMOTE_ADDR');
+
+            if ($remoteAddr !== null && is_array($this->config->proxyIPs)) {
+                foreach (array_keys($this->config->proxyIPs) as $proxyIP) {
+                    if ($this->checkIPAgainstProxy($remoteAddr, (string) $proxyIP)) {
+                        $isFromTrustedProxy = true;
+                        break;
+                    }
+                }
+            }
+
+            if ($isFromTrustedProxy) {
+                if ($this->hasHeader('X-Forwarded-Proto') && $this->header('X-Forwarded-Proto')->getValue() === 'https') {
+                    return true;
+                }
+
+                if ($this->hasHeader('Front-End-Https') && ! empty($this->header('Front-End-Https')->getValue()) && strtolower($this->header('Front-End-Https')->getValue()) !== 'off') {
+                    return true;
+                }
+            }
         }
 
-        return $this->hasHeader('Front-End-Https') && ! empty($this->header('Front-End-Https')->getValue()) && strtolower($this->header('Front-End-Https')->getValue()) !== 'off';
+        return false;
     }
 
     /**
