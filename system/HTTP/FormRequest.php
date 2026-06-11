@@ -144,7 +144,10 @@ abstract class FormRequest
     }
 
     /**
-     * Called when validation fails. Override to customize the failure response.
+     * Called when validation fails.
+     *
+     * Override to customize the failure response, or return null to let the
+     * controller handle the failed validation with the resolved FormRequest.
      *
      * The default implementation redirects back with input and flashes validation
      * errors via the standard ``_ci_validation_errors`` channel (the same channel
@@ -155,7 +158,7 @@ abstract class FormRequest
      * @param array<string, string> $errors
      * @param array<string, mixed>  $preparedData
      */
-    protected function failedValidation(array $errors, array $preparedData): ResponseInterface
+    protected function failedValidation(array $errors, array $preparedData): ?ResponseInterface
     {
         if ($this->shouldReturnJsonResponse()) {
             return service('response')->setStatusCode(422)->setJSON(['errors' => $errors]);
@@ -256,7 +259,8 @@ abstract class FormRequest
      * Runs authorization and validation. Called by the framework before
      * injecting the FormRequest into the controller method.
      *
-     * Returns null on success, or a ResponseInterface to short-circuit the
+     * Returns null on success, or when failedValidation() lets the controller
+     * handle the failure. Returns a ResponseInterface to short-circuit the
      * request when authorization or validation fails.
      *
      * Do not call this method directly unless you are inside a ``_remap()``

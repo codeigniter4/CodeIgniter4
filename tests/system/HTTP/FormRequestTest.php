@@ -395,6 +395,116 @@ final class FormRequestTest extends CIUnitTestCase
         $this->assertSame(303, $response->getStatusCode());
     }
 
+    public function testFailedValidationMayContinueToController(): void
+    {
+        service('superglobals')->setPost('title', ' Hello World ');
+
+        $formRequest = new class ($this->makeRequest()) extends FormRequest {
+            /**
+             * @var array<string, string>
+             */
+            public array $errors = [];
+
+            /**
+             * @var array<string, mixed>
+             */
+            public array $preparedData = [];
+
+            public function rules(): array
+            {
+                return [
+                    'title' => 'required',
+                    'body'  => 'required',
+                ];
+            }
+
+            protected function prepareForValidation(array $data): array
+            {
+                $data['title'] = trim($data['title'] ?? '');
+
+                return $data;
+            }
+
+            protected function failedValidation(array $errors, array $preparedData): ?ResponseInterface
+            {
+                $this->errors       = $errors;
+                $this->preparedData = $preparedData;
+
+                return null;
+            }
+        };
+
+        $response = $formRequest->resolveRequest();
+
+        $this->assertNull($response);
+        $this->assertArrayHasKey('body', $formRequest->errors);
+        $this->assertSame(['title' => 'Hello World'], $formRequest->preparedData);
+        $this->assertSame([], $formRequest->getValidated());
+    }
+
+    public function testNullableFailedValidationFormRequestPassesWithValidData(): void
+    {
+        service('superglobals')->setPost('title', ' Hello World ');
+        service('superglobals')->setPost('body', 'Some body text');
+
+        $formRequest = new class ($this->makeRequest()) extends FormRequest {
+            public bool $failedValidationCalled = false;
+
+            public function rules(): array
+            {
+                return [
+                    'title' => 'required',
+                    'body'  => 'required',
+                ];
+            }
+
+            protected function prepareForValidation(array $data): array
+            {
+                $data['title'] = trim($data['title'] ?? '');
+
+                return $data;
+            }
+
+            protected function failedValidation(array $errors, array $preparedData): ?ResponseInterface
+            {
+                $this->failedValidationCalled = true;
+
+                return null;
+            }
+        };
+
+        $response = $formRequest->resolveRequest();
+
+        $this->assertNull($response);
+        $this->assertFalse($formRequest->failedValidationCalled);
+        $this->assertSame(['title' => 'Hello World', 'body' => 'Some body text'], $formRequest->getValidated());
+    }
+
+    public function testFailedValidationReturningResponseStillShortCircuits(): void
+    {
+        $formRequest = new class ($this->makeRequest()) extends FormRequest {
+            public static bool $called = false;
+
+            public function rules(): array
+            {
+                return ['title' => 'required'];
+            }
+
+            protected function failedValidation(array $errors, array $preparedData): ResponseInterface
+            {
+                self::$called = true;
+
+                return service('response')->setStatusCode(422);
+            }
+        };
+
+        $response = $formRequest->resolveRequest();
+
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertSame(422, $response->getStatusCode());
+        $this->assertTrue($formRequest::$called);
+    }
+
     public function testPreparedValidationDataIsPassedToFailedValidationWithoutPreparingAgain(): void
     {
         service('superglobals')->setPost('title', ' Hello World ');
@@ -588,6 +698,36 @@ final class FormRequestTest extends CIUnitTestCase
 
         // isAuthorized() must fire before prepareForValidation(); validation never runs.
         $this->assertSame(['authorize'], $formRequest::$order);
+    }
+
+    public function testUnauthorizedRequestStopsBeforeNullableFailedValidation(): void
+    {
+        $formRequest = new class ($this->makeRequest()) extends FormRequest {
+            public bool $failedValidationCalled = false;
+
+            public function rules(): array
+            {
+                return ['title' => 'required'];
+            }
+
+            public function isAuthorized(): bool
+            {
+                return false;
+            }
+
+            protected function failedValidation(array $errors, array $preparedData): ?ResponseInterface
+            {
+                $this->failedValidationCalled = true;
+
+                return null;
+            }
+        };
+
+        $response = $formRequest->resolveRequest();
+
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertSame(403, $response->getStatusCode());
+        $this->assertFalse($formRequest->failedValidationCalled);
     }
 
     // -------------------------------------------------------------------------
@@ -893,6 +1033,25 @@ final class FormRequestTest extends CIUnitTestCase
         $response = $this->runRequest('/posts', 'store', 'POST');
 
         $this->assertSame(303, $response->getStatusCode());
+    }
+
+    // -------------------------------------------------------------------------
+    // Integration: controller-handled validation failure
+    // -------------------------------------------------------------------------
+
+    #[RunInSeparateProcess]
+    public function testContinuingInvalidFormRequestReachesController(): void
+    {
+        service('superglobals')->setPost('title', ' Draft ');
+
+        $response = $this->runRequest('/posts/continuing', 'storeContinuing', 'POST');
+
+        $this->assertSame(422, $response->getStatusCode());
+
+        $body = json_decode((string) $response->getBody(), true);
+        $this->assertArrayHasKey('body', $body['errors']);
+        $this->assertSame(['title' => 'Draft'], $body['form']);
+        $this->assertSame([], $body['validated']);
     }
 
     // -------------------------------------------------------------------------

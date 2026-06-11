@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace Tests\Support\Controllers;
 
 use CodeIgniter\Controller;
+use CodeIgniter\HTTP\ResponseInterface;
+use Tests\Support\HTTP\Requests\ContinuingPostFormRequest;
 use Tests\Support\HTTP\Requests\UnauthorizedFormRequest;
 use Tests\Support\HTTP\Requests\ValidPostFormRequest;
 
@@ -37,6 +39,22 @@ class FormRequestController extends Controller
     public function store(ValidPostFormRequest $request): string
     {
         return json_encode($request->getValidated());
+    }
+
+    /**
+     * Handles validation failures in the controller.
+     */
+    public function storeContinuing(ContinuingPostFormRequest $request): ResponseInterface
+    {
+        if ($request->errors !== []) {
+            return $this->response->setStatusCode(422)->setJSON([
+                'errors'    => $request->errors,
+                'form'      => $request->form,
+                'validated' => $request->getValidated(),
+            ]);
+        }
+
+        return $this->response->setJSON(['validated' => $request->getValidated()]);
     }
 
     /**

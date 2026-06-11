@@ -801,10 +801,10 @@ class CodeIgniter
     /**
      * Instantiates, authorizes, and validates a FormRequest class.
      *
-     * If authorization or validation fails, the FormRequest returns a
-     * ResponseInterface. The framework wraps it in a FormRequestException
-     * (which implements ResponsableInterface) so the response is sent
-     * without reaching the controller method.
+     * If the FormRequest returns a ResponseInterface, the framework wraps it
+     * in a FormRequestException (which implements ResponsableInterface) so the
+     * response is sent without reaching the controller method. When it returns
+     * null, the FormRequest is injected.
      *
      * @param class-string<FormRequest> $className
      */

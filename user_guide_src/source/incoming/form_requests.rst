@@ -41,7 +41,8 @@ framework instantiates it, runs authorization and validation, and passes the
 resolved object to your method. If validation fails, the default behavior
 redirects back with errors for web requests or returns a 422 JSON response for
 JSON request bodies or requests that prefer ``application/json`` - the method
-body is never reached.
+body is never reached unless the FormRequest explicitly continues on validation
+failure.
 
 .. literalinclude:: form_requests/002.php
    :lines: 2-
@@ -127,11 +128,15 @@ use ``_remap()``. Because ``_remap()`` has a fixed signature
 inject a FormRequest into.
 
 Instantiate the FormRequest manually inside ``_remap()`` and call
-``resolveRequest()`` yourself. The method returns ``null`` on success or a
-``ResponseInterface`` when authorization or validation fails:
+``resolveRequest()`` yourself. The method returns ``null`` on success, ``null``
+when ``failedValidation()`` returns ``null``, or a
+``ResponseInterface`` when authorization or validation short-circuits:
 
 .. literalinclude:: form_requests/012.php
    :lines: 2-
+
+If ``failedValidation()`` can return ``null``, check your request's failure
+state before using ``getValidated()``.
 
 *********************
 Custom Error Messages
@@ -203,8 +208,8 @@ Customizing Failure Behavior
 ****************************
 
 Override ``failedValidation()`` and ``failedAuthorization()`` to take full
-control of what happens when a request is rejected. Both methods return a
-``ResponseInterface`` that the framework sends to the client:
+control of what happens when a request is rejected. Return a
+``ResponseInterface`` to send a response immediately:
 
 .. literalinclude:: form_requests/008.php
    :lines: 2-
@@ -215,8 +220,30 @@ header. Otherwise, it redirects back with input and validation errors.
 
 .. note:: The ``X-Requested-With: XMLHttpRequest`` header alone does not select
     a JSON response. If an AJAX client expects JSON validation errors, send an
-    ``Accept: application/json`` header. If your application needs HTML
-    fragments for AJAX form failures, override ``failedValidation()``.
+    ``Accept: application/json`` header. If the FormRequest should own the
+    failed response, override ``failedValidation()``. If the controller should
+    render the failed response with route context, use the controller-handled
+    failure flow below.
+
+Handling Validation Failures in the Controller
+==============================================
+
+Some server-rendered forms need the controller action to render the invalid
+response. For example, the failed response may need the same page, panel, or
+route context that the controller already owns.
+
+Override ``failedValidation()`` and return ``null`` to let the controller handle
+the failed validation. Store any error or prepared data your controller needs on
+the request class:
+
+.. literalinclude:: form_requests/016.php
+   :lines: 2-
+
+The ``$preparedData`` argument contains the values that were passed to
+validation. The prepared validation data has not passed validation. Use
+``getValidated()`` or ``getValidatedInput()`` only after validation succeeds.
+
+.. note:: Authorization failures still stop dispatch before the controller runs.
 
 .. _form-request-flash-normalized:
 
@@ -253,13 +280,15 @@ whose type extends ``FormRequest``:
 #. ``prepareForValidation()`` receives that data and may modify it before the
    rules are applied.
 #. ``run()`` executes the validation rules. If it fails, ``failedValidation()``
-   is called, and its response is returned to the client.
-#. The validated data is stored internally and available via ``getValidated()``
-   and ``getValidatedInput()``.
+   is called. If it returns a response, that response is returned to the client.
+   If it returns ``null``, the failed FormRequest is injected instead.
+#. When validation succeeds, the validated data is stored internally and
+   available via ``getValidated()`` and ``getValidatedInput()``.
 #. The resolved FormRequest object is injected into the controller method or
    closure.
 
-The callable is never invoked if authorization or validation fails. Non-FormRequest
+The callable is never invoked if authorization fails. Validation failures only
+reach the callable when ``failedValidation()`` returns ``null``. Non-FormRequest
 parameters consume URI route segments in declaration order; variadic parameters
 receive all remaining segments.
 
