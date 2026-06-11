@@ -506,7 +506,7 @@ abstract class CIUnitTestCase extends TestCase
      */
     public function assertSameSql(string $expected, string $actual, string $message = ''): void
     {
-        $this->assertSame($expected, str_replace("\n", ' ', $actual), $message);
+        $this->assertSame($expected, str_replace(["\r\n", "\r", "\n"], ' ', $actual), $message);
     }
 
     // --------------------------------------------------------------------

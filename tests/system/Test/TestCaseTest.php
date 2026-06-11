@@ -104,4 +104,12 @@ final class TestCaseTest extends CIUnitTestCase
 
         $this->assertSameSql($expected, $actual);
     }
+
+    public function testAssertSameSqlIgnoresCrLfInActualSql(): void
+    {
+        $expected = 'SELECT * FROM "jobs" WHERE "id" = 1';
+        $actual   = "SELECT * FROM \"jobs\"\r\nWHERE \"id\" = 1";
+
+        $this->assertSameSql($expected, $actual);
+    }
 }
