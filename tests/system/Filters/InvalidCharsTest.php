@@ -103,6 +103,19 @@ final class InvalidCharsTest extends CIUnitTestCase
         $this->invalidChars->before($this->request);
     }
 
+    public function testBeforeInvalidUTF8StringInArrayKeyCausesException(): void
+    {
+        $this->expectException(SecurityException::class);
+        $this->expectExceptionMessage('Invalid UTF-8 characters in post:');
+
+        $sjisString = mb_convert_encoding('SJISの文字列です。', 'SJIS');
+        service('superglobals')->setPost('val', [
+            $sjisString => 'valid string',
+        ]);
+
+        $this->invalidChars->before($this->request);
+    }
+
     public function testBeforeInvalidControlCharCausesException(): void
     {
         $this->expectException(SecurityException::class);
@@ -110,6 +123,19 @@ final class InvalidCharsTest extends CIUnitTestCase
 
         $stringWithNullChar = "String contains null char and line break.\0\n";
         service('superglobals')->setCookie('val', $stringWithNullChar);
+
+        $this->invalidChars->before($this->request);
+    }
+
+    public function testBeforeInvalidControlCharInArrayKeyCausesException(): void
+    {
+        $this->expectException(SecurityException::class);
+        $this->expectExceptionMessage('Invalid Control characters in cookie:');
+
+        $stringWithNullChar = "String contains null char and line break.\0\n";
+        service('superglobals')->setCookie('val', [
+            $stringWithNullChar => 'valid string',
+        ]);
 
         $this->invalidChars->before($this->request);
     }
