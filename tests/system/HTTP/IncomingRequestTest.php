@@ -750,6 +750,39 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertTrue($this->request->isAJAX());
     }
 
+    public function testIsSecureWithHttps(): void
+    {
+        service('superglobals')->setServer('HTTPS', 'on');
+
+        $this->assertTrue($this->request->isSecure());
+        $this->request->isSecure();
+        $this->request->isSecure();
+    }
+
+    public function testIsSecureWithFrontEndHttps(): void
+    {
+        service('superglobals')->setServer('REMOTE_ADDR', '10.0.1.200');
+        $config           = new App();
+        $config->proxyIPs = ['10.0.1.200' => 'Front-End-Https'];
+        $this->request    = $this->createRequest($config);
+
+        $this->request->appendHeader('Front-End-Https', 'on');
+
+        $this->assertTrue($this->request->isSecure());
+    }
+
+    public function testIsSecureWithXForwardedProto(): void
+    {
+        service('superglobals')->setServer('REMOTE_ADDR', '10.0.1.200');
+        $config           = new App();
+        $config->proxyIPs = ['10.0.1.200' => 'X-Forwarded-Proto'];
+        $this->request    = $this->createRequest($config);
+
+        $this->request->appendHeader('X-Forwarded-Proto', 'https');
+
+        $this->assertTrue($this->request->isSecure());
+    }
+
     /**
      * @param array<string, string> $server
      * @param array<string, string> $proxyIPs
