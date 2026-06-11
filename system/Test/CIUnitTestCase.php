@@ -504,7 +504,7 @@ abstract class CIUnitTestCase extends TestCase
     /**
      * Asserts that two SQL strings are the same, ignoring newlines in the actual SQL.
      */
-    public function assertSqlEquals(string $expected, string $actual, string $message = ''): void
+    public function assertSameSql(string $expected, string $actual, string $message = ''): void
     {
         $this->assertSame($expected, str_replace("\n", ' ', $actual), $message);
     }

@@ -94,7 +94,7 @@ final class TestCaseTest extends CIUnitTestCase
         $this->assertFalse($result, 'Different string lengths should have returned false');
     }
 
-    public function testAssertSqlEqualsIgnoresNewlinesInActualSql(): void
+    public function testAssertSameSqlIgnoresNewlinesInActualSql(): void
     {
         $expected = 'SELECT * FROM "jobs" WHERE "id" = 1';
         $actual   = <<<'SQL'
@@ -102,6 +102,6 @@ final class TestCaseTest extends CIUnitTestCase
             WHERE "id" = 1
             SQL;
 
-        $this->assertSqlEquals($expected, $actual);
+        $this->assertSameSql($expected, $actual);
     }
 }

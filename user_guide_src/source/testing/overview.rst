@@ -202,8 +202,8 @@ between expected and actual time, formatted as strings, is within the prescribed
 
 The above test will allow the actual time to be either 660 or 661 seconds.
 
-assertSqlEquals($expected, $actual, $message = '')
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+assertSameSql($expected, $actual, $message = '')
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Asserts that two SQL strings are the same, ignoring newlines in the actual SQL:
 
