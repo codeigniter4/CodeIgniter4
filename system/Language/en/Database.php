@@ -16,6 +16,7 @@ return [
     'invalidEvent'                     => '"{0}" is not a valid Model Event callback.',
     'invalidArgument'                  => 'You must provide a valid "{0}".',
     'invalidAllowedFields'             => 'Allowed fields must be specified for model: "{0}"',
+    'disallowedFields'                 => 'Fields are not allowed for model "{0}": {1}',
     'emptyDataset'                     => 'There is no data to {0}.',
     'emptyPrimaryKey'                  => 'There is no primary key defined when trying to make {0}.',
     'failGetFieldData'                 => 'Failed to get field data from database.',

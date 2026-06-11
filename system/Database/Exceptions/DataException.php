@@ -74,6 +74,16 @@ class DataException extends RuntimeException implements ExceptionInterface
     }
 
     /**
+     * @param list<string> $fields
+     *
+     * @return DataException
+     */
+    public static function forDisallowedFields(string $model, array $fields)
+    {
+        return new static(lang('Database.disallowedFields', [$model, implode(', ', $fields)]));
+    }
+
+    /**
      * @return DataException
      */
     public static function forTableNotFound(string $table)
