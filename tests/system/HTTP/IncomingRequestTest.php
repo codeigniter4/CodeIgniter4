@@ -750,6 +750,11 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertTrue($this->request->isAJAX());
     }
 
+    /**
+     * @param array<string, string> $server
+     * @param array<string, string> $proxyIPs
+     * @param array<string, string> $headers
+     */
     #[DataProvider('provideIsSecure')]
     public function testIsSecure(array $server, array $proxyIPs, array $headers, bool $expected): void
     {
@@ -771,6 +776,9 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame($expected, $request->isSecure());
     }
 
+    /**
+     * @return iterable<string, array{server: array<string, string>, proxyIPs: array<string, string>, headers: array<string, string>, expected: bool}>
+     */
     public static function provideIsSecure(): iterable
     {
         yield from [
