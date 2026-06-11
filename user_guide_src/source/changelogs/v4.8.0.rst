@@ -213,6 +213,8 @@ Commands
 Testing
 =======
 
+- Added ``assertSqlEquals()`` to ``CIUnitTestCase`` to compare generated SQL while ignoring newlines in the actual SQL.
+
 Database
 ========
 

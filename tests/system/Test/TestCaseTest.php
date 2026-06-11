@@ -93,4 +93,15 @@ final class TestCaseTest extends CIUnitTestCase
         $result = $this->assertCloseEnoughString('apples & oranges', 'apples');
         $this->assertFalse($result, 'Different string lengths should have returned false');
     }
+
+    public function testAssertSqlEqualsIgnoresNewlinesInActualSql(): void
+    {
+        $expected = 'SELECT * FROM "jobs" WHERE "id" = 1';
+        $actual   = <<<'SQL'
+            SELECT * FROM "jobs"
+            WHERE "id" = 1
+            SQL;
+
+        $this->assertSqlEquals($expected, $actual);
+    }
 }

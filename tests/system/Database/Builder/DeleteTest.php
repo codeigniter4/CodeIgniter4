@@ -46,7 +46,7 @@ final class DeleteTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
+        $this->assertSqlEquals($expectedSQL, $answer);
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
