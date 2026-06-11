@@ -474,7 +474,7 @@ $builder->whereDate()
 
 Generates a **WHERE** clause that compares only the date portion of a field:
 
-.. literalinclude:: query_builder/130.php
+.. literalinclude:: query_builder/131.php
 
 The ``whereYear()``, ``whereMonth()``, and ``whereDay()`` methods compare the
 corresponding date part. The ``orWhereDate()``, ``orWhereYear()``,
