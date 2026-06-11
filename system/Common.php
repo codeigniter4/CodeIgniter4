@@ -416,6 +416,12 @@ if (! function_exists('env')) {
             return $default;
         }
 
+        // Non-string values (e.g. $_SERVER['argc'] is int, $_SERVER['argv'] is array in CLI)
+        // must be returned as-is to avoid TypeError from strtolower().
+        if (! is_string($value)) {
+            return $value;
+        }
+
         // Handle any boolean values
         return match (strtolower($value)) {
             'true'  => true,
@@ -459,8 +465,11 @@ if (! function_exists('esc')) {
 
         if (is_array($data)) {
             foreach ($data as &$value) {
-                $value = esc($value, $context);
+                $value = esc($value, $context, $encoding);
             }
+            unset($value); // Prevent reference leak: &$value would remain bound to last element
+
+            return $data;
         }
 
         if (is_string($data)) {
@@ -470,16 +479,14 @@ if (! function_exists('esc')) {
 
             $method = $context === 'attr' ? 'escapeHtmlAttr' : 'escape' . ucfirst($context);
 
-            static $escaper;
-            if (! $escaper) {
-                $escaper = new Escaper($encoding);
+            static $escapers = [];
+            $cacheKey        = $encoding ?? 'default';
+
+            if (! isset($escapers[$cacheKey])) {
+                $escapers[$cacheKey] = new Escaper($encoding);
             }
 
-            if ($encoding !== null && $escaper->getEncoding() !== $encoding) {
-                $escaper = new Escaper($encoding);
-            }
-
-            $data = $escaper->{$method}($data);
+            $data = $escapers[$cacheKey]->{$method}($data);
         }
 
         return $data;

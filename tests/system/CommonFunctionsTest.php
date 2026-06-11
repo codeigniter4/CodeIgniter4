@@ -131,6 +131,42 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertNull(env('p4'));
     }
 
+    #[DataProvider('provideEnvReturnsCorrectTypesWithoutTypeError')]
+    public function testEnvReturnsCorrectTypesWithoutTypeError(string $source, mixed $value): void
+    {
+        $key = 'ci_test_var';
+
+        if ($source === 'SERVER' || $source === 'BOTH') {
+            service('superglobals')->setServer($key, $value);
+        }
+
+        if ($source === 'ENV' || $source === 'BOTH') {
+            $_ENV[$key] = $value;
+        }
+
+        $this->assertSame($value, env($key));
+    }
+
+    /**
+     * @return iterable<string, array{string, mixed}>
+     */
+    public static function provideEnvReturnsCorrectTypesWithoutTypeError(): iterable
+    {
+        yield 'integer from SERVER' => ['SERVER', 2];
+
+        yield 'array from SERVER' => ['SERVER', ['spark', 'migrate']];
+
+        yield 'int 1 is not true' => ['SERVER', 1];
+
+        yield 'int 0 is not false' => ['SERVER', 0];
+
+        yield 'float from SERVER' => ['SERVER', 3.14];
+
+        yield 'integer from ENV' => ['ENV', 42];
+
+        yield 'CLI simulation BOTH' => ['BOTH', 3];
+    }
+
     private function createRouteCollection(): RouteCollection
     {
         return new RouteCollection(Services::locator(), new Modules(), new Routing());
@@ -274,6 +310,36 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $data      = ['a' => 'b', 'c' => 'd'];
         $data['e'] = &$data;
         $this->assertSame($data, esc($data, 'raw'));
+    }
+
+    public function testEscapeArrayDoesNotLeakForeachReference(): void
+    {
+        $data = ['first' => '<b>bold</b>', 'last' => '<i>italic</i>'];
+
+        $escaped = esc($data);
+
+        $this->assertSame('&lt;b&gt;bold&lt;/b&gt;', $escaped['first']);
+        $this->assertSame('&lt;i&gt;italic&lt;/i&gt;', $escaped['last']);
+    }
+
+    public function testEscapeArrayLastElementNotMutatedAfterCall(): void
+    {
+        $data = ['x' => '<script>', 'y' => '<style>'];
+
+        $escaped = esc($data);
+
+        $this->assertSame('&lt;script&gt;', $escaped['x']);
+        $this->assertSame('&lt;style&gt;', $escaped['y']);
+        $this->assertCount(2, $escaped);
+    }
+
+    public function testEscapeArrayReferenceIsCleanedUpOnSingleElement(): void
+    {
+        $data = ['only' => '<div>'];
+
+        $escaped = esc($data);
+
+        $this->assertSame('&lt;div&gt;', $escaped['only']);
     }
 
     #[PreserveGlobalState(false)]
