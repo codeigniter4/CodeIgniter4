@@ -15,8 +15,10 @@ namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\RawSql;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -50,6 +52,124 @@ final class LikeTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
         $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    public function testLikeAny(): void
+    {
+        $builder = new BaseBuilder('job', $this->db);
+
+        $builder->likeAny(['name', 'description'], 'veloper');
+
+        $expectedSQL   = 'SELECT * FROM "job" WHERE ( "name" LIKE \'%veloper%\' ESCAPE \'!\' OR "description" LIKE \'%veloper%\' ESCAPE \'!\' )';
+        $expectedBinds = [
+            'name' => [
+                '%veloper%',
+                true,
+            ],
+            'description' => [
+                '%veloper%',
+                true,
+            ],
+        ];
+
+        $this->assertSame($expectedSQL, (string) preg_replace('/\s+/', ' ', trim($builder->getCompiledSelect())));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    public function testLikeAnyAfterWhere(): void
+    {
+        $builder = new BaseBuilder('job', $this->db);
+
+        $builder->where('active', 1)
+            ->likeAny(['name', 'description'], 'veloper');
+
+        $expectedSQL = 'SELECT * FROM "job" WHERE "active" = 1 AND ( "name" LIKE \'%veloper%\' ESCAPE \'!\' OR "description" LIKE \'%veloper%\' ESCAPE \'!\' )';
+
+        $this->assertSame($expectedSQL, (string) preg_replace('/\s+/', ' ', trim($builder->getCompiledSelect())));
+    }
+
+    public function testOrLikeAnyAfterWhere(): void
+    {
+        $builder = new BaseBuilder('job', $this->db);
+
+        $builder->where('active', 1)
+            ->orLikeAny(['name', 'description'], 'veloper');
+
+        $expectedSQL = 'SELECT * FROM "job" WHERE "active" = 1 OR ( "name" LIKE \'%veloper%\' ESCAPE \'!\' OR "description" LIKE \'%veloper%\' ESCAPE \'!\' )';
+
+        $this->assertSame($expectedSQL, (string) preg_replace('/\s+/', ' ', trim($builder->getCompiledSelect())));
+    }
+
+    public function testLikeAnyCaseInsensitiveSearch(): void
+    {
+        $builder = new BaseBuilder('job', $this->db);
+
+        $builder->likeAny(['name', 'description'], 'VELOPER', 'both', null, true);
+
+        $expectedSQL   = 'SELECT * FROM "job" WHERE ( LOWER("name") LIKE \'%veloper%\' ESCAPE \'!\' OR LOWER("description") LIKE \'%veloper%\' ESCAPE \'!\' )';
+        $expectedBinds = [
+            'name' => [
+                '%veloper%',
+                true,
+            ],
+            'description' => [
+                '%veloper%',
+                true,
+            ],
+        ];
+
+        $this->assertSame($expectedSQL, (string) preg_replace('/\s+/', ' ', trim($builder->getCompiledSelect())));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    public function testLikeAnyWithRawSqlField(): void
+    {
+        $builder = new BaseBuilder('job', $this->db);
+        $rawSql  = new RawSql('LOWER(description)');
+
+        $builder->likeAny(['name', $rawSql], 'veloper', 'after');
+
+        $expectedSQL   = 'SELECT * FROM "job" WHERE ( "name" LIKE \'veloper%\' ESCAPE \'!\' OR LOWER(description) LIKE \'veloper%\' ESCAPE \'!\' )';
+        $expectedBinds = [
+            'name' => [
+                'veloper%',
+                true,
+            ],
+            $rawSql->getBindingKey() => [
+                'veloper%',
+                true,
+            ],
+        ];
+
+        $this->assertSame($expectedSQL, (string) preg_replace('/\s+/', ' ', trim($builder->getCompiledSelect())));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    /**
+     * @param mixed $fields
+     */
+    #[DataProvider('provideLikeAnyInvalidFieldsThrowInvalidArgumentException')]
+    public function testLikeAnyInvalidFieldsThrowInvalidArgumentException($fields): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $builder = new BaseBuilder('job', $this->db);
+
+        $builder->likeAny($fields, 'veloper');
+    }
+
+    /**
+     * @return iterable<string, array{mixed}>
+     */
+    public static function provideLikeAnyInvalidFieldsThrowInvalidArgumentException(): iterable
+    {
+        return [
+            'empty list'  => [[]],
+            'assoc array' => [['name' => 'description']],
+            'empty field' => [['name', '']],
+            'blank field' => [['name', '   ']],
+            'int field'   => [['name', 1]],
+        ];
     }
 
     /**
