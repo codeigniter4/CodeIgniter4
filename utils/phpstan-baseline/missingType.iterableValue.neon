@@ -783,11 +783,6 @@ parameters:
             path: ../../system/Database/BaseConnection.php
 
         -
-            message: '#^Method CodeIgniter\\Database\\BaseConnection\:\:escape\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
             message: '#^Method CodeIgniter\\Database\\BaseConnection\:\:escape\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/BaseConnection.php
@@ -1009,11 +1004,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Database\\ConnectionInterface\:\:callFunction\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/ConnectionInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\ConnectionInterface\:\:escape\(\) has parameter \$str with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/ConnectionInterface.php
 
@@ -1386,11 +1376,6 @@ parameters:
             message: '#^Property CodeIgniter\\Database\\Postgre\\Builder\:\:\$randomKeyword type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/Postgre/Builder.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Postgre\\Connection\:\:escape\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Postgre/Connection.php
 
         -
             message: '#^Method CodeIgniter\\Database\\Postgre\\Connection\:\:escape\(\) return type has no value type specified in iterable type array\.$#'

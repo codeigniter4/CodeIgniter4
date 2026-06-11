@@ -25,6 +25,8 @@ use ErrorException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
+use Tests\Support\Enum\RoleEnum;
+use Tests\Support\Enum\StatusEnum;
 
 /**
  * @internal
@@ -398,6 +400,28 @@ final class WhereTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
         $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    public function testWhereWithBackedEnum(): void
+    {
+        $builder = $this->db->table('jobs');
+
+        $builder->where('status', StatusEnum::ACTIVE);
+
+        $expectedSQL = 'SELECT * FROM "jobs" WHERE "status" = \'active\'';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testWhereBetweenWithBackedEnums(): void
+    {
+        $builder = $this->db->table('jobs');
+
+        $builder->whereBetween('role', [RoleEnum::GUEST, RoleEnum::ADMIN]);
+
+        $expectedSQL = 'SELECT * FROM "jobs" WHERE "role" BETWEEN 0 AND 2';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     #[DataProvider('provideWhereColumnWithOperators')]
@@ -838,6 +862,17 @@ final class WhereTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
         $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    public function testWhereInWithBackedEnums(): void
+    {
+        $builder = $this->db->table('jobs');
+
+        $builder->whereIn('status', [StatusEnum::ACTIVE, StatusEnum::INACTIVE]);
+
+        $expectedSQL = 'SELECT * FROM "jobs" WHERE "status" IN (\'active\',\'inactive\')';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     public function testWhereInSubQuery(): void

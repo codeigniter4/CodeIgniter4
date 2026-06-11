@@ -20,6 +20,7 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 use PHPUnit\Framework\Attributes\Group;
+use Tests\Support\Enum\StatusEnum;
 
 /**
  * @internal
@@ -63,6 +64,34 @@ final class InsertTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));
         $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    public function testInsertWithBackedEnum(): void
+    {
+        $builder = $this->db->table('jobs');
+
+        $builder->testMode()->insert([
+            'id'     => 1,
+            'status' => StatusEnum::ACTIVE,
+        ], true);
+
+        $expectedSQL = 'INSERT INTO "jobs" ("id", "status") VALUES (1, \'active\')';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));
+    }
+
+    public function testInsertObjectWithBackedEnum(): void
+    {
+        $builder = $this->db->table('jobs');
+
+        $builder->testMode()->insert((object) [
+            'id'     => 1,
+            'status' => StatusEnum::ACTIVE,
+        ], true);
+
+        $expectedSQL = 'INSERT INTO "jobs" ("id", "status") VALUES (1, \'active\')';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));
     }
 
     public function testInsertObject(): void

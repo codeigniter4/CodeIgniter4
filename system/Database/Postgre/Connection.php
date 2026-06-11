@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Postgre;
 
+use BackedEnum;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\RawSql;
@@ -354,7 +355,7 @@ class Connection extends BaseConnection
      *
      * Escapes data based on type
      *
-     * @param array|bool|float|int|object|string|null $str
+     * @param mixed $str
      *
      * @return ($str is array ? array : float|int|string)
      */
@@ -362,6 +363,10 @@ class Connection extends BaseConnection
     {
         if (! $this->connID) {
             $this->initialize();
+        }
+
+        if ($str instanceof BackedEnum) {
+            $str = $str->value;
         }
 
         if ($str instanceof Stringable) {

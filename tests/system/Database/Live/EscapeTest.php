@@ -18,6 +18,8 @@ use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use PHPUnit\Framework\Attributes\Group;
+use Tests\Support\Enum\RoleEnum;
+use Tests\Support\Enum\StatusEnum;
 
 /**
  * @internal
@@ -61,6 +63,16 @@ final class EscapeTest extends CIUnitTestCase
         $sql      = 'SELECT * FROM brands WHERE name = ' . $this->db->escape(new Time('2024-01-01 12:00:00'));
 
         $this->assertSame($expected, $sql);
+    }
+
+    public function testEscapeStringBackedEnum(): void
+    {
+        $this->assertSame("'active'", $this->db->escape(StatusEnum::ACTIVE));
+    }
+
+    public function testEscapeIntBackedEnum(): void
+    {
+        $this->assertSame(2, $this->db->escape(RoleEnum::ADMIN));
     }
 
     public function testEscapeString(): void
@@ -111,7 +123,7 @@ final class EscapeTest extends CIUnitTestCase
 
     public function testEscapeStringArray(): void
     {
-        $stringArray = [' A simple string ', new RawSql('CURRENT_TIMESTAMP()'), false, null];
+        $stringArray = [' A simple string ', new RawSql('CURRENT_TIMESTAMP()'), false, null, StatusEnum::ACTIVE, RoleEnum::ADMIN];
 
         $escapedString = $this->db->escape($stringArray);
 
@@ -125,5 +137,7 @@ final class EscapeTest extends CIUnitTestCase
         }
 
         $this->assertSame('NULL', $escapedString[3]);
+        $this->assertSame("'active'", $escapedString[4]);
+        $this->assertSame(2, $escapedString[5]);
     }
 }
