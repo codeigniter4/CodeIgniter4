@@ -17,6 +17,7 @@ use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Argument;
+use CodeIgniter\CLI\Input\Option;
 
 /**
  * Displays the basic usage information for a given command.
@@ -76,11 +77,9 @@ class Help extends AbstractCommand
             CLI::write(lang('CLI.helpArguments'), 'yellow');
 
             foreach ($command->getArgumentsDefinition() as $argument => $definition) {
-                $default = '';
-
-                if (! $definition->required) {
-                    $default = sprintf(' [default: %s]', $this->formatDefaultValue($definition->default));
-                }
+                $default = ! $definition->required && $this->shouldShowDefault($definition->default)
+                    ? sprintf(' [default: %s]', $this->formatDefaultValue($definition->default))
+                    : '';
 
                 CLI::write(sprintf(
                     '%s%s%s',
@@ -118,10 +117,15 @@ class Help extends AbstractCommand
                     $definition->negation !== null ? sprintf('|--%s', $definition->negation) : '',
                 );
 
+                $default = $this->shouldShowOptionDefault($definition)
+                    ? sprintf(' [default: %s]', $this->formatDefaultValue($definition->default))
+                    : '';
+
                 CLI::write(sprintf(
-                    '%s%s%s',
+                    '%s%s%s%s',
                     CLI::color($this->addPadding($optionString, 2, $maxPadding), 'green'),
                     $definition->description,
+                    CLI::color($default, 'yellow'),
                     $definition->isArray ? CLI::color(' (multiple values allowed)', 'yellow') : '',
                 ));
             }
@@ -153,6 +157,31 @@ class Help extends AbstractCommand
         }
 
         return $max + 4; // Account for the extra padding around the option/argument.
+    }
+
+    /**
+     * Decides whether an option's default value is worth displaying.
+     */
+    private function shouldShowOptionDefault(Option $definition): bool
+    {
+        // Only value-accepting options carry a meaningful default. Plain flags
+        // and negatable toggles are boolean by nature.
+        if (! $definition->acceptsValue) {
+            return false;
+        }
+
+        return $this->shouldShowDefault($definition->default);
+    }
+
+    /**
+     * Whether a default value is concrete enough to display. `null` and the
+     * empty string are treated as "no default".
+     *
+     * @param list<string>|string|null $value
+     */
+    private function shouldShowDefault(array|string|null $value): bool
+    {
+        return $value !== null && $value !== '';
     }
 
     /**

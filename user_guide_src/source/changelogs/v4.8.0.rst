@@ -192,6 +192,8 @@ Commands
   ``isInteractive()`` / ``setInteractive()`` methods on ``AbstractCommand``. ``isInteractive()`` also auto-detects piped or
   CI environments by probing STDIN for a TTY, and the state cascades to sub-commands invoked via ``$this->call(...)``.
   See :ref:`non-interactive-mode`.
+- ``spark help <command>`` now shows the default value of each option that accepts a value (e.g., ``[default: "file"]``),
+  the same way argument defaults are already displayed. Boolean flags and negatable toggles, which have no meaningful default to show, are unaffected.
 - You can now retrieve the last executed command in the console using the new ``Console::getCommand()`` method. This is useful for logging, debugging, or any situation where you need to know which command was run.
 - ``CLI`` now supports the ``--`` separator to mean that what follows are arguments, not options. This allows you to have arguments that start with ``-`` without them being treated as options.
   For example: ``spark my:command -- --myarg`` will pass ``--myarg`` as an argument instead of an option.
