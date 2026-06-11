@@ -160,8 +160,8 @@ final class StrictFieldProtectionModelTest extends LiveModelTestCase
     public function testProtectFalseBypassesStrictFieldProtection(): void
     {
         $result = $this->createModel(UserModel::class)->strictFieldProtection()->protect(false)->update(1, [
-            'id'   => 1,
-            'name' => 'Strict Disabled',
+            'name'       => 'Strict Disabled',
+            'created_at' => '2026-01-01 12:00:00',
         ]);
 
         $this->assertTrue($result);
