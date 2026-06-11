@@ -711,11 +711,6 @@ class Model extends BaseModel
         return parent::update($id, $row);
     }
 
-    protected function objectToRawArray($object, bool $onlyChanged = true, bool $recursive = false): array
-    {
-        return parent::objectToRawArray($object, $onlyChanged);
-    }
-
     /**
      * Provides/instantiates the builder/db connection and model's table/primary key names and return type.
      *
