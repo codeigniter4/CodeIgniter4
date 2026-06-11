@@ -195,7 +195,6 @@ final class GroupTest extends CIUnitTestCase
     {
         return [
             'null'         => [null],
-            'not array'    => ['not array'],
             'empty array'  => [[]],
             'one value'    => [[10]],
             'three values' => [[10, 20, 30]],

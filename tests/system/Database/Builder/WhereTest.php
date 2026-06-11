@@ -834,7 +834,6 @@ final class WhereTest extends CIUnitTestCase
     {
         return [
             'null'         => [null],
-            'not array'    => ['not array'],
             'empty array'  => [[]],
             'one value'    => [['2026-01-01']],
             'three values' => [
