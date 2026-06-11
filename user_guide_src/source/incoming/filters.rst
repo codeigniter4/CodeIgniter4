@@ -315,6 +315,7 @@ The filters bundled with CodeIgniter4 are:
 - ``forcehttps`` => :ref:`forcehttps`
 - ``pagecache`` => :doc:`PageCache <../general/caching>`
 - ``performance`` => :ref:`performancemetrics`
+- ``requestid`` => :ref:`requestid`
 
 .. note:: The filters are executed in the order defined in the config file. However, if enabled, ``DebugToolbar`` is always executed last because it should be able to capture everything that happens in the other filters.
 
@@ -377,3 +378,26 @@ If you want to customize the headers, extend ``CodeIgniter\Filters\SecureHeaders
 .. literalinclude:: filters/011.php
 
 If you want to know about secure headers, see `OWASP Secure Headers Project <https://owasp.org/www-project-secure-headers/>`_.
+
+.. _requestid:
+
+Request ID
+==========
+
+.. versionadded:: 4.8.0
+
+This filter adds a request ID to each request in context of the application. This can be useful for
+debugging and logging purposes, as it allows you to trace a specific request through the application.
+
+Framework-generated IDs are 32-character hexadecimal strings and are unique for practical purposes, however valid incoming IDs are reused.
+It is added to the request's context and can be accessed via the ``request_id`` key.
+
+To enable this filter, simply add/uncomment the ``requestid`` alias in the ``$required['before']`` and ``$required['after']`` array in **app/Config/Filters.php**:
+
+.. literalinclude:: filters/014.php
+
+.. note:: If the incoming request has a header named ``X-Request-ID``, the value of that header
+    will be used as the request ID instead of generating a new one or checking for uniqueness.
+    The framework does basic validation to ensure that the incoming request ID is a non-empty string,
+    has at most 64 characters, and contains only valid characters (alphanumeric, dot, underscore, colon, and hyphen).
+    If the validation fails, a new request ID will be generated as normal. This allows you to pass in your own request ID if you have one available, such as from a client or a load balancer.

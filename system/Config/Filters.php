@@ -21,6 +21,7 @@ use CodeIgniter\Filters\Honeypot;
 use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\PageCache;
 use CodeIgniter\Filters\PerformanceMetrics;
+use CodeIgniter\Filters\RequestId;
 use CodeIgniter\Filters\SecureHeaders;
 
 /**
@@ -47,6 +48,7 @@ class Filters extends BaseConfig
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
+        'requestid'     => RequestId::class,
     ];
 
     /**
@@ -64,11 +66,13 @@ class Filters extends BaseConfig
      */
     public array $required = [
         'before' => [
+            // 'requestid', // Request ID for each request
             'forcehttps', // Force Global Secure Requests
             'pagecache',  // Web Page Caching
         ],
         'after' => [
             'pagecache',   // Web Page Caching
+            // 'requestid',  // Request ID for each request
             'performance', // Performance Metrics
             'toolbar',     // Debug Toolbar
         ],
