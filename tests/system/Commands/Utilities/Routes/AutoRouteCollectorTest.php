@@ -54,6 +54,12 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
             ],
             [
                 'auto',
+                'formRequestController/storeContinuing[/...]',
+                '',
+                '\Tests\Support\Controllers\FormRequestController::storeContinuing',
+            ],
+            [
+                'auto',
                 'formRequestController/update[/...]',
                 '',
                 '\Tests\Support\Controllers\FormRequestController::update',

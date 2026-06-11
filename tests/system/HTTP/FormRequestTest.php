@@ -436,7 +436,7 @@ final class FormRequestTest extends CIUnitTestCase
 
         $response = $formRequest->resolveRequest();
 
-        $this->assertNull($response);
+        $this->assertNotInstanceOf(ResponseInterface::class, $response);
         $this->assertArrayHasKey('body', $formRequest->errors);
         $this->assertSame(['title' => 'Hello World'], $formRequest->preparedData);
         $this->assertSame([], $formRequest->getValidated());
@@ -475,7 +475,7 @@ final class FormRequestTest extends CIUnitTestCase
 
         $response = $formRequest->resolveRequest();
 
-        $this->assertNull($response);
+        $this->assertNotInstanceOf(ResponseInterface::class, $response);
         $this->assertFalse($formRequest->failedValidationCalled);
         $this->assertSame(['title' => 'Hello World', 'body' => 'Some body text'], $formRequest->getValidated());
     }
