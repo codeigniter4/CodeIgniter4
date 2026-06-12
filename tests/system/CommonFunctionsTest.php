@@ -42,6 +42,7 @@ use Config\Security as SecurityConfig;
 use Config\Services;
 use Config\Session as SessionConfig;
 use Exception;
+use InvalidArgumentException;
 use Kint;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -310,6 +311,22 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $data      = ['a' => 'b', 'c' => 'd'];
         $data['e'] = &$data;
         $this->assertSame($data, esc($data, 'raw'));
+    }
+
+    public function testEscapeArrayPropagatesEncoding(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        // If encoding is not propagated, it would not instantiate the Escaper with the invalid encoding and wouldn't throw.
+        esc(['test'], 'html', 'invalid-encoding');
+    }
+
+    public function testEscapeWithChangingEncodingRecursive(): void
+    {
+        $data = ['<x'];
+
+        $this->assertSame(['&lt;x'], esc($data, 'html', 'utf-8'));
+        $this->assertSame(['&lt;x'], esc($data, 'html', 'iso-8859-1'));
+        $this->assertSame(['&lt;x'], esc($data, 'html', 'utf-8'));
     }
 
     #[PreserveGlobalState(false)]

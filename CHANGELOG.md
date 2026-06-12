@@ -14,6 +14,7 @@
 
 ### Fixed Bugs
 
+* fix: env() TypeError for non-string values and esc() encoding propagation with reference leak prevention
 * fix: make Autoloader composer path injectable to fix parallel test race condition by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/10082
 * fix: store SPL closures in `register()` so `unregister()` can remove them by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/10097
 * fix: ensure output buffer is closed after use of `command()` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10099
