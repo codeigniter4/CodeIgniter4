@@ -46,7 +46,7 @@ final class ExplainTest extends CIUnitTestCase
 
         $expectedSQL = 'EXPLAIN SELECT * FROM "jobs" WHERE "id" > 3';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
+        $this->assertSameSql($expectedSQL, $answer);
     }
 
     public function testSQLiteExplainUsesQueryPlanInTestMode(): void
@@ -58,7 +58,7 @@ final class ExplainTest extends CIUnitTestCase
 
         $expectedSQL = 'EXPLAIN QUERY PLAN SELECT * FROM "jobs" WHERE "id" > 3';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
+        $this->assertSameSql($expectedSQL, $answer);
     }
 
     public function testExplainResetsByDefault(): void
@@ -68,7 +68,7 @@ final class ExplainTest extends CIUnitTestCase
 
         $builder->where('id >', 3)->explain();
 
-        $this->assertSame('SELECT * FROM "jobs"', str_replace("\n", ' ', $builder->getCompiledSelect(false)));
+        $this->assertSameSql('SELECT * FROM "jobs"', $builder->getCompiledSelect(false));
         $this->assertSame([], $builder->getBinds());
     }
 
@@ -79,7 +79,7 @@ final class ExplainTest extends CIUnitTestCase
 
         $builder->where('id >', 3)->explain(false);
 
-        $this->assertSame('SELECT * FROM "jobs" WHERE "id" > 3', str_replace("\n", ' ', $builder->getCompiledSelect(false)));
+        $this->assertSameSql('SELECT * FROM "jobs" WHERE "id" > 3', $builder->getCompiledSelect(false));
         $this->assertSame([
             'id' => [
                 3,
@@ -96,7 +96,7 @@ final class ExplainTest extends CIUnitTestCase
         $builder = new BaseBuilder('jobs', $db);
 
         $this->assertFalse($builder->where('id >', 3)->explain());
-        $this->assertSame('SELECT * FROM "jobs"', str_replace("\n", ' ', $builder->getCompiledSelect(false)));
+        $this->assertSameSql('SELECT * FROM "jobs"', $builder->getCompiledSelect(false));
         $this->assertSame([], $builder->getBinds());
     }
 

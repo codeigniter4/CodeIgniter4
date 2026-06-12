@@ -62,7 +62,7 @@ final class InsertTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledInsert());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -77,7 +77,7 @@ final class InsertTest extends CIUnitTestCase
 
         $expectedSQL = 'INSERT INTO "jobs" ("id", "status") VALUES (1, \'active\')';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledInsert());
     }
 
     public function testInsertObjectWithBackedEnum(): void
@@ -91,7 +91,7 @@ final class InsertTest extends CIUnitTestCase
 
         $expectedSQL = 'INSERT INTO "jobs" ("id", "status") VALUES (1, \'active\')';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledInsert());
     }
 
     public function testInsertObject(): void
@@ -116,7 +116,7 @@ final class InsertTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledInsert());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -132,7 +132,7 @@ final class InsertTest extends CIUnitTestCase
 
         $expectedSQL = 'INSERT INTO "jobs" ("id", "name") VALUES (1, CONCAT("id", \'Grocery Sales\'))';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledInsert());
     }
 
     /**
@@ -160,7 +160,7 @@ final class InsertTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledInsert());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -200,10 +200,10 @@ final class InsertTest extends CIUnitTestCase
         $raw = <<<'SQL'
             INSERT INTO "jobs" ("description", "id", "name") VALUES ('There''s something in your teeth',2,'Commedian'), ('I am yellow',3,'Cab Driver')
             SQL;
-        $this->assertSame($raw, str_replace("\n", ' ', $query->getOriginalQuery()));
+        $this->assertSameSql($raw, $query->getOriginalQuery());
 
         $expected = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES ('There''s something in your teeth',2,'Commedian'), ('I am yellow',3,'Cab Driver')";
-        $this->assertSame($expected, str_replace("\n", ' ', $query->getQuery()));
+        $this->assertSameSql($expected, $query->getQuery());
     }
 
     /**
@@ -235,12 +235,12 @@ final class InsertTest extends CIUnitTestCase
         $raw = <<<'SQL'
             INSERT IGNORE INTO "jobs" ("description", "id", "name") VALUES ('I am yellow',3,'Cab Driver')
             SQL;
-        $this->assertSame($raw, str_replace("\n", ' ', $query->getOriginalQuery()));
+        $this->assertSameSql($raw, $query->getOriginalQuery());
 
         $expected = <<<'SQL'
             INSERT IGNORE INTO "jobs" ("description", "id", "name") VALUES ('I am yellow',3,'Cab Driver')
             SQL;
-        $this->assertSame($expected, str_replace("\n", ' ', $query->getQuery()));
+        $this->assertSameSql($expected, $query->getQuery());
     }
 
     public function testInsertBatchWithoutEscape(): void
@@ -267,7 +267,7 @@ final class InsertTest extends CIUnitTestCase
         $this->assertInstanceOf(Query::class, $query);
 
         $expected = 'INSERT INTO "jobs" ("description", "id", "name") VALUES (1 + 2,2,1 + 1), (2 + 2,3,2 + 1)';
-        $this->assertSame($expected, str_replace("\n", ' ', $query->getQuery()));
+        $this->assertSameSql($expected, $query->getQuery());
     }
 
     /**
@@ -291,7 +291,7 @@ final class InsertTest extends CIUnitTestCase
         $this->assertInstanceOf(Query::class, $query);
 
         $expected = "INSERT INTO \"ip_table\" (\"ip\", \"ip2\") VALUES ('1.1.1.0','1.1.1.2'), ('2.2.2.0','2.2.2.2'), ('3.3.3.0','3.3.3.2'), ('4.4.4.0','4.4.4.2')";
-        $this->assertSame($expected, str_replace("\n", ' ', $query->getQuery()));
+        $this->assertSameSql($expected, $query->getQuery());
     }
 
     public function testInsertBatchThrowsExceptionOnNoData(): void

@@ -41,6 +41,6 @@ final class EmptyTest extends CIUnitTestCase
 
         $expectedSQL = 'DELETE FROM "jobs"';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
+        $this->assertSameSql($expectedSQL, $answer);
     }
 }

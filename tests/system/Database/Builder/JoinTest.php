@@ -44,7 +44,7 @@ final class JoinTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user" JOIN "job" ON "user"."id" = "job"."id"';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testJoinIsNull(): void
@@ -55,7 +55,7 @@ final class JoinTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "table1" JOIN "table2" ON "field" IS NULL';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testJoinIsNotNull(): void
@@ -66,7 +66,7 @@ final class JoinTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "table1" JOIN "table2" ON "field" IS NOT NULL';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testJoinMultipleConditions(): void
@@ -77,7 +77,7 @@ final class JoinTest extends CIUnitTestCase
 
         $expectedSQL = "SELECT * FROM \"table1\" LEFT JOIN \"table2\" ON \"table1\".\"field1\" = \"table2\".\"field2\" AND \"table1\".\"field1\" = 'foo' AND \"table2\".\"field2\" = 0";
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     /**
@@ -96,7 +96,7 @@ final class JoinTest extends CIUnitTestCase
         // @TODO Should be `... CURDATE() BETWEEN "lease_start_date" AND "lease_exp_date"`
         $expectedSQL = 'SELECT * FROM "table1" LEFT JOIN "leases" ON "units"."unit_id" = "leases"."unit_id" AND CURDATE() BETWEEN lease_start_date AND lease_exp_date';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     /**
@@ -129,7 +129,7 @@ final class JoinTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "jobs" FULL OUTER JOIN "users" as "u" ON "users"."id" = "jobs"."id"';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testJoinWithAlias(): void
@@ -142,7 +142,7 @@ final class JoinTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "test"."dbo"."jobs" LEFT JOIN "test"."dbo"."users" "u" ON "u"."id" = "jobs"."id"';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testSqlsrvJoinMultipleConditions(): void
@@ -155,7 +155,7 @@ final class JoinTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "test"."dbo"."jobs" LEFT JOIN "test"."dbo"."users" "u" ON "u"."id" = "jobs"."id" AND "u"."status" = \'active\'';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testSqlsrvJoinRawSql(): void
@@ -168,6 +168,6 @@ final class JoinTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "test"."dbo"."jobs" LEFT JOIN "test"."dbo"."users" "u" ON u.id = jobs.id AND u.deleted_at IS NULL';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 }

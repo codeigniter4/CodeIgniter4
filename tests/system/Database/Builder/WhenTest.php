@@ -42,14 +42,14 @@ final class WhenTest extends CIUnitTestCase
         $builder = $this->db->table('jobs');
 
         $expectedSQL = 'SELECT * FROM "jobs"';
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
 
         $builder = $builder->when(true, static function ($query): void {
             $query->select('id');
         });
 
         $expectedSQL = 'SELECT "id" FROM "jobs"';
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testWhenTruthy(): void
@@ -61,7 +61,7 @@ final class WhenTest extends CIUnitTestCase
         });
 
         $expectedSQL = 'SELECT "id" FROM "jobs"';
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testWhenRunsDefaultWhenFalse(): void
@@ -75,7 +75,7 @@ final class WhenTest extends CIUnitTestCase
         });
 
         $expectedSQL = 'SELECT "name" FROM "jobs"';
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testWhenDoesntModifyWhenFalse(): void
@@ -87,7 +87,7 @@ final class WhenTest extends CIUnitTestCase
         });
 
         $expectedSQL = 'SELECT * FROM "jobs"';
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testWhenPassesParemeters(): void
@@ -100,7 +100,7 @@ final class WhenTest extends CIUnitTestCase
         });
 
         $expectedSQL = 'SELECT * FROM "jobs" WHERE "name" = \'developer\'';
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     #[DataProvider('provideConditionValues')]
@@ -117,7 +117,7 @@ final class WhenTest extends CIUnitTestCase
         $expected    = $expectDefault ? 'name' : 'id';
         $expectedSQL = 'SELECT "' . $expected . '" FROM "jobs"';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testWhenNotFalse(): void
@@ -125,14 +125,14 @@ final class WhenTest extends CIUnitTestCase
         $builder = $this->db->table('jobs');
 
         $expectedSQL = 'SELECT * FROM "jobs"';
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
 
         $builder = $builder->whenNot(false, static function ($query): void {
             $query->select('id');
         });
 
         $expectedSQL = 'SELECT "id" FROM "jobs"';
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testWhenNotFalsey(): void
@@ -144,7 +144,7 @@ final class WhenTest extends CIUnitTestCase
         });
 
         $expectedSQL = 'SELECT "id" FROM "jobs"';
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testWhenNotRunsDefaultWhenTrue(): void
@@ -158,7 +158,7 @@ final class WhenTest extends CIUnitTestCase
         });
 
         $expectedSQL = 'SELECT "name" FROM "jobs"';
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testWhenNotDoesntModifyWhenFalse(): void
@@ -170,7 +170,7 @@ final class WhenTest extends CIUnitTestCase
         });
 
         $expectedSQL = 'SELECT * FROM "jobs"';
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testWhenNotPassesParemeters(): void
@@ -183,7 +183,7 @@ final class WhenTest extends CIUnitTestCase
         });
 
         $expectedSQL = 'SELECT * FROM "jobs" WHERE "name" = \'0\'';
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     #[DataProvider('provideConditionValues')]
@@ -200,7 +200,7 @@ final class WhenTest extends CIUnitTestCase
         $expected    = $expectDefault ? 'id' : 'name';
         $expectedSQL = 'SELECT "' . $expected . '" FROM "jobs"';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     /**

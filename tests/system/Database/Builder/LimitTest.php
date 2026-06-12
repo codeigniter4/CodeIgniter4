@@ -41,7 +41,7 @@ final class LimitTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user"  LIMIT 5';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testLimitAndOffset(): void
@@ -52,7 +52,7 @@ final class LimitTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user"  LIMIT 1, 5';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testLimitAndOffsetMethod(): void
@@ -63,6 +63,6 @@ final class LimitTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user"  LIMIT 1, 5';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 }

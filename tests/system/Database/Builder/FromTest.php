@@ -42,7 +42,7 @@ final class FromTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user", "jobs"';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testFromThatOverwrites(): void
@@ -53,7 +53,7 @@ final class FromTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "jobs"';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testFromWithMultipleTables(): void
@@ -64,7 +64,7 @@ final class FromTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user", "jobs", "roles"';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testFromWithMultipleTablesAsString(): void
@@ -75,7 +75,7 @@ final class FromTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user", "jobs", "roles"';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testFromReset(): void
@@ -86,23 +86,23 @@ final class FromTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user", "jobs", "roles"';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
 
         $expectedSQL = 'SELECT * FROM "user"';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
 
         $expectedSQL = 'SELECT *';
 
         $builder->from(null, true);
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
 
         $expectedSQL = 'SELECT * FROM "jobs"';
 
         $builder->from('jobs');
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testFromSubquery(): void
@@ -111,19 +111,19 @@ final class FromTest extends CIUnitTestCase
         $subquery    = new BaseBuilder('users', $this->db);
         $builder     = $this->db->newQuery()->fromSubquery($subquery, 'alias');
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
 
         $expectedSQL = 'SELECT * FROM (SELECT "id", "name" FROM "users") "users_1"';
         $subquery    = (new BaseBuilder('users', $this->db))->select('id, name');
         $builder     = $this->db->newQuery()->fromSubquery($subquery, 'users_1');
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
 
         $expectedSQL = 'SELECT * FROM (SELECT * FROM "users") "alias", "some_table"';
         $subquery    = new BaseBuilder('users', $this->db);
         $builder     = $this->db->newQuery()->fromSubquery($subquery, 'alias')->from('some_table');
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testFromWithMultipleTablesAsStringWithSQLSRV(): void
@@ -136,7 +136,7 @@ final class FromTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "test"."dbo"."user", "test"."dbo"."jobs", "test"."dbo"."roles"';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testFromSubqueryWithSQLSRV(): void
@@ -151,7 +151,7 @@ final class FromTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "test"."dbo"."jobs", (SELECT * FROM "test"."dbo"."users") "users_1"';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     /**
@@ -165,7 +165,7 @@ final class FromTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "database"."dbo"."table"';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     /**
@@ -179,6 +179,6 @@ final class FromTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "test"."dbo"."table"';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 }
