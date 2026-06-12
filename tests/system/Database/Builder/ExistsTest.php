@@ -42,7 +42,7 @@ final class ExistsTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT 1 FROM "jobs" WHERE "id" > :id:  LIMIT 1';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
+        $this->assertSameSql($expectedSQL, $answer);
     }
 
     public function testDoesntExistReturnsSqlInTestMode(): void
@@ -54,7 +54,7 @@ final class ExistsTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT 1 FROM "jobs" WHERE "id" > :id:  LIMIT 1';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
+        $this->assertSameSql($expectedSQL, $answer);
     }
 
     public function testExistsDoesNotUseOrderByOrLockForUpdate(): void
@@ -69,11 +69,8 @@ final class ExistsTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT 1 FROM "jobs" WHERE "id" > :id:  LIMIT 1';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
-        $this->assertSame(
-            'SELECT * FROM "jobs" WHERE "id" > 3 ORDER BY "id" DESC FOR UPDATE',
-            str_replace("\n", ' ', $builder->getCompiledSelect(false)),
-        );
+        $this->assertSameSql($expectedSQL, $answer);
+        $this->assertSameSql('SELECT * FROM "jobs" WHERE "id" > 3 ORDER BY "id" DESC FOR UPDATE', $builder->getCompiledSelect(false));
     }
 
     public function testExistsWithSQLSRVDoesNotUseOrderByOrLockForUpdate(): void
@@ -90,11 +87,8 @@ final class ExistsTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT 1 FROM "test"."dbo"."jobs" WHERE "id" > :id:  ORDER BY (SELECT NULL)  OFFSET 0  ROWS FETCH NEXT 1 ROWS ONLY ';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
-        $this->assertSame(
-            'SELECT * FROM "test"."dbo"."jobs" WITH (UPDLOCK, ROWLOCK) WHERE "id" > 3 ORDER BY "id" DESC',
-            str_replace("\n", ' ', $builder->getCompiledSelect(false)),
-        );
+        $this->assertSameSql($expectedSQL, $answer);
+        $this->assertSameSql('SELECT * FROM "test"."dbo"."jobs" WITH (UPDLOCK, ROWLOCK) WHERE "id" > 3 ORDER BY "id" DESC', $builder->getCompiledSelect(false));
     }
 
     public function testExistsHonorsExistingLimitAndOffset(): void
@@ -108,11 +102,8 @@ final class ExistsTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT 1 FROM ( SELECT * FROM "jobs" WHERE "id" > :id:  LIMIT 20, 10 ) CI_exists  LIMIT 1';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
-        $this->assertSame(
-            'SELECT * FROM "jobs" WHERE "id" > 3  LIMIT 20, 10',
-            str_replace("\n", ' ', $builder->getCompiledSelect(false)),
-        );
+        $this->assertSameSql($expectedSQL, $answer);
+        $this->assertSameSql('SELECT * FROM "jobs" WHERE "id" > 3  LIMIT 20, 10', $builder->getCompiledSelect(false));
     }
 
     public function testExistsHonorsLimitZero(): void
@@ -131,7 +122,7 @@ final class ExistsTest extends CIUnitTestCase
 
             $expectedSQL = 'SELECT 1 FROM "jobs" WHERE "id" > :id:  LIMIT 0';
 
-            $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
+            $this->assertSameSql($expectedSQL, $answer);
         } finally {
             $config->limitZeroAsAll = $limitZeroAsAll;
         }
@@ -150,11 +141,8 @@ final class ExistsTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT 1 FROM ( SELECT COUNT("id") AS "total" FROM "jobs" WHERE "id" > :id: GROUP BY "id" HAVING "total" > :total: ) CI_exists  LIMIT 1';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
-        $this->assertSame(
-            'SELECT COUNT("id") AS "total" FROM "jobs" WHERE "id" > 3 GROUP BY "id" HAVING "total" > 1',
-            str_replace("\n", ' ', $builder->getCompiledSelect(false)),
-        );
+        $this->assertSameSql($expectedSQL, $answer);
+        $this->assertSameSql('SELECT COUNT("id") AS "total" FROM "jobs" WHERE "id" > 3 GROUP BY "id" HAVING "total" > 1', $builder->getCompiledSelect(false));
     }
 
     public function testExistsWithAggregateSelection(): void
@@ -168,11 +156,8 @@ final class ExistsTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT 1 FROM ( SELECT COUNT("id") AS "total" FROM "jobs" WHERE "id" > :id: ) CI_exists  LIMIT 1';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
-        $this->assertSame(
-            'SELECT COUNT("id") AS "total" FROM "jobs" WHERE "id" > 3',
-            str_replace("\n", ' ', $builder->getCompiledSelect(false)),
-        );
+        $this->assertSameSql($expectedSQL, $answer);
+        $this->assertSameSql('SELECT COUNT("id") AS "total" FROM "jobs" WHERE "id" > 3', $builder->getCompiledSelect(false));
     }
 
     public function testExistsWithUnion(): void
@@ -184,11 +169,8 @@ final class ExistsTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT 1 FROM ( SELECT * FROM (SELECT * FROM "jobs") "uwrp0" UNION SELECT * FROM (SELECT * FROM "jobs") "uwrp1" ) CI_exists  LIMIT 1';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
-        $this->assertSame(
-            'SELECT * FROM (SELECT * FROM "jobs") "uwrp0" UNION SELECT * FROM (SELECT * FROM "jobs") "uwrp1"',
-            str_replace("\n", ' ', $builder->getCompiledSelect(false)),
-        );
+        $this->assertSameSql($expectedSQL, $answer);
+        $this->assertSameSql('SELECT * FROM (SELECT * FROM "jobs") "uwrp0" UNION SELECT * FROM (SELECT * FROM "jobs") "uwrp1"', $builder->getCompiledSelect(false));
     }
 
     public function testExistsResetsByDefault(): void
@@ -198,7 +180,7 @@ final class ExistsTest extends CIUnitTestCase
 
         $builder->where('id >', 3)->exists();
 
-        $this->assertSame('SELECT * FROM "jobs"', str_replace("\n", ' ', $builder->getCompiledSelect(false)));
+        $this->assertSameSql('SELECT * FROM "jobs"', $builder->getCompiledSelect(false));
         $this->assertSame([], $builder->getBinds());
     }
 
@@ -209,7 +191,7 @@ final class ExistsTest extends CIUnitTestCase
 
         $builder->where('id >', 3)->exists(false);
 
-        $this->assertSame('SELECT * FROM "jobs" WHERE "id" > 3', str_replace("\n", ' ', $builder->getCompiledSelect(false)));
+        $this->assertSameSql('SELECT * FROM "jobs" WHERE "id" > 3', $builder->getCompiledSelect(false));
         $this->assertSame([
             'id' => [
                 3,

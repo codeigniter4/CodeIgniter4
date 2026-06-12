@@ -41,7 +41,7 @@ final class OrderTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user" ORDER BY "name" ASC';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testOrderDescending(): void
@@ -52,7 +52,7 @@ final class OrderTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user" ORDER BY "name" DESC';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testOrderRandom(): void
@@ -63,7 +63,7 @@ final class OrderTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user" ORDER BY RAND()';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testOrderRandomWithRandomColumn(): void
@@ -76,6 +76,6 @@ final class OrderTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "fail_user" ORDER BY "SYSTEM"."RANDOM"';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 }

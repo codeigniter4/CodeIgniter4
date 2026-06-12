@@ -92,6 +92,6 @@ final class OrderTest extends CIUnitTestCase
 
         $expected = 'SELECT * FROM ' . $table . ' ORDER BY ' . $key;
 
-        $this->assertSame($expected, str_replace("\n", ' ', $sql));
+        $this->assertSameSql($expected, $sql);
     }
 }

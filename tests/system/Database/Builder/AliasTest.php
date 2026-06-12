@@ -39,7 +39,7 @@ final class AliasTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "jobs" "j"';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testTableName(): void
@@ -49,7 +49,7 @@ final class AliasTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "jobs" "j"';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testAliasSupportsArrayOfNames(): void
@@ -58,7 +58,7 @@ final class AliasTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "jobs" "j", "users" "u"';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testAliasSupportsStringOfNames(): void
@@ -67,7 +67,7 @@ final class AliasTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "jobs" "j", "users" "u"';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     /**
@@ -82,7 +82,7 @@ final class AliasTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "db_jobs" LEFT JOIN "db_users" as "u" ON "u"."id" = "db_jobs"."id"';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     /**
@@ -97,7 +97,7 @@ final class AliasTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "db_jobs" LEFT JOIN "db_users" as "u" ON "db_users"."id" = "db_jobs"."id"';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     /**
@@ -113,6 +113,6 @@ final class AliasTest extends CIUnitTestCase
         $expectedSQL = <<<'SQL'
             SELECT * FROM "db_jobs" "j" WHERE "j"."name" LIKE '%veloper%' ESCAPE '!'
             SQL;
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 }

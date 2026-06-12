@@ -59,7 +59,7 @@ final class WhereTest extends CIUnitTestCase
         ];
 
         $builder->where('id', 3);
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -76,7 +76,7 @@ final class WhereTest extends CIUnitTestCase
         ];
 
         $builder->where('id', 3, false);
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -93,7 +93,7 @@ final class WhereTest extends CIUnitTestCase
         ];
 
         $builder->where('id !=', 3);
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -119,7 +119,7 @@ final class WhereTest extends CIUnitTestCase
         ];
 
         $builder->where($where);
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -135,7 +135,7 @@ final class WhereTest extends CIUnitTestCase
         $expectedBinds = [];
 
         $builder->where($where);
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -150,7 +150,7 @@ final class WhereTest extends CIUnitTestCase
         $builder->where($where);
 
         $expectedSQL = 'SELECT * FROM "user" WHERE "id" < 100 AND "col1" LIKE \'%gmail%\'';
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     /**
@@ -164,7 +164,7 @@ final class WhereTest extends CIUnitTestCase
 
         $builder->where($key, $value);
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -210,7 +210,7 @@ final class WhereTest extends CIUnitTestCase
         $expectedBinds = [];
 
         $builder->where($where);
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -222,7 +222,7 @@ final class WhereTest extends CIUnitTestCase
         $builder->where($where, null, false);
 
         $expectedSQL = 'SELECT * FROM "jobs" WHERE CURRENT_TIMESTAMP() = DATE_ADD(column, INTERVAL 2 HOUR)';
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
 
         $expectedBinds = [];
         $this->assertSame($expectedBinds, $builder->getBinds());
@@ -236,7 +236,7 @@ final class WhereTest extends CIUnitTestCase
         $builder->where($where, "''", false);
 
         $expectedSQL = "SELECT * FROM \"jobs\" WHERE REPLACE(column, 'somestring', '') = ''";
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
 
         $expectedBinds = [
             "REPLACE(column, 'somestring', '')" => [
@@ -255,7 +255,7 @@ final class WhereTest extends CIUnitTestCase
         $builder->where($where, null, false);
 
         $expectedSQL = "SELECT * FROM \"jobs\" WHERE created_on BETWEEN '2022-07-01 00:00:00' AND '2022-12-31 23:59:59'";
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
 
         $expectedBinds = [];
         $this->assertSame($expectedBinds, $builder->getBinds());
@@ -271,7 +271,7 @@ final class WhereTest extends CIUnitTestCase
         $expectedSQL   = "SELECT * FROM \"jobs\" WHERE id > 2 AND name != 'Accountant'";
         $expectedBinds = [];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -344,7 +344,7 @@ final class WhereTest extends CIUnitTestCase
 
         $builder->where('advance_amount <', static fn (BaseBuilder $builder) => $builder->select('MAX(advance_amount)', false)->from('orders')->where('id >', 2));
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
 
         // Builder
         $builder = $this->db->table('neworder');
@@ -355,7 +355,7 @@ final class WhereTest extends CIUnitTestCase
 
         $builder->where('advance_amount <', $subQuery);
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testOrWhere(): void
@@ -376,7 +376,7 @@ final class WhereTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -398,7 +398,7 @@ final class WhereTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -410,7 +410,7 @@ final class WhereTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "jobs" WHERE "status" = \'active\'';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testWhereBetweenWithBackedEnums(): void
@@ -421,7 +421,7 @@ final class WhereTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "jobs" WHERE "role" BETWEEN 0 AND 2';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     #[DataProvider('provideWhereColumnWithOperators')]
@@ -434,7 +434,7 @@ final class WhereTest extends CIUnitTestCase
         $expectedSQL   = sprintf('SELECT * FROM "users" WHERE "created_at" %s "updated_at"', $operator);
         $expectedBinds = [];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -464,7 +464,7 @@ final class WhereTest extends CIUnitTestCase
         $expectedSQL   = 'SELECT * FROM "users" "u" WHERE "u"."updated_at" > "u"."created_at"';
         $expectedBinds = [];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -483,7 +483,7 @@ final class WhereTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -499,7 +499,7 @@ final class WhereTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "users" WHERE   ( "created_at" = "updated_at" OR "updated_at" > "created_at"  ) AND "active" = 1';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testWhereColumnNoEscape(): void
@@ -511,7 +511,7 @@ final class WhereTest extends CIUnitTestCase
         $expectedSQL   = 'SELECT * FROM "users" WHERE LOWER(users.email) = normalized_email';
         $expectedBinds = [];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -524,7 +524,7 @@ final class WhereTest extends CIUnitTestCase
         $expectedSQL   = 'SELECT * FROM "users" WHERE "created_at" = "like"';
         $expectedBinds = [];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -537,7 +537,7 @@ final class WhereTest extends CIUnitTestCase
         $expectedSQL   = 'SELECT * FROM "users" WHERE JSON_EXTRACT(data, \'$.a>b\') = updated_at';
         $expectedBinds = [];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -573,7 +573,7 @@ final class WhereTest extends CIUnitTestCase
             ->from('orders')
             ->whereColumn('orders.user_id', 'users.id'));
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
 
         // Builder
         $builder = $this->db->table('users');
@@ -584,7 +584,7 @@ final class WhereTest extends CIUnitTestCase
 
         $builder->whereExists($subQuery);
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     #[DataProvider('provideWhereExistsVariants')]
@@ -599,7 +599,7 @@ final class WhereTest extends CIUnitTestCase
             ->from('orders')
             ->whereColumn('orders.user_id', 'users.id'));
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     /**
@@ -636,7 +636,7 @@ final class WhereTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "users" WHERE   ( EXISTS (SELECT 1 FROM "orders" WHERE "orders"."user_id" = "users"."id") OR NOT EXISTS (SELECT 1 FROM "jobs" WHERE "jobs"."user_id" = "users"."id")  ) AND "active" = 1';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testWhereExistsWithOuterAndInnerBinds(): void
@@ -658,7 +658,7 @@ final class WhereTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -715,7 +715,7 @@ final class WhereTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -740,7 +740,7 @@ final class WhereTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "jobs" WHERE "active" = 1 OR "created_at" ' . $sql . " '2026-01-01' AND '2026-01-31'";
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     /**
@@ -766,7 +766,7 @@ final class WhereTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "jobs" WHERE   ( "created_at" BETWEEN \'2026-01-01\' AND \'2026-01-31\' OR "updated_at" NOT BETWEEN \'2026-02-01\' AND \'2026-02-28\'  ) AND "active" = 1';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testWhereBetweenNoEscape(): void
@@ -787,7 +787,7 @@ final class WhereTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -800,7 +800,7 @@ final class WhereTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "users" "u" WHERE "u"."created_at" BETWEEN \'2026-01-01\' AND \'2026-01-31\'';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     /**
@@ -859,7 +859,7 @@ final class WhereTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -871,7 +871,7 @@ final class WhereTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "jobs" WHERE "status" IN (\'active\',\'inactive\')';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testWhereInSubQuery(): void
@@ -883,7 +883,7 @@ final class WhereTest extends CIUnitTestCase
 
         $builder->whereIn('id', static fn (BaseBuilder $builder) => $builder->select('job_id')->from('users_jobs')->where('user_id', 3));
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
 
         // Builder
         $builder = $this->db->table('jobs');
@@ -894,7 +894,7 @@ final class WhereTest extends CIUnitTestCase
 
         $builder->whereIn('id', $subQuery);
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     /**
@@ -955,7 +955,7 @@ final class WhereTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -968,7 +968,7 @@ final class WhereTest extends CIUnitTestCase
 
         $builder->whereNotIn('id', static fn (BaseBuilder $builder) => $builder->select('job_id')->from('users_jobs')->where('user_id', 3));
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
 
         // Builder
         $builder = $this->db->table('jobs');
@@ -979,7 +979,7 @@ final class WhereTest extends CIUnitTestCase
 
         $builder->whereNotIn('id', $subQuery);
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testOrWhereIn(): void
@@ -1003,7 +1003,7 @@ final class WhereTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -1016,7 +1016,7 @@ final class WhereTest extends CIUnitTestCase
 
         $builder->where('deleted_at', null)->orWhereIn('id', static fn (BaseBuilder $builder) => $builder->select('job_id')->from('users_jobs')->where('user_id', 3));
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
 
         // Builder
         $builder = $this->db->table('jobs');
@@ -1027,7 +1027,7 @@ final class WhereTest extends CIUnitTestCase
 
         $builder->where('deleted_at', null)->orWhereIn('id', $subQuery);
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testOrWhereNotIn(): void
@@ -1051,7 +1051,7 @@ final class WhereTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -1064,7 +1064,7 @@ final class WhereTest extends CIUnitTestCase
 
         $builder->where('deleted_at', null)->orWhereNotIn('id', static fn (BaseBuilder $builder) => $builder->select('job_id')->from('users_jobs')->where('user_id', 3));
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
 
         // Builder
         $builder = $this->db->table('jobs');
@@ -1075,7 +1075,7 @@ final class WhereTest extends CIUnitTestCase
 
         $builder->where('deleted_at', null)->orWhereNotIn('id', $subQuery);
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     /**
@@ -1087,7 +1087,7 @@ final class WhereTest extends CIUnitTestCase
         $builder->where('LOWER(jobs.name)', 'accountant');
 
         $expectedSQL = 'SELECT * FROM "jobs" WHERE LOWER(jobs.name) = \'accountant\'';
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testWhereValueIsString(): void
@@ -1099,7 +1099,7 @@ final class WhereTest extends CIUnitTestCase
         $expectedSQL = <<<'SQL'
             SELECT * FROM "users" WHERE "id" = '1'
             SQL;
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testWhereValueIsFloat(): void
@@ -1111,7 +1111,7 @@ final class WhereTest extends CIUnitTestCase
         $expectedSQL = <<<'SQL'
             SELECT * FROM "users" WHERE "id" = 1.234
             SQL;
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     /**
@@ -1126,7 +1126,7 @@ final class WhereTest extends CIUnitTestCase
         $builder->where('id', true);
 
         $expectedSQL = 'SELECT * FROM "users" WHERE "id" = 1';
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     /**
@@ -1141,7 +1141,7 @@ final class WhereTest extends CIUnitTestCase
         $builder->where('id', false);
 
         $expectedSQL = 'SELECT * FROM "users" WHERE "id" = 0';
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     /**
@@ -1157,7 +1157,7 @@ final class WhereTest extends CIUnitTestCase
         $expectedSQL = <<<'SQL'
             SELECT * FROM "users" WHERE "id" = ('a','b')
             SQL;
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     /**
@@ -1197,7 +1197,7 @@ final class WhereTest extends CIUnitTestCase
         $builder->where('id', null);
 
         $expectedSQL = 'SELECT * FROM "users" WHERE "id" IS NULL';
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     /**

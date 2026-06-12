@@ -48,7 +48,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT * FROM "users"';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
     public function testSelectOnlyOneColumn(): void
@@ -59,7 +59,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT "name" FROM "users"';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
     public function testSelectAcceptsArray(): void
@@ -70,7 +70,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT "name", "role" FROM "users"';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
     /**
@@ -83,7 +83,7 @@ final class SelectTest extends CIUnitTestCase
 
         $builder->select($select);
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
     /**
@@ -140,7 +140,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT "name", "role" FROM "users"';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
     public function testSelectKeepsAliases(): void
@@ -151,7 +151,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT "name", "role" as "myRole" FROM "users"';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
     public function testSelectWorksWithComplexSelects(): void
@@ -162,7 +162,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT (SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid FROM "users"';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
     public function testSelectNullAsInString(): void
@@ -173,7 +173,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT NULL as field_alias, "name" FROM "users"';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
     public function testSelectNullAsInArray(): void
@@ -184,7 +184,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT NULL as field_alias, "name" FROM "users"';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
     /**
@@ -198,7 +198,7 @@ final class SelectTest extends CIUnitTestCase
         $builder->select(new RawSql($sql));
 
         $expected = 'SELECT ' . $sql . ' FROM "users"';
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
     /**
@@ -212,7 +212,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT "numericValue1" + "numericValue2" AS "numericResult" FROM "users"';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
     /**
@@ -242,7 +242,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT MIN("payments") AS "payments" FROM "invoices"';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
     public function testSelectMinWithAlias(): void
@@ -253,7 +253,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT MIN("payments") AS "myAlias" FROM "invoices"';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
     public function testSelectMaxWithNoAlias(): void
@@ -264,7 +264,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT MAX("payments") AS "payments" FROM "invoices"';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
     public function testSelectMaxWithAlias(): void
@@ -275,7 +275,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT MAX("payments") AS "myAlias" FROM "invoices"';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
     public function testSelectAvgWithNoAlias(): void
@@ -286,7 +286,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT AVG("payments") AS "payments" FROM "invoices"';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
     public function testSelectAvgWithAlias(): void
@@ -297,7 +297,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT AVG("payments") AS "myAlias" FROM "invoices"';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
     public function testSelectSumWithNoAlias(): void
@@ -308,7 +308,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT SUM("payments") AS "payments" FROM "invoices"';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
     public function testSelectSumWithAlias(): void
@@ -319,7 +319,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT SUM("payments") AS "myAlias" FROM "invoices"';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
     public function testSelectCountWithNoAlias(): void
@@ -330,7 +330,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT COUNT("payments") AS "payments" FROM "invoices"';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
     public function testSelectCountWithAlias(): void
@@ -341,7 +341,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT COUNT("payments") AS "myAlias" FROM "invoices"';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
     public function testSelectMinThrowsExceptionOnEmptyValue(): void
@@ -362,7 +362,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT MAX("db"."payments") AS "payments" FROM "invoices"';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
     public function testSelectMinThrowsExceptionOnMultipleColumn(): void
@@ -383,7 +383,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT * FROM "test"."dbo"."users"';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
     public function testLockForUpdate(): void
@@ -394,7 +394,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT * FROM "users" WHERE "id" = 1 ORDER BY "id" ASC  LIMIT 1 FOR UPDATE';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
     public function testLockForUpdatePersistsWhenSelectIsNotReset(): void
@@ -405,8 +405,8 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT * FROM "users" FOR UPDATE';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect(false)));
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect(false)));
+        $this->assertSameSql($expected, $builder->getCompiledSelect(false));
+        $this->assertSameSql($expected, $builder->getCompiledSelect(false));
     }
 
     public function testLockForUpdateResetsWithSelect(): void
@@ -415,8 +415,8 @@ final class SelectTest extends CIUnitTestCase
 
         $builder->lockForUpdate();
 
-        $this->assertSame('SELECT * FROM "users" FOR UPDATE', str_replace("\n", ' ', $builder->getCompiledSelect()));
-        $this->assertSame('SELECT * FROM "users"', str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql('SELECT * FROM "users" FOR UPDATE', $builder->getCompiledSelect());
+        $this->assertSameSql('SELECT * FROM "users"', $builder->getCompiledSelect());
     }
 
     public function testLockForUpdateThrowsExceptionWithUnion(): void
@@ -462,7 +462,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT * FROM "users" FOR UPDATE';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->lockForUpdate()->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->lockForUpdate()->getCompiledSelect());
     }
 
     public function testLockForUpdateThrowsExceptionWithOCI8Limit(): void
@@ -494,7 +494,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT * FROM "users" FOR UPDATE';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->lockForUpdate()->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->lockForUpdate()->getCompiledSelect());
     }
 
     #[DataProvider('provideLockForUpdateUnsupportedSelectClauses')]
@@ -553,7 +553,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT * FROM "test"."dbo"."users" WITH (UPDLOCK, ROWLOCK)';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->lockForUpdate()->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->lockForUpdate()->getCompiledSelect());
     }
 
     public function testLockForUpdateWithSQLSRVAlias(): void
@@ -564,7 +564,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT * FROM "test"."dbo"."users" "u" WITH (UPDLOCK, ROWLOCK)';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->lockForUpdate()->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->lockForUpdate()->getCompiledSelect());
     }
 
     public function testLockForUpdateWithSQLSRVLimit(): void
@@ -590,7 +590,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT * FROM "test"."dbo"."jobs" WITH (UPDLOCK, ROWLOCK) LEFT JOIN "test"."dbo"."users" "u" ON "u"."id" = "jobs"."id"';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
     public function testLockForUpdateThrowsExceptionOnSQLSRVWithoutFromTable(): void
@@ -632,7 +632,7 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT "name", (SELECT "name" FROM "countries" WHERE "id" = 1) "country" FROM "users"';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
     public function testSelectResetQuery(): void
@@ -643,10 +643,7 @@ final class SelectTest extends CIUnitTestCase
         $builder->resetQuery();
 
         $sql = $builder->getCompiledSelect();
-        $this->assertSame(
-            'SELECT * FROM "users"',
-            str_replace("\n", ' ', $sql),
-        );
+        $this->assertSameSql('SELECT * FROM "users"', $sql);
     }
 
     /**
@@ -660,12 +657,12 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT "name", "role" FROM "users" ORDER BY "name" DESC';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect(false)));
+        $this->assertSameSql($expected, $builder->getCompiledSelect(false));
 
         $builder->orderBy('role', 'desc');
 
         $expected = 'SELECT "name", "role" FROM "users" ORDER BY "name" DESC, "role" DESC';
 
-        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 }

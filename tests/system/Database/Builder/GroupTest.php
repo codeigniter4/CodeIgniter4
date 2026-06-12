@@ -43,7 +43,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name"';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testHavingBy(): void
@@ -56,7 +56,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING SUM(id) > 2';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testOrHavingBy(): void
@@ -70,7 +70,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" > 3 OR SUM(id) > 2';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     #[DataProvider('provideHavingBetweenMethods')]
@@ -94,7 +94,7 @@ final class GroupTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -121,7 +121,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "active" = 1 OR "total" ' . $sql . ' 10 AND 20';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     /**
@@ -149,7 +149,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING   ( "total" BETWEEN 10 AND 20 OR "score" NOT BETWEEN 30 AND 40  ) AND "active" = 1';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testHavingBetweenNoEscape(): void
@@ -172,7 +172,7 @@ final class GroupTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -211,7 +211,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" IN (1,2)';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testHavingInClosure(): void
@@ -224,7 +224,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testOrHavingIn(): void
@@ -238,7 +238,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" IN (1,2) OR "group_id" IN (5,6)';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testOrHavingInClosure(): void
@@ -252,7 +252,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3) OR "group_id" IN (SELECT "group_id" FROM "groups" WHERE "group_id" = 6)';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testHavingNotIn(): void
@@ -265,7 +265,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" NOT IN (1,2)';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testHavingNotInClosure(): void
@@ -278,7 +278,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" NOT IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testOrHavingNotIn(): void
@@ -292,7 +292,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" NOT IN (1,2) OR "group_id" NOT IN (5,6)';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testOrHavingNotInClosure(): void
@@ -306,7 +306,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" NOT IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3) OR "group_id" NOT IN (SELECT "group_id" FROM "groups" WHERE "group_id" = 6)';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testHavingLike(): void
@@ -319,7 +319,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'%a%\' ESCAPE \'!\'';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testHavingLikeBefore(): void
@@ -332,7 +332,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'%a\' ESCAPE \'!\'';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testHavingLikeAfter(): void
@@ -345,7 +345,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'a%\' ESCAPE \'!\'';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testNotHavingLike(): void
@@ -358,7 +358,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" NOT LIKE \'%a%\' ESCAPE \'!\'';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testNotHavingLikeBefore(): void
@@ -371,7 +371,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" NOT LIKE \'%a\' ESCAPE \'!\'';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testNotHavingLikeAfter(): void
@@ -384,7 +384,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" NOT LIKE \'a%\' ESCAPE \'!\'';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testOrHavingLike(): void
@@ -398,7 +398,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'%a%\' ESCAPE \'!\' OR  "pet_color" LIKE \'%b%\' ESCAPE \'!\'';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testOrHavingLikeBefore(): void
@@ -412,7 +412,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'%a\' ESCAPE \'!\' OR  "pet_color" LIKE \'%b\' ESCAPE \'!\'';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testOrHavingLikeAfter(): void
@@ -426,7 +426,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'a%\' ESCAPE \'!\' OR  "pet_color" LIKE \'b%\' ESCAPE \'!\'';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testOrNotHavingLike(): void
@@ -440,7 +440,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'%a%\' ESCAPE \'!\' OR  "pet_color" NOT LIKE \'%b%\' ESCAPE \'!\'';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testOrNotHavingLikeBefore(): void
@@ -454,7 +454,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'%a\' ESCAPE \'!\' OR  "pet_color" NOT LIKE \'%b\' ESCAPE \'!\'';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testOrNotHavingLikeAfter(): void
@@ -468,7 +468,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'a%\' ESCAPE \'!\' OR  "pet_color" NOT LIKE \'b%\' ESCAPE \'!\'';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testHavingAndGroup(): void
@@ -485,7 +485,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING SUM(id) < 3 AND   ( SUM(id) = 2 AND "name" = \'adam\'  )';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testHavingOrGroup(): void
@@ -502,7 +502,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING SUM(id) > 3 OR   ( SUM(id) = 2 AND "name" = \'adam\'  )';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testNotHavingAndGroup(): void
@@ -519,7 +519,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING SUM(id) < 3 AND NOT   ( SUM(id) = 2 AND "name" = \'adam\'  )';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testNotHavingOrGroup(): void
@@ -536,7 +536,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING SUM(id) < 3 OR NOT   ( SUM(id) = 2 AND "name" = \'adam\'  )';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testAndGroups(): void
@@ -551,7 +551,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user" WHERE   ( "id" > 3 AND "name" != \'Luke\'  ) AND "name" = \'Darth\'';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testOrGroups(): void
@@ -566,7 +566,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user" WHERE "name" = \'Darth\' OR   ( "id" > 3 AND "name" != \'Luke\'  )';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testNotGroups(): void
@@ -581,7 +581,7 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user" WHERE "name" = \'Darth\' AND NOT   ( "id" > 3 AND "name" != \'Luke\'  )';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     public function testOrNotGroups(): void
@@ -596,6 +596,6 @@ final class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user" WHERE "name" = \'Darth\' OR NOT   ( "id" > 3 AND "name" != \'Luke\'  )';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 }

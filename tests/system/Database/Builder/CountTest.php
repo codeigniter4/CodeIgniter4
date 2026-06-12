@@ -53,7 +53,7 @@ final class CountTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT COUNT(*) AS "numrows" FROM "jobs" WHERE "id" > :id:';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
+        $this->assertSameSql($expectedSQL, $answer);
     }
 
     public function testCountAllResultsDoesNotUseLockForUpdate(): void
@@ -65,8 +65,8 @@ final class CountTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT COUNT(*) AS "numrows" FROM "jobs" WHERE "id" > :id:';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
-        $this->assertSame('SELECT * FROM "jobs" WHERE "id" > 3 FOR UPDATE', str_replace("\n", ' ', $builder->getCompiledSelect(false)));
+        $this->assertSameSql($expectedSQL, $answer);
+        $this->assertSameSql('SELECT * FROM "jobs" WHERE "id" > 3 FOR UPDATE', $builder->getCompiledSelect(false));
     }
 
     public function testCountAllResultsWithSQLSRVDoesNotUseLockForUpdate(): void
@@ -80,8 +80,8 @@ final class CountTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT COUNT(*) AS "numrows" FROM "test"."dbo"."jobs" WHERE "id" > :id:';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
-        $this->assertSame('SELECT * FROM "test"."dbo"."jobs" WITH (UPDLOCK, ROWLOCK) WHERE "id" > 3', str_replace("\n", ' ', $builder->getCompiledSelect(false)));
+        $this->assertSameSql($expectedSQL, $answer);
+        $this->assertSameSql('SELECT * FROM "test"."dbo"."jobs" WITH (UPDLOCK, ROWLOCK) WHERE "id" > 3', $builder->getCompiledSelect(false));
     }
 
     public function testCountAllResultsWithGroupBy(): void
@@ -94,7 +94,7 @@ final class CountTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT COUNT(*) AS "numrows" FROM ( SELECT * FROM "jobs" WHERE "id" > :id: GROUP BY "id" ) CI_count_all_results';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
+        $this->assertSameSql($expectedSQL, $answer);
     }
 
     /**
@@ -110,11 +110,11 @@ final class CountTest extends CIUnitTestCase
         $expectedSQL = 'SELECT COUNT(*) AS "numrows" FROM ( SELECT "ci_jobs".* FROM "ci_jobs" WHERE "id" > :id: GROUP BY "id" ) CI_count_all_results';
 
         $answer1 = $builder->countAllResults(false);
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer1));
+        $this->assertSameSql($expectedSQL, $answer1);
 
         // We run the query one more time to make sure the DBPrefix is added only once
         $answer2 = $builder->countAllResults(false);
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer2));
+        $this->assertSameSql($expectedSQL, $answer2);
     }
 
     public function testCountAllResultsWithGroupByAndHaving(): void
@@ -128,7 +128,7 @@ final class CountTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT COUNT(*) AS "numrows" FROM ( SELECT * FROM "jobs" WHERE "id" > :id: GROUP BY "id" HAVING 1 = 1 ) CI_count_all_results';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
+        $this->assertSameSql($expectedSQL, $answer);
     }
 
     public function testCountAllResultsWithHavingOnly(): void
@@ -141,6 +141,6 @@ final class CountTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT COUNT(*) AS "numrows" FROM "jobs" WHERE "id" > :id: HAVING 1 = 1';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
+        $this->assertSameSql($expectedSQL, $answer);
     }
 }

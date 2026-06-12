@@ -50,7 +50,7 @@ final class LikeTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -191,7 +191,7 @@ final class LikeTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -209,7 +209,7 @@ final class LikeTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -227,7 +227,7 @@ final class LikeTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -245,7 +245,7 @@ final class LikeTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -267,7 +267,7 @@ final class LikeTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -285,7 +285,7 @@ final class LikeTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -307,7 +307,7 @@ final class LikeTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -325,7 +325,7 @@ final class LikeTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -348,7 +348,7 @@ final class LikeTest extends CIUnitTestCase
                 true,
             ],
         ];
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 }

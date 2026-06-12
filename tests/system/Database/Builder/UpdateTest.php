@@ -57,7 +57,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -80,7 +80,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -102,7 +102,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -124,7 +124,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -146,7 +146,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -168,7 +168,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -198,7 +198,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -366,7 +366,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -392,7 +392,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -417,7 +417,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -441,7 +441,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -467,7 +467,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 }

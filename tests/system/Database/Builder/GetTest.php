@@ -39,7 +39,7 @@ final class GetTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "users"';
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
     /**
