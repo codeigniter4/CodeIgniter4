@@ -467,7 +467,6 @@ if (! function_exists('esc')) {
             foreach ($data as &$value) {
                 $value = esc($value, $context, $encoding);
             }
-            unset($value); // Prevent reference leak: &$value would remain bound to last element
 
             return $data;
         }
