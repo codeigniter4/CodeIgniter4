@@ -34,6 +34,7 @@ Bugs Fixed
 - **Database:** Fixed a bug where ``updateBatch()`` could be called after Query Builder ``where()`` conditions, even though it's not supported. In this situation, now the ``DatabaseException`` is thrown.
 - **HTTP:** Fixed a bug where the User Agent library reported Safari's WebKit version instead of the browser version from the ``Version`` token.
 - **Model:** Fixed a bug in ``Model::objectToRawArray()`` where the ``$recursive`` parameter was ignored.
+- **Testing:** Fixed a bug where using ``MockInputOutput`` within a test that also uses ``StreamFilterTrait`` tore down the trait's stream filters, so CLI output produced after the ``MockInputOutput`` interaction (such as in ``tearDown()``) was no longer captured and leaked to the console.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
