@@ -133,13 +133,17 @@ class LocalizationFinder extends BaseCommand
                 $languageStoredKeys = require $languageFilePath;
             }
 
-            $languageDiff = ArrayHelper::recursiveDiff($foundLanguageKeys[$langFileName], $languageStoredKeys);
+            // Keys already resolvable from any namespace's language file (framework, packages, or app)
+            // are not new and must not be re-reported or written.
+            $resolvedKeys = $this->findResolvedTranslations($langFileName, $currentLocale);
+
+            $languageDiff = ArrayHelper::recursiveDiff($foundLanguageKeys[$langFileName], $resolvedKeys);
             $countNewKeys += ArrayHelper::recursiveCount($languageDiff);
 
             if ($this->showNew) {
                 $tableRows = array_merge($this->arrayToTableRows($langFileName, $languageDiff), $tableRows);
             } else {
-                $newLanguageKeys = array_replace_recursive($foundLanguageKeys[$langFileName], $languageStoredKeys);
+                $newLanguageKeys = array_replace_recursive($languageDiff, $languageStoredKeys);
 
                 if ($languageDiff !== []) {
                     if (file_put_contents($languageFilePath, $this->templateFile($newLanguageKeys)) === false) {
@@ -175,6 +179,35 @@ class LocalizationFinder extends BaseCommand
 
             CLI::table($tableBadRows, ['Bad Key', 'Filepath']);
         }
+    }
+
+    /**
+     * Loads the translations already resolvable for the given file and locale
+     * from every registered namespace (framework, packages, and app).
+     *
+     * @return array<string, mixed>
+     */
+    private function findResolvedTranslations(string $langFileName, string $currentLocale): array
+    {
+        $translations = [];
+
+        foreach (service('locator')->search("Language/{$currentLocale}/{$langFileName}.php", 'php', false) as $file) {
+            if (! is_file($file)) {
+                continue;
+            }
+
+            $keys = require $file;
+
+            if (is_array($keys)) {
+                $translations[] = $keys;
+            }
+        }
+
+        if ($translations === []) {
+            return [];
+        }
+
+        return array_replace_recursive(...$translations);
     }
 
     /**
