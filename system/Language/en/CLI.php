@@ -15,6 +15,7 @@ declare(strict_types=1);
 return [
     'altCommandPlural'   => 'Did you mean one of these?',
     'altCommandSingular' => 'Did you mean this?',
+    'commandAlias'       => '[alias of {0}]',
     'commandNotFound'    => 'Command "{0}" not found.',
     'generator'          => [
         'cancelOperation' => 'Operation has been cancelled.',
@@ -48,6 +49,7 @@ return [
             'cell' => 'Cell view name',
         ],
     ],
+    'helpAliases'           => 'Aliases:',
     'helpArguments'         => 'Arguments:',
     'helpAvailableCommands' => 'Available commands:',
     'helpDescription'       => 'Description:',

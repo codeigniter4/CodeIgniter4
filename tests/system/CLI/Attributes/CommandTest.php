@@ -41,6 +41,14 @@ final class CommandTest extends CIUnitTestCase
 
         $this->assertSame('', $command->description);
         $this->assertSame('', $command->group);
+        $this->assertSame([], $command->aliases);
+    }
+
+    public function testAttributeExposesAliases(): void
+    {
+        $command = new Command(name: 'app:about', aliases: ['app:ab', 'ab']);
+
+        $this->assertSame(['app:ab', 'ab'], $command->aliases);
     }
 
     /**
@@ -83,6 +91,26 @@ final class CommandTest extends CIUnitTestCase
         yield 'name with consecutive colons' => [
             'Command name "app::about" is not valid.',
             ['name' => 'app::about'],
+        ];
+
+        yield 'empty alias' => [
+            'Command alias "" is not valid.',
+            ['name' => 'app:about', 'aliases' => ['']],
+        ];
+
+        yield 'alias with whitespace' => [
+            'Command alias "bad alias" is not valid.',
+            ['name' => 'app:about', 'aliases' => ['bad alias']],
+        ];
+
+        yield 'alias same as name' => [
+            'Command alias "app:about" cannot be the same as the command name.',
+            ['name' => 'app:about', 'aliases' => ['app:about']],
+        ];
+
+        yield 'duplicate alias' => [
+            'Command alias "ab" is defined more than once.',
+            ['name' => 'app:about', 'aliases' => ['ab', 'ab']],
         ];
     }
 }

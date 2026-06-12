@@ -27,7 +27,7 @@ use ReflectionException;
  * Command discovery and execution class.
  *
  * @phpstan-type legacy_commands array<string, array{class: class-string<BaseCommand>, file: string, group: string, description: string}>
- * @phpstan-type modern_commands array<string, array{class: class-string<AbstractCommand>, file: string, group: string, description: string}>
+ * @phpstan-type modern_commands array<string, array{class: class-string<AbstractCommand>, file: string, group: string, description: string, aliases: list<string>}>
  */
 class Commands
 {
@@ -48,6 +48,13 @@ class Commands
      * @var modern_commands
      */
     private array $modernCommands = [];
+
+    /**
+     * Maps an alias name to the canonical modern command name it resolves to.
+     *
+     * @var array<string, string>
+     */
+    private array $aliases = [];
 
     /**
      * Guards {@see discoverCommands()} from re-scanning the filesystem on repeat calls.
@@ -154,6 +161,16 @@ class Commands
     }
 
     /**
+     * Provide access to the alias map of modern commands.
+     *
+     * @return array<string, string> Alias name mapped to its canonical command name.
+     */
+    public function getCommandAliases(): array
+    {
+        return $this->aliases;
+    }
+
+    /**
      * Checks if a legacy command with the given name has been discovered.
      */
     public function hasLegacyCommand(string $name): bool
@@ -162,15 +179,16 @@ class Commands
     }
 
     /**
-     * Checks if a modern command with the given name has been discovered.
+     * Checks whether the given name resolves to a modern command, either as a
+     * command name or as one of its aliases.
      *
-     * A name present in both registries signals a collision; legacy wins
-     * at runtime. Callers can combine this with {@see hasLegacyCommand()}
-     * to detect that case.
+     * A name present in both registries signals a collision. Legacy wins at
+     * runtime. Callers can combine this with `hasLegacyCommand()` to detect
+     * that case.
      */
     public function hasModernCommand(string $name): bool
     {
-        return array_key_exists($name, $this->modernCommands);
+        return $this->resolveCommand($name) !== null;
     }
 
     /**
@@ -186,13 +204,31 @@ class Commands
             return new $className($this->logger, $this);
         }
 
-        if (! $legacy && isset($this->modernCommands[$command])) {
-            $className = $this->modernCommands[$command]['class'];
+        if (! $legacy) {
+            $resolved = $this->resolveCommand($command);
 
-            return new $className($this);
+            if ($resolved !== null) {
+                $className = $this->modernCommands[$resolved]['class'];
+
+                return new $className($this);
+            }
         }
 
         throw new CommandNotFoundException($command);
+    }
+
+    /**
+     * Resolves a modern command name or alias to its canonical command name,
+     * or `null` when neither matches. The command name takes precedence so an
+     * alias can never shadow a real command.
+     */
+    private function resolveCommand(string $name): ?string
+    {
+        if (isset($this->modernCommands[$name])) {
+            return $name;
+        }
+
+        return $this->aliases[$name] ?? null;
     }
 
     /**
@@ -247,6 +283,38 @@ class Commands
                 'yellow',
             );
         }
+
+        $this->registerAliases();
+    }
+
+    /**
+     * Builds the alias map from the discovered modern commands. Fails hard when
+     * an alias collides with an existing command name or another alias.
+     *
+     * @throws LogicException
+     */
+    private function registerAliases(): void
+    {
+        foreach ($this->modernCommands as $name => $details) {
+            // A legacy command of the same name shadows this modern command at
+            // dispatch, so its aliases would resolve to a command `spark <name>`
+            // never reaches. Drop them entirely.
+            if (isset($this->commands[$name])) {
+                continue;
+            }
+
+            foreach ($details['aliases'] as $alias) {
+                if (isset($this->commands[$alias]) || isset($this->modernCommands[$alias])) {
+                    throw new LogicException(lang('Commands.aliasClashesWithCommandName', [$alias, $name]));
+                }
+
+                if (isset($this->aliases[$alias])) {
+                    throw new LogicException(lang('Commands.aliasClashesWithAlias', [$alias, $name, $this->aliases[$alias]]));
+                }
+
+                $this->aliases[$alias] = $name;
+            }
+        }
     }
 
     /**
@@ -264,7 +332,7 @@ class Commands
             return true;
         }
 
-        if (isset($this->modernCommands[$command]) && ! $legacy) {
+        if (! $legacy && $this->resolveCommand($command) !== null) {
             return true;
         }
 
@@ -302,7 +370,7 @@ class Commands
         /** @var array<string, int> */
         $alternatives = [];
 
-        foreach (array_keys($this->commands + $this->modernCommands) as $commandName) {
+        foreach (array_keys($this->commands + $this->modernCommands + $this->aliases) as $commandName) {
             $lev = levenshtein($name, $commandName);
 
             if ($lev <= strlen($commandName) / 3 || str_contains($commandName, $name)) {
@@ -370,6 +438,7 @@ class Commands
             'file'        => $file,
             'group'       => $attribute->group,
             'description' => $attribute->description,
+            'aliases'     => $attribute->aliases,
         ];
     }
 }

@@ -43,6 +43,11 @@ abstract class AbstractCommand
     /**
      * @var list<non-empty-string>
      */
+    private readonly array $aliases;
+
+    /**
+     * @var list<non-empty-string>
+     */
     private array $usages = [];
 
     /**
@@ -138,6 +143,7 @@ abstract class AbstractCommand
         $this->name        = $attribute->name;
         $this->description = $attribute->description;
         $this->group       = $attribute->group;
+        $this->aliases     = $attribute->aliases;
 
         $this->configure();
         $this->provideDefaultOptions();
@@ -163,6 +169,14 @@ abstract class AbstractCommand
     public function getGroup(): string
     {
         return $this->group;
+    }
+
+    /**
+     * @return list<non-empty-string>
+     */
+    public function getAliases(): array
+    {
+        return $this->aliases;
     }
 
     /**

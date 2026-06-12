@@ -13,13 +13,17 @@ declare(strict_types=1);
 
 // Commands language settings
 return [
+    'aliasClashesWithAlias'                 => 'Command alias "{0}" of the "{1}" command is already used as an alias of the "{2}" command.',
+    'aliasClashesWithCommandName'           => 'Command alias "{0}" of the "{1}" command clashes with an existing command of the same name.',
     'arrayArgumentInvalidDefault'           => 'Array argument "{0}" must have an array default value or null.',
     'arrayArgumentCannotBeRequired'         => 'Array argument "{0}" cannot be required.',
     'arrayOptionInvalidDefault'             => 'Array option "--{0}" must have an array default value or null.',
     'arrayOptionMustRequireValue'           => 'Array option "--{0}" must require a value.',
     'arrayOptionEmptyArrayDefault'          => 'Array option "--{0}" cannot have an empty array as the default value.',
     'argumentAfterArrayArgument'            => 'Argument "{0}" cannot be defined after array argument "{1}".',
+    'commandAliasSameAsName'                => 'Command alias "{0}" cannot be the same as the command name.',
     'duplicateArgument'                     => 'An argument with the name "{0}" is already defined.',
+    'duplicateCommandAlias'                 => 'Command alias "{0}" is defined more than once.',
     'duplicateCommandName'                  => 'Warning: The "{0}" command is defined as both legacy ({1}) and modern ({2}). The legacy command will be executed. Please rename or remove one.',
     'duplicateOption'                       => 'An option with the name "--{0}" is already defined.',
     'duplicateShortcut'                     => 'Shortcut "-{0}" cannot be used for option "--{1}"; it is already assigned to option "--{2}".',
@@ -28,6 +32,7 @@ return [
     'emptyOptionName'                       => 'Option name cannot be empty.',
     'emptyShortcutName'                     => 'Shortcut name cannot be empty.',
     'flagOptionPassedMultipleTimes'         => 'Option "--{0}" is passed multiple times.',
+    'invalidCommandAlias'                   => 'Command alias "{0}" is not valid.',
     'invalidCommandName'                    => 'Command name "{0}" is not valid.',
     'invalidArgumentName'                   => 'Argument name "{0}" is not valid.',
     'invalidOptionName'                     => 'Option name "--{0}" is not valid.',

@@ -13,14 +13,17 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands;
 
+use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Commands;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
+use Config\Services;
 use PHPUnit\Framework\Attributes\After;
 use PHPUnit\Framework\Attributes\Before;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use ReflectionClass;
 use Tests\Support\Duplicates\DuplicateLegacy;
 use Tests\Support\Duplicates\DuplicateModern;
 
@@ -40,6 +43,11 @@ final class ListCommandsTest extends CIUnitTestCase
         $this->resetServices();
 
         CLI::reset();
+    }
+
+    private function getUndecoratedBuffer(): string
+    {
+        return preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()) ?? '';
     }
 
     public function testRunCommand(): void
@@ -66,6 +74,40 @@ final class ListCommandsTest extends CIUnitTestCase
         $this->assertStringContainsString('Fixture command to test runtime availability checks.', $this->getStreamFilterBuffer());
     }
 
+    public function testAliasIsListedAsItsOwnRowInDetailedOutput(): void
+    {
+        command('list');
+
+        $buffer = $this->getUndecoratedBuffer();
+
+        // The canonical command keeps its description on its own row...
+        $this->assertMatchesRegularExpression(
+            '/\n {2}fixture:aliased\s+Fixture command exercising command aliases\.\n/',
+            $buffer,
+        );
+        // ...and each alias renders as a separate row pointing back to it.
+        $this->assertMatchesRegularExpression(
+            '/\n {2}fixture:alias\s+\[alias of fixture:aliased\]\n/',
+            $buffer,
+        );
+        $this->assertMatchesRegularExpression(
+            '/\n {2}fa\s+\[alias of fixture:aliased\]\n/',
+            $buffer,
+        );
+    }
+
+    public function testAliasIsListedInSimpleOutput(): void
+    {
+        command('list --simple');
+
+        $buffer = $this->getUndecoratedBuffer();
+
+        // The canonical command and each alias are emitted as their own lines.
+        $this->assertStringContainsString("fixture:aliased\n", $buffer);
+        $this->assertStringContainsString("fixture:alias\n", $buffer);
+        $this->assertStringContainsString("fa\n", $buffer);
+    }
+
     public function testDuplicateCommandNameListedOnceInSimpleOutput(): void
     {
         $list = new ListCommands($this->mockRunnerWithDuplicate());
@@ -85,6 +127,56 @@ final class ListCommandsTest extends CIUnitTestCase
 
         $this->assertStringContainsString('Legacy dup description', $buffer);
         $this->assertStringNotContainsString('Modern dup description', $buffer);
+    }
+
+    public function testShadowedAliasIsNotListedInDetailedOutput(): void
+    {
+        $list = new ListCommands($this->discoveredRunnerWithDuplicate());
+        $this->resetStreamFilterBuffer();
+
+        $list->run([], []);
+
+        $buffer = $this->getUndecoratedBuffer();
+
+        $this->assertStringContainsString('dup:test', $buffer);
+        $this->assertStringNotContainsString('dup:alias', $buffer);
+    }
+
+    public function testShadowedAliasIsNotListedInSimpleOutput(): void
+    {
+        $list = new ListCommands($this->discoveredRunnerWithDuplicate());
+        $this->resetStreamFilterBuffer();
+
+        $list->run([], ['simple' => null]);
+
+        $buffer = $this->getUndecoratedBuffer();
+
+        $this->assertStringContainsString('dup:test', $buffer);
+        $this->assertStringNotContainsString('dup:alias', $buffer);
+    }
+
+    /**
+     * Runs real discovery against the colliding legacy/modern `dup:test`
+     * fixtures so the alias suppression in `Commands::registerAliases()` is
+     * exercised end to end, not stubbed.
+     */
+    private function discoveredRunnerWithDuplicate(): Commands
+    {
+        $legacyFile = (new ReflectionClass(DuplicateLegacy::class))->getFileName();
+        $modernFile = (new ReflectionClass(DuplicateModern::class))->getFileName();
+
+        $locator = $this->getMockBuilder(FileLocator::class)
+            ->setConstructorArgs([service('autoloader')])
+            ->onlyMethods(['listFiles', 'findQualifiedNameFromPath'])
+            ->getMock();
+        $locator->method('listFiles')->with('Commands/')->willReturn([$legacyFile, $modernFile]);
+        $locator->expects($this->exactly(2))->method('findQualifiedNameFromPath')->willReturnMap([
+            [$legacyFile, DuplicateLegacy::class],
+            [$modernFile, DuplicateModern::class],
+        ]);
+        Services::injectMock('locator', $locator);
+
+        return new Commands();
     }
 
     private function mockRunnerWithDuplicate(): Commands
@@ -108,8 +200,10 @@ final class ListCommandsTest extends CIUnitTestCase
                     'file'        => 'irrelevant',
                     'group'       => 'Duplicates',
                     'description' => 'Modern dup description',
+                    'aliases'     => [],
                 ],
             ]);
+        $runner->method('getCommandAliases')->willReturn([]);
 
         return $runner;
     }

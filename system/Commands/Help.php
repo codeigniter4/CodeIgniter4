@@ -70,6 +70,15 @@ class Help extends AbstractCommand
             CLI::write($this->addPadding($command->getDescription()));
         }
 
+        if ($command->getAliases() !== []) {
+            CLI::newLine();
+            CLI::write(lang('CLI.helpAliases'), 'yellow');
+
+            foreach ($command->getAliases() as $alias) {
+                CLI::write($this->addPadding($alias));
+            }
+        }
+
         $maxPadding = $this->getMaxPadding($command);
 
         if ($command->getArgumentsDefinition() !== []) {

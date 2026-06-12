@@ -52,9 +52,18 @@ The attribute holds the command's identity:
 - ``description`` is shown in the ``list`` output and at the top of ``help <command>``.
 - ``group`` controls how the command is grouped in the ``list`` output. A command with an empty
   ``group`` is skipped by discovery.
+- ``aliases`` is an optional list of alternative names the command can also be invoked by. Each alias
+  follows the same naming rules as ``name`` and must differ from it. Aliases resolve to the command at
+  dispatch (``php spark <alias>`` and ``help <alias>`` both work), are listed as their own rows in the
+  ``list`` output, and are shown in an ``Aliases:`` section of ``help <command>``.
 
-The attribute itself validates these constraints at construction time — if you
+The attribute itself validates these constraints at construction time. If you
 misspell ``name``, you will see the error at discovery rather than at run time.
+An alias that collides with an existing command name or with another command's
+alias is a hard error at discovery, since the runner could not tell which command
+you meant.
+
+.. literalinclude:: cli_modern_commands/014.php
 
 *****************
 Command Lifecycle
@@ -412,7 +421,10 @@ Coexistence With Legacy Commands
 Legacy ``BaseCommand`` classes are still supported, and they are discovered
 alongside modern commands. If the same name is claimed by both a legacy and a
 modern command, the legacy one is invoked and a warning is printed once at
-discovery time so you can rename or retire one of the two.
+discovery time so you can rename or retire one of the two. Any aliases declared
+by the shadowed modern command are dropped at discovery, so they are neither
+listed nor runnable. Resolve the collision and the modern command, along with
+its aliases, becomes reachable again.
 
 To detect the collision programmatically — for example, in a migration script
 that verifies the legacy copy was removed — the ``Commands`` runner exposes two

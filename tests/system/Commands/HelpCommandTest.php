@@ -152,6 +152,60 @@ final class HelpCommandTest extends CIUnitTestCase
         );
     }
 
+    public function testDescribeCommandWithAliases(): void
+    {
+        command('help fixture:aliased');
+
+        $this->assertSame(
+            <<<'EOT'
+
+                Usage:
+                  fixture:aliased [options]
+
+                Description:
+                  Fixture command exercising command aliases.
+
+                Aliases:
+                  fixture:alias
+                  fa
+
+                Options:
+                  -h, --help            Display help for the given command.
+                      --no-header       Do not display the banner when running the command.
+                  -N, --no-interaction  Do not ask any interactive questions.
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
+    }
+
+    public function testDescribeCommandViaAliasResolvesToCanonical(): void
+    {
+        command('help fixture:alias');
+
+        $this->assertSame(
+            <<<'EOT'
+
+                Usage:
+                  fixture:aliased [options]
+
+                Description:
+                  Fixture command exercising command aliases.
+
+                Aliases:
+                  fixture:alias
+                  fa
+
+                Options:
+                  -h, --help            Display help for the given command.
+                      --no-header       Do not display the banner when running the command.
+                  -N, --no-interaction  Do not ask any interactive questions.
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
+    }
+
     public function testDescribeUnavailableCommand(): void
     {
         command('help test:unavailable');

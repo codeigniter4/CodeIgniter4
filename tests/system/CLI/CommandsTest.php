@@ -17,6 +17,7 @@ use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\CLI\Exceptions\CommandNotFoundException;
 use CodeIgniter\CodeIgniter;
+use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
@@ -30,9 +31,13 @@ use PHPUnit\Framework\Attributes\Group;
 use ReflectionClass;
 use RuntimeException;
 use Tests\Support\Commands\Legacy\AppInfo;
+use Tests\Support\Commands\Modern\AliasedCommand;
 use Tests\Support\Commands\Modern\AppAboutCommand;
 use Tests\Support\Duplicates\DuplicateLegacy;
 use Tests\Support\Duplicates\DuplicateModern;
+use Tests\Support\InvalidCommands\AliasClashCommand;
+use Tests\Support\InvalidCommands\AliasSecondClashCommand;
+use Tests\Support\InvalidCommands\AliasTargetCommand;
 use Tests\Support\InvalidCommands\EmptyCommandName;
 use Tests\Support\InvalidCommands\NoAttributeCommand;
 
@@ -305,6 +310,76 @@ final class CommandsTest extends CIUnitTestCase
         $this->assertTrue($commands->hasModernCommand('dup:test'));
     }
 
+    public function testShadowedModernCommandAliasesAreNotRegistered(): void
+    {
+        $this->injectDuplicateLocator();
+
+        $commands = new Commands();
+
+        // The legacy command owns the name, so the shadowed modern command's
+        // alias is dropped: neither listed nor resolvable.
+        $this->assertSame([], $commands->getCommandAliases());
+        $this->assertFalse($commands->hasModernCommand('dup:alias'));
+    }
+
+    public function testModernCommandAliasesAreRegistered(): void
+    {
+        $aliases = (new Commands())->getCommandAliases();
+
+        $this->assertSame('fixture:aliased', $aliases['fixture:alias']);
+        $this->assertSame('fixture:aliased', $aliases['fa']);
+    }
+
+    public function testHasModernCommandResolvesAliases(): void
+    {
+        $commands = new Commands();
+
+        $this->assertTrue($commands->hasModernCommand('fixture:alias'));
+        $this->assertTrue($commands->hasModernCommand('fa'));
+    }
+
+    public function testGetCommandResolvesAliasToCanonicalCommand(): void
+    {
+        $command = (new Commands())->getCommand('fixture:alias');
+
+        $this->assertInstanceOf(AliasedCommand::class, $command);
+        $this->assertSame('fixture:aliased', $command->getName());
+    }
+
+    public function testRunCommandViaAlias(): void
+    {
+        $commands = new Commands();
+
+        $this->assertSame(EXIT_SUCCESS, $commands->runCommand('fa', [], []));
+        $this->assertStringContainsString('Ran fixture:aliased.', $this->getStreamFilterBuffer());
+    }
+
+    public function testAliasClashingWithCommandNameFailsHard(): void
+    {
+        $this->injectAliasLocator([
+            AliasTargetCommand::class => SUPPORTPATH . 'InvalidCommands/AliasTargetCommand.php',
+            AliasClashCommand::class  => SUPPORTPATH . 'InvalidCommands/AliasClashCommand.php',
+        ]);
+
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Command alias "alias:target" of the "alias:source" command clashes with an existing command of the same name.');
+
+        new Commands();
+    }
+
+    public function testAliasClashingWithAnotherAliasFailsHard(): void
+    {
+        $this->injectAliasLocator([
+            AliasClashCommand::class       => SUPPORTPATH . 'InvalidCommands/AliasClashCommand.php',
+            AliasSecondClashCommand::class => SUPPORTPATH . 'InvalidCommands/AliasSecondClashCommand.php',
+        ]);
+
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Command alias "alias:target" of the "alias:source-two" command is already used as an alias of the "alias:source" command.');
+
+        new Commands();
+    }
+
     public function testDestructiveCommandIsNotRisky(): void
     {
         $this->expectException(RuntimeException::class);
@@ -488,6 +563,30 @@ final class CommandsTest extends CIUnitTestCase
                 [$legacyFile, DuplicateLegacy::class],
                 [$modernFile, DuplicateModern::class],
             ]);
+        Services::injectMock('locator', $locator);
+    }
+
+    /**
+     * Partially mocks the real locator so `lang()` can still load language
+     * files while discovery is fed the given command fixtures.
+     *
+     * @param array<class-string, string> $classToFile
+     */
+    private function injectAliasLocator(array $classToFile): void
+    {
+        $map = [];
+
+        foreach ($classToFile as $class => $file) {
+            $map[] = [$file, $class];
+        }
+
+        $locator = $this->getMockBuilder(FileLocator::class)
+            ->setConstructorArgs([service('autoloader')])
+            ->onlyMethods(['listFiles', 'findQualifiedNameFromPath'])
+            ->getMock();
+        $locator->method('listFiles')->with('Commands/')->willReturn(array_values($classToFile));
+        $locator->method('findQualifiedNameFromPath')->willReturnMap($map);
+
         Services::injectMock('locator', $locator);
     }
 }

@@ -45,8 +45,9 @@ class ListCommands extends AbstractCommand
     {
         // Legacy takes precedence on key collision so the listing reflects the
         // command that would actually be invoked.
+        $runner   = $this->getCommandRunner();
         $commands = array_keys(
-            $this->getCommandRunner()->getCommands() + $this->getCommandRunner()->getModernCommands(),
+            $runner->getCommands() + $runner->getModernCommands() + $runner->getCommandAliases(),
         );
         sort($commands);
 
@@ -67,12 +68,21 @@ class ListCommands extends AbstractCommand
 
         // Legacy takes precedence on key collision so the listing reflects the
         // command that would actually be invoked.
-        $all = $this->getCommandRunner()->getCommands() + $this->getCommandRunner()->getModernCommands();
+        $runner = $this->getCommandRunner();
+        $modern = $runner->getModernCommands();
+        $all    = $runner->getCommands() + $modern;
 
         foreach ($all as $command => $details) {
             $maxPad = max($maxPad, strlen($command) + 4);
 
             $entries[] = [$details['group'], $command, $details['description']];
+        }
+
+        // Aliases are listed as their own rows under the group of the command they resolve to.
+        foreach ($runner->getCommandAliases() as $alias => $canonical) {
+            $maxPad = max($maxPad, strlen($alias) + 4);
+
+            $entries[] = [$modern[$canonical]['group'], $alias, lang('CLI.commandAlias', [$canonical])];
         }
 
         usort($entries, static function (array $a, array $b): int {

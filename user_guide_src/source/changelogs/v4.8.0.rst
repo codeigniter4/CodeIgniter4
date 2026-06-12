@@ -197,6 +197,9 @@ Commands
 - Added a new attribute-based command style built on :php:class:`AbstractCommand <CodeIgniter\\CLI\\AbstractCommand>` and the ``#[Command]`` attribute,
   with ``configure()`` / ``isAvailable()`` / ``initialize()`` / ``interact()`` / ``execute()`` hooks and typed ``Argument`` / ``Option`` definitions.
   The legacy ``BaseCommand`` style continues to work. See :doc:`../cli/cli_modern_commands`.
+- Modern commands can now declare command aliases through an ``aliases`` list on the ``#[Command]`` attribute. Aliases resolve to the command
+  at dispatch (``php spark <alias>`` and ``help <alias>``), are listed as their own rows in ``spark list``, and appear in an ``Aliases:`` section
+  of ``help <command>``. An alias that collides with an existing command name or another alias is rejected at discovery. See :doc:`../cli/cli_modern_commands`.
 - Every modern command now ships with a ``--no-interaction`` / ``-N`` flag that skips the ``interact()`` hook, plus public
   ``isInteractive()`` / ``setInteractive()`` methods on ``AbstractCommand``. ``isInteractive()`` also auto-detects piped or
   CI environments by probing STDIN for a TTY, and the state cascades to sub-commands invoked via ``$this->call(...)``.
@@ -337,8 +340,10 @@ Others
 Message Changes
 ***************
 
-- Added new language key:
+- Added new language keys:
     - ``Cache.unsupportedLockStore`` (``CacheException::forUnsupportedLockStore()``)
+    - ``CLI.commandAlias`` and ``CLI.helpAliases`` (command alias rendering in ``list`` and ``help``)
+    - ``Commands.invalidCommandAlias``, ``Commands.commandAliasSameAsName``, ``Commands.duplicateCommandAlias``, ``Commands.aliasClashesWithCommandName``, and ``Commands.aliasClashesWithAlias`` (command alias validation)
 
 - Removed deprecated language keys tied to removed exception constructors:
     - ``Core.missingExtension`` (``FrameworkException::forMissingExtension()``)
