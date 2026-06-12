@@ -21,6 +21,8 @@ use CodeIgniter\API\BaseTransformer;
  */
 class ParentTransformer extends BaseTransformer
 {
+    protected ?string $resourceType = 'parent';
+
     public function toArray(mixed $resource): array
     {
         return [

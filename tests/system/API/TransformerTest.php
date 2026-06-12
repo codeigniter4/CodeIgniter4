@@ -801,4 +801,125 @@ final class TransformerTest extends CIUnitTestCase
 
         $this->assertSame(['child_id' => 42], $result);
     }
+
+    public function testSparseFieldsetScopesNestedChildByType(): void
+    {
+        // ?fields[child]=child_id must scope the nested ChildTransformer
+        // ($resourceType = 'child') automatically, without any explicit request.
+        $request = $this->createMockRequest('include=children&fields[child]=child_id');
+        Services::injectMock('request', $request);
+
+        $transformer = new ParentTransformer($request);
+
+        $result = $transformer->transform(['id' => 1]);
+
+        $this->assertSame([
+            'parent_id' => 1,
+            'children'  => ['child_id' => 99], // 'status' dropped by fields[child]
+        ], $result);
+    }
+
+    public function testSparseFieldsetForOneTypeLeavesOthersUntouched(): void
+    {
+        // ?fields[parent]=parent_id scopes only the root; the child is full.
+        $request = $this->createMockRequest('include=children&fields[parent]=parent_id');
+        Services::injectMock('request', $request);
+
+        $transformer = new ParentTransformer($request);
+
+        $result = $transformer->transform(['id' => 1]);
+
+        $this->assertSame([
+            'parent_id' => 1,
+            'children'  => ['child_id' => 99, 'status' => 'transformed'],
+        ], $result);
+    }
+
+    public function testSparseFieldsetsScopeRootAndChildIndependently(): void
+    {
+        // The headline case: each type gets its own fieldset in one request.
+        $request = $this->createMockRequest('include=children&fields[parent]=parent_id&fields[child]=child_id');
+        Services::injectMock('request', $request);
+
+        $transformer = new ParentTransformer($request);
+
+        $result = $transformer->transform(['id' => 1]);
+
+        $this->assertSame([
+            'parent_id' => 1,
+            'children'  => ['child_id' => 99],
+        ], $result);
+    }
+
+    public function testFlatFieldsDoesNotScopeTypedNestedChild(): void
+    {
+        // A flat ?fields= belongs to the root only and must not leak into a
+        // typed nested child.
+        $request = $this->createMockRequest('include=children&fields=parent_id');
+        Services::injectMock('request', $request);
+
+        $transformer = new ParentTransformer($request);
+
+        $result = $transformer->transform(['id' => 1]);
+
+        $this->assertSame([
+            'parent_id' => 1,
+            'children'  => ['child_id' => 99, 'status' => 'transformed'],
+        ], $result);
+    }
+
+    public function testUnknownSparseFieldsetIsIgnored(): void
+    {
+        // A fieldset for a type not present in the response is simply ignored;
+        // every transformer returns all of its fields.
+        $request = $this->createMockRequest('include=children&fields[unknown]=id');
+        Services::injectMock('request', $request);
+
+        $transformer = new ParentTransformer($request);
+
+        $result = $transformer->transform(['id' => 1]);
+
+        $this->assertSame([
+            'parent_id' => 1,
+            'children'  => ['child_id' => 99, 'status' => 'transformed'],
+        ], $result);
+    }
+
+    public function testSparseFieldsetAppliesToRootWhenTypeMatches(): void
+    {
+        // ?fields[child]=child_id on a root ChildTransformer ($resourceType = 'child').
+        $request = $this->createMockRequest('fields[child]=child_id');
+        Services::injectMock('request', $request);
+
+        $transformer = new ChildTransformer($request);
+
+        $result = $transformer->transform(['id' => 42]);
+
+        $this->assertSame(['child_id' => 42], $result);
+    }
+
+    public function testSparseFieldsetRespectsAllowedFieldsWhitelist(): void
+    {
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessage(lang('Api.invalidFields', ['secret']));
+
+        $request = $this->createMockRequest('fields[widget]=id,secret');
+        Services::injectMock('request', $request);
+
+        $transformer = new class ($request) extends BaseTransformer {
+            protected ?string $resourceType = 'widget';
+
+            public function toArray(mixed $resource): array
+            {
+                return $resource;
+            }
+
+            protected function getAllowedFields(): array
+            {
+                return ['id', 'name'];
+            }
+        };
+
+        $transformer->transform(['id' => 1, 'name' => 'Test', 'secret' => 'x']);
+    }
 }

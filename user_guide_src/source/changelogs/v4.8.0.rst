@@ -182,6 +182,14 @@ Removed Deprecated Items
 Enhancements
 ************
 
+API
+===
+
+- Added per-type sparse fieldsets to API transformers. A transformer may declare a ``$type`` so clients
+  can request ``?fields[<type>]=...`` to filter the fields of that resource type independently, including
+  for nested/related resources, while the flat ``?fields=...`` continues to apply to the root resource only.
+  See :ref:`api_transformers`.
+
 Commands
 ========
 
