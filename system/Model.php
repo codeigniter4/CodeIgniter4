@@ -783,9 +783,11 @@ class Model extends BaseModel
         return $row;
     }
 
-    protected function getFieldProtectionIgnoredFieldsForUpdate($id): array
+    protected function doProtectFieldsForUpdate(array $row): array
     {
-        return $id === null ? [] : [$this->primaryKey];
+        $this->ensureNoDisallowedFields($row, [$this->primaryKey]);
+
+        return $this->doProtectFields($row);
     }
 
     /**

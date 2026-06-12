@@ -163,10 +163,10 @@ potential mass assignment vulnerabilities.
 
 .. note:: The `$primaryKey`_ field should never be an allowed field.
 
-.. _model-strict-field-protection:
+.. _model-throw-on-disallowed-fields:
 
-$strictFieldProtection
-----------------------
+$throwOnDisallowedFields
+------------------------
 
 .. versionadded:: 4.8.0
 
@@ -178,7 +178,7 @@ This is useful when you want to catch typos, stale form fields, or unexpected
 write payloads during development or in strict application code. It does not
 replace validation and does not inspect the database schema.
 
-You may also change this setting with the ``strictFieldProtection()`` method.
+You may also change this setting with the ``throwOnDisallowedFields()`` method.
 
 $allowEmptyInserts
 ------------------
@@ -936,13 +936,13 @@ or primary keys do not get changed.
 .. literalinclude:: model/041.php
 
 If you prefer disallowed fields to raise an exception instead of being silently
-removed, enable strict field protection:
+removed, enable throwing on disallowed fields:
 
 .. literalinclude:: model/068.php
 
-With strict field protection enabled, operation fields such as the primary key
-passed to ``update()`` or the index passed to ``updateBatch()`` may still be used
-to locate rows.
+When throwing on disallowed fields is enabled, operation fields such as the
+primary key passed to ``update()`` or the index passed to ``updateBatch()`` may
+still be used to locate rows.
 
 Occasionally, you will find times where you need to be able to change these elements. This is often during
 testing, migrations, or seeds. In these cases, you can turn the protection on or off:

@@ -17,7 +17,7 @@ class {class} extends Model
     protected $protectFields    = true;
     protected $allowedFields    = [];
 
-    protected bool $strictFieldProtection = false;
+    protected bool $throwOnDisallowedFields = false;
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
 

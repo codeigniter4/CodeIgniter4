@@ -1,4 +1,4 @@
 <?php
 
-$model->strictFieldProtection()
+$model->throwOnDisallowedFields()
     ->insert($data);

@@ -145,7 +145,7 @@ abstract class BaseModel
      * Whether Model should throw instead of silently discarding
      * fields that are not in $allowedFields.
      */
-    protected bool $strictFieldProtection = false;
+    protected bool $throwOnDisallowedFields = false;
 
     /**
      * An array of field names that are allowed
@@ -1073,8 +1073,7 @@ abstract class BaseModel
 
         // Must be called first, so we don't
         // strip out updated_at values.
-        $this->ensureNoDisallowedFields($row, $this->getFieldProtectionIgnoredFieldsForUpdate($id));
-        $row = $this->doProtectFields($row);
+        $row = $this->doProtectFieldsForUpdate($row);
 
         // doProtectFields() can further remove elements from
         // $row, so we need to check for empty dataset again
@@ -1396,9 +1395,9 @@ abstract class BaseModel
      *
      * @return $this
      */
-    public function strictFieldProtection(bool $strict = true)
+    public function throwOnDisallowedFields(bool $throw = true)
     {
-        $this->strictFieldProtection = $strict;
+        $this->throwOnDisallowedFields = $throw;
 
         return $this;
     }
@@ -1436,7 +1435,7 @@ abstract class BaseModel
     }
 
     /**
-     * Throws when strict field protection detects fields that would be discarded.
+     * Throws when configured to detect fields that would be discarded.
      *
      * @param row_array    $row
      * @param list<string> $ignoredFields
@@ -1445,7 +1444,7 @@ abstract class BaseModel
      */
     protected function ensureNoDisallowedFields(array $row, array $ignoredFields = []): void
     {
-        if (! $this->strictFieldProtection || ! $this->protectFields || $this->allowedFields === []) {
+        if (! $this->throwOnDisallowedFields || ! $this->protectFields || $this->allowedFields === []) {
             return;
         }
 
@@ -1465,18 +1464,6 @@ abstract class BaseModel
     }
 
     /**
-     * Returns fields that may be used by the write operation but not persisted.
-     *
-     * @param mixed $id
-     *
-     * @return list<string>
-     */
-    protected function getFieldProtectionIgnoredFieldsForUpdate($id): array
-    {
-        return [];
-    }
-
-    /**
      * Ensures that only the fields that are allowed to be inserted are in
      * the data array.
      *
@@ -1490,6 +1477,25 @@ abstract class BaseModel
      * @throws DataException
      */
     protected function doProtectFieldsForInsert(array $row): array
+    {
+        $this->ensureNoDisallowedFields($row);
+
+        return $this->doProtectFields($row);
+    }
+
+    /**
+     * Ensures that only the fields that are allowed to be updated are in
+     * the data array.
+     *
+     * @used-by update() to protect against mass assignment vulnerabilities.
+     *
+     * @param row_array $row
+     *
+     * @return row_array
+     *
+     * @throws DataException
+     */
+    protected function doProtectFieldsForUpdate(array $row): array
     {
         $this->ensureNoDisallowedFields($row);
 
