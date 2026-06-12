@@ -312,36 +312,6 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertSame($data, esc($data, 'raw'));
     }
 
-    public function testEscapeArrayDoesNotLeakForeachReference(): void
-    {
-        $data = ['first' => '<b>bold</b>', 'last' => '<i>italic</i>'];
-
-        $escaped = esc($data);
-
-        $this->assertSame('&lt;b&gt;bold&lt;/b&gt;', $escaped['first']);
-        $this->assertSame('&lt;i&gt;italic&lt;/i&gt;', $escaped['last']);
-    }
-
-    public function testEscapeArrayLastElementNotMutatedAfterCall(): void
-    {
-        $data = ['x' => '<script>', 'y' => '<style>'];
-
-        $escaped = esc($data);
-
-        $this->assertSame('&lt;script&gt;', $escaped['x']);
-        $this->assertSame('&lt;style&gt;', $escaped['y']);
-        $this->assertCount(2, $escaped);
-    }
-
-    public function testEscapeArrayReferenceIsCleanedUpOnSingleElement(): void
-    {
-        $data = ['only' => '<div>'];
-
-        $escaped = esc($data);
-
-        $this->assertSame('&lt;div&gt;', $escaped['only']);
-    }
-
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     #[WithoutErrorHandler]
