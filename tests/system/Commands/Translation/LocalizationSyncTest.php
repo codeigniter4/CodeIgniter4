@@ -222,7 +222,7 @@ final class LocalizationSyncTest extends CIUnitTestCase
     public function testProcessWithInvalidOption(): void
     {
         $langPath = SUPPORTPATH . 'Language';
-        $command  = new LocalizationSync(service('logger'), service('commands'));
+        $command  = new LocalizationSync(service('commands'));
         $this->setPrivateProperty($command, 'languagePath', $langPath);
         $runner = self::getPrivateMethodInvoker($command, 'process');
 
