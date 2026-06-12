@@ -479,7 +479,7 @@ if (! function_exists('esc')) {
             $method = $context === 'attr' ? 'escapeHtmlAttr' : 'escape' . ucfirst($context);
 
             static $escapers = [];
-            $cacheKey = strtolower($encoding ?? 'utf-8');
+            $cacheKey        = strtolower($encoding ?? 'utf-8');
 
             if (! isset($escapers[$cacheKey])) {
                 $escapers[$cacheKey] = new Escaper($encoding);
