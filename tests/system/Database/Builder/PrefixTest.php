@@ -51,7 +51,7 @@ final class PrefixTest extends CIUnitTestCase
 
         $builder->where($where);
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -64,7 +64,7 @@ final class PrefixTest extends CIUnitTestCase
 
         $builder->whereColumn('users.created_at <', 'users.updated_at');
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -86,7 +86,7 @@ final class PrefixTest extends CIUnitTestCase
 
         $builder->whereBetween('users.created_at', [1, 10]);
 
-        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
