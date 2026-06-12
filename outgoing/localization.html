@@ -780,6 +780,12 @@ in the file.</p>
 After the operation, you need to translate the language keys yourself.
 The command is able to recognize nested keys normally <code class="docutils literal notranslate"><span class="pre">File.array.nested.text</span></code>.
 Previously saved keys do not change.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Keys that <code class="docutils literal notranslate"><span class="pre">lang()</span></code> can already resolve (for example <code class="docutils literal notranslate"><span class="pre">Errors.*</span></code>
+from <strong>system/Language</strong>) are treated as already translated, so they are
+neither listed by <code class="docutils literal notranslate"><span class="pre">--show-new</span></code> nor written into <strong>app/Language</strong>.</p>
+</div>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark lang:find</span>
 </pre></div>
 </div>
