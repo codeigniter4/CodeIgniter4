@@ -1861,7 +1861,7 @@ Class Reference
         If ``$first`` does not end with a supported operator, ``=`` is used as the comparison operator.
         Supported operators are ``=``, ``!=``, ``<>``, ``<``, ``>``, ``<=``, and ``>=``.
 
-    .. php:method:: whereBetween([$key = null[, $values = null[, $escape = null]]])
+    .. php:method:: whereBetween(?string $key = null, ?array $values = null, ?bool $escape = null)
 
         :param string $key: Name of field to examine
         :param array $values: Two values defining the inclusive range
@@ -1871,7 +1871,7 @@ Class Reference
 
         Generates a ``WHERE`` field ``BETWEEN`` minimum and maximum value SQL query, joined with ``AND`` if appropriate.
 
-    .. php:method:: orWhereBetween([$key = null[, $values = null[, $escape = null]]])
+    .. php:method:: orWhereBetween(?string $key = null, ?array $values = null, ?bool $escape = null)
 
         :param string $key: The field to search
         :param array $values: Two values defining the inclusive range
@@ -1881,7 +1881,7 @@ Class Reference
 
         Generates a ``WHERE`` field ``BETWEEN`` minimum and maximum value SQL query, joined with ``OR`` if appropriate.
 
-    .. php:method:: whereNotBetween([$key = null[, $values = null[, $escape = null]]])
+    .. php:method:: whereNotBetween(?string $key = null, ?array $values = null, ?bool $escape = null)
 
         :param string $key: Name of field to examine
         :param array $values: Two values defining the inclusive range
@@ -1891,7 +1891,7 @@ Class Reference
 
         Generates a ``WHERE`` field ``NOT BETWEEN`` minimum and maximum value SQL query, joined with ``AND`` if appropriate.
 
-    .. php:method:: orWhereNotBetween([$key = null[, $values = null[, $escape = null]]])
+    .. php:method:: orWhereNotBetween(?string $key = null, ?array $values = null, ?bool $escape = null)
 
         :param string $key: The field to search
         :param array $values: Two values defining the inclusive range
@@ -2100,7 +2100,7 @@ Class Reference
 
         Adds a ``HAVING`` clause to a query, separating multiple calls with ``OR``.
 
-    .. php:method:: havingBetween([$key = null[, $values = null[, $escape = null]]])
+    .. php:method:: havingBetween(?string $key = null, ?array $values = null, ?bool $escape = null)
 
         :param string $key: Name of field to examine
         :param array $values: Two values defining the inclusive range
@@ -2110,7 +2110,7 @@ Class Reference
 
         Generates a ``HAVING`` field ``BETWEEN`` minimum and maximum value SQL query, joined with ``AND`` if appropriate.
 
-    .. php:method:: orHavingBetween([$key = null[, $values = null[, $escape = null]]])
+    .. php:method:: orHavingBetween(?string $key = null, ?array $values = null, ?bool $escape = null)
 
         :param string $key: The field to search
         :param array $values: Two values defining the inclusive range
@@ -2120,7 +2120,7 @@ Class Reference
 
         Generates a ``HAVING`` field ``BETWEEN`` minimum and maximum value SQL query, joined with ``OR`` if appropriate.
 
-    .. php:method:: havingNotBetween([$key = null[, $values = null[, $escape = null]]])
+    .. php:method:: havingNotBetween(?string $key = null, ?array $values = null, ?bool $escape = null)
 
         :param string $key: Name of field to examine
         :param array $values: Two values defining the inclusive range
@@ -2130,7 +2130,7 @@ Class Reference
 
         Generates a ``HAVING`` field ``NOT BETWEEN`` minimum and maximum value SQL query, joined with ``AND`` if appropriate.
 
-    .. php:method:: orHavingNotBetween([$key = null[, $values = null[, $escape = null]]])
+    .. php:method:: orHavingNotBetween(?string $key = null, ?array $values = null, ?bool $escape = null)
 
         :param string $key: The field to search
         :param array $values: Two values defining the inclusive range

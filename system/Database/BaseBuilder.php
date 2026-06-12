@@ -922,7 +922,7 @@ class BaseBuilder
      *
      * @throws InvalidArgumentException
      */
-    public function whereBetween(?string $key = null, $values = null, ?bool $escape = null): static
+    public function whereBetween(?string $key = null, ?array $values = null, ?bool $escape = null): static
     {
         return $this->whereBetweenHaving('QBWhere', $key, $values, false, 'AND ', $escape);
     }
@@ -937,7 +937,7 @@ class BaseBuilder
      *
      * @throws InvalidArgumentException
      */
-    public function orWhereBetween(?string $key = null, $values = null, ?bool $escape = null): static
+    public function orWhereBetween(?string $key = null, ?array $values = null, ?bool $escape = null): static
     {
         return $this->whereBetweenHaving('QBWhere', $key, $values, false, 'OR ', $escape);
     }
@@ -952,7 +952,7 @@ class BaseBuilder
      *
      * @throws InvalidArgumentException
      */
-    public function whereNotBetween(?string $key = null, $values = null, ?bool $escape = null): static
+    public function whereNotBetween(?string $key = null, ?array $values = null, ?bool $escape = null): static
     {
         return $this->whereBetweenHaving('QBWhere', $key, $values, true, 'AND ', $escape);
     }
@@ -967,7 +967,7 @@ class BaseBuilder
      *
      * @throws InvalidArgumentException
      */
-    public function orWhereNotBetween(?string $key = null, $values = null, ?bool $escape = null): static
+    public function orWhereNotBetween(?string $key = null, ?array $values = null, ?bool $escape = null): static
     {
         return $this->whereBetweenHaving('QBWhere', $key, $values, true, 'OR ', $escape);
     }
@@ -982,7 +982,7 @@ class BaseBuilder
      *
      * @throws InvalidArgumentException
      */
-    public function havingBetween(?string $key = null, $values = null, ?bool $escape = null): static
+    public function havingBetween(?string $key = null, ?array $values = null, ?bool $escape = null): static
     {
         return $this->whereBetweenHaving('QBHaving', $key, $values, false, 'AND ', $escape);
     }
@@ -997,7 +997,7 @@ class BaseBuilder
      *
      * @throws InvalidArgumentException
      */
-    public function orHavingBetween(?string $key = null, $values = null, ?bool $escape = null): static
+    public function orHavingBetween(?string $key = null, ?array $values = null, ?bool $escape = null): static
     {
         return $this->whereBetweenHaving('QBHaving', $key, $values, false, 'OR ', $escape);
     }
@@ -1012,7 +1012,7 @@ class BaseBuilder
      *
      * @throws InvalidArgumentException
      */
-    public function havingNotBetween(?string $key = null, $values = null, ?bool $escape = null): static
+    public function havingNotBetween(?string $key = null, ?array $values = null, ?bool $escape = null): static
     {
         return $this->whereBetweenHaving('QBHaving', $key, $values, true, 'AND ', $escape);
     }
@@ -1027,7 +1027,7 @@ class BaseBuilder
      *
      * @throws InvalidArgumentException
      */
-    public function orHavingNotBetween(?string $key = null, $values = null, ?bool $escape = null): static
+    public function orHavingNotBetween(?string $key = null, ?array $values = null, ?bool $escape = null): static
     {
         return $this->whereBetweenHaving('QBHaving', $key, $values, true, 'OR ', $escape);
     }
@@ -1050,7 +1050,7 @@ class BaseBuilder
      *
      * @throws InvalidArgumentException
      */
-    private function whereBetweenHaving(string $qbKey, ?string $key = null, $values = null, bool $not = false, string $type = 'AND ', ?bool $escape = null): static
+    private function whereBetweenHaving(string $qbKey, ?string $key = null, ?array $values = null, bool $not = false, string $type = 'AND ', ?bool $escape = null): static
     {
         if ($key === null || $key === '') {
             throw new InvalidArgumentException(sprintf('%s() expects $key to be a non-empty string', debug_backtrace(0, 2)[1]['function']));
