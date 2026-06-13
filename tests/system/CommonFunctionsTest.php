@@ -320,13 +320,13 @@ final class CommonFunctionsTest extends CIUnitTestCase
         esc(['test'], 'html', 'invalid-encoding');
     }
 
-    public function testEscapeWithChangingEncodingRecursive(): void
+    public function testEscapeWithChangingArrayEncoding(): void
     {
-        $data = ['<x'];
+        $data = [hex2bin('E9')];
 
-        $this->assertSame(['&lt;x'], esc($data, 'html', 'utf-8'));
-        $this->assertSame(['&lt;x'], esc($data, 'html', 'iso-8859-1'));
-        $this->assertSame(['&lt;x'], esc($data, 'html', 'utf-8'));
+        $this->assertSame(['&#xE9;'], esc($data, 'attr', 'iso-8859-1'));
+        $this->assertSame(['&#x0439;'], esc($data, 'attr', 'windows-1251'));
+        $this->assertSame(['&#xE9;'], esc($data, 'attr', 'iso-8859-1'));
     }
 
     #[PreserveGlobalState(false)]
