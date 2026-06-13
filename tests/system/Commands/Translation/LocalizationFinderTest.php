@@ -87,7 +87,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
         self::$locale = 'test_locale_incorrect';
         $this->makeLocaleDirectory();
 
-        $status = service('commands')->runLegacy('lang:find', [
+        $status = service('commands')->runCommand('lang:find', [], [
             'dir'    => 'Translation',
             'locale' => self::$locale,
         ]);
@@ -108,7 +108,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
     {
         $this->makeLocaleDirectory();
 
-        $status = service('commands')->runLegacy('lang:find', [
+        $status = service('commands')->runCommand('lang:find', [], [
             'dir' => 'Translation/NotExistFolder',
         ]);
 
@@ -166,6 +166,9 @@ final class LocalizationFinderTest extends CIUnitTestCase
         $this->assertArrayNotHasKey('pageNotFound', $generatedKeys);
     }
 
+    /**
+     * @return array<string, string>
+     */
     private function getActualTranslationOneKeys(): array
     {
         return [
@@ -179,6 +182,9 @@ final class LocalizationFinderTest extends CIUnitTestCase
         ];
     }
 
+    /**
+     * @return array<string, array<string, array<string, string>|string>>
+     */
     private function getActualTranslationThreeKeys(): array
     {
         return [
@@ -212,6 +218,9 @@ final class LocalizationFinderTest extends CIUnitTestCase
         ];
     }
 
+    /**
+     * @return array<string, array<string, string>>
+     */
     private function getActualTranslationFourKeys(): array
     {
         return [

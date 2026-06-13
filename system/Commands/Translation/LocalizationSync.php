@@ -13,8 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Translation;
 
-use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Input\Option;
 use CodeIgniter\Exceptions\LogicException;
 use Config\App;
 use ErrorException;
@@ -25,62 +27,72 @@ use RecursiveIteratorIterator;
 use SplFileInfo;
 
 /**
- * @see \CodeIgniter\Commands\Translation\LocalizationSyncTest
+ * Synchronizes translation files from one language to another.
  */
-class LocalizationSync extends BaseCommand
+#[Command(
+    name: 'lang:sync',
+    description: 'Synchronize translation files from one language to another.',
+    group: 'Translation',
+)]
+class LocalizationSync extends AbstractCommand
 {
-    protected $group       = 'Translation';
-    protected $name        = 'lang:sync';
-    protected $description = 'Synchronize translation files from one language to another.';
-    protected $usage       = 'lang:sync [options]';
-    protected $arguments   = [];
-    protected $options     = [
-        '--locale' => 'The original locale (en, ru, etc.).',
-        '--target' => 'Target locale (en, ru, etc.).',
-    ];
     private string $languagePath;
 
-    public function run(array $params)
+    protected function configure(): void
     {
-        $optionTargetLocale = '';
-        $optionLocale       = $params['locale'] ?? Locale::getDefault();
+        $this
+            ->addOption(new Option(
+                name: 'locale',
+                description: 'The original locale (en, ru, etc.).',
+                requiresValue: true,
+                default: '',
+            ))
+            ->addOption(new Option(
+                name: 'target',
+                description: 'Target locale (en, ru, etc.).',
+                requiresValue: true,
+                default: '',
+            ));
+    }
+
+    protected function execute(array $arguments, array $options): int
+    {
+        $locale = $options['locale'];
+        assert(is_string($locale));
+
+        $target = $options['target'];
+        assert(is_string($target));
+
         $this->languagePath = APPPATH . 'Language';
+        $supportedLocales   = config(App::class)->supportedLocales;
 
-        if (isset($params['target']) && $params['target'] !== '') {
-            $optionTargetLocale = $params['target'];
+        if ($locale === '') {
+            $locale = Locale::getDefault();
         }
 
-        if (! in_array($optionLocale, config(App::class)->supportedLocales, true)) {
+        if (! in_array($locale, $supportedLocales, true)) {
+            return $this->errorUnsupportedLocale($locale);
+        }
+
+        if ($target === '') {
             CLI::error(
-                'Error: "' . $optionLocale . '" is not supported. Supported locales: '
-                . implode(', ', config(App::class)->supportedLocales),
+                sprintf(
+                    'Error: "--target" is not configured. Supported locales: %s',
+                    implode(', ', $supportedLocales),
+                ),
+                'light_gray',
+                'red',
             );
 
             return EXIT_USER_INPUT;
         }
 
-        if ($optionTargetLocale === '') {
-            CLI::error(
-                'Error: "--target" is not configured. Supported locales: '
-                . implode(', ', config(App::class)->supportedLocales),
-            );
-
-            return EXIT_USER_INPUT;
+        if (! in_array($target, $supportedLocales, true)) {
+            return $this->errorUnsupportedLocale($target);
         }
 
-        if (! in_array($optionTargetLocale, config(App::class)->supportedLocales, true)) {
-            CLI::error(
-                'Error: "' . $optionTargetLocale . '" is not supported. Supported locales: '
-                . implode(', ', config(App::class)->supportedLocales),
-            );
-
-            return EXIT_USER_INPUT;
-        }
-
-        if ($optionTargetLocale === $optionLocale) {
-            CLI::error(
-                'Error: You cannot have the same values for "--target" and "--locale".',
-            );
+        if ($target === $locale) {
+            CLI::error('Error: You cannot have the same values for "--target" and "--locale".', 'light_gray', 'red');
 
             return EXIT_USER_INPUT;
         }
@@ -89,13 +101,31 @@ class LocalizationSync extends BaseCommand
             $this->languagePath = SUPPORTPATH . 'Language';
         }
 
-        if ($this->process($optionLocale, $optionTargetLocale) === EXIT_ERROR) {
+        if ($this->process($locale, $target) === EXIT_ERROR) {
             return EXIT_ERROR;
         }
 
-        CLI::write('All operations done!');
+        CLI::write('All operations done!', 'green');
 
         return EXIT_SUCCESS;
+    }
+
+    /**
+     * Writes the unsupported-locale error and returns the user-input exit code.
+     */
+    private function errorUnsupportedLocale(string $locale): int
+    {
+        CLI::error(
+            sprintf(
+                'Error: "%s" is not supported. Supported locales: %s',
+                $locale,
+                implode(', ', config(App::class)->supportedLocales),
+            ),
+            'light_gray',
+            'red',
+        );
+
+        return EXIT_USER_INPUT;
     }
 
     private function process(string $originalLocale, string $targetLocale): int
@@ -105,7 +135,9 @@ class LocalizationSync extends BaseCommand
 
         if (! is_dir($originalLocaleDir)) {
             CLI::error(
-                'Error: The "' . clean_path($originalLocaleDir) . '" directory was not found.',
+                sprintf('Error: The "%s" directory was not found.', clean_path($originalLocaleDir)),
+                'light_gray',
+                'red',
             );
 
             return EXIT_ERROR;
@@ -118,7 +150,9 @@ class LocalizationSync extends BaseCommand
             }
         } catch (ErrorException $e) {
             CLI::error(
-                'Error: The target directory "' . clean_path($targetLocaleDir) . '" cannot be accessed.',
+                sprintf('Error: The target directory "%s" cannot be accessed.', clean_path($targetLocaleDir)),
+                'light_gray',
+                'red',
             );
 
             return EXIT_ERROR;
@@ -131,10 +165,10 @@ class LocalizationSync extends BaseCommand
             ),
         );
 
-        /** @var array<non-empty-string, SplFileInfo> $files */
-        $files = iterator_to_array($iterator, true);
+        $files = iterator_to_array($iterator);
         ksort($files);
 
+        /** @var SplFileInfo $originalLanguageFile */
         foreach ($files as $originalLanguageFile) {
             if ($originalLanguageFile->getExtension() !== 'php') {
                 continue;
@@ -191,7 +225,10 @@ class LocalizationSync extends BaseCommand
 
                 $mergedLanguageKeys[$key] = $this->mergeLanguageKeys($value, $targetLanguageKeys[$key], $placeholderValue);
             } else {
-                throw new LogicException('Value for the key "' . $placeholderValue . '" is of the wrong type. Only "array" or "string" is allowed.');
+                throw new LogicException(sprintf(
+                    'Value for the key "%s" is of the wrong type. Only "array" or "string" is allowed.',
+                    $placeholderValue,
+                ));
             }
         }
 

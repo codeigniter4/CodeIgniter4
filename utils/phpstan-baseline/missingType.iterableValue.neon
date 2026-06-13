@@ -1,4 +1,4 @@
-# total 1216 errors
+# total 1204 errors
 
 parameters:
     ignoreErrors:
@@ -61,36 +61,6 @@ parameters:
             message: '#^Method CodeIgniter\\CodeIgniter\:\:getPerformanceStats\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/CodeIgniter.php
-
-        -
-            message: '#^Method CodeIgniter\\Commands\\Translation\\LocalizationFinder\:\:arrayToTableRows\(\) has parameter \$array with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Commands/Translation/LocalizationFinder.php
-
-        -
-            message: '#^Method CodeIgniter\\Commands\\Translation\\LocalizationFinder\:\:arrayToTableRows\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Commands/Translation/LocalizationFinder.php
-
-        -
-            message: '#^Method CodeIgniter\\Commands\\Translation\\LocalizationFinder\:\:buildMultiArray\(\) has parameter \$fromKeys with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Commands/Translation/LocalizationFinder.php
-
-        -
-            message: '#^Method CodeIgniter\\Commands\\Translation\\LocalizationFinder\:\:buildMultiArray\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Commands/Translation/LocalizationFinder.php
-
-        -
-            message: '#^Method CodeIgniter\\Commands\\Translation\\LocalizationFinder\:\:findTranslationsInFile\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Commands/Translation/LocalizationFinder.php
-
-        -
-            message: '#^Method CodeIgniter\\Commands\\Translation\\LocalizationFinder\:\:templateFile\(\) has parameter \$language with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Commands/Translation/LocalizationFinder.php
 
         -
             message: '#^Method CodeIgniter\\Commands\\Utilities\\Namespaces\:\:outputAllNamespaces\(\) has parameter \$params with no value type specified in iterable type array\.$#'
@@ -4606,21 +4576,6 @@ parameters:
             message: '#^Method CodeIgniter\\CodeIgniterTest\:\:testPageCacheWithCacheQueryString\(\) has parameter \$testingUrls with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/CodeIgniterTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Commands\\Translation\\LocalizationFinderTest\:\:getActualTranslationFourKeys\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Commands/Translation/LocalizationFinderTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Commands\\Translation\\LocalizationFinderTest\:\:getActualTranslationOneKeys\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Commands/Translation/LocalizationFinderTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Commands\\Translation\\LocalizationFinderTest\:\:getActualTranslationThreeKeys\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Commands/Translation/LocalizationFinderTest.php
 
         -
             message: '#^Method CodeIgniter\\Commands\\Utilities\\Routes\\AutoRouterImproved\\AutoRouteCollectorTest\:\:createAutoRouteCollector\(\) has parameter \$filterConfigFilters with no value type specified in iterable type array\.$#'
