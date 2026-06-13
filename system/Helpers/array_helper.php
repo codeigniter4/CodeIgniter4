@@ -34,9 +34,9 @@ if (! function_exists('dot_array_has')) {
     /**
      * Checks if an array key exists using dot syntax.
      *
-     * @param array<array-key, mixed> $array
+     * @param array<array-key, mixed>|object $array
      */
-    function dot_array_has(string $index, array $array): bool
+    function dot_array_has(string $index, array|object $array): bool
     {
         return ArrayHelper::dotHas($index, $array);
     }
@@ -70,12 +70,12 @@ if (! function_exists('dot_array_only')) {
     /**
      * Gets only the specified keys using dot syntax.
      *
-     * @param array<array-key, mixed> $array
-     * @param list<string>|string     $indexes
+     * @param array<array-key, mixed>|object $array
+     * @param list<string>|string            $indexes
      *
      * @return array<array-key, mixed>
      */
-    function dot_array_only(array $array, array|string $indexes): array
+    function dot_array_only(array|object $array, array|string $indexes): array
     {
         return ArrayHelper::dotOnly($array, $indexes);
     }
@@ -85,12 +85,12 @@ if (! function_exists('dot_array_except')) {
     /**
      * Gets all keys except the specified ones using dot syntax.
      *
-     * @param array<array-key, mixed> $array
-     * @param list<string>|string     $indexes
+     * @param array<array-key, mixed>|object $array
+     * @param list<string>|string            $indexes
      *
      * @return array<array-key, mixed>
      */
-    function dot_array_except(array $array, array|string $indexes): array
+    function dot_array_except(array|object $array, array|string $indexes): array
     {
         return ArrayHelper::dotExcept($array, $indexes);
     }

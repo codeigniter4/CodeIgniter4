@@ -16,6 +16,7 @@ namespace CodeIgniter\Helpers;
 use ArrayObject;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
+use DateTimeImmutable;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
@@ -177,6 +178,76 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertSame($expected, dot_array_only($data, 'user.*'));
     }
 
+    public function testDotArrayOnlyWithObjectValues(): void
+    {
+        $data = (object) [
+            'user' => (object) [
+                'id'      => 123,
+                'profile' => (object) [
+                    'name' => 'john',
+                ],
+            ],
+            'meta' => ['request_id' => 'abc'],
+        ];
+
+        $expected = [
+            'user' => [
+                'profile' => [
+                    'name' => 'john',
+                ],
+            ],
+        ];
+
+        $this->assertSame($expected, dot_array_only($data, 'user.profile.name'));
+    }
+
+    public function testDotArrayOnlyWildcardWithEntityRows(): void
+    {
+        $a      = new SomeEntity();
+        $a->foo = 1;
+        $a->bar = 2;
+
+        $b      = new SomeEntity();
+        $b->foo = 3;
+        $b->bar = 4;
+
+        $this->assertSame(
+            [
+                'rows' => [
+                    ['foo' => 1],
+                    ['foo' => 3],
+                ],
+            ],
+            dot_array_only(['rows' => [$a, $b]], 'rows.*.foo'),
+        );
+    }
+
+    public function testDotArrayOnlyPreservesWholeSelectedObject(): void
+    {
+        $user = (object) ['id' => 1, 'name' => 'Ada'];
+
+        // Selecting the object as a whole returns it untouched.
+        $this->assertSame(['user' => $user], dot_array_only(['user' => $user], 'user'));
+    }
+
+    public function testDotArrayOnlyProjectsPartialObjectAsArray(): void
+    {
+        $created = new DateTimeImmutable();
+
+        $data = [
+            'user' => (object) [
+                'id'      => 123,
+                'created' => $created,
+            ],
+        ];
+
+        // A partial projection must fabricate array structure for "user"...
+        $this->assertSame(['user' => ['id' => 123]], dot_array_only($data, 'user.id'));
+
+        // ...while the value-object leaf is preserved as-is.
+        $this->assertSame(['user' => ['created' => $created]], dot_array_only($data, 'user.created'));
+    }
+
     public function testDotArrayExcept(): void
     {
         $data = [
@@ -213,6 +284,94 @@ final class ArrayHelperTest extends CIUnitTestCase
         ];
 
         $this->assertSame($expected, dot_array_except($data, 'user.*'));
+    }
+
+    public function testDotArrayExceptWithObjectValues(): void
+    {
+        $meta = (object) ['request_id' => 'abc'];
+        $data = (object) [
+            'user' => (object) [
+                'id'   => 123,
+                'name' => 'john',
+            ],
+            'meta' => $meta,
+        ];
+
+        $result = dot_array_except($data, 'user.id');
+
+        // "user" is partially excluded, so it is rebuilt as an array...
+        $this->assertSame(['name' => 'john'], $result['user']);
+        // ...but the untouched "meta" object is preserved as-is.
+        $this->assertSame($meta, $result['meta']);
+    }
+
+    public function testDotArrayExceptWildcardWithObjectValues(): void
+    {
+        $data = (object) [
+            'user' => (object) [
+                'id'   => 123,
+                'name' => 'john',
+            ],
+            'meta' => ['request_id' => 'abc'],
+        ];
+
+        $expected = [
+            'user' => [],
+            'meta' => ['request_id' => 'abc'],
+        ];
+
+        $this->assertSame($expected, dot_array_except($data, 'user.*'));
+    }
+
+    public function testDotArrayExceptPreservesUntouchedObject(): void
+    {
+        $user = (object) ['id' => 1, 'name' => 'Ada'];
+
+        // The path does not touch "user", so the object is returned untouched.
+        $this->assertSame(['user' => $user], dot_array_except(['user' => $user], 'other'));
+    }
+
+    public function testDotArrayExceptPreservesValueObjects(): void
+    {
+        $created = new DateTimeImmutable();
+
+        $data = [
+            'user'    => ['id' => 1],
+            'created' => $created,
+        ];
+
+        $result = dot_array_except($data, 'user.id');
+
+        $this->assertSame([], $result['user']);
+        // Untouched value-objects must survive instead of collapsing to [].
+        $this->assertSame($created, $result['created']);
+    }
+
+    public function testDotArrayExceptPreservesTraversableKeys(): void
+    {
+        $data = new ArrayObject([
+            'user' => ['id' => 1, 'name' => 'Ada'],
+            'meta' => 'm',
+        ]);
+
+        $expected = [
+            'user' => ['name' => 'Ada'],
+            'meta' => 'm',
+        ];
+
+        $this->assertSame($expected, dot_array_except($data, 'user.id'));
+    }
+
+    public function testDotArrayOnlyAndExceptAgreeOnPublicPropertyObjects(): void
+    {
+        $user = new class () {
+            public int $id      = 1;
+            public string $name = 'Ada';
+        };
+
+        // Both helpers treat a public-property object as a container.
+        $this->assertSame(['user' => ['id' => 1]], dot_array_only(['user' => $user], 'user.id'));
+        $this->assertSame(['user' => ['name' => 'Ada']], dot_array_except(['user' => $user], 'user.id'));
     }
 
     public function testArrayDotTooManyLevels(): void
@@ -456,6 +615,82 @@ final class ArrayHelperTest extends CIUnitTestCase
         ];
 
         $this->assertSame(['John', 'Maria'], dot_array_search('users.*.name', $data));
+    }
+
+    public function testDotArrayHasWithObjectValues(): void
+    {
+        $data = [
+            'user' => (object) [
+                'profile' => (object) [
+                    'name' => 'Jane',
+                ],
+            ],
+        ];
+
+        $this->assertTrue(dot_array_has('user.profile.name', $data));
+        $this->assertFalse(dot_array_has('user.profile.email', $data));
+    }
+
+    public function testDotArrayHasWithMagicObjectValues(): void
+    {
+        $data = [
+            'user' => new class () {
+                /**
+                 * @var array<string, array<string, string>>
+                 */
+                private array $values = [
+                    'profile' => [
+                        'name' => 'Jane',
+                    ],
+                ];
+
+                public function __isset(string $key): bool
+                {
+                    return array_key_exists($key, $this->values);
+                }
+
+                public function __get(string $key): mixed
+                {
+                    return $this->values[$key];
+                }
+            },
+        ];
+
+        $this->assertTrue(dot_array_has('user.profile.name', $data));
+    }
+
+    public function testDotArrayHasWithArrayAccessValues(): void
+    {
+        $data = [
+            'user' => new ArrayObject([
+                'profile' => [
+                    'name' => 'Jane',
+                ],
+            ]),
+        ];
+
+        $this->assertTrue(dot_array_has('user.profile.name', $data));
+    }
+
+    public function testDotArrayHasWithEntityValues(): void
+    {
+        $entity      = new SomeEntity();
+        $entity->foo = 'value';
+
+        $this->assertTrue(dot_array_has('user.foo', ['user' => $entity]));
+        $this->assertFalse(dot_array_has('user._options', ['user' => $entity]));
+    }
+
+    public function testDotArrayHasWildcardWithEntityValues(): void
+    {
+        $a      = new SomeEntity();
+        $a->foo = 1;
+
+        $b      = new SomeEntity();
+        $b->foo = 2;
+
+        $this->assertTrue(dot_array_has('rows.*.foo', ['rows' => [$a, $b]]));
+        $this->assertFalse(dot_array_has('rows.*._cast', ['rows' => [$a, $b]]));
     }
 
     /**

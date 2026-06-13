@@ -22,6 +22,17 @@ Available Functions
 
 The following functions are available:
 
+.. note:: Since v4.8.0, the dot-path helpers can read values from arrays or
+    objects, including ``Entity`` objects. This applies to
+    :php:func:`dot_array_search()`, :php:func:`dot_array_has()`,
+    :php:func:`dot_array_only()`, :php:func:`dot_array_except()`, and
+    :php:func:`array_group_by()`.
+
+    :php:func:`dot_array_set()` and :php:func:`dot_array_unset()` still modify
+    arrays only. :php:func:`dot_array_only()` and
+    :php:func:`dot_array_except()` always return arrays. See their descriptions
+    for how object values are handled.
+
 ..  php:function:: dot_array_search(string $search, array|object $values)
 
     :param  string  $search: The dot-notation string describing how to search the array
@@ -56,12 +67,10 @@ The following functions are available:
 .. note:: Prior to v4.2.0, ``dot_array_search('foo.bar.baz', ['foo' => ['bar' => 23]])`` returned ``23``
     due to a bug. v4.2.0 and later returns ``null``.
 
-.. note:: Prior to v4.8.0, only arrays were supported. Support for objects was added in v4.8.0.
-
-..  php:function:: dot_array_has(string $search, array $values): bool
+..  php:function:: dot_array_has(string $search, array|object $values): bool
 
     :param  string  $search: The dot-notation string describing how to search the array
-    :param  array   $values: The array to check
+    :param  array|object $values: The array or object to check
     :returns: ``true`` if the key exists, otherwise ``false``
     :rtype: bool
 
@@ -105,9 +114,9 @@ The following functions are available:
     .. literalinclude:: array_helper/017.php
         :lines: 2-
 
-..  php:function:: dot_array_only(array $array, array|string $indexes): array
+..  php:function:: dot_array_only(array|object $array, array|string $indexes): array
 
-    :param  array            $array: The source array
+    :param  array|object     $array: The source array or object
     :param  array|string     $indexes: One key or a list of keys using dot notation
     :returns: Nested array containing only the requested keys
     :rtype: array
@@ -119,12 +128,19 @@ The following functions are available:
     Wildcard ``*`` is supported. Unlike ``dot_array_set()`` and ``dot_array_unset()``,
     this method also allows wildcard at the end (for example ``user.*``).
 
+    The result is always an array. If a selected value is an object, that object
+    is kept as the value. If you select a value inside an object, the returned
+    path is built with arrays:
+
+    .. literalinclude:: array_helper/020.php
+        :lines: 2-
+
     .. literalinclude:: array_helper/018.php
         :lines: 2-
 
-..  php:function:: dot_array_except(array $array, array|string $indexes): array
+..  php:function:: dot_array_except(array|object $array, array|string $indexes): array
 
-    :param  array            $array: The source array
+    :param  array|object     $array: The source array or object
     :param  array|string     $indexes: One key or a list of keys using dot notation
     :returns: Nested array with the specified keys removed
     :rtype: array
@@ -136,6 +152,13 @@ The following functions are available:
     Wildcard ``*`` is supported. Unlike ``dot_array_set()`` and ``dot_array_unset()``,
     this method also allows wildcard at the end (for example ``user.*``).
 
+    The result is always an array. Object values that are not changed are kept
+    as they are. If a key is removed from inside an object, that part of the
+    result is returned as an array:
+
+    .. literalinclude:: array_helper/021.php
+        :lines: 2-
+
     .. literalinclude:: array_helper/019.php
         :lines: 2-
 
@@ -146,7 +169,8 @@ The following functions are available:
     :returns: The value found within the array, or null
     :rtype: mixed
 
-    Returns the value of an element with a key value in an array of uncertain depth
+    Returns the value of an element with a key value in an array of uncertain depth.
+    Only nested arrays are searched; object values are not traversed.
 
 ..  php:function:: array_sort_by_multiple_keys(array &$array, array $sortColumns)
 
@@ -189,7 +213,8 @@ The following functions are available:
     :returns: The flattened array
 
     This function flattens a multidimensional array to a single key-value array by using dots
-    as separators for the keys.
+    as separators for the keys. The source may be any ``iterable``. Only nested arrays are
+    flattened; object values are kept as-is, as leaf values.
 
     .. literalinclude:: array_helper/009.php
         :lines: 2-
@@ -217,8 +242,6 @@ The following functions are available:
     This function allows you to group data rows together by index values.
     The depth of returned array equals the number of indexes passed as parameter.
     Data rows may be arrays or objects, and dot syntax can read nested array keys or object properties.
-
-    .. note:: Prior to v4.8.0, only arrays were supported. Support for objects was added in v4.8.0.
 
     The example shows some data (i.e. loaded from an API) with nested arrays.
 

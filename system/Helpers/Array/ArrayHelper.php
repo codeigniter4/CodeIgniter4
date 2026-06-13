@@ -16,6 +16,7 @@ namespace CodeIgniter\Helpers\Array;
 use ArrayAccess;
 use CodeIgniter\Entity\Entity;
 use CodeIgniter\Exceptions\InvalidArgumentException;
+use stdClass;
 use Traversable;
 
 /**
@@ -97,17 +98,12 @@ final class ArrayHelper
         // Grab the current index
         $currentIndex = array_shift($indexes);
 
-        if (! self::valueExists($array, $currentIndex) && $currentIndex !== '*') {
-            return null;
-        }
-
         // Handle Wildcard (*)
         if ($currentIndex === '*') {
-            $answer   = [];
-            $iterable = is_object($array) ? self::toIterable($array) : $array;
+            $answer = [];
 
-            foreach ($iterable as $value) {
-                if (! is_array($value) && ! is_object($value)) {
+            foreach (self::entries($array) as $value) {
+                if (! self::isNavigable($value)) {
                     return null;
                 }
 
@@ -124,13 +120,17 @@ final class ArrayHelper
             return null;
         }
 
+        [$found, $value] = self::resolve($array, $currentIndex);
+
+        if (! $found) {
+            return null;
+        }
+
         // If this is the last index, make sure to return it now,
         // and not try to recurse through things.
         if ($indexes === []) {
-            return self::value($array, $currentIndex);
+            return $value;
         }
-
-        $value = self::value($array, $currentIndex);
 
         // Do we need to recursively search this value?
         if ((is_array($value) && $value !== []) || is_object($value)) {
@@ -146,9 +146,9 @@ final class ArrayHelper
      *
      * If wildcard `*` is used, all items for the key after it must have the key.
      *
-     * @param array<array-key, mixed> $array
+     * @param array<array-key, mixed>|object $array
      */
-    public static function dotHas(string $index, array $array): bool
+    public static function dotHas(string $index, array|object $array): bool
     {
         self::ensureValidWildcardPattern($index);
 
@@ -164,10 +164,10 @@ final class ArrayHelper
     /**
      * Recursively check key existence by dot path, including wildcard support.
      *
-     * @param array<array-key, mixed> $array
-     * @param list<string>            $indexes
+     * @param array<array-key, mixed>|object $array
+     * @param list<string>                   $indexes
      */
-    private static function hasByDotPath(array $array, array $indexes): bool
+    private static function hasByDotPath(array|object $array, array $indexes): bool
     {
         if ($indexes === []) {
             return true;
@@ -176,8 +176,8 @@ final class ArrayHelper
         $currentIndex = array_shift($indexes);
 
         if ($currentIndex === '*') {
-            foreach ($array as $item) {
-                if (! is_array($item) || ! self::hasByDotPath($item, $indexes)) {
+            foreach (self::entries($array) as $item) {
+                if (! self::isNavigable($item) || ! self::hasByDotPath($item, $indexes)) {
                     return false;
                 }
             }
@@ -185,7 +185,9 @@ final class ArrayHelper
             return true;
         }
 
-        if (! array_key_exists($currentIndex, $array)) {
+        [$found, $value] = self::resolve($array, $currentIndex);
+
+        if (! $found) {
             return false;
         }
 
@@ -193,11 +195,11 @@ final class ArrayHelper
             return true;
         }
 
-        if (! is_array($array[$currentIndex])) {
+        if (! self::isNavigable($value)) {
             return false;
         }
 
-        return self::hasByDotPath($array[$currentIndex], $indexes);
+        return self::hasByDotPath($value, $indexes);
     }
 
     /**
@@ -247,12 +249,12 @@ final class ArrayHelper
     /**
      * Gets only the specified keys using dot syntax.
      *
-     * @param array<array-key, mixed> $array
-     * @param list<string>|string     $indexes
+     * @param array<array-key, mixed>|object $array
+     * @param list<string>|string            $indexes
      *
      * @return array<array-key, mixed>
      */
-    public static function dotOnly(array $array, array|string $indexes): array
+    public static function dotOnly(array|object $array, array|string $indexes): array
     {
         $indexes = is_string($indexes) ? [$indexes] : $indexes;
         $result  = [];
@@ -261,7 +263,7 @@ final class ArrayHelper
             self::ensureValidWildcardPattern($index, true);
 
             if ($index === '*') {
-                $result = [...$result, ...$array];
+                $result = [...$result, ...(is_object($array) ? self::toIterable($array) : $array)];
 
                 continue;
             }
@@ -280,15 +282,18 @@ final class ArrayHelper
     /**
      * Gets all keys except the specified ones using dot syntax.
      *
-     * @param array<array-key, mixed> $array
-     * @param list<string>|string     $indexes
+     * @param array<array-key, mixed>|object $array
+     * @param list<string>|string            $indexes
      *
      * @return array<array-key, mixed>
      */
-    public static function dotExcept(array $array, array|string $indexes): array
+    public static function dotExcept(array|object $array, array|string $indexes): array
     {
         $indexes = is_string($indexes) ? [$indexes] : $indexes;
-        $result  = $array;
+
+        // Open only the root into an array view; nested values (including
+        // objects) are preserved until a path actually descends into them.
+        $result = self::entries($array);
 
         foreach ($indexes as $index) {
             self::ensureValidWildcardPattern($index, true);
@@ -299,17 +304,18 @@ final class ArrayHelper
                 continue;
             }
 
+            $segments = self::convertToArray($index);
+            if ($segments === []) {
+                continue;
+            }
+
             if (str_ends_with($index, '*')) {
-                $segments = self::convertToArray($index);
-                self::clearByDotPath($result, $segments);
+                self::excludeChildrenByDotPath($result, $segments);
 
                 continue;
             }
 
-            $segments = self::convertToArray($index);
-            if ($segments !== []) {
-                self::unsetByDotPath($result, $segments);
-            }
+            self::excludeByDotPath($result, $segments);
         }
 
         return $result;
@@ -461,57 +467,70 @@ final class ArrayHelper
     }
 
     /**
-     * @param array<array-key, mixed>|object $data
+     * Resolve a key against an array or object node, walking the access chain
+     * (Entity, ArrayAccess, public properties, magic `__isset`/`__get`) once.
+     *
+     * @param array<array-key, mixed>|object $node
+     *
+     * @return array{bool, mixed} The pair [found, value].
      */
-    private static function valueExists(array|object $data, string $key): bool
+    private static function resolve(array|object $node, string $key): array
     {
-        if (is_array($data)) {
-            return isset($data[$key]);
+        if (is_array($node)) {
+            return array_key_exists($key, $node) ? [true, $node[$key]] : [false, null];
         }
 
-        $array = self::entityToArray($data);
+        $array = self::entityToArray($node);
 
         if ($array !== null) {
-            return isset($array[$key]);
+            return array_key_exists($key, $array) ? [true, $array[$key]] : [false, null];
         }
 
-        if ($data instanceof ArrayAccess && $data->offsetExists($key)) {
-            return true;
+        if ($node instanceof ArrayAccess && $node->offsetExists($key)) {
+            return [true, $node->offsetGet($key)];
         }
 
-        if (isset(get_object_vars($data)[$key])) {
-            return true;
+        $properties = get_object_vars($node);
+
+        if (array_key_exists($key, $properties)) {
+            return [true, $properties[$key]];
         }
 
-        return isset($data->{$key});
+        return isset($node->{$key}) ? [true, $node->{$key}] : [false, null];
     }
 
     /**
-     * @param array<array-key, mixed>|object $data
+     * Whether keys can be resolved from this value, i.e. it is an array or an
+     * object that exposes a key surface: an expandable container, an
+     * `ArrayAccess`, or one relying on magic `__get`. Pure value-objects
+     * (e.g. `DateTimeImmutable`) are not navigable.
+     *
+     * Direct key lookup can support more object types than wildcard traversal:
+     * `ArrayAccess` and magic-only objects can resolve `user.id`, but cannot be
+     * enumerated for `user.*` unless they are also expandable.
      */
-    private static function value(array|object $data, string $key): mixed
+    private static function isNavigable(mixed $value): bool
     {
-        if (is_array($data)) {
-            return $data[$key];
+        if (is_array($value)) {
+            return true;
         }
 
-        $array = self::entityToArray($data);
+        return is_object($value)
+            && (self::isExpandable($value)
+                || $value instanceof ArrayAccess
+                || method_exists($value, '__get'));
+    }
 
-        if ($array !== null) {
-            return $array[$key];
-        }
-
-        if ($data instanceof ArrayAccess && $data->offsetExists($key)) {
-            return $data->offsetGet($key);
-        }
-
-        $properties = get_object_vars($data);
-
-        if (array_key_exists($key, $properties)) {
-            return $properties[$key];
-        }
-
-        return $data->{$key};
+    /**
+     * Entries of an array or object node for wildcard traversal.
+     *
+     * @param array<array-key, mixed>|object $node
+     *
+     * @return array<array-key, mixed>
+     */
+    private static function entries(array|object $node): array
+    {
+        return is_object($node) ? self::toIterable($node) : $node;
     }
 
     /**
@@ -531,7 +550,8 @@ final class ArrayHelper
      *
      * Entities are converted via toArray() so internal properties like
      * `_options` or `_cast` are not exposed. Other Traversable objects are
-     * materialized; plain objects fall back to their public properties.
+     * converted to an array with their keys preserved; plain objects fall back
+     * to their public properties.
      *
      * @return array<array-key, mixed>
      */
@@ -544,10 +564,50 @@ final class ArrayHelper
         }
 
         if ($data instanceof Traversable) {
-            return iterator_to_array($data, false);
+            return iterator_to_array($data);
         }
 
         return get_object_vars($data);
+    }
+
+    /**
+     * Whether an object should be expanded into an array when building output.
+     *
+     * Only enumerable containers are expanded: entities, `stdClass`, other
+     * `Traversable` objects, and plain objects exposing public properties.
+     * Opaque objects with no enumerable key surface (value-objects such as
+     * `DateTimeImmutable`, magic-only or pure `ArrayAccess` objects) are
+     * preserved as-is, since they cannot be faithfully rebuilt as an array.
+     */
+    private static function isExpandable(object $value): bool
+    {
+        return $value instanceof Entity
+            || $value instanceof stdClass
+            || $value instanceof Traversable
+            || get_object_vars($value) !== [];
+    }
+
+    /**
+     * Ensure a value can be descended into for a partial exclusion/projection.
+     *
+     * Arrays pass through; expandable objects are converted to an array view
+     * in place (this is the only point where output structure is fabricated).
+     * Anything else (scalars, value-objects, magic-only or pure `ArrayAccess`
+     * objects) is left untouched and reported as non-descendable.
+     */
+    private static function expandForDescent(mixed &$value): bool
+    {
+        if (is_array($value)) {
+            return true;
+        }
+
+        if (is_object($value) && self::isExpandable($value)) {
+            $value = self::entries($value);
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -688,19 +748,106 @@ final class ArrayHelper
     }
 
     /**
-     * Projects matching paths from source array into result with preserved structure.
+     * Removes a value by dot path for dotExcept(). Objects are expanded to an
+     * array view only when the path descends into them, so untouched branches
+     * keep their original values (including objects).
      *
+     * @param array<array-key, mixed> $array
      * @param list<string>            $indexes
-     * @param list<string>            $prefix
-     * @param array<array-key, mixed> $result
+     */
+    private static function excludeByDotPath(array &$array, array $indexes): int
+    {
+        if ($indexes === []) {
+            return 0;
+        }
+
+        $currentIndex = array_shift($indexes);
+
+        if ($currentIndex === '*') {
+            $removed = 0;
+
+            foreach ($array as &$item) {
+                if (self::expandForDescent($item)) {
+                    $removed += self::excludeByDotPath($item, $indexes);
+                }
+            }
+            unset($item);
+
+            return $removed;
+        }
+
+        if ($indexes === []) {
+            if (! array_key_exists($currentIndex, $array)) {
+                return 0;
+            }
+
+            unset($array[$currentIndex]);
+
+            return 1;
+        }
+
+        if (! array_key_exists($currentIndex, $array) || ! self::expandForDescent($array[$currentIndex])) {
+            return 0;
+        }
+
+        return self::excludeByDotPath($array[$currentIndex], $indexes);
+    }
+
+    /**
+     * Clears all children under the specified path for dotExcept(), expanding
+     * objects to an array view only along the descended path.
+     *
+     * @param array<array-key, mixed> $array
+     * @param list<string>            $indexes
+     */
+    private static function excludeChildrenByDotPath(array &$array, array $indexes): int
+    {
+        if ($indexes === []) {
+            $count = count($array);
+            $array = [];
+
+            return $count;
+        }
+
+        $currentIndex = array_shift($indexes);
+
+        if ($currentIndex === '*') {
+            $cleared = 0;
+
+            foreach ($array as &$item) {
+                if (self::expandForDescent($item)) {
+                    $cleared += self::excludeChildrenByDotPath($item, $indexes);
+                }
+            }
+            unset($item);
+
+            return $cleared;
+        }
+
+        if (! array_key_exists($currentIndex, $array) || ! self::expandForDescent($array[$currentIndex])) {
+            return 0;
+        }
+
+        return self::excludeChildrenByDotPath($array[$currentIndex], $indexes);
+    }
+
+    /**
+     * Projects matching paths from source into result with preserved structure.
+     *
+     * @param array<array-key, mixed>|object $source
+     * @param list<string>                   $indexes
+     * @param list<string>                   $prefix
+     * @param array<array-key, mixed>        $result
      */
     private static function projectByDotPath(
-        mixed $source,
+        array|object $source,
         array $indexes,
         array &$result,
         array $prefix = [],
     ): void {
         if ($indexes === []) {
+            // The whole node was selected: preserve it as-is. Output structure
+            // is only fabricated for the projection skeleton above this leaf.
             self::setByDotPath($result, $prefix, $source);
 
             return;
@@ -709,21 +856,35 @@ final class ArrayHelper
         $currentIndex = array_shift($indexes);
 
         if ($currentIndex === '*') {
-            if (! is_array($source)) {
-                return;
-            }
+            foreach (self::entries($source) as $key => $value) {
+                if (! self::isNavigable($value)) {
+                    if ($indexes === []) {
+                        self::setByDotPath($result, [...$prefix, (string) $key], $value);
+                    }
 
-            foreach ($source as $key => $value) {
+                    continue;
+                }
+
                 self::projectByDotPath($value, $indexes, $result, [...$prefix, (string) $key]);
             }
 
             return;
         }
 
-        if (! is_array($source) || ! array_key_exists($currentIndex, $source)) {
+        [$found, $value] = self::resolve($source, $currentIndex);
+
+        if (! $found) {
             return;
         }
 
-        self::projectByDotPath($source[$currentIndex], $indexes, $result, [...$prefix, $currentIndex]);
+        if (! self::isNavigable($value)) {
+            if ($indexes === []) {
+                self::setByDotPath($result, [...$prefix, $currentIndex], $value);
+            }
+
+            return;
+        }
+
+        self::projectByDotPath($value, $indexes, $result, [...$prefix, $currentIndex]);
     }
 }
