@@ -30,6 +30,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
     private static string $locale;
     private static string $languageTestPath;
     private string $originalLocale;
+    private ?string $tempSourceDir = null;
 
     /**
      * @var list<string>
@@ -57,6 +58,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
         parent::tearDown();
 
         $this->clearGeneratedFiles();
+        $this->clearSourceFixture();
         Locale::setDefault($this->originalLocale);
         config(App::class)->supportedLocales = $this->originalSupportedLocales;
     }
@@ -129,6 +131,39 @@ final class LocalizationFinderTest extends CIUnitTestCase
         command('lang:find --dir Translation --verbose');
 
         $this->assertStringContainsString($this->getActualTableWithBadKeys(), $this->getStreamFilterBuffer());
+    }
+
+    public function testShowNewSkipsKeysAlreadyTranslatedByFramework(): void
+    {
+        $this->makeLocaleDirectory();
+        $this->makeSourceFixture(
+            'ResolvedKeys',
+            "<?php\nlang('Errors.pageNotFound');\nlang('Errors.thisKeyIsBrandNew');\n",
+        );
+
+        command('lang:find --dir ResolvedKeys --show-new');
+
+        $buffer = $this->getStreamFilterBuffer();
+        $this->assertStringNotContainsString('Errors.pageNotFound', $buffer);
+        $this->assertStringContainsString('Errors.thisKeyIsBrandNew', $buffer);
+    }
+
+    public function testWriteSkipsKeysAlreadyTranslatedByFramework(): void
+    {
+        $this->makeLocaleDirectory();
+        $this->makeSourceFixture(
+            'ResolvedKeys',
+            "<?php\nlang('Errors.pageNotFound');\nlang('Errors.thisKeyIsBrandNew');\n",
+        );
+
+        command('lang:find --dir ResolvedKeys');
+
+        $generatedFile = self::$languageTestPath . self::$locale . '/Errors.php';
+        $this->assertFileExists($generatedFile);
+
+        $generatedKeys = require $generatedFile;
+        $this->assertArrayHasKey('thisKeyIsBrandNew', $generatedKeys);
+        $this->assertArrayNotHasKey('pageNotFound', $generatedKeys);
     }
 
     private function getActualTranslationOneKeys(): array
@@ -261,6 +296,32 @@ final class LocalizationFinderTest extends CIUnitTestCase
         @mkdir(self::$languageTestPath . self::$locale, 0777, true);
     }
 
+    private function makeSourceFixture(string $dirName, string $contents): void
+    {
+        $this->tempSourceDir = SUPPORTPATH . 'Services' . DIRECTORY_SEPARATOR . $dirName;
+        @mkdir($this->tempSourceDir, 0777, true);
+        file_put_contents($this->tempSourceDir . DIRECTORY_SEPARATOR . 'Source.php', $contents);
+    }
+
+    private function clearSourceFixture(): void
+    {
+        if ($this->tempSourceDir === null) {
+            return;
+        }
+
+        $sourceFile = $this->tempSourceDir . DIRECTORY_SEPARATOR . 'Source.php';
+
+        if (is_file($sourceFile)) {
+            unlink($sourceFile);
+        }
+
+        if (is_dir($this->tempSourceDir)) {
+            rmdir($this->tempSourceDir);
+        }
+
+        $this->tempSourceDir = null;
+    }
+
     private function clearGeneratedFiles(): void
     {
         if (is_file(self::$languageTestPath . self::$locale . '/TranslationOne.php')) {
@@ -273,6 +334,10 @@ final class LocalizationFinderTest extends CIUnitTestCase
 
         if (is_file(self::$languageTestPath . self::$locale . '/Translation-Four.php')) {
             unlink(self::$languageTestPath . self::$locale . '/Translation-Four.php');
+        }
+
+        if (is_file(self::$languageTestPath . self::$locale . '/Errors.php')) {
+            unlink(self::$languageTestPath . self::$locale . '/Errors.php');
         }
 
         if (is_dir(self::$languageTestPath . '/test_locale_incorrect')) {
