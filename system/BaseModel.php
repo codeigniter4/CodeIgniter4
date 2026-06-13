@@ -996,31 +996,30 @@ abstract class BaseModel
         $cleanValidationRules       = $this->cleanValidationRules;
         $this->cleanValidationRules = false;
 
-        if (is_array($set)) {
-            foreach ($set as &$row) {
-                $row = $this->transformDataToArray($row, 'insert');
+        try {
+            if (is_array($set)) {
+                foreach ($set as &$row) {
+                    $row = $this->transformDataToArray($row, 'insert');
 
-                // Validate every row.
-                if (! $this->skipValidation && ! $this->validate($row)) {
-                    // Restore $cleanValidationRules
-                    $this->cleanValidationRules = $cleanValidationRules;
+                    // Validate every row.
+                    if (! $this->skipValidation && ! $this->validate($row)) {
+                        return false;
+                    }
 
-                    return false;
+                    // Must be called first so we don't
+                    // strip out created_at values.
+                    $row = $this->doProtectFieldsForInsert($row);
+
+                    // Set created_at and updated_at with same time
+                    $date = $this->setDate();
+                    $row  = $this->setCreatedField($row, $date);
+                    $row  = $this->setUpdatedField($row, $date);
                 }
-
-                // Must be called first so we don't
-                // strip out created_at values.
-                $row = $this->doProtectFieldsForInsert($row);
-
-                // Set created_at and updated_at with same time
-                $date = $this->setDate();
-                $row  = $this->setCreatedField($row, $date);
-                $row  = $this->setUpdatedField($row, $date);
             }
+        } finally {
+            // Restore $cleanValidationRules
+            $this->cleanValidationRules = $cleanValidationRules;
         }
-
-        // Restore $cleanValidationRules
-        $this->cleanValidationRules = $cleanValidationRules;
 
         $eventData = ['data' => $set];
 

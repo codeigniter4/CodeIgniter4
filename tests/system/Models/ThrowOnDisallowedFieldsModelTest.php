@@ -18,6 +18,7 @@ use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Models\UserModel;
 use Tests\Support\Models\ValidModel;
 use Tests\Support\Models\WithoutAutoIncrementModel;
+use Throwable;
 
 /**
  * @internal
@@ -65,6 +66,27 @@ final class ThrowOnDisallowedFieldsModelTest extends LiveModelTestCase
                 'timezone' => 'UTC',
             ],
         ]);
+    }
+
+    public function testInsertBatchRestoresCleanValidationRulesWhenDisallowedFieldsThrow(): void
+    {
+        $model     = $this->createModel(UserModel::class)->throwOnDisallowedFields();
+        $exception = null;
+
+        try {
+            $model->insertBatch([
+                [
+                    'name'     => 'Disallowed Batch Restore',
+                    'email'    => 'disallowed-batch-restore@example.com',
+                    'country'  => 'US',
+                    'timezone' => 'UTC',
+                ],
+            ]);
+        } catch (Throwable $exception) {
+        }
+
+        $this->assertInstanceOf(DataException::class, $exception);
+        $this->assertTrue($this->getPrivateProperty($model, 'cleanValidationRules'));
     }
 
     public function testThrowOnDisallowedFieldsThrowsOnUpdateDisallowedFields(): void
