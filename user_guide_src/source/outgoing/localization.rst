@@ -317,6 +317,10 @@ After the operation, you need to translate the language keys yourself.
 The command is able to recognize nested keys normally ``File.array.nested.text``.
 Previously saved keys do not change.
 
+.. note:: Keys that ``lang()`` can already resolve (for example ``Errors.*``
+    from **system/Language**) are treated as already translated, so they are
+    neither listed by ``--show-new`` nor written into **app/Language**.
+
 .. code-block:: console
 
     php spark lang:find
