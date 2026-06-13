@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 use CodeIgniter\Cache\ResponseCache;
 use CodeIgniter\HTTP\CLIRequest;
-use CodeIgniter\HTTP\FormRequest;
 use CodeIgniter\HTTP\Header;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\SSEResponse;
@@ -27,7 +26,6 @@ use CodeIgniter\Entity\Cast\URICast;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Log\Handlers\ChromeLoggerHandler;
 use CodeIgniter\Security\CheckPhpIni;
-use CodeIgniter\Validation\ValidatedInput;
 use CodeIgniter\View\Table;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\View\Plugins;
@@ -101,6 +99,7 @@ return Architecture::define()
         'Filters'       => ['HTTP'],
         'Honeypot'      => ['Filters', 'HTTP'],
         'HTTP'          => ['Cookie', 'Files', 'I18n', 'Input', 'Security', 'URI'],
+        'Input'         => ['I18n'],
         'Images'        => ['Files', 'I18n'],
         'Lock'          => ['Cache'],
         'Model'         => ['Database', 'DataCaster', 'DataConverter', 'Entity', 'I18n', 'Pager', 'Validation'],
@@ -135,9 +134,6 @@ return Architecture::define()
     ])
     ->skipClassViolation(URICast::class, [
         URI::class,
-    ])
-    ->skipClassViolation(FormRequest::class, [
-        ValidatedInput::class,
     ])
     ->skipClassViolation(ChromeLoggerHandler::class, [
         ResponseInterface::class,

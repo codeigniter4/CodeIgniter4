@@ -11,11 +11,10 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Validation;
+namespace CodeIgniter\Input;
 
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\I18n\Time;
-use CodeIgniter\Input\InputData;
 use CodeIgniter\Test\CIUnitTestCase;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Enum\ColorEnum;

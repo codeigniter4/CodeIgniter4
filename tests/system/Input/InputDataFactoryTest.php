@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\Input;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Validation\ValidatedInput;
 use PHPUnit\Framework\Attributes\Group;
 
 /**

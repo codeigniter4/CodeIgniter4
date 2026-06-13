@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Exceptions\RuntimeException;
-use CodeIgniter\Validation\ValidatedInput;
+use CodeIgniter\Input\ValidatedInput;
 use ReflectionNamedType;
 use ReflectionParameter;
 
