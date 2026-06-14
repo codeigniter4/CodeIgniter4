@@ -484,7 +484,7 @@ Typed Validated Input
 ---------------------
 
 ``getValidatedInput()`` returns the same validated data as a
-``CodeIgniter\Validation\ValidatedInput`` object. Use it after validation
+``CodeIgniter\Input\ValidatedInput`` object. Use it after validation
 succeeds when you want to read common controller values as strings, integers,
 floats, booleans, arrays, dates, or enums:
 

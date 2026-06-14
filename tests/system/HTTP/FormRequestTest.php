@@ -15,10 +15,10 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\RuntimeException;
+use CodeIgniter\Input\ValidatedInput;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
-use CodeIgniter\Validation\ValidatedInput;
 use Config\App;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;

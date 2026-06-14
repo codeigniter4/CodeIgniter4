@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Input;
 
-use CodeIgniter\Validation\ValidatedInput;
-
 /**
  * @see \CodeIgniter\Input\InputDataFactoryTest
  */

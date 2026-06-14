@@ -11,11 +11,10 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Validation;
+namespace CodeIgniter\Input;
 
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\I18n\Time;
-use CodeIgniter\Input\InputData;
 use DateTimeZone;
 use Exception;
 use ReflectionEnum;
@@ -27,7 +26,7 @@ use UnitEnum;
  * This class is stricter than InputData: missing values may use defaults and
  * null values remain null, but invalid present values throw.
  *
- * @see \CodeIgniter\Validation\ValidatedInputTest
+ * @see \CodeIgniter\Input\ValidatedInputTest
  */
 class ValidatedInput extends InputData
 {

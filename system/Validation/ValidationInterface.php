@@ -15,6 +15,7 @@ namespace CodeIgniter\Validation;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\Input\ValidatedInput;
 
 /**
  * Expected behavior of a validator
