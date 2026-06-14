@@ -322,6 +322,7 @@
 <li><p><strong>API:</strong> Fixed a bug in Transformers where the root request’s <code class="docutils literal notranslate"><span class="pre">fields</span></code> and <code class="docutils literal notranslate"><span class="pre">include</span></code> query parameters leaked into nested transformers created inside <code class="docutils literal notranslate"><span class="pre">include*()</span></code> methods, causing incorrect field filtering, unexpected includes, or infinite recursion.</p></li>
 <li><p><strong>Commands:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">lang:find</span></code> treated translation keys already provided by the framework or another namespace (such as <code class="docutils literal notranslate"><span class="pre">Errors.*</span></code> in <code class="docutils literal notranslate"><span class="pre">system/Language</span></code>) as new, listing them under <code class="docutils literal notranslate"><span class="pre">--show-new</span></code> and writing untranslated placeholders into <code class="docutils literal notranslate"><span class="pre">app/Language</span></code> that overrode the existing translations.</p></li>
 <li><p><strong>Database:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">updateBatch()</span></code> could be called after Query Builder <code class="docutils literal notranslate"><span class="pre">where()</span></code> conditions, even though it’s not supported. In this situation, now the <code class="docutils literal notranslate"><span class="pre">DatabaseException</span></code> is thrown.</p></li>
+<li><p><strong>Filters:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">InvalidChars</span></code> filter where invalid UTF-8 or control characters in array keys were not checked.</p></li>
 <li><p><strong>HTTP:</strong> Fixed a bug where the User Agent library reported Safari’s WebKit version instead of the browser version from the <code class="docutils literal notranslate"><span class="pre">Version</span></code> token.</p></li>
 <li><p><strong>Model:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">Model::objectToRawArray()</span></code> where the <code class="docutils literal notranslate"><span class="pre">$recursive</span></code> parameter was ignored.</p></li>
 <li><p><strong>Testing:</strong> Fixed a bug where using <code class="docutils literal notranslate"><span class="pre">MockInputOutput</span></code> within a test that also uses <code class="docutils literal notranslate"><span class="pre">StreamFilterTrait</span></code> tore down the trait’s stream filters, so CLI output produced after the <code class="docutils literal notranslate"><span class="pre">MockInputOutput</span></code> interaction (such as in <code class="docutils literal notranslate"><span class="pre">tearDown()</span></code>) was no longer captured and leaked to the console.</p></li>
@@ -344,7 +345,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jun 12, 2026.
+      <span class="lastupdated">Last updated on Jun 14, 2026.
       </span></p>
   </div>
 
