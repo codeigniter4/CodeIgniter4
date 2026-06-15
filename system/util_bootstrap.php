@@ -23,14 +23,13 @@ ini_set('display_startup_errors', '1');
  * DEFINE ENVIRONMENT
  * ---------------------------------------------------------------
  *
- * As this bootstrap file is primarily used by internal scripts
- * across the framework and other CodeIgniter projects, we need
- * to make sure it recognizes that we're in development.
+ * The environment defaults to development. A caller may set
+ * $_SERVER['CI_ENVIRONMENT'] before including this file to override it.
  */
 
-$_SERVER['CI_ENVIRONMENT'] = 'development';
-define('ENVIRONMENT', 'development');
-defined('CI_DEBUG') || define('CI_DEBUG', true);
+$_SERVER['CI_ENVIRONMENT'] ??= 'development';
+defined('ENVIRONMENT') || define('ENVIRONMENT', $_SERVER['CI_ENVIRONMENT']);
+defined('CI_DEBUG')    || define('CI_DEBUG', true);
 
 /*
  * ---------------------------------------------------------------

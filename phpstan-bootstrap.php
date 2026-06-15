@@ -1,5 +1,9 @@
 <?php
 
+// Analyse under the testing environment so the Tests\Support namespace is
+// registered and its migrations are discovered for schema introspection.
+$_SERVER['CI_ENVIRONMENT'] = 'testing';
+
 require __DIR__ . '/system/util_bootstrap.php';
 
 defined('OCI_COMMIT_ON_SUCCESS') || define('OCI_COMMIT_ON_SUCCESS', 32);

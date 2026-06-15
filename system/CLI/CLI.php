@@ -707,7 +707,7 @@ class CLI
     public static function hasColorSupport($resource): bool
     {
         // Follow https://no-color.org/
-        if (isset($_SERVER['NO_COLOR']) || getenv('NO_COLOR') !== false) {
+        if (isset($_SERVER['NO_COLOR']) || getenv('NO_COLOR') !== false) { // @phpstan-ignore codeigniter.superglobalsOffsetAccess (reads live $_SERVER, not the snapshot service)
             return false;
         }
 
@@ -718,7 +718,7 @@ class CLI
         if (is_windows()) {
             // @codeCoverageIgnoreStart
             return static::streamSupports('sapi_windows_vt100_support', $resource)
-                || isset($_SERVER['ANSICON'])
+                || isset($_SERVER['ANSICON']) // @phpstan-ignore codeigniter.superglobalsOffsetAccess (reads live $_SERVER, not the snapshot service)
                 || getenv('ANSICON') !== false
                 || getenv('ConEmuANSI') === 'ON'
                 || getenv('TERM') === 'xterm';
@@ -887,7 +887,7 @@ class CLI
      */
     protected static function parseCommandLine()
     {
-        $args = $_SERVER['argv'] ?? [];
+        $args = $_SERVER['argv'] ?? []; // @phpstan-ignore codeigniter.superglobalsOffsetAccess (reads live $_SERVER, not the snapshot service)
         array_shift($args); // scrap invoking program
         $optionValue = false;
 
