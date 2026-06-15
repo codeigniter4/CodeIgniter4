@@ -321,6 +321,8 @@
 <ul class="simple">
 <li><p><strong>API:</strong> Fixed a bug in Transformers where the root request’s <code class="docutils literal notranslate"><span class="pre">fields</span></code> and <code class="docutils literal notranslate"><span class="pre">include</span></code> query parameters leaked into nested transformers created inside <code class="docutils literal notranslate"><span class="pre">include*()</span></code> methods, causing incorrect field filtering, unexpected includes, or infinite recursion.</p></li>
 <li><p><strong>Commands:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">make:model</span> <span class="pre">--return</span> <span class="pre">entity</span></code> did not preserve sub-namespaces when generating the related Entity class.</p></li>
+<li><p><strong>Common:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">env()</span></code> where a <code class="docutils literal notranslate"><span class="pre">TypeError</span></code> could be thrown when non-string values were passed.</p></li>
+<li><p><strong>Common:</strong> Fixed <code class="docutils literal notranslate"><span class="pre">esc()</span></code> to propagate encoding correctly and prevent reference leaks.</p></li>
 <li><p><strong>Commands:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">lang:find</span></code> treated translation keys already provided by the framework or another namespace (such as <code class="docutils literal notranslate"><span class="pre">Errors.*</span></code> in <code class="docutils literal notranslate"><span class="pre">system/Language</span></code>) as new, listing them under <code class="docutils literal notranslate"><span class="pre">--show-new</span></code> and writing untranslated placeholders into <code class="docutils literal notranslate"><span class="pre">app/Language</span></code> that overrode the existing translations.</p></li>
 <li><p><strong>Database:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">updateBatch()</span></code> could be called after Query Builder <code class="docutils literal notranslate"><span class="pre">where()</span></code> conditions, even though it’s not supported. In this situation, now the <code class="docutils literal notranslate"><span class="pre">DatabaseException</span></code> is thrown.</p></li>
 <li><p><strong>Filters:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">InvalidChars</span></code> filter where invalid UTF-8 or control characters in array keys were not checked.</p></li>
@@ -347,7 +349,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jun 14, 2026.
+      <span class="lastupdated">Last updated on Jun 15, 2026.
       </span></p>
   </div>
 
