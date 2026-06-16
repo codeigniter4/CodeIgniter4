@@ -419,6 +419,50 @@ final class SelectTest extends CIUnitTestCase
         $this->assertSameSql('SELECT * FROM "users"', $builder->getCompiledSelect());
     }
 
+    public function testSharedLock(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $builder->where('id', 1)->orderBy('id', 'ASC')->limit(1)->sharedLock();
+
+        $expected = 'SELECT * FROM "users" WHERE "id" = 1 ORDER BY "id" ASC  LIMIT 1 FOR SHARE';
+
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
+    }
+
+    public function testSharedLockPersistsWhenSelectIsNotReset(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $builder->sharedLock();
+
+        $expected = 'SELECT * FROM "users" FOR SHARE';
+
+        $this->assertSameSql($expected, $builder->getCompiledSelect(false));
+        $this->assertSameSql($expected, $builder->getCompiledSelect(false));
+    }
+
+    public function testSharedLockResetsWithSelect(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $builder->sharedLock();
+
+        $this->assertSameSql('SELECT * FROM "users" FOR SHARE', $builder->getCompiledSelect());
+        $this->assertSameSql('SELECT * FROM "users"', $builder->getCompiledSelect());
+    }
+
+    public function testSelectLockLastCallWins(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $this->assertSameSql('SELECT * FROM "users" FOR UPDATE', $builder->sharedLock()->lockForUpdate()->getCompiledSelect());
+
+        $builder = new BaseBuilder('users', $this->db);
+
+        $this->assertSameSql('SELECT * FROM "users" FOR SHARE', $builder->lockForUpdate()->sharedLock()->getCompiledSelect());
+    }
+
     public function testLockForUpdateThrowsExceptionWithUnion(): void
     {
         $builder = new BaseBuilder('users', $this->db);
@@ -427,6 +471,16 @@ final class SelectTest extends CIUnitTestCase
         $this->expectExceptionMessage('Query Builder does not support lockForUpdate() with union() or unionAll().');
 
         $builder->union(new BaseBuilder('jobs', $this->db))->lockForUpdate()->getCompiledSelect();
+    }
+
+    public function testSharedLockThrowsExceptionWithUnion(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('Query Builder does not support sharedLock() with union() or unionAll().');
+
+        $builder->union(new BaseBuilder('jobs', $this->db))->sharedLock()->getCompiledSelect();
     }
 
     public function testLockForUpdateThrowsExceptionWithSQLSRVUnion(): void
@@ -439,6 +493,18 @@ final class SelectTest extends CIUnitTestCase
         $this->expectExceptionMessage('Query Builder does not support lockForUpdate() with union() or unionAll().');
 
         $builder->union(new SQLSRVBuilder('jobs', $this->db))->lockForUpdate()->getCompiledSelect();
+    }
+
+    public function testSharedLockThrowsExceptionWithSQLSRVUnion(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $builder = new SQLSRVBuilder('users', $this->db);
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('Query Builder does not support sharedLock() with union() or unionAll().');
+
+        $builder->union(new SQLSRVBuilder('jobs', $this->db))->sharedLock()->getCompiledSelect();
     }
 
     public function testLockForUpdateThrowsExceptionOnMySQLiSubquery(): void
@@ -456,6 +522,32 @@ final class SelectTest extends CIUnitTestCase
         $builder->lockForUpdate()->getCompiledSelect();
     }
 
+    public function testSharedLockThrowsExceptionOnMySQLiSubquery(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'MySQLi']);
+
+        $subquery = new MySQLiBuilder('users', $this->db);
+        $builder  = new MySQLiBuilder('jobs', $this->db);
+
+        $builder->fromSubquery($subquery, 'users_1');
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('MySQLi does not support sharedLock() with fromSubquery().');
+
+        $builder->sharedLock()->getCompiledSelect();
+    }
+
+    public function testSharedLockWithMySQLi(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'MySQLi']);
+
+        $builder = new MySQLiBuilder('users', $this->db);
+
+        $expected = 'SELECT * FROM "users" LOCK IN SHARE MODE';
+
+        $this->assertSameSql($expected, $builder->sharedLock()->getCompiledSelect());
+    }
+
     public function testLockForUpdateWithOCI8(): void
     {
         $builder = new OCI8Builder('users', $this->db);
@@ -463,6 +555,16 @@ final class SelectTest extends CIUnitTestCase
         $expected = 'SELECT * FROM "users" FOR UPDATE';
 
         $this->assertSameSql($expected, $builder->lockForUpdate()->getCompiledSelect());
+    }
+
+    public function testSharedLockThrowsExceptionOnOCI8(): void
+    {
+        $builder = new OCI8Builder('users', $this->db);
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('OCI8 does not support sharedLock().');
+
+        $builder->sharedLock()->getCompiledSelect();
     }
 
     public function testLockForUpdateThrowsExceptionWithOCI8Limit(): void
@@ -475,7 +577,7 @@ final class SelectTest extends CIUnitTestCase
         $builder->limit(1)->lockForUpdate()->getCompiledSelect();
     }
 
-    #[DataProvider('provideLockForUpdateUnsupportedSelectClauses')]
+    #[DataProvider('provideSelectLockUnsupportedSelectClauses')]
     public function testLockForUpdateThrowsExceptionWithOCI8SelectClause(string $clause): void
     {
         $builder = new OCI8Builder('users', $this->db);
@@ -483,7 +585,7 @@ final class SelectTest extends CIUnitTestCase
         $this->expectException(DatabaseException::class);
         $this->expectExceptionMessage('OCI8 does not support lockForUpdate() with distinct(), groupBy(), having(), or aggregate helper selections.');
 
-        $this->applyLockForUpdateUnsupportedClause($builder, $clause)
+        $this->applySelectLockUnsupportedClause($builder, $clause)
             ->lockForUpdate()
             ->getCompiledSelect();
     }
@@ -497,7 +599,16 @@ final class SelectTest extends CIUnitTestCase
         $this->assertSameSql($expected, $builder->lockForUpdate()->getCompiledSelect());
     }
 
-    #[DataProvider('provideLockForUpdateUnsupportedSelectClauses')]
+    public function testSharedLockWithPostgre(): void
+    {
+        $builder = new PostgreBuilder('users', $this->db);
+
+        $expected = 'SELECT * FROM "users" FOR SHARE';
+
+        $this->assertSameSql($expected, $builder->sharedLock()->getCompiledSelect());
+    }
+
+    #[DataProvider('provideSelectLockUnsupportedSelectClauses')]
     public function testLockForUpdateThrowsExceptionWithPostgreSelectClause(string $clause): void
     {
         $builder = new PostgreBuilder('users', $this->db);
@@ -505,15 +616,28 @@ final class SelectTest extends CIUnitTestCase
         $this->expectException(DatabaseException::class);
         $this->expectExceptionMessage('Postgre does not support lockForUpdate() with distinct(), groupBy(), having(), or aggregate helper selections.');
 
-        $this->applyLockForUpdateUnsupportedClause($builder, $clause)
+        $this->applySelectLockUnsupportedClause($builder, $clause)
             ->lockForUpdate()
+            ->getCompiledSelect();
+    }
+
+    #[DataProvider('provideSelectLockUnsupportedSelectClauses')]
+    public function testSharedLockThrowsExceptionWithPostgreSelectClause(string $clause): void
+    {
+        $builder = new PostgreBuilder('users', $this->db);
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('Postgre does not support sharedLock() with distinct(), groupBy(), having(), or aggregate helper selections.');
+
+        $this->applySelectLockUnsupportedClause($builder, $clause)
+            ->sharedLock()
             ->getCompiledSelect();
     }
 
     /**
      * @return iterable<string, list<string>>
      */
-    public static function provideLockForUpdateUnsupportedSelectClauses(): iterable
+    public static function provideSelectLockUnsupportedSelectClauses(): iterable
     {
         yield 'distinct' => ['distinct'];
 
@@ -524,7 +648,7 @@ final class SelectTest extends CIUnitTestCase
         yield 'aggregate selection' => ['aggregate'];
     }
 
-    private function applyLockForUpdateUnsupportedClause(BaseBuilder $builder, string $clause): BaseBuilder
+    private function applySelectLockUnsupportedClause(BaseBuilder $builder, string $clause): BaseBuilder
     {
         return match ($clause) {
             'distinct'  => $builder->distinct(),
@@ -545,6 +669,16 @@ final class SelectTest extends CIUnitTestCase
         $builder->lockForUpdate()->getCompiledSelect();
     }
 
+    public function testSharedLockThrowsExceptionOnSQLite3(): void
+    {
+        $builder = new SQLite3Builder('users', $this->db);
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('SQLite3 does not support sharedLock().');
+
+        $builder->sharedLock()->getCompiledSelect();
+    }
+
     public function testLockForUpdateWithSQLSRV(): void
     {
         $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
@@ -556,6 +690,17 @@ final class SelectTest extends CIUnitTestCase
         $this->assertSameSql($expected, $builder->lockForUpdate()->getCompiledSelect());
     }
 
+    public function testSharedLockWithSQLSRV(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $builder = new SQLSRVBuilder('users', $this->db);
+
+        $expected = 'SELECT * FROM "test"."dbo"."users" WITH (HOLDLOCK, ROWLOCK)';
+
+        $this->assertSameSql($expected, $builder->sharedLock()->getCompiledSelect());
+    }
+
     public function testLockForUpdateWithSQLSRVAlias(): void
     {
         $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
@@ -565,6 +710,17 @@ final class SelectTest extends CIUnitTestCase
         $expected = 'SELECT * FROM "test"."dbo"."users" "u" WITH (UPDLOCK, ROWLOCK)';
 
         $this->assertSameSql($expected, $builder->lockForUpdate()->getCompiledSelect());
+    }
+
+    public function testSharedLockWithSQLSRVAlias(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $builder = new SQLSRVBuilder('users u', $this->db);
+
+        $expected = 'SELECT * FROM "test"."dbo"."users" "u" WITH (HOLDLOCK, ROWLOCK)';
+
+        $this->assertSameSql($expected, $builder->sharedLock()->getCompiledSelect());
     }
 
     public function testLockForUpdateWithSQLSRVLimit(): void
@@ -593,6 +749,19 @@ final class SelectTest extends CIUnitTestCase
         $this->assertSameSql($expected, $builder->getCompiledSelect());
     }
 
+    public function testSharedLockWithSQLSRVJoin(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $builder = new SQLSRVBuilder('jobs', $this->db);
+
+        $builder->join('users u', 'u.id = jobs.id', 'LEFT')->sharedLock();
+
+        $expected = 'SELECT * FROM "test"."dbo"."jobs" WITH (HOLDLOCK, ROWLOCK) LEFT JOIN "test"."dbo"."users" "u" ON "u"."id" = "jobs"."id"';
+
+        $this->assertSameSql($expected, $builder->getCompiledSelect());
+    }
+
     public function testLockForUpdateThrowsExceptionOnSQLSRVWithoutFromTable(): void
     {
         $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
@@ -605,6 +774,20 @@ final class SelectTest extends CIUnitTestCase
         $this->expectExceptionMessage('SQLSRV does not support lockForUpdate() without a FROM table.');
 
         $builder->lockForUpdate()->getCompiledSelect();
+    }
+
+    public function testSharedLockThrowsExceptionOnSQLSRVWithoutFromTable(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $builder = (new SQLSRVBuilder('users', $this->db))
+            ->from([], true)
+            ->select('1', false);
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('SQLSRV does not support sharedLock() without a FROM table.');
+
+        $builder->sharedLock()->getCompiledSelect();
     }
 
     public function testLockForUpdateThrowsExceptionOnSQLSRVSubquery(): void
@@ -620,6 +803,21 @@ final class SelectTest extends CIUnitTestCase
         $this->expectExceptionMessage('SQLSRV does not support lockForUpdate() on subqueries.');
 
         $builder->lockForUpdate()->getCompiledSelect();
+    }
+
+    public function testSharedLockThrowsExceptionOnSQLSRVSubquery(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $subquery = new SQLSRVBuilder('users', $this->db);
+        $builder  = new SQLSRVBuilder('jobs', $this->db);
+
+        $builder->fromSubquery($subquery, 'users_1');
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('SQLSRV does not support sharedLock() on subqueries.');
+
+        $builder->sharedLock()->getCompiledSelect();
     }
 
     public function testSelectSubquery(): void

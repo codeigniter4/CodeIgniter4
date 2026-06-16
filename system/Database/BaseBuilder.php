@@ -33,6 +33,9 @@ class BaseBuilder
 {
     use ConditionalTrait;
 
+    protected const SELECT_LOCK_FOR_UPDATE = 'forUpdate';
+    protected const SELECT_LOCK_SHARED     = 'shared';
+
     /**
      * Reset DELETE data flag
      *
@@ -112,9 +115,9 @@ class BaseBuilder
     protected $QBOffset = false;
 
     /**
-     * QB FOR UPDATE flag
+     * QB SELECT lock mode
      */
-    protected bool $QBLockForUpdate = false;
+    protected ?string $QBSelectLock = null;
 
     /**
      * QB SELECT aggregate helper flag
@@ -1994,7 +1997,17 @@ class BaseBuilder
      */
     public function lockForUpdate(): static
     {
-        $this->QBLockForUpdate = true;
+        $this->QBSelectLock = self::SELECT_LOCK_FOR_UPDATE;
+
+        return $this;
+    }
+
+    /**
+     * Locks the selected rows in shared mode.
+     */
+    public function sharedLock(): static
+    {
+        $this->QBSelectLock = self::SELECT_LOCK_SHARED;
 
         return $this;
     }
@@ -2262,18 +2275,18 @@ class BaseBuilder
      */
     protected function compileExists(): string
     {
-        // ORDER BY and FOR UPDATE are unnecessary for checking row existence,
+        // ORDER BY and SELECT locks are unnecessary for checking row existence,
         // and can produce invalid or surprising SQL on some drivers.
         $orderBy       = $this->QBOrderBy;
         $limit         = $this->QBLimit;
         $offset        = $this->QBOffset;
-        $lockForUpdate = $this->QBLockForUpdate;
+        $selectLock    = $this->QBSelectLock;
         $select        = $this->QBSelect;
         $noEscape      = $this->QBNoEscape;
         $needsSubquery = $this->QBSelectUsesAggregate || $this->QBUnion !== [] || $this->QBGroupBy !== [] || $this->QBHaving !== [] || $this->QBOffset !== false;
 
-        $this->QBOrderBy       = null;
-        $this->QBLockForUpdate = false;
+        $this->QBOrderBy    = null;
+        $this->QBSelectLock = null;
 
         if (! $needsSubquery && $this->QBLimit !== 0) {
             $this->QBLimit = 1;
@@ -2291,12 +2304,12 @@ class BaseBuilder
 
             return $this->compileSelect('SELECT 1');
         } finally {
-            $this->QBOrderBy       = $orderBy;
-            $this->QBLimit         = $limit;
-            $this->QBOffset        = $offset;
-            $this->QBLockForUpdate = $lockForUpdate;
-            $this->QBSelect        = $select;
-            $this->QBNoEscape      = $noEscape;
+            $this->QBOrderBy    = $orderBy;
+            $this->QBLimit      = $limit;
+            $this->QBOffset     = $offset;
+            $this->QBSelectLock = $selectLock;
+            $this->QBSelect     = $select;
+            $this->QBNoEscape   = $noEscape;
         }
     }
 
@@ -2320,11 +2333,11 @@ class BaseBuilder
         }
 
         // We cannot use a LIMIT when getting the single row COUNT(*) result
-        $limit         = $this->QBLimit;
-        $lockForUpdate = $this->QBLockForUpdate;
+        $limit      = $this->QBLimit;
+        $selectLock = $this->QBSelectLock;
 
-        $this->QBLimit         = false;
-        $this->QBLockForUpdate = false;
+        $this->QBLimit      = false;
+        $this->QBSelectLock = null;
 
         try {
             if ($this->QBDistinct === true || ! empty($this->QBGroupBy)) {
@@ -2339,7 +2352,7 @@ class BaseBuilder
                 $sql = $this->compileSelect($this->countString . $this->db->protectIdentifiers('numrows'));
             }
         } finally {
-            $this->QBLockForUpdate = $lockForUpdate;
+            $this->QBSelectLock = $selectLock;
         }
 
         if ($this->testMode) {
@@ -3755,7 +3768,7 @@ class BaseBuilder
             $sql = $this->_limit($sql . "\n");
         }
 
-        $sql .= $this->compileLockForUpdate();
+        $sql .= $this->compileSelectLock();
 
         return $this->unionInjection($sql);
     }
@@ -3763,13 +3776,36 @@ class BaseBuilder
     /**
      * Compile the SELECT lock clause.
      */
-    protected function compileLockForUpdate(): string
+    protected function compileSelectLock(): string
     {
-        if ($this->QBLockForUpdate && $this->QBUnion !== []) {
-            throw new DatabaseException('Query Builder does not support lockForUpdate() with union() or unionAll().');
+        if ($this->QBSelectLock === null) {
+            return '';
         }
 
-        return $this->QBLockForUpdate ? "\nFOR UPDATE" : '';
+        if ($this->QBUnion !== []) {
+            throw new DatabaseException(sprintf(
+                'Query Builder does not support %s() with union() or unionAll().',
+                $this->selectLockMethod(),
+            ));
+        }
+
+        return match ($this->QBSelectLock) {
+            self::SELECT_LOCK_FOR_UPDATE => "\nFOR UPDATE",
+            self::SELECT_LOCK_SHARED     => "\nFOR SHARE",
+            default                      => throw new DatabaseException('Query Builder has an invalid SELECT lock mode.'),
+        };
+    }
+
+    /**
+     * Returns the public method name for the current SELECT lock mode.
+     */
+    protected function selectLockMethod(): string
+    {
+        return match ($this->QBSelectLock) {
+            self::SELECT_LOCK_FOR_UPDATE => 'lockForUpdate',
+            self::SELECT_LOCK_SHARED     => 'sharedLock',
+            default                      => 'selectLock',
+        };
     }
 
     /**
@@ -4115,7 +4151,7 @@ class BaseBuilder
             'QBDistinct'            => false,
             'QBLimit'               => false,
             'QBOffset'              => false,
-            'QBLockForUpdate'       => false,
+            'QBSelectLock'          => null,
             'QBSelectUsesAggregate' => false,
             'QBUnion'               => [],
         ]);

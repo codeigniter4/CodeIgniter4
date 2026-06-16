@@ -216,10 +216,14 @@ class Builder extends BaseBuilder
     /**
      * Compile the SELECT lock clause.
      */
-    protected function compileLockForUpdate(): string
+    protected function compileSelectLock(): string
     {
-        if (! $this->QBLockForUpdate) {
+        if ($this->QBSelectLock === null) {
             return '';
+        }
+
+        if ($this->QBSelectLock === self::SELECT_LOCK_SHARED) {
+            throw new DatabaseException('OCI8 does not support sharedLock().');
         }
 
         if ($this->QBLimit !== false || $this->QBOffset) {
@@ -230,7 +234,7 @@ class Builder extends BaseBuilder
             throw new DatabaseException('OCI8 does not support lockForUpdate() with distinct(), groupBy(), having(), or aggregate helper selections.');
         }
 
-        return parent::compileLockForUpdate();
+        return parent::compileSelectLock();
     }
 
     /**

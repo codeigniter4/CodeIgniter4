@@ -69,6 +69,19 @@ final class CountTest extends CIUnitTestCase
         $this->assertSameSql('SELECT * FROM "jobs" WHERE "id" > 3 FOR UPDATE', $builder->getCompiledSelect(false));
     }
 
+    public function testCountAllResultsDoesNotUseSharedLock(): void
+    {
+        $builder = new BaseBuilder('jobs', $this->db);
+        $builder->testMode();
+
+        $answer = $builder->where('id >', 3)->sharedLock()->countAllResults(false);
+
+        $expectedSQL = 'SELECT COUNT(*) AS "numrows" FROM "jobs" WHERE "id" > :id:';
+
+        $this->assertSameSql($expectedSQL, $answer);
+        $this->assertSameSql('SELECT * FROM "jobs" WHERE "id" > 3 FOR SHARE', $builder->getCompiledSelect(false));
+    }
+
     public function testCountAllResultsWithSQLSRVDoesNotUseLockForUpdate(): void
     {
         $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
@@ -82,6 +95,21 @@ final class CountTest extends CIUnitTestCase
 
         $this->assertSameSql($expectedSQL, $answer);
         $this->assertSameSql('SELECT * FROM "test"."dbo"."jobs" WITH (UPDLOCK, ROWLOCK) WHERE "id" > 3', $builder->getCompiledSelect(false));
+    }
+
+    public function testCountAllResultsWithSQLSRVDoesNotUseSharedLock(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $builder = new SQLSRVBuilder('jobs', $this->db);
+        $builder->testMode();
+
+        $answer = $builder->where('id >', 3)->sharedLock()->countAllResults(false);
+
+        $expectedSQL = 'SELECT COUNT(*) AS "numrows" FROM "test"."dbo"."jobs" WHERE "id" > :id:';
+
+        $this->assertSameSql($expectedSQL, $answer);
+        $this->assertSameSql('SELECT * FROM "test"."dbo"."jobs" WITH (HOLDLOCK, ROWLOCK) WHERE "id" > 3', $builder->getCompiledSelect(false));
     }
 
     public function testCountAllResultsWithGroupBy(): void

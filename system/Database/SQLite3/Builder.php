@@ -58,10 +58,13 @@ class Builder extends BaseBuilder
     /**
      * Compile the SELECT lock clause.
      */
-    protected function compileLockForUpdate(): string
+    protected function compileSelectLock(): string
     {
-        if ($this->QBLockForUpdate) {
-            throw new DatabaseException('SQLite3 does not support lockForUpdate().');
+        if ($this->QBSelectLock !== null) {
+            throw new DatabaseException(sprintf(
+                'SQLite3 does not support %s().',
+                $this->selectLockMethod(),
+            ));
         }
 
         return '';
