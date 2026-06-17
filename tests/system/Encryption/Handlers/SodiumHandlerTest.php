@@ -18,6 +18,7 @@ use CodeIgniter\Encryption\Exceptions\EncryptionException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
 use PHPUnit\Framework\Attributes\Group;
+use SodiumException;
 
 /**
  * @internal
@@ -150,5 +151,79 @@ final class SodiumHandlerTest extends CIUnitTestCase
         $this->assertSame($message2, $encrypter->decrypt($encoded2, ['key' => $originalKey]));
 
         $this->assertSame($message, $encrypter->decrypt($encoded, ['key' => $differentKey]));
+    }
+
+    public function testBug0IssetThrowsTypeError(): void
+    {
+        $this->expectException(EncryptionException::class);
+        /** @var \CodeIgniter\Encryption\Handlers\SodiumHandler $encrypter */
+        $encrypter = $this->encryption->initialize($this->config);
+
+        $encrypter->encrypt('message', ['key' => null]);
+    }
+
+    public function testBug1MemzeroZeroesInternalKey(): void
+    {
+        /** @var \CodeIgniter\Encryption\Handlers\SodiumHandler $encrypter */
+        $encrypter   = $this->encryption->initialize($this->config);
+        $originalKey = $encrypter->key;// @phpstan-ignore-line
+
+        $encrypter->encrypt('message');
+
+        $this->assertSame($originalKey, $encrypter->key);// @phpstan-ignore-line
+    }
+
+    public function testBug2InvalidKeyLengthThrowsSodiumException(): void
+    {
+        $this->expectException(EncryptionException::class);
+        /** @var \CodeIgniter\Encryption\Handlers\SodiumHandler $encrypter */
+        $encrypter = $this->encryption->initialize($this->config);
+
+        $encrypter->encrypt('message', str_repeat('a', 31));
+    }
+
+    public function testBug3InvalidPaddingThrowsSodiumException(): void
+    {
+        $this->expectException(SodiumException::class);
+        /** @var \CodeIgniter\Encryption\Handlers\SodiumHandler $encrypter */
+        $encrypter = $this->encryption->initialize($this->config);
+
+        $ciphertext = $encrypter->encrypt('message', ['blockSize' => 16]);
+
+        $encrypter->decrypt($ciphertext, ['blockSize' => 32]);
+    }
+
+    public function testBug4OriginalDataIsNotZeroed(): void
+    {
+        $encrypter = $this->encryption->initialize($this->config);
+
+        $message = 'SuperSecretMessage';
+        $encrypter->encrypt($message);
+
+        $this->assertSame('SuperSecretMessage', $message);
+    }
+
+    public function testDecryptTamperedMessageThrowsException(): void
+    {
+        $this->expectException(EncryptionException::class);
+        $encrypter = $this->encryption->initialize($this->config);
+
+        $ciphertext = $encrypter->encrypt('message');
+
+        // Zmiana jednego znaku w szyfrogramie w celu uszkodzenia podpisu
+        $ciphertext[0] = $ciphertext[0] === 'a' ? 'b' : 'a';
+
+        $encrypter->decrypt($ciphertext);
+    }
+
+    public function testOverrideKeyAsStringWorks(): void
+    {
+        $encrypter = $this->encryption->initialize($this->config);
+        $newKey    = sodium_crypto_secretbox_keygen();
+
+        $ciphertext = $encrypter->encrypt('message', $newKey);
+        $decrypted  = $encrypter->decrypt($ciphertext, $newKey);
+
+        $this->assertSame('message', $decrypted);
     }
 }
