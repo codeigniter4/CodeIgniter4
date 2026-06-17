@@ -27,6 +27,7 @@ use Config\Security as SecurityConfig;
 use ErrorException;
 use JsonException;
 use SensitiveParameter;
+use ValueError;
 
 /**
  * Class Security
@@ -419,7 +420,7 @@ class Security implements SecurityInterface
 
         try {
             return bin2hex((string) hex2bin($value) ^ (string) hex2bin($key));
-        } catch (ErrorException $e) {
+        } catch (ErrorException|ValueError $e) {
             // "hex2bin(): Hexadecimal input string must have an even length"
             throw new InvalidArgumentException($e->getMessage(), $e->getCode(), $e);
         }

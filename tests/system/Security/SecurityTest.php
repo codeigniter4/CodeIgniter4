@@ -15,6 +15,7 @@ namespace CodeIgniter\Security;
 
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
@@ -418,5 +419,16 @@ final class SecurityTest extends CIUnitTestCase
         yield 'missing_token_in_body' => [self::createIncomingRequest()->setBody('other=value&another=test')];
 
         yield 'invalid_form_data' => [self::createIncomingRequest()->setBody('csrf_test_name[]=invalid')];
+    }
+
+    public function testDerandomizeThrowsInvalidArgumentExceptionOnInvalidHex(): void
+    {
+        $security    = $this->createMockSecurity();
+        $derandomize = self::getPrivateMethodInvoker($security, 'derandomize');
+
+        $this->expectException(InvalidArgumentException::class);
+
+        // 'G' is not a valid hexadecimal character, which will trigger hex2bin's ValueError/Warning
+        $derandomize(str_repeat('G', 64));
     }
 }
