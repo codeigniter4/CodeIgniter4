@@ -273,6 +273,117 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertSame('foo=bar', $request->getBody());
     }
 
+    public function testCsrfVerifyFormBodyWithArrayTokenThrowsException(): void
+    {
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'PUT')
+            ->setCookie('csrf_cookie_name', self::CORRECT_CSRF_HASH);
+
+        $security = $this->createMockSecurity();
+        $request  = $this->createIncomingRequest();
+
+        $request->setBody('csrf_test_name[]=invalid&foo=bar');
+
+        $this->expectException(SecurityException::class);
+        $security->verify($request);
+    }
+
+    public function testCsrfVerifyPostWithArrayTokenThrowsException(): void
+    {
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('csrf_test_name', ['injected_array'])
+            ->setCookie('csrf_cookie_name', self::CORRECT_CSRF_HASH);
+
+        $security = $this->createMockSecurity();
+        $request  = $this->createIncomingRequest();
+
+        $this->expectException(SecurityException::class);
+        $security->verify($request);
+    }
+
+    public function testCsrfVerifyJsonBodyWithArrayTokenThrowsException(): void
+    {
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setCookie('csrf_cookie_name', self::CORRECT_CSRF_HASH);
+
+        $security = $this->createMockSecurity();
+        $request  = $this->createIncomingRequest();
+
+        $request->setBody(json_encode(['csrf_test_name' => ['injected_array']]));
+
+        $this->expectException(SecurityException::class);
+        $security->verify($request);
+    }
+
+    public function testCsrfVerifyJsonBodyWithNestedArrayTokenThrowsException(): void
+    {
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setCookie('csrf_cookie_name', self::CORRECT_CSRF_HASH);
+
+        $security = $this->createMockSecurity();
+        $request  = $this->createIncomingRequest();
+
+        $request->setBody(json_encode(['csrf_test_name' => [['nested' => 'injection']]]));
+
+        $this->expectException(SecurityException::class);
+        $security->verify($request);
+    }
+
+    public function testCsrfVerifyPostWithEmptyStringTokenThrowsException(): void
+    {
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('csrf_test_name', '')
+            ->setCookie('csrf_cookie_name', self::CORRECT_CSRF_HASH);
+
+        $security = $this->createMockSecurity();
+        $request  = $this->createIncomingRequest();
+
+        $this->expectException(SecurityException::class);
+        $security->verify($request);
+    }
+
+    public function testRemoveTokenInRequestSkipsArrayTokenInFormBody(): void
+    {
+        $security = $this->createMockSecurity();
+        $request  = $this->createIncomingRequest();
+        $body     = 'csrf_test_name[]=value&foo=bar';
+        $request->setBody($body);
+
+        $removeTokenInRequest = self::getPrivateMethodInvoker($security, 'removeTokenInRequest');
+        $removeTokenInRequest($request);
+
+        $this->assertSame($body, $request->getBody());
+    }
+
+    public function testRemoveTokenInRequestStripsStringTokenFromFormBody(): void
+    {
+        $security = $this->createMockSecurity();
+        $request  = $this->createIncomingRequest();
+        $request->setBody('csrf_test_name=' . self::CORRECT_CSRF_HASH . '&foo=bar');
+
+        $removeTokenInRequest = self::getPrivateMethodInvoker($security, 'removeTokenInRequest');
+        $removeTokenInRequest($request);
+
+        $this->assertSame('foo=bar', $request->getBody());
+    }
+
+    public function testRemoveTokenInRequestKeepsBodyWhenTokenMissing(): void
+    {
+        $security = $this->createMockSecurity();
+        $request  = $this->createIncomingRequest();
+
+        $request->setBody('foo=bar&baz=qux');
+
+        $removeTokenInRequest = self::getPrivateMethodInvoker($security, 'removeTokenInRequest');
+        $removeTokenInRequest($request);
+
+        $this->assertSame('foo=bar&baz=qux', $request->getBody());
+    }
+
     public function testSanitizeFilename(): void
     {
         $security = $this->createMockSecurity();
@@ -409,14 +520,28 @@ final class SecurityTest extends CIUnitTestCase
 
         yield 'invalid_post_data' => [self::createIncomingRequest()->setGlobal('post', ['csrf_test_name' => ['invalid' => 'data']])];
 
+        yield 'invalid_post_indexed_array' => [self::createIncomingRequest()->setGlobal('post', ['csrf_test_name' => ['value1', 'value2']])];
+
+        yield 'invalid_post_nested_array' => [self::createIncomingRequest()->setGlobal('post', ['csrf_test_name' => [['nested' => 'injection']]])];
+
         yield 'empty_header' => [self::createIncomingRequest()->setHeader('X-CSRF-TOKEN', '')];
 
         yield 'invalid_json_data' => [self::createIncomingRequest()->setBody(json_encode(['csrf_test_name' => ['invalid' => 'data']]))];
+
+        yield 'invalid_json_indexed_array' => [self::createIncomingRequest()->setBody(json_encode(['csrf_test_name' => ['value1', 'value2']]))];
+
+        yield 'invalid_json_nested_array' => [self::createIncomingRequest()->setBody(json_encode(['csrf_test_name' => [['nested' => 'injection']]]))];
 
         yield 'invalid_json' => [self::createIncomingRequest()->setBody('{invalid json}')];
 
         yield 'missing_token_in_body' => [self::createIncomingRequest()->setBody('other=value&another=test')];
 
         yield 'invalid_form_data' => [self::createIncomingRequest()->setBody('csrf_test_name[]=invalid')];
+
+        yield 'invalid_form_data_nested' => [self::createIncomingRequest()->setBody('csrf_test_name[][nested]=injection')];
+
+        yield 'invalid_form_data_mixed' => [self::createIncomingRequest()->setBody('csrf_test_name=valid&csrf_test_name[]=override')];
+
+        yield 'empty_body' => [self::createIncomingRequest()->setBody('')];
     }
 }

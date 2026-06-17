@@ -272,12 +272,13 @@ class Security implements SecurityInterface
     /**
      * Remove token in POST or JSON request data
      */
-    private function removeTokenInRequest(IncomingRequest $request): void
+private function removeTokenInRequest(IncomingRequest $request): void
     {
-        $superglobals = service('superglobals');
-        $tokenName    = $this->config->tokenName;
+        $tokenName = $this->config->tokenName;
 
-        // If the token is found in POST data, we can safely remove it.
+        // 1. POST data
+        $superglobals = service('superglobals');
+        
         if (is_string($superglobals->post($tokenName))) {
             $superglobals->unsetPost($tokenName);
             $request->setGlobal('post', $superglobals->getPostArray());
@@ -285,89 +286,82 @@ class Security implements SecurityInterface
             return;
         }
 
-        $body = $request->getBody() ?? '';
-
+        // 2. Raw data (Body)
+        $body = (string) $request->getBody();
+        
         if ($body === '') {
             return;
         }
 
-        // If the token is found in JSON data, we can safely remove it.
+        // 3a. JSON payload
         try {
-            $json = json_decode($body, flags: JSON_THROW_ON_ERROR);
-        } catch (JsonException) {
-            $json = null;
-        }
+            $json = json_decode($body, true, flags: JSON_THROW_ON_ERROR);
+            
+            if (is_array($json)) {
+                if (is_string($json[$tokenName] ?? null)) {
+                    unset($json[$tokenName]);
+                    $request->setBody(json_encode($json, JSON_THROW_ON_ERROR));
+                }
 
-        if (is_object($json)) {
-            if (property_exists($json, $tokenName)) {
-                unset($json->{$tokenName});
-                $request->setBody(json_encode($json));
+                return;
             }
+        } catch (JsonException) {
+            // 3b. Form-encoded data
+            parse_str($body, $result);
 
-            return;
+            if (is_string($result[$tokenName] ?? null)) {
+                unset($result[$tokenName]);
+                $request->setBody(http_build_query($result));
+            }
         }
-
-        // If the token is found in form-encoded data, we can safely remove it.
-        parse_str($body, $result);
-
-        unset($result[$tokenName]);
-        $request->setBody(http_build_query($result));
     }
 
     private function getPostedToken(IncomingRequest $request): ?string
     {
-        $tokenName  = $this->config->tokenName;
-        $headerName = $this->config->headerName;
+        $tokenName = $this->config->tokenName;
+        $isValid   = fn (mixed $t): bool => is_string($t) && $this->isNonEmptyTokenString($t);
 
-        // 1. Check POST data first.
+        // 1. POST
         $token = $request->getPost($tokenName);
-
-        if ($this->isNonEmptyTokenString($token)) {
+        if ($isValid($token)) {
             return $token;
         }
 
-        // 2. Check header data next.
+        // 2. Header
+        $headerName = $this->config->headerName;
         if ($request->hasHeader($headerName)) {
             $token = $request->header($headerName)->getValue();
-
-            if ($this->isNonEmptyTokenString($token)) {
+            if ($isValid($token)) {
                 return $token;
             }
         }
 
-        // 3. Finally, check the raw input data for JSON or form-encoded data.
-        $body = $request->getBody() ?? '';
-
+        // 3. Raw Body
+        $body = (string) $request->getBody();
         if ($body === '') {
             return null;
         }
 
-        // 3a. Check if a JSON payload exists and contains the token.
+        // 3a. JSON
         try {
-            $json = json_decode($body, flags: JSON_THROW_ON_ERROR);
+            $json = json_decode($body, true, flags: JSON_THROW_ON_ERROR);
+            if (is_array($json)) {
+                $token = $json[$tokenName] ?? null;
+                if ($isValid($token)) {
+                    return $token;
+                }
+            }
         } catch (JsonException) {
-            $json = null;
-        }
-
-        if (is_object($json) && property_exists($json, $tokenName)) {
-            $token = $json->{$tokenName};
-
-            if ($this->isNonEmptyTokenString($token)) {
+            // 3b. Form-encoded
+            parse_str($body, $result);
+            $token = $result[$tokenName] ?? null;
+            if ($isValid($token)) {
                 return $token;
             }
         }
 
-        // 3b. Check if form-encoded data exists and contains the token.
-        parse_str($body, $result);
-        $token = $result[$tokenName] ?? null;
-
-        if ($this->isNonEmptyTokenString($token)) {
-            return $token;
-        }
-
         return null;
     }
-
     /**
      * @phpstan-assert-if-true non-empty-string $token
      */
