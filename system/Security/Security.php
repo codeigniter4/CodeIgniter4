@@ -272,13 +272,13 @@ class Security implements SecurityInterface
     /**
      * Remove token in POST or JSON request data
      */
-private function removeTokenInRequest(IncomingRequest $request): void
+    private function removeTokenInRequest(IncomingRequest $request): void
     {
         $tokenName = $this->config->tokenName;
 
         // 1. POST data
         $superglobals = service('superglobals');
-        
+
         if (is_string($superglobals->post($tokenName))) {
             $superglobals->unsetPost($tokenName);
             $request->setGlobal('post', $superglobals->getPostArray());
@@ -288,7 +288,7 @@ private function removeTokenInRequest(IncomingRequest $request): void
 
         // 2. Raw data (Body)
         $body = (string) $request->getBody();
-        
+
         if ($body === '') {
             return;
         }
@@ -296,7 +296,7 @@ private function removeTokenInRequest(IncomingRequest $request): void
         // 3a. JSON payload
         try {
             $json = json_decode($body, true, flags: JSON_THROW_ON_ERROR);
-            
+
             if (is_array($json)) {
                 if (is_string($json[$tokenName] ?? null)) {
                     unset($json[$tokenName]);
@@ -362,6 +362,7 @@ private function removeTokenInRequest(IncomingRequest $request): void
 
         return null;
     }
+
     /**
      * @phpstan-assert-if-true non-empty-string $token
      */
