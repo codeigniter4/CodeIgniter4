@@ -46,7 +46,6 @@ class SodiumHandler extends BaseHandler
         $key       = $this->key;
         $blockSize = $this->blockSize;
 
-        // Nadpisywanie parametrów
         if ($params !== null) {
             if (is_array($params)) {
                 $key       = array_key_exists('key', $params) ? $params['key'] : $key;
@@ -56,7 +55,6 @@ class SodiumHandler extends BaseHandler
             }
         }
 
-        // Walidacja klucza
         if (empty($key) || strlen((string) $key) !== SODIUM_CRYPTO_SECRETBOX_KEYBYTES) {
             throw EncryptionException::forNeedsStarterKey();
         }
@@ -65,12 +63,12 @@ class SodiumHandler extends BaseHandler
             throw EncryptionException::forEncryptionFailed();
         }
 
-        $nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES); // 24 bytes
+        $nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
         $data  = sodium_pad($data, $blockSize);
 
         $ciphertext = $nonce . sodium_crypto_secretbox($data, $nonce, $key);
 
-        sodium_memzero($data); // Czyścimy tylko spadowany bufor wiadomości
+        sodium_memzero($data);
 
         return $ciphertext;
     }
@@ -83,7 +81,6 @@ class SodiumHandler extends BaseHandler
         $key       = $this->key;
         $blockSize = $this->blockSize;
 
-        // Nadpisywanie parametrów
         if ($params !== null) {
             if (is_array($params)) {
                 $key       = array_key_exists('key', $params) ? $params['key'] : $key;
@@ -93,7 +90,6 @@ class SodiumHandler extends BaseHandler
             }
         }
 
-        // Walidacja klucza
         if (empty($key) || strlen((string) $key) !== SODIUM_CRYPTO_SECRETBOX_KEYBYTES) {
             throw EncryptionException::forNeedsStarterKey();
         }
@@ -113,7 +109,7 @@ class SodiumHandler extends BaseHandler
 
         $data = sodium_unpad($data, $blockSize);
 
-        sodium_memzero($ciphertext); // Czyścimy wyodrębniony szyfrogram
+        sodium_memzero($ciphertext);
 
         return $data;
     }

@@ -156,7 +156,7 @@ final class SodiumHandlerTest extends CIUnitTestCase
     public function testBug0IssetThrowsTypeError(): void
     {
         $this->expectException(EncryptionException::class);
-        /** @var \CodeIgniter\Encryption\Handlers\SodiumHandler $encrypter */
+        /** @var SodiumHandler $encrypter */
         $encrypter = $this->encryption->initialize($this->config);
 
         $encrypter->encrypt('message', ['key' => null]);
@@ -164,19 +164,19 @@ final class SodiumHandlerTest extends CIUnitTestCase
 
     public function testBug1MemzeroZeroesInternalKey(): void
     {
-        /** @var \CodeIgniter\Encryption\Handlers\SodiumHandler $encrypter */
+        /** @var SodiumHandler $encrypter */
         $encrypter   = $this->encryption->initialize($this->config);
-        $originalKey = $encrypter->key;// @phpstan-ignore-line
+        $originalKey = $encrypter->key; // @phpstan-ignore-line
 
         $encrypter->encrypt('message');
 
-        $this->assertSame($originalKey, $encrypter->key);// @phpstan-ignore-line
+        $this->assertSame($originalKey, $encrypter->key); // @phpstan-ignore-line
     }
 
     public function testBug2InvalidKeyLengthThrowsSodiumException(): void
     {
         $this->expectException(EncryptionException::class);
-        /** @var \CodeIgniter\Encryption\Handlers\SodiumHandler $encrypter */
+        /** @var SodiumHandler $encrypter */
         $encrypter = $this->encryption->initialize($this->config);
 
         $encrypter->encrypt('message', str_repeat('a', 31));
@@ -185,7 +185,7 @@ final class SodiumHandlerTest extends CIUnitTestCase
     public function testBug3InvalidPaddingThrowsSodiumException(): void
     {
         $this->expectException(SodiumException::class);
-        /** @var \CodeIgniter\Encryption\Handlers\SodiumHandler $encrypter */
+        /** @var SodiumHandler $encrypter */
         $encrypter = $this->encryption->initialize($this->config);
 
         $ciphertext = $encrypter->encrypt('message', ['blockSize' => 16]);
@@ -210,7 +210,6 @@ final class SodiumHandlerTest extends CIUnitTestCase
 
         $ciphertext = $encrypter->encrypt('message');
 
-        // Zmiana jednego znaku w szyfrogramie w celu uszkodzenia podpisu
         $ciphertext[0] = $ciphertext[0] === 'a' ? 'b' : 'a';
 
         $encrypter->decrypt($ciphertext);
