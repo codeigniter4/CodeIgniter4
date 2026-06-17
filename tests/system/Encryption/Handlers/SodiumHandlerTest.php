@@ -18,6 +18,7 @@ use CodeIgniter\Encryption\Exceptions\EncryptionException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
 use PHPUnit\Framework\Attributes\Group;
+use ReflectionProperty;
 use SodiumException;
 
 /**
@@ -164,13 +165,15 @@ final class SodiumHandlerTest extends CIUnitTestCase
 
     public function testBug1MemzeroZeroesInternalKey(): void
     {
-        /** @var SodiumHandler $encrypter */
-        $encrypter   = $this->encryption->initialize($this->config);
-        $originalKey = $encrypter->key; // @phpstan-ignore-line
+        $encrypter = $this->encryption->initialize($this->config);
+
+        $refKey = new ReflectionProperty($encrypter, 'key');
+
+        $originalKey = $refKey->getValue($encrypter);
 
         $encrypter->encrypt('message');
 
-        $this->assertSame($originalKey, $encrypter->key); // @phpstan-ignore-line
+        $this->assertSame($originalKey, $refKey->getValue($encrypter));
     }
 
     public function testBug2InvalidKeyLengthThrowsSodiumException(): void
