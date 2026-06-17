@@ -1167,5 +1167,63 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->request->getIPAddress();
     }
 
+    public function testInjectedSuperglobalsIsSecure(): void
+    {
+        $superglobals = new Superglobals(server: ['HTTPS' => 'on']);
+
+        $config  = new App();
+        $uri     = new SiteURI($config);
+        $request = new IncomingRequest($config, $uri, null, new UserAgent(), $superglobals);
+
+        $this->assertTrue($request->isSecure());
+    }
+
+    public function testInjectedSuperglobalsIsSecureNoOverride(): void
+    {
+        service('superglobals')->setServer('HTTPS', 'on');
+
+        $superglobals = new Superglobals(server: []);
+
+        $config  = new App();
+        $uri     = new SiteURI($config);
+        $request = new IncomingRequest($config, $uri, null, new UserAgent(), $superglobals);
+
+        $this->assertFalse($request->isSecure());
+    }
+
+    public function testInjectedSuperglobalsGetPostGet(): void
+    {
+        // Service has only GET data
+        service('superglobals')->setGet('key', 'service_get');
+
+        // Injected mock has only POST data
+        $superglobals = new Superglobals(post: ['key' => 'mock_post'], get: []);
+
+        $config  = new App();
+        $uri     = new SiteURI($config);
+        $request = new IncomingRequest($config, $uri, null, new UserAgent(), $superglobals);
+
+        // Mock says POST exists -> choose POST -> service has no POST -> null
+        // Without injection, would have found no POST in service, fallen back to GET -> 'service_get'
+        $this->assertNull($request->getPostGet('key'));
+    }
+
+    public function testInjectedSuperglobalsGetGetPost(): void
+    {
+        // Service has only POST data
+        service('superglobals')->setPost('key', 'service_post');
+
+        // Injected mock has only GET data
+        $superglobals = new Superglobals(get: ['key' => 'mock_get'], post: []);
+
+        $config  = new App();
+        $uri     = new SiteURI($config);
+        $request = new IncomingRequest($config, $uri, null, new UserAgent(), $superglobals);
+
+        // Mock says GET exists -> choose GET -> service has no GET -> null
+        // Without injection, would have found no GET in service, fallen back to POST -> 'service_post'
+        $this->assertNull($request->getGetPost('key'));
+    }
+
     // @TODO getIPAddress should have more testing, to 100% code coverage
 }
