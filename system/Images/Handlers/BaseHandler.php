@@ -721,14 +721,23 @@ abstract class BaseHandler implements ImageHandlerInterface
     protected function reproportion()
     {
         $image = $this->image();
-        $origW = (int) $image->origWidth;
-        $origH = (int) $image->origHeight;
-        $w     = (int) $this->width;
-        $h     = (int) $this->height;
+        $origW = $image->origWidth;
+        $origH = $image->origHeight;
+        $w     = $this->width;
+        $h     = $this->height;
 
-        if (! is_numeric($this->width) || ! is_numeric($this->height) || $origW === 0 || $origH === 0 || ($w === 0 && $h === 0)) {
+        if ($origW === 0 || $origW === 0.0 || $origH === 0 || $origH === 0.0) {
             return;
         }
+
+        if (($w === 0 || $w === 0.0) && ($h === 0 || $h === 0.0)) {
+            return;
+        }
+
+        $w     = (int) $w;
+        $h     = (int) $h;
+        $origW = (int) $origW;
+        $origH = (int) $origH;
 
         $this->width  = $w;
         $this->height = $h;

@@ -20,7 +20,6 @@ use CodeIgniter\Images\Handlers\BaseHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\Attributes\Group;
-use ReflectionMethod;
 
 /**
  * Test the common image processing functionality.
@@ -141,13 +140,12 @@ final class BaseHandlerTest extends CIUnitTestCase
         $image->origWidth  = 0.0;
         $image->origHeight = 0.0;
 
-        // Use reflection to test the protected method reproportion directly
-        // This should not throw a DivisionByZeroError
         $expectedWidth  = $handler->getWidth();
         $expectedHeight = $handler->getHeight();
 
-        $method = new ReflectionMethod($handler::class, 'reproportion');
-        $method->invoke($handler);
+        $invoker = $this->getPrivateMethodInvoker($handler, 'reproportion');
+
+        $invoker();
 
         $this->assertSame($expectedWidth, $handler->getWidth());
         $this->assertSame($expectedHeight, $handler->getHeight());
