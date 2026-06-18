@@ -153,13 +153,14 @@ final class SodiumHandlerTest extends CIUnitTestCase
         $this->assertSame($message, $encrypter->decrypt($encoded, ['key' => $differentKey]));
     }
 
-    public function testBug0IssetThrowsTypeError(): void
+    public function testNullKeyOverrideFallsBackToInstanceKey(): void
     {
-        $this->expectException(EncryptionException::class);
         /** @var SodiumHandler $encrypter */
         $encrypter = $this->encryption->initialize($this->config);
 
-        $encrypter->encrypt('message', ['key' => null]);
+        $ciphertext = $encrypter->encrypt('message', ['key' => null]);
+
+        $this->assertSame('message', $encrypter->decrypt($ciphertext, ['key' => null]));
     }
 
     public function testBug1MemzeroZeroesInternalKey(): void
