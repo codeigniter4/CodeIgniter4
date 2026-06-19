@@ -172,9 +172,9 @@ final class SodiumHandlerTest extends CIUnitTestCase
         $encrypter->encrypt('message', str_repeat('a', 31));
     }
 
-    public function testMismatchedBlockSizeThrowsSodiumException(): void
+    public function testMismatchedBlockSizeThrowsEncryptionException(): void
     {
-        $this->expectException(SodiumException::class);
+        $this->expectException(EncryptionException::class);
         /** @var SodiumHandler $encrypter */
         $encrypter = $this->encryption->initialize($this->config);
 
