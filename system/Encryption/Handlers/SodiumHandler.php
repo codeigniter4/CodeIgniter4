@@ -15,6 +15,7 @@ namespace CodeIgniter\Encryption\Handlers;
 
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
 use SensitiveParameter;
+use SodiumException;
 
 /**
  * SodiumHandler uses libsodium in encryption.
