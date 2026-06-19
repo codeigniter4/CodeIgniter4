@@ -48,8 +48,8 @@ class SodiumHandler extends BaseHandler
 
         if ($params !== null) {
             if (is_array($params)) {
-                $key       = isset($params['key']) ? $params['key'] : $key;
-                $blockSize = isset($params['blockSize']) ? $params['blockSize'] : $blockSize;
+                $key       = $params['key'] ?? $key;
+                $blockSize = $params['blockSize'] ?? $blockSize;
             } else {
                 $key = $params;
             }
@@ -84,8 +84,8 @@ class SodiumHandler extends BaseHandler
 
         if ($params !== null) {
             if (is_array($params)) {
-                $key       = isset($params['key']) ? $params['key'] : $key;
-                $blockSize = isset($params['blockSize']) ? $params['blockSize'] : $blockSize;
+                $key       = $params['key'] ?? $key;
+                $blockSize = $params['blockSize'] ?? $blockSize;
             } else {
                 $key = $params;
             }

@@ -163,7 +163,6 @@ final class SodiumHandlerTest extends CIUnitTestCase
         $this->assertSame('message', $encrypter->decrypt($ciphertext, ['key' => null]));
     }
 
-
     public function testInvalidKeyLengthThrowsEncryptionException(): void
     {
         $this->expectException(EncryptionException::class);
@@ -183,7 +182,6 @@ final class SodiumHandlerTest extends CIUnitTestCase
 
         $encrypter->decrypt($ciphertext, ['blockSize' => 32]);
     }
-
 
     public function testDecryptTamperedMessageThrowsException(): void
     {
