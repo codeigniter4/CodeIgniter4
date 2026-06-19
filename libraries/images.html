@@ -414,6 +414,12 @@ only applies to JPEG and WebP images, will be ignored otherwise:</p>
 <p class="admonition-title">Note</p>
 <p>The parameter <code class="docutils literal notranslate"><span class="pre">$quality</span></code> for WebP can be used since v4.4.0.</p>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When using ImageMagick, the target path passed to <code class="docutils literal notranslate"><span class="pre">save()</span></code> determines the output format by its extension.
+ImageMagick may also interpret explicit format prefixes like <code class="docutils literal notranslate"><span class="pre">jpg:filename.png</span></code>. If the target path is based on user
+input, validate it against the formats your application allows, including any format prefix or extension.</p>
+</div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$image</span><span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
@@ -520,8 +526,7 @@ offset values:</p>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>ImageMagick already saves files in the type
-indicated by their extension, ignoring <code class="docutils literal notranslate"><span class="pre">$imageType</span></code>.</p>
+<p>ImageMagick already saves files in the type indicated by their extension, ignoring <code class="docutils literal notranslate"><span class="pre">$imageType</span></code>.</p>
 </div>
 </section>
 <section id="fitting-images">
@@ -711,7 +716,7 @@ camera details, and timestamps will be completely removed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jun 15, 2026.
+      <span class="lastupdated">Last updated on Jun 19, 2026.
       </span></p>
   </div>
 
