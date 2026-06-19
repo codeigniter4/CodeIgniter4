@@ -48,8 +48,8 @@ class SodiumHandler extends BaseHandler
 
         if ($params !== null) {
             if (is_array($params)) {
-                $key       = array_key_exists('key', $params) ? $params['key'] : $key;
-                $blockSize = array_key_exists('blockSize', $params) ? $params['blockSize'] : $blockSize;
+                $key       = isset($params['key']) ? $params['key'] : $key;
+                $blockSize = isset($params['blockSize']) ? $params['blockSize'] : $blockSize;
             } else {
                 $key = $params;
             }
@@ -69,6 +69,7 @@ class SodiumHandler extends BaseHandler
         $ciphertext = $nonce . sodium_crypto_secretbox($data, $nonce, $key);
 
         sodium_memzero($data);
+        sodium_memzero($key);
 
         return $ciphertext;
     }
@@ -83,8 +84,8 @@ class SodiumHandler extends BaseHandler
 
         if ($params !== null) {
             if (is_array($params)) {
-                $key       = array_key_exists('key', $params) ? $params['key'] : $key;
-                $blockSize = array_key_exists('blockSize', $params) ? $params['blockSize'] : $blockSize;
+                $key       = isset($params['key']) ? $params['key'] : $key;
+                $blockSize = isset($params['blockSize']) ? $params['blockSize'] : $blockSize;
             } else {
                 $key = $params;
             }
@@ -107,9 +108,14 @@ class SodiumHandler extends BaseHandler
             throw EncryptionException::forAuthenticationFailed();
         }
 
-        $data = sodium_unpad($data, $blockSize);
+        try {
+            $data = sodium_unpad($data, $blockSize);
+        } catch (SodiumException) {
+            throw EncryptionException::forAuthenticationFailed();
+        }
 
         sodium_memzero($ciphertext);
+        sodium_memzero($key);
 
         return $data;
     }

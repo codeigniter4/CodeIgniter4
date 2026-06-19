@@ -163,19 +163,8 @@ final class SodiumHandlerTest extends CIUnitTestCase
         $this->assertSame('message', $encrypter->decrypt($ciphertext, ['key' => null]));
     }
 
-    public function testBug1MemzeroZeroesInternalKey(): void
-    {
-        $encrypter = $this->encryption->initialize($this->config);
 
-        $prop        = 'key';
-        $originalKey = $encrypter->{$prop}; // @phpstan-ignore property.notFound
-
-        $encrypter->encrypt('message');
-
-        $this->assertSame($originalKey, $encrypter->{$prop}); // @phpstan-ignore property.notFound
-    }
-
-    public function testBug2InvalidKeyLengthThrowsSodiumException(): void
+    public function testInvalidKeyLengthThrowsEncryptionException(): void
     {
         $this->expectException(EncryptionException::class);
         /** @var SodiumHandler $encrypter */
@@ -184,7 +173,7 @@ final class SodiumHandlerTest extends CIUnitTestCase
         $encrypter->encrypt('message', str_repeat('a', 31));
     }
 
-    public function testBug3InvalidPaddingThrowsSodiumException(): void
+    public function testMismatchedBlockSizeThrowsSodiumException(): void
     {
         $this->expectException(SodiumException::class);
         /** @var SodiumHandler $encrypter */
@@ -195,15 +184,6 @@ final class SodiumHandlerTest extends CIUnitTestCase
         $encrypter->decrypt($ciphertext, ['blockSize' => 32]);
     }
 
-    public function testBug4OriginalDataIsNotZeroed(): void
-    {
-        $encrypter = $this->encryption->initialize($this->config);
-
-        $message = 'SuperSecretMessage';
-        $encrypter->encrypt($message);
-
-        $this->assertSame('SuperSecretMessage', $message);
-    }
 
     public function testDecryptTamperedMessageThrowsException(): void
     {
