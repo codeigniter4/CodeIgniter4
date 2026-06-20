@@ -342,6 +342,99 @@ Registrar methods must always return an array, with keys corresponding to the pr
 of the target config file. Existing values are merged, and Registrar properties have
 overwrite priority.
 
+By default this merge is **shallow** (top-level only). Arrays are combined with
+``array_merge()``, so a nested array under a top-level key *replaces* the existing
+nested array rather than merging into it. In the following example the ``key2``
+subtree from the config is replaced entirely, dropping ``val2`` and ``val3``:
+
+.. literalinclude:: configuration/012.php
+
+.. _registrar-merge-directives:
+
+Controlling how values are merged
+---------------------------------
+
+.. versionadded:: 4.8.0
+
+When a registrar needs finer control than the shallow default, it can return a
+``CodeIgniter\Config\Merge`` directive as the value of a property. Merge
+directives are explicit instructions to either keep merging into a value, replace
+it, or add items to a list.
+
+The two directives that control whole values are:
+
+- ``Merge::replace($value)`` - discard the existing value and use ``$value``.
+  Accepts **any type** (scalar, ``null``, or array - e.g. ``['a', 'b']`` becomes
+  ``['c']``, or ``Merge::replace('redis')``).
+- ``Merge::byKey($value)`` - deep-merge by key: **string keys recurse, integer
+  keys append, and scalar leaves are replaced**. The name is deliberately not
+  ``recursive`` to avoid confusion with PHP's ``array_merge_recursive()``, which
+  collects scalar values into arrays instead of replacing them.
+
+Use ``Merge::byKey()`` when you want to navigate into nested configuration and
+preserve sibling keys:
+
+.. literalinclude:: configuration/013.php
+
+.. important:: Inside ``Merge::byKey()``, plain arrays are still merged by key.
+    Use ``Merge::replace()`` when you want to stop merging at that key and
+    overwrite the value. For example, ``'after' => []`` leaves an existing
+    ``after`` list unchanged, while ``'after' => Merge::replace([])`` clears it.
+
+The following registrar adds a filter to ``globals['before']`` while hard-resetting
+``globals['after']``, leaving any other ``globals`` keys untouched:
+
+.. literalinclude:: configuration/014.php
+
+The *list* strategies add items to a list and control where they land. They are
+useful where order matters, such as the filter lists in ``Config\Filters``:
+
+- ``Merge::append($value)`` - add items to the **end** of the list
+  (e.g. ``['a', 'b']`` becomes ``['a', 'b', 'c']``).
+- ``Merge::prepend($value)`` - add items to the **front** of the list
+  (e.g. ``['a', 'b']`` becomes ``['c', 'a', 'b']``).
+- ``Merge::before($anchor, $value)`` - insert items immediately **before** the
+  first element equal to ``$anchor``.
+- ``Merge::after($anchor, $value)`` - insert items immediately **after** the
+  first element equal to ``$anchor``.
+
+All four de-duplicate, so the directives never *introduce* a duplicate value: a
+value already in the list is not added again, and duplicate payload values are
+collapsed (e.g. ``Merge::append(['x', 'x'])`` adds ``x`` once). Duplicates that
+already exist in the current list are left as-is. They differ only in how they
+treat a value that is *already present*:
+
+- ``append()`` / ``prepend()`` leave an already-present value **where it is**
+  (they only add values that are missing).
+- ``before()`` / ``after()`` **move** an already-present value to the anchor
+  position - but only when the anchor is in the list. If the anchor is missing
+  they fall back to ``append()`` / ``prepend()`` respectively, and do **not**
+  relocate a value that is already present.
+
+The anchor is matched strictly against the **direct elements** of the list; the
+list strategies act on a single list level and never recurse. To reach a list
+that is nested under other keys (such as ``globals['before']``), navigate to it
+with ``Merge::byKey()`` and place the list directive at that key:
+
+.. literalinclude:: configuration/015.php
+
+.. important:: Merge directives are interpreted only when used as the **value of
+    a config property** returned by a registrar, and recursively **inside**
+    ``Merge::byKey()``. The payloads of the ``replace()``, ``append()``,
+    ``prepend()``, ``before()``, and ``after()`` strategies are taken literally and
+    are **not** scanned for nested directives - for nested control, wrap the
+    property in ``Merge::byKey()`` and place the directives at its keys.
+
+.. note:: Merge directives sharpen a *single* registrar's intent; they do not add
+    an explicit priority mechanism between registrars. Registrars are still applied
+    in discovery order, and an item's final position follows from that order *plus*
+    the strategy: with ``append()`` an earlier registrar's items sit ahead of a
+    later one's, while with ``prepend()``, ``before()``, and ``after()`` a later
+    registrar's items land **nearer the front or the anchor** than an earlier one's.
+    For example, ``after('csrf', ['a'])`` followed by ``after('csrf', ['b'])`` from a
+    second registrar yields ``['csrf', 'b', 'a']``. As always, **.env** values take
+    priority over registrars.
+
 Explicit Registrars
 ===================
 
