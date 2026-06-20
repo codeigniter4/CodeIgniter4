@@ -130,3 +130,7 @@ _modules/*
 /phpunit.xml
 
 /.php-cs-fixer.php
+
+# somehow created on run rector
+# probably some code executed
+/tmp/schema.php
