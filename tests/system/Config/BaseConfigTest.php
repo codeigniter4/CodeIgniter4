@@ -19,6 +19,7 @@ use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
 use Encryption;
+use MergeRegistrarConfig;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
@@ -27,6 +28,11 @@ use PHPUnit\Framework\MockObject\MockObject;
 use RegistrarConfig;
 use SimpleConfig;
 use Tests\Support\Config\BadRegistrar;
+use Tests\Support\Config\MergeOrderRegistrar;
+use Tests\Support\Config\MergePlainRegistrar;
+use Tests\Support\Config\MergeRegistrar;
+use Tests\Support\Config\MergeRegistrarA;
+use Tests\Support\Config\MergeRegistrarB;
 use Tests\Support\Config\TestRegistrar;
 
 /**
@@ -51,6 +57,10 @@ final class BaseConfigTest extends CIUnitTestCase
 
         if (! class_exists('RegistrarConfig', false)) {
             require $this->fixturesFolder . '/RegistrarConfig.php';
+        }
+
+        if (! class_exists('MergeRegistrarConfig', false)) {
+            require $this->fixturesFolder . '/MergeRegistrarConfig.php';
         }
 
         if (! class_exists('Encryption', false)) {
@@ -294,6 +304,83 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('bar', $config->foo);
         // add to an existing array property
         $this->assertSame(['baz', 'first', 'second'], $config->bar);
+    }
+
+    /**
+     * @param list<class-string> $registrars
+     */
+    private function registerMerge(MergeRegistrarConfig $config, array $registrars): void
+    {
+        $config::$registrars = $registrars;
+        $this->setPrivateProperty($config, 'didDiscovery', true);
+        $method = self::getPrivateMethodInvoker($config, 'registerProperties');
+        $method();
+    }
+
+    public function testMergePlainRegistrarKeepsLegacyShallowMerge(): void
+    {
+        // BC regression: a plain-array registrar still drops nested siblings.
+        $config = new MergeRegistrarConfig();
+        $this->registerMerge($config, [MergePlainRegistrar::class]);
+
+        $this->assertSame([
+            'key1' => 'val1',
+            'key2' => ['val4' => 'subVal4'],
+        ], $config->arrayNested);
+    }
+
+    public function testMergeByKeyDeepMerges(): void
+    {
+        $config = new MergeRegistrarConfig();
+        $this->registerMerge($config, [MergeRegistrar::class]);
+
+        // Example A - siblings preserved.
+        $this->assertSame([
+            'key1' => 'val1',
+            'key2' => ['val2' => 'subVal2', 'val3' => 'subVal3', 'val4' => 'subVal4'],
+        ], $config->arrayNested);
+
+        // Example B - list grows.
+        $this->assertSame(['superadmin' => ['admin.access', 'shippinglabel-logos.*']], $config->matrix);
+
+        // Example C - nested directives resolved.
+        $this->assertSame(['before' => ['csrf', 'blogFilter'], 'after' => []], $config->globals);
+    }
+
+    public function testMergeAppendAndReplaceAtPropertyRoot(): void
+    {
+        $config = new MergeRegistrarConfig();
+        $this->registerMerge($config, [MergeRegistrar::class]);
+
+        $this->assertSame(['a', 'b', 'c'], $config->list);
+        $this->assertSame('redis', $config->handler);
+    }
+
+    public function testMergeOrderingDirectivesThroughRegistrar(): void
+    {
+        $config = new MergeRegistrarConfig();
+        $this->registerMerge($config, [MergeOrderRegistrar::class]);
+
+        // Nested ordering inside byKey(): auth lands after csrf, honeypot at the front.
+        $this->assertSame([
+            'before' => ['csrf', 'auth'],
+            'after'  => ['honeypot', 'toolbar'],
+        ], $config->globals);
+
+        // Property-root ordering.
+        $this->assertSame(['z', 'a', 'b'], $config->list);
+    }
+
+    public function testMultipleRegistrarsOnSameProperty(): void
+    {
+        $config = new MergeRegistrarConfig();
+        // Two registrars both append to list and both replace handler.
+        $this->registerMerge($config, [MergeRegistrarA::class, MergeRegistrarB::class]);
+
+        // append() accumulates in registrar (discovery) order.
+        $this->assertSame(['a', 'b', 'x', 'y'], $config->list);
+        // competing replace() calls resolve in registrar order - last wins.
+        $this->assertSame('memcached', $config->handler);
     }
 
     public function testBadRegistrar(): void

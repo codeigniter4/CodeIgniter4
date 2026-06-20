@@ -13,6 +13,7 @@ namespace CodeIgniter\Config;
 
 use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\Exceptions\ConfigException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Exceptions\RuntimeException;
 use Config\Encryption;
 use Config\Modules;
@@ -311,6 +312,14 @@ class BaseConfig
             }
 
             foreach ($properties as $property => $value) {
+                // Directives are recognized only at the property root.
+                if ($value instanceof Merge) {
+                    $this->{$property} = $this->applyMerge($this->{$property} ?? null, $value);
+
+                    continue;
+                }
+
+                // Legacy behavior - unchanged, and on the hot path with no extra checks.
                 if (isset($this->{$property}) && is_array($this->{$property}) && is_array($value)) {
                     $this->{$property} = array_merge($this->{$property}, $value);
                 } else {
@@ -318,5 +327,121 @@ class BaseConfig
                 }
             }
         }
+    }
+
+    /**
+     * Applies a property-root Merge directive against the current value.
+     *
+     * REPLACE is terminal - its payload is taken verbatim. The list strategies
+     * (APPEND/PREPEND/BEFORE/AFTER) resolve via mergeList(). BY_KEY recurses via
+     * mergeByKey(), honoring nested directives.
+     */
+    private function applyMerge(mixed $current, Merge $directive): mixed
+    {
+        return match ($directive->strategy) {
+            Merge::REPLACE                                             => $directive->value,
+            Merge::BY_KEY                                              => $this->mergeByKey(is_array($current) ? $current : [], $directive->value),
+            Merge::APPEND, Merge::PREPEND, Merge::BEFORE, Merge::AFTER => $this->mergeList(is_array($current) ? $current : [], $directive),
+            default                                                    => throw new InvalidArgumentException('Unknown merge strategy: ' . $directive->strategy),
+        };
+    }
+
+    /**
+     * Resolves a list directive (APPEND, PREPEND, BEFORE, AFTER) against the
+     * current value treated as a list.
+     *
+     * The directives never introduce a duplicate value: the incoming payload is
+     * de-duplicated against itself (keeping first-seen order) and values already
+     * in the list are not added again. Duplicates that already exist in the
+     * current list are left untouched. Then:
+     *  - APPEND/PREPEND add only the values that are absent - already-present
+     *    values are left where they are (no relocation).
+     *  - BEFORE/AFTER move an already-present value to the anchor position, but
+     *    only when the anchor exists. If the anchor is missing they fall back to
+     *    APPEND/PREPEND respectively and do not relocate already-present values.
+     *
+     * The anchor is matched strictly (===) against the list elements, using the
+     * first match. Do not use a value as both the anchor and an inserted value.
+     *
+     * @param array<array-key, mixed> $current
+     *
+     * @return list<mixed>
+     */
+    private function mergeList(array $current, Merge $directive): array
+    {
+        $current = array_values($current);
+
+        // De-duplicate the payload itself (strict, first-seen order) so a value
+        // repeated within it is not inserted twice.
+        $incoming = [];
+
+        foreach ($directive->value as $value) {
+            if (! in_array($value, $incoming, true)) {
+                $incoming[] = $value;
+            }
+        }
+
+        $anchored    = $directive->strategy === Merge::BEFORE || $directive->strategy === Merge::AFTER;
+        $anchorFound = $anchored && in_array($directive->anchor, $current, true);
+
+        if ($anchorFound) {
+            // Move-to-position: pull out any present copies, then insert the
+            // whole incoming block at the (recomputed) anchor position.
+            $current = array_values(array_filter(
+                $current,
+                static fn ($value): bool => ! in_array($value, $incoming, true),
+            ));
+
+            $index  = (int) array_search($directive->anchor, $current, true);
+            $offset = $directive->strategy === Merge::AFTER ? $index + 1 : $index;
+
+            array_splice($current, $offset, 0, $incoming);
+
+            return $current;
+        }
+
+        // APPEND/PREPEND, or BEFORE/AFTER with a missing anchor: add only the
+        // values not already present, without relocating anything.
+        $incoming = array_values(array_filter(
+            $incoming,
+            static fn ($value): bool => ! in_array($value, $current, true),
+        ));
+
+        return $directive->strategy === Merge::PREPEND || $directive->strategy === Merge::BEFORE
+            ? array_merge($incoming, $current)
+            : array_merge($current, $incoming);
+    }
+
+    /**
+     * Recursive by-key merge used by Merge::byKey(): string keys recurse, integer
+     * keys append, scalar leaves are replaced, and nested Merge directives are
+     * honored. A missing/non-array current child uses [] as its base, so directives
+     * in brand-new subtrees are still resolved.
+     *
+     * @param array<array-key, mixed> $current
+     * @param array<array-key, mixed> $incoming
+     *
+     * @return array<array-key, mixed>
+     */
+    private function mergeByKey(array $current, array $incoming): array
+    {
+        foreach ($incoming as $key => $value) {
+            if ($value instanceof Merge) {
+                if (is_int($key)) {
+                    // No stable current element at an appended position; resolve against null.
+                    $current[] = $this->applyMerge(null, $value);
+                } else {
+                    $current[$key] = $this->applyMerge($current[$key] ?? null, $value);
+                }
+            } elseif (is_int($key)) {
+                $current[] = $value;
+            } elseif (isset($current[$key]) && is_array($current[$key]) && is_array($value)) {
+                $current[$key] = $this->mergeByKey($current[$key], $value);
+            } else {
+                $current[$key] = $value;
+            }
+        }
+
+        return $current;
     }
 }
