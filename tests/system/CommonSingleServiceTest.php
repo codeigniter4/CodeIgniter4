@@ -34,8 +34,8 @@ final class CommonSingleServiceTest extends CIUnitTestCase
     {
         Services::injectMock('security', new MockSecurity(new SecurityConfig()));
 
-        $service1 = single_service($service); // @phpstan-ignore codeigniter.unknownServiceMethod
-        $service2 = single_service($service); // @phpstan-ignore codeigniter.unknownServiceMethod
+        $service1 = single_service($service);
+        $service2 = single_service($service);
 
         $this->assertNotNull($service1);
 
@@ -62,8 +62,8 @@ final class CommonSingleServiceTest extends CIUnitTestCase
 
         $params[] = $method->getNumberOfParameters() === 1 ? true : $method->getParameters()[0]->getDefaultValue();
 
-        $service1 = single_service($service, ...$params); // @phpstan-ignore codeigniter.unknownServiceMethod
-        $service2 = single_service($service, ...$params); // @phpstan-ignore codeigniter.unknownServiceMethod
+        $service1 = single_service($service, ...$params);
+        $service2 = single_service($service, ...$params);
 
         $this->assertNotNull($service1);
 
