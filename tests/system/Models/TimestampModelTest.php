@@ -98,7 +98,7 @@ final class TimestampModelTest extends LiveModelTestCase
             $expected .= '.000';
         }
 
-        $this->assertSame($expected, $user['created_at']); // @phpstan-ignore offsetAccess.notFound
+        $this->assertSame($expected, $user['created_at']);
         $this->assertSame($expected, $user['updated_at']);
     }
 
@@ -123,7 +123,7 @@ final class TimestampModelTest extends LiveModelTestCase
             $expected .= '.000';
         }
 
-        $this->assertSame($expected, $user['created_at']); // @phpstan-ignore offsetAccess.notFound
+        $this->assertSame($expected, $user['created_at']);
         $this->assertSame($expected, $user['updated_at']);
     }
 
@@ -143,7 +143,7 @@ final class TimestampModelTest extends LiveModelTestCase
         $user = $this->model->find($id);
 
         $user['country'] = 'CA';
-        $this->model->update($user['id'], $user); // @phpstan-ignore offsetAccess.notFound
+        $this->model->update($user['id'], $user);
 
         $user = $this->model->find($id);
 
@@ -153,7 +153,7 @@ final class TimestampModelTest extends LiveModelTestCase
             $expected .= '.000';
         }
 
-        $this->assertSame($expected, $user['created_at']); // @phpstan-ignore offsetAccess.notFound
+        $this->assertSame($expected, $user['created_at']);
         $this->assertSame($expected, $user['updated_at']);
     }
 
@@ -208,7 +208,7 @@ final class TimestampModelTest extends LiveModelTestCase
             $expected .= '.000';
         }
 
-        $this->assertSame($expected, $user['created_at']); // @phpstan-ignore offsetAccess.notFound
+        $this->assertSame($expected, $user['created_at']);
         $this->assertSame($expected, $user['updated_at']);
     }
 
@@ -237,7 +237,7 @@ final class TimestampModelTest extends LiveModelTestCase
             $expected .= '.000';
         }
 
-        $this->assertSame($expected, $user['created_at']); // @phpstan-ignore offsetAccess.notFound
+        $this->assertSame($expected, $user['created_at']);
         $this->assertSame($expected, $user['updated_at']);
     }
 
@@ -261,7 +261,7 @@ final class TimestampModelTest extends LiveModelTestCase
         $user = $this->model->find($id);
 
         $user['country'] = 'CA';
-        $this->model->update($user['id'], $user); // @phpstan-ignore offsetAccess.notFound
+        $this->model->update($user['id'], $user);
 
         $user = $this->model->find($id);
 
@@ -271,7 +271,7 @@ final class TimestampModelTest extends LiveModelTestCase
             $expected .= '.000';
         }
 
-        $this->assertSame($expected, $user['created_at']); // @phpstan-ignore offsetAccess.notFound
+        $this->assertSame($expected, $user['created_at']);
         $this->assertSame($expected, $user['updated_at']);
     }
 

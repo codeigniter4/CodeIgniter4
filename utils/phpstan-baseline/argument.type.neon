@@ -1,4 +1,4 @@
-# total 78 errors
+# total 76 errors
 
 parameters:
     ignoreErrors:
@@ -178,18 +178,8 @@ parameters:
             path: ../../tests/system/Log/Handlers/ChromeLoggerHandlerTest.php
 
         -
-            message: '#^Parameter \#1 \$row of method CodeIgniter\\BaseModel\:\:save\(\) expects array\<int\|string, bool\|float\|int\|object\|string\|null\>\|object, array\<string, array\<int, string\>\> given\.$#'
-            count: 1
-            path: ../../tests/system/Models/DataConverterModelTest.php
-
-        -
             message: '#^Parameter \#1 \$row of method CodeIgniter\\Model\:\:insert\(\) expects array\<int\|string, bool\|float\|int\|object\|string\|null\>\|object\|null, array\<string, list\<string\>\|string\> given\.$#'
             count: 3
-            path: ../../tests/system/Models/DataConverterModelTest.php
-
-        -
-            message: '#^Parameter \#2 \$row of method CodeIgniter\\Model\:\:update\(\) expects array\<int\|string, bool\|float\|int\|object\|string\|null\>\|object\|null, array\<string, array\<int, string\>\> given\.$#'
-            count: 1
             path: ../../tests/system/Models/DataConverterModelTest.php
 
         -
