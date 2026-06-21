@@ -28,57 +28,57 @@ parameters:
             path: ../../tests/system/Database/Live/GetTest.php
 
         -
-            message: '#^Cannot access property \$id on array\.$#'
+            message: '#^Cannot access property \$id on array\<string, mixed\>\.$#'
             count: 2
             path: ../../tests/system/Models/FindModelTest.php
 
         -
-            message: '#^Cannot access property \$created_at on array\.$#'
+            message: '#^Cannot access property \$created_at on array\<string, mixed\>\.$#'
             count: 3
             path: ../../tests/system/Models/InsertModelTest.php
 
         -
-            message: '#^Cannot access property \$created_at on array\.$#'
+            message: '#^Cannot access property \$created_at on array\<string, mixed\>\.$#'
             count: 1
             path: ../../tests/system/Models/MiscellaneousModelTest.php
 
         -
-            message: '#^Cannot access property \$description on array\.$#'
+            message: '#^Cannot access property \$description on array\<string, mixed\>\.$#'
             count: 1
             path: ../../tests/system/Models/SaveModelTest.php
 
         -
-            message: '#^Cannot access property \$country on array\.$#'
+            message: '#^Cannot access property \$country on array\<string, mixed\>\.$#'
             count: 2
             path: ../../tests/system/Models/TimestampModelTest.php
 
         -
-            message: '#^Cannot access property \$created_at on array\.$#'
+            message: '#^Cannot access property \$created_at on array\<string, mixed\>\.$#'
             count: 2
             path: ../../tests/system/Models/TimestampModelTest.php
 
         -
-            message: '#^Cannot access property \$id on array\.$#'
+            message: '#^Cannot access property \$id on array\<string, mixed\>\.$#'
             count: 2
             path: ../../tests/system/Models/TimestampModelTest.php
 
         -
-            message: '#^Cannot access property \$updated_at on array\.$#'
+            message: '#^Cannot access property \$updated_at on array\<string, mixed\>\.$#'
             count: 2
             path: ../../tests/system/Models/TimestampModelTest.php
 
         -
-            message: '#^Cannot access property \$value on list\<array\>\.$#'
+            message: '#^Cannot access property \$value on array\<int\<0, max\>\|string, mixed\>\.$#'
             count: 1
             path: ../../tests/system/Models/UpdateModelTest.php
 
         -
-            message: '#^Cannot access property \$key on array\.$#'
+            message: '#^Cannot access property \$key on array\<string, mixed\>\.$#'
             count: 7
             path: ../../tests/system/Models/WhenWhenNotModelTest.php
 
         -
-            message: '#^Cannot access property \$value on array\.$#'
+            message: '#^Cannot access property \$value on array\<string, mixed\>\.$#'
             count: 1
             path: ../../tests/system/Models/WhenWhenNotModelTest.php
 

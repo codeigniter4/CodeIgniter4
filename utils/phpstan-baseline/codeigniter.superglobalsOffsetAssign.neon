@@ -1,0 +1,28 @@
+# total 5 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Direct assignment of string\|null to \$_COOKIE\[''csrf_cookie_name''\] is not allowed\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockSecurity.php
+
+        -
+            message: '#^Direct assignment of ''1'' to \$_SERVER\[''CODEIGNITER_SCREAM_DEPRECATIONS''\] is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/Debug/ExceptionsTest.php
+
+        -
+            message: '#^Direct assignment of ''test'' to \$_SERVER\[''HTTPS''\] is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/HomeTest.php
+
+        -
+            message: '#^Direct assignment of ''test'' to \$_SERVER\[''HTTPS''\] is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/Test/FeatureTestAutoRoutingImprovedTest.php
+
+        -
+            message: '#^Direct assignment of ''test'' to \$_SERVER\[''HTTPS''\] is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/Test/FeatureTestTraitTest.php

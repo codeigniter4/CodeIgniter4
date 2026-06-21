@@ -1,0 +1,83 @@
+# total 17 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Direct global assignment to \$_SERVER is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/Config/BaseConfigTest.php
+
+        -
+            message: '#^Direct global assignment to \$_SERVER is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/Config/ServicesTest.php
+
+        -
+            message: '#^Direct global assignment to \$_SERVER is not allowed\.$#'
+            count: 2
+            path: ../../tests/system/ControllerTest.php
+
+        -
+            message: '#^Direct global assignment to \$_SERVER is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/Filters/FiltersTest.php
+
+        -
+            message: '#^Direct global assignment to \$_COOKIE is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Direct global assignment to \$_GET is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Direct global assignment to \$_POST is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Direct global assignment to \$_REQUEST is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Direct global assignment to \$_SERVER is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Direct global assignment to \$_GET is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Direct global assignment to \$_SERVER is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Direct global assignment to \$_COOKIE is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/Helpers/CookieHelperTest.php
+
+        -
+            message: '#^Direct global assignment to \$_GET is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/Helpers/FormHelperTest.php
+
+        -
+            message: '#^Direct global assignment to \$_POST is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/Helpers/FormHelperTest.php
+
+        -
+            message: '#^Direct global assignment to \$_SERVER is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/Helpers/URLHelper/SiteUrlCliTest.php
+
+        -
+            message: '#^Direct global assignment to \$_SERVER is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/Helpers/URLHelper/SiteUrlTest.php

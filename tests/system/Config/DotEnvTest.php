@@ -93,7 +93,7 @@ final class DotEnvTest extends CIUnitTestCase
     public function testLoadsHex2Bin(): void
     {
         putenv('encryption.key');
-        unset($_ENV['encryption.key'], $_SERVER['encryption.key']); // @phpstan-ignore codeigniter.superglobalAccess
+        unset($_ENV['encryption.key'], $_SERVER['encryption.key']);
 
         $dotenv = new DotEnv($this->fixturesFolder, 'encryption.env');
         $dotenv->load();
@@ -108,7 +108,7 @@ final class DotEnvTest extends CIUnitTestCase
     public function testLoadsBase64(): void
     {
         putenv('encryption.key');
-        unset($_ENV['encryption.key'], $_SERVER['encryption.key']); // @phpstan-ignore codeigniter.superglobalAccess
+        unset($_ENV['encryption.key'], $_SERVER['encryption.key']);
 
         $dotenv = new DotEnv($this->fixturesFolder, 'base64encryption.env');
         $dotenv->load();

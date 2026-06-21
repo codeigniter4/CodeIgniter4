@@ -1,0 +1,33 @@
+# total 7 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Direct unset of \$_SERVER\[''encryption\.key''\] is not allowed\.$#'
+            count: 1
+            path: ../../system/Commands/Encryption/GenerateKey.php
+
+        -
+            message: '#^Direct unset of \$_COOKIE\[\$this\-\>config\-\>cookieName\] is not allowed\.$#'
+            count: 1
+            path: ../../system/Session/Session.php
+
+        -
+            message: '#^Direct unset of \$_SERVER\[''foo''\] is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/CommonFunctionsSendTest.php
+
+        -
+            message: '#^Direct unset of \$_SERVER\[''foo''\] is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/CommonFunctionsTest.php
+
+        -
+            message: '#^Direct unset of \$_SERVER\[''encryption\.key''\] is not allowed\.$#'
+            count: 2
+            path: ../../tests/system/Config/DotEnvTest.php
+
+        -
+            message: '#^Direct unset of \$_SERVER\[''CODEIGNITER_SCREAM_DEPRECATIONS''\] is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/Debug/ExceptionsTest.php

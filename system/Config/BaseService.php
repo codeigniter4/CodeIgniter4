@@ -445,8 +445,9 @@ class BaseService
      */
     public static function injectMock(string $name, $mock)
     {
-        static::$instances[$name]         = $mock;
-        static::$mocks[strtolower($name)] = $mock;
+        $name                     = strtolower($name);
+        static::$instances[$name] = $mock;
+        static::$mocks[$name]     = $mock;
     }
 
     /**
