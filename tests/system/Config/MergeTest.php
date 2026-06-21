@@ -340,6 +340,17 @@ final class MergeTest extends CIUnitTestCase
         $this->assertSame(['deep' => ['nested' => ['value']]], $result);
     }
 
+    public function testByKeyResolvesDirectiveInsideBrandNewNestedArraySubtree(): void
+    {
+        $result = $this->apply([], Merge::byKey([
+            'globals' => [
+                'before' => Merge::append(['auth']),
+            ],
+        ]));
+
+        $this->assertSame(['globals' => ['before' => ['auth']]], $result);
+    }
+
     public function testAppendPayloadIsTerminalLiteral(): void
     {
         // A directive embedded in an append() payload is literal data, not interpreted.

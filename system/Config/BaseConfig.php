@@ -435,8 +435,11 @@ class BaseConfig
                 }
             } elseif (is_int($key)) {
                 $current[] = $value;
-            } elseif (isset($current[$key]) && is_array($current[$key]) && is_array($value)) {
-                $current[$key] = $this->mergeByKey($current[$key], $value);
+            } elseif (is_array($value)) {
+                $current[$key] = $this->mergeByKey(
+                    isset($current[$key]) && is_array($current[$key]) ? $current[$key] : [],
+                    $value,
+                );
             } else {
                 $current[$key] = $value;
             }
