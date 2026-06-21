@@ -13,9 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Builder;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use Config\Feature;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -64,5 +66,43 @@ final class LimitTest extends CIUnitTestCase
         $expectedSQL = 'SELECT * FROM "user"  LIMIT 1, 5';
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testLimitZeroAsAllOptimization(): void
+    {
+        $feature = new class () extends Feature {
+            public int $accessCount = 0;
+
+            public function __construct()
+            {
+                parent::__construct();
+                unset($this->limitZeroAsAll);
+            }
+
+            public function __get(string $name): mixed
+            {
+                if ($name === 'limitZeroAsAll') {
+                    $this->accessCount++;
+
+                    return true;
+                }
+
+                return null;
+            }
+        };
+
+        Factories::injectMock('config', 'Feature', $feature);
+
+        // Constructor accesses it once
+        $builder = new BaseBuilder('user', $this->db);
+        $this->assertSame(1, $feature->accessCount);
+
+        // Should not access config again during typical query building
+        $builder->limit(0);
+        $builder->getCompiledSelect();
+
+        $this->assertSame(1, $feature->accessCount);
+
+        Factories::reset('config');
     }
 }

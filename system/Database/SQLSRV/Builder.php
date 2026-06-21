@@ -20,7 +20,6 @@ use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\Query;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Database\ResultInterface;
-use Config\Feature;
 
 /**
  * Builder for SQLSRV
@@ -339,8 +338,7 @@ class Builder extends BaseBuilder
         // DatabaseException:
         //   [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The number of
         //   rows provided for a FETCH clause must be greater then zero.
-        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true; // @phpstan-ignore nullCoalesce.property
-        if (! $limitZeroAsAll && $this->QBLimit === 0) {
+        if (! $this->limitZeroAsAll && $this->QBLimit === 0) {
             return "SELECT * \nFROM " . $this->_fromTables() . ' WHERE 1=0 ';
         }
 
@@ -626,8 +624,7 @@ class Builder extends BaseBuilder
             . $this->compileOrderBy(); // ORDER BY
 
         // LIMIT
-        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true; // @phpstan-ignore nullCoalesce.property
-        if ($limitZeroAsAll) {
+        if ($this->limitZeroAsAll) {
             if ($this->QBLimit) {
                 $sql = $this->_limit($sql . "\n");
             }
@@ -646,8 +643,7 @@ class Builder extends BaseBuilder
      */
     public function get(?int $limit = null, int $offset = 0, bool $reset = true)
     {
-        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true; // @phpstan-ignore nullCoalesce.property
-        if ($limitZeroAsAll && $limit === 0) {
+        if ($this->limitZeroAsAll && $limit === 0) {
             $limit = null;
         }
 

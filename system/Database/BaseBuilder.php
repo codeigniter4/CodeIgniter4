@@ -296,6 +296,13 @@ class BaseBuilder
     protected $pregOperators = [];
 
     /**
+     * Limit 0 as all
+     *
+     * @var bool
+     */
+    protected $limitZeroAsAll;
+
+    /**
      * Constructor
      *
      * @param array|string|TableName $tableName tablename or tablenames with or without aliases
@@ -334,6 +341,8 @@ class BaseBuilder
                 }
             }
         }
+
+        $this->limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true; // @phpstan-ignore nullCoalesce.property
     }
 
     /**
@@ -1511,8 +1520,7 @@ class BaseBuilder
      */
     public function limit(?int $value = null, ?int $offset = 0)
     {
-        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true; // @phpstan-ignore nullCoalesce.property
-        if ($limitZeroAsAll && $value === 0) {
+        if ($this->limitZeroAsAll && $value === 0) {
             $value = null;
         }
 
@@ -1633,8 +1641,7 @@ class BaseBuilder
      */
     public function get(?int $limit = null, int $offset = 0, bool $reset = true)
     {
-        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true; // @phpstan-ignore nullCoalesce.property
-        if ($limitZeroAsAll && $limit === 0) {
+        if ($this->limitZeroAsAll && $limit === 0) {
             $limit = null;
         }
 
@@ -1771,8 +1778,7 @@ class BaseBuilder
             $this->where($where);
         }
 
-        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true; // @phpstan-ignore nullCoalesce.property
-        if ($limitZeroAsAll && $limit === 0) {
+        if ($this->limitZeroAsAll && $limit === 0) {
             $limit = null;
         }
 
@@ -2498,8 +2504,7 @@ class BaseBuilder
             $this->where($where);
         }
 
-        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true; // @phpstan-ignore nullCoalesce.property
-        if ($limitZeroAsAll && $limit === 0) {
+        if ($this->limitZeroAsAll && $limit === 0) {
             $limit = null;
         }
 
@@ -2545,8 +2550,7 @@ class BaseBuilder
             $valStr[] = $key . ' = ' . $val;
         }
 
-        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true; // @phpstan-ignore nullCoalesce.property
-        if ($limitZeroAsAll) {
+        if ($this->limitZeroAsAll) {
             return 'UPDATE ' . $this->compileIgnore('update') . $table . ' SET ' . implode(', ', $valStr)
                 . $this->compileWhereHaving('QBWhere')
                 . $this->compileOrderBy()
@@ -2829,8 +2833,7 @@ class BaseBuilder
 
         $sql = $this->_delete($this->removeAlias($table));
 
-        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true; // @phpstan-ignore nullCoalesce.property
-        if ($limitZeroAsAll && $limit === 0) {
+        if ($this->limitZeroAsAll && $limit === 0) {
             $limit = null;
         }
 
@@ -3104,8 +3107,7 @@ class BaseBuilder
             . $this->compileWhereHaving('QBHaving')
             . $this->compileOrderBy();
 
-        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true; // @phpstan-ignore nullCoalesce.property
-        if ($limitZeroAsAll) {
+        if ($this->limitZeroAsAll) {
             if ($this->QBLimit) {
                 $sql = $this->_limit($sql . "\n");
             }

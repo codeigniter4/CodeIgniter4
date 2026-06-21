@@ -370,6 +370,13 @@ abstract class BaseModel
      */
     protected $afterDelete = [];
 
+    /**
+     * Limit 0 as all
+     *
+     * @var bool
+     */
+    protected $limitZeroAsAll;
+
     public function __construct(?ValidationInterface $validation = null)
     {
         $this->tempReturnType     = $this->returnType;
@@ -377,6 +384,8 @@ abstract class BaseModel
         $this->tempAllowCallbacks = $this->allowCallbacks;
 
         $this->validation = $validation;
+
+        $this->limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true; // @phpstan-ignore nullCoalesce.property
 
         $this->initialize();
         $this->createDataConverter();
@@ -653,8 +662,7 @@ abstract class BaseModel
      */
     public function findAll(?int $limit = null, int $offset = 0)
     {
-        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true; // @phpstan-ignore nullCoalesce.property
-        if ($limitZeroAsAll) {
+        if ($this->limitZeroAsAll) {
             $limit ??= 0;
         }
 

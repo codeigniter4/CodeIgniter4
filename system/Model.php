@@ -25,7 +25,6 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\Validation\ValidationInterface;
 use Config\Database;
-use Config\Feature;
 use stdClass;
 
 /**
@@ -234,8 +233,7 @@ class Model extends BaseModel
      */
     protected function doFindAll(?int $limit = null, int $offset = 0)
     {
-        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true; // @phpstan-ignore nullCoalesce.property
-        if ($limitZeroAsAll) {
+        if ($this->limitZeroAsAll) {
             $limit ??= 0;
         }
 
