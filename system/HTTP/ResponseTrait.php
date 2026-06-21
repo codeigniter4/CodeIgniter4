@@ -733,20 +733,15 @@ trait ResponseTrait
             return null;
         }
 
-        $filepath = '';
         if ($data === null) {
-            $filepath = $filename;
-            $filename = explode('/', str_replace(DIRECTORY_SEPARATOR, '/', $filename));
-            $filename = end($filename);
+            $response = new DownloadResponse(basename($filename), $setMime);
+            $response->setFilePath($filename);
+
+            return $response;
         }
 
         $response = new DownloadResponse($filename, $setMime);
-
-        if ($filepath !== '') {
-            $response->setFilePath($filepath);
-        } elseif ($data !== null) {
-            $response->setBinary($data);
-        }
+        $response->setBinary($data);
 
         return $response;
     }
