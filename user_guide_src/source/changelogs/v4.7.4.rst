@@ -35,6 +35,7 @@ Bugs Fixed
 - **Common:** Fixed a bug in ``env()`` where a ``TypeError`` could be thrown when non-string values were passed.
 - **Common:** Fixed ``esc()`` to propagate encoding correctly and prevent reference leaks.
 - **Commands:** Fixed a bug where ``spark lang:find`` treated translation keys already provided by the framework or another namespace (such as ``Errors.*`` in ``system/Language``) as new, listing them under ``--show-new`` and writing untranslated placeholders into ``app/Language`` that overrode the existing translations.
+- **Config:** Fixed a bug where ``BaseService::injectMock`` did not apply ``strtolower`` consistently, causing inconsistent Service and Mock registration and resolution.
 - **Database:** Fixed a bug where ``updateBatch()`` could be called after Query Builder ``where()`` conditions, even though it's not supported. In this situation, now the ``DatabaseException`` is thrown.
 - **Filters:** Fixed a bug in ``InvalidChars`` filter where invalid UTF-8 or control characters in array keys were not checked.
 - **HTTP:** Fixed a bug where the User Agent library reported Safari's WebKit version instead of the browser version from the ``Version`` token.

@@ -1,0 +1,148 @@
+# total 35 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Direct access to \$_SERVER\[''argv''\] is not allowed\.$#'
+            count: 2
+            path: ../../system/Boot.php
+
+        -
+            message: '#^Direct access to \$_SERVER\[''ANSICON''\] is not allowed\.$#'
+            count: 1
+            path: ../../system/CLI/CLI.php
+
+        -
+            message: '#^Direct access to \$_SERVER\[''NO_COLOR''\] is not allowed\.$#'
+            count: 1
+            path: ../../system/CLI/CLI.php
+
+        -
+            message: '#^Direct access to \$_SERVER\[''argv''\] is not allowed\.$#'
+            count: 1
+            path: ../../system/CLI/CLI.php
+
+        -
+            message: '#^Direct access to \$_SERVER\[''REMOTE_ADDR''\] is not allowed\.$#'
+            count: 1
+            path: ../../system/Common.php
+
+        -
+            message: '#^Direct access to \$_SERVER\[''REQUEST_METHOD''\] is not allowed\.$#'
+            count: 1
+            path: ../../system/Common.php
+
+        -
+            message: '#^Direct access to \$_SERVER\[\$key\] is not allowed\.$#'
+            count: 1
+            path: ../../system/Common.php
+
+        -
+            message: '#^Direct access to \$_SERVER\[''CI_ENVIRONMENT''\] is not allowed\.$#'
+            count: 2
+            path: ../../system/Config/AutoloadConfig.php
+
+        -
+            message: '#^Direct access to \$_SERVER\["\{\$prefix\}\.\{\$property\}"\] is not allowed\.$#'
+            count: 1
+            path: ../../system/Config/BaseConfig.php
+
+        -
+            message: '#^Direct access to \$_SERVER\["\{\$prefix\}_\{\$underscoreProperty\}"\] is not allowed\.$#'
+            count: 1
+            path: ../../system/Config/BaseConfig.php
+
+        -
+            message: '#^Direct access to \$_SERVER\["\{\$shortPrefix\}\.\{\$property\}"\] is not allowed\.$#'
+            count: 1
+            path: ../../system/Config/BaseConfig.php
+
+        -
+            message: '#^Direct access to \$_SERVER\["\{\$shortPrefix\}_\{\$underscoreProperty\}"\] is not allowed\.$#'
+            count: 1
+            path: ../../system/Config/BaseConfig.php
+
+        -
+            message: '#^Direct access to \$_COOKIE\[\$this\-\>config\-\>cookieName\] is not allowed\.$#'
+            count: 5
+            path: ../../system/Session/Session.php
+
+        -
+            message: '#^Direct access to \$_SERVER\[''BAR''\] is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/Config/DotEnvTest.php
+
+        -
+            message: '#^Direct access to \$_SERVER\[''FOO''\] is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/Config/DotEnvTest.php
+
+        -
+            message: '#^Direct access to \$_SERVER\[''NULL''\] is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/Config/DotEnvTest.php
+
+        -
+            message: '#^Direct access to \$_SERVER\[''SPACED''\] is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/Config/DotEnvTest.php
+
+        -
+            message: '#^Direct access to \$_SERVER\[''SimpleConfig_simple_name''\] is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/Config/DotEnvTest.php
+
+        -
+            message: '#^Direct access to \$_SERVER\[''QUERY_STRING''\] is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Direct access to \$_COOKIE\[''custom_cookie''\] is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/SuperglobalsTest.php
+
+        -
+            message: '#^Direct access to \$_COOKIE\[''session''\] is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/SuperglobalsTest.php
+
+        -
+            message: '#^Direct access to \$_GET\[''custom_get''\] is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/SuperglobalsTest.php
+
+        -
+            message: '#^Direct access to \$_GET\[''test''\] is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/SuperglobalsTest.php
+
+        -
+            message: '#^Direct access to \$_POST\[''custom_post''\] is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/SuperglobalsTest.php
+
+        -
+            message: '#^Direct access to \$_POST\[''test''\] is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/SuperglobalsTest.php
+
+        -
+            message: '#^Direct access to \$_REQUEST\[''custom_request''\] is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/SuperglobalsTest.php
+
+        -
+            message: '#^Direct access to \$_REQUEST\[''test''\] is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/SuperglobalsTest.php
+
+        -
+            message: '#^Direct access to \$_SERVER\[''CUSTOM_SERVER''\] is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/SuperglobalsTest.php
+
+        -
+            message: '#^Direct access to \$_SERVER\[''TEST_KEY''\] is not allowed\.$#'
+            count: 1
+            path: ../../tests/system/SuperglobalsTest.php

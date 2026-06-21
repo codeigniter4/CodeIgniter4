@@ -91,6 +91,10 @@ only applies to JPEG and WebP images, will be ignored otherwise:
 
 .. note:: The parameter ``$quality`` for WebP can be used since v4.4.0.
 
+.. note:: When using ImageMagick, the target path passed to ``save()`` determines the output format by its extension.
+    ImageMagick may also interpret explicit format prefixes like ``jpg:filename.png``. If the target path is based on user
+    input, validate it against the formats your application allows, including any format prefix or extension.
+
 .. literalinclude:: images/005.php
 
 .. note:: Higher quality will result in larger file sizes. See also https://www.php.net/manual/en/function.imagejpeg.php
@@ -153,8 +157,7 @@ The ``convert()`` method changes the library's internal indicator for the desire
 
   .. literalinclude:: images/009.php
 
-.. note:: ImageMagick already saves files in the type
-    indicated by their extension, ignoring ``$imageType``.
+.. note:: ImageMagick already saves files in the type indicated by their extension, ignoring ``$imageType``.
 
 Fitting Images
 ==============
