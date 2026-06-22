@@ -18,7 +18,7 @@ class ArrayCast extends BaseCast
     public static function get($value, array $params = []): array
     {
         if (is_string($value) && (str_starts_with($value, 'a:') || str_starts_with($value, 's:'))) {
-            $value = unserialize($value);
+            $value = unserialize($value, ['allowed_classes' => false]);
         }
 
         return (array) $value;
