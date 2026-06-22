@@ -22,6 +22,7 @@ use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsPar
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\CodingStyle\Rector\FuncCall\VersionCompareFuncCallToConstantRector;
 use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
 use Rector\DeadCode\Rector\MethodCall\RemoveNullArgOnNullDefaultParamRector;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
@@ -35,6 +36,7 @@ use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
 use Rector\PHPUnit\CodeQuality\Rector\FuncCall\AssertFuncCallToPHPUnitAssertRector;
 use Rector\PHPUnit\CodeQuality\Rector\StmtsAwareInterface\DeclareStrictTypesTestsRector;
+use Rector\PostRector\Rector\UnusedImportRemovingPostRector;
 use Rector\Privatization\Rector\Class_\FinalizeTestCaseClassRector;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
 use Rector\Renaming\Rector\ConstFetch\RenameConstantRector;
@@ -94,6 +96,10 @@ return RectorConfig::configure()
         RemoveUnusedPrivateMethodRector::class => [
             // private method called via getPrivateMethodInvoker
             __DIR__ . '/tests/_support/Test/TestForReflectionHelper.php',
+        ],
+
+        RemoveUnusedConstructorParamRector::class => [
+            __DIR__ . '/system/HTTP/Response.php',
         ],
 
         // Exclude test file because `is_cli()` is mocked and Rector might remove needed parameters.
@@ -169,8 +175,10 @@ return RectorConfig::configure()
             __DIR__ . '/tests/system/Models',
         ],
 
-        // buggy on auto import removed
-        __DIR__ . '/system/HTTP/Response.php',
+        UnusedImportRemovingPostRector::class => [
+            // buggy on auto import removed
+            __DIR__ . '/system/HTTP/Response.php',
+        ],
     ])
     // auto import fully qualified class names
     ->withImportNames()
