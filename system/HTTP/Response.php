@@ -16,6 +16,7 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\Cookie\CookieStore;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use Config\App;
 use Config\Cookie as CookieConfig;
 
 /**
