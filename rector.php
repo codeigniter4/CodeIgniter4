@@ -22,7 +22,6 @@ use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsPar
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\CodingStyle\Rector\FuncCall\VersionCompareFuncCallToConstantRector;
 use Rector\Config\RectorConfig;
-use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
 use Rector\DeadCode\Rector\MethodCall\RemoveNullArgOnNullDefaultParamRector;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
@@ -95,10 +94,6 @@ return RectorConfig::configure()
         RemoveUnusedPrivateMethodRector::class => [
             // private method called via getPrivateMethodInvoker
             __DIR__ . '/tests/_support/Test/TestForReflectionHelper.php',
-        ],
-
-        RemoveUnusedConstructorParamRector::class => [
-            __DIR__ . '/system/HTTP/Response.php',
         ],
 
         // Exclude test file because `is_cli()` is mocked and Rector might remove needed parameters.
