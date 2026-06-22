@@ -173,7 +173,7 @@ return RectorConfig::configure()
         __DIR__ . '/system/HTTP/Response.php',
     ])
     // auto import fully qualified class names
-    ->withImportNames(removeUnusedImports: true)
+    ->withImportNames()
     ->withRules([
         DeclareStrictTypesRector::class,
         UnderscoreToCamelCaseVariableNameRector::class,
