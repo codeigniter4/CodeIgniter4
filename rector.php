@@ -173,6 +173,9 @@ return RectorConfig::configure()
             __DIR__ . '/tests/system/Database',
             __DIR__ . '/tests/system/Models',
         ],
+
+        // buggy on auto import removed
+        __DIR__ . '/system/HTTP/Response.php',
     ])
     // auto import fully qualified class names
     ->withImportNames(removeUnusedImports: true)
