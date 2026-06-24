@@ -498,8 +498,8 @@ final class ResponseTest extends CIUnitTestCase
     {
         $response = new Response(new App());
 
-        $tempDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'ci4_test_dir';
-        @mkdir($tempDir);
+        $tempDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'ci4_test_dir_' . bin2hex(random_bytes(8));
+        $this->assertTrue(mkdir($tempDir));
         $tempDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'ci4_test_dir_' . bin2hex(random_bytes(8));
         $this->assertTrue(mkdir($tempDir));
         $extremeName = 'my_extreme_file_!@#$%.txt';
