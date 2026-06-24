@@ -418,7 +418,9 @@ class Autoloader
         $packageList = [];
 
         foreach ($allData as $list) {
-            $packageList = array_merge($packageList, $list['versions']);
+            foreach ($list['versions'] as $packageName => $data) {
+                $packageList[$packageName] = $data;
+            }
         }
 
         // Check config for $composerPackages.

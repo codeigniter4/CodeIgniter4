@@ -20,6 +20,7 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
+use Composer\Autoload\ClassLoader;
 use Config\Autoload;
 use Config\Modules;
 use PHPUnit\Framework\Attributes\Group;
@@ -415,6 +416,22 @@ final class AutoloaderTest extends CIUnitTestCase
 
         $namespaces = $loader->getNamespace();
         $this->assertArrayNotHasKey('Laminas\\Escaper', $namespaces);
+    }
+
+    public function testLoadComposerNamespacesAccumulatesCorrectly(): void
+    {
+        $composer = $this->createMock(ClassLoader::class);
+        $composer->method('getPrefixesPsr4')->willReturn([
+            'Laminas\\Escaper\\' => [VENDORPATH . 'composer/../laminas/laminas-escaper/src'],
+        ]);
+
+        $loader  = new Autoloader();
+        $invoker = self::getPrivateMethodInvoker($loader, 'loadComposerNamespaces');
+
+        $invoker($composer, []);
+
+        $namespaces = $loader->getNamespace();
+        $this->assertArrayHasKey('Laminas\\Escaper', $namespaces);
     }
 
     public function testAutoloaderLoadsNonClassFiles(): void
