@@ -22,8 +22,6 @@ Message Changes
 Changes
 *******
 
-- **HTTP:** Optimized ``ResponseTrait::download()`` to use ``basename()`` for filename extraction instead of string replacement and array explosion, improving performance.
-
 ************
 Deprecations
 ************
