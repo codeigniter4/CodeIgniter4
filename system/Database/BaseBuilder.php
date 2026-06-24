@@ -764,14 +764,18 @@ class BaseBuilder
             $keyValue = $key;
         }
 
+        if ($keyValue === []) {
+            return $this;
+        }
+
         // If the escape value was not set will base it on the global setting
         if (! is_bool($escape)) {
             $escape = $this->db->protectIdentifiers;
         }
 
-        foreach ($keyValue as $k => $v) {
-            $prefix = empty($this->{$qbKey}) ? $this->groupGetType('') : $this->groupGetType($type);
+        $prefix = empty($this->{$qbKey}) ? $this->groupGetType('') : $this->groupGetType($type);
 
+        foreach ($keyValue as $k => $v) {
             if ($rawSqlOnly) {
                 $k  = '';
                 $op = '';
@@ -830,6 +834,8 @@ class BaseBuilder
                     'escape'    => $escape,
                 ];
             }
+
+            $prefix = $type;
         }
 
         return $this;
@@ -1152,12 +1158,16 @@ class BaseBuilder
 
         $keyValue = is_array($field) ? $field : [$field => $match];
 
+        if ($keyValue === []) {
+            return $this;
+        }
+
+        $prefix = $this->{$clause} === [] ? $this->groupGetType('') : $this->groupGetType($type);
+
         foreach ($keyValue as $k => $v) {
             if ($insensitiveSearch) {
                 $v = mb_strtolower($v, 'UTF-8');
             }
-
-            $prefix = empty($this->{$clause}) ? $this->groupGetType('') : $this->groupGetType($type);
 
             if ($side === 'none') {
                 $bind = $this->setBind($k, $v, $escape);
@@ -1180,6 +1190,8 @@ class BaseBuilder
                 'condition' => $likeStatement,
                 'escape'    => $escape,
             ];
+
+            $prefix = $type;
         }
 
         return $this;
