@@ -1012,7 +1012,7 @@ class CLI
                 continue;
             }
 
-            if (mb_strpos($value, ' ') !== false) {
+            if (str_contains($value, ' ')) {
                 $out .= "\"{$value}\" ";
             } elseif ($value !== null) {
                 $out .= "{$value} ";
