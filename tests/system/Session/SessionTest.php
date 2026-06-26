@@ -328,6 +328,19 @@ final class SessionTest extends CIUnitTestCase
         $this->assertSame('bar', $_SESSION['foo']);
     }
 
+    public function testDestroyClearsSessionInTesting(): void
+    {
+        $session = $this->getInstance();
+        $session->start();
+
+        $session->set('foo', 'bar');
+        $this->assertSame('bar', $_SESSION['foo']);
+
+        $session->destroy();
+
+        $this->assertSame([], $_SESSION);
+    }
+
     public function testCanFlashData(): void
     {
         $session = $this->getInstance();

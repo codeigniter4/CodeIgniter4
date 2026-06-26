@@ -274,6 +274,8 @@ class Session implements SessionInterface
     public function destroy()
     {
         if (ENVIRONMENT === 'testing') {
+            $_SESSION = [];
+
             return;
         }
 
