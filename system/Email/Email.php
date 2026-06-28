@@ -197,7 +197,7 @@ class Email
      *
      * @see http://www.ietf.org/rfc/rfc822.txt
      *
-     * @var "\r\n"|"\n"
+     * @var "\n"|"\r\n"
      */
     public $CRLF = "\r\n";
 
@@ -1335,14 +1335,22 @@ class Email
      */
     protected function prepQuotedPrintable($str)
     {
+        // We are intentionally wrapping so mail servers will encode characters
+        // properly and MUAs will behave, so {unwrap} must go!
         $str = str_replace(['{unwrap}', '{/unwrap}'], '', $str);
 
+        // RFC 2045 specifies CRLF as "\r\n".
+        // However, many developers choose to override that and violate
+        // the RFC rules due to (apparently) a bug in MS Exchange,
+        // which only works with "\n".
         if ($this->CRLF === "\r\n") {
             return quoted_printable_encode($str);
         }
 
+        // Reduce multiple spaces & remove nulls
         $str = preg_replace(['| +|', '/\x00+/'], [' ', ''], $str);
 
+        // Standardize newlines
         if (str_contains($str, "\r")) {
             $str = str_replace(["\r\n", "\r"], "\n", $str);
         }
@@ -1361,34 +1369,48 @@ class Email
             $temp    = '';
             $tempLen = 0;
 
+            // Loop through each character in the line to add soft-wrap
+            // characters at the end of a line " =\r\n" and add the newly
+            // processed line(s) to the output (see comment on $crlf class property)
             for ($i = 0; $i < $length; $i++) {
                 $char    = $line[$i];
                 $ascii   = ord($char);
                 $charLen = 1;
 
+                // Convert spaces and tabs but only if it's the end of the line
                 if ($ascii === 32 || $ascii === 9) {
                     if ($i === ($length - 1)) {
                         $char    = sprintf('=%02X', $ascii);
                         $charLen = 3;
                     }
-                } elseif ($ascii === 61 || ! isset($asciiSafeChars[$ascii])) {
+                }
+                // DO NOT move this below the $ascii_safe_chars line!
+                //
+                // = (equals) signs are allowed by RFC2049, but must be encoded
+                // as they are the encoding delimiter!
+                elseif ($ascii === 61 || ! isset($asciiSafeChars[$ascii])) {
                     $char    = sprintf('=%02X', $ascii);
                     $charLen = 3;
                 }
 
+                // If we're at the character limit, add the line to the output,
+                // reset our temp variable, and keep on chuggin'
                 if (($tempLen + $charLen) >= 76) {
                     $output .= $temp . '=' . $this->CRLF;
                     $temp    = '';
                     $tempLen = 0;
                 }
 
+                // Add the character to our temporary line
                 $temp .= $char;
                 $tempLen += $charLen;
             }
 
+            // Add our completed line to the output
             $output .= $temp . $this->CRLF;
         }
 
+        // get rid of extra CRLF tacked onto the end
         return static::substr($output, 0, static::strlen($this->CRLF) * -1);
     }
 
