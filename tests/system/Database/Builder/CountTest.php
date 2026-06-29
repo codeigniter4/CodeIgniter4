@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
@@ -61,12 +62,22 @@ final class CountTest extends CIUnitTestCase
         $builder = new BaseBuilder('jobs', $this->db);
         $builder->testMode();
 
-        $answer = $builder->where('id >', 3)->lockForUpdate()->countAllResults(false);
+        $answer = $builder->where('id >', 3)->lockForUpdate()->skipLocked()->countAllResults(false);
 
         $expectedSQL = 'SELECT COUNT(*) AS "numrows" FROM "jobs" WHERE "id" > :id:';
 
         $this->assertSameSql($expectedSQL, $answer);
-        $this->assertSameSql('SELECT * FROM "jobs" WHERE "id" > 3 FOR UPDATE', $builder->getCompiledSelect(false));
+        $this->assertSameSql('SELECT * FROM "jobs" WHERE "id" > 3 FOR UPDATE SKIP LOCKED', $builder->getCompiledSelect(false));
+    }
+
+    public function testCountAllResultsThrowsExceptionWithSelectLockWaitWithoutSelectLock(): void
+    {
+        $builder = new BaseBuilder('jobs', $this->db);
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('Query Builder does not support skipLocked() without lockForUpdate() or sharedLock().');
+
+        $builder->skipLocked()->countAllResults();
     }
 
     public function testCountAllResultsDoesNotUseSharedLock(): void
@@ -89,12 +100,12 @@ final class CountTest extends CIUnitTestCase
         $builder = new SQLSRVBuilder('jobs', $this->db);
         $builder->testMode();
 
-        $answer = $builder->where('id >', 3)->lockForUpdate()->countAllResults(false);
+        $answer = $builder->where('id >', 3)->lockForUpdate()->nowait()->countAllResults(false);
 
         $expectedSQL = 'SELECT COUNT(*) AS "numrows" FROM "test"."dbo"."jobs" WHERE "id" > :id:';
 
         $this->assertSameSql($expectedSQL, $answer);
-        $this->assertSameSql('SELECT * FROM "test"."dbo"."jobs" WITH (UPDLOCK, ROWLOCK) WHERE "id" > 3', $builder->getCompiledSelect(false));
+        $this->assertSameSql('SELECT * FROM "test"."dbo"."jobs" WITH (UPDLOCK, ROWLOCK, NOWAIT) WHERE "id" > 3', $builder->getCompiledSelect(false));
     }
 
     public function testCountAllResultsWithSQLSRVDoesNotUseSharedLock(): void

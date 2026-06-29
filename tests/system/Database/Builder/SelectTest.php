@@ -452,6 +452,87 @@ final class SelectTest extends CIUnitTestCase
         $this->assertSameSql('SELECT * FROM "users"', $builder->getCompiledSelect());
     }
 
+    public function testLockForUpdateWithNowait(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $this->assertSameSql('SELECT * FROM "users" FOR UPDATE NOWAIT', $builder->lockForUpdate()->nowait()->getCompiledSelect());
+    }
+
+    public function testLockForUpdateWithSkipLocked(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $this->assertSameSql('SELECT * FROM "users" FOR UPDATE SKIP LOCKED', $builder->lockForUpdate()->skipLocked()->getCompiledSelect());
+    }
+
+    public function testSharedLockWithNowait(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $this->assertSameSql('SELECT * FROM "users" FOR SHARE NOWAIT', $builder->sharedLock()->nowait()->getCompiledSelect());
+    }
+
+    public function testSharedLockWithSkipLocked(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $this->assertSameSql('SELECT * FROM "users" FOR SHARE SKIP LOCKED', $builder->sharedLock()->skipLocked()->getCompiledSelect());
+    }
+
+    public function testSelectLockWaitPersistsWhenSelectIsNotReset(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $builder->lockForUpdate()->skipLocked();
+
+        $expected = 'SELECT * FROM "users" FOR UPDATE SKIP LOCKED';
+
+        $this->assertSameSql($expected, $builder->getCompiledSelect(false));
+        $this->assertSameSql($expected, $builder->getCompiledSelect(false));
+    }
+
+    public function testSelectLockWaitResetsWithSelect(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $builder->lockForUpdate()->nowait();
+
+        $this->assertSameSql('SELECT * FROM "users" FOR UPDATE NOWAIT', $builder->getCompiledSelect());
+        $this->assertSameSql('SELECT * FROM "users"', $builder->getCompiledSelect());
+    }
+
+    public function testSelectLockWaitLastCallWins(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $this->assertSameSql('SELECT * FROM "users" FOR UPDATE NOWAIT', $builder->lockForUpdate()->skipLocked()->nowait()->getCompiledSelect());
+
+        $builder = new BaseBuilder('users', $this->db);
+
+        $this->assertSameSql('SELECT * FROM "users" FOR UPDATE SKIP LOCKED', $builder->lockForUpdate()->nowait()->skipLocked()->getCompiledSelect());
+    }
+
+    public function testNowaitThrowsExceptionWithoutSelectLock(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('Query Builder does not support nowait() without lockForUpdate() or sharedLock().');
+
+        $builder->nowait()->getCompiledSelect();
+    }
+
+    public function testSkipLockedThrowsExceptionWithoutSelectLock(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('Query Builder does not support skipLocked() without lockForUpdate() or sharedLock().');
+
+        $builder->skipLocked()->getCompiledSelect();
+    }
+
     public function testSelectLockLastCallWins(): void
     {
         $builder = new BaseBuilder('users', $this->db);
@@ -548,6 +629,52 @@ final class SelectTest extends CIUnitTestCase
         $this->assertSameSql($expected, $builder->sharedLock()->getCompiledSelect());
     }
 
+    public function testLockForUpdateWithMySQLiNowait(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'MySQLi']);
+
+        $builder = new MySQLiBuilder('users', $this->db);
+
+        $expected = 'SELECT * FROM "users" FOR UPDATE NOWAIT';
+
+        $this->assertSameSql($expected, $builder->lockForUpdate()->nowait()->getCompiledSelect());
+    }
+
+    public function testLockForUpdateWithMySQLiSkipLocked(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'MySQLi']);
+
+        $builder = new MySQLiBuilder('users', $this->db);
+
+        $expected = 'SELECT * FROM "users" FOR UPDATE SKIP LOCKED';
+
+        $this->assertSameSql($expected, $builder->lockForUpdate()->skipLocked()->getCompiledSelect());
+    }
+
+    public function testSharedLockWithMySQLiNowaitThrowsException(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'MySQLi']);
+
+        $builder = new MySQLiBuilder('users', $this->db);
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('MySQLi does not support sharedLock() with nowait().');
+
+        $builder->sharedLock()->nowait()->getCompiledSelect();
+    }
+
+    public function testSharedLockWithMySQLiSkipLockedThrowsException(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'MySQLi']);
+
+        $builder = new MySQLiBuilder('users', $this->db);
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('MySQLi does not support sharedLock() with skipLocked().');
+
+        $builder->sharedLock()->skipLocked()->getCompiledSelect();
+    }
+
     public function testLockForUpdateWithOCI8(): void
     {
         $builder = new OCI8Builder('users', $this->db);
@@ -555,6 +682,24 @@ final class SelectTest extends CIUnitTestCase
         $expected = 'SELECT * FROM "users" FOR UPDATE';
 
         $this->assertSameSql($expected, $builder->lockForUpdate()->getCompiledSelect());
+    }
+
+    public function testLockForUpdateWithOCI8Nowait(): void
+    {
+        $builder = new OCI8Builder('users', $this->db);
+
+        $expected = 'SELECT * FROM "users" FOR UPDATE NOWAIT';
+
+        $this->assertSameSql($expected, $builder->lockForUpdate()->nowait()->getCompiledSelect());
+    }
+
+    public function testLockForUpdateWithOCI8SkipLocked(): void
+    {
+        $builder = new OCI8Builder('users', $this->db);
+
+        $expected = 'SELECT * FROM "users" FOR UPDATE SKIP LOCKED';
+
+        $this->assertSameSql($expected, $builder->lockForUpdate()->skipLocked()->getCompiledSelect());
     }
 
     public function testSharedLockThrowsExceptionOnOCI8(): void
@@ -606,6 +751,42 @@ final class SelectTest extends CIUnitTestCase
         $expected = 'SELECT * FROM "users" FOR SHARE';
 
         $this->assertSameSql($expected, $builder->sharedLock()->getCompiledSelect());
+    }
+
+    public function testLockForUpdateWithPostgreNowait(): void
+    {
+        $builder = new PostgreBuilder('users', $this->db);
+
+        $expected = 'SELECT * FROM "users" FOR UPDATE NOWAIT';
+
+        $this->assertSameSql($expected, $builder->lockForUpdate()->nowait()->getCompiledSelect());
+    }
+
+    public function testLockForUpdateWithPostgreSkipLocked(): void
+    {
+        $builder = new PostgreBuilder('users', $this->db);
+
+        $expected = 'SELECT * FROM "users" FOR UPDATE SKIP LOCKED';
+
+        $this->assertSameSql($expected, $builder->lockForUpdate()->skipLocked()->getCompiledSelect());
+    }
+
+    public function testSharedLockWithPostgreNowait(): void
+    {
+        $builder = new PostgreBuilder('users', $this->db);
+
+        $expected = 'SELECT * FROM "users" FOR SHARE NOWAIT';
+
+        $this->assertSameSql($expected, $builder->sharedLock()->nowait()->getCompiledSelect());
+    }
+
+    public function testSharedLockWithPostgreSkipLocked(): void
+    {
+        $builder = new PostgreBuilder('users', $this->db);
+
+        $expected = 'SELECT * FROM "users" FOR SHARE SKIP LOCKED';
+
+        $this->assertSameSql($expected, $builder->sharedLock()->skipLocked()->getCompiledSelect());
     }
 
     #[DataProvider('provideSelectLockUnsupportedSelectClauses')]
@@ -679,6 +860,16 @@ final class SelectTest extends CIUnitTestCase
         $builder->sharedLock()->getCompiledSelect();
     }
 
+    public function testNowaitThrowsExceptionWithoutSelectLockOnSQLite3(): void
+    {
+        $builder = new SQLite3Builder('users', $this->db);
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('Query Builder does not support nowait() without lockForUpdate() or sharedLock().');
+
+        $builder->nowait()->getCompiledSelect();
+    }
+
     public function testLockForUpdateWithSQLSRV(): void
     {
         $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
@@ -699,6 +890,51 @@ final class SelectTest extends CIUnitTestCase
         $expected = 'SELECT * FROM "test"."dbo"."users" WITH (HOLDLOCK, ROWLOCK)';
 
         $this->assertSameSql($expected, $builder->sharedLock()->getCompiledSelect());
+    }
+
+    public function testLockForUpdateWithSQLSRVNowait(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $builder = new SQLSRVBuilder('users', $this->db);
+
+        $expected = 'SELECT * FROM "test"."dbo"."users" WITH (UPDLOCK, ROWLOCK, NOWAIT)';
+
+        $this->assertSameSql($expected, $builder->lockForUpdate()->nowait()->getCompiledSelect());
+    }
+
+    public function testLockForUpdateWithSQLSRVSkipLocked(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $builder = new SQLSRVBuilder('users', $this->db);
+
+        $expected = 'SELECT * FROM "test"."dbo"."users" WITH (UPDLOCK, ROWLOCK, READCOMMITTEDLOCK, READPAST)';
+
+        $this->assertSameSql($expected, $builder->lockForUpdate()->skipLocked()->getCompiledSelect());
+    }
+
+    public function testSharedLockWithSQLSRVNowait(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $builder = new SQLSRVBuilder('users', $this->db);
+
+        $expected = 'SELECT * FROM "test"."dbo"."users" WITH (HOLDLOCK, ROWLOCK, NOWAIT)';
+
+        $this->assertSameSql($expected, $builder->sharedLock()->nowait()->getCompiledSelect());
+    }
+
+    public function testSharedLockWithSQLSRVSkipLockedThrowsException(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $builder = new SQLSRVBuilder('users', $this->db);
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('SQLSRV does not support sharedLock() with skipLocked().');
+
+        $builder->sharedLock()->skipLocked()->getCompiledSelect();
     }
 
     public function testLockForUpdateWithSQLSRVAlias(): void

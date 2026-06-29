@@ -1036,6 +1036,73 @@ CodeIgniter can detect an unsupported combination, it throws a
     ``limit()``, ``offset()``, ``distinct()``, ``groupBy()``, ``having()``, or
     aggregate helper selections such as ``selectCount()``.
 
+.. _query-builder-skip-locked:
+
+Skip Locked
+===========
+
+$builder->skipLocked()
+----------------------
+
+.. versionadded:: 4.8.0
+
+Adds a ``SKIP LOCKED`` style modifier to a pessimistic ``SELECT`` lock. This is
+useful when multiple workers claim rows from the same queue-like table and each
+worker should skip rows already locked by another transaction.
+
+.. literalinclude:: query_builder/132.php
+
+Use this method with ``lockForUpdate()`` or ``sharedLock()``. Calling
+``skipLocked()`` without a pessimistic lock throws a ``DatabaseException``.
+
+``skipLocked()`` can return an incomplete view of matching rows because locked
+rows are skipped instead of waited on. This is usually what queue workers want,
+but it is not suitable for general-purpose reads that must see every matching
+row.
+
+This method is supported with ``lockForUpdate()`` by the **MySQLi**,
+**Postgre**, **OCI8**, and **SQLSRV** drivers. It is supported with
+``sharedLock()`` by the **Postgre** driver. Unsupported combinations throw a
+``DatabaseException``.
+
+.. note:: MySQLi support requires a MySQL or MariaDB server version that
+    supports ``SKIP LOCKED``.
+
+.. warning:: SQLSRV uses SQL Server's ``READCOMMITTEDLOCK`` and ``READPAST``
+    table hints for ``lockForUpdate()->skipLocked()``. SQL Server can still wait
+    on locks that ``READPAST`` does not skip, such as page-level locks.
+
+.. _query-builder-nowait:
+
+No Wait
+========
+
+$builder->nowait()
+------------------
+
+.. versionadded:: 4.8.0
+
+Adds a ``NOWAIT`` style modifier to a pessimistic ``SELECT`` lock. This is
+useful when the query should fail immediately instead of waiting for locked rows
+to become available.
+
+.. literalinclude:: query_builder/133.php
+
+Use this method with ``lockForUpdate()`` or ``sharedLock()``. Calling
+``nowait()`` without a pessimistic lock throws a ``DatabaseException``.
+
+When a row cannot be locked immediately, the database server returns an error
+and CodeIgniter throws a database exception according to the current database
+debug and transaction settings.
+
+This method is supported with ``lockForUpdate()`` by the **MySQLi**,
+**Postgre**, **OCI8**, and **SQLSRV** drivers. It is supported with
+``sharedLock()`` by the **Postgre** and **SQLSRV** drivers. Unsupported
+combinations throw a ``DatabaseException``.
+
+.. note:: MySQLi support requires a MySQL or MariaDB server version that
+    supports ``NOWAIT``.
+
 .. _query-builder-union:
 
 *************
@@ -1743,12 +1810,26 @@ Class Reference
 
         Adds a pessimistic write lock to a ``SELECT`` query. See :ref:`query-builder-lock-for-update`.
 
+    .. php:method:: nowait()
+
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:   ``BaseBuilder``
+
+        Fails immediately when selected rows cannot be locked. See :ref:`query-builder-nowait`.
+
     .. php:method:: sharedLock()
 
         :returns: ``BaseBuilder`` instance (method chaining)
         :rtype:   ``BaseBuilder``
 
         Adds a pessimistic read lock to a ``SELECT`` query. See :ref:`query-builder-shared-lock`.
+
+    .. php:method:: skipLocked()
+
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:   ``BaseBuilder``
+
+        Skips selected rows that cannot be locked immediately. See :ref:`query-builder-skip-locked`.
 
     .. php:method:: select([$select = '*'[, $escape = null]])
 

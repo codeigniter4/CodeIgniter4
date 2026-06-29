@@ -64,7 +64,7 @@ class Builder extends BaseBuilder
     protected function compileSelectLock(): string
     {
         if ($this->QBSelectLock === null) {
-            return '';
+            return parent::compileSelectLock();
         }
 
         foreach ($this->QBFrom as $value) {
@@ -77,6 +77,13 @@ class Builder extends BaseBuilder
         }
 
         if ($this->QBSelectLock === self::SELECT_LOCK_SHARED) {
+            if ($this->QBSelectLockWait !== null) {
+                throw new DatabaseException(sprintf(
+                    'MySQLi does not support sharedLock() with %s().',
+                    $this->selectLockWaitMethod(),
+                ));
+            }
+
             return "\nLOCK IN SHARE MODE";
         }
 

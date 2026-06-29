@@ -68,7 +68,7 @@ class Builder extends BaseBuilder
     protected function compileSelectLock(): string
     {
         if ($this->QBSelectLock === null) {
-            return '';
+            return parent::compileSelectLock();
         }
 
         if ($this->QBDistinct || $this->QBGroupBy !== [] || $this->QBHaving !== [] || $this->QBSelectUsesAggregate) {

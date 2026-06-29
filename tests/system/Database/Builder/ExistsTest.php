@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
@@ -65,12 +66,23 @@ final class ExistsTest extends CIUnitTestCase
         $answer = $builder->where('id >', 3)
             ->orderBy('id', 'DESC')
             ->lockForUpdate()
+            ->nowait()
             ->exists(false);
 
         $expectedSQL = 'SELECT 1 FROM "jobs" WHERE "id" > :id:  LIMIT 1';
 
         $this->assertSameSql($expectedSQL, $answer);
-        $this->assertSameSql('SELECT * FROM "jobs" WHERE "id" > 3 ORDER BY "id" DESC FOR UPDATE', $builder->getCompiledSelect(false));
+        $this->assertSameSql('SELECT * FROM "jobs" WHERE "id" > 3 ORDER BY "id" DESC FOR UPDATE NOWAIT', $builder->getCompiledSelect(false));
+    }
+
+    public function testExistsThrowsExceptionWithSelectLockWaitWithoutSelectLock(): void
+    {
+        $builder = new BaseBuilder('jobs', $this->db);
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('Query Builder does not support nowait() without lockForUpdate() or sharedLock().');
+
+        $builder->nowait()->exists();
     }
 
     public function testExistsDoesNotUseOrderByOrSharedLock(): void
@@ -99,12 +111,13 @@ final class ExistsTest extends CIUnitTestCase
         $answer = $builder->where('id >', 3)
             ->orderBy('id', 'DESC')
             ->lockForUpdate()
+            ->skipLocked()
             ->exists(false);
 
         $expectedSQL = 'SELECT 1 FROM "test"."dbo"."jobs" WHERE "id" > :id:  ORDER BY (SELECT NULL)  OFFSET 0  ROWS FETCH NEXT 1 ROWS ONLY ';
 
         $this->assertSameSql($expectedSQL, $answer);
-        $this->assertSameSql('SELECT * FROM "test"."dbo"."jobs" WITH (UPDLOCK, ROWLOCK) WHERE "id" > 3 ORDER BY "id" DESC', $builder->getCompiledSelect(false));
+        $this->assertSameSql('SELECT * FROM "test"."dbo"."jobs" WITH (UPDLOCK, ROWLOCK, READCOMMITTEDLOCK, READPAST) WHERE "id" > 3 ORDER BY "id" DESC', $builder->getCompiledSelect(false));
     }
 
     public function testExistsWithSQLSRVDoesNotUseOrderByOrSharedLock(): void

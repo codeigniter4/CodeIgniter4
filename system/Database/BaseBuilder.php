@@ -33,8 +33,10 @@ class BaseBuilder
 {
     use ConditionalTrait;
 
-    protected const SELECT_LOCK_FOR_UPDATE = 'forUpdate';
-    protected const SELECT_LOCK_SHARED     = 'shared';
+    protected const SELECT_LOCK_FOR_UPDATE       = 'forUpdate';
+    protected const SELECT_LOCK_SHARED           = 'shared';
+    protected const SELECT_LOCK_WAIT_NOWAIT      = 'nowait';
+    protected const SELECT_LOCK_WAIT_SKIP_LOCKED = 'skipLocked';
 
     /**
      * Reset DELETE data flag
@@ -118,6 +120,11 @@ class BaseBuilder
      * QB SELECT lock mode
      */
     protected ?string $QBSelectLock = null;
+
+    /**
+     * QB SELECT lock wait behavior
+     */
+    protected ?string $QBSelectLockWait = null;
 
     /**
      * QB SELECT aggregate helper flag
@@ -2013,6 +2020,26 @@ class BaseBuilder
     }
 
     /**
+     * Fails immediately when selected rows cannot be locked.
+     */
+    public function nowait(): static
+    {
+        $this->QBSelectLockWait = self::SELECT_LOCK_WAIT_NOWAIT;
+
+        return $this;
+    }
+
+    /**
+     * Skips selected rows that cannot be locked immediately.
+     */
+    public function skipLocked(): static
+    {
+        $this->QBSelectLockWait = self::SELECT_LOCK_WAIT_SKIP_LOCKED;
+
+        return $this;
+    }
+
+    /**
      * Sets the OFFSET value
      *
      * @return $this
@@ -2275,18 +2302,22 @@ class BaseBuilder
      */
     protected function compileExists(): string
     {
+        $this->assertSelectLockWaitHasLock();
+
         // ORDER BY and SELECT locks are unnecessary for checking row existence,
         // and can produce invalid or surprising SQL on some drivers.
-        $orderBy       = $this->QBOrderBy;
-        $limit         = $this->QBLimit;
-        $offset        = $this->QBOffset;
-        $selectLock    = $this->QBSelectLock;
-        $select        = $this->QBSelect;
-        $noEscape      = $this->QBNoEscape;
-        $needsSubquery = $this->QBSelectUsesAggregate || $this->QBUnion !== [] || $this->QBGroupBy !== [] || $this->QBHaving !== [] || $this->QBOffset !== false;
+        $orderBy        = $this->QBOrderBy;
+        $limit          = $this->QBLimit;
+        $offset         = $this->QBOffset;
+        $selectLock     = $this->QBSelectLock;
+        $selectLockWait = $this->QBSelectLockWait;
+        $select         = $this->QBSelect;
+        $noEscape       = $this->QBNoEscape;
+        $needsSubquery  = $this->QBSelectUsesAggregate || $this->QBUnion !== [] || $this->QBGroupBy !== [] || $this->QBHaving !== [] || $this->QBOffset !== false;
 
-        $this->QBOrderBy    = null;
-        $this->QBSelectLock = null;
+        $this->QBOrderBy        = null;
+        $this->QBSelectLock     = null;
+        $this->QBSelectLockWait = null;
 
         if (! $needsSubquery && $this->QBLimit !== 0) {
             $this->QBLimit = 1;
@@ -2304,12 +2335,13 @@ class BaseBuilder
 
             return $this->compileSelect('SELECT 1');
         } finally {
-            $this->QBOrderBy    = $orderBy;
-            $this->QBLimit      = $limit;
-            $this->QBOffset     = $offset;
-            $this->QBSelectLock = $selectLock;
-            $this->QBSelect     = $select;
-            $this->QBNoEscape   = $noEscape;
+            $this->QBOrderBy        = $orderBy;
+            $this->QBLimit          = $limit;
+            $this->QBOffset         = $offset;
+            $this->QBSelectLock     = $selectLock;
+            $this->QBSelectLockWait = $selectLockWait;
+            $this->QBSelect         = $select;
+            $this->QBNoEscape       = $noEscape;
         }
     }
 
@@ -2321,6 +2353,8 @@ class BaseBuilder
      */
     public function countAllResults(bool $reset = true)
     {
+        $this->assertSelectLockWaitHasLock();
+
         // ORDER BY usage is often problematic here (most notably
         // on Microsoft SQL Server) and ultimately unnecessary
         // for selecting COUNT(*) ...
@@ -2333,11 +2367,13 @@ class BaseBuilder
         }
 
         // We cannot use a LIMIT when getting the single row COUNT(*) result
-        $limit      = $this->QBLimit;
-        $selectLock = $this->QBSelectLock;
+        $limit          = $this->QBLimit;
+        $selectLock     = $this->QBSelectLock;
+        $selectLockWait = $this->QBSelectLockWait;
 
-        $this->QBLimit      = false;
-        $this->QBSelectLock = null;
+        $this->QBLimit          = false;
+        $this->QBSelectLock     = null;
+        $this->QBSelectLockWait = null;
 
         try {
             if ($this->QBDistinct === true || ! empty($this->QBGroupBy)) {
@@ -2352,7 +2388,8 @@ class BaseBuilder
                 $sql = $this->compileSelect($this->countString . $this->db->protectIdentifiers('numrows'));
             }
         } finally {
-            $this->QBSelectLock = $selectLock;
+            $this->QBSelectLock     = $selectLock;
+            $this->QBSelectLockWait = $selectLockWait;
         }
 
         if ($this->testMode) {
@@ -3778,6 +3815,8 @@ class BaseBuilder
      */
     protected function compileSelectLock(): string
     {
+        $this->assertSelectLockWaitHasLock();
+
         if ($this->QBSelectLock === null) {
             return '';
         }
@@ -3793,7 +3832,35 @@ class BaseBuilder
             self::SELECT_LOCK_FOR_UPDATE => "\nFOR UPDATE",
             self::SELECT_LOCK_SHARED     => "\nFOR SHARE",
             default                      => throw new DatabaseException('Query Builder has an invalid SELECT lock mode.'),
+        } . $this->compileSelectLockWait();
+    }
+
+    /**
+     * Compile the SELECT lock wait behavior.
+     */
+    protected function compileSelectLockWait(): string
+    {
+        return match ($this->QBSelectLockWait) {
+            self::SELECT_LOCK_WAIT_NOWAIT      => ' NOWAIT',
+            self::SELECT_LOCK_WAIT_SKIP_LOCKED => ' SKIP LOCKED',
+            null                               => '',
+            default                            => throw new DatabaseException('Query Builder has an invalid SELECT lock wait behavior.'),
         };
+    }
+
+    /**
+     * Ensures SELECT lock wait behavior has a pessimistic lock to modify.
+     */
+    protected function assertSelectLockWaitHasLock(): void
+    {
+        if ($this->QBSelectLock !== null || $this->QBSelectLockWait === null) {
+            return;
+        }
+
+        throw new DatabaseException(sprintf(
+            'Query Builder does not support %s() without lockForUpdate() or sharedLock().',
+            $this->selectLockWaitMethod(),
+        ));
     }
 
     /**
@@ -3805,6 +3872,18 @@ class BaseBuilder
             self::SELECT_LOCK_FOR_UPDATE => 'lockForUpdate',
             self::SELECT_LOCK_SHARED     => 'sharedLock',
             default                      => 'selectLock',
+        };
+    }
+
+    /**
+     * Returns the public method name for the current SELECT lock wait behavior.
+     */
+    protected function selectLockWaitMethod(): string
+    {
+        return match ($this->QBSelectLockWait) {
+            self::SELECT_LOCK_WAIT_NOWAIT      => 'nowait',
+            self::SELECT_LOCK_WAIT_SKIP_LOCKED => 'skipLocked',
+            default                            => 'selectLockWait',
         };
     }
 
@@ -4152,6 +4231,7 @@ class BaseBuilder
             'QBLimit'               => false,
             'QBOffset'              => false,
             'QBSelectLock'          => null,
+            'QBSelectLockWait'      => null,
             'QBSelectUsesAggregate' => false,
             'QBUnion'               => [],
         ]);
