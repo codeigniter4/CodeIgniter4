@@ -429,15 +429,22 @@ class Rules
 
                 $fieldData       = dot_array_search($otherField, $data);
                 $fieldSplitArray = explode('.', $field);
-                $fieldKey        = $fieldSplitArray[1];
+                $fieldKey        = $fieldSplitArray[1] ?? null;
 
                 if (is_array($fieldData)) {
-                    return ! empty(dot_array_search($otherField, $data)[$fieldKey]);
+                    if (empty($fieldData[$fieldKey])) {
+                        return false;
+                    }
+
+                    continue;
                 }
-                $nowField      = str_replace('*', $fieldKey, $otherField);
+
+                $nowField      = str_replace('*', (string) $fieldKey, $otherField);
                 $nowFieldVaule = dot_array_search($nowField, $data);
 
-                return null !== $nowFieldVaule;
+                if ($nowFieldVaule === null) {
+                    return false;
+                }
             }
         }
 
