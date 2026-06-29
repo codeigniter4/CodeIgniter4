@@ -477,6 +477,19 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, (string) $uri);
     }
 
+    public function testWithQuerySetsQueryWithoutMutatingOriginal(): void
+    {
+        $url = 'http://example.com/path?foo=bar#fragment';
+        $uri = new URI($url);
+
+        $new = $uri->withQuery('?key=value&second.key=value.2');
+
+        $this->assertNotSame($uri, $new);
+        $this->assertSame('key=value&second_key=value.2', $new->getQuery());
+        $this->assertSame('http://example.com/path?key=value&second_key=value.2#fragment', (string) $new);
+        $this->assertSame($url, (string) $uri);
+    }
+
     public function testUseRawQueryStringAtConstructor(): void
     {
         $url = 'http://example.com/path?key=value&second.key=value.2';
@@ -509,6 +522,32 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, (string) $uri);
     }
 
+    public function testWithQueryArraySetsQueryWithoutMutatingOriginal(): void
+    {
+        $url = 'http://example.com/path?foo=bar#fragment';
+        $uri = new URI($url);
+
+        $new = $uri->withQueryArray(['key' => 'value', 'second.key' => 'value.2']);
+
+        $this->assertNotSame($uri, $new);
+        $this->assertSame('key=value&second_key=value.2', $new->getQuery());
+        $this->assertSame('http://example.com/path?key=value&second_key=value.2#fragment', (string) $new);
+        $this->assertSame($url, (string) $uri);
+    }
+
+    public function testWithQueryArraySetsQueryWithUseRawQueryStringWithoutMutatingOriginal(): void
+    {
+        $url = 'http://example.com/path?foo=bar#fragment';
+        $uri = new URI($url, true);
+
+        $new = $uri->withQueryArray(['key' => 'value', 'second.key' => 'value.2']);
+
+        $this->assertNotSame($uri, $new);
+        $this->assertSame('key=value&second.key=value.2', $new->getQuery());
+        $this->assertSame('http://example.com/path?key=value&second.key=value.2#fragment', (string) $new);
+        $this->assertSame($url, (string) $uri);
+    }
+
     public function testSetQueryArraySetsValueWithUseRawQueryString(): void
     {
         $url = 'http://example.com/path';
@@ -529,6 +568,20 @@ final class URITest extends CIUnitTestCase
         $this->expectException(HTTPException::class);
 
         $uri->setQuery('?key=value#fragment');
+    }
+
+    public function testWithQueryThrowsErrorWhenFragmentPresentWithoutMutatingOriginal(): void
+    {
+        $url = 'http://example.com/path?foo=bar';
+        $uri = new URI($url);
+
+        $this->expectException(HTTPException::class);
+
+        try {
+            $uri->withQuery('?key=value#fragment');
+        } finally {
+            $this->assertSame($url, (string) $uri);
+        }
     }
 
     /**
@@ -896,6 +949,18 @@ final class URITest extends CIUnitTestCase
         $this->assertSame('http://example.com/foo?foo=bar', (string) $uri);
     }
 
+    public function testWithoutQueryVarsRemovesQueryVarsWithoutMutatingOriginal(): void
+    {
+        $base = 'http://example.com/foo?foo=bar&bar=baz&baz=foz#section';
+        $uri  = new URI($base);
+
+        $new = $uri->withoutQueryVars('bar', 'baz');
+
+        $this->assertNotSame($uri, $new);
+        $this->assertSame('http://example.com/foo?foo=bar#section', (string) $new);
+        $this->assertSame($base, (string) $uri);
+    }
+
     public function testKeepQueryVars(): void
     {
         $base = 'http://example.com/foo?foo=bar&bar=baz&baz=foz';
@@ -904,6 +969,18 @@ final class URITest extends CIUnitTestCase
         $uri->keepQuery('bar', 'baz');
 
         $this->assertSame('http://example.com/foo?bar=baz&baz=foz', (string) $uri);
+    }
+
+    public function testWithOnlyQueryVarsKeepsQueryVarsWithoutMutatingOriginal(): void
+    {
+        $base = 'http://example.com/foo?foo=bar&bar=baz&baz=foz#section';
+        $uri  = new URI($base);
+
+        $new = $uri->withOnlyQueryVars('bar', 'baz');
+
+        $this->assertNotSame($uri, $new);
+        $this->assertSame('http://example.com/foo?bar=baz&baz=foz#section', (string) $new);
+        $this->assertSame($base, (string) $uri);
     }
 
     public function testEmptyQueryVars(): void
