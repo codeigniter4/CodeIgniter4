@@ -363,7 +363,7 @@ class IncomingRequest extends Request
      * @param int|null          $filter Filter constant
      * @param array|int|null    $flags
      *
-     * @return array|bool|float|int|stdClass|string|null
+     * @return array<int|string, mixed>|bool|float|int|stdClass|string|null
      */
     public function getVar($index = null, $filter = null, $flags = null)
     {
@@ -390,7 +390,7 @@ class IncomingRequest extends Request
      *
      * @see http://php.net/manual/en/function.json-decode.php
      *
-     * @return array|bool|float|int|stdClass|null
+     * @return array<int|string, mixed>|bool|float|int|stdClass|null
      *
      * @throws HTTPException When the body is invalid as JSON.
      */
@@ -417,7 +417,7 @@ class IncomingRequest extends Request
      * @param int|null          $filter Filter Constant
      * @param array|int|null    $flags  Option
      *
-     * @return array|bool|float|int|stdClass|string|null
+     * @return array<int|string, mixed>|bool|float|int|stdClass|string|null
      */
     public function getJsonVar($index = null, bool $assoc = false, ?int $filter = null, $flags = null)
     {

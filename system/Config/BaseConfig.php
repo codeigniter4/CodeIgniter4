@@ -166,7 +166,7 @@ class BaseConfig
     /**
      * Initialization an environment-specific configuration setting
      *
-     * @param array|bool|float|int|string|null $property
+     * @param array<int|string, mixed>|bool|float|int|string|null $property
      *
      * @return void
      */

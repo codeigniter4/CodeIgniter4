@@ -1,4 +1,4 @@
-# total 1257 errors
+# total 1246 errors
 
 parameters:
     ignoreErrors:
@@ -204,11 +204,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Config\\BaseConfig\:\:__set_state\(\) has parameter \$array with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Config/BaseConfig.php
-
-        -
-            message: '#^Method CodeIgniter\\Config\\BaseConfig\:\:initEnvValue\(\) has parameter \$property with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Config/BaseConfig.php
 
@@ -444,11 +439,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Database\\BaseBuilder\:\:deleteBatch\(\) has parameter \$set with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseBuilder.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseBuilder\:\:delete\(\) has parameter \$where with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/BaseBuilder.php
 
@@ -838,11 +828,6 @@ parameters:
             path: ../../system/Database/BaseConnection.php
 
         -
-            message: '#^Method CodeIgniter\\Database\\BaseConnection\:\:query\(\) has parameter \$binds with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
             message: '#^Method CodeIgniter\\Database\\BaseConnection\:\:setAliasedTables\(\) has parameter \$aliases with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/BaseConnection.php
@@ -1044,11 +1029,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Database\\ConnectionInterface\:\:escape\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/ConnectionInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\ConnectionInterface\:\:query\(\) has parameter \$binds with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/ConnectionInterface.php
 
@@ -2133,11 +2113,6 @@ parameters:
             path: ../../system/Encryption/Encryption.php
 
         -
-            message: '#^Method CodeIgniter\\Encryption\\Handlers\\BaseHandler\:\:__get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Encryption/Handlers/BaseHandler.php
-
-        -
             message: '#^Method CodeIgniter\\Encryption\\Handlers\\OpenSSLHandler\:\:decrypt\(\) has parameter \$params with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Encryption/Handlers/OpenSSLHandler.php
@@ -2166,11 +2141,6 @@ parameters:
             message: '#^Method CodeIgniter\\Encryption\\Handlers\\SodiumHandler\:\:parseParams\(\) has parameter \$params with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Encryption/Handlers/SodiumHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Encryption\\KeyRotationDecorator\:\:__get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Encryption/KeyRotationDecorator.php
 
         -
             message: '#^Method CodeIgniter\\Encryption\\KeyRotationDecorator\:\:decrypt\(\) has parameter \$params with no value type specified in iterable type array\.$#'
@@ -2728,22 +2698,12 @@ parameters:
             path: ../../system/HTTP/IncomingRequest.php
 
         -
-            message: '#^Method CodeIgniter\\HTTP\\IncomingRequest\:\:getJSON\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/IncomingRequest.php
-
-        -
             message: '#^Method CodeIgniter\\HTTP\\IncomingRequest\:\:getJsonVar\(\) has parameter \$flags with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HTTP/IncomingRequest.php
 
         -
             message: '#^Method CodeIgniter\\HTTP\\IncomingRequest\:\:getJsonVar\(\) has parameter \$index with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/IncomingRequest.php
-
-        -
-            message: '#^Method CodeIgniter\\HTTP\\IncomingRequest\:\:getJsonVar\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HTTP/IncomingRequest.php
 
@@ -2809,11 +2769,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\HTTP\\IncomingRequest\:\:getVar\(\) has parameter \$index with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/IncomingRequest.php
-
-        -
-            message: '#^Method CodeIgniter\\HTTP\\IncomingRequest\:\:getVar\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HTTP/IncomingRequest.php
 
@@ -3586,16 +3541,6 @@ parameters:
             message: '#^Property CodeIgniter\\HotReloader\\IteratorFilter\:\:\$watchedExtensions type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HotReloader/IteratorFilter.php
-
-        -
-            message: '#^Method CodeIgniter\\I18n\\Time\:\:__get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/I18n/Time.php
-
-        -
-            message: '#^Method CodeIgniter\\I18n\\TimeLegacy\:\:__get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/I18n/TimeLegacy.php
 
         -
             message: '#^Method CodeIgniter\\Images\\Handlers\\BaseHandler\:\:__call\(\) has parameter \$args with no value type specified in iterable type array\.$#'
