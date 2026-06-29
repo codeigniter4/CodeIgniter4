@@ -326,6 +326,7 @@
 <li><p><strong>Commands:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">lang:find</span></code> treated translation keys already provided by the framework or another namespace (such as <code class="docutils literal notranslate"><span class="pre">Errors.*</span></code> in <code class="docutils literal notranslate"><span class="pre">system/Language</span></code>) as new, listing them under <code class="docutils literal notranslate"><span class="pre">--show-new</span></code> and writing untranslated placeholders into <code class="docutils literal notranslate"><span class="pre">app/Language</span></code> that overrode the existing translations.</p></li>
 <li><p><strong>Config:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">BaseService::injectMock</span></code> did not apply <code class="docutils literal notranslate"><span class="pre">strtolower</span></code> consistently, causing inconsistent Service and Mock registration and resolution.</p></li>
 <li><p><strong>Database:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">updateBatch()</span></code> could be called after Query Builder <code class="docutils literal notranslate"><span class="pre">where()</span></code> conditions, even though it’s not supported. In this situation, now the <code class="docutils literal notranslate"><span class="pre">DatabaseException</span></code> is thrown.</p></li>
+<li><p><strong>Encryption:</strong> Fixed bugs in <code class="docutils literal notranslate"><span class="pre">SodiumHandler</span></code> where runtime <code class="docutils literal notranslate"><span class="pre">blockSize</span></code> overrides without <code class="docutils literal notranslate"><span class="pre">key</span></code> were handled incorrectly, invalid key lengths could leak native Sodium errors, and mismatched decrypt <code class="docutils literal notranslate"><span class="pre">blockSize</span></code> values could throw <code class="docutils literal notranslate"><span class="pre">SodiumException</span></code> instead of <code class="docutils literal notranslate"><span class="pre">EncryptionException</span></code>.</p></li>
 <li><p><strong>Filters:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">InvalidChars</span></code> filter where invalid UTF-8 or control characters in array keys were not checked.</p></li>
 <li><p><strong>HTTP:</strong> Fixed a bug where the User Agent library reported Safari’s WebKit version instead of the browser version from the <code class="docutils literal notranslate"><span class="pre">Version</span></code> token.</p></li>
 <li><p><strong>Model:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">Model::objectToRawArray()</span></code> where the <code class="docutils literal notranslate"><span class="pre">$recursive</span></code> parameter was ignored.</p></li>
@@ -350,7 +351,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jun 21, 2026.
+      <span class="lastupdated">Last updated on Jun 29, 2026.
       </span></p>
   </div>
 
