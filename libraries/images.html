@@ -355,6 +355,15 @@ function <code class="docutils literal notranslate"><span class="pre">service()<
 <p>On Windows, the ImageMagick handler requires <strong>absolute file paths</strong> when
 loading images (for example, using <code class="docutils literal notranslate"><span class="pre">WRITEPATH</span></code> or <code class="docutils literal notranslate"><span class="pre">FCPATH</span></code>).</p>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Do not let user input directly decide the image source path, storage
+directory, or filename. This includes values passed to methods like
+<code class="docutils literal notranslate"><span class="pre">save()</span></code>, <code class="docutils literal notranslate"><span class="pre">copy()</span></code> and others, and any path or filename used to store
+processed images. Use directories controlled by your application, and
+generate filenames yourself or sanitize them with
+<a class="reference internal" href="../helpers/security_helper.html#sanitize_filename" title="sanitize_filename"><code class="xref php php-func docutils literal notranslate"><span class="pre">sanitize_filename</span></code></a>.</p>
+</div>
 </section>
 <section id="processing-an-image">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">Processing an Image</a><a class="headerlink" href="#processing-an-image" title="Link to this heading"></a></h2>
