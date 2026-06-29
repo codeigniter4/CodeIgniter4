@@ -16,6 +16,7 @@ class {class} extends Model
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [];
+    protected $insertOnlyFields = [];
 
     protected bool $throwOnDisallowedFields = false;
     protected bool $allowEmptyInserts = false;

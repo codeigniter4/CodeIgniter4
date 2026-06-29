@@ -163,6 +163,31 @@ potential mass assignment vulnerabilities.
 
 .. note:: The `$primaryKey`_ field should never be an allowed field.
 
+.. _model-insert-only-fields:
+
+$insertOnlyFields
+-----------------
+
+.. versionadded:: 4.8.0
+
+This array may contain fields that can be set during ``insert()`` and
+``insertBatch()`` calls, but cannot be submitted during ``update()``,
+``updateBatch()``, or update-side ``save()`` calls.
+
+This is useful for values that should be created once and then left unchanged
+through normal Model writes, such as public IDs, external references, or
+generated slugs.
+
+.. literalinclude:: model/069.php
+
+Fields listed here must also be listed in `$allowedFields`_ when field
+protection is enabled. This is Model-level protection only. It does not create a
+database constraint, does not inspect previous database values, and does not
+intercept direct Query Builder writes. Calling ``protect(false)`` disables this
+protection.
+
+You may also change this setting with the ``setInsertOnlyFields()`` method.
+
 .. _model-throw-on-disallowed-fields:
 
 $throwOnDisallowedFields
@@ -943,6 +968,11 @@ removed, enable throwing on disallowed fields:
 When throwing on disallowed fields is enabled, operation fields such as the
 primary key passed to ``update()`` or the index passed to ``updateBatch()`` may
 still be used to locate rows.
+
+If some allowed fields should only be set during insert operations, list them
+in `$insertOnlyFields`_:
+
+.. literalinclude:: model/069.php
 
 Occasionally, you will find times where you need to be able to change these elements. This is often during
 testing, migrations, or seeds. In these cases, you can turn the protection on or off:
