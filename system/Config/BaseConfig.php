@@ -13,7 +13,6 @@ namespace CodeIgniter\Config;
 
 use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\Exceptions\ConfigException;
-use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Exceptions\RuntimeException;
 use Config\Encryption;
 use Config\Modules;
@@ -342,7 +341,6 @@ class BaseConfig
             Merge::REPLACE                                             => $directive->value,
             Merge::BY_KEY                                              => $this->mergeByKey(is_array($current) ? $current : [], $directive->value),
             Merge::APPEND, Merge::PREPEND, Merge::BEFORE, Merge::AFTER => $this->mergeList(is_array($current) ? $current : [], $directive),
-            default                                                    => throw new InvalidArgumentException('Unknown merge strategy: ' . $directive->strategy),
         };
     }
 

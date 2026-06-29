@@ -55,8 +55,9 @@ final readonly class Merge
     public const BY_KEY = 'byKey';
 
     /**
-     * @param mixed $value  Any value for REPLACE; array for the list strategies and BY_KEY.
-     * @param mixed $anchor The element BEFORE/AFTER position against (matched strictly).
+     * @param self::AFTER|self::APPEND|self::BEFORE|self::BY_KEY|self::PREPEND|self::REPLACE $strategy
+     * @param mixed                                                                          $value    Any value for REPLACE; array for the list strategies and BY_KEY.
+     * @param mixed                                                                          $anchor   The element BEFORE/AFTER position against (matched strictly).
      */
     private function __construct(
         public string $strategy,
