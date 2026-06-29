@@ -137,7 +137,7 @@ interface ConnectionInterface
      * Escapes data based on type.
      * Sets boolean and null types.
      *
-     * @param array|bool|float|int|object|string|null $str
+     * @param mixed $str
      *
      * @return ($str is array ? array : float|int|string)
      */
@@ -149,7 +149,7 @@ interface ConnectionInterface
      *
      * @param array ...$params
      *
-     * @return array|bool|float|int|object|resource|string|null
+     * @return mixed
      */
     public function callFunction(string $functionName, ...$params);
 

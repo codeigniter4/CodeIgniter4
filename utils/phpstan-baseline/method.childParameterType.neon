@@ -18,22 +18,22 @@ parameters:
             path: ../../system/Database/BaseResult.php
 
         -
-            message: '#^Parameter \#1 \$value \(bool\|int\|string\) of method CodeIgniter\\Entity\\Cast\\IntBoolCast\:\:set\(\) should be contravariant with parameter \$value \(array\|bool\|float\|int\|object\|string\|null\) of method CodeIgniter\\Entity\\Cast\\BaseCast\:\:set\(\)$#'
+            message: '#^Parameter \#1 \$value \(bool\|int\|string\) of method CodeIgniter\\Entity\\Cast\\IntBoolCast\:\:set\(\) should be contravariant with parameter \$value \(mixed\) of method CodeIgniter\\Entity\\Cast\\BaseCast\:\:set\(\)$#'
             count: 1
             path: ../../system/Entity/Cast/IntBoolCast.php
 
         -
-            message: '#^Parameter \#1 \$value \(bool\|int\|string\) of method CodeIgniter\\Entity\\Cast\\IntBoolCast\:\:set\(\) should be contravariant with parameter \$value \(array\|bool\|float\|int\|object\|string\|null\) of method CodeIgniter\\Entity\\Cast\\CastInterface\:\:set\(\)$#'
+            message: '#^Parameter \#1 \$value \(bool\|int\|string\) of method CodeIgniter\\Entity\\Cast\\IntBoolCast\:\:set\(\) should be contravariant with parameter \$value \(mixed\) of method CodeIgniter\\Entity\\Cast\\CastInterface\:\:set\(\)$#'
             count: 1
             path: ../../system/Entity/Cast/IntBoolCast.php
 
         -
-            message: '#^Parameter \#1 \$value \(int\) of method CodeIgniter\\Entity\\Cast\\IntBoolCast\:\:get\(\) should be contravariant with parameter \$value \(array\|bool\|float\|int\|object\|string\|null\) of method CodeIgniter\\Entity\\Cast\\BaseCast\:\:get\(\)$#'
+            message: '#^Parameter \#1 \$value \(int\) of method CodeIgniter\\Entity\\Cast\\IntBoolCast\:\:get\(\) should be contravariant with parameter \$value \(mixed\) of method CodeIgniter\\Entity\\Cast\\BaseCast\:\:get\(\)$#'
             count: 1
             path: ../../system/Entity/Cast/IntBoolCast.php
 
         -
-            message: '#^Parameter \#1 \$value \(int\) of method CodeIgniter\\Entity\\Cast\\IntBoolCast\:\:get\(\) should be contravariant with parameter \$value \(array\|bool\|float\|int\|object\|string\|null\) of method CodeIgniter\\Entity\\Cast\\CastInterface\:\:get\(\)$#'
+            message: '#^Parameter \#1 \$value \(int\) of method CodeIgniter\\Entity\\Cast\\IntBoolCast\:\:get\(\) should be contravariant with parameter \$value \(mixed\) of method CodeIgniter\\Entity\\Cast\\CastInterface\:\:get\(\)$#'
             count: 1
             path: ../../system/Entity/Cast/IntBoolCast.php
 

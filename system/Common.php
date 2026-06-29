@@ -403,9 +403,9 @@ if (! function_exists('env')) {
      * retrieving values set from the .env file for
      * use in config files.
      *
-     * @param array<int|string, mixed>|bool|float|int|object|string|null $default
+     * @param mixed $default
      *
-     * @return array<int|string, mixed>|bool|float|int|object|string|null
+     * @return mixed
      */
     function env(string $key, $default = null)
     {
@@ -1080,7 +1080,7 @@ if (! function_exists('service')) {
      *  - $timer = service('timer')
      *  - $timer = \CodeIgniter\Config\Services::timer();
      *
-     * @param array|bool|float|int|object|string|null ...$params
+     * @param mixed ...$params
      */
     function service(string $name, ...$params): ?object
     {
@@ -1096,7 +1096,7 @@ if (! function_exists('single_service')) {
     /**
      * Always returns a new instance of the class.
      *
-     * @param array|bool|float|int|object|string|null ...$params
+     * @param mixed ...$params
      */
     function single_service(string $name, ...$params): ?object
     {

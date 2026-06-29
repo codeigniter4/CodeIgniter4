@@ -244,7 +244,7 @@ class BaseService
      *
      * $key must be a name matching a service.
      *
-     * @param array|bool|float|int|object|string|null ...$params
+     * @param mixed ...$params
      *
      * @return object
      */

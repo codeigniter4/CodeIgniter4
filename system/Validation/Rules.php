@@ -316,7 +316,7 @@ class Rules
     }
 
     /**
-     * @param array|bool|float|int|object|string|null $str
+     * @param mixed $str
      */
     public function required($str = null): bool
     {
@@ -454,10 +454,10 @@ class Rules
     /**
      * The field exists in $data.
      *
-     * @param array|bool|float|int|object|string|null $value The field value.
-     * @param string|null                             $param The rule's parameter.
-     * @param array                                   $data  The data to be validated.
-     * @param string|null                             $field The field name.
+     * @param mixed       $value The field value.
+     * @param string|null $param The rule's parameter.
+     * @param array       $data  The data to be validated.
+     * @param string|null $field The field name.
      */
     public function field_exists(
         $value = null,

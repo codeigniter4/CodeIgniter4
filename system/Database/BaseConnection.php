@@ -1533,7 +1533,7 @@ abstract class BaseConnection implements ConnectionInterface
      * Escapes data based on type.
      * Sets boolean and null types
      *
-     * @param array|bool|float|int|object|string|null $str
+     * @param mixed $str
      *
      * @return ($str is array ? array : float|int|string)
      */
@@ -2059,7 +2059,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Accessor for properties if they exist.
      *
-     * @return array|bool|float|int|object|resource|string|null
+     * @return mixed
      */
     public function __get(string $key)
     {
