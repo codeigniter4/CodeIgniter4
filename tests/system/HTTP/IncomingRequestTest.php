@@ -45,7 +45,13 @@ final class IncomingRequestTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $_POST = $_GET = $_SERVER = $_REQUEST = $_ENV = $_COOKIE = $_SESSION = [];
+        $_ENV = $_SESSION = [];
+        service('superglobals')
+            ->setPostArray([])
+            ->setGetArray([])
+            ->setServerArray([])
+            ->setRequestArray([])
+            ->setCookieArray([]);
         Services::injectMock('superglobals', new Superglobals());
 
         $config        = new App();

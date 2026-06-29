@@ -350,9 +350,9 @@ trait FeatureTestTrait
         $request->setProtocolVersion('1.1');
 
         if ($config->forceGlobalSecureRequests) {
-            $_SERVER['HTTPS'] = 'test';
-            $server           = $request->getServer();
-            $server['HTTPS']  = 'test';
+            service('superglobals')->setServer('HTTPS', 'test');
+            $server          = $request->getServer();
+            $server['HTTPS'] = 'test';
             $request->setGlobal('server', $server);
         }
 

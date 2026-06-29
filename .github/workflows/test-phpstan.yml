@@ -13,7 +13,7 @@ on:
       - 'tests/**.php'
       - 'utils/**.php'
       - composer.json
-      - phpstan.neon.dist
+      - phpstan.dist.neon
       - phpstan-baseline.php
       - '.github/workflows/test-phpstan.yml'
 
@@ -27,7 +27,7 @@ on:
       - 'tests/**.php'
       - 'utils/**.php'
       - composer.json
-      - phpstan.neon.dist
+      - phpstan.dist.neon
       - phpstan-baseline.php
       - '.github/workflows/test-phpstan.yml'
 

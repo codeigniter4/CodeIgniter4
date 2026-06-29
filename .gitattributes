@@ -26,7 +26,7 @@ structarmed.php              export-ignore
 phpmetrics.json              export-ignore
 phpstan-baseline.php         export-ignore
 phpstan-bootstrap.php        export-ignore
-phpstan.neon.dist            export-ignore
+phpstan.dist.neon            export-ignore
 phpunit.dist.xml             export-ignore
 psalm-baseline.xml           export-ignore
 psalm.xml                    export-ignore

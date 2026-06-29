@@ -40,9 +40,10 @@ final class WhenWhenNotModelTest extends LiveModelTestCase
         ];
         $filter = 'foobar';
 
-        $this->createModel(SecondaryModel::class)->insertBatch($secondaryData);
+        $model = $this->createModel(SecondaryModel::class);
+        $model->insertBatch($secondaryData);
 
-        $result = $this->model->when($filter, static function ($query, $filter): void {
+        $result = $model->when($filter, static function ($query, $filter): void {
             $query->where('value', $filter);
         })->find();
 
@@ -69,9 +70,10 @@ final class WhenWhenNotModelTest extends LiveModelTestCase
         ];
         $filter = '';
 
-        $this->createModel(SecondaryModel::class)->insertBatch($secondaryData);
+        $model = $this->createModel(SecondaryModel::class);
+        $model->insertBatch($secondaryData);
 
-        $result = $this->model->when($filter, static function ($query, $filter): void {
+        $result = $model->when($filter, static function ($query, $filter): void {
             $query->where('value', $filter);
         }, static function ($query): void {
             $query->where('value', 'foobar');
@@ -100,9 +102,10 @@ final class WhenWhenNotModelTest extends LiveModelTestCase
         ];
         $filter = '';
 
-        $this->createModel(SecondaryModel::class)->insertBatch($secondaryData);
+        $model = $this->createModel(SecondaryModel::class);
+        $model->insertBatch($secondaryData);
 
-        $result = $this->model->whenNot($filter, static function ($query, $filter): void {
+        $result = $model->whenNot($filter, static function ($query, $filter): void {
             $query->where('value !=', 'foobar');
         })->find();
 
@@ -129,9 +132,10 @@ final class WhenWhenNotModelTest extends LiveModelTestCase
         ];
         $filter = 'foobar';
 
-        $this->createModel(SecondaryModel::class)->insertBatch($secondaryData);
+        $model = $this->createModel(SecondaryModel::class);
+        $model->insertBatch($secondaryData);
 
-        $result = $this->model->whenNot($filter, static function ($query, $filter): void {
+        $result = $model->whenNot($filter, static function ($query, $filter): void {
             $query->where('value !=', 'foobar');
         }, static function ($query): void {
             $query->where('value', 'foobar');

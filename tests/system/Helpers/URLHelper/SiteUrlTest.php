@@ -52,7 +52,7 @@ final class SiteUrlTest extends CIUnitTestCase
     {
         parent::tearDown();
 
-        $_SERVER = [];
+        service('superglobals')->setServerArray([]);
     }
 
     private function createRequest(?App $config = null, $body = null, ?string $path = null): void

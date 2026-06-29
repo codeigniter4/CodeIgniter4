@@ -32,7 +32,7 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $_GET = $_SERVER = [];
+        service('superglobals')->setGetArray([])->setServerArray([]);
 
         Services::injectMock('superglobals', new Superglobals());
     }
@@ -251,7 +251,7 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
 
         $expected = 'ci/woot';
         $this->assertSame($expected, $factory->detectRoutePath('QUERY_STRING'));
-        $this->assertSame('code=good', $_SERVER['QUERY_STRING']);
+        $this->assertSame('code=good', $_SERVER['QUERY_STRING']); // @phpstan-ignore codeigniter.superglobalsOffsetAccess (checks the live superglobal, not the snapshot service)
         $this->assertSame(['code' => 'good'], $_GET);
     }
 
