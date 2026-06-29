@@ -266,6 +266,29 @@ use comments for keep-alive and configure the client retry interval:
 
 .. literalinclude:: response/037.php
 
+Development Server Limitations
+------------------------------
+
+When testing SSE locally, keep in mind that PHP's built-in development server
+(used by ``php spark serve``) is not designed to handle long-lived streaming
+connections effectively.
+
+Because an SSE connection remains open for an extended period, the built-in
+server may spend most of its capacity serving the stream. As a result, other
+requests may appear slow, blocked, or delayed while the SSE connection is active.
+
+Possible symptoms include:
+
+- normal HTTP requests appearing to hang or time out
+- API requests responding slowly
+- frontend requests remaining in a pending state
+
+For more realistic testing, prefer a server stack that handles concurrent
+requests better, such as Apache, nginx with PHP-FPM, or FrankenPHP.
+
+This behavior is a limitation of the development server environment, not of
+``SSEResponse`` itself.
+
 Production Considerations
 -------------------------
 
