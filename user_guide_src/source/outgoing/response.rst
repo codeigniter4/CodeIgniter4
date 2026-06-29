@@ -284,7 +284,7 @@ Possible symptoms include:
 - frontend requests remaining in a pending state
 
 For more realistic testing, prefer a server stack that handles concurrent
-requests better, such as Apache, Nginx with PHP-FPM, or FrankenPHP.
+requests better, such as Apache, nginx with PHP-FPM, or FrankenPHP.
 
 This behavior is a limitation of the development server environment, not of
 ``SSEResponse`` itself.
