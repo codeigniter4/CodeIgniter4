@@ -909,7 +909,7 @@ final class SelectTest extends CIUnitTestCase
 
         $builder = new SQLSRVBuilder('users', $this->db);
 
-        $expected = 'SELECT * FROM "test"."dbo"."users" WITH (UPDLOCK, ROWLOCK, READCOMMITTEDLOCK, READPAST)';
+        $expected = 'SELECT * FROM "test"."dbo"."users" WITH (UPDLOCK, READCOMMITTEDLOCK, READPAST)';
 
         $this->assertSameSql($expected, $builder->lockForUpdate()->skipLocked()->getCompiledSelect());
     }

@@ -33,8 +33,9 @@ use TypeError;
  */
 class Builder extends BaseBuilder
 {
-    private const LOCK_FOR_UPDATE_HINTS = ['UPDLOCK', 'ROWLOCK'];
-    private const SHARED_LOCK_HINTS     = ['HOLDLOCK', 'ROWLOCK'];
+    private const LOCK_FOR_UPDATE_HINTS             = ['UPDLOCK', 'ROWLOCK'];
+    private const LOCK_FOR_UPDATE_SKIP_LOCKED_HINTS = ['UPDLOCK', 'READCOMMITTEDLOCK', 'READPAST'];
+    private const SHARED_LOCK_HINTS                 = ['HOLDLOCK', 'ROWLOCK'];
 
     /**
      * ORDER BY random keyword
@@ -97,9 +98,11 @@ class Builder extends BaseBuilder
     private function compileTableLockHint(): string
     {
         $hints = match ($this->QBSelectLock) {
-            self::SELECT_LOCK_FOR_UPDATE => self::LOCK_FOR_UPDATE_HINTS,
-            self::SELECT_LOCK_SHARED     => self::SHARED_LOCK_HINTS,
-            default                      => [],
+            self::SELECT_LOCK_FOR_UPDATE => $this->QBSelectLockWait === self::SELECT_LOCK_WAIT_SKIP_LOCKED
+                ? self::LOCK_FOR_UPDATE_SKIP_LOCKED_HINTS
+                : self::LOCK_FOR_UPDATE_HINTS,
+            self::SELECT_LOCK_SHARED => self::SHARED_LOCK_HINTS,
+            default                  => [],
         };
 
         if ($hints === []) {
@@ -108,12 +111,6 @@ class Builder extends BaseBuilder
 
         if ($this->QBSelectLockWait === self::SELECT_LOCK_WAIT_NOWAIT) {
             $hints[] = 'NOWAIT';
-        } elseif (
-            $this->QBSelectLock === self::SELECT_LOCK_FOR_UPDATE
-            && $this->QBSelectLockWait === self::SELECT_LOCK_WAIT_SKIP_LOCKED
-        ) {
-            $hints[] = 'READCOMMITTEDLOCK';
-            $hints[] = 'READPAST';
         }
 
         return ' WITH (' . implode(', ', $hints) . ')';

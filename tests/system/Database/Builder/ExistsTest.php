@@ -117,7 +117,7 @@ final class ExistsTest extends CIUnitTestCase
         $expectedSQL = 'SELECT 1 FROM "test"."dbo"."jobs" WHERE "id" > :id:  ORDER BY (SELECT NULL)  OFFSET 0  ROWS FETCH NEXT 1 ROWS ONLY ';
 
         $this->assertSameSql($expectedSQL, $answer);
-        $this->assertSameSql('SELECT * FROM "test"."dbo"."jobs" WITH (UPDLOCK, ROWLOCK, READCOMMITTEDLOCK, READPAST) WHERE "id" > 3 ORDER BY "id" DESC', $builder->getCompiledSelect(false));
+        $this->assertSameSql('SELECT * FROM "test"."dbo"."jobs" WITH (UPDLOCK, READCOMMITTEDLOCK, READPAST) WHERE "id" > 3 ORDER BY "id" DESC', $builder->getCompiledSelect(false));
     }
 
     public function testExistsWithSQLSRVDoesNotUseOrderByOrSharedLock(): void
