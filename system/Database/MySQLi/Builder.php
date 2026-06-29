@@ -61,19 +61,26 @@ class Builder extends BaseBuilder
     /**
      * Compile the SELECT lock clause.
      */
-    protected function compileLockForUpdate(): string
+    protected function compileSelectLock(): string
     {
-        if (! $this->QBLockForUpdate) {
+        if ($this->QBSelectLock === null) {
             return '';
         }
 
         foreach ($this->QBFrom as $value) {
             if (str_starts_with($value, '(SELECT')) {
-                throw new DatabaseException('MySQLi does not support lockForUpdate() with fromSubquery().');
+                throw new DatabaseException(sprintf(
+                    'MySQLi does not support %s() with fromSubquery().',
+                    $this->selectLockMethod(),
+                ));
             }
         }
 
-        return parent::compileLockForUpdate();
+        if ($this->QBSelectLock === self::SELECT_LOCK_SHARED) {
+            return "\nLOCK IN SHARE MODE";
+        }
+
+        return parent::compileSelectLock();
     }
 
     /**

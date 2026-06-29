@@ -945,11 +945,52 @@ As is in ``countAllResult()`` method, this method resets any field values that y
 to ``select()`` as well. If you need to keep them, you can pass ``false`` as the
 first parameter.
 
-.. _query-builder-lock-for-update:
-
 ********************
 Pessimistic Locking
 ********************
+
+.. _query-builder-shared-lock:
+
+Shared Lock
+===========
+
+$builder->sharedLock()
+----------------------
+
+.. versionadded:: 4.8.0
+
+Adds a pessimistic read lock to a ``SELECT`` query. This is useful when rows
+must be read consistently while other transactions are prevented from modifying
+them until the current transaction ends.
+
+.. literalinclude:: query_builder/131.php
+
+Use this method inside a database transaction. Without an explicit transaction,
+the lock is typically released when the ``SELECT`` statement finishes. If the
+same transaction will update the selected rows, use ``lockForUpdate()`` instead.
+
+This method is supported by the **MySQLi**, **Postgre**, and **SQLSRV**
+drivers. Unsupported drivers throw a ``DatabaseException``. ``sharedLock()`` is
+not supported with ``union()`` or ``unionAll()``. Some databases restrict which
+query shapes can be used with row locking. When CodeIgniter can detect an
+unsupported combination, it throws a ``DatabaseException``. See the following
+warnings for driver-specific behavior.
+
+.. warning:: MySQLi does not support ``sharedLock()`` with ``fromSubquery()``
+    because an outer locking read on a derived table does not lock the underlying
+    rows as users may expect.
+
+.. warning:: Postgre does not support ``sharedLock()`` with ``distinct()``,
+    ``groupBy()``, ``having()``, or aggregate helper selections such as
+    ``selectCount()``.
+
+.. warning:: SQLSRV uses SQL Server table hints instead of a trailing ``FOR SHARE``
+    clause. The hint is applied to table references in the ``FROM`` clause;
+    joined tables are not hinted. Its exact lock granularity depends on SQL
+    Server's execution plan and transaction isolation level. SQLSRV does not
+    support ``sharedLock()`` without a ``FROM`` table or on subqueries.
+
+.. _query-builder-lock-for-update:
 
 Lock for Update
 ===============
@@ -1701,6 +1742,13 @@ Class Reference
         :rtype:   ``BaseBuilder``
 
         Adds a pessimistic write lock to a ``SELECT`` query. See :ref:`query-builder-lock-for-update`.
+
+    .. php:method:: sharedLock()
+
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:   ``BaseBuilder``
+
+        Adds a pessimistic read lock to a ``SELECT`` query. See :ref:`query-builder-shared-lock`.
 
     .. php:method:: select([$select = '*'[, $escape = null]])
 

@@ -73,6 +73,22 @@ final class ExistsTest extends CIUnitTestCase
         $this->assertSameSql('SELECT * FROM "jobs" WHERE "id" > 3 ORDER BY "id" DESC FOR UPDATE', $builder->getCompiledSelect(false));
     }
 
+    public function testExistsDoesNotUseOrderByOrSharedLock(): void
+    {
+        $builder = new BaseBuilder('jobs', $this->db);
+        $builder->testMode();
+
+        $answer = $builder->where('id >', 3)
+            ->orderBy('id', 'DESC')
+            ->sharedLock()
+            ->exists(false);
+
+        $expectedSQL = 'SELECT 1 FROM "jobs" WHERE "id" > :id:  LIMIT 1';
+
+        $this->assertSameSql($expectedSQL, $answer);
+        $this->assertSameSql('SELECT * FROM "jobs" WHERE "id" > 3 ORDER BY "id" DESC FOR SHARE', $builder->getCompiledSelect(false));
+    }
+
     public function testExistsWithSQLSRVDoesNotUseOrderByOrLockForUpdate(): void
     {
         $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
@@ -89,6 +105,24 @@ final class ExistsTest extends CIUnitTestCase
 
         $this->assertSameSql($expectedSQL, $answer);
         $this->assertSameSql('SELECT * FROM "test"."dbo"."jobs" WITH (UPDLOCK, ROWLOCK) WHERE "id" > 3 ORDER BY "id" DESC', $builder->getCompiledSelect(false));
+    }
+
+    public function testExistsWithSQLSRVDoesNotUseOrderByOrSharedLock(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $builder = new SQLSRVBuilder('jobs', $this->db);
+        $builder->testMode();
+
+        $answer = $builder->where('id >', 3)
+            ->orderBy('id', 'DESC')
+            ->sharedLock()
+            ->exists(false);
+
+        $expectedSQL = 'SELECT 1 FROM "test"."dbo"."jobs" WHERE "id" > :id:  ORDER BY (SELECT NULL)  OFFSET 0  ROWS FETCH NEXT 1 ROWS ONLY ';
+
+        $this->assertSameSql($expectedSQL, $answer);
+        $this->assertSameSql('SELECT * FROM "test"."dbo"."jobs" WITH (HOLDLOCK, ROWLOCK) WHERE "id" > 3 ORDER BY "id" DESC', $builder->getCompiledSelect(false));
     }
 
     public function testExistsHonorsExistingLimitAndOffset(): void

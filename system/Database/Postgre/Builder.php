@@ -65,17 +65,20 @@ class Builder extends BaseBuilder
     /**
      * Compile the SELECT lock clause.
      */
-    protected function compileLockForUpdate(): string
+    protected function compileSelectLock(): string
     {
-        if (! $this->QBLockForUpdate) {
+        if ($this->QBSelectLock === null) {
             return '';
         }
 
         if ($this->QBDistinct || $this->QBGroupBy !== [] || $this->QBHaving !== [] || $this->QBSelectUsesAggregate) {
-            throw new DatabaseException('Postgre does not support lockForUpdate() with distinct(), groupBy(), having(), or aggregate helper selections.');
+            throw new DatabaseException(sprintf(
+                'Postgre does not support %s() with distinct(), groupBy(), having(), or aggregate helper selections.',
+                $this->selectLockMethod(),
+            ));
         }
 
-        return parent::compileLockForUpdate();
+        return parent::compileSelectLock();
     }
 
     /**

@@ -34,6 +34,7 @@ use TypeError;
 class Builder extends BaseBuilder
 {
     private const LOCK_FOR_UPDATE_HINT = ' WITH (UPDLOCK, ROWLOCK)';
+    private const SHARED_LOCK_HINT     = ' WITH (HOLDLOCK, ROWLOCK)';
 
     /**
      * ORDER BY random keyword
@@ -84,10 +85,22 @@ class Builder extends BaseBuilder
                 continue;
             }
 
-            $from[] = $this->getFullName($value) . ($this->QBLockForUpdate ? self::LOCK_FOR_UPDATE_HINT : '');
+            $from[] = $this->getFullName($value) . $this->compileTableLockHint();
         }
 
         return implode(', ', $from);
+    }
+
+    /**
+     * Compile the SQL Server table hint for the current SELECT lock mode.
+     */
+    private function compileTableLockHint(): string
+    {
+        return match ($this->QBSelectLock) {
+            self::SELECT_LOCK_FOR_UPDATE => self::LOCK_FOR_UPDATE_HINT,
+            self::SELECT_LOCK_SHARED     => self::SHARED_LOCK_HINT,
+            default                      => '',
+        };
     }
 
     /**
@@ -615,7 +628,7 @@ class Builder extends BaseBuilder
             $sql = $this->_limit($sql . "\n");
         }
 
-        $sql .= $this->compileLockForUpdate();
+        $sql .= $this->compileSelectLock();
 
         return $this->unionInjection($sql);
     }
@@ -623,23 +636,32 @@ class Builder extends BaseBuilder
     /**
      * Compile the SELECT lock clause.
      */
-    protected function compileLockForUpdate(): string
+    protected function compileSelectLock(): string
     {
-        if (! $this->QBLockForUpdate) {
+        if ($this->QBSelectLock === null) {
             return '';
         }
 
         if ($this->QBFrom === []) {
-            throw new DatabaseException('SQLSRV does not support lockForUpdate() without a FROM table.');
+            throw new DatabaseException(sprintf(
+                'SQLSRV does not support %s() without a FROM table.',
+                $this->selectLockMethod(),
+            ));
         }
 
         if ($this->QBUnion !== []) {
-            throw new DatabaseException('Query Builder does not support lockForUpdate() with union() or unionAll().');
+            throw new DatabaseException(sprintf(
+                'Query Builder does not support %s() with union() or unionAll().',
+                $this->selectLockMethod(),
+            ));
         }
 
         foreach ($this->QBFrom as $value) {
             if (str_starts_with($value, '(SELECT')) {
-                throw new DatabaseException('SQLSRV does not support lockForUpdate() on subqueries.');
+                throw new DatabaseException(sprintf(
+                    'SQLSRV does not support %s() on subqueries.',
+                    $this->selectLockMethod(),
+                ));
             }
         }
 
