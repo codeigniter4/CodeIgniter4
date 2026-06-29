@@ -41,6 +41,7 @@ Bugs Fixed
 - **Filters:** Fixed a bug in ``InvalidChars`` filter where invalid UTF-8 or control characters in array keys were not checked.
 - **HTTP:** Fixed a bug where the User Agent library reported Safari's WebKit version instead of the browser version from the ``Version`` token.
 - **Model:** Fixed a bug in ``Model::objectToRawArray()`` where the ``$recursive`` parameter was ignored.
+- **Security:** Fixed a bug where ``CheckPhpIni`` could raise a type error when ``ini_get_all()`` returned ``null`` for a configured directive value.
 - **Session:** Fixed a bug in ``RedisHandler`` where the configured ``$lockMaxRetries`` and ``$lockRetryInterval`` values were not respected when acquiring session locks.
 - **Testing:** Fixed a bug where using ``MockInputOutput`` within a test that also uses ``StreamFilterTrait`` tore down the trait's stream filters, so CLI output produced after the ``MockInputOutput`` interaction (such as in ``tearDown()``) was no longer captured and leaked to the console.
 - **Validation:** Fixed bugs in the ``required_without`` rule logic where using array dot notation caused early exits ignoring subsequent fields and triggered an ``Undefined array key`` warning for missing keys.
