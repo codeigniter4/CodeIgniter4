@@ -142,6 +142,12 @@ abstract class BaseModel
     protected $protectFields = true;
 
     /**
+     * Whether Model should throw instead of silently discarding
+     * fields that are not in $allowedFields.
+     */
+    protected bool $throwOnDisallowedFields = false;
+
+    /**
      * An array of field names that are allowed
      * to be set by the user in inserts/updates.
      *
@@ -990,31 +996,30 @@ abstract class BaseModel
         $cleanValidationRules       = $this->cleanValidationRules;
         $this->cleanValidationRules = false;
 
-        if (is_array($set)) {
-            foreach ($set as &$row) {
-                $row = $this->transformDataToArray($row, 'insert');
+        try {
+            if (is_array($set)) {
+                foreach ($set as &$row) {
+                    $row = $this->transformDataToArray($row, 'insert');
 
-                // Validate every row.
-                if (! $this->skipValidation && ! $this->validate($row)) {
-                    // Restore $cleanValidationRules
-                    $this->cleanValidationRules = $cleanValidationRules;
+                    // Validate every row.
+                    if (! $this->skipValidation && ! $this->validate($row)) {
+                        return false;
+                    }
 
-                    return false;
+                    // Must be called first so we don't
+                    // strip out created_at values.
+                    $row = $this->doProtectFieldsForInsert($row);
+
+                    // Set created_at and updated_at with same time
+                    $date = $this->setDate();
+                    $row  = $this->setCreatedField($row, $date);
+                    $row  = $this->setUpdatedField($row, $date);
                 }
-
-                // Must be called first so we don't
-                // strip out created_at values.
-                $row = $this->doProtectFieldsForInsert($row);
-
-                // Set created_at and updated_at with same time
-                $date = $this->setDate();
-                $row  = $this->setCreatedField($row, $date);
-                $row  = $this->setUpdatedField($row, $date);
             }
+        } finally {
+            // Restore $cleanValidationRules
+            $this->cleanValidationRules = $cleanValidationRules;
         }
-
-        // Restore $cleanValidationRules
-        $this->cleanValidationRules = $cleanValidationRules;
 
         $eventData = ['data' => $set];
 
@@ -1067,7 +1072,7 @@ abstract class BaseModel
 
         // Must be called first, so we don't
         // strip out updated_at values.
-        $row = $this->doProtectFields($row);
+        $row = $this->doProtectFieldsForUpdate($row);
 
         // doProtectFields() can further remove elements from
         // $row, so we need to check for empty dataset again
@@ -1157,6 +1162,7 @@ abstract class BaseModel
 
                 // Must be called first so we don't
                 // strip out updated_at values.
+                $this->ensureNoDisallowedFields($row, $index === null ? [] : [$index]);
                 $row = $this->doProtectFields($row);
 
                 // Restore updateIndex value in case it was wiped out
@@ -1383,6 +1389,19 @@ abstract class BaseModel
     }
 
     /**
+     * Sets whether or not disallowed fields should throw an exception
+     * instead of being discarded.
+     *
+     * @return $this
+     */
+    public function throwOnDisallowedFields(bool $throw = true)
+    {
+        $this->throwOnDisallowedFields = $throw;
+
+        return $this;
+    }
+
+    /**
      * Ensures that only the fields that are allowed to be updated are
      * in the data array.
      *
@@ -1415,6 +1434,35 @@ abstract class BaseModel
     }
 
     /**
+     * Throws when configured to detect fields that would be discarded.
+     *
+     * @param row_array    $row
+     * @param list<string> $ignoredFields
+     *
+     * @throws DataException
+     */
+    protected function ensureNoDisallowedFields(array $row, array $ignoredFields = []): void
+    {
+        if (! $this->throwOnDisallowedFields || ! $this->protectFields || $this->allowedFields === []) {
+            return;
+        }
+
+        $disallowedFields = [];
+
+        foreach (array_keys($row) as $key) {
+            if (in_array($key, $this->allowedFields, true) || in_array($key, $ignoredFields, true)) {
+                continue;
+            }
+
+            $disallowedFields[] = $key;
+        }
+
+        if ($disallowedFields !== []) {
+            throw DataException::forDisallowedFields(static::class, $disallowedFields);
+        }
+    }
+
+    /**
      * Ensures that only the fields that are allowed to be inserted are in
      * the data array.
      *
@@ -1429,6 +1477,27 @@ abstract class BaseModel
      */
     protected function doProtectFieldsForInsert(array $row): array
     {
+        $this->ensureNoDisallowedFields($row);
+
+        return $this->doProtectFields($row);
+    }
+
+    /**
+     * Ensures that only the fields that are allowed to be updated are in
+     * the data array.
+     *
+     * @used-by update() to protect against mass assignment vulnerabilities.
+     *
+     * @param row_array $row
+     *
+     * @return row_array
+     *
+     * @throws DataException
+     */
+    protected function doProtectFieldsForUpdate(array $row): array
+    {
+        $this->ensureNoDisallowedFields($row);
+
         return $this->doProtectFields($row);
     }
 

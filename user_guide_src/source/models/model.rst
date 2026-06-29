@@ -163,6 +163,23 @@ potential mass assignment vulnerabilities.
 
 .. note:: The `$primaryKey`_ field should never be an allowed field.
 
+.. _model-throw-on-disallowed-fields:
+
+$throwOnDisallowedFields
+------------------------
+
+.. versionadded:: 4.8.0
+
+When ``true``, the model throws a ``DataException`` instead of discarding fields
+that are not listed in `$allowedFields`_ during ``insert()``, ``insertBatch()``,
+``update()``, ``updateBatch()``, and ``save()`` calls.
+
+This is useful when you want to catch typos, stale form fields, or unexpected
+write payloads during development or in strict application code. It does not
+replace validation and does not inspect the database schema.
+
+You may also change this setting with the ``throwOnDisallowedFields()`` method.
+
 $allowEmptyInserts
 ------------------
 
@@ -906,6 +923,8 @@ So it will ignore the row in the database that has ``id=4`` when it verifies the
 This can also be used to create more dynamic rules at runtime, as long as you take care that any dynamic
 keys passed in don't conflict with your form data.
 
+.. _model-protecting-fields:
+
 Protecting Fields
 =================
 
@@ -915,6 +934,15 @@ in addition to these will be removed prior to hitting the database. This is grea
 or primary keys do not get changed.
 
 .. literalinclude:: model/041.php
+
+If you prefer disallowed fields to raise an exception instead of being silently
+removed, enable throwing on disallowed fields:
+
+.. literalinclude:: model/068.php
+
+When throwing on disallowed fields is enabled, operation fields such as the
+primary key passed to ``update()`` or the index passed to ``updateBatch()`` may
+still be used to locate rows.
 
 Occasionally, you will find times where you need to be able to change these elements. This is often during
 testing, migrations, or seeds. In these cases, you can turn the protection on or off:

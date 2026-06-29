@@ -767,6 +767,8 @@ class Model extends BaseModel
             throw DataException::forInvalidAllowedFields(static::class);
         }
 
+        $this->ensureNoDisallowedFields($row, $this->useAutoIncrement === false ? [$this->primaryKey] : []);
+
         foreach (array_keys($row) as $key) {
             // Do not remove the non-auto-incrementing primary key data.
             if ($this->useAutoIncrement === false && $key === $this->primaryKey) {
@@ -779,6 +781,13 @@ class Model extends BaseModel
         }
 
         return $row;
+    }
+
+    protected function doProtectFieldsForUpdate(array $row): array
+    {
+        $this->ensureNoDisallowedFields($row, [$this->primaryKey]);
+
+        return $this->doProtectFields($row);
     }
 
     /**

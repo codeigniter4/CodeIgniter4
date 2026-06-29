@@ -274,6 +274,7 @@ Model
 
 - Added new ``chunkRows()`` method to ``CodeIgniter\Model`` for processing large datasets in smaller chunks.
 - Added new ``firstOrInsert()`` method to ``CodeIgniter\Model`` that finds the first row matching the given attributes or inserts a new one. See :ref:`model-first-or-insert`.
+- Added ``$throwOnDisallowedFields`` and ``throwOnDisallowedFields()`` to ``CodeIgniter\Model`` to throw a ``DataException`` when write data contains fields that would otherwise be discarded by ``$allowedFields``. See :ref:`model-throw-on-disallowed-fields`.
 
 Libraries
 =========
