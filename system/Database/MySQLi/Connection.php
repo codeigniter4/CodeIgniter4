@@ -111,8 +111,8 @@ class Connection extends BaseConnection
      */
     protected function isForeignKeyConstraintViolation(int|string $code, string $message): bool
     {
-        // ER_ROW_IS_REFERENCED_2, ER_NO_REFERENCED_ROW_2.
-        return in_array($code, [1451, 1452], true);
+        // ER_NO_REFERENCED_ROW, ER_ROW_IS_REFERENCED, ER_ROW_IS_REFERENCED_2, ER_NO_REFERENCED_ROW_2.
+        return in_array($code, [1216, 1217, 1451, 1452], true);
     }
 
     /**
@@ -120,8 +120,8 @@ class Connection extends BaseConnection
      */
     protected function isNotNullConstraintViolation(int|string $code, string $message): bool
     {
-        // ER_BAD_NULL_ERROR: column cannot be null.
-        return $code === 1048;
+        // ER_BAD_NULL_ERROR, ER_BAD_NULL_ERROR_NOT_IGNORED: column cannot be null.
+        return in_array($code, [1048, 3673], true);
     }
 
     /**
@@ -129,8 +129,18 @@ class Connection extends BaseConnection
      */
     protected function isCheckConstraintViolation(int|string $code, string $message): bool
     {
-        // ER_CHECK_CONSTRAINT_VIOLATED: check constraint is violated.
-        return $code === 3819;
+        if ($code === 3819) {
+            return true;
+        }
+
+        // MariaDB reports CHECK failures as ER_CONSTRAINT_FAILED, while MySQL uses 4025 for other errors.
+        if ($code !== 4025) {
+            return false;
+        }
+
+        $message = strtolower($message);
+
+        return str_contains($message, 'constraint') && str_contains($message, 'failed');
     }
 
     /**

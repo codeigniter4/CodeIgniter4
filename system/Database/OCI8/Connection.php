@@ -137,8 +137,8 @@ class Connection extends BaseConnection
      */
     protected function isNotNullConstraintViolation(int|string $code, string $message): bool
     {
-        // ORA-01400: cannot insert NULL.
-        return (int) $code === 1400;
+        // ORA-01400: cannot insert NULL; ORA-01407: cannot update to NULL.
+        return in_array((int) $code, [1400, 1407], true);
     }
 
     /**

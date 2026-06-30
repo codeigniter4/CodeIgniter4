@@ -1,9 +1,9 @@
 <?php
 
-use CodeIgniter\Database\Exceptions\ConstraintViolationException;
+use CodeIgniter\Database\Exceptions\UniqueConstraintViolationException;
 
 $inserted = $db->table('users')->insert(['email' => 'duplicate@example.com']);
 
-if (! $inserted && $db->getLastException() instanceof ConstraintViolationException) {
-    // Handle the constraint violation.
+if (! $inserted && $db->getLastException() instanceof UniqueConstraintViolationException) {
+    // Handle duplicate key violation.
 }

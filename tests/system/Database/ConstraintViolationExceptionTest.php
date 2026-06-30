@@ -85,9 +85,30 @@ final class ConstraintViolationExceptionTest extends CIUnitTestCase
             ForeignKeyConstraintViolationException::class,
         ];
 
+        yield 'MySQLi foreign key parent row referenced legacy code' => [
+            self::connection(MySQLiConnection::class, 'MySQLi'),
+            1217,
+            'Cannot delete or update a parent row: a foreign key constraint fails.',
+            ForeignKeyConstraintViolationException::class,
+        ];
+
+        yield 'MySQLi foreign key child row missing parent legacy code' => [
+            self::connection(MySQLiConnection::class, 'MySQLi'),
+            1216,
+            'Cannot add or update a child row: a foreign key constraint fails.',
+            ForeignKeyConstraintViolationException::class,
+        ];
+
         yield 'MySQLi not null' => [
             self::connection(MySQLiConnection::class, 'MySQLi'),
             1048,
+            "Column 'name' cannot be null",
+            NotNullConstraintViolationException::class,
+        ];
+
+        yield 'MySQLi not null ignored' => [
+            self::connection(MySQLiConnection::class, 'MySQLi'),
+            3673,
             "Column 'name' cannot be null",
             NotNullConstraintViolationException::class,
         ];
@@ -96,6 +117,13 @@ final class ConstraintViolationExceptionTest extends CIUnitTestCase
             self::connection(MySQLiConnection::class, 'MySQLi'),
             3819,
             "Check constraint 'positive_amount' is violated.",
+            CheckConstraintViolationException::class,
+        ];
+
+        yield 'MySQLi check MariaDB' => [
+            self::connection(MySQLiConnection::class, 'MySQLi'),
+            4025,
+            'CONSTRAINT `positive_amount` failed.',
             CheckConstraintViolationException::class,
         ];
 
@@ -247,6 +275,13 @@ final class ConstraintViolationExceptionTest extends CIUnitTestCase
                 NotNullConstraintViolationException::class,
             ];
 
+            yield 'OCI8 not null update' => [
+                self::connection(OCI8Connection::class, 'OCI8'),
+                1407,
+                'Cannot update to NULL.',
+                NotNullConstraintViolationException::class,
+            ];
+
             yield 'OCI8 check' => [
                 self::connection(OCI8Connection::class, 'OCI8'),
                 2290,
@@ -260,6 +295,15 @@ final class ConstraintViolationExceptionTest extends CIUnitTestCase
     {
         $exception = self::connection(MockConnection::class, 'MockDriver')
             ->createDatabaseException('Syntax error.', 1064);
+
+        $this->assertInstanceOf(DatabaseException::class, $exception);
+        $this->assertNotInstanceOf(ConstraintViolationException::class, $exception);
+    }
+
+    public function testCreatesBaseDatabaseExceptionForMySQLiNonConstraint4025(): void
+    {
+        $exception = self::connection(MySQLiConnection::class, 'MySQLi')
+            ->createDatabaseException('InnoDB autoextend size is out of range.', 4025);
 
         $this->assertInstanceOf(DatabaseException::class, $exception);
         $this->assertNotInstanceOf(ConstraintViolationException::class, $exception);
