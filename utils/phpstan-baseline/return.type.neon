@@ -1,4 +1,4 @@
-# total 2 errors
+# total 3 errors
 
 parameters:
     ignoreErrors:
@@ -6,6 +6,11 @@ parameters:
             message: '#^Method CodeIgniter\\Database\\BaseBuilder\:\:cleanClone\(\) should return \$this\(CodeIgniter\\Database\\BaseBuilder\) but returns static\(CodeIgniter\\Database\\BaseBuilder\)\.$#'
             count: 1
             path: ../../system/Database/BaseBuilder.php
+
+        -
+            message: '#^Method CodeIgniter\\Entity\\Cast\\DatetimeCast\:\:get\(\) should return CodeIgniter\\I18n\\Time but returns mixed\.$#'
+            count: 1
+            path: ../../system/Entity/Cast/DatetimeCast.php
 
         -
             message: '#^Method CodeIgniter\\Router\\Router\:\:getRouteAttributes\(\) should return array\{class\: list\<string\>, method\: list\<string\>\} but returns array\{class\: list\<CodeIgniter\\Router\\Attributes\\RouteAttributeInterface\>, method\: list\<CodeIgniter\\Router\\Attributes\\RouteAttributeInterface\>\}\.$#'

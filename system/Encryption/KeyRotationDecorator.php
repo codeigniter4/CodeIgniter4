@@ -86,7 +86,7 @@ class KeyRotationDecorator implements EncrypterInterface
     /**
      * Delegate property access to the inner handler.
      *
-     * @return array|bool|int|string|null
+     * @return array<int|string, mixed>|bool|int|string|null
      */
     public function __get(string $key)
     {

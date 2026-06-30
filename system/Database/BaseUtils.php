@@ -125,7 +125,7 @@ abstract class BaseUtils
     /**
      * Optimize Database
      *
-     * @return mixed
+     * @return array<string, mixed>|bool
      *
      * @throws DatabaseException
      */
@@ -170,7 +170,7 @@ abstract class BaseUtils
     /**
      * Repair Table
      *
-     * @return mixed
+     * @return array<string, mixed>|bool
      *
      * @throws DatabaseException
      */

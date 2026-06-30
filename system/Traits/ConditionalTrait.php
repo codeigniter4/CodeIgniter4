@@ -23,7 +23,6 @@ trait ConditionalTrait
      * @param TWhen                        $condition
      * @param callable(self, TWhen): mixed $callback
      * @param (callable(self): mixed)|null $defaultCallback
-     * @param mixed                        $condition
      *
      * @return $this
      */
@@ -46,7 +45,6 @@ trait ConditionalTrait
      * @param TWhenNot                        $condition
      * @param callable(self, TWhenNot): mixed $callback
      * @param (callable(self): mixed)|null    $defaultCallback
-     * @param mixed                           $condition
      *
      * @return $this
      */

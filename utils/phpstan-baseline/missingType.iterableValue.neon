@@ -1,4 +1,4 @@
-# total 1257 errors
+# total 1153 errors
 
 parameters:
     ignoreErrors:
@@ -173,16 +173,6 @@ parameters:
             path: ../../system/Common.php
 
         -
-            message: '#^Function service\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Common.php
-
-        -
-            message: '#^Function single_service\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Common.php
-
-        -
             message: '#^Function stringify_attributes\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Common.php
@@ -208,11 +198,6 @@ parameters:
             path: ../../system/Config/BaseConfig.php
 
         -
-            message: '#^Method CodeIgniter\\Config\\BaseConfig\:\:initEnvValue\(\) has parameter \$property with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Config/BaseConfig.php
-
-        -
             message: '#^Property CodeIgniter\\Config\\BaseConfig\:\:\$registrars type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Config/BaseConfig.php
@@ -229,11 +214,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Config\\BaseService\:\:__callStatic\(\) has parameter \$arguments with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Config/BaseService.php
-
-        -
-            message: '#^Method CodeIgniter\\Config\\BaseService\:\:getSharedInstance\(\) has parameter \$params with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Config/BaseService.php
 
@@ -444,11 +424,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Database\\BaseBuilder\:\:deleteBatch\(\) has parameter \$set with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseBuilder.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseBuilder\:\:delete\(\) has parameter \$where with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/BaseBuilder.php
 
@@ -788,11 +763,6 @@ parameters:
             path: ../../system/Database/BaseConnection.php
 
         -
-            message: '#^Method CodeIgniter\\Database\\BaseConnection\:\:__get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
             message: '#^Method CodeIgniter\\Database\\BaseConnection\:\:callFunction\(\) has parameter \$params with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/BaseConnection.php
@@ -804,11 +774,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Database\\BaseConnection\:\:escapeIdentifiers\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseConnection\:\:escape\(\) has parameter \$str with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/BaseConnection.php
 
@@ -834,11 +799,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Database\\BaseConnection\:\:protectIdentifiers\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseConnection\:\:query\(\) has parameter \$binds with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/BaseConnection.php
 
@@ -1033,22 +993,7 @@ parameters:
             path: ../../system/Database/ConnectionInterface.php
 
         -
-            message: '#^Method CodeIgniter\\Database\\ConnectionInterface\:\:callFunction\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/ConnectionInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\ConnectionInterface\:\:escape\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/ConnectionInterface.php
-
-        -
             message: '#^Method CodeIgniter\\Database\\ConnectionInterface\:\:escape\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/ConnectionInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\ConnectionInterface\:\:query\(\) has parameter \$binds with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/ConnectionInterface.php
 
@@ -1416,11 +1361,6 @@ parameters:
             message: '#^Property CodeIgniter\\Database\\Postgre\\Builder\:\:\$randomKeyword type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/Postgre/Builder.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Postgre\\Connection\:\:escape\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Postgre/Connection.php
 
         -
             message: '#^Method CodeIgniter\\Database\\Postgre\\Connection\:\:escape\(\) return type has no value type specified in iterable type array\.$#'
@@ -2133,11 +2073,6 @@ parameters:
             path: ../../system/Encryption/Encryption.php
 
         -
-            message: '#^Method CodeIgniter\\Encryption\\Handlers\\BaseHandler\:\:__get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Encryption/Handlers/BaseHandler.php
-
-        -
             message: '#^Method CodeIgniter\\Encryption\\Handlers\\OpenSSLHandler\:\:decrypt\(\) has parameter \$params with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Encryption/Handlers/OpenSSLHandler.php
@@ -2168,11 +2103,6 @@ parameters:
             path: ../../system/Encryption/Handlers/SodiumHandler.php
 
         -
-            message: '#^Method CodeIgniter\\Encryption\\KeyRotationDecorator\:\:__get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Encryption/KeyRotationDecorator.php
-
-        -
             message: '#^Method CodeIgniter\\Encryption\\KeyRotationDecorator\:\:decrypt\(\) has parameter \$params with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Encryption/KeyRotationDecorator.php
@@ -2183,144 +2113,14 @@ parameters:
             path: ../../system/Encryption/KeyRotationDecorator.php
 
         -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\ArrayCast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/ArrayCast.php
-
-        -
             message: '#^Method CodeIgniter\\Entity\\Cast\\ArrayCast\:\:get\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Entity/Cast/ArrayCast.php
 
         -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\ArrayCast\:\:set\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/ArrayCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\BaseCast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/BaseCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\BaseCast\:\:get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/BaseCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\BaseCast\:\:set\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/BaseCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\BaseCast\:\:set\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/BaseCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\BooleanCast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/BooleanCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\CSVCast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/CSVCast.php
-
-        -
             message: '#^Method CodeIgniter\\Entity\\Cast\\CSVCast\:\:get\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Entity/Cast/CSVCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\CSVCast\:\:set\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/CSVCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\CastInterface\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/CastInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\CastInterface\:\:get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/CastInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\CastInterface\:\:set\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/CastInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\CastInterface\:\:set\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/CastInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\DatetimeCast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/DatetimeCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\EnumCast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/EnumCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\EnumCast\:\:set\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/EnumCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\FloatCast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/FloatCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\IntegerCast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/IntegerCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\JsonCast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/JsonCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\JsonCast\:\:get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/JsonCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\JsonCast\:\:set\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/JsonCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\ObjectCast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/ObjectCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\StringCast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/StringCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\TimestampCast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/TimestampCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\TimestampCast\:\:get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/TimestampCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\URICast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/URICast.php
 
         -
             message: '#^Method CodeIgniter\\Exceptions\\PageNotFoundException\:\:lang\(\) has parameter \$args with no value type specified in iterable type array\.$#'
@@ -2608,11 +2408,6 @@ parameters:
             path: ../../system/HTTP/CURLRequest.php
 
         -
-            message: '#^Method CodeIgniter\\HTTP\\CURLRequest\:\:setJSON\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/CURLRequest.php
-
-        -
             message: '#^Method CodeIgniter\\HTTP\\CURLRequest\:\:setResponseHeaders\(\) has parameter \$headers with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HTTP/CURLRequest.php
@@ -2683,11 +2478,6 @@ parameters:
             path: ../../system/HTTP/IncomingRequest.php
 
         -
-            message: '#^Method CodeIgniter\\HTTP\\IncomingRequest\:\:getCookie\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/IncomingRequest.php
-
-        -
             message: '#^Method CodeIgniter\\HTTP\\IncomingRequest\:\:getFileMultiple\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HTTP/IncomingRequest.php
@@ -2708,11 +2498,6 @@ parameters:
             path: ../../system/HTTP/IncomingRequest.php
 
         -
-            message: '#^Method CodeIgniter\\HTTP\\IncomingRequest\:\:getGetPost\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/IncomingRequest.php
-
-        -
             message: '#^Method CodeIgniter\\HTTP\\IncomingRequest\:\:getGet\(\) has parameter \$flags with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HTTP/IncomingRequest.php
@@ -2723,27 +2508,12 @@ parameters:
             path: ../../system/HTTP/IncomingRequest.php
 
         -
-            message: '#^Method CodeIgniter\\HTTP\\IncomingRequest\:\:getGet\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/IncomingRequest.php
-
-        -
-            message: '#^Method CodeIgniter\\HTTP\\IncomingRequest\:\:getJSON\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/IncomingRequest.php
-
-        -
             message: '#^Method CodeIgniter\\HTTP\\IncomingRequest\:\:getJsonVar\(\) has parameter \$flags with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HTTP/IncomingRequest.php
 
         -
             message: '#^Method CodeIgniter\\HTTP\\IncomingRequest\:\:getJsonVar\(\) has parameter \$index with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/IncomingRequest.php
-
-        -
-            message: '#^Method CodeIgniter\\HTTP\\IncomingRequest\:\:getJsonVar\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HTTP/IncomingRequest.php
 
@@ -2763,11 +2533,6 @@ parameters:
             path: ../../system/HTTP/IncomingRequest.php
 
         -
-            message: '#^Method CodeIgniter\\HTTP\\IncomingRequest\:\:getPostGet\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/IncomingRequest.php
-
-        -
             message: '#^Method CodeIgniter\\HTTP\\IncomingRequest\:\:getPost\(\) has parameter \$flags with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HTTP/IncomingRequest.php
@@ -2778,22 +2543,12 @@ parameters:
             path: ../../system/HTTP/IncomingRequest.php
 
         -
-            message: '#^Method CodeIgniter\\HTTP\\IncomingRequest\:\:getPost\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/IncomingRequest.php
-
-        -
             message: '#^Method CodeIgniter\\HTTP\\IncomingRequest\:\:getRawInputVar\(\) has parameter \$flags with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HTTP/IncomingRequest.php
 
         -
             message: '#^Method CodeIgniter\\HTTP\\IncomingRequest\:\:getRawInputVar\(\) has parameter \$index with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/IncomingRequest.php
-
-        -
-            message: '#^Method CodeIgniter\\HTTP\\IncomingRequest\:\:getRawInputVar\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HTTP/IncomingRequest.php
 
@@ -2809,11 +2564,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\HTTP\\IncomingRequest\:\:getVar\(\) has parameter \$index with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/IncomingRequest.php
-
-        -
-            message: '#^Method CodeIgniter\\HTTP\\IncomingRequest\:\:getVar\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HTTP/IncomingRequest.php
 
@@ -2949,11 +2699,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\HTTP\\Request\:\:fetchGlobal\(\) has parameter \$index with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/Request.php
-
-        -
-            message: '#^Method CodeIgniter\\HTTP\\Request\:\:fetchGlobal\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HTTP/Request.php
 
@@ -3113,22 +2858,12 @@ parameters:
             path: ../../system/Helpers/Array/ArrayHelper.php
 
         -
-            message: '#^Method CodeIgniter\\Helpers\\Array\\ArrayHelper\:\:arraySearchDot\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Helpers/Array/ArrayHelper.php
-
-        -
             message: '#^Method CodeIgniter\\Helpers\\Array\\ArrayHelper\:\:dotKeyExists\(\) has parameter \$array with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Helpers/Array/ArrayHelper.php
 
         -
             message: '#^Method CodeIgniter\\Helpers\\Array\\ArrayHelper\:\:dotSearch\(\) has parameter \$array with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Helpers/Array/ArrayHelper.php
-
-        -
-            message: '#^Method CodeIgniter\\Helpers\\Array\\ArrayHelper\:\:dotSearch\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Helpers/Array/ArrayHelper.php
 
@@ -3173,11 +2908,6 @@ parameters:
             path: ../../system/Helpers/array_helper.php
 
         -
-            message: '#^Function array_deep_search\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Helpers/array_helper.php
-
-        -
             message: '#^Function array_flatten_with_dots\(\) has parameter \$array with no value type specified in iterable type iterable\.$#'
             count: 1
             path: ../../system/Helpers/array_helper.php
@@ -3214,11 +2944,6 @@ parameters:
 
         -
             message: '#^Function dot_array_search\(\) has parameter \$array with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Helpers/array_helper.php
-
-        -
-            message: '#^Function dot_array_search\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Helpers/array_helper.php
 
@@ -3586,16 +3311,6 @@ parameters:
             message: '#^Property CodeIgniter\\HotReloader\\IteratorFilter\:\:\$watchedExtensions type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HotReloader/IteratorFilter.php
-
-        -
-            message: '#^Method CodeIgniter\\I18n\\Time\:\:__get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/I18n/Time.php
-
-        -
-            message: '#^Method CodeIgniter\\I18n\\TimeLegacy\:\:__get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/I18n/TimeLegacy.php
 
         -
             message: '#^Method CodeIgniter\\Images\\Handlers\\BaseHandler\:\:__call\(\) has parameter \$args with no value type specified in iterable type array\.$#'
@@ -4168,11 +3883,6 @@ parameters:
             path: ../../system/Validation/Rules.php
 
         -
-            message: '#^Method CodeIgniter\\Validation\\Rules\:\:field_exists\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/Rules.php
-
-        -
             message: '#^Method CodeIgniter\\Validation\\Rules\:\:is_not_unique\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Validation/Rules.php
@@ -4188,11 +3898,6 @@ parameters:
             path: ../../system/Validation/Rules.php
 
         -
-            message: '#^Method CodeIgniter\\Validation\\Rules\:\:required\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/Rules.php
-
-        -
             message: '#^Method CodeIgniter\\Validation\\Rules\:\:required_with\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Validation/Rules.php
@@ -4203,142 +3908,7 @@ parameters:
             path: ../../system/Validation/Rules.php
 
         -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\CreditCardRules\:\:valid_cc_number\(\) has parameter \$ccNumber with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/CreditCardRules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\FormatRules\:\:alpha\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/FormatRules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\FormatRules\:\:alpha_dash\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/FormatRules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\FormatRules\:\:alpha_numeric\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/FormatRules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\FormatRules\:\:alpha_numeric_punct\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/FormatRules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\FormatRules\:\:alpha_numeric_space\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/FormatRules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\FormatRules\:\:alpha_space\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/FormatRules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\FormatRules\:\:decimal\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/FormatRules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\FormatRules\:\:hex\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/FormatRules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\FormatRules\:\:integer\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/FormatRules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\FormatRules\:\:is_natural\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/FormatRules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\FormatRules\:\:is_natural_no_zero\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/FormatRules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\FormatRules\:\:numeric\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/FormatRules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\FormatRules\:\:regex_match\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/FormatRules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\FormatRules\:\:string\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/FormatRules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\FormatRules\:\:timezone\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/FormatRules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\FormatRules\:\:valid_base64\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/FormatRules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\FormatRules\:\:valid_date\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/FormatRules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\FormatRules\:\:valid_email\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/FormatRules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\FormatRules\:\:valid_emails\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/FormatRules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\FormatRules\:\:valid_ip\(\) has parameter \$ip with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/FormatRules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\FormatRules\:\:valid_json\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/FormatRules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\FormatRules\:\:valid_url\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/FormatRules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\FormatRules\:\:valid_url_strict\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/FormatRules.php
-
-        -
             message: '#^Method CodeIgniter\\Validation\\StrictRules\\Rules\:\:differs\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/Rules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\Rules\:\:differs\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/Rules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\Rules\:\:equals\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/Rules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\Rules\:\:exact_length\(\) has parameter \$str with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Validation/StrictRules/Rules.php
 
@@ -4348,32 +3918,7 @@ parameters:
             path: ../../system/Validation/StrictRules/Rules.php
 
         -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\Rules\:\:field_exists\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/Rules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\Rules\:\:greater_than\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/Rules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\Rules\:\:greater_than_equal_to\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/Rules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\Rules\:\:in_list\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/Rules.php
-
-        -
             message: '#^Method CodeIgniter\\Validation\\StrictRules\\Rules\:\:is_not_unique\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/Rules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\Rules\:\:is_not_unique\(\) has parameter \$str with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Validation/StrictRules/Rules.php
 
@@ -4383,52 +3928,7 @@ parameters:
             path: ../../system/Validation/StrictRules/Rules.php
 
         -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\Rules\:\:is_unique\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/Rules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\Rules\:\:less_than\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/Rules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\Rules\:\:less_than_equal_to\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/Rules.php
-
-        -
             message: '#^Method CodeIgniter\\Validation\\StrictRules\\Rules\:\:matches\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/Rules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\Rules\:\:matches\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/Rules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\Rules\:\:max_length\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/Rules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\Rules\:\:min_length\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/Rules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\Rules\:\:not_equals\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/Rules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\Rules\:\:not_in_list\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/Rules.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\Rules\:\:required\(\) has parameter \$str with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Validation/StrictRules/Rules.php
 
@@ -4438,27 +3938,12 @@ parameters:
             path: ../../system/Validation/StrictRules/Rules.php
 
         -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\Rules\:\:required_with\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/Rules.php
-
-        -
             message: '#^Method CodeIgniter\\Validation\\StrictRules\\Rules\:\:required_without\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Validation/StrictRules/Rules.php
 
         -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\Rules\:\:required_without\(\) has parameter \$str with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/StrictRules/Rules.php
-
-        -
             message: '#^Method CodeIgniter\\Validation\\Validation\:\:check\(\) has parameter \$rules with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/Validation.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\Validation\:\:check\(\) has parameter \$value with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Validation/Validation.php
 
@@ -4624,11 +4109,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Validation\\ValidationInterface\:\:check\(\) has parameter \$rules with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Validation/ValidationInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\ValidationInterface\:\:check\(\) has parameter \$value with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Validation/ValidationInterface.php
 

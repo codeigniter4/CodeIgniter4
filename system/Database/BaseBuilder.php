@@ -2817,7 +2817,7 @@ class BaseBuilder
     /**
      * Compiles a delete string and runs the query
      *
-     * @param array|RawSql|string $where
+     * @param array<int|string, mixed>|RawSql|string $where
      *
      * @return bool|string Returns a SQL string if in test mode.
      *
@@ -3075,7 +3075,7 @@ class BaseBuilder
      * Generates a query string based on which functions were used.
      * Should not be called directly.
      *
-     * @param mixed $selectOverride
+     * @param false|string $selectOverride
      */
     protected function compileSelect($selectOverride = false): string
     {

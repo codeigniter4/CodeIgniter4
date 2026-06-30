@@ -100,7 +100,7 @@ interface ConnectionInterface
      * Should automatically handle different connections for read/write
      * queries if needed.
      *
-     * @param array|string|null $binds
+     * @param array<int|string, mixed>|string|null $binds
      *
      * @return BaseResult<TConnection, TResult>|bool|Query
      */
@@ -137,7 +137,7 @@ interface ConnectionInterface
      * Escapes data based on type.
      * Sets boolean and null types.
      *
-     * @param array|bool|float|int|object|string|null $str
+     * @param mixed $str
      *
      * @return ($str is array ? array : float|int|string)
      */
@@ -149,7 +149,7 @@ interface ConnectionInterface
      *
      * @param array ...$params
      *
-     * @return array|bool|float|int|object|resource|string|null
+     * @return mixed
      */
     public function callFunction(string $functionName, ...$params);
 
