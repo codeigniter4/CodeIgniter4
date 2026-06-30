@@ -339,7 +339,7 @@ the file to as the first parameter:
 
 .. literalinclude:: uploaded_files/016.php
 
-By default, the original filename was used.
+By default, the client-provided filename is sanitized and used.
 
 with New Filename
 -----------------

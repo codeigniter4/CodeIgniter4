@@ -143,9 +143,6 @@ many will be simple comments or formatting that have no effect on the runtime:
 * ``composer.json``
 * ``contributing/guidelines.rst``
 * ``env``
-* ``phpstan.neon.dist``
-* ``phpunit.xml.dist``
 * ``public/.htaccess``
 * ``public/index.php``
-* ``rector.php``
 * ``spark``

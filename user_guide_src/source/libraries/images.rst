@@ -42,6 +42,14 @@ The available Handlers are as follows:
    On Windows, the ImageMagick handler requires **absolute file paths** when
    loading images (for example, using ``WRITEPATH`` or ``FCPATH``).
 
+.. warning::
+    Do not let user input directly decide the image source path, storage
+    directory, or filename. This includes values passed to methods like
+    ``save()``, ``copy()`` and others, and any path or filename used to store
+    processed images. Use directories controlled by your application, and
+    generate filenames yourself or sanitize them with
+    :php:func:`sanitize_filename`.
+
 *******************
 Processing an Image
 *******************

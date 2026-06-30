@@ -166,7 +166,7 @@ class BaseConfig
     /**
      * Initialization an environment-specific configuration setting
      *
-     * @param array|bool|float|int|string|null $property
+     * @param array<int|string, mixed>|bool|float|int|string|null $property
      *
      * @return void
      */
@@ -221,10 +221,10 @@ class BaseConfig
                 return $_ENV["{$shortPrefix}_{$underscoreProperty}"];
 
             case array_key_exists("{$shortPrefix}.{$property}", $_SERVER):
-                return $_SERVER["{$shortPrefix}.{$property}"];
+                return $_SERVER["{$shortPrefix}.{$property}"]; // @phpstan-ignore codeigniter.superglobalsOffsetAccess (reads live $_SERVER, not the snapshot service)
 
             case array_key_exists("{$shortPrefix}_{$underscoreProperty}", $_SERVER):
-                return $_SERVER["{$shortPrefix}_{$underscoreProperty}"];
+                return $_SERVER["{$shortPrefix}_{$underscoreProperty}"]; // @phpstan-ignore codeigniter.superglobalsOffsetAccess (reads live $_SERVER, not the snapshot service)
 
             case array_key_exists("{$prefix}.{$property}", $_ENV):
                 return $_ENV["{$prefix}.{$property}"];
@@ -233,10 +233,10 @@ class BaseConfig
                 return $_ENV["{$prefix}_{$underscoreProperty}"];
 
             case array_key_exists("{$prefix}.{$property}", $_SERVER):
-                return $_SERVER["{$prefix}.{$property}"];
+                return $_SERVER["{$prefix}.{$property}"]; // @phpstan-ignore codeigniter.superglobalsOffsetAccess (reads live $_SERVER, not the snapshot service)
 
             case array_key_exists("{$prefix}_{$underscoreProperty}", $_SERVER):
-                return $_SERVER["{$prefix}_{$underscoreProperty}"];
+                return $_SERVER["{$prefix}_{$underscoreProperty}"]; // @phpstan-ignore codeigniter.superglobalsOffsetAccess (reads live $_SERVER, not the snapshot service)
 
             default:
                 $value = getenv("{$shortPrefix}.{$property}");

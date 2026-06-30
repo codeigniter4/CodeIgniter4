@@ -151,4 +151,57 @@ final class SodiumHandlerTest extends CIUnitTestCase
 
         $this->assertSame($message, $encrypter->decrypt($encoded, ['key' => $differentKey]));
     }
+
+    public function testNullKeyOverrideFallsBackToInstanceKey(): void
+    {
+        /** @var SodiumHandler $encrypter */
+        $encrypter = $this->encryption->initialize($this->config);
+
+        $ciphertext = $encrypter->encrypt('message', ['key' => null]);
+
+        $this->assertSame('message', $encrypter->decrypt($ciphertext, ['key' => null]));
+    }
+
+    public function testInvalidKeyLengthThrowsEncryptionException(): void
+    {
+        $this->expectException(EncryptionException::class);
+        /** @var SodiumHandler $encrypter */
+        $encrypter = $this->encryption->initialize($this->config);
+
+        $encrypter->encrypt('message', str_repeat('a', 31));
+    }
+
+    public function testMismatchedBlockSizeThrowsEncryptionException(): void
+    {
+        $this->expectException(EncryptionException::class);
+        /** @var SodiumHandler $encrypter */
+        $encrypter = $this->encryption->initialize($this->config);
+
+        $ciphertext = $encrypter->encrypt('message', ['blockSize' => 16]);
+
+        $encrypter->decrypt($ciphertext, ['blockSize' => 32]);
+    }
+
+    public function testDecryptTamperedMessageThrowsException(): void
+    {
+        $this->expectException(EncryptionException::class);
+        $encrypter = $this->encryption->initialize($this->config);
+
+        $ciphertext = $encrypter->encrypt('message');
+
+        $ciphertext[0] = $ciphertext[0] === 'a' ? 'b' : 'a';
+
+        $encrypter->decrypt($ciphertext);
+    }
+
+    public function testOverrideKeyAsStringWorks(): void
+    {
+        $encrypter = $this->encryption->initialize($this->config);
+        $newKey    = sodium_crypto_secretbox_keygen();
+
+        $ciphertext = $encrypter->encrypt('message', $newKey);
+        $decrypted  = $encrypter->decrypt($ciphertext, $newKey);
+
+        $this->assertSame('message', $decrypted);
+    }
 }

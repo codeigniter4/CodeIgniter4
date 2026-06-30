@@ -70,7 +70,7 @@ class MockConnection extends BaseConnection
      * Should automatically handle different connections for read/write
      * queries if needed.
      *
-     * @param mixed $binds
+     * @param array<int|string, mixed>|string|null $binds
      *
      * @return BaseResult<object|resource, object|resource>|bool|Query
      *

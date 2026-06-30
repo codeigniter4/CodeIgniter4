@@ -13,8 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Builder;
 
+use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use CodeIgniter\Test\Mock\MockQuery;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -89,5 +91,82 @@ final class DeleteTest extends CIUnitTestCase
             WHERE "id" = 1 LIMIT 10
             EOL;
         $this->assertSame($expectedSQL, $sql);
+    }
+
+    public function testDeleteBatchEscapesWhereBinds(): void
+    {
+        $db      = new MockConnection([]);
+        $builder = new BaseBuilder('jobs', $db);
+
+        $data = [
+            ['id' => 1, 'name' => 'Derek J'],
+            ['id' => 2, 'name' => 'Ahmadinejad'],
+        ];
+
+        // A user-controlled value that would break out of the query if it
+        // were substituted into the SQL unescaped.
+        $malicious = "anything' OR '1'='1";
+
+        $db->shouldReturn('execute', new class () {});
+        $builder->setData($data, null, 'data')
+            ->onConstraint(['id' => 'id'])
+            ->where('jobs.name', $malicious)
+            ->deleteBatch();
+
+        $query = $db->getLastQuery();
+        $this->assertInstanceOf(MockQuery::class, $query);
+
+        // The bound value must be escaped and quoted as a single string literal:
+        // it is wrapped in single quotes and the inner quotes are doubled, so it
+        // cannot break out of the literal and inject SQL.
+        $this->assertStringContainsString("'anything'' OR ''1''", $query->getQuery());
+        $this->assertStringNotContainsString("= anything' OR '1'='1", $query->getQuery());
+    }
+
+    public function testDeleteBatchEscapesMultipleWhereBinds(): void
+    {
+        $db      = new MockConnection([]);
+        $builder = new BaseBuilder('jobs', $db);
+
+        $data = [
+            ['id' => 1, 'name' => 'Derek J'],
+            ['id' => 2, 'name' => 'Ahmadinejad'],
+        ];
+
+        $db->shouldReturn('execute', new class () {});
+        $builder->setData($data, null, 'data')
+            ->onConstraint(['id' => 'id'])
+            ->where('jobs.name', "anything' OR '1'='1")
+            ->where('jobs.id', 1)
+            ->deleteBatch();
+
+        $query = $db->getLastQuery();
+        $this->assertInstanceOf(MockQuery::class, $query);
+
+        $this->assertStringContainsString('"jobs"."name" = \'anything\'\' OR \'\'1\'\' = \'\'1\'', $query->getQuery());
+        $this->assertStringContainsString('"jobs"."id" = 1', $query->getQuery());
+    }
+
+    public function testDeleteBatchEscapesWhereInBinds(): void
+    {
+        $db      = new MockConnection([]);
+        $builder = new BaseBuilder('jobs', $db);
+
+        $data = [
+            ['id' => 1, 'name' => 'Derek J'],
+            ['id' => 2, 'name' => 'Ahmadinejad'],
+        ];
+
+        $db->shouldReturn('execute', new class () {});
+        $builder->setData($data, null, 'data')
+            ->onConstraint(['id' => 'id'])
+            ->whereIn('jobs.name', ["anything' OR '1'='1", 'Ahmadinejad'])
+            ->deleteBatch();
+
+        $query = $db->getLastQuery();
+        $this->assertInstanceOf(MockQuery::class, $query);
+
+        $this->assertStringContainsString("IN ('anything'' OR ''1''=''1','Ahmadinejad')", $query->getQuery());
+        $this->assertStringNotContainsString("IN anything' OR '1'='1", $query->getQuery());
     }
 }

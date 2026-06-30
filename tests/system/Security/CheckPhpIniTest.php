@@ -18,12 +18,32 @@ use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
+ * @return array<string, array<string, mixed>>|false
+ */
+function ini_get_all(?string $extension = null, bool $details = true): array|false
+{
+    return CheckPhpIniTest::$iniGetAllReturn ?? \ini_get_all($extension, $details);
+}
+
+/**
  * @internal
  */
 #[Group('Others')]
 final class CheckPhpIniTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
+
+    /**
+     * @var array<string, array<string, mixed>>|null
+     */
+    public static ?array $iniGetAllReturn = null;
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        self::$iniGetAllReturn = null;
+    }
 
     public function testCheckIni(): void
     {
@@ -49,6 +69,26 @@ final class CheckPhpIniTest extends CIUnitTestCase
             'remark'      => 'Enable when your code requires to read docblock annotations at runtime',
         ];
         $this->assertSame($expected, $output['opcache.save_comments']);
+    }
+
+    public function testCheckIniCastsNullIniValuesToString(): void
+    {
+        self::$iniGetAllReturn = [
+            'default_charset' => [
+                'global_value' => null,
+                'local_value'  => null,
+            ],
+        ];
+
+        $output = self::getPrivateMethodInvoker(CheckPhpIni::class, 'checkIni')();
+
+        $expected = [
+            'global'      => '',
+            'current'     => '',
+            'recommended' => 'UTF-8',
+            'remark'      => '',
+        ];
+        $this->assertSame($expected, $output['default_charset']);
     }
 
     public function testRunCli(): void

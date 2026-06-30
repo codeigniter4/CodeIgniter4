@@ -302,4 +302,111 @@ final class EmailTest extends CIUnitTestCase
 
         $this->assertSame(gethostname(), $getHostname());
     }
+
+    #[DataProvider('providePrepQuotedPrintableWithLfCrlf')]
+    public function testPrepQuotedPrintableWithLfCrlf(string $input, string $expected): void
+    {
+        $email       = new Email();
+        $email->CRLF = "\n";
+        $prepQP      = self::getPrivateMethodInvoker($email, 'prepQuotedPrintable');
+
+        $this->assertSame($expected, $prepQP($input));
+    }
+
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function providePrepQuotedPrintableWithLfCrlf(): iterable
+    {
+        return [
+            'empty string'               => ['', ''],
+            'safe ascii only'            => ['hello world', 'hello world'],
+            'safe chars only'            => ['abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789(),-./:?', 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789(),-./:?'],
+            'unsafe char encoded'        => ["a\x01b", 'a=01b'],
+            'trailing space encoded'     => ["hello \nworld", "hello=20\nworld"],
+            'trailing tab encoded'       => ["hello\t\nworld", "hello=09\nworld"],
+            'equals sign encoded as =3D' => ['a=b', 'a=3Db'],
+            'multiple spaces reduced'    => ['a  b', 'a b'],
+            'null bytes removed'         => ["a\x00b", 'ab'],
+            'unwrap tags removed'        => ['{unwrap}secret{/unwrap}', 'secret'],
+            'single line'                => ['test', 'test'],
+            'two lines'                  => ["line1\nline2", "line1\nline2"],
+            'three lines trailing empty' => ["line1\nline2\n", "line1\nline2\n"],
+        ];
+    }
+
+    public function testPrepQuotedPrintableWithCrlfNative(): void
+    {
+        $email       = new Email();
+        $email->CRLF = "\r\n";
+        $prepQP      = self::getPrivateMethodInvoker($email, 'prepQuotedPrintable');
+
+        $result = $prepQP('test');
+
+        $this->assertSame(quoted_printable_encode('test'), $result);
+    }
+
+    public function testPrepQuotedPrintableSoftLineBreak(): void
+    {
+        $email       = new Email();
+        $email->CRLF = "\n";
+        $prepQP      = self::getPrivateMethodInvoker($email, 'prepQuotedPrintable');
+
+        // 76 'a' chars fit in one line; add 2 more 'b' chars and they soft-wrap
+        // After reduction: no trailing spaces, just safe chars
+        $input  = str_repeat('a', 76) . 'bb';
+        $result = $prepQP($input);
+
+        $this->assertStringContainsString("=\n", $result, 'Soft line break must be present');
+        $this->assertStringNotContainsString("\r\n", $result, 'Custom CRLF must not contain \\r');
+    }
+
+    public function testPrepQuotedPrintableSoftBreakAfterEncodedChar(): void
+    {
+        $email       = new Email();
+        $email->CRLF = "\n";
+        $prepQP      = self::getPrivateMethodInvoker($email, 'prepQuotedPrintable');
+
+        // 74 safe chars + 1 encoded (=3D = 3 bytes) = 77 → must break before encoded
+        $input  = str_repeat('a', 74) . '=';
+        $result = $prepQP($input);
+
+        $this->assertSame(str_repeat('a', 74) . "=\n=3D", $result);
+    }
+
+    public function testPrepQuotedPrintableHardLineBreakNoInternalSpaceReduction(): void
+    {
+        $email       = new Email();
+        $email->CRLF = "\n";
+        $prepQP      = self::getPrivateMethodInvoker($email, 'prepQuotedPrintable');
+
+        // Spaces not at end of line must be left as-is
+        $this->assertSame('a b', $prepQP('a   b'));
+    }
+
+    public function testPrepQuotedPrintableMixedContent(): void
+    {
+        $email       = new Email();
+        $email->CRLF = "\n";
+        $prepQP      = self::getPrivateMethodInvoker($email, 'prepQuotedPrintable');
+
+        $input  = "Hello, World!\nline ends with tab\t\n=special chars: \x01\x02";
+        $result = $prepQP($input);
+
+        $this->assertStringContainsString('Hello, World=21', $result);
+        $this->assertStringContainsString('=09', $result);
+        $this->assertStringContainsString('=3D', $result);
+        $this->assertStringContainsString('=01', $result);
+        $this->assertStringContainsString('=02', $result);
+    }
+
+    public function testPrepQuotedPrintableUnwrapRemovesTagsOnly(): void
+    {
+        $email       = new Email();
+        $email->CRLF = "\n";
+        $prepQP      = self::getPrivateMethodInvoker($email, 'prepQuotedPrintable');
+
+        $this->assertSame('keep =7Bbraces=7D', $prepQP('keep {braces}'));
+        $this->assertSame('keep (parentheses)', $prepQP('keep (parentheses)'));
+    }
 }

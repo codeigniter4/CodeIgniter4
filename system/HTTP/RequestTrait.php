@@ -87,67 +87,7 @@ trait RequestTrait
 
         // @TODO Extract all this IP address logic to another class.
         foreach ($proxyIPs as $proxyIP => $header) {
-            // Check if we have an IP address or a subnet
-            if (! str_contains($proxyIP, '/')) {
-                // An IP address (and not a subnet) is specified.
-                // We can compare right away.
-                if ($proxyIP === $this->ipAddress) {
-                    $spoof = $this->getClientIP($header);
-
-                    if ($spoof !== null) {
-                        $this->ipAddress = $spoof;
-                        break;
-                    }
-                }
-
-                continue;
-            }
-
-            // We have a subnet ... now the heavy lifting begins
-            if (! isset($separator)) {
-                $separator = $ipValidator($this->ipAddress, 'ipv6') ? ':' : '.';
-            }
-
-            // If the proxy entry doesn't match the IP protocol - skip it
-            if (! str_contains($proxyIP, $separator)) {
-                continue;
-            }
-
-            // Convert the REMOTE_ADDR IP address to binary, if needed
-            if (! isset($ip, $sprintf)) {
-                if ($separator === ':') {
-                    // Make sure we're having the "full" IPv6 format
-                    $ip = explode(':', str_replace('::', str_repeat(':', 9 - substr_count($this->ipAddress, ':')), $this->ipAddress));
-
-                    for ($j = 0; $j < 8; $j++) {
-                        $ip[$j] = intval($ip[$j], 16);
-                    }
-
-                    $sprintf = '%016b%016b%016b%016b%016b%016b%016b%016b';
-                } else {
-                    $ip      = explode('.', $this->ipAddress);
-                    $sprintf = '%08b%08b%08b%08b';
-                }
-
-                $ip = vsprintf($sprintf, $ip);
-            }
-
-            // Split the netmask length off the network address
-            sscanf($proxyIP, '%[^/]/%d', $netaddr, $masklen);
-
-            // Again, an IPv6 address is most likely in a compressed form
-            if ($separator === ':') {
-                $netaddr = explode(':', str_replace('::', str_repeat(':', 9 - substr_count($netaddr, ':')), $netaddr));
-
-                for ($i = 0; $i < 8; $i++) {
-                    $netaddr[$i] = intval($netaddr[$i], 16);
-                }
-            } else {
-                $netaddr = explode('.', $netaddr);
-            }
-
-            // Convert to binary and finally compare
-            if (strncmp($ip, vsprintf($sprintf, $netaddr), $masklen) === 0) {
+            if ($this->checkIPAgainstProxy($this->ipAddress, (string) $proxyIP)) {
                 $spoof = $this->getClientIP($header);
 
                 if ($spoof !== null) {
@@ -190,6 +130,92 @@ trait RequestTrait
         }
 
         return $spoof;
+    }
+
+    /**
+     * Checks if the request comes from one of the trusted proxies
+     * configured in Config\App::$proxyIPs.
+     */
+    protected function isFromTrustedProxy(): bool
+    {
+        $proxyIPs = $this->config->proxyIPs;
+
+        if (! is_array($proxyIPs) || $proxyIPs === []) {
+            return false;
+        }
+
+        $remoteAddr = $this->getServer('REMOTE_ADDR');
+
+        if (! is_string($remoteAddr) || $remoteAddr === '') {
+            return false;
+        }
+
+        foreach (array_keys($proxyIPs) as $proxyIP) {
+            if ($this->checkIPAgainstProxy($remoteAddr, (string) $proxyIP)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if the given IP address matches the trusted proxy entry,
+     * which may be a single IP address or a subnet in CIDR notation.
+     * Supports both IPv4 and IPv6.
+     */
+    private function checkIPAgainstProxy(string $ip, string $proxyIP): bool
+    {
+        $maskLength = null;
+
+        if (str_contains($proxyIP, '/')) {
+            [$proxyIP, $mask] = explode('/', $proxyIP, 2);
+
+            if ($mask === '' || ! ctype_digit($mask)) {
+                return false;
+            }
+
+            $maskLength = (int) $mask;
+        }
+
+        $binaryIP    = inet_pton($ip);
+        $binaryProxy = inet_pton($proxyIP);
+
+        if ($binaryIP === false || $binaryProxy === false) {
+            return false;
+        }
+
+        // If the proxy entry doesn't match the IP protocol - no match
+        if (strlen($binaryIP) !== strlen($binaryProxy)) {
+            return false;
+        }
+
+        if ($maskLength === null) {
+            return $binaryIP === $binaryProxy;
+        }
+
+        if ($maskLength > strlen($binaryIP) * 8) {
+            return false;
+        }
+
+        if ($maskLength === 0) {
+            return true;
+        }
+
+        $fullBytes     = intdiv($maskLength, 8);
+        $remainingBits = $maskLength % 8;
+
+        if ($fullBytes > 0 && strncmp($binaryIP, $binaryProxy, $fullBytes) !== 0) {
+            return false;
+        }
+
+        if ($remainingBits > 0) {
+            $bitmask = 0xFF & (0xFF << (8 - $remainingBits));
+
+            return (ord($binaryIP[$fullBytes]) & $bitmask) === (ord($binaryProxy[$fullBytes]) & $bitmask);
+        }
+
+        return true;
     }
 
     /**
@@ -257,7 +283,7 @@ trait RequestTrait
      * @param int|null                                 $filter Filter constant
      * @param array|int|null                           $flags  Options
      *
-     * @return array|bool|float|int|object|string|null
+     * @return mixed
      */
     public function fetchGlobal(string $name, $index = null, ?int $filter = null, $flags = null)
     {

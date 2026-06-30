@@ -76,6 +76,17 @@ You can also check if the request was made through and HTTPS connection with the
 
 .. literalinclude:: incomingrequest/006.php
 
+.. important:: The ``X-Forwarded-Proto`` and ``Front-End-Https`` headers are taken
+    into account only when the request comes from a trusted proxy configured in
+    ``Config\App::$proxyIPs``. Otherwise, they are client-supplied and could be
+    spoofed.
+
+.. note:: On dual-stack servers, a proxy's IPv4 address may be reported as an
+    IPv4-mapped IPv6 address (e.g., ``::ffff:192.168.5.21``), which does not
+    match an IPv4 entry such as ``192.168.5.0/24``. In that case, add the
+    IPv4-mapped form to ``Config\App::$proxyIPs``, e.g.,
+    ``::ffff:192.168.5.21`` or ``::ffff:192.168.5.0/120``.
+
 Retrieving Input
 ****************
 
@@ -350,6 +361,10 @@ The methods provided by the parent classes that are available are:
 
         :returns: True if the request is an HTTPS request, otherwise false.
         :rtype: bool
+
+        .. important:: The ``X-Forwarded-Proto`` and ``Front-End-Https`` headers
+            are taken into account only when the request comes from a trusted
+            proxy configured in ``Config\App::$proxyIPs``.
 
     .. php:method:: getVar([$index = null[, $filter = null[, $flags = null]]])
 

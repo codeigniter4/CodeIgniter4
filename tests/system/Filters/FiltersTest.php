@@ -68,7 +68,7 @@ final class FiltersTest extends CIUnitTestCase
         ];
         service('autoloader')->addNamespace($defaults);
 
-        $_SERVER = [];
+        service('superglobals')->setServerArray([]);
         Services::injectMock('superglobals', new Superglobals());
 
         $this->response = service('response');

@@ -30,7 +30,8 @@ final class CommonFunctionsSendTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        unset($_ENV['foo'], $_SERVER['foo']);
+        unset($_ENV['foo']);
+        service('superglobals')->unsetServer('foo');
     }
 
     /**
