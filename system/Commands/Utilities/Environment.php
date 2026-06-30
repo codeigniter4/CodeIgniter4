@@ -13,8 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Utilities;
 
-use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Input\Argument;
 use CodeIgniter\Config\DotEnv;
 use Config\Paths;
 
@@ -22,53 +24,9 @@ use Config\Paths;
  * Command to display the current environment,
  * or set a new one in the `.env` file.
  */
-final class Environment extends BaseCommand
+#[Command(name: 'env', description: 'Retrieves the current environment, or set a new one.', group: 'CodeIgniter')]
+class Environment extends AbstractCommand
 {
-    /**
-     * The group the command is lumped under
-     * when listing commands.
-     *
-     * @var string
-     */
-    protected $group = 'CodeIgniter';
-
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'env';
-
-    /**
-     * The Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Retrieves the current environment, or set a new one.';
-
-    /**
-     * The Command's usage
-     *
-     * @var string
-     */
-    protected $usage = 'env [<environment>]';
-
-    /**
-     * The Command's arguments
-     *
-     * @var array<string, string>
-     */
-    protected $arguments = [
-        'environment' => '[Optional] The new environment to set. If none is provided, this will print the current environment.',
-    ];
-
-    /**
-     * The Command's options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [];
-
     /**
      * Allowed values for environment. `testing` is excluded
      * since spark won't work on it.
@@ -80,44 +38,56 @@ final class Environment extends BaseCommand
         'development',
     ];
 
-    /**
-     * @return int
-     */
-    public function run(array $params)
+    protected function configure(): void
     {
-        if (! isset($params[0])) {
-            CLI::write(sprintf('Your environment is currently set as %s.', CLI::color(service('superglobals')->server('CI_ENVIRONMENT', ENVIRONMENT), 'green')));
-            CLI::newLine();
+        $this->addArgument(new Argument(
+            name: 'environment',
+            description: 'The new environment to set. If none is provided, the current environment is printed.',
+            default: '',
+        ));
+    }
+
+    protected function execute(array $arguments, array $options): int
+    {
+        $env = $arguments['environment'];
+        assert(is_string($env));
+
+        if ($env === '') {
+            CLI::write(sprintf(
+                'Your environment is currently set as %s.',
+                CLI::color(service('superglobals')->server('CI_ENVIRONMENT', ENVIRONMENT), 'green'),
+            ));
 
             return EXIT_SUCCESS;
         }
 
-        $env = strtolower(array_shift($params));
+        $env = strtolower($env);
 
         if ($env === 'testing') {
             CLI::error('The "testing" environment is reserved for PHPUnit testing.', 'light_gray', 'red');
             CLI::error('You will not be able to run spark under a "testing" environment.', 'light_gray', 'red');
-            CLI::newLine();
 
             return EXIT_ERROR;
         }
 
         if (! in_array($env, self::$knownTypes, true)) {
-            CLI::error(sprintf('Invalid environment type "%s". Expected one of "%s".', $env, implode('" and "', self::$knownTypes)), 'light_gray', 'red');
-            CLI::newLine();
+            CLI::error(sprintf(
+                'Invalid environment type "%s". Expected one of "%s".',
+                $env,
+                implode('" and "', self::$knownTypes),
+            ), 'light_gray', 'red');
 
             return EXIT_ERROR;
         }
 
         if (! $this->writeNewEnvironmentToEnvFile($env)) {
             CLI::error('Error in writing new environment to .env file.', 'light_gray', 'red');
-            CLI::newLine();
 
             return EXIT_ERROR;
         }
 
-        // force DotEnv to reload the new environment
-        // however we cannot redefine the ENVIRONMENT constant
+        // Reload DotEnv with the new environment. The ENVIRONMENT constant
+        // only takes the new value on the next script execution.
         putenv('CI_ENVIRONMENT');
         unset($_ENV['CI_ENVIRONMENT']);
         service('superglobals')->unsetServer('CI_ENVIRONMENT');
@@ -125,7 +95,6 @@ final class Environment extends BaseCommand
 
         CLI::write(sprintf('Environment is successfully changed to "%s".', $env), 'green');
         CLI::write('The ENVIRONMENT constant will be changed in the next script execution.');
-        CLI::newLine();
 
         return EXIT_SUCCESS;
     }
@@ -142,7 +111,6 @@ final class Environment extends BaseCommand
             if (! is_file($baseEnv)) {
                 CLI::write('Both default shipped `env` file and custom `.env` are missing.', 'yellow');
                 CLI::write('It is impossible to write the new environment type.', 'yellow');
-                CLI::newLine();
 
                 return false;
             }
