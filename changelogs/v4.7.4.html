@@ -322,6 +322,14 @@ WHERE binds are now escaped in the same way as a regular <code class="docutils l
 <p>See the <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-c9w5-rwh3-7pm9">Security advisory GHSA-c9w5-rwh3-7pm9</a>
 for more information.</p>
 </li>
+<li><p><strong>UploadedFile:</strong> <code class="docutils literal notranslate"><span class="pre">UploadedFile::move()</span></code> now sanitizes the client-provided
+filename when called without a second argument. Previously, the unsanitized
+client filename was used as the default, allowing path traversal sequences
+(e.g. <code class="docutils literal notranslate"><span class="pre">../../public/shell.php</span></code>) to write the uploaded file outside the
+intended directory. A name explicitly passed as the second argument is not
+sanitized and remains the caller’s responsibility.
+See the <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-hhmc-q9hp-r662">Security advisory GHSA-hhmc-q9hp-r662</a>
+for more information.</p></li>
 </ul>
 </section>
 <section id="breaking">
