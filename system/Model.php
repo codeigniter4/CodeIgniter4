@@ -785,7 +785,7 @@ class Model extends BaseModel
 
     protected function doProtectFieldsForUpdate(array $row): array
     {
-        $this->ensureNoInsertOnlyFields($row, [$this->primaryKey]);
+        $row = $this->doProtectInsertOnlyFieldsForUpdate($row, [$this->primaryKey]);
         $this->ensureNoDisallowedFields($row, [$this->primaryKey]);
 
         return $this->doProtectFields($row);

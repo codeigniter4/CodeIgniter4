@@ -54,46 +54,110 @@ final class InsertOnlyFieldsModelTest extends LiveModelTestCase
         ]);
     }
 
-    public function testUpdateThrowsOnInsertOnlyFields(): void
+    public function testUpdateDiscardsInsertOnlyFieldsByDefault(): void
+    {
+        $result = $this->createModel(UserModel::class)->setInsertOnlyFields(['email'])->update(1, [
+            'name'  => 'Insert Only Update',
+            'email' => 'insert-only-update@example.com',
+        ]);
+
+        $this->assertTrue($result);
+        $this->seeInDatabase('user', [
+            'id'    => 1,
+            'name'  => 'Insert Only Update',
+            'email' => 'derek@world.com',
+        ]);
+    }
+
+    public function testThrowOnDisallowedFieldsThrowsOnInsertOnlyFields(): void
     {
         $this->expectException(DataException::class);
         $this->expectExceptionMessage('Fields cannot be updated for model "Tests\Support\Models\UserModel": email');
 
-        $this->createModel(UserModel::class)->setInsertOnlyFields(['email'])->update(1, [
+        $this->createModel(UserModel::class)->setInsertOnlyFields(['email'])->throwOnDisallowedFields()->update(1, [
             'name'  => 'Insert Only Update',
             'email' => 'insert-only-update@example.com',
         ]);
     }
 
-    public function testSaveUpdateThrowsOnInsertOnlyFields(): void
+    public function testSaveUpdateDiscardsInsertOnlyFieldsByDefault(): void
+    {
+        $result = $this->createModel(UserModel::class)->setInsertOnlyFields(['email'])->save([
+            'id'    => 1,
+            'name'  => 'Insert Only Save',
+            'email' => 'insert-only-save@example.com',
+        ]);
+
+        $this->assertTrue($result);
+        $this->seeInDatabase('user', [
+            'id'    => 1,
+            'name'  => 'Insert Only Save',
+            'email' => 'derek@world.com',
+        ]);
+    }
+
+    public function testSaveUpdateThrowsOnInsertOnlyFieldsWhenThrowingOnDisallowedFields(): void
     {
         $this->expectException(DataException::class);
         $this->expectExceptionMessage('Fields cannot be updated for model "Tests\Support\Models\UserModel": email');
 
-        $this->createModel(UserModel::class)->setInsertOnlyFields(['email'])->save([
+        $this->createModel(UserModel::class)->setInsertOnlyFields(['email'])->throwOnDisallowedFields()->save([
             'id'    => 1,
             'name'  => 'Insert Only Save',
             'email' => 'insert-only-save@example.com',
         ]);
     }
 
-    public function testSetUpdateThrowsOnInsertOnlyFields(): void
+    public function testSetUpdateDiscardsInsertOnlyFieldsByDefault(): void
+    {
+        $result = $this->createModel(UserModel::class)->setInsertOnlyFields(['email'])
+            ->where('id', 1)
+            ->set('email', 'insert-only-set@example.com')
+            ->update(null, ['name' => 'Insert Only Set']);
+
+        $this->assertTrue($result);
+        $this->seeInDatabase('user', [
+            'id'    => 1,
+            'name'  => 'Insert Only Set',
+            'email' => 'derek@world.com',
+        ]);
+    }
+
+    public function testSetUpdateThrowsOnInsertOnlyFieldsWhenThrowingOnDisallowedFields(): void
     {
         $this->expectException(DataException::class);
         $this->expectExceptionMessage('Fields cannot be updated for model "Tests\Support\Models\UserModel": email');
 
-        $this->createModel(UserModel::class)->setInsertOnlyFields(['email'])
+        $this->createModel(UserModel::class)->setInsertOnlyFields(['email'])->throwOnDisallowedFields()
             ->where('id', 1)
             ->set('email', 'insert-only-set@example.com')
             ->update(null, ['name' => 'Insert Only Set']);
     }
 
-    public function testUpdateBatchThrowsOnInsertOnlyFields(): void
+    public function testUpdateBatchDiscardsInsertOnlyFieldsByDefault(): void
+    {
+        $result = $this->createModel(UserModel::class)->setInsertOnlyFields(['email'])->updateBatch([
+            [
+                'id'    => 1,
+                'name'  => 'Insert Only Batch',
+                'email' => 'insert-only-update-batch@example.com',
+            ],
+        ], 'id');
+
+        $this->assertSame(1, $result);
+        $this->seeInDatabase('user', [
+            'id'    => 1,
+            'name'  => 'Insert Only Batch',
+            'email' => 'derek@world.com',
+        ]);
+    }
+
+    public function testUpdateBatchThrowsOnInsertOnlyFieldsWhenThrowingOnDisallowedFields(): void
     {
         $this->expectException(DataException::class);
         $this->expectExceptionMessage('Fields cannot be updated for model "Tests\Support\Models\UserModel": email');
 
-        $this->createModel(UserModel::class)->setInsertOnlyFields(['email'])->updateBatch([
+        $this->createModel(UserModel::class)->setInsertOnlyFields(['email'])->throwOnDisallowedFields()->updateBatch([
             [
                 'id'    => 1,
                 'name'  => 'Insert Only Batch',
@@ -118,29 +182,32 @@ final class InsertOnlyFieldsModelTest extends LiveModelTestCase
         ]);
     }
 
-    public function testEntityUpdateThrowsOnChangedInsertOnlyFields(): void
+    public function testEntityUpdateDiscardsChangedInsertOnlyFieldsByDefault(): void
     {
         $model = new class ($this->db) extends UserModel {
-            protected $returnType       = User::class;
-            protected $insertOnlyFields = ['email'];
+            protected $returnType             = User::class;
+            protected array $insertOnlyFields = ['email'];
         };
 
         $user = $model->find(1);
         $this->assertInstanceOf(User::class, $user);
 
         $user->email = 'insert-only-entity@example.com';
+        $user->name  = 'Insert Only Entity';
 
-        $this->expectException(DataException::class);
-        $this->expectExceptionMessage('Fields cannot be updated for model "' . $model::class . '": email');
-
-        $model->update($user->id, $user);
+        $this->assertTrue($model->update($user->id, $user));
+        $this->seeInDatabase('user', [
+            'id'    => 1,
+            'name'  => 'Insert Only Entity',
+            'email' => 'derek@world.com',
+        ]);
     }
 
     public function testEntityUpdateAllowsUnchangedInsertOnlyFields(): void
     {
         $model = new class ($this->db) extends UserModel {
-            protected $returnType       = User::class;
-            protected $insertOnlyFields = ['email'];
+            protected $returnType             = User::class;
+            protected array $insertOnlyFields = ['email'];
         };
 
         $user = $model->find(1);

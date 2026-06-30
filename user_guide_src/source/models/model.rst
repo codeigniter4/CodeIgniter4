@@ -171,8 +171,8 @@ $insertOnlyFields
 .. versionadded:: 4.8.0
 
 This array may contain fields that can be set during ``insert()`` and
-``insertBatch()`` calls, but cannot be submitted during ``update()``,
-``updateBatch()``, or update-side ``save()`` calls.
+``insertBatch()`` calls, but should be removed from ``update()``,
+``updateBatch()``, and update-side ``save()`` calls.
 
 This is useful for values that should be created once and then left unchanged
 through normal Model writes, such as public IDs, external references, or
@@ -183,8 +183,13 @@ generated slugs.
 Fields listed here must also be listed in `$allowedFields`_ when field
 protection is enabled. This is Model-level protection only. It does not create a
 database constraint, does not inspect previous database values, and does not
-intercept direct Query Builder writes. Calling ``protect(false)`` disables this
-protection.
+intercept ``replace()`` or direct Query Builder writes. Calling
+``protect(false)`` disables this protection.
+
+By default, insert-only fields are discarded from update data, the same way
+fields outside `$allowedFields`_ are discarded. When `$throwOnDisallowedFields`_
+is enabled, submitting an insert-only field during an update operation throws a
+``DataException``.
 
 You may also change this setting with the ``setInsertOnlyFields()`` method.
 

@@ -8,5 +8,5 @@ class UserModel extends Model
 {
     protected $allowedFields = ['public_id', 'name', 'email'];
 
-    protected $insertOnlyFields = ['public_id'];
+    protected array $insertOnlyFields = ['public_id'];
 }

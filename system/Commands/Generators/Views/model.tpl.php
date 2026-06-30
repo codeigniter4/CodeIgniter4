@@ -7,16 +7,16 @@ use CodeIgniter\Model;
 class {class} extends Model
 {
 <?php if (is_string($dbGroup)): ?>
-    protected $DBGroup          = '{dbGroup}';
+    protected $DBGroup                = '{dbGroup}';
 <?php endif; ?>
-    protected $table            = '{table}';
-    protected $primaryKey       = 'id';
-    protected $useAutoIncrement = true;
-    protected $returnType       = {return};
-    protected $useSoftDeletes   = false;
-    protected $protectFields    = true;
-    protected $allowedFields    = [];
-    protected $insertOnlyFields = [];
+    protected $table                  = '{table}';
+    protected $primaryKey             = 'id';
+    protected $useAutoIncrement       = true;
+    protected $returnType             = {return};
+    protected $useSoftDeletes         = false;
+    protected $protectFields          = true;
+    protected $allowedFields          = [];
+    protected array $insertOnlyFields = [];
 
     protected bool $throwOnDisallowedFields = false;
     protected bool $allowEmptyInserts = false;

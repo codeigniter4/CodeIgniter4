@@ -160,7 +160,7 @@ abstract class BaseModel
      *
      * @var list<string>
      */
-    protected $insertOnlyFields = [];
+    protected array $insertOnlyFields = [];
 
     /**
      * If true, will set created_at, and updated_at
@@ -1171,7 +1171,7 @@ abstract class BaseModel
                 // strip out updated_at values.
                 $ignoredFields = $index === null ? [] : [$index];
 
-                $this->ensureNoInsertOnlyFields($row, $ignoredFields);
+                $row = $this->doProtectInsertOnlyFieldsForUpdate($row, $ignoredFields);
                 $this->ensureNoDisallowedFields($row, $ignoredFields);
                 $row = $this->doProtectFields($row);
 
@@ -1487,17 +1487,19 @@ abstract class BaseModel
     }
 
     /**
-     * Throws when update data contains fields that may only be inserted.
+     * Removes fields from update data when they may only be inserted.
      *
      * @param row_array    $row
      * @param list<string> $ignoredFields
      *
+     * @return row_array
+     *
      * @throws DataException
      */
-    protected function ensureNoInsertOnlyFields(array $row, array $ignoredFields = []): void
+    protected function doProtectInsertOnlyFieldsForUpdate(array $row, array $ignoredFields = []): array
     {
         if (! $this->protectFields || $this->allowedFields === [] || $this->insertOnlyFields === []) {
-            return;
+            return $row;
         }
 
         $insertOnlyFields = [];
@@ -1509,12 +1511,15 @@ abstract class BaseModel
 
             if (in_array($key, $this->insertOnlyFields, true)) {
                 $insertOnlyFields[] = $key;
+                unset($row[$key]);
             }
         }
 
-        if ($insertOnlyFields !== []) {
+        if ($insertOnlyFields !== [] && $this->throwOnDisallowedFields) {
             throw DataException::forInsertOnlyFields(static::class, $insertOnlyFields);
         }
+
+        return $row;
     }
 
     /**
@@ -1551,7 +1556,7 @@ abstract class BaseModel
      */
     protected function doProtectFieldsForUpdate(array $row): array
     {
-        $this->ensureNoInsertOnlyFields($row);
+        $row = $this->doProtectInsertOnlyFieldsForUpdate($row);
         $this->ensureNoDisallowedFields($row);
 
         return $this->doProtectFields($row);

@@ -14,8 +14,8 @@ class UserModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields    = ['name', 'email'];
-    protected $insertOnlyFields = [];
+    protected $allowedFields          = ['name', 'email'];
+    protected array $insertOnlyFields = [];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
