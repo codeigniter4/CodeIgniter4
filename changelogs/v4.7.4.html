@@ -330,6 +330,21 @@ intended directory. A name explicitly passed as the second argument is not
 sanitized and remains the caller’s responsibility.
 See the <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-hhmc-q9hp-r662">Security advisory GHSA-hhmc-q9hp-r662</a>
 for more information.</p></li>
+<li><p><strong>Validation:</strong> The <code class="docutils literal notranslate"><span class="pre">is_image</span></code> and <code class="docutils literal notranslate"><span class="pre">mime_in</span></code> file upload validation rules
+now also verify non-empty client filename extensions. Previously, these rules
+classified an upload solely by its content-derived MIME type, so a file with a
+dangerous client extension (for example, a <code class="docutils literal notranslate"><span class="pre">.php</span></code> file prepended with image
+magic bytes) could pass validation while keeping its original extension on
+disk.
+See the <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-mmj4-63m4-r6h5">Security advisory GHSA-mmj4-63m4-r6h5</a>
+for more information.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">is_image</span></code> rule now rejects uploads when a non-empty client filename
+extension is not an image extension. The <code class="docutils literal notranslate"><span class="pre">mime_in</span></code> rule now rejects uploads
+when a non-empty client filename extension does not match the detected file
+content, matching the same extension/content agreement used by <code class="docutils literal notranslate"><span class="pre">ext_in</span></code>.
+Files uploaded without any extension (such as JavaScript <code class="docutils literal notranslate"><span class="pre">Blob</span></code> uploads)
+are still accepted, since the rules validate the file content.</p>
+</li>
 </ul>
 </section>
 <section id="breaking">
