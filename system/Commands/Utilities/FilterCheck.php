@@ -13,74 +13,41 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Utilities;
 
-use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Input\Argument;
 use CodeIgniter\Commands\Utilities\Routes\FilterCollector;
 
 /**
  * Check filters for a route.
  */
-class FilterCheck extends BaseCommand
+#[Command(name: 'filter:check', description: 'Check filters for a route.', group: 'CodeIgniter')]
+class FilterCheck extends AbstractCommand
 {
-    /**
-     * The group the command is lumped under
-     * when listing commands.
-     *
-     * @var string
-     */
-    protected $group = 'CodeIgniter';
-
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'filter:check';
-
-    /**
-     * the Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Check filters for a route.';
-
-    /**
-     * the Command's usage
-     *
-     * @var string
-     */
-    protected $usage = 'filter:check <HTTP method> <route>';
-
-    /**
-     * the Command's Arguments
-     *
-     * @var array<string, string>
-     */
-    protected $arguments = [
-        'method' => 'The HTTP method. GET, POST, PUT, etc.',
-        'route'  => 'The route (URI path) to check filters.',
-    ];
-
-    /**
-     * the Command's Options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [];
-
-    /**
-     * @return int exit code
-     */
-    public function run(array $params)
+    protected function configure(): void
     {
-        if (! $this->checkParams($params)) {
-            return EXIT_ERROR;
-        }
+        $this
+            ->addArgument(new Argument(
+                name: 'method',
+                description: 'The HTTP method. GET, POST, PUT, etc.',
+                required: true,
+            ))
+            ->addArgument(new Argument(
+                name: 'route',
+                description: 'The route (URI path) to check filters.',
+                required: true,
+            ));
+    }
 
-        $method = $params[0];
-        $route  = $params[1];
+    protected function execute(array $arguments, array $options): int
+    {
+        $method = $arguments['method'];
+        assert(is_string($method));
 
-        // Load Routes
+        $route = $arguments['route'];
+        assert(is_string($route));
+
         service('routes')->loadRoutes();
 
         $filterCollector = new FilterCollector();
@@ -89,14 +56,10 @@ class FilterCheck extends BaseCommand
 
         // PageNotFoundException
         if ($filters['before'] === ['<unknown>']) {
-            CLI::error(
-                "Can't find a route: " .
-                CLI::color(
-                    '"' . strtoupper($method) . ' ' . $route . '"',
-                    'black',
-                    'light_gray',
-                ),
-            );
+            CLI::error(sprintf(
+                "Can't find a route: %s",
+                CLI::color(sprintf('"%s %s"', strtoupper($method), $route), 'black', 'light_gray'),
+            ));
 
             return EXIT_ERROR;
         }
@@ -108,23 +71,6 @@ class FilterCheck extends BaseCommand
     }
 
     /**
-     * @param array<int|string, string|null> $params
-     */
-    private function checkParams(array $params): bool
-    {
-        if (! isset($params[0], $params[1])) {
-            CLI::error('You must specify a HTTP verb and a route.');
-            CLI::write('  Usage: ' . $this->usage);
-            CLI::write('Example: filter:check GET /');
-            CLI::write('         filter:check PUT products/1');
-
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * @param array{before: list<string>, after: list<string>} $filters
      */
     private function showTable(
@@ -133,47 +79,19 @@ class FilterCheck extends BaseCommand
         string $method,
         string $route,
     ): void {
-        $thead = [
-            'Method',
-            'Route',
-            'Before Filters',
-            'After Filters',
-        ];
+        $merged = $this->mergeFilters($filterCollector->getRequiredFilters(), $filters);
 
-        $required = $filterCollector->getRequiredFilters();
-
-        $coloredRequired = $this->colorItems($required);
-
-        $before = array_merge($coloredRequired['before'], $filters['before']);
-        $after  = array_merge($filters['after'], $coloredRequired['after']);
-
-        $tbody   = [];
-        $tbody[] = [
-            strtoupper($method),
-            $route,
-            implode(' ', $before),
-            implode(' ', $after),
+        $thead = ['Method', 'Route', 'Before Filters', 'After Filters'];
+        $tbody = [
+            [
+                strtoupper($method),
+                $route,
+                implode(' ', $merged['before']),
+                implode(' ', $merged['after']),
+            ],
         ];
 
         CLI::table($tbody, $thead);
-    }
-
-    /**
-     * Color all elements of the array.
-     *
-     * @param array<array-key, mixed> $array
-     *
-     * @return array<array-key, mixed>
-     */
-    private function colorItems(array $array): array
-    {
-        return array_map(function ($item): array|string {
-            if (is_array($item)) {
-                return $this->colorItems($item);
-            }
-
-            return CLI::color($item, 'yellow');
-        }, $array);
     }
 
     private function showFilterClasses(
@@ -181,19 +99,49 @@ class FilterCheck extends BaseCommand
         string $method,
         string $route,
     ): void {
-        $requiredFilterClasses = $filterCollector->getRequiredFilterClasses();
-        $filterClasses         = $filterCollector->getClasses($method, $route);
+        $merged = $this->mergeFilters(
+            $filterCollector->getRequiredFilterClasses(),
+            $filterCollector->getClasses($method, $route),
+        );
 
-        $coloredRequiredFilterClasses = $this->colorItems($requiredFilterClasses);
+        $lastPosition = array_key_last($merged);
 
-        $classList = [
-            'before' => array_merge($coloredRequiredFilterClasses['before'], $filterClasses['before']),
-            'after'  => array_merge($filterClasses['after'], $coloredRequiredFilterClasses['after']),
-        ];
-
-        foreach ($classList as $position => $classes) {
-            CLI::write(ucfirst($position) . ' Filter Classes:', 'cyan');
+        foreach ($merged as $position => $classes) {
+            CLI::write(sprintf('%s Filter Classes:', ucfirst($position)), 'cyan');
             CLI::write(implode(' → ', $classes));
+
+            if ($position !== $lastPosition) {
+                CLI::newLine();
+            }
         }
+    }
+
+    /**
+     * Merges the required filters (highlighted) with the route's filters,
+     * keeping required-before filters first and required-after filters last.
+     *
+     * @param array{before: list<string>, after: list<string>} $required
+     * @param array{before: list<string>, after: list<string>} $filters
+     *
+     * @return array{before: list<string>, after: list<string>}
+     */
+    private function mergeFilters(array $required, array $filters): array
+    {
+        return [
+            'before' => array_merge($this->highlight($required['before']), $filters['before']),
+            'after'  => array_merge($filters['after'], $this->highlight($required['after'])),
+        ];
+    }
+
+    /**
+     * Applies the highlight color to the given filter names.
+     *
+     * @param list<string> $items
+     *
+     * @return list<string>
+     */
+    private function highlight(array $items): array
+    {
+        return array_map(static fn (string $item): string => CLI::color($item, 'yellow'), $items);
     }
 }
