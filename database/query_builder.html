@@ -2553,7 +2553,8 @@ that it produces a <strong>DELETE</strong> SQL string instead of an <strong>INSE
 <p>This method may be especially useful when deleting data in a table with a composite primary key.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>SQLite3 does not support the use of <code class="docutils literal notranslate"><span class="pre">where()</span></code>.</p>
+<p>The SQLite3 driver does not support additional Query Builder WHERE
+conditions for <code class="docutils literal notranslate"><span class="pre">deleteBatch()</span></code>.</p>
 </div>
 </section>
 <section id="delete-from-a-query">

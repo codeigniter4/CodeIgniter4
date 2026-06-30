@@ -307,13 +307,21 @@
 </nav>
 <section id="security">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">SECURITY</a><a class="headerlink" href="#security" title="Link to this heading"></a></h2>
-<ul class="simple">
+<ul>
 <li><p><strong>IncomingRequest:</strong> <em>HTTPS detection via client-supplied headers</em> was fixed.
 <code class="docutils literal notranslate"><span class="pre">IncomingRequest::isSecure()</span></code> now trusts the <code class="docutils literal notranslate"><span class="pre">X-Forwarded-Proto</span></code> and
 <code class="docutils literal notranslate"><span class="pre">Front-End-Https</span></code> headers only when the request comes from a trusted proxy
 configured in <code class="docutils literal notranslate"><span class="pre">Config\App::$proxyIPs</span></code>.
 See the <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-7wmf-pw8j-mc78">Security advisory GHSA-7wmf-pw8j-mc78</a>
 for more information.</p></li>
+<li><p><strong>Query Builder:</strong> Fixed a SQL injection vulnerability in <code class="docutils literal notranslate"><span class="pre">deleteBatch()</span></code>.
+When <code class="docutils literal notranslate"><span class="pre">deleteBatch()</span></code> was used together with <code class="docutils literal notranslate"><span class="pre">where()</span></code> conditions, the
+bound values from the WHERE clause were substituted into the generated SQL
+with their escape flag ignored, so they were never escaped or quoted. The
+WHERE binds are now escaped in the same way as a regular <code class="docutils literal notranslate"><span class="pre">delete()</span></code>.</p>
+<p>See the <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-c9w5-rwh3-7pm9">Security advisory GHSA-c9w5-rwh3-7pm9</a>
+for more information.</p>
+</li>
 </ul>
 </section>
 <section id="breaking">
