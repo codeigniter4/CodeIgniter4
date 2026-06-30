@@ -21,6 +21,15 @@ SECURITY
   See the `Security advisory GHSA-7wmf-pw8j-mc78 <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-7wmf-pw8j-mc78>`_
   for more information.
 
+- **Query Builder:** Fixed a SQL injection vulnerability in ``deleteBatch()``.
+  When ``deleteBatch()`` was used together with ``where()`` conditions, the
+  bound values from the WHERE clause were substituted into the generated SQL
+  with their escape flag ignored, so they were never escaped or quoted. The
+  WHERE binds are now escaped in the same way as a regular ``delete()``.
+
+  See the `Security advisory GHSA-c9w5-rwh3-7pm9 <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-c9w5-rwh3-7pm9>`_
+  for more information.
+
 ********
 BREAKING
 ********

@@ -100,6 +100,25 @@ final class DeleteTest extends CIUnitTestCase
         $this->dontSeeInDatabase('user', ['email' => 'ahmadinejad@world.com', 'name' => 'Ahmadinejad']);
     }
 
+    public function testDeleteBatchPreventsSQLInjectionInWhere(): void
+    {
+        if ($this->db->DBDriver === 'SQLite3') {
+            $this->markTestSkipped('SQLite3 driver does not support WHERE for batch deletes.');
+        }
+
+        $data = [
+            ['userid' => 1, 'username' => 'Derek J'],
+        ];
+
+        $this->db->table('user')
+            ->setData($data, null, 'data')
+            ->onConstraint(['id' => 'userid'])
+            ->where('user.name', "nobody' OR 1=1 --")
+            ->deleteBatch();
+
+        $this->seeInDatabase('user', ['email' => 'derek@world.com', 'name' => 'Derek Jones']);
+    }
+
     public function testDeleteBatchConstraintsDate(): void
     {
         $table = 'type_test';
