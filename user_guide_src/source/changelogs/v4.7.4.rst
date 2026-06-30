@@ -11,6 +11,17 @@ Release Date: Unreleased
     :depth: 3
 
 ********
+SECURITY
+********
+
+- **IncomingRequest:** *HTTPS detection via client-supplied headers* was fixed.
+  ``IncomingRequest::isSecure()`` now trusts the ``X-Forwarded-Proto`` and
+  ``Front-End-Https`` headers only when the request comes from a trusted proxy
+  configured in ``Config\App::$proxyIPs``.
+  See the `Security advisory GHSA-7wmf-pw8j-mc78 <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-7wmf-pw8j-mc78>`_
+  for more information.
+
+********
 BREAKING
 ********
 

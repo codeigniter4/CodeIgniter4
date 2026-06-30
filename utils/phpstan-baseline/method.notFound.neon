@@ -1,4 +1,4 @@
-# total 80 errors
+# total 78 errors
 
 parameters:
     ignoreErrors:
@@ -114,7 +114,7 @@ parameters:
 
         -
             message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:isSecure\(\)\.$#'
-            count: 3
+            count: 1
             path: ../../tests/system/HTTP/IncomingRequestTest.php
 
         -
