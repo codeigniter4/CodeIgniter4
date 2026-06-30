@@ -452,6 +452,21 @@ string (i.e., <code class="docutils literal notranslate"><span class="pre">'get'
 <span class="p">}</span>
 </pre></div>
 </div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">X-Forwarded-Proto</span></code> and <code class="docutils literal notranslate"><span class="pre">Front-End-Https</span></code> headers are taken
+into account only when the request comes from a trusted proxy configured in
+<code class="docutils literal notranslate"><span class="pre">Config\App::$proxyIPs</span></code>. Otherwise, they are client-supplied and could be
+spoofed.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On dual-stack servers, a proxy’s IPv4 address may be reported as an
+IPv4-mapped IPv6 address (e.g., <code class="docutils literal notranslate"><span class="pre">::ffff:192.168.5.21</span></code>), which does not
+match an IPv4 entry such as <code class="docutils literal notranslate"><span class="pre">192.168.5.0/24</span></code>. In that case, add the
+IPv4-mapped form to <code class="docutils literal notranslate"><span class="pre">Config\App::$proxyIPs</span></code>, e.g.,
+<code class="docutils literal notranslate"><span class="pre">::ffff:192.168.5.21</span></code> or <code class="docutils literal notranslate"><span class="pre">::ffff:192.168.5.0/120</span></code>.</p>
+</div>
 </section>
 </section>
 <section id="retrieving-input">
@@ -875,6 +890,12 @@ multi-file upload, based on the filename given in the HTML file input:</p>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">X-Forwarded-Proto</span></code> and <code class="docutils literal notranslate"><span class="pre">Front-End-Https</span></code> headers
+are taken into account only when the request comes from a trusted
+proxy configured in <code class="docutils literal notranslate"><span class="pre">Config\App::$proxyIPs</span></code>.</p>
+</div>
 </dd></dl>
 
 <dl class="php method">
@@ -1188,7 +1209,7 @@ the complete App configuration for base URLs.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jun 29, 2026.
+      <span class="lastupdated">Last updated on Jun 30, 2026.
       </span></p>
   </div>
 
