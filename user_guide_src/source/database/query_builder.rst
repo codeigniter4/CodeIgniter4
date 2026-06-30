@@ -1004,11 +1004,13 @@ lock-wait modifiers:
       - No
       - No
 
-.. [1] ``NOWAIT`` requires MySQL 8.0.1+ or MariaDB 10.3.0+. CodeIgniter does
-    not check the server version before compiling the clause.
+.. [1] ``NOWAIT`` requires MySQL 8.0.1+ or MariaDB 10.3.0+ with InnoDB
+    tables. CodeIgniter does not check the server version or storage engine
+    before compiling the clause.
 
-.. [2] ``SKIP LOCKED`` requires MySQL 8.0.1+ or MariaDB 10.6.0+. CodeIgniter
-    does not check the server version before compiling the clause.
+.. [2] ``SKIP LOCKED`` requires MySQL 8.0.1+ or MariaDB 10.6.0+ with InnoDB
+    tables. CodeIgniter does not check the server version or storage engine
+    before compiling the clause.
 
 .. [3] SQLSRV approximates ``skipLocked()`` using SQL Server's
     ``READCOMMITTEDLOCK`` and ``READPAST`` table hints. It can still wait on
