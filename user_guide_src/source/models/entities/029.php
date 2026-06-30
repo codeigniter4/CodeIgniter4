@@ -12,6 +12,7 @@ class User extends Entity
 }
 
 $user = new User();
+
 $user->secret_note = 'Internal billing note';
 
 echo $user->secret_note; // Internal billing note
