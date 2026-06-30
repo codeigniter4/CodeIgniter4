@@ -1072,8 +1072,7 @@ class Forge
      */
     protected function _attributeAutoIncrement(array &$attributes, array &$field)
     {
-        if (
-            ! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true
+        if (! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true
             && str_contains(strtolower($field['type']), 'int')
         ) {
             $field['auto_increment'] = ' AUTO_INCREMENT';
@@ -1106,7 +1105,7 @@ class Forge
             $sql .= 'CONSTRAINT ' . $this->db->escapeIdentifiers(($this->primaryKeys['keyName'] === '' ?
                 'pk_' . $table :
                 $this->primaryKeys['keyName']))
-                . ' PRIMARY KEY(' . implode(', ', $this->db->escapeIdentifiers($this->primaryKeys['fields'])) . ')';
+                    . ' PRIMARY KEY(' . implode(', ', $this->db->escapeIdentifiers($this->primaryKeys['fields'])) . ')';
         }
 
         return $sql;
@@ -1210,6 +1209,10 @@ class Forge
      */
     protected function _processForeignKeys(string $table, bool $asQuery = false): array
     {
+        if ($this->foreignKeys === []) {
+            return [''];
+        }
+
         $errorNames = [];
 
         foreach ($this->foreignKeys as $fkeyInfo) {
@@ -1231,7 +1234,6 @@ class Forge
         $dbPrefix = $this->db->DBPrefix;
         $fkSuffix = $isOci8 ? '_fk' : '_foreign';
 
-        // Niezmienne fragmenty SQL przygotowane przed pętlą
         $prefixSql = $asQuery
             ? 'ALTER TABLE ' . $this->db->escapeIdentifiers($dbPrefix . $table) . ' ADD '
             : ",\n\t";
