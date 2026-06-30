@@ -54,7 +54,7 @@ final class ConstraintViolationExceptionTest extends CIUnitTestCase
     ): void {
         $exception = $db->createDatabaseException($message, $code);
 
-        $this->assertSame($expectedException, $exception::class);
+        $this->assertSame($exception::class, $expectedException);
         $this->assertInstanceOf(ConstraintViolationException::class, $exception);
         $this->assertSame($code, $exception->getDatabaseCode());
     }
