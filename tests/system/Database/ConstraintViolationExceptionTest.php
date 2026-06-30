@@ -265,7 +265,7 @@ final class ConstraintViolationExceptionTest extends CIUnitTestCase
         $this->assertNotInstanceOf(ConstraintViolationException::class, $exception);
     }
 
-    #[DataProvider('provideSqlsrvConstraintVendorCodesWithNonConstraintSqlstate')]
+    #[DataProvider('provideCreatesBaseDatabaseExceptionForSqlsrvConstraintVendorCodeWithNonConstraintSqlstate')]
     public function testCreatesBaseDatabaseExceptionForSqlsrvConstraintVendorCodeWithNonConstraintSqlstate(string $code): void
     {
         $exception = self::connection(SQLSRVConnection::class, 'SQLSRV')
@@ -278,11 +278,14 @@ final class ConstraintViolationExceptionTest extends CIUnitTestCase
     /**
      * @return iterable<string, array{string}>
      */
-    public static function provideSqlsrvConstraintVendorCodesWithNonConstraintSqlstate(): iterable
+    public static function provideCreatesBaseDatabaseExceptionForSqlsrvConstraintVendorCodeWithNonConstraintSqlstate(): iterable
     {
         yield 'unique constraint' => ['HY000/2627'];
+
         yield 'unique index' => ['HY000/2601'];
+
         yield 'not null' => ['HY000/515'];
+
         yield 'generic constraint' => ['HY000/547'];
     }
 
