@@ -1,67 +1,7 @@
-# total 1153 errors
+# total 1141 errors
 
 parameters:
     ignoreErrors:
-        -
-            message: '#^Method CodeIgniter\\CLI\\CLI\:\:isZeroOptions\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/CLI/CLI.php
-
-        -
-            message: '#^Method CodeIgniter\\CLI\\CLI\:\:printKeysAndValues\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/CLI/CLI.php
-
-        -
-            message: '#^Method CodeIgniter\\CLI\\CLI\:\:promptByKey\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/CLI/CLI.php
-
-        -
-            message: '#^Method CodeIgniter\\CLI\\CLI\:\:promptByKey\(\) has parameter \$text with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/CLI/CLI.php
-
-        -
-            message: '#^Method CodeIgniter\\CLI\\CLI\:\:promptByKey\(\) has parameter \$validation with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/CLI/CLI.php
-
-        -
-            message: '#^Method CodeIgniter\\CLI\\CLI\:\:promptByMultipleKeys\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/CLI/CLI.php
-
-        -
-            message: '#^Method CodeIgniter\\CLI\\CLI\:\:promptByMultipleKeys\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/CLI/CLI.php
-
-        -
-            message: '#^Method CodeIgniter\\CLI\\CLI\:\:prompt\(\) has parameter \$validation with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/CLI/CLI.php
-
-        -
-            message: '#^Method CodeIgniter\\CLI\\CLI\:\:table\(\) has parameter \$tbody with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/CLI/CLI.php
-
-        -
-            message: '#^Method CodeIgniter\\CLI\\CLI\:\:table\(\) has parameter \$thead with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/CLI/CLI.php
-
-        -
-            message: '#^Method CodeIgniter\\CLI\\CLI\:\:validate\(\) has parameter \$rules with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/CLI/CLI.php
-
-        -
-            message: '#^Method CodeIgniter\\CLI\\Console\:\:parseParamsForHelpOption\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/CLI/Console.php
-
         -
             message: '#^Method CodeIgniter\\CodeIgniter\:\:getPerformanceStats\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
