@@ -817,6 +817,8 @@ class URI implements Stringable
      * to clean the various parts of the query keys and values.
      *
      * @return $this
+     *
+     * @TODO Deprecated in the next major version. Use withQuery() instead for immutability.
      */
     public function setQuery(string $query)
     {
@@ -859,6 +861,8 @@ class URI implements Stringable
      * portion of the URI.
      *
      * @return $this
+     *
+     * @TODO Deprecated in the next major version. Use withQueryArray() instead for immutability.
      */
     public function setQueryArray(array $query)
     {
@@ -891,6 +895,8 @@ class URI implements Stringable
      * @param int|string|null $value
      *
      * @return $this
+     *
+     * @TODO Deprecated in the next major version. Use withQueryVar() or withQueryVars() instead for immutability.
      */
     public function addQuery(string $key, $value = null)
     {
@@ -939,6 +945,8 @@ class URI implements Stringable
      * @param string ...$params
      *
      * @return $this
+     *
+     * @TODO Deprecated in the next major version. Use withoutQueryVars() instead for immutability.
      */
     public function stripQuery(...$params)
     {
@@ -972,6 +980,8 @@ class URI implements Stringable
      * @param string ...$params
      *
      * @return $this
+     *
+     * @TODO Deprecated in the next major version. Use withOnlyQueryVars() instead for immutability.
      */
     public function keepQuery(...$params)
     {

@@ -193,6 +193,25 @@ Changing Query Values Without Mutation
 
 .. versionadded:: 4.8.0
 
+The immutable query methods provide alternatives to the older mutable methods:
+
++-----------------------+--------------------------------------------+
+| Mutable method        | Immutable alternative                      |
++=======================+============================================+
+| ``setQuery()``        | ``withQuery()``                            |
++-----------------------+--------------------------------------------+
+| ``setQueryArray()``   | ``withQueryArray()``                       |
++-----------------------+--------------------------------------------+
+| ``addQuery()``        | ``withQueryVar()`` / ``withQueryVars()``   |
++-----------------------+--------------------------------------------+
+| ``stripQuery()``      | ``withoutQueryVars()``                     |
++-----------------------+--------------------------------------------+
+| ``keepQuery()``       | ``withOnlyQueryVars()``                    |
++-----------------------+--------------------------------------------+
+
+The ``with*()`` methods return a cloned URI instance and do not modify the original URI.
+The older mutable methods change the current URI instance.
+
 You can return a new URI instance with its query variables replaced by using the
 ``withQuery()`` and ``withQueryArray()`` methods:
 
@@ -204,12 +223,10 @@ are replaced:
 
 .. literalinclude:: uri/028.php
 
-You can also return a new URI instance with query variables removed or filtered by using the
+You can return a new URI instance with query variables removed or filtered by using the
 ``withoutQueryVars()`` and ``withOnlyQueryVars()`` methods:
 
 .. literalinclude:: uri/030.php
-
-The original URI instance is not modified.
 
 Filtering Query Values
 ^^^^^^^^^^^^^^^^^^^^^^
