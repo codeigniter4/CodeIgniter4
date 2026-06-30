@@ -124,6 +124,22 @@ class CastException extends FrameworkException implements HasExitCodeInterface
     }
 
     /**
+     * Thrown when an invalid type is provided for encrypted casting.
+     */
+    public static function forInvalidEncryptedValueType(): static
+    {
+        return new static(lang('Cast.invalidEncryptedValueType'));
+    }
+
+    /**
+     * Thrown when an encrypted value is malformed.
+     */
+    public static function forInvalidEncryptedPayload(): static
+    {
+        return new static(lang('Cast.invalidEncryptedPayload'));
+    }
+
+    /**
      * Thrown when an invalid rounding mode is provided for float casting.
      */
     public static function forInvalidFloatRoundingMode(string $mode): static
