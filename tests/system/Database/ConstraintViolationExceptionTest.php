@@ -225,6 +225,13 @@ final class ConstraintViolationExceptionTest extends CIUnitTestCase
             UniqueConstraintViolationException::class,
         ];
 
+        yield 'SQLSRV foreign key' => [
+            self::connection(SQLSRVConnection::class, 'SQLSRV'),
+            '23000/547',
+            'The INSERT statement conflicted with the FOREIGN KEY constraint.',
+            ForeignKeyConstraintViolationException::class,
+        ];
+
         yield 'SQLSRV generic constraint' => [
             self::connection(SQLSRVConnection::class, 'SQLSRV'),
             '23000/547',
