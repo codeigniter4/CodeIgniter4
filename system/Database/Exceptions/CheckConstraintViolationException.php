@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\Exceptions;
 
 /**
- * Thrown when a unique constraint is violated.
+ * Thrown when a CHECK constraint is violated.
  */
-class UniqueConstraintViolationException extends ConstraintViolationException
+class CheckConstraintViolationException extends ConstraintViolationException
 {
 }

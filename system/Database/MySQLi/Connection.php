@@ -107,6 +107,33 @@ class Connection extends BaseConnection
     }
 
     /**
+     * Checks whether the native database error represents a foreign key constraint violation.
+     */
+    protected function isForeignKeyConstraintViolation(int|string $code, string $message): bool
+    {
+        // ER_ROW_IS_REFERENCED_2, ER_NO_REFERENCED_ROW_2.
+        return in_array($code, [1451, 1452], true);
+    }
+
+    /**
+     * Checks whether the native database error represents a NOT NULL constraint violation.
+     */
+    protected function isNotNullConstraintViolation(int|string $code, string $message): bool
+    {
+        // ER_BAD_NULL_ERROR: column cannot be null.
+        return $code === 1048;
+    }
+
+    /**
+     * Checks whether the native database error represents a CHECK constraint violation.
+     */
+    protected function isCheckConstraintViolation(int|string $code, string $message): bool
+    {
+        // ER_CHECK_CONSTRAINT_VIOLATED: check constraint is violated.
+        return $code === 3819;
+    }
+
+    /**
      * Checks whether the native database code represents a retryable transaction failure.
      */
     protected function isRetryableTransactionErrorCode(int|string $code): bool

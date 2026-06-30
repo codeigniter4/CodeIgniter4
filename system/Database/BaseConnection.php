@@ -15,7 +15,11 @@ namespace CodeIgniter\Database;
 
 use BackedEnum;
 use Closure;
+use CodeIgniter\Database\Exceptions\CheckConstraintViolationException;
+use CodeIgniter\Database\Exceptions\ConstraintViolationException;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Exceptions\ForeignKeyConstraintViolationException;
+use CodeIgniter\Database\Exceptions\NotNullConstraintViolationException;
 use CodeIgniter\Database\Exceptions\RetryableTransactionException;
 use CodeIgniter\Database\Exceptions\UniqueConstraintViolationException;
 use CodeIgniter\Events\Events;
@@ -2232,6 +2236,38 @@ abstract class BaseConnection implements ConnectionInterface
     }
 
     /**
+     * Checks whether the native database error represents a foreign key constraint violation.
+     */
+    protected function isForeignKeyConstraintViolation(int|string $code, string $message): bool
+    {
+        return false;
+    }
+
+    /**
+     * Checks whether the native database error represents a NOT NULL constraint violation.
+     */
+    protected function isNotNullConstraintViolation(int|string $code, string $message): bool
+    {
+        return false;
+    }
+
+    /**
+     * Checks whether the native database error represents a CHECK constraint violation.
+     */
+    protected function isCheckConstraintViolation(int|string $code, string $message): bool
+    {
+        return false;
+    }
+
+    /**
+     * Checks whether the native database error represents a constraint violation.
+     */
+    protected function isConstraintViolation(int|string $code, string $message): bool
+    {
+        return false;
+    }
+
+    /**
      * Checks whether the native database code represents a retryable transaction failure.
      */
     protected function isRetryableTransactionErrorCode(int|string $code): bool
@@ -2251,6 +2287,22 @@ abstract class BaseConnection implements ConnectionInterface
     ): DatabaseException {
         if ($this->isUniqueConstraintViolation($code, $message)) {
             return new UniqueConstraintViolationException($message, $code, $previous);
+        }
+
+        if ($this->isForeignKeyConstraintViolation($code, $message)) {
+            return new ForeignKeyConstraintViolationException($message, $code, $previous);
+        }
+
+        if ($this->isNotNullConstraintViolation($code, $message)) {
+            return new NotNullConstraintViolationException($message, $code, $previous);
+        }
+
+        if ($this->isCheckConstraintViolation($code, $message)) {
+            return new CheckConstraintViolationException($message, $code, $previous);
+        }
+
+        if ($this->isConstraintViolation($code, $message)) {
+            return new ConstraintViolationException($message, $code, $previous);
         }
 
         if ($this->isRetryableTransactionErrorCode($code)) {

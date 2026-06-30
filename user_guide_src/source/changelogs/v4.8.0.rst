@@ -232,9 +232,10 @@ Database
 ========
 
 - Added ``afterCommit()`` and ``afterRollback()`` transaction callbacks to database connections. These callbacks run after the outermost transaction commits or rolls back. See :ref:`transactions-transaction-callbacks`.
+- Added ``ConstraintViolationException`` with ``UniqueConstraintViolationException``, ``ForeignKeyConstraintViolationException``, ``NotNullConstraintViolationException``, and ``CheckConstraintViolationException`` subclasses for typed database integrity errors. See :ref:`database-constraint-violation-exceptions`.
 - Added ``inTransaction()`` to database connections to check whether the connection is inside an active CodeIgniter-managed transaction. See :ref:`transactions-checking-transaction-state`.
 - Added support for PHP ``BackedEnum`` values in database escaping, query bindings, and Query Builder bound values.
-- Prepared query execution failures now throw or store typed database exceptions such as ``UniqueConstraintViolationException`` and ``RetryableTransactionException`` when applicable, matching normal query failures.
+- Prepared query execution failures now throw or store typed database exceptions such as ``ConstraintViolationException`` and ``RetryableTransactionException`` when applicable, matching normal query failures.
 - Added ``RetryableTransactionException`` for driver-specific retryable transaction failures such as deadlocks and serialization failures. See :ref:`transactions-retryable-exceptions`.
 - Added the ``transaction()`` method to database connections to run a callback inside a transaction, with optional retry attempts for retryable transaction failures and scoped ``transException`` and ``resetTransStatus`` options. See :ref:`transactions-closure`.
 - Added ``trustServerCertificate`` option to ``SQLSRV`` database connections in ``Config\Database``. Set it to ``true`` to trust the server certificate without CA validation when using encrypted connections.
@@ -261,7 +262,6 @@ Others
 ------
 
 - Added new ``timezone`` option to connection array in ``Config\Database`` config. This ensures consistent timestamps between model operations and database functions like ``NOW()``. Supported drivers: **MySQLi**, **Postgre**, and **OCI8**. See :ref:`database-config-timezone` for details.
-- Added :php:class:`UniqueConstraintViolationException <CodeIgniter\\Database\\Exceptions\\UniqueConstraintViolationException>` which extends ``DatabaseException`` and is thrown on duplicate key (unique constraint) violations across all database drivers. See :ref:`database-unique-constraint-violation`.
 - Added ``$db->getLastException()`` which returns the typed exception even when ``DBDebug`` is ``false``. See :ref:`database-get-last-exception`.
 - Added ``DatabaseException::getDatabaseCode()`` returning the native driver error code as ``int|string``; ``getCode()`` is constrained to ``int`` by PHP's ``Throwable`` interface and cannot carry string SQLSTATE codes.
 

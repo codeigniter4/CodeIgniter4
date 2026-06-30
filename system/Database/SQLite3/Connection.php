@@ -79,6 +79,38 @@ class Connection extends BaseConnection
     }
 
     /**
+     * Checks whether the native database error represents a foreign key constraint violation.
+     */
+    protected function isForeignKeyConstraintViolation(int|string $code, string $message): bool
+    {
+        return str_contains($message, 'FOREIGN KEY constraint failed');
+    }
+
+    /**
+     * Checks whether the native database error represents a NOT NULL constraint violation.
+     */
+    protected function isNotNullConstraintViolation(int|string $code, string $message): bool
+    {
+        return str_contains($message, 'NOT NULL constraint failed');
+    }
+
+    /**
+     * Checks whether the native database error represents a CHECK constraint violation.
+     */
+    protected function isCheckConstraintViolation(int|string $code, string $message): bool
+    {
+        return str_contains($message, 'CHECK constraint failed');
+    }
+
+    /**
+     * Checks whether the native database error represents a constraint violation.
+     */
+    protected function isConstraintViolation(int|string $code, string $message): bool
+    {
+        return $code === 19;
+    }
+
+    /**
      * Checks whether the native database code represents a retryable transaction failure.
      */
     protected function isRetryableTransactionErrorCode(int|string $code): bool
