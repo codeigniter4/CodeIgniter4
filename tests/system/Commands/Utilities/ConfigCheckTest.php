@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Utilities;
 
-use Closure;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
@@ -66,38 +65,20 @@ final class ConfigCheckTest extends CIUnitTestCase
         CLI::reset();
     }
 
-    public function testCommandConfigCheckWithNoArgumentPassed(): void
-    {
-        command('config:check');
-
-        $this->assertSame(
-            <<<'EOF'
-
-                You must specify a Config classname.
-                  Usage: config:check <classname>
-                Example: config:check App
-                         config:check 'CodeIgniter\Shield\Config\Auth'
-
-                EOF,
-            $this->getStreamFilterBuffer(),
-        );
-    }
-
     public function testCommandConfigCheckNonexistentClass(): void
     {
         command('config:check Nonexistent');
 
         $this->assertSame(
-            "\nNo such Config class: Nonexistent\n",
+            "\nConfig class \"Nonexistent\" not found.\n",
             $this->getStreamFilterBuffer(),
         );
     }
 
     public function testConfigCheckWithKintEnabledUsesKintD(): void
     {
-        /** @var Closure(mixed...): string */
         $command = self::getPrivateMethodInvoker(
-            new ConfigCheck(service('logger'), service('commands')),
+            new ConfigCheck(service('commands')),
             'getKintD',
         );
 
@@ -105,15 +86,14 @@ final class ConfigCheckTest extends CIUnitTestCase
 
         $this->assertSame(
             "\n" . $command(config('App')) . "\n",
-            preg_replace('/\s+Config Caching: \S+/', '', $this->getStreamFilterBuffer()),
+            preg_replace('/\s+Config caching: \S+/', '', $this->getStreamFilterBuffer()),
         );
     }
 
     public function testConfigCheckWithKintDisabledUsesVarDump(): void
     {
-        /** @var Closure(mixed...): string */
         $command = self::getPrivateMethodInvoker(
-            new ConfigCheck(service('logger'), service('commands')),
+            new ConfigCheck(service('commands')),
             'getVarDump',
         );
 
@@ -123,7 +103,7 @@ final class ConfigCheckTest extends CIUnitTestCase
 
             $this->assertSame(
                 "\n" . $command(config('App')),
-                preg_replace('/\s+Config Caching: \S+/', '', $this->getStreamFilterBuffer()),
+                preg_replace('/\s+Config caching: \S+/', '', $this->getStreamFilterBuffer()),
             );
         } finally {
             Kint::$enabled_mode = true;

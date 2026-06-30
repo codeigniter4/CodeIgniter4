@@ -14,110 +14,67 @@ declare(strict_types=1);
 namespace CodeIgniter\Commands\Utilities;
 
 use CodeIgniter\Cache\FactoriesCache;
-use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Input\Argument;
 use CodeIgniter\Config\BaseConfig;
 use Config\Optimize;
 use Kint\Kint;
 
 /**
  * Check the Config values.
- *
- * @see \CodeIgniter\Commands\Utilities\ConfigCheckTest
  */
-final class ConfigCheck extends BaseCommand
+#[Command(name: 'config:check', description: 'Check your config values.', group: 'CodeIgniter')]
+class ConfigCheck extends AbstractCommand
 {
-    /**
-     * The group the command is lumped under
-     * when listing commands.
-     *
-     * @var string
-     */
-    protected $group = 'CodeIgniter';
-
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'config:check';
-
-    /**
-     * The Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Check your Config values.';
-
-    /**
-     * The Command's usage
-     *
-     * @var string
-     */
-    protected $usage = 'config:check <classname>';
-
-    /**
-     * The Command's arguments
-     *
-     * @var array<string, string>
-     */
-    protected $arguments = [
-        'classname' => 'The config classname to check. Short classname or FQCN.',
-    ];
-
-    /**
-     * The Command's options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [];
-
-    /**
-     * @return int
-     */
-    public function run(array $params)
+    protected function configure(): void
     {
-        if (! isset($params[0])) {
-            CLI::error('You must specify a Config classname.');
-            CLI::write('  Usage: ' . $this->usage);
-            CLI::write('Example: config:check App');
-            CLI::write('         config:check \'CodeIgniter\Shield\Config\Auth\'');
+        $this->addArgument(new Argument(
+            name: 'class_name',
+            description: 'The config class to check. Short name or FQCN.',
+            required: true,
+        ));
+    }
 
-            return EXIT_ERROR;
-        }
-
+    protected function execute(array $arguments, array $options): int
+    {
         /** @var class-string<BaseConfig> $class */
-        $class = $params[0];
+        $class = $arguments['class_name'];
 
-        // Load Config cache if it is enabled.
-        $configCacheEnabled = class_exists(Optimize::class)
-            && (new Optimize())->configCacheEnabled;
+        $configCacheEnabled = class_exists(Optimize::class) && (new Optimize())->configCacheEnabled;
+
         if ($configCacheEnabled) {
-            $factoriesCache = new FactoriesCache();
-            $factoriesCache->load('config');
+            (new FactoriesCache())->load('config');
         }
 
         $config = config($class);
 
         if ($config === null) {
-            CLI::error('No such Config class: ' . $class);
+            CLI::error(sprintf('Config class "%s" not found.', $class));
 
             return EXIT_ERROR;
         }
 
-        if (defined('KINT_DIR') && Kint::$enabled_mode !== false) {
-            CLI::write($this->getKintD($config));
-        } else {
-            CLI::write(
-                CLI::color($this->getVarDump($config), 'cyan'),
-            );
-        }
+        CLI::write($this->getDump($config));
 
         CLI::newLine();
-        $state = CLI::color($configCacheEnabled ? 'Enabled' : 'Disabled', 'green');
-        CLI::write('Config Caching: ' . $state);
+        $state = CLI::color($configCacheEnabled ? 'enabled' : 'disabled', 'green');
+        CLI::write(sprintf('Config caching: %s', $state));
 
         return EXIT_SUCCESS;
+    }
+
+    /**
+     * Renders the config object using Kint when available, otherwise var_dump().
+     */
+    private function getDump(object $config): string
+    {
+        if (defined('KINT_DIR') && Kint::$enabled_mode !== false) {
+            return $this->getKintD($config);
+        }
+
+        return CLI::color($this->getVarDump($config), 'cyan');
     }
 
     /**
@@ -129,11 +86,7 @@ final class ConfigCheck extends BaseCommand
         d($config);
         $output = ob_get_clean();
 
-        $output = trim($output);
-
-        $lines = explode("\n", $output);
-        array_splice($lines, 0, 3);
-        array_splice($lines, -3);
+        $lines = array_slice(explode("\n", trim($output)), 3, -3);
 
         return implode("\n", $lines);
     }
