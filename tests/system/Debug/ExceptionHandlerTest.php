@@ -127,8 +127,9 @@ final class ExceptionHandlerTest extends CIUnitTestCase
     {
         $exception = $this->createExceptionWithSensitiveTraceArgument();
 
-        $_COOKIE['debug_cookie'] = 'cookie-secret';
-        $_POST['debug_post']     = 'post-secret';
+        service('superglobals')
+            ->setCookie('debug_cookie', 'cookie-secret')
+            ->setPost('debug_post', 'post-secret');
 
         try {
             $report = $this->extractCopyableErrorReport($this->renderHtmlException($exception));
@@ -139,7 +140,7 @@ final class ExceptionHandlerTest extends CIUnitTestCase
             $this->assertStringNotContainsString('$_COOKIE', $report);
             $this->assertStringNotContainsString('$_POST', $report);
         } finally {
-            unset($_COOKIE['debug_cookie'], $_POST['debug_post']);
+            service('superglobals')->unsetCookie('debug_cookie')->unsetPost('debug_post');
         }
     }
 
