@@ -134,6 +134,33 @@ final class ModelGeneratorTest extends CIUnitTestCase
         rmdir(dirname($entity));
     }
 
+    public function testGenerateModelWithSubNamespaceAndReturnEntity(): void
+    {
+        command('make:model admin/class --return entity');
+
+        $model  = APPPATH . 'Models/Admin/Class.php';
+        $entity = APPPATH . 'Entities/Admin/Class.php';
+
+        $this->assertFileExists($model);
+        $this->assertFileExists($entity);
+
+        if (is_file($model)) {
+            unlink($model);
+        }
+        $modelDir = dirname($model);
+        if (is_dir($modelDir)) {
+            rmdir($modelDir);
+        }
+
+        if (is_file($entity)) {
+            unlink($entity);
+        }
+        $entityDir = dirname($entity);
+        if (is_dir($entityDir)) {
+            rmdir($entityDir);
+        }
+    }
+
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/5050
      */

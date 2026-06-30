@@ -31,11 +31,20 @@ Bugs Fixed
 **********
 
 - **API:** Fixed a bug in Transformers where the root request's ``fields`` and ``include`` query parameters leaked into nested transformers created inside ``include*()`` methods, causing incorrect field filtering, unexpected includes, or infinite recursion.
+- **Commands:** Fixed a bug where ``make:model --return entity`` did not preserve sub-namespaces when generating the related Entity class.
+- **Common:** Fixed a bug in ``env()`` where a ``TypeError`` could be thrown when non-string values were passed.
+- **Common:** Fixed ``esc()`` to propagate encoding correctly and prevent reference leaks.
 - **Commands:** Fixed a bug where ``spark lang:find`` treated translation keys already provided by the framework or another namespace (such as ``Errors.*`` in ``system/Language``) as new, listing them under ``--show-new`` and writing untranslated placeholders into ``app/Language`` that overrode the existing translations.
+- **Config:** Fixed a bug where ``BaseService::injectMock`` did not apply ``strtolower`` consistently, causing inconsistent Service and Mock registration and resolution.
 - **Database:** Fixed a bug where ``updateBatch()`` could be called after Query Builder ``where()`` conditions, even though it's not supported. In this situation, now the ``DatabaseException`` is thrown.
+- **Encryption:** Fixed bugs in ``SodiumHandler`` where runtime ``blockSize`` overrides without ``key`` were handled incorrectly, invalid key lengths could leak native Sodium errors, and mismatched decrypt ``blockSize`` values could throw ``SodiumException`` instead of ``EncryptionException``.
+- **Filters:** Fixed a bug in ``InvalidChars`` filter where invalid UTF-8 or control characters in array keys were not checked.
 - **HTTP:** Fixed a bug where the User Agent library reported Safari's WebKit version instead of the browser version from the ``Version`` token.
 - **Model:** Fixed a bug in ``Model::objectToRawArray()`` where the ``$recursive`` parameter was ignored.
+- **Security:** Fixed a bug where ``CheckPhpIni`` could raise a type error when ``ini_get_all()`` returned ``null`` for a configured directive value.
+- **Session:** Fixed a bug in ``RedisHandler`` where the configured ``$lockMaxRetries`` and ``$lockRetryInterval`` values were not respected when acquiring session locks.
 - **Testing:** Fixed a bug where using ``MockInputOutput`` within a test that also uses ``StreamFilterTrait`` tore down the trait's stream filters, so CLI output produced after the ``MockInputOutput`` interaction (such as in ``tearDown()``) was no longer captured and leaked to the console.
+- **Validation:** Fixed bugs in the ``required_without`` rule logic where using array dot notation caused early exits ignoring subsequent fields and triggered an ``Undefined array key`` warning for missing keys.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_

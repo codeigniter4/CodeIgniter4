@@ -1138,6 +1138,10 @@ class BaseBuilder
             $keyValue = $key;
         }
 
+        if ($keyValue === []) {
+            return $this;
+        }
+
         // If the escape value was not set will base it on the global setting
         if (! is_bool($escape)) {
             $escape = $this->db->protectIdentifiers;
@@ -1615,6 +1619,10 @@ class BaseBuilder
         }
 
         $keyValue = is_array($field) ? $field : [$field => $match];
+
+        if ($keyValue === []) {
+            return $this;
+        }
 
         foreach ($keyValue as $k => $v) {
             if ($insensitiveSearch) {
@@ -3396,7 +3404,7 @@ class BaseBuilder
     /**
      * Compiles a delete string and runs the query
      *
-     * @param array|RawSql|string $where
+     * @param array<int|string, mixed>|RawSql|string $where
      *
      * @return bool|string Returns a SQL string if in test mode.
      *
@@ -3718,7 +3726,7 @@ class BaseBuilder
      * Generates a query string based on which functions were used.
      * Should not be called directly.
      *
-     * @param mixed $selectOverride
+     * @param false|string $selectOverride
      */
     protected function compileSelect($selectOverride = false): string
     {

@@ -22,7 +22,7 @@ if (! function_exists('dot_array_search')) {
      *
      * @param array<array-key, mixed>|object $array
      *
-     * @return array<array-key, mixed>|bool|int|object|string|null
+     * @return mixed
      */
     function dot_array_search(string $index, array|object $array)
     {
@@ -102,7 +102,7 @@ if (! function_exists('array_deep_search')) {
      *
      * @param int|string $key
      *
-     * @return array|bool|float|int|object|string|null
+     * @return mixed
      */
     function array_deep_search($key, array $array)
     {
@@ -111,8 +111,12 @@ if (! function_exists('array_deep_search')) {
         }
 
         foreach ($array as $value) {
-            if (is_array($value) && ($result = array_deep_search($key, $value))) {
-                return $result;
+            if (is_array($value)) {
+                $result = array_deep_search($key, $value);
+
+                if ($result !== null) {
+                    return $result;
+                }
             }
         }
 

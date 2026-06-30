@@ -41,7 +41,7 @@ final class FormHelperTest extends CIUnitTestCase
 
         parent::setUp();
 
-        $_POST = $_GET = [];
+        service('superglobals')->setPostArray([])->setGetArray([]);
 
         CodeIgniterServices::injectMock('superglobals', new Superglobals());
 

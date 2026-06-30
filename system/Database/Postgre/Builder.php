@@ -285,7 +285,7 @@ class Builder extends BaseBuilder
     /**
      * Compiles a delete string and runs the query
      *
-     * @param mixed $where
+     * @param array<int|string, mixed>|RawSql|string $where
      *
      * @return bool|string
      *

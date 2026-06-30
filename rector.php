@@ -22,6 +22,7 @@ use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsPar
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\CodingStyle\Rector\FuncCall\VersionCompareFuncCallToConstantRector;
 use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
 use Rector\DeadCode\Rector\MethodCall\RemoveNullArgOnNullDefaultParamRector;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
@@ -34,6 +35,7 @@ use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
 use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
 use Rector\PHPUnit\CodeQuality\Rector\StmtsAwareInterface\DeclareStrictTypesTestsRector;
+use Rector\PostRector\Rector\UnusedImportRemovingPostRector;
 use Rector\Privatization\Rector\Class_\FinalizeTestCaseClassRector;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
 use Rector\Renaming\Rector\ConstFetch\RenameConstantRector;
@@ -73,7 +75,7 @@ return RectorConfig::configure()
         __DIR__ . '/phpstan-bootstrap.php',
     ])
     ->withPHPStanConfigs([
-        __DIR__ . '/phpstan.neon.dist',
+        __DIR__ . '/phpstan.dist.neon',
         __DIR__ . '/vendor/codeigniter/phpstan-codeigniter/extension.neon',
         __DIR__ . '/vendor/phpstan/phpstan-strict-rules/rules.neon',
         __DIR__ . '/vendor/shipmonk/phpstan-baseline-per-identifier/extension.neon',
@@ -92,8 +94,11 @@ return RectorConfig::configure()
 
         RemoveUnusedPrivateMethodRector::class => [
             // private method called via getPrivateMethodInvoker
-            __DIR__ . '/tests/system/Test/ReflectionHelperTest.php',
             __DIR__ . '/tests/_support/Test/TestForReflectionHelper.php',
+        ],
+
+        RemoveUnusedConstructorParamRector::class => [
+            __DIR__ . '/system/HTTP/Response.php',
         ],
 
         // Exclude test file because `is_cli()` is mocked and Rector might remove needed parameters.
@@ -111,10 +116,7 @@ return RectorConfig::configure()
             __DIR__ . '/app',
             __DIR__ . '/system/CodeIgniter.php',
             __DIR__ . '/system/Config/BaseConfig.php',
-            __DIR__ . '/system/Commands/Generators/Views',
-            __DIR__ . '/system/Pager/Views',
             __DIR__ . '/system/Test/ControllerTestTrait.php',
-            __DIR__ . '/system/Validation/Views',
             __DIR__ . '/system/View/Parser.php',
             __DIR__ . '/tests/system/Debug/ExceptionsTest.php',
         ],
@@ -137,10 +139,12 @@ return RectorConfig::configure()
             __DIR__ . '/system/HTTP/CURLRequest.php',
             __DIR__ . '/system/HTTP/DownloadResponse.php',
             __DIR__ . '/system/HTTP/IncomingRequest.php',
+            __DIR__ . '/system/Security/Security.php',
             __DIR__ . '/system/Session/Session.php',
         ],
 
         ReturnNeverTypeRector::class => [
+            __DIR__ . '/system/CodeIgniter.php',
             __DIR__ . '/system/Database/MySQLi/Utils.php',
             __DIR__ . '/system/Database/OCI8/Utils.php',
             __DIR__ . '/system/Database/Postgre/Utils.php',
@@ -167,9 +171,14 @@ return RectorConfig::configure()
             __DIR__ . '/tests/system/Database',
             __DIR__ . '/tests/system/Models',
         ],
+
+        UnusedImportRemovingPostRector::class => [
+            // buggy on auto import removed
+            __DIR__ . '/system/HTTP/Response.php',
+        ],
     ])
     // auto import fully qualified class names
-    ->withImportNames(removeUnusedImports: true)
+    ->withImportNames()
     ->withRules([
         DeclareStrictTypesRector::class,
         UnderscoreToCamelCaseVariableNameRector::class,
@@ -198,4 +207,5 @@ return RectorConfig::configure()
     ->withConfiguredRule(RenameConstantRector::class, [
         'FILTER_DEFAULT' => 'FILTER_UNSAFE_RAW',
     ])
-    ->withCodeQualityLevel(61);
+    ->withCodeQualityLevel(61)
+    ->reportUnusedSkips();

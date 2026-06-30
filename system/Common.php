@@ -398,17 +398,23 @@ if (! function_exists('env')) {
      * retrieving values set from the .env file for
      * use in config files.
      *
-     * @param array<int|string, mixed>|bool|float|int|object|string|null $default
+     * @param mixed $default
      *
-     * @return array<int|string, mixed>|bool|float|int|object|string|null
+     * @return mixed
      */
     function env(string $key, $default = null)
     {
-        $value = $_ENV[$key] ?? $_SERVER[$key] ?? getenv($key);
+        $value = $_ENV[$key] ?? $_SERVER[$key] ?? getenv($key); // @phpstan-ignore codeigniter.superglobalsOffsetAccess (reads live $_SERVER, not the snapshot service)
 
         // Not found? Return the default value
         if ($value === false) {
             return $default;
+        }
+
+        // Non-string values (e.g. $_SERVER['argc'] is int, $_SERVER['argv'] is array in CLI)
+        // must be returned as-is to avoid TypeError from strtolower().
+        if (! is_string($value)) {
+            return $value;
         }
 
         // Handle any boolean values
@@ -454,8 +460,10 @@ if (! function_exists('esc')) {
 
         if (is_array($data)) {
             foreach ($data as &$value) {
-                $value = esc($value, $context);
+                $value = esc($value, $context, $encoding);
             }
+
+            return $data;
         }
 
         if (is_string($data)) {
@@ -465,16 +473,14 @@ if (! function_exists('esc')) {
 
             $method = $context === 'attr' ? 'escapeHtmlAttr' : 'escape' . ucfirst($context);
 
-            static $escaper;
-            if (! $escaper) {
-                $escaper = new Escaper($encoding);
+            static $escapers = [];
+            $cacheKey        = strtolower($encoding ?? 'utf-8');
+
+            if (! isset($escapers[$cacheKey])) {
+                $escapers[$cacheKey] = new Escaper($encoding);
             }
 
-            if ($encoding !== null && $escaper->getEncoding() !== $encoding) {
-                $escaper = new Escaper($encoding);
-            }
-
-            $data = $escaper->{$method}($data);
+            $data = $escapers[$cacheKey]->{$method}($data);
         }
 
         return $data;
@@ -686,7 +692,7 @@ if (! function_exists('is_cli')) {
 
         // PHP_SAPI could be 'cgi-fcgi', 'fpm-fcgi'.
         // See https://github.com/codeigniter4/CodeIgniter4/pull/5393
-        return ! isset($_SERVER['REMOTE_ADDR']) && ! isset($_SERVER['REQUEST_METHOD']);
+        return ! isset($_SERVER['REMOTE_ADDR']) && ! isset($_SERVER['REQUEST_METHOD']); // @phpstan-ignore codeigniter.superglobalsOffsetAccess (reads live $_SERVER, not the snapshot service), codeigniter.superglobalsOffsetAccess (reads live $_SERVER, not the snapshot service)
     }
 }
 
@@ -1069,7 +1075,7 @@ if (! function_exists('service')) {
      *  - $timer = service('timer')
      *  - $timer = \CodeIgniter\Config\Services::timer();
      *
-     * @param array|bool|float|int|object|string|null ...$params
+     * @param mixed ...$params
      */
     function service(string $name, ...$params): ?object
     {
@@ -1085,7 +1091,7 @@ if (! function_exists('single_service')) {
     /**
      * Always returns a new instance of the class.
      *
-     * @param array|bool|float|int|object|string|null ...$params
+     * @param mixed ...$params
      */
     function single_service(string $name, ...$params): ?object
     {

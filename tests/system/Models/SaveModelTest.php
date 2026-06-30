@@ -167,9 +167,9 @@ final class SaveModelTest extends LiveModelTestCase
             'created_at'  => time(),
         ]);
 
-        $this->createModel(EntityModel::class);
+        $model = $this->createModel(EntityModel::class);
 
-        $job = $this->model->select('id, name')->where('name', 'Rocket Scientist')->first();
+        $job = $model->select('id, name')->where('name', 'Rocket Scientist')->first();
         $this->assertNull($job->description);
         $this->assertSame('Rocket Scientist', $job->name);
 
@@ -181,7 +181,7 @@ final class SaveModelTest extends LiveModelTestCase
             'name' => 'Rocket Scientist',
         ]);
 
-        $job = $this->model->select('id, name, description')->where('name', 'Rocket Scientist')->first();
+        $job = $model->select('id, name, description')->where('name', 'Rocket Scientist')->first();
         $this->assertSame('Some guitar description', $job->description);
     }
 

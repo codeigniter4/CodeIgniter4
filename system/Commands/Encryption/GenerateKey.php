@@ -133,7 +133,8 @@ class GenerateKey extends AbstractCommand
 
         // force DotEnv to reload the new env vars
         putenv('encryption.key');
-        unset($_ENV['encryption.key'], $_SERVER['encryption.key']);
+        unset($_ENV['encryption.key']);
+        service('superglobals')->unsetServer('encryption.key');
         $dotenv = new DotEnv((new Paths())->envDirectory ?? ROOTPATH); // @phpstan-ignore nullCoalesce.property
         $dotenv->load();
 

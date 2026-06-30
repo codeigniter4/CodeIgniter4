@@ -19,6 +19,7 @@ use Tests\Support\Entity\User;
 use Tests\Support\Models\UserTimestampModel;
 
 /**
+ * @property-read UserTimestampModel $model
  * @internal
  */
 #[Group('DatabaseLive')]
@@ -98,7 +99,7 @@ final class TimestampModelTest extends LiveModelTestCase
             $expected .= '.000';
         }
 
-        $this->assertSame($expected, $user['created_at']); // @phpstan-ignore offsetAccess.notFound
+        $this->assertSame($expected, $user['created_at']);
         $this->assertSame($expected, $user['updated_at']);
     }
 
@@ -123,7 +124,7 @@ final class TimestampModelTest extends LiveModelTestCase
             $expected .= '.000';
         }
 
-        $this->assertSame($expected, $user['created_at']); // @phpstan-ignore offsetAccess.notFound
+        $this->assertSame($expected, $user['created_at']);
         $this->assertSame($expected, $user['updated_at']);
     }
 
@@ -143,7 +144,7 @@ final class TimestampModelTest extends LiveModelTestCase
         $user = $this->model->find($id);
 
         $user['country'] = 'CA';
-        $this->model->update($user['id'], $user); // @phpstan-ignore offsetAccess.notFound
+        $this->model->update($user['id'], $user);
 
         $user = $this->model->find($id);
 
@@ -153,7 +154,7 @@ final class TimestampModelTest extends LiveModelTestCase
             $expected .= '.000';
         }
 
-        $this->assertSame($expected, $user['created_at']); // @phpstan-ignore offsetAccess.notFound
+        $this->assertSame($expected, $user['created_at']);
         $this->assertSame($expected, $user['updated_at']);
     }
 
@@ -170,14 +171,13 @@ final class TimestampModelTest extends LiveModelTestCase
         ];
         $id = $this->doNotAllowDatesPrepareOneRecord($data);
         $this->setPrivateProperty($this->model, 'returnType', User::class);
-        $this->setPrivateProperty($this->model, 'tempReturnType', User::class);
 
-        $user = $this->model->find($id);
+        $user = $this->model->asObject(User::class)->find($id);
 
         $user->country = 'CA';
         $this->model->update($user->id, $user);
 
-        $user = $this->model->find($id);
+        $user = $this->model->asObject(User::class)->find($id);
 
         $this->assertSame('2023-11-25 12:00:00', (string) $user->created_at);
         $this->assertSame('2023-11-25 12:00:00', (string) $user->updated_at);
@@ -208,7 +208,7 @@ final class TimestampModelTest extends LiveModelTestCase
             $expected .= '.000';
         }
 
-        $this->assertSame($expected, $user['created_at']); // @phpstan-ignore offsetAccess.notFound
+        $this->assertSame($expected, $user['created_at']);
         $this->assertSame($expected, $user['updated_at']);
     }
 
@@ -237,7 +237,7 @@ final class TimestampModelTest extends LiveModelTestCase
             $expected .= '.000';
         }
 
-        $this->assertSame($expected, $user['created_at']); // @phpstan-ignore offsetAccess.notFound
+        $this->assertSame($expected, $user['created_at']);
         $this->assertSame($expected, $user['updated_at']);
     }
 
@@ -261,7 +261,7 @@ final class TimestampModelTest extends LiveModelTestCase
         $user = $this->model->find($id);
 
         $user['country'] = 'CA';
-        $this->model->update($user['id'], $user); // @phpstan-ignore offsetAccess.notFound
+        $this->model->update($user['id'], $user);
 
         $user = $this->model->find($id);
 
@@ -271,7 +271,7 @@ final class TimestampModelTest extends LiveModelTestCase
             $expected .= '.000';
         }
 
-        $this->assertSame($expected, $user['created_at']); // @phpstan-ignore offsetAccess.notFound
+        $this->assertSame($expected, $user['created_at']);
         $this->assertSame($expected, $user['updated_at']);
     }
 
@@ -292,14 +292,13 @@ final class TimestampModelTest extends LiveModelTestCase
         ];
         $id = $this->allowDatesPrepareOneRecord($data);
         $this->setPrivateProperty($this->model, 'returnType', User::class);
-        $this->setPrivateProperty($this->model, 'tempReturnType', User::class);
 
-        $user = $this->model->find($id);
+        $user = $this->model->asObject(User::class)->find($id);
 
         $user->country = 'CA';
         $this->model->update($user->id, $user);
 
-        $user = $this->model->find($id);
+        $user = $this->model->asObject(User::class)->find($id);
 
         $this->assertSame('2000-01-01 12:00:00', (string) $user->created_at);
         // The Entity has `updated_at` value, but it will be discarded because of onlyChanged.

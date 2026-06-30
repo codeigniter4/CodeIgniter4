@@ -35,14 +35,14 @@ final class ExceptionsTest extends CIUnitTestCase
     {
         parent::setUpBeforeClass();
 
-        unset($_SERVER['CODEIGNITER_SCREAM_DEPRECATIONS']);
+        service('superglobals')->unsetServer('CODEIGNITER_SCREAM_DEPRECATIONS');
     }
 
     public static function tearDownAfterClass(): void
     {
         parent::tearDownAfterClass();
 
-        $_SERVER['CODEIGNITER_SCREAM_DEPRECATIONS'] = '1';
+        service('superglobals')->setServer('CODEIGNITER_SCREAM_DEPRECATIONS', '1');
     }
 
     protected function setUp(): void

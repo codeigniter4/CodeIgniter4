@@ -80,7 +80,7 @@ final class ServicesTest extends CIUnitTestCase
 
     protected function tearDown(): void
     {
-        $_SERVER = $this->original;
+        service('superglobals')->setServerArray($this->original);
         $this->resetServices();
     }
 

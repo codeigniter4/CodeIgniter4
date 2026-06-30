@@ -98,8 +98,8 @@ class RedisHandler extends BaseHandler
             $this->keyPrefix .= $this->ipAddress . ':';
         }
 
-        $this->lockRetryInterval = $config->lockWait ?? $this->lockRetryInterval;
-        $this->lockMaxRetries    = $config->lockAttempts ?? $this->lockMaxRetries;
+        $this->lockRetryInterval = $config->lockRetryInterval ?? $this->lockRetryInterval; // @phpstan-ignore nullCoalesce.property
+        $this->lockMaxRetries    = $config->lockMaxRetries ?? $this->lockMaxRetries; // @phpstan-ignore nullCoalesce.property
     }
 
     protected function setSavePath(): void
@@ -386,10 +386,10 @@ class RedisHandler extends BaseHandler
             break;
         } while (++$attempt < $this->lockMaxRetries);
 
-        if ($attempt === 300) {
+        if ($attempt === $this->lockMaxRetries) {
             $this->logger->error(
                 'Session: Unable to obtain lock for ' . $this->keyPrefix . $sessionID
-                . ' after 300 attempts, aborting.',
+                . ' after ' . $this->lockMaxRetries . ' attempts, aborting.',
             );
 
             return false;

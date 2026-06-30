@@ -41,7 +41,7 @@ final class ArrayHelper
      * @param string                         $index The index as dot array syntax.
      * @param array<array-key, mixed>|object $array
      *
-     * @return array<array-key, mixed>|bool|int|object|string|null
+     * @return mixed
      */
     public static function dotSearch(string $index, array|object $array)
     {
@@ -86,7 +86,7 @@ final class ArrayHelper
      * @param list<string>                   $indexes
      * @param array<array-key, mixed>|object $array
      *
-     * @return array<array-key, mixed>|bool|float|int|object|string|null
+     * @return mixed
      */
     private static function arraySearchDot(array $indexes, array|object $array)
     {

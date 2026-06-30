@@ -13,7 +13,7 @@ on:
       - 'tests/**.php'
       - 'utils/**.php'
       - composer.json
-      - phpstan.neon.dist
+      - phpstan.dist.neon
       - phpstan-baseline.php
       - '.github/workflows/test-phpstan.yml'
 
@@ -27,7 +27,7 @@ on:
       - 'tests/**.php'
       - 'utils/**.php'
       - composer.json
-      - phpstan.neon.dist
+      - phpstan.dist.neon
       - phpstan-baseline.php
       - '.github/workflows/test-phpstan.yml'
 
@@ -46,7 +46,7 @@ jobs:
       fail-fast: false
     steps:
       - name: Checkout
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Setup PHP
         uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
@@ -66,7 +66,7 @@ jobs:
         run: echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
       - name: Cache dependencies
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ${{ steps.composer-cache.outputs.COMPOSER_CACHE_FILES_DIR }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
@@ -76,7 +76,7 @@ jobs:
         run: mkdir -p build/phpstan
 
       - name: Cache PHPStan result cache directory
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: build/phpstan
           key: ${{ runner.os }}-phpstan-${{ github.sha }}

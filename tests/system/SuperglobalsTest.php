@@ -40,7 +40,7 @@ final class SuperglobalsTest extends CIUnitTestCase
         $this->superglobals->setServer('TEST_KEY', 'test_value');
 
         $this->assertSame('test_value', $this->superglobals->server('TEST_KEY'));
-        $this->assertSame('test_value', $_SERVER['TEST_KEY']);
+        $this->assertSame('test_value', $_SERVER['TEST_KEY']); // @phpstan-ignore codeigniter.superglobalsOffsetAccess (checks the live superglobal, not the snapshot service)
     }
 
     public function testServerGetReturnsNullForNonExistent(): void
@@ -108,7 +108,7 @@ final class SuperglobalsTest extends CIUnitTestCase
         $this->superglobals->setGet('test', 'value1');
 
         $this->assertSame('value1', $this->superglobals->get('test'));
-        $this->assertSame('value1', $_GET['test']);
+        $this->assertSame('value1', $_GET['test']); // @phpstan-ignore codeigniter.superglobalsOffsetAccess (checks the live superglobal, not the snapshot service)
     }
 
     public function testGetReturnsNullForNonExistent(): void
@@ -158,7 +158,7 @@ final class SuperglobalsTest extends CIUnitTestCase
         $this->superglobals->setPost('test', 'value1');
 
         $this->assertSame('value1', $this->superglobals->post('test'));
-        $this->assertSame('value1', $_POST['test']);
+        $this->assertSame('value1', $_POST['test']); // @phpstan-ignore codeigniter.superglobalsOffsetAccess (checks the live superglobal, not the snapshot service)
     }
 
     public function testPostReturnsNullForNonExistent(): void
@@ -208,7 +208,7 @@ final class SuperglobalsTest extends CIUnitTestCase
         $this->superglobals->setCookie('session', 'abc123');
 
         $this->assertSame('abc123', $this->superglobals->cookie('session'));
-        $this->assertSame('abc123', $_COOKIE['session']);
+        $this->assertSame('abc123', $_COOKIE['session']); // @phpstan-ignore codeigniter.superglobalsOffsetAccess (checks the live superglobal, not the snapshot service)
     }
 
     public function testCookieReturnsNullForNonExistent(): void
@@ -258,7 +258,7 @@ final class SuperglobalsTest extends CIUnitTestCase
         $this->superglobals->setRequest('test', 'value1');
 
         $this->assertSame('value1', $this->superglobals->request('test'));
-        $this->assertSame('value1', $_REQUEST['test']);
+        $this->assertSame('value1', $_REQUEST['test']); // @phpstan-ignore codeigniter.superglobalsOffsetAccess (checks the live superglobal, not the snapshot service)
     }
 
     public function testRequestReturnsNullForNonExistent(): void
@@ -475,11 +475,11 @@ final class SuperglobalsTest extends CIUnitTestCase
         new Superglobals($server, $get, $post, $cookie, $files, $request);
 
         // Verify PHP superglobals are synchronized
-        $this->assertSame('server_val', $_SERVER['CUSTOM_SERVER']);
-        $this->assertSame('get_val', $_GET['custom_get']);
-        $this->assertSame('post_val', $_POST['custom_post']);
-        $this->assertSame('cookie_val', $_COOKIE['custom_cookie']);
-        $this->assertSame('request_val', $_REQUEST['custom_request']);
+        $this->assertSame('server_val', $_SERVER['CUSTOM_SERVER']); // @phpstan-ignore codeigniter.superglobalsOffsetAccess (checks the live superglobal, not the snapshot service)
+        $this->assertSame('get_val', $_GET['custom_get']); // @phpstan-ignore codeigniter.superglobalsOffsetAccess (checks the live superglobal, not the snapshot service)
+        $this->assertSame('post_val', $_POST['custom_post']); // @phpstan-ignore codeigniter.superglobalsOffsetAccess (checks the live superglobal, not the snapshot service)
+        $this->assertSame('cookie_val', $_COOKIE['custom_cookie']); // @phpstan-ignore codeigniter.superglobalsOffsetAccess (checks the live superglobal, not the snapshot service)
+        $this->assertSame('request_val', $_REQUEST['custom_request']); // @phpstan-ignore codeigniter.superglobalsOffsetAccess (checks the live superglobal, not the snapshot service)
         $this->assertSame($files, $_FILES);
     }
 

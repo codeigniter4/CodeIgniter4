@@ -479,7 +479,7 @@ class Toolbar
 
         // Otherwise, if it includes ?debugbar_time, then
         // we should return the entire debugbar.
-        if ($request->getGet('debugbar_time')) {
+        if ($request->getGet('debugbar_time') !== null) {
             helper('security');
 
             // Negotiate the content-type to format the output

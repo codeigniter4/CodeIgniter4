@@ -312,7 +312,7 @@ class Forge extends BaseForge
     /**
      * Drop index for table
      *
-     * @return mixed
+     * @return false|resource
      */
     protected function _dropIndex(string $table, object $indexData)
     {
