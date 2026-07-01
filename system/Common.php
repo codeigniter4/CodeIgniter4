@@ -119,7 +119,7 @@ if (! function_exists('command')) {
      *
      *  > command('migrate:create SomeMigration');
      *
-     * @return string
+     * @return false|string
      */
     function command(string $command)
     {
@@ -185,13 +185,21 @@ if (! function_exists('command')) {
             $params[$arg] = $value;
         }
 
+        $bufferLevel = ob_get_level();
+
         try {
             ob_start();
             service('commands')->run($command, $params);
 
+            if (ob_get_level() <= $bufferLevel) {
+                return false;
+            }
+
             return ob_get_contents();
         } finally {
-            ob_end_clean();
+            while (ob_get_level() > $bufferLevel) {
+                ob_end_clean();
+            }
         }
     }
 }
