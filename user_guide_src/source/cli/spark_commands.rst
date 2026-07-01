@@ -119,3 +119,8 @@ it from the command line.
 
 All output from the command that is ran is captured when not run from the command line. It is returned from the command
 so that you can choose to display it or not.
+
+.. note:: The ``command()`` function does not catch exceptions thrown while the command runs.
+    :doc:`Modern commands <cli_modern_commands>` in particular throw when their input fails
+    validation, such as a missing required argument or an unknown option. Wrap the call in a
+    ``try``/``catch`` block if you need to handle these cases.
