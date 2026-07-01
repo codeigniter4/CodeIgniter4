@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\DataCaster\Cast;
 
 use CodeIgniter\DataCaster\Exceptions\CastException;
-use Config\Services;
 use SensitiveParameter;
 
 /**
@@ -45,7 +44,7 @@ class EncryptedCast extends BaseCast
             throw CastException::forInvalidEncryptedPayload();
         }
 
-        return Services::encrypter()->decrypt($decoded);
+        return service('encrypter')->decrypt($decoded);
     }
 
     public static function set(
@@ -62,6 +61,6 @@ class EncryptedCast extends BaseCast
             throw CastException::forInvalidEncryptedValueType();
         }
 
-        return base64_encode(Services::encrypter()->encrypt($value));
+        return base64_encode(service('encrypter')->encrypt($value));
     }
 }
