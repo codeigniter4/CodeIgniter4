@@ -101,6 +101,34 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame('3', $this->request->getGetPost('TEST'));
     }
 
+    public function testCanGrabMultiplePostAndGetVars(): void
+    {
+        service('superglobals')
+            ->setPostArray([
+                'post'   => 'post value',
+                'shared' => 'post shared value',
+            ])
+            ->setGetArray([
+                'get'    => 'get value',
+                'shared' => 'get shared value',
+            ]);
+
+        $index = ['post', 'get', 'shared', 'missing'];
+
+        $this->assertSame([
+            'post'    => 'post value',
+            'get'     => 'get value',
+            'shared'  => 'post shared value',
+            'missing' => null,
+        ], $this->request->getPostGet($index));
+        $this->assertSame([
+            'post'    => 'post value',
+            'get'     => 'get value',
+            'shared'  => 'get shared value',
+            'missing' => null,
+        ], $this->request->getGetPost($index));
+    }
+
     public function testNoOldInput(): void
     {
         $this->assertNull($this->request->getOldInput('name'));
