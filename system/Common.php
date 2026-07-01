@@ -119,7 +119,7 @@ if (! function_exists('command')) {
      *
      *  > command('migrate:create SomeMigration');
      *
-     * @return false|string
+     * @return string
      */
     function command(string $command)
     {
