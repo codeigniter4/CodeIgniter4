@@ -259,6 +259,9 @@ final class ChunkByIdModelTest extends LiveModelTestCase
         $this->createModel(UserModel::class)->chunkRowsById(0, static function ($rows): void {});
     }
 
+    /**
+     * @param array<string, mixed>|object $row
+     */
     private static function userId(array|object $row): int
     {
         $data = (array) $row;
