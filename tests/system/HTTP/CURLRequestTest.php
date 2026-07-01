@@ -1566,4 +1566,103 @@ Connection: keep-alive\r\n\r\n" . $testBody;
 
         $this->assertSame($testBody, $response->getBody());
     }
+
+    public function testSetCURLOptions(): void
+    {
+        $invoker = self::getPrivateMethodInvoker($this->request, 'setCURLOptions');
+
+        // Test Auth Options
+        $options = $invoker([], ['auth' => ['user', 'pass', 'digest']]);
+        $this->assertSame('user:pass', $options[CURLOPT_USERPWD]);
+        $this->assertSame(CURLAUTH_DIGEST, $options[CURLOPT_HTTPAUTH]);
+
+        $options2 = $invoker([], ['auth' => ['user', 'pass', 'basic']]);
+        $this->assertSame(CURLAUTH_BASIC, $options2[CURLOPT_HTTPAUTH]);
+
+        // Test SSL Options
+        $options3 = $invoker([], ['cert' => __FILE__]);
+        $this->assertSame(__FILE__, $options3[CURLOPT_SSLCERT]);
+
+        $options4 = $invoker([], ['verify' => false]);
+        $this->assertFalse($options4[CURLOPT_SSL_VERIFYPEER]);
+        $this->assertSame(0, $options4[CURLOPT_SSL_VERIFYHOST]);
+
+        // Test Proxy Options
+        $options5 = $invoker([], ['proxy' => 'http://proxy.example.com']);
+        $this->assertTrue($options5[CURLOPT_HTTPPROXYTUNNEL]);
+        $this->assertSame('http://proxy.example.com', $options5[CURLOPT_PROXY]);
+
+        // Test Debug Options
+        $options6 = $invoker([], ['debug' => true]);
+        $this->assertSame(1, $options6[CURLOPT_VERBOSE]);
+        $this->assertIsResource($options6[CURLOPT_STDERR]);
+
+        // Test Redirect Options
+        $options7 = $invoker([], ['allow_redirects' => false]);
+        $this->assertSame(0, $options7[CURLOPT_FOLLOWLOCATION]);
+
+        $options8 = $invoker([], ['allow_redirects' => true]);
+        $this->assertSame(1, $options8[CURLOPT_FOLLOWLOCATION]);
+        $this->assertSame(5, $options8[CURLOPT_MAXREDIRS]);
+
+        // Test Connection Options
+        $options9 = $invoker([], [
+            'dns_cache_timeout' => 120,
+            'fresh_connect'     => false,
+            'timeout'           => 10,
+            'connect_timeout'   => 5,
+            'force_ip_resolve'  => 'v4',
+        ]);
+        $this->assertSame(120, $options9[CURLOPT_DNS_CACHE_TIMEOUT]);
+        $this->assertFalse($options9[CURLOPT_FRESH_CONNECT]);
+        $this->assertEqualsWithDelta(10000.0, $options9[CURLOPT_TIMEOUT_MS], PHP_FLOAT_EPSILON);
+        $this->assertEqualsWithDelta(5000.0, $options9[CURLOPT_CONNECTTIMEOUT_MS], PHP_FLOAT_EPSILON);
+        $this->assertSame(CURL_IPRESOLVE_V4, $options9[CURLOPT_IPRESOLVE]);
+
+        // Test Body Options (form_params / multipart / json)
+        $options10 = $invoker([], ['form_params' => ['foo' => 'bar']]);
+        $this->assertSame('foo=bar', $options10[CURLOPT_POSTFIELDS]);
+
+        $options11 = $invoker([], ['multipart' => ['file' => 'data']]);
+        $this->assertSame(['file' => 'data'], $options11[CURLOPT_POSTFIELDS]);
+
+        // Test Response Options (decode_content / http_errors)
+        $options12 = $invoker([], ['decode_content' => true]);
+        $this->assertSame('', $options12[CURLOPT_ENCODING]);
+        $this->assertSame('Accept-Encoding', $options12[CURLOPT_HTTPHEADER]);
+
+        // Test Protocol/Misc/Client Options
+        $options13 = $invoker([], [
+            'http_errors' => false,
+            'version'     => '2.0',
+            'cookie'      => 'cookies.txt',
+            'user_agent'  => 'TestAgent',
+        ]);
+        $this->assertFalse($options13[CURLOPT_FAILONERROR]);
+        $this->assertSame(CURL_HTTP_VERSION_2_0, $options13[CURLOPT_HTTP_VERSION]);
+        $this->assertSame('cookies.txt', $options13[CURLOPT_COOKIEJAR]);
+        $this->assertSame('cookies.txt', $options13[CURLOPT_COOKIEFILE]);
+        $this->assertSame('TestAgent', $options13[CURLOPT_USERAGENT]);
+    }
+
+    public function testCURLOptionsPreservesIntegerKeys(): void
+    {
+        // cURL options use integer constants as keys. This test ensures they are not re-indexed.
+        $request = $this->getRequest();
+        $method  = self::getPrivateMethodInvoker($request, 'setCURLOptions');
+
+        $initialOptions = [
+            CURLOPT_RETURNTRANSFER => true,
+        ];
+
+        $config = [
+            'auth' => ['user', 'pass'],
+        ];
+
+        $options = $method($initialOptions, $config);
+
+        // Verify keys are preserved and not re-indexed to 0, 1...
+        $this->assertArrayHasKey(CURLOPT_RETURNTRANSFER, $options);
+        $this->assertArrayHasKey(CURLOPT_USERPWD, $options);
+    }
 }
