@@ -1075,6 +1075,35 @@ On the other hand, if you want the entire chunk to be passed to the Closure at o
 
 .. literalinclude:: model/064.php
 
+chunkById()
+-----------
+
+.. versionadded:: 4.8.0
+
+If you need to update or delete rows while processing them, use ``chunkById()``.
+This method retrieves each chunk ordered by the model's primary key instead of using an offset,
+so deleting or updating rows already processed will not cause later rows to be skipped.
+
+.. literalinclude:: model/069.php
+
+chunkRowsById()
+---------------
+
+.. versionadded:: 4.8.0
+
+If you want the entire ID-based chunk to be passed to the Closure at once, use ``chunkRowsById()``.
+
+.. literalinclude:: model/070.php
+
+.. warning:: ID-based chunking needs the model to define a primary key, and that primary key must be selected.
+    If you customize the selected columns, make sure the primary key is included.
+    When joining tables, make sure the model table primary key remains available under its normal field name.
+    These methods manage their own primary key ordering and cannot be used with
+    ``orderBy()``, ``groupBy()``, ``limit()``, ``offset()`` or ``union()``.
+    You should also avoid changing primary key values while processing chunks.
+    Since these methods add their own ``WHERE`` condition to each chunk query,
+    group any ``orWhere()`` conditions that should be evaluated together.
+
 .. _model-events-callbacks:
 
 Working with Query Builder

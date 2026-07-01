@@ -165,6 +165,7 @@ class Model extends BaseModel
         'getCompiledInsert',
         'getCompiledSelect',
         'getCompiledUpdate',
+        'hasLimitOffsetOrUnion',
     ];
 
     public function __construct(?ConnectionInterface $db = null, ?ValidationInterface $validation = null)
@@ -599,9 +600,7 @@ class Model extends BaseModel
      */
     private function iterateChunks(int $size): Generator
     {
-        if ($size <= 0) {
-            throw new InvalidArgumentException('$size must be a positive integer.');
-        }
+        $this->assertValidChunkSize($size);
 
         $total  = $this->builder()->countAllResults(false);
         $offset = 0;
@@ -627,6 +626,89 @@ class Model extends BaseModel
     }
 
     /**
+     * Iterates over the result set in chunks of the specified size ordered by the primary key.
+     *
+     * @param int $size The number of records to retrieve in each chunk.
+     *
+     * @return Generator<list<array<string, string>>|list<object>>
+     */
+    private function iterateChunksById(int $size): Generator
+    {
+        $this->assertValidChunkSize($size);
+
+        if ($this->primaryKey === '') {
+            throw new InvalidArgumentException('ID-based chunking requires a primary key.');
+        }
+
+        $builder             = clone $this->builder();
+        $qualifiedPrimaryKey = $this->table . '.' . $this->primaryKey;
+        $lastPrimaryKey      = null;
+        $hasLastPrimaryKey   = false;
+
+        if ($builder->QBOrderBy !== []) {
+            throw new InvalidArgumentException('ID-based chunking cannot be used with orderBy().');
+        }
+
+        if ($builder->QBGroupBy !== []) {
+            throw new InvalidArgumentException('ID-based chunking cannot be used with groupBy().');
+        }
+
+        if ($builder->hasLimitOffsetOrUnion()) {
+            throw new InvalidArgumentException('ID-based chunking cannot be used with limit(), offset() or union().');
+        }
+
+        while (true) {
+            $chunkBuilder = clone $builder;
+
+            if ($this->tempUseSoftDeletes) {
+                $chunkBuilder->where($this->table . '.' . $this->deletedField, null);
+            }
+
+            if ($hasLastPrimaryKey) {
+                $chunkBuilder->where($qualifiedPrimaryKey . ' >', $lastPrimaryKey);
+            }
+
+            $rows = $chunkBuilder
+                ->orderBy($qualifiedPrimaryKey, 'ASC')
+                ->get($size);
+
+            if (! $rows) {
+                throw DataException::forEmptyDataset('chunkById');
+            }
+
+            $rows = $rows->getResult($this->tempReturnType);
+
+            if ($rows === []) {
+                return;
+            }
+
+            $lastPrimaryKey = $this->getIdValue($rows[array_key_last($rows)]);
+
+            if ($lastPrimaryKey === null) {
+                throw new InvalidArgumentException('The primary key must be selected for ID-based chunking.');
+            }
+
+            $hasLastPrimaryKey = true;
+
+            yield $rows;
+
+            if (count($rows) < $size) {
+                return;
+            }
+        }
+    }
+
+    /**
+     * Asserts the chunk size is valid.
+     */
+    private function assertValidChunkSize(int $size): void
+    {
+        if ($size <= 0) {
+            throw new InvalidArgumentException('$size must be a positive integer.');
+        }
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function chunk(int $size, Closure $userFunc)
@@ -643,9 +725,35 @@ class Model extends BaseModel
     /**
      * {@inheritDoc}
      */
+    public function chunkById(int $size, Closure $userFunc)
+    {
+        foreach ($this->iterateChunksById($size) as $rows) {
+            foreach ($rows as $row) {
+                if ($userFunc($row) === false) {
+                    return;
+                }
+            }
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function chunkRows(int $size, Closure $userFunc): void
     {
         foreach ($this->iterateChunks($size) as $rows) {
+            if ($userFunc($rows) === false) {
+                return;
+            }
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function chunkRowsById(int $size, Closure $userFunc): void
+    {
+        foreach ($this->iterateChunksById($size) as $rows) {
             if ($userFunc($rows) === false) {
                 return;
             }
