@@ -67,9 +67,7 @@ final class ResponseSendTest extends CIUnitTestCase
         // send it
         ob_start();
         $response->send();
-        if (ob_get_level() > 0) {
-            ob_end_clean();
-        }
+        ob_end_clean();
 
         // and what actually got sent?
         $this->assertHeaderEmitted('Date:');
@@ -102,9 +100,7 @@ final class ResponseSendTest extends CIUnitTestCase
         // send it
         ob_start();
         $response->send();
-        if (ob_get_level() > 0) {
-            ob_end_clean();
-        }
+        ob_end_clean();
 
         // and what actually got sent?; test both ways
         $this->assertHeaderEmitted('Content-Security-Policy:');
@@ -140,9 +136,7 @@ final class ResponseSendTest extends CIUnitTestCase
         // send it
         ob_start();
         $response->send();
-        if (ob_get_level() > 0) {
-            ob_end_clean();
-        }
+        ob_end_clean();
 
         // and what actually got sent?
         $this->assertHeaderEmitted('Set-Cookie: foo=bar;');
@@ -213,9 +207,7 @@ final class ResponseSendTest extends CIUnitTestCase
         header('Access-Control-Expose-Headers: Content-Encoding');
         header('Allow: GET, POST');
         $response->send();
-        if (ob_get_level() > 0) {
-            ob_end_clean();
-        }
+        ob_end_clean();
 
         // single header
         $this->assertHeaderEmitted('Vary: Accept-Encoding');
