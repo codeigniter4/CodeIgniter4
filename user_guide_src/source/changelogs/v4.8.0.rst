@@ -335,6 +335,7 @@ Validation
 Others
 ======
 
+- **Config:** Added optional ``CodeIgniter\Config\Merge`` directives for :ref:`Registrars <registrars>` to control replacing, deep merging, and ordered list additions. Existing registrar merge behavior is unchanged. See :ref:`registrar-merge-directives`.
 - **Float and Double Casting:** Added support for precision and rounding mode when casting to float or double in entities.
 - Added ``CodeIgniter\Input\InputData``, ``ValidatedInput``, and ``InputDataFactory`` for reusable typed input data objects.
 - Float and Double casting now throws ``CastException::forInvalidFloatRoundingMode()`` if an rounding mode other than up, down, even or odd is provided.
