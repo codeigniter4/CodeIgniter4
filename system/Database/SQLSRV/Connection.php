@@ -118,16 +118,6 @@ class Connection extends BaseConnection
     }
 
     /**
-     * Checks whether the native database error represents a foreign key constraint violation.
-     */
-    protected function isForeignKeyConstraintViolation(int|string $code, string $message): bool
-    {
-        return $this->getVendorErrorCode($code) === 547
-            && $this->hasSQLState($code, '23000')
-            && str_contains($message, 'FOREIGN KEY constraint');
-    }
-
-    /**
      * Checks whether the native database error represents a NOT NULL constraint violation.
      */
     protected function isNotNullConstraintViolation(int|string $code, string $message): bool

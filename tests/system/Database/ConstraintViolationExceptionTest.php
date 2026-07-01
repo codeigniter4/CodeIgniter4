@@ -121,7 +121,7 @@ final class ConstraintViolationExceptionTest extends CIUnitTestCase
         ];
 
         yield 'MySQLi check MariaDB' => [
-            self::connection(MySQLiConnection::class, 'MySQLi'),
+            self::mysqliConnectionWithVersion('10.11.0-MariaDB'),
             4025,
             'CONSTRAINT `positive_amount` failed.',
             CheckConstraintViolationException::class,
@@ -225,13 +225,6 @@ final class ConstraintViolationExceptionTest extends CIUnitTestCase
             UniqueConstraintViolationException::class,
         ];
 
-        yield 'SQLSRV foreign key' => [
-            self::connection(SQLSRVConnection::class, 'SQLSRV'),
-            '23000/547',
-            'The INSERT statement conflicted with the FOREIGN KEY constraint.',
-            ForeignKeyConstraintViolationException::class,
-        ];
-
         yield 'SQLSRV generic constraint' => [
             self::connection(SQLSRVConnection::class, 'SQLSRV'),
             '23000/547',
@@ -309,7 +302,7 @@ final class ConstraintViolationExceptionTest extends CIUnitTestCase
 
     public function testCreatesBaseDatabaseExceptionForMySQLiNonConstraint4025(): void
     {
-        $exception = self::connection(MySQLiConnection::class, 'MySQLi')
+        $exception = self::mysqliConnectionWithVersion('8.4.0')
             ->createDatabaseException('InnoDB autoextend size is out of range.', 4025);
 
         $this->assertInstanceOf(DatabaseException::class, $exception);
@@ -346,6 +339,24 @@ final class ConstraintViolationExceptionTest extends CIUnitTestCase
     private static function connection(string $connectionClass, string $driver): BaseConnection
     {
         return new $connectionClass(self::config($driver));
+    }
+
+    private static function mysqliConnectionWithVersion(string $version): BaseConnection
+    {
+        return new class (self::config('MySQLi'), $version) extends MySQLiConnection {
+            /**
+             * @param array<string, mixed> $params
+             */
+            public function __construct(array $params, private readonly string $version)
+            {
+                parent::__construct($params);
+            }
+
+            public function getVersion(): string
+            {
+                return $this->version;
+            }
+        };
     }
 
     /**

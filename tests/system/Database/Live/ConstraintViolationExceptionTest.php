@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Database\Exceptions\ConstraintViolationException;
 use CodeIgniter\Database\Exceptions\ForeignKeyConstraintViolationException;
 use CodeIgniter\Database\Exceptions\NotNullConstraintViolationException;
 use CodeIgniter\Database\Forge;
@@ -70,12 +71,16 @@ final class ConstraintViolationExceptionTest extends CIUnitTestCase
             ->update(['name' => null]);
     }
 
-    public function testThrowsForeignKeyConstraintViolationExceptionWithDebugEnabled(): void
+    public function testThrowsConstraintViolationExceptionForForeignKeyWithDebugEnabled(): void
     {
         $this->enableDBDebug();
         $this->createForeignKeyTables();
 
-        $this->expectException(ForeignKeyConstraintViolationException::class);
+        $expectedException = $this->db->DBDriver === 'SQLSRV'
+            ? ConstraintViolationException::class
+            : ForeignKeyConstraintViolationException::class;
+
+        $this->expectException($expectedException);
 
         $this->db->table('cv_child')->insert([
             'id'        => 1,

@@ -134,13 +134,7 @@ class Connection extends BaseConnection
         }
 
         // MariaDB reports CHECK failures as ER_CONSTRAINT_FAILED, while MySQL uses 4025 for other errors.
-        if ($code !== 4025) {
-            return false;
-        }
-
-        $message = strtolower($message);
-
-        return str_contains($message, 'constraint') && str_contains($message, 'failed');
+        return $code === 4025 && str_contains(strtolower($this->getVersion()), 'mariadb');
     }
 
     /**
