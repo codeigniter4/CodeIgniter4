@@ -266,8 +266,8 @@ trait MessageTrait
      */
     public function setProtocolVersion(string $version): self
     {
-        // If empty or null, keep default protocol version (usually 1.1) and do nothing.
-        if ($version === '' || $version === null) {
+        // If empty, keep default protocol version (usually 1.1) and do nothing.
+        if ($version === '') {
             return $this;
         }
 
