@@ -272,7 +272,7 @@ trait MessageTrait
         }
 
         // If a full protocol string (e.g., "HTTP/1.1") is provided, extract the numeric part.
-        if (strpos($version, '/') !== false) {
+        if (str_contains($version, '/')) {
             $version = substr($version, strpos($version, '/') + 1);
         }
 
