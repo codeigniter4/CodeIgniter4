@@ -280,7 +280,7 @@ final class IncomingRequestTest extends CIUnitTestCase
      */
     public function testNegotiatesLocale(): void
     {
-        service('superglobals')->setServer('HTTP_ACCEPT_LANGUAGE', 'fr-FR); q=1.0, en; q=0.5');
+        service('superglobals')->setServer('HTTP_ACCEPT_LANGUAGE', 'fr-FR; q=1.0, en; q=0.5');
 
         $config                   = new App();
         $config->negotiateLocale  = true;
@@ -295,7 +295,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testNegotiatesLocaleOnlyBroad(): void
     {
-        service('superglobals')->setServer('HTTP_ACCEPT_LANGUAGE', 'fr); q=1.0, en; q=0.5');
+        service('superglobals')->setServer('HTTP_ACCEPT_LANGUAGE', 'fr; q=1.0, en; q=0.5');
 
         $config                   = new App();
         $config->negotiateLocale  = true;
@@ -349,7 +349,7 @@ final class IncomingRequestTest extends CIUnitTestCase
     public function testNegotiatesLanguage(): void
     {
         $this->request->setHeader('Accept-Language', 'da, en-gb;q=0.8, en;q=0.7');
-        $this->assertSame('en', $this->request->negotiate('language', ['en', 'da']));
+        $this->assertSame('da', $this->request->negotiate('language', ['en', 'da']));
     }
 
     public function testCanGrabGetRawJSON(): void

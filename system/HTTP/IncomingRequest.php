@@ -207,7 +207,7 @@ class IncomingRequest extends Request
     public function negotiate(string $type, array $supported, bool $strictMatch = false): string
     {
         if ($this->negotiator === null) {
-            $this->negotiator = Services::negotiator($this, true);
+            $this->negotiator = Services::negotiator($this, false);
         }
 
         return match (strtolower($type)) {

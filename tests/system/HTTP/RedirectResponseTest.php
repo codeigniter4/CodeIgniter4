@@ -24,6 +24,7 @@ use Config\App;
 use Config\Modules;
 use Config\Routing;
 use Config\Services;
+use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
@@ -32,6 +33,7 @@ use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 /**
  * @internal
  */
+#[BackupGlobals(true)]
 #[Group('SeparateProcess')]
 final class RedirectResponseTest extends CIUnitTestCase
 {

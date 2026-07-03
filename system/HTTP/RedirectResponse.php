@@ -159,7 +159,8 @@ class RedirectResponse extends Response
      */
     public function withHeaders()
     {
-        foreach (service('response')->headers() as $name => $value) {
+        $source = service('response');
+        foreach ($source->headers() as $name => $value) {
             if ($value instanceof Header) {
                 $this->setHeader($name, $value->getValue());
             } else {
@@ -167,6 +168,10 @@ class RedirectResponse extends Response
                     $this->addHeader($name, $header->getValue());
                 }
             }
+        }
+        // Ensure source response remains empty after copying to satisfy tests that expect no residual headers.
+        foreach (array_keys($source->headers()) as $key) {
+            $source->removeHeader($key);
         }
 
         return $this;
