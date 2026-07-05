@@ -78,6 +78,16 @@ You can use any standard HTTP verb (GET, POST, PUT, DELETE, OPTIONS, etc):
 
 .. literalinclude:: routing/003.php
 
+``QUERY`` routes are for the HTTP QUERY method defined by RFC 10008.
+QUERY requests are safe and idempotent like GET, but send query content in the
+request body. Read that body explicitly with request input methods such as
+``$this->request->input()->json()`` or ``$this->request->input()->raw()``. Your
+controller should reject missing or unsupported ``Content-Type`` values for the
+query content it expects.
+
+.. note:: Your web server, proxy, or CORS configuration may need to allow the
+    ``QUERY`` method before these requests can reach CodeIgniter.
+
 You can supply multiple verbs that a route should match by passing them in as an array to the ``match()`` method:
 
 .. literalinclude:: routing/004.php

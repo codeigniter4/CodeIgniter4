@@ -93,6 +93,15 @@ class Method
     /**
      * Safe: Yes
      * Idempotent: Yes
+     * Cacheable: Yes
+     *
+     * @see https://www.rfc-editor.org/rfc/rfc10008.html
+     */
+    public const QUERY = 'QUERY';
+
+    /**
+     * Safe: Yes
+     * Idempotent: Yes
      * Cacheable: No
      *
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/TRACE
@@ -115,6 +124,7 @@ class Method
             self::PATCH,
             self::POST,
             self::PUT,
+            self::QUERY,
             self::TRACE,
         ];
     }

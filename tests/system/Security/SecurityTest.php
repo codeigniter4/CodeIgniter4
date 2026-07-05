@@ -16,6 +16,7 @@ namespace CodeIgniter\Security;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Security\Exceptions\SecurityException;
@@ -102,6 +103,16 @@ final class SecurityTest extends CIUnitTestCase
         $security->verify($this->createIncomingRequest());
 
         $this->assertSame(self::CORRECT_CSRF_HASH, $security->getHash());
+    }
+
+    public function testCsrfVerifyQueryReturnsSelf(): void
+    {
+        service('superglobals')->setServer('REQUEST_METHOD', Method::QUERY);
+
+        $security = $this->createMockSecurity();
+        $request  = $this->createIncomingRequest();
+
+        $this->assertSame($security, $security->verify($request));
     }
 
     public function testCsrfVerifyPostThrowsExceptionOnNoMatch(): void

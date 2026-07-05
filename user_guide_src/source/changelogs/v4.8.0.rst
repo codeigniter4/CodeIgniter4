@@ -306,6 +306,7 @@ Helpers and Functions
 HTTP
 ====
 
+- Added support for the HTTP ``QUERY`` method in routing, feature tests, ``CURLRequest``, and ``FormRequest`` input source selection.
 - Added the ``retry`` option to ``CURLRequest`` for retrying failed responses with configurable delays, retryable status codes, optional transient cURL error retries, and ``Retry-After`` support. See :ref:`curlrequest-request-options-retry`.
 - Added :ref:`Form Requests <form-requests>` - a new ``FormRequest`` base class that encapsulates validation rules, custom error messages, and authorization logic for a single HTTP request.
 - Added ``IncomingRequest::input()`` to read GET, POST, JSON, and raw request data through ``InputData``.

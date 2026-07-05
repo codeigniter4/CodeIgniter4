@@ -143,6 +143,7 @@ class RouteCollection implements RouteCollectionInterface
         Method::OPTIONS => [],
         Method::GET     => [],
         Method::HEAD    => [],
+        Method::QUERY   => [],
         Method::POST    => [],
         Method::PATCH   => [],
         Method::PUT     => [],
@@ -168,6 +169,7 @@ class RouteCollection implements RouteCollectionInterface
         Method::OPTIONS => [],
         Method::GET     => [],
         Method::HEAD    => [],
+        Method::QUERY   => [],
         Method::POST    => [],
         Method::PATCH   => [],
         Method::PUT     => [],
@@ -1098,6 +1100,19 @@ class RouteCollection implements RouteCollectionInterface
     public function head(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
         $this->create(Method::HEAD, $from, $to, $options);
+
+        return $this;
+    }
+
+    /**
+     * Specifies a route that is only available to QUERY requests.
+     *
+     * @param array<string, mixed>|(Closure(mixed...): (ResponseInterface|string|void))|string $to
+     * @param array<string, mixed>|null                                                        $options
+     */
+    public function query(string $from, $to, ?array $options = null): RouteCollectionInterface
+    {
+        $this->create(Method::QUERY, $from, $to, $options);
 
         return $this;
     }

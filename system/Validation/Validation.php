@@ -535,7 +535,7 @@ class Validation implements ValidationInterface
             return $this;
         }
 
-        if (in_array($request->getMethod(), [Method::PUT, Method::PATCH, Method::DELETE], true)
+        if (in_array($request->getMethod(), [Method::PUT, Method::PATCH, Method::DELETE, Method::QUERY], true)
             && ! str_contains($request->getHeaderLine('Content-Type'), 'multipart/form-data')
         ) {
             $this->data = $request->getRawInput();

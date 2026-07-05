@@ -839,12 +839,17 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $expected = ['here' => '\there'];
 
-        $routes->match(['GET', 'POST'], 'here', 'there');
+        $routes->match(['GET', 'POST', 'QUERY'], 'here', 'there');
         $this->assertSame($expected, $routes->getRoutes());
 
         service('request')->setMethod(Method::POST);
         $routes = $this->getCollector();
-        $routes->match(['GET', 'POST'], 'here', 'there');
+        $routes->match(['GET', 'POST', 'QUERY'], 'here', 'there');
+        $this->assertSame($expected, $routes->getRoutes());
+
+        service('request')->setMethod(Method::QUERY);
+        $routes = $this->getCollector();
+        $routes->match(['GET', 'POST', 'QUERY'], 'here', 'there');
         $this->assertSame($expected, $routes->getRoutes());
     }
 
@@ -912,6 +917,17 @@ final class RouteCollectionTest extends CIUnitTestCase
         $expected = ['here' => '\there'];
 
         $routes->head('here', 'there');
+        $this->assertSame($expected, $routes->getRoutes());
+    }
+
+    public function testQuery(): void
+    {
+        $routes = $this->getCollector();
+        $routes->setHTTPVerb(Method::QUERY);
+
+        $expected = ['here' => '\there'];
+
+        $routes->query('here', 'there');
         $this->assertSame($expected, $routes->getRoutes());
     }
 

@@ -974,7 +974,8 @@ class ValidationTest extends CIUnitTestCase
         $this->validation->run($data);
     }
 
-    public function testRawInput(): void
+    #[DataProvider('provideRawInput')]
+    public function testRawInput(string $method): void
     {
         $rawstring       = 'username=admin001&role=administrator&usepass=0';
         $config          = new App();
@@ -984,11 +985,21 @@ class ValidationTest extends CIUnitTestCase
         $rules = [
             'role' => 'required|min_length[5]',
         ];
-        $result = $this->validation->withRequest($request->withMethod('PATCH'))->setRules($rules)->run();
+        $result = $this->validation->withRequest($request->withMethod($method))->setRules($rules)->run();
 
         $this->assertTrue($result);
         $this->assertSame([], $this->validation->getErrors());
         $this->assertSame(['role' => 'administrator'], $this->validation->getValidated());
+    }
+
+    /**
+     * @return iterable<string, list<string>>
+     */
+    public static function provideRawInput(): iterable
+    {
+        yield 'PATCH' => ['PATCH'];
+
+        yield 'QUERY' => ['QUERY'];
     }
 
     public function testJsonInput(): void

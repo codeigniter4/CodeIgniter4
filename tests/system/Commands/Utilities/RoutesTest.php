@@ -32,6 +32,10 @@ final class RoutesTest extends CIUnitTestCase
     {
         $this->resetServices();
         parent::setUp();
+
+        service('superglobals')
+            ->setServer('HTTP_HOST', 'example.com')
+            ->setServer('SERVER_NAME', 'example.com');
     }
 
     protected function tearDown(): void
@@ -68,6 +72,7 @@ final class RoutesTest extends CIUnitTestCase
             | GET     | closure | »             | (Closure)                              |                |               |
             | GET     | testing | testing-index | \App\Controllers\TestController::index |                |               |
             | HEAD    | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | QUERY   | testing | testing-index | \App\Controllers\TestController::index |                |               |
             | POST    | testing | testing-index | \App\Controllers\TestController::index |                |               |
             | PATCH   | testing | testing-index | \App\Controllers\TestController::index |                |               |
             | PUT     | testing | testing-index | \App\Controllers\TestController::index |                |               |
@@ -104,6 +109,7 @@ final class RoutesTest extends CIUnitTestCase
             | GET     | /       | »             | \App\Controllers\Home::index           |                |               |
             | GET     | testing | testing-index | \App\Controllers\TestController::index |                |               |
             | HEAD    | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | QUERY   | testing | testing-index | \App\Controllers\TestController::index |                |               |
             | POST    | testing | testing-index | \App\Controllers\TestController::index |                |               |
             | PATCH   | testing | testing-index | \App\Controllers\TestController::index |                |               |
             | PUT     | testing | testing-index | \App\Controllers\TestController::index |                |               |
@@ -133,6 +139,7 @@ final class RoutesTest extends CIUnitTestCase
             | GET     | all     | »             | \App\Controllers\AllDomain::index      |                |               |
             | GET     | testing | testing-index | \App\Controllers\TestController::index |                |               |
             | HEAD    | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | QUERY   | testing | testing-index | \App\Controllers\TestController::index |                |               |
             | POST    | testing | testing-index | \App\Controllers\TestController::index |                |               |
             | PATCH   | testing | testing-index | \App\Controllers\TestController::index |                |               |
             | PUT     | testing | testing-index | \App\Controllers\TestController::index |                |               |
@@ -162,6 +169,7 @@ final class RoutesTest extends CIUnitTestCase
             | GET     | all     | »             | \App\Controllers\AllDomain::index      |                |               |
             | GET     | testing | testing-index | \App\Controllers\TestController::index |                |               |
             | HEAD    | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | QUERY   | testing | testing-index | \App\Controllers\TestController::index |                |               |
             | POST    | testing | testing-index | \App\Controllers\TestController::index |                |               |
             | PATCH   | testing | testing-index | \App\Controllers\TestController::index |                |               |
             | PUT     | testing | testing-index | \App\Controllers\TestController::index |                |               |
@@ -193,6 +201,7 @@ final class RoutesTest extends CIUnitTestCase
             | GET        | closure                        | »             | (Closure)                                           |                |               |
             | GET        | testing                        | testing-index | \App\Controllers\TestController::index              |                |               |
             | HEAD       | testing                        | testing-index | \App\Controllers\TestController::index              |                |               |
+            | QUERY      | testing                        | testing-index | \App\Controllers\TestController::index              |                |               |
             | POST       | testing                        | testing-index | \App\Controllers\TestController::index              |                |               |
             | PATCH      | testing                        | testing-index | \App\Controllers\TestController::index              |                |               |
             | PUT        | testing                        | testing-index | \App\Controllers\TestController::index              |                |               |
@@ -228,6 +237,7 @@ final class RoutesTest extends CIUnitTestCase
             | GET     | closure          | »             | (Closure)                              |                |               |
             | GET     | testing          | testing-index | \App\Controllers\TestController::index |                |               |
             | HEAD    | testing          | testing-index | \App\Controllers\TestController::index |                |               |
+            | QUERY   | testing          | testing-index | \App\Controllers\TestController::index |                |               |
             | POST    | testing          | testing-index | \App\Controllers\TestController::index |                |               |
             | PATCH   | testing          | testing-index | \App\Controllers\TestController::index |                |               |
             | PUT     | testing          | testing-index | \App\Controllers\TestController::index |                |               |

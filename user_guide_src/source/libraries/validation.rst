@@ -399,7 +399,7 @@ data to be validated:
     when the request is a JSON request (``Content-Type: application/json``),
     or gets Raw data from
     :ref:`$request->getRawInput() <incomingrequest-retrieving-raw-data>`
-    when the request is a PUT, PATCH, DELETE request and
+    when the request is a PUT, PATCH, DELETE, or QUERY request and
     is not HTML form post (``Content-Type: multipart/form-data``),
     or gets data from :ref:`$request->getVar() <incomingrequest-getting-data>`,
     and an attacker could change what data is validated.

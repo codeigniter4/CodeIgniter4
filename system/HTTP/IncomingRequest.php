@@ -503,7 +503,7 @@ class IncomingRequest extends Request
     }
 
     /**
-     * A convenience method that grabs the raw input stream(send method in PUT, PATCH, DELETE) and decodes
+     * A convenience method that grabs the raw input stream (send method in PUT, PATCH, DELETE, QUERY) and decodes
      * the String into an array.
      *
      * @return array
@@ -516,7 +516,7 @@ class IncomingRequest extends Request
     }
 
     /**
-     * Gets a specific variable from raw input stream (send method in PUT, PATCH, DELETE).
+     * Gets a specific variable from raw input stream (send method in PUT, PATCH, DELETE, QUERY).
      *
      * @param array|string|null $index  The variable that you want which can use dot syntax for getting specific values.
      * @param int|null          $filter Filter Constant

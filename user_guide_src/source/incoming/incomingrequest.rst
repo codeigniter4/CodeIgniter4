@@ -231,8 +231,8 @@ pass true in the second parameter:
 
 .. _incomingrequest-retrieving-raw-data:
 
-Retrieving Raw Data (PUT, PATCH, DELETE)
-========================================
+Retrieving Raw Data (PUT, PATCH, DELETE, QUERY)
+===============================================
 
 Finally, you can grab the contents of ``php://input`` as a raw stream with ``getRawInput()``:
 
