@@ -412,7 +412,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'GET',
                 'home',
-                static fn (): string|false => json_encode(service('request')->getGet()),
+                static fn (): false|string => json_encode(service('request')->getGet()),
             ],
         ]);
         $data = [
@@ -439,7 +439,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'GET',
                 'home',
-                static fn (): string|false => json_encode(service('request')->fetchGlobal('request')),
+                static fn (): false|string => json_encode(service('request')->fetchGlobal('request')),
             ],
         ]);
         $data = [
@@ -466,7 +466,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'POST',
                 'home',
-                static fn (): string|false => json_encode(service('request')->getPost()),
+                static fn (): false|string => json_encode(service('request')->getPost()),
             ],
         ]);
         $data = [
@@ -493,7 +493,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'POST',
                 'home',
-                static fn (): string|false => json_encode(service('request')->fetchGlobal('request')),
+                static fn (): false|string => json_encode(service('request')->fetchGlobal('request')),
             ],
         ]);
         $data = [
@@ -544,7 +544,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'PUT',
                 'home',
-                static fn (): string|false => json_encode(service('request')->fetchGlobal('request')),
+                static fn (): false|string => json_encode(service('request')->fetchGlobal('request')),
             ],
         ]);
         $data = [
