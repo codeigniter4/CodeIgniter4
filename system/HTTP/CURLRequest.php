@@ -783,7 +783,7 @@ class CURLRequest extends OutgoingRequest
      */
     private function applyProtocolOptions(array $curlOptions, array $config): array
     {
-        if (empty($config['version'])) {
+        if (! isset($config['version']) || (bool) $config['version'] === false) {
             return $curlOptions;
         }
 
