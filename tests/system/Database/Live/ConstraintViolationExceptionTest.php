@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Exceptions\ConstraintViolationException;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\ForeignKeyConstraintViolationException;
 use CodeIgniter\Database\Exceptions\NotNullConstraintViolationException;
 use CodeIgniter\Database\Forge;
@@ -80,12 +81,18 @@ final class ConstraintViolationExceptionTest extends CIUnitTestCase
             ? ConstraintViolationException::class
             : ForeignKeyConstraintViolationException::class;
 
-        $this->expectException($expectedException);
+        try {
+            $this->db->table('cv_child')->insert([
+                'id'        => 1,
+                'parent_id' => 999,
+            ]);
 
-        $this->db->table('cv_child')->insert([
-            'id'        => 1,
-            'parent_id' => 999,
-        ]);
+            $this->fail('Expected database exception was not thrown.');
+        } catch (DatabaseException $e) {
+            $actualException = $e::class;
+
+            $this->assertSame($expectedException, $actualException);
+        }
     }
 
     public function testStoresNotNullConstraintViolationExceptionWithDebugDisabled(): void
