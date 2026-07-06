@@ -783,26 +783,26 @@ class CURLRequest extends OutgoingRequest
      */
     private function applyProtocolOptions(array $curlOptions, array $config): array
     {
-        // version
-        $version = $config['version'] ?? null;
+        if (empty($config['version'])) {
+            return $curlOptions;
+        }
 
-        if ((bool) $version) {
-            $version = sprintf('%.1F', $version);
+        $version = sprintf('%.1F', (float) $config['version']);
 
-            if (! defined('CURL_HTTP_VERSION_3')) {
-                define('CURL_HTTP_VERSION_3', 30);
-            }
+        if ($version === '3.0' && ! defined('CURL_HTTP_VERSION_3')) {
+            define('CURL_HTTP_VERSION_3', 30);
+        }
 
-            $versions = [
-                '1.0' => CURL_HTTP_VERSION_1_0,
-                '1.1' => CURL_HTTP_VERSION_1_1,
-                '2.0' => CURL_HTTP_VERSION_2_0,
-                '3.0' => CURL_HTTP_VERSION_3,
-            ];
+        $curlVersion = match ($version) {
+            '1.0'   => CURL_HTTP_VERSION_1_0,
+            '1.1'   => CURL_HTTP_VERSION_1_1,
+            '2.0'   => CURL_HTTP_VERSION_2_0,
+            '3.0'   => CURL_HTTP_VERSION_3,
+            default => null,
+        };
 
-            if (isset($versions[$version])) {
-                $curlOptions[CURLOPT_HTTP_VERSION] = $versions[$version];
-            }
+        if ($curlVersion !== null) {
+            $curlOptions[CURLOPT_HTTP_VERSION] = $curlVersion;
         }
 
         return $curlOptions;
