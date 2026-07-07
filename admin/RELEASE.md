@@ -18,17 +18,18 @@
 
 ## Merge `develop` branch into next minor version branch `4.y`
 
-Before starting release process, if there are commits in `develop` branch that
+Before starting the release process, if there are commits in `develop` branch that
 are not merged into `4.y` branch, merge them. This is because if conflicts occur,
 merging will take time.
 
-```console
-git fetch upstream
-git switch 4.y
-git merge upstream/4.y
-git merge upstream/develop
-git push upstream HEAD
-```
+* [ ] Merge `develop` into `4.y`:
+    ```console
+    git fetch upstream
+    git switch 4.y
+    git merge upstream/4.y
+    git merge upstream/develop
+    git push upstream HEAD
+    ```
 
 ## [Minor version only] Merge minor version branch into `develop`
 
@@ -118,16 +119,16 @@ the existing content.
     * Create a new branch `release-4.x.x`
     * Update **system/CodeIgniter.php** with the new version number:
       `const CI_VERSION = '4.x.x';`
-    * Update **user_guide_src/source/conf.py** with the new `version = '4.x'` (if releasing
-      the minor version) and `release = '4.x.x'`.
+    * Update **user_guide_src/source/conf.py** with the new `version = '4.x'`
+      and `release = '4.x.x'`.
     * Update **user_guide_src/source/changelogs/{version}.rst**
       * Set the date to format `Release Date: January 31, 2021`
     * Update **phpdoc.dist.xml** with the new `<title>CodeIgniter v4.x API</title>`
       and `<version number="4.x.x">`
     * Update **admin/starter/builds**:
       * Set `define('LATEST_RELEASE', '^4.x')`
-      * Set `define('NEXT_MINOR', '4.y-dev')`.
-      * If the major version changes, you need to manually change to `define('NEXT_MINOR', '5.0-dev')`.
+      * Set `define('NEXT_MINOR', '^4.y-dev')`.
+      * If the major version changes, you need to manually change to `define('NEXT_MINOR', '^5.0-dev')`.
     * Commit the changes with `Prep for 4.x.x release`
 * [ ] Create a new PR from `release-4.x.x` to `develop`:
   * Title: `Prep for 4.x.x release`
@@ -234,26 +235,31 @@ sudo pip3 install sphinx_rtd_theme
 
 ### Manual User Guide Process
 
-* Still in the **CodeIgniter4** repo enter the **user_guide_src** directory
-* Clear out any old build files: `rm -rf build/`
-* Build the HTML version of the User Guide: `make html`
-* Build the ePub version of the User Guide: `make epub`
-* Switch to the **userguide** repo and create a new branch `release-4.x.x`
-* Replace **docs/** with **CodeIgniter4/user_guide_src/build/html**
-* Ensure the file **docs/.nojekyll** exists or GitHub Pages will ignore folders
+> [!NOTE]
+> This process is normally not needed. The "Deploy Distributable Repos" action
+> builds and deploys the User Guide automatically when a release is published.
+> Follow these steps only if the automatic deployment fails.
+
+* [ ] Still in the **CodeIgniter4** repo enter the **user_guide_src** directory
+* [ ] Clear out any old build files: `rm -rf build/`
+* [ ] Build the HTML version of the User Guide: `make html`
+* [ ] Build the ePub version of the User Guide: `make epub`
+* [ ] Switch to the **userguide** repo and create a new branch `release-4.x.x`
+* [ ] Replace **docs/** with **CodeIgniter4/user_guide_src/build/html**
+* [ ] Ensure the file **docs/.nojekyll** exists or GitHub Pages will ignore folders
   with an underscore prefix
-* Copy **CodeIgniter4/user_guide_src/build/epub/CodeIgniter.epub** to
+* [ ] Copy **CodeIgniter4/user_guide_src/build/epub/CodeIgniter.epub** to
   **./CodeIgniter4.x.x.epub**
-* Commit the changes with "Update for 4.x.x" and push to origin
-* Create a new PR from `release-4.x.x` to `develop`:
+* [ ] Commit the changes with "Update for 4.x.x" and push to origin
+* [ ] Create a new PR from `release-4.x.x` to `develop`:
   * Title: "Update for 4.x.x"
   * Description: blank
-* Merge the PR
-* Create a new Release:
+* [ ] Merge the PR
+* [ ] Create a new Release:
   * Version: "v4.x.x"
   * Title: "CodeIgniter 4.x.x User Guide"
   * Description: "CodeIgniter 4.x.x User Guide"
-* Watch for the "github pages" Environment to make sure the deployment succeeds
+* [ ] Watch for the "github pages" Environment to make sure the deployment succeeds
 
 The User Guide website should update itself via the deploy GitHub Action. Should
 this fail the server must be updated manually. See repo and hosting details in
