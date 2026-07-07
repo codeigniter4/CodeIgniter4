@@ -91,7 +91,7 @@ return Architecture::define()
         'Controller'    => ['HTTP', 'Validation'],
         'Cookie'        => ['I18n'],
         'Database'      => ['Entity', 'Events', 'I18n'],
-        'DataCaster'    => ['I18n', 'URI', 'Database'],
+        'DataCaster'    => ['I18n', 'URI', 'Database', 'Encryption'],
         'DataConverter' => ['DataCaster'],
         'Email'         => ['I18n', 'Events'],
         'Entity'        => ['DataCaster', 'I18n'],

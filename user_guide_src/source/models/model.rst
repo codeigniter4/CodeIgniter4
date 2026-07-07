@@ -426,6 +426,8 @@ of type to mark the field as nullable, i.e., ``?int``, ``?datetime``.
 +---------------+----------------+---------------------------+
 |``enum``       | Enum           | string/int type           |
 +---------------+----------------+---------------------------+
+|``encrypted``  | string         | string/text type          |
++---------------+----------------+---------------------------+
 
 float
 -----
@@ -488,6 +490,46 @@ Enum casting supports:
 
 * **Backed enums** (string or int) - The backing value is stored in the database
 * **Unit enums** - The case name is stored in the database as a string
+
+.. _model-field-casting-encrypted:
+
+encrypted
+---------
+
+.. versionadded:: 4.8.0
+
+Casting as ``encrypted`` encrypts string values before they are stored and
+decrypts them when they are retrieved. It uses the
+:doc:`Encryption </libraries/encryption>` service, so you must configure an
+encryption key before using it. The configured key is required for both writing
+new values and reading stored values back. The ``encrypted`` type accepts string
+values. Use ``?encrypted`` for nullable values.
+
+.. literalinclude:: model/069.php
+
+Encrypted values are stored as Base64-encoded ciphertext. Use a ``TEXT`` column
+or a sufficiently large string column because the stored value is longer than
+the plain text value. Avoid narrow columns like ``VARCHAR(255)`` unless you have
+verified the maximum encrypted length for the values you will store.
+
+.. warning:: Encrypted values cannot be searched, sorted, filtered, or checked
+    for uniqueness by their plain text value in the database.
+
+.. warning:: Do not use encrypted casting for passwords. Passwords should be
+    hashed with PHP's password hashing functions.
+
+.. note:: Model validation and write callbacks receive the encrypted value
+    because Model Field Casting converts values before they are stored. Validate
+    the plain text value before passing it to the Model when validation must
+    inspect the plain text.
+
+.. note:: If the stored value cannot be decrypted, an ``EncryptionException`` is
+    thrown.
+
+.. note:: If you rotate encryption keys, values encrypted with a previous key can
+    be decrypted when that key is configured in ``previousKeys``. Save the value
+    again to re-encrypt it with the current key. See :ref:`spark-key-rotate` for
+    rotating keys.
 
 Custom Casting
 ==============
