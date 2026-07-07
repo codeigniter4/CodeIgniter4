@@ -53,6 +53,7 @@ update your implementations to include the new methods or method changes to ensu
 
 - **Cache:** ``CodeIgniter\Cache\CacheInterface::remember()`` now accepts a TTL callable. Custom implementations of ``CacheInterface`` must update the ``$ttl`` parameter type from ``int`` to ``callable|int``.
 - **Database:** ``CodeIgniter\Database\ConnectionInterface`` now requires the ``afterCommit()``, ``afterRollback()``, ``inTransaction()``, and ``transaction()`` methods.
+- **HTTP:** ``CodeIgniter\HTTP\ResponseInterface`` now requires the ``stream()`` and ``eventStream()`` methods, which create streaming and SSE responses. See :ref:`streaming-responses`.
 - **Logging:** ``CodeIgniter\Log\Handlers\HandlerInterface::handle()`` now requires a third parameter ``array $context = []``. Any custom log handler that overrides ``handle()`` - whether implementing ``HandlerInterface`` directly or extending a built-in handler class - must add the parameter to its ``handle()`` method signature.
 - **Security:** The ``SecurityInterface``'s ``verify()`` method now has a native return type of ``static``.
 - **Validation:** ``CodeIgniter\Validation\ValidationInterface`` now requires the ``getValidatedInput()`` method, which returns a ``CodeIgniter\Input\ValidatedInput`` instance.

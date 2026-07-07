@@ -274,9 +274,11 @@ filters still run and may set headers, but they must not rely on the response
 body. View rendering and decorators are not applied - stream your output in
 the callback.
 
-Since the body length is unknown in advance, no ``Content-Length`` header is
-sent. The client cannot display download progress, and interrupted transfers
-cannot be resumed.
+``StreamResponse`` does not set a ``Content-Length`` header by default, since
+the body length is typically unknown in advance. Without it, clients cannot
+display download progress or resume interrupted transfers. If you do know the
+total size (for example, when proxying a stream of known length), you may set
+``Content-Length`` yourself before returning the response.
 
 .. note:: To serve an existing file, prefer :ref:`DownloadResponse <force-file-download>`,
     which sends proper ``Content-Length`` and ``Content-Disposition`` headers.
