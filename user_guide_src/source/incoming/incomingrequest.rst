@@ -409,7 +409,7 @@ The methods provided by the parent classes that are available are:
 
     .. php:method:: getGet([$index = null[, $filter = null[, $flags = null]]])
 
-        :param  string  $index: The name of the variable/key to look for.
+        :param  array|string  $index: The name of the variable/key to look for, or an array of names.
         :param  int     $filter: The type of filter to apply. A list of filters can be found in
                         `Types of filters <https://www.php.net/manual/en/filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found in
@@ -453,7 +453,7 @@ The methods provided by the parent classes that are available are:
 
     .. php:method:: getPost([$index = null[, $filter = null[, $flags = null]]])
 
-        :param  string  $index: The name of the variable/key to look for.
+        :param  array|string  $index: The name of the variable/key to look for, or an array of names.
         :param  int     $filter: The type of filter to apply. A list of filters can be
                         found `here <https://www.php.net/manual/en/filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found
@@ -465,7 +465,7 @@ The methods provided by the parent classes that are available are:
 
     .. php:method:: getPostGet([$index = null[, $filter = null[, $flags = null]]])
 
-        :param  string  $index: The name of the variable/key to look for.
+        :param  array|string  $index: The name of the variable/key to look for, or an array of names.
         :param  int     $filter: The type of filter to apply. A list of filters can be found in
                         `Types of filters <https://www.php.net/manual/en/filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found in
@@ -480,12 +480,15 @@ The methods provided by the parent classes that are available are:
 
         .. literalinclude:: incomingrequest/032.php
 
+        If an array of indexes is specified, the method returns an associative array and applies
+        the POST-then-GET lookup order to each index.
+
         If no index is specified, it will return both POST and GET streams combined.
         Although POST data will be preferred in case of name conflict.
 
     .. php:method:: getGetPost([$index = null[, $filter = null[, $flags = null]]])
 
-        :param  string  $index: The name of the variable/key to look for.
+        :param  array|string  $index: The name of the variable/key to look for, or an array of names.
         :param  int     $filter: The type of filter to apply. A list of filters can be found in
                         `Types of filters <https://www.php.net/manual/en/filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found in
@@ -499,6 +502,9 @@ The methods provided by the parent classes that are available are:
         then in POST:
 
         .. literalinclude:: incomingrequest/033.php
+
+        If an array of indexes is specified, the method returns an associative array and applies
+        the GET-then-POST lookup order to each index.
 
         If no index is specified, it will return both GET and POST streams combined.
         Although GET data will be preferred in case of name conflict.
