@@ -81,7 +81,7 @@ final class StreamResponseTest extends CIUnitTestCase
     public function testConstructorTreatsCallableIterableAsCallable(): void
     {
         // An array callable is both callable and iterable; callable must win.
-        $response = new StreamResponse([$this, 'writeHello']);
+        $response = new StreamResponse($this->writeHello(...));
         $response->pretend();
 
         ob_start();
