@@ -256,12 +256,12 @@ Scalar Type Casting
 -------------------
 
 Properties can be cast to any of the following data types:
-**integer**, **float**, **double**, **string**, **boolean**, **object**, **array**, **datetime**, **timestamp**, **uri**, **int-bool**, **enum** and **encrypted**.
+**integer**, **float**, **double**, **string**, **boolean**, **object**, **array**, **datetime**, **timestamp**, **uri**, **int-bool**, **enum**, **encrypted**, **encrypted-json** and **encrypted-json-array**.
 Add a question mark at the beginning of type to mark property as nullable, i.e., **?string**, **?integer**.
 
 .. note:: **int-bool** can be used since v4.3.0.
 .. note:: **enum** can be used since v4.7.0.
-.. note:: **encrypted** can be used since v4.8.0.
+.. note:: **encrypted**, **encrypted-json** and **encrypted-json-array** can be used since v4.8.0.
 .. note:: Since v4.8.0, you can also pass parameters to **float** and **double** types to specify the number of decimal places and rounding mode, i.e., **float[2,even]**.
 
 For example, if you had a User entity with an ``is_banned`` property, you can cast it as a boolean:
@@ -348,6 +348,12 @@ values back. The ``encrypted`` type accepts string values. Use ``?encrypted``
 for nullable values.
 
 .. literalinclude:: entities/029.php
+
+The ``encrypted-json`` and ``encrypted-json-array`` types JSON encode values
+before encryption and JSON decode them after decryption. The ``encrypted-json``
+type returns ``stdClass`` values, while ``encrypted-json-array`` returns arrays.
+Use ``?encrypted-json`` and ``?encrypted-json-array`` for nullable values. These
+values are still stored as encrypted text, not as queryable database JSON.
 
 Encrypted values are stored as Base64-encoded ciphertext. Use a ``TEXT`` column
 or a sufficiently large string column because the stored value is longer than
