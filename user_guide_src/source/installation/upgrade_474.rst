@@ -12,10 +12,6 @@ Please refer to the upgrade instructions corresponding to your installation meth
     :local:
     :depth: 2
 
-**********************
-Mandatory File Changes
-**********************
-
 ****************
 Breaking Changes
 ****************
@@ -47,10 +43,6 @@ non-HTTPS, which may result in redirect loops.
     IPv4-mapped form to ``Config\App::$proxyIPs``, e.g.,
     ``::ffff:192.168.5.21`` or ``::ffff:192.168.5.0/120``.
 
-*********************
-Breaking Enhancements
-*********************
-
 *************
 Project Files
 *************
@@ -71,7 +63,7 @@ and it is recommended that you merge the updated versions with your application:
 Config
 ------
 
-- @TODO
+- No config files were changed in this release.
 
 All Changes
 ===========
@@ -79,4 +71,4 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- @TODO
+- No project files were changed in this release.
