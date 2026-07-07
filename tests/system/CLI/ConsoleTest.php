@@ -136,7 +136,7 @@ final class ConsoleTest extends CIUnitTestCase
         $this->initializeConsole('env', '--help');
         (new Console())->run();
 
-        $this->assertStringContainsString('env [<environment>]', $this->getStreamFilterBuffer());
+        $this->assertStringContainsString('env [options] [--] [<environment>]', $this->getStreamFilterBuffer());
         $this->assertStringContainsString(
             'Retrieves the current environment, or set a new one.',
             $this->getStreamFilterBuffer(),
