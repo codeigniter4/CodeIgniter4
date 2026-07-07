@@ -85,6 +85,7 @@ Bugs Fixed
 - **Database:** Fixed a bug in ``BaseUtils::getXMLFromResult()`` where database values of ``0`` or ``'0'`` were treated as empty and omitted from the generated XML export.
 - **Encryption:** Fixed bugs in ``SodiumHandler`` where runtime ``blockSize`` overrides without ``key`` were handled incorrectly, invalid key lengths could leak native Sodium errors, and mismatched decrypt ``blockSize`` values could throw ``SodiumException`` instead of ``EncryptionException``.
 - **Filters:** Fixed a bug in ``InvalidChars`` filter where invalid UTF-8 or control characters in array keys were not checked.
+- **HTTP:** Fixed a bug where ``IncomingRequest::getPostGet()`` and ``IncomingRequest::getGetPost()`` threw a ``TypeError`` when passed an array of indexes.
 - **HTTP:** Fixed a bug where the User Agent library reported Safari's WebKit version instead of the browser version from the ``Version`` token.
 - **Model:** Fixed a bug in ``Model::objectToRawArray()`` where the ``$recursive`` parameter was ignored.
 - **Security:** Fixed a bug where ``CheckPhpIni`` could raise a type error when ``ini_get_all()`` returned ``null`` for a configured directive value.

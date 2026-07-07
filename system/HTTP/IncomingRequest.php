@@ -602,6 +602,16 @@ class IncomingRequest extends Request
             return array_merge($this->getGet($index, $filter, $flags), $this->getPost($index, $filter, $flags));
         }
 
+        if (is_array($index)) {
+            $output = [];
+
+            foreach ($index as $key) {
+                $output[$key] = $this->getPostGet($key, $filter, $flags);
+            }
+
+            return $output;
+        }
+
         // Use $_POST directly here, since filter_has_var only
         // checks the initial POST data, not anything that might
         // have been added since.
@@ -623,6 +633,16 @@ class IncomingRequest extends Request
     {
         if ($index === null) {
             return array_merge($this->getPost($index, $filter, $flags), $this->getGet($index, $filter, $flags));
+        }
+
+        if (is_array($index)) {
+            $output = [];
+
+            foreach ($index as $key) {
+                $output[$key] = $this->getGetPost($key, $filter, $flags);
+            }
+
+            return $output;
         }
 
         // Use $_GET directly here, since filter_has_var only
