@@ -2,7 +2,7 @@
 
 use CodeIgniter\HTTP\SSEResponse;
 
-$sse = new SSEResponse(static function (SSEResponse $sse) {
+$sse = $this->response->eventStream(static function (SSEResponse $sse) {
     $sse->comment('keep-alive');
 
     foreach (['one', 'two', 'three', 'four'] as $text) {

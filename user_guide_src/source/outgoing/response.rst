@@ -231,6 +231,61 @@ Some browsers can display files such as PDF. To tell the browser to display the 
 
 .. literalinclude:: response/033.php
 
+.. _streaming-responses:
+
+Streaming Responses
+===================
+
+.. versionadded:: 4.8.0
+
+CodeIgniter provides a ``StreamResponse`` class that streams its body to the
+client as it is generated, instead of buffering the complete body first. This
+is useful for large dataset exports, AI/LLM token streaming, proxying upstream
+streams, or any content that is produced while it is being sent. Streaming
+keeps memory usage low and improves time-to-first-byte for large responses.
+
+Use the ``$this->response->stream()`` method with a callback:
+
+.. literalinclude:: response/039.php
+
+The callback receives the ``StreamResponse`` instance. ``StreamResponse::write()``
+returns ``false`` once the client has disconnected, so you can stop producing
+output early. By default, every ``write()`` flushes output to the client
+immediately. When writing many small chunks, pass ``false`` as the second
+argument and call ``StreamResponse::flush()`` at intervals instead.
+
+Alternatively, you may pass an iterable of string chunks (such as a generator),
+and each chunk is written and flushed in order:
+
+.. literalinclude:: response/040.php
+
+Headers and Status Code
+-----------------------
+
+Set the content type, status code, and any custom headers **before** returning
+the response - anything set inside the callback will be too late. Unless you
+have already set them, ``StreamResponse`` applies ``X-Accel-Buffering: no`` and
+``Content-Encoding: identity`` to discourage intermediaries from buffering or
+compressing the stream.
+
+The response is streamed: output buffering is disabled, the PHP time limit is
+removed, and the session is closed to avoid blocking other requests. After
+filters still run and may set headers, but they must not rely on the response
+body. View rendering and decorators are not applied - stream your output in
+the callback.
+
+Since the body length is unknown in advance, no ``Content-Length`` header is
+sent. The client cannot display download progress, and interrupted transfers
+cannot be resumed.
+
+.. note:: To serve an existing file, prefer :ref:`DownloadResponse <force-file-download>`,
+    which sends proper ``Content-Length`` and ``Content-Disposition`` headers.
+    Use ``StreamResponse`` when the content is generated while it is being sent.
+
+The :ref:`development server <sse-development-server>` and
+:ref:`production <sse-production>` considerations described for SSE below apply
+to all streaming responses.
+
 .. _server-sent-events:
 
 Server-Sent Events (SSE)
@@ -241,7 +296,11 @@ Server-Sent Events (SSE)
 CodeIgniter provides an ``SSEResponse`` for streaming
 `Server-Sent Events <https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events>`_
 over HTTP. This is useful for long-lived connections where the server pushes
-events to the client.
+events to the client. ``SSEResponse`` is a specialized
+:ref:`StreamResponse <streaming-responses>` that formats output according to
+the SSE protocol and forces the appropriate headers. Create it via the
+``$this->response->eventStream()`` factory method, or instantiate
+``new SSEResponse(...)`` directly.
 
 .. literalinclude:: response/036.php
 
@@ -266,6 +325,8 @@ use comments for keep-alive and configure the client retry interval:
 
 .. literalinclude:: response/037.php
 
+.. _sse-development-server:
+
 Development Server Limitations
 ------------------------------
 
@@ -288,6 +349,8 @@ requests better, such as Apache, nginx with PHP-FPM, or FrankenPHP.
 
 This behavior is a limitation of the development server environment, not of
 ``SSEResponse`` itself.
+
+.. _sse-production:
 
 Production Considerations
 -------------------------

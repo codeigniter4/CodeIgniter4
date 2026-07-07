@@ -21,16 +21,16 @@ use JsonException;
  *
  * @see \CodeIgniter\HTTP\SSEResponseTest
  */
-class SSEResponse extends Response implements NonBufferedResponseInterface
+class SSEResponse extends StreamResponse
 {
     /**
      * Constructor.
      *
      * @param Closure(SSEResponse): void $callback
      */
-    public function __construct(private readonly Closure $callback)
+    public function __construct(Closure $callback)
     {
-        parent::__construct();
+        parent::__construct($callback);
     }
 
     /**
@@ -42,7 +42,7 @@ class SSEResponse extends Response implements NonBufferedResponseInterface
      */
     public function event(array|string $data, ?string $event = null, ?string $id = null): bool
     {
-        if ($this->isConnectionAborted()) {
+        if (! $this->isClientConnected()) {
             return false;
         }
 
@@ -76,10 +76,6 @@ class SSEResponse extends Response implements NonBufferedResponseInterface
      */
     public function comment(string $text): bool
     {
-        if ($this->isConnectionAborted()) {
-            return false;
-        }
-
         return $this->write($this->formatMultiline('', $text));
     }
 
@@ -90,19 +86,7 @@ class SSEResponse extends Response implements NonBufferedResponseInterface
      */
     public function retry(int $milliseconds): bool
     {
-        if ($this->isConnectionAborted()) {
-            return false;
-        }
-
         return $this->write("retry: {$milliseconds}\n\n");
-    }
-
-    /**
-     * Check if the client connection has been lost.
-     */
-    private function isConnectionAborted(): bool
-    {
-        return connection_status() !== CONNECTION_NORMAL || connection_aborted() === 1;
     }
 
     /**
@@ -131,45 +115,13 @@ class SSEResponse extends Response implements NonBufferedResponseInterface
     }
 
     /**
-     * Write raw SSE output and flush.
-     */
-    private function write(string $output): bool
-    {
-        echo $output;
-
-        if (! service('environment')->isTesting()) {
-            if (ob_get_level() > 0) {
-                ob_flush();
-            }
-
-            flush();
-        }
-
-        return true;
-    }
-
-    /**
      * {@inheritDoc}
      *
-     * @return $this
+     * SSE headers are fixed by the protocol, so they override
+     * anything set on the response.
      */
-    public function send()
+    protected function prepareStreamHeaders(): void
     {
-        // Turn off output buffering completely, even if php.ini output_buffering is not off
-        if (! service('environment')->isTesting()) {
-            set_time_limit(0);
-            ini_set('zlib.output_compression', 'Off');
-
-            while (ob_get_level() > 0) {
-                ob_end_clean();
-            }
-        }
-
-        // Close session if active to prevent blocking other requests
-        if (session_status() === PHP_SESSION_ACTIVE) {
-            session_write_close();
-        }
-
         $this->setContentType('text/event-stream', 'UTF-8');
         $this->removeHeader('Cache-Control');
         $this->setHeader('Cache-Control', 'no-cache');
@@ -180,25 +132,5 @@ class SSEResponse extends Response implements NonBufferedResponseInterface
         if (version_compare($this->getProtocolVersion(), '2.0', '<')) {
             $this->setHeader('Connection', 'keep-alive');
         }
-
-        // Intentionally skip CSP finalize: no HTML/JS execution in SSE streams.
-        $this->sendHeaders();
-        $this->sendCookies();
-
-        ($this->callback)($this);
-
-        return $this;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * No-op — body is streamed via the callback, not stored.
-     *
-     * @return $this
-     */
-    public function sendBody()
-    {
-        return $this;
     }
 }
