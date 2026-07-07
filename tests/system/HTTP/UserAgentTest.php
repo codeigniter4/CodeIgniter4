@@ -74,8 +74,36 @@ final class UserAgentTest extends CIUnitTestCase
     {
         $this->assertSame('Mac OS X', $this->agent->getPlatform());
         $this->assertSame('Safari', $this->agent->getBrowser());
-        $this->assertSame('533.20.27', $this->agent->getVersion());
+        $this->assertSame('5.0.4', $this->agent->getVersion());
         $this->assertSame('', $this->agent->getRobot());
+    }
+
+    public function testParseModernSafariUsesVersionToken(): void
+    {
+        $this->agent->parse('Mozilla/5.0 (Macintosh; Intel Mac OS X 13_2) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.3 Safari/605.1.15');
+
+        $this->assertSame('Mac OS X', $this->agent->getPlatform());
+        $this->assertSame('Safari', $this->agent->getBrowser());
+        $this->assertSame('16.3', $this->agent->getVersion());
+    }
+
+    public function testParseMobileSafariUsesVersionToken(): void
+    {
+        $this->agent->parse($this->_mobile_ua);
+
+        $this->assertSame('iOS', $this->agent->getPlatform());
+        $this->assertSame('Safari', $this->agent->getBrowser());
+        $this->assertSame('4.0.5', $this->agent->getVersion());
+        $this->assertSame('Apple iPhone', $this->agent->getMobile());
+    }
+
+    public function testParseChromeWithSafariTokenUsesChromeVersion(): void
+    {
+        $this->agent->parse('Mozilla/5.0 (Macintosh; Intel Mac OS X 13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36');
+
+        $this->assertSame('Mac OS X', $this->agent->getPlatform());
+        $this->assertSame('Chrome', $this->agent->getBrowser());
+        $this->assertSame('110.0.0.0', $this->agent->getVersion());
     }
 
     public function testParse(): void

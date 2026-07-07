@@ -266,6 +266,91 @@ class FileRulesTest extends CIUnitTestCase
         $this->assertTrue($this->validation->run([]));
     }
 
+    public function testIsImageFailsForMismatchedClientExtension(): void
+    {
+        $payload = $this->createGifPayload();
+
+        try {
+            $this->setUploadedAvatar($payload, 'shell.php');
+
+            $this->validation->setRules(['avatar' => 'is_image[avatar]']);
+            $this->assertFalse($this->validation->run([]));
+        } finally {
+            unlink($payload);
+        }
+    }
+
+    public function testIsImageFailsForNonImageClientExtension(): void
+    {
+        $payload = $this->createGifPayload();
+
+        try {
+            $this->setUploadedAvatar($payload, 'document.pdf');
+
+            $this->validation->setRules(['avatar' => 'is_image[avatar]']);
+            $this->assertFalse($this->validation->run([]));
+        } finally {
+            unlink($payload);
+        }
+    }
+
+    public function testIsImageAllowsImageClientExtensionThatDoesNotMatchContent(): void
+    {
+        $payload = $this->createGifPayload();
+
+        try {
+            $this->setUploadedAvatar($payload, 'my-avatar.jpg');
+
+            $this->validation->setRules(['avatar' => 'is_image[avatar]']);
+            $this->assertTrue($this->validation->run([]));
+        } finally {
+            unlink($payload);
+        }
+    }
+
+    public function testIsImageAllowsExtensionlessClientFilename(): void
+    {
+        $payload = $this->createGifPayload();
+
+        try {
+            $this->setUploadedAvatar($payload, 'blob');
+
+            $this->validation->setRules(['avatar' => 'is_image[avatar]']);
+            $this->assertTrue($this->validation->run([]));
+        } finally {
+            unlink($payload);
+        }
+    }
+
+    public function testIsImageAllowsSvg(): void
+    {
+        $payload = $this->createSvgPayload();
+
+        try {
+            $this->setUploadedAvatar($payload, 'my-avatar.svg', 'image/svg+xml');
+
+            $this->validation->setRules(['avatar' => 'is_image[avatar]']);
+            $this->assertTrue($this->validation->run([]));
+        } finally {
+            unlink($payload);
+        }
+    }
+
+    public function testIsImageFailsForNonImageContent(): void
+    {
+        $payload = $this->createPhpPayload();
+
+        try {
+            // An image extension is not enough; the file content must be an image too.
+            $this->setUploadedAvatar($payload, 'fake.gif');
+
+            $this->validation->setRules(['avatar' => 'is_image[avatar]']);
+            $this->assertFalse($this->validation->run([]));
+        } finally {
+            unlink($payload);
+        }
+    }
+
     public function testIsntImage(): void
     {
         $_FILES['stuff'] = [
@@ -292,6 +377,62 @@ class FileRulesTest extends CIUnitTestCase
             'avatar' => 'mime_in[avatar,image/jpg,image/jpeg,image/gif,image/png]',
         ]);
         $this->assertTrue($this->validation->run([]));
+    }
+
+    public function testMimeTypeFailsForMismatchedClientExtension(): void
+    {
+        $payload = $this->createGifPayload();
+
+        try {
+            $this->setUploadedAvatar($payload, 'shell.php');
+
+            $this->validation->setRules(['avatar' => 'mime_in[avatar,image/gif]']);
+            $this->assertFalse($this->validation->run([]));
+        } finally {
+            unlink($payload);
+        }
+    }
+
+    public function testMimeTypeFailsForIncompatibleClientExtension(): void
+    {
+        $payload = $this->createGifPayload();
+
+        try {
+            $this->setUploadedAvatar($payload, 'document.pdf');
+
+            $this->validation->setRules(['avatar' => 'mime_in[avatar,image/gif]']);
+            $this->assertFalse($this->validation->run([]));
+        } finally {
+            unlink($payload);
+        }
+    }
+
+    public function testMimeTypeFailsForAllowedClientExtensionThatDoesNotMatchContent(): void
+    {
+        $payload = $this->createGifPayload();
+
+        try {
+            $this->setUploadedAvatar($payload, 'my-avatar.jpg');
+
+            $this->validation->setRules(['avatar' => 'mime_in[avatar,image/gif,image/jpeg]']);
+            $this->assertFalse($this->validation->run([]));
+        } finally {
+            unlink($payload);
+        }
+    }
+
+    public function testMimeTypeAllowsExtensionlessClientFilename(): void
+    {
+        $payload = $this->createGifPayload();
+
+        try {
+            $this->setUploadedAvatar($payload, 'blob');
+
+            $this->validation->setRules(['avatar' => 'mime_in[avatar,image/gif]']);
+            $this->assertTrue($this->validation->run([]));
+        } finally {
+            unlink($payload);
+        }
     }
 
     public function testMimeTypeNotOk(): void
@@ -397,14 +538,34 @@ class FileRulesTest extends CIUnitTestCase
         return $payload;
     }
 
-    private function setUploadedAvatar(string $payload, string $name): void
+    private function createPhpPayload(): string
+    {
+        $payload = tempnam(sys_get_temp_dir(), 'ci4-upload-poc-');
+        $this->assertIsString($payload);
+
+        file_put_contents($payload, "<?php echo 'pwned'; ?>\n");
+
+        return $payload;
+    }
+
+    private function createSvgPayload(): string
+    {
+        $payload = tempnam(sys_get_temp_dir(), 'ci4-upload-poc-');
+        $this->assertIsString($payload);
+
+        file_put_contents($payload, '<?xml version="1.0"?><svg xmlns="http://www.w3.org/2000/svg" width="1" height="1"></svg>');
+
+        return $payload;
+    }
+
+    private function setUploadedAvatar(string $payload, string $name, string $clientMimeType = 'image/gif'): void
     {
         service('superglobals')->setFilesArray([
             'avatar' => [
                 'tmp_name' => $payload,
                 'name'     => $name,
                 'size'     => filesize($payload),
-                'type'     => 'image/gif',
+                'type'     => $clientMimeType,
                 'error'    => UPLOAD_ERR_OK,
             ],
         ]);

@@ -272,6 +272,10 @@ class IncomingRequest extends Request
             return true;
         }
 
+        if (! $this->isFromTrustedProxy()) {
+            return false;
+        }
+
         if ($this->hasHeader('X-Forwarded-Proto') && $this->header('X-Forwarded-Proto')->getValue() === 'https') {
             return true;
         }
@@ -363,7 +367,7 @@ class IncomingRequest extends Request
      * @param int|null          $filter Filter constant
      * @param array|int|null    $flags
      *
-     * @return array|bool|float|int|stdClass|string|null
+     * @return array<int|string, mixed>|bool|float|int|stdClass|string|null
      */
     public function getVar($index = null, $filter = null, $flags = null)
     {
@@ -390,7 +394,7 @@ class IncomingRequest extends Request
      *
      * @see http://php.net/manual/en/function.json-decode.php
      *
-     * @return array|bool|float|int|stdClass|null
+     * @return array<int|string, mixed>|bool|float|int|stdClass|null
      *
      * @throws HTTPException When the body is invalid as JSON.
      */
@@ -417,7 +421,7 @@ class IncomingRequest extends Request
      * @param int|null          $filter Filter Constant
      * @param array|int|null    $flags  Option
      *
-     * @return array|bool|float|int|stdClass|string|null
+     * @return array<int|string, mixed>|bool|float|int|stdClass|string|null
      */
     public function getJsonVar($index = null, bool $assoc = false, ?int $filter = null, $flags = null)
     {
@@ -508,7 +512,7 @@ class IncomingRequest extends Request
      * @param int|null          $filter Filter Constant
      * @param array|int|null    $flags  Option
      *
-     * @return array|bool|float|int|object|string|null
+     * @return mixed
      */
     public function getRawInputVar($index = null, ?int $filter = null, $flags = null)
     {
@@ -562,7 +566,7 @@ class IncomingRequest extends Request
      * @param int|null          $filter A filter name to apply.
      * @param array|int|null    $flags
      *
-     * @return array|bool|float|int|object|string|null
+     * @return mixed
      */
     public function getGet($index = null, $filter = null, $flags = null)
     {
@@ -576,7 +580,7 @@ class IncomingRequest extends Request
      * @param int|null          $filter A filter name to apply
      * @param array|int|null    $flags
      *
-     * @return array|bool|float|int|object|string|null
+     * @return mixed
      */
     public function getPost($index = null, $filter = null, $flags = null)
     {
@@ -590,12 +594,22 @@ class IncomingRequest extends Request
      * @param int|null          $filter A filter name to apply
      * @param array|int|null    $flags
      *
-     * @return array|bool|float|int|object|string|null
+     * @return mixed
      */
     public function getPostGet($index = null, $filter = null, $flags = null)
     {
         if ($index === null) {
             return array_merge($this->getGet($index, $filter, $flags), $this->getPost($index, $filter, $flags));
+        }
+
+        if (is_array($index)) {
+            $output = [];
+
+            foreach ($index as $key) {
+                $output[$key] = $this->getPostGet($key, $filter, $flags);
+            }
+
+            return $output;
         }
 
         // Use $_POST directly here, since filter_has_var only
@@ -613,12 +627,22 @@ class IncomingRequest extends Request
      * @param int|null          $filter A filter name to apply
      * @param array|int|null    $flags
      *
-     * @return array|bool|float|int|object|string|null
+     * @return mixed
      */
     public function getGetPost($index = null, $filter = null, $flags = null)
     {
         if ($index === null) {
             return array_merge($this->getPost($index, $filter, $flags), $this->getGet($index, $filter, $flags));
+        }
+
+        if (is_array($index)) {
+            $output = [];
+
+            foreach ($index as $key) {
+                $output[$key] = $this->getGetPost($key, $filter, $flags);
+            }
+
+            return $output;
         }
 
         // Use $_GET directly here, since filter_has_var only
@@ -636,7 +660,7 @@ class IncomingRequest extends Request
      * @param int|null          $filter A filter name to be applied
      * @param array|int|null    $flags
      *
-     * @return array|bool|float|int|object|string|null
+     * @return mixed
      */
     public function getCookie($index = null, $filter = null, $flags = null)
     {

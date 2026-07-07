@@ -42,6 +42,14 @@ The available Handlers are as follows:
    On Windows, the ImageMagick handler requires **absolute file paths** when
    loading images (for example, using ``WRITEPATH`` or ``FCPATH``).
 
+.. warning::
+    Do not let user input directly decide the image source path, storage
+    directory, or filename. This includes values passed to methods like
+    ``save()``, ``copy()`` and others, and any path or filename used to store
+    processed images. Use directories controlled by your application, and
+    generate filenames yourself or sanitize them with
+    :php:func:`sanitize_filename`.
+
 *******************
 Processing an Image
 *******************
@@ -90,6 +98,10 @@ quality. Values range from 0 to 100 with 90 being the framework default. This pa
 only applies to JPEG and WebP images, will be ignored otherwise:
 
 .. note:: The parameter ``$quality`` for WebP can be used since v4.4.0.
+
+.. note:: When using ImageMagick, the target path passed to ``save()`` determines the output format by its extension.
+    ImageMagick may also interpret explicit format prefixes like ``jpg:filename.png``. If the target path is based on user
+    input, validate it against the formats your application allows, including any format prefix or extension.
 
 .. literalinclude:: images/005.php
 
@@ -153,8 +165,7 @@ The ``convert()`` method changes the library's internal indicator for the desire
 
   .. literalinclude:: images/009.php
 
-.. note:: ImageMagick already saves files in the type
-    indicated by their extension, ignoring ``$imageType``.
+.. note:: ImageMagick already saves files in the type indicated by their extension, ignoring ``$imageType``.
 
 Fitting Images
 ==============

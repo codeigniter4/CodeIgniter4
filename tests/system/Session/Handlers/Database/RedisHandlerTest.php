@@ -15,6 +15,8 @@ namespace CodeIgniter\Session\Handlers\Database;
 
 use CodeIgniter\Session\Handlers\RedisHandler;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\TestLogger;
+use Config\Logger as LoggerConfig;
 use Config\Session as SessionConfig;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -54,7 +56,10 @@ final class RedisHandlerTest extends CIUnitTestCase
             $sessionConfig->{$key} = $value;
         }
 
-        return new RedisHandler($sessionConfig, $this->userIpAddress);
+        $handler = new RedisHandler($sessionConfig, $this->userIpAddress);
+        $handler->setLogger(new TestLogger(new LoggerConfig()));
+
+        return $handler;
     }
 
     protected function tearDown(): void
@@ -355,6 +360,28 @@ final class RedisHandlerTest extends CIUnitTestCase
         $connection2 = $this->getPrivateProperty($handler2, 'redis');
 
         $this->assertNotSame($connection1, $connection2);
+
+        $handler1->close();
+        $handler2->close();
+    }
+
+    public function testLockMaxRetries(): void
+    {
+        $options = [
+            'lockRetryInterval' => 10_000, // 10ms
+            'lockMaxRetries'    => 3,
+        ];
+
+        $handler1 = $this->getInstance($options);
+        $handler1->open($this->sessionSavePath, $this->sessionName);
+        $handler1->read('lock_test_session'); // Acquires lock
+
+        $handler2 = $this->getInstance($options);
+        $handler2->open($this->sessionSavePath, $this->sessionName);
+
+        // Before the fix, this would incorrectly return true (since $attempt === 3 !== 300).
+        // With the fix, it should return false after 3 attempts.
+        $this->assertFalse($handler2->read('lock_test_session'));
 
         $handler1->close();
         $handler2->close();

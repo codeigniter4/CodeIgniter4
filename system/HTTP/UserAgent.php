@@ -317,8 +317,15 @@ class UserAgent implements Stringable
         if (is_array($this->config->browsers) && $this->config->browsers !== []) {
             foreach ($this->config->browsers as $key => $val) {
                 if (preg_match('|' . $key . '.*?([0-9\.]+)|i', $this->agent, $match)) {
+                    $version = $match[1];
+
+                    // Safari's browser version is reported in the Version token.
+                    if ($val === 'Safari' && preg_match('|Version/([0-9\.]+).*?Safari|i', $this->agent, $safariMatch)) {
+                        $version = $safariMatch[1];
+                    }
+
                     $this->isBrowser = true;
-                    $this->version   = $match[1];
+                    $this->version   = $version;
                     $this->browser   = $val;
                     $this->setMobile();
 

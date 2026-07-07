@@ -781,7 +781,7 @@ abstract class BaseConnection implements ConnectionInterface
      * Should automatically handle different connections for read/write
      * queries if needed.
      *
-     * @param array|string|null $binds
+     * @param array<int|string, mixed>|string|null $binds
      *
      * @return BaseResult<TConnection, TResult>|bool|Query
      *
@@ -1533,7 +1533,7 @@ abstract class BaseConnection implements ConnectionInterface
      * Escapes data based on type.
      * Sets boolean and null types
      *
-     * @param array|bool|float|int|object|string|null $str
+     * @param mixed $str
      *
      * @return ($str is array ? array : float|int|string)
      */
@@ -2059,7 +2059,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Accessor for properties if they exist.
      *
-     * @return array|bool|float|int|object|resource|string|null
+     * @return mixed
      */
     public function __get(string $key)
     {

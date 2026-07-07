@@ -494,6 +494,41 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertSame(file_get_contents(__FILE__), $actualOutput);
     }
 
+    public function testGetDownloadResponseByExtremeFilePath(): void
+    {
+        $response = new Response(new App());
+
+        $tempDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'ci4_test_dir_' . bin2hex(random_bytes(8));
+        $this->assertTrue(mkdir($tempDir));
+        $extremeName = 'my_extreme_file_!@#$%.txt';
+        $extremePath = $tempDir . DIRECTORY_SEPARATOR . $extremeName;
+
+        try {
+            file_put_contents($extremePath, 'extreme data');
+
+            $actual = $response->download($extremePath, null);
+
+            $this->assertInstanceOf(DownloadResponse::class, $actual);
+            $actual->buildHeaders();
+
+            $expectedFilename = $extremeName;
+            $this->assertSame(
+                'attachment; filename="' . addslashes($expectedFilename) . '"; filename*=UTF-8\'\'' . rawurlencode($expectedFilename),
+                $actual->getHeaderLine('Content-Disposition'),
+            );
+
+            ob_start();
+            $actual->sendBody();
+            $actualOutput = ob_get_contents();
+            ob_end_clean();
+
+            $this->assertSame('extreme data', $actualOutput);
+        } finally {
+            @unlink($extremePath);
+            @rmdir($tempDir);
+        }
+    }
+
     public function testVagueDownload(): void
     {
         $response = new Response(new App());

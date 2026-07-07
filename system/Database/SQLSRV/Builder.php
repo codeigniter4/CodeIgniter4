@@ -538,7 +538,7 @@ class Builder extends BaseBuilder
     /**
      * Compiles a delete string and runs the query
      *
-     * @param mixed $where
+     * @param array<int|string, mixed>|RawSql|string $where
      *
      * @return bool|string
      *
@@ -578,7 +578,7 @@ class Builder extends BaseBuilder
      *
      * Generates a query string based on which functions were used.
      *
-     * @param bool $selectOverride
+     * @param false|string $selectOverride
      */
     protected function compileSelect($selectOverride = false): string
     {
@@ -752,7 +752,7 @@ class Builder extends BaseBuilder
             $sql .= implode(
                 ' AND ',
                 array_map(
-                    static fn ($key, $value) => (
+                    static fn ($key, $value): RawSql|string => (
                         ($value instanceof RawSql && is_string($key))
                         ?
                         $fullTableName . '.' . $key . ' = ' . $value

@@ -1,4 +1,4 @@
-# total 49 errors
+# total 47 errors
 
 parameters:
     ignoreErrors:
@@ -16,16 +16,6 @@ parameters:
             message: '#^Access to an undefined property CodeIgniter\\Database\\BaseConnection\:\:\$schema\.$#'
             count: 14
             path: ../../system/Database/SQLSRV/Forge.php
-
-        -
-            message: '#^Access to an undefined property Config\\Session\:\:\$lockAttempts\.$#'
-            count: 1
-            path: ../../system/Session/Handlers/RedisHandler.php
-
-        -
-            message: '#^Access to an undefined property Config\\Session\:\:\$lockWait\.$#'
-            count: 1
-            path: ../../system/Session/Handlers/RedisHandler.php
 
         -
             message: '#^Access to an undefined property CodeIgniter\\Database\\BaseConnection\:\:\$mysqli\.$#'

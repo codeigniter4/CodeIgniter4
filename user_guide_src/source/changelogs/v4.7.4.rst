@@ -1,0 +1,82 @@
+#############
+Version 4.7.4
+#############
+
+Release Date: July 7, 2026
+
+**4.7.4 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+********
+SECURITY
+********
+
+- **IncomingRequest:** *HTTPS detection via client-supplied headers* was fixed.
+  ``IncomingRequest::isSecure()`` now trusts the ``X-Forwarded-Proto`` and
+  ``Front-End-Https`` headers only when the request comes from a trusted proxy
+  configured in ``Config\App::$proxyIPs``.
+  See the `Security advisory GHSA-7wmf-pw8j-mc78 <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-7wmf-pw8j-mc78>`_
+  for more information.
+
+- **Query Builder:** Fixed a SQL injection vulnerability in ``deleteBatch()``.
+  When ``deleteBatch()`` was used together with ``where()`` conditions, the
+  bound values from the WHERE clause were substituted into the generated SQL
+  with their escape flag ignored, so they were never escaped or quoted. The
+  WHERE binds are now escaped in the same way as a regular ``delete()``.
+
+  See the `Security advisory GHSA-c9w5-rwh3-7pm9 <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-c9w5-rwh3-7pm9>`_
+  for more information.
+
+- **UploadedFile:** ``UploadedFile::move()`` now sanitizes the client-provided
+  filename when called without a second argument. Previously, the unsanitized
+  client filename was used as the default, allowing path traversal sequences
+  (e.g. ``../../public/shell.php``) to write the uploaded file outside the
+  intended directory. A name explicitly passed as the second argument is not
+  sanitized and remains the caller's responsibility.
+  See the `Security advisory GHSA-hhmc-q9hp-r662 <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-hhmc-q9hp-r662>`_
+  for more information.
+
+- **Validation:** The ``is_image`` and ``mime_in`` file upload validation rules
+  now also verify non-empty client filename extensions. Previously, these rules
+  classified an upload solely by its content-derived MIME type, so a file with a
+  dangerous client extension (for example, a ``.php`` file prepended with image
+  magic bytes) could pass validation while keeping its original extension on
+  disk.
+  See the `Security advisory GHSA-mmj4-63m4-r6h5 <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-mmj4-63m4-r6h5>`_
+  for more information.
+
+  The ``is_image`` rule now rejects uploads when a non-empty client filename
+  extension is not an image extension. The ``mime_in`` rule now rejects uploads
+  when a non-empty client filename extension does not match the detected file
+  content, matching the same extension/content agreement used by ``ext_in``.
+  Files uploaded without any extension (such as JavaScript ``Blob`` uploads)
+  are still accepted, since the rules validate the file content.
+
+**********
+Bugs Fixed
+**********
+
+- **API:** Fixed a bug in Transformers where the root request's ``fields`` and ``include`` query parameters leaked into nested transformers created inside ``include*()`` methods, causing incorrect field filtering, unexpected includes, or infinite recursion.
+- **Commands:** Fixed a bug where ``make:model --return entity`` did not preserve sub-namespaces when generating the related Entity class.
+- **Common:** Fixed a bug in ``env()`` where a ``TypeError`` could be thrown when non-string values were passed.
+- **Common:** Fixed ``esc()`` to propagate encoding correctly and prevent reference leaks.
+- **Commands:** Fixed a bug where ``spark lang:find`` treated translation keys already provided by the framework or another namespace (such as ``Errors.*`` in ``system/Language``) as new, listing them under ``--show-new`` and writing untranslated placeholders into ``app/Language`` that overrode the existing translations.
+- **Config:** Fixed a bug where ``BaseService::injectMock`` did not apply ``strtolower`` consistently, causing inconsistent Service and Mock registration and resolution.
+- **Database:** Fixed a bug where ``updateBatch()`` could be called after Query Builder ``where()`` conditions, even though it's not supported. In this situation, now the ``DatabaseException`` is thrown.
+- **Database:** Fixed a bug in ``BaseUtils::getXMLFromResult()`` where database values of ``0`` or ``'0'`` were treated as empty and omitted from the generated XML export.
+- **Encryption:** Fixed bugs in ``SodiumHandler`` where runtime ``blockSize`` overrides without ``key`` were handled incorrectly, invalid key lengths could leak native Sodium errors, and mismatched decrypt ``blockSize`` values could throw ``SodiumException`` instead of ``EncryptionException``.
+- **Filters:** Fixed a bug in ``InvalidChars`` filter where invalid UTF-8 or control characters in array keys were not checked.
+- **HTTP:** Fixed a bug where ``IncomingRequest::getPostGet()`` and ``IncomingRequest::getGetPost()`` threw a ``TypeError`` when passed an array of indexes.
+- **HTTP:** Fixed a bug where the User Agent library reported Safari's WebKit version instead of the browser version from the ``Version`` token.
+- **Model:** Fixed a bug in ``Model::objectToRawArray()`` where the ``$recursive`` parameter was ignored.
+- **Security:** Fixed a bug where ``CheckPhpIni`` could raise a type error when ``ini_get_all()`` returned ``null`` for a configured directive value.
+- **Session:** Fixed a bug in ``RedisHandler`` where the configured ``$lockMaxRetries`` and ``$lockRetryInterval`` values were not respected when acquiring session locks.
+- **Testing:** Fixed a bug where using ``MockInputOutput`` within a test that also uses ``StreamFilterTrait`` tore down the trait's stream filters, so CLI output produced after the ``MockInputOutput`` interaction (such as in ``tearDown()``) was no longer captured and leaked to the console.
+- **Validation:** Fixed bugs in the ``required_without`` rule logic where using array dot notation caused early exits ignoring subsequent fields and triggered an ``Undefined array key`` warning for missing keys.
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

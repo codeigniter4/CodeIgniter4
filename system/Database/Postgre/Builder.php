@@ -225,7 +225,7 @@ class Builder extends BaseBuilder
     /**
      * Compiles a delete string and runs the query
      *
-     * @param mixed $where
+     * @param array<int|string, mixed>|RawSql|string $where
      *
      * @return bool|string
      *
@@ -597,11 +597,7 @@ class Builder extends BaseBuilder
             );
 
             // convert binds in where
-            foreach ($this->QBWhere as $key => $where) {
-                foreach ($this->binds as $field => $bind) {
-                    $this->QBWhere[$key]['condition'] = str_replace(':' . $field . ':', $bind[0], $where['condition']);
-                }
-            }
+            $this->convertWhereBindsForBatch();
 
             $sql .= ' ' . str_replace(
                 'WHERE ',

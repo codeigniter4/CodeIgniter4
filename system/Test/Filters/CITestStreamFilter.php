@@ -93,6 +93,22 @@ class CITestStreamFilter extends php_user_filter
     }
 
     /**
+     * Whether an output filter is currently attached to STDOUT.
+     */
+    public static function hasOutputFilter(): bool
+    {
+        return self::$out !== null;
+    }
+
+    /**
+     * Whether an error filter is currently attached to STDERR.
+     */
+    public static function hasErrorFilter(): bool
+    {
+        return self::$err !== null;
+    }
+
+    /**
      * @param resource|null $stream
      *
      * @param-out null $stream

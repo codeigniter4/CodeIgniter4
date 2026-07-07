@@ -375,7 +375,7 @@ class Filters
     {
         // For backward compatibility. For users who do not update Config\Filters.
         if (! isset($this->config->required[$position])) {
-            $baseConfig = config(BaseFiltersConfig::class); // @phpstan-ignore-line
+            $baseConfig = config(BaseFiltersConfig::class);
             $filters    = $baseConfig->required[$position];
             $aliases    = $baseConfig->aliases;
         } else {

@@ -205,4 +205,24 @@ final class DbUtilsTest extends CIUnitTestCase
 
         $this->assertSame($expected, $actual);
     }
+
+    public function testUtilsXMLFromResultWithZero(): void
+    {
+        $this->db->table('job')->insert([
+            'name'        => '0',
+            'description' => 'Testing zero value',
+        ]);
+        $data = $this->db->table('job')->where('name', '0')->get();
+
+        $util = (new Database())->loadUtils($this->db);
+
+        $data = $util->getXMLFromResult($data);
+
+        $expected = '<root><element><id>5</id><name>0</name><description>Testing zero value</description><created_at></created_at><updated_at></updated_at><deleted_at></deleted_at></element></root>';
+
+        $actual = preg_replace('#\R+#', '', $data);
+        $actual = preg_replace('/[ ]{2,}|[\t]/', '', $actual);
+
+        $this->assertSame($expected, $actual);
+    }
 }

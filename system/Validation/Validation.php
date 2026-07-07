@@ -242,10 +242,10 @@ class Validation implements ValidationInterface
      * Runs the validation process, returning true or false determining whether
      * validation was successful or not.
      *
-     * @param array|bool|float|int|object|string|null $value   The data to validate.
-     * @param array|string                            $rules   The validation rules.
-     * @param list<string>                            $errors  The custom error message.
-     * @param string|null                             $dbGroup The database group to use.
+     * @param mixed        $value   The data to validate.
+     * @param array|string $rules   The validation rules.
+     * @param list<string> $errors  The custom error message.
+     * @param string|null  $dbGroup The database group to use.
      */
     public function check($value, $rules, array $errors = [], $dbGroup = null): bool
     {
@@ -1000,8 +1000,7 @@ class Validation implements ValidationInterface
      * Entry point: allocates a single accumulator and delegates to the
      * recursive collector, so no intermediate arrays are built or unpacked.
      *
-     * @param list<string>                  $segments
-     * @param array<array-key, mixed>|mixed $current
+     * @param list<string> $segments
      *
      * @return list<string>
      */
@@ -1019,10 +1018,9 @@ class Validation implements ValidationInterface
      * paths where the key is genuinely absent are recorded - intermediate
      * missing segments are silently skipped so `*` never appears in a result.
      *
-     * @param list<string>                  $segments
-     * @param int<0, max>                   $segmentCount
-     * @param array<array-key, mixed>|mixed $current
-     * @param list<string>                  $result
+     * @param list<string> $segments
+     * @param int<0, max>  $segmentCount
+     * @param list<string> $result
      */
     private function collectMissingPaths(
         array $segments,

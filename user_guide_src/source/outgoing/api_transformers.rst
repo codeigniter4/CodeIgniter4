@@ -72,7 +72,7 @@ The ``make:transformer`` command supports several options:
 
     .. code-block:: console
 
-        php spark make:transformer User --namespace="MyCompany\\API"
+        php spark make:transformer User --namespace MyCompany\API
 
 **--force**
     Forces overwriting an existing file:
@@ -174,6 +174,14 @@ The response would include:
         ]
     }
 
+.. note:: The ``fields`` and ``include`` query parameters describe the **root** resource only.
+    Transformers instantiated inside an ``include*()`` method (such as ``PostTransformer`` above)
+    are treated as nested resources: when created **without an explicit request** they do **not**
+    inherit the root request's ``fields``/``include`` state. This prevents the parent's query
+    parameters from leaking into related resources, which could otherwise cause incorrect field
+    filtering or unexpected/recursive includes. If you deliberately pass a request to a nested
+    transformer, that request's scope is honored.
+
 Restricting Available Includes
 ===============================
 
@@ -261,6 +269,13 @@ Class Reference
         :param IncomingRequest|null $request: Optional request instance. If not provided, the global request will be used.
 
         Initializes the transformer and extracts the ``fields`` and ``include`` query parameters from the request.
+
+        .. note:: When no request is explicitly passed, the global request's ``fields`` and ``include``
+            are read **only for the root transformer**. A transformer constructed during a nested
+            transformation (i.e. inside an ``include*()`` method) without an explicit request still uses
+            the global request object, but does not read ``fields``/``include`` from it, to avoid leaking
+            the root's scope. Passing an explicit request always applies that request's scope, regardless
+            of nesting.
 
     .. php:method:: toArray(mixed $resource)
 
