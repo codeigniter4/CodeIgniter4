@@ -53,8 +53,8 @@ final class ModelGeneratorTest extends CIUnitTestCase
         $file = APPPATH . 'Models/User.php';
         $this->assertFileExists($file);
         $this->assertStringContainsString('extends Model', $this->getFileContent($file));
-        $this->assertStringContainsString('protected $table            = \'users\';', $this->getFileContent($file));
-        $this->assertStringContainsString('protected $returnType       = \'array\';', $this->getFileContent($file));
+        $this->assertStringContainsString('protected $table                  = \'users\';', $this->getFileContent($file));
+        $this->assertStringContainsString('protected $returnType             = \'array\';', $this->getFileContent($file));
     }
 
     public function testGenerateModelWithOptionTable(): void
@@ -63,7 +63,7 @@ final class ModelGeneratorTest extends CIUnitTestCase
         $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $file = APPPATH . 'Models/Cars.php';
         $this->assertFileExists($file);
-        $this->assertStringContainsString('protected $table            = \'utilisateur\';', $this->getFileContent($file));
+        $this->assertStringContainsString('protected $table                  = \'utilisateur\';', $this->getFileContent($file));
     }
 
     public function testGenerateModelWithOptionDBGroup(): void
@@ -72,7 +72,7 @@ final class ModelGeneratorTest extends CIUnitTestCase
         $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $file = APPPATH . 'Models/User.php';
         $this->assertFileExists($file);
-        $this->assertStringContainsString('protected $DBGroup          = \'testing\';', $this->getFileContent($file));
+        $this->assertStringContainsString('protected $DBGroup                = \'testing\';', $this->getFileContent($file));
     }
 
     public function testGenerateModelWithOptionReturnArray(): void
@@ -81,7 +81,7 @@ final class ModelGeneratorTest extends CIUnitTestCase
         $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $file = APPPATH . 'Models/User.php';
         $this->assertFileExists($file);
-        $this->assertStringContainsString('protected $returnType       = \'array\';', $this->getFileContent($file));
+        $this->assertStringContainsString('protected $returnType             = \'array\';', $this->getFileContent($file));
     }
 
     public function testGenerateModelWithOptionReturnObject(): void
@@ -90,7 +90,7 @@ final class ModelGeneratorTest extends CIUnitTestCase
         $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $file = APPPATH . 'Models/User.php';
         $this->assertFileExists($file);
-        $this->assertStringContainsString('protected $returnType       = \'object\';', $this->getFileContent($file));
+        $this->assertStringContainsString('protected $returnType             = \'object\';', $this->getFileContent($file));
     }
 
     public function testGenerateModelWithOptionReturnEntity(): void
@@ -100,7 +100,7 @@ final class ModelGeneratorTest extends CIUnitTestCase
 
         $file = APPPATH . 'Models/User.php';
         $this->assertFileExists($file);
-        $this->assertStringContainsString('protected $returnType       = \App\Entities\User::class;', $this->getFileContent($file));
+        $this->assertStringContainsString('protected $returnType             = \App\Entities\User::class;', $this->getFileContent($file));
 
         if (is_file($file)) {
             unlink($file);

@@ -84,6 +84,16 @@ class DataException extends RuntimeException implements ExceptionInterface
     }
 
     /**
+     * @param list<string> $fields
+     *
+     * @return DataException
+     */
+    public static function forInsertOnlyFields(string $model, array $fields)
+    {
+        return new static(lang('Database.insertOnlyFields', [$model, implode(', ', $fields)]));
+    }
+
+    /**
      * @return DataException
      */
     public static function forTableNotFound(string $table)

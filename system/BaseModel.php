@@ -156,6 +156,13 @@ abstract class BaseModel
     protected $allowedFields = [];
 
     /**
+     * Fields that may be inserted but not updated through Model write methods.
+     *
+     * @var list<string>
+     */
+    protected array $insertOnlyFields = [];
+
+    /**
      * If true, will set created_at, and updated_at
      * values during insert and update routines.
      *
@@ -1162,7 +1169,10 @@ abstract class BaseModel
 
                 // Must be called first so we don't
                 // strip out updated_at values.
-                $this->ensureNoDisallowedFields($row, $index === null ? [] : [$index]);
+                $ignoredFields = $index === null ? [] : [$index];
+
+                $row = $this->doProtectInsertOnlyFieldsForUpdate($row, $ignoredFields);
+                $this->ensureNoDisallowedFields($row, $ignoredFields);
                 $row = $this->doProtectFields($row);
 
                 // Restore updateIndex value in case it was wiped out
@@ -1376,6 +1386,20 @@ abstract class BaseModel
     }
 
     /**
+     * Sets the fields that may be inserted but not updated.
+     *
+     * @param list<string> $insertOnlyFields
+     *
+     * @return $this
+     */
+    public function setInsertOnlyFields(array $insertOnlyFields)
+    {
+        $this->insertOnlyFields = $insertOnlyFields;
+
+        return $this;
+    }
+
+    /**
      * Sets whether or not we should whitelist data set during
      * updates or inserts against $this->availableFields.
      *
@@ -1463,6 +1487,42 @@ abstract class BaseModel
     }
 
     /**
+     * Removes fields from update data when they may only be inserted.
+     *
+     * @param row_array    $row
+     * @param list<string> $ignoredFields
+     *
+     * @return row_array
+     *
+     * @throws DataException
+     */
+    protected function doProtectInsertOnlyFieldsForUpdate(array $row, array $ignoredFields = []): array
+    {
+        if (! $this->protectFields || $this->allowedFields === [] || $this->insertOnlyFields === []) {
+            return $row;
+        }
+
+        $insertOnlyFields = [];
+
+        foreach (array_keys($row) as $key) {
+            if (in_array($key, $ignoredFields, true)) {
+                continue;
+            }
+
+            if (in_array($key, $this->insertOnlyFields, true)) {
+                $insertOnlyFields[] = $key;
+                unset($row[$key]);
+            }
+        }
+
+        if ($insertOnlyFields !== [] && $this->throwOnDisallowedFields) {
+            throw DataException::forInsertOnlyFields(static::class, $insertOnlyFields);
+        }
+
+        return $row;
+    }
+
+    /**
      * Ensures that only the fields that are allowed to be inserted are in
      * the data array.
      *
@@ -1496,6 +1556,7 @@ abstract class BaseModel
      */
     protected function doProtectFieldsForUpdate(array $row): array
     {
+        $row = $this->doProtectInsertOnlyFieldsForUpdate($row);
         $this->ensureNoDisallowedFields($row);
 
         return $this->doProtectFields($row);
