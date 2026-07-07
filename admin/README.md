@@ -41,13 +41,6 @@ This folder contains tools or docs useful for project maintainers.
     to be added as part of a git commit, ensuring that they conform to the
     framework coding style standards, and automatically fixing what can be.
 
-## Maintainer Scripts
-
--   **docbot** re-builds the user guide from the RST source for it,
-    and optionally deploys it to the `gh-pages` branch of the main
-    repository (if the user running it has maintainer rights on that repo).  
-    See the [writeup](./docbot.md).
-
 ## Release Scripts
 
 The release process is detailed in [RELEASE.md](./RELEASE.md). These scripts
