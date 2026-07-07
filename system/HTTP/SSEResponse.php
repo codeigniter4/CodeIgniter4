@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
-use Closure;
 use JsonException;
 
 /**
@@ -26,9 +25,9 @@ class SSEResponse extends StreamResponse
     /**
      * Constructor.
      *
-     * @param Closure(SSEResponse): void $callback
+     * @param callable(SSEResponse): void $callback
      */
-    public function __construct(Closure $callback)
+    public function __construct(callable $callback)
     {
         parent::__construct($callback);
     }

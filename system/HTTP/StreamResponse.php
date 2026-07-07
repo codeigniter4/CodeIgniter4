@@ -29,16 +29,18 @@ class StreamResponse extends Response implements NonBufferedResponseInterface
     private readonly Closure $callback;
 
     /**
-     * @param (Closure(static): void)|iterable<string> $callbackOrChunks A callback that
-     *                                                                   streams output via write(), or an iterable of
-     *                                                                   string chunks to be written in order
+     * @param (callable(static): void)|iterable<string> $callbackOrChunks A callback that
+     *                                                                    streams output via write(), or an iterable of
+     *                                                                    string chunks to be written in order. A value
+     *                                                                    that is both callable and iterable is treated
+     *                                                                    as a callback.
      */
-    public function __construct(Closure|iterable $callbackOrChunks)
+    public function __construct(callable|iterable $callbackOrChunks)
     {
         parent::__construct();
 
-        $this->callback = $callbackOrChunks instanceof Closure
-            ? $callbackOrChunks
+        $this->callback = is_callable($callbackOrChunks)
+            ? $callbackOrChunks(...)
             : static function (self $response) use ($callbackOrChunks): void {
                 foreach ($callbackOrChunks as $chunk) {
                     if (! $response->write($chunk)) {

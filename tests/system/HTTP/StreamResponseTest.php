@@ -78,6 +78,24 @@ final class StreamResponseTest extends CIUnitTestCase
         $this->assertSame(206, $response->getStatusCode());
     }
 
+    public function testConstructorTreatsCallableIterableAsCallable(): void
+    {
+        // An array callable is both callable and iterable; callable must win.
+        $response = new StreamResponse([$this, 'writeHello']);
+        $response->pretend();
+
+        ob_start();
+        $response->send();
+        $output = ob_get_clean();
+
+        $this->assertSame('Hello', $output);
+    }
+
+    public function writeHello(StreamResponse $stream): void
+    {
+        $stream->write('Hello');
+    }
+
     public function testStreamFactoryReturnsStreamResponse(): void
     {
         $response = (new Response())->stream(static function (): void {

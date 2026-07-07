@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
-use Closure;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\Cookie\CookieStore;
@@ -815,11 +814,11 @@ trait ResponseTrait
      * Creates a response that streams its body to the client as it is
      * generated, instead of buffering the complete body first.
      *
-     * @param (Closure(StreamResponse): void)|iterable<string> $callbackOrChunks A callback that
-     *                                                                           streams output via write(), or an iterable of
-     *                                                                           string chunks to be written in order
+     * @param (callable(StreamResponse): void)|iterable<string> $callbackOrChunks A callback that
+     *                                                                            streams output via write(), or an iterable of
+     *                                                                            string chunks to be written in order
      */
-    public function stream(Closure|iterable $callbackOrChunks): StreamResponse
+    public function stream(callable|iterable $callbackOrChunks): StreamResponse
     {
         return new StreamResponse($callbackOrChunks);
     }
@@ -827,9 +826,9 @@ trait ResponseTrait
     /**
      * Creates a response for streaming Server-Sent Events (SSE).
      *
-     * @param Closure(SSEResponse): void $callback
+     * @param callable(SSEResponse): void $callback
      */
-    public function eventStream(Closure $callback): SSEResponse
+    public function eventStream(callable $callback): SSEResponse
     {
         return new SSEResponse($callback);
     }
