@@ -291,9 +291,13 @@ class Logger implements LoggerInterface
      */
     protected function interpolate($message, array $context = [])
     {
-        if (! is_string($message)) {
+
+        if (! is_string($message) && ! ($message instanceof Stringable)) {
             return print_r($message, true);
         }
+
+        // Cast to string in case $message is a Stringable object
+        $message = (string) $message;
 
         $replace = [];
 
@@ -305,6 +309,10 @@ class Logger implements LoggerInterface
             }
 
             // todo - sanitize input before writing to file?
+            if (is_array($val) || (is_object($val) && ! method_exists($val, '__toString'))) {
+                $val = print_r($val, true);
+            }
+
             $replace['{' . $key . '}'] = $val;
         }
 
@@ -322,9 +330,9 @@ class Logger implements LoggerInterface
 
         // Match up environment variables in {env:foo} tags.
         if (str_contains($message, 'env:')) {
-            preg_match('/env:[^}]+/', $message, $matches);
+            preg_match_all('/env:[^}]+/', $message, $matches);
 
-            foreach ($matches as $str) {
+            foreach ($matches[0] as $str) {
                 $key                 = str_replace('env:', '', $str);
                 $replace["{{$str}}"] = $_ENV[$key] ?? 'n/a';
             }

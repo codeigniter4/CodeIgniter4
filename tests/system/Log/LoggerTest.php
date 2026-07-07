@@ -22,6 +22,8 @@ use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use PHPUnit\Framework\Attributes\Group;
 use ReflectionMethod;
 use ReflectionNamedType;
+use stdClass;
+use Stringable;
 use Tests\Support\Log\Handlers\TestHandler;
 
 /**
@@ -437,5 +439,86 @@ final class LoggerTest extends CIUnitTestCase
         ];
 
         $this->assertSame($expected, $logger->determineFile());
+    }
+
+    public function testLogInterpolatesArrayContext(): void
+    {
+        $config = new LoggerConfig();
+        $logger = new Logger($config);
+
+        Time::setTestNow('2023-11-25 12:00:00');
+
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message ' . print_r(['foo' => 'bar'], true);
+
+        $logger->log('debug', 'Test message {foo}', ['foo' => ['foo' => 'bar']]);
+
+        $logs = TestHandler::getLogs();
+
+        $this->assertCount(1, $logs);
+        $this->assertSame($expected, $logs[0]);
+    }
+
+    public function testLogInterpolatesObjectContext(): void
+    {
+        $config = new LoggerConfig();
+        $logger = new Logger($config);
+
+        Time::setTestNow('2023-11-25 12:00:00');
+
+        $obj      = new stdClass();
+        $obj->foo = 'bar';
+
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message ' . print_r($obj, true);
+
+        $logger->log('debug', 'Test message {foo}', ['foo' => $obj]);
+
+        $logs = TestHandler::getLogs();
+
+        $this->assertCount(1, $logs);
+        $this->assertSame($expected, $logs[0]);
+    }
+
+    public function testLogInterpolatesMultipleEnvironmentVars(): void
+    {
+        $config = new LoggerConfig();
+        $logger = new Logger($config);
+
+        Time::setTestNow('2023-11-25 12:00:00');
+
+        $_ENV['foo'] = 'bar';
+        $_ENV['baz'] = 'qux';
+
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message bar and qux';
+
+        $logger->log('debug', 'Test message {env:foo} and {env:baz}');
+
+        $logs = TestHandler::getLogs();
+
+        $this->assertCount(1, $logs);
+        $this->assertSame($expected, $logs[0]);
+    }
+
+    public function testLogAcceptsStringableMessage(): void
+    {
+        $config = new LoggerConfig();
+        $logger = new Logger($config);
+
+        Time::setTestNow('2023-11-25 12:00:00');
+
+        $message = new class () implements Stringable {
+            public function __toString(): string
+            {
+                return 'Stringable message {foo}';
+            }
+        };
+
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Stringable message bar';
+
+        $logger->log('debug', $message, ['foo' => 'bar']);
+
+        $logs = TestHandler::getLogs();
+
+        $this->assertCount(1, $logs);
+        $this->assertSame($expected, $logs[0]);
     }
 }
