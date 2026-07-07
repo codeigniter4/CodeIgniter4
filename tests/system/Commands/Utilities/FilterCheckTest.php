@@ -53,6 +53,7 @@ final class FilterCheckTest extends CIUnitTestCase
         $this->assertStringContainsString(
             'Before Filter Classes:
 CodeIgniter\Filters\ForceHTTPS → CodeIgniter\Filters\PageCache
+
 After Filter Classes:
 CodeIgniter\Filters\PageCache → CodeIgniter\Filters\PerformanceMetrics → CodeIgniter\Filters\DebugToolbar',
             (string) preg_replace('/\033\[.+?m/u', '', $this->getBuffer()),
