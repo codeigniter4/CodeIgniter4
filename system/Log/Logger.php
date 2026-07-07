@@ -291,7 +291,6 @@ class Logger implements LoggerInterface
      */
     protected function interpolate($message, array $context = [])
     {
-
         if (! is_string($message) && ! ($message instanceof Stringable)) {
             return print_r($message, true);
         }
