@@ -284,6 +284,15 @@ total size (for example, when proxying a stream of known length), you may set
     which sends proper ``Content-Length`` and ``Content-Disposition`` headers.
     Use ``StreamResponse`` when the content is generated while it is being sent.
 
+Example: Proxying an Upstream Stream
+------------------------------------
+
+``StreamResponse`` can forward a stream from another source - such as object
+storage or an internal API - to the client without buffering it in memory or
+writing it to disk:
+
+.. literalinclude:: response/041.php
+
 The :ref:`development server <sse-development-server>` and
 :ref:`production <sse-production>` considerations described for SSE below apply
 to all streaming responses.
