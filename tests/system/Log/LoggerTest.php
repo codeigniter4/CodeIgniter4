@@ -251,7 +251,7 @@ final class LoggerTest extends CIUnitTestCase
         Time::setTestNow('2023-11-25 12:00:00');
 
         $resource = fopen('php://memory', 'rb');
-        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message [resource stream]';
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message [resource (stream)]';
 
         $logger->log('debug', 'Test message {value}', ['value' => $resource]);
 

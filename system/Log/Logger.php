@@ -377,11 +377,7 @@ class Logger implements LoggerInterface
             return '[object ' . $value::class . ']';
         }
 
-        if (is_resource($value)) {
-            return '[resource ' . get_resource_type($value) . ']';
-        }
-
-        return '[' . gettype($value) . ']';
+        return '[' . get_debug_type($value) . ']';
     }
 
     /**
