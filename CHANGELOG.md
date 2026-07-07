@@ -1,5 +1,81 @@
 # Changelog
 
+## [v4.7.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.7.4) (2026-07-07)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.7.3...v4.7.4)
+
+### Security
+
+* **IncomingRequest:** *HTTPS detection via client-supplied headers* was fixed.
+  ``IncomingRequest::isSecure()`` now trusts the ``X-Forwarded-Proto`` and
+  ``Front-End-Https`` headers only when the request comes from a trusted proxy
+  configured in ``Config\App::$proxyIPs``.
+  See the `Security advisory GHSA-7wmf-pw8j-mc78 <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-7wmf-pw8j-mc78>`_
+  for more information.
+
+* **Query Builder:** Fixed a SQL injection vulnerability in ``deleteBatch()``.
+  When ``deleteBatch()`` was used together with ``where()`` conditions, the
+  bound values from the WHERE clause were substituted into the generated SQL
+  with their escape flag ignored, so they were never escaped or quoted. The
+  WHERE binds are now escaped in the same way as a regular ``delete()``.
+
+  See the `Security advisory GHSA-c9w5-rwh3-7pm9 <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-c9w5-rwh3-7pm9>`_
+  for more information.
+
+* **UploadedFile:** ``UploadedFile::move()`` now sanitizes the client-provided
+  filename when called without a second argument. Previously, the unsanitized
+  client filename was used as the default, allowing path traversal sequences
+  (e.g. ``../../public/shell.php``) to write the uploaded file outside the
+  intended directory. A name explicitly passed as the second argument is not
+  sanitized and remains the caller's responsibility.
+  See the `Security advisory GHSA-hhmc-q9hp-r662 <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-hhmc-q9hp-r662>`_
+  for more information.
+
+* **Validation:** The ``is_image`` and ``mime_in`` file upload validation rules
+  now also verify non-empty client filename extensions. Previously, these rules
+  classified an upload solely by its content-derived MIME type, so a file with a
+  dangerous client extension (for example, a ``.php`` file prepended with image
+  magic bytes) could pass validation while keeping its original extension on
+  disk.
+  See the `Security advisory GHSA-mmj4-63m4-r6h5 <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-mmj4-63m4-r6h5>`_
+  for more information.
+
+  The ``is_image`` rule now rejects uploads when a non-empty client filename
+  extension is not an image extension. The ``mime_in`` rule now rejects uploads
+  when a non-empty client filename extension does not match the detected file
+  content, matching the same extension/content agreement used by ``ext_in``.
+  Files uploaded without any extension (such as JavaScript ``Blob`` uploads)
+  are still accepted, since the rules validate the file content.
+
+### Fixed Bugs
+
+* fix: prevent updateBatch with existing where conditions by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/10236
+* fix: detect Safari version from Version token by @memleakd in https://github.com/codeigniter4/CodeIgniter4/pull/10251
+* fix: nested transformer request scope leakage by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/10281
+* fix(model): pass $recursive parameter to parent in objectToRawArray by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10258
+* fix: preserve enclosing stream filter when using `MockInputOutput` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10307
+* fix: skip already-translated keys in `spark lang:find` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10308
+* fix(Filters): check both keys and values in `InvalidChars` arrays by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10303
+* fix: use dynamic lockMaxRetries limit in RedisHandler by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10295
+* fix: preserve sub-namespace when generating Entity from Model (i.e., `--return entity`) by @xgrind in https://github.com/codeigniter4/CodeIgniter4/pull/10232
+* fix: `env()` TypeError for non-string `$_SERVER` values + `esc()` fixes by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10305
+* fix: unify casing in BaseService::injectMock by @ThomasMeschke in https://github.com/codeigniter4/CodeIgniter4/pull/10316
+* fix: normalize SodiumHandler params and padding failures by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10321
+* fix(Validation): correct required_without logic and prevent array key warnings by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10328
+* fix: handle null ini values in phpini check by @Will-thom in https://github.com/codeigniter4/CodeIgniter4/pull/10233
+* fix: preserve zero values in XML export by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10367
+* fix: support array indexes in `getPostGet()` and `getGetPost()` by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/10362
+
+### Refactoring
+
+* refactor: narrow `Image` original dimension types to `int` by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/10326
+* refactor(HTTP): optimize file path parsing in `download()` method by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10330
+* refactor(database): optimize groupGetType by caching it inside BaseBuilder loops by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10340
+* refactor: bump to phpstan-codeigniter v2.1 by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10312
+* refactor: replace type `mixed` with more specific types by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10345
+* refactor: optimize `prepQuotedPrintable()` with hash lookup and int-length tracking by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10344
+* refactor: add precise `array` phpdocs for `CLI` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10354
+* refactor(database): optimize `_processForeignKeys()` string allocations and loop invariants by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10351
+
 ## [v4.7.3](https://github.com/codeigniter4/CodeIgniter4/tree/v4.7.3) (2026-05-22)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.7.2...v4.7.3)
 
