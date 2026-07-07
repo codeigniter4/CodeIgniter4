@@ -33,8 +33,9 @@ use TypeError;
  */
 class Builder extends BaseBuilder
 {
-    private const LOCK_FOR_UPDATE_HINT = ' WITH (UPDLOCK, ROWLOCK)';
-    private const SHARED_LOCK_HINT     = ' WITH (HOLDLOCK, ROWLOCK)';
+    private const LOCK_FOR_UPDATE_HINTS             = ['UPDLOCK', 'ROWLOCK'];
+    private const LOCK_FOR_UPDATE_SKIP_LOCKED_HINTS = ['UPDLOCK', 'READCOMMITTEDLOCK', 'READPAST'];
+    private const SHARED_LOCK_HINTS                 = ['HOLDLOCK', 'ROWLOCK'];
 
     /**
      * ORDER BY random keyword
@@ -96,11 +97,23 @@ class Builder extends BaseBuilder
      */
     private function compileTableLockHint(): string
     {
-        return match ($this->QBSelectLock) {
-            self::SELECT_LOCK_FOR_UPDATE => self::LOCK_FOR_UPDATE_HINT,
-            self::SELECT_LOCK_SHARED     => self::SHARED_LOCK_HINT,
-            default                      => '',
+        $hints = match ($this->QBSelectLock) {
+            self::SELECT_LOCK_FOR_UPDATE => $this->QBSelectLockWait === self::SELECT_LOCK_WAIT_SKIP_LOCKED
+                ? self::LOCK_FOR_UPDATE_SKIP_LOCKED_HINTS
+                : self::LOCK_FOR_UPDATE_HINTS,
+            self::SELECT_LOCK_SHARED => self::SHARED_LOCK_HINTS,
+            default                  => [],
         };
+
+        if ($hints === []) {
+            return '';
+        }
+
+        if ($this->QBSelectLockWait === self::SELECT_LOCK_WAIT_NOWAIT) {
+            $hints[] = 'NOWAIT';
+        }
+
+        return ' WITH (' . implode(', ', $hints) . ')';
     }
 
     /**
@@ -639,7 +652,14 @@ class Builder extends BaseBuilder
     protected function compileSelectLock(): string
     {
         if ($this->QBSelectLock === null) {
-            return '';
+            return parent::compileSelectLock();
+        }
+
+        if (
+            $this->QBSelectLock === self::SELECT_LOCK_SHARED
+            && $this->QBSelectLockWait === self::SELECT_LOCK_WAIT_SKIP_LOCKED
+        ) {
+            throw new DatabaseException('SQLSRV does not support sharedLock() with skipLocked().');
         }
 
         if ($this->QBFrom === []) {

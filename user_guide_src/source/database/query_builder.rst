@@ -949,6 +949,77 @@ first parameter.
 Pessimistic Locking
 ********************
 
+.. _query-builder-pessimistic-locking-driver-support:
+
+Driver Support
+==============
+
+The following table summarizes Query Builder support for pessimistic locks and
+lock-wait modifiers:
+
+.. list-table::
+    :header-rows: 1
+    :widths: 38 15 15 15 18 15
+
+    * - Query Builder methods
+      - MySQLi
+      - Postgre
+      - OCI8
+      - SQLSRV
+      - SQLite3
+    * - ``lockForUpdate()``
+      - Yes
+      - Yes
+      - Yes
+      - Yes
+      - No
+    * - ``sharedLock()``
+      - Yes
+      - Yes
+      - No
+      - Yes
+      - No
+    * - ``lockForUpdate()->nowait()``
+      - Yes [1]_
+      - Yes
+      - Yes
+      - Yes
+      - No
+    * - ``lockForUpdate()->skipLocked()``
+      - Yes [2]_
+      - Yes
+      - Yes
+      - Approximate [3]_
+      - No
+    * - ``sharedLock()->nowait()``
+      - No
+      - Yes
+      - No
+      - Yes
+      - No
+    * - ``sharedLock()->skipLocked()``
+      - No
+      - Yes
+      - No
+      - No
+      - No
+
+.. [1] ``NOWAIT`` requires MySQL 8.0.1+ or MariaDB 10.3.0+ with InnoDB
+    tables. CodeIgniter does not check the server version or storage engine
+    before compiling the clause.
+
+.. [2] ``SKIP LOCKED`` requires MySQL 8.0.1+ or MariaDB 10.6.0+ with InnoDB
+    tables. CodeIgniter does not check the server version or storage engine
+    before compiling the clause.
+
+.. [3] SQLSRV approximates ``skipLocked()`` using SQL Server's
+    ``READCOMMITTEDLOCK`` and ``READPAST`` table hints. It can still wait on
+    locks that ``READPAST`` does not skip, such as page-level locks.
+
+.. note:: ``countAllResults()``, ``exists()``, and ``doesntExist()`` do not apply
+    pessimistic locks or lock-wait modifiers. Consequently, they report matching
+    rows rather than rows currently available for locking.
+
 .. _query-builder-shared-lock:
 
 Shared Lock
@@ -969,12 +1040,12 @@ Use this method inside a database transaction. Without an explicit transaction,
 the lock is typically released when the ``SELECT`` statement finishes. If the
 same transaction will update the selected rows, use ``lockForUpdate()`` instead.
 
-This method is supported by the **MySQLi**, **Postgre**, and **SQLSRV**
-drivers. Unsupported drivers throw a ``DatabaseException``. ``sharedLock()`` is
-not supported with ``union()`` or ``unionAll()``. Some databases restrict which
-query shapes can be used with row locking. When CodeIgniter can detect an
-unsupported combination, it throws a ``DatabaseException``. See the following
-warnings for driver-specific behavior.
+See :ref:`query-builder-pessimistic-locking-driver-support` for supported
+drivers and lock combinations. Unsupported drivers throw a ``DatabaseException``.
+``sharedLock()`` is not supported with ``union()`` or ``unionAll()``. Some
+databases restrict which query shapes can be used with row locking. When
+CodeIgniter can detect an unsupported combination, it throws a
+``DatabaseException``. See the following warnings for driver-specific behavior.
 
 .. warning:: MySQLi does not support ``sharedLock()`` with ``fromSubquery()``
     because an outer locking read on a derived table does not lock the underlying
@@ -1011,10 +1082,10 @@ the lock is typically released when the ``SELECT`` statement finishes. The exact
 locking behavior is determined by the database server and transaction isolation
 level.
 
-This method is supported by the **MySQLi**, **Postgre**, **OCI8**, and
-**SQLSRV** drivers. Unsupported drivers throw a ``DatabaseException``.
-``lockForUpdate()`` is not supported with ``union()`` or ``unionAll()``.
-Some databases restrict which query shapes can be used with row locking. When
+See :ref:`query-builder-pessimistic-locking-driver-support` for supported
+drivers and lock combinations. Unsupported drivers throw a ``DatabaseException``.
+``lockForUpdate()`` is not supported with ``union()`` or ``unionAll()``. Some
+databases restrict which query shapes can be used with row locking. When
 CodeIgniter can detect an unsupported combination, it throws a
 ``DatabaseException``. See the following warnings for driver-specific behavior.
 
@@ -1035,6 +1106,61 @@ CodeIgniter can detect an unsupported combination, it throws a
 .. warning:: OCI8 does not support ``lockForUpdate()`` together with
     ``limit()``, ``offset()``, ``distinct()``, ``groupBy()``, ``having()``, or
     aggregate helper selections such as ``selectCount()``.
+
+.. _query-builder-skip-locked:
+
+Skip Locked
+===========
+
+$builder->skipLocked()
+----------------------
+
+.. versionadded:: 4.8.0
+
+Adds a ``SKIP LOCKED`` style modifier to a pessimistic ``SELECT`` lock. This is
+useful when multiple workers claim rows from the same queue-like table and each
+worker should skip rows already locked by another transaction.
+
+.. literalinclude:: query_builder/132.php
+
+Use this method with ``lockForUpdate()`` or ``sharedLock()``. Calling
+``skipLocked()`` without a pessimistic lock throws a ``DatabaseException``.
+
+``skipLocked()`` can return an incomplete view of matching rows because locked
+rows are skipped instead of waited on. This is usually what queue workers want,
+but it is not suitable for general-purpose reads that must see every matching
+row.
+
+See :ref:`query-builder-pessimistic-locking-driver-support` for supported
+drivers and lock combinations. Unsupported combinations throw a
+``DatabaseException``.
+
+.. _query-builder-nowait:
+
+No Wait
+========
+
+$builder->nowait()
+------------------
+
+.. versionadded:: 4.8.0
+
+Adds a ``NOWAIT`` style modifier to a pessimistic ``SELECT`` lock. This is
+useful when the query should fail immediately instead of waiting for locked rows
+to become available.
+
+.. literalinclude:: query_builder/133.php
+
+Use this method with ``lockForUpdate()`` or ``sharedLock()``. Calling
+``nowait()`` without a pessimistic lock throws a ``DatabaseException``.
+
+When a row cannot be locked immediately, the database server returns an error
+and CodeIgniter throws a database exception according to the current database
+debug and transaction settings.
+
+See :ref:`query-builder-pessimistic-locking-driver-support` for supported
+drivers and lock combinations. Unsupported combinations throw a
+``DatabaseException``.
 
 .. _query-builder-union:
 
@@ -1743,12 +1869,26 @@ Class Reference
 
         Adds a pessimistic write lock to a ``SELECT`` query. See :ref:`query-builder-lock-for-update`.
 
+    .. php:method:: nowait()
+
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:   ``BaseBuilder``
+
+        Fails immediately when selected rows cannot be locked. See :ref:`query-builder-nowait`.
+
     .. php:method:: sharedLock()
 
         :returns: ``BaseBuilder`` instance (method chaining)
         :rtype:   ``BaseBuilder``
 
         Adds a pessimistic read lock to a ``SELECT`` query. See :ref:`query-builder-shared-lock`.
+
+    .. php:method:: skipLocked()
+
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:   ``BaseBuilder``
+
+        Skips selected rows that cannot be locked immediately. See :ref:`query-builder-skip-locked`.
 
     .. php:method:: select([$select = '*'[, $escape = null]])
 

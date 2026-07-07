@@ -60,14 +60,14 @@ class Builder extends BaseBuilder
      */
     protected function compileSelectLock(): string
     {
-        if ($this->QBSelectLock !== null) {
-            throw new DatabaseException(sprintf(
-                'SQLite3 does not support %s().',
-                $this->selectLockMethod(),
-            ));
+        if ($this->QBSelectLock === null) {
+            return parent::compileSelectLock();
         }
 
-        return '';
+        throw new DatabaseException(sprintf(
+            'SQLite3 does not support %s().',
+            $this->selectLockMethod(),
+        ));
     }
 
     /**
