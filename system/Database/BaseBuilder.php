@@ -3332,7 +3332,7 @@ class BaseBuilder
             $sql .= 'WHERE ' . implode(
                 ' AND ',
                 array_map(
-                    static fn ($key, $value) => (
+                    static fn ($key, $value): RawSql|string => (
                         ($value instanceof RawSql && is_string($key))
                         ?
                         $table . '.' . $key . ' = ' . $value
@@ -3560,7 +3560,7 @@ class BaseBuilder
             $sql .= 'ON ' . implode(
                 ' AND ',
                 array_map(
-                    static fn ($key, $value) => (
+                    static fn ($key, $value): RawSql|string => (
                         $value instanceof RawSql ?
                         $value :
                         (
@@ -3575,11 +3575,7 @@ class BaseBuilder
             );
 
             // convert binds in where
-            foreach ($this->QBWhere as $key => $where) {
-                foreach ($this->binds as $field => $bind) {
-                    $this->QBWhere[$key]['condition'] = str_replace(':' . $field . ':', $bind[0], $where['condition']);
-                }
-            }
+            $this->convertWhereBindsForBatch();
 
             $sql .= ' ' . $this->compileWhereHaving('QBWhere');
 
@@ -3603,6 +3599,35 @@ class BaseBuilder
         }
 
         return str_replace('{:_table_:}', $data, $sql);
+    }
+
+    /**
+     * Escapes and substitutes the WHERE binds into the QBWhere conditions
+     * for batch delete queries.
+     *
+     * The bound values respect their escape flag and are escaped the same way
+     * as a regular query (see Query::matchNamedBinds()), instead of being
+     * injected into the SQL as raw, unescaped values.
+     *
+     * @used-by _deleteBatch()
+     */
+    protected function convertWhereBindsForBatch(): void
+    {
+        $replacers = [];
+
+        foreach ($this->binds as $field => $bind) {
+            $escapedValue = $bind[1] ? $this->db->escape($bind[0]) : $bind[0];
+
+            if (is_array($bind[0])) {
+                $escapedValue = '(' . implode(',', $escapedValue) . ')';
+            }
+
+            $replacers[':' . $field . ':'] = (string) $escapedValue;
+        }
+
+        foreach ($this->QBWhere as $key => $where) {
+            $this->QBWhere[$key]['condition'] = strtr($where['condition'], $replacers);
+        }
     }
 
     /**

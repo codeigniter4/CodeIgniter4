@@ -169,13 +169,21 @@ if (! function_exists('command')) {
         // Prepend an application name, as Console expects one.
         array_unshift($tokens, 'spark');
 
+        $bufferLevel = ob_get_level();
+
         try {
             ob_start();
             (new Console())->run($tokens);
 
+            if (ob_get_level() <= $bufferLevel) {
+                return false;
+            }
+
             return ob_get_contents();
         } finally {
-            ob_end_clean();
+            while (ob_get_level() > $bufferLevel) {
+                ob_end_clean();
+            }
         }
     }
 }

@@ -100,6 +100,38 @@ final class FileMovingTest extends CIUnitTestCase
         $this->assertTrue($this->root->hasChild('destination/' . $finalFilename . '_1.txt'));
     }
 
+    public function testMoveSanitizesClientNameByDefault(): void
+    {
+        service('superglobals')->setFilesArray([
+            'userfile' => [
+                'name'     => '../../public/shell.php',
+                'type'     => 'text/plain',
+                'size'     => 124,
+                'tmp_name' => '/tmp/fileA.txt',
+                'error'    => 0,
+            ],
+        ]);
+
+        $collection = new FileCollection();
+
+        $this->assertTrue($collection->hasFile('userfile'));
+
+        $destination = $this->destination;
+        if (! is_dir($destination)) {
+            mkdir($destination, 0777, true);
+        }
+
+        $file = $collection->getFile('userfile');
+        $this->assertInstanceOf(UploadedFile::class, $file);
+
+        // No second argument: the client-provided name must be sanitized.
+        $file->move($destination);
+
+        $this->assertSame('publicshell.php', $file->getName());
+        $this->assertTrue($this->root->hasChild('destination/publicshell.php'));
+        $this->assertFalse($this->root->hasChild('public/shell.php'));
+    }
+
     public function testMoveOverwriting(): void
     {
         $finalFilename = 'file_with_delimiters_underscore';

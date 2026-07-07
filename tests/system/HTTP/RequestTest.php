@@ -19,6 +19,7 @@ use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -567,95 +568,126 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->getIPAddress());
     }
 
-    public function testGetIPAddressThruProxy(): void
-    {
-        $expected = '123.123.123.123';
+    /**
+     * @param array<string, string> $proxyIPs
+     */
+    #[DataProvider('provideGetIPAddressThruProxy')]
+    public function testGetIPAddressThruProxy(
+        string $expected,
+        string $remoteAddr,
+        array $proxyIPs,
+        string $forwardedFor,
+    ): void {
         service('superglobals')
-            ->setServer('REMOTE_ADDR', '10.0.1.200')
-            ->setServer('HTTP_X_FORWARDED_FOR', $expected);
+            ->setServer('REMOTE_ADDR', $remoteAddr)
+            ->setServer('HTTP_X_FORWARDED_FOR', $forwardedFor);
 
         $config           = new App();
-        $config->proxyIPs = [
-            '10.0.1.200'     => 'X-Forwarded-For',
-            '192.168.5.0/24' => 'X-Forwarded-For',
-        ];
+        $config->proxyIPs = $proxyIPs;
         Factories::injectMock('config', App::class, $config);
         $this->request = new Request();
         $this->request->populateHeaders();
 
-        // we should see the original forwarded address
         $this->assertSame($expected, $this->request->getIPAddress());
     }
 
-    public function testGetIPAddressThruProxyInvalid(): void
+    /**
+     * @return iterable<string, array{string, string, array<string, string>, string}>
+     */
+    public static function provideGetIPAddressThruProxy(): iterable
     {
-        $expected = '123.456.23.123';
-        service('superglobals')
-            ->setServer('REMOTE_ADDR', '10.0.1.200')
-            ->setServer('HTTP_X_FORWARDED_FOR', $expected);
-        $config           = new App();
-        $config->proxyIPs = [
-            '10.0.1.200'     => 'X-Forwarded-For',
-            '192.168.5.0/24' => 'X-Forwarded-For',
+        yield from [
+            'trusted proxy IP' => [
+                '123.123.123.123',
+                '10.0.1.200',
+                ['10.0.1.200' => 'X-Forwarded-For', '192.168.5.0/24' => 'X-Forwarded-For'],
+                '123.123.123.123',
+            ],
+            'invalid spoofed address' => [
+                '10.0.1.200',
+                '10.0.1.200',
+                ['10.0.1.200' => 'X-Forwarded-For', '192.168.5.0/24' => 'X-Forwarded-For'],
+                '123.456.23.123',
+            ],
+            'not whitelisted proxy IP' => [
+                '10.10.1.200',
+                '10.10.1.200',
+                ['10.0.1.200' => 'X-Forwarded-For', '192.168.5.0/24' => 'X-Forwarded-For'],
+                '123.456.23.123',
+            ],
+            'trusted subnet' => [
+                '123.123.123.123',
+                '192.168.5.21',
+                ['192.168.5.0/24' => 'X-Forwarded-For'],
+                '123.123.123.123',
+            ],
+            'out of trusted subnet' => [
+                '192.168.5.21',
+                '192.168.5.21',
+                ['192.168.5.0/28' => 'X-Forwarded-For'],
+                '123.123.123.123',
+            ],
+            'trusted IPv6 proxy IP' => [
+                '123.123.123.123',
+                '2001:db8::2:1',
+                ['2001:db8::2:1' => 'X-Forwarded-For'],
+                '123.123.123.123',
+            ],
+            'trusted IPv6 subnet' => [
+                '123.123.123.123',
+                '2001:db8::2:1',
+                ['2001:db8::/32' => 'X-Forwarded-For'],
+                '123.123.123.123',
+            ],
+            'out of trusted IPv6 subnet' => [
+                '2001:db9::2:1',
+                '2001:db9::2:1',
+                ['2001:db8::/32' => 'X-Forwarded-For'],
+                '123.123.123.123',
+            ],
+            'proxy entry IP version mismatch' => [
+                '192.168.5.21',
+                '192.168.5.21',
+                ['2001:db8::/32' => 'X-Forwarded-For'],
+                '123.123.123.123',
+            ],
+            'invalid proxy IP string' => [
+                '10.0.1.200',
+                '10.0.1.200',
+                ['not an ip' => 'X-Forwarded-For'],
+                '123.123.123.123',
+            ],
+            'invalid proxy CIDR mask' => [
+                '192.168.5.21',
+                '192.168.5.21',
+                ['192.168.5.0/foo' => 'X-Forwarded-For'],
+                '123.123.123.123',
+            ],
+            'empty proxy CIDR mask' => [
+                '192.168.5.21',
+                '192.168.5.21',
+                ['192.168.5.0/' => 'X-Forwarded-For'],
+                '123.123.123.123',
+            ],
+            'negative proxy CIDR mask' => [
+                '192.168.5.21',
+                '192.168.5.21',
+                ['192.168.5.0/-1' => 'X-Forwarded-For'],
+                '123.123.123.123',
+            ],
+            'out of range IPv4 proxy CIDR mask' => [
+                '192.168.5.21',
+                '192.168.5.21',
+                ['192.168.5.0/33' => 'X-Forwarded-For'],
+                '123.123.123.123',
+            ],
+            'out of range IPv6 proxy CIDR mask' => [
+                '2001:db8::2:1',
+                '2001:db8::2:1',
+                ['2001:db8::/129' => 'X-Forwarded-For'],
+                '123.123.123.123',
+            ],
         ];
-
-        $this->request = new Request($config);
-        $this->request->populateHeaders();
-
-        // spoofed address invalid
-        $this->assertSame('10.0.1.200', $this->request->getIPAddress());
-    }
-
-    public function testGetIPAddressThruProxyNotWhitelisted(): void
-    {
-        $expected = '123.456.23.123';
-        service('superglobals')
-            ->setServer('REMOTE_ADDR', '10.10.1.200')
-            ->setServer('HTTP_X_FORWARDED_FOR', $expected);
-
-        $config           = new App();
-        $config->proxyIPs = [
-            '10.0.1.200'     => 'X-Forwarded-For',
-            '192.168.5.0/24' => 'X-Forwarded-For',
-        ];
-        $this->request = new Request($config);
-        $this->request->populateHeaders();
-
-        // spoofed address invalid
-        $this->assertSame('10.10.1.200', $this->request->getIPAddress());
-    }
-
-    public function testGetIPAddressThruProxySubnet(): void
-    {
-        $expected = '123.123.123.123';
-        service('superglobals')
-            ->setServer('REMOTE_ADDR', '192.168.5.21')
-            ->setServer('HTTP_X_FORWARDED_FOR', $expected);
-
-        $config           = new App();
-        $config->proxyIPs = ['192.168.5.0/24' => 'X-Forwarded-For'];
-        Factories::injectMock('config', App::class, $config);
-        $this->request = new Request();
-        $this->request->populateHeaders();
-
-        // we should see the original forwarded address
-        $this->assertSame($expected, $this->request->getIPAddress());
-    }
-
-    public function testGetIPAddressThruProxyOutofSubnet(): void
-    {
-        $expected = '123.123.123.123';
-        service('superglobals')
-            ->setServer('REMOTE_ADDR', '192.168.5.21')
-            ->setServer('HTTP_X_FORWARDED_FOR', $expected);
-
-        $config           = new App();
-        $config->proxyIPs = ['192.168.5.0/28' => 'X-Forwarded-For'];
-        $this->request    = new Request($config);
-        $this->request->populateHeaders();
-
-        // we should see the original forwarded address
-        $this->assertSame('192.168.5.21', $this->request->getIPAddress());
     }
 
     // FIXME getIPAddress should have more testing, to 100% code coverage

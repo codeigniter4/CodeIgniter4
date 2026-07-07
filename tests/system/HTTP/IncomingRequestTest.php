@@ -752,16 +752,86 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertTrue($this->request->isSecure());
     }
 
-    public function testIsSecureFrontEnd(): void
-    {
-        $this->request->appendHeader('Front-End-Https', 'on');
-        $this->assertTrue($this->request->isSecure());
+    /**
+     * @param array<string, string> $proxyIPs
+     */
+    #[DataProvider('provideIsSecureWithForwardedHeaders')]
+    public function testIsSecureWithForwardedHeaders(
+        string $header,
+        string $value,
+        string $remoteAddr,
+        array $proxyIPs,
+        bool $expected,
+    ): void {
+        service('superglobals')->setServer('REMOTE_ADDR', $remoteAddr);
+
+        $config           = new App();
+        $config->proxyIPs = $proxyIPs;
+
+        $request = $this->createRequest($config);
+        $request->appendHeader($header, $value);
+
+        $this->assertSame($expected, $request->isSecure());
     }
 
-    public function testIsSecureForwarded(): void
+    /**
+     * @return iterable<string, array{string, string, string, array<string, string>, bool}>
+     */
+    public static function provideIsSecureWithForwardedHeaders(): iterable
     {
-        $this->request->appendHeader('X-Forwarded-Proto', 'https');
-        $this->assertTrue($this->request->isSecure());
+        yield from [
+            'X-Forwarded-Proto trusted proxy IP' => [
+                'X-Forwarded-Proto', 'https', '10.0.1.200', ['10.0.1.200' => 'X-Forwarded-For'], true,
+            ],
+            'X-Forwarded-Proto no trusted proxies' => [
+                'X-Forwarded-Proto', 'https', '10.0.1.200', [], false,
+            ],
+            'X-Forwarded-Proto untrusted proxy IP' => [
+                'X-Forwarded-Proto', 'https', '10.0.1.201', ['10.0.1.200' => 'X-Forwarded-For'], false,
+            ],
+            'X-Forwarded-Proto trusted subnet' => [
+                'X-Forwarded-Proto', 'https', '192.168.5.21', ['192.168.5.0/24' => 'X-Forwarded-For'], true,
+            ],
+            'X-Forwarded-Proto out of trusted subnet' => [
+                'X-Forwarded-Proto', 'https', '192.168.6.21', ['192.168.5.0/24' => 'X-Forwarded-For'], false,
+            ],
+            'X-Forwarded-Proto trusted IPv6 subnet' => [
+                'X-Forwarded-Proto', 'https', '2001:db8::5', ['2001:db8::/32' => 'X-Forwarded-For'], true,
+            ],
+            'X-Forwarded-Proto out of trusted IPv6 subnet' => [
+                'X-Forwarded-Proto', 'https', '2001:db9::5', ['2001:db8::/32' => 'X-Forwarded-For'], false,
+            ],
+            'X-Forwarded-Proto trusted proxy but http' => [
+                'X-Forwarded-Proto', 'http', '10.0.1.200', ['10.0.1.200' => 'X-Forwarded-For'], false,
+            ],
+            'Front-End-Https trusted proxy IP' => [
+                'Front-End-Https', 'on', '10.0.1.200', ['10.0.1.200' => 'X-Forwarded-For'], true,
+            ],
+            'Front-End-Https no trusted proxies' => [
+                'Front-End-Https', 'on', '10.0.1.200', [], false,
+            ],
+            'Front-End-Https trusted proxy but off' => [
+                'Front-End-Https', 'off', '10.0.1.200', ['10.0.1.200' => 'X-Forwarded-For'], false,
+            ],
+            'invalid proxy IP string' => [
+                'X-Forwarded-Proto', 'https', '10.0.1.200', ['not an ip' => 'X-Forwarded-For'], false,
+            ],
+            'invalid proxy CIDR mask' => [
+                'X-Forwarded-Proto', 'https', '192.168.5.21', ['192.168.5.0/foo' => 'X-Forwarded-For'], false,
+            ],
+            'empty proxy CIDR mask' => [
+                'X-Forwarded-Proto', 'https', '192.168.5.21', ['192.168.5.0/' => 'X-Forwarded-For'], false,
+            ],
+            'negative proxy CIDR mask' => [
+                'X-Forwarded-Proto', 'https', '192.168.5.21', ['192.168.5.0/-1' => 'X-Forwarded-For'], false,
+            ],
+            'out of range IPv4 proxy CIDR mask' => [
+                'X-Forwarded-Proto', 'https', '192.168.5.21', ['192.168.5.0/33' => 'X-Forwarded-For'], false,
+            ],
+            'out of range IPv6 proxy CIDR mask' => [
+                'X-Forwarded-Proto', 'https', '2001:db8::5', ['2001:db8::/129' => 'X-Forwarded-For'], false,
+            ],
+        ];
     }
 
     public function testUserAgent(): void

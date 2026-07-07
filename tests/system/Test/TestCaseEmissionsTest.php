@@ -61,9 +61,7 @@ final class TestCaseEmissionsTest extends CIUnitTestCase
         // send it
         ob_start();
         $response->send();
-        if (ob_get_level() > 0) {
-            ob_end_clean();
-        }
+        ob_end_clean();
 
         // and what actually got sent?; test both ways
         $this->assertHeaderEmitted('Set-Cookie: foo=bar;');
@@ -89,9 +87,7 @@ final class TestCaseEmissionsTest extends CIUnitTestCase
         // send it
         ob_start();
         $response->send(); // what really was sent
-        if (ob_get_level() > 0) {
-            ob_end_clean();
-        }
+        ob_end_clean();
 
         $this->assertHeaderNotEmitted('Set-Cookie: pop=corn', true);
     }

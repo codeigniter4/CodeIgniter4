@@ -282,6 +282,10 @@ class IncomingRequest extends Request
             return true;
         }
 
+        if (! $this->isFromTrustedProxy()) {
+            return false;
+        }
+
         if ($this->hasHeader('X-Forwarded-Proto') && $this->header('X-Forwarded-Proto')->getValue() === 'https') {
             return true;
         }

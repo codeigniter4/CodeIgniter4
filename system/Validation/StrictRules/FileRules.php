@@ -15,6 +15,7 @@ namespace CodeIgniter\Validation\StrictRules;
 
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\Files\UploadedFile;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use Config\Mimes;
@@ -147,6 +148,10 @@ class FileRules
             if (mb_strpos($type, 'image') !== 0) {
                 return false;
             }
+
+            if ($this->hasInvalidImageClientExtension($file)) {
+                return false;
+            }
         }
 
         return true;
@@ -177,6 +182,10 @@ class FileRules
             }
 
             if (! in_array($file->getMimeType(), $params, true)) {
+                return false;
+            }
+
+            if ($this->hasMismatchedClientExtension($file)) {
                 return false;
             }
         }
@@ -317,5 +326,35 @@ class FileRules
         }
 
         return true;
+    }
+
+    /**
+     * Reject filenames with non-empty extensions that are not image types.
+     */
+    private function hasInvalidImageClientExtension(UploadedFile $file): bool
+    {
+        $clientExtension = trim(strtolower($file->getClientExtension()), '. ');
+
+        if ($clientExtension === '') {
+            return false;
+        }
+
+        $type = Mimes::guessTypeFromExtension($clientExtension) ?? '';
+
+        return mb_strpos($type, 'image') !== 0;
+    }
+
+    /**
+     * Reject filenames with non-empty extensions that do not match the detected content.
+     */
+    private function hasMismatchedClientExtension(UploadedFile $file): bool
+    {
+        $clientExtension = trim(strtolower($file->getClientExtension()), '. ');
+
+        if ($clientExtension === '') {
+            return false;
+        }
+
+        return $file->guessExtension() !== $clientExtension;
     }
 }
