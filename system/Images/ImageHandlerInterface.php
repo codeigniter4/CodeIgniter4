@@ -152,8 +152,6 @@ interface ImageHandlerInterface
 
     /**
      * Clear metadata before saving image as a new file.
-     *
-     * @return $this
      */
     public function clearMetadata(): static;
 }

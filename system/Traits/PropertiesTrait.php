@@ -27,8 +27,6 @@ trait PropertiesTrait
 {
     /**
      * Attempts to set the values of public class properties.
-     *
-     * @return $this
      */
     final public function fill(array $params): self
     {
@@ -43,10 +41,15 @@ trait PropertiesTrait
 
     /**
      * Get the public properties of the class and return as an array.
+     *
+     * @return array<string, mixed>
      */
     final public function getPublicProperties(): array
     {
         $worker = new class () {
+            /**
+             * @return array<string, mixed>
+             */
             public function getProperties(object $obj): array
             {
                 return get_object_vars($obj);
