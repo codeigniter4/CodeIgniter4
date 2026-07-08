@@ -48,9 +48,8 @@ final class RedirectResponseTest extends CIUnitTestCase
     #[WithoutErrorHandler]
     protected function setUp(): void
     {
-        parent::setUp();
-
         $this->resetServices();
+        parent::setUp();
 
         Services::injectMock('superglobals', new Superglobals());
         service('superglobals')->setServer('REQUEST_METHOD', 'GET');

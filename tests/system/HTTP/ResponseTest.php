@@ -37,12 +37,11 @@ final class ResponseTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
-        Services::injectMock('superglobals', new Superglobals());
-        $this->server = service('superglobals')->getServerArray();
-
+        $this->resetServices();
         parent::setUp();
 
-        $this->resetServices();
+        Services::injectMock('superglobals', new Superglobals());
+        $this->server = service('superglobals')->getServerArray();
     }
 
     protected function tearDown(): void

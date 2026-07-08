@@ -32,9 +32,8 @@ final class NegotiateTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
-        parent::setUp();
-
         $this->resetServices();
+        parent::setUp();
 
         $config          = new App();
         $this->request   = new IncomingRequest($config, new SiteURI($config), null, new UserAgent());

@@ -30,9 +30,8 @@ final class UserAgentTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
-        parent::setUp();
-
         $this->resetServices();
+        parent::setUp();
 
         // set a baseline user agent
         service('superglobals')->setServer('HTTP_USER_AGENT', $this->_user_agent);
