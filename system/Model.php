@@ -32,6 +32,7 @@ use Config\Database;
 use Config\Feature;
 use Generator;
 use stdClass;
+use Throwable;
 
 /**
  * The Model class extends BaseModel and provides additional
@@ -575,6 +576,28 @@ class Model extends BaseModel
     }
 
     /**
+     * Runs the callback with a row reloaded inside a transaction and locked for update.
+     *
+     * @template TReturn
+     *
+     * @param callable(object|row_array, static): TReturn $callback
+     *
+     * @return false|TReturn|null
+     */
+    public function withLockedRow(int|string $id, callable $callback): mixed
+    {
+        return $this->db->transaction(function () use ($id, $callback): mixed {
+            $row = $this->findLockedRow($id);
+
+            if ($row === null) {
+                return null;
+            }
+
+            return $callback($row, $this);
+        });
+    }
+
+    /**
      * Applies the Model soft-delete constraint before terminal Builder operations.
      */
     private function prepareSoftDeleteQuery(bool $reset): void
@@ -589,6 +612,30 @@ class Model extends BaseModel
         $this->tempUseSoftDeletes = $reset
             ? $this->useSoftDeletes
             : ($this->useSoftDeletes ? false : $this->useSoftDeletes);
+    }
+
+    /**
+     * Reloads a row with a database lock, without allowing find callbacks to short-circuit it.
+     */
+    private function findLockedRow(int|string $id): mixed
+    {
+        $builder                  = $this->builder();
+        $tempAllowCallbacks       = $this->tempAllowCallbacks;
+        $this->tempAllowCallbacks = false;
+
+        try {
+            $builder->lockForUpdate();
+
+            return $this->find($id);
+        } catch (Throwable $e) {
+            $this->builder            = null;
+            $this->tempReturnType     = $this->returnType;
+            $this->tempUseSoftDeletes = $this->useSoftDeletes;
+
+            throw $e;
+        } finally {
+            $this->tempAllowCallbacks = $tempAllowCallbacks;
+        }
     }
 
     /**
