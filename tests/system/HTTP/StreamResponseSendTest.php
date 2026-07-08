@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use Config\App;
 use Generator;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
@@ -44,7 +45,7 @@ final class StreamResponseSendTest extends CIUnitTestCase
 
         $this->assertSame('Hello World', $output);
         $this->assertHeaderEmitted('X-Accel-Buffering: no');
-        $this->assertHeaderEmitted('Content-Encoding: identity');
+        $this->assertHeaderNotEmitted('Content-Encoding:');
         $this->assertHeaderEmitted('Set-Cookie: foo=bar;');
     }
 
@@ -120,5 +121,51 @@ final class StreamResponseSendTest extends CIUnitTestCase
         ob_end_clean();
 
         $this->assertSame(202, http_response_code());
+    }
+
+    /**
+     * This test does not test that CSP is handled properly -
+     * it makes sure that sending gives CSP a chance to do its thing.
+     */
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    #[WithoutErrorHandler]
+    public function testSendEmitsCspHeaderWhenEnabled(): void
+    {
+        $this->resetFactories();
+        $this->resetServices();
+
+        config(App::class)->CSPEnabled = true;
+
+        $response = new StreamResponse(static function (): void {
+        });
+        $response->pretend(false);
+
+        ob_start();
+        $response->send();
+        ob_end_clean();
+
+        $this->assertHeaderEmitted('Content-Security-Policy:');
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    #[WithoutErrorHandler]
+    public function testSendSkipsCspHeaderForSSE(): void
+    {
+        $this->resetFactories();
+        $this->resetServices();
+
+        config(App::class)->CSPEnabled = true;
+
+        $response = new SSEResponse(static function (): void {
+        });
+        $response->pretend(false);
+
+        ob_start();
+        $response->send();
+        ob_end_clean();
+
+        $this->assertHeaderNotEmitted('Content-Security-Policy:');
     }
 }

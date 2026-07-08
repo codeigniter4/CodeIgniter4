@@ -123,7 +123,13 @@ class StreamResponse extends Response implements NonBufferedResponseInterface
 
         $this->prepareStreamHeaders();
 
-        // Intentionally skip CSP finalize: the body is streamed, not buffered HTML.
+        // Give CSP a chance to build its headers. Nonce placeholders cannot be
+        // replaced in a streamed body; call getCSP()->getScriptNonce() or
+        // getStyleNonce() before returning the response instead.
+        if ($this->shouldFinalizeCsp()) {
+            $this->getCSP()->finalize($this);
+        }
+
         $this->sendHeaders();
         $this->sendCookies();
 
@@ -140,10 +146,6 @@ class StreamResponse extends Response implements NonBufferedResponseInterface
     {
         if (! $this->hasHeader('X-Accel-Buffering')) {
             $this->setHeader('X-Accel-Buffering', 'no');
-        }
-
-        if (! $this->hasHeader('Content-Encoding')) {
-            $this->setHeader('Content-Encoding', 'identity');
         }
     }
 

@@ -252,7 +252,12 @@ The callback receives the ``StreamResponse`` instance. ``StreamResponse::write()
 returns ``false`` once the client has disconnected, so you can stop producing
 output early. By default, every ``write()`` flushes output to the client
 immediately. When writing many small chunks, pass ``false`` as the second
-argument and call ``StreamResponse::flush()`` at intervals instead.
+argument and call ``StreamResponse::flush()`` at intervals instead - the
+example above flushes once per batch.
+
+The callback is not limited to ``write()``: you may also write directly to
+``php://output`` (for example, with ``fputcsv()`` for CSV exports), calling
+``flush()`` and ``StreamResponse::isClientConnected()`` yourself.
 
 Alternatively, you may pass an iterable of string chunks (such as a generator),
 and each chunk is written and flushed in order:
@@ -264,15 +269,24 @@ Headers and Status Code
 
 Set the content type, status code, and any custom headers **before** returning
 the response - anything set inside the callback will be too late. Unless you
-have already set them, ``StreamResponse`` applies ``X-Accel-Buffering: no`` and
-``Content-Encoding: identity`` to discourage intermediaries from buffering or
-compressing the stream.
+have already set it, ``StreamResponse`` applies ``X-Accel-Buffering: no`` to
+discourage intermediaries from buffering the stream. PHP's zlib output
+compression is turned off automatically, but if your web server or CDN
+compresses responses (e.g., nginx ``gzip`` or Apache ``mod_deflate``), configure
+it to skip your streaming endpoints - compression can delay chunk delivery.
 
 The response is streamed: output buffering is disabled, the PHP time limit is
 removed, and the session is closed to avoid blocking other requests. After
 filters still run and may set headers, but they must not rely on the response
 body. View rendering and decorators are not applied - stream your output in
 the callback.
+
+If :doc:`Content Security Policy </outgoing/csp>` is enabled, the
+``Content-Security-Policy`` header is sent as usual. However, nonce
+placeholders cannot be replaced in a streamed body. When streaming HTML that
+needs a nonce, call ``$this->response->getCSP()->getScriptNonce()`` (or
+``getStyleNonce()``) **before** returning the response and embed the returned
+value in your output yourself.
 
 ``StreamResponse`` does not set a ``Content-Length`` header by default, since
 the body length is typically unknown in advance. Without it, clients cannot
@@ -369,9 +383,9 @@ Production Considerations
 Some server stacks and CDNs buffer or compress responses (e.g., Apache with
 ``mod_deflate``), which can break real-time SSE delivery.
 ``SSEResponse`` disables PHP output buffering, turns off zlib output
-compression, and sets ``Content-Encoding: identity`` and ``X-Accel-Buffering: no``.
-However, intermediaries may still buffer or compress, so configure your web server
-or CDN to disable buffering/compression for SSE endpoints.
+compression, and sets ``X-Accel-Buffering: no``. However, intermediaries may
+still buffer or compress, so configure your web server or CDN to disable
+buffering/compression for SSE endpoints.
 
 Example: Product-Oriented Use Case
 ----------------------------------

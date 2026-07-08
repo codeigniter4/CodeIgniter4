@@ -124,12 +124,22 @@ class SSEResponse extends StreamResponse
         $this->setContentType('text/event-stream', 'UTF-8');
         $this->removeHeader('Cache-Control');
         $this->setHeader('Cache-Control', 'no-cache');
-        $this->setHeader('Content-Encoding', 'identity');
         $this->setHeader('X-Accel-Buffering', 'no');
 
         // Connection: keep-alive is only valid for HTTP/1.x
         if (version_compare($this->getProtocolVersion(), '2.0', '<')) {
             $this->setHeader('Connection', 'keep-alive');
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * CSP is not finalized for SSE responses, as Content Security
+     * Policy does not apply to event streams.
+     */
+    protected function shouldFinalizeCsp(): bool
+    {
+        return false;
     }
 }

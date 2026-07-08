@@ -394,7 +394,7 @@ trait ResponseTrait
      * need it avoids the cost of constructing a 1000+ line service on every
      * request.
      */
-    private function shouldFinalizeCsp(): bool
+    protected function shouldFinalizeCsp(): bool
     {
         // Developer already touched CSP through getCSP(); respect it.
         if ($this->CSP !== null) {

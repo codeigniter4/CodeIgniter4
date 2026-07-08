@@ -2,13 +2,24 @@
 
 use CodeIgniter\HTTP\StreamResponse;
 
-return $this->response->stream(static function (StreamResponse $stream) {
-    $stream->write("id,email\n");
+return $this->response
+    ->stream(static function (StreamResponse $stream) {
+        $userModel = model('UserModel');
+        $offset    = 0;
 
-    foreach (model('UserModel')->findAll() as $user) {
-        // write() returns false when the client disconnects
-        if (! $stream->write("{$user->id},{$user->email}\n")) {
-            break;
+        // Fetch rows in batches to keep memory usage low
+        while ($users = $userModel->findAll(500, $offset)) {
+            foreach ($users as $user) {
+                // write() returns false once the client has disconnected
+                if (! $stream->write(json_encode($user) . "\n", false)) {
+                    return;
+                }
+            }
+
+            // Push the whole batch to the client at once
+            $stream->flush();
+
+            $offset += 500;
         }
-    }
-});
+    })
+    ->setContentType('application/x-ndjson');
