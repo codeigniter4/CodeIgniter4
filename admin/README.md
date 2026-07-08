@@ -48,7 +48,7 @@ are used as part of that process:
 
 -   **generate-changelog.php** prepends the CHANGELOG.md entry for a new
     release, built from GitHub's auto-generated release notes and the
-    SECURITY section of the version's detailed changelog.  
+    SECURITY section of the version's detailed changelog.
     Usage: `php admin/generate-changelog.php 4.x.x [--dry-run]`
 -   **prepare-release.php** creates the `release-4.x.x` branch and updates
     version references in the framework source, the user guide, and the
@@ -61,6 +61,10 @@ are used as part of that process:
     latest) that appear to be missing the labels used to generate the
     changelog.
     Usage: `php admin/check-pr-labels.php [<version>]`
+-   **update-upgrade-guide.php** fills the "Config" and "All Changes" sections
+    of the version's upgrade guide with the project space files changed since
+    the last release.
+    Usage: `php admin/update-upgrade-guide.php <version> [--dry-run]`
 
 ## Other Stuff
 
