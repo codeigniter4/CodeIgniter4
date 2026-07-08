@@ -13,18 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Models;
 
-use CodeIgniter\Database\BaseBuilder;
-use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use CodeIgniter\Database\Query;
-use CodeIgniter\Database\TableName;
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Mock\MockConnection;
 use PHPUnit\Framework\Attributes\Group;
 use RuntimeException;
-use stdClass;
 use Tests\Support\Models\EventModel;
 use Tests\Support\Models\UserModel;
+use Tests\Support\Models\WithLockedRowConnection;
 
 /**
  * @internal
@@ -130,130 +125,5 @@ final class WithLockedRowUnitTest extends CIUnitTestCase
         $this->assertSame('derek@world.com', $result);
         $this->assertStringContainsString('FOR UPDATE', $sql);
         $this->assertStringNotContainsString('country', $sql);
-    }
-}
-
-/**
- * @internal
- */
-final class WithLockedRowConnection extends MockConnection
-{
-    /**
-     * @param list<array<string, mixed>> $rows
-     */
-    public function __construct(private array $rows = [], public bool $throwOnSelect = false)
-    {
-        parent::__construct([]);
-    }
-
-    /**
-     * @param array<int|string, mixed>|string|null $binds
-     */
-    public function query(string $sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = ''): BaseResult|bool
-    {
-        if ($this->connID === false || $this->connID === null) {
-            $this->initialize();
-        }
-
-        $query = new Query($this);
-        $query->setQuery($sql, $binds, $setEscapeFlags);
-
-        $this->lastQuery = $query;
-
-        if ($query->isWriteType()) {
-            return true;
-        }
-
-        if ($this->throwOnSelect) {
-            throw new DatabaseException('Locked lookup failed.');
-        }
-
-        return new WithLockedRowResult($this->connID, new stdClass(), $this->rows);
-    }
-
-    /**
-     * @param array<array-key, mixed>|string|TableName $tableName
-     */
-    public function table($tableName): BaseBuilder
-    {
-        return new BaseBuilder($tableName, $this);
-    }
-
-    protected function execute(string $sql): object
-    {
-        return new stdClass();
-    }
-}
-
-/**
- * @internal
- *
- * @extends BaseResult<object|resource, object|resource>
- */
-final class WithLockedRowResult extends BaseResult
-{
-    /**
-     * @param list<array<string, mixed>> $rows
-     * @param mixed                      $connID
-     * @param mixed                      $resultID
-     */
-    public function __construct($connID, $resultID, private array $rows)
-    {
-        parent::__construct($connID, $resultID);
-    }
-
-    public function getFieldCount(): int
-    {
-        return 0;
-    }
-
-    /**
-     * @return list<string>
-     */
-    public function getFieldNames(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return list<object>
-     */
-    public function getFieldData(): array
-    {
-        return [];
-    }
-
-    public function freeResult(): void
-    {
-    }
-
-    public function dataSeek(int $n = 0): bool
-    {
-        return true;
-    }
-
-    /**
-     * @return array<string, mixed>|false
-     */
-    protected function fetchAssoc(): array|false
-    {
-        return array_shift($this->rows) ?? false;
-    }
-
-    protected function fetchObject($className = stdClass::class): false|object
-    {
-        $row = $this->fetchAssoc();
-
-        if ($row === false) {
-            return false;
-        }
-
-        $object = new $className();
-
-        foreach ($row as $key => $value) {
-            $object->{$key} = $value;
-        }
-
-        return $object;
     }
 }
