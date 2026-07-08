@@ -46,6 +46,10 @@ This folder contains tools or docs useful for project maintainers.
 The release process is detailed in [RELEASE.md](./RELEASE.md). These scripts
 are used as part of that process:
 
+-   **generate-changelog.php** prepends the CHANGELOG.md entry for a new
+    release, built from GitHub's auto-generated release notes and the
+    SECURITY section of the version's detailed changelog.  
+    Usage: `php admin/generate-changelog.php 4.x.x [--dry-run]`
 -   **prepare-release.php** creates the `release-4.x.x` branch and updates
     version references in the framework source, the user guide, and the
     distribution build script.  
