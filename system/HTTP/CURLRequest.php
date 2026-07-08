@@ -526,21 +526,50 @@ class CURLRequest extends OutgoingRequest
      */
     protected function setCURLOptions(array $curlOptions = [], array $config = [])
     {
-        // Auth Headers
-        if (! empty($config['auth'])) {
-            $curlOptions[CURLOPT_USERPWD] = $config['auth'][0] . ':' . $config['auth'][1];
+        $curlOptions = $this->applyAuthOptions($curlOptions, $config);
+        $curlOptions = $this->applySslOptions($curlOptions, $config);
+        $curlOptions = $this->applyProxyOptions($curlOptions, $config);
+        $curlOptions = $this->applyDebugOptions($curlOptions, $config);
+        $curlOptions = $this->applyRedirectOptions($curlOptions, $config);
+        $curlOptions = $this->applyConnectionOptions($curlOptions, $config);
+        $curlOptions = $this->applyBodyOptions($curlOptions, $config);
+        $curlOptions = $this->applyResponseOptions($curlOptions, $config);
+        $curlOptions = $this->applyProtocolOptions($curlOptions, $config);
 
-            if (! empty($config['auth'][2]) && strtolower($config['auth'][2]) === 'digest') {
-                $curlOptions[CURLOPT_HTTPAUTH] = CURLAUTH_DIGEST;
-            } else {
-                $curlOptions[CURLOPT_HTTPAUTH] = CURLAUTH_BASIC;
-            }
+        return $this->applyClientOptions($curlOptions, $config);
+    }
+
+    /**
+     * @param array<int, mixed>    $curlOptions
+     * @param array<string, mixed> $config
+     *
+     * @return array<int, mixed>
+     */
+    private function applyAuthOptions(array $curlOptions, array $config): array
+    {
+        // Auth Headers
+        if (isset($config['auth']) && is_array($config['auth']) && count($config['auth']) >= 2) {
+            $curlOptions[CURLOPT_USERPWD]  = $config['auth'][0] . ':' . $config['auth'][1];
+            $curlOptions[CURLOPT_HTTPAUTH] = (isset($config['auth'][2]) && $config['auth'][2] !== '' && strtolower($config['auth'][2]) === 'digest')
+                ? CURLAUTH_DIGEST
+                : CURLAUTH_BASIC;
         }
 
-        // Certificate
-        if (! empty($config['cert'])) {
-            $cert = $config['cert'];
+        return $curlOptions;
+    }
 
+    /**
+     * @param array<int, mixed>    $curlOptions
+     * @param array<string, mixed> $config
+     *
+     * @return array<int, mixed>
+     */
+    private function applySslOptions(array $curlOptions, array $config): array
+    {
+        // Certificate
+        $cert = $config['cert'] ?? null;
+
+        if ((bool) $cert) {
             if (is_array($cert)) {
                 $curlOptions[CURLOPT_SSLCERTPASSWD] = $cert[1];
                 $cert                               = $cert[0];
@@ -571,30 +600,51 @@ class CURLRequest extends OutgoingRequest
             }
         }
 
+        return $curlOptions;
+    }
+
+    /**
+     * @param array<int, mixed>    $curlOptions
+     * @param array<string, mixed> $config
+     *
+     * @return array<int, mixed>
+     */
+    private function applyProxyOptions(array $curlOptions, array $config): array
+    {
         // Proxy
         if (isset($config['proxy'])) {
             $curlOptions[CURLOPT_HTTPPROXYTUNNEL] = true;
             $curlOptions[CURLOPT_PROXY]           = $config['proxy'];
         }
 
+        return $curlOptions;
+    }
+
+    /**
+     * @param array<int, mixed>    $curlOptions
+     * @param array<string, mixed> $config
+     *
+     * @return array<int, mixed>
+     */
+    private function applyDebugOptions(array $curlOptions, array $config): array
+    {
         // Debug
-        if ($config['debug']) {
+        if ((bool) ($config['debug'] ?? false)) {
             $curlOptions[CURLOPT_VERBOSE] = 1;
             $curlOptions[CURLOPT_STDERR]  = is_string($config['debug']) ? fopen($config['debug'], 'a+b') : fopen('php://stderr', 'wb');
         }
 
-        // Decode Content
-        if (! empty($config['decode_content'])) {
-            $accept = $this->getHeaderLine('Accept-Encoding');
+        return $curlOptions;
+    }
 
-            if ($accept !== '') {
-                $curlOptions[CURLOPT_ENCODING] = $accept;
-            } else {
-                $curlOptions[CURLOPT_ENCODING]   = '';
-                $curlOptions[CURLOPT_HTTPHEADER] = 'Accept-Encoding';
-            }
-        }
-
+    /**
+     * @param array<int, mixed>    $curlOptions
+     * @param array<string, mixed> $config
+     *
+     * @return array<int, mixed>
+     */
+    private function applyRedirectOptions(array $curlOptions, array $config): array
+    {
         // Allow Redirects
         if (array_key_exists('allow_redirects', $config)) {
             $settings = $this->redirectDefaults;
@@ -623,6 +673,17 @@ class CURLRequest extends OutgoingRequest
             }
         }
 
+        return $curlOptions;
+    }
+
+    /**
+     * @param array<int, mixed>    $curlOptions
+     * @param array<string, mixed> $config
+     *
+     * @return array<int, mixed>
+     */
+    private function applyConnectionOptions(array $curlOptions, array $config): array
+    {
         // DNS Cache Timeout
         if (isset($config['dns_cache_timeout']) && is_numeric($config['dns_cache_timeout']) && $config['dns_cache_timeout'] >= -1) {
             $curlOptions[CURLOPT_DNS_CACHE_TIMEOUT] = (int) $config['dns_cache_timeout'];
@@ -634,39 +695,10 @@ class CURLRequest extends OutgoingRequest
             : true;
 
         // Timeout
-        $curlOptions[CURLOPT_TIMEOUT_MS] = (float) $config['timeout'] * 1000;
+        $curlOptions[CURLOPT_TIMEOUT_MS] = (float) ($config['timeout'] ?? 0) * 1000;
 
         // Connection Timeout
-        $curlOptions[CURLOPT_CONNECTTIMEOUT_MS] = (float) $config['connect_timeout'] * 1000;
-
-        // Post Data - application/x-www-form-urlencoded
-        if (! empty($config['form_params']) && is_array($config['form_params'])) {
-            $postFields                      = http_build_query($config['form_params']);
-            $curlOptions[CURLOPT_POSTFIELDS] = $postFields;
-
-            // Ensure content-length is set, since CURL doesn't seem to
-            // calculate it when HTTPHEADER is set.
-            $this->setHeader('Content-Length', (string) strlen($postFields));
-            $this->setHeader('Content-Type', 'application/x-www-form-urlencoded');
-        }
-
-        // Post Data - multipart/form-data
-        if (! empty($config['multipart']) && is_array($config['multipart'])) {
-            // setting the POSTFIELDS option automatically sets multipart
-            $curlOptions[CURLOPT_POSTFIELDS] = $config['multipart'];
-        }
-
-        // HTTP Errors
-        $curlOptions[CURLOPT_FAILONERROR] = array_key_exists('http_errors', $config) ? (bool) $config['http_errors'] : true;
-
-        // JSON
-        if (isset($config['json'])) {
-            // Will be set as the body in `applyBody()`
-            $json = json_encode($config['json']);
-            $this->setBody($json);
-            $this->setHeader('Content-Type', 'application/json');
-            $this->setHeader('Content-Length', (string) strlen($json));
-        }
+        $curlOptions[CURLOPT_CONNECTTIMEOUT_MS] = (float) ($config['connect_timeout'] ?? 150) * 1000;
 
         // Resolve IP
         if (array_key_exists('force_ip_resolve', $config)) {
@@ -677,24 +709,113 @@ class CURLRequest extends OutgoingRequest
             };
         }
 
-        // version
-        if (! empty($config['version'])) {
-            $version = sprintf('%.1F', $config['version']);
-            if ($version === '1.0') {
-                $curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_0;
-            } elseif ($version === '1.1') {
-                $curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_1;
-            } elseif ($version === '2.0') {
-                $curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_2_0;
-            } elseif ($version === '3.0') {
-                if (! defined('CURL_HTTP_VERSION_3')) {
-                    define('CURL_HTTP_VERSION_3', 30);
-                }
+        return $curlOptions;
+    }
 
-                $curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_3;
+    /**
+     * @param array<int, mixed>    $curlOptions
+     * @param array<string, mixed> $config
+     *
+     * @return array<int, mixed>
+     */
+    private function applyBodyOptions(array $curlOptions, array $config): array
+    {
+        // Post Data - application/x-www-form-urlencoded
+        if (isset($config['form_params']) && is_array($config['form_params']) && $config['form_params'] !== []) {
+            $postFields                      = http_build_query($config['form_params']);
+            $curlOptions[CURLOPT_POSTFIELDS] = $postFields;
+
+            // Ensure content-length is set, since CURL doesn't seem to
+            // calculate it when HTTPHEADER is set.
+            $this->setHeader('Content-Length', (string) strlen($postFields));
+            $this->setHeader('Content-Type', 'application/x-www-form-urlencoded');
+        }
+
+        // Post Data - multipart/form-data
+        if (isset($config['multipart']) && is_array($config['multipart']) && $config['multipart'] !== []) {
+            // setting the POSTFIELDS option automatically sets multipart
+            $curlOptions[CURLOPT_POSTFIELDS] = $config['multipart'];
+        }
+
+        // JSON
+        if (isset($config['json'])) {
+            // Will be set as the body in `applyBody()`
+            $json = json_encode($config['json']);
+            $this->setBody($json);
+            $this->setHeader('Content-Type', 'application/json');
+            $this->setHeader('Content-Length', (string) strlen($json));
+        }
+
+        return $curlOptions;
+    }
+
+    /**
+     * @param array<int, mixed>    $curlOptions
+     * @param array<string, mixed> $config
+     *
+     * @return array<int, mixed>
+     */
+    private function applyResponseOptions(array $curlOptions, array $config): array
+    {
+        // Decode Content
+        if ((bool) ($config['decode_content'] ?? false)) {
+            $accept = $this->getHeaderLine('Accept-Encoding');
+
+            if ($accept !== '') {
+                $curlOptions[CURLOPT_ENCODING] = $accept;
+            } else {
+                $curlOptions[CURLOPT_ENCODING]   = '';
+                $curlOptions[CURLOPT_HTTPHEADER] = 'Accept-Encoding';
             }
         }
 
+        // HTTP Errors
+        $curlOptions[CURLOPT_FAILONERROR] = array_key_exists('http_errors', $config) ? (bool) $config['http_errors'] : true;
+
+        return $curlOptions;
+    }
+
+    /**
+     * @param array<int, mixed>    $curlOptions
+     * @param array<string, mixed> $config
+     *
+     * @return array<int, mixed>
+     */
+    private function applyProtocolOptions(array $curlOptions, array $config): array
+    {
+        if (! isset($config['version']) || (bool) $config['version'] === false) {
+            return $curlOptions;
+        }
+
+        $version = sprintf('%.1F', (float) $config['version']);
+
+        if ($version === '3.0' && ! defined('CURL_HTTP_VERSION_3')) {
+            define('CURL_HTTP_VERSION_3', 30);
+        }
+
+        $curlVersion = match ($version) {
+            '1.0'   => CURL_HTTP_VERSION_1_0,
+            '1.1'   => CURL_HTTP_VERSION_1_1,
+            '2.0'   => CURL_HTTP_VERSION_2_0,
+            '3.0'   => CURL_HTTP_VERSION_3,
+            default => null,
+        };
+
+        if ($curlVersion !== null) {
+            $curlOptions[CURLOPT_HTTP_VERSION] = $curlVersion;
+        }
+
+        return $curlOptions;
+    }
+
+    /**
+     * @param array<int, mixed>    $curlOptions
+     * @param array<string, mixed> $config
+     *
+     * @return array<int, mixed>
+     */
+    private function applyClientOptions(array $curlOptions, array $config): array
+    {
         // Cookie
         if (isset($config['cookie'])) {
             $curlOptions[CURLOPT_COOKIEJAR]  = $config['cookie'];
