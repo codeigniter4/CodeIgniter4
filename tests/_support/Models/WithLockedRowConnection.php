@@ -29,7 +29,7 @@ final class WithLockedRowConnection extends MockConnection
     /**
      * @param list<array<string, mixed>> $rows
      */
-    public function __construct(private array $rows = [], public bool $throwOnSelect = false)
+    public function __construct(private readonly array $rows = [], public bool $throwOnSelect = false)
     {
         parent::__construct([]);
     }
