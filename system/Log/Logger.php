@@ -307,6 +307,10 @@ class Logger implements LoggerInterface
                 $val = $val->getMessage() . ' ' . clean_path($val->getFile()) . ':' . $val->getLine();
             }
 
+            if (is_bool($val)) {
+                $val = $val ? 'true' : 'false';
+            }
+
             // todo - sanitize input before writing to file?
             if (is_array($val) || (is_object($val) && ! method_exists($val, '__toString'))) {
                 $val = print_r($val, true);
