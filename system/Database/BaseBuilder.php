@@ -577,8 +577,6 @@ class BaseBuilder
      * Generates the FROM portion of the query
      *
      * @param array|string $from
-     *
-     * @return $this
      */
     public function from($from, bool $overwrite = false): self
     {
@@ -608,8 +606,6 @@ class BaseBuilder
     /**
      * @param BaseBuilder $from  Expected subquery
      * @param string      $alias Subquery alias
-     *
-     * @return $this
      */
     public function fromSubquery(BaseBuilder $from, string $alias): self
     {
