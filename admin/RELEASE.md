@@ -171,22 +171,16 @@ existing content.
     **Full Changelog**: https://github.com/codeigniter4/CodeIgniter4/compare/v4.x.w...v4.x.x
     ```
     Click the "Generate release notes" button, and get the "New Contributors".
-* [ ] Watch for the "Deploy Distributable Repos" action to make sure **framework**,
-  **appstarter**, and **userguide** get updated
-* [ ] Run the following commands to install and test `appstarter` and verify the new
-  version:
-    ```console
-    rm -rf release-test
-    composer create-project codeigniter4/appstarter release-test
-    cd release-test
-    composer test && composer info codeigniter4/framework
-    ```
-* [ ] Verify that the user guide actions succeeded:
-  * [ ] "[Deploy Distributable Repos](https://github.com/codeigniter4/CodeIgniter4/actions/workflows/deploy-distributables.yml)", the main repo
-  * [ ] "[Deploy Production](https://github.com/codeigniter4/userguide/actions/workflows/deploy.yml)", UG repo
-  * [ ] "[pages-build-deployment](https://github.com/codeigniter4/userguide/actions/workflows/pages/pages-build-deployment)", UG repo
-  * [ ] Check if "CodeIgniter4.x.x.epub" is added to UG repo. "CodeIgniter.epub" was
-    created when v4.3.8 was released.
+* [ ] Watch the "[Verify Release](https://github.com/codeigniter4/CodeIgniter4/actions/workflows/verify-release.yml)"
+  workflow and make sure it passes. It does the following:
+  * Wait for the "[Deploy Distributable Repos](https://github.com/codeigniter4/CodeIgniter4/actions/workflows/deploy-distributables.yml)"
+    action to update **framework**, **appstarter**, and **userguide**
+  * Install `appstarter` from Packagist, verify it pulls framework `v4.x.x`,
+    and run its tests
+  * Verify that the user guide deployments succeeded ("Deploy Production" and
+    "pages build and deployment" in the UG repo) and that **CodeIgniter4.x.x.epub**
+    was added
+  * If it fails, fix the cause and re-run it via "Run workflow" with the tag `v4.x.x`.
 * [ ] Fast-forward `develop` branch to catch the merge commit from `master`
     ```console
     git fetch upstream
