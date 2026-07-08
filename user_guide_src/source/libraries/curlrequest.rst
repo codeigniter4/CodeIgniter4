@@ -118,7 +118,8 @@ each take the URL as the first parameter and an array of options as the second:
 
 The ``query()`` shortcut sends an HTTP QUERY request. QUERY requests usually
 include query content, so use options such as ``json``, ``form_params``, or
-``body`` to send the expected body.
+``body`` to send the expected body. This is different from the ``query`` request
+option, which adds URL query variables to the request URI.
 
 Base URI
 --------

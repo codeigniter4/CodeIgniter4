@@ -367,9 +367,9 @@ Routes with any HTTP verbs
     another, more appropriate method.
 
 .. warning:: While the ``add()`` method seems to be convenient, it is recommended to always use the HTTP-verb-based
-    routes, described above, as it is more secure. If you use the :doc:`CSRF protection </libraries/security>`, it does not protect **GET**
-    requests. If the URI specified in the ``add()`` method is accessible by the GET method, the CSRF protection
-    will not work.
+    routes, described above, as it is more secure. If you use the :doc:`CSRF protection </libraries/security>`, it does not protect
+    **GET** or **QUERY** requests. If the URI specified in the ``add()`` method is accessible by the GET or QUERY method,
+    the CSRF protection will not work.
 
 It is possible to define a route with any HTTP verbs.
 You can use the ``add()`` method:

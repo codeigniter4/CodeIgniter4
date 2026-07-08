@@ -40,6 +40,7 @@ Behavior Changes
 - **Database:** The Postgre driver's ``$db->error()['code']`` previously always returned ``''``. It now returns the 5-character SQLSTATE string for query and transaction failures (e.g., ``'42P01'``), or ``'08006'`` for connection-level failures. Code that relied on ``$db->error()['code'] === ''`` will need updating.
 - **Filters:** HTTP method matching for method-based filters is now case-sensitive. The keys in ``Config\Filters::$methods`` must exactly match the request method
   (e.g., ``GET``, ``POST``). Lowercase method names (e.g., ``post``) will no longer match.
+- **HTTP:** Routes defined with ``$routes->add()`` now also match HTTP ``QUERY`` requests. If the route has CSRF protection, remember that CSRF verification does not protect safe methods such as ``GET`` and ``QUERY``.
 - **Testing:** Tests using the ``FeatureTestTrait`` must now use uppercase HTTP method names when performing a request when using the ``call()`` method directly
   (e.g., ``$this->call('GET', '/path')`` instead of ``$this->call('get', '/path')``). Additionally, setting method-based routes using ``withRoutes()`` must
   also use uppercase method names (e.g., ``$this->withRoutes([['GET', 'home', 'Home::index']])``).

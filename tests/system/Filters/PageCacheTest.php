@@ -15,6 +15,7 @@ namespace CodeIgniter\Filters;
 
 use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -31,14 +32,15 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class PageCacheTest extends CIUnitTestCase
 {
-    private function createRequest(): IncomingRequest
+    private function createRequest(string $method = Method::GET): IncomingRequest
     {
         $superglobals = service('superglobals');
         $superglobals->setServer('REQUEST_URI', '/');
 
         $siteUri = new SiteURI(new App());
 
-        return new IncomingRequest(new App(), $siteUri, null, new UserAgent());
+        return (new IncomingRequest(new App(), $siteUri, null, new UserAgent()))
+            ->withMethod($method);
     }
 
     public function testDefaultConfigCachesAllStatusCodes(): void
@@ -139,6 +141,39 @@ final class PageCacheTest extends CIUnitTestCase
 
         $result = $filter->after($request, $response500);
         $this->assertNotInstanceOf(ResponseInterface::class, $result);
+    }
+
+    public function testQueryRequestIsNotCached(): void
+    {
+        $config = new Cache();
+        $filter = new PageCache($config);
+
+        $request  = $this->createRequest(Method::QUERY);
+        $response = new Response();
+        $response->setStatusCode(200);
+        $response->setBody('Success');
+
+        $result = $filter->after($request, $response);
+        $this->assertNotInstanceOf(ResponseInterface::class, $result);
+    }
+
+    public function testQueryRequestDoesNotReturnCachedResponse(): void
+    {
+        $filter  = new PageCache(new Cache());
+        $request = $this->createRequest(Method::QUERY);
+        $key     = service('responsecache')->generateCacheKey($request);
+
+        service('cache')->save($key, serialize([
+            'headers' => [],
+            'output'  => 'Cached',
+            'status'  => 200,
+            'reason'  => 'OK',
+        ]), 60);
+
+        $result = $filter->before($request);
+        $this->assertNull($result);
+
+        service('cache')->delete($key);
     }
 
     public function testDownloadResponseNotCached(): void
