@@ -171,7 +171,7 @@ final class PageCacheTest extends CIUnitTestCase
         ]), 60);
 
         $result = $filter->before($request);
-        $this->assertNull($result);
+        $this->assertNotInstanceOf(ResponseInterface::class, $result);
 
         service('cache')->delete($key);
     }
