@@ -76,21 +76,26 @@ PRs with breaking changes must have the following additional label:
 
 ### Generate Changelog
 
-To auto-generate the changelog, navigate to the
-[Releases](https://github.com/codeigniter4/CodeIgniter4/releases) page,
-click the "Draft a new release" button.
+The changelog is generated from GitHub's auto-generated release notes with a
+script. It requires the authenticated [GitHub CLI](https://cli.github.com/).
 
-* Choose a tag: `v4.x.x` (Create new tag: v4.x.x on publish)
-* Target: `develop`
+The script also copies the security fixes from the SECURITY section of
+**user_guide_src/source/changelogs/v4.x.x.rst**, so any security advisory PRs
+must be merged and documented there before generating the changelog.
 
-Click the "Generate release notes" button.
+* [ ] Run `php admin/generate-changelog.php 4.x.x --dry-run` and check the output.
+  * The script lists the PRs that have none of the changelog labels. If any of
+    them should be included in the changelog, add a label to the PR and run
+    the script again.
+* [ ] Run `php admin/generate-changelog.php 4.x.x` to prepend the new entry to
+  **CHANGELOG.md**.
 
-Check the resulting content. If there are items in the *Others* section which
-should be included in the changelog, add a label to the PR and regenerate
-the changelog.
-
-Copy the resulting contents into **CHANGELOG.md** and adjust the format to match
-the existing content.
+If the script cannot be used, the same notes can be generated from the
+[Releases](https://github.com/codeigniter4/CodeIgniter4/releases) page:
+click "Draft a new release", choose the tag `v4.x.x` (create new tag on
+publish) with target `develop`, and click "Generate release notes". Copy the
+resulting contents into **CHANGELOG.md** and adjust the format to match the
+existing content.
 
 ## Process
 
@@ -100,7 +105,7 @@ the existing content.
 > generating much new content.
 
 * [ ] Merge any security advisory PRs in private forks.
-* [ ] Add the current version to **CHANGELOG.md** with the contents generated above.
+* [ ] Check that **CHANGELOG.md** contains the entry for the new version, generated above.
 * [ ] Update **user_guide_src/source/changelogs/v4.x.x.rst**
   * Remove the section titles that have no items
 * [ ] Update **user_guide_src/source/installation/upgrade_4xx.rst**
