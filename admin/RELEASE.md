@@ -74,6 +74,11 @@ the following [labels](https://github.com/codeigniter4/CodeIgniter4/labels):
 PRs with breaking changes must have the following additional label:
 - **breaking change** ... PRs that may break existing functionalities
 
+At any time, missing labels can be checked for with
+`php admin/check-pr-labels.php`, which flags PRs merged since the last release
+that appear to lack a changelog label. It requires the authenticated
+[GitHub CLI](https://cli.github.com/).
+
 ### Generate Changelog
 
 The changelog is generated from GitHub's auto-generated release notes with a
