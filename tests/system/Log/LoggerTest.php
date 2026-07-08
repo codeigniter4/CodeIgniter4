@@ -521,4 +521,43 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertCount(1, $logs);
         $this->assertSame($expected, $logs[0]);
     }
+
+    public function testLogObjectContextLosesProperties(): void
+    {
+        $config = new LoggerConfig();
+        $logger = new Logger($config);
+
+        Time::setTestNow('2023-11-25 12:00:00');
+
+        $user = new stdClass();
+        $user->name = 'John';
+        $user->role = 'admin';
+
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> User: ' . print_r($user, true);
+
+        $logger->log('debug', 'User: {user}', ['user' => $user]);
+
+        $logs = TestHandler::getLogs();
+
+        $this->assertCount(1, $logs);
+        $this->assertSame($expected, $logs[0]);
+    }
+
+    public function testLogBooleanFalseIsLoggedAsEmptyString(): void
+    {
+        $config = new LoggerConfig();
+        $logger = new Logger($config);
+
+        Time::setTestNow('2023-11-25 12:00:00');
+
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Active: false';
+
+        $logger->log('debug', 'Active: {status}', ['status' => false]);
+
+        $logs = TestHandler::getLogs();
+
+        $this->assertCount(1, $logs);
+        $this->assertSame($expected, $logs[0]);
+    }
 }
+
