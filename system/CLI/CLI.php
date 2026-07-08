@@ -273,10 +273,10 @@ class CLI
     /**
      * prompt(), but based on the option's key
      *
-     * @param list<string>|string       $text       Output "field" text or an one or two value array where the first value is the text before listing the options
-     *                                              and the second value the text before asking to select one option. Provide empty string to omit
-     * @param array<int|string, string> $options    A list of options (array(key => description)), the first option will be the default value
-     * @param list<string>|string|null  $validation Validation rules
+     * @param list<string>|string      $text       Output "field" text or an one or two value array where the first value is the text before listing the options
+     *                                             and the second value the text before asking to select one option. Provide empty string to omit
+     * @param array<array-key, string> $options    A list of options (array(key => description)), the first option will be the default value
+     * @param list<string>|string|null $validation Validation rules
      *
      * @return string The selected key of $options
      */
@@ -302,11 +302,11 @@ class CLI
     /**
      * This method is the same as promptByKey(), but this method supports multiple keys, separated by commas.
      *
-     * @param string                    $text    Output "field" text or an one or two value array where the first value is the text before listing the options
-     *                                           and the second value the text before asking to select one option. Provide empty string to omit
-     * @param array<int|string, string> $options A list of options (array(key => description)), the first option will be the default value
+     * @param string                   $text    Output "field" text or an one or two value array where the first value is the text before listing the options
+     *                                          and the second value the text before asking to select one option. Provide empty string to omit
+     * @param array<array-key, string> $options A list of options (array(key => description)), the first option will be the default value
      *
-     * @return array<int|string, string> The selected key(s) and value(s) of $options
+     * @return array<array-key, string> The selected key(s) and value(s) of $options
      */
     public static function promptByMultipleKeys(string $text, array $options): array
     {
@@ -376,7 +376,7 @@ class CLI
     /**
      * Validation for $options in promptByKey() and promptByMultipleKeys(). Return an error if $options is an empty array.
      *
-     * @param array<int|string, string> $options
+     * @param array<array-key, string> $options
      */
     private static function isZeroOptions(array $options): void
     {
@@ -388,7 +388,7 @@ class CLI
     /**
      * Print each key and value one by one
      *
-     * @param array<int|string, string> $options
+     * @param array<array-key, string> $options
      */
     private static function printKeysAndValues(array $options): void
     {
@@ -1029,8 +1029,8 @@ class CLI
     /**
      * Returns a well formatted table
      *
-     * @param list<array<int|string, mixed>> $tbody List of rows
-     * @param list<string>                   $thead List of columns
+     * @param list<array<array-key, mixed>> $tbody List of rows
+     * @param list<string>                  $thead List of columns
      *
      * @return void
      */

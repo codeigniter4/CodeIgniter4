@@ -72,7 +72,7 @@ class MigrateRefresh extends BaseCommand
      */
     public function run(array $params)
     {
-        $params['b'] = 0;
+        $params['b'] = '0';
 
         if (ENVIRONMENT === 'production') {
             // @codeCoverageIgnoreStart

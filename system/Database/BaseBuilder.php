@@ -2813,7 +2813,7 @@ class BaseBuilder
     /**
      * Compiles a delete string and runs the query
      *
-     * @param array<int|string, mixed>|RawSql|string $where
+     * @param array<array-key, mixed>|RawSql|string $where
      *
      * @return bool|string Returns a SQL string if in test mode.
      *

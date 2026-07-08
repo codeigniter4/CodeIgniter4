@@ -54,7 +54,7 @@ class Commands
     /**
      * Runs a command given
      *
-     * @param array<int|string, string|null> $params
+     * @param array<array-key, string|null> $params
      *
      * @return int Exit code
      */

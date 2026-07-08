@@ -1,12 +1,7 @@
-# total 11 errors
+# total 10 errors
 
 parameters:
     ignoreErrors:
-        -
-            message: '#^Parameter \#1 \$params \(array\<string, mixed\>\) of method CodeIgniter\\Commands\\Database\\MigrateStatus\:\:run\(\) should be contravariant with parameter \$params \(array\<int\|string, string\|null\>\) of method CodeIgniter\\CLI\\BaseCommand\:\:run\(\)$#'
-            count: 1
-            path: ../../system/Commands/Database/MigrateStatus.php
-
         -
             message: '#^Parameter \#1 \$offset \(string\) of method CodeIgniter\\Cookie\\Cookie\:\:offsetSet\(\) should be contravariant with parameter \$offset \(string\|null\) of method ArrayAccess\<string,bool\|int\|string\>\:\:offsetSet\(\)$#'
             count: 1

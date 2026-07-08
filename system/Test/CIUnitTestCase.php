@@ -169,7 +169,7 @@ abstract class CIUnitTestCase extends TestCase
      * Stores information needed to remove any
      * rows inserted via $this->hasInDatabase().
      *
-     * @var list<array<int|string, mixed>>
+     * @var list<array<array-key, mixed>>
      */
     protected $insertCache = [];
 
@@ -189,7 +189,7 @@ abstract class CIUnitTestCase extends TestCase
      * Values to be set in the SESSION global
      * before running the test.
      *
-     * @var array<int|string, mixed>
+     * @var array<array-key, mixed>
      */
     protected $session = [];
 

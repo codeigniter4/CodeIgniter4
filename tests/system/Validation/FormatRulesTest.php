@@ -33,7 +33,7 @@ class FormatRulesTest extends CIUnitTestCase
     protected Validation $validation;
 
     /**
-     * @var array<string, array<int|string, array<string, string>|string>>
+     * @var array<string, array<array-key, array<string, string>|string>>
      */
     protected array $config = [
         'ruleSets' => [

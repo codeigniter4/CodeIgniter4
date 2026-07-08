@@ -71,7 +71,7 @@ class Plugins
     /**
      * Wrap helper function to use as view plugin.
      *
-     * @param array<int|string, string>|list<string> $params
+     * @param array<array-key, string>|list<string> $params
      */
     public static function lang(array $params = []): string
     {
