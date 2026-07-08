@@ -107,7 +107,9 @@ final class StreamResponseTest extends CIUnitTestCase
 
     public function testStreamFactoryAcceptsIterable(): void
     {
-        $response = (new Response())->stream(['a', 'b']);
+        /** @var iterable<string> $chunks */
+        $chunks   = ['a', 'b'];
+        $response = (new Response())->stream($chunks);
 
         $this->assertInstanceOf(StreamResponse::class, $response);
     }
