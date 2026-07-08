@@ -43,6 +43,7 @@ final class IncomingRequestTest extends CIUnitTestCase
     #[WithoutErrorHandler]
     protected function setUp(): void
     {
+        $this->resetServices();
         parent::setUp();
 
         $_ENV = $_SESSION = [];

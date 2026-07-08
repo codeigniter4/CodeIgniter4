@@ -81,7 +81,7 @@ trait MessageTrait
      */
     public function populateHeaders(): void
     {
-        $contentType = service('superglobals')->server('CONTENT_TYPE');
+        $contentType = service('superglobals')->server('CONTENT_TYPE', (string) getenv('CONTENT_TYPE'));
         if (! empty($contentType)) {
             $this->setHeader('Content-Type', $contentType);
         }
@@ -266,25 +266,18 @@ trait MessageTrait
      */
     public function setProtocolVersion(string $version): self
     {
-        // If empty, keep default protocol version (usually 1.1) and do nothing.
-        if ($version === '') {
-            return $this;
-        }
-
-        // If a full protocol string (e.g., "HTTP/1.1") is provided, extract the numeric part.
-        if (str_contains($version, '/')) {
+        if (! is_numeric($version)) {
             $version = substr($version, strpos($version, '/') + 1);
         }
 
-        // Normalize to a single decimal place as used in validProtocolVersions.
-        $normalized = number_format((float) $version, 1);
+        // Make sure that version is in the correct format
+        $version = number_format((float) $version, 1);
 
-        // Throw exception if the version is not recognized.
-        if (! in_array($normalized, $this->validProtocolVersions, true)) {
+        if (! in_array($version, $this->validProtocolVersions, true)) {
             throw HTTPException::forInvalidHTTPProtocol($version);
         }
 
-        $this->protocolVersion = $normalized;
+        $this->protocolVersion = $version;
 
         return $this;
     }
