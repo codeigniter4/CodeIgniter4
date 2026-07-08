@@ -529,7 +529,7 @@ final class LoggerTest extends CIUnitTestCase
 
         Time::setTestNow('2023-11-25 12:00:00');
 
-        $user = new stdClass();
+        $user       = new stdClass();
         $user->name = 'John';
         $user->role = 'admin';
 
@@ -560,4 +560,3 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertSame($expected, $logs[0]);
     }
 }
-
