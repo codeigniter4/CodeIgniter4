@@ -65,6 +65,10 @@ are used as part of that process:
     of the version's upgrade guide with the project space files changed since
     the last release.
     Usage: `php admin/update-upgrade-guide.php <version> [--dry-run]`
+-   **sync-release-branches.php** checks out the target branch and merges
+    upstream and the source branch into it, as done at several points of the
+    release process. Without `--push`, the result is left unpushed for review.
+    Usage: `php admin/sync-release-branches.php <target> <source> [--push]`
 
 ## Other Stuff
 

@@ -1,11 +1,10 @@
 # Release Process
 
-> Documentation guide based on the releases of `4.0.5` and `4.1.0` on January 31, 2021.
+> Documentation guide based on the releases of `4.0.5` and `4.1.0` on January 31, 2021 (MGatner)
 >
-> Updated for `4.5.0` on April 7, 2024.
-> Updated for `4.6.0` on January 19, 2025.
->
-> -MGatner, kenjis
+> Updated for `4.5.0` on April 7, 2024 (kenjis)
+> Updated for `4.6.0` on January 19, 2025 (paulbalandan)
+> Updated for `4.7.5` on July 8, 2026 (paulbalandan)
 
 ## Notation
 
@@ -24,11 +23,7 @@ merging will take time.
 
 * [ ] Merge `develop` into `4.y`:
     ```console
-    git fetch upstream
-    git switch 4.y
-    git merge upstream/4.y
-    git merge upstream/develop
-    git push upstream HEAD
+    php admin/sync-release-branches.php 4.y develop --push
     ```
 
 ## [Minor version only] Merge minor version branch into `develop`
@@ -183,19 +178,11 @@ existing content.
   * If it fails, fix the cause and re-run it via "Run workflow" with the tag `v4.x.x`.
 * [ ] Fast-forward `develop` branch to catch the merge commit from `master`
     ```console
-    git fetch upstream
-    git checkout develop
-    git merge upstream/develop
-    git merge upstream/master
-    git push upstream HEAD
+    php admin/sync-release-branches.php develop master --push
     ```
 * [ ] Update the next minor version branch `4.y`:
     ```console
-    git fetch upstream
-    git switch 4.y
-    git merge upstream/4.y
-    git merge upstream/develop
-    git push upstream HEAD
+    php admin/sync-release-branches.php 4.y develop --push
     ```
 * [ ] [Minor version only] Create the new next minor version branch `4.z`:
     ```console
