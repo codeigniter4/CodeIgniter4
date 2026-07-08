@@ -16,6 +16,7 @@ use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\Header;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\SSEResponse;
+use CodeIgniter\HTTP\StreamResponse;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\DataCaster\DataCaster;
 use CodeIgniter\Entity\Cast\CastInterface;
@@ -155,4 +156,5 @@ return Architecture::define()
     ->skipClassViolation(RedirectResponse::class, [PagerInterface::class])
     ->skipClassViolation(DownloadResponse::class, [PagerInterface::class])
     ->skipClassViolation(SSEResponse::class, [PagerInterface::class])
+    ->skipClassViolation(StreamResponse::class, [PagerInterface::class])
     ->skipClassViolation(Validation::class, [RendererInterface::class]);
