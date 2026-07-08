@@ -107,6 +107,37 @@ class Connection extends BaseConnection
     }
 
     /**
+     * Checks whether the native database error represents a foreign key constraint violation.
+     */
+    protected function isForeignKeyConstraintViolation(int|string $code, string $message): bool
+    {
+        // ER_NO_REFERENCED_ROW, ER_ROW_IS_REFERENCED, ER_ROW_IS_REFERENCED_2, ER_NO_REFERENCED_ROW_2.
+        return in_array($code, [1216, 1217, 1451, 1452], true);
+    }
+
+    /**
+     * Checks whether the native database error represents a NOT NULL constraint violation.
+     */
+    protected function isNotNullConstraintViolation(int|string $code, string $message): bool
+    {
+        // ER_BAD_NULL_ERROR, ER_BAD_NULL_ERROR_NOT_IGNORED: column cannot be null.
+        return in_array($code, [1048, 3673], true);
+    }
+
+    /**
+     * Checks whether the native database error represents a CHECK constraint violation.
+     */
+    protected function isCheckConstraintViolation(int|string $code, string $message): bool
+    {
+        if ($code === 3819) {
+            return true;
+        }
+
+        // MariaDB reports CHECK failures as ER_CONSTRAINT_FAILED, while MySQL uses 4025 for other errors.
+        return $code === 4025 && str_contains(strtolower($this->getVersion()), 'mariadb');
+    }
+
+    /**
      * Checks whether the native database code represents a retryable transaction failure.
      */
     protected function isRetryableTransactionErrorCode(int|string $code): bool

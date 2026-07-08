@@ -94,14 +94,10 @@ class Connection extends BaseConnection
      */
     protected function isUniqueConstraintViolation(int|string $code, string $message): bool
     {
-        $code = (string) $code;
+        $vendorCode = $this->getVendorErrorCode($code);
 
-        if (str_contains($code, '/')) {
-            [$sqlstate, $vendorCode] = explode('/', $code, 2);
-
-            if ($sqlstate === '23000' && in_array((int) $vendorCode, [2627, 2601], true)) {
-                return true;
-            }
+        if ($vendorCode !== null && in_array($vendorCode, [2627, 2601], true)) {
+            return $this->hasSQLState($code, '23000');
         }
 
         $errors = sqlsrv_errors(SQLSRV_ERR_ERRORS);
@@ -122,19 +118,54 @@ class Connection extends BaseConnection
     }
 
     /**
+     * Checks whether the native database error represents a NOT NULL constraint violation.
+     */
+    protected function isNotNullConstraintViolation(int|string $code, string $message): bool
+    {
+        return $this->getVendorErrorCode($code) === 515
+            && $this->hasSQLState($code, '23000');
+    }
+
+    /**
+     * Checks whether the native database error represents a constraint violation.
+     */
+    protected function isConstraintViolation(int|string $code, string $message): bool
+    {
+        return $this->getSQLState($code) === '23000'
+            || ($this->getVendorErrorCode($code) === 547 && $this->hasSQLState($code, '23000'));
+    }
+
+    /**
      * Checks whether the native database code represents a retryable transaction failure.
      */
     protected function isRetryableTransactionErrorCode(int|string $code): bool
+    {
+        $vendorCode = $this->getVendorErrorCode($code);
+
+        return $vendorCode !== null && in_array($vendorCode, [1205, 3960], true);
+    }
+
+    private function getVendorErrorCode(int|string $code): ?int
     {
         $vendorCode = (string) (is_string($code) && str_contains($code, '/')
             ? substr($code, strrpos($code, '/') + 1)
             : $code);
 
-        if (preg_match('/^\d+$/', $vendorCode) !== 1) {
-            return false;
-        }
+        return preg_match('/^\d+$/', $vendorCode) === 1 ? (int) $vendorCode : null;
+    }
 
-        return in_array((int) $vendorCode, [1205, 3960], true);
+    private function getSQLState(int|string $code): string
+    {
+        return is_string($code) && str_contains($code, '/')
+            ? substr($code, 0, strpos($code, '/'))
+            : (string) $code;
+    }
+
+    private function hasSQLState(int|string $code, string $sqlstate): bool
+    {
+        return ! is_string($code)
+            || ! str_contains($code, '/')
+            || $this->getSQLState($code) === $sqlstate;
     }
 
     /**

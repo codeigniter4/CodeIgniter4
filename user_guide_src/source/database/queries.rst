@@ -228,17 +228,30 @@ its subclasses, which you can catch and handle:
 
 .. literalinclude:: queries/030.php
 
+.. _database-constraint-violation-exceptions:
 .. _database-unique-constraint-violation:
 
-UniqueConstraintViolationException
-----------------------------------
+Constraint Violation Exceptions
+-------------------------------
 
 .. versionadded:: 4.8.0
 
-``UniqueConstraintViolationException`` extends ``DatabaseException`` and is
-thrown specifically when a query or prepared query execution fails due to a
-duplicate key or unique constraint violation. Catching it separately allows you
-to handle this case without inspecting raw driver-specific error codes.
+Database constraint violations are reported as ``ConstraintViolationException``
+or one of its subclasses when CodeIgniter can identify the native driver error:
+
+- ``UniqueConstraintViolationException``
+- ``ForeignKeyConstraintViolationException``
+- ``NotNullConstraintViolationException``
+- ``CheckConstraintViolationException``
+
+These exceptions allow you to handle common integrity errors without inspecting
+raw driver-specific error codes. If a driver reports a constraint violation that
+CodeIgniter cannot safely classify more precisely, it throws the parent
+``ConstraintViolationException``.
+
+Some database engines report certain constraint failures with a generic
+integrity-constraint code. In those cases CodeIgniter uses the parent
+``ConstraintViolationException`` rather than guessing the more specific subtype.
 
 DBDebug Disabled
 ================
@@ -265,8 +278,8 @@ $db->getLastException()
 
 ``getLastException()`` returns the typed exception that would have been thrown
 had ``DBDebug`` been ``true``. This is the recommended way to distinguish
-between failure types (e.g., a unique constraint violation vs. another database
-error) without enabling ``DBDebug``:
+between failure types (e.g., a constraint violation vs. another database error)
+without enabling ``DBDebug``:
 
 .. literalinclude:: queries/031.php
 

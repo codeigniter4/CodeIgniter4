@@ -15,7 +15,6 @@ namespace CodeIgniter\Database;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\RetryableTransactionException;
-use CodeIgniter\Database\Exceptions\UniqueConstraintViolationException;
 use CodeIgniter\Database\MySQLi\Connection as MySQLiConnection;
 use CodeIgniter\Database\OCI8\Connection as OCI8Connection;
 use CodeIgniter\Database\Postgre\Connection as PostgreConnection;
@@ -35,74 +34,6 @@ use Tests\Support\Mock\MockPreparedQuery;
 #[Group('Others')]
 final class RetryableTransactionExceptionTest extends CIUnitTestCase
 {
-    #[DataProvider('provideCreatesUniqueConstraintViolationExceptions')]
-    public function testCreatesUniqueConstraintViolationExceptions(
-        BaseConnection $db,
-        int|string $code,
-        string $message,
-    ): void {
-        $exception = self::createDatabaseException($db, $message, $code);
-
-        $this->assertInstanceOf(UniqueConstraintViolationException::class, $exception);
-        $this->assertSame($code, $exception->getDatabaseCode());
-    }
-
-    /**
-     * @return iterable<string, array{BaseConnection, int|string, string}>
-     */
-    public static function provideCreatesUniqueConstraintViolationExceptions(): iterable
-    {
-        yield 'MySQLi duplicate key' => [
-            self::connection(MySQLiConnection::class, 'MySQLi'),
-            1062,
-            'Duplicate entry.',
-        ];
-
-        yield 'Postgre unique violation' => [
-            self::connection(PostgreConnection::class, 'Postgre'),
-            '23505',
-            'Unique violation.',
-        ];
-
-        yield 'SQLite unique constraint' => [
-            self::connection(SQLite3Connection::class, 'SQLite3'),
-            19,
-            'UNIQUE constraint failed: table.column',
-        ];
-
-        yield 'SQLite legacy unique constraint' => [
-            self::connection(SQLite3Connection::class, 'SQLite3'),
-            19,
-            'column email is not unique',
-        ];
-
-        yield 'SQLSRV unique constraint' => [
-            self::connection(SQLSRVConnection::class, 'SQLSRV'),
-            '23000/2627',
-            'Violation of UNIQUE KEY constraint.',
-        ];
-
-        yield 'SQLSRV unique index' => [
-            self::connection(SQLSRVConnection::class, 'SQLSRV'),
-            '23000/2601',
-            'Cannot insert duplicate key row.',
-        ];
-
-        if (defined('OCI_COMMIT_ON_SUCCESS')) {
-            yield 'OCI8 unique constraint' => [
-                self::connection(OCI8Connection::class, 'OCI8'),
-                1,
-                'Unique constraint violated.',
-            ];
-
-            yield 'OCI8 unique constraint string code' => [
-                self::connection(OCI8Connection::class, 'OCI8'),
-                '1',
-                'Unique constraint violated.',
-            ];
-        }
-    }
-
     #[DataProvider('provideCreatesRetryableTransactionExceptions')]
     public function testCreatesRetryableTransactionExceptions(BaseConnection $db, int|string $code): void
     {

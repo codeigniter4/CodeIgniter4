@@ -124,6 +124,33 @@ class Connection extends BaseConnection
     }
 
     /**
+     * Checks whether the native database error represents a foreign key constraint violation.
+     */
+    protected function isForeignKeyConstraintViolation(int|string $code, string $message): bool
+    {
+        // ORA-02291: parent key not found; ORA-02292: child record found.
+        return in_array((int) $code, [2291, 2292], true);
+    }
+
+    /**
+     * Checks whether the native database error represents a NOT NULL constraint violation.
+     */
+    protected function isNotNullConstraintViolation(int|string $code, string $message): bool
+    {
+        // ORA-01400: cannot insert NULL; ORA-01407: cannot update to NULL.
+        return in_array((int) $code, [1400, 1407], true);
+    }
+
+    /**
+     * Checks whether the native database error represents a CHECK constraint violation.
+     */
+    protected function isCheckConstraintViolation(int|string $code, string $message): bool
+    {
+        // ORA-02290: check constraint violated.
+        return (int) $code === 2290;
+    }
+
+    /**
      * Checks whether the native database code represents a retryable transaction failure.
      */
     protected function isRetryableTransactionErrorCode(int|string $code): bool
