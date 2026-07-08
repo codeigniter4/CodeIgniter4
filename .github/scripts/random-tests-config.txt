@@ -27,7 +27,7 @@ Events
 Files
 # Filters
 Format
-# HTTP
+HTTP
 # Helpers
 Honeypot
 HotReloader
