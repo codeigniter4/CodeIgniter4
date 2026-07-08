@@ -114,14 +114,11 @@ existing content.
 * [ ] Update **user_guide_src/source/changelogs/v4.x.x.rst**
   * Remove the section titles that have no items
 * [ ] Update **user_guide_src/source/installation/upgrade_4xx.rst**
-  * [ ] fill in the "All Changes" section using the following command, and add it to **upgrade_4xx.rst**:
-    ```
-    git diff --name-status upstream/master -- . ':!.github/' ':!admin/' ':!changelogs/' ':!contributing/' \
-        ':!system/' ':!tests/' ':!user_guide_src/' ':!utils/' \
-        ':!*.json' ':!*.xml' ':!*.dist' ':!rector.php' ':!structarmed.php' \
-        ':!phpstan*' ':!psalm*' ':!.php-cs-fixer.*' ':!LICENSE' ':!CHANGELOG.md'
-    ```
-    * Note: `tests/` is not used for distribution repos. See `admin/starter/tests/`.
+  * [ ] Run `php admin/update-upgrade-guide.php 4.x.x` to fill in the "Config" and
+    "All Changes" sections with the project space files changed since the last release.
+    * The "Config" section is not modified if it already has content. The script
+      prints any missing entries to merge manually.
+    * Add notes to the "Config" entries as needed.
   * [ ] Remove the section titles that have no items
   * [ ] [Minor version only] Update the "from" version in the title, (e.g., `from 4.3.x` → `from 4.3.8`).
 * [ ] Run `php admin/prepare-release.php 4.x.x` and push to origin.
