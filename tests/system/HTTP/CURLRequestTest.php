@@ -39,9 +39,9 @@ class CURLRequestTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
+        $this->resetServices();
         parent::setUp();
 
-        $this->resetServices();
         Services::injectMock('superglobals', new Superglobals());
         $this->request = $this->getRequest();
     }

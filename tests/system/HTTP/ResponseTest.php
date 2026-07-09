@@ -22,12 +22,14 @@ use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
 use DateTime;
 use DateTimeZone;
+use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
  */
+#[BackupGlobals(true)]
 #[Group('Others')]
 final class ResponseTest extends CIUnitTestCase
 {
@@ -35,12 +37,11 @@ final class ResponseTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
-        Services::injectMock('superglobals', new Superglobals());
-        $this->server = service('superglobals')->getServerArray();
-
+        $this->resetServices();
         parent::setUp();
 
-        $this->resetServices();
+        Services::injectMock('superglobals', new Superglobals());
+        $this->server = service('superglobals')->getServerArray();
     }
 
     protected function tearDown(): void
@@ -169,6 +170,7 @@ final class ResponseTest extends CIUnitTestCase
         Factories::injectMock('config', 'App', $config);
 
         $this->resetServices();
+        Services::injectMock('superglobals', new Superglobals([], []));
 
         $response = new Response($config);
         $pager    = service('pager');
