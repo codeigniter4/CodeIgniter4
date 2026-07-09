@@ -12,7 +12,6 @@ declare(strict_types=1);
  */
 
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
-use Rector\CodeQuality\Rector\BooleanNot\NegatedAndsToPositiveOrsRector;
 use Rector\CodeQuality\Rector\Empty_\SimplifyEmptyCheckOnEmptyArrayRector;
 use Rector\CodeQuality\Rector\FuncCall\CompactToVariablesRector;
 use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
@@ -176,7 +175,6 @@ return RectorConfig::configure()
         ],
 
         // to be applied in separate PRs to ease review
-        NegatedAndsToPositiveOrsRector::class,
     ])
     // auto import fully qualified class names
     ->withImportNames()

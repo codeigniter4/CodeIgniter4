@@ -261,9 +261,7 @@ class Entity implements JsonSerializable
 
         // When returning everything
         if (! $onlyChanged) {
-            return $recursive
-                ? array_map($convert, $this->attributes)
-                : $this->attributes;
+            return array_map($convert, $this->attributes);
         }
 
         // When filtering by changed values only
@@ -335,7 +333,7 @@ class Entity implements JsonSerializable
             }
 
             // non-recursive changed value
-            $return[$key] = $value;
+            $return[$key] = $convert($value);
         }
 
         return $return;
