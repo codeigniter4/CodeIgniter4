@@ -93,6 +93,26 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
+    public function testDisable(): void
+    {
+        $this->prepare(true);
+        $this->csp->disable();
+        $this->assertTrue($this->work());
+        $this->assertHeaderNotEmitted('Content-Security-Policy:');
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testEnable(): void
+    {
+        $this->prepare(false);
+        $this->csp->enable();
+        $this->assertTrue($this->work());
+        $this->assertHeaderEmitted('Content-Security-Policy:');
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testReportOnly(): void
     {
         $this->csp->reportOnly(false);
