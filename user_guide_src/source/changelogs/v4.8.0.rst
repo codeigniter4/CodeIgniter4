@@ -321,6 +321,7 @@ HTTP
   For example: ``php index.php command -- --myarg`` will pass ``--myarg`` as an argument instead of an option.
 - ``CLIRequest`` now supports options with values specified using an equals sign (e.g., ``--option=value``) in addition to the existing space-separated syntax (e.g., ``--option value``).
   This provides more flexibility in how you can pass options to CLI requests.
+- Added ``enable()`` and ``disable()`` methods to ``ContentSecurityPolicy`` to enable or disable the CSP header for the current request. See :ref:`csp-enable-disable`.
 - Added ``$enableStyleNonce`` and ``$enableScriptNonce`` options to ``Config\App`` to automatically add nonces to control whether to add nonces to style-* and script-* directives in the Content Security Policy (CSP) header when CSP is enabled. See :ref:`csp-control-nonce-generation` for details.
 - Added ``URI::withQuery()``, ``URI::withQueryArray()``, ``URI::withoutQueryVars()``, and ``URI::withOnlyQueryVars()`` to return cloned URIs with replaced or filtered query variables.
 - Added ``URI::withQueryVar()`` and ``URI::withQueryVars()`` to return a cloned URI with query variables added or replaced.
