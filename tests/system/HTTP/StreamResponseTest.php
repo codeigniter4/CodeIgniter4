@@ -114,11 +114,31 @@ final class StreamResponseTest extends CIUnitTestCase
         $this->assertInstanceOf(StreamResponse::class, $response);
     }
 
+    public function testStreamFactoryCopiesProtocolVersion(): void
+    {
+        $response = (new Response())
+            ->setProtocolVersion('2.0')
+            ->stream(static function (): void {
+            });
+
+        $this->assertSame('2.0', $response->getProtocolVersion());
+    }
+
     public function testEventStreamFactoryReturnsSSEResponse(): void
     {
         $response = (new Response())->eventStream(static function (): void {
         });
 
         $this->assertInstanceOf(SSEResponse::class, $response);
+    }
+
+    public function testEventStreamFactoryCopiesProtocolVersion(): void
+    {
+        $response = (new Response())
+            ->setProtocolVersion('2.0')
+            ->eventStream(static function (): void {
+            });
+
+        $this->assertSame('2.0', $response->getProtocolVersion());
     }
 }

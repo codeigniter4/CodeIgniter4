@@ -52,4 +52,22 @@ final class SSEResponseSendTest extends CIUnitTestCase
             $this->assertHeaderNotEmitted('Connection: keep-alive');
         }
     }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    #[WithoutErrorHandler]
+    public function testEventStreamFactoryPreservesHttp2ProtocolHeaders(): void
+    {
+        $response = (new Response())
+            ->setProtocolVersion('2.0')
+            ->eventStream(static function (): void {
+            });
+        $response->pretend(false);
+
+        ob_start();
+        $response->send();
+        ob_end_clean();
+
+        $this->assertHeaderNotEmitted('Connection: keep-alive');
+    }
 }

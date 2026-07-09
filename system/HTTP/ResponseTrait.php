@@ -820,7 +820,7 @@ trait ResponseTrait
      */
     public function stream(callable|iterable $callbackOrChunks): StreamResponse
     {
-        return new StreamResponse($callbackOrChunks);
+        return (new StreamResponse($callbackOrChunks))->setProtocolVersion($this->getProtocolVersion());
     }
 
     /**
@@ -830,7 +830,7 @@ trait ResponseTrait
      */
     public function eventStream(callable $callback): SSEResponse
     {
-        return new SSEResponse($callback);
+        return (new SSEResponse($callback))->setProtocolVersion($this->getProtocolVersion());
     }
 
     public function getCSP(): ContentSecurityPolicy
