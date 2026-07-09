@@ -1,12 +1,7 @@
-# total 73 errors
+# total 68 errors
 
 parameters:
     ignoreErrors:
-        -
-            message: '#^Parameter \#2 \$params of method CodeIgniter\\CLI\\BaseCommand\:\:call\(\) expects array\<int\|string, string\|null\>, array\<int\|string, int\|string\|null\> given\.$#'
-            count: 2
-            path: ../../system/Commands/Database/MigrateRefresh.php
-
         -
             message: '#^Parameter \#3 \.\.\.\$arrays of function array_map expects array, int\|string given\.$#'
             count: 1
@@ -101,21 +96,6 @@ parameters:
             message: '#^Parameter \#2 \$callable of method CodeIgniter\\Debug\\Timer\:\:record\(\) expects callable\(\)\: mixed, ''strlen'' given\.$#'
             count: 1
             path: ../../tests/system/Debug/TimerTest.php
-
-        -
-            message: '#^Parameter \#1 \$value of method CodeIgniter\\HTTP\\Header\:\:setValue\(\) expects array\<int\|string, array\<string, string\>\|string\>\|string\|null, array\<int, int\|string\> given\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/HeaderTest.php
-
-        -
-            message: '#^Parameter \#2 \$value of class CodeIgniter\\HTTP\\Header constructor expects array\<int\|string, array\<string, string\>\|string\>\|string\|null, int given\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/HeaderTest.php
-
-        -
-            message: '#^Parameter \#2 \$value of class CodeIgniter\\HTTP\\Header constructor expects array\<int\|string, array\<string, string\>\|string\>\|string\|null, stdClass given\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/HeaderTest.php
 
         -
             message: '#^Parameter \#1 \$array of method CodeIgniter\\Superglobals\:\:setServerArray\(\) expects array\<string, array\<mixed\>\|float\|int\|string\>, array\<string, string\|null\> given\.$#'

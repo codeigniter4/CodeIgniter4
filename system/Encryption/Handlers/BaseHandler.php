@@ -55,7 +55,7 @@ abstract class BaseHandler implements EncrypterInterface
      *
      * @param string $key Property name
      *
-     * @return array<int|string, mixed>|bool|int|string|null
+     * @return array<array-key, mixed>|bool|int|string|null
      */
     public function __get($key)
     {

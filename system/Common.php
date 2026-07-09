@@ -154,7 +154,7 @@ if (! function_exists('command')) {
             $cursor += strlen($match[0]);
         }
 
-        /** @var array<int|string, string|null> */
+        /** @var array<array-key, string|null> */
         $params      = [];
         $command     = array_shift($args);
         $optionValue = false;
@@ -450,13 +450,13 @@ if (! function_exists('esc')) {
      * If $data is an array, then it loops over it, escaping each
      * 'value' of the key/value pairs.
      *
-     * @param array<int|string, array<int|string, mixed>|string>|string $data
-     * @param 'attr'|'css'|'html'|'js'|'raw'|'url'                      $context
-     * @param string|null                                               $encoding Current encoding for escaping.
-     *                                                                            If not UTF-8, we convert strings from this encoding
-     *                                                                            pre-escaping and back to this encoding post-escaping.
+     * @param array<array-key, array<array-key, mixed>|string>|string $data
+     * @param 'attr'|'css'|'html'|'js'|'raw'|'url'                    $context
+     * @param string|null                                             $encoding Current encoding for escaping.
+     *                                                                          If not UTF-8, we convert strings from this encoding
+     *                                                                          pre-escaping and back to this encoding post-escaping.
      *
-     * @return ($data is string ? string : array<int|string, array<int|string, mixed>|string>)
+     * @return ($data is string ? string : array<array-key, array<array-key, mixed>|string>)
      *
      * @throws InvalidArgumentException
      */

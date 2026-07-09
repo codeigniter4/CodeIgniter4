@@ -35,7 +35,7 @@ use ReflectionException;
  * Provides additional utilities for doing full HTTP testing
  * against your application in trait format.
  *
- * @property array<int|string, mixed>           $session
+ * @property array<array-key, mixed>            $session
  * @property array<string, list<string>|string> $headers
  * @property RouteCollection|null               $routes
  *
@@ -104,7 +104,7 @@ trait FeatureTestTrait
     /**
      * Sets any values that should exist during this session.
      *
-     * @param array<int|string, mixed>|null $values Array of values, or null to use the current $_SESSION
+     * @param array<array-key, mixed>|null $values Array of values, or null to use the current $_SESSION
      *
      * @return $this
      */

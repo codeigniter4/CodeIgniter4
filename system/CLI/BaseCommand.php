@@ -99,7 +99,7 @@ abstract class BaseCommand
     /**
      * Actually execute a command.
      *
-     * @param array<int|string, string|null> $params
+     * @param array<array-key, string|null> $params
      *
      * @return int|void
      */
@@ -108,7 +108,7 @@ abstract class BaseCommand
     /**
      * Can be used by a command to run other commands.
      *
-     * @param array<int|string, string|null> $params
+     * @param array<array-key, string|null> $params
      *
      * @return int|void
      *
