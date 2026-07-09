@@ -601,6 +601,19 @@ abstract class BaseModel
     abstract public function chunk(int $size, Closure $userFunc);
 
     /**
+     * Loops over records in batches ordered by the primary key.
+     * This method works only with DB calls.
+     *
+     * @param Closure(array<string, string>|object): mixed $userFunc
+     *
+     * @return void
+     *
+     * @throws DataException
+     * @throws InvalidArgumentException if $size is not a positive integer or the current query cannot be chunked by ID
+     */
+    abstract public function chunkById(int $size, Closure $userFunc);
+
+    /**
      * Loops over records in batches, allowing you to operate on each chunk at a time.
      * This method works only with DB calls.
      *
@@ -615,6 +628,22 @@ abstract class BaseModel
      * @throws InvalidArgumentException if $size is not a positive integer
      */
     abstract public function chunkRows(int $size, Closure $userFunc);
+
+    /**
+     * Loops over records in batches ordered by the primary key, allowing you to operate on each chunk at a time.
+     * This method works only with DB calls.
+     *
+     * This method calls the `$userFunc` with the chunk, instead of a single record as in `chunkById()`.
+     * This allows you to operate on multiple records at once, which can be more efficient for certain operations.
+     *
+     * @param Closure(list<array<string, string>>|list<object>): mixed $userFunc
+     *
+     * @return void
+     *
+     * @throws DataException
+     * @throws InvalidArgumentException if $size is not a positive integer or the current query cannot be chunked by ID
+     */
+    abstract public function chunkRowsById(int $size, Closure $userFunc);
 
     /**
      * Fetches the row of database.

@@ -1057,6 +1057,8 @@ Sometimes, you need to process large amounts of data and would run the risk of r
 This is best used during cronjobs, data exports, or other large tasks. To make this simpler, you can
 process the data in smaller, manageable pieces using the methods below.
 
+.. note:: The ``chunk()``, ``chunkRows()``, ``chunkById()``, and ``chunkRowsById()`` methods do not trigger Model callbacks.
+
 chunk()
 -------
 
@@ -1074,6 +1076,36 @@ chunkRows()
 On the other hand, if you want the entire chunk to be passed to the Closure at once, you can use the ``chunkRows()`` method.
 
 .. literalinclude:: model/064.php
+
+chunkById()
+-----------
+
+.. versionadded:: 4.8.0
+
+If you need to update or delete rows while processing them, use ``chunkById()``.
+This method retrieves each chunk ordered by the model's primary key instead of using an offset,
+so deleting or updating rows already processed will not cause later rows to be skipped.
+
+.. literalinclude:: model/071.php
+
+chunkRowsById()
+---------------
+
+.. versionadded:: 4.8.0
+
+If you want the entire ID-based chunk to be passed to the Closure at once, use ``chunkRowsById()``.
+
+.. literalinclude:: model/072.php
+
+.. warning:: ID-based chunking needs the model to define a primary key, and that primary key must be selected.
+    If you customize the selected columns, make sure the primary key is included.
+    When using joins, the model primary key must remain available under its normal field name,
+    and each primary key value must appear only once in the result set. Otherwise, rows may be skipped.
+    These methods manage their own primary key ordering and cannot be used with
+    ``orderBy()``, ``groupBy()``, ``limit()``, ``offset()`` or ``union()``.
+    You should also avoid changing primary key values while processing chunks.
+    Since these methods add their own ``WHERE`` condition to each chunk query,
+    group any ``orWhere()`` conditions that should be evaluated together.
 
 .. _model-events-callbacks:
 

@@ -2062,6 +2062,16 @@ class BaseBuilder
     }
 
     /**
+     * Checks if the current query has a LIMIT, OFFSET or UNION clause.
+     *
+     * @internal This method is for internal Model use only.
+     */
+    public function hasLimitOffsetOrUnion(): bool
+    {
+        return $this->QBLimit !== false || $this->QBOffset !== false || $this->QBUnion !== [];
+    }
+
+    /**
      * Generates a platform-specific LIMIT clause.
      */
     protected function _limit(string $sql, bool $offsetIgnore = false): string

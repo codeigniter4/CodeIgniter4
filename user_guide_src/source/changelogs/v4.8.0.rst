@@ -70,6 +70,7 @@ Method Signature Changes
 - **Config:** ``CodeIgniter\Config\Services::request()`` no longer accepts any parameter.
 - **Database:** The following methods have had their signatures updated to remove deprecated parameters:
     - ``CodeIgniter\Database\Forge::_createTable()`` no longer accepts the deprecated ``$ifNotExists`` parameter. The method signature is now ``_createTable(string $table, array $attributes)``.
+- **Model:** ``CodeIgniter\BaseModel`` now requires the ``chunkRows()``, ``chunkById()``, and ``chunkRowsById()`` methods. Custom classes extending ``BaseModel`` directly must implement them.
 
 Property Scope Changes
 ======================
@@ -273,9 +274,9 @@ Debug
 Model
 =====
 
-- Added new ``chunkRows()`` method to ``CodeIgniter\Model`` for processing large datasets in smaller chunks.
+- Added ``chunkRows()``, ``chunkById()``, and ``chunkRowsById()`` methods to ``CodeIgniter\Model`` for processing large datasets in chunks.
 - Added ``encrypted`` casting for Entity properties and Model fields using the Encryption service. See :ref:`model-field-casting-encrypted`.
-- Added new ``firstOrInsert()`` method to ``CodeIgniter\Model`` that finds the first row matching the given attributes or inserts a new one. See :ref:`model-first-or-insert`.
+- Added ``firstOrInsert()`` method to ``CodeIgniter\Model`` that finds the first row matching the given attributes or inserts a new one. See :ref:`model-first-or-insert`.
 - Added ``$insertOnlyFields`` and ``setInsertOnlyFields()`` to ``CodeIgniter\Model`` to remove configured fields from Model update operations while allowing them during inserts. See :ref:`model-insert-only-fields`.
 - Added ``$throwOnDisallowedFields`` and ``throwOnDisallowedFields()`` to ``CodeIgniter\Model`` to throw a ``DataException`` when write data contains fields that would otherwise be discarded by ``$allowedFields``. See :ref:`model-throw-on-disallowed-fields`.
 
@@ -300,8 +301,8 @@ Helpers and Functions
   object rows (including ``Entity``) in :php:func:`dot_array_search()`,
   :php:func:`dot_array_has()`, :php:func:`dot_array_only()`,
   :php:func:`dot_array_except()`, and :php:func:`array_group_by()`.
-  :php:func:`dot_array_only()` and :php:func:`dot_array_except()` still return arrays. If the source itself is an object, 
-  it is read as an array-like value. Object values inside the source are kept unchanged when selected as a whole or left untouched. 
+  :php:func:`dot_array_only()` and :php:func:`dot_array_except()` still return arrays. If the source itself is an object,
+  it is read as an array-like value. Object values inside the source are kept unchanged when selected as a whole or left untouched.
   Partial object paths are returned as arrays.
 
 HTTP
