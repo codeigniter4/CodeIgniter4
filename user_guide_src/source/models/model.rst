@@ -782,7 +782,7 @@ Reloads one row by primary key inside a transaction using
 :ref:`query-builder-lock-for-update`, then runs the callback with the locked row
 and the current Model instance:
 
-.. literalinclude:: model/071.php
+.. literalinclude:: model/073.php
 
 The method returns the callback return value. If the row is not found, the
 callback is not run and ``null`` is returned. If the transaction cannot begin or
