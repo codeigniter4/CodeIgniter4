@@ -126,9 +126,9 @@ class PredisHandler extends BaseHandler
         $masterPort = null;
 
         foreach ($sentinels as $sentinel) {
-            $parts = parse_url($sentinel);
-            $sentinelHost = $parts['host'] ?? '127.0.0.1';
-            $sentinelPort = $parts['port'] ?? 26379;
+            $parts          = parse_url($sentinel);
+            $sentinelHost   = $parts['host'] ?? '127.0.0.1';
+            $sentinelPort   = $parts['port'] ?? 26379;
             $sentinelScheme = $parts['scheme'] ?? 'tcp';
 
             try {

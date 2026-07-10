@@ -139,11 +139,12 @@ class RedisHandler extends BaseHandler
         $masterPort = null;
 
         foreach ($sentinels as $sentinel) {
-            $parts = parse_url($sentinel);
+            $parts        = parse_url($sentinel);
             $sentinelHost = $parts['host'] ?? '127.0.0.1';
             $sentinelPort = $parts['port'] ?? 26379;
 
             $sentinelConn = $this->createRedis();
+
             try {
                 $sentinelConn->connect($sentinelHost, $sentinelPort, $timeout);
 

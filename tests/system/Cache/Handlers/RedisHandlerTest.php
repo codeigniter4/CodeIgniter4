@@ -256,7 +256,7 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
             $this->markTestSkipped('redis extension not loaded.');
         }
 
-        $cacheConfig = new Cache();
+        $cacheConfig                     = new Cache();
         $cacheConfig->redis['sentinels'] = ['tcp://10.0.0.1:26379', 'tcp://10.0.0.2:26379'];
         $cacheConfig->redis['service']   = 'mymaster';
 
@@ -267,10 +267,8 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
 
         $handler->expects($this->once())
             ->method('initializeSentinel')
-            ->with($this->callback(function (array $config): bool {
-                return $config['sentinels'] === ['tcp://10.0.0.1:26379', 'tcp://10.0.0.2:26379']
-                    && $config['service'] === 'mymaster';
-            }));
+            ->with($this->callback(static fn (array $config): bool => $config['sentinels'] === ['tcp://10.0.0.1:26379', 'tcp://10.0.0.2:26379']
+                    && $config['service'] === 'mymaster'));
 
         $handler->initialize();
     }
@@ -297,7 +295,7 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
             $this->markTestSkipped('redis extension not loaded.');
         }
 
-        $cacheConfig = new Cache();
+        $cacheConfig                     = new Cache();
         $cacheConfig->redis['sentinels'] = ['tcp://127.0.0.1:26380'];
         $cacheConfig->redis['service']   = 'mymaster';
         $cacheConfig->redis['timeout']   = 1;
@@ -309,7 +307,7 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
 
     public function testInitializeSentinelSuccessfullyDiscoversAndConnectsToMaster(): void
     {
-        $cacheConfig = new Cache();
+        $cacheConfig                     = new Cache();
         $cacheConfig->redis['sentinels'] = ['tcp://127.0.0.1:26379'];
         $cacheConfig->redis['service']   = 'mymaster';
 

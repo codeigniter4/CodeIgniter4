@@ -242,9 +242,7 @@ class RedisHandler extends BaseHandler
         return false;
     }
 
-    /**
-     * Opens a session connection via Redis Sentinel.
-     */
+    /** Opens a session connection via Redis Sentinel. */
     /**
      * Factory method for creating Redis connections.
      * Override in tests to mock Redis.
@@ -261,11 +259,12 @@ class RedisHandler extends BaseHandler
         $timeout    = $this->savePath['timeout'] ?? 0.0;
 
         foreach ($this->redisSentinels as $sentinel) {
-            $parts = parse_url($sentinel);
+            $parts        = parse_url($sentinel);
             $sentinelHost = $parts['host'] ?? '127.0.0.1';
             $sentinelPort = $parts['port'] ?? 26379;
 
             $conn = $this->createRedis();
+
             try {
                 $conn->connect($sentinelHost, $sentinelPort, $timeout);
 

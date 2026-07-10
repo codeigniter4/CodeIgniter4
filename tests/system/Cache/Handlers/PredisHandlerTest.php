@@ -211,7 +211,7 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
 
     public function testSentinelConfigStoredAfterConstruction(): void
     {
-        $cacheConfig = new Cache();
+        $cacheConfig                     = new Cache();
         $cacheConfig->redis['sentinels'] = ['tcp://10.0.0.1:26379', 'tcp://10.0.0.2:26379'];
         $cacheConfig->redis['service']   = 'mymaster';
 
@@ -226,7 +226,7 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
 
     public function testInitializeWithNormalConfigStripsSentinelKeys(): void
     {
-        $cacheConfig = new Cache();
+        $cacheConfig                     = new Cache();
         $cacheConfig->redis['sentinels'] = [];
         $cacheConfig->redis['service']   = '';
 
@@ -238,7 +238,7 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
 
     public function testInitializeSentinelThrowsWhenSentinelsUnreachable(): void
     {
-        $cacheConfig = new Cache();
+        $cacheConfig                     = new Cache();
         $cacheConfig->redis['sentinels'] = ['tcp://127.0.0.1:26380'];
         $cacheConfig->redis['service']   = 'mymaster';
         $cacheConfig->redis['timeout']   = 1;
@@ -252,7 +252,7 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
 
     public function testInitializeSentinelSuccessfullyDiscoversAndConnectsToMaster(): void
     {
-        $cacheConfig = new Cache();
+        $cacheConfig                     = new Cache();
         $cacheConfig->redis['sentinels'] = ['tcp://127.0.0.1:26379'];
         $cacheConfig->redis['service']   = 'mymaster';
 

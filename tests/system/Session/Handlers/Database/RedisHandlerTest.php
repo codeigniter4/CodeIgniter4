@@ -424,15 +424,15 @@ final class RedisHandlerTest extends CIUnitTestCase
 
     public function testOpenSentinelSuccessfullyDiscoversAndConnectsToMaster(): void
     {
-        $sessionConfig = new SessionConfig();
-        $sessionConfig->driver            = RedisHandler::class;
-        $sessionConfig->cookieName        = 'ci_session';
-        $sessionConfig->expiration        = 7200;
-        $sessionConfig->savePath          = 'tcp://127.0.0.1:6379';
-        $sessionConfig->matchIP           = false;
-        $sessionConfig->timeToUpdate      = 300;
-        $sessionConfig->regenerateDestroy = false;
-        $sessionConfig->redisSentinels    = ['tcp://127.0.0.1:26379'];
+        $sessionConfig                       = new SessionConfig();
+        $sessionConfig->driver               = RedisHandler::class;
+        $sessionConfig->cookieName           = 'ci_session';
+        $sessionConfig->expiration           = 7200;
+        $sessionConfig->savePath             = 'tcp://127.0.0.1:6379';
+        $sessionConfig->matchIP              = false;
+        $sessionConfig->timeToUpdate         = 300;
+        $sessionConfig->regenerateDestroy    = false;
+        $sessionConfig->redisSentinels       = ['tcp://127.0.0.1:26379'];
         $sessionConfig->redisSentinelService = 'mymaster';
 
         $sentinelMock = $this->createMock(Redis::class);
