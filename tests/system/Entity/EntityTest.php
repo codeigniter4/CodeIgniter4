@@ -367,6 +367,41 @@ final class EntityTest extends CIUnitTestCase
         $this->assertCloseEnoughString($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
     }
 
+    public function testToRawArrayConvertsDateTimeToString(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'created_at' => null,
+                'updated_at' => null,
+            ];
+            protected $original = [
+                'created_at' => null,
+                'updated_at' => null,
+            ];
+        };
+
+        $entity->created_at = '2023-12-12 12:12:12';
+        $entity->updated_at = '2023-12-13 13:13:13';
+
+        $raw = $entity->toRawArray();
+
+        // toRawArray() should return primitive types, not objects
+        $this->assertIsString($raw['created_at']);
+        $this->assertSame('2023-12-12 12:12:12', $raw['created_at']);
+        $this->assertIsString($raw['updated_at']);
+        $this->assertSame('2023-12-13 13:13:13', $raw['updated_at']);
+
+        // Attributes themselves should still contain Time objects
+        $attrs = $this->getPrivateProperty($entity, 'attributes');
+        $this->assertInstanceOf(Time::class, $attrs['created_at']);
+        $this->assertInstanceOf(Time::class, $attrs['updated_at']);
+
+        // toArray() should still return Time objects (no regression)
+        $array = $entity->toArray();
+        $this->assertInstanceOf(Time::class, $array['created_at']);
+        $this->assertInstanceOf(Time::class, $array['updated_at']);
+    }
+
     public function testCastInteger(): void
     {
         $entity = $this->getCastEntity();
@@ -1419,6 +1454,93 @@ final class EntityTest extends CIUnitTestCase
         $this->assertSame([
             'bar' => 'bar:foo',
         ], $result);
+    }
+
+    public function testToRawArrayConvertsDateTimeToStringOnlyWhenNonRecursive(): void
+    {
+        $entity = $this->getEntity();
+
+        // Non-recursive: DateTime becomes string
+        $entity->created_at = '2024-03-15 10:30:00';
+        $raw                = $entity->toRawArray();
+        $this->assertIsString($raw['created_at']);
+
+        // Recursive: DateTime stays Time
+        $recursive = $entity->toRawArray(false, true);
+        $this->assertInstanceOf(Time::class, $recursive['created_at']);
+
+        // Non-recursive onlyChanged: also converts to string
+        $entity->syncOriginal();
+        $entity->created_at = '2024-06-15 14:30:00';
+        $changed            = $entity->toRawArray(true);
+        $this->assertIsString($changed['created_at']);
+
+        // Recursive onlyChanged: preserves Time
+        $changedRecursive = $entity->toRawArray(true, true);
+        $this->assertInstanceOf(Time::class, $changedRecursive['created_at']);
+
+        // Null values stay null regardless of mode
+        $entity2 = $this->getEntity();
+        $this->assertNull($entity2->toRawArray()['created_at']);
+        $this->assertNull($entity2->toRawArray(false, true)['created_at']);
+
+        // toArray() should not be affected (still returns Time)
+        $arr = $entity->toArray();
+        $this->assertInstanceOf(Time::class, $arr['createdAt']);
+    }
+
+    public function testToRawArrayRecursivePreservesTimeObjectsInNestedEntities(): void
+    {
+        $child             = $this->getEntity();
+        $child->created_at = '2024-03-10 08:00:00';
+
+        $parent             = $this->getEntity();
+        $parent->created_at = '2024-03-15 10:30:00';
+        $parent->entity     = $child;
+
+        $result = $parent->toRawArray(false, true);
+
+        $this->assertInstanceOf(Time::class, $result['created_at']);
+        $this->assertIsArray($result['entity']);
+        $this->assertInstanceOf(Time::class, $result['entity']['created_at']);
+
+        // Non-recursive: converts to string
+        $nonRecursive = $parent->toRawArray();
+        $this->assertIsString($nonRecursive['created_at']);
+
+        // toArray() uses datamapped keys
+        $arr = $parent->toArray();
+        $this->assertInstanceOf(Time::class, $arr['createdAt']);
+    }
+
+    public function testToRawArrayRecursiveWithMixedAttributes(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'name'       => null,
+                'created_at' => null,
+                'count'      => null,
+            ];
+            protected $original = [
+                'name'       => null,
+                'created_at' => null,
+                'count'      => null,
+            ];
+        };
+
+        $entity->name       = 'test';
+        $entity->count      = 42;
+        $entity->created_at = '2024-08-20 16:45:00';
+
+        // Recursive: scalars unchanged, DateTime preserved as Time
+        $result = $entity->toRawArray(false, true);
+        $this->assertSame('test', $result['name']);
+        $this->assertSame(42, $result['count']);
+        $this->assertInstanceOf(Time::class, $result['created_at']);
+
+        // Non-recursive: DateTime converted to string
+        $result2 = $entity->toRawArray();
+        $this->assertIsString($result2['created_at']);
     }
 
     public function testFilledConstruction(): void

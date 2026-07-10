@@ -261,84 +261,93 @@ class Entity implements JsonSerializable
 
         // When returning everything
         if (! $onlyChanged) {
-            return $recursive
-                ? array_map($convert, $this->attributes)
-                : $this->attributes;
-        }
+            $result = array_map($convert, $this->attributes);
+        } else {
+            // When filtering by changed values only
+            $result = [];
 
-        // When filtering by changed values only
-        $return = [];
+            foreach ($this->attributes as $key => $value) {
+                // Special handling for arrays of entities in recursive mode
+                // Skip hasChanged() and do per-entity comparison directly
+                if ($recursive && is_array($value) && $this->containsOnlyEntities($value)) {
+                    $originalValue = $this->original[$key] ?? null;
 
-        foreach ($this->attributes as $key => $value) {
-            // Special handling for arrays of entities in recursive mode
-            // Skip hasChanged() and do per-entity comparison directly
-            if ($recursive && is_array($value) && $this->containsOnlyEntities($value)) {
-                $originalValue = $this->original[$key] ?? null;
+                    if (! is_string($originalValue)) {
+                        // No original or invalid format, export all entities
+                        $converted = [];
 
-                if (! is_string($originalValue)) {
-                    // No original or invalid format, export all entities
-                    $converted = [];
+                        foreach ($value as $idx => $item) {
+                            $converted[$idx] = $item->toRawArray(false, true);
+                        }
+                        $result[$key] = $converted;
+
+                        continue;
+                    }
+
+                    // Decode original array structure for per-entity comparison
+                    $originalArray = json_decode($originalValue, true);
+                    $converted     = [];
 
                     foreach ($value as $idx => $item) {
-                        $converted[$idx] = $item->toRawArray(false, true);
+                        // Compare current entity against its original state
+                        $currentNormalized  = $this->normalizeValue($item);
+                        $originalNormalized = $originalArray[$idx] ?? null;
+
+                        // Only include if changed, new, or can't determine
+                        if ($originalNormalized === null || $currentNormalized !== $originalNormalized) {
+                            $converted[$idx] = $item->toRawArray(false, true);
+                        }
                     }
-                    $return[$key] = $converted;
+
+                    // Only include this property if at least one entity changed
+                    if ($converted !== []) {
+                        $result[$key] = $converted;
+                    }
 
                     continue;
                 }
 
-                // Decode original array structure for per-entity comparison
-                $originalArray = json_decode($originalValue, true);
-                $converted     = [];
-
-                foreach ($value as $idx => $item) {
-                    // Compare current entity against its original state
-                    $currentNormalized  = $this->normalizeValue($item);
-                    $originalNormalized = $originalArray[$idx] ?? null;
-
-                    // Only include if changed, new, or can't determine
-                    if ($originalNormalized === null || $currentNormalized !== $originalNormalized) {
-                        $converted[$idx] = $item->toRawArray(false, true);
-                    }
+                // For all other cases, use hasChanged()
+                if (! $this->hasChanged($key)) {
+                    continue;
                 }
 
-                // Only include this property if at least one entity changed
-                if ($converted !== []) {
-                    $return[$key] = $converted;
-                }
+                if ($recursive) {
+                    // Special handling for arrays (mixed or not all entities)
+                    if (is_array($value)) {
+                        $converted = [];
 
-                continue;
-            }
+                        foreach ($value as $idx => $item) {
+                            $converted[$idx] = $item instanceof self ? $item->toRawArray(false, true) : $convert($item);
+                        }
+                        $result[$key] = $converted;
 
-            // For all other cases, use hasChanged()
-            if (! $this->hasChanged($key)) {
-                continue;
-            }
-
-            if ($recursive) {
-                // Special handling for arrays (mixed or not all entities)
-                if (is_array($value)) {
-                    $converted = [];
-
-                    foreach ($value as $idx => $item) {
-                        $converted[$idx] = $item instanceof self ? $item->toRawArray(false, true) : $convert($item);
+                        continue;
                     }
-                    $return[$key] = $converted;
+
+                    // default recursive conversion
+                    $result[$key] = $convert($value);
 
                     continue;
                 }
 
-                // default recursive conversion
-                $return[$key] = $convert($value);
-
-                continue;
+                // non-recursive changed value
+                $result[$key] = $convert($value);
             }
-
-            // non-recursive changed value
-            $return[$key] = $value;
         }
 
-        return $return;
+        // Convert DateTime objects to string for user-facing calls
+        if (! $recursive) {
+            $result = array_map(static function ($value) {
+                if ($value instanceof DateTimeInterface) {
+                    return method_exists($value, '__toString') ? (string) $value : $value->format('Y-m-d H:i:s');
+                }
+
+                return $value;
+            }, $result);
+        }
+
+        return $result;
     }
 
     /**

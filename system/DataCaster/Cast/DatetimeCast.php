@@ -16,6 +16,8 @@ namespace CodeIgniter\DataCaster\Cast;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\I18n\Time;
+use DateTimeInterface;
+use Exception;
 
 /**
  * Class DatetimeCast
@@ -51,7 +53,15 @@ class DatetimeCast extends BaseCast
         array $params = [],
         ?object $helper = null,
     ): string {
-        if (! $value instanceof Time) {
+        if (is_string($value)) {
+            try {
+                $value = Time::parse($value);
+            } catch (Exception) {
+                self::invalidTypeValueError($value);
+            }
+        }
+
+        if (! $value instanceof DateTimeInterface) {
             self::invalidTypeValueError($value);
         }
 
