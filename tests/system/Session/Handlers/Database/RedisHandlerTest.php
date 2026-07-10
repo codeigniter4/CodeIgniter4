@@ -36,7 +36,7 @@ final class RedisHandlerTest extends CIUnitTestCase
     private string $userIpAddress   = '127.0.0.1';
 
     /**
-     * @param array<string, array<string>|bool|int|string|null> $options Replace values for `Config\Session`.
+     * @param array<string, bool|int|list<string>|string|null> $options Replace values for `Config\Session`.
      */
     protected function getInstance($options = []): RedisHandler
     {
