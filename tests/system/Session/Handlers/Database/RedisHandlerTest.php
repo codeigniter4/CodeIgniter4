@@ -386,4 +386,89 @@ final class RedisHandlerTest extends CIUnitTestCase
         $handler1->close();
         $handler2->close();
     }
+
+    public function testConstructorReadsSentinelConfig(): void
+    {
+        $options = [
+            'redisSentinels'       => ['tcp://10.0.0.1:26379', 'tcp://10.0.0.2:26379'],
+            'redisSentinelService' => 'mymaster',
+        ];
+        $handler = $this->getInstance($options);
+
+        $sentinels = $this->getPrivateProperty($handler, 'redisSentinels');
+        $service   = $this->getPrivateProperty($handler, 'redisSentinelService');
+
+        $this->assertSame(['tcp://10.0.0.1:26379', 'tcp://10.0.0.2:26379'], $sentinels);
+        $this->assertSame('mymaster', $service);
+    }
+
+    public function testOpenSentinelReturnsFalseWhenUnreachable(): void
+    {
+        $options = [
+            'redisSentinels'       => ['tcp://127.0.0.1:26380'],
+            'redisSentinelService' => 'mymaster',
+        ];
+        $handler = $this->getInstance($options);
+
+        $this->assertFalse($handler->open($this->sessionSavePath, $this->sessionName));
+    }
+
+    public function testSentinelConfigNullFallsBackToNormalOpen(): void
+    {
+        // Default config has redisSentinels = null
+        $handler = $this->getInstance();
+        $this->assertTrue($handler->open($this->sessionSavePath, $this->sessionName));
+
+        $handler->close();
+    }
+
+    public function testOpenSentinelSuccessfullyDiscoversAndConnectsToMaster(): void
+    {
+        $sessionConfig = new SessionConfig();
+        $sessionConfig->driver            = RedisHandler::class;
+        $sessionConfig->cookieName        = 'ci_session';
+        $sessionConfig->expiration        = 7200;
+        $sessionConfig->savePath          = 'tcp://127.0.0.1:6379';
+        $sessionConfig->matchIP           = false;
+        $sessionConfig->timeToUpdate      = 300;
+        $sessionConfig->regenerateDestroy = false;
+        $sessionConfig->redisSentinels    = ['tcp://127.0.0.1:26379'];
+        $sessionConfig->redisSentinelService = 'mymaster';
+
+        $sentinelMock = $this->createMock(Redis::class);
+        $sentinelMock->expects($this->once())
+            ->method('connect')
+            ->with('127.0.0.1', 26379, 0.0)
+            ->willReturn(true);
+        $sentinelMock->expects($this->once())
+            ->method('rawCommand')
+            ->with('SENTINEL', 'get-master-addr-by-name', 'mymaster')
+            ->willReturn(['10.0.0.1', '6379']);
+        $sentinelMock->expects($this->once())
+            ->method('close');
+
+        $masterMock = $this->createMock(Redis::class);
+        $masterMock->expects($this->once())
+            ->method('connect')
+            ->with('10.0.0.1', 6379, 0.0)
+            ->willReturn(true);
+        $masterMock->expects($this->once())
+            ->method('select')
+            ->with(0)
+            ->willReturn(true);
+
+        $handler = $this->getMockBuilder(RedisHandler::class)
+            ->onlyMethods(['createRedis'])
+            ->setConstructorArgs([$sessionConfig, $this->userIpAddress])
+            ->getMock();
+
+        $handler->method('createRedis')
+            ->willReturnOnConsecutiveCalls($sentinelMock, $masterMock);
+
+        $handler->setLogger(new TestLogger(new LoggerConfig()));
+
+        $this->assertTrue($handler->open($this->sessionSavePath, $this->sessionName));
+
+        $handler->close();
+    }
 }

@@ -36,6 +36,8 @@ class RedisHandler extends BaseHandler
      *   timeout: int,
      *   persistent: bool,
      *   database: int,
+     *   sentinels: list<string>,
+     *   service: string,
      * }
      */
     protected $config = [
@@ -45,6 +47,8 @@ class RedisHandler extends BaseHandler
         'timeout'    => 0,
         'persistent' => false,
         'database'   => 0,
+        'sentinels'  => [],
+        'service'    => '',
     ];
 
     /**
@@ -68,9 +72,15 @@ class RedisHandler extends BaseHandler
     {
         $config = $this->config;
 
-        $this->redis = new Redis();
+        $this->redis = $this->createRedis();
 
         try {
+            if ($config['sentinels'] !== [] && $config['service'] !== '') {
+                $this->initializeSentinel($config);
+
+                return;
+            }
+
             $funcConnection = isset($config['persistent']) && $config['persistent'] ? 'pconnect' : 'connect';
 
             // Note:: If Redis is your primary cache choice, and it is "offline", every page load will end up been delayed by the timeout duration.
@@ -95,6 +105,92 @@ class RedisHandler extends BaseHandler
             }
         } catch (RedisException $e) {
             throw new CriticalError('Cache: RedisException occurred with message (' . $e->getMessage() . ').', $e->getCode(), $e);
+        }
+    }
+
+    /**
+     * Initializes a connection via Redis Sentinel.
+     *
+     * @param array{
+     *   sentinels: list<string>,
+     *   service: string,
+     *   timeout: int,
+     *   password?: string|null,
+     *   persistent?: bool,
+     *   database?: int,
+     * } $config
+     */
+    /**
+     * Factory method for creating Redis connections.
+     * Override in tests to mock Redis.
+     */
+    protected function createRedis(): Redis
+    {
+        return new Redis();
+    }
+
+    protected function initializeSentinel(array $config): void
+    {
+        $sentinels = $config['sentinels'];
+        $service   = $config['service'];
+        $timeout   = $config['timeout'] ?? 0;
+
+        $masterHost = null;
+        $masterPort = null;
+
+        foreach ($sentinels as $sentinel) {
+            $parts = parse_url($sentinel);
+            $sentinelHost = $parts['host'] ?? '127.0.0.1';
+            $sentinelPort = $parts['port'] ?? 26379;
+
+            $sentinelConn = $this->createRedis();
+            try {
+                $sentinelConn->connect($sentinelHost, $sentinelPort, $timeout);
+
+                if (isset($config['password']) && $config['password'] !== null) {
+                    $sentinelConn->auth($config['password']);
+                }
+
+                $addr = $sentinelConn->rawCommand('SENTINEL', 'get-master-addr-by-name', $service);
+
+                if (is_array($addr) && count($addr) >= 2) {
+                    $masterHost = $addr[0];
+                    $masterPort = (int) $addr[1];
+                }
+
+                $sentinelConn->close();
+                unset($sentinelConn);
+
+                if ($masterHost !== null) {
+                    break;
+                }
+            } catch (RedisException) {
+                continue;
+            }
+        }
+
+        if ($masterHost === null) {
+            throw new CriticalError('Cache: Redis Sentinel could not find a master for service "' . $service . '".');
+        }
+
+        $funcConnection = isset($config['persistent']) && $config['persistent'] ? 'pconnect' : 'connect';
+
+        if (! $this->redis->{$funcConnection}($masterHost, $masterPort, $timeout)) {
+            log_message('error', 'Cache: Redis connection to Sentinel master failed. Check your configuration.');
+
+            throw new CriticalError('Cache: Redis connection to Sentinel master failed. Check your configuration.');
+        }
+
+        if (isset($config['password']) && $config['password'] !== null && ! $this->redis->auth($config['password'])) {
+            log_message('error', 'Cache: Redis authentication failed.');
+
+            throw new CriticalError('Cache: Redis authentication failed.');
+        }
+
+        if (isset($config['database']) && ! $this->redis->select($config['database'])) {
+            log_message('error', 'Cache: Redis select database failed.');
+
+            throw new CriticalError('Cache: Redis select database failed.');
         }
     }
 

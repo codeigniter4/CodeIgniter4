@@ -76,6 +76,18 @@ class RedisHandler extends BaseHandler
     private int $lockMaxRetries = 300;
 
     /**
+     * Redis Sentinel hosts for high availability.
+     *
+     * @var list<string>
+     */
+    private array $redisSentinels = [];
+
+    /**
+     * Redis Sentinel master service name.
+     */
+    private string $redisSentinelService = '';
+
+    /**
      * @param string $ipAddress User's IP address.
      *
      * @throws SessionException
@@ -100,6 +112,14 @@ class RedisHandler extends BaseHandler
 
         $this->lockRetryInterval = $config->lockRetryInterval ?? $this->lockRetryInterval; // @phpstan-ignore nullCoalesce.property
         $this->lockMaxRetries    = $config->lockMaxRetries ?? $this->lockMaxRetries; // @phpstan-ignore nullCoalesce.property
+
+        /** @var list<string>|null $sentinels */
+        $sentinels = $config->redisSentinels ?? null;
+
+        if ($sentinels !== null) {
+            $this->redisSentinels       = $sentinels;
+            $this->redisSentinelService = $config->redisSentinelService ?? '';
+        }
     }
 
     protected function setSavePath(): void
@@ -178,6 +198,10 @@ class RedisHandler extends BaseHandler
             return false;
         }
 
+        if ($this->redisSentinels !== [] && $this->redisSentinelService !== '') {
+            return $this->openSentinel();
+        }
+
         if ($this->hasPersistentConnection()) {
             $redis = $this->getPersistentConnection();
 
@@ -194,7 +218,7 @@ class RedisHandler extends BaseHandler
             }
         }
 
-        $redis = new Redis();
+        $redis = $this->createRedis();
 
         $funcConnection = isset($this->savePath['persistent']) && $this->savePath['persistent'] === true
             ? 'pconnect'
@@ -204,6 +228,87 @@ class RedisHandler extends BaseHandler
             $this->logger->error('Session: Unable to connect to Redis with the configured settings.');
         } elseif (isset($this->savePath['password']) && ! $redis->auth($this->savePath['password'])) {
             $this->logger->error('Session: Unable to authenticate to Redis instance.');
+        } elseif (isset($this->savePath['database']) && ! $redis->select($this->savePath['database'])) {
+            $this->logger->error(
+                'Session: Unable to select Redis database with index ' . $this->savePath['database'],
+            );
+        } else {
+            $this->setPersistentConnection($redis);
+            $this->redis = $redis;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Opens a session connection via Redis Sentinel.
+     */
+    /**
+     * Factory method for creating Redis connections.
+     * Override in tests to mock Redis.
+     */
+    protected function createRedis(): Redis
+    {
+        return new Redis();
+    }
+
+    protected function openSentinel(): bool
+    {
+        $masterHost = null;
+        $masterPort = null;
+        $timeout    = $this->savePath['timeout'] ?? 0.0;
+
+        foreach ($this->redisSentinels as $sentinel) {
+            $parts = parse_url($sentinel);
+            $sentinelHost = $parts['host'] ?? '127.0.0.1';
+            $sentinelPort = $parts['port'] ?? 26379;
+
+            $conn = $this->createRedis();
+            try {
+                $conn->connect($sentinelHost, $sentinelPort, $timeout);
+
+                if (isset($this->savePath['password'])) {
+                    $conn->auth($this->savePath['password']);
+                }
+
+                $addr = $conn->rawCommand('SENTINEL', 'get-master-addr-by-name', $this->redisSentinelService);
+
+                if (is_array($addr) && count($addr) >= 2) {
+                    $masterHost = $addr[0];
+                    $masterPort = (int) $addr[1];
+                }
+
+                $conn->close();
+                unset($conn);
+
+                if ($masterHost !== null) {
+                    break;
+                }
+            } catch (RedisException) {
+                continue;
+            }
+        }
+
+        if ($masterHost === null) {
+            $this->logger->error(
+                'Session: Redis Sentinel could not find a master for service "' . $this->redisSentinelService . '".',
+            );
+
+            return false;
+        }
+
+        $redis = $this->createRedis();
+
+        $funcConnection = isset($this->savePath['persistent']) && $this->savePath['persistent'] === true
+            ? 'pconnect'
+            : 'connect';
+
+        if ($redis->{$funcConnection}($masterHost, $masterPort, $timeout) === false) {
+            $this->logger->error('Session: Unable to connect to Redis Sentinel master.');
+        } elseif (isset($this->savePath['password']) && ! $redis->auth($this->savePath['password'])) {
+            $this->logger->error('Session: Unable to authenticate to Redis master.');
         } elseif (isset($this->savePath['database']) && ! $redis->select($this->savePath['database'])) {
             $this->logger->error(
                 'Session: Unable to select Redis database with index ' . $this->savePath['database'],

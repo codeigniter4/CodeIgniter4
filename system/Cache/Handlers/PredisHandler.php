@@ -38,7 +38,9 @@ class PredisHandler extends BaseHandler
      *   port: int,
      *   async: bool,
      *   persistent: bool,
-     *   timeout: int
+     *   timeout: int,
+     *   sentinels: list<string>,
+     *   service: string,
      * }
      */
     protected $config = [
@@ -49,6 +51,8 @@ class PredisHandler extends BaseHandler
         'async'      => false,
         'persistent' => false,
         'timeout'    => 0,
+        'sentinels'  => [],
+        'service'    => '',
     ];
 
     /**
@@ -68,14 +72,106 @@ class PredisHandler extends BaseHandler
         $this->config = array_merge($this->config, $config->redis);
     }
 
+    /**
+     * Factory method for creating Predis Client instances.
+     * Override in tests to mock Client.
+     */
+    protected function createPredisClient(array $connection, array $options = []): Client
+    {
+        return new Client($connection, $options);
+    }
+
     public function initialize(): void
     {
         try {
-            $this->redis = new Client($this->config, ['prefix' => $this->prefix]);
+            $config = $this->config;
+
+            if ($config['sentinels'] !== [] && $config['service'] !== '') {
+                $this->initializeSentinel($config);
+
+                return;
+            }
+
+            unset($config['sentinels'], $config['service']);
+
+            $this->redis = $this->createPredisClient($config, ['prefix' => $this->prefix]);
             $this->redis->time();
         } catch (Exception $e) {
             throw new CriticalError('Cache: Predis connection refused (' . $e->getMessage() . ').', $e->getCode(), $e);
         }
+    }
+
+    /**
+     * Initializes a connection via Redis Sentinel.
+     *
+     * Predis v3.x does not have built-in sentinel support,
+     * so we manually discover the master via the Sentinel protocol.
+     *
+     * @param array{
+     *   sentinels: list<string>,
+     *   service: string,
+     *   timeout: int,
+     *   password?: string|null,
+     *   database?: int,
+     *   prefix?: string,
+     * } $config
+     */
+    protected function initializeSentinel(array $config): void
+    {
+        $sentinels = $config['sentinels'];
+        $service   = $config['service'];
+        $timeout   = $config['timeout'] ?? 0;
+
+        $masterHost = null;
+        $masterPort = null;
+
+        foreach ($sentinels as $sentinel) {
+            $parts = parse_url($sentinel);
+            $sentinelHost = $parts['host'] ?? '127.0.0.1';
+            $sentinelPort = $parts['port'] ?? 26379;
+            $sentinelScheme = $parts['scheme'] ?? 'tcp';
+
+            try {
+                $sentinelClient = $this->createPredisClient([
+                    'scheme'  => $sentinelScheme,
+                    'host'    => $sentinelHost,
+                    'port'    => $sentinelPort,
+                    'timeout' => $timeout,
+                ]);
+
+                if (isset($config['password']) && $config['password'] !== null) {
+                    $sentinelClient->auth($config['password']);
+                }
+
+                $addr = $sentinelClient->rawCommand('SENTINEL', 'get-master-addr-by-name', $service);
+
+                if (is_array($addr) && count($addr) >= 2) {
+                    $masterHost = $addr[0];
+                    $masterPort = (int) $addr[1];
+                }
+
+                $sentinelClient->disconnect();
+                unset($sentinelClient);
+
+                if ($masterHost !== null) {
+                    break;
+                }
+            } catch (Exception) {
+                continue;
+            }
+        }
+
+        if ($masterHost === null) {
+            throw new CriticalError('Cache: Redis Sentinel could not find a master for service "' . $service . '".');
+        }
+
+        $config['scheme'] = 'tcp';
+        $config['host']   = $masterHost;
+        $config['port']   = $masterPort;
+        unset($config['sentinels'], $config['service'], $config['async'], $config['persistent']);
+
+        $this->redis = $this->createPredisClient($config, ['prefix' => $this->prefix]);
+        $this->redis->time();
     }
 
     public function get(string $key): mixed

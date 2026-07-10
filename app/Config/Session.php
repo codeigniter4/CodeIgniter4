@@ -125,4 +125,26 @@ class Session extends BaseConfig
      * seconds.
      */
     public int $lockMaxRetries = 300;
+
+    /**
+     * --------------------------------------------------------------------------
+     * Redis Sentinel Hosts
+     * --------------------------------------------------------------------------
+     *
+     * List of Redis Sentinel servers for high availability.
+     * Used only when $driver is RedisHandler.
+     *
+     * @var list<string>|null
+     */
+    public ?array $redisSentinels = null;
+
+    /**
+     * --------------------------------------------------------------------------
+     * Redis Sentinel Service
+     * --------------------------------------------------------------------------
+     *
+     * The master group name for Redis Sentinel.
+     * Used only when $driver is RedisHandler.
+     */
+    public ?string $redisSentinelService = null;
 }

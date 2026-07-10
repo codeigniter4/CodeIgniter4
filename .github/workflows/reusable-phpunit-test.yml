@@ -137,6 +137,15 @@ jobs:
           --health-timeout=5s
           --health-retries=3
 
+      redis-sentinel:
+        image: bitnami/redis-sentinel:latest
+        ports:
+          - 26379:26379
+        env:
+          REDIS_MASTER_HOST: redis
+          REDIS_MASTER_PORT_NUMBER: 6379
+          REDIS_SENTINEL_QUORUM: 1
+
       memcached:
         image: memcached:1.6-alpine
         ports:

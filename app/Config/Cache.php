@@ -120,7 +120,9 @@ class Cache extends BaseConfig
      *     timeout?: int,
      *     async?: bool,
      *     persistent?: bool,
-     *     database?: int
+     *     database?: int,
+     *     sentinels?: list<string>,
+     *     service?: string
      * }
      */
     public array $redis = [

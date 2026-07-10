@@ -15,9 +15,11 @@ namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\Exceptions\CriticalError;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
 use PHPUnit\Framework\Attributes\Group;
+use Predis\Client;
 
 /**
  * @internal
@@ -205,5 +207,82 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
         $this->assertTrue($this->handler->reconnect());
 
         $this->assertSame('value', $this->handler->get(self::$key1));
+    }
+
+    public function testSentinelConfigStoredAfterConstruction(): void
+    {
+        $cacheConfig = new Cache();
+        $cacheConfig->redis['sentinels'] = ['tcp://10.0.0.1:26379', 'tcp://10.0.0.2:26379'];
+        $cacheConfig->redis['service']   = 'mymaster';
+
+        $handler = new PredisHandler($cacheConfig);
+
+        $config = $this->getPrivateProperty($handler, 'config');
+
+        $this->assertSame(['tcp://10.0.0.1:26379', 'tcp://10.0.0.2:26379'], $config['sentinels']);
+        $this->assertSame('mymaster', $config['service']);
+        $this->assertSame('tcp', $config['scheme']); // Not yet transformed
+    }
+
+    public function testInitializeWithNormalConfigStripsSentinelKeys(): void
+    {
+        $cacheConfig = new Cache();
+        $cacheConfig->redis['sentinels'] = [];
+        $cacheConfig->redis['service']   = '';
+
+        $handler = new PredisHandler($cacheConfig);
+        $handler->initialize();
+
+        $this->assertTrue($handler->ping());
+    }
+
+    public function testInitializeSentinelThrowsWhenSentinelsUnreachable(): void
+    {
+        $cacheConfig = new Cache();
+        $cacheConfig->redis['sentinels'] = ['tcp://127.0.0.1:26380'];
+        $cacheConfig->redis['service']   = 'mymaster';
+        $cacheConfig->redis['timeout']   = 1;
+
+        $handler = new PredisHandler($cacheConfig);
+
+        $this->expectException(CriticalError::class);
+
+        $handler->initialize();
+    }
+
+    public function testInitializeSentinelSuccessfullyDiscoversAndConnectsToMaster(): void
+    {
+        $cacheConfig = new Cache();
+        $cacheConfig->redis['sentinels'] = ['tcp://127.0.0.1:26379'];
+        $cacheConfig->redis['service']   = 'mymaster';
+
+        $sentinelMock = $this->getMockBuilder(Client::class)
+            ->onlyMethods(['__call', 'disconnect'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $sentinelMock->expects($this->once())
+            ->method('__call')
+            ->with('rawCommand', ['SENTINEL', 'get-master-addr-by-name', 'mymaster'])
+            ->willReturn(['10.0.0.1', '6379']);
+        $sentinelMock->expects($this->once())
+            ->method('disconnect');
+
+        $masterMock = $this->getMockBuilder(Client::class)
+            ->onlyMethods(['__call'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $masterMock->expects($this->once())
+            ->method('__call')
+            ->with('time', []);
+
+        $handler = $this->getMockBuilder(PredisHandler::class)
+            ->onlyMethods(['createPredisClient'])
+            ->setConstructorArgs([$cacheConfig])
+            ->getMock();
+
+        $handler->method('createPredisClient')
+            ->willReturnOnConsecutiveCalls($sentinelMock, $masterMock);
+
+        $handler->initialize();
     }
 }

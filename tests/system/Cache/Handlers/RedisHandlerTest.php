@@ -19,6 +19,7 @@ use CodeIgniter\I18n\Time;
 use Config\Cache;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use Redis;
 
 /**
  * @internal
@@ -247,5 +248,101 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
         $this->assertTrue($this->handler->reconnect());
 
         $this->assertSame('value', $this->handler->get(self::$key1));
+    }
+
+    public function testInitializeCallsSentinelPathWhenSentinelsConfigured(): void
+    {
+        if (! extension_loaded('redis')) {
+            $this->markTestSkipped('redis extension not loaded.');
+        }
+
+        $cacheConfig = new Cache();
+        $cacheConfig->redis['sentinels'] = ['tcp://10.0.0.1:26379', 'tcp://10.0.0.2:26379'];
+        $cacheConfig->redis['service']   = 'mymaster';
+
+        $handler = $this->getMockBuilder(RedisHandler::class)
+            ->onlyMethods(['initializeSentinel'])
+            ->setConstructorArgs([$cacheConfig])
+            ->getMock();
+
+        $handler->expects($this->once())
+            ->method('initializeSentinel')
+            ->with($this->callback(function (array $config): bool {
+                return $config['sentinels'] === ['tcp://10.0.0.1:26379', 'tcp://10.0.0.2:26379']
+                    && $config['service'] === 'mymaster';
+            }));
+
+        $handler->initialize();
+    }
+
+    public function testInitializeUsesNormalPathWhenSentinelsNotConfigured(): void
+    {
+        if (! extension_loaded('redis')) {
+            $this->markTestSkipped('redis extension not loaded.');
+        }
+
+        $handler = $this->getMockBuilder(RedisHandler::class)
+            ->onlyMethods(['initializeSentinel'])
+            ->setConstructorArgs([new Cache()])
+            ->getMock();
+
+        $handler->expects($this->never())->method('initializeSentinel');
+
+        $handler->initialize();
+    }
+
+    public function testReconnectInSentinelModeReturnsFalse(): void
+    {
+        if (! extension_loaded('redis')) {
+            $this->markTestSkipped('redis extension not loaded.');
+        }
+
+        $cacheConfig = new Cache();
+        $cacheConfig->redis['sentinels'] = ['tcp://127.0.0.1:26380'];
+        $cacheConfig->redis['service']   = 'mymaster';
+        $cacheConfig->redis['timeout']   = 1;
+
+        $handler = new RedisHandler($cacheConfig);
+
+        $this->assertFalse($handler->reconnect());
+    }
+
+    public function testInitializeSentinelSuccessfullyDiscoversAndConnectsToMaster(): void
+    {
+        $cacheConfig = new Cache();
+        $cacheConfig->redis['sentinels'] = ['tcp://127.0.0.1:26379'];
+        $cacheConfig->redis['service']   = 'mymaster';
+
+        $mainRedis = $this->createMock(Redis::class);
+        $mainRedis->expects($this->once())
+            ->method('connect')
+            ->with('10.0.0.1', 6379, 0)
+            ->willReturn(true);
+        $mainRedis->expects($this->once())
+            ->method('select')
+            ->with(0)
+            ->willReturn(true);
+
+        $sentinelMock = $this->createMock(Redis::class);
+        $sentinelMock->expects($this->once())
+            ->method('connect')
+            ->with('127.0.0.1', 26379, 0)
+            ->willReturn(true);
+        $sentinelMock->expects($this->once())
+            ->method('rawCommand')
+            ->with('SENTINEL', 'get-master-addr-by-name', 'mymaster')
+            ->willReturn(['10.0.0.1', '6379']);
+        $sentinelMock->expects($this->once())
+            ->method('close');
+
+        $handler = $this->getMockBuilder(RedisHandler::class)
+            ->onlyMethods(['createRedis'])
+            ->setConstructorArgs([$cacheConfig])
+            ->getMock();
+
+        $handler->method('createRedis')
+            ->willReturnOnConsecutiveCalls($mainRedis, $sentinelMock);
+
+        $handler->initialize();
     }
 }
