@@ -281,8 +281,10 @@ if (! function_exists('get_dir_file_info')) {
                 if (is_dir($sourceDir . $file) && $file[0] !== '.' && $topLevelOnly === false) {
                     get_dir_file_info($sourceDir . $file . DIRECTORY_SEPARATOR, $topLevelOnly, true);
                 } elseif ($file[0] !== '.') {
-                    $fileData[$file]                  = get_file_info($sourceDir . $file);
-                    $fileData[$file]['relative_path'] = $relativePath;
+                    if (($info = get_file_info($sourceDir . $file)) !== null) {
+                        $fileData[$file]                  = $info;
+                        $fileData[$file]['relative_path'] = $relativePath;
+                    }
                 }
             }
 
