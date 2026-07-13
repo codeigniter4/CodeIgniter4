@@ -477,6 +477,25 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertSame($expected, get_dir_file_info(SUPPORTPATH . 'Files#baker'));
     }
 
+    public function testGetDirFileInfoIgnoresDirectoriesWhenTopLevelOnlyIsTrue(): void
+    {
+        $dir = WRITEPATH . 'test_get_dir_file_info';
+        mkdir($dir . '/subdir', 0777, true);
+        file_put_contents($dir . '/file.txt', 'test');
+
+        $result = get_dir_file_info($dir, true);
+
+        // Clean up
+        unlink($dir . '/file.txt');
+        rmdir($dir . '/subdir');
+        rmdir($dir);
+
+        // 'subdir' is a directory. When $topLevelOnly is true, get_dir_file_info passes it to get_file_info,
+        // which returns null because is_file() is false. The function should ignore it completely.
+        $this->assertArrayHasKey('file.txt', $result);
+        $this->assertArrayNotHasKey('subdir', $result);
+    }
+
     public function testGetFileInfo(): void
     {
         $file = SUPPORTPATH . 'Files/baker/banana.php';

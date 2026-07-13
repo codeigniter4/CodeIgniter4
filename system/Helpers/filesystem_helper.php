@@ -85,10 +85,12 @@ if (! function_exists('directory_mirror')) {
         $dirLen = strlen($originDir);
 
         /** @var SplFileInfo $file */
-        foreach (new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($originDir, FilesystemIterator::SKIP_DOTS),
-            RecursiveIteratorIterator::SELF_FIRST,
-        ) as $file) {
+        foreach (
+            new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($originDir, FilesystemIterator::SKIP_DOTS),
+                RecursiveIteratorIterator::SELF_FIRST,
+            ) as $file
+        ) {
             $origin = $file->getPathname();
             $target = $targetDir . substr($origin, $dirLen);
 
@@ -159,10 +161,12 @@ if (! function_exists('delete_files')) {
         $path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
         try {
-            foreach (new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS),
-                RecursiveIteratorIterator::CHILD_FIRST,
-            ) as $object) {
+            foreach (
+                new RecursiveIteratorIterator(
+                    new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS),
+                    RecursiveIteratorIterator::CHILD_FIRST,
+                ) as $object
+            ) {
                 $filename = $object->getFilename();
                 if (! $hidden && $filename[0] === '.') {
                     continue;
@@ -212,10 +216,12 @@ if (! function_exists('get_filenames')) {
         $sourceDir = rtrim($sourceDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
         try {
-            foreach (new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator($sourceDir, RecursiveDirectoryIterator::SKIP_DOTS | FilesystemIterator::FOLLOW_SYMLINKS),
-                RecursiveIteratorIterator::SELF_FIRST,
-            ) as $name => $object) {
+            foreach (
+                new RecursiveIteratorIterator(
+                    new RecursiveDirectoryIterator($sourceDir, RecursiveDirectoryIterator::SKIP_DOTS | FilesystemIterator::FOLLOW_SYMLINKS),
+                    RecursiveIteratorIterator::SELF_FIRST,
+                ) as $name => $object
+            ) {
                 $basename = pathinfo($name, PATHINFO_BASENAME);
                 if (! $hidden && $basename[0] === '.') {
                     continue;
@@ -403,18 +409,18 @@ if (! function_exists('symbolic_permissions')) {
 
         // Owner
         $symbolic .= ((($perms & 0x0100) !== 0) ? 'r' : '-')
-                . ((($perms & 0x0080) !== 0) ? 'w' : '-')
-                . ((($perms & 0x0040) !== 0) ? ((($perms & 0x0800) !== 0) ? 's' : 'x') : ((($perms & 0x0800) !== 0) ? 'S' : '-'));
+            . ((($perms & 0x0080) !== 0) ? 'w' : '-')
+            . ((($perms & 0x0040) !== 0) ? ((($perms & 0x0800) !== 0) ? 's' : 'x') : ((($perms & 0x0800) !== 0) ? 'S' : '-'));
 
         // Group
         $symbolic .= ((($perms & 0x0020) !== 0) ? 'r' : '-')
-                . ((($perms & 0x0010) !== 0) ? 'w' : '-')
-                . ((($perms & 0x0008) !== 0) ? ((($perms & 0x0400) !== 0) ? 's' : 'x') : ((($perms & 0x0400) !== 0) ? 'S' : '-'));
+            . ((($perms & 0x0010) !== 0) ? 'w' : '-')
+            . ((($perms & 0x0008) !== 0) ? ((($perms & 0x0400) !== 0) ? 's' : 'x') : ((($perms & 0x0400) !== 0) ? 'S' : '-'));
 
         // World
         $symbolic .= ((($perms & 0x0004) !== 0) ? 'r' : '-')
-                . ((($perms & 0x0002) !== 0) ? 'w' : '-')
-                . ((($perms & 0x0001) !== 0) ? ((($perms & 0x0200) !== 0) ? 't' : 'x') : ((($perms & 0x0200) !== 0) ? 'T' : '-'));
+            . ((($perms & 0x0002) !== 0) ? 'w' : '-')
+            . ((($perms & 0x0001) !== 0) ? ((($perms & 0x0200) !== 0) ? 't' : 'x') : ((($perms & 0x0200) !== 0) ? 'T' : '-'));
 
         return $symbolic;
     }
