@@ -791,13 +791,15 @@ the transaction status fails without an exception, ``false`` is returned.
 Existing Model query constraints are applied to the locked lookup, so methods
 like ``where()`` and ``withDeleted()`` can be called before ``withLockedRow()``.
 
-Any exception thrown by the callback rolls back the transaction and is rethrown.
-Unsupported lock combinations throw the same database exceptions as
-``lockForUpdate()``.
+Returning ``false`` from the callback does not trigger a rollback. To explicitly
+roll back from the callback, throw an exception. Any exception thrown by the
+callback rolls back the transaction and is rethrown. Unsupported lock
+combinations throw the same database exceptions as ``lockForUpdate()``.
 
-The locked row is reloaded directly from the database, so Model find callbacks
-are not run for that lookup. Model methods called inside the callback, such as
-``save()`` or ``update()``, still follow the Model's callback setting.
+.. important:: The locked row is reloaded directly from the database, so Model
+    find callbacks are not run for that lookup. Model methods called inside the
+    callback, such as ``save()`` or ``update()``, still follow the Model's
+    callback setting.
 
 .. note:: Row locks are only useful when the database supports transactions and
     pessimistic locks. See :ref:`query-builder-lock-for-update` for driver
