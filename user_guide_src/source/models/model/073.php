@@ -4,7 +4,7 @@ $result = $accountModel->withLockedRow($id, static function (object $account, $m
     $account->balance -= 100;
 
     if (! $model->save($account)) {
-        throw new RuntimeException('Unable to save the account.');
+        throw new \RuntimeException('Unable to save the account.');
     }
 
     return true;
