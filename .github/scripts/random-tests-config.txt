@@ -20,7 +20,7 @@ Cookie
 # DataConverter
 # Database
 # Debug
-# Email
+Email
 # Encryption
 # Entity
 Events
