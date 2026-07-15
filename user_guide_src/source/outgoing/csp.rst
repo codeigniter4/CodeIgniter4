@@ -93,14 +93,14 @@ For example, to enable/disable CSP for a specific response:
 .. literalinclude:: csp/017.php
 
 The runtime value takes precedence over the ``CSPEnabled`` configuration value
-for the current response.
+for the current request.
 
-These methods only affect the current response. After the response has been sent,
-the CSP instance is recreated and the value of ``CSPEnabled`` in
-**app/Config/App.php** is used as the default for subsequent requests.
+These methods only affect the current request. They do not modify the
+application configuration. On subsequent requests, the ``CSPEnabled`` value in
+**app/Config/App.php** is used again.
 
-This allows applications to keep CSP enabled globally while temporarily disabling
-it for specific responses, or enable it only where required.
+This allows applications to keep CSP enabled globally while temporarily
+disabling it for specific requests, or enable it only where required.
 
 Report Only
 ===========
