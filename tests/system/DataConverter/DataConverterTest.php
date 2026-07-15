@@ -15,6 +15,7 @@ namespace CodeIgniter\DataConverter;
 
 use Closure;
 use CodeIgniter\DataCaster\Exceptions\CastException;
+use CodeIgniter\Entity\Entity;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -875,6 +876,44 @@ final class DataConverterTest extends CIUnitTestCase
             'name'       => 'John Smith',
             'created_at' => '2023-12-02 07:35:57',
         ], $array);
+    }
+
+    public function testExtractEntityWithTimestampCast(): void
+    {
+        $converter = $this->createDataConverter([
+            'updated_at' => 'timestamp',
+        ]);
+
+        $entity = new class () extends Entity {
+            protected $dates = [];
+        };
+        $entity->injectRawData([
+            'updated_at' => Time::createFromTimestamp(1_784_092_299),
+        ]);
+
+        $data = $converter->extract($entity);
+
+        $this->assertSame(1_784_092_299, $data['updated_at']);
+    }
+
+    public function testExtractEntityPreservesMicrosecondsWithDatetimeCast(): void
+    {
+        $converter = $this->createDataConverter(
+            ['updated_at' => 'datetime[us]'],
+            [],
+            db_connect(),
+        );
+
+        $entity = new class () extends Entity {
+            protected $dates = [];
+        };
+        $entity->injectRawData([
+            'updated_at' => Time::createFromFormat('Y-m-d H:i:s.u', '2026-07-15 00:00:01.123456'),
+        ]);
+
+        $data = $converter->extract($entity);
+
+        $this->assertSame('2026-07-15 00:00:01.123456', $data['updated_at']);
     }
 
     /**

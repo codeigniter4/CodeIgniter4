@@ -30,7 +30,7 @@ Deprecations
 Bugs Fixed
 **********
 
-- **Entity:** Fixed a bug where ``toRawArray()`` returned ``Time`` objects instead of ISO-8601 strings for date fields.
+- **Entity:** Fixed a bug where ``toRawArray()`` returned ``Time`` objects instead of strings for date fields.
 
 - **Logger:** Fixed a bug where interpolating a log message with array or non-stringable context values could raise PHP warnings or errors.
 

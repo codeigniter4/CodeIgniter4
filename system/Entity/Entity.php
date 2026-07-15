@@ -336,15 +336,27 @@ class Entity implements JsonSerializable
             }
         }
 
-        // Convert DateTime objects to string for user-facing calls
+        // Convert DateTime objects to string for user-facing calls (only for dates/datetime cast fields)
         if (! $recursive) {
-            $result = array_map(static function ($value) {
+            foreach ($result as $key => $value) {
                 if ($value instanceof DateTimeInterface) {
-                    return method_exists($value, '__toString') ? (string) $value : $value->format('Y-m-d H:i:s');
-                }
+                    $isDate = in_array($key, $this->dates, true);
+                    if (! $isDate && isset($this->casts[$key])) {
+                        $cast = $this->casts[$key];
+                        if (str_contains($cast, 'datetime')) {
+                            $isDate = true;
+                        }
+                    }
 
-                return $value;
-            }, $result);
+                    if ($isDate) {
+                        if ((int) $value->format('u') > 0) {
+                            $result[$key] = $value->format('Y-m-d H:i:s.u');
+                        } else {
+                            $result[$key] = method_exists($value, '__toString') ? (string) $value : $value->format('Y-m-d H:i:s');
+                        }
+                    }
+                }
+            }
         }
 
         return $result;

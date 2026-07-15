@@ -1543,6 +1543,62 @@ final class EntityTest extends CIUnitTestCase
         $this->assertIsString($result2['created_at']);
     }
 
+    public function testToRawArrayDoesNotConvertDateTimeWhenNotDeclaredInDatesOrCasts(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'custom_date' => null,
+            ];
+            protected $dates = [];
+            protected $casts = [];
+        };
+
+        $entity->custom_date = Time::parse('2024-08-20 16:45:00');
+
+        $result = $entity->toRawArray();
+        $this->assertInstanceOf(Time::class, $result['custom_date']);
+    }
+
+    public function testToRawArrayRespectsCustomDateTimeStringConversion(): void
+    {
+        $customDateTime = new class ('2024-08-20 16:45:00') extends DateTime {
+            public function __toString(): string
+            {
+                return 'custom-formatted-date';
+            }
+        };
+
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'created_at' => null,
+            ];
+            protected $dates = [];
+            protected $casts = [
+                'created_at' => 'datetime',
+            ];
+        };
+
+        $entity->created_at = $customDateTime;
+
+        $result = $entity->toRawArray();
+        $this->assertSame('custom-formatted-date', $result['created_at']);
+    }
+
+    public function testToRawArrayConvertsNativeDateTimeToString(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'created_at' => null,
+            ];
+            protected $dates = ['created_at'];
+        };
+
+        $entity->created_at = new DateTime('2024-08-20 16:45:00');
+
+        $result = $entity->toRawArray();
+        $this->assertSame('2024-08-20 16:45:00', $result['created_at']);
+    }
+
     public function testFilledConstruction(): void
     {
         $data = [

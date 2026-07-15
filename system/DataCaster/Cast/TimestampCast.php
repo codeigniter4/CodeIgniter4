@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace CodeIgniter\DataCaster\Cast;
 
 use CodeIgniter\I18n\Time;
+use DateTimeInterface;
+use Exception;
 
 /**
  * Class TimestampCast
@@ -40,7 +42,15 @@ class TimestampCast extends BaseCast
         array $params = [],
         ?object $helper = null,
     ): int {
-        if (! $value instanceof Time) {
+        if (is_string($value)) {
+            try {
+                $value = Time::parse($value);
+            } catch (Exception) {
+                self::invalidTypeValueError($value);
+            }
+        }
+
+        if (! $value instanceof DateTimeInterface) {
             self::invalidTypeValueError($value);
         }
 
