@@ -14,8 +14,10 @@ declare(strict_types=1);
 namespace CodeIgniter\Commands\Cache;
 
 use CodeIgniter\Cache\CacheFactory;
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
+use Config\Cache;
 use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -27,18 +29,41 @@ final class InfoCacheTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
+    private Cache $config;
+
     protected function setUp(): void
     {
         parent::setUp();
 
+        $this->config                    = new Cache();
+        $this->config->file['storePath'] = rtrim($this->config->file['storePath'], DIRECTORY_SEPARATOR)
+            . DIRECTORY_SEPARATOR . 'FileHandlerCommands';
+
+        if (! is_dir($this->config->file['storePath'])) {
+            mkdir($this->config->file['storePath'], 0777, true);
+        }
+
+        Factories::injectMock('config', Cache::class, $this->config);
+
         // Make sure we are testing with the correct handler (override injections)
-        Services::injectMock('cache', CacheFactory::getHandler(config('Cache')));
+        $handler = CacheFactory::getHandler($this->config);
+        $handler->clean();
+        Services::injectMock('cache', $handler);
     }
 
     protected function tearDown(): void
     {
-        // restore default cache handler
-        config('Cache')->handler = 'file';
+        $this->config->handler = 'file';
+
+        if (is_dir($this->config->file['storePath'])) {
+            CacheFactory::getHandler($this->config)->clean();
+            rmdir($this->config->file['storePath']);
+        }
+
+        $this->resetFactories();
+        $this->resetServices();
+
+        parent::tearDown();
     }
 
     protected function getBuffer(): string
@@ -48,7 +73,7 @@ final class InfoCacheTest extends CIUnitTestCase
 
     public function testInfoCacheErrorsOnInvalidHandler(): void
     {
-        config('Cache')->handler = 'redis';
+        $this->config->handler = 'redis';
         cache()->save('foo', 'bar');
         command('cache:info');
 

@@ -16,8 +16,10 @@ namespace CodeIgniter\Commands\Cache;
 use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\Cache\Handlers\FileHandler;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
+use Config\Cache;
 use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -29,6 +31,8 @@ final class ClearCacheTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
+    private Cache $config;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -36,16 +40,36 @@ final class ClearCacheTest extends CIUnitTestCase
         CLI::reset();
         $this->resetServices();
 
+        $this->config                    = new Cache();
+        $this->config->file['storePath'] = rtrim($this->config->file['storePath'], DIRECTORY_SEPARATOR)
+            . DIRECTORY_SEPARATOR . 'FileHandlerCommands';
+
+        if (! is_dir($this->config->file['storePath'])) {
+            mkdir($this->config->file['storePath'], 0777, true);
+        }
+
+        Factories::injectMock('config', Cache::class, $this->config);
+
         // Make sure we are testing with the correct handler (override injections)
-        Services::injectMock('cache', CacheFactory::getHandler(config('Cache')));
+        $handler = CacheFactory::getHandler($this->config);
+        $handler->clean();
+        Services::injectMock('cache', $handler);
     }
 
     protected function tearDown(): void
     {
-        parent::tearDown();
+        $this->config->handler = 'file';
+
+        if (is_dir($this->config->file['storePath'])) {
+            CacheFactory::getHandler($this->config)->clean();
+            rmdir($this->config->file['storePath']);
+        }
 
         CLI::reset();
+        $this->resetFactories();
         $this->resetServices();
+
+        parent::tearDown();
     }
 
     public function testClearCacheInvalidHandler(): void
@@ -72,7 +96,7 @@ final class ClearCacheTest extends CIUnitTestCase
     public function testClearCacheFails(): void
     {
         $cache = $this->getMockBuilder(FileHandler::class)
-            ->setConstructorArgs([config('Cache')])
+            ->setConstructorArgs([$this->config])
             ->onlyMethods(['clean'])
             ->getMock();
         $cache->expects($this->once())->method('clean')->willReturn(false);
