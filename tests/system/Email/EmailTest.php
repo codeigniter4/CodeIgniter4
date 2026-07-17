@@ -484,7 +484,7 @@ final class EmailTest extends CIUnitTestCase
 
     public function testWordWrap(): void
     {
-        $email          = new Email();
+        $email = new Email();
         /** @phpstan-ignore assign.propertyType */
         $email->newline = "\n";
 
