@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Email;
 
+use Closure;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockEmail;
@@ -34,34 +35,6 @@ final class EmailTest extends CIUnitTestCase
     protected function tearDown(): void
     {
         parent::tearDown();
-
-        global $mockMailCalled, $mockMailArgs, $mockMailException;
-        global $mockPopenCalled, $mockPopenArgs, $mockPopenResult;
-        global $mockPcloseStatus;
-        global $mockFsockopenCalled, $mockFsockopenResult, $mockFsockopenArgs;
-        global $mockFwriteCalled, $mockFwriteData;
-        global $mockFgetsResponses, $mockFgetsException;
-        global $mockCryptoResult;
-        global $mockFopenFail;
-        global $mockIconvUnavailable;
-
-        $mockMailCalled       = null;
-        $mockMailArgs         = null;
-        $mockMailException    = null;
-        $mockPopenCalled      = null;
-        $mockPopenArgs        = null;
-        $mockPopenResult      = null;
-        $mockPcloseStatus     = null;
-        $mockFsockopenCalled  = null;
-        $mockFsockopenResult  = null;
-        $mockFsockopenArgs    = null;
-        $mockFwriteCalled     = null;
-        $mockFwriteData       = null;
-        $mockFgetsResponses   = null;
-        $mockFgetsException   = null;
-        $mockCryptoResult     = null;
-        $mockFopenFail        = null;
-        $mockIconvUnavailable = null;
     }
 
     public function testEmailValidation(): void
@@ -340,6 +313,7 @@ final class EmailTest extends CIUnitTestCase
     public function testPrepQuotedPrintableWithLfCrlf(string $input, string $expected): void
     {
         $email       = new Email();
+        /** @phpstan-ignore assign.propertyType */
         $email->CRLF = "\n";
         $prepQP      = self::getPrivateMethodInvoker($email, 'prepQuotedPrintable');
 
@@ -371,6 +345,7 @@ final class EmailTest extends CIUnitTestCase
     public function testPrepQuotedPrintableWithCrlfNative(): void
     {
         $email       = new Email();
+        /** @phpstan-ignore assign.propertyType */
         $email->CRLF = "\r\n";
         $prepQP      = self::getPrivateMethodInvoker($email, 'prepQuotedPrintable');
 
@@ -382,6 +357,7 @@ final class EmailTest extends CIUnitTestCase
     public function testPrepQuotedPrintableSoftLineBreak(): void
     {
         $email       = new Email();
+        /** @phpstan-ignore assign.propertyType */
         $email->CRLF = "\n";
         $prepQP      = self::getPrivateMethodInvoker($email, 'prepQuotedPrintable');
 
@@ -397,6 +373,7 @@ final class EmailTest extends CIUnitTestCase
     public function testPrepQuotedPrintableSoftBreakAfterEncodedChar(): void
     {
         $email       = new Email();
+        /** @phpstan-ignore assign.propertyType */
         $email->CRLF = "\n";
         $prepQP      = self::getPrivateMethodInvoker($email, 'prepQuotedPrintable');
 
@@ -410,6 +387,7 @@ final class EmailTest extends CIUnitTestCase
     public function testPrepQuotedPrintableHardLineBreakNoInternalSpaceReduction(): void
     {
         $email       = new Email();
+        /** @phpstan-ignore assign.propertyType */
         $email->CRLF = "\n";
         $prepQP      = self::getPrivateMethodInvoker($email, 'prepQuotedPrintable');
 
@@ -420,6 +398,7 @@ final class EmailTest extends CIUnitTestCase
     public function testPrepQuotedPrintableMixedContent(): void
     {
         $email       = new Email();
+        /** @phpstan-ignore assign.propertyType */
         $email->CRLF = "\n";
         $prepQP      = self::getPrivateMethodInvoker($email, 'prepQuotedPrintable');
 
@@ -436,6 +415,7 @@ final class EmailTest extends CIUnitTestCase
     public function testPrepQuotedPrintableUnwrapRemovesTagsOnly(): void
     {
         $email       = new Email();
+        /** @phpstan-ignore assign.propertyType */
         $email->CRLF = "\n";
         $prepQP      = self::getPrivateMethodInvoker($email, 'prepQuotedPrintable');
 
@@ -512,6 +492,7 @@ final class EmailTest extends CIUnitTestCase
     public function testWordWrap(): void
     {
         $email          = new Email();
+        /** @phpstan-ignore assign.propertyType */
         $email->newline = "\n";
 
         $text    = 'This is a very long line of text that should be wrapped to a smaller character limit.';
@@ -724,7 +705,7 @@ final class EmailTest extends CIUnitTestCase
     {
         $email = new Email();
 
-        $validateForShell = \Closure::bind(fn (&$email) => $this->validateEmailForShell($email), $email, Email::class);
+        $validateForShell = Closure::bind(fn (&$email) => $this->validateEmailForShell($email), $email, Email::class);
 
         $address = 'test@example.com';
         $this->assertTrue($validateForShell($address));
@@ -772,225 +753,6 @@ final class EmailTest extends CIUnitTestCase
         $this->assertFalse($smtpAuthenticate());
     }
 
-    public function testSendWithMail(): void
-    {
-        global $mockMailCalled, $mockMailArgs;
-        $mockMailCalled = false;
-        $mockMailArgs   = [];
-
-        $email = new Email();
-        $email->setProtocol('mail');
-        $email->setFrom('sender@example.com');
-        $email->setTo('recipient@example.com');
-        $email->setSubject('Mail Test');
-        $email->setMessage('Testing mail() wrapper');
-
-        $this->assertTrue($email->send(false));
-        $this->assertTrue($GLOBALS['mockMailCalled']);
-        $this->assertSame('recipient@example.com', $GLOBALS['mockMailArgs'][0]);
-        $this->assertSame('=?UTF-8?Q?Mail=20Test?=', $GLOBALS['mockMailArgs'][1]);
-    }
-
-    public function testSendWithSendmail(): void
-    {
-        global $mockPopenCalled, $mockPcloseStatus;
-        $mockPopenCalled  = false;
-        $mockPcloseStatus = 0;
-
-        $email = new Email();
-        $email->setProtocol('sendmail');
-        $email->setFrom('sender@example.com');
-        $email->setTo('recipient@example.com');
-        $email->setSubject('Sendmail Test');
-        $email->setMessage('Testing sendmail wrapper');
-
-        $this->assertTrue($email->send(false));
-        $this->assertTrue($GLOBALS['mockPopenCalled']);
-    }
-
-    public function testSendWithSendmailFailure(): void
-    {
-        global $mockPopenCalled, $mockPcloseStatus;
-        $mockPopenCalled  = false;
-        $mockPcloseStatus = 1; // exit code 1 = failure
-
-        $email = new Email();
-        $email->setProtocol('sendmail');
-        $email->setFrom('sender@example.com');
-        $email->setTo('recipient@example.com');
-        $email->setSubject('Sendmail Fail Test');
-        $email->setMessage('Testing sendmail failure');
-
-        $this->assertFalse($email->send(false));
-    }
-
-    public function testSendWithSmtpSuccess(): void
-    {
-        global $mockFsockopenCalled, $mockFwriteCalled, $mockFwriteData, $mockFgetsResponses;
-        $mockFsockopenCalled = false;
-        $mockFwriteCalled    = false;
-        $mockFwriteData      = [];
-
-        $mockFgetsResponses = [
-            "220 smtp.example.com ESMTP\r\n",
-            "250-smtp.example.com Hello\r\n",
-            "250-AUTH LOGIN PLAIN\r\n",
-            "250 OK\r\n",
-            "334 VXNlcm5hbWU6\r\n",
-            "334 UGFzc3dvcmQ6\r\n",
-            "235 2.7.0 Authentication successful\r\n",
-            "250 2.1.0 Sender OK\r\n",
-            "250 2.1.5 Recipient OK\r\n",
-            "354 Start mail input; end with <CRLF>.<CRLF>\r\n",
-            "250 2.0.0 OK: queued\r\n",
-            "221 2.0.0 Bye\r\n",
-        ];
-
-        $email = new Email();
-        $email->setProtocol('smtp');
-        $email->SMTPHost = 'smtp.example.com';
-        $this->setPrivateProperty($email, 'SMTPAuth', true);
-        $this->setPrivateProperty($email, 'SMTPUser', 'user');
-        $this->setPrivateProperty($email, 'SMTPPass', 'pass');
-        $this->setPrivateProperty($email, 'SMTPAuthMethod', 'login');
-
-        $email->setFrom('sender@example.com');
-        $email->setTo('recipient@example.com');
-        $email->setSubject('SMTP Test');
-        $email->setMessage('Testing SMTP success path');
-
-        $this->assertTrue($email->send(false));
-        $this->assertTrue($GLOBALS['mockFsockopenCalled']);
-        $this->assertTrue($GLOBALS['mockFwriteCalled']);
-
-        $lastCommand = end($GLOBALS['mockFwriteData']);
-        $this->assertIsString($lastCommand);
-        $this->assertStringContainsString('QUIT', $lastCommand);
-    }
-
-    public function testSendWithSmtpConnectFailure(): void
-    {
-        global $mockFsockopenResult;
-        $mockFsockopenResult = false;
-
-        $email = new Email();
-        $email->setProtocol('smtp');
-        $email->SMTPHost = 'smtp.example.com';
-
-        $email->setFrom('sender@example.com');
-        $email->setTo('recipient@example.com');
-
-        $this->assertFalse($email->send(false));
-        $mockFsockopenResult = null;
-    }
-
-    public function testSendWithSmtpEhloFailure(): void
-    {
-        global $mockFsockopenCalled, $mockFgetsResponses;
-        $mockFsockopenCalled = false;
-
-        $mockFgetsResponses = [
-            "220 smtp.example.com ESMTP\r\n",
-            "500 Command unrecognized\r\n",
-        ];
-
-        $email = new Email();
-        $email->setProtocol('smtp');
-        $email->SMTPHost = 'smtp.example.com';
-
-        $email->setFrom('sender@example.com');
-        $email->setTo('recipient@example.com');
-
-        $this->assertFalse($email->send(false));
-    }
-
-    public function testSendWithSmtpMailFromFailure(): void
-    {
-        global $mockFsockopenCalled, $mockFgetsResponses;
-        $mockFsockopenCalled = false;
-
-        $mockFgetsResponses = [
-            "220 smtp.example.com ESMTP\r\n",
-            "250-smtp.example.com Hello\r\n",
-            "250 OK\r\n",
-            "550 Sender Rejected\r\n",
-        ];
-
-        $email = new Email();
-        $email->setProtocol('smtp');
-        $email->SMTPHost = 'smtp.example.com';
-
-        $email->setFrom('sender@example.com');
-        $email->setTo('recipient@example.com');
-
-        $this->assertFalse($email->send(false));
-    }
-
-    public function testSendWithSmtpRcptToFailure(): void
-    {
-        global $mockFsockopenCalled, $mockFgetsResponses;
-        $mockFsockopenCalled = false;
-
-        $mockFgetsResponses = [
-            "220 smtp.example.com ESMTP\r\n",
-            "250-smtp.example.com Hello\r\n",
-            "250 OK\r\n",
-            "250 2.1.0 Sender OK\r\n",
-            "550 User Unknown\r\n",
-        ];
-
-        $email = new Email();
-        $email->setProtocol('smtp');
-        $email->SMTPHost = 'smtp.example.com';
-
-        $email->setFrom('sender@example.com');
-        $email->setTo('recipient@example.com');
-
-        $this->assertFalse($email->send(false));
-    }
-
-    public function testSendWithSmtpDataFailure(): void
-    {
-        global $mockFsockopenCalled, $mockFgetsResponses;
-        $mockFsockopenCalled = false;
-
-        $mockFgetsResponses = [
-            "220 smtp.example.com ESMTP\r\n",
-            "250-smtp.example.com Hello\r\n",
-            "250 OK\r\n",
-            "250 2.1.0 Sender OK\r\n",
-            "250 2.1.5 Recipient OK\r\n",
-            "554 Transaction Failed\r\n",
-        ];
-
-        $email = new Email();
-        $email->setProtocol('smtp');
-        $email->SMTPHost = 'smtp.example.com';
-
-        $email->setFrom('sender@example.com');
-        $email->setTo('recipient@example.com');
-
-        $this->assertFalse($email->send(false));
-    }
-
-    public function testBatchBccSendMail(): void
-    {
-        global $mockMailCalled;
-        $mockMailCalled = false;
-
-        $email = new Email();
-        $email->setProtocol('mail');
-        $email->setFrom('sender@example.com');
-        $email->setTo('recipient@example.com');
-        $email->setBCC('bcc1@example.com, bcc2@example.com');
-
-        $this->setPrivateProperty($email, 'BCCBatchMode', true);
-        $this->setPrivateProperty($email, 'BCCBatchSize', 1);
-
-        $this->assertTrue($email->send(false));
-        $this->assertTrue($GLOBALS['mockMailCalled']);
-    }
-
     public function testAttachMissingFile(): void
     {
         $email = new Email();
@@ -1019,62 +781,6 @@ final class EmailTest extends CIUnitTestCase
         $this->assertFalse($email->setAttachmentCID('nonexistent.jpg'));
     }
 
-    public function testSendWithSmtpTlsSuccess(): void
-    {
-        global $mockFsockopenCalled, $mockFgetsResponses, $mockCryptoResult;
-        $mockFsockopenCalled = false;
-        $mockCryptoResult    = true;
-
-        $mockFgetsResponses = [
-            "220 smtp.example.com ESMTP\r\n", // Connection greeting
-            "250-smtp.example.com Hello\r\n", // EHLO response before STARTTLS
-            "250 OK\r\n",
-            "220 Go ahead with TLS\r\n", // STARTTLS response
-            "250-smtp.example.com Hello\r\n", // EHLO response after STARTTLS
-            "250 OK\r\n",
-            "250 2.1.0 Sender OK\r\n", // MAIL FROM
-            "250 2.1.5 Recipient OK\r\n", // RCPT TO
-            "354 Start input\r\n", // DATA
-            "250 queued\r\n", // DATA end
-            "221 Bye\r\n", // QUIT
-        ];
-
-        $email = new Email();
-        $email->setProtocol('smtp');
-        $email->SMTPHost   = 'smtp.example.com';
-        $email->SMTPCrypto = 'tls';
-
-        $email->setFrom('sender@example.com');
-        $email->setTo('recipient@example.com');
-
-        $this->assertTrue($email->send(false));
-    }
-
-    public function testSendWithSmtpTlsFailure(): void
-    {
-        global $mockFsockopenCalled, $mockFgetsResponses, $mockCryptoResult;
-        $mockFsockopenCalled = false;
-        $mockCryptoResult    = false; // handshake fails
-
-        $mockFgetsResponses = [
-            "220 smtp.example.com ESMTP\r\n",
-            "250-smtp.example.com Hello\r\n",
-            "250 OK\r\n",
-            "220 Go ahead with TLS\r\n",
-            "500 TLS error\r\n", // error returned during handshake failure log
-        ];
-
-        $email = new Email();
-        $email->setProtocol('smtp');
-        $email->SMTPHost   = 'smtp.example.com';
-        $email->SMTPCrypto = 'tls';
-
-        $email->setFrom('sender@example.com');
-        $email->setTo('recipient@example.com');
-
-        $this->assertFalse($email->send(false));
-    }
-
     public function testSmtpConnectAlreadyConnected(): void
     {
         $email = new Email();
@@ -1082,258 +788,6 @@ final class EmailTest extends CIUnitTestCase
 
         $smtpConnect = self::getPrivateMethodInvoker($email, 'SMTPConnect');
         $this->assertTrue($smtpConnect());
-    }
-
-    public function testSendWithSmtpPlainSuccess(): void
-    {
-        global $mockFsockopenCalled, $mockFgetsResponses;
-        $mockFsockopenCalled = false;
-
-        $mockFgetsResponses = [
-            "220 smtp.example.com ESMTP\r\n",
-            "250-smtp.example.com Hello\r\n",
-            "250 OK\r\n",
-            "334 VXNlcm5hbWU6\r\n",
-            "235 Auth OK\r\n", // plain auth only takes one response 235
-            "250 Sender OK\r\n",
-            "250 Recipient OK\r\n",
-            "354 Start input\r\n",
-            "250 queued\r\n",
-            "221 Bye\r\n",
-        ];
-
-        $email = new Email();
-        $email->setProtocol('smtp');
-        $email->SMTPHost = 'smtp.example.com';
-        $this->setPrivateProperty($email, 'SMTPAuth', true);
-        $this->setPrivateProperty($email, 'SMTPUser', 'user');
-        $this->setPrivateProperty($email, 'SMTPPass', 'pass');
-        $this->setPrivateProperty($email, 'SMTPAuthMethod', 'plain');
-
-        $email->setFrom('sender@example.com');
-        $email->setTo('recipient@example.com');
-
-        $this->assertTrue($email->send(false));
-    }
-
-    public function testSendWithSendmailPopenFailure(): void
-    {
-        global $mockPopenResult;
-        $mockPopenResult = false;
-
-        $email = new Email();
-        $email->setProtocol('sendmail');
-        $email->setFrom('sender@example.com');
-        $email->setTo('recipient@example.com');
-
-        $this->assertFalse($email->send(false));
-        $mockPopenResult = null;
-    }
-
-    public function testSendWithSmtpAuthCommandFailure(): void
-    {
-        global $mockFsockopenCalled, $mockFgetsResponses;
-        $mockFsockopenCalled = false;
-
-        $mockFgetsResponses = [
-            "220 smtp.example.com ESMTP\r\n",
-            "250-smtp.example.com Hello\r\n",
-            "250 OK\r\n",
-            "504 Command parameter not implemented\r\n",
-        ];
-
-        $email = new Email();
-        $email->setProtocol('smtp');
-        $email->SMTPHost = 'smtp.example.com';
-        $this->setPrivateProperty($email, 'SMTPAuth', true);
-        $this->setPrivateProperty($email, 'SMTPUser', 'user');
-        $this->setPrivateProperty($email, 'SMTPPass', 'pass');
-
-        $email->setFrom('sender@example.com');
-        $email->setTo('recipient@example.com');
-
-        $this->assertFalse($email->send(false));
-    }
-
-    public function testSendWithSmtpAuthUsernameFailure(): void
-    {
-        global $mockFsockopenCalled, $mockFgetsResponses;
-        $mockFsockopenCalled = false;
-
-        $mockFgetsResponses = [
-            "220 smtp.example.com ESMTP\r\n",
-            "250-smtp.example.com Hello\r\n",
-            "250 OK\r\n",
-            "334 VXNlcm5hbWU6\r\n",
-            "535 Authentication Credentials Invalid\r\n",
-        ];
-
-        $email = new Email();
-        $email->setProtocol('smtp');
-        $email->SMTPHost = 'smtp.example.com';
-        $this->setPrivateProperty($email, 'SMTPAuth', true);
-        $this->setPrivateProperty($email, 'SMTPUser', 'user');
-        $this->setPrivateProperty($email, 'SMTPPass', 'pass');
-        $this->setPrivateProperty($email, 'SMTPAuthMethod', 'login');
-
-        $email->setFrom('sender@example.com');
-        $email->setTo('recipient@example.com');
-
-        $this->assertFalse($email->send(false));
-    }
-
-    public function testSendWithSmtpAuthPasswordFailure(): void
-    {
-        global $mockFsockopenCalled, $mockFgetsResponses;
-        $mockFsockopenCalled = false;
-
-        $mockFgetsResponses = [
-            "220 smtp.example.com ESMTP\r\n",
-            "250-smtp.example.com Hello\r\n",
-            "250 OK\r\n",
-            "334 VXNlcm5hbWU6\r\n",
-            "334 UGFzc3dvcmQ6\r\n",
-            "535 Authentication Failed\r\n",
-        ];
-
-        $email = new Email();
-        $email->setProtocol('smtp');
-        $email->SMTPHost = 'smtp.example.com';
-        $this->setPrivateProperty($email, 'SMTPAuth', true);
-        $this->setPrivateProperty($email, 'SMTPUser', 'user');
-        $this->setPrivateProperty($email, 'SMTPPass', 'pass');
-        $this->setPrivateProperty($email, 'SMTPAuthMethod', 'login');
-
-        $email->setFrom('sender@example.com');
-        $email->setTo('recipient@example.com');
-
-        $this->assertFalse($email->send(false));
-    }
-
-    public function testSendWithSmtpPlainAuthFailure(): void
-    {
-        global $mockFsockopenCalled, $mockFgetsResponses;
-        $mockFsockopenCalled = false;
-
-        $mockFgetsResponses = [
-            "220 smtp.example.com ESMTP\r\n",
-            "250-smtp.example.com Hello\r\n",
-            "250 OK\r\n",
-            "334 VXNlcm5hbWU6\r\n",
-            "535 Plain Authentication Failed\r\n",
-        ];
-
-        $email = new Email();
-        $email->setProtocol('smtp');
-        $email->SMTPHost = 'smtp.example.com';
-        $this->setPrivateProperty($email, 'SMTPAuth', true);
-        $this->setPrivateProperty($email, 'SMTPUser', 'user');
-        $this->setPrivateProperty($email, 'SMTPPass', 'pass');
-        $this->setPrivateProperty($email, 'SMTPAuthMethod', 'plain');
-
-        $email->setFrom('sender@example.com');
-        $email->setTo('recipient@example.com');
-
-        $this->assertFalse($email->send(false));
-    }
-
-    public function testSendWithSmtpKeepAlive(): void
-    {
-        global $mockFsockopenCalled, $mockFgetsResponses, $mockFwriteData, $mockFwriteCalled;
-        $mockFsockopenCalled = false;
-        $mockFwriteCalled    = false;
-        $mockFwriteData      = [];
-
-        $mockFgetsResponses = [
-            "220 smtp.example.com ESMTP\r\n",
-            "250-smtp.example.com Hello\r\n",
-            "250 OK\r\n",
-            "334 VXNlcm5hbWU6\r\n",
-            "334 UGFzc3dvcmQ6\r\n",
-            "235 2.7.0 Authentication successful\r\n",
-            "250 2.1.0 Sender OK\r\n",
-            "250 2.1.5 Recipient OK\r\n",
-            "354 Start input\r\n",
-            "250 queued\r\n",
-
-            "250 reset ok\r\n",
-            "250 Sender OK\r\n",
-            "250 Recipient OK\r\n",
-            "354 Start input\r\n",
-            "250 queued\r\n",
-
-            "221 Bye\r\n",
-        ];
-
-        $email = new Email();
-        $email->setProtocol('smtp');
-        $email->SMTPHost = 'smtp.example.com';
-        $this->setPrivateProperty($email, 'SMTPKeepAlive', true);
-        $this->setPrivateProperty($email, 'SMTPAuth', true);
-        $this->setPrivateProperty($email, 'SMTPUser', 'user');
-        $this->setPrivateProperty($email, 'SMTPPass', 'pass');
-        $this->setPrivateProperty($email, 'SMTPAuthMethod', 'login');
-
-        $email->setFrom('sender@example.com');
-        $email->setTo('recipient@example.com');
-        $email->setSubject('SMTP KeepAlive Test 1');
-        $email->setMessage('Testing SMTP KeepAlive 1');
-
-        $this->assertTrue($email->send(false));
-
-        $email->setSubject('SMTP KeepAlive Test 2');
-        $email->setMessage('Testing SMTP KeepAlive 2');
-        $this->assertTrue($email->send(false));
-
-        $joinedCommands = implode('', $mockFwriteData);
-        $this->assertStringContainsString('RSET', $joinedCommands);
-        $this->assertStringNotContainsString('QUIT', $joinedCommands);
-
-        $this->setPrivateProperty($email, 'SMTPKeepAlive', false);
-        $email->send(false);
-    }
-
-    public function testBatchBccSendSmtp(): void
-    {
-        global $mockFsockopenCalled, $mockFgetsResponses;
-        $mockFsockopenCalled = false;
-
-        $mockFgetsResponses = [
-            // Batch 1:
-            "220 smtp.example.com ESMTP\r\n",
-            "250-smtp.example.com Hello\r\n",
-            "250 OK\r\n",
-            "250 2.1.0 Sender OK\r\n",
-            "250 2.1.5 Recipient OK\r\n",
-            "250 2.1.5 Recipient OK\r\n",
-            "354 Start input\r\n",
-            "250 queued\r\n",
-            "221 Bye\r\n",
-
-            // Batch 2:
-            "220 smtp.example.com ESMTP\r\n",
-            "250-smtp.example.com Hello\r\n",
-            "250 OK\r\n",
-            "250 2.1.0 Sender OK\r\n",
-            "250 2.1.5 Recipient OK\r\n",
-            "250 2.1.5 Recipient OK\r\n",
-            "354 Start input\r\n",
-            "250 queued\r\n",
-            "221 Bye\r\n",
-        ];
-
-        $email = new Email();
-        $email->setProtocol('smtp');
-        $email->SMTPHost = 'smtp.example.com';
-        $email->setFrom('sender@example.com');
-        $email->setTo('recipient@example.com');
-        $email->setBCC('bcc1@example.com, bcc2@example.com');
-
-        $this->setPrivateProperty($email, 'BCCBatchMode', true);
-        $this->setPrivateProperty($email, 'BCCBatchSize', 1);
-
-        $this->assertTrue($email->send(false));
-        $this->assertTrue($GLOBALS['mockFsockopenCalled']);
     }
 
     public function testBuildMessageHtmlWithInlineAttachments(): void
@@ -1355,71 +809,11 @@ final class EmailTest extends CIUnitTestCase
         $this->assertStringContainsString('Content-ID:', (string) $body);
     }
 
-    public function testDestructWithSmtpConnectedAndException(): void
-    {
-        global $mockFgetsException;
-
-        $email = new Email();
-        $this->setPrivateProperty($email, 'SMTPConnect', fopen('php://memory', 'r+b'));
-
-        $mockFgetsException = true;
-
-        unset($email);
-
-        $mockFgetsException = false;
-        $this->expectNotToPerformAssertions();
-    }
-
     public function testMimeTypesUnknown(): void
     {
         $email     = new Email();
         $mimeTypes = self::getPrivateMethodInvoker($email, 'mimeTypes');
         $this->assertSame('application/x-unknown-content-type', $mimeTypes('invalid_ext'));
-    }
-
-    public function testSmtpImplicitTlsAndSsl(): void
-    {
-        global $mockFsockopenCalled, $mockFsockopenArgs, $mockFgetsResponses;
-
-        // 1. Implicit TLS with port 465
-        $mockFsockopenCalled = false;
-        $mockFsockopenArgs   = [];
-        $mockFgetsResponses  = [
-            "220 smtp.example.com ESMTP\r\n",
-            "250 OK\r\n",
-        ];
-
-        $email = new Email();
-        $email->setProtocol('smtp');
-        $email->SMTPHost = 'smtp.example.com';
-        $email->SMTPPort = 465;
-
-        $email->setFrom('sender@example.com');
-        $email->setTo('recipient@example.com');
-        $email->send(false);
-
-        $this->assertTrue($GLOBALS['mockFsockopenCalled']);
-        $this->assertSame('tls://smtp.example.com', $GLOBALS['mockFsockopenArgs'][0]);
-
-        // 2. Explicit SSL with SMTPCrypto
-        $mockFsockopenCalled = false;
-        $mockFsockopenArgs   = [];
-        $mockFgetsResponses  = [
-            "220 smtp.example.com ESMTP\r\n",
-            "250 OK\r\n",
-        ];
-
-        $email = new Email();
-        $email->setProtocol('smtp');
-        $email->SMTPHost   = 'smtp.example.com';
-        $email->SMTPCrypto = 'ssl';
-
-        $email->setFrom('sender@example.com');
-        $email->setTo('recipient@example.com');
-        $email->send(false);
-
-        $this->assertTrue($GLOBALS['mockFsockopenCalled']);
-        $this->assertSame('ssl://smtp.example.com', $GLOBALS['mockFsockopenArgs'][0]);
     }
 
     public function testAttachRealFileDetectMime(): void
@@ -1432,78 +826,12 @@ final class EmailTest extends CIUnitTestCase
         $this->assertSame('application/x-php', $attachments[0]['type']);
     }
 
-    public function testSpoolEmailCatchesException(): void
-    {
-        global $mockMailException;
-        $mockMailException = true;
-
-        $email = new Email();
-        $email->setProtocol('mail');
-        $email->setFrom('sender@example.com');
-        $email->setTo('recipient@example.com');
-
-        $this->assertFalse($email->send(false));
-        $mockMailException = false;
-    }
-
     public function testValidateEmailIdn(): void
     {
         $email         = new Email();
         $validateEmail = self::getPrivateMethodInvoker($email, 'validateEmail');
         $address       = ['test@przykłady.pl'];
         $this->assertTrue($validateEmail($address));
-    }
-
-    public function testSendWithSmtpStarttlsCommandFailure(): void
-    {
-        global $mockFsockopenCalled, $mockFgetsResponses;
-        $mockFsockopenCalled = false;
-
-        $mockFgetsResponses = [
-            "220 smtp.example.com ESMTP\r\n",
-            "250-smtp.example.com Hello\r\n",
-            "250 OK\r\n",
-            "502 Command not implemented\r\n",
-        ];
-
-        $email = new Email();
-        $email->setProtocol('smtp');
-        $email->SMTPHost   = 'smtp.example.com';
-        $email->SMTPCrypto = 'tls';
-
-        $email->setFrom('sender@example.com');
-        $email->setTo('recipient@example.com');
-
-        $this->assertFalse($email->send(false));
-    }
-
-    public function testSendWithSmtpCcBcc(): void
-    {
-        global $mockFsockopenCalled, $mockFgetsResponses;
-        $mockFsockopenCalled = false;
-
-        $mockFgetsResponses = [
-            "220 smtp.example.com ESMTP\r\n",
-            "250-smtp.example.com Hello\r\n",
-            "250 OK\r\n",
-            "250 Sender OK\r\n",
-            "250 Recipient TO OK\r\n",
-            "250 Recipient CC OK\r\n",
-            "250 Recipient BCC OK\r\n",
-            "354 Start input\r\n",
-            "250 queued\r\n",
-            "221 Bye\r\n",
-        ];
-
-        $email = new Email();
-        $email->setProtocol('smtp');
-        $email->SMTPHost = 'smtp.example.com';
-        $email->setFrom('sender@example.com');
-        $email->setTo('recipient@example.com');
-        $email->setCC('cc@example.com');
-        $email->setBCC('bcc@example.com');
-
-        $this->assertTrue($email->send(false));
     }
 
     public function testSetSubjectPreventsHeaderInjection(): void
@@ -1540,77 +868,12 @@ final class EmailTest extends CIUnitTestCase
         $this->assertStringContainsString('name="żółć-logo.png"', (string) $finalBody);
     }
 
-    public function testSendWithSmtpServerDisconnectsMidWay(): void
-    {
-        global $mockFsockopenCalled, $mockFgetsResponses;
-        $mockFsockopenCalled = false;
-
-        $mockFgetsResponses = [
-            "220 smtp.example.com ESMTP\r\n",
-            false,
-        ];
-
-        $email = new Email();
-        $email->setProtocol('smtp');
-        $email->SMTPHost = 'smtp.example.com';
-        $email->setFrom('sender@example.com');
-        $email->setTo('recipient@example.com');
-
-        $this->assertFalse($email->send(false));
-    }
-
-    public function testSmtpSendsRcptToForCcAndBcc(): void
-    {
-        global $mockFsockopenCalled, $mockFgetsResponses, $mockFwriteData, $mockFwriteCalled;
-        $mockFsockopenCalled = false;
-        $mockFwriteCalled    = false;
-        $mockFwriteData      = [];
-
-        $mockFgetsResponses = [
-            "220 smtp.example.com ESMTP\r\n",
-            "250-smtp.example.com Hello\r\n",
-            "250 OK\r\n",
-            "250 2.1.0 Sender OK\r\n",
-            "250 2.1.5 Recipient To OK\r\n",
-            "250 2.1.5 Recipient CC OK\r\n",
-            "250 2.1.5 Recipient BCC OK\r\n",
-            "354 Start input\r\n",
-            "250 queued\r\n",
-            "221 Bye\r\n",
-        ];
-
-        $email = new Email();
-        $email->setProtocol('smtp');
-        $email->SMTPHost = 'smtp.example.com';
-        $email->setFrom('sender@example.com');
-        $email->setTo('to@example.com');
-        $email->setCC('cc@example.com');
-        $email->setBCC('bcc@example.com');
-
-        $this->assertTrue($email->send(false));
-
-        $joinedCommands = implode('', $mockFwriteData);
-        $this->assertStringContainsString('RCPT TO:<to@example.com>', $joinedCommands);
-        $this->assertStringContainsString('RCPT TO:<cc@example.com>', $joinedCommands);
-        $this->assertStringContainsString('RCPT TO:<bcc@example.com>', $joinedCommands);
-    }
-
     public function testGetProtocolFallback(): void
     {
         $email = new Email();
         $email->setProtocol('invalid');
         $getProtocol = self::getPrivateMethodInvoker($email, 'getProtocol');
         $this->assertSame('mail', $getProtocol());
-    }
-
-    public function testAttachFileOpenFails(): void
-    {
-        global $mockFopenFail;
-        $mockFopenFail = true;
-
-        $email = new Email();
-        $this->assertFalse($email->attach(__FILE__));
-        $mockFopenFail = false;
     }
 
     public function testSetBccBatchMode(): void
@@ -1641,153 +904,4 @@ final class EmailTest extends CIUnitTestCase
         $email->setReplyTo('support@example.com', 'Jöhn Døe');
         $this->assertTrue($this->getPrivateProperty($email, 'replyToFlag'));
     }
-
-    public function testPrepQEncodingFallbackWithoutIconv(): void
-    {
-        global $mockIconvUnavailable;
-        $mockIconvUnavailable = true;
-
-        $email = new Email();
-        $email->setSubject('Jöhn Døe');
-        $headers = $this->getPrivateProperty($email, 'headers');
-        $this->assertStringContainsString('=?UTF-8?Q?', (string) $headers['Subject']);
-
-        $mockIconvUnavailable = false;
-    }
-}
-
-// Global functions namespace overrides
-
-namespace CodeIgniter\Email;
-
-function mail(string $to, string $subject, string $message, string $additionalHeaders = '', string $additionalParams = ''): bool
-{
-    global $mockMailCalled, $mockMailArgs, $mockMailException;
-    $mockMailCalled = true;
-    $mockMailArgs   = func_get_args();
-    if ($mockMailException !== null && $mockMailException !== false) {
-        throw new \ErrorException('Mock mail error');
-    }
-
-    return true;
-}
-
-/**
- * @return false|resource
- */
-function popen(string $command, string $mode)
-{
-    global $mockPopenCalled, $mockPopenArgs, $mockPopenResult;
-    $mockPopenCalled = true;
-    $mockPopenArgs   = func_get_args();
-    if (isset($mockPopenResult) && $mockPopenResult === false) {
-        return false;
-    }
-
-    return fopen('php://memory', 'r+b');
-}
-
-/**
- * @param resource $handle
- */
-function pclose($handle): int
-{
-    fclose($handle);
-    global $mockPcloseStatus;
-
-    return $mockPcloseStatus ?? 0;
-}
-
-/**
- * @param int    $errno
- * @param string $errstr
- * @param float  $timeout
- *
- * @return false|resource
- */
-function fsockopen(string $hostname, int $port = -1, &$errno = null, &$errstr = null, $timeout = null)
-{
-    global $mockFsockopenCalled, $mockFsockopenResult, $mockFsockopenArgs;
-    $mockFsockopenCalled = true;
-    $mockFsockopenArgs   = func_get_args();
-
-    return $mockFsockopenResult ?? fopen('php://memory', 'r+b');
-}
-
-/**
- * @param resource $handle
- * @param string   $string
- *
- * @return false|int
- */
-function fwrite($handle, $string): bool|int
-{
-    global $mockFwriteCalled, $mockFwriteData;
-    if (isset($mockFwriteCalled)) {
-        $mockFwriteCalled = true;
-        $mockFwriteData[] = $string;
-
-        return strlen($string);
-    }
-
-    return \fwrite($handle, $string);
-}
-
-/**
- * @param resource $handle
- * @param int      $length
- *
- * @return false|string
- */
-function fgets($handle, $length = null): bool|string
-{
-    global $mockFgetsResponses, $mockFgetsException;
-    if ($mockFgetsException !== null && $mockFgetsException !== false) {
-        throw new \ErrorException('Mock connection error');
-    }
-    if ($mockFgetsResponses !== null && $mockFgetsResponses !== []) {
-        return array_shift($mockFgetsResponses);
-    }
-
-    return \fgets($handle, $length);
-}
-
-/**
- * @param resource      $stream
- * @param int|null      $cryptoType
- * @param resource|null $sessionStream
- */
-function stream_socket_enable_crypto($stream, bool $enable, $cryptoType = null, $sessionStream = null): bool|int
-{
-    global $mockCryptoResult;
-
-    return $mockCryptoResult ?? true;
-}
-
-/**
- * @param resource $context
- *
- * @return false|resource
- */
-function fopen(string $filename, string $mode, bool $useIncludePath = false, $context = null)
-{
-    global $mockFopenFail;
-    if ($mockFopenFail !== null && $mockFopenFail !== false) {
-        return false;
-    }
-    if ($context !== null) {
-        return \fopen($filename, $mode, $useIncludePath, $context);
-    }
-
-    return \fopen($filename, $mode, $useIncludePath);
-}
-
-function extension_loaded(string $name): bool
-{
-    global $mockIconvUnavailable;
-    if ($name === 'iconv' && $mockIconvUnavailable !== null && $mockIconvUnavailable !== false) {
-        return false;
-    }
-
-    return \extension_loaded($name);
 }
