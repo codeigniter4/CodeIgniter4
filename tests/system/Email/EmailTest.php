@@ -313,7 +313,6 @@ final class EmailTest extends CIUnitTestCase
     public function testPrepQuotedPrintableWithLfCrlf(string $input, string $expected): void
     {
         $email       = new Email();
-        /** @phpstan-ignore assign.propertyType */
         $email->CRLF = "\n";
         $prepQP      = self::getPrivateMethodInvoker($email, 'prepQuotedPrintable');
 
@@ -345,7 +344,6 @@ final class EmailTest extends CIUnitTestCase
     public function testPrepQuotedPrintableWithCrlfNative(): void
     {
         $email       = new Email();
-        /** @phpstan-ignore assign.propertyType */
         $email->CRLF = "\r\n";
         $prepQP      = self::getPrivateMethodInvoker($email, 'prepQuotedPrintable');
 
@@ -357,7 +355,6 @@ final class EmailTest extends CIUnitTestCase
     public function testPrepQuotedPrintableSoftLineBreak(): void
     {
         $email       = new Email();
-        /** @phpstan-ignore assign.propertyType */
         $email->CRLF = "\n";
         $prepQP      = self::getPrivateMethodInvoker($email, 'prepQuotedPrintable');
 
@@ -373,7 +370,6 @@ final class EmailTest extends CIUnitTestCase
     public function testPrepQuotedPrintableSoftBreakAfterEncodedChar(): void
     {
         $email       = new Email();
-        /** @phpstan-ignore assign.propertyType */
         $email->CRLF = "\n";
         $prepQP      = self::getPrivateMethodInvoker($email, 'prepQuotedPrintable');
 
@@ -387,7 +383,6 @@ final class EmailTest extends CIUnitTestCase
     public function testPrepQuotedPrintableHardLineBreakNoInternalSpaceReduction(): void
     {
         $email       = new Email();
-        /** @phpstan-ignore assign.propertyType */
         $email->CRLF = "\n";
         $prepQP      = self::getPrivateMethodInvoker($email, 'prepQuotedPrintable');
 
@@ -398,7 +393,6 @@ final class EmailTest extends CIUnitTestCase
     public function testPrepQuotedPrintableMixedContent(): void
     {
         $email       = new Email();
-        /** @phpstan-ignore assign.propertyType */
         $email->CRLF = "\n";
         $prepQP      = self::getPrivateMethodInvoker($email, 'prepQuotedPrintable');
 
@@ -415,7 +409,6 @@ final class EmailTest extends CIUnitTestCase
     public function testPrepQuotedPrintableUnwrapRemovesTagsOnly(): void
     {
         $email       = new Email();
-        /** @phpstan-ignore assign.propertyType */
         $email->CRLF = "\n";
         $prepQP      = self::getPrivateMethodInvoker($email, 'prepQuotedPrintable');
 
