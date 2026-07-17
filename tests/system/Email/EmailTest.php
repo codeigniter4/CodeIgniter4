@@ -33,6 +33,8 @@ final class EmailTest extends CIUnitTestCase
 
     protected function tearDown(): void
     {
+        parent::tearDown();
+
         global $mockMailCalled, $mockMailArgs, $mockMailException;
         global $mockPopenCalled, $mockPopenArgs, $mockPopenResult;
         global $mockPcloseStatus;
