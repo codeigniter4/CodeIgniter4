@@ -781,6 +781,42 @@ error when ``DBDebug`` is ``false``).
     :php:class:`UniqueConstraintViolationException <CodeIgniter\\Database\\Exceptions\\UniqueConstraintViolationException>`
     and resolved automatically by performing a second lookup.
 
+.. _model-with-locked-row:
+
+withLockedRow()
+---------------
+
+.. versionadded:: 4.8.0
+
+Reloads one row by primary key inside a transaction using
+:ref:`query-builder-lock-for-update`, then runs the callback with the locked row
+and the current Model instance:
+
+.. literalinclude:: model/073.php
+
+The method returns the callback return value. If the row is not found, the
+callback is not run and ``null`` is returned. If the transaction cannot begin or
+the transaction status fails without an exception, ``false`` is returned.
+
+Existing Model query constraints are applied to the locked lookup, so methods
+like ``where()`` and ``withDeleted()`` can be called before ``withLockedRow()``.
+
+Returning ``false`` from the callback does not trigger a rollback. To explicitly
+roll back from the callback, throw an exception. Any exception thrown by the
+callback rolls back the transaction and is rethrown. Unsupported lock
+combinations throw the same database exceptions as ``lockForUpdate()``.
+
+.. important:: The locked row is reloaded directly from the database, so Model
+    find callbacks are not run for that lookup. Model methods called inside the
+    callback, such as ``save()`` or ``update()``, still follow the Model's
+    callback setting.
+
+.. note:: Row locks are only useful when the database supports transactions and
+    pessimistic locks. See :ref:`query-builder-lock-for-update` for driver
+    support and limitations. If database transactions are disabled, this method
+    follows the behavior of ``transaction()`` and runs the callback without
+    starting a transaction.
+
 .. _model-saving-dates:
 
 Saving Dates
