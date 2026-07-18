@@ -23,6 +23,7 @@ use Config\Encryption as EncryptionConfig;
 use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
+use stdClass;
 
 /**
  * @internal
@@ -109,6 +110,73 @@ final class EncryptedCastTest extends CIUnitTestCase
         $this->assertSame('old-secret', $dataCaster->castAs($oldEncryptedValue, 'secret'));
     }
 
+    public function testEncryptedJsonCastConvertsObjectToAndFromEncryptedJson(): void
+    {
+        $dataCaster = new DataCaster(types: ['settings' => 'encrypted-json']);
+
+        $encrypted = $dataCaster->castAs((object) ['notifications' => true, 'theme' => 'dark'], 'settings', 'set');
+
+        $this->assertIsString($encrypted);
+        $this->assertNotSame('{"notifications":true,"theme":"dark"}', $encrypted);
+        $this->assertNotFalse(base64_decode($encrypted, true));
+
+        $settings = $dataCaster->castAs($encrypted, 'settings');
+
+        $this->assertInstanceOf(stdClass::class, $settings);
+        $this->assertTrue($settings->notifications);
+        $this->assertSame('dark', $settings->theme);
+    }
+
+    public function testEncryptedJsonArrayCastConvertsArrayToAndFromEncryptedJson(): void
+    {
+        $dataCaster = new DataCaster(types: ['settings' => 'encrypted-json-array']);
+
+        $encrypted = $dataCaster->castAs(['notifications' => true, 'theme' => 'dark'], 'settings', 'set');
+
+        $this->assertIsString($encrypted);
+        $this->assertNotSame('{"notifications":true,"theme":"dark"}', $encrypted);
+        $this->assertSame(
+            ['notifications' => true, 'theme' => 'dark'],
+            $dataCaster->castAs($encrypted, 'settings'),
+        );
+    }
+
+    public function testEncryptedJsonCastsSupportNullableValues(): void
+    {
+        $dataCaster = new DataCaster(types: [
+            'settings'      => '?encrypted-json',
+            'arraySettings' => '?encrypted-json-array',
+        ]);
+
+        $this->assertNull($dataCaster->castAs(null, 'settings', 'set'));
+        $this->assertNull($dataCaster->castAs(null, 'settings'));
+        $this->assertNull($dataCaster->castAs(null, 'arraySettings', 'set'));
+        $this->assertNull($dataCaster->castAs(null, 'arraySettings'));
+    }
+
+    public function testEncryptedJsonCastRejectsMalformedEncryptedPayload(): void
+    {
+        $this->expectException(CastException::class);
+        $this->expectExceptionMessage('Type casting "encrypted" expects a valid encrypted value.');
+
+        $dataCaster = new DataCaster(types: ['settings' => 'encrypted-json']);
+
+        $dataCaster->castAs('@@not-base64@@', 'settings');
+    }
+
+    public function testEncryptedJsonCastRejectsDecryptedMalformedJson(): void
+    {
+        $this->expectException(CastException::class);
+        $this->expectExceptionMessage('Syntax error, malformed JSON.');
+
+        $encryptedCast = new DataCaster(types: ['settings' => 'encrypted']);
+        $encrypted     = $encryptedCast->castAs('not-json', 'settings', 'set');
+
+        $dataCaster = new DataCaster(types: ['settings' => 'encrypted-json']);
+
+        $dataCaster->castAs($encrypted, 'settings');
+    }
+
     public function testDataConverterConvertsEncryptedFieldToAndFromDataSource(): void
     {
         $converter = new DataConverter(['secret' => 'encrypted']);
@@ -118,6 +186,21 @@ final class EncryptedCastTest extends CIUnitTestCase
         $this->assertIsString($dataSourceData['secret']);
         $this->assertNotSame('plain-secret', $dataSourceData['secret']);
         $this->assertSame(['secret' => 'plain-secret'], $converter->fromDataSource($dataSourceData));
+    }
+
+    public function testDataConverterConvertsEncryptedJsonArrayFieldToAndFromDataSource(): void
+    {
+        $converter = new DataConverter(['settings' => 'encrypted-json-array']);
+
+        $dataSourceData = $converter->toDataSource([
+            'settings' => ['notifications' => true, 'theme' => 'dark'],
+        ]);
+
+        $this->assertIsString($dataSourceData['settings']);
+        $this->assertSame(
+            ['settings' => ['notifications' => true, 'theme' => 'dark']],
+            $converter->fromDataSource($dataSourceData),
+        );
     }
 
     public function testEntityStoresEncryptedRawValueAndReturnsPlaintext(): void
@@ -136,6 +219,27 @@ final class EncryptedCastTest extends CIUnitTestCase
         $this->assertNotSame('plain-secret', $raw['secret']);
         $this->assertSame('plain-secret', $entity->secret);
         $this->assertSame(['secret' => 'plain-secret'], $entity->toArray());
+    }
+
+    public function testEntityStoresEncryptedJsonRawValueAndReturnsPlainValue(): void
+    {
+        $entity = new class () extends Entity {
+            protected $casts = [
+                'settings' => 'encrypted-json-array',
+            ];
+        };
+
+        $entity->settings = ['notifications' => true, 'theme' => 'dark'];
+
+        $raw = $entity->toRawArray();
+
+        $this->assertIsString($raw['settings']);
+        $this->assertNotSame('{"notifications":true,"theme":"dark"}', $raw['settings']);
+        $this->assertSame(['notifications' => true, 'theme' => 'dark'], $entity->settings);
+        $this->assertSame(
+            ['settings' => ['notifications' => true, 'theme' => 'dark']],
+            $entity->toArray(),
+        );
     }
 
     /**

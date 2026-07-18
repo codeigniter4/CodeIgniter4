@@ -19,6 +19,7 @@ use CodeIgniter\DataCaster\Cast\CastInterface;
 use CodeIgniter\DataCaster\Cast\CSVCast;
 use CodeIgniter\DataCaster\Cast\DatetimeCast;
 use CodeIgniter\DataCaster\Cast\EncryptedCast;
+use CodeIgniter\DataCaster\Cast\EncryptedJsonCast;
 use CodeIgniter\DataCaster\Cast\EnumCast;
 use CodeIgniter\DataCaster\Cast\FloatCast;
 use CodeIgniter\DataCaster\Cast\IntBoolCast;
@@ -51,21 +52,22 @@ final class DataCaster
      * @var cast_handlers [type => classname]
      */
     private array $castHandlers = [
-        'array'     => ArrayCast::class,
-        'bool'      => BooleanCast::class,
-        'boolean'   => BooleanCast::class,
-        'csv'       => CSVCast::class,
-        'datetime'  => DatetimeCast::class,
-        'encrypted' => EncryptedCast::class,
-        'enum'      => EnumCast::class,
-        'double'    => FloatCast::class,
-        'float'     => FloatCast::class,
-        'int'       => IntegerCast::class,
-        'integer'   => IntegerCast::class,
-        'int-bool'  => IntBoolCast::class,
-        'json'      => JsonCast::class,
-        'timestamp' => TimestampCast::class,
-        'uri'       => URICast::class,
+        'array'          => ArrayCast::class,
+        'bool'           => BooleanCast::class,
+        'boolean'        => BooleanCast::class,
+        'csv'            => CSVCast::class,
+        'datetime'       => DatetimeCast::class,
+        'encrypted'      => EncryptedCast::class,
+        'encrypted-json' => EncryptedJsonCast::class,
+        'enum'           => EnumCast::class,
+        'double'         => FloatCast::class,
+        'float'          => FloatCast::class,
+        'int'            => IntegerCast::class,
+        'integer'        => IntegerCast::class,
+        'int-bool'       => IntBoolCast::class,
+        'json'           => JsonCast::class,
+        'timestamp'      => TimestampCast::class,
+        'uri'            => URICast::class,
     ];
 
     /**
@@ -159,9 +161,13 @@ final class DataCaster
             }
         }
 
-        // In order not to create a separate handler for the
-        // json-array type, we transform the required one.
-        $type = ($type === 'json-array') ? 'json[array]' : $type;
+        // In order not to create separate handlers for these
+        // array variants, we transform the required ones.
+        $type = match ($type) {
+            'json-array'           => 'json[array]',
+            'encrypted-json-array' => 'encrypted-json[array]',
+            default                => $type,
+        };
 
         $params = [];
 

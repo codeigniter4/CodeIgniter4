@@ -399,35 +399,39 @@ Data Types
 The following types are provided by default. Add a question mark at the beginning
 of type to mark the field as nullable, i.e., ``?int``, ``?datetime``.
 
-+---------------+----------------+---------------------------+
-| Type          | PHP Value Type | DB Column Type            |
-+===============+================+===========================+
-|``int``        | int            | int type                  |
-+---------------+----------------+---------------------------+
-|``float``      | float          | float (numeric) type      |
-+---------------+----------------+---------------------------+
-|``bool``       | bool           | bool/int/string type      |
-+---------------+----------------+---------------------------+
-|``int-bool``   | bool           | int type (1 or 0)         |
-+---------------+----------------+---------------------------+
-|``array``      | array          | string type (serialized)  |
-+---------------+----------------+---------------------------+
-|``csv``        | array          | string type (CSV)         |
-+---------------+----------------+---------------------------+
-|``json``       | stdClass       | json/string type          |
-+---------------+----------------+---------------------------+
-|``json-array`` | array          | json/string type          |
-+---------------+----------------+---------------------------+
-|``datetime``   | Time           | datetime type             |
-+---------------+----------------+---------------------------+
-|``timestamp``  | Time           | int type (UNIX timestamp) |
-+---------------+----------------+---------------------------+
-|``uri``        | URI            | string type               |
-+---------------+----------------+---------------------------+
-|``enum``       | Enum           | string/int type           |
-+---------------+----------------+---------------------------+
-|``encrypted``  | string         | string/text type          |
-+---------------+----------------+---------------------------+
++--------------------------+----------------+---------------------------+
+| Type                     | PHP Value Type | DB Column Type            |
++==========================+================+===========================+
+|``int``                   | int            | int type                  |
++--------------------------+----------------+---------------------------+
+|``float``                 | float          | float (numeric) type      |
++--------------------------+----------------+---------------------------+
+|``bool``                  | bool           | bool/int/string type      |
++--------------------------+----------------+---------------------------+
+|``int-bool``              | bool           | int type (1 or 0)         |
++--------------------------+----------------+---------------------------+
+|``array``                 | array          | string type (serialized)  |
++--------------------------+----------------+---------------------------+
+|``csv``                   | array          | string type (CSV)         |
++--------------------------+----------------+---------------------------+
+|``json``                  | stdClass       | json/string type          |
++--------------------------+----------------+---------------------------+
+|``json-array``            | array          | json/string type          |
++--------------------------+----------------+---------------------------+
+|``datetime``              | Time           | datetime type             |
++--------------------------+----------------+---------------------------+
+|``timestamp``             | Time           | int type (UNIX timestamp) |
++--------------------------+----------------+---------------------------+
+|``uri``                   | URI            | string type               |
++--------------------------+----------------+---------------------------+
+|``enum``                  | Enum           | string/int type           |
++--------------------------+----------------+---------------------------+
+|``encrypted``             | string         | string/text type          |
++--------------------------+----------------+---------------------------+
+|``encrypted-json``        | stdClass       | string/text type          |
++--------------------------+----------------+---------------------------+
+|``encrypted-json-array``  | array          | string/text type          |
++--------------------------+----------------+---------------------------+
 
 float
 -----
@@ -505,7 +509,13 @@ encryption key before using it. The configured key is required for both writing
 new values and reading stored values back. The ``encrypted`` type accepts string
 values. Use ``?encrypted`` for nullable values.
 
-.. literalinclude:: model/069.php
+.. literalinclude:: model/070.php
+
+The ``encrypted-json`` and ``encrypted-json-array`` types JSON encode values
+before encryption and JSON decode them after decryption. The ``encrypted-json``
+type returns ``stdClass`` values, while ``encrypted-json-array`` returns arrays.
+Use ``?encrypted-json`` and ``?encrypted-json-array`` for nullable values. These
+values are still stored as encrypted text, not as queryable database JSON.
 
 Encrypted values are stored as Base64-encoded ciphertext. Use a ``TEXT`` column
 or a sufficiently large string column because the stored value is longer than
