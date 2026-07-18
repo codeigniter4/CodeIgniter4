@@ -403,6 +403,22 @@ class ContentSecurityPolicy
     }
 
     /**
+     * Enable Content Security Policy enforcement.
+     */
+    public function enable(): void
+    {
+        $this->CSPEnabled = true;
+    }
+
+    /**
+     * Disable Content Security Policy enforcement.
+     */
+    public function disable(): void
+    {
+        $this->CSPEnabled = false;
+    }
+
+    /**
      * Whether adding nonce in style-* directives is enabled or not.
      */
     public function styleNonceEnabled(): bool

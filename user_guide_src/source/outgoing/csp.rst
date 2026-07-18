@@ -78,6 +78,30 @@ name or an array of them:
 The first parameter to each of the "add" methods is an appropriate string value,
 or an array of them.
 
+.. _csp-enable-disable:
+
+Enable or Disable CSP at Runtime
+================================
+
+.. versionadded:: 4.8.0
+
+You can enable or disable CSP for the current request by using the
+``enable()`` and ``disable()`` methods on the CSP instance.
+
+For example, to enable/disable CSP for a specific response:
+
+.. literalinclude:: csp/017.php
+
+The runtime value takes precedence over the ``CSPEnabled`` configuration value
+for the current request.
+
+These methods only affect the current request. They do not modify the
+application configuration. On subsequent requests, the ``CSPEnabled`` value in
+**app/Config/App.php** is used again.
+
+This allows applications to keep CSP enabled globally while temporarily
+disabling it for specific requests, or enable it only where required.
+
 Report Only
 ===========
 
