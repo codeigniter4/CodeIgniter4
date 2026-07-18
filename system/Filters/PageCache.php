@@ -16,6 +16,7 @@ namespace CodeIgniter\Filters;
 use CodeIgniter\Cache\ResponseCache;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\NonBufferedResponseInterface;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
@@ -53,6 +54,10 @@ class PageCache implements FilterInterface
     {
         assert($request instanceof CLIRequest || $request instanceof IncomingRequest);
 
+        if ($request instanceof IncomingRequest && $request->getMethod() === Method::QUERY) {
+            return null;
+        }
+
         $response = service('response');
 
         return $this->pageCache->get($request, $response);
@@ -66,6 +71,10 @@ class PageCache implements FilterInterface
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
         assert($request instanceof CLIRequest || $request instanceof IncomingRequest);
+
+        if ($request instanceof IncomingRequest && $request->getMethod() === Method::QUERY) {
+            return null;
+        }
 
         if (
             ! $response instanceof NonBufferedResponseInterface

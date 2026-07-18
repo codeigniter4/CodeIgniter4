@@ -185,7 +185,7 @@ By default ``validationData()`` selects the appropriate data source
 automatically based on the HTTP method and ``Content-Type`` header:
 
 * **JSON request** (``Content-Type: application/json``) -> decoded JSON body
-* **PUT / PATCH / DELETE** (non-multipart) -> raw body via ``getRawInput()``
+* **PUT / PATCH / DELETE / QUERY** (non-multipart) -> raw body via ``getRawInput()``
 * **GET / HEAD** -> query-string parameters via ``getGet()``
 * **Everything else** (POST, multipart) -> POST body via ``getPost()``
 

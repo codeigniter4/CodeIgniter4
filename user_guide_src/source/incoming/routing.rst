@@ -78,6 +78,19 @@ You can use any standard HTTP verb (GET, POST, PUT, DELETE, OPTIONS, etc):
 
 .. literalinclude:: routing/003.php
 
+``QUERY`` routes are for the HTTP QUERY method defined by RFC 10008.
+``QUERY`` requests are safe and idempotent like GET, but send query content in the
+request body. Read that body explicitly with request input methods such as
+``$this->request->input()->json()`` or ``$this->request->input()->raw()``. Your
+controller should reject missing or unsupported ``Content-Type`` values for the
+query content it expects. Do not use ``QUERY`` for operations that create,
+update, delete, or otherwise change server state.
+
+.. note:: Your web server, proxy, or CORS configuration may need to allow the
+    ``QUERY`` method before these requests can reach CodeIgniter. For
+    browser-based cross-origin requests, ensure ``QUERY`` is included in your
+    allowed CORS methods so preflight requests can succeed.
+
 You can supply multiple verbs that a route should match by passing them in as an array to the ``match()`` method:
 
 .. literalinclude:: routing/004.php
@@ -354,9 +367,9 @@ Routes with any HTTP verbs
     another, more appropriate method.
 
 .. warning:: While the ``add()`` method seems to be convenient, it is recommended to always use the HTTP-verb-based
-    routes, described above, as it is more secure. If you use the :doc:`CSRF protection </libraries/security>`, it does not protect **GET**
-    requests. If the URI specified in the ``add()`` method is accessible by the GET method, the CSRF protection
-    will not work.
+    routes, described above, as it is more secure. If you use the :doc:`CSRF protection </libraries/security>`, it does not protect
+    **GET** or **QUERY** requests. If the URI specified in the ``add()`` method is accessible by the GET or QUERY method,
+    the CSRF protection will not work.
 
 It is possible to define a route with any HTTP verbs.
 You can use the ``add()`` method:

@@ -223,10 +223,10 @@ abstract class FormRequest
      * multiple sources. By default, data is sourced from the appropriate
      * part of the request based on HTTP method and Content-Type:
      *
-     * - JSON (any method)      - decoded JSON body
-     * - PUT / PATCH / DELETE   - raw body (unless multipart/form-data)
-     * - GET / HEAD             - query-string parameters
-     * - Everything else (POST) - POST body
+     * - JSON (any method)              - decoded JSON body
+     * - PUT / PATCH / DELETE / QUERY   - raw body (unless multipart/form-data)
+     * - GET / HEAD                     - query-string parameters
+     * - Everything else (POST)         - POST body
      *
      * @return array<string, mixed>
      */
@@ -239,7 +239,7 @@ abstract class FormRequest
         }
 
         if (
-            in_array($this->request->getMethod(), [Method::PUT, Method::PATCH, Method::DELETE], true)
+            in_array($this->request->getMethod(), [Method::PUT, Method::PATCH, Method::DELETE, Method::QUERY], true)
             && ! str_contains($contentType, 'multipart/form-data')
         ) {
             return $this->request->getRawInput() ?? [];

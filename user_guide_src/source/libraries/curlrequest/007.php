@@ -7,3 +7,4 @@ $client->options('http://example.com');
 $client->patch('http://example.com');
 $client->put('http://example.com');
 $client->post('http://example.com');
+$client->query('http://example.com');

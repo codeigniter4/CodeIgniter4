@@ -175,6 +175,35 @@ class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('OPTIONS', $options[CURLOPT_CUSTOMREQUEST]);
     }
 
+    public function testQuerySetsCorrectMethod(): void
+    {
+        $this->request->query('http://example.com');
+
+        $this->assertSame('QUERY', $this->request->getMethod());
+
+        $options = $this->request->curl_options;
+
+        $this->assertArrayHasKey(CURLOPT_CUSTOMREQUEST, $options);
+        $this->assertSame('QUERY', $options[CURLOPT_CUSTOMREQUEST]);
+    }
+
+    public function testQueryWithJsonSetsBodyAndContentType(): void
+    {
+        $params = [
+            'foo' => 'bar',
+        ];
+        $this->request->query('http://example.com', [
+            'json' => $params,
+        ]);
+
+        $options = $this->request->curl_options;
+
+        $this->assertSame('QUERY', $this->request->getMethod());
+        $this->assertSame('QUERY', $options[CURLOPT_CUSTOMREQUEST]);
+        $this->assertSame(json_encode($params), $options[CURLOPT_POSTFIELDS]);
+        $this->assertContains('Content-Type: application/json', $options[CURLOPT_HTTPHEADER]);
+    }
+
     public function testOptionsBaseURIOption(): void
     {
         $options = ['baseURI' => 'http://www.foo.com/api/v1/'];

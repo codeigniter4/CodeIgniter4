@@ -105,6 +105,9 @@ This is useful when testing JSON or XML APIs so that you can set the request in 
 This will take the parameters passed into ``call()``, ``post()``, ``get()``... and assign them to the
 body of the request in the given format.
 
+For example, use ``withBodyFormat('json')->query()`` to test a QUERY request
+with a JSON body.
+
 This will also set the `Content-Type` header for your request accordingly.
 
 .. literalinclude:: feature/008.php

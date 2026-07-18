@@ -40,7 +40,7 @@ final class FormRequestTest extends CIUnitTestCase
         parent::setUp();
 
         $this->resetServices();
-        Services::injectMock('superglobals', new Superglobals());
+        Services::injectMock('superglobals', new Superglobals(get: [], post: []));
         service('superglobals')->setServer('REQUEST_METHOD', 'POST');
         service('superglobals')->setServer('SERVER_PROTOCOL', 'HTTP/1.1');
         service('superglobals')->setServer('SERVER_NAME', 'example.com');
@@ -344,6 +344,23 @@ final class FormRequestTest extends CIUnitTestCase
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertSame(422, $response->getStatusCode());
+    }
+
+    public function testResolveRequestUsesQueryRawBody(): void
+    {
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', Method::QUERY)
+            ->setServer('CONTENT_TYPE', 'application/x-www-form-urlencoded');
+
+        $formRequest = $this->makeFormRequest($this->makeRequest('title=Hello&body=World'));
+
+        $response = $formRequest->resolveRequest();
+
+        $this->assertNotInstanceOf(ResponseInterface::class, $response);
+        $this->assertSame([
+            'title' => 'Hello',
+            'body'  => 'World',
+        ], $formRequest->getValidated());
     }
 
     public function testResolveRequestReturns422WhenJsonIsPreferred(): void

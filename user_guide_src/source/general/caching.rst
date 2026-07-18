@@ -90,8 +90,8 @@ Valid options are:
     caching errors that should be temporary. For example, a cached 404 page would
     remain cached even after the resource is created, until the cache expires.
 
-.. note:: Regardless of this setting, ``DownloadResponse`` and ``RedirectResponse``
-    instances are never cached by the ``PageCache`` filter.
+.. note:: Regardless of this setting, ``DownloadResponse``, ``RedirectResponse``,
+    and HTTP ``QUERY`` responses are never cached by the ``PageCache`` filter.
 
 Enabling Caching
 ================

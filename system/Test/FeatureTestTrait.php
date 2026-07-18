@@ -297,6 +297,21 @@ trait FeatureTestTrait
     }
 
     /**
+     * Performs a QUERY request.
+     *
+     * @param array<string, mixed>|null $params
+     *
+     * @return TestResponse
+     *
+     * @throws RedirectException
+     * @throws Exception
+     */
+    public function query(string $path, ?array $params = null)
+    {
+        return $this->call(Method::QUERY, $path, $params);
+    }
+
+    /**
      * Setup a Request object to use so that CodeIgniter
      * won't try to auto-populate some of the items.
      *

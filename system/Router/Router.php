@@ -43,6 +43,7 @@ class Router implements RouterInterface
     public const HTTP_METHODS = [
         Method::GET,
         Method::HEAD,
+        Method::QUERY,
         Method::POST,
         Method::PATCH,
         Method::PUT,

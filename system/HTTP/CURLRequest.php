@@ -293,6 +293,16 @@ class CURLRequest extends OutgoingRequest
     }
 
     /**
+     * Convenience method for sending a QUERY request.
+     *
+     * @param array<string, mixed> $options
+     */
+    public function query(string $url, array $options = []): ResponseInterface
+    {
+        return $this->request(Method::QUERY, $url, $options);
+    }
+
+    /**
      * Set the HTTP Authentication.
      *
      * @param string $type basic or digest

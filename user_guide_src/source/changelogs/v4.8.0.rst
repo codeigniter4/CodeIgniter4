@@ -40,6 +40,7 @@ Behavior Changes
 - **Database:** The Postgre driver's ``$db->error()['code']`` previously always returned ``''``. It now returns the 5-character SQLSTATE string for query and transaction failures (e.g., ``'42P01'``), or ``'08006'`` for connection-level failures. Code that relied on ``$db->error()['code'] === ''`` will need updating.
 - **Filters:** HTTP method matching for method-based filters is now case-sensitive. The keys in ``Config\Filters::$methods`` must exactly match the request method
   (e.g., ``GET``, ``POST``). Lowercase method names (e.g., ``post``) will no longer match.
+- **HTTP:** Routes defined with ``$routes->add()`` now also match HTTP ``QUERY`` requests. If the route has CSRF protection, remember that CSRF verification does not protect safe methods such as ``GET`` and ``QUERY``.
 - **Testing:** Tests using the ``FeatureTestTrait`` must now use uppercase HTTP method names when performing a request when using the ``call()`` method directly
   (e.g., ``$this->call('GET', '/path')`` instead of ``$this->call('get', '/path')``). Additionally, setting method-based routes using ``withRoutes()`` must
   also use uppercase method names (e.g., ``$this->withRoutes([['GET', 'home', 'Home::index']])``).
@@ -308,6 +309,7 @@ Helpers and Functions
 HTTP
 ====
 
+- Added support for the HTTP ``QUERY`` method in routing, feature tests, ``CURLRequest``, and ``FormRequest`` input source selection.
 - Added the ``retry`` option to ``CURLRequest`` for retrying failed responses with configurable delays, retryable status codes, optional transient cURL error retries, and ``Retry-After`` support. See :ref:`curlrequest-request-options-retry`.
 - Added :ref:`Form Requests <form-requests>` - a new ``FormRequest`` base class that encapsulates validation rules, custom error messages, and authorization logic for a single HTTP request.
 - Added ``IncomingRequest::input()`` to read GET, POST, JSON, and raw request data through ``InputData``.

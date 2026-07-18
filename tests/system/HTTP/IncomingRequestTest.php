@@ -728,6 +728,7 @@ final class IncomingRequestTest extends CIUnitTestCase
             ['HEAD'],
             ['PATCH'],
             ['OPTIONS'],
+            ['QUERY'],
         ];
     }
 
