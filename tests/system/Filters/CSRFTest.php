@@ -40,6 +40,9 @@ final class CSRFTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->resetServices();
+
         $this->config = new \Config\Filters();
     }
 
