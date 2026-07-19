@@ -511,14 +511,14 @@ final class GDHandlerTest extends CIUnitTestCase
     {
         $this->handler->withFile($this->path);
 
-        // Force an invalid image type to ensure proper exception handling
+        // Force an invalid image type to trigger getImageResource() default case
         $image            = $this->handler->getFile();
         $image->imageType = 9999;
 
         $this->expectException(ImageException::class);
         $this->expectExceptionMessage(lang('Images.unsupportedImageCreate'));
 
-        // save() should throw an exception instead of fatal error in GD
+        // save() calls ensureResource() -> getImageResource(), which should throw
         $this->handler->save($this->start . 'work/ci-logo.jpg');
     }
 
@@ -526,14 +526,14 @@ final class GDHandlerTest extends CIUnitTestCase
     {
         $this->handler->withFile($this->path);
 
-        // Force an invalid image type to trigger getImageResource default case
+        // Force an invalid image type to trigger getImageResource() default case
         $image            = $this->handler->getFile();
         $image->imageType = 9999;
 
         $this->expectException(ImageException::class);
-        $this->expectExceptionMessage('Ima');
+        $this->expectExceptionMessage(lang('Images.unsupportedImageCreate'));
 
-        // Calling any process function that triggers ensureResource/createImage
+        // resize() calls ensureResource() -> getImageResource(), which should throw
         $this->handler->resize(10, 10);
     }
 }
