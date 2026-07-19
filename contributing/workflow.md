@@ -67,39 +67,72 @@ Clone your repository, leaving a local folder for you to work with:
 > git clone ORIGIN_URL
 ```
 
-## Syncing Your Repository
+## Configuring Upstream and Rebasing
 
-Within your local repository, Git will have created an alias,
-**origin**, for the GitHub repository it is bound to. You want to create
-an alias for the shared repository as well, so that you can "synch" the
-two, making sure that your repository includes any other contributions
-that have been merged by us into the shared repo:
+Git names your fork `origin` when you clone it. Add the main CodeIgniter4
+repository as `upstream` so that you can fetch changes made by other
+contributors. You only need to add this remote once:
 
 ```console
-> git remote add upstream UPSTREAM_URL
+> git remote add upstream https://github.com/codeigniter4/CodeIgniter4.git
+> git remote -v
 ```
 
-Then synchronizing is done by pulling from us and pushing to you. This
-is normally done locally, so that you can resolve any merge conflicts.
-For instance, to synchronize **develop** branches:
+If `upstream` already exists but uses the wrong URL, update it instead:
+
+```console
+> git remote set-url upstream https://github.com/codeigniter4/CodeIgniter4.git
+```
+
+Fetch the latest upstream branches before rebasing:
 
 ```console
 > git fetch upstream
-> git switch develop
-> git merge upstream/develop
-> git push origin develop
 ```
 
-You might get merge conflicts when you merge. It is your
-responsibility to resolve those locally, so that you can continue
-collaborating with the shared repository. Basically, the shared
-repository is updated in the order that contributions are merged into
-it, not in the order that they might have been submitted. If two PRs
-update the same piece of code, then the first one to be merged will take
-precedence, even if it causes problems for other contributions.
+Rebase bug-fix branches onto `upstream/develop`:
 
-It is a good idea to synchronize repositories when the shared one
-changes.
+```console
+> git switch your-branch
+> git rebase upstream/develop
+```
+
+Features and enhancements target the next minor-version branch. Replace `4.x`
+with the branch used by your pull request:
+
+```console
+> git switch your-branch
+> git rebase upstream/4.x
+```
+
+> [!IMPORTANT]
+> Do not merge the upstream target branch into your contribution branch. A merge
+> may add merge commits that make the pull request and project history harder to
+> follow. Rebasing keeps the commit history linear and easier to review.
+
+Make sure local work is committed or stashed before rebasing. If Git reports a
+conflict, edit the affected files, mark them as resolved, and continue:
+
+```console
+> git add path/to/resolved-file
+> git rebase --continue
+```
+
+Repeat these commands until the rebase is complete. To cancel the rebase and
+return the branch to its previous state, run:
+
+```console
+> git rebase --abort
+```
+
+If the branch was already pushed to your fork, update it safely after rebasing:
+
+```console
+> git push --force-with-lease origin your-branch
+```
+
+Use `--force-with-lease` rather than `--force` so that Git does not overwrite
+remote changes that you have not fetched.
 
 ## Branching Revisited
 
@@ -250,25 +283,9 @@ are working in.
 At some point, you will decide that your feature branch is complete, or
 that it could benefit from a review by fellow developers.
 
-> [!NOTE]
-> Remember to sync your local repo with the shared one before pushing!
-It is a lot easier to resolve conflicts at this stage.
-
-Synchronize your repository:
-
-```console
-> git fetch upstream
-> git switch develop
-> git merge upstream/develop
-> git push origin develop
-```
-
-Bring your feature branch up to date:
-
-```console
-> git switch fix/issue-123
-> git rebase upstream/develop
-```
+Before pushing, follow
+[Configuring Upstream and Rebasing](#configuring-upstream-and-rebasing) to bring
+your contribution branch up to date and resolve any conflicts.
 
 And finally push your local branch to your GitHub repository:
 
@@ -325,34 +342,15 @@ If you are asked for changes in the review, commit the fix in your branch and
 push it to GitHub again.
 
 If the __"develop"__ or next minor version branch, e.g. __"4.6"__, progresses
-and conflicts arise that prevent merging, or if you are asked to *rebase*,
-do the following:
-
-Synchronize your repository:
-
-```console
-> git fetch upstream
-> git switch develop
-> git merge upstream/develop
-> git push origin develop
-```
-
-(Optional) Create a new branch as a backup, just in case:
+and conflicts arise that prevent merging, or if you are asked to *rebase*, you
+may first create a backup branch:
 
 ```console
 > git branch fix/problem123.bk fix/problem123
 ```
 
-Bring your feature branch up to date:
-
-```console
-> git switch fix/problem123
-> git rebase upstream/develop
-```
-
-You might get conflicts when you rebase. It is your
-responsibility to resolve those locally, so that you can continue
-collaborating with the shared repository.
+Then follow
+[Configuring Upstream and Rebasing](#configuring-upstream-and-rebasing).
 
 Occasionally, the Composer packages for development may be updated. Run the
 following command to use the latest packages:
@@ -380,13 +378,10 @@ Copy the IDs of any commits you made that you want to keep:
 > git log
 ```
 
-Update your __"4.6"__ branch:
+Fetch the latest upstream branches:
 
 ```console
 > git fetch upstream
-> git switch 4.6
-> git merge upstream/4.6
-> git push origin 4.6
 ```
 
 (Optional) Create a new branch as a backup, just in case:
@@ -398,7 +393,7 @@ Update your __"4.6"__ branch:
 Rebase your PR branch from `develop` onto __"4.6"__:
 
 ```console
-> git rebase --onto 4.6 develop feat-abc
+> git rebase --onto upstream/4.6 develop feat-abc
 ```
 
 Force push.
