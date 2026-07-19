@@ -14,3 +14,4 @@ if you want to take the lead on one of them.
 - [Contributor Covenant Code of Conduct](../CODE_OF_CONDUCT.md)
 - [Reporting a Bug](./bug_report.md)
 - [Sending a Pull Request](./pull_request.md)
+- [Configuring Upstream and Rebasing](./workflow.md#configuring-upstream-and-rebasing)
