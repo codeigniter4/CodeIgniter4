@@ -30,6 +30,7 @@ Deprecations
 Bugs Fixed
 **********
 
+- **CLIRequest:** Fixed a bug where ``parseCommand()`` could throw a TypeError when ``argv`` is missing.
 - **Logger:** Fixed a bug where interpolating a log message with array or non-stringable context values could raise PHP warnings or errors.
 
 See the repo's
