@@ -275,6 +275,11 @@ compression is turned off automatically, but if your web server or CDN
 compresses responses (e.g., nginx ``gzip`` or Apache ``mod_deflate``), configure
 it to skip your streaming endpoints - compression can delay chunk delivery.
 
+.. note:: ``stream()`` and ``eventStream()`` create a new response instance.
+    Headers, cookies, and status codes already set on the main response are not
+    copied. Set them on the returned ``StreamResponse`` or ``SSEResponse``
+    instance before returning it.
+
 The response is streamed: output buffering is disabled, the PHP time limit is
 removed, and the session is closed to avoid blocking other requests. After
 filters still run and may set headers, but they must not rely on the response
