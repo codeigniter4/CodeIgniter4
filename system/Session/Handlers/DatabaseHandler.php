@@ -276,7 +276,7 @@ class DatabaseHandler extends BaseHandler
      *
      * @return false|int Returns the number of deleted sessions on success, or false on failure.
      */
-    public function gc($max_lifetime): false|int
+    public function gc(int $max_lifetime): false|int
     {
         return $this->db->table($this->table)->where(
             'timestamp <',

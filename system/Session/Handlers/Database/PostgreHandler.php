@@ -59,7 +59,7 @@ class PostgreHandler extends DatabaseHandler
      * @param int $max_lifetime Sessions that have not updated
      *                          for the last max_lifetime seconds will be removed.
      */
-    public function gc($max_lifetime): false|int
+    public function gc(int $max_lifetime): false|int
     {
         $separator = '\'';
         $interval  = implode($separator, ['', "{$max_lifetime} second", '']);
