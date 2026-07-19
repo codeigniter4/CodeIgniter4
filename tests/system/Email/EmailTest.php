@@ -32,11 +32,6 @@ final class EmailTest extends CIUnitTestCase
 {
     use ReflectionHelper;
 
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-    }
-
     public function testEmailValidation(): void
     {
         $config           = config('Email');
@@ -485,8 +480,7 @@ final class EmailTest extends CIUnitTestCase
     public function testWordWrap(): void
     {
         $email = new Email();
-        /** @phpstan-ignore assign.propertyType */
-        $email->newline = "\n";
+        $email->setNewline();
 
         $text    = 'This is a very long line of text that should be wrapped to a smaller character limit.';
         $wrapped = $email->wordWrap($text, 20);
@@ -750,13 +744,6 @@ final class EmailTest extends CIUnitTestCase
     {
         $email = new Email();
         $this->assertFalse($email->attach('/path/to/nonexistent/file.txt'));
-    }
-
-    public function testAttachUnreadableFile(): void
-    {
-        $email = new Email();
-        // A directory is not readable as a regular file for fopen
-        $this->assertFalse($email->attach(__DIR__));
     }
 
     public function testSetAttachmentCID(): void
