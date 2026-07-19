@@ -82,7 +82,11 @@ final class StreamResponseTest extends CIUnitTestCase
 
     public function testConstructorTreatsCallableIterableAsCallable(): void
     {
-        $callbackOrChunks = new class () implements IteratorAggregate {
+        $callbackOrChunks = new
+        /**
+         * @implements IteratorAggregate<int, string>
+         */
+        class () implements IteratorAggregate {
             public function __invoke(StreamResponse $stream): void
             {
                 $stream->write('Hello');
