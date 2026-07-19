@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use Generator;
+use IteratorAggregate;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -80,8 +82,22 @@ final class StreamResponseTest extends CIUnitTestCase
 
     public function testConstructorTreatsCallableIterableAsCallable(): void
     {
-        // An array callable is both callable and iterable; callable must win.
-        $response = new StreamResponse($this->writeHello(...));
+        $callbackOrChunks = new class () implements IteratorAggregate {
+            public function __invoke(StreamResponse $stream): void
+            {
+                $stream->write('Hello');
+            }
+
+            /**
+             * @return Generator<int, string>
+             */
+            public function getIterator(): Generator
+            {
+                yield 'iterable chunk';
+            }
+        };
+
+        $response = new StreamResponse($callbackOrChunks);
         $response->pretend();
 
         ob_start();
@@ -89,11 +105,6 @@ final class StreamResponseTest extends CIUnitTestCase
         $output = ob_get_clean();
 
         $this->assertSame('Hello', $output);
-    }
-
-    public function writeHello(StreamResponse $stream): void
-    {
-        $stream->write('Hello');
     }
 
     public function testStreamFactoryReturnsStreamResponse(): void
