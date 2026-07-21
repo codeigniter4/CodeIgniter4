@@ -17,6 +17,7 @@ use App\Controllers\Home;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Debug\Timer;
+use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\Response;
@@ -39,6 +40,7 @@ use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 use Tests\Support\Filters\Customfilter;
 use Tests\Support\Filters\RedirectFilter;
 use Tests\Support\Router\Filters\TestAttributeFilter;
+use Tests\Support\HTTP\Responses\ResponseWithPostSendFlag;
 
 /**
  * @internal
@@ -1327,5 +1329,25 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertNull(RichRenderer::$js_nonce);
         $this->assertNull(RichRenderer::$css_nonce);
         $this->assertTrue(RichRenderer::$needs_pre_render);
+    }
+
+    public function testPostResponseTriggeredAfterSend(): void
+    {
+        $this->resetServices();
+
+        $response = new ResponseWithPostSendFlag();
+        Services::injectMock('response', $response);
+
+        $postResponseTriggeredAfterResponseSent = false;
+
+        Events::on('post_response', static function () use (&$postResponseTriggeredAfterResponseSent, &$response) {
+            $postResponseTriggeredAfterResponseSent = $response->responseSent;
+        });
+
+        ob_start();
+        $this->codeigniter->run();
+        ob_get_clean();
+
+        $this->assertTrue($postResponseTriggeredAfterResponseSent);
     }
 }
