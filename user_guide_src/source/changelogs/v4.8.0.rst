@@ -350,6 +350,7 @@ Others
 - **Filters:** Added ``RequestId`` filter for request tracing and correlation logging. The filter stores the request ID in the request context and automatically adds the ``X-Request-ID`` response header. Incoming ``X-Request-ID`` headers are used when valid. See :ref:`requestid` for details.
 - **Environment:** Added ``CodeIgniter\EnvironmentDetector`` class and corresponding ``environment`` service as a mockable wrapper around the ``ENVIRONMENT`` constant.
   Framework internals that previously compared ``ENVIRONMENT`` directly now go through this service, making environment-specific branches reachable in tests via ``Services::injectMock()``. See :ref:`environment-detector-service`.
+- **Events**: Added ``post_response`` event to run after the response is sent to the client.
 - **Time:** Added ``Time::between()``, ``Time::min()``, and ``Time::max()`` comparison helpers. See :ref:`between <time-comparing-two-times-between>`, :ref:`min <time-comparing-two-times-min>`, and :ref:`max <time-comparing-two-times-max>`.
 
 ***************

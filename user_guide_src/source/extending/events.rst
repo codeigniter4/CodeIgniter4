@@ -99,6 +99,10 @@ invoked by **public/index.php**:
 * **post_controller_constructor** Called immediately after your controller is instantiated, but prior to any method calls happening.
 * **post_system** Called right before the final rendered page is sent to the browser,
   at the end of system execution, after the execution of "after" controller filters.
+* **post_response** Called after the response is sent to the client. This event is useful
+  for performing tasks that do not need to be completed before the response is sent, such as logging or cleanup tasks.
+
+.. note:: The ``post_response`` event was added in v4.8.0.
 
 .. _event-points-for-cli-apps:
 
