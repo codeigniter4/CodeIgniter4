@@ -39,8 +39,8 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 use Tests\Support\Filters\Customfilter;
 use Tests\Support\Filters\RedirectFilter;
-use Tests\Support\Router\Filters\TestAttributeFilter;
 use Tests\Support\HTTP\Responses\ResponseWithPostSendFlag;
+use Tests\Support\Router\Filters\TestAttributeFilter;
 
 /**
  * @internal
@@ -1340,7 +1340,7 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         $postResponseTriggeredAfterResponseSent = false;
 
-        Events::on('post_response', static function () use (&$postResponseTriggeredAfterResponseSent, &$response) {
+        Events::on('post_response', static function () use (&$postResponseTriggeredAfterResponseSent, &$response): void {
             $postResponseTriggeredAfterResponseSent = $response->responseSent;
         });
 
