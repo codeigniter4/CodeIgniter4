@@ -408,7 +408,7 @@ trait ResponseTrait
         $level  = count($status);
         $flags  = PHP_OUTPUT_HANDLER_REMOVABLE | PHP_OUTPUT_HANDLER_FLUSHABLE;
 
-        while ($level-- > 0 && ($s = $status[$level]) && (! isset($s['del']) ? ! isset($s['flags']) || ($s['flags'] & $flags) === $flags : $s['del'])) {
+        while ($level-- > 0 && ($s = $status[$level]) && ($s['del'] ?? (! isset($s['flags']) || ($s['flags'] & $flags) === $flags))) {
             ob_end_flush();
         }
     }
