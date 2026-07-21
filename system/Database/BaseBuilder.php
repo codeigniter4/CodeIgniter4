@@ -788,7 +788,6 @@ class BaseBuilder
      * @param non-empty-string $second Second column name
      * @param bool|null        $escape Whether to protect identifiers
      *
-     *
      * @throws InvalidArgumentException
      */
     public function whereColumn(string $first, string $second, ?bool $escape = null): static
@@ -802,7 +801,6 @@ class BaseBuilder
      * @param non-empty-string $first  First column name, optionally with comparison operator
      * @param non-empty-string $second Second column name
      * @param bool|null        $escape Whether to protect identifiers
-     *
      *
      * @throws InvalidArgumentException
      */
@@ -861,7 +859,6 @@ class BaseBuilder
      * @param non-empty-string     $type
      * @param bool|null            $escape Whether to protect identifiers
      *
-     *
      * @throws InvalidArgumentException
      */
     protected function whereColumnHaving(string $qbKey, string $first, string $second, string $type = 'AND ', ?bool $escape = null): static
@@ -913,7 +910,6 @@ class BaseBuilder
      *
      * @param array<array-key, mixed>|null $values The range values searched on
      *
-     *
      * @throws InvalidArgumentException
      */
     public function whereBetween(?string $key = null, ?array $values = null, ?bool $escape = null): static
@@ -926,7 +922,6 @@ class BaseBuilder
      * joined with 'OR' if appropriate.
      *
      * @param array<array-key, mixed>|null $values The range values searched on
-     *
      *
      * @throws InvalidArgumentException
      */
@@ -941,7 +936,6 @@ class BaseBuilder
      *
      * @param array<array-key, mixed>|null $values The range values searched on
      *
-     *
      * @throws InvalidArgumentException
      */
     public function whereNotBetween(?string $key = null, ?array $values = null, ?bool $escape = null): static
@@ -954,7 +948,6 @@ class BaseBuilder
      * joined with 'OR' if appropriate.
      *
      * @param array<array-key, mixed>|null $values The range values searched on
-     *
      *
      * @throws InvalidArgumentException
      */
@@ -969,7 +962,6 @@ class BaseBuilder
      *
      * @param array<array-key, mixed>|null $values The range values searched on
      *
-     *
      * @throws InvalidArgumentException
      */
     public function havingBetween(?string $key = null, ?array $values = null, ?bool $escape = null): static
@@ -982,7 +974,6 @@ class BaseBuilder
      * joined with 'OR' if appropriate.
      *
      * @param array<array-key, mixed>|null $values The range values searched on
-     *
      *
      * @throws InvalidArgumentException
      */
@@ -997,7 +988,6 @@ class BaseBuilder
      *
      * @param array<array-key, mixed>|null $values The range values searched on
      *
-     *
      * @throws InvalidArgumentException
      */
     public function havingNotBetween(?string $key = null, ?array $values = null, ?bool $escape = null): static
@@ -1010,7 +1000,6 @@ class BaseBuilder
      * joined with 'OR' if appropriate.
      *
      * @param array<array-key, mixed>|null $values The range values searched on
-     *
      *
      * @throws InvalidArgumentException
      */
@@ -1032,7 +1021,6 @@ class BaseBuilder
      * @param 'QBHaving'|'QBWhere'         $qbKey
      * @param non-empty-string|null        $key
      * @param array<array-key, mixed>|null $values The range values searched on
-     *
      *
      * @throws InvalidArgumentException
      */
@@ -1072,7 +1060,6 @@ class BaseBuilder
      * @used-by orWhereNotExists()
      *
      * @param BaseBuilder|(Closure(BaseBuilder): BaseBuilder) $subquery
-     *
      *
      * @throws InvalidArgumentException
      */
@@ -1391,7 +1378,6 @@ class BaseBuilder
      *
      * @param list<non-empty-string|RawSql> $fields
      *
-     *
      * @throws InvalidArgumentException
      */
     public function likeAny(array $fields, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false): static
@@ -1429,7 +1415,6 @@ class BaseBuilder
      * Generates grouped LIKE portions of the query joined with OR.
      *
      * @param list<non-empty-string|RawSql> $fields
-     *
      *
      * @throws InvalidArgumentException
      */
@@ -1505,7 +1490,6 @@ class BaseBuilder
 
     /**
      * @param list<non-empty-string|RawSql> $fields
-     *
      *
      * @throws InvalidArgumentException
      */
