@@ -39,8 +39,6 @@ final class Context
      *
      * @param array<string, mixed>|string $key   The key to identify the data. Can be a string or an array of key-value pairs.
      * @param mixed                       $value The value to be stored in the context.
-     *
-     * @return $this
      */
     public function set(array|string $key, mixed $value = null): self
     {
@@ -75,8 +73,6 @@ final class Context
      *
      * @param array<string, mixed>|string $key   The key to identify the data. Can be a string or an array of key-value pairs.
      * @param mixed                       $value The value to be stored in the context.
-     *
-     * @return $this
      */
     public function setHidden(#[SensitiveParameter] array|string $key, #[SensitiveParameter] mixed $value = null): self
     {
@@ -262,8 +258,6 @@ final class Context
      * Supports dot notation for nested arrays.
      *
      * @param list<string>|string $key The key to identify the data to be removed from the context.
-     *
-     * @return $this
      */
     public function remove(array|string $key): self
     {
@@ -297,8 +291,6 @@ final class Context
      * Supports dot notation for nested arrays.
      *
      * @param list<string>|string $key The key to identify the data to be removed from the hidden context.
-     *
-     * @return $this
      */
     public function removeHidden(#[SensitiveParameter] array|string $key): self
     {
@@ -329,8 +321,6 @@ final class Context
 
     /**
      * Clear all data from the context, including hidden data.
-     *
-     * @return $this
      */
     public function clearAll(): self
     {
@@ -342,8 +332,6 @@ final class Context
 
     /**
      * Clear all data from the context.
-     *
-     * @return $this
      */
     public function clear(): self
     {
@@ -354,8 +342,6 @@ final class Context
 
     /**
      * Clear all hidden data from the context.
-     *
-     * @return $this
      */
     public function clearHidden(): self
     {

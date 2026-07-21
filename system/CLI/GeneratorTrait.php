@@ -96,14 +96,14 @@ trait GeneratorTrait
      *
      * @internal
      *
-     * @var array<int|string, string|null>
+     * @var array<array-key, string|null>
      */
     private $params = [];
 
     /**
      * Generates a class file from an existing template.
      *
-     * @param array<int|string, string|null> $params
+     * @param array<array-key, string|null> $params
      */
     protected function generateClass(array $params): void
     {
@@ -126,8 +126,8 @@ trait GeneratorTrait
     /**
      * Generate a view file from an existing template.
      *
-     * @param string                         $view   namespaced view name that is generated
-     * @param array<int|string, string|null> $params
+     * @param string                        $view   namespaced view name that is generated
+     * @param array<array-key, string|null> $params
      */
     protected function generateView(string $view, array $params): void
     {

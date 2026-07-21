@@ -109,8 +109,6 @@ final class DataCaster
      *
      * @param array<string, string> $types [field => type]
      *
-     * @return $this
-     *
      * @internal
      */
     public function setTypes(array $types): static

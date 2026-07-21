@@ -41,7 +41,7 @@ class ValidationTest extends CIUnitTestCase
     protected Validation $validation;
 
     /**
-     * @var array<string, array<int|string, array<string, array<string, string>|string>|string>|string>
+     * @var array<string, array<array-key, array<string, array<string, string>|string>|string>|string>
      */
     protected static array $config = [
         'ruleSets' => [

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\TestResponse;
@@ -89,6 +90,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
     {
         $this->assertTrue($this->work());
         $this->assertHeaderEmitted('Content-Security-Policy:');
+        $this->assertHeaderNotEmitted('Content-Security-Policy-Report-Only:');
+        $this->assertHeaderNotEmitted('Reporting-Endpoints:');
     }
 
     #[PreserveGlobalState(false)]
@@ -115,9 +118,60 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
     #[RunInSeparateProcess]
     public function testReportOnly(): void
     {
-        $this->csp->reportOnly(false);
+        $config             = new CSPConfig();
+        $config->reportOnly = true;
+
+        Services::injectMock('csp', new ContentSecurityPolicy($config));
+
+        $this->response = new Response(config(App::class));
+        $this->response->pretend(false);
+        $this->csp = $this->response->getCSP();
+
         $this->assertTrue($this->work());
-        $this->assertHeaderEmitted('Content-Security-Policy:');
+        $this->assertHeaderEmitted('Content-Security-Policy-Report-Only:');
+        $this->assertHeaderNotEmitted('Content-Security-Policy:');
+        $this->assertHeaderNotEmitted('Reporting-Endpoints:');
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testExistingCSPHeaderStringIsPreserved(): void
+    {
+        $this->response->setHeader('Content-Security-Policy', "frame-src 'none'");
+
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy:');
+        $this->assertIsString($header);
+        $this->assertStringContainsString("frame-src 'none', base-uri 'self'", $header);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testExistingCSPHeaderArrayIsPreserved(): void
+    {
+        $this->response->setHeader('Content-Security-Policy', [
+            "frame-src 'none'",
+            "media-src 'none'",
+        ]);
+
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy:');
+        $this->assertIsString($header);
+        $this->assertStringContainsString("frame-src 'none', media-src 'none', base-uri 'self'", $header);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testExistingReportOnlyHeaderIsPreserved(): void
+    {
+        $this->response->setHeader('Content-Security-Policy-Report-Only', "frame-src 'none'");
+
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy-Report-Only:');
+        $this->assertSame("Content-Security-Policy-Report-Only: frame-src 'none'", $header);
     }
 
     #[PreserveGlobalState(false)]
@@ -626,6 +680,23 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $header = $this->getHeaderEmitted('Reporting-Endpoints');
         $this->assertIsString($header);
         $this->assertSame('Reporting-Endpoints: default="http://example.com/csp-reports"', $header);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testExistingReportingEndpointsHeaderIsPreserved(): void
+    {
+        $this->response->setHeader('Reporting-Endpoints', 'existing="http://example.com/existing-reports"');
+        $this->csp->addReportingEndpoints(['default' => 'http://example.com/csp-reports']);
+        $this->csp->setReportToEndpoint('default');
+
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Reporting-Endpoints:');
+        $this->assertSame(
+            'Reporting-Endpoints: existing="http://example.com/existing-reports", default="http://example.com/csp-reports"',
+            $header,
+        );
     }
 
     #[PreserveGlobalState(false)]

@@ -14,11 +14,13 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
  */
+#[BackupGlobals(true)]
 #[Group('Others')]
 final class UserAgentTest extends CIUnitTestCase
 {
@@ -28,6 +30,7 @@ final class UserAgentTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
+        $this->resetServices();
         parent::setUp();
 
         // set a baseline user agent

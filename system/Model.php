@@ -145,7 +145,7 @@ class Model extends BaseModel
      * so that we can capture it (not the builder)
      * and ensure it gets validated first.
      *
-     * @var array{escape: array<int|string, bool|null>, data: row_array}|array{}
+     * @var array{escape: array<array-key, bool|null>, data: row_array}|array{}
      */
     protected $tempData = [];
 
@@ -153,7 +153,7 @@ class Model extends BaseModel
      * Escape array that maps usage of escape
      * flag for every parameter.
      *
-     * @var array<int|string, bool|null>
+     * @var array<array-key, bool|null>
      */
     protected $escape = [];
 

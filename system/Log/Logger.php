@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Log;
 
+use CodeIgniter\Entity\Entity;
 use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Log\Exceptions\LogException;
 use CodeIgniter\Log\Handlers\HandlerInterface;
@@ -389,14 +390,14 @@ class Logger implements LoggerInterface
         $replace = [];
 
         foreach ($context as $key => $val) {
-            // Verify that the 'exception' key is actually an exception
-            // or error, both of which implement the 'Throwable' interface.
-            if ($key === 'exception' && $val instanceof Throwable) {
-                $val = $val->getMessage() . ' ' . clean_path($val->getFile()) . ':' . $val->getLine();
+            $placeholder = '{' . $key . '}';
+
+            if (! str_contains($message, $placeholder)) {
+                continue;
             }
 
             // todo - sanitize input before writing to file?
-            $replace['{' . $key . '}'] = $val;
+            $replace[$placeholder] = $this->stringifyContextValue($key, $val);
         }
 
         $replace['{post_vars}'] = '$_POST: ' . print_r(service('superglobals')->getPostArray(), true);
@@ -426,6 +427,48 @@ class Logger implements LoggerInterface
         }
 
         return strtr($message, $replace);
+    }
+
+    /**
+     * Converts context values to strings without raising PHP errors.
+     */
+    protected function stringifyContextValue(int|string $key, mixed $value): string
+    {
+        // Verify that the 'exception' key is actually an exception
+        // or error, both of which implement the 'Throwable' interface.
+        if ($key === 'exception' && $value instanceof Throwable) {
+            return $value->getMessage() . ' ' . clean_path($value->getFile()) . ':' . $value->getLine();
+        }
+
+        if ($value === null || is_scalar($value)) {
+            return (string) $value;
+        }
+
+        if ($value instanceof Stringable) {
+            try {
+                return (string) $value;
+            } catch (Throwable) {
+                return '[object ' . $value::class . ']';
+            }
+        }
+
+        if (is_array($value)) {
+            return print_r($value, true);
+        }
+
+        if ($value instanceof Entity) {
+            try {
+                return print_r($value->toArray(), true);
+            } catch (Throwable) {
+                return '[object ' . $value::class . ']';
+            }
+        }
+
+        if (is_object($value)) {
+            return '[object ' . $value::class . ']';
+        }
+
+        return '[' . get_debug_type($value) . ']';
     }
 
     /**

@@ -20,6 +20,7 @@ use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use DateTime;
 use DateTimeZone;
+use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
@@ -28,6 +29,7 @@ use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 /**
  * @internal
  */
+#[BackupGlobals(true)]
 #[Group('SeparateProcess')]
 final class DownloadResponseTest extends CIUnitTestCase
 {

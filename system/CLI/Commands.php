@@ -75,7 +75,7 @@ class Commands
      *
      * @deprecated 4.8.0 Use {@see runLegacy()} instead.
      *
-     * @param array<int|string, string|null> $params
+     * @param array<array-key, string|null> $params
      *
      * @return int
      */

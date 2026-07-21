@@ -276,8 +276,6 @@ class SiteURI extends URI
 
     /**
      * Sets the path portion of the URI based on segments.
-     *
-     * @return $this
      */
     protected function refreshPath(): self
     {

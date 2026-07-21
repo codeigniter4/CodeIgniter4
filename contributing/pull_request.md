@@ -192,11 +192,16 @@ specific examples to pay attention to:
 Your PRs need to be mergeable and GPG-signed before they will be
 considered.
 
-We suggest that you synchronize your repository's `develop` branch with
-that in the main repository, and then your feature branch and your
-develop branch, before submitting a PR. You will need to resolve any
-merge conflicts introduced by changes incorporated since you started
-working on your contribution.
+Before submitting a PR, rebase your contribution branch onto the latest
+appropriate branch from the main repository. Bug fixes should be rebased onto
+`upstream/develop`, while features and enhancements should be rebased onto the
+applicable `upstream/4.x` branch. See
+[Configuring Upstream and Rebasing](./workflow.md#configuring-upstream-and-rebasing)
+for the commands and conflict-resolution steps.
+
+Do not merge the target branch into your contribution branch. This may add merge
+commits that make the PR and project history harder to follow. Rebasing keeps
+the commit history linear and easier to review.
 
 ### Branching
 
@@ -328,10 +333,11 @@ GitHub means "making a copy of that repo to your account" and "cloning" means
     tests yet, please create one.
    - `> vendor/bin/phpunit tests/system/path/to/file/you/modified`
    - Make sure the tests pass to have a higher chance of merging.
-11. [Push](https://docs.github.com/en/github/using-git/pushing-commits-to-a-remote-repository) your contribution branch to your fork.
+11. [Rebase your branch](./workflow.md#configuring-upstream-and-rebasing) onto the appropriate upstream branch.
+12. [Push](https://docs.github.com/en/github/using-git/pushing-commits-to-a-remote-repository) your contribution branch to your fork.
    - `> git push origin <new-branch-name>`
-12. Send a [pull request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork).
-13. Label your pull request with the appropriate label if you can.
+13. Send a [pull request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork).
+14. Label your pull request with the appropriate label if you can.
 
 See [Contribution workflow](./workflow.md) for Git workflow details.
 
@@ -340,8 +346,8 @@ the team will respond. If your change fails to meet the guidelines, it will be
 rejected or feedback will be provided to help you improve it.
 
 Once the maintainer handling your pull request is satisfied with it, they will
-approve the pull request and merge it into the "develop" branch. Your patch will
-now be part of the next release!
+approve and merge the pull request into the appropriate target branch. Your
+patch will now be part of the next release!
 
 ## Translating System Messages
 

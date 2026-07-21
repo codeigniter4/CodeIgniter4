@@ -100,7 +100,7 @@ interface ConnectionInterface
      * Should automatically handle different connections for read/write
      * queries if needed.
      *
-     * @param array<int|string, mixed>|string|null $binds
+     * @param array<array-key, mixed>|string|null $binds
      *
      * @return BaseResult<TConnection, TResult>|bool|Query
      */
@@ -124,8 +124,6 @@ interface ConnectionInterface
      * Register a callback to run after the outermost transaction commits.
      *
      * @param callable(): void $callback
-     *
-     * @return $this
      */
     public function afterCommit(callable $callback): static;
 
@@ -133,8 +131,6 @@ interface ConnectionInterface
      * Register a callback to run after the outermost transaction rolls back.
      *
      * @param callable(): void $callback
-     *
-     * @return $this
      */
     public function afterRollback(callable $callback): static;
 

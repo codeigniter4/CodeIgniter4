@@ -48,13 +48,10 @@ trait MessageTrait
     // --------------------------------------------------------------------
     // Body
     // --------------------------------------------------------------------
-
     /**
      * Sets the body of the current message.
      *
      * @param string $data
-     *
-     * @return $this
      */
     public function setBody($data): self
     {
@@ -67,8 +64,6 @@ trait MessageTrait
      * Appends data to the body of the current message.
      *
      * @param string $data
-     *
-     * @return $this
      */
     public function appendBody($data): self
     {
@@ -144,8 +139,6 @@ trait MessageTrait
      * Sets a header and it's value.
      *
      * @param array|string|null $value
-     *
-     * @return $this
      */
     public function setHeader(string $name, $value): self
     {
@@ -191,8 +184,6 @@ trait MessageTrait
 
     /**
      * Removes a header from the list of headers we track.
-     *
-     * @return $this
      */
     public function removeHeader(string $name): self
     {
@@ -205,8 +196,6 @@ trait MessageTrait
     /**
      * Adds an additional header value to any headers that accept
      * multiple values (i.e. are an array or implement ArrayAccess)
-     *
-     * @return $this
      */
     public function appendHeader(string $name, ?string $value): self
     {
@@ -225,8 +214,6 @@ trait MessageTrait
      * Adds a header (not a header value) with the same name.
      * Use this only when you set multiple headers with the same name,
      * typically, for `Set-Cookie`.
-     *
-     * @return $this
      */
     public function addHeader(string $name, string $value): static
     {
@@ -251,8 +238,6 @@ trait MessageTrait
     /**
      * Adds an additional header value to any headers that accept
      * multiple values (i.e. are an array or implement ArrayAccess)
-     *
-     * @return $this
      */
     public function prependHeader(string $name, string $value): self
     {
@@ -276,8 +261,6 @@ trait MessageTrait
 
     /**
      * Sets the HTTP protocol version.
-     *
-     * @return $this
      *
      * @throws HTTPException For invalid protocols
      */

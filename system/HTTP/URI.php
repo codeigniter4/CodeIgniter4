@@ -572,7 +572,7 @@ class URI implements Stringable
      * @param int        $number Segment number starting at 1
      * @param int|string $value
      *
-     * @return $this
+     * @return URI
      */
     public function setSegment(int $number, $value)
     {
@@ -798,8 +798,6 @@ class URI implements Stringable
 
     /**
      * Sets the path portion of the URI based on segments.
-     *
-     * @return $this
      */
     protected function refreshPath(): self
     {

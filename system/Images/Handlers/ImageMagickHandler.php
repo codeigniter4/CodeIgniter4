@@ -571,8 +571,6 @@ class ImageMagickHandler extends BaseHandler
     /**
      * Clears metadata from the image.
      *
-     * @return $this
-     *
      * @throws ImagickException
      */
     public function clearMetadata(): static

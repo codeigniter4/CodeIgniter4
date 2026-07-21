@@ -1,4 +1,4 @@
-# total 1095 errors
+# total 1094 errors
 
 parameters:
     ignoreErrors:
@@ -3929,11 +3929,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\View\\Cells\\Cell\:\:getNonPublicProperties\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/View/Cells/Cell.php
-
-        -
-            message: '#^Method CodeIgniter\\View\\Cells\\Cell\:\:getPublicProperties\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/View/Cells/Cell.php
 

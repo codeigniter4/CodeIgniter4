@@ -2032,7 +2032,7 @@ abstract class BaseModel
      *
      * @param object|row_array|null $row
      *
-     * @return array<int|string, mixed>
+     * @return array<array-key, mixed>
      *
      * @throws DataException
      * @throws InvalidArgumentException
@@ -2124,7 +2124,7 @@ abstract class BaseModel
     /**
      * Provides direct access to method in the database connection.
      *
-     * @param array<int|string, mixed> $params
+     * @param array<array-key, mixed> $params
      *
      * @return mixed
      */

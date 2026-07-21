@@ -1,0 +1,38 @@
+#############
+Version 4.7.5
+#############
+
+Release Date: Unreleased
+
+**4.7.5 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+********
+BREAKING
+********
+
+***************
+Message Changes
+***************
+
+*******
+Changes
+*******
+
+************
+Deprecations
+************
+
+**********
+Bugs Fixed
+**********
+
+- **Content Security Policy:** Fixed a bug where empty ``Content-Security-Policy``, ``Content-Security-Policy-Report-Only``, and ``Reporting-Endpoints`` response headers were generated when no corresponding values existed.
+- **Logger:** Fixed a bug where interpolating a log message with array or non-stringable context values could raise PHP warnings or errors.
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

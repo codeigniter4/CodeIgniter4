@@ -820,7 +820,7 @@ abstract class BaseConnection implements ConnectionInterface
      * Should automatically handle different connections for read/write
      * queries if needed.
      *
-     * @param array<int|string, mixed>|string|null $binds
+     * @param array<array-key, mixed>|string|null $binds
      *
      * @return BaseResult<TConnection, TResult>|bool|Query
      *
@@ -1051,8 +1051,6 @@ abstract class BaseConnection implements ConnectionInterface
      * If no transaction is active, the callback runs immediately.
      *
      * @param callable(): void $callback
-     *
-     * @return $this
      */
     public function afterCommit(callable $callback): static
     {
@@ -1073,8 +1071,6 @@ abstract class BaseConnection implements ConnectionInterface
      * If no transaction is active, the callback is not run.
      *
      * @param callable(): void $callback
-     *
-     * @return $this
      */
     public function afterRollback(callable $callback): static
     {

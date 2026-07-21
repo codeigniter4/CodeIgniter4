@@ -25,9 +25,9 @@ Cookie
 # Entity
 Events
 Files
-# Filters
+Filters
 Format
-# HTTP
+HTTP
 # Helpers
 Honeypot
 HotReloader

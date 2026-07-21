@@ -600,8 +600,6 @@ class BaseBuilder
      * Generates the FROM portion of the query
      *
      * @param array|string $from
-     *
-     * @return $this
      */
     public function from($from, bool $overwrite = false): self
     {
@@ -631,8 +629,6 @@ class BaseBuilder
     /**
      * @param BaseBuilder $from  Expected subquery
      * @param string      $alias Subquery alias
-     *
-     * @return $this
      */
     public function fromSubquery(BaseBuilder $from, string $alias): self
     {
@@ -792,7 +788,6 @@ class BaseBuilder
      * @param non-empty-string $second Second column name
      * @param bool|null        $escape Whether to protect identifiers
      *
-     * @return $this
      *
      * @throws InvalidArgumentException
      */
@@ -808,7 +803,6 @@ class BaseBuilder
      * @param non-empty-string $second Second column name
      * @param bool|null        $escape Whether to protect identifiers
      *
-     * @return $this
      *
      * @throws InvalidArgumentException
      */
@@ -821,8 +815,6 @@ class BaseBuilder
      * Generates a WHERE EXISTS subquery.
      *
      * @param BaseBuilder|(Closure(BaseBuilder): BaseBuilder) $subquery
-     *
-     * @return $this
      */
     public function whereExists($subquery): static
     {
@@ -833,8 +825,6 @@ class BaseBuilder
      * Generates an OR WHERE EXISTS subquery.
      *
      * @param BaseBuilder|(Closure(BaseBuilder): BaseBuilder) $subquery
-     *
-     * @return $this
      */
     public function orWhereExists($subquery): static
     {
@@ -845,8 +835,6 @@ class BaseBuilder
      * Generates a WHERE NOT EXISTS subquery.
      *
      * @param BaseBuilder|(Closure(BaseBuilder): BaseBuilder) $subquery
-     *
-     * @return $this
      */
     public function whereNotExists($subquery): static
     {
@@ -857,8 +845,6 @@ class BaseBuilder
      * Generates an OR WHERE NOT EXISTS subquery.
      *
      * @param BaseBuilder|(Closure(BaseBuilder): BaseBuilder) $subquery
-     *
-     * @return $this
      */
     public function orWhereNotExists($subquery): static
     {
@@ -875,7 +861,6 @@ class BaseBuilder
      * @param non-empty-string     $type
      * @param bool|null            $escape Whether to protect identifiers
      *
-     * @return $this
      *
      * @throws InvalidArgumentException
      */
@@ -928,7 +913,6 @@ class BaseBuilder
      *
      * @param array<array-key, mixed>|null $values The range values searched on
      *
-     * @return $this
      *
      * @throws InvalidArgumentException
      */
@@ -943,7 +927,6 @@ class BaseBuilder
      *
      * @param array<array-key, mixed>|null $values The range values searched on
      *
-     * @return $this
      *
      * @throws InvalidArgumentException
      */
@@ -958,7 +941,6 @@ class BaseBuilder
      *
      * @param array<array-key, mixed>|null $values The range values searched on
      *
-     * @return $this
      *
      * @throws InvalidArgumentException
      */
@@ -973,7 +955,6 @@ class BaseBuilder
      *
      * @param array<array-key, mixed>|null $values The range values searched on
      *
-     * @return $this
      *
      * @throws InvalidArgumentException
      */
@@ -988,7 +969,6 @@ class BaseBuilder
      *
      * @param array<array-key, mixed>|null $values The range values searched on
      *
-     * @return $this
      *
      * @throws InvalidArgumentException
      */
@@ -1003,7 +983,6 @@ class BaseBuilder
      *
      * @param array<array-key, mixed>|null $values The range values searched on
      *
-     * @return $this
      *
      * @throws InvalidArgumentException
      */
@@ -1018,7 +997,6 @@ class BaseBuilder
      *
      * @param array<array-key, mixed>|null $values The range values searched on
      *
-     * @return $this
      *
      * @throws InvalidArgumentException
      */
@@ -1033,7 +1011,6 @@ class BaseBuilder
      *
      * @param array<array-key, mixed>|null $values The range values searched on
      *
-     * @return $this
      *
      * @throws InvalidArgumentException
      */
@@ -1056,7 +1033,6 @@ class BaseBuilder
      * @param non-empty-string|null        $key
      * @param array<array-key, mixed>|null $values The range values searched on
      *
-     * @return $this
      *
      * @throws InvalidArgumentException
      */
@@ -1097,7 +1073,6 @@ class BaseBuilder
      *
      * @param BaseBuilder|(Closure(BaseBuilder): BaseBuilder) $subquery
      *
-     * @return $this
      *
      * @throws InvalidArgumentException
      */
@@ -1416,7 +1391,6 @@ class BaseBuilder
      *
      * @param list<non-empty-string|RawSql> $fields
      *
-     * @return $this
      *
      * @throws InvalidArgumentException
      */
@@ -1456,7 +1430,6 @@ class BaseBuilder
      *
      * @param list<non-empty-string|RawSql> $fields
      *
-     * @return $this
      *
      * @throws InvalidArgumentException
      */
@@ -1533,7 +1506,6 @@ class BaseBuilder
     /**
      * @param list<non-empty-string|RawSql> $fields
      *
-     * @return $this
      *
      * @throws InvalidArgumentException
      */
@@ -3451,7 +3423,7 @@ class BaseBuilder
     /**
      * Compiles a delete string and runs the query
      *
-     * @param array<int|string, mixed>|RawSql|string $where
+     * @param array<array-key, mixed>|RawSql|string $where
      *
      * @return bool|string Returns a SQL string if in test mode.
      *

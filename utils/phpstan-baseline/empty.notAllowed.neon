@@ -1,4 +1,4 @@
-# total 206 errors
+# total 199 errors
 
 parameters:
     ignoreErrors:
@@ -194,7 +194,7 @@ parameters:
 
         -
             message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-            count: 10
+            count: 3
             path: ../../system/HTTP/CURLRequest.php
 
         -
