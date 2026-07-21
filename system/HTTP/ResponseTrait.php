@@ -405,10 +405,10 @@ trait ResponseTrait
     private function closeOutputBuffers(): void
     {
         $status = ob_get_status(true);
-        $level = count($status);
-        $flags = PHP_OUTPUT_HANDLER_REMOVABLE | PHP_OUTPUT_HANDLER_FLUSHABLE;
+        $level  = count($status);
+        $flags  = PHP_OUTPUT_HANDLER_REMOVABLE | PHP_OUTPUT_HANDLER_FLUSHABLE;
 
-        while ($level-- > 0 && ($s = $status[$level]) && (!isset($s['del']) ? !isset($s['flags']) || ($s['flags'] & $flags) === $flags : $s['del'])) {
+        while ($level-- > 0 && ($s = $status[$level]) && (! isset($s['del']) ? ! isset($s['flags']) || ($s['flags'] & $flags) === $flags : $s['del'])) {
             ob_end_flush();
         }
     }
