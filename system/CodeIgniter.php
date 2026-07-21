@@ -297,6 +297,8 @@ class CodeIgniter
 
         $this->sendResponse();
 
+        Events::trigger('post_response');
+
         return null;
     }
 
