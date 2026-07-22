@@ -397,6 +397,23 @@ interface ResponseInterface extends MessageInterface
      */
     public function download(string $filename = '', $data = '', bool $setMime = false);
 
+    /**
+     * Creates a response that streams its body to the client as it is
+     * generated, instead of buffering the complete body first.
+     *
+     * @param (callable(StreamResponse): void)|iterable<string> $callbackOrChunks A callback that
+     *                                                                            streams output via write(), or an iterable of
+     *                                                                            string chunks to be written in order
+     */
+    public function stream(callable|iterable $callbackOrChunks): StreamResponse;
+
+    /**
+     * Creates a response for streaming Server-Sent Events (SSE).
+     *
+     * @param callable(SSEResponse): void $callback
+     */
+    public function eventStream(callable $callback): SSEResponse;
+
     // --------------------------------------------------------------------
     // CSP Methods
     // --------------------------------------------------------------------

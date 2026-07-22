@@ -394,7 +394,7 @@ trait ResponseTrait
      * need it avoids the cost of constructing a 1000+ line service on every
      * request.
      */
-    private function shouldFinalizeCsp(): bool
+    protected function shouldFinalizeCsp(): bool
     {
         // Developer already touched CSP through getCSP(); respect it.
         if ($this->CSP !== null) {
@@ -808,6 +808,29 @@ trait ResponseTrait
         $response->setBinary($data);
 
         return $response;
+    }
+
+    /**
+     * Creates a response that streams its body to the client as it is
+     * generated, instead of buffering the complete body first.
+     *
+     * @param (callable(StreamResponse): void)|iterable<string> $callbackOrChunks A callback that
+     *                                                                            streams output via write(), or an iterable of
+     *                                                                            string chunks to be written in order
+     */
+    public function stream(callable|iterable $callbackOrChunks): StreamResponse
+    {
+        return (new StreamResponse($callbackOrChunks))->setProtocolVersion($this->getProtocolVersion());
+    }
+
+    /**
+     * Creates a response for streaming Server-Sent Events (SSE).
+     *
+     * @param callable(SSEResponse): void $callback
+     */
+    public function eventStream(callable $callback): SSEResponse
+    {
+        return (new SSEResponse($callback))->setProtocolVersion($this->getProtocolVersion());
     }
 
     public function getCSP(): ContentSecurityPolicy

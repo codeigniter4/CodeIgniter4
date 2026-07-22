@@ -5,7 +5,7 @@ use CodeIgniter\HTTP\SSEResponse;
 
 $user_id = session()->get('user_id');
 
-return new SSEResponse(static function (SSEResponse $sse) use ($user_id) {
+return $this->response->eventStream(static function (SSEResponse $sse) use ($user_id) {
     // Stream live notifications for the current user
     $notificationModel = model(NotificationModel::class);
 
