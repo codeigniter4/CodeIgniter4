@@ -12,7 +12,7 @@ applyTo: "user_guide_src/**/*.rst"
   precisely.
 - Determine the PR target branch before describing compatibility:
   `develop` follows the patch-release policy, while `4.*` follows the
-  minor-release policy in `.github/copilot-instructions.md`.
+  minor-release policy in the root `AGENTS.md`.
 - Behavior changes, enhancements, deprecations, and important bug fixes may
   require a changelog entry.
 - Changes requiring users to modify code or configuration may require an

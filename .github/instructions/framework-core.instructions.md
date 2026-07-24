@@ -6,8 +6,8 @@ applyTo: "system/**/*.php"
 
 - Assume public and protected symbols are extension points used by third-party
   applications unless they are clearly marked internal.
-- Apply the target-branch compatibility policy from
-  `.github/copilot-instructions.md` before changing any extension point.
+- Apply the target-branch compatibility policy from the root `AGENTS.md`
+  before changing any extension point.
 - Before changing a signature or behavior, inspect parent classes, implemented
   interfaces, traits, service factories, configuration, and corresponding
   tests.
