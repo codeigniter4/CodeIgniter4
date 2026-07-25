@@ -819,7 +819,7 @@ class CLI
         if ($thisStep !== false) {
             // Don't allow div by zero or negative numbers....
             $thisStep   = abs($thisStep);
-            $totalSteps = $totalSteps < 1 ? 1 : $totalSteps;
+            $totalSteps = max(1, $totalSteps);
 
             $percent = (int) (($thisStep / $totalSteps) * 100);
             $step    = (int) round($percent / 10);
