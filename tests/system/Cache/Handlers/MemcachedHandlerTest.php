@@ -26,18 +26,6 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('CacheLive')]
 final class MemcachedHandlerTest extends AbstractHandlerTestCase
 {
-    /**
-     * @return list<string>
-     */
-    private static function getKeyArray(): array
-    {
-        return [
-            self::$key1,
-            self::$key2,
-            self::$key3,
-        ];
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -51,9 +39,11 @@ final class MemcachedHandlerTest extends AbstractHandlerTestCase
 
     protected function tearDown(): void
     {
-        foreach (self::getKeyArray() as $key) {
-            $this->handler->delete($key);
+        if (isset($this->handler)) {
+            $this->handler->clean();
         }
+
+        parent::tearDown();
     }
 
     public function testNew(): void

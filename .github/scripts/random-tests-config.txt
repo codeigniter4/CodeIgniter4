@@ -11,7 +11,7 @@
 API
 AutoReview
 Autoloader
-# Cache
+Cache
 CLI
 Commands
 Config
@@ -20,7 +20,7 @@ Cookie
 # DataConverter
 # Database
 # Debug
-# Email
+Email
 # Encryption
 # Entity
 Events
