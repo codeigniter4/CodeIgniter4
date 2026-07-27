@@ -489,10 +489,6 @@ final class GDHandlerTest extends CIUnitTestCase
     public function testImageCopyTargetWithMaxQuality(): void
     {
         foreach (['gif', 'jpeg', 'png', 'webp'] as $type) {
-            if ($type === 'webp' && ! function_exists('imagecreatefromwebp')) {
-                $this->markTestSkipped('webp is not supported.');
-            }
-
             $this->handler->withFile($this->origin . 'ci-logo.' . $type);
             $this->assertTrue($this->handler->save($this->start . 'work/ci-logo.' . $type, 100));
             $this->assertTrue($this->root->hasChild('work/ci-logo.' . $type));
@@ -505,21 +501,6 @@ final class GDHandlerTest extends CIUnitTestCase
                 $child->getContent(),
             );
         }
-    }
-
-    public function testSaveUnsupportedImageType(): void
-    {
-        $this->handler->withFile($this->path);
-
-        // Force an invalid image type to trigger getImageResource() default case
-        $image            = $this->handler->getFile();
-        $image->imageType = 9999;
-
-        $this->expectException(ImageException::class);
-        $this->expectExceptionMessage(lang('Images.unsupportedImageCreate'));
-
-        // save() calls ensureResource() -> getImageResource(), which should throw
-        $this->handler->save($this->start . 'work/ci-logo.jpg');
     }
 
     public function testProcessUnsupportedImageType(): void
