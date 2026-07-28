@@ -38,11 +38,6 @@ abstract class LiveModelTestCase extends CIUnitTestCase
 
     protected $seed = CITestSeeder::class;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
     protected function tearDown(): void
     {
         parent::tearDown();

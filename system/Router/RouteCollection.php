@@ -1335,7 +1335,7 @@ class RouteCollection implements RouteCollectionInterface
 
             // Ensure that the param we're inserting matches
             // the expected param type.
-            $pos  = strpos($from, $pattern);
+            $pos  = strpos($from, (string) $pattern);
             $from = substr_replace($from, $params[$index], $pos, strlen($pattern));
         }
 
@@ -1397,7 +1397,7 @@ class RouteCollection implements RouteCollectionInterface
 
             // Ensure that the param we're inserting matches
             // the expected param type.
-            $pos  = strpos($from, $placeholder);
+            $pos  = strpos($from, (string) $placeholder);
             $from = substr_replace($from, (string) $params[$index], $pos, strlen($placeholder));
         }
 
