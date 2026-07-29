@@ -29,11 +29,6 @@ final class TestResponseTest extends CIUnitTestCase
     private ?TestResponse $testResponse = null;
     private Response $response;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
     #[DataProvider('provideHttpStatusCodes')]
     public function testIsOK(int $code, bool $isOk): void
     {
