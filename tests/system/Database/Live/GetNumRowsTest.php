@@ -30,28 +30,6 @@ final class GetNumRowsTest extends CIUnitTestCase
     protected $seed    = CITestSeeder::class;
 
     /**
-     * Added as instructed at https://codeigniter4.github.io/userguide/testing/database.html#the-test-class
-     * {@inheritDoc}
-     *
-     * @see \CodeIgniter\Test\CIDatabaseTestCase::setUp()
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
-    /**
-     * Added as instructed at https://codeigniter4.github.io/userguide/testing/database.html#the-test-class
-     * {@inheritDoc}
-     *
-     * @see \CodeIgniter\Test\CIDatabaseTestCase::tearDown()
-     */
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-    }
-
-    /**
      * tests newly added ResultInterface::getNumRows with a live db
      */
     public function testGetRowNum(): void
