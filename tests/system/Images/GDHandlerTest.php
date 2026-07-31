@@ -19,7 +19,9 @@ use CodeIgniter\Images\Handlers\BaseHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
+use org\bovigo\vfs\vfsStreamFile;
 use PHPUnit\Framework\Attributes\Group;
+use Throwable;
 
 /**
  * Unit testing for the GD image handler.
@@ -462,5 +464,57 @@ final class GDHandlerTest extends CIUnitTestCase
         $result = $this->handler->clearMetadata();
 
         $this->assertSame($this->handler, $result);
+    }
+
+    public function testSaveFailed(): void
+    {
+        foreach (['gif', 'jpeg', 'png', 'webp'] as $type) {
+            if ($type === 'webp' && ! function_exists('imagecreatefromwebp')) {
+                $this->markTestSkipped('webp is not supported.');
+            }
+
+            $this->handler->withFile($this->origin . 'ci-logo.' . $type);
+            $this->handler->getResource(); // make sure resource is loaded
+
+            try {
+                $this->handler->save($this->start . 'wontwork/ci-logo.' . $type);
+                $this->fail('Exception should have been thrown for ' . $type);
+            } catch (Throwable $e) {
+                $this->assertInstanceOf(ImageException::class, $e);
+                $this->assertSame(lang('Images.saveFailed'), $e->getMessage());
+            }
+        }
+    }
+
+    public function testImageCopyTargetWithMaxQuality(): void
+    {
+        foreach (['gif', 'jpeg', 'png', 'webp'] as $type) {
+            $this->handler->withFile($this->origin . 'ci-logo.' . $type);
+            $this->assertTrue($this->handler->save($this->start . 'work/ci-logo.' . $type, 100));
+            $this->assertTrue($this->root->hasChild('work/ci-logo.' . $type));
+
+            /** @var vfsStreamFile $child */
+            $child = $this->root->getChild('work/ci-logo.' . $type);
+
+            $this->assertSame(
+                file_get_contents($this->origin . 'ci-logo.' . $type),
+                $child->getContent(),
+            );
+        }
+    }
+
+    public function testProcessUnsupportedImageType(): void
+    {
+        $this->handler->withFile($this->path);
+
+        // Force an invalid image type to trigger getImageResource() default case
+        $image            = $this->handler->getFile();
+        $image->imageType = 9999;
+
+        $this->expectException(ImageException::class);
+        $this->expectExceptionMessage(lang('Images.unsupportedImageCreate'));
+
+        // resize() calls ensureResource() -> getImageResource(), which should throw
+        $this->handler->resize(10, 10);
     }
 }
