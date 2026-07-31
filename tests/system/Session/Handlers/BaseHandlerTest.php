@@ -18,10 +18,12 @@ use CodeIgniter\Test\TestLogger;
 use Config\Cookie as CookieConfig;
 use Config\Logger as LoggerConfig;
 use Config\Session as SessionConfig;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
  */
+#[Group('Others')]
 final class BaseHandlerTest extends CIUnitTestCase
 {
     private string $sessionName     = 'ci_session';
