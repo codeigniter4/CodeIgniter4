@@ -73,6 +73,7 @@ Method Signature Changes
 - **Database:** The following methods have had their signatures updated to remove deprecated parameters:
     - ``CodeIgniter\Database\Forge::_createTable()`` no longer accepts the deprecated ``$ifNotExists`` parameter. The method signature is now ``_createTable(string $table, array $attributes)``.
 - **Model:** ``CodeIgniter\BaseModel`` now requires the ``chunkRows()``, ``chunkById()``, and ``chunkRowsById()`` methods. Custom classes extending ``BaseModel`` directly must implement them.
+- **Session:** The ``$max_lifetime`` parameter of the following ``gc()`` methods now has the native ``int`` type, matching ``SessionHandlerInterface``: ``ArrayHandler::gc()``, ``DatabaseHandler::gc()``, ``FileHandler::gc()``, ``MemcachedHandler::gc()``, ``PostgreHandler::gc()``, ``RedisHandler::gc()``.
 
 Property Scope Changes
 ======================

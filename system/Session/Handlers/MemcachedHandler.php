@@ -255,7 +255,7 @@ class MemcachedHandler extends BaseHandler
      * @param int $max_lifetime Sessions that have not updated
      *                          for the last max_lifetime seconds will be removed.
      */
-    public function gc($max_lifetime): int
+    public function gc(int $max_lifetime): int
     {
         return 1;
     }
