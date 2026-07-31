@@ -1,4 +1,4 @@
-# total 199 errors
+# total 198 errors
 
 parameters:
     ignoreErrors:
@@ -264,7 +264,7 @@ parameters:
 
         -
             message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-            count: 2
+            count: 1
             path: ../../system/Router/Router.php
 
         -

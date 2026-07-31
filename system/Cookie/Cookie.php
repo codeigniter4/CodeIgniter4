@@ -366,7 +366,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     {
         $maxAge = $this->expires - Time::now()->getTimestamp();
 
-        return $maxAge >= 0 ? $maxAge : 0;
+        return max($maxAge, 0);
     }
 
     /**

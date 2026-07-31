@@ -712,7 +712,7 @@ class Router implements RouterInterface
 
         // $this->method already contains the default method name,
         // so don't overwrite it with emptiness.
-        if (! empty($method)) {
+        if (! in_array($method, [null, '', '0'], true)) {
             $this->method = $method;
         }
 

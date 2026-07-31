@@ -28,30 +28,24 @@ use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 #[RequiresPhpExtension('apcu')]
 final class ApcuHandlerTest extends AbstractHandlerTestCase
 {
-    /**
-     * @return list<string>
-     */
-    private static function getKeyArray(): array
-    {
-        return [
-            self::$key1,
-            self::$key2,
-            self::$key3,
-        ];
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
+
+        if (! function_exists('apcu_enabled') || ! apcu_enabled()) {
+            $this->markTestSkipped('APCu extension is not loaded or not enabled in CLI.');
+        }
 
         $this->handler = CacheFactory::getHandler(new Cache(), 'apcu');
     }
 
     protected function tearDown(): void
     {
-        foreach (self::getKeyArray() as $key) {
-            $this->handler->delete($key);
+        if (isset($this->handler)) {
+            $this->handler->clean();
         }
+
+        parent::tearDown();
     }
 
     public function testNew(): void

@@ -16,7 +16,7 @@ namespace Tests\Support\Commands\Modern;
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
 
-#[Command(name: 'test:fixture', group: 'Fixtures', description: 'A command used as a fixture for testing purposes.')]
+#[Command(name: 'test:fixture', description: 'A command used as a fixture for testing purposes.', group: 'Fixtures')]
 final class TestFixtureCommand extends AbstractCommand
 {
     protected function execute(array $arguments, array $options): int

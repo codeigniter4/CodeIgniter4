@@ -222,7 +222,7 @@ class CLIRequest extends Request
     {
         @trigger_error(sprintf('The %s() method is deprecated and no longer used.', __METHOD__), E_USER_DEPRECATED);
 
-        $args = $this->getServer('argv');
+        $args = $this->getServer('argv') ?? [];
         array_shift($args); // Scrap index.php
 
         $optionValue = false;

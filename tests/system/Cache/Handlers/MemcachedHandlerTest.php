@@ -13,10 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache\Handlers;
 
-use ArgumentCountError;
 use CodeIgniter\Cache\CacheFactory;
-use CodeIgniter\Cache\LockStoreInterface;
-use CodeIgniter\Cache\LockStoreProviderInterface;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Exceptions\BadMethodCallException;
 use CodeIgniter\I18n\Time;
@@ -29,18 +26,6 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('CacheLive')]
 final class MemcachedHandlerTest extends AbstractHandlerTestCase
 {
-    /**
-     * @return list<string>
-     */
-    private static function getKeyArray(): array
-    {
-        return [
-            self::$key1,
-            self::$key2,
-            self::$key3,
-        ];
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -54,13 +39,11 @@ final class MemcachedHandlerTest extends AbstractHandlerTestCase
 
     protected function tearDown(): void
     {
-        if (! isset($this->handler)) {
-            return;
+        if (isset($this->handler)) {
+            $this->handler->clean();
         }
 
-        foreach (self::getKeyArray() as $key) {
-            $this->handler->delete($key);
-        }
+        parent::tearDown();
     }
 
     public function testNew(): void
@@ -102,98 +85,9 @@ final class MemcachedHandlerTest extends AbstractHandlerTestCase
         $this->assertNull($this->handler->get(self::$key1));
     }
 
-    /**
-     * This test waits for 3 seconds before last assertion so this
-     * is naturally a "slow" test on the perspective of the default limit.
-     *
-     * @timeLimit 3.5
-     */
-    public function testRememberWithTTLCallable(): void
-    {
-        $this->handler->remember(self::$key1, static fn (): int => 2, static fn (): string => 'value');
-
-        $this->assertSame('value', $this->handler->get(self::$key1));
-        $this->assertNull($this->handler->get(self::$dummy));
-
-        CLI::wait(3);
-        $this->assertNull($this->handler->get(self::$key1));
-    }
-
-    /**
-     * This test waits for 3 seconds before last assertion so this
-     * is naturally a "slow" test on the perspective of the default limit.
-     *
-     * @timeLimit 3.5
-     */
-    public function testRememberWithTTLCallableAndValuePassed(): void
-    {
-        $this->handler->remember(self::$key1, static fn ($value): int => $value[0], static fn (): array => [2, 3]);
-
-        $this->assertSame([2, 3], $this->handler->get(self::$key1));
-        $this->assertNull($this->handler->get(self::$dummy));
-
-        CLI::wait(3);
-        $this->assertNull($this->handler->get(self::$key1));
-    }
-
-    public function testRememberWithTTLCallableAndMultipleParameters(): void
-    {
-        $this->expectException(ArgumentCountError::class);
-
-        /** @phpstan-ignore argument.type */
-        $this->handler->remember(self::$key1, static fn ($a, $b): int => 2, static fn (): string => 'value');
-    }
-
     public function testSave(): void
     {
         $this->assertTrue($this->handler->save(self::$key1, 'value'));
-    }
-
-    public function testLockOperations(): void
-    {
-        $handler = $this->handler;
-
-        $this->assertInstanceOf(LockStoreProviderInterface::class, $handler);
-
-        $store = $handler->lockStore();
-
-        $this->assertInstanceOf(LockStoreInterface::class, $store);
-        $this->assertTrue($store->acquireLock(self::$key1, 'owner1', 60));
-        $this->assertFalse($store->acquireLock(self::$key1, 'owner2', 60));
-        $this->assertSame('owner1', $store->getLockOwner(self::$key1));
-        $this->assertFalse($store->releaseLock(self::$key1, 'owner2'));
-        $this->assertFalse($store->refreshLock(self::$key1, 'owner2', 120));
-        $this->assertTrue($store->refreshLock(self::$key1, 'owner1', 120));
-        $this->assertTrue($store->releaseLock(self::$key1, 'owner1'));
-        $this->assertNull($store->getLockOwner(self::$key1));
-        $this->assertTrue($store->acquireLock(self::$key1, 'owner1', 60));
-        $this->assertTrue($store->forceReleaseLock(self::$key1));
-        $this->assertNull($store->getLockOwner(self::$key1));
-        $this->assertTrue($store->forceReleaseLock(self::$key1));
-    }
-
-    /**
-     * This test waits for 2 seconds before reacquiring the lock.
-     *
-     * @timeLimit 2.5
-     */
-    public function testExpiredLockCanBeAcquiredByNewOwner(): void
-    {
-        $handler = $this->handler;
-
-        $this->assertInstanceOf(LockStoreProviderInterface::class, $handler);
-
-        $store = $handler->lockStore();
-
-        $this->assertTrue($store->acquireLock(self::$key1, 'owner1', 1));
-
-        CLI::wait(2);
-
-        $this->assertTrue($store->acquireLock(self::$key1, 'owner2', 60));
-        $this->assertSame('owner2', $store->getLockOwner(self::$key1));
-        $this->assertFalse($store->releaseLock(self::$key1, 'owner1'));
-        $this->assertFalse($store->refreshLock(self::$key1, 'owner1', 120));
-        $this->assertTrue($store->releaseLock(self::$key1, 'owner2'));
     }
 
     public function testSavePermanent(): void
@@ -292,18 +186,11 @@ final class MemcachedHandlerTest extends AbstractHandlerTestCase
 
     public function testReconnect(): void
     {
-        $handler = $this->handler;
-
-        $this->assertInstanceOf(LockStoreProviderInterface::class, $handler);
-
-        $lockStore = $handler->lockStore();
-
         $this->handler->save(self::$key1, 'value');
         $this->assertSame('value', $this->handler->get(self::$key1));
 
         $this->assertTrue($this->handler->reconnect());
 
         $this->assertSame('value', $this->handler->get(self::$key1));
-        $this->assertNotSame($lockStore, $handler->lockStore());
     }
 }

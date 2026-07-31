@@ -66,22 +66,22 @@ class ShowTableInfo extends AbstractCommand
                 name: 'limit-rows',
                 description: 'Limits the number of rows.',
                 requiresValue: true,
-                default: '10',
                 valueLabel: 'rows',
+                default: '10',
             ))
             ->addOption(new Option(
                 name: 'limit-field-value',
                 description: 'Limits the length of field values.',
                 requiresValue: true,
-                default: '15',
                 valueLabel: 'value',
+                default: '15',
             ))
             ->addOption(new Option(
                 name: 'dbgroup',
                 description: 'Database group to show.',
                 requiresValue: true,
-                default: '',
                 valueLabel: 'group',
+                default: '',
             ))
             ->addUsage('db:table --show')
             ->addUsage('db:table --metadata')

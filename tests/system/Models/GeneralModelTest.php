@@ -35,11 +35,6 @@ final class GeneralModelTest extends CIUnitTestCase
      */
     private ?object $model = null;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
     protected function tearDown(): void
     {
         parent::tearDown();

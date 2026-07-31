@@ -380,7 +380,6 @@ class Services extends BaseService
         }
 
         $config ??= config(Images::class);
-        assert($config instanceof Images);
 
         $handler = in_array($handler, [null, '', '0'], true) ? $config->defaultHandler : $handler;
         $class   = $config->handlers[$handler];

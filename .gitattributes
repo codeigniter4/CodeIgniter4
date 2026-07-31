@@ -32,6 +32,7 @@ psalm-baseline.xml           export-ignore
 psalm.xml                    export-ignore
 psalm_autoload.php           export-ignore
 rector.php                   export-ignore
+AGENTS.md                    export-ignore
 
 # source user guide
 user_guide_src/ export-ignore

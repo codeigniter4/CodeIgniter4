@@ -632,4 +632,15 @@ final class CLIRequestTest extends CIUnitTestCase
     {
         $this->assertFalse($this->request->is('get'));
     }
+
+    public function testParseCommandWithMissingArgv(): void
+    {
+        Services::injectMock('superglobals', new Superglobals([], [], [], [], []));
+
+        $request = new CLIRequest(new App());
+
+        $this->assertSame('', $request->getPath());
+        $this->assertSame([], $request->getSegments());
+        $this->assertSame('', $request->getOptionString());
+    }
 }

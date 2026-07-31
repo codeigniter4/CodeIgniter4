@@ -32,18 +32,6 @@ final class FileHandlerTest extends AbstractHandlerTestCase
     private static string $directory = 'FileHandler';
     private Cache $config;
 
-    /**
-     * @return list<string>
-     */
-    private static function getKeyArray(): array
-    {
-        return [
-            self::$key1,
-            self::$key2,
-            self::$key3,
-        ];
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -70,15 +58,8 @@ final class FileHandlerTest extends AbstractHandlerTestCase
         if (is_dir($this->config->file['storePath'])) {
             chmod($this->config->file['storePath'], 0777);
 
-            foreach (self::getKeyArray() as $key) {
-                if (is_file($this->config->file['storePath'] . DIRECTORY_SEPARATOR . $key)) {
-                    chmod($this->config->file['storePath'] . DIRECTORY_SEPARATOR . $key, 0777);
-                    unlink($this->config->file['storePath'] . DIRECTORY_SEPARATOR . $key);
-                }
-                if (is_file($this->config->file['storePath'] . DIRECTORY_SEPARATOR . $this->config->prefix . $key)) {
-                    chmod($this->config->file['storePath'] . DIRECTORY_SEPARATOR . $this->config->prefix . $key, 0777);
-                    unlink($this->config->file['storePath'] . DIRECTORY_SEPARATOR . $this->config->prefix . $key);
-                }
+            if (isset($this->handler)) {
+                $this->handler->clean();
             }
 
             rmdir($this->config->file['storePath']);
@@ -119,7 +100,7 @@ final class FileHandlerTest extends AbstractHandlerTestCase
      */
     public function testGet(): void
     {
-        $this->handler->save(self::$key1, 'value', 2);
+        $this->assertTrue($this->handler->save(self::$key1, 'value', 2));
 
         $this->assertSame('value', $this->handler->get(self::$key1));
         $this->assertNull($this->handler->get(self::$dummy));
