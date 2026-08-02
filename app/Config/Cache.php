@@ -142,7 +142,7 @@ class Cache extends BaseConfig
         'async'      => false, // specific to Predis and ignored by the native Redis extension
         'persistent' => false,
         'database'   => 0,
-        'sentinel' => [],
+        'sentinel'   => [],
     ];
 
     /**
