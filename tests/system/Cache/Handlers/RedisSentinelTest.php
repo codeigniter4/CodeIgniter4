@@ -32,6 +32,22 @@ final class RedisSentinelTest extends TestCase
         RedisSentinel::discoverMaster([], 'mymaster');
     }
 
+    /**
+     * Skips the test when no Redis Sentinel is reachable at 127.0.0.1:26379.
+     * This keeps CI (which only provides a plain Redis server) green while the
+     * live test still runs locally when a Sentinel is available.
+     */
+    private function skipUnlessSentinel(): void
+    {
+        $socket = @stream_socket_client('tcp://127.0.0.1:26379', $errno, $errstr, 1.0);
+
+        if ($socket === false) {
+            $this->markTestSkipped('Redis Sentinel not reachable at 127.0.0.1:26379.');
+        }
+
+        fclose($socket);
+    }
+
     #[RequiresPhpExtension('redis')]
     public function testDiscoverMasterThrowsWhenAllNodesUnreachable(): void
     {
@@ -55,6 +71,7 @@ final class RedisSentinelTest extends TestCase
     #[RequiresPhpExtension('redis')]
     public function testDiscoverMasterLive(): void
     {
+        $this->skipUnlessSentinel();
         $address = RedisSentinel::discoverMaster(
             [['host' => '127.0.0.1', 'port' => 26379]],
             'mymaster',
