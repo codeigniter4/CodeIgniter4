@@ -22,7 +22,9 @@ use Config\Cache;
 use Exception;
 use Predis\Client;
 use Predis\Collection\Iterator\Keyspace;
+use Predis\Command\RawCommand;
 use Predis\Response\Status;
+use RuntimeException;
 
 /**
  * Predis cache handler
@@ -81,41 +83,67 @@ class PredisHandler extends BaseHandler implements LockStoreProviderInterface
     public function initialize(): void
     {
         try {
-            // Predis has native Sentinel support: pass the Sentinel nodes plus a
-            // replication/service option and it discovers and follows the master.
+            // When a Sentinel cluster is configured, discover the current master
+            // address first and connect to it directly (Predis has no built-in
+            // Sentinel handling on this client). Otherwise connect to the single
+            // configured host.
             if (($this->config['sentinel']['nodes'] ?? []) !== []) {
-                $nodes = array_map(
-                    static fn (array $node): array => [
-                        'scheme' => $node['scheme'] ?? 'tcp',
-                        'host'   => $node['host'],
-                        'port'   => $node['port'] ?? 26379,
-                    ],
-                    $this->config['sentinel']['nodes'],
-                );
-                $options = [
-                    'prefix'      => $this->prefix,
-                    'replication' => 'sentinel',
-                    'service'     => $this->config['sentinel']['service'],
-                ];
+                [$host, $port] = $this->discoverMasterFromSentinel();
 
-                // `parameters` are applied to the connections resolved by Sentinel.
-                if (isset($this->config['password'])) {
-                    $options['parameters']['password'] = $this->config['password'];
-                }
-                if (isset($this->config['database'])) {
-                    $options['parameters']['database'] = $this->config['database'];
-                }
+                $config         = $this->config;
+                $config['host'] = $host;
+                $config['port'] = $port;
 
-                $this->redis = new Client($nodes, $options);
+                $this->redis = new Client($config, ['prefix' => $this->prefix]);
             } else {
                 $this->redis = new Client($this->config, ['prefix' => $this->prefix]);
             }
 
             $this->lockStore = null;
             $this->redis->time();
+        } catch (RuntimeException $e) {
+            throw new CriticalError('Cache: ' . $e->getMessage(), $e->getCode(), $e);
         } catch (Exception $e) {
             throw new CriticalError('Cache: Predis connection refused (' . $e->getMessage() . ').', $e->getCode(), $e);
         }
+    }
+
+    /**
+     * Queries the configured Sentinel nodes for the current master address.
+     *
+     * Each node is tried in order; the first one that answers wins.
+     *
+     * @return array{0: string, 1: int} The master host and port.
+     *
+     * @throws RuntimeException When no Sentinel node can discover the master.
+     */
+    private function discoverMasterFromSentinel(): array
+    {
+        $service = $this->config['sentinel']['service'];
+
+        foreach ($this->config['sentinel']['nodes'] as $node) {
+            try {
+                $sentinel = new Client([
+                    'scheme'  => $node['scheme'] ?? 'tcp',
+                    'host'    => $node['host'],
+                    'port'    => $node['port'] ?? 26379,
+                    'timeout' => (float) ($this->config['sentinel']['timeout'] ?? 0),
+                ]);
+
+                $result = $sentinel->executeCommand(
+                    RawCommand::create('SENTINEL', 'get-master-addr-by-name', $service),
+                );
+                $sentinel->disconnect();
+
+                if (is_array($result) && isset($result[0], $result[1]) && is_string($result[0])) {
+                    return [(string) $result[0], (int) $result[1]];
+                }
+            } catch (Exception) {
+                // Node unreachable or command failed; try the next one.
+            }
+        }
+
+        throw new RuntimeException(sprintf('Redis Sentinel unable to discover master "%s".', $service));
     }
 
     public function get(string $key): mixed
