@@ -707,6 +707,27 @@ Starting with v4.5.0, you can use Redis ACL (username and password)::
     (``$lockRetryInterval``) and the number of retries (``$lockMaxRetries``) are
     configurable.
 
+Redis Sentinel
+--------------
+
+The RedisHandler can connect through
+`Redis Sentinel <https://redis.io/docs/latest/operate/oss_and_stack/management/sentinel/>`_
+instead of a single fixed host. Set the ``$sentinel`` property with the master
+``service`` name and the list of Sentinel ``nodes``; the handler queries the
+Sentinel nodes for the current master and connects to it, so sessions survive a
+failover without a hardcoded master address. When ``$sentinel`` is populated,
+``$savePath`` is ignored.
+
+This requires the ``redis`` PHP extension (phpredis >= 5.3 is recommended,
+which exposes a dedicated ``RedisSentinel`` class; older versions work via the
+``SENTINEL`` command).
+
+.. literalinclude:: sessions/046.php
+
+.. note:: Discovery happens once when the session is opened. If the master
+    fails over while the session is open, re-opening the session re-discovers
+    the new master.
+
 .. _sessions-memcachedhandler-driver:
 
 MemcachedHandler Driver

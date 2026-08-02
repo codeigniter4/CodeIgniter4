@@ -113,6 +113,12 @@ class Cache extends BaseConfig
      * Your Redis server can be specified below, if you are using
      * the Redis or Predis drivers.
      *
+     * To connect through Redis Sentinel, populate the `sentinel` key with the
+     * master service name and the list of Sentinel nodes. When `sentinel` is
+     * non-empty, `host`/`port` are ignored by the Redis handler (phpredis),
+     * and the Predis handler replaces its single-node connection with the
+     * Sentinel nodes.
+     *
      * @var array{
      *     host?: string,
      *     password?: string|null,
@@ -120,7 +126,12 @@ class Cache extends BaseConfig
      *     timeout?: int,
      *     async?: bool,
      *     persistent?: bool,
-     *     database?: int
+     *     database?: int,
+     *     sentinel?: array{
+     *         service?: string,
+     *         nodes?: list<array{host: string, port?: int, scheme?: string}>,
+     *         timeout?: float
+     *     }
      * }
      */
     public array $redis = [
@@ -131,6 +142,7 @@ class Cache extends BaseConfig
         'async'      => false, // specific to Predis and ignored by the native Redis extension
         'persistent' => false,
         'database'   => 0,
+        'sentinel' => [],
     ];
 
     /**

@@ -238,4 +238,29 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
 
         $this->assertSame('value', $this->handler->get(self::$key1));
     }
+
+    /**
+     * Live test that runs when the redis extension is loaded (see the class-level
+     * RequiresPhpExtension attribute). It assumes a local Redis Sentinel is
+     * reachable at 127.0.0.1:26379 monitoring the "mymaster" service, mirroring
+     * how the other live Redis tests assume a server on 127.0.0.1:6379.
+     */
+    public function testInitializeWithSentinel(): void
+    {
+        $config        = new Cache();
+        $config->redis = [
+            'sentinel' => [
+                'service' => 'mymaster',
+                'nodes'   => [
+                    ['host' => '127.0.0.1', 'port' => 26379],
+                ],
+                'timeout' => 0.5,
+            ],
+        ];
+
+        $handler = CacheFactory::getHandler($config, 'redis');
+        $handler->save(self::$key1, 'sentinel-value');
+        $this->assertSame('sentinel-value', $handler->get(self::$key1));
+        $handler->clean();
+    }
 }

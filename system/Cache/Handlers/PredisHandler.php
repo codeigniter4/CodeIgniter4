@@ -41,7 +41,11 @@ class PredisHandler extends BaseHandler implements LockStoreProviderInterface
      *   port: int,
      *   async: bool,
      *   persistent: bool,
-     *   timeout: int
+     *   timeout: int,
+     *   sentinel?: array{
+     *     service?: string,
+     *     nodes?: list<array{scheme?: string, host: string, port?: int}>
+     *   }
      * }
      */
     protected $config = [
@@ -52,6 +56,7 @@ class PredisHandler extends BaseHandler implements LockStoreProviderInterface
         'async'      => false,
         'persistent' => false,
         'timeout'    => 0,
+        'sentinel'   => [],
     ];
 
     /**
@@ -76,7 +81,36 @@ class PredisHandler extends BaseHandler implements LockStoreProviderInterface
     public function initialize(): void
     {
         try {
-            $this->redis     = new Client($this->config, ['prefix' => $this->prefix]);
+            // Predis has native Sentinel support: pass the Sentinel nodes plus a
+            // replication/service option and it discovers and follows the master.
+            if (($this->config['sentinel']['nodes'] ?? []) !== []) {
+                $nodes = array_map(
+                    static fn (array $node): array => [
+                        'scheme' => $node['scheme'] ?? 'tcp',
+                        'host'   => $node['host'],
+                        'port'   => $node['port'] ?? 26379,
+                    ],
+                    $this->config['sentinel']['nodes'],
+                );
+                $options = [
+                    'prefix'      => $this->prefix,
+                    'replication' => 'sentinel',
+                    'service'     => $this->config['sentinel']['service'],
+                ];
+
+                // `parameters` are applied to the connections resolved by Sentinel.
+                if (isset($this->config['password'])) {
+                    $options['parameters']['password'] = $this->config['password'];
+                }
+                if (isset($this->config['database'])) {
+                    $options['parameters']['database'] = $this->config['database'];
+                }
+
+                $this->redis = new Client($nodes, $options);
+            } else {
+                $this->redis = new Client($this->config, ['prefix' => $this->prefix]);
+            }
+
             $this->lockStore = null;
             $this->redis->time();
         } catch (Exception $e) {

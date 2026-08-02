@@ -342,6 +342,31 @@ Config options to connect to redis server stored in the cache configuration file
 For more information on Redis, please see
 `https://redis.io <https://redis.io>`_.
 
+Redis Sentinel
+--------------
+
+Both the **Redis** and **Predis** handlers support connecting through
+`Redis Sentinel <https://redis.io/docs/latest/operate/oss_and_stack/management/sentinel/>`_.
+When the ``sentinel`` key is populated, the handler discovers the current master
+of the named ``service`` from the listed Sentinel ``nodes`` and connects to it,
+so your cache keeps working after a failover without a hardcoded master address.
+
+For the **Redis** handler (phpredis), ``host``/``port`` are ignored when
+``sentinel`` is set; the handler queries each Sentinel node for the master.
+Sentinel support requires the ``redis`` PHP extension (phpredis >= 5.3 is
+recommended, which exposes a dedicated ``RedisSentinel`` class; older versions
+work via the ``SENTINEL`` command).
+
+For the **Predis** handler, Sentinel is handled natively: Predis is given the
+Sentinel nodes plus a ``replication => sentinel`` / ``service`` option and
+discovers and follows the master itself.
+
+.. literalinclude:: caching/016.php
+
+.. note:: Discovery happens once when the handler initialises. If the master
+    fails over while the connection is open, call ``Cache::reconnect()`` (Redis
+    handler) or let the Predis client retry to re-discover the new master.
+
 Predis Caching
 ==============
 
