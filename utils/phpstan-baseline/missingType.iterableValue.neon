@@ -1,4 +1,4 @@
-# total 1140 errors
+# total 1139 errors
 
 parameters:
     ignoreErrors:
@@ -3634,11 +3634,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Router\\Router\:\:scanControllers\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Router/Router.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\Router\:\:setRequest\(\) has parameter \$segments with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Router/Router.php
 
