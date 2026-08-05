@@ -147,7 +147,7 @@ class Registrar
 
         $dbParams = self::$dbConfig[$group] ?? [];
 
-        if (! empty($dbParams) && ! in_array($group, ['SQLite3', 'OCI8'], true)) {
+        if (! empty($dbParams) && $group !== 'SQLite3') {
             $componentName = '';
 
             foreach ($_SERVER['argv'] ?? [] as $arg) {
@@ -161,7 +161,36 @@ class Registrar
             }
 
             if ($componentName !== '') {
-                $dbParams['database'] = 'test_' . strtolower($componentName);
+                if ($group === 'OCI8') {
+                    $compUser = strtoupper('t_' . substr(preg_replace('/[^a-zA-Z0-9]/', '', $componentName), 0, 20));
+                    $tns      = '//' . $dbParams['hostname'] . ':' . $dbParams['port'] . '/' . $dbParams['database'];
+
+                    try {
+                        $conn = @oci_connect($dbParams['username'], $dbParams['password'], $tns);
+                        if ($conn !== false) {
+                            $stmt = @oci_parse($conn, 'SELECT USERNAME FROM ALL_USERS WHERE USERNAME = :usr');
+                            @oci_bind_by_name($stmt, ':usr', $compUser);
+                            @oci_execute($stmt);
+
+                            if (@oci_fetch_array($stmt, OCI_ASSOC) === false) {
+                                $stmt2 = @oci_parse($conn, 'CREATE USER ' . $compUser . ' IDENTIFIED BY ' . $compUser);
+                                @oci_execute($stmt2);
+                                $stmt3 = @oci_parse($conn, 'GRANT CONNECT, RESOURCE, DBA TO ' . $compUser);
+                                @oci_execute($stmt3);
+                                $stmt4 = @oci_parse($conn, 'GRANT UNLIMITED TABLESPACE TO ' . $compUser);
+                                @oci_execute($stmt4);
+                            }
+
+                            @oci_close($conn);
+
+                            $dbParams['username'] = $compUser;
+                            $dbParams['password'] = $compUser;
+                        }
+                    } catch (Throwable) {
+                        // Ignore error and fall back to default user
+                    }
+                } else {
+                    $dbParams['database'] = 'test_' . strtolower($componentName);
 
                 try {
                     if ($group === 'MySQLi') {
@@ -200,6 +229,7 @@ class Registrar
                     // Ignore any error and let the connection fail naturally
                 }
             }
+        }
         }
 
         $config['tests'] = $dbParams;
