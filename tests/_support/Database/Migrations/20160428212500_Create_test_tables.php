@@ -184,6 +184,7 @@ class Migration_Create_test_tables extends Migration
         $this->forge->dropTable('user', true);
         $this->forge->dropTable('job', true);
         $this->forge->dropTable('misc', true);
+        $this->forge->dropTable('team_members', true);
         $this->forge->dropTable('type_test', true);
         $this->forge->dropTable('empty', true);
         $this->forge->dropTable('secondary', true);
