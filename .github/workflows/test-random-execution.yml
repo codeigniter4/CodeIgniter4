@@ -75,7 +75,10 @@ jobs:
           - Postgre
           - SQLSRV
           - SQLite3
-          - Oracle
+          # Oracle is excluded: OCI8 uses a single shared schema via DSN
+          # and cannot be isolated with per-component databases, causing
+          # ORA-00955 collisions when components run in parallel.
+          # - Oracle
 
     services:
       mysql:
@@ -212,18 +215,13 @@ jobs:
             args+=("--component" "${{ inputs.component }}")
           fi
 
-          # OCI8 connects to a single shared schema via DSN, so components
-          # cannot be isolated with per-component databases like MySQLi/Postgre/SQLSRV.
-          # Run Oracle sequentially to avoid table name collisions (ORA-00955).
-          if [[ "${{ matrix.db-platform }}" == "Oracle" ]]; then
-            args+=("--max-jobs" "1")
-            args+=("--repeat" "${{ inputs.repeat || '2' }}")
-          else
-            if [[ -n "${{ inputs.max-jobs }}" ]]; then
-              args+=("--max-jobs" "${{ inputs.max-jobs }}")
-            fi
-            args+=("--repeat" "${{ inputs.repeat || '10' }}")
+          # Add --max-jobs flag if specified (empty means auto-detect)
+          if [[ -n "${{ inputs.max-jobs }}" ]]; then
+            args+=("--max-jobs" "${{ inputs.max-jobs }}")
           fi
+
+          # Add --repeat flag (always, default is 10)
+          args+=("--repeat" "${{ inputs.repeat || '10' }}")
 
           # Add --timeout flag (always, default is 300)
           args+=("--timeout" "${{ inputs.timeout || '300' }}")
