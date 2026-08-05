@@ -147,7 +147,7 @@ class Registrar
 
         $dbParams = self::$dbConfig[$group] ?? [];
 
-        if (! empty($dbParams) && $group !== 'SQLite3') {
+        if (! empty($dbParams) && ! in_array($group, ['SQLite3', 'OCI8'], true)) {
             $componentName = '';
 
             foreach ($_SERVER['argv'] ?? [] as $arg) {
@@ -161,79 +161,43 @@ class Registrar
             }
 
             if ($componentName !== '') {
-                if ($group === 'OCI8') {
-                    $hostname = $dbParams['hostname'] ?? '127.0.0.1';
-                    $port     = $dbParams['port'] ?? 1521;
-                    $database = $dbParams['database'] ?? 'FREEPDB1';
-                    $username = $dbParams['username'] ?? 'ORACLE';
-                    $password = $dbParams['password'] ?? 'ORACLE';
+                $dbParams['database'] = 'test_' . strtolower($componentName);
 
-                    $compUser = strtoupper('t_' . substr(preg_replace('/[^a-zA-Z0-9]/', '', $componentName), 0, 20));
-                    $tns      = '//' . $hostname . ':' . $port . '/' . $database;
-
-                    try {
-                        $conn = @oci_connect($username, $password, $tns);
-                        if ($conn !== false) {
-                            $stmt = @oci_parse($conn, 'SELECT USERNAME FROM ALL_USERS WHERE USERNAME = :usr');
-                            @oci_bind_by_name($stmt, ':usr', $compUser);
-                            @oci_execute($stmt);
-
-                            if (@oci_fetch_array($stmt, OCI_ASSOC) === false) {
-                                $stmt2 = @oci_parse($conn, 'CREATE USER ' . $compUser . ' IDENTIFIED BY ' . $compUser);
-                                @oci_execute($stmt2);
-                                $stmt3 = @oci_parse($conn, 'GRANT CONNECT, RESOURCE, DBA TO ' . $compUser);
-                                @oci_execute($stmt3);
-                                $stmt4 = @oci_parse($conn, 'GRANT UNLIMITED TABLESPACE TO ' . $compUser);
-                                @oci_execute($stmt4);
-                            }
-
-                            @oci_close($conn);
-
-                            $dbParams['username'] = $compUser;
-                            $dbParams['password'] = $compUser;
+                try {
+                    if ($group === 'MySQLi') {
+                        $conn = new mysqli(
+                            $dbParams['hostname'],
+                            $dbParams['username'],
+                            $dbParams['password'],
+                            '',
+                            (int) $dbParams['port'],
+                        );
+                        if (! $conn->connect_error) {
+                            $conn->query('CREATE DATABASE IF NOT EXISTS ' . $conn->real_escape_string($dbParams['database']));
+                            $conn->close();
                         }
-                    } catch (Throwable) {
-                        // Ignore error and fall back to default user
-                    }
-                } else {
-                    $dbParams['database'] = 'test_' . strtolower($componentName);
-
-                    try {
-                        if ($group === 'MySQLi') {
-                            $conn = new mysqli(
-                                $dbParams['hostname'],
-                                $dbParams['username'],
-                                $dbParams['password'],
-                                '',
-                                (int) $dbParams['port'],
-                            );
-                            if (! $conn->connect_error) {
-                                $conn->query('CREATE DATABASE IF NOT EXISTS ' . $conn->real_escape_string($dbParams['database']));
-                                $conn->close();
-                            }
-                        } elseif ($group === 'Postgre') {
-                            $dsn = 'pgsql:host=' . $dbParams['hostname'] . ';port=' . $dbParams['port'] . ';user=' . $dbParams['username'] . ';password=' . $dbParams['password'];
-                            $pdo = new PDO($dsn);
-                            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                            $stmt = $pdo->prepare('SELECT 1 FROM pg_database WHERE datname = ?');
-                            $stmt->execute([$dbParams['database']]);
-                            if (! $stmt->fetchColumn()) {
-                                $dbName = str_replace('"', '""', $dbParams['database']);
-                                $pdo->exec('CREATE DATABASE "' . $dbName . '"');
-                            }
-                        } elseif ($group === 'SQLSRV') {
-                            $dsn = 'sqlsrv:Server=' . $dbParams['hostname'] . ',' . $dbParams['port'] . ';Encrypt=False;TrustServerCertificate=True';
-                            $pdo = new PDO($dsn, $dbParams['username'], $dbParams['password']);
-                            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                            $stmt = $pdo->prepare('SELECT 1 FROM sys.databases WHERE name = ?');
-                            $stmt->execute([$dbParams['database']]);
-                            if (! $stmt->fetchColumn()) {
-                                $pdo->exec('CREATE DATABASE [' . str_replace(']', ']]', $dbParams['database']) . '] COLLATE Latin1_General_100_CS_AS_SC_UTF8');
-                            }
+                    } elseif ($group === 'Postgre') {
+                        $dsn = 'pgsql:host=' . $dbParams['hostname'] . ';port=' . $dbParams['port'] . ';user=' . $dbParams['username'] . ';password=' . $dbParams['password'];
+                        $pdo = new PDO($dsn);
+                        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                        $stmt = $pdo->prepare('SELECT 1 FROM pg_database WHERE datname = ?');
+                        $stmt->execute([$dbParams['database']]);
+                        if (! $stmt->fetchColumn()) {
+                            $dbName = str_replace('"', '""', $dbParams['database']);
+                            $pdo->exec('CREATE DATABASE "' . $dbName . '"');
                         }
-                    } catch (Throwable) {
-                        // Ignore any error and let the connection fail naturally
+                    } elseif ($group === 'SQLSRV') {
+                        $dsn = 'sqlsrv:Server=' . $dbParams['hostname'] . ',' . $dbParams['port'] . ';Encrypt=False;TrustServerCertificate=True';
+                        $pdo = new PDO($dsn, $dbParams['username'], $dbParams['password']);
+                        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                        $stmt = $pdo->prepare('SELECT 1 FROM sys.databases WHERE name = ?');
+                        $stmt->execute([$dbParams['database']]);
+                        if (! $stmt->fetchColumn()) {
+                            $pdo->exec('CREATE DATABASE [' . str_replace(']', ']]', $dbParams['database']) . '] COLLATE Latin1_General_100_CS_AS_SC_UTF8');
+                        }
                     }
+                } catch (Throwable) {
+                    // Ignore any error and let the connection fail naturally
                 }
             }
         }
