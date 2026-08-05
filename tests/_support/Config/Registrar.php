@@ -198,44 +198,44 @@ class Registrar
                 } else {
                     $dbParams['database'] = 'test_' . strtolower($componentName);
 
-                try {
-                    if ($group === 'MySQLi') {
-                        $conn = new mysqli(
-                            $dbParams['hostname'],
-                            $dbParams['username'],
-                            $dbParams['password'],
-                            '',
-                            (int) $dbParams['port'],
-                        );
-                        if (! $conn->connect_error) {
-                            $conn->query('CREATE DATABASE IF NOT EXISTS ' . $conn->real_escape_string($dbParams['database']));
-                            $conn->close();
+                    try {
+                        if ($group === 'MySQLi') {
+                            $conn = new mysqli(
+                                $dbParams['hostname'],
+                                $dbParams['username'],
+                                $dbParams['password'],
+                                '',
+                                (int) $dbParams['port'],
+                            );
+                            if (! $conn->connect_error) {
+                                $conn->query('CREATE DATABASE IF NOT EXISTS ' . $conn->real_escape_string($dbParams['database']));
+                                $conn->close();
+                            }
+                        } elseif ($group === 'Postgre') {
+                            $dsn = 'pgsql:host=' . $dbParams['hostname'] . ';port=' . $dbParams['port'] . ';user=' . $dbParams['username'] . ';password=' . $dbParams['password'];
+                            $pdo = new PDO($dsn);
+                            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                            $stmt = $pdo->prepare('SELECT 1 FROM pg_database WHERE datname = ?');
+                            $stmt->execute([$dbParams['database']]);
+                            if (! $stmt->fetchColumn()) {
+                                $dbName = str_replace('"', '""', $dbParams['database']);
+                                $pdo->exec('CREATE DATABASE "' . $dbName . '"');
+                            }
+                        } elseif ($group === 'SQLSRV') {
+                            $dsn = 'sqlsrv:Server=' . $dbParams['hostname'] . ',' . $dbParams['port'] . ';Encrypt=False;TrustServerCertificate=True';
+                            $pdo = new PDO($dsn, $dbParams['username'], $dbParams['password']);
+                            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                            $stmt = $pdo->prepare('SELECT 1 FROM sys.databases WHERE name = ?');
+                            $stmt->execute([$dbParams['database']]);
+                            if (! $stmt->fetchColumn()) {
+                                $pdo->exec('CREATE DATABASE [' . str_replace(']', ']]', $dbParams['database']) . '] COLLATE Latin1_General_100_CS_AS_SC_UTF8');
+                            }
                         }
-                    } elseif ($group === 'Postgre') {
-                        $dsn = 'pgsql:host=' . $dbParams['hostname'] . ';port=' . $dbParams['port'] . ';user=' . $dbParams['username'] . ';password=' . $dbParams['password'];
-                        $pdo = new PDO($dsn);
-                        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                        $stmt = $pdo->prepare('SELECT 1 FROM pg_database WHERE datname = ?');
-                        $stmt->execute([$dbParams['database']]);
-                        if (! $stmt->fetchColumn()) {
-                            $dbName = str_replace('"', '""', $dbParams['database']);
-                            $pdo->exec('CREATE DATABASE "' . $dbName . '"');
-                        }
-                    } elseif ($group === 'SQLSRV') {
-                        $dsn = 'sqlsrv:Server=' . $dbParams['hostname'] . ',' . $dbParams['port'] . ';Encrypt=False;TrustServerCertificate=True';
-                        $pdo = new PDO($dsn, $dbParams['username'], $dbParams['password']);
-                        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                        $stmt = $pdo->prepare('SELECT 1 FROM sys.databases WHERE name = ?');
-                        $stmt->execute([$dbParams['database']]);
-                        if (! $stmt->fetchColumn()) {
-                            $pdo->exec('CREATE DATABASE [' . str_replace(']', ']]', $dbParams['database']) . '] COLLATE Latin1_General_100_CS_AS_SC_UTF8');
-                        }
+                    } catch (Throwable) {
+                        // Ignore any error and let the connection fail naturally
                     }
-                } catch (Throwable) {
-                    // Ignore any error and let the connection fail naturally
                 }
             }
-        }
         }
 
         $config['tests'] = $dbParams;
