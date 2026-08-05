@@ -162,11 +162,17 @@ class Registrar
 
             if ($componentName !== '') {
                 if ($group === 'OCI8') {
+                    $hostname = $dbParams['hostname'] ?? '127.0.0.1';
+                    $port     = $dbParams['port'] ?? 1521;
+                    $database = $dbParams['database'] ?? 'FREEPDB1';
+                    $username = $dbParams['username'] ?? 'ORACLE';
+                    $password = $dbParams['password'] ?? 'ORACLE';
+
                     $compUser = strtoupper('t_' . substr(preg_replace('/[^a-zA-Z0-9]/', '', $componentName), 0, 20));
-                    $tns      = '//' . $dbParams['hostname'] . ':' . $dbParams['port'] . '/' . $dbParams['database'];
+                    $tns      = '//' . $hostname . ':' . $port . '/' . $database;
 
                     try {
-                        $conn = @oci_connect($dbParams['username'], $dbParams['password'], $tns);
+                        $conn = @oci_connect($username, $password, $tns);
                         if ($conn !== false) {
                             $stmt = @oci_parse($conn, 'SELECT USERNAME FROM ALL_USERS WHERE USERNAME = :usr');
                             @oci_bind_by_name($stmt, ':usr', $compUser);
