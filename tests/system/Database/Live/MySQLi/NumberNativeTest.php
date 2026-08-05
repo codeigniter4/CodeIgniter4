@@ -44,7 +44,7 @@ final class NumberNativeTest extends CIUnitTestCase
     {
         $this->tests['numberNative'] = true;
 
-        $db1 = Database::connect($this->tests);
+        $db1 = Database::connect($this->tests, false);
 
         if ($db1->DBDriver !== 'MySQLi') {
             $this->markTestSkipped('Only MySQLi can complete this test.');
@@ -57,7 +57,7 @@ final class NumberNativeTest extends CIUnitTestCase
     {
         $this->tests['numberNative'] = false;
 
-        $db1 = Database::connect($this->tests);
+        $db1 = Database::connect($this->tests, false);
 
         if ($db1->DBDriver !== 'MySQLi') {
             $this->markTestSkipped('Only MySQLi can complete this test.');
@@ -70,7 +70,7 @@ final class NumberNativeTest extends CIUnitTestCase
     {
         $this->tests['numberNative'] = true;
 
-        $db1 = Database::connect($this->tests);
+        $db1 = Database::connect($this->tests, false);
 
         if ($db1->DBDriver !== 'MySQLi') {
             $this->markTestSkipped('Only MySQLi can complete this test.');
@@ -88,7 +88,7 @@ final class NumberNativeTest extends CIUnitTestCase
     {
         $this->tests['numberNative'] = false;
 
-        $db1 = Database::connect($this->tests);
+        $db1 = Database::connect($this->tests, false);
 
         if ($db1->DBDriver !== 'MySQLi') {
             $this->markTestSkipped('Only MySQLi can complete this test.');

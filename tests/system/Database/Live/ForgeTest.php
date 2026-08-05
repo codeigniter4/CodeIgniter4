@@ -36,23 +36,62 @@ final class ForgeTest extends CIUnitTestCase
     protected $seed    = CITestSeeder::class;
     private Forge $forge;
 
+    private function dropAllMockTables(): void
+    {
+        $tablesToDrop = [
+            'forge_test_invoices',
+            'forge_test_inv',
+            'forge_test_users',
+            'actions',
+            'forge_test_table',
+            'test_exists',
+            'forge_test_attributes',
+            'forge_array_constraint',
+            'forge_nullable_table',
+            'forge_test_1',
+            'forge_test_two',
+            'forge_test_three',
+            'forge_test_four',
+            'forge_test_modify',
+            'droptest',
+            'key_test_users',
+            'test_stores',
+            'user2',
+            'forge_test_table_dummy',
+        ];
+
+        foreach ($tablesToDrop as $table) {
+            $this->forge->dropTable($table, true);
+        }
+    }
+
     protected function setUp(): void
     {
         $this->forge = Database::forge($this->DBGroup);
 
-        // when running locally if one of these tables isn't dropped it may cause error
-        $this->forge->dropTable('forge_test_invoices', true);
-        $this->forge->dropTable('forge_test_inv', true);
-        $this->forge->dropTable('forge_test_users', true);
-        $this->forge->dropTable('actions', true);
+        $this->dropAllMockTables();
+
+        db_connect($this->DBGroup)->resetDataCache();
 
         parent::setUp();
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        $this->dropAllMockTables();
     }
 
     public function testCreateDatabase(): void
     {
         if ($this->db->DBDriver === 'OCI8') {
             $this->markTestSkipped('OCI8 does not support create database.');
+        }
+
+        try {
+            $this->forge->dropDatabase('test_forge_database');
+        } catch (DatabaseException) {
+            // Ignore if doesn't exist
         }
 
         $databaseCreated = $this->forge->createDatabase('test_forge_database');
@@ -68,6 +107,12 @@ final class ForgeTest extends CIUnitTestCase
 
         $dbName = 'test_com.sitedb.web';
 
+        try {
+            $this->forge->dropDatabase($dbName);
+        } catch (DatabaseException) {
+            // Ignore if doesn't exist
+        }
+
         $databaseCreated = $this->forge->createDatabase($dbName);
 
         $this->assertTrue($databaseCreated);
@@ -75,7 +120,7 @@ final class ForgeTest extends CIUnitTestCase
         // Checks if tableExists() works.
         $config             = config(Database::class)->{$this->DBGroup};
         $config['database'] = $dbName;
-        $db                 = db_connect($config);
+        $db                 = db_connect($config, false);
         $result             = $db->tableExists('not_exist');
 
         $this->assertFalse($result);
@@ -149,6 +194,12 @@ final class ForgeTest extends CIUnitTestCase
         }
         if ($this->db->DBDriver === 'SQLite3') {
             $this->markTestSkipped('SQLite3 requires file path to drop database');
+        }
+
+        try {
+            $this->forge->createDatabase('test_forge_database');
+        } catch (DatabaseException) {
+            // Ignore if exists
         }
 
         $databaseDropped = $this->forge->dropDatabase('test_forge_database');

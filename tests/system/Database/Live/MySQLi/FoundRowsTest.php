@@ -54,7 +54,7 @@ final class FoundRowsTest extends CIUnitTestCase
     {
         $this->tests['foundRows'] = true;
 
-        $db1 = Database::connect($this->tests);
+        $db1 = Database::connect($this->tests, false);
 
         $this->assertTrue($db1->foundRows);
     }
@@ -63,7 +63,7 @@ final class FoundRowsTest extends CIUnitTestCase
     {
         $this->tests['foundRows'] = false;
 
-        $db1 = Database::connect($this->tests);
+        $db1 = Database::connect($this->tests, false);
 
         $this->assertFalse($db1->foundRows);
     }
@@ -72,7 +72,7 @@ final class FoundRowsTest extends CIUnitTestCase
     {
         $this->tests['foundRows'] = true;
 
-        $db1 = Database::connect($this->tests);
+        $db1 = Database::connect($this->tests, false);
 
         $db1->table('db_user')
             ->set('country', 'US')
@@ -88,7 +88,7 @@ final class FoundRowsTest extends CIUnitTestCase
     {
         $this->tests['foundRows'] = false;
 
-        $db1 = Database::connect($this->tests);
+        $db1 = Database::connect($this->tests, false);
 
         $db1->table('db_user')
             ->set('country', 'US')
@@ -104,7 +104,7 @@ final class FoundRowsTest extends CIUnitTestCase
     {
         $this->tests['foundRows'] = true;
 
-        $db1 = Database::connect($this->tests);
+        $db1 = Database::connect($this->tests, false);
 
         $db1->table('db_user')
             ->set('country', 'NZ')
@@ -120,7 +120,7 @@ final class FoundRowsTest extends CIUnitTestCase
     {
         $this->tests['foundRows'] = false;
 
-        $db1 = Database::connect($this->tests);
+        $db1 = Database::connect($this->tests, false);
 
         $db1->table('db_user')
             ->set('country', 'NZ')
@@ -136,7 +136,7 @@ final class FoundRowsTest extends CIUnitTestCase
     {
         $this->tests['foundRows'] = true;
 
-        $db1 = Database::connect($this->tests);
+        $db1 = Database::connect($this->tests, false);
 
         $db1->table('db_user')
             ->set('name', 'Derek Jones')
@@ -152,7 +152,7 @@ final class FoundRowsTest extends CIUnitTestCase
     {
         $this->tests['foundRows'] = false;
 
-        $db1 = Database::connect($this->tests);
+        $db1 = Database::connect($this->tests, false);
 
         $db1->table('db_user')
             ->set('name', 'Derek Jones')

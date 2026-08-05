@@ -22,6 +22,7 @@ use PgSql\Connection as PgSqlConnection;
 use PgSql\Result as PgSqlResult;
 use stdClass;
 use Stringable;
+use Throwable;
 
 /**
  * Connection for Postgre
@@ -149,7 +150,14 @@ class Connection extends BaseConnection
      */
     protected function _close()
     {
-        pg_close($this->connID);
+        if ($this->connID !== false) {
+            try {
+                pg_close($this->connID);
+            } catch (Throwable) {
+            } finally {
+                $this->connID = false;
+            }
+        }
     }
 
     /**
@@ -157,7 +165,15 @@ class Connection extends BaseConnection
      */
     protected function _ping(): bool
     {
-        return pg_ping($this->connID);
+        if ($this->connID === false) {
+            return false;
+        }
+
+        try {
+            return pg_ping($this->connID);
+        } catch (Throwable) {
+            return false;
+        }
     }
 
     /**

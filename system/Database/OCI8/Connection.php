@@ -20,6 +20,8 @@ use CodeIgniter\Database\TableName;
 use ErrorException;
 use stdClass;
 
+defined('OCI_COMMIT_ON_SUCCESS') || define('OCI_COMMIT_ON_SUCCESS', 32);
+
 /**
  * Connection for OCI8
  *
@@ -148,6 +150,17 @@ class Connection extends BaseConnection
         return ($this->charset === '')
             ? $func($this->username, $this->password, $this->DSN)
             : $func($this->username, $this->password, $this->DSN, $this->charset);
+    }
+
+    public function initialize()
+    {
+        parent::initialize();
+
+        if ($this->connID) {
+            $this->simpleQuery("ALTER SESSION SET NLS_DATE_FORMAT='YYYY-MM-DD HH24:MI:SS'");
+            $this->simpleQuery("ALTER SESSION SET NLS_TIMESTAMP_FORMAT='YYYY-MM-DD HH24:MI:SS'");
+            $this->simpleQuery("ALTER SESSION SET NLS_TIMESTAMP_TZ_FORMAT='YYYY-MM-DD HH24:MI:SS'");
+        }
     }
 
     /**
@@ -288,11 +301,11 @@ class Connection extends BaseConnection
         $sql = 'SELECT "TABLE_NAME" FROM "USER_TABLES"';
 
         if ($tableName !== null) {
-            return $sql . ' WHERE "TABLE_NAME" LIKE ' . $this->escape($tableName);
+            return $sql . ' WHERE "TABLE_NAME" LIKE ' . $this->escape(strtoupper($tableName));
         }
 
         if ($prefixLimit && $this->DBPrefix !== '') {
-            return $sql . ' WHERE "TABLE_NAME" LIKE \'' . $this->escapeLikeString($this->DBPrefix) . "%' "
+            return $sql . ' WHERE "TABLE_NAME" LIKE \'' . $this->escapeLikeString(strtoupper($this->DBPrefix)) . "%' "
                     . sprintf($this->likeEscapeStr, $this->likeEscapeChar);
         }
 
@@ -397,7 +410,7 @@ class Connection extends BaseConnection
         $sql = 'SELECT AIC.INDEX_NAME, UC.CONSTRAINT_TYPE, AIC.COLUMN_NAME '
             . ' FROM ALL_IND_COLUMNS AIC '
             . ' LEFT JOIN USER_CONSTRAINTS UC ON AIC.INDEX_NAME = UC.CONSTRAINT_NAME AND AIC.TABLE_NAME = UC.TABLE_NAME '
-            . 'WHERE AIC.TABLE_NAME = ' . $this->escape(strtolower($table)) . ' '
+            . 'WHERE AIC.TABLE_NAME = ' . $this->escape(strtoupper($table)) . ' '
             . 'AND AIC.TABLE_OWNER = ' . $this->escape(strtoupper($owner)) . ' '
             . ' ORDER BY UC.CONSTRAINT_TYPE, AIC.COLUMN_POSITION';
 
@@ -422,7 +435,7 @@ class Connection extends BaseConnection
             $retVal[$row->INDEX_NAME]         = new stdClass();
             $retVal[$row->INDEX_NAME]->name   = $row->INDEX_NAME;
             $retVal[$row->INDEX_NAME]->fields = [$row->COLUMN_NAME];
-            $retVal[$row->INDEX_NAME]->type   = $constraintTypes[$row->CONSTRAINT_TYPE] ?? 'INDEX';
+            $retVal[$row->INDEX_NAME]->type   = $constraintTypes[$row->CONSTRAINT_TYPE ?? ''] ?? 'INDEX';
         }
 
         return $retVal;

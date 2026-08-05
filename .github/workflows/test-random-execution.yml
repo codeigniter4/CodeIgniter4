@@ -177,7 +177,7 @@ jobs:
         uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
         with:
           php-version: ${{ matrix.php-version }}
-          extensions: gd, curl, iconv, json, mbstring, openssl, sodium
+          extensions: gd, curl, iconv, json, mbstring, openssl, sodium, mysqli, oci8, pgsql, sqlsrv, sqlite3
           ini-values: opcache.enable_cli=0
           coverage: none
 
@@ -212,16 +212,24 @@ jobs:
             args+=("--component" "${{ inputs.component }}")
           fi
 
-          # Add --max-jobs flag if specified (empty means auto-detect)
-          if [[ -n "${{ inputs.max-jobs }}" ]]; then
-            args+=("--max-jobs" "${{ inputs.max-jobs }}")
+          # OCI8 connects to a single shared schema (FREEPDB1) via DSN, so
+          # components cannot be isolated with per-component databases like
+          # MySQLi/Postgre/SQLSRV. Running components in parallel makes
+          # e.g. Commands' migrate:rollback drop tables that Database tests
+          # rely on (ORA-00942/04043/08103). Run Oracle sequentially with
+          # default repeat 2 to avoid schema collisions and timeouts.
+          if [[ "${{ matrix.db-platform }}" == "Oracle" ]]; then
+            args+=("--max-jobs" "1")
+            args+=("--repeat" "${{ inputs.repeat || '2' }}")
+          else
+            if [[ -n "${{ inputs.max-jobs }}" ]]; then
+              args+=("--max-jobs" "${{ inputs.max-jobs }}")
+            fi
+            args+=("--repeat" "${{ inputs.repeat || '10' }}")
           fi
 
-          # Add --repeat flag (always, default is 10)
-          args+=("--repeat" "${{ inputs.repeat || '10' }}")
-
-          # Add --timeout flag (always, default is 300)
-          args+=("--timeout" "${{ inputs.timeout || '300' }}")
+          # Add --timeout flag (always, default is 600)
+          args+=("--timeout" "${{ inputs.timeout || '600' }}")
 
           .github/scripts/run-random-tests.sh "${args[@]}"
         env:

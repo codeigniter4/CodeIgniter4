@@ -34,6 +34,8 @@ final class MetadataTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        Database::forge($this->DBGroup)->dropTable('migrations_lock', true);
+
         $prefix = $this->db->getPrefix();
 
         $tables = [
@@ -120,12 +122,10 @@ final class MetadataTest extends CIUnitTestCase
 
     public function testListTablesConstrainedByExtraneousPrefixReturnsOnlyTheExtraneousTable(): void
     {
-        $oldPrefix = '';
+        $oldPrefix = $this->db->getPrefix();
 
         try {
             $this->createExtraneousTable();
-
-            $oldPrefix = $this->db->getPrefix();
             $this->db->setPrefix('tmp_');
 
             $tables = $this->db->listTables(true);

@@ -72,6 +72,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         // To delete data with `$this->regressDatabase()`, set it true.
         $this->migrate = true;
         $this->regressDatabase();
+        Database::forge($this->DBGroup)->dropTable('migrations_lock', true);
     }
 
     public function testLoadsDefaultDatabaseWhenNoneSpecified(): void
