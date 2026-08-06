@@ -277,10 +277,10 @@ class Connection extends BaseConnection
             return '';
         }
 
-        preg_match('/(?is)\b(?:into)\s+("?\w+"?)/', $commentStrippedSql, $match);
+        preg_match('/(?is)\b(?:into)\s+(?:\"?\w+\"?\.)?(\"?\w+\"?)/', $commentStrippedSql, $match);
         $tableName = $match[1] ?? '';
 
-        return str_starts_with($tableName, '"') ? trim($tableName, '"') : strtoupper($tableName);
+        return strtoupper(trim($tableName, '"'));
     }
 
     /**
@@ -661,7 +661,7 @@ class Connection extends BaseConnection
             }
 
             $primaryColumnName = $this->protectIdentifiers($index->fields[0], false, false);
-            $primaryColumnType = $columnTypeList[$primaryColumnName];
+            $primaryColumnType = $columnTypeList[$primaryColumnName] ?? $columnTypeList[strtoupper($primaryColumnName)] ?? null;
 
             if ($primaryColumnType !== 'NUMBER') {
                 $primaryColumnName = '';
@@ -672,7 +672,7 @@ class Connection extends BaseConnection
             return 0;
         }
 
-        $query           = $this->query('SELECT DATA_DEFAULT FROM USER_TAB_COLUMNS WHERE TABLE_NAME = ? AND COLUMN_NAME = ?', [$this->lastInsertedTableName, $primaryColumnName])->getRow();
+        $query           = $this->query('SELECT DATA_DEFAULT FROM USER_TAB_COLUMNS WHERE TABLE_NAME = ? AND COLUMN_NAME = ?', [strtoupper($this->lastInsertedTableName), strtoupper($primaryColumnName)])->getRow();
         $lastInsertValue = str_replace('nextval', 'currval', $query->DATA_DEFAULT ?? '0');
         $query           = $this->query(sprintf('SELECT %s SEQ FROM DUAL', $lastInsertValue))->getRow();
 

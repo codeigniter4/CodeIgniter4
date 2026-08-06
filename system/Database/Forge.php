@@ -568,8 +568,16 @@ class Forge
         $sql = $this->_createTable($table, false, $attributes);
 
         if (($result = $this->db->query($sql)) !== false) {
-            if (isset($this->db->dataCache['table_names']) && ! in_array($table, $this->db->dataCache['table_names'], true)) {
-                $this->db->dataCache['table_names'][] = $table;
+            if (isset($this->db->dataCache['table_names'])) {
+                $exists = in_array(
+                    strtolower($table),
+                    array_map(strtolower(...), $this->db->dataCache['table_names']),
+                    true,
+                );
+
+                if (! $exists) {
+                    $this->db->dataCache['table_names'][] = $table;
+                }
             }
 
             // Most databases don't support creating indexes from within the CREATE TABLE statement
