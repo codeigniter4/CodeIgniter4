@@ -694,7 +694,7 @@ class Router implements RouterInterface
      * Takes an array of URI segments as input and sets the class/method
      * to be called.
      *
-     * @param array $segments URI segments
+     * @param list<string> $segments URI segments
      *
      * @return void
      */
@@ -705,13 +705,13 @@ class Router implements RouterInterface
             return;
         }
 
-        [$controller, $method] = array_pad(explode('::', $segments[0]), 2, null);
+        [$controller, $method] = explode('::', $segments[0], 2) + [null, null];
 
         $this->controller = $controller;
 
         // $this->method already contains the default method name,
         // so don't overwrite it with emptiness.
-        if (! empty($method)) {
+        if ($method !== null && $method !== '') {
             $this->method = $method;
         }
 
