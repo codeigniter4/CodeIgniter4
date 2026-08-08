@@ -1,4 +1,4 @@
-# total 1139 errors
+# total 1137 errors
 
 parameters:
     ignoreErrors:
@@ -3264,16 +3264,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Images\\Handlers\\BaseHandler\:\:calcCropCoords\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Images/Handlers/BaseHandler.php
-
-        -
-            message: '#^Property CodeIgniter\\Images\\Handlers\\BaseHandler\:\:\$supportTransparency type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Images/Handlers/BaseHandler.php
-
-        -
-            message: '#^Property CodeIgniter\\Images\\Handlers\\BaseHandler\:\:\$textDefaults type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Images/Handlers/BaseHandler.php
 

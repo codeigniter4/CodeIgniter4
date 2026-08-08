@@ -1,4 +1,4 @@
-# total 1582 errors
+# total 1573 errors
 
 includes:
     - argument.type.neon
@@ -21,4 +21,3 @@ includes:
     - return.type.neon
     - staticMethod.notFound.neon
     - ternary.shortNotAllowed.neon
-    - varTag.type.neon

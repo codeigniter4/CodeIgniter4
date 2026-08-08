@@ -1,4 +1,4 @@
-# total 44 errors
+# total 43 errors
 
 parameters:
     ignoreErrors:
@@ -161,11 +161,6 @@ parameters:
             message: '#^PHPDoc type CodeIgniter\\HTTP\\URI of property CodeIgniter\\HTTP\\IncomingRequest\:\:\$uri is not the same as PHPDoc type CodeIgniter\\HTTP\\URI\|null of overridden property CodeIgniter\\HTTP\\OutgoingRequest\:\:\$uri\.$#'
             count: 1
             path: ../../system/HTTP/IncomingRequest.php
-
-        -
-            message: '#^PHPDoc type Imagick\|null of property CodeIgniter\\Images\\Handlers\\ImageMagickHandler\:\:\$resource is not the same as PHPDoc type resource\|null of overridden property CodeIgniter\\Images\\Handlers\\BaseHandler\:\:\$resource\.$#'
-            count: 1
-            path: ../../system/Images/Handlers/ImageMagickHandler.php
 
         -
             message: '#^PHPDoc type string of property CodeIgniter\\Session\\Handlers\\FileHandler\:\:\$savePath is not the same as PHPDoc type array\<string, mixed\>\|string of overridden property CodeIgniter\\Session\\Handlers\\BaseHandler\:\:\$savePath\.$#'
