@@ -773,7 +773,6 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testIsCli(): void
     {
-        $this->assertIsBool(is_cli());
         $this->assertTrue(is_cli());
     }
 

@@ -1192,7 +1192,7 @@ final class URITest extends CIUnitTestCase
 
         $uri->setSilent()->setURI($url);
 
-        $this->assertTrue(true);
+        $this->expectNotToPerformAssertions();
     }
 
     public function testCreateURIStringNoArguments(): void

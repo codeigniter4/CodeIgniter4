@@ -431,7 +431,6 @@ final class CLIRequestTest extends CIUnitTestCase
         $result = $this->request->fetchGlobal('post');
 
         $this->assertSame($post, $result);
-        $this->assertIsArray($result['ANNOUNCEMENTS']);
         $this->assertCount(2, $result['ANNOUNCEMENTS']);
     }
 

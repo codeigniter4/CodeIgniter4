@@ -984,7 +984,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $startController();
 
         // No PageNotFoundException
-        $this->assertTrue(true);
+        $this->expectNotToPerformAssertions();
     }
 
     public function testRouteAttributeCacheIntegration(): void

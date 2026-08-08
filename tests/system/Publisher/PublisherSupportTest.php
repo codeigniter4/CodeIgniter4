@@ -106,7 +106,6 @@ final class PublisherSupportTest extends CIUnitTestCase
 
         $scratch = $publisher->getScratch();
 
-        $this->assertIsString($scratch);
         $this->assertDirectoryExists($scratch);
         $this->assertDirectoryIsWritable($scratch);
         $this->assertNotNull($this->getPrivateProperty($publisher, 'scratch'));
