@@ -46,7 +46,7 @@ class Timer
     public function start(string $name, ?float $time = null)
     {
         $this->timers[strtolower($name)] = [
-            'start' => empty($time) ? microtime(true) : $time,
+            'start' => $time === null || $time === 0.0 ? microtime(true) : $time,
             'end'   => null,
         ];
 
@@ -67,7 +67,7 @@ class Timer
     {
         $name = strtolower($name);
 
-        if (empty($this->timers[$name])) {
+        if (! isset($this->timers[$name])) {
             throw new RuntimeException('Cannot stop timer: invalid name given.');
         }
 
@@ -90,13 +90,13 @@ class Timer
     {
         $name = strtolower($name);
 
-        if (empty($this->timers[$name])) {
+        if (! isset($this->timers[$name])) {
             return null;
         }
 
         $timer = $this->timers[$name];
 
-        if (empty($timer['end'])) {
+        if ($timer['end'] === null) {
             $timer['end'] = microtime(true);
         }
 
@@ -113,7 +113,7 @@ class Timer
         $timers = $this->timers;
 
         foreach ($timers as &$timer) {
-            if (empty($timer['end'])) {
+            if ($timer['end'] === null) {
                 $timer['end'] = microtime(true);
             }
 

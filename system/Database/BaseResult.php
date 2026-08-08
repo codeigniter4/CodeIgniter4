@@ -268,7 +268,7 @@ abstract class BaseResult implements ResultInterface
             }
 
             // array_key_exists() instead of isset() to allow for NULL values
-            if (empty($this->rowData) || ! array_key_exists($n, $this->rowData)) {
+            if ($this->rowData === null || ! array_key_exists($n, $this->rowData)) {
                 return null;
             }
 
@@ -304,7 +304,7 @@ abstract class BaseResult implements ResultInterface
             $this->getCustomResultObject($className);
         }
 
-        if (empty($this->customResultObject[$className])) {
+        if (($this->customResultObject[$className] ?? []) === []) {
             return null;
         }
 

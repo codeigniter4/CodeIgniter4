@@ -79,7 +79,7 @@ class CreateDatabase extends BaseCommand
     {
         $name = array_shift($params);
 
-        if (empty($name)) {
+        if ($name === null || $name === '') {
             $name = CLI::prompt('Database name', null, 'required'); // @codeCoverageIgnore
         }
 

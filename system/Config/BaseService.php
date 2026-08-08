@@ -276,7 +276,7 @@ class BaseService
     public static function autoloader(bool $getShared = true)
     {
         if ($getShared) {
-            if (empty(static::$instances['autoloader'])) {
+            if (! isset(static::$instances['autoloader'])) {
                 static::$instances['autoloader'] = new Autoloader();
             }
 
@@ -296,7 +296,7 @@ class BaseService
     public static function locator(bool $getShared = true)
     {
         if ($getShared) {
-            if (empty(static::$instances['locator'])) {
+            if (! isset(static::$instances['locator'])) {
                 $cacheEnabled = class_exists(Optimize::class)
                     && (new Optimize())->locatorCacheEnabled;
 

@@ -206,7 +206,7 @@ class Builder extends BaseBuilder
         $offset = (int) ($offsetIgnore === false ? $this->QBOffset : 0);
 
         // OFFSET-FETCH can be used only with the ORDER BY clause
-        if (empty($this->QBOrderBy)) {
+        if (! is_array($this->QBOrderBy) || $this->QBOrderBy === []) {
             $sql .= ' ORDER BY 1';
         }
 
@@ -316,7 +316,7 @@ class Builder extends BaseBuilder
         if ($sql === '') {
             $constraints = $this->QBOptions['constraints'] ?? [];
 
-            if (empty($constraints)) {
+            if ($constraints === []) {
                 $fieldNames = array_map(static fn ($columnName): string => trim($columnName, '"'), $keys);
 
                 $uniqueIndexes = array_filter($this->db->getIndexData($table), static function ($index) use ($fieldNames): bool {
@@ -334,7 +334,7 @@ class Builder extends BaseBuilder
                 $constraints = $this->onConstraint($constraints)->QBOptions['constraints'] ?? [];
             }
 
-            if (empty($constraints)) {
+            if ($constraints === []) {
                 if ($this->db->DBDebug) {
                     throw new DatabaseException('No constraint found for upsert.');
                 }

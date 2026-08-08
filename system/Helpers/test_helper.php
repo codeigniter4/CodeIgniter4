@@ -57,13 +57,13 @@ if (! function_exists('mock')) {
         $mockClass   = $className::$mockClass;
         $mockService = $className::$mockServiceName ?? '';
 
-        if (empty($mockClass) || ! class_exists($mockClass)) {
+        if ($mockClass === '' || ! class_exists($mockClass)) {
             throw TestException::forInvalidMockClass($mockClass);
         }
 
         $mock = new $mockClass();
 
-        if (! empty($mockService)) {
+        if ($mockService !== '') {
             Services::injectMock($mockService, $mock);
         }
 

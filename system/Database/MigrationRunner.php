@@ -116,7 +116,7 @@ class MigrationRunner
     /**
      * The full path to locate migration files.
      *
-     * @var string
+     * @var string|null
      */
     protected $path;
 
@@ -471,7 +471,7 @@ class MigrationRunner
         $migrations = [];
         $locator    = service('locator', true);
 
-        if (! empty($this->path)) {
+        if ($this->path !== null && $this->path !== '') {
             helper('filesystem');
             $dir   = rtrim($this->path, DIRECTORY_SEPARATOR) . '/';
             $files = get_filenames($dir, true, false, false);
@@ -480,7 +480,7 @@ class MigrationRunner
         }
 
         foreach ($files as $file) {
-            $file = empty($this->path) ? $file : $this->path . str_replace($this->path, '', $file);
+            $file = $this->path === null || $this->path === '' ? $file : $this->path . str_replace($this->path, '', $file);
 
             if ($migration = $this->migrationFromFile($file, $namespace)) {
                 $migrations[] = $migration;
@@ -712,7 +712,7 @@ class MigrationRunner
 
         $query = $builder->orderBy('id', 'ASC')->get();
 
-        return empty($query) ? [] : $query->getResultObject();
+        return $query === false ? [] : $query->getResultObject();
     }
 
     /**
@@ -729,7 +729,7 @@ class MigrationRunner
             ->orderBy('id', $order)
             ->get();
 
-        return empty($query) ? [] : $query->getResultObject();
+        return $query === false ? [] : $query->getResultObject();
     }
 
     /**

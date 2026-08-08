@@ -564,7 +564,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      */
     protected function calcAspectRatio($width, $height = null, $origWidth = 0, $origHeight = 0): array
     {
-        if (empty($origWidth) || empty($origHeight)) {
+        if (in_array($origWidth, [0, 0.0], true) || in_array($origHeight, [0, 0.0], true)) {
             throw new InvalidArgumentException('You must supply the parameters: origWidth, origHeight.');
         }
 

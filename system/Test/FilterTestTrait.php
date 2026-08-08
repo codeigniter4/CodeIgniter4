@@ -178,7 +178,7 @@ trait FilterTestTrait
                     if ($result instanceof ResponseInterface) {
                         return $result;
                     }
-                    if (empty($result)) {
+                    if (! is_string($result) || $result === '') {
                         continue;
                     }
                 }

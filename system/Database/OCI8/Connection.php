@@ -628,7 +628,7 @@ class Connection extends BaseConnection
 
     public function insertID(): int
     {
-        if (empty($this->lastInsertedTableName)) {
+        if ($this->lastInsertedTableName === null || $this->lastInsertedTableName === '') {
             return 0;
         }
 
@@ -764,7 +764,7 @@ class Connection extends BaseConnection
      */
     public function getDatabase(): string
     {
-        if (! empty($this->database)) {
+        if (is_string($this->database) && $this->database !== '') {
             return $this->database;
         }
 

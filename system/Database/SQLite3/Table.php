@@ -96,7 +96,7 @@ class Table
 
         $prefix = $this->db->DBPrefix;
 
-        if (! empty($prefix) && str_starts_with($table, $prefix)) {
+        if ($prefix !== '' && str_starts_with($table, $prefix)) {
             $table = substr($table, strlen($prefix));
         }
 
@@ -217,7 +217,7 @@ class Table
      */
     public function dropForeignKey(string $foreignName)
     {
-        if (empty($this->foreignKeys)) {
+        if ($this->foreignKeys === []) {
             return $this;
         }
 

@@ -54,7 +54,7 @@ class Builder extends BaseBuilder
     {
         $sql = parent::compileIgnore($statement);
 
-        if (! empty($sql)) {
+        if ($sql !== '') {
             $sql = ' ' . trim($sql);
         }
 
@@ -171,9 +171,9 @@ class Builder extends BaseBuilder
         $builder = $this->db->table($table);
         $exists  = $builder->where($key, $value, true)->get()->getFirstRow();
 
-        if (empty($exists) && $this->testMode) {
+        if ($exists === null && $this->testMode) {
             $result = $this->getCompiledInsert();
-        } elseif (empty($exists)) {
+        } elseif ($exists === null) {
             $result = $builder->insert($set);
         } elseif ($this->testMode) {
             $result = $this->where($key, $value, true)->getCompiledUpdate();
@@ -233,7 +233,7 @@ class Builder extends BaseBuilder
      */
     public function delete($where = '', ?int $limit = null, bool $resetData = true)
     {
-        if ($limit !== null && $limit !== 0 || ! empty($this->QBLimit)) {
+        if ($limit !== null && $limit !== 0 || ($this->QBLimit !== false && $this->QBLimit !== 0)) {
             throw new DatabaseException('PostgreSQL does not allow LIMITs on DELETE queries.');
         }
 
@@ -255,7 +255,7 @@ class Builder extends BaseBuilder
      */
     protected function _update(string $table, array $values): string
     {
-        if (! empty($this->QBLimit)) {
+        if ($this->QBLimit !== false && $this->QBLimit !== 0) {
             throw new DatabaseException('Postgres does not support LIMITs with UPDATE queries.');
         }
 
@@ -464,7 +464,7 @@ class Builder extends BaseBuilder
 
             $constraints = $this->QBOptions['constraints'] ?? [];
 
-            if (empty($constraints)) {
+            if ($constraints === []) {
                 $allIndexes = array_filter($this->db->getIndexData($table), static function ($index) use ($fieldNames): bool {
                     $hasAllFields = count(array_intersect($index->fields, $fieldNames)) === count($index->fields);
 
@@ -479,7 +479,7 @@ class Builder extends BaseBuilder
                 $constraints = $this->onConstraint($constraints)->QBOptions['constraints'] ?? [];
             }
 
-            if (empty($constraints)) {
+            if ($constraints === []) {
                 if ($this->db->DBDebug) {
                     throw new DatabaseException('No constraint found for upsert.');
                 }

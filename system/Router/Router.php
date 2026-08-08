@@ -729,7 +729,7 @@ class Router implements RouterInterface
      */
     protected function setDefaultController()
     {
-        if (empty($this->controller)) {
+        if (! is_string($this->controller) || $this->controller === '') {
             throw RouterException::forMissingDefaultRoute();
         }
 

@@ -371,11 +371,13 @@ class CURLRequest extends OutgoingRequest
         // Reset our curl options so we're on a fresh slate.
         $curlOptions = [];
 
-        if (! empty($this->config['query']) && is_array($this->config['query'])) {
+        $query = $this->config['query'] ?? [];
+
+        if (is_array($query) && $query !== []) {
             // This is likely too naive a solution.
             // Should look into handling when $url already
             // has query vars on it.
-            $url .= '?' . http_build_query($this->config['query']);
+            $url .= '?' . http_build_query($query);
             unset($this->config['query']);
         }
 
@@ -431,7 +433,7 @@ class CURLRequest extends OutgoingRequest
      */
     protected function applyRequestHeaders(array $curlOptions = []): array
     {
-        if (empty($this->headers)) {
+        if ($this->headers === []) {
             return $curlOptions;
         }
 
@@ -478,7 +480,7 @@ class CURLRequest extends OutgoingRequest
      */
     protected function applyBody(array $curlOptions = []): array
     {
-        if (! empty($this->body)) {
+        if (! in_array($this->body, [null, '', '0'], true)) {
             $curlOptions[CURLOPT_POSTFIELDS] = (string) $this->getBody();
         }
 

@@ -71,7 +71,7 @@ class Filters
      */
     public static function default($value, string $default): string
     {
-        return empty($value) ? $default : $value;
+        return in_array($value, [null, false, 0, 0.0, '', '0', []], true) ? $default : $value;
     }
 
     /**

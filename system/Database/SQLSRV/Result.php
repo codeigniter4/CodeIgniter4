@@ -156,7 +156,9 @@ class Result extends BaseResult
     protected function fetchObject(string $className = 'stdClass')
     {
         if (is_subclass_of($className, Entity::class)) {
-            return empty($data = $this->fetchAssoc()) ? false : (new $className())->injectRawData($data);
+            $data = $this->fetchAssoc();
+
+            return in_array($data, [null, false, []], true) ? false : (new $className())->injectRawData($data);
         }
 
         return sqlsrv_fetch_object($this->resultID, $className);

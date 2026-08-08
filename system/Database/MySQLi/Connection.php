@@ -108,7 +108,7 @@ class Connection extends BaseConnection
             $socket   = $this->hostname;
         } else {
             $hostname = $persistent ? 'p:' . $this->hostname : $this->hostname;
-            $port     = empty($this->port) ? null : $this->port;
+            $port     = $this->port === '' ? null : $this->port;
             $socket   = '';
         }
 
@@ -147,19 +147,19 @@ class Connection extends BaseConnection
         if (is_array($this->encrypt)) {
             $ssl = [];
 
-            if (! empty($this->encrypt['ssl_key'])) {
+            if (($this->encrypt['ssl_key'] ?? '') !== '') {
                 $ssl['key'] = $this->encrypt['ssl_key'];
             }
-            if (! empty($this->encrypt['ssl_cert'])) {
+            if (($this->encrypt['ssl_cert'] ?? '') !== '') {
                 $ssl['cert'] = $this->encrypt['ssl_cert'];
             }
-            if (! empty($this->encrypt['ssl_ca'])) {
+            if (($this->encrypt['ssl_ca'] ?? '') !== '') {
                 $ssl['ca'] = $this->encrypt['ssl_ca'];
             }
-            if (! empty($this->encrypt['ssl_capath'])) {
+            if (($this->encrypt['ssl_capath'] ?? '') !== '') {
                 $ssl['capath'] = $this->encrypt['ssl_capath'];
             }
-            if (! empty($this->encrypt['ssl_cipher'])) {
+            if (($this->encrypt['ssl_cipher'] ?? '') !== '') {
                 $ssl['cipher'] = $this->encrypt['ssl_cipher'];
             }
 
@@ -253,7 +253,7 @@ class Connection extends BaseConnection
             $databaseName = $this->database;
         }
 
-        if (empty($this->connID)) {
+        if ($this->connID === false) {
             $this->initialize();
         }
 
@@ -275,7 +275,7 @@ class Connection extends BaseConnection
             return $this->dataCache['version'];
         }
 
-        if (empty($this->mysqli)) {
+        if (! $this->mysqli instanceof mysqli) {
             $this->initialize();
         }
 
@@ -473,7 +473,7 @@ class Connection extends BaseConnection
         $keys = [];
 
         foreach ($indexes as $index) {
-            if (empty($keys[$index['Key_name']])) {
+            if (! isset($keys[$index['Key_name']])) {
                 $keys[$index['Key_name']]       = new stdClass();
                 $keys[$index['Key_name']]->name = $index['Key_name'];
 
@@ -577,7 +577,7 @@ class Connection extends BaseConnection
      */
     public function error(): array
     {
-        if (! empty($this->mysqli->connect_errno)) {
+        if ($this->mysqli instanceof mysqli && $this->mysqli->connect_errno !== 0) {
             return [
                 'code'    => $this->mysqli->connect_errno,
                 'message' => $this->mysqli->connect_error,
