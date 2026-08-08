@@ -16,10 +16,10 @@ namespace CodeIgniter\DataCaster\Cast;
 use CodeIgniter\HTTP\URI;
 
 /**
- * Class URICast
- *
  * (PHP) [URI --> string] --> (DB driver) --> (DB column) string
  *       [    <-- string] <-- (DB driver) <-- (DB column) string
+ *
+ * @extends BaseCast<URI, string>
  */
 class URICast extends BaseCast
 {

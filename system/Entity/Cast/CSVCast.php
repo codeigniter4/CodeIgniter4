@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Entity\Cast;
 
+/**
+ * @extends BaseCast<list<string>, string>
+ */
 class CSVCast extends BaseCast
 {
     public static function get($value, array $params = []): array

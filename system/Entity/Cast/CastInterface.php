@@ -17,26 +17,29 @@ namespace CodeIgniter\Entity\Cast;
  * The methods work at (1)(4) only.
  *   [App Code] --- (1) --> [Entity] --- (2) --> [Database]
  *   [App Code] <-- (4) --- [Entity] <-- (3) --- [Database]
+ *
+ * @template TPhpNativeValue
+ * @template TEntityStoredValue
  */
 interface CastInterface
 {
     /**
      * Takes a raw value from Entity, returns its value for PHP.
      *
-     * @param mixed              $value  Data
+     * @param TEntityStoredValue $value
      * @param array<int, string> $params Additional param
      *
-     * @return mixed
+     * @return TPhpNativeValue
      */
     public static function get($value, array $params = []);
 
     /**
      * Takes a PHP value, returns its raw value for Entity.
      *
-     * @param mixed              $value  Data
+     * @param TPhpNativeValue    $value
      * @param array<int, string> $params Additional param
      *
-     * @return mixed
+     * @return TEntityStoredValue
      */
     public static function set($value, array $params = []);
 }

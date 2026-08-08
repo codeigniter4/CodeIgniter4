@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Entity\Cast;
 
+/**
+ * @extends BaseCast<float, mixed>
+ */
 class FloatCast extends BaseCast
 {
     public static function get($value, array $params = []): float

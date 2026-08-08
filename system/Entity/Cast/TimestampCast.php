@@ -15,6 +15,9 @@ namespace CodeIgniter\Entity\Cast;
 
 use CodeIgniter\Entity\Exceptions\CastException;
 
+/**
+ * @extends BaseCast<int, string>
+ */
 class TimestampCast extends BaseCast
 {
     public static function get($value, array $params = [])

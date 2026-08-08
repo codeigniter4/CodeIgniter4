@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Entity\Cast;
 
+/**
+ * @extends BaseCast<string, mixed>
+ */
 class StringCast extends BaseCast
 {
     public static function get($value, array $params = []): string
