@@ -66,7 +66,7 @@ class DotEnv
         // (e.g. another test process renaming `.env`). A vanished file is
         // treated as absent, so re-check with a fresh stat cache.
         if ($lines === false) {
-            clearstatcache();
+            clearstatcache(true, $this->path);
 
             if (is_file($this->path)) {
                 throw new InvalidArgumentException("The .env file is not readable: {$this->path}");
