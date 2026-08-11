@@ -121,7 +121,7 @@ class Encryption
             $this->digest = $config->digest;
         }
 
-        if (empty($this->driver)) {
+        if ($this->driver === null || $this->driver === '') {
             throw EncryptionException::forNoDriverRequested();
         }
 
@@ -129,7 +129,7 @@ class Encryption
             throw EncryptionException::forUnKnownHandler($this->driver);
         }
 
-        if (empty($this->key)) {
+        if (in_array($this->key, [null, '', '0'], true)) {
             throw EncryptionException::forNeedsStarterKey();
         }
 

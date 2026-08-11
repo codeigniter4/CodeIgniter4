@@ -174,7 +174,7 @@ class RedisHandler extends BaseHandler
      */
     public function open($path, $name): bool
     {
-        if (empty($this->savePath)) {
+        if ($this->savePath === [] || $this->savePath === '') {
             return false;
         }
 

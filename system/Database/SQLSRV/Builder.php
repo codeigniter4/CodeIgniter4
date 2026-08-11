@@ -224,7 +224,7 @@ class Builder extends BaseBuilder
 
         $fullTableName = $this->getFullName($table);
 
-        $statement = sprintf('UPDATE %s%s SET ', empty($this->QBLimit) ? '' : 'TOP(' . $this->QBLimit . ') ', $fullTableName);
+        $statement = sprintf('UPDATE %s%s SET ', $this->QBLimit === false || $this->QBLimit === 0 ? '' : 'TOP(' . $this->QBLimit . ') ', $fullTableName);
 
         $statement .= implode(', ', $valstr)
             . $this->compileWhereHaving('QBWhere')
@@ -344,7 +344,7 @@ class Builder extends BaseBuilder
             return "SELECT * \nFROM " . $this->_fromTables() . ' WHERE 1=0 ';
         }
 
-        if (empty($this->QBOrderBy)) {
+        if (! is_array($this->QBOrderBy) || $this->QBOrderBy === []) {
             $sql .= ' ORDER BY (SELECT NULL) ';
         }
 
@@ -514,7 +514,7 @@ class Builder extends BaseBuilder
         }
 
         $query = $this->db->query($sql, null, false);
-        if (empty($query->getResult())) {
+        if ($query->getResult() === []) {
             return 0;
         }
 
@@ -532,7 +532,7 @@ class Builder extends BaseBuilder
      */
     protected function _delete(string $table): string
     {
-        return 'DELETE' . (empty($this->QBLimit) ? '' : ' TOP (' . $this->QBLimit . ') ') . ' FROM ' . $this->getFullName($table) . $this->compileWhereHaving('QBWhere');
+        return 'DELETE' . ($this->QBLimit === false || $this->QBLimit === 0 ? '' : ' TOP (' . $this->QBLimit . ') ') . ' FROM ' . $this->getFullName($table) . $this->compileWhereHaving('QBWhere');
     }
 
     /**
@@ -589,13 +589,13 @@ class Builder extends BaseBuilder
             $sql = $this->QBDistinct ? 'SELECT DISTINCT ' : 'SELECT ';
 
             // SQL Server can't work with select * if group by is specified
-            if (empty($this->QBSelect) && $this->QBGroupBy !== [] && is_array($this->QBGroupBy)) {
+            if ($this->QBSelect === [] && $this->QBGroupBy !== [] && is_array($this->QBGroupBy)) {
                 foreach ($this->QBGroupBy as $field) {
                     $this->QBSelect[] = is_array($field) ? $field['field'] : $field;
                 }
             }
 
-            if (empty($this->QBSelect)) {
+            if ($this->QBSelect === []) {
                 $sql .= '*';
             } else {
                 // Cycle through the "select" portion of the query and prep each column name.
@@ -616,7 +616,7 @@ class Builder extends BaseBuilder
         }
 
         // Write the "JOIN" portion of the query
-        if (! empty($this->QBJoin)) {
+        if ($this->QBJoin !== []) {
             $sql .= "\n" . implode("\n", $this->QBJoin);
         }
 
@@ -698,7 +698,7 @@ class Builder extends BaseBuilder
 
             $fieldNames = array_map(static fn ($columnName): string => trim($columnName, '"'), $keys);
 
-            if (empty($constraints)) {
+            if ($constraints === []) {
                 $tableIndexes = $this->db->getIndexData($table);
 
                 $uniqueIndexes = array_filter($tableIndexes, static function ($index) use ($fieldNames): bool {
@@ -725,7 +725,7 @@ class Builder extends BaseBuilder
                 $constraints = $this->onConstraint($constraints)->QBOptions['constraints'] ?? [];
             }
 
-            if (empty($constraints)) {
+            if ($constraints === []) {
                 if ($this->db->DBDebug) {
                     throw new DatabaseException('No constraint found for upsert.');
                 }

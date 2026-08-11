@@ -152,7 +152,7 @@ class Forge extends BaseForge
                 if ($alterType === 'ADD') {
                     $processedFields[$i]['_literal'] = "\n\tADD ";
                 } else {
-                    $processedFields[$i]['_literal'] = empty($field['new_name']) ? "\n\tMODIFY " : "\n\tCHANGE ";
+                    $processedFields[$i]['_literal'] = ($field['new_name'] ?? '') === '' ? "\n\tMODIFY " : "\n\tCHANGE ";
                 }
 
                 $processedFields[$i] = $processedFields[$i]['_literal'] . $this->_processColumn($processedFields[$i]);
@@ -169,19 +169,19 @@ class Forge extends BaseForge
     {
         $extraClause = isset($processedField['after']) ? ' AFTER ' . $this->db->escapeIdentifiers($processedField['after']) : '';
 
-        if (empty($extraClause) && isset($processedField['first']) && $processedField['first'] === true) {
+        if ($extraClause === '' && isset($processedField['first']) && $processedField['first'] === true) {
             $extraClause = ' FIRST';
         }
 
         return $this->db->escapeIdentifiers($processedField['name'])
-                . (empty($processedField['new_name']) ? '' : ' ' . $this->db->escapeIdentifiers($processedField['new_name']))
+                . (($processedField['new_name'] ?? '') === '' ? '' : ' ' . $this->db->escapeIdentifiers($processedField['new_name']))
                 . ' ' . $processedField['type'] . $processedField['length']
                 . $processedField['unsigned']
                 . $processedField['null']
                 . $processedField['default']
                 . $processedField['auto_increment']
                 . $processedField['unique']
-                . (empty($processedField['comment']) ? '' : ' COMMENT ' . $processedField['comment'])
+                . (($processedField['comment'] ?? '') === '' ? '' : ' COMMENT ' . $processedField['comment'])
                 . $extraClause;
     }
 

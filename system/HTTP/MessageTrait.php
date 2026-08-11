@@ -82,7 +82,7 @@ trait MessageTrait
     public function populateHeaders(): void
     {
         $contentType = service('superglobals')->server('CONTENT_TYPE', (string) getenv('CONTENT_TYPE'));
-        if (! empty($contentType)) {
+        if ($contentType !== '') {
             $this->setHeader('Content-Type', $contentType);
         }
         unset($contentType);
@@ -113,7 +113,7 @@ trait MessageTrait
         // If no headers are defined, but the user is
         // requesting it, then it's likely they want
         // it to be populated so do that...
-        if (empty($this->headers)) {
+        if ($this->headers === []) {
             $this->populateHeaders();
         }
 

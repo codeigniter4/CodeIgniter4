@@ -98,11 +98,11 @@ class DotEnv
             putenv("{$name}={$value}");
         }
 
-        if (empty($_ENV[$name])) {
+        if (! isset($_ENV[$name]) || in_array($_ENV[$name], ['', '0'], true)) {
             $_ENV[$name] = $value;
         }
 
-        if (empty($_SERVER[$name])) {
+        if (! isset($_SERVER[$name]) || in_array($_SERVER[$name], ['', '0'], true)) {
             $_SERVER[$name] = $value;
         }
     }

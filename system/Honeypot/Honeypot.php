@@ -64,7 +64,7 @@ class Honeypot
     {
         assert($request instanceof IncomingRequest);
 
-        return ! empty($request->getPost($this->config->name));
+        return ! in_array($request->getPost($this->config->name), [null, false, 0, 0.0, '', '0', []], true);
     }
 
     /**

@@ -66,11 +66,11 @@ abstract class BaseResource extends Controller
             $this->modelName = is_object($which) ? null : $which;
         }
 
-        if (empty($this->model) && ! empty($this->modelName) && class_exists($this->modelName)) {
+        if ($this->model === null && $this->modelName !== null && class_exists($this->modelName)) {
             $this->model = model($this->modelName);
         }
 
-        if (! empty($this->model) && empty($this->modelName)) {
+        if ($this->model !== null && ($this->modelName === null || $this->modelName === '')) {
             $this->modelName = $this->model::class;
         }
     }

@@ -143,7 +143,7 @@ class File extends SplFileInfo
     public function getRandomName(): string
     {
         $extension = $this->getExtension();
-        $extension = empty($extension) ? '' : '.' . $extension;
+        $extension = $extension === '' ? '' : '.' . $extension;
 
         return Time::now()->getTimestamp() . '_' . bin2hex(random_bytes(10)) . $extension;
     }

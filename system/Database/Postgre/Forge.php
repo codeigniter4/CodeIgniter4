@@ -107,7 +107,7 @@ class Forge extends BaseForge
                     . " TYPE {$field['type']}{$field['length']}";
             }
 
-            if (! empty($field['default'])) {
+            if (($field['default'] ?? '') !== '') {
                 $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($field['name'])
                     . " SET {$field['default']}";
             }
@@ -119,12 +119,12 @@ class Forge extends BaseForge
             $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($field['name'])
                 . ($nullable ? ' DROP' : ' SET') . ' NOT NULL';
 
-            if (! empty($field['new_name'])) {
+            if (($field['new_name'] ?? '') !== '') {
                 $sqls[] = $sql . ' RENAME COLUMN ' . $this->db->escapeIdentifiers($field['name'])
                     . ' TO ' . $this->db->escapeIdentifiers($field['new_name']);
             }
 
-            if (! empty($field['comment'])) {
+            if (($field['comment'] ?? '') !== '') {
                 $sqls[] = 'COMMENT ON COLUMN' . $this->db->escapeIdentifiers($table)
                     . '.' . $this->db->escapeIdentifiers($field['name'])
                     . " IS {$field['comment']}";
@@ -186,7 +186,7 @@ class Forge extends BaseForge
      */
     protected function _attributeAutoIncrement(array &$attributes, array &$field)
     {
-        if (! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true) {
+        if (($attributes['AUTO_INCREMENT'] ?? false) === true) {
             $field['type'] = $field['type'] === 'NUMERIC' || $field['type'] === 'BIGINT' ? 'BIGSERIAL' : 'SERIAL';
         }
     }

@@ -149,13 +149,13 @@ class Forge extends BaseForge
             } else {
                 $processedFields[$i]['_literal'] = "\n\t" . $this->_processColumn($processedFields[$i]);
 
-                if (! empty($processedFields[$i]['comment'])) {
+                if (($processedFields[$i]['comment'] ?? '') !== '') {
                     $sqls[] = 'COMMENT ON COLUMN '
                         . $this->db->escapeIdentifiers($table) . '.' . $this->db->escapeIdentifiers($processedFields[$i]['name'])
                         . ' IS ' . $processedFields[$i]['comment'];
                 }
 
-                if ($alterType === 'MODIFY' && ! empty($processedFields[$i]['new_name'])) {
+                if ($alterType === 'MODIFY' && ($processedFields[$i]['new_name'] ?? '') !== '') {
                     $sqls[] = $sql . ' RENAME COLUMN ' . $this->db->escapeIdentifiers($processedFields[$i]['name'])
                         . ' TO ' . $this->db->escapeIdentifiers($processedFields[$i]['new_name']);
                 }
@@ -182,7 +182,7 @@ class Forge extends BaseForge
      */
     protected function _attributeAutoIncrement(array &$attributes, array &$field)
     {
-        if (! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true
+        if (($attributes['AUTO_INCREMENT'] ?? false) === true
             && str_contains(strtolower($field['type']), 'number')
             && version_compare($this->db->getVersion(), '12.1', '>=')
         ) {

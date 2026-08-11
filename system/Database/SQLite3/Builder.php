@@ -142,7 +142,7 @@ class Builder extends BaseBuilder
         if ($sql === '') {
             $constraints = $this->QBOptions['constraints'] ?? [];
 
-            if (empty($constraints)) {
+            if ($constraints === []) {
                 $fieldNames = array_map(static fn ($columnName): string => trim($columnName, '`'), $keys);
 
                 $allIndexes = array_filter($this->db->getIndexData($table), static function ($index) use ($fieldNames): bool {
@@ -159,7 +159,7 @@ class Builder extends BaseBuilder
                 $constraints = $this->onConstraint($constraints)->QBOptions['constraints'] ?? [];
             }
 
-            if (empty($constraints)) {
+            if ($constraints === []) {
                 if ($this->db->DBDebug) {
                     throw new DatabaseException('No constraint found for upsert.');
                 }

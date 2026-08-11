@@ -205,7 +205,7 @@ if (! function_exists('anchor_popup')) {
 
             // Ref: http://www.w3schools.com/jsref/met_win_open.asp
             $windowName = '_blank';
-        } elseif (! empty($attributes['window_name'])) {
+        } elseif (($attributes['window_name'] ?? '') !== '') {
             $windowName = $attributes['window_name'];
             unset($attributes['window_name']);
         } else {

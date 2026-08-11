@@ -100,7 +100,7 @@ class Forge extends BaseForge
             return false;
         }
 
-        if (! empty($this->db->dataCache['db_names'])) {
+        if (($this->db->dataCache['db_names'] ?? []) !== []) {
             $key = array_search(strtolower($dbName), array_map(strtolower(...), $this->db->dataCache['db_names']), true);
             if ($key !== false) {
                 unset($this->db->dataCache['db_names'][$key]);
@@ -222,8 +222,7 @@ class Forge extends BaseForge
     protected function _attributeAutoIncrement(array &$attributes, array &$field)
     {
         if (
-            ! empty($attributes['AUTO_INCREMENT'])
-            && $attributes['AUTO_INCREMENT'] === true
+            ($attributes['AUTO_INCREMENT'] ?? false) === true
             && str_contains(strtolower($field['type']), 'int')
         ) {
             $field['type']           = 'INTEGER PRIMARY KEY';

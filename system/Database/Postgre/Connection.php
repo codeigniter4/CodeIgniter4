@@ -63,7 +63,7 @@ class Connection extends BaseConnection
      */
     public function connect(bool $persistent = false)
     {
-        if (empty($this->DSN)) {
+        if ($this->DSN === null || $this->DSN === '') {
             $this->buildDSN();
         }
 
@@ -88,7 +88,7 @@ class Connection extends BaseConnection
                 throw new DatabaseException($error);
             }
 
-            if (! empty($this->schema)) {
+            if ($this->schema !== '') {
                 $this->simpleQuery("SET search_path TO {$this->schema},public");
             }
 
