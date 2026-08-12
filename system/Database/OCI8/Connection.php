@@ -53,6 +53,9 @@ class Connection extends BaseConnection
         'rownum',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $validDSNs = [
         // TNS
         'tns' => '/^\(DESCRIPTION=(\(.+\)){2,}\)$/',
@@ -79,6 +82,8 @@ class Connection extends BaseConnection
      *
      * Used by storedProcedure() to prevent execute() from
      * re-setting the statement ID.
+     *
+     * @var bool
      */
     protected $resetStmtId = true;
 
