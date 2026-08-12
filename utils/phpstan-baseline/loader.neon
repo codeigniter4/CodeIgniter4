@@ -1,4 +1,4 @@
-# total 1560 errors
+# total 1527 errors
 
 includes:
     - argument.type.neon
@@ -20,4 +20,3 @@ includes:
     - property.phpDocType.neon
     - return.type.neon
     - staticMethod.notFound.neon
-    - ternary.shortNotAllowed.neon

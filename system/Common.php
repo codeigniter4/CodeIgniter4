@@ -95,7 +95,8 @@ if (! function_exists('clean_path')) {
     {
         // Resolve relative paths
         try {
-            $path = realpath($path) ?: $path;
+            $realPath = realpath($path);
+            $path     = $realPath === false ? $path : $realPath;
         } catch (ErrorException|ValueError) {
             $path = 'error file path: ' . urlencode($path);
         }
@@ -1347,7 +1348,11 @@ if (! function_exists('trait_uses_recursive')) {
      */
     function trait_uses_recursive($trait)
     {
-        $traits = class_uses($trait) ?: [];
+        $traits = class_uses($trait);
+
+        if ($traits === false) {
+            return [];
+        }
 
         foreach ($traits as $trait) {
             $traits += trait_uses_recursive($trait);

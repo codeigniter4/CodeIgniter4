@@ -88,7 +88,7 @@ class Database extends BaseCollector
         $config = config(Toolbar::class);
 
         // Provide default in case it's not set
-        $max = $config->maxQueries ?: 100;
+        $max = ($config->maxQueries === 0) ? 100 : $config->maxQueries;
 
         if (count(static::$queries) < $max) {
             $queryString = $query->getQuery();

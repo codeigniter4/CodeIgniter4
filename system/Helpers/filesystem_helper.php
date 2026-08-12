@@ -155,8 +155,9 @@ if (! function_exists('delete_files')) {
      */
     function delete_files(string $path, bool $delDir = false, bool $htdocs = false, bool $hidden = false): bool
     {
-        $path = realpath($path) ?: $path;
-        $path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $realPath = realpath($path);
+        $path     = $realPath === false ? $path : $realPath;
+        $path     = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
         try {
             foreach (new RecursiveIteratorIterator(
@@ -208,7 +209,8 @@ if (! function_exists('get_filenames')) {
     ): array {
         $files = [];
 
-        $sourceDir = realpath($sourceDir) ?: $sourceDir;
+        $realPath  = realpath($sourceDir);
+        $sourceDir = $realPath === false ? $sourceDir : $realPath;
         $sourceDir = rtrim($sourceDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
         try {

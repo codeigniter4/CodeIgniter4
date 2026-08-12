@@ -195,7 +195,7 @@ trait ResponseTrait
             $body = service('format')->getFormatter('application/json')->format($body);
         }
 
-        return $body ?: null;
+        return ($body === null || $body === '') ? null : $body;
     }
 
     /**
@@ -541,10 +541,12 @@ trait ResponseTrait
 
         if (is_numeric($expire)) {
             $expire = $expire > 0 ? Time::now()->getTimestamp() + $expire : 0;
+        } else {
+            $expire = 0;
         }
 
         $cookie = new Cookie($name, $value, [
-            'expires'  => $expire ?: 0,
+            'expires'  => $expire,
             'domain'   => $domain,
             'path'     => $path,
             'prefix'   => $prefix,
