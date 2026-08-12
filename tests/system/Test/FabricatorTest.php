@@ -128,8 +128,10 @@ final class FabricatorTest extends CIUnitTestCase
         $fabricator = new Fabricator(UserModel::class);
 
         $faker = $fabricator->getFaker();
+        $digit = $faker->randomDigit();
 
-        $this->assertIsNumeric($faker->randomDigit());
+        $this->assertGreaterThanOrEqual(0, $digit);
+        $this->assertLessThanOrEqual(9, $digit);
     }
 
     public function testSetFormattersChangesFormatters(): void

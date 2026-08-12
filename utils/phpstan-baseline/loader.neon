@@ -1,4 +1,4 @@
-# total 1604 errors
+# total 1582 errors
 
 includes:
     - argument.type.neon
@@ -7,7 +7,6 @@ includes:
     - codeigniter.modelArgumentType.neon
     - deadCode.unreachable.neon
     - function.resultUnused.neon
-    - method.alreadyNarrowedType.neon
     - method.childParameterType.neon
     - method.childReturnType.neon
     - method.notFound.neon

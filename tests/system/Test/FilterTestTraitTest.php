@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Test;
 
+use Closure;
 use CodeIgniter\HTTP\RequestInterface;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Filters\Customfilter;
@@ -53,8 +54,7 @@ final class FilterTestTraitTest extends CIUnitTestCase
     {
         $caller = $this->getFilterCaller('test-customfilter', 'before');
 
-        $this->assertIsCallable($caller);
-        $this->assertInstanceOf('Closure', $caller);
+        $this->assertInstanceOf(Closure::class, $caller);
     }
 
     public function testGetCallerInvalidPosition(): void

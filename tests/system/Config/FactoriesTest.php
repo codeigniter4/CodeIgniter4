@@ -439,7 +439,6 @@ final class FactoriesTest extends CIUnitTestCase
 
         $data = Factories::getComponentInstances('config');
 
-        $this->assertIsArray($data);
         $this->assertArrayHasKey('aliases', $data);
         $this->assertArrayHasKey('instances', $data);
 
@@ -469,7 +468,6 @@ final class FactoriesTest extends CIUnitTestCase
 
         $data = Factories::getComponentInstances('config');
 
-        $this->assertIsArray($data);
         $this->assertArrayHasKey('aliases', $data);
         $this->assertArrayHasKey('instances', $data);
 
