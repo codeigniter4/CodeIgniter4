@@ -15,17 +15,12 @@ namespace CodeIgniter\Entity\Cast;
 
 use CodeIgniter\I18n\Time;
 use DateTimeInterface;
-use Exception;
 
+/**
+ * @extends BaseCast<Time, DateTimeInterface|float|int|string>
+ */
 class DatetimeCast extends BaseCast
 {
-    /**
-     * {@inheritDoc}
-     *
-     * @return Time
-     *
-     * @throws Exception
-     */
     public static function get($value, array $params = [])
     {
         if ($value instanceof Time) {

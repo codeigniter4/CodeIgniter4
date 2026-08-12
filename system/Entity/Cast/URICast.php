@@ -15,6 +15,9 @@ namespace CodeIgniter\Entity\Cast;
 
 use CodeIgniter\HTTP\URI;
 
+/**
+ * @extends BaseCast<URI, string|URI>
+ */
 class URICast extends BaseCast
 {
     public static function get($value, array $params = []): URI

@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace CodeIgniter\DataCaster\Cast;
 
 /**
- * Class CSVCast
- *
  * (PHP) [array --> string] --> (DB driver) --> (DB column) string
  *       [      <-- string] <-- (DB driver) <-- (DB column) string
+ *
+ * @extends BaseCast<list<string>, string>
  */
 class CSVCast extends BaseCast
 {

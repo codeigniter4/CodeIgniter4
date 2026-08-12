@@ -18,10 +18,10 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\I18n\Time;
 
 /**
- * Class DatetimeCast
- *
  * (PHP) [Time --> string] --> (DB driver) --> (DB column) datetime
  *       [     <-- string] <-- (DB driver) <-- (DB column) datetime
+ *
+ * @extends BaseCast<Time, string>
  */
 class DatetimeCast extends BaseCast
 {

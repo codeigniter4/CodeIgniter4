@@ -30,6 +30,19 @@
     </projectFiles>
 
     <issueHandlers>
+        <!-- Psalm does not bring class-level template params into scope for static methods. -->
+        <NoValue>
+            <errorLevel type="suppress">
+                <directory name="system/DataCaster/Cast" />
+                <directory name="system/Entity/Cast" />
+            </errorLevel>
+        </NoValue>
+        <UndefinedDocblockClass>
+            <errorLevel type="suppress">
+                <directory name="system/DataCaster/Cast" />
+                <directory name="system/Entity/Cast" />
+            </errorLevel>
+        </UndefinedDocblockClass>
         <UndefinedGlobalVariable>
             <errorLevel type="suppress">
                 <directory name="tests/_support/View/Cells" />

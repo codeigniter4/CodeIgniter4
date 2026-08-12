@@ -18,6 +18,9 @@ use CodeIgniter\Entity\Exceptions\CastException;
 use ReflectionEnum;
 use UnitEnum;
 
+/**
+ * @extends BaseCast<BackedEnum|UnitEnum, int|string>
+ */
 class EnumCast extends BaseCast
 {
     public static function get($value, array $params = []): BackedEnum|UnitEnum
@@ -34,11 +37,9 @@ class EnumCast extends BaseCast
 
         $reflection = new ReflectionEnum($enumClass);
 
-        // Backed enum - validate and cast the value to proper type
-        if ($reflection->isBacked()) {
+        if (is_a($enumClass, BackedEnum::class, true)) {
             $backingType = $reflection->getBackingType();
 
-            // Cast to proper type (int or string)
             if ($backingType->getName() === 'int') {
                 $value = (int) $value;
             } elseif ($backingType->getName() === 'string') {
@@ -54,7 +55,6 @@ class EnumCast extends BaseCast
             return $enum;
         }
 
-        // Unit enum - match by name
         foreach ($enumClass::cases() as $case) {
             if ($case->name === $value) {
                 return $case;
@@ -64,9 +64,11 @@ class EnumCast extends BaseCast
         throw CastException::forInvalidEnumCaseName($enumClass, $value);
     }
 
+    /**
+     * @param mixed $value
+     */
     public static function set($value, array $params = []): int|string
     {
-        // Get the expected enum class
         $enumClass = $params[0] ?? null;
 
         if ($enumClass === null) {
@@ -77,33 +79,23 @@ class EnumCast extends BaseCast
             throw CastException::forNotEnum($enumClass);
         }
 
-        // If it's already an enum object, validate and extract its value
         if (is_object($value) && enum_exists($value::class)) {
-            // Validate that the enum is of the expected type
             if (! $value instanceof $enumClass) {
                 throw CastException::forInvalidEnumType($enumClass, $value::class);
             }
 
-            $reflection = new ReflectionEnum($value::class);
-
-            // Backed enum - return the properly typed backing value
-            if ($reflection->isBacked()) {
-                /** @var BackedEnum $value */
+            if ($value instanceof BackedEnum) {
                 return $value->value;
             }
 
-            // Unit enum - return the case name
-            /** @var UnitEnum $value */
             return $value->name;
         }
 
         $reflection = new ReflectionEnum($enumClass);
 
-        // Validate backed enum values
-        if ($reflection->isBacked()) {
+        if (is_a($enumClass, BackedEnum::class, true)) {
             $backingType = $reflection->getBackingType();
 
-            // Cast to proper type (int or string)
             if ($backingType->getName() === 'int') {
                 $value = (int) $value;
             } elseif ($backingType->getName() === 'string') {
@@ -117,7 +109,6 @@ class EnumCast extends BaseCast
             return $value;
         }
 
-        // Validate unit enum case names - must be a string
         $value = (string) $value;
 
         foreach ($enumClass::cases() as $case) {

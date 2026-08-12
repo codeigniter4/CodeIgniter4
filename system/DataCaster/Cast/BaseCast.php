@@ -15,6 +15,12 @@ namespace CodeIgniter\DataCaster\Cast;
 
 use CodeIgniter\Exceptions\InvalidArgumentException;
 
+/**
+ * @template TPhpNativeValue
+ * @template TDataSourceValue
+ *
+ * @implements CastInterface<TPhpNativeValue, TDataSourceValue>
+ */
 abstract class BaseCast implements CastInterface
 {
     public static function get(

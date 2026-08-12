@@ -13,6 +13,12 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Entity\Cast;
 
+/**
+ * @template TPhpNativeValue
+ * @template TEntityStoredValue
+ *
+ * @implements CastInterface<TPhpNativeValue, TEntityStoredValue>
+ */
 abstract class BaseCast implements CastInterface
 {
     public static function get($value, array $params = [])
