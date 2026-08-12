@@ -24,7 +24,7 @@ use SQLite3Stmt;
 /**
  * Prepared query for SQLite3
  *
- * @extends BasePreparedQuery<SQLite3, SQLite3Stmt, SQLite3Result>
+ * @extends BasePreparedQuery<SQLite3, SQLite3Stmt, SQLite3Result, Connection>
  */
 class PreparedQuery extends BasePreparedQuery
 {

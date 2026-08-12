@@ -23,7 +23,7 @@ use PgSql\Result as PgSqlResult;
 /**
  * Prepared query for Postgre
  *
- * @extends BasePreparedQuery<PgSqlConnection, PgSqlResult, PgSqlResult>
+ * @extends BasePreparedQuery<PgSqlConnection, PgSqlResult, PgSqlResult, Connection>
  */
 class PreparedQuery extends BasePreparedQuery
 {

@@ -17,6 +17,8 @@ use CodeIgniter\Database\Forge as BaseForge;
 
 /**
  * Forge for MySQLi
+ *
+ * @extends BaseForge<Connection>
  */
 class Forge extends BaseForge
 {

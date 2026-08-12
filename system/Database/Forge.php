@@ -21,13 +21,15 @@ use Throwable;
 /**
  * The Forge class transforms migrations to executable
  * SQL statements.
+ *
+ * @template TDb of BaseConnection
  */
 class Forge
 {
     /**
      * The active database connection.
      *
-     * @var BaseConnection
+     * @var TDb
      */
     protected $db;
 
@@ -187,6 +189,8 @@ class Forge
 
     /**
      * Constructor.
+     *
+     * @param TDb $db
      */
     public function __construct(BaseConnection $db)
     {

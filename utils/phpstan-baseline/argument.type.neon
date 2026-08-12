@@ -53,7 +53,7 @@ parameters:
             path: ../../tests/system/Config/FactoriesTest.php
 
         -
-            message: '#^Parameter \#1 \$from of method CodeIgniter\\Database\\BaseBuilder\:\:from\(\) expects array\|string, null given\.$#'
+            message: '#^Parameter \#1 \$from of method CodeIgniter\\Database\\BaseBuilder\<CodeIgniter\\Database\\BaseConnection\>\:\:from\(\) expects array\|string, null given\.$#'
             count: 1
             path: ../../tests/system/Database/Builder/FromTest.php
 
@@ -68,7 +68,7 @@ parameters:
             path: ../../tests/system/Database/Builder/GetTest.php
 
         -
-            message: '#^Parameter \#1 \$fields of method CodeIgniter\\Database\\Forge\:\:addField\(\) expects array\<string, array\|string\>\|string, array\<int, string\> given\.$#'
+            message: '#^Parameter \#1 \$fields of method CodeIgniter\\Database\\Forge\<CodeIgniter\\Database\\BaseConnection\>\:\:addField\(\) expects array\<string, array\|string\>\|string, array\<int, string\> given\.$#'
             count: 2
             path: ../../tests/system/Database/Live/ForgeTest.php
 
@@ -78,17 +78,17 @@ parameters:
             path: ../../tests/system/Database/Live/SQLite3/AlterTableTest.php
 
         -
-            message: '#^Parameter \#1 \$set of method CodeIgniter\\Database\\BaseBuilder\:\:updateFields\(\) expects list\<CodeIgniter\\Database\\RawSql\|string\>\|string, array\{0\: ''country'', updated_at\: CodeIgniter\\Database\\RawSql\} given\.$#'
+            message: '#^Parameter \#1 \$set of method CodeIgniter\\Database\\BaseBuilder\<CodeIgniter\\Database\\BaseConnection\>\:\:updateFields\(\) expects list\<CodeIgniter\\Database\\RawSql\|string\>\|string, array\{0\: ''country'', updated_at\: CodeIgniter\\Database\\RawSql\} given\.$#'
             count: 2
             path: ../../tests/system/Database/Live/UpdateTest.php
 
         -
-            message: '#^Parameter \#1 \$set of method CodeIgniter\\Database\\BaseBuilder\:\:updateFields\(\) expects list\<CodeIgniter\\Database\\RawSql\|string\>\|string, array\{0\: ''name'', updated_at\: CodeIgniter\\Database\\RawSql\} given\.$#'
+            message: '#^Parameter \#1 \$set of method CodeIgniter\\Database\\BaseBuilder\<CodeIgniter\\Database\\BaseConnection\>\:\:updateFields\(\) expects list\<CodeIgniter\\Database\\RawSql\|string\>\|string, array\{0\: ''name'', updated_at\: CodeIgniter\\Database\\RawSql\} given\.$#'
             count: 1
             path: ../../tests/system/Database/Live/UpdateTest.php
 
         -
-            message: '#^Parameter \#1 \$set of method CodeIgniter\\Database\\BaseBuilder\:\:updateFields\(\) expects list\<CodeIgniter\\Database\\RawSql\|string\>\|string, array\{updated_at\: CodeIgniter\\Database\\RawSql\} given\.$#'
+            message: '#^Parameter \#1 \$set of method CodeIgniter\\Database\\BaseBuilder\<CodeIgniter\\Database\\BaseConnection\>\:\:updateFields\(\) expects list\<CodeIgniter\\Database\\RawSql\|string\>\|string, array\{updated_at\: CodeIgniter\\Database\\RawSql\} given\.$#'
             count: 2
             path: ../../tests/system/Database/Live/UpsertTest.php
 

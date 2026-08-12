@@ -14,11 +14,12 @@ declare(strict_types=1);
 namespace Tests\Support\Mock;
 
 use CodeIgniter\Database\BasePreparedQuery;
+use CodeIgniter\Test\Mock\MockConnection;
 
 /**
  * @internal
  *
- * @extends BasePreparedQuery<object, object, object>
+ * @extends BasePreparedQuery<object, object, object, MockConnection>
  */
 final class MockPreparedQuery extends BasePreparedQuery
 {

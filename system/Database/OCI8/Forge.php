@@ -17,6 +17,8 @@ use CodeIgniter\Database\Forge as BaseForge;
 
 /**
  * Forge for OCI8
+ *
+ * @extends BaseForge<Connection>
  */
 class Forge extends BaseForge
 {
