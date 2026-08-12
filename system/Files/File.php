@@ -111,7 +111,8 @@ class File extends SplFileInfo
     public function guessExtension(): ?string
     {
         // naively get the path extension using pathinfo
-        $pathinfo = pathinfo($this->getRealPath() ?: $this->__toString()) + ['extension' => ''];
+        $realPath = $this->getRealPath();
+        $pathinfo = pathinfo($realPath === false ? $this->__toString() : $realPath) + ['extension' => ''];
 
         $proposedExtension = $pathinfo['extension'];
 
@@ -131,9 +132,10 @@ class File extends SplFileInfo
             return $this->originalMimeType ?? 'application/octet-stream'; // @codeCoverageIgnore
         }
 
-        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $finfo    = finfo_open(FILEINFO_MIME_TYPE);
+        $realPath = $this->getRealPath();
 
-        return finfo_file($finfo, $this->getRealPath() ?: $this->__toString());
+        return finfo_file($finfo, $realPath === false ? $this->__toString() : $realPath);
     }
 
     /**
@@ -159,7 +161,8 @@ class File extends SplFileInfo
         $name ??= $this->getBasename();
         $destination = $overwrite ? $targetPath . $name : $this->getDestination($targetPath . $name);
 
-        $oldName = $this->getRealPath() ?: $this->__toString();
+        $realPath = $this->getRealPath();
+        $oldName  = $realPath === false ? $this->__toString() : $realPath;
 
         if (! @rename($oldName, $destination)) {
             $error = error_get_last();

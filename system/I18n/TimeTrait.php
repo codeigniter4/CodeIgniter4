@@ -87,7 +87,7 @@ trait TimeTrait
             }
         }
 
-        $timezone       = $timezone ?: date_default_timezone_get();
+        $timezone       = ($timezone === null || $timezone === '') ? date_default_timezone_get() : $timezone;
         $this->timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
 
         // If the time string was a relative string (i.e. 'next Tuesday')

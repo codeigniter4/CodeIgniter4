@@ -587,7 +587,8 @@ class CURLRequest extends OutgoingRequest
         // SSL Verification
         if (isset($config['verify'])) {
             if (is_string($config['verify'])) {
-                $file = realpath($config['verify']) ?: $config['verify'];
+                $realPath = realpath($config['verify']);
+                $file     = $realPath === false ? $config['verify'] : $realPath;
 
                 if (! is_file($file)) {
                     throw HTTPException::forInvalidSSLKey($config['verify']);

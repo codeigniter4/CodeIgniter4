@@ -216,7 +216,9 @@ class Pager implements PagerInterface
     {
         $this->ensureGroup($group);
 
-        return $this->groups[$group]['currentPage'] ?: 1;
+        $currentPage = $this->groups[$group]['currentPage'];
+
+        return ($currentPage === 0) ? 1 : $currentPage;
     }
 
     /**
