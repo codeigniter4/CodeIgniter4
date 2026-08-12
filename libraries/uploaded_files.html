@@ -754,6 +754,16 @@ In PHP versions below 8.1, this returns <code class="docutils literal notranslat
 </section>
 <section id="moving-files">
 <h3><a class="toc-backref" href="#id18" role="doc-backlink">Moving Files</a><a class="headerlink" href="#moving-files" title="Link to this heading"></a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Do not let user input directly decide the destination directory. The <code class="docutils literal notranslate"><span class="pre">$targetPath</span></code> argument of <code class="docutils literal notranslate"><span class="pre">move()</span></code> and the
+<code class="docutils literal notranslate"><span class="pre">$folderName</span></code> argument of <code class="docutils literal notranslate"><span class="pre">store()</span></code> are never sanitized, so an attacker-controlled value containing <code class="docutils literal notranslate"><span class="pre">../</span></code> can
+move the uploaded file outside the intended directory. Use directories controlled by your application.</p>
+<p>Filenames are only sanitized by default: <code class="docutils literal notranslate"><span class="pre">move()</span></code> sanitizes the client-provided name when the <code class="docutils literal notranslate"><span class="pre">$name</span></code> argument is
+omitted, and <code class="docutils literal notranslate"><span class="pre">store()</span></code> generates a random name when <code class="docutils literal notranslate"><span class="pre">$fileName</span></code> is omitted. A caller-supplied <code class="docutils literal notranslate"><span class="pre">$name</span></code> or
+<code class="docutils literal notranslate"><span class="pre">$fileName</span></code> is NOT sanitized, so if you pass one, generate it yourself or sanitize it with
+<a class="reference internal" href="../helpers/security_helper.html#sanitize_filename" title="sanitize_filename"><code class="xref php php-func docutils literal notranslate"><span class="pre">sanitize_filename</span></code></a>.</p>
+</div>
 <section id="with-original-filename">
 <h4>with Original Filename<a class="headerlink" href="#with-original-filename" title="Link to this heading"></a></h4>
 <p>Each file can be moved to its new location with the aptly named <code class="docutils literal notranslate"><span class="pre">move()</span></code> method. This takes the directory to move
@@ -853,7 +863,7 @@ passing it as the second parameter:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 31, 2026.
+      <span class="lastupdated">Last updated on Aug 12, 2026.
       </span></p>
   </div>
 
