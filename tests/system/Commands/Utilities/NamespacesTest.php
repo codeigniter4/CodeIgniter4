@@ -89,7 +89,7 @@ final class NamespacesTest extends CIUnitTestCase
 
     public function testTruncateNamespaces(): void
     {
-        $commandObject  = new Namespaces(service('logger'), service('commands'));
+        $commandObject  = new Namespaces(service('commands'));
         $truncateRunner = self::getPrivateMethodInvoker($commandObject, 'truncate');
 
         $this->assertSame('App\Controllers\...', $truncateRunner('App\Controllers\Admin', 19));
