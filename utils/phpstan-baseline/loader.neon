@@ -1,4 +1,4 @@
-# total 1527 errors
+# total 1480 errors
 
 includes:
     - argument.type.neon
@@ -12,7 +12,6 @@ includes:
     - method.notFound.neon
     - missingType.iterableValue.neon
     - missingType.parameter.neon
-    - missingType.property.neon
     - nullCoalesce.property.neon
     - property.defaultValue.neon
     - property.nonObject.neon
