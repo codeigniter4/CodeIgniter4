@@ -55,4 +55,24 @@ final class PublishCommandTest extends CIUnitTestCase
             WRITEPATH,
         ]), $this->getStreamFilterBuffer());
     }
+
+    public function testNoPublishersInDirectory(): void
+    {
+        command('publish NoSuchDirectory');
+
+        $this->assertStringContainsString(
+            lang('Publisher.publishMissing', ['NoSuchDirectory']),
+            $this->getStreamFilterBuffer(),
+        );
+    }
+
+    public function testNoPublishersInNamespace(): void
+    {
+        command('publish --namespace NoSuchNamespace');
+
+        $this->assertStringContainsString(
+            lang('Publisher.publishMissingNamespace', ['Publishers', 'NoSuchNamespace']),
+            $this->getStreamFilterBuffer(),
+        );
+    }
 }
