@@ -1,4 +1,4 @@
-# total 1086 errors
+# total 1082 errors
 
 parameters:
     ignoreErrors:
@@ -6,26 +6,6 @@ parameters:
             message: '#^Method CodeIgniter\\CodeIgniter\:\:getPerformanceStats\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/CodeIgniter.php
-
-        -
-            message: '#^Method CodeIgniter\\Commands\\Utilities\\Namespaces\:\:outputAllNamespaces\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Commands/Utilities/Namespaces.php
-
-        -
-            message: '#^Method CodeIgniter\\Commands\\Utilities\\Namespaces\:\:outputAllNamespaces\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Commands/Utilities/Namespaces.php
-
-        -
-            message: '#^Method CodeIgniter\\Commands\\Utilities\\Namespaces\:\:outputCINamespaces\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Commands/Utilities/Namespaces.php
-
-        -
-            message: '#^Method CodeIgniter\\Commands\\Utilities\\Namespaces\:\:outputCINamespaces\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Commands/Utilities/Namespaces.php
 
         -
             message: '#^Method CodeIgniter\\Commands\\Utilities\\Routes\\AutoRouterImproved\\AutoRouteCollector\:\:addFilters\(\) has parameter \$routes with no value type specified in iterable type array\.$#'

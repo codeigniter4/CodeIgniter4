@@ -222,6 +222,7 @@ Commands
 - Added ``key:rotate`` command to demote the current ``encryption.key`` to ``encryption.previousKeys`` in **.env** and generate a new key. See :ref:`spark-key-rotate`.
 - Added ``AbstractCommand::callSilently()`` to invoke another command with its output discarded, restoring the prior IO afterwards. See :ref:`modern-commands-call-silently`.
 - The ``migrate``, ``migrate:rollback``, ``migrate:refresh``, and ``migrate:status`` commands now accept long option names (``--namespace``, ``--group``, ``--batch``, ``--force``) alongside their existing short forms (``-n``, ``-g``, ``-b``, ``-f``).
+- The ``namespaces`` command now accepts long option names (``--config-only``, ``--raw``, ``--max-length``) alongside its existing short forms (``-c``, ``-r``, ``-m``).
 - The ``worker:install`` and ``worker:uninstall`` commands now accept the ``-f`` short option alongside ``--force``.
 - Added :php:class:`NullInputOutput <CodeIgniter\\CLI\\NullInputOutput>`, an :php:class:`InputOutput <CodeIgniter\\CLI\\InputOutput>` sink that discards all writes and returns an empty string from ``input()``.
 - The ``spark routes`` command now resolves the Before/After Filters columns for routes that use custom placeholders registered via ``$routes->addPlaceholder()``.

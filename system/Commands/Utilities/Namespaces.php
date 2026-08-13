@@ -13,105 +13,77 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Utilities;
 
-use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Input\Option;
 use Config\Autoload;
 
 /**
- * Lists namespaces set in Config\Autoload with their
- * full server path. Helps you to verify that you have
- * the namespaces setup correctly.
+ * Lists namespaces set in Config\Autoload with their full server path.
  *
  * @see \CodeIgniter\Commands\Utilities\NamespacesTest
  */
-class Namespaces extends BaseCommand
+#[Command(
+    name: 'namespaces',
+    description: 'Verifies your namespaces are setup correctly.',
+    group: 'CodeIgniter',
+)]
+class Namespaces extends AbstractCommand
 {
-    /**
-     * The group the command is lumped under
-     * when listing commands.
-     *
-     * @var string
-     */
-    protected $group = 'CodeIgniter';
-
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'namespaces';
-
-    /**
-     * the Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Verifies your namespaces are setup correctly.';
-
-    /**
-     * the Command's usage
-     *
-     * @var string
-     */
-    protected $usage = 'namespaces';
-
-    /**
-     * the Command's Arguments
-     *
-     * @var array<string, string>
-     */
-    protected $arguments = [];
-
-    /**
-     * the Command's Options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [
-        '-c' => 'Show only CodeIgniter config namespaces.',
-        '-r' => 'Show raw path strings.',
-        '-m' => 'Specify max length of the path strings to output. Default: 60.',
-    ];
-
-    /**
-     * Displays the help for the spark cli script itself.
-     */
-    public function run(array $params)
+    protected function configure(): void
     {
-        $params['m'] = (int) ($params['m'] ?? 60);
+        $this
+            ->addOption(new Option(
+                name: 'config-only',
+                shortcut: 'c',
+                description: 'Show only CodeIgniter config namespaces.',
+            ))
+            ->addOption(new Option(
+                name: 'raw',
+                shortcut: 'r',
+                description: 'Show raw path strings.',
+            ))
+            ->addOption(new Option(
+                name: 'max-length',
+                shortcut: 'm',
+                description: 'Specify max length of the path strings to output.',
+                requiresValue: true,
+                default: '60',
+            ));
+    }
 
-        $tbody = array_key_exists('c', $params) ? $this->outputCINamespaces($params) : $this->outputAllNamespaces($params);
+    protected function execute(array $arguments, array $options): int
+    {
+        $namespaces = $options['config-only'] !== false
+            ? (new Autoload())->psr4
+            : service('autoloader')->getNamespace();
 
-        $thead = [
-            'Namespace',
-            'Path',
-            'Found?',
-        ];
+        $tbody = $this->buildTable(
+            $namespaces,
+            $options['raw'] !== false,
+            (int) $options['max-length'],
+        );
 
-        CLI::table($tbody, $thead);
+        CLI::table($tbody, ['Namespace', 'Path', 'Found?']);
 
         return EXIT_SUCCESS;
     }
 
-    private function outputAllNamespaces(array $params): array
+    /**
+     * @param array<string, list<string>|string> $namespaces
+     *
+     * @return list<list<string>>
+     */
+    private function buildTable(array $namespaces, bool $raw, int $maxLength): array
     {
-        $maxLength = $params['m'];
-
-        $autoloader = service('autoloader');
-
         $tbody = [];
 
-        foreach ($autoloader->getNamespace() as $ns => $paths) {
-            foreach ($paths as $path) {
-                if (array_key_exists('r', $params)) {
-                    $pathOutput = $this->truncate($path, $maxLength);
-                } else {
-                    $pathOutput = $this->truncate(clean_path($path), $maxLength);
-                }
-
+        foreach ($namespaces as $namespace => $paths) {
+            foreach ((array) $paths as $path) {
                 $tbody[] = [
-                    $ns,
-                    $pathOutput,
+                    $namespace,
+                    $this->truncate($raw ? $path : clean_path($path), $maxLength),
                     is_dir($path) ? 'Yes' : 'MISSING',
                 ];
             }
@@ -122,42 +94,10 @@ class Namespaces extends BaseCommand
 
     private function truncate(string $string, int $max): string
     {
-        $length = mb_strlen($string);
-
-        if ($length > $max) {
+        if (mb_strlen($string) > $max) {
             return mb_substr($string, 0, $max - 3) . '...';
         }
 
         return $string;
-    }
-
-    private function outputCINamespaces(array $params): array
-    {
-        $maxLength = $params['m'];
-
-        $config = new Autoload();
-
-        $tbody = [];
-
-        foreach ($config->psr4 as $ns => $paths) {
-            foreach ((array) $paths as $path) {
-                if (array_key_exists('r', $params)) {
-                    $pathOutput = $this->truncate($path, $maxLength);
-                } else {
-                    $pathOutput = $this->truncate(clean_path($path), $maxLength);
-                }
-
-                $realPath = realpath($path);
-                $path     = $realPath === false ? $path : $realPath;
-
-                $tbody[] = [
-                    $ns,
-                    $pathOutput,
-                    is_dir($path) ? 'Yes' : 'MISSING',
-                ];
-            }
-        }
-
-        return $tbody;
     }
 }
