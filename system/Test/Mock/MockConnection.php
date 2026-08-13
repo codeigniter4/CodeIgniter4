@@ -196,7 +196,7 @@ class MockConnection extends BaseConnection
 
     public function insertID(): int
     {
-        return $this->connID->insert_id;
+        return 0;
     }
 
     /**

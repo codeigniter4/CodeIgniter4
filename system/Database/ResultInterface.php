@@ -113,28 +113,44 @@ interface ResultInterface
     /**
      * Returns the "first" row of the current results.
      *
-     * @return array|object|null
+     * @template T of object
+     *
+     * @param 'array'|'object'|class-string<T> $type The type of result object. 'array', 'object' or class name.
+     *
+     * @return ($type is 'object' ? stdClass|null : ($type is 'array' ? array|null : T|null))
      */
     public function getFirstRow(string $type = 'object');
 
     /**
      * Returns the "last" row of the current results.
      *
-     * @return array|object|null
+     * @template T of object
+     *
+     * @param 'array'|'object'|class-string<T> $type The type of result object. 'array', 'object' or class name.
+     *
+     * @return ($type is 'object' ? stdClass|null : ($type is 'array' ? array|null : T|null))
      */
     public function getLastRow(string $type = 'object');
 
     /**
      * Returns the "next" row of the current results.
      *
-     * @return array|object|null
+     * @template T of object
+     *
+     * @param 'array'|'object'|class-string<T> $type The type of result object. 'array', 'object' or class name.
+     *
+     * @return ($type is 'object' ? stdClass|null : ($type is 'array' ? array|null : T|null))
      */
     public function getNextRow(string $type = 'object');
 
     /**
      * Returns the "previous" row of the current results.
      *
-     * @return array|object|null
+     * @template T of object
+     *
+     * @param 'array'|'object'|class-string<T> $type The type of result object. 'array', 'object' or class name.
+     *
+     * @return ($type is 'object' ? stdClass|null : ($type is 'array' ? array|null : T|null))
      */
     public function getPreviousRow(string $type = 'object');
 

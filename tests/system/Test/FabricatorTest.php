@@ -16,6 +16,7 @@ namespace CodeIgniter\Test;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Model;
 use PHPUnit\Framework\Attributes\Group;
+use stdClass;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\EventModel;
 use Tests\Support\Models\FabricatorModel;
@@ -410,6 +411,7 @@ final class FabricatorTest extends CIUnitTestCase
         $fabricator = new Fabricator(FabricatorModel::class);
 
         $result = $fabricator->create(null, true);
+        $this->assertInstanceOf(stdClass::class, $result);
 
         $this->assertIsInt($result->id);
         $this->assertIsInt($result->created_at);
