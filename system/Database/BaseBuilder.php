@@ -3591,13 +3591,16 @@ class BaseBuilder
     /**
      * Returns a clone of a Base Builder with reset query builder values.
      *
-     * @return $this
+     * @return static
      *
      * @deprecated
      */
     protected function cleanClone()
     {
-        return (clone $this)->from([], true)->resetQuery();
+        $clone = clone $this;
+        $clone->from([], true);
+
+        return $clone->resetQuery();
     }
 
     /**

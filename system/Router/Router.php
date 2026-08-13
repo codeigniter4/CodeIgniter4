@@ -914,7 +914,7 @@ class Router implements RouterInterface
      * Returns the route attributes collected during routing
      * for the current route.
      *
-     * @return array{class: list<string>, method: list<string>}
+     * @return array{class: list<RouteAttributeInterface>, method: list<RouteAttributeInterface>}
      */
     public function getRouteAttributes(): array
     {
