@@ -541,7 +541,7 @@ class URI implements Stringable
      */
     public function getFragment(): string
     {
-        return $this->fragment ?? '';
+        return $this->fragment;
     }
 
     /**
