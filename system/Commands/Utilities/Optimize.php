@@ -15,7 +15,8 @@ namespace CodeIgniter\Commands\Utilities;
 
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Autoloader\FileLocatorCached;
-use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Publisher\Publisher;
@@ -23,41 +24,10 @@ use CodeIgniter\Publisher\Publisher;
 /**
  * Optimize for production.
  */
-final class Optimize extends BaseCommand
+#[Command(name: 'optimize', description: 'Optimize for production.', group: 'CodeIgniter')]
+final class Optimize extends AbstractCommand
 {
-    /**
-     * The group the command is lumped under
-     * when listing commands.
-     *
-     * @var string
-     */
-    protected $group = 'CodeIgniter';
-
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'optimize';
-
-    /**
-     * The Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Optimize for production.';
-
-    /**
-     * The Command's usage
-     *
-     * @var string
-     */
-    protected $usage = 'optimize';
-
-    /**
-     * @return int
-     */
-    public function run(array $params)
+    protected function execute(array $arguments, array $options): int
     {
         try {
             $this->enableCaching();
@@ -78,25 +48,24 @@ final class Optimize extends BaseCommand
         $locator->deleteCache();
         CLI::write('Removed FileLocatorCache.', 'green');
 
-        $cache = WRITEPATH . 'cache/FactoriesCache_config';
-        $this->removeFile($cache);
+        $this->removeFile(WRITEPATH . 'cache/FactoriesCache_config');
     }
 
-    private function removeFile(string $cache): void
+    private function removeFile(string $file): void
     {
-        if (is_file($cache)) {
-            $result = unlink($cache);
-
-            if ($result) {
-                CLI::write('Removed "' . clean_path($cache) . '".', 'green');
-
-                return;
-            }
-
-            CLI::error('Error in removing file: ' . clean_path($cache));
-
-            throw new RuntimeException(__METHOD__);
+        if (! is_file($file)) {
+            return;
         }
+
+        if (unlink($file)) {
+            CLI::write(sprintf('Removed "%s".', clean_path($file)), 'green');
+
+            return;
+        }
+
+        CLI::error(sprintf('Error in removing file: %s', clean_path($file)));
+
+        throw new RuntimeException(__METHOD__);
     }
 
     private function enableCaching(): void
@@ -122,7 +91,7 @@ final class Optimize extends BaseCommand
             return;
         }
 
-        CLI::error('Error in updating file: ' . clean_path($config));
+        CLI::error(sprintf('Error in updating file: %s', clean_path($config)));
 
         throw new RuntimeException(__METHOD__);
     }
