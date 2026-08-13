@@ -22,6 +22,8 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
 
 /**
  * Builder for Postgre
+ *
+ * @extends BaseBuilder<Connection>
  */
 class Builder extends BaseBuilder
 {

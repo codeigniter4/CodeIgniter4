@@ -1,22 +1,7 @@
-# total 47 errors
+# total 28 errors
 
 parameters:
     ignoreErrors:
-        -
-            message: '#^Access to an undefined property CodeIgniter\\Database\\BaseConnection\<mysqli, mysqli_result\>\:\:\$mysqli\.$#'
-            count: 3
-            path: ../../system/Database/MySQLi/PreparedQuery.php
-
-        -
-            message: '#^Access to an undefined property CodeIgniter\\Database\\BaseConnection\:\:\$schema\.$#'
-            count: 2
-            path: ../../system/Database/SQLSRV/Builder.php
-
-        -
-            message: '#^Access to an undefined property CodeIgniter\\Database\\BaseConnection\:\:\$schema\.$#'
-            count: 14
-            path: ../../system/Database/SQLSRV/Forge.php
-
         -
             message: '#^Access to an undefined property CodeIgniter\\Database\\BaseConnection\:\:\$mysqli\.$#'
             count: 1

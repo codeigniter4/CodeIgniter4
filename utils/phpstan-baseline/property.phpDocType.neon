@@ -1,4 +1,4 @@
-# total 43 errors
+# total 38 errors
 
 parameters:
     ignoreErrors:
@@ -8,7 +8,7 @@ parameters:
             path: ../../system/Database/MySQLi/Connection.php
 
         -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\MySQLi\\Forge\:\:\$createDatabaseStr is not the same as PHPDoc type string\|false of overridden property CodeIgniter\\Database\\Forge\:\:\$createDatabaseStr\.$#'
+            message: '#^PHPDoc type string of property CodeIgniter\\Database\\MySQLi\\Forge\:\:\$createDatabaseStr is not the same as PHPDoc type string\|false of overridden property CodeIgniter\\Database\\Forge\<CodeIgniter\\Database\\MySQLi\\Connection\>\:\:\$createDatabaseStr\.$#'
             count: 1
             path: ../../system/Database/MySQLi/Forge.php
 
@@ -23,44 +23,34 @@ parameters:
             path: ../../system/Database/MySQLi/Utils.php
 
         -
-            message: '#^PHPDoc type CodeIgniter\\Database\\OCI8\\Connection of property CodeIgniter\\Database\\OCI8\\Builder\:\:\$db is not the same as PHPDoc type CodeIgniter\\Database\\BaseConnection of overridden property CodeIgniter\\Database\\BaseBuilder\:\:\$db\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/Builder.php
-
-        -
             message: '#^PHPDoc type string of property CodeIgniter\\Database\\OCI8\\Connection\:\:\$escapeChar is not the same as PHPDoc type array\|string of overridden property CodeIgniter\\Database\\BaseConnection\<resource,resource\>\:\:\$escapeChar\.$#'
             count: 1
             path: ../../system/Database/OCI8/Connection.php
 
         -
-            message: '#^PHPDoc type false of property CodeIgniter\\Database\\OCI8\\Forge\:\:\$createDatabaseStr is not the same as PHPDoc type string\|false of overridden property CodeIgniter\\Database\\Forge\:\:\$createDatabaseStr\.$#'
+            message: '#^PHPDoc type false of property CodeIgniter\\Database\\OCI8\\Forge\:\:\$createDatabaseStr is not the same as PHPDoc type string\|false of overridden property CodeIgniter\\Database\\Forge\<CodeIgniter\\Database\\OCI8\\Connection\>\:\:\$createDatabaseStr\.$#'
             count: 1
             path: ../../system/Database/OCI8/Forge.php
 
         -
-            message: '#^PHPDoc type false of property CodeIgniter\\Database\\OCI8\\Forge\:\:\$createTableIfStr is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\Forge\:\:\$createTableIfStr\.$#'
+            message: '#^PHPDoc type false of property CodeIgniter\\Database\\OCI8\\Forge\:\:\$createTableIfStr is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\Forge\<CodeIgniter\\Database\\OCI8\\Connection\>\:\:\$createTableIfStr\.$#'
             count: 1
             path: ../../system/Database/OCI8/Forge.php
 
         -
-            message: '#^PHPDoc type false of property CodeIgniter\\Database\\OCI8\\Forge\:\:\$dropDatabaseStr is not the same as PHPDoc type string\|false of overridden property CodeIgniter\\Database\\Forge\:\:\$dropDatabaseStr\.$#'
+            message: '#^PHPDoc type false of property CodeIgniter\\Database\\OCI8\\Forge\:\:\$dropDatabaseStr is not the same as PHPDoc type string\|false of overridden property CodeIgniter\\Database\\Forge\<CodeIgniter\\Database\\OCI8\\Connection\>\:\:\$dropDatabaseStr\.$#'
             count: 1
             path: ../../system/Database/OCI8/Forge.php
 
         -
-            message: '#^PHPDoc type false of property CodeIgniter\\Database\\OCI8\\Forge\:\:\$dropTableIfStr is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\Forge\:\:\$dropTableIfStr\.$#'
+            message: '#^PHPDoc type false of property CodeIgniter\\Database\\OCI8\\Forge\:\:\$dropTableIfStr is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\Forge\<CodeIgniter\\Database\\OCI8\\Connection\>\:\:\$dropTableIfStr\.$#'
             count: 1
             path: ../../system/Database/OCI8/Forge.php
 
         -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\OCI8\\Forge\:\:\$renameTableStr is not the same as PHPDoc type string\|false of overridden property CodeIgniter\\Database\\Forge\:\:\$renameTableStr\.$#'
+            message: '#^PHPDoc type string of property CodeIgniter\\Database\\OCI8\\Forge\:\:\$renameTableStr is not the same as PHPDoc type string\|false of overridden property CodeIgniter\\Database\\Forge\<CodeIgniter\\Database\\OCI8\\Connection\>\:\:\$renameTableStr\.$#'
             count: 1
             path: ../../system/Database/OCI8/Forge.php
-
-        -
-            message: '#^PHPDoc type CodeIgniter\\Database\\OCI8\\Connection of property CodeIgniter\\Database\\OCI8\\PreparedQuery\:\:\$db is not the same as PHPDoc type CodeIgniter\\Database\\BaseConnection\<resource, resource\> of overridden property CodeIgniter\\Database\\BasePreparedQuery\<resource,resource,resource\>\:\:\$db\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/PreparedQuery.php
 
         -
             message: '#^PHPDoc type string of property CodeIgniter\\Database\\OCI8\\Utils\:\:\$listDatabases is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$listDatabases\.$#'
@@ -71,11 +61,6 @@ parameters:
             message: '#^PHPDoc type string of property CodeIgniter\\Database\\Postgre\\Connection\:\:\$escapeChar is not the same as PHPDoc type array\|string of overridden property CodeIgniter\\Database\\BaseConnection\<PgSql\\Connection,PgSql\\Result\>\:\:\$escapeChar\.$#'
             count: 1
             path: ../../system/Database/Postgre/Connection.php
-
-        -
-            message: '#^PHPDoc type CodeIgniter\\Database\\Postgre\\Connection of property CodeIgniter\\Database\\Postgre\\Forge\:\:\$db is not the same as PHPDoc type CodeIgniter\\Database\\BaseConnection of overridden property CodeIgniter\\Database\\Forge\:\:\$db\.$#'
-            count: 1
-            path: ../../system/Database/Postgre/Forge.php
 
         -
             message: '#^PHPDoc type string of property CodeIgniter\\Database\\Postgre\\Utils\:\:\$listDatabases is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$listDatabases\.$#'
@@ -93,29 +78,24 @@ parameters:
             path: ../../system/Database/SQLSRV/Connection.php
 
         -
-            message: '#^PHPDoc type array of property CodeIgniter\\Database\\SQLSRV\\Forge\:\:\$unsigned is not the same as PHPDoc type array\|bool of overridden property CodeIgniter\\Database\\Forge\:\:\$unsigned\.$#'
+            message: '#^PHPDoc type array of property CodeIgniter\\Database\\SQLSRV\\Forge\:\:\$unsigned is not the same as PHPDoc type array\|bool of overridden property CodeIgniter\\Database\\Forge\<CodeIgniter\\Database\\SQLSRV\\Connection\>\:\:\$unsigned\.$#'
             count: 1
             path: ../../system/Database/SQLSRV/Forge.php
 
         -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLSRV\\Forge\:\:\$createDatabaseStr is not the same as PHPDoc type string\|false of overridden property CodeIgniter\\Database\\Forge\:\:\$createDatabaseStr\.$#'
+            message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLSRV\\Forge\:\:\$createDatabaseStr is not the same as PHPDoc type string\|false of overridden property CodeIgniter\\Database\\Forge\<CodeIgniter\\Database\\SQLSRV\\Connection\>\:\:\$createDatabaseStr\.$#'
             count: 1
             path: ../../system/Database/SQLSRV/Forge.php
 
         -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLSRV\\Forge\:\:\$createTableIfStr is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\Forge\:\:\$createTableIfStr\.$#'
+            message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLSRV\\Forge\:\:\$createTableIfStr is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\Forge\<CodeIgniter\\Database\\SQLSRV\\Connection\>\:\:\$createTableIfStr\.$#'
             count: 1
             path: ../../system/Database/SQLSRV/Forge.php
 
         -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLSRV\\Forge\:\:\$renameTableStr is not the same as PHPDoc type string\|false of overridden property CodeIgniter\\Database\\Forge\:\:\$renameTableStr\.$#'
+            message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLSRV\\Forge\:\:\$renameTableStr is not the same as PHPDoc type string\|false of overridden property CodeIgniter\\Database\\Forge\<CodeIgniter\\Database\\SQLSRV\\Connection\>\:\:\$renameTableStr\.$#'
             count: 1
             path: ../../system/Database/SQLSRV/Forge.php
-
-        -
-            message: '#^PHPDoc type CodeIgniter\\Database\\SQLSRV\\Connection of property CodeIgniter\\Database\\SQLSRV\\PreparedQuery\:\:\$db is not the same as PHPDoc type CodeIgniter\\Database\\BaseConnection\<resource, resource\> of overridden property CodeIgniter\\Database\\BasePreparedQuery\<resource,resource,resource\>\:\:\$db\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/PreparedQuery.php
 
         -
             message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLSRV\\Utils\:\:\$listDatabases is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$listDatabases\.$#'
@@ -131,11 +111,6 @@ parameters:
             message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLite3\\Connection\:\:\$escapeChar is not the same as PHPDoc type array\|string of overridden property CodeIgniter\\Database\\BaseConnection\<SQLite3,SQLite3Result\>\:\:\$escapeChar\.$#'
             count: 1
             path: ../../system/Database/SQLite3/Connection.php
-
-        -
-            message: '#^PHPDoc type CodeIgniter\\Database\\SQLite3\\Connection of property CodeIgniter\\Database\\SQLite3\\Forge\:\:\$db is not the same as PHPDoc type CodeIgniter\\Database\\BaseConnection of overridden property CodeIgniter\\Database\\Forge\:\:\$db\.$#'
-            count: 1
-            path: ../../system/Database/SQLite3/Forge.php
 
         -
             message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLite3\\Utils\:\:\$optimizeTable is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$optimizeTable\.$#'

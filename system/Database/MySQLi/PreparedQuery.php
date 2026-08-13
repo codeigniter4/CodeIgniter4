@@ -24,7 +24,7 @@ use mysqli_stmt;
 /**
  * Prepared query for MySQLi
  *
- * @extends BasePreparedQuery<mysqli, mysqli_stmt, mysqli_result>
+ * @extends BasePreparedQuery<mysqli, mysqli_stmt, mysqli_result, Connection>
  */
 class PreparedQuery extends BasePreparedQuery
 {

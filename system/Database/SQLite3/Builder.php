@@ -20,6 +20,8 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
 
 /**
  * Builder for SQLite3
+ *
+ * @extends BaseBuilder<Connection>
  */
 class Builder extends BaseBuilder
 {
