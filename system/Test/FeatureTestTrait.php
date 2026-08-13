@@ -358,10 +358,8 @@ trait FeatureTestTrait
      */
     protected function setupHeaders(IncomingRequest $request)
     {
-        if (! empty($this->headers)) {
-            foreach ($this->headers as $name => $value) {
-                $request->setHeader($name, $value);
-            }
+        foreach ($this->headers as $name => $value) {
+            $request->setHeader($name, $value);
         }
 
         return $request;

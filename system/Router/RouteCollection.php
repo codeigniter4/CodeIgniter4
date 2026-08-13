@@ -1019,7 +1019,7 @@ class RouteCollection implements RouteCollectionInterface
      */
     public function match(array $verbs = [], string $from = '', $to = '', ?array $options = null): RouteCollectionInterface
     {
-        if ($from === '' || empty($to)) {
+        if ($from === '' || in_array($to, ['', []], true)) {
             throw new InvalidArgumentException('You must supply the parameters: from, to.');
         }
 
@@ -1331,7 +1331,7 @@ class RouteCollection implements RouteCollectionInterface
         // Find all of our back-references in the original route
         preg_match_all('/\(([^)]+)\)/', $from, $matches);
 
-        if (empty($matches[0])) {
+        if ($matches[0] === []) {
             return '/' . ltrim($from, '/');
         }
 
@@ -1370,7 +1370,7 @@ class RouteCollection implements RouteCollectionInterface
         // Find all of our back-references in the original route
         preg_match_all('/\(([^)]+)\)/', $from, $matches);
 
-        if (empty($matches[0])) {
+        if ($matches[0] === []) {
             if (str_contains($from, '{locale}')) {
                 $locale = $params[0] ?? null;
             }
@@ -1490,7 +1490,7 @@ class RouteCollection implements RouteCollectionInterface
         }
 
         // Hostname limiting?
-        if (! empty($options['hostname'])) {
+        if (! in_array($options['hostname'] ?? '', ['', '0', []], true)) {
             // @todo determine if there's a way to whitelist hosts?
             if (! $this->checkHostname($options['hostname'])) {
                 return;
@@ -1499,7 +1499,7 @@ class RouteCollection implements RouteCollectionInterface
             $overwrite = true;
         }
         // Limiting to subdomains?
-        elseif (! empty($options['subdomain'])) {
+        elseif (! in_array($options['subdomain'] ?? '', ['', '0', []], true)) {
             // If we don't match the current subdomain, then
             // we don't need to add the route.
             if (! $this->checkSubdomains($options['subdomain'])) {
@@ -1661,7 +1661,7 @@ class RouteCollection implements RouteCollectionInterface
 
         // Routes can be limited to any sub-domain. In that case, though,
         // it does require a sub-domain to be present.
-        if (! empty($this->currentSubdomain) && in_array('*', $subdomains, true)) {
+        if (! in_array($this->currentSubdomain, [null, ''], true) && in_array('*', $subdomains, true)) {
             return true;
         }
 

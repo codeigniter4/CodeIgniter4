@@ -15,6 +15,9 @@ namespace CodeIgniter\Entity\Cast;
 
 use CodeIgniter\Entity\Exceptions\CastException;
 
+/**
+ * @extends BaseCast<float, mixed>
+ */
 class FloatCast extends BaseCast
 {
     public static function get($value, array $params = []): float

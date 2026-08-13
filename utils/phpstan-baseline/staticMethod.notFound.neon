@@ -1,16 +1,11 @@
-# total 21 errors
+# total 19 errors
 
 parameters:
     ignoreErrors:
         -
-            message: '#^Call to an undefined static method UnitEnum\:\:tryFrom\(\)\.$#'
+            message: '#^Call to an undefined static method CodeIgniter\\Images\\Exceptions\\ImageException\:\:forMissingExtension\(\)\.$#'
             count: 1
-            path: ../../system/DataCaster/Cast/EnumCast.php
-
-        -
-            message: '#^Call to an undefined static method UnitEnum\:\:tryFrom\(\)\.$#'
-            count: 2
-            path: ../../system/Entity/Cast/EnumCast.php
+            path: ../../system/Images/Handlers/GDHandler.php
 
         -
             message: '#^Call to an undefined static method CodeIgniter\\Config\\Factories\:\:cells\(\)\.$#'

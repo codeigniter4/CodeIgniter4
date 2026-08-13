@@ -17,10 +17,10 @@ use SensitiveParameter;
 use stdClass;
 
 /**
- * Class EncryptedJsonCast
- *
  * (PHP) [array|stdClass --> encrypted JSON string] --> (DB driver) --> (DB column) string
  *       [               <-- decrypted JSON string] <-- (DB driver) <-- (DB column) encrypted JSON string
+ *
+ * @extends BaseCast<array<array-key, mixed>|stdClass|null, string|null>
  */
 class EncryptedJsonCast extends BaseCast
 {

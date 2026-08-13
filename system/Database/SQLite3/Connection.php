@@ -352,7 +352,7 @@ class Connection extends BaseConnection
 
         $query = $query->getResultObject();
 
-        if (empty($query)) {
+        if ($query === []) {
             return [];
         }
 

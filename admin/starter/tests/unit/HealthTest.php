@@ -11,7 +11,7 @@ final class HealthTest extends CIUnitTestCase
 {
     public function testIsDefinedAppPath(): void
     {
-        $this->assertTrue(defined('APPPATH'));
+        $this->assertDirectoryExists(APPPATH);
     }
 
     public function testBaseUrlHasBeenSet(): void

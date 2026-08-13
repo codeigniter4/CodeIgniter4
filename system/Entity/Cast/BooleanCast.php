@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Entity\Cast;
 
+/**
+ * @extends BaseCast<bool, mixed>
+ */
 class BooleanCast extends BaseCast
 {
     public static function get($value, array $params = []): bool

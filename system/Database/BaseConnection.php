@@ -605,7 +605,7 @@ abstract class BaseConnection implements ConnectionInterface
         // No connection resource? Check if there is a failover else throw an error
         if (! $this->connID) {
             // Check if there is a failover set
-            if (! empty($this->failover) && is_array($this->failover)) {
+            if (is_array($this->failover) && $this->failover !== []) {
                 // Go over all the failovers
                 foreach ($this->failover as $index => $failover) {
                     $typedPropertyTypes = $this->getBuiltinPropertyTypesMap(array_keys($failover));
@@ -742,7 +742,7 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function getDatabase(): string
     {
-        return empty($this->database) ? '' : $this->database;
+        return is_string($this->database) ? $this->database : '';
     }
 
     /**
@@ -830,7 +830,7 @@ abstract class BaseConnection implements ConnectionInterface
     {
         $queryClass = $queryClass !== '' && $queryClass !== '0' ? $queryClass : $this->queryClass;
 
-        if (empty($this->connID)) {
+        if ($this->connID === false) {
             $this->initialize();
         }
 
@@ -839,7 +839,7 @@ abstract class BaseConnection implements ConnectionInterface
 
         $query->setQuery($sql, $binds, $setEscapeFlags);
 
-        if (! empty($this->swapPre) && ! empty($this->DBPrefix)) {
+        if ($this->swapPre !== '' && $this->DBPrefix !== '') {
             $query->swapPrefix($this->DBPrefix, $this->swapPre);
         }
 
@@ -937,7 +937,7 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function simpleQuery(string $sql)
     {
-        if (empty($this->connID)) {
+        if ($this->connID === false) {
             $this->initialize();
         }
 
@@ -1193,7 +1193,7 @@ abstract class BaseConnection implements ConnectionInterface
             return true;
         }
 
-        if (empty($this->connID)) {
+        if ($this->connID === false) {
             $this->initialize();
         }
 
@@ -1345,7 +1345,7 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function table($tableName)
     {
-        if (empty($tableName)) {
+        if (in_array($tableName, ['', '0', []], true)) {
             throw new DatabaseException('You must set the database table to be used with your query.');
         }
 
@@ -1387,7 +1387,7 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function prepare(Closure $func, array $options = [])
     {
-        if (empty($this->connID)) {
+        if ($this->connID === false) {
             $this->initialize();
         }
 
@@ -1572,9 +1572,8 @@ abstract class BaseConnection implements ConnectionInterface
         // one of the aliases previously identified? If so,
         // we have nothing more to do other than escape the item
         //
-        // NOTE: The ! empty() condition prevents this method
-        // from breaking when QB isn't enabled.
-        if (! empty($this->aliasedTables) && in_array($parts[0], $this->aliasedTables, true)) {
+        // $aliasedTables is empty when QB isn't enabled.
+        if ($this->aliasedTables !== [] && in_array($parts[0], $this->aliasedTables, true)) {
             if ($protectIdentifiers) {
                 foreach ($parts as $key => $val) {
                     if (! in_array($val, $this->reservedIdentifiers, true)) {
@@ -1681,7 +1680,7 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function escapeIdentifiers($item)
     {
-        if ($this->escapeChar === '' || empty($item) || in_array($item, $this->reservedIdentifiers, true)) {
+        if ($this->escapeChar === '' || in_array($item, ['', '0', []], true) || in_array($item, $this->reservedIdentifiers, true)) {
             return $item;
         }
 
@@ -1967,7 +1966,7 @@ abstract class BaseConnection implements ConnectionInterface
         $tableExists = $this->query($sql)->getResultArray() !== [];
 
         // if cache has been built already
-        if (! empty($this->dataCache['table_names'])) {
+        if (($this->dataCache['table_names'] ?? []) !== []) {
             $key = array_search(
                 strtolower($tableName),
                 array_map(strtolower(...), $this->dataCache['table_names']),
@@ -2002,7 +2001,7 @@ abstract class BaseConnection implements ConnectionInterface
             return $this->dataCache['field_names'][$table];
         }
 
-        if (empty($this->connID)) {
+        if ($this->connID === false) {
             $this->initialize();
         }
 

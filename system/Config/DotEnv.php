@@ -59,14 +59,23 @@ class DotEnv
             return null;
         }
 
-        // Ensure the file is readable
-        if (! is_readable($this->path)) {
-            throw new InvalidArgumentException("The .env file is not readable: {$this->path}");
+        $lines = @file($this->path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+        // The .env file may have been removed or replaced by a concurrent
+        // process between the is_file() check above and this read attempt
+        // (e.g. another test process renaming `.env`). A vanished file is
+        // treated as absent, so re-check with a fresh stat cache.
+        if ($lines === false) {
+            clearstatcache(true, $this->path);
+
+            if (is_file($this->path)) {
+                throw new InvalidArgumentException("The .env file is not readable: {$this->path}");
+            }
+
+            return null;
         }
 
         $vars = [];
-
-        $lines = file($this->path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
         foreach ($lines as $line) {
             // Is it a comment?
@@ -98,11 +107,11 @@ class DotEnv
             putenv("{$name}={$value}");
         }
 
-        if (empty($_ENV[$name])) {
+        if (! isset($_ENV[$name]) || in_array($_ENV[$name], ['', '0'], true)) {
             $_ENV[$name] = $value;
         }
 
-        if (empty($_SERVER[$name])) {
+        if (! isset($_SERVER[$name]) || in_array($_SERVER[$name], ['', '0'], true)) {
             $_SERVER[$name] = $value;
         }
     }

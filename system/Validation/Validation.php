@@ -1033,7 +1033,8 @@ class Validation implements ValidationInterface
             ) {
                 // the pipe is inside the brackets causing the closing bracket to
                 // not be included. so, we adjust the rule to include that portion.
-                $pos  = strpos($string, '|', $cursor + strlen($rule) + 1) ?: $length;
+                $next = strpos($string, '|', $cursor + strlen($rule) + 1);
+                $pos  = $next === false ? $length : $next;
                 $rule = substr($string, $cursor, $pos - $cursor);
             }
 

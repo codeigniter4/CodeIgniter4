@@ -17,10 +17,10 @@ use CodeIgniter\DataCaster\Exceptions\CastException;
 use SensitiveParameter;
 
 /**
- * Class EncryptedCast
- *
  * (PHP) [string --> encrypted string] --> (DB driver) --> (DB column) string
  *       [       <-- string          ] <-- (DB driver) <-- (DB column) encrypted string
+ *
+ * @extends BaseCast<string|null, string|null>
  */
 class EncryptedCast extends BaseCast
 {

@@ -292,7 +292,10 @@ final class CLITest extends CIUnitTestCase
     public function testStreamSupports(): void
     {
         $this->assertTrue(CLI::streamSupports('stream_isatty', STDOUT));
-        $this->assertIsBool(CLI::streamSupports('sapi_windows_vt100_support', STDOUT));
+        $this->assertSame(
+            function_exists('sapi_windows_vt100_support'),
+            CLI::streamSupports('sapi_windows_vt100_support', STDOUT),
+        );
     }
 
     public function testColor(): void
@@ -712,12 +715,12 @@ final class CLITest extends CIUnitTestCase
         $height = new ReflectionProperty(CLI::class, 'height');
         $height->setValue(null, null);
 
-        $this->assertIsInt(CLI::getHeight());
+        $this->assertGreaterThan(0, CLI::getHeight());
 
         $width = new ReflectionProperty(CLI::class, 'width');
         $width->setValue(null, null);
 
-        $this->assertIsInt(CLI::getWidth());
+        $this->assertGreaterThan(0, CLI::getWidth());
     }
 
     #[RequiresOperatingSystem('Darwin|Linux')]

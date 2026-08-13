@@ -254,11 +254,11 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 
         // to preserve backward compatibility with array-based cookies in previous CI versions
         $prefix = ($options['prefix'] === '') ? self::$defaults['prefix'] : $options['prefix'];
-        $path   = $options['path'] ?: self::$defaults['path'];
-        $domain = $options['domain'] ?: self::$defaults['domain'];
+        $path   = ($options['path'] === '') ? self::$defaults['path'] : $options['path'];
+        $domain = ($options['domain'] === '') ? self::$defaults['domain'] : $options['domain'];
 
         // empty string SameSite should use the default for browsers
-        $samesite = $options['samesite'] ?: self::$defaults['samesite'];
+        $samesite = ($options['samesite'] === '') ? self::$defaults['samesite'] : $options['samesite'];
 
         $raw      = $options['raw'];
         $secure   = $options['secure'];
@@ -429,7 +429,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
             'domain'   => $this->domain,
             'secure'   => $this->secure,
             'httponly' => $this->httponly,
-            'samesite' => $this->samesite ?: ucfirst(self::SAMESITE_LAX),
+            'samesite' => ($this->samesite === '') ? ucfirst(self::SAMESITE_LAX) : $this->samesite,
         ];
     }
 

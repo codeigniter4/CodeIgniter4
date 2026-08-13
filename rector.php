@@ -19,7 +19,6 @@ use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
 use Rector\CodeQuality\Rector\Isset_\IssetOnPropertyObjectToPropertyExistsRector;
 use Rector\CodingStyle\Rector\ClassMethod\FuncGetArgsToVariadicParamRector;
 use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsParentRector;
-use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\CodingStyle\Rector\FuncCall\VersionCompareFuncCallToConstantRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
@@ -33,8 +32,6 @@ use Rector\EarlyReturn\Rector\Return_\PreparedValueToEarlyReturnRector;
 use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php71\Rector\FuncCall\RemoveExtraParametersRector;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
-use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
-use Rector\Php81\Rector\Property\ReadOnlyPropertyRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
 use Rector\PHPUnit\CodeQuality\Rector\StmtsAwareInterface\DeclareStrictTypesTestsRector;
 use Rector\Privatization\Rector\Class_\FinalizeTestCaseClassRector;
@@ -106,13 +103,6 @@ return RectorConfig::configure()
         // Keep property defaults for backward compatibility.
         RemoveDefaultValueFromAssignedPropertyRector::class,
 
-        ReadOnlyPropertyRector::class => [
-            __DIR__ . '/system/Cache/ResponseCache.php',
-            __DIR__ . '/system/HotReloader/IteratorFilter.php',
-            __DIR__ . '/system/Router/RouteCollection.php',
-            __DIR__ . '/system/Security/Security.php',
-        ],
-
         // Exclude test file because `is_cli()` is mocked and Rector might remove needed parameters.
         RemoveExtraParametersRector::class => [
             __DIR__ . '/tests/system/Debug/ToolbarTest.php',
@@ -166,9 +156,6 @@ return RectorConfig::configure()
             __DIR__ . '/system/HTTP/SiteURI.php',
         ],
 
-        // Unnecessary (string) is inserted
-        NullToStrictStringFuncCallArgRector::class,
-
         CompactToVariablesRector::class,
 
         // possibly isset() on purpose, on updated Config classes property across versions
@@ -197,7 +184,6 @@ return RectorConfig::configure()
         SimplifyUselessVariableRector::class,
         RemoveAlwaysElseRector::class,
         PassStrictParameterToFunctionParameterRector::class,
-        CountArrayToEmptyArrayComparisonRector::class,
         ChangeNestedForeachIfsToEarlyContinueRector::class,
         ChangeIfElseValueAssignToEarlyReturnRector::class,
         PreparedValueToEarlyReturnRector::class,

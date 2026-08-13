@@ -262,7 +262,7 @@ class Forge extends BaseForge
                     . " {$field['type']}{$field['length']}";
             }
 
-            if (! empty($field['default'])) {
+            if (($field['default'] ?? '') !== '') {
                 $fullTable = $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table);
                 $colName   = $field['name']; // bare, for sys.columns lookup
 
@@ -293,7 +293,7 @@ class Forge extends BaseForge
             $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($field['name'])
                 . " {$field['type']}{$field['length']} " . ($nullable ? '' : 'NOT') . ' NULL';
 
-            if (! empty($field['comment'])) {
+            if (($field['comment'] ?? '') !== '') {
                 $sqls[] = 'EXEC sys.sp_addextendedproperty '
                     . "@name=N'Caption', @value=N'" . $field['comment'] . "' , "
                     . "@level0type=N'SCHEMA',@level0name=N'" . $this->db->schema . "', "
@@ -301,7 +301,7 @@ class Forge extends BaseForge
                     . "@level2type=N'COLUMN',@level2name=N'" . $this->db->escapeIdentifiers($field['name']) . "'";
             }
 
-            if (! empty($field['new_name'])) {
+            if (($field['new_name'] ?? '') !== '') {
                 $sqls[] = "EXEC sp_rename  '[" . $this->db->schema . '].[' . $table . '].[' . $field['name'] . "]' , '" . $field['new_name'] . "', 'COLUMN';";
             }
         }
@@ -373,7 +373,7 @@ class Forge extends BaseForge
     protected function _processColumn(array $processedField): string
     {
         return $this->db->escapeIdentifiers($processedField['name'])
-            . (empty($processedField['new_name']) ? '' : ' ' . $this->db->escapeIdentifiers($processedField['new_name']))
+            . (($processedField['new_name'] ?? '') === '' ? '' : ' ' . $this->db->escapeIdentifiers($processedField['new_name']))
             . ' ' . $processedField['type'] . ($processedField['type'] === 'text' ? '' : $processedField['length'])
             . $processedField['default']
             . $processedField['null']
@@ -440,7 +440,7 @@ class Forge extends BaseForge
      */
     protected function _attributeAutoIncrement(array &$attributes, array &$field)
     {
-        if (! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true && str_contains(strtolower($field['type']), strtolower('INT'))) {
+        if (($attributes['AUTO_INCREMENT'] ?? false) === true && str_contains(strtolower($field['type']), strtolower('INT'))) {
             $field['auto_increment'] = ' IDENTITY(1,1)';
         }
     }

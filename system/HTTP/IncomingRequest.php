@@ -290,7 +290,14 @@ class IncomingRequest extends Request
             return true;
         }
 
-        return $this->hasHeader('Front-End-Https') && ! empty($this->header('Front-End-Https')->getValue()) && strtolower($this->header('Front-End-Https')->getValue()) !== 'off';
+        if (! $this->hasHeader('Front-End-Https')) {
+            return false;
+        }
+
+        $frontEndHttps = $this->header('Front-End-Https')->getValue();
+
+        return is_string($frontEndHttps) && ! in_array($frontEndHttps, ['', '0'], true)
+            && strtolower($frontEndHttps) !== 'off';
     }
 
     /**

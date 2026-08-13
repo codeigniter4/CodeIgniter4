@@ -210,8 +210,8 @@ class Toolbar
         $output = '';
 
         foreach ($rows as $row) {
-            $hasChildren = isset($row['children']) && ! empty($row['children']);
-            $isQuery     = isset($row['query']) && ! empty($row['query']);
+            $hasChildren = ($row['children'] ?? []) !== [];
+            $isQuery     = ($row['query'] ?? '') !== '';
 
             // Open controller timeline by default
             $open = $row['name'] === 'Controller';

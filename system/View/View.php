@@ -239,7 +239,7 @@ class View implements RendererInterface
             ob_start();
             include $this->renderVars['file'];
 
-            return ob_get_clean() ?: '';
+            return (string) ob_get_clean();
         })();
 
         // Get back current vars
@@ -331,7 +331,7 @@ class View implements RendererInterface
             ob_start();
             eval('?>' . $view);
 
-            return ob_get_clean() ?: '';
+            return (string) ob_get_clean();
         })($view);
 
         $this->logPerformance($start, microtime(true), $this->excerpt($view));

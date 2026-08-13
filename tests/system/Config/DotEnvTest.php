@@ -143,6 +143,68 @@ final class DotEnvTest extends CIUnitTestCase
         $dotenv->load();
     }
 
+    /**
+     * Regression test: a concurrent process may remove or replace the .env
+     * file between the is_file() check and the read attempt. In that case the
+     * file must be treated as absent (parse() returns null) instead of
+     * throwing an exception.
+     */
+    public function testParseReturnsNullIfFileRemovedBetweenCheckAndRead(): void
+    {
+        $scheme = 'vanishenv';
+
+        $wrapper = new class () {
+            public static bool $vanished = false;
+
+            /**
+             * @var resource|null
+             */
+            public $context;
+
+            /**
+             * @return array<string, int>|false
+             */
+            public function url_stat(string $path, int $flags): array|false
+            {
+                if (self::$vanished) {
+                    return false;
+                }
+
+                return [
+                    'dev'     => 0,
+                    'ino'     => 0,
+                    'mode'    => 0100644,
+                    'nlink'   => 1,
+                    'uid'     => 0,
+                    'gid'     => 0,
+                    'rdev'    => 0,
+                    'size'    => 1,
+                    'atime'   => 1,
+                    'mtime'   => 1,
+                    'ctime'   => 1,
+                    'blksize' => 4096,
+                    'blocks'  => 8,
+                ];
+            }
+
+            public function stream_open(string $path, string $mode, int $options, ?string &$openedPath): bool
+            {
+                self::$vanished = true;
+
+                return false;
+            }
+        };
+
+        stream_wrapper_register($scheme, $wrapper::class, STREAM_IS_URL);
+
+        try {
+            $dotenv = new DotEnv("{$scheme}://dir", '.env');
+            $this->assertNull($dotenv->parse());
+        } finally {
+            stream_wrapper_unregister($scheme);
+        }
+    }
+
     public function testQuotedDotenvLoadsEnvironmentVars(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, 'quoted.env');

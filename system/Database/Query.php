@@ -85,7 +85,7 @@ class Query implements QueryInterface, Stringable
      *
      * @var string
      */
-    protected $errorString;
+    protected $errorString = '';
 
     /**
      * Pointer to database connection.
@@ -148,7 +148,7 @@ class Query implements QueryInterface, Stringable
 
     public function getQuery(): string
     {
-        if (empty($this->finalQueryString)) {
+        if (! isset($this->finalQueryString) || $this->finalQueryString === '') {
             $this->compileBinds();
         }
 
@@ -197,7 +197,7 @@ class Query implements QueryInterface, Stringable
 
     public function hasError(): bool
     {
-        return ! empty($this->errorString);
+        return $this->errorString !== '';
     }
 
     public function getErrorCode(): int
@@ -246,7 +246,7 @@ class Query implements QueryInterface, Stringable
         $sql   = $this->swappedQueryString ?? $this->originalQueryString;
         $binds = $this->binds;
 
-        if (empty($binds)) {
+        if ($binds === []) {
             $this->finalQueryString = $sql;
 
             return;

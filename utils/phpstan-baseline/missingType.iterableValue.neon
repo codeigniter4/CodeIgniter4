@@ -1,4 +1,4 @@
-# total 1094 errors
+# total 1086 errors
 
 parameters:
     ignoreErrors:
@@ -266,21 +266,6 @@ parameters:
             message: '#^Method CodeIgniter\\Cookie\\CookieStore\:\:validateCookies\(\) has parameter \$cookies with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Cookie/CookieStore.php
-
-        -
-            message: '#^Method CodeIgniter\\DataCaster\\Cast\\ArrayCast\:\:get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/DataCaster/Cast/ArrayCast.php
-
-        -
-            message: '#^Method CodeIgniter\\DataCaster\\Cast\\CSVCast\:\:get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/DataCaster/Cast/CSVCast.php
-
-        -
-            message: '#^Method CodeIgniter\\DataCaster\\Cast\\JsonCast\:\:get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/DataCaster/Cast/JsonCast.php
 
         -
             message: '#^Method CodeIgniter\\DataConverter\\DataConverter\:\:fromDataSource\(\) return type has no value type specified in iterable type array\.$#'
@@ -1948,16 +1933,6 @@ parameters:
             path: ../../system/Encryption/KeyRotationDecorator.php
 
         -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\ArrayCast\:\:get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/ArrayCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\CSVCast\:\:get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/CSVCast.php
-
-        -
             message: '#^Method CodeIgniter\\Exceptions\\PageNotFoundException\:\:lang\(\) has parameter \$args with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Exceptions/PageNotFoundException.php
@@ -3068,16 +3043,6 @@ parameters:
             path: ../../system/Images/Handlers/BaseHandler.php
 
         -
-            message: '#^Property CodeIgniter\\Images\\Handlers\\BaseHandler\:\:\$supportTransparency type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Images/Handlers/BaseHandler.php
-
-        -
-            message: '#^Property CodeIgniter\\Images\\Handlers\\BaseHandler\:\:\$textDefaults type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Images/Handlers/BaseHandler.php
-
-        -
             message: '#^Method CodeIgniter\\Images\\Image\:\:getProperties\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Images/Image.php
@@ -3434,11 +3399,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Router\\Router\:\:scanControllers\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Router/Router.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\Router\:\:setRequest\(\) has parameter \$segments with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Router/Router.php
 

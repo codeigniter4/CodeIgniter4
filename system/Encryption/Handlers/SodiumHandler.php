@@ -56,7 +56,7 @@ class SodiumHandler extends BaseHandler
             }
         }
 
-        if (empty($key) || strlen((string) $key) !== SODIUM_CRYPTO_SECRETBOX_KEYBYTES) {
+        if (! is_string($key) || strlen($key) !== SODIUM_CRYPTO_SECRETBOX_KEYBYTES) {
             throw EncryptionException::forNeedsStarterKey();
         }
 
@@ -92,7 +92,7 @@ class SodiumHandler extends BaseHandler
             }
         }
 
-        if (empty($key) || strlen((string) $key) !== SODIUM_CRYPTO_SECRETBOX_KEYBYTES) {
+        if (! is_string($key) || strlen($key) !== SODIUM_CRYPTO_SECRETBOX_KEYBYTES) {
             throw EncryptionException::forNeedsStarterKey();
         }
 

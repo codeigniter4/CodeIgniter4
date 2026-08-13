@@ -216,7 +216,9 @@ class Pager implements PagerInterface
     {
         $this->ensureGroup($group);
 
-        return $this->groups[$group]['currentPage'] ?: 1;
+        $currentPage = $this->groups[$group]['currentPage'];
+
+        return ($currentPage === 0) ? 1 : $currentPage;
     }
 
     /**
@@ -310,7 +312,7 @@ class Pager implements PagerInterface
         $curr = $this->getCurrentPage($group);
         $page = null;
 
-        if (! empty($last) && $curr !== 0 && $last === $curr) {
+        if (! in_array($last, [null, 0], true) && $curr !== 0 && $last === $curr) {
             return null;
         }
 

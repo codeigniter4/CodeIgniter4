@@ -73,7 +73,7 @@ final class ScaffoldGeneratorTest extends CIUnitTestCase
             return '';
         }
 
-        return file_get_contents($filepath) ?: '';
+        return (string) file_get_contents($filepath);
     }
 
     public function testCreateComponentProducesManyFiles(): void

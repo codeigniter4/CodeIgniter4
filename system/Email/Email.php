@@ -693,7 +693,7 @@ class Email
 
         $this->attachments[] = [
             'name'        => $namesAttached,
-            'disposition' => empty($disposition) ? 'attachment' : $disposition,
+            'disposition' => $disposition === '' ? 'attachment' : $disposition,
             // Can also be 'inline'  Not sure if it matters
             'type'      => $mime,
             'content'   => chunk_split(base64_encode($fileContent)),
@@ -1488,7 +1488,7 @@ class Email
      */
     public function send($autoClear = true)
     {
-        if (! isset($this->headers['From']) && ! empty($this->fromEmail)) {
+        if (! isset($this->headers['From']) && $this->fromEmail !== null && $this->fromEmail !== '') {
             $this->setFrom($this->fromEmail, $this->fromName);
         }
 
@@ -1503,8 +1503,8 @@ class Email
         }
 
         if (
-            empty($this->recipients) && ! isset($this->headers['To'])
-            && empty($this->BCCArray) && ! isset($this->headers['Bcc'])
+            $this->recipients === [] && ! isset($this->headers['To'])
+            && $this->BCCArray === [] && ! isset($this->headers['Bcc'])
             && ! isset($this->headers['Cc'])
         ) {
             $this->setErrorMessage(lang('Email.noRecipients'));
@@ -2180,7 +2180,7 @@ class Email
     {
         $mime = Mimes::guessTypeFromExtension(strtolower($ext));
 
-        return empty($mime) ? 'application/x-unknown-content-type' : $mime;
+        return $mime ?? 'application/x-unknown-content-type';
     }
 
     public function __destruct()

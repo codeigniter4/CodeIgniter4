@@ -49,7 +49,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      *
      * @var string
      */
-    protected $errorString;
+    protected $errorString = '';
 
     /**
      * The typed exception for the last failed prepared query, if any.
@@ -97,7 +97,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 
         $query->setQuery($sql);
 
-        if (! empty($this->db->swapPre) && ! empty($this->db->DBPrefix)) {
+        if ($this->db->swapPre !== '' && $this->db->DBPrefix !== '') {
             $query->swapPrefix($this->db->DBPrefix, $this->db->swapPre);
         }
 
@@ -283,7 +283,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      */
     public function hasError(): bool
     {
-        return ! empty($this->errorString);
+        return $this->errorString !== '';
     }
 
     /**

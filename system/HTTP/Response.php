@@ -175,7 +175,7 @@ class Response extends Message implements ResponseInterface
      */
     public function getStatusCode(): int
     {
-        if (empty($this->statusCode)) {
+        if ($this->statusCode === 0) {
             throw HTTPException::forMissingResponseStatus();
         }
 
@@ -199,7 +199,7 @@ class Response extends Message implements ResponseInterface
     public function getReasonPhrase()
     {
         if ($this->reason === '') {
-            return empty($this->statusCode) ? '' : static::$statusCodes[$this->statusCode];
+            return $this->statusCode === 0 ? '' : static::$statusCodes[$this->statusCode];
         }
 
         return $this->reason;

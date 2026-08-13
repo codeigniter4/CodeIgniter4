@@ -80,7 +80,8 @@ final class SessionTest extends CIUnitTestCase
         $session = $this->getInstance();
         $session->start();
 
-        $this->assertTrue(isset($_SESSION['__ci_last_regenerate']) && ! empty($_SESSION['__ci_last_regenerate']));
+        $this->assertArrayHasKey('__ci_last_regenerate', $_SESSION);
+        $this->assertGreaterThan(0, $_SESSION['__ci_last_regenerate']);
     }
 
     public function testWillRegenerateSessionAutomatically(): void

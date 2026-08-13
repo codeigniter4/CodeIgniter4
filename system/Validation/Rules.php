@@ -369,8 +369,8 @@ class Rules
 
         foreach (explode(',', $fields) as $field) {
             if (
-                (array_key_exists($field, $data) && ! empty($data[$field]))
-                || (str_contains($field, '.') && ! empty(dot_array_search($field, $data)))
+                (array_key_exists($field, $data) && ! $this->isBlank($data[$field]))
+                || (str_contains($field, '.') && ! $this->isBlank(dot_array_search($field, $data)))
             ) {
                 $requiredFields[] = $field;
             }
@@ -417,7 +417,7 @@ class Rules
             if (
                 (! str_contains($otherField, '.'))
                 && (! array_key_exists($otherField, $data)
-                    || empty($data[$otherField]))
+                    || $this->isBlank($data[$otherField]))
             ) {
                 return false;
             }
@@ -432,7 +432,7 @@ class Rules
                 $fieldKey        = $fieldSplitArray[1] ?? null;
 
                 if (is_array($fieldData)) {
-                    if (empty($fieldData[$fieldKey])) {
+                    if ($this->isBlank($fieldData[$fieldKey] ?? null)) {
                         return false;
                     }
 
@@ -471,5 +471,16 @@ class Rules
         }
 
         return array_key_exists($field, $data);
+    }
+
+    /**
+     * Whether the value counts as blank for the `required_with` and
+     * `required_without` rules.
+     *
+     * @param mixed $value
+     */
+    private function isBlank($value): bool
+    {
+        return in_array($value, [null, false, 0, 0.0, '', '0', []], true);
     }
 }

@@ -534,11 +534,11 @@ final class SecurityTest extends CIUnitTestCase
     {
         $security = $this->createMockSecurity();
 
-        $this->assertIsString($security->getHash());
-        $this->assertIsString($security->getTokenName());
-        $this->assertIsString($security->getHeaderName());
-        $this->assertIsString($security->getCookieName());
-        $this->assertIsBool($security->shouldRedirect());
+        $this->assertSame(32, strlen($security->getHash()));
+        $this->assertSame('csrf_test_name', $security->getTokenName());
+        $this->assertSame('X-CSRF-TOKEN', $security->getHeaderName());
+        $this->assertSame('csrf_cookie_name', $security->getCookieName());
+        $this->assertFalse($security->shouldRedirect());
     }
 
     public function testGetPostedTokenReturnsTokenFromPost(): void

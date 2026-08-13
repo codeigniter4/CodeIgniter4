@@ -48,11 +48,11 @@ class Database
             throw new InvalidArgumentException('You must supply the parameter: alias.');
         }
 
-        if (! empty($params['DSN']) && str_contains($params['DSN'], '://')) {
+        if (($params['DSN'] ?? '') !== '' && str_contains($params['DSN'], '://')) {
             $params = $this->parseDSN($params);
         }
 
-        if (empty($params['DBDriver'])) {
+        if (($params['DBDriver'] ?? '') === '') {
             throw new InvalidArgumentException('You have not selected a database type to connect to.');
         }
 

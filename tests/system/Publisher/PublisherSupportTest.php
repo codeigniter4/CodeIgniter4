@@ -106,7 +106,6 @@ final class PublisherSupportTest extends CIUnitTestCase
 
         $scratch = $publisher->getScratch();
 
-        $this->assertIsString($scratch);
         $this->assertDirectoryExists($scratch);
         $this->assertDirectoryIsWritable($scratch);
         $this->assertNotNull($this->getPrivateProperty($publisher, 'scratch'));
@@ -159,7 +158,8 @@ final class PublisherSupportTest extends CIUnitTestCase
     {
         $directory = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . bin2hex(random_bytes(6));
         mkdir($directory, 0700);
-        $directory = realpath($directory) ?: $directory;
+        $realPath  = realpath($directory);
+        $directory = $realPath === false ? $directory : $realPath;
         $this->assertDirectoryExists($directory);
         config('Publisher')->restrictions[$directory] = ''; // Allow the directory
 

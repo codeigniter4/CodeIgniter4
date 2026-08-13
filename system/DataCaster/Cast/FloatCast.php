@@ -16,10 +16,10 @@ namespace CodeIgniter\DataCaster\Cast;
 use CodeIgniter\DataCaster\Exceptions\CastException;
 
 /**
- * Class FloatCast
- *
  * (PHP) [float --> float       ] --> (DB driver) --> (DB column) float
  *       [      <-- float|string] <-- (DB driver) <-- (DB column) float
+ *
+ * @extends BaseCast<float, float|string>
  */
 class FloatCast extends BaseCast
 {

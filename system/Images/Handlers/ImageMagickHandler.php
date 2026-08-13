@@ -25,16 +25,11 @@ use RuntimeException;
 
 /**
  * Image handler for Imagick extension.
+ *
+ * @extends BaseHandler<Imagick>
  */
 class ImageMagickHandler extends BaseHandler
 {
-    /**
-     * Stores Imagick instance.
-     *
-     * @var Imagick|null
-     */
-    protected $resource;
-
     /**
      * Constructor.
      *
@@ -64,14 +59,12 @@ class ImageMagickHandler extends BaseHandler
     protected function ensureResource()
     {
         if (! $this->resource instanceof Imagick) {
-            // Verify that we have a valid image
             $this->image();
 
             try {
                 $this->resource = new Imagick();
                 $this->resource->readImage($this->image()->getPathname());
 
-                // Check for valid image
                 if ($this->resource->getImageWidth() === 0 || $this->resource->getImageHeight() === 0) {
                     throw ImageException::forInvalidImageCreate($this->image()->getPathname());
                 }
@@ -123,12 +116,10 @@ class ImageMagickHandler extends BaseHandler
                         $yAxis,
                     );
 
-                    // Reset canvas to cropped size
                     $this->resource->setImagePage(0, 0, 0, 0);
                     break;
             }
 
-            // Handle transparency for supported image types
             if (in_array($this->image()->imageType, $this->supportTransparency, true)
                 && $this->resource->getImageAlphaChannel() === Imagick::ALPHACHANNEL_UNDEFINED) {
                 $this->resource->setImageAlphaChannel(Imagick::ALPHACHANNEL_OPAQUE);
@@ -150,7 +141,6 @@ class ImageMagickHandler extends BaseHandler
     public function _resize(bool $maintainRatio = false)
     {
         if ($maintainRatio) {
-            // If maintaining a ratio, we need a custom approach
             $this->ensureResource();
 
             // Use thumbnailImage which preserves an aspect ratio
@@ -159,7 +149,6 @@ class ImageMagickHandler extends BaseHandler
             return $this;
         }
 
-        // Use the common process() method for normal resizing
         return $this->process('resize');
     }
 
@@ -172,7 +161,6 @@ class ImageMagickHandler extends BaseHandler
      */
     public function _crop()
     {
-        // Use the common process() method for cropping
         $result = $this->process('crop');
 
         // Handle a case where crop dimensions exceed the original image size
@@ -181,15 +169,12 @@ class ImageMagickHandler extends BaseHandler
             $imgHeight = $this->resource->getImageHeight();
 
             if ($this->xAxis >= $imgWidth || $this->yAxis >= $imgHeight) {
-                // Create transparent background
                 $background = new Imagick();
                 $background->newImage($this->width, $this->height, new ImagickPixel('transparent'));
                 $background->setImageFormat($this->resource->getImageFormat());
 
-                // Composite our image on the background
                 $background->compositeImage($this->resource, Imagick::COMPOSITE_OVER, 0, 0);
 
-                // Replace our resource
                 $this->resource = $background;
             }
         }
@@ -209,11 +194,9 @@ class ImageMagickHandler extends BaseHandler
     {
         $this->ensureResource();
 
-        // Create transparent background
         $this->resource->setImageBackgroundColor(new ImagickPixel('transparent'));
         $this->resource->rotateImage(new ImagickPixel('transparent'), $angle);
 
-        // Reset canvas dimensions
         $this->resource->setImagePage($this->resource->getImageWidth(), $this->resource->getImageHeight(), 0, 0);
 
         return $this;
@@ -230,10 +213,8 @@ class ImageMagickHandler extends BaseHandler
     {
         $this->ensureResource();
 
-        // Create background
         $bg = new ImagickPixel("rgb({$red},{$green},{$blue})");
 
-        // Create a new canvas with the background color
         $canvas = new Imagick();
         $canvas->newImage(
             $this->resource->getImageWidth(),
@@ -242,7 +223,6 @@ class ImageMagickHandler extends BaseHandler
             $this->resource->getImageFormat(),
         );
 
-        // Composite our image on the background
         $canvas->compositeImage(
             $this->resource,
             Imagick::COMPOSITE_OVER,
@@ -250,7 +230,6 @@ class ImageMagickHandler extends BaseHandler
             0,
         );
 
-        // Replace our resource with the flattened version
         $this->resource->clear();
         $this->resource = $canvas;
 
@@ -427,13 +406,11 @@ class ImageMagickHandler extends BaseHandler
             $draw->setFillColor(new ImagickPixel("rgba({$r},{$g},{$b},{$opacity})"));
         }
 
-        // Calculate text positioning
         $imgWidth  = $this->resource->getImageWidth();
         $imgHeight = $this->resource->getImageHeight();
         $xAxis     = 0;
         $yAxis     = 0;
 
-        // Default padding
         $padding = $options['padding'] ?? 0;
 
         if (isset($options['hAlign'])) {
@@ -470,7 +447,7 @@ class ImageMagickHandler extends BaseHandler
                     break;
 
                 case 'bottom':
-                    // Note: Vertical offset is inverted for bottom alignment as per original implementation
+                    // A negative offset pushes the text further up from the bottom edge.
                     $yAxis = $vOffset < 0 ? $imgHeight + $vOffset - $padding : $imgHeight - $vOffset - $padding;
                     break;
             }
@@ -504,7 +481,6 @@ class ImageMagickHandler extends BaseHandler
             );
         }
 
-        // Draw the main text
         $this->resource->annotateImage(
             $draw,
             $xAxis,

@@ -193,8 +193,8 @@ class Connection extends BaseConnection
         $charset = in_array(strtolower($this->charset), ['utf-8', 'utf8'], true) ? 'UTF-8' : SQLSRV_ENC_CHAR;
 
         $connection = [
-            'UID'                    => empty($this->username) ? '' : $this->username,
-            'PWD'                    => empty($this->password) ? '' : $this->password,
+            'UID'                    => is_string($this->username) ? $this->username : '',
+            'PWD'                    => is_string($this->password) ? $this->password : '',
             'Database'               => $this->database,
             'ConnectionPooling'      => $persistent ? 1 : 0,
             'CharacterSet'           => $charset,
@@ -205,7 +205,7 @@ class Connection extends BaseConnection
 
         // If the username and password are both empty, assume this is a
         // 'Windows Authentication Mode' connection.
-        if (empty($connection['UID']) && empty($connection['PWD'])) {
+        if ($connection['UID'] === '' && $connection['PWD'] === '') {
             unset($connection['UID'], $connection['PWD']);
         }
 
@@ -221,7 +221,7 @@ class Connection extends BaseConnection
             $query = $this->query('SELECT CASE WHEN (@@OPTIONS | 256) = @@OPTIONS THEN 1 ELSE 0 END AS qi');
             $query = $query->getResultObject();
 
-            $this->_quoted_identifier = empty($query) ? false : (bool) $query[0]->qi;
+            $this->_quoted_identifier = $query === [] ? false : (bool) $query[0]->qi;
             $this->escapeChar         = ($this->_quoted_identifier) ? '"' : ['[', ']'];
 
             return $this->connID;
@@ -578,7 +578,7 @@ class Connection extends BaseConnection
             $databaseName = $this->database;
         }
 
-        if (empty($this->connID)) {
+        if ($this->connID === false) {
             $this->initialize();
         }
 

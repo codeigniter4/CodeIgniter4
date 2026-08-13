@@ -232,7 +232,7 @@ class Filters
             }
 
             // Ignore an empty result
-            if (empty($result)) {
+            if (! is_string($result) || $result === '') {
                 continue;
             }
 

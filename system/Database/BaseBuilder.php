@@ -328,7 +328,7 @@ class BaseBuilder
      */
     public function __construct($tableName, ConnectionInterface $db, ?array $options = null)
     {
-        if (empty($tableName)) {
+        if (in_array($tableName, ['', '0', []], true)) {
             throw new DatabaseException('A table must be specified when creating a new Query Builder.');
         }
 
@@ -1123,7 +1123,7 @@ class BaseBuilder
             } elseif ($v !== null) {
                 $op = $this->getOperatorFromWhereKey($k);
 
-                if (! empty($op)) {
+                if ($op !== false && $op !== []) {
                     $k = trim($k);
 
                     end($op);
@@ -1784,7 +1784,7 @@ class BaseBuilder
         $type = $this->groupGetType($type);
 
         $this->QBWhereGroupStarted = true;
-        $prefix                    = empty($this->{$clause}) ? '' : $type;
+        $prefix                    = $this->{$clause} === [] ? '' : $type;
         $where                     = [
             'condition' => $prefix . $not . str_repeat(' ', ++$this->QBWhereGroupCount) . ' (',
             'escape'    => false,
@@ -2104,7 +2104,7 @@ class BaseBuilder
         $query = new Query($this->db);
         $query->setQuery($sql, $this->binds, false);
 
-        if (! empty($this->db->swapPre) && ! empty($this->db->DBPrefix)) {
+        if ($this->db->swapPre !== '' && $this->db->DBPrefix !== '') {
             $query->swapPrefix($this->db->DBPrefix, $this->db->swapPre);
         }
 
@@ -2202,7 +2202,7 @@ class BaseBuilder
 
         $query = $this->db->query($sql, null, false);
 
-        if (empty($query->getResult())) {
+        if ($query->getResult() === []) {
             return 0;
         }
 
@@ -2334,7 +2334,7 @@ class BaseBuilder
         // for selecting COUNT(*) ...
         $orderBy = [];
 
-        if (! empty($this->QBOrderBy)) {
+        if (is_array($this->QBOrderBy) && $this->QBOrderBy !== []) {
             $orderBy = $this->QBOrderBy;
 
             $this->QBOrderBy = null;
@@ -2350,7 +2350,7 @@ class BaseBuilder
         $this->QBSelectLockWait = null;
 
         try {
-            if ($this->QBDistinct === true || ! empty($this->QBGroupBy)) {
+            if ($this->QBDistinct === true || $this->QBGroupBy !== []) {
                 // We need to backup the original SELECT in case DBPrefix is used
                 $select = $this->QBSelect;
                 $sql    = $this->countString . $this->db->protectIdentifiers('numrows') . "\nFROM (\n" . $this->compileSelect() . "\n) CI_count_all_results";
@@ -2383,7 +2383,7 @@ class BaseBuilder
 
         $row = $result instanceof ResultInterface ? $result->getRow() : null;
 
-        if (empty($row)) {
+        if ($row === null) {
             return 0;
         }
 
@@ -2447,7 +2447,7 @@ class BaseBuilder
      */
     protected function batchExecute(string $renderMethod, int $batchSize = 100)
     {
-        if (empty($this->QBSet)) {
+        if ($this->QBSet === []) {
             if ($this->db->DBDebug) {
                 throw new DatabaseException(trim($renderMethod, '_') . '() has no data.');
             }
@@ -2500,7 +2500,7 @@ class BaseBuilder
      */
     public function setData($set, ?bool $escape = null, string $alias = '')
     {
-        if (empty($set)) {
+        if ($set === []) {
             if ($this->db->DBDebug) {
                 throw new DatabaseException('setData() has no data.');
             }
@@ -2707,7 +2707,7 @@ class BaseBuilder
      */
     public function updateFields($set, bool $addToDefault = false, ?array $ignore = null)
     {
-        if (! empty($set)) {
+        if (! in_array($set, [null, [], ''], true)) {
             if (! is_array($set)) {
                 $set = explode(',', $set);
             }
@@ -2743,13 +2743,13 @@ class BaseBuilder
     /**
      * Sets constraints for batch upsert, update
      *
-     * @param array|RawSql|string $set a string of columns, key value pairs, or RawSql
+     * @param array|RawSql|string|null $set A string of columns, key value pairs, or RawSql
      *
      * @return $this
      */
     public function onConstraint($set)
     {
-        if (! empty($set)) {
+        if (! in_array($set, [null, [], ''], true)) {
             if (is_string($set)) {
                 $set = explode(',', $set);
 
@@ -3004,7 +3004,7 @@ class BaseBuilder
      */
     protected function validateInsert(): bool
     {
-        if (empty($this->QBSet)) {
+        if ($this->QBSet === []) {
             if ($this->db->DBDebug) {
                 throw new DatabaseException('You must use the "set" method to insert an entry.');
             }
@@ -3040,7 +3040,7 @@ class BaseBuilder
             $this->set($set);
         }
 
-        if (empty($this->QBSet)) {
+        if ($this->QBSet === []) {
             if ($this->db->DBDebug) {
                 throw new DatabaseException('You must use the "set" method to update an entry.');
             }
@@ -3192,7 +3192,7 @@ class BaseBuilder
      */
     protected function validateUpdate(): bool
     {
-        if (empty($this->QBSet)) {
+        if ($this->QBSet === []) {
             if ($this->db->DBDebug) {
                 throw new DatabaseException('You must use the "set" method to update an entry.');
             }
@@ -3421,7 +3421,7 @@ class BaseBuilder
             $this->where($where);
         }
 
-        if (empty($this->QBWhere)) {
+        if ($this->QBWhere === []) {
             if ($this->db->DBDebug) {
                 throw new DatabaseException('Deletes are not allowed unless they contain a "where" or "like" clause.');
             }
@@ -3440,7 +3440,7 @@ class BaseBuilder
             $this->QBLimit = $limit;
         }
 
-        if (! empty($this->QBLimit)) {
+        if ($this->QBLimit !== false && $this->QBLimit !== 0) {
             if (! $this->canLimitDeletes) {
                 throw new DatabaseException('SQLite3 does not allow LIMITs on DELETE queries.');
             }
@@ -3763,7 +3763,7 @@ class BaseBuilder
         } else {
             $sql = $this->QBDistinct ? 'SELECT DISTINCT ' : 'SELECT ';
 
-            if (empty($this->QBSelect)) {
+            if ($this->QBSelect === []) {
                 $sql .= '*';
             } else {
                 // Cycle through the "select" portion of the query and prep each column name.
@@ -3782,11 +3782,11 @@ class BaseBuilder
             }
         }
 
-        if (! empty($this->QBFrom)) {
+        if ($this->QBFrom !== []) {
             $sql .= "\nFROM " . $this->_fromTables();
         }
 
-        if (! empty($this->QBJoin)) {
+        if ($this->QBJoin !== []) {
             $sql .= "\n" . implode("\n", $this->QBJoin);
         }
 
@@ -3914,7 +3914,7 @@ class BaseBuilder
      */
     protected function compileWhereHaving(string $qbKey): string
     {
-        if (! empty($this->{$qbKey})) {
+        if ($this->{$qbKey} !== []) {
             foreach ($this->{$qbKey} as &$qbkey) {
                 $qbkey = $this->compileWhereHavingCondition($qbkey);
             }
@@ -4050,7 +4050,7 @@ class BaseBuilder
      */
     protected function compileGroupBy(): string
     {
-        if (! empty($this->QBGroupBy)) {
+        if ($this->QBGroupBy !== []) {
             foreach ($this->QBGroupBy as &$groupBy) {
                 // Is it already compiled?
                 if (is_string($groupBy)) {
@@ -4240,7 +4240,7 @@ class BaseBuilder
         }
 
         // Reset QBFrom part
-        if (! empty($this->QBFrom)) {
+        if ($this->QBFrom !== []) {
             $this->from(array_shift($this->QBFrom), true);
         }
     }
