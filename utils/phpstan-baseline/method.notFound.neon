@@ -1,4 +1,4 @@
-# total 80 errors
+# total 33 errors
 
 parameters:
     ignoreErrors:
@@ -41,91 +41,6 @@ parameters:
             message: '#^Call to an undefined method CodeIgniter\\HTTP\\ResponseInterface\:\:pretend\(\)\.$#'
             count: 3
             path: ../../tests/system/Debug/ExceptionHandlerTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getCookie\(\)\.$#'
-            count: 2
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getDefaultLocale\(\)\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getFileMultiple\(\)\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getFile\(\)\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getFiles\(\)\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getGetPost\(\)\.$#'
-            count: 6
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getGet\(\)\.$#'
-            count: 2
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getLocale\(\)\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getOldInput\(\)\.$#'
-            count: 9
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getPostGet\(\)\.$#'
-            count: 6
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getPost\(\)\.$#'
-            count: 2
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getVar\(\)\.$#'
-            count: 2
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:isAJAX\(\)\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:isCLI\(\)\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:isSecure\(\)\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:is\(\)\.$#'
-            count: 5
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:negotiate\(\)\.$#'
-            count: 5
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
 
         -
             message: '#^Call to an undefined method CodeIgniter\\HTTP\\URI\:\:getRoutePath\(\)\.$#'
