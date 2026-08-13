@@ -13,83 +13,44 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Utilities;
 
-use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Input\Argument;
 use CodeIgniter\Security\CheckPhpIni;
 
 /**
  * Check php.ini values.
  */
-final class PhpIniCheck extends BaseCommand
+#[Command(
+    name: 'phpini:check',
+    description: 'Check your php.ini values in production environment.',
+    group: 'CodeIgniter',
+)]
+final class PhpIniCheck extends AbstractCommand
 {
-    /**
-     * The group the command is lumped under
-     * when listing commands.
-     *
-     * @var string
-     */
-    protected $group = 'CodeIgniter';
-
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'phpini:check';
-
-    /**
-     * The Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Check your php.ini values in production environment.';
-
-    /**
-     * The Command's usage
-     *
-     * @var string
-     */
-    protected $usage = 'phpini:check';
-
-    /**
-     * The Command's arguments
-     *
-     * @var array<string, string>
-     */
-    protected $arguments = [
-        'opcache' => 'Check detail opcache values in production environment.',
-    ];
-
-    /**
-     * The Command's options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [];
-
-    /**
-     * @return int
-     */
-    public function run(array $params)
+    protected function configure(): void
     {
-        if (isset($params[0]) && ! in_array($params[0], array_keys($this->arguments), true)) {
+        $this
+            ->addArgument(new Argument(
+                name: 'section',
+                description: 'The section to check in detail. Only "opcache" is supported.',
+                default: '',
+            ))
+            ->addUsage('phpini:check opcache');
+    }
+
+    protected function execute(array $arguments, array $options): int
+    {
+        $section = $arguments['section'];
+
+        if ($section !== '' && $section !== 'opcache') {
             CLI::error('You must specify a correct argument.');
-            CLI::write('    Usage: ' . $this->usage);
-            CLI::write('  Example: phpini:check opcache');
-            CLI::write('Arguments:');
-
-            $length = max(array_map(strlen(...), array_keys($this->arguments)));
-
-            foreach ($this->arguments as $argument => $description) {
-                CLI::write(CLI::color($this->setPad($argument, $length, 2, 2), 'green') . $description);
-            }
 
             return EXIT_ERROR;
         }
 
-        $argument = $params[0] ?? null;
-
-        CheckPhpIni::run(argument: $argument);
+        CheckPhpIni::run(argument: $section !== '' ? $section : null);
 
         return EXIT_SUCCESS;
     }
