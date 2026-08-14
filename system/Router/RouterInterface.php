@@ -55,7 +55,7 @@ interface RouterInterface
      * during the parsing process as an array, ready to send to
      * instance->method(...$params).
      *
-     * @return array
+     * @return list<string>
      */
     public function params();
 
