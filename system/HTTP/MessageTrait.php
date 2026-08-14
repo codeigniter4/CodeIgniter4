@@ -41,7 +41,7 @@ trait MessageTrait
      * and their normal-case key as it is in $headers.
      * Used for case-insensitive header access.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $headerMap = [];
 
@@ -51,7 +51,7 @@ trait MessageTrait
     /**
      * Sets the body of the current message.
      *
-     * @param string $data
+     * @param array<array-key, mixed>|string|null $data
      */
     public function setBody($data): self
     {
@@ -138,7 +138,7 @@ trait MessageTrait
     /**
      * Sets a header and it's value.
      *
-     * @param array|string|null $value
+     * @param array<array-key, string>|string|null $value
      */
     public function setHeader(string $name, $value): self
     {

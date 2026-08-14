@@ -37,6 +37,9 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
         Services::injectMock('superglobals', new Superglobals());
     }
 
+    /**
+     * @param array<string, string> $server
+     */
     private function createSiteURIFactory(array $server, ?App $appConfig = null): SiteURIFactory
     {
         $appConfig ??= new App();
@@ -316,6 +319,9 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
         $this->assertSame($detectPath, $factory->detectRoutePath());
     }
 
+    /**
+     * @return iterable<array{string, string}>
+     */
     public static function provideExtensionPHP(): iterable
     {
         return [

@@ -200,7 +200,7 @@ interface ResponseInterface extends MessageInterface
     /**
      * Converts the $body into JSON and sets the Content Type header.
      *
-     * @param array|object|string $body
+     * @param array<array-key, mixed>|object|string $body
      *
      * @return $this
      */
@@ -218,7 +218,7 @@ interface ResponseInterface extends MessageInterface
     /**
      * Converts $body into XML, and sets the correct Content-Type.
      *
-     * @param array|string $body
+     * @param array<array-key, mixed>|string $body
      *
      * @return $this
      */
@@ -271,6 +271,8 @@ interface ResponseInterface extends MessageInterface
      *  - proxy-revalidate
      *  - no-transform
      *
+     * @param array<array-key, mixed> $options
+     *
      * @return $this
      */
     public function setCache(array $options = []);
@@ -310,15 +312,15 @@ interface ResponseInterface extends MessageInterface
      * Accepts an arbitrary number of binds (up to 7) or an associative
      * array in the first parameter containing all the values.
      *
-     * @param array|Cookie|string $name     Cookie name / array containing binds / Cookie object
-     * @param string              $value    Cookie value
-     * @param int                 $expire   Cookie expiration time in seconds
-     * @param string              $domain   Cookie domain (e.g.: '.yourdomain.com')
-     * @param string              $path     Cookie path (default: '/')
-     * @param string              $prefix   Cookie name prefix
-     * @param bool                $secure   Whether to only transfer cookies via SSL
-     * @param bool                $httponly Whether only make the cookie accessible via HTTP (no javascript)
-     * @param string|null         $samesite
+     * @param array<string, mixed>|Cookie|string $name     Cookie name / array containing binds / Cookie object
+     * @param string                             $value    Cookie value
+     * @param int|string                         $expire   Cookie expiration time in seconds
+     * @param string                             $domain   Cookie domain (e.g.: '.yourdomain.com')
+     * @param string                             $path     Cookie path (default: '/')
+     * @param string                             $prefix   Cookie name prefix
+     * @param bool                               $secure   Whether to only transfer cookies via SSL
+     * @param bool                               $httponly Whether only make the cookie accessible via HTTP (no javascript)
+     * @param string|null                        $samesite
      *
      * @return $this
      */

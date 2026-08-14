@@ -105,14 +105,14 @@ class IncomingRequest extends Request
     /**
      * Stores the valid locale codes.
      *
-     * @var array
+     * @var list<string>
      */
     protected $validLocales = [];
 
     /**
      * Holds the old data from a redirect.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $oldInput = [];
 
@@ -203,6 +203,8 @@ class IncomingRequest extends Request
     /**
      * Provides a convenient way to work with the Negotiate class
      * for content negotiation.
+     *
+     * @param list<string> $supported
      */
     public function negotiate(string $type, array $supported, bool $strictMatch = false): string
     {
@@ -339,6 +341,8 @@ class IncomingRequest extends Request
     /**
      * Set the valid locales.
      *
+     * @param list<string> $locales
+     *
      * @return $this
      */
     public function setValidLocales(array $locales)
@@ -370,9 +374,9 @@ class IncomingRequest extends Request
      * to grab data from the request object and can be used in lieu of the
      * other get* methods in most cases.
      *
-     * @param array|string|null $index
-     * @param int|null          $filter Filter constant
-     * @param array|int|null    $flags
+     * @param list<string>|string|null      $index
+     * @param int|null                      $filter Filter constant
+     * @param array<string, mixed>|int|null $flags
      *
      * @return array<array-key, mixed>|bool|float|int|stdClass|string|null
      */
@@ -423,10 +427,10 @@ class IncomingRequest extends Request
     /**
      * Get a specific variable from a JSON input stream
      *
-     * @param array|string|null $index  The variable that you want which can use dot syntax for getting specific values.
-     * @param bool              $assoc  If true, return the result as an associative array.
-     * @param int|null          $filter Filter Constant
-     * @param array|int|null    $flags  Option
+     * @param list<string>|string|null      $index  The variable that you want which can use dot syntax for getting specific values.
+     * @param bool                          $assoc  If true, return the result as an associative array.
+     * @param int|null                      $filter Filter Constant
+     * @param array<string, mixed>|int|null $flags  Option
      *
      * @return array<array-key, mixed>|bool|float|int|stdClass|string|null
      */
@@ -503,7 +507,7 @@ class IncomingRequest extends Request
      * A convenience method that grabs the raw input stream(send method in PUT, PATCH, DELETE) and decodes
      * the String into an array.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getRawInput()
     {
@@ -515,9 +519,9 @@ class IncomingRequest extends Request
     /**
      * Gets a specific variable from raw input stream (send method in PUT, PATCH, DELETE).
      *
-     * @param array|string|null $index  The variable that you want which can use dot syntax for getting specific values.
-     * @param int|null          $filter Filter Constant
-     * @param array|int|null    $flags  Option
+     * @param list<string>|string|null      $index  The variable that you want which can use dot syntax for getting specific values.
+     * @param int|null                      $filter Filter Constant
+     * @param array<string, mixed>|int|null $flags  Option
      *
      * @return mixed
      */
@@ -569,9 +573,9 @@ class IncomingRequest extends Request
     /**
      * Fetch an item from GET data.
      *
-     * @param array|string|null $index  Index for item to fetch from $_GET.
-     * @param int|null          $filter A filter name to apply.
-     * @param array|int|null    $flags
+     * @param list<string>|string|null      $index  Index for item to fetch from $_GET.
+     * @param int|null                      $filter A filter name to apply.
+     * @param array<string, mixed>|int|null $flags
      *
      * @return mixed
      */
@@ -583,9 +587,9 @@ class IncomingRequest extends Request
     /**
      * Fetch an item from POST.
      *
-     * @param array|string|null $index  Index for item to fetch from $_POST.
-     * @param int|null          $filter A filter name to apply
-     * @param array|int|null    $flags
+     * @param list<string>|string|null      $index  Index for item to fetch from $_POST.
+     * @param int|null                      $filter A filter name to apply
+     * @param array<string, mixed>|int|null $flags
      *
      * @return mixed
      */
@@ -597,9 +601,9 @@ class IncomingRequest extends Request
     /**
      * Fetch an item from POST data with fallback to GET.
      *
-     * @param array|string|null $index  Index for item to fetch from $_POST or $_GET
-     * @param int|null          $filter A filter name to apply
-     * @param array|int|null    $flags
+     * @param list<string>|string|null      $index  Index for item to fetch from $_POST or $_GET
+     * @param int|null                      $filter A filter name to apply
+     * @param array<string, mixed>|int|null $flags
      *
      * @return mixed
      */
@@ -630,9 +634,9 @@ class IncomingRequest extends Request
     /**
      * Fetch an item from GET data with fallback to POST.
      *
-     * @param array|string|null $index  Index for item to be fetched from $_GET or $_POST
-     * @param int|null          $filter A filter name to apply
-     * @param array|int|null    $flags
+     * @param list<string>|string|null      $index  Index for item to be fetched from $_GET or $_POST
+     * @param int|null                      $filter A filter name to apply
+     * @param array<string, mixed>|int|null $flags
      *
      * @return mixed
      */
@@ -663,9 +667,9 @@ class IncomingRequest extends Request
     /**
      * Fetch an item from the COOKIE array.
      *
-     * @param array|string|null $index  Index for item to be fetched from $_COOKIE
-     * @param int|null          $filter A filter name to be applied
-     * @param array|int|null    $flags
+     * @param list<string>|string|null      $index  Index for item to be fetched from $_COOKIE
+     * @param int|null                      $filter A filter name to be applied
+     * @param array<string, mixed>|int|null $flags
      *
      * @return mixed
      */
@@ -689,7 +693,7 @@ class IncomingRequest extends Request
      * with redirect_with_input(). It first checks for the data in the old
      * POST data, then the old GET data and finally check for dot arrays
      *
-     * @return array|string|null
+     * @return array<array-key, mixed>|string|null
      */
     public function getOldInput(string $key)
     {
@@ -741,6 +745,8 @@ class IncomingRequest extends Request
     /**
      * Returns an array of all files that have been uploaded with this
      * request. Each file is represented by an UploadedFile instance.
+     *
+     * @return array<string, array<array-key, UploadedFile>|UploadedFile>
      */
     public function getFiles(): array
     {
@@ -755,7 +761,7 @@ class IncomingRequest extends Request
      * Verify if a file exist, by the name of the input field used to upload it, in the collection
      * of uploaded files and if is have been uploaded with multiple option.
      *
-     * @return array|null
+     * @return list<UploadedFile>|null
      */
     public function getFileMultiple(string $fileID)
     {

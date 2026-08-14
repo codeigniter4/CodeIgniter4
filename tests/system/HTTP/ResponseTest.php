@@ -33,6 +33,9 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class ResponseTest extends CIUnitTestCase
 {
+    /**
+     * @var array<string, string>
+     */
     private array $server;
 
     protected function setUp(): void
@@ -296,6 +299,9 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertSame($expectedCode, $response->getStatusCode());
     }
 
+    /**
+     * @return iterable<array{string, string, string, int|null, int}>
+     */
     public static function provideRedirect(): iterable
     {
         yield from [
@@ -341,6 +347,9 @@ final class ResponseTest extends CIUnitTestCase
         service('superglobals')->unsetServer('SERVER_SOFTWARE');
     }
 
+    /**
+     * @return iterable<array{string, string, int|null, int}>
+     */
     public static function provideRedirectWithIIS(): iterable
     {
         yield from [
