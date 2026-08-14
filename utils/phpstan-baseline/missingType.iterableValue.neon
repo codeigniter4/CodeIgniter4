@@ -1,12 +1,7 @@
-# total 1132 errors
+# total 1131 errors
 
 parameters:
     ignoreErrors:
-        -
-            message: '#^Method CodeIgniter\\CodeIgniter\:\:getPerformanceStats\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/CodeIgniter.php
-
         -
             message: '#^Method CodeIgniter\\Commands\\ListCommands\:\:listFull\(\) has parameter \$commands with no value type specified in iterable type array\.$#'
             count: 1
