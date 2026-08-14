@@ -1,4 +1,4 @@
-# total 31 errors
+# total 30 errors
 
 parameters:
     ignoreErrors:
@@ -71,11 +71,6 @@ parameters:
             message: '#^Function CodeIgniter\\HTTP\\Files\\rrmdir\(\) has parameter \$src with no type specified\.$#'
             count: 1
             path: ../../tests/system/HTTP/Files/FileMovingTest.php
-
-        -
-            message: '#^Method CodeIgniter\\HTTP\\IncomingRequestTest\:\:createRequest\(\) has parameter \$body with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
 
         -
             message: '#^Method CodeIgniter\\Helpers\\URLHelper\\CurrentUrlTest\:\:createRequest\(\) has parameter \$body with no type specified\.$#'

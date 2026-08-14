@@ -1,4 +1,4 @@
-# total 1131 errors
+# total 1129 errors
 
 parameters:
     ignoreErrors:
@@ -4466,16 +4466,6 @@ parameters:
             message: '#^Method CodeIgniter\\Filters\\InvalidCharsTest\:\:provideCheckControlStringWithLineBreakAndTabReturnsTheString\(\) return type has no value type specified in iterable type iterable\.$#'
             count: 1
             path: ../../tests/system/Filters/InvalidCharsTest.php
-
-        -
-            message: '#^Method CodeIgniter\\HTTP\\IncomingRequestTest\:\:provideCanGrabGetRawInputVar\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
-
-        -
-            message: '#^Method CodeIgniter\\HTTP\\IncomingRequestTest\:\:provideIsHTTPMethods\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
 
         -
             message: '#^Method CodeIgniter\\HTTP\\MessageTest\:\:provideArrayHeaderValue\(\) return type has no value type specified in iterable type iterable\.$#'
