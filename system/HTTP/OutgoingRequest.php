@@ -30,7 +30,7 @@ class OutgoingRequest extends Message implements OutgoingRequestInterface
     /**
      * A URI instance.
      *
-     * @var URI|null
+     * @var URI
      */
     protected $uri;
 
@@ -41,7 +41,7 @@ class OutgoingRequest extends Message implements OutgoingRequestInterface
      */
     public function __construct(
         string $method,
-        ?URI $uri = null,
+        URI $uri,
         array $headers = [],
         $body = null,
         string $version = '1.1',
@@ -110,7 +110,7 @@ class OutgoingRequest extends Message implements OutgoingRequestInterface
     /**
      * Retrieves the URI instance.
      *
-     * @return URI|null
+     * @return URI
      */
     public function getUri()
     {

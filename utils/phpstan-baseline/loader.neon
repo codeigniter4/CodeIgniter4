@@ -8,7 +8,6 @@ includes:
     - deadCode.unreachable.neon
     - function.resultUnused.neon
     - method.childParameterType.neon
-    - method.childReturnType.neon
     - method.notFound.neon
     - missingType.callable.neon
     - missingType.iterableValue.neon

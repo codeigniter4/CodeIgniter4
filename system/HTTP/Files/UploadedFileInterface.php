@@ -62,7 +62,7 @@ interface UploadedFileInterface
      * @param string      $targetPath Path to which to move the uploaded file.
      * @param string|null $name       the name to rename the file to.
      *
-     * @return bool
+     * @return static
      *
      * @throws InvalidArgumentException if the $path specified is invalid.
      * @throws RuntimeException         on the second or subsequent call to the method.

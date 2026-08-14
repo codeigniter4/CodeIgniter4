@@ -78,11 +78,6 @@ parameters:
             path: ../../system/HTTP/Exceptions/RedirectException.php
 
         -
-            message: '#^PHPDoc type CodeIgniter\\HTTP\\URI of property CodeIgniter\\HTTP\\IncomingRequest\:\:\$uri is not the same as PHPDoc type CodeIgniter\\HTTP\\URI\|null of overridden property CodeIgniter\\HTTP\\OutgoingRequest\:\:\$uri\.$#'
-            count: 1
-            path: ../../system/HTTP/IncomingRequest.php
-
-        -
             message: '#^PHPDoc type string of property CodeIgniter\\Session\\Handlers\\FileHandler\:\:\$savePath is not the same as PHPDoc type array\<string, mixed\>\|string of overridden property CodeIgniter\\Session\\Handlers\\BaseHandler\:\:\$savePath\.$#'
             count: 1
             path: ../../system/Session/Handlers/FileHandler.php
