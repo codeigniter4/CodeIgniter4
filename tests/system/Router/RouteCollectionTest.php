@@ -56,7 +56,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $loader = service('locator');
 
-        if ($moduleConfig === null) {
+        if (! $moduleConfig instanceof Modules) {
             $moduleConfig          = new Modules();
             $moduleConfig->enabled = false;
         }
