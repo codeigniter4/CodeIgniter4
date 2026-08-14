@@ -1,4 +1,4 @@
-# total 64 errors
+# total 63 errors
 
 parameters:
     ignoreErrors:
@@ -121,11 +121,6 @@ parameters:
             message: '#^Parameter \#4 \$scheme of class CodeIgniter\\HTTP\\SiteURI constructor expects ''http''\|''https''\|null, '''' given\.$#'
             count: 1
             path: ../../tests/system/HTTP/SiteURITest.php
-
-        -
-            message: '#^Parameter \#2 \$value of function form_hidden expects array\|string, null given\.$#'
-            count: 1
-            path: ../../tests/system/Helpers/FormHelperTest.php
 
         -
             message: '#^Parameter \#1 \$num of function number_to_size expects int\|string, float given\.$#'

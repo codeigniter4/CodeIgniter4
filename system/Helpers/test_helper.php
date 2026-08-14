@@ -22,11 +22,11 @@ if (! function_exists('fake')) {
     /**
      * Creates a single item using Fabricator.
      *
-     * @param Model|object|string $model     Instance or name of the model
-     * @param array|null          $overrides Overriding data to pass to Fabricator::setOverrides()
-     * @param bool                $persist
+     * @param Model|object|string       $model     Instance or name of the model
+     * @param array<string, mixed>|null $overrides Overriding data to pass to Fabricator::setOverrides()
+     * @param bool                      $persist
      *
-     * @return array|object
+     * @return array<string, mixed>|object
      */
     function fake($model, ?array $overrides = null, $persist = true)
     {

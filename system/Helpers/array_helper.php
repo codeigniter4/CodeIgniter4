@@ -20,6 +20,8 @@ if (! function_exists('dot_array_search')) {
      * Searches an array through dot syntax. Supports
      * wildcard searches, like foo.*.bar
      *
+     * @param array<array-key, mixed> $array
+     *
      * @return mixed
      */
     function dot_array_search(string $index, array $array)
@@ -32,7 +34,8 @@ if (! function_exists('array_deep_search')) {
     /**
      * Returns the value of an element at a key in an array of uncertain depth.
      *
-     * @param int|string $key
+     * @param int|string              $key
+     * @param array<array-key, mixed> $array
      *
      * @return mixed
      */
@@ -78,9 +81,9 @@ if (! function_exists('array_sort_by_multiple_keys')) {
      * For information on multi-level array sorting, refer to Example #3 here:
      * https://www.php.net/manual/de/function.array-multisort.php
      *
-     * @param array $array       the reference of the array to be sorted
-     * @param array $sortColumns an associative array of columns to sort
-     *                           after and their sorting flags
+     * @param array<array-key, mixed> $array       The reference of the array to be sorted
+     * @param array<string, int>      $sortColumns An associative array of columns to sort
+     *                                             after and their sorting flags
      */
     function array_sort_by_multiple_keys(array &$array, array $sortColumns): bool
     {
@@ -129,10 +132,10 @@ if (! function_exists('array_flatten_with_dots')) {
     /**
      * Flatten a multidimensional array using dots as separators.
      *
-     * @param iterable $array The multi-dimensional array
-     * @param string   $id    Something to initially prepend to the flattened keys
+     * @param iterable<array-key, mixed> $array The multi-dimensional array
+     * @param string                     $id    Something to initially prepend to the flattened keys
      *
-     * @return array The flattened array
+     * @return array<string, mixed> The flattened array
      */
     function array_flatten_with_dots(iterable $array, string $id = ''): array
     {
@@ -156,11 +159,11 @@ if (! function_exists('array_group_by')) {
     /**
      * Groups all rows by their index values. Result's depth equals number of indexes
      *
-     * @param array $array        Data array (i.e. from query result)
-     * @param array $indexes      Indexes to group by. Dot syntax used. Returns $array if empty
-     * @param bool  $includeEmpty If true, null and '' are also added as valid keys to group
+     * @param array<array-key, mixed> $array        Data array (i.e. from query result)
+     * @param list<string>            $indexes      Indexes to group by. Dot syntax used. Returns $array if empty
+     * @param bool                    $includeEmpty If true, null and '' are also added as valid keys to group
      *
-     * @return array Result array where rows are grouped together by indexes values.
+     * @return array<array-key, mixed> Result array where rows are grouped together by indexes values.
      */
     function array_group_by(array $array, array $indexes, bool $includeEmpty = false): array
     {

@@ -134,6 +134,8 @@ if (! function_exists('format_number')) {
     /**
      * A general purpose, locale-aware, number_format method.
      * Used by all of the functions of the number_helper.
+     *
+     * @param array<string, float|int|string|null> $options
      */
     function format_number(float $num, int $precision = 1, ?string $locale = null, array $options = []): string
     {
