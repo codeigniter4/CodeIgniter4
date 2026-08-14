@@ -21,10 +21,10 @@ final class DotArrayFilter
     /**
      * Creates a new array with only the elements specified in dot array syntax.
      *
-     * @param array $indexes The dot array syntax pattern to use for filtering.
-     * @param array $array   The array to filter.
+     * @param list<string>            $indexes The dot array syntax pattern to use for filtering.
+     * @param array<array-key, mixed> $array   The array to filter.
      *
-     * @return array The filtered array.
+     * @return array<array-key, mixed> The filtered array.
      */
     public static function run(array $indexes, array $array): array
     {
@@ -47,10 +47,10 @@ final class DotArrayFilter
     /**
      * Used by `run()` to recursively filter the array with wildcards.
      *
-     * @param array $indexes The dot array syntax pattern to use for filtering.
-     * @param array $array   The array to filter.
+     * @param list<string>            $indexes The dot array syntax pattern to use for filtering.
+     * @param array<array-key, mixed> $array   The array to filter.
      *
-     * @return array The filtered array.
+     * @return array<array-key, mixed> The filtered array.
      */
     private static function filter(array $indexes, array $array): array
     {

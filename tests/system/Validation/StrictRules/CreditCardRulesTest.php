@@ -69,6 +69,8 @@ class CreditCardRulesTest extends CIUnitTestCase
      * Cards shown are test cards found around the web.
      *
      * @see https://www.paypalobjects.com/en_US/vhelp/paypalmanager_help/credit_card_numbers.htm
+     *
+     * @return iterable<string, array{string, string|null, bool}>
      */
     public static function provideValidCCNumber(): iterable
     {

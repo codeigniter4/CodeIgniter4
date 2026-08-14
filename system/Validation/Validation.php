@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\Validation;
 
 use Closure;
-use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
@@ -34,22 +33,20 @@ class Validation implements ValidationInterface
     /**
      * Files to load with validation functions.
      *
-     * @var array
+     * @var list<class-string>
      */
     protected $ruleSetFiles;
 
     /**
      * The loaded instances of our validation files.
      *
-     * @var array
+     * @var array<class-string, object>
      */
     protected $ruleSetInstances = [];
 
     /**
      * Stores the actual rules that should be run against $data.
-     *
-     * @var array<array-key, array{label?: string, rules: list<string>}>
-     *
+     * ```
      * [
      *     field1 => [
      *         'label' => label,
@@ -58,6 +55,9 @@ class Validation implements ValidationInterface
      *          ],
      *     ],
      * ]
+     * ```
+     *
+     * @var array<array-key, array{label?: string|null, rules: list<(Closure(mixed, array<array-key, mixed>=, string|null=, string|null=): (bool|string))|string>}>
      */
     protected $rules = [];
 
@@ -65,14 +65,14 @@ class Validation implements ValidationInterface
      * The data that should be validated,
      * where 'key' is the alias, with value.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $data = [];
 
     /**
      * The data that was actually validated.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $validated = [];
 
@@ -80,7 +80,7 @@ class Validation implements ValidationInterface
      * Any generated errors during validation.
      * 'key' is the alias, 'value' is the message.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $errors = [];
 
@@ -88,7 +88,7 @@ class Validation implements ValidationInterface
      * Stores custom error message to use
      * during validation. Where 'key' is the alias.
      *
-     * @var array
+     * @var array<string, array<string, string>>
      */
     protected $customErrors = [];
 
@@ -122,14 +122,6 @@ class Validation implements ValidationInterface
         $this->loadRuleSets();
     }
 
-    /**
-     * Runs the validation process, returning true/false determining whether
-     * validation was successful or not.
-     *
-     * @param array|null                                 $data    The array of data to validate.
-     * @param string|null                                $group   The predefined group of rules to apply.
-     * @param array|BaseConnection|non-empty-string|null $dbGroup The database group to use.
-     */
     public function run(?array $data = null, ?string $group = null, $dbGroup = null): bool
     {
         if ($data === null) {
@@ -164,10 +156,6 @@ class Validation implements ValidationInterface
             $field = (string) $field;
 
             $rules = $setup['rules'];
-
-            if (is_string($rules)) {
-                $rules = $this->splitRules($rules);
-            }
 
             if (str_contains($field, '*')) {
                 $flattenedArray = array_flatten_with_dots($data);
@@ -238,15 +226,6 @@ class Validation implements ValidationInterface
             . '\z/';
     }
 
-    /**
-     * Runs the validation process, returning true or false determining whether
-     * validation was successful or not.
-     *
-     * @param mixed        $value   The data to validate.
-     * @param array|string $rules   The validation rules.
-     * @param list<string> $errors  The custom error message.
-     * @param string|null  $dbGroup The database group to use.
-     */
     public function check($value, $rules, array $errors = [], $dbGroup = null): bool
     {
         $this->reset();
@@ -263,9 +242,6 @@ class Validation implements ValidationInterface
         );
     }
 
-    /**
-     * Returns the actual validated data.
-     */
     public function getValidated(): array
     {
         return $this->validated;
@@ -277,10 +253,10 @@ class Validation implements ValidationInterface
      * the error to $this->errors and moves on to the next,
      * so that we can collect all of the first errors.
      *
-     * @param array|string $value
-     * @param array        $rules
-     * @param array        $data          The array of data to validate, with `DBGroup`.
-     * @param string|null  $originalField The original asterisk field name like "foo.*.bar".
+     * @param array<array-key, mixed>|string                                                                     $value
+     * @param list<(Closure(mixed, array<array-key, mixed>=, string|null=, string|null=): (bool|string))|string> $rules
+     * @param array<array-key, mixed>                                                                            $data          The array of data to validate, with `DBGroup`.
+     * @param string|null                                                                                        $originalField The original asterisk field name like "foo.*.bar".
      */
     protected function processRules(
         string $field,
@@ -386,9 +362,10 @@ class Validation implements ValidationInterface
     }
 
     /**
-     * @param array $data The array of data to validate, with `DBGroup`.
+     * @param list<(Closure(mixed, array<array-key, mixed>=, string|null=, string|null=): (bool|string))|string> $rules
+     * @param array<array-key, mixed>                                                                            $data  The array of data to validate, with `DBGroup`.
      *
-     * @return array|true The modified rules or true if we return early
+     * @return list<(Closure(mixed, array<array-key, mixed>=, string|null=, string|null=): (bool|string))|string>|true The modified rules or true if we return early
      */
     private function processIfExist(string $field, array $rules, array $data)
     {
@@ -427,10 +404,11 @@ class Validation implements ValidationInterface
     }
 
     /**
-     * @param array|string $value
-     * @param array        $data  The array of data to validate, with `DBGroup`.
+     * @param array<array-key, mixed>|string                                                                     $value
+     * @param list<(Closure(mixed, array<array-key, mixed>=, string|null=, string|null=): (bool|string))|string> $rules
+     * @param array<array-key, mixed>                                                                            $data  The array of data to validate, with `DBGroup`.
      *
-     * @return array|true The modified rules or true if we return early
+     * @return list<(Closure(mixed, array<array-key, mixed>=, string|null=, string|null=): (bool|string))|string>|true The modified rules or true if we return early
      */
     private function processPermitEmpty($value, array $rules, array $data)
     {
@@ -474,7 +452,7 @@ class Validation implements ValidationInterface
     }
 
     /**
-     * @param Closure(bool|float|int|list<mixed>|object|string|null, bool|float|int|list<mixed>|object|string|null, string|null, string|null): (bool|string) $rule
+     * @param Closure(mixed, array<array-key, mixed>=, string|null=, string|null=): (bool|string) $rule
      */
     private function isClosure($rule): bool
     {
@@ -483,6 +461,8 @@ class Validation implements ValidationInterface
 
     /**
      * Is the array a string list `list<string>`?
+     *
+     * @param array<array-key, mixed> $array
      */
     private function isStringList(array $array): bool
     {
@@ -535,24 +515,6 @@ class Validation implements ValidationInterface
         return $this;
     }
 
-    /**
-     * Sets (or adds) an individual rule and custom error messages for a single
-     * field.
-     *
-     * The custom error message should be just the messages that apply to
-     * this field, like so:
-     *    [
-     *        'rule1' => 'message1',
-     *        'rule2' => 'message2',
-     *    ]
-     *
-     * @param array|string $rules  The validation rules.
-     * @param array        $errors The custom error message.
-     *
-     * @return $this
-     *
-     * @throws InvalidArgumentException
-     */
     public function setRule(string $field, ?string $label, $rules, array $errors = [])
     {
         if (! is_array($rules) && ! is_string($rules)) {
@@ -575,24 +537,6 @@ class Validation implements ValidationInterface
         return $this;
     }
 
-    /**
-     * Stores the rules that should be used to validate the items.
-     *
-     * Rules should be an array formatted like:
-     *    [
-     *        'field' => 'rule1|rule2'
-     *    ]
-     *
-     * The $errors array should be formatted like:
-     *    [
-     *        'field' => [
-     *            'rule1' => 'message1',
-     *            'rule2' => 'message2',
-     *        ],
-     *    ]
-     *
-     * @param array $errors An array of custom error messages
-     */
     public function setRules(array $rules, array $errors = []): ValidationInterface
     {
         $this->customErrors = $errors;
@@ -625,9 +569,6 @@ class Validation implements ValidationInterface
         return $this;
     }
 
-    /**
-     * Returns all of the rules currently defined.
-     */
     public function getRules(): array
     {
         return $this->rules;
@@ -736,20 +677,6 @@ class Validation implements ValidationInterface
         }
     }
 
-    /**
-     * Loads custom rule groups (if set) into the current rules.
-     *
-     * Rules can be pre-defined in Config\Validation and can
-     * be any name, but must all still be an array of the
-     * same format used with setRules(). Additionally, check
-     * for {group}_errors for an array of custom error messages.
-     *
-     * @param non-empty-string|null $group
-     *
-     * @return array<int, array> [rules, customErrors]
-     *
-     * @throws ValidationException
-     */
     public function loadRuleGroup(?string $group = null)
     {
         if ($group === null || $group === '') {
@@ -791,6 +718,11 @@ class Validation implements ValidationInterface
      * The value of {id} would be replaced with the actual id in the form data:
      *
      *  'is_unique[users,email,id,13]'
+     *
+     * @param array<array-key, array{label?: string|null, rules: list<(Closure(mixed, array<array-key, mixed>=, string|null=, string|null=): (bool|string))|string>}> $rules
+     * @param array<array-key, mixed>                                                                                                                                 $data
+     *
+     * @return array<array-key, array{label?: string|null, rules: list<(Closure(mixed, array<array-key, mixed>=, string|null=, string|null=): (bool|string))|string>}>
      */
     protected function fillPlaceholders(array $rules, array $data): array
     {
@@ -850,6 +782,10 @@ class Validation implements ValidationInterface
 
     /**
      * Retrieves valid placeholder fields.
+     *
+     * @param array<array-key, mixed> $data
+     *
+     * @return list<string>
      */
     private function retrievePlaceholders(string $rule, array $data): array
     {
@@ -957,6 +893,8 @@ class Validation implements ValidationInterface
 
     /**
      * Split rules string by pipe operator.
+     *
+     * @return list<string>
      */
     protected function splitRules(string $rules): array
     {

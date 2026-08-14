@@ -1,4 +1,4 @@
-# total 63 errors
+# total 62 errors
 
 parameters:
     ignoreErrors:
@@ -166,11 +166,6 @@ parameters:
             message: '#^Parameter \#1 \$body of method CodeIgniter\\HTTP\\Response\:\:setJSON\(\) expects array\|object\|string, true given\.$#'
             count: 1
             path: ../../tests/system/Test/TestResponseTest.php
-
-        -
-            message: '#^Parameter \#3 \$errors of method CodeIgniter\\Validation\\Validation\:\:check\(\) expects list\<string\>, array\{is_numeric\: ''Nope\. Not a number\.''\} given\.$#'
-            count: 1
-            path: ../../tests/system/Validation/ValidationTest.php
 
         -
             message: '#^Parameter \#2 \$context of method CodeIgniter\\View\\Parser\:\:setData\(\) expects ''attr''\|''css''\|''html''\|''js''\|''raw''\|''url''\|null, ''unknown'' given\.$#'
