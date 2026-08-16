@@ -27,6 +27,61 @@ Previously, returning a non-integer value from a command run through ``spark`` w
 Starting with v4.8.0, this behavior is still supported but will trigger a deprecation notice. Commands should now return an integer exit code
 to ensure proper behavior across all platforms.
 
+Uploaded File Move Return Type
+==============================
+
+``CodeIgniter\HTTP\Files\UploadedFileInterface::move()`` now returns ``static``
+instead of ``bool``, matching ``CodeIgniter\Files\File::move()`` which
+``UploadedFile`` extends.
+
+If you have a custom implementation of ``UploadedFileInterface``, or a class
+extending ``UploadedFile`` that overrides ``move()``, return the instance
+instead of ``true``:
+
+.. code-block:: php
+
+    // Before
+    public function move(string $targetPath, ?string $name = null, bool $overwrite = false)
+    {
+        // ...
+
+        return true;
+    }
+
+    // After
+    public function move(string $targetPath, ?string $name = null, bool $overwrite = false)
+    {
+        // ...
+
+        return $this;
+    }
+
+Calling code that only tests the result, such as ``if ($file->move($path))``,
+needs no change because the returned instance is truthy. Code comparing the
+result strictly against ``true`` must be updated.
+
+Outgoing Request Constructor
+============================
+
+``CodeIgniter\HTTP\OutgoingRequest::__construct()`` now requires the ``$uri``
+parameter, which was previously ``?URI $uri = null``. Consequently
+``OutgoingRequest::getUri()`` now returns ``URI`` instead of ``URI|null``.
+
+Passing ``null`` only worked when a ``Host`` header was supplied in the same
+call, because the constructor's host check short-circuits before dereferencing
+the URI. Such calls must now pass a ``URI``:
+
+.. code-block:: php
+
+    // Before
+    $request = new OutgoingRequest('GET', null, ['Host' => 'example.com']);
+
+    // After
+    $request = new OutgoingRequest('GET', new URI('http://example.com'), ['Host' => 'example.com']);
+
+Any other call that omitted ``$uri`` or passed ``null`` already failed with
+``Call to a member function getHost() on null``, so it needs no migration.
+
 *********************
 Breaking Enhancements
 *********************
