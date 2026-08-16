@@ -27,11 +27,9 @@ use Throwable;
 class RedirectException extends RuntimeException implements ExceptionInterface, ResponsableInterface, HTTPExceptionInterface
 {
     /**
-     * HTTP status code for redirects
-     *
-     * @var int
+     * Status code applied to a Response that arrives without a 3xx redirect status.
      */
-    protected $code = 302;
+    protected int $defaultStatusCode = 302;
 
     protected ?ResponseInterface $response = null;
 
@@ -61,7 +59,7 @@ class RedirectException extends RuntimeException implements ExceptionInterface, 
             }
 
             if ($this->response->getStatusCode() < 301 || $this->response->getStatusCode() > 308) {
-                $this->response->setStatusCode($this->code);
+                $this->response->setStatusCode($this->defaultStatusCode);
             }
         }
 

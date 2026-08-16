@@ -73,9 +73,9 @@ parameters:
             path: ../../system/Exceptions/PageNotFoundException.php
 
         -
-            message: '#^PHPDoc type int of property CodeIgniter\\HTTP\\Exceptions\\RedirectException\:\:\$code is not the same as PHPDoc type mixed of overridden property Exception\:\:\$code\.$#'
+            message: '#^PHPDoc type CodeIgniter\\HTTP\\URI of property CodeIgniter\\HTTP\\IncomingRequest\:\:\$uri is not the same as PHPDoc type CodeIgniter\\HTTP\\URI\|null of overridden property CodeIgniter\\HTTP\\OutgoingRequest\:\:\$uri\.$#'
             count: 1
-            path: ../../system/HTTP/Exceptions/RedirectException.php
+            path: ../../system/HTTP/IncomingRequest.php
 
         -
             message: '#^PHPDoc type string of property CodeIgniter\\Session\\Handlers\\FileHandler\:\:\$savePath is not the same as PHPDoc type array\<string, mixed\>\|string of overridden property CodeIgniter\\Session\\Handlers\\BaseHandler\:\:\$savePath\.$#'
