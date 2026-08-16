@@ -28,8 +28,8 @@ class Rules
     /**
      * The value does not match another field in $data.
      *
-     * @param string|null $str
-     * @param array       $data Other field/value pairs
+     * @param string|null             $str
+     * @param array<array-key, mixed> $data Other field/value pairs
      */
     public function differs($str, string $field, array $data): bool
     {
@@ -110,12 +110,14 @@ class Rules
      * Can ignore records by field/value to filter (currently
      * accept only one filter).
      *
-     * Example:
+     * ```
      *    is_not_unique[dbGroup.table.field,where_field,where_value]
      *    is_not_unique[table.field,where_field,where_value]
      *    is_not_unique[menu.id,active,1]
+     * ```
      *
-     * @param string|null $str
+     * @param string|null             $str
+     * @param array<array-key, mixed> $data
      */
     public function is_not_unique($str, string $field, array $data): bool
     {
@@ -158,7 +160,8 @@ class Rules
      *    is_unique[table.field,ignore_field,ignore_value]
      *    is_unique[users.email,id,5]
      *
-     * @param string|null $str
+     * @param string|null             $str
+     * @param array<array-key, mixed> $data
      */
     public function is_unique($str, string $field, array $data): bool
     {
@@ -178,9 +181,9 @@ class Rules
     /**
      * Prepares the database query for uniqueness checks.
      *
-     * @param mixed                $value The value to check.
-     * @param string               $field The field parameters.
-     * @param array<string, mixed> $data  Additional data.
+     * @param mixed                   $value The value to check.
+     * @param string                  $field The field parameters.
+     * @param array<array-key, mixed> $data  Additional data.
      *
      * @return array{0: BaseBuilder, 1: string|null, 2: string|null}
      */
@@ -247,8 +250,8 @@ class Rules
     /**
      * Matches the value of another field in $data.
      *
-     * @param string|null $str
-     * @param array       $data Other field/value pairs
+     * @param string|null             $str
+     * @param array<array-key, mixed> $data Other field/value pairs
      */
     public function matches($str, string $field, array $data): bool
     {
@@ -343,9 +346,9 @@ class Rules
      *
      *     required_with[password]
      *
-     * @param string|null $str
-     * @param string|null $fields List of fields that we should check if present
-     * @param array       $data   Complete list of fields from the form
+     * @param string|null             $str
+     * @param string|null             $fields List of fields that we should check if present
+     * @param array<array-key, mixed> $data   Complete list of fields from the form
      */
     public function required_with($str = null, ?string $fields = null, array $data = []): bool
     {
@@ -387,9 +390,10 @@ class Rules
      *
      *     required_without[id,email]
      *
-     * @param string|null $str
-     * @param string|null $otherFields The param fields of required_without[].
-     * @param string|null $field       This rule param fields aren't present, this field is required.
+     * @param string|null             $str
+     * @param string|null             $otherFields The param fields of required_without[].
+     * @param string|null             $field       This rule param fields aren't present, this field is required.
+     * @param array<array-key, mixed> $data
      */
     public function required_without(
         $str = null,
@@ -454,10 +458,10 @@ class Rules
     /**
      * The field exists in $data.
      *
-     * @param mixed       $value The field value.
-     * @param string|null $param The rule's parameter.
-     * @param array       $data  The data to be validated.
-     * @param string|null $field The field name.
+     * @param mixed                   $value The field value.
+     * @param string|null             $param The rule's parameter.
+     * @param array<array-key, mixed> $data  The data to be validated.
+     * @param string|null             $field The field name.
      */
     public function field_exists(
         $value = null,
