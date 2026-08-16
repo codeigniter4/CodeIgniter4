@@ -25,11 +25,11 @@ if (! function_exists('site_url')) {
     /**
      * Returns a site URL as defined by the App config.
      *
-     * @param array|string $relativePath URI string or array of URI segments.
-     * @param string|null  $scheme       URI scheme. E.g., http, ftp. If empty
-     *                                   string '' is set, a protocol-relative
-     *                                   link is returned.
-     * @param App|null     $config       Alternate configuration to use.
+     * @param list<string>|string $relativePath URI string or array of URI segments.
+     * @param string|null         $scheme       URI scheme. E.g., http, ftp. If empty
+     *                                          string '' is set, a protocol-relative
+     *                                          link is returned.
+     * @param App|null            $config       Alternate configuration to use.
      */
     function site_url($relativePath = '', ?string $scheme = null, ?App $config = null): string
     {
@@ -46,10 +46,10 @@ if (! function_exists('base_url')) {
      * Returns the base URL as defined by the App config.
      * Base URLs are trimmed site URLs without the index page.
      *
-     * @param array|string $relativePath URI string or array of URI segments.
-     * @param string|null  $scheme       URI scheme. E.g., http, ftp. If empty
-     *                                   string '' is set, a protocol-relative
-     *                                   link is returned.
+     * @param list<string>|string $relativePath URI string or array of URI segments.
+     * @param string|null         $scheme       URI scheme. E.g., http, ftp. If empty
+     *                                          string '' is set, a protocol-relative
+     *                                          link is returned.
      */
     function base_url($relativePath = '', ?string $scheme = null): string
     {
@@ -146,10 +146,10 @@ if (! function_exists('anchor')) {
      *
      * Creates an anchor based on the local URL.
      *
-     * @param array|string        $uri        URI string or array of URI segments
-     * @param string              $title      The link title
-     * @param array|object|string $attributes Any attributes
-     * @param App|null            $altConfig  Alternate configuration to use
+     * @param list<string>|string                      $uri        URI string or array of URI segments
+     * @param string                                   $title      The link title
+     * @param array<string, scalar|null>|object|string $attributes Any attributes
+     * @param App|null                                 $altConfig  Alternate configuration to use
      */
     function anchor($uri = '', string $title = '', $attributes = '', ?App $altConfig = null): string
     {
@@ -179,10 +179,10 @@ if (! function_exists('anchor_popup')) {
      * Creates an anchor based on the local URL. The link
      * opens a new window based on the attributes specified.
      *
-     * @param string                    $uri        the URL
-     * @param string                    $title      the link title
-     * @param array|false|object|string $attributes any attributes
-     * @param App|null                  $altConfig  Alternate configuration to use
+     * @param string                                         $uri        the URL
+     * @param string                                         $title      the link title
+     * @param array<string, scalar|null>|false|object|string $attributes any attributes
+     * @param App|null                                       $altConfig  Alternate configuration to use
      */
     function anchor_popup($uri = '', string $title = '', $attributes = false, ?App $altConfig = null): string
     {
@@ -231,9 +231,9 @@ if (! function_exists('mailto')) {
     /**
      * Mailto Link
      *
-     * @param string              $email      the email address
-     * @param string              $title      the link title
-     * @param array|object|string $attributes any attributes
+     * @param string                                   $email      the email address
+     * @param string                                   $title      the link title
+     * @param array<string, scalar|null>|object|string $attributes any attributes
      */
     function mailto(string $email, string $title = '', $attributes = ''): string
     {
@@ -251,9 +251,9 @@ if (! function_exists('safe_mailto')) {
      *
      * Create a spam-protected mailto link written in Javascript
      *
-     * @param string              $email      the email address
-     * @param string              $title      the link title
-     * @param array|object|string $attributes any attributes
+     * @param string                                   $email      the email address
+     * @param string                                   $title      the link title
+     * @param array<string, scalar|null>|object|string $attributes any attributes
      */
     function safe_mailto(string $email, string $title = '', $attributes = ''): string
     {

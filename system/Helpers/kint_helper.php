@@ -18,7 +18,7 @@ if (! function_exists('dd')) {
         /**
          * Prints a Kint debug report and exits.
          *
-         * @param array $vars
+         * @param mixed ...$vars
          *
          * @return never
          *
@@ -38,7 +38,7 @@ if (! function_exists('dd')) {
         /**
          * dd function
          *
-         * @param array $vars
+         * @param mixed ...$vars
          *
          * @return int
          */
@@ -54,7 +54,7 @@ if (! function_exists('d') && ! class_exists(Kint::class)) {
     /**
      * d function
      *
-     * @param array $vars
+     * @param mixed ...$vars
      *
      * @return int
      */

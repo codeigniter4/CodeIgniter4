@@ -33,7 +33,8 @@ final class ArrayHelper
      *
      * @used-by dot_array_search()
      *
-     * @param string $index The index as dot array syntax.
+     * @param string                  $index The index as dot array syntax.
+     * @param array<array-key, mixed> $array
      *
      * @return mixed
      */
@@ -67,6 +68,9 @@ final class ArrayHelper
      * Recursively search the array with wildcards.
      *
      * @used-by dotSearch()
+     *
+     * @param list<string>            $indexes
+     * @param array<array-key, mixed> $array
      *
      * @return mixed
      */
@@ -125,6 +129,8 @@ final class ArrayHelper
      * array_key_exists() with dot array syntax.
      *
      * If wildcard `*` is used, all items for the key after it must have the key.
+     *
+     * @param array<array-key, mixed> $array
      */
     public static function dotKeyExists(string $index, array $array): bool
     {
@@ -179,11 +185,11 @@ final class ArrayHelper
      *
      * @used-by array_group_by()
      *
-     * @param array $array        Data array (i.e. from query result)
-     * @param array $indexes      Indexes to group by. Dot syntax used. Returns $array if empty
-     * @param bool  $includeEmpty If true, null and '' are also added as valid keys to group
+     * @param array<array-key, mixed> $array        Data array (i.e. from query result)
+     * @param list<string>            $indexes      Indexes to group by. Dot syntax used. Returns $array if empty
+     * @param bool                    $includeEmpty If true, null and '' are also added as valid keys to group
      *
-     * @return array Result array where rows are grouped together by indexes values.
+     * @return array<array-key, mixed> Result array where rows are grouped together by indexes values.
      */
     public static function groupBy(array $array, array $indexes, bool $includeEmpty = false): array
     {
@@ -205,6 +211,12 @@ final class ArrayHelper
      * `dot_array_search()`.
      *
      * @used-by groupBy()
+     *
+     * @param array<array-key, mixed> $result
+     * @param array<array-key, mixed> $row
+     * @param list<string>            $indexes
+     *
+     * @return array<array-key, mixed>
      */
     private static function arrayAttachIndexedValue(
         array $result,
@@ -244,6 +256,11 @@ final class ArrayHelper
     /**
      * Compare recursively two associative arrays and return difference as new array.
      * Returns keys that exist in `$original` but not in `$compareWith`.
+     *
+     * @param array<array-key, mixed> $original
+     * @param array<array-key, mixed> $compareWith
+     *
+     * @return array<array-key, mixed>
      */
     public static function recursiveDiff(array $original, array $compareWith): array
     {
@@ -284,6 +301,8 @@ final class ArrayHelper
 
     /**
      * Recursively count all keys.
+     *
+     * @param array<array-key, mixed> $array
      */
     public static function recursiveCount(array $array, int $counter = 0): int
     {
