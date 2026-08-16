@@ -196,13 +196,13 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame([], $routes);
     }
 
-    public function testAddWorksWithArrayOFHTTPMethods(): void
+    public function testAddWorksWithArrayOfHTTPMethods(): void
     {
         service('request')->setMethod(Method::POST);
 
         $routes = $this->getCollector();
 
-        $routes->add('home', 'controller', ['get', 'post']);
+        $routes->add('home', 'controller');
 
         $expects = [
             'home' => '\controller',

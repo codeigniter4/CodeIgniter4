@@ -55,14 +55,6 @@ final class AutoRouter implements AutoRouterInterface
     ) {
     }
 
-    /**
-     * Attempts to match a URI path against Controllers and directories
-     * found in APPPATH/Controllers, to find a matching route.
-     *
-     * @param string $httpVerb HTTP verb like `GET`,`POST`
-     *
-     * @return array [directory_name, controller_name, controller_method, params]
-     */
     public function getRoute(string $uri, string $httpVerb): array
     {
         $segments = explode('/', $uri);
@@ -95,7 +87,7 @@ final class AutoRouter implements AutoRouterInterface
             throw PageNotFoundException::forPageNotFound();
         }
 
-        /** @var array $params An array of params to the controller method. */
+        /** @var list<string> $params An array of params to the controller method. */
         $params = [];
 
         if ($segments !== []) {
@@ -177,11 +169,12 @@ final class AutoRouter implements AutoRouterInterface
     }
 
     /**
-     * Scans the controller directory, attempting to locate a controller matching the supplied uri $segments
+     * Scans the controller directory, attempting to locate a controller matching the supplied uri `$segments`.
+     * Returns an array of remaining uri segments that don't map onto a directory.
      *
-     * @param array $segments URI segments
+     * @param list<string> $segments URI segments
      *
-     * @return array returns an array of remaining uri segments that don't map onto a directory
+     * @return list<string>
      */
     private function scanControllers(array $segments): array
     {

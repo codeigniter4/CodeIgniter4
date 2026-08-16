@@ -42,6 +42,11 @@ use CodeIgniter\HTTP\ResponseInterface;
 #[Attribute(Attribute::TARGET_CLASS | Attribute::TARGET_METHOD | Attribute::IS_REPEATABLE)]
 class Restrict implements RouteAttributeInterface
 {
+    /**
+     * @param list<string>|string|null $environment
+     * @param list<string>|string|null $hostname
+     * @param list<string>|string|null $subdomain
+     */
     public function __construct(
         public array|string|null $environment = null,
         public array|string|null $hostname = null,
