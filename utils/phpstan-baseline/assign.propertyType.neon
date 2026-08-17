@@ -1,4 +1,4 @@
-# total 26 errors
+# total 24 errors
 
 parameters:
     ignoreErrors:
@@ -21,11 +21,6 @@ parameters:
             message: '#^Property CodeIgniter\\Database\\Live\\SQLite3\\AlterTableTest\:\:\$forge \(CodeIgniter\\Database\\SQLite3\\Forge\) does not accept CodeIgniter\\Database\\Forge\.$#'
             count: 1
             path: ../../tests/system/Database/Live/SQLite3/AlterTableTest.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\Live\\SQLite3\\GetIndexDataTest\:\:\$db \(CodeIgniter\\Database\\SQLite3\\Connection\) does not accept CodeIgniter\\Database\\BaseConnection\.$#'
-            count: 2
-            path: ../../tests/system/Database/Live/SQLite3/GetIndexDataTest.php
 
         -
             message: '#^Property CodeIgniter\\Database\\Live\\SQLite3\\GetIndexDataTest\:\:\$forge \(CodeIgniter\\Database\\SQLite3\\Forge\) does not accept CodeIgniter\\Database\\Forge\.$#'

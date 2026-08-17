@@ -3,11 +3,11 @@
 parameters:
     ignoreErrors:
         -
-            message: '#^Return type \(CodeIgniter\\HTTP\\URI\|null\) of method CodeIgniter\\HTTP\\OutgoingRequest\:\:getUri\(\) should be covariant with return type \(CodeIgniter\\HTTP\\URI\) of method CodeIgniter\\HTTP\\OutgoingRequestInterface\:\:getUri\(\)$#'
-            count: 1
-            path: ../../system/HTTP/OutgoingRequest.php
-
-        -
             message: '#^Return type \(bool\) of method CodeIgniter\\HTTP\\Files\\UploadedFile\:\:move\(\) should be compatible with return type \(CodeIgniter\\Files\\File\) of method CodeIgniter\\Files\\File\:\:move\(\)$#'
             count: 1
             path: ../../system/HTTP/Files/UploadedFile.php
+
+        -
+            message: '#^Return type \(CodeIgniter\\HTTP\\URI\|null\) of method CodeIgniter\\HTTP\\OutgoingRequest\:\:getUri\(\) should be covariant with return type \(CodeIgniter\\HTTP\\URI\) of method CodeIgniter\\HTTP\\OutgoingRequestInterface\:\:getUri\(\)$#'
+            count: 1
+            path: ../../system/HTTP/OutgoingRequest.php
