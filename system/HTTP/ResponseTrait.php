@@ -169,7 +169,7 @@ trait ResponseTrait
     /**
      * Converts the $body into JSON and sets the Content Type header.
      *
-     * @param array|object|string $body
+     * @param array<array-key, mixed>|object|string $body
      *
      * @return $this
      */
@@ -201,7 +201,7 @@ trait ResponseTrait
     /**
      * Converts $body into XML, and sets the correct Content-Type.
      *
-     * @param array|string $body
+     * @param array<array-key, mixed>|string $body
      *
      * @return $this
      */
@@ -234,8 +234,8 @@ trait ResponseTrait
      * Handles conversion of the data into the appropriate format,
      * and sets the correct Content-Type header for our response.
      *
-     * @param array|object|string $body
-     * @param string              $format Valid: json, xml
+     * @param array<array-key, mixed>|object|string $body
+     * @param string                                $format Valid: json, xml
      *
      * @return false|string
      *
@@ -495,15 +495,16 @@ trait ResponseTrait
      * Accepts an arbitrary number of binds (up to 7) or an associative
      * array in the first parameter containing all the values.
      *
-     * @param array|Cookie|string $name     Cookie name / array containing binds / Cookie object
-     * @param string              $value    Cookie value
-     * @param int                 $expire   Cookie expiration time in seconds
-     * @param string              $domain   Cookie domain (e.g.: '.yourdomain.com')
-     * @param string              $path     Cookie path (default: '/')
-     * @param string              $prefix   Cookie name prefix ('': the default prefix)
-     * @param bool|null           $secure   Whether to only transfer cookies via SSL
-     * @param bool|null           $httponly Whether only make the cookie accessible via HTTP (no javascript)
-     * @param string|null         $samesite
+     * @param array|Cookie|string                $name     Cookie name / array containing binds / Cookie object
+     * @param string                             $value    Cookie value
+     * @param int|string                         $expire   Cookie expiration time in seconds
+     * @param string                             $domain   Cookie domain (e.g.: '.yourdomain.com')
+     * @param string                             $path     Cookie path (default: '/')
+     * @param string                             $prefix   Cookie name prefix ('': the default prefix)
+     * @param bool|null                          $secure   Whether to only transfer cookies via SSL
+     * @param bool|null                          $httponly Whether only make the cookie accessible via HTTP (no javascript)
+     * @param string|null                        $samesite
+     * @param array<string, mixed>|Cookie|string $name
      *
      * @return $this
      */
@@ -700,6 +701,8 @@ trait ResponseTrait
      * Extracted call to `setrawcookie()` in order to run unit tests on it.
      *
      * @codeCoverageIgnore
+     *
+     * @param array<array-key, mixed> $options
      */
     private function doSetRawCookie(string $name, string $value, array $options): void
     {
@@ -710,6 +713,8 @@ trait ResponseTrait
      * Extracted call to `setcookie()` in order to run unit tests on it.
      *
      * @codeCoverageIgnore
+     *
+     * @param array<array-key, mixed> $options
      */
     private function doSetCookie(string $name, string $value, array $options): void
     {

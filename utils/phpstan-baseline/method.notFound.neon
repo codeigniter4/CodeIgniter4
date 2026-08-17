@@ -1,4 +1,4 @@
-# total 33 errors
+# total 32 errors
 
 parameters:
     ignoreErrors:
@@ -43,11 +43,6 @@ parameters:
             path: ../../tests/system/Debug/ExceptionHandlerTest.php
 
         -
-            message: '#^Call to an undefined method CodeIgniter\\HTTP\\URI\:\:getRoutePath\(\)\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/URITest.php
-
-        -
             message: '#^Call to an undefined method org\\bovigo\\vfs\\visitor\\vfsStreamVisitor\:\:getStructure\(\)\.$#'
             count: 2
             path: ../../tests/system/Helpers/FilesystemHelperTest.php
@@ -78,11 +73,6 @@ parameters:
             path: ../../tests/system/RESTful/ResourceControllerTest.php
 
         -
-            message: '#^Call to an undefined method CodeIgniter\\Test\\TestResponse\:\:ohno\(\)\.$#'
-            count: 1
-            path: ../../tests/system/Test/ControllerTestTraitTest.php
-
-        -
             message: '#^Call to an undefined method CodeIgniter\\View\\Table\:\:compileTemplate\(\)\.$#'
             count: 2
             path: ../../tests/system/View/TableTest.php
@@ -106,3 +96,8 @@ parameters:
             message: '#^Call to an undefined method CodeIgniter\\View\\Table\:\:setFromDBResult\(\)\.$#'
             count: 1
             path: ../../tests/system/View/TableTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\Test\\TestResponse\:\:ohno\(\)\.$#'
+            count: 1
+            path: ../../tests/system/Test/ControllerTestTraitTest.php

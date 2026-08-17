@@ -1,4 +1,4 @@
-# total 38 errors
+# total 36 errors
 
 parameters:
     ignoreErrors:
@@ -123,21 +123,6 @@ parameters:
             path: ../../system/Exceptions/PageNotFoundException.php
 
         -
-            message: '#^PHPDoc type int of property CodeIgniter\\HTTP\\Exceptions\\RedirectException\:\:\$code is not the same as PHPDoc type mixed of overridden property Exception\:\:\$code\.$#'
-            count: 1
-            path: ../../system/HTTP/Exceptions/RedirectException.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\HTTP\\Files\\UploadedFile\:\:\$originalMimeType is not the same as PHPDoc type string\|null of overridden property CodeIgniter\\Files\\File\:\:\$originalMimeType\.$#'
-            count: 1
-            path: ../../system/HTTP/Files/UploadedFile.php
-
-        -
-            message: '#^PHPDoc type CodeIgniter\\HTTP\\URI of property CodeIgniter\\HTTP\\IncomingRequest\:\:\$uri is not the same as PHPDoc type CodeIgniter\\HTTP\\URI\|null of overridden property CodeIgniter\\HTTP\\OutgoingRequest\:\:\$uri\.$#'
-            count: 1
-            path: ../../system/HTTP/IncomingRequest.php
-
-        -
             message: '#^PHPDoc type string of property CodeIgniter\\Session\\Handlers\\FileHandler\:\:\$savePath is not the same as PHPDoc type array\<string, mixed\>\|string of overridden property CodeIgniter\\Session\\Handlers\\BaseHandler\:\:\$savePath\.$#'
             count: 1
             path: ../../system/Session/Handlers/FileHandler.php
@@ -173,11 +158,6 @@ parameters:
             path: ../../tests/system/Database/Live/SQLite3/GetIndexDataTest.php
 
         -
-            message: '#^PHPDoc type CodeIgniter\\Router\\RouteCollection of property CodeIgniter\\HTTP\\RedirectResponseTest\:\:\$routes is not the same as PHPDoc type CodeIgniter\\Router\\RouteCollection\|null of overridden property CodeIgniter\\Test\\CIUnitTestCase\:\:\$routes\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/RedirectResponseTest.php
-
-        -
             message: '#^PHPDoc type Tests\\Support\\Models\\EventModel of property CodeIgniter\\Models\\EventsModelTest\:\:\$model is not the same as PHPDoc type CodeIgniter\\Model of overridden property CodeIgniter\\Models\\LiveModelTestCase\:\:\$model\.$#'
             count: 1
             path: ../../tests/system/Models/EventsModelTest.php
@@ -191,3 +171,13 @@ parameters:
             message: '#^PHPDoc type CodeIgniter\\Router\\RouteCollection of property CodeIgniter\\RESTful\\ResourcePresenterTest\:\:\$routes is not the same as PHPDoc type CodeIgniter\\Router\\RouteCollection\|null of overridden property CodeIgniter\\Test\\CIUnitTestCase\:\:\$routes\.$#'
             count: 1
             path: ../../tests/system/RESTful/ResourcePresenterTest.php
+
+        -
+            message: '#^PHPDoc type CodeIgniter\\HTTP\\URI of property CodeIgniter\\HTTP\\IncomingRequest\:\:\$uri is not the same as PHPDoc type CodeIgniter\\HTTP\\URI\|null of overridden property CodeIgniter\\HTTP\\OutgoingRequest\:\:\$uri\.$#'
+            count: 1
+            path: ../../system/HTTP/IncomingRequest.php
+
+        -
+            message: '#^PHPDoc type int of property CodeIgniter\\HTTP\\Exceptions\\RedirectException\:\:\$code is not the same as PHPDoc type mixed of overridden property Exception\:\:\$code\.$#'
+            count: 1
+            path: ../../system/HTTP/Exceptions/RedirectException.php

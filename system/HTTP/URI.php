@@ -917,9 +917,10 @@ class URI implements Stringable
      * A convenience method to pass an array of items in as the Query
      * portion of the URI.
      *
-     * @return URI
-     *
      * @TODO: PSR-7: Should be `withQueryParams(array $query)`
+     * @param array<string, mixed> $query
+     *
+     * @return URI
      */
     public function setQueryArray(array $query)
     {

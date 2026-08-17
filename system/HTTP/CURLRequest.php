@@ -51,14 +51,14 @@ class CURLRequest extends OutgoingRequest
     /**
      * The setting values
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $config;
 
     /**
      * The default setting values
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $defaultConfig = [
         'timeout'         => 0.0,
@@ -71,7 +71,7 @@ class CURLRequest extends OutgoingRequest
      * Default values for when 'allow_redirects'
      * option is true.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $redirectDefaults = [
         'max'       => 5,
@@ -92,6 +92,8 @@ class CURLRequest extends OutgoingRequest
 
     /**
      * The default options from the constructor. Applied to all requests.
+     *
+     * @var array<string, mixed>
      */
     private readonly array $defaultOptions;
 
@@ -156,7 +158,8 @@ class CURLRequest extends OutgoingRequest
      * Sends an HTTP request to the specified $url. If this is a relative
      * URL, it will be merged with $this->baseURI to form a complete URL.
      *
-     * @param string $method HTTP method
+     * @param string               $method  HTTP method
+     * @param array<string, mixed> $options
      */
     public function request($method, string $url, array $options = []): ResponseInterface
     {
@@ -200,6 +203,8 @@ class CURLRequest extends OutgoingRequest
 
     /**
      * Convenience method for sending a GET request.
+     *
+     * @param array<string, mixed> $options
      */
     public function get(string $url, array $options = []): ResponseInterface
     {
@@ -208,6 +213,8 @@ class CURLRequest extends OutgoingRequest
 
     /**
      * Convenience method for sending a DELETE request.
+     *
+     * @param array<string, mixed> $options
      */
     public function delete(string $url, array $options = []): ResponseInterface
     {
@@ -216,6 +223,8 @@ class CURLRequest extends OutgoingRequest
 
     /**
      * Convenience method for sending a HEAD request.
+     *
+     * @param array<string, mixed> $options
      */
     public function head(string $url, array $options = []): ResponseInterface
     {
@@ -224,6 +233,8 @@ class CURLRequest extends OutgoingRequest
 
     /**
      * Convenience method for sending an OPTIONS request.
+     *
+     * @param array<string, mixed> $options
      */
     public function options(string $url, array $options = []): ResponseInterface
     {
@@ -232,6 +243,8 @@ class CURLRequest extends OutgoingRequest
 
     /**
      * Convenience method for sending a PATCH request.
+     *
+     * @param array<string, mixed> $options
      */
     public function patch(string $url, array $options = []): ResponseInterface
     {
@@ -240,6 +253,8 @@ class CURLRequest extends OutgoingRequest
 
     /**
      * Convenience method for sending a POST request.
+     *
+     * @param array<string, mixed> $options
      */
     public function post(string $url, array $options = []): ResponseInterface
     {
@@ -248,6 +263,8 @@ class CURLRequest extends OutgoingRequest
 
     /**
      * Convenience method for sending a PUT request.
+     *
+     * @param array<string, mixed> $options
      */
     public function put(string $url, array $options = []): ResponseInterface
     {
@@ -271,7 +288,8 @@ class CURLRequest extends OutgoingRequest
     /**
      * Set form data to be sent.
      *
-     * @param bool $multipart Set TRUE if you are sending CURLFiles
+     * @param bool                 $multipart Set TRUE if you are sending CURLFiles
+     * @param array<string, mixed> $params
      *
      * @return $this
      */
@@ -303,6 +321,8 @@ class CURLRequest extends OutgoingRequest
     /**
      * Sets the correct settings based on the options array
      * passed in.
+     *
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -430,6 +450,10 @@ class CURLRequest extends OutgoingRequest
 
     /**
      * Adds $this->headers to the cURL request.
+     *
+     * @param array<int, mixed> $curlOptions
+     *
+     * @return array<int, mixed>
      */
     protected function applyRequestHeaders(array $curlOptions = []): array
     {
@@ -450,6 +474,10 @@ class CURLRequest extends OutgoingRequest
 
     /**
      * Apply method
+     *
+     * @param array<int, mixed> $curlOptions
+     *
+     * @return array<int, mixed>
      */
     protected function applyMethod(string $method, array $curlOptions): array
     {
@@ -477,6 +505,10 @@ class CURLRequest extends OutgoingRequest
 
     /**
      * Apply body
+     *
+     * @param array<int, mixed> $curlOptions
+     *
+     * @return array<int, mixed>
      */
     protected function applyBody(array $curlOptions = []): array
     {
@@ -490,6 +522,8 @@ class CURLRequest extends OutgoingRequest
     /**
      * Parses the header retrieved from the cURL response into
      * our Response object.
+     *
+     * @param list<string> $headers
      *
      * @return void
      */
@@ -522,7 +556,10 @@ class CURLRequest extends OutgoingRequest
     /**
      * Set CURL options
      *
-     * @return array
+     * @param array<int, mixed>    $curlOptions
+     * @param array<string, mixed> $config
+     *
+     * @return array<int, mixed>
      *
      * @throws InvalidArgumentException
      */

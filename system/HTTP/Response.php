@@ -39,7 +39,7 @@ class Response extends Message implements ResponseInterface
     /**
      * HTTP status codes
      *
-     * @var array
+     * @var array<int, string>
      */
     protected static $statusCodes = [
         // 1xx: Informational
