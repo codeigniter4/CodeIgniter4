@@ -30,7 +30,7 @@ class File extends SplFileInfo
     /**
      * The files size in bytes
      *
-     * @var int
+     * @var false|int|null
      */
     protected $size;
 
@@ -65,7 +65,7 @@ class File extends SplFileInfo
      */
     public function getSize(): false|int
     {
-        return $this->size ?? ($this->size = parent::getSize());
+        return $this->size ??= parent::getSize();
     }
 
     /**

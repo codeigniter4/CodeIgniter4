@@ -28,6 +28,8 @@ use TypeError;
  * Provides the core Query Builder methods.
  * Database-specific Builders might need to override
  * certain methods to make them work.
+ *
+ * @template TDb of BaseConnection
  */
 class BaseBuilder
 {
@@ -205,7 +207,7 @@ class BaseBuilder
     /**
      * A reference to the database connection.
      *
-     * @var BaseConnection
+     * @var TDb
      */
     protected $db;
 
@@ -332,7 +334,7 @@ class BaseBuilder
             throw new DatabaseException('A table must be specified when creating a new Query Builder.');
         }
 
-        /** @var BaseConnection $db */
+        /** @var TDb $db */
         $this->db = $db;
 
         if ($tableName instanceof TableName) {

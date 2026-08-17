@@ -263,11 +263,11 @@ class CLIRequest extends Request
     /**
      * Fetch an item from GET data.
      *
-     * @param array|string|null $index  Index for item to fetch from $_GET.
-     * @param int|null          $filter A filter name to apply.
-     * @param array|int|null    $flags
+     * @param list<string>|string|null      $index  Index for item to fetch from $_GET.
+     * @param int|null                      $filter A filter name to apply.
+     * @param array<string, mixed>|int|null $flags
      *
-     * @return array|null
+     * @return array{}|null
      */
     public function getGet($index = null, $filter = null, $flags = null)
     {
@@ -277,11 +277,11 @@ class CLIRequest extends Request
     /**
      * Fetch an item from POST.
      *
-     * @param array|string|null $index  Index for item to fetch from $_POST.
-     * @param int|null          $filter A filter name to apply
-     * @param array|int|null    $flags
+     * @param list<string>|string|null      $index  Index for item to fetch from $_POST.
+     * @param int|null                      $filter A filter name to apply
+     * @param array<string, mixed>|int|null $flags
      *
-     * @return array|null
+     * @return array{}|null
      */
     public function getPost($index = null, $filter = null, $flags = null)
     {
@@ -291,11 +291,11 @@ class CLIRequest extends Request
     /**
      * Fetch an item from POST data with fallback to GET.
      *
-     * @param array|string|null $index  Index for item to fetch from $_POST or $_GET
-     * @param int|null          $filter A filter name to apply
-     * @param array|int|null    $flags
+     * @param list<string>|string|null      $index  Index for item to fetch from $_POST or $_GET
+     * @param int|null                      $filter A filter name to apply
+     * @param array<string, mixed>|int|null $flags
      *
-     * @return array|null
+     * @return array{}|null
      */
     public function getPostGet($index = null, $filter = null, $flags = null)
     {
@@ -305,11 +305,11 @@ class CLIRequest extends Request
     /**
      * Fetch an item from GET data with fallback to POST.
      *
-     * @param array|string|null $index  Index for item to be fetched from $_GET or $_POST
-     * @param int|null          $filter A filter name to apply
-     * @param array|int|null    $flags
+     * @param list<string>|string|null      $index  Index for item to be fetched from $_GET or $_POST
+     * @param int|null                      $filter A filter name to apply
+     * @param array<string, mixed>|int|null $flags
      *
-     * @return array|null
+     * @return array{}|null
      */
     public function getGetPost($index = null, $filter = null, $flags = null)
     {
@@ -319,11 +319,11 @@ class CLIRequest extends Request
     /**
      * This is a place holder for calls from cookie_helper get_cookie().
      *
-     * @param array|string|null $index  Index for item to be fetched from $_COOKIE
-     * @param int|null          $filter A filter name to be applied
-     * @param mixed             $flags
+     * @param list<string>|string|null $index  Index for item to be fetched from $_COOKIE
+     * @param int|null                 $filter A filter name to be applied
+     * @param mixed                    $flags
      *
-     * @return array|null
+     * @return array{}|null
      */
     public function getCookie($index = null, $filter = null, $flags = null)
     {
@@ -331,9 +331,9 @@ class CLIRequest extends Request
     }
 
     /**
-     * @param array|string|null $index
+     * @param list<string>|string|null $index
      *
-     * @return array|null
+     * @return array{}|null
      */
     private function returnNullOrEmptyArray($index)
     {

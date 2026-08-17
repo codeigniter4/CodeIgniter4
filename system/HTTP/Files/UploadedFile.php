@@ -56,17 +56,10 @@ class UploadedFile extends File implements UploadedFileInterface
     protected $name;
 
     /**
-     * The type of file as provided by PHP
-     *
-     * @var string
-     */
-    protected $originalMimeType;
-
-    /**
      * The error constant of the upload
      * (one of PHP's UPLOADERRXXX constants)
      *
-     * @var int
+     * @var int|null
      */
     protected $error;
 

@@ -19,9 +19,11 @@ namespace CodeIgniter\Router;
 interface AutoRouterInterface
 {
     /**
-     * Returns controller, method and params from the URI.
+     * Returns the directory name, controller name, controller method, and any parameters for the given URI and HTTP verb.
      *
-     * @return array [directory_name, controller_name, controller_method, params]
+     * @param string $httpVerb HTTP verb like `GET`,`POST`
+     *
+     * @return array{string|null, string, string, list<string>}
      */
     public function getRoute(string $uri, string $httpVerb): array;
 }

@@ -28,12 +28,15 @@ interface RouteCollectionInterface
     /**
      * Adds a single route to the collection.
      *
+     * Example:
+     *      $routes->add('news', 'Posts::index');
+     *
      * Route handler closure parameters are resolved dynamically via reflection,
      * so their callable signatures cannot be expressed precisely in PHPDoc.
      *
-     * @param string               $from    The route path (with placeholders or regex)
-     * @param array|Closure|string $to      The route handler
-     * @param array|null           $options The route options
+     * @param string                                 $from    The route path (with placeholders or regex)
+     * @param array<array-key, mixed>|Closure|string $to      The route handler
+     * @param array<string, mixed>|null              $options The route options
      *
      * @return RouteCollectionInterface
      */
@@ -47,8 +50,8 @@ interface RouteCollectionInterface
      * You can pass an associative array as $placeholder, and have
      * multiple placeholders added at once.
      *
-     * @param array|string $placeholder
-     * @param string|null  $pattern     The regex pattern
+     * @param array<string, string>|string $placeholder
+     * @param string|null                  $pattern     The regex pattern
      *
      * @return RouteCollectionInterface
      */
@@ -180,6 +183,8 @@ interface RouteCollectionInterface
      *
      * @param non-empty-string|null $verb            HTTP verb like `GET`,`POST` or `*` or `CLI`.
      * @param bool                  $includeWildcard Whether to include '*' routes.
+     *
+     * @return array<string, array<string, string>|(Closure(mixed...): (ResponseInterface|string|void))|string>
      */
     public function getRoutes(?string $verb = null, bool $includeWildcard = true): array;
 
@@ -195,6 +200,7 @@ interface RouteCollectionInterface
 
     /**
      * Sets the current HTTP verb.
+     * Used primarily for testing.
      *
      * @param string $verb HTTP verb
      *
@@ -222,8 +228,9 @@ interface RouteCollectionInterface
      *      // Equals 'path/$param1/$param2'
      *      reverseRoute('Controller::method', $param1, $param2);
      *
-     * @param string     $search    Named route or Controller::method
-     * @param int|string ...$params
+     * @param string     $search    Route name or Controller::method
+     * @param int|string ...$params One or more parameters to be passed to the route.
+     *                              The last parameter allows you to set the locale.
      *
      * @return false|string The route (URI path relative to baseURL) or false if not found.
      */

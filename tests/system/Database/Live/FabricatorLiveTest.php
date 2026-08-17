@@ -18,6 +18,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\Fabricator;
 use PHPUnit\Framework\Attributes\Group;
+use stdClass;
 use Tests\Support\Models\UserModel;
 use Tests\Support\Models\ValidModel;
 
@@ -39,6 +40,7 @@ final class FabricatorLiveTest extends CIUnitTestCase
         $fabricator->setOverrides(['country' => 'Spain']);
 
         $result = $fabricator->create();
+        $this->assertInstanceOf(stdClass::class, $result);
 
         $this->seeInDatabase('user', ['name' => $result->name]);
     }

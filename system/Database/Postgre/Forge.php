@@ -17,6 +17,8 @@ use CodeIgniter\Database\Forge as BaseForge;
 
 /**
  * Forge for Postgre
+ *
+ * @extends BaseForge<Connection>
  */
 class Forge extends BaseForge
 {
@@ -66,11 +68,6 @@ class Forge extends BaseForge
      * @internal
      */
     protected $null = 'NULL';
-
-    /**
-     * @var Connection
-     */
-    protected $db;
 
     /**
      * CREATE TABLE attributes

@@ -1,4 +1,4 @@
-# total 28 errors
+# total 26 errors
 
 parameters:
     ignoreErrors:
@@ -56,16 +56,6 @@ parameters:
             message: '#^Property CodeIgniter\\Filters\\HoneypotTest\:\:\$response \(CodeIgniter\\HTTP\\Response\|null\) does not accept CodeIgniter\\HTTP\\ResponseInterface\.$#'
             count: 4
             path: ../../tests/system/Filters/HoneypotTest.php
-
-        -
-            message: '#^Property Config\\App\:\:\$proxyIPs \(array\<string, string\>\) does not accept array\<int, string\>\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
-
-        -
-            message: '#^Property Config\\App\:\:\$proxyIPs \(array\<string, string\>\) does not accept string\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
 
         -
             message: '#^Property CodeIgniter\\Helpers\\CookieHelperTest\:\:\$response \(CodeIgniter\\HTTP\\Response\) does not accept CodeIgniter\\HTTP\\ResponseInterface\.$#'

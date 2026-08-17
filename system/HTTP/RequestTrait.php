@@ -42,7 +42,7 @@ trait RequestTrait
     /**
      * Stores values we've retrieved from PHP globals.
      *
-     * @var array{get?: array, post?: array, request?: array, cookie?: array, server?: array}
+     * @var array{get?: array<string, mixed>, post?: array<string, mixed>, request?: array<string, mixed>, cookie?: array<string, mixed>, server?: array<string, mixed>}
      *
      * @deprecated 4.7.0 Use the Superglobals service instead
      */
@@ -217,9 +217,9 @@ trait RequestTrait
     /**
      * Fetch an item from the $_SERVER array.
      *
-     * @param array|string|null $index  Index for item to be fetched from $_SERVER
-     * @param int|null          $filter A filter name to be applied
-     * @param array|int|null    $flags
+     * @param list<string>|string|null      $index  Index for item to be fetched from $_SERVER
+     * @param int|null                      $filter A filter name to be applied
+     * @param array<string, mixed>|int|null $flags
      *
      * @return mixed
      */
@@ -258,9 +258,9 @@ trait RequestTrait
      * http://php.net/manual/en/filter.filters.sanitize.php
      *
      * @param 'cookie'|'get'|'post'|'request'|'server' $name   Superglobal name (lowercase)
-     * @param array|int|string|null                    $index
+     * @param int|list<string>|string|null             $index
      * @param int|null                                 $filter Filter constant
-     * @param array|int|null                           $flags  Options
+     * @param array<string, mixed>|int|null            $flags  Options
      *
      * @return mixed
      */

@@ -387,8 +387,6 @@ abstract class BaseResult implements ResultInterface
 
     /**
      * Returns the "first" row of the current results.
-     *
-     * @return array|object|null
      */
     public function getFirstRow(string $type = 'object')
     {
@@ -399,8 +397,6 @@ abstract class BaseResult implements ResultInterface
 
     /**
      * Returns the "last" row of the current results.
-     *
-     * @return array|object|null
      */
     public function getLastRow(string $type = 'object')
     {
@@ -411,8 +407,6 @@ abstract class BaseResult implements ResultInterface
 
     /**
      * Returns the "next" row of the current results.
-     *
-     * @return array|object|null
      */
     public function getNextRow(string $type = 'object')
     {
@@ -426,8 +420,6 @@ abstract class BaseResult implements ResultInterface
 
     /**
      * Returns the "previous" row of the current results.
-     *
-     * @return array|object|null
      */
     public function getPreviousRow(string $type = 'object')
     {

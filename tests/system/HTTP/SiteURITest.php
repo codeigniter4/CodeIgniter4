@@ -28,6 +28,9 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class SiteURITest extends CIUnitTestCase
 {
+    /**
+     * @param list<string> $expectedSegments
+     */
     #[DataProvider('provideConstructor')]
     public function testConstructor(
         string $baseURL,
@@ -60,11 +63,17 @@ final class SiteURITest extends CIUnitTestCase
         $this->assertSame($expectedTotalSegments, $uri->getTotalSegments());
     }
 
+    /**
+     * @return iterable<array{string, string, string, string, string, string, string, string, array<array-key, mixed>, int}>
+     */
     public static function provideConstructor(): iterable
     {
         return array_merge(self::provideSetPath(), self::provideRelativePathWithQueryOrFragment());
     }
 
+    /**
+     * @return iterable<array{string, string}>
+     */
     public static function provideRelativePathWithQueryOrFragment(): iterable
     {
         return [
@@ -176,6 +185,9 @@ final class SiteURITest extends CIUnitTestCase
         new SiteURI($config);
     }
 
+    /**
+     * @param list<string> $expectedSegments
+     */
     #[DataProvider('provideSetPath')]
     public function testSetPath(
         string $baseURL,
@@ -208,6 +220,9 @@ final class SiteURITest extends CIUnitTestCase
         $this->assertSame($expectedTotalSegments, $uri->getTotalSegments());
     }
 
+    /**
+     * @return iterable<array{string, string, string, string, string, string, string, string, array<array-key, mixed>, int}>
+     */
     public static function provideSetPath(): iterable
     {
         return [

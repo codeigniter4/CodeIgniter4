@@ -69,8 +69,9 @@ class Negotiate
      * If no match is found, the first, highest-ranking client requested
      * type is returned.
      *
-     * @param bool $strictMatch If TRUE, will return an empty string when no match found.
-     *                          If FALSE, will return the first supported element.
+     * @param bool         $strictMatch If TRUE, will return an empty string when no match found.
+     *                                  If FALSE, will return the first supported element.
+     * @param list<string> $supported
      */
     public function media(array $supported, bool $strictMatch = false): string
     {
@@ -84,6 +85,8 @@ class Negotiate
      *
      * If no match is found, the first, highest-ranking client requested
      * type is returned.
+     *
+     * @param list<string> $supported
      */
     public function charset(array $supported): string
     {
@@ -110,6 +113,8 @@ class Negotiate
      *
      * If no match is found, the first, highest-ranking client requested
      * type is returned.
+     *
+     * @param list<string> $supported
      */
     public function encoding(array $supported = []): string
     {
@@ -125,6 +130,8 @@ class Negotiate
      *
      * If strict locale negotiation is disabled and no match is found, the first, highest-ranking client requested
      * type is returned.
+     *
+     * @param list<string> $supported
      */
     public function language(array $supported): string
     {
@@ -145,12 +152,12 @@ class Negotiate
      *
      * Portions of this code base on Aura.Accept library.
      *
-     * @param array  $supported    App-supported values
-     * @param string $header       header string
-     * @param bool   $enforceTypes If TRUE, will compare media types and sub-types.
-     * @param bool   $strictMatch  If TRUE, will return empty string on no match.
-     *                             If FALSE, will return the first supported element.
-     * @param bool   $matchLocales If TRUE, will match locale sub-types to a broad type (fr-FR = fr)
+     * @param list<string> $supported    App-supported values
+     * @param string       $header       header string
+     * @param bool         $enforceTypes If TRUE, will compare media types and sub-types.
+     * @param bool         $strictMatch  If TRUE, will return empty string on no match.
+     *                                   If FALSE, will return the first supported element.
+     * @param bool         $matchLocales If TRUE, will match locale sub-types to a broad type (fr-FR = fr)
      *
      * @return string Best match
      */
@@ -261,6 +268,8 @@ class Negotiate
      * Parses an Accept* header into it's multiple values.
      *
      * This is based on code from Aura.Accept library.
+     *
+     * @return list<array{value: string, q: float, params: array<string, string>}>
      */
     public function parseHeader(string $header): array
     {
@@ -339,7 +348,8 @@ class Negotiate
     /**
      * Match-maker
      *
-     * @param bool $matchLocales
+     * @param bool                                                          $matchLocales
+     * @param array{value: string, q: float, params: array<string, string>} $acceptable
      */
     protected function match(array $acceptable, string $supported, bool $enforceTypes = false, $matchLocales = false): bool
     {
@@ -370,6 +380,9 @@ class Negotiate
     /**
      * Checks two Accept values with matching 'values' to see if their
      * 'params' are the same.
+     *
+     * @param array{value: string, q: float, params: array<string, string>} $acceptable
+     * @param array{value: string, q: float, params: array<string, string>} $supported
      */
     protected function matchParameters(array $acceptable, array $supported): bool
     {
@@ -391,6 +404,9 @@ class Negotiate
     /**
      * Compares the types/subtypes of an acceptable Media type and
      * the supported string.
+     *
+     * @param array{value: string, q: float, params: array<string, string>} $acceptable
+     * @param array{value: string, q: float, params: array<string, string>} $supported
      */
     public function matchTypes(array $acceptable, array $supported): bool
     {
@@ -416,6 +432,9 @@ class Negotiate
     /**
      * Will match locales against their broader pairs, so that fr-FR would
      * match a supported localed of fr
+     *
+     * @param array{value: string, q: float, params: array<string, string>} $acceptable
+     * @param array{value: string, q: float, params: array<string, string>} $supported
      */
     public function matchLocales(array $acceptable, array $supported): bool
     {

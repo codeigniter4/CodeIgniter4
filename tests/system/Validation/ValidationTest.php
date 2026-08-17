@@ -214,6 +214,9 @@ class ValidationTest extends CIUnitTestCase
         $this->addToAssertionCount(1);
     }
 
+    /**
+     * @return iterable<array{bool, mixed}>
+     */
     public static function provideSetRuleRulesFormat(): iterable
     {
         yield 'fail-simple-object' => [
@@ -444,6 +447,8 @@ class ValidationTest extends CIUnitTestCase
 
     /**
      * Validation rule2
+     *
+     * @param array<array-key, mixed> $data
      */
     public function rule2(mixed $value, array $data, ?string &$error, string $field): bool
     {
@@ -592,6 +597,9 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{mixed, bool}>
+     */
     public static function provideCanValidatetArrayData(): iterable
     {
         yield 'list array' => [
@@ -643,6 +651,9 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{mixed, bool}>
+     */
     public static function provideIsIntWithInvalidTypeData(): iterable
     {
         yield 'array with int' => [
@@ -871,6 +882,11 @@ class ValidationTest extends CIUnitTestCase
      * @param list<string>|string $rules
      * @param string              $expected
      */
+    /**
+     * @param array<array-key, array<array-key, mixed>|string> $errors
+     * @param mixed                                            $rules
+     * @param mixed                                            $expected
+     */
     #[DataProvider('provideRulesSetup')]
     public function testRulesSetup($rules, $expected, array $errors = []): void
     {
@@ -881,6 +897,9 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->getError('foo'));
     }
 
+    /**
+     * @return iterable<array{list<string>|string, string, array<array-key, array<array-key, mixed>|string>}>
+     */
     public static function provideRulesSetup(): iterable
     {
         yield from [
@@ -1184,9 +1203,9 @@ class ValidationTest extends CIUnitTestCase
 
     public function testNoRuleSetsSetup(): void
     {
-        try {
-            $rulesets = static::$config['ruleSets'];
+        $rulesets = static::$config['ruleSets'];
 
+        try {
             static::$config['ruleSets'] = null;
             (new Validation((object) static::$config, service('renderer')))
                 ->reset()
@@ -1318,6 +1337,11 @@ class ValidationTest extends CIUnitTestCase
         ], $this->validation->getErrors());
     }
 
+    /**
+     * @param array<array-key, mixed>                          $body
+     * @param array<array-key, array<array-key, mixed>|string> $rules
+     * @param array<array-key, mixed>                          $results
+     */
     #[DataProvider('provideRulesForArrayField')]
     public function testRulesForArrayField(array $body, array $rules, array $results): void
     {
@@ -1331,6 +1355,9 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($results, $this->validation->getErrors());
     }
 
+    /**
+     * @return iterable<string, array{body: array<array-key, mixed>, rules: array<array-key, array<array-key, mixed>|string>, results: array<array-key, mixed>}>
+     */
     public static function provideRulesForArrayField(): iterable
     {
         yield from [
@@ -1580,8 +1607,10 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $errors['Username']);
     }
 
+    /** @see https://github.com/codeigniter4/CodeIgniter4/issues/4521 */
     /**
-     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4521
+     * @param array<array-key, array<array-key, mixed>|string> $rules
+     * @param array<array-key, mixed>                          $data
      */
     #[DataProvider('provideIfExistRuleWithAsterisk')]
     public function testIfExistRuleWithAsterisk(bool $expected, array $rules, array $data): void
@@ -1590,6 +1619,9 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $actual);
     }
 
+    /**
+     * @return iterable<array{bool, array<array-key, array<array-key, mixed>|string>, array<array-key, mixed>}>
+     */
     public static function provideIfExistRuleWithAsterisk(): iterable
     {
         yield 'dot-on-end-fail' => [
@@ -1649,8 +1681,10 @@ class ValidationTest extends CIUnitTestCase
         ];
     }
 
+    /** @see https://github.com/codeigniter4/CodeIgniter4/issues/4510 */
     /**
-     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4510
+     * @param array<array-key, array<array-key, mixed>|string> $rules
+     * @param array<array-key, mixed>                          $data
      */
     #[DataProvider('provideValidationOfArrayData')]
     public function testValidationOfArrayData(bool $expected, array $rules, array $data): void
@@ -1659,6 +1693,9 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $actual);
     }
 
+    /**
+     * @return iterable<array{bool, array<array-key, array<array-key, mixed>|string>, array<array-key, mixed>}>
+     */
     public static function provideValidationOfArrayData(): iterable
     {
         yield 'fail-empty-string' => [
@@ -1704,8 +1741,9 @@ class ValidationTest extends CIUnitTestCase
         ];
     }
 
+    /** @see https://github.com/codeigniter4/CodeIgniter4/issues/4929 */
     /**
-     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4929
+     * @param array<array-key, mixed> $expected
      */
     #[DataProvider('provideSplittingOfComplexStringRules')]
     public function testSplittingOfComplexStringRules(string $input, array $expected): void
@@ -1714,6 +1752,9 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $splitter($input));
     }
 
+    /**
+     * @return iterable<array{string, array<array-key, mixed>}>
+     */
     public static function provideSplittingOfComplexStringRules(): iterable
     {
         yield [
@@ -1766,7 +1807,7 @@ class ValidationTest extends CIUnitTestCase
      * internal method to simplify placeholder replacement test
      * REQUIRES THE RULES TO BE SET FOR THE FIELD "foo"
      *
-     * @param array|null $data optional POST data, needs to contain the key $placeholderField to pass
+     * @param array<array-key, mixed>|null $data Optional POST data, needs to contain the key $placeholderField to pass
      *
      * @source https://github.com/codeigniter4/CodeIgniter4/pull/3910#issuecomment-784922913
      */

@@ -30,6 +30,8 @@ use TypeError;
  * @todo auto check for TextCastToInt
  * @todo auto check for InsertIndexValue
  * @todo replace: delete index entries before insert
+ *
+ * @extends BaseBuilder<Connection>
  */
 class Builder extends BaseBuilder
 {

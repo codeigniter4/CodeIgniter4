@@ -15,8 +15,12 @@ use CodeIgniter\Config\BaseConfig;
 
 class RegistrarConfig extends BaseConfig
 {
-    public $foo = 'bar';
-    public $bar = [
+    public string $foo = 'bar';
+
+    /**
+     * @var list<string>
+     */
+    public array $bar = [
         'baz',
     ];
 }

@@ -22,17 +22,10 @@ use OCILob;
 /**
  * Prepared query for OCI8
  *
- * @extends BasePreparedQuery<resource, resource, resource>
+ * @extends BasePreparedQuery<resource, resource, resource, Connection>
  */
 class PreparedQuery extends BasePreparedQuery
 {
-    /**
-     * A reference to the db connection to use.
-     *
-     * @var Connection
-     */
-    protected $db;
-
     /**
      * Latest inserted table name.
      */

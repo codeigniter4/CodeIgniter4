@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
@@ -227,13 +228,12 @@ final class GetTest extends CIUnitTestCase
     public function testFreeResult(): void
     {
         $data = $this->db->table('job')->where('id', 4)->get();
+        $this->assertInstanceOf(BaseResult::class, $data);
 
         $details = $data->getResult();
-
         $this->assertSame('Musician', $details[0]->name);
 
         $data->freeResult();
-
         $this->assertFalse($data->resultID);
     }
 
@@ -254,13 +254,13 @@ final class GetTest extends CIUnitTestCase
     public function testGetRowWithCustomReturnType(): void
     {
         $testClass = new class () {
-            public $id;
-            public $name;
-            public $email;
-            public $country;
-            public $created_at;
-            public $updated_at;
-            public $deleted_at;
+            public mixed $id         = null;
+            public mixed $name       = null;
+            public mixed $email      = null;
+            public mixed $country    = null;
+            public mixed $created_at = null;
+            public mixed $updated_at = null;
+            public mixed $deleted_at = null;
         };
 
         $user = $this->db->table('user')->get()->getRow(0, $testClass::class);
@@ -292,6 +292,7 @@ final class GetTest extends CIUnitTestCase
     public function testGetPreviousRow(): void
     {
         $user = $this->db->table('user')->get();
+        $this->assertInstanceOf(BaseResult::class, $user);
 
         $user->currentRow = 3;
 

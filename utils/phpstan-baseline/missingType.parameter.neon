@@ -1,4 +1,4 @@
-# total 31 errors
+# total 26 errors
 
 parameters:
     ignoreErrors:
@@ -51,31 +51,6 @@ parameters:
             message: '#^Method CodeIgniter\\Filters\\FiltersTest\:\:createFilters\(\) has parameter \$request with no type specified\.$#'
             count: 1
             path: ../../tests/system/Filters/FiltersTest.php
-
-        -
-            message: '#^Function CodeIgniter\\HTTP\\Files\\is_uploaded_file\(\) has parameter \$filename with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/Files/FileMovingTest.php
-
-        -
-            message: '#^Function CodeIgniter\\HTTP\\Files\\move_uploaded_file\(\) has parameter \$destination with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/Files/FileMovingTest.php
-
-        -
-            message: '#^Function CodeIgniter\\HTTP\\Files\\move_uploaded_file\(\) has parameter \$filename with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/Files/FileMovingTest.php
-
-        -
-            message: '#^Function CodeIgniter\\HTTP\\Files\\rrmdir\(\) has parameter \$src with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/Files/FileMovingTest.php
-
-        -
-            message: '#^Method CodeIgniter\\HTTP\\IncomingRequestTest\:\:createRequest\(\) has parameter \$body with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
 
         -
             message: '#^Method CodeIgniter\\Helpers\\URLHelper\\CurrentUrlTest\:\:createRequest\(\) has parameter \$body with no type specified\.$#'

@@ -27,6 +27,9 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class ResponseCookieTest extends CIUnitTestCase
 {
+    /**
+     * @var array<string, mixed>
+     */
     private array $defaults;
 
     protected function setUp(): void

@@ -19,6 +19,8 @@ use CodeIgniter\Database\Forge as BaseForge;
 
 /**
  * Forge for SQLite3
+ *
+ * @extends BaseForge<Connection>
  */
 class Forge extends BaseForge
 {
@@ -28,11 +30,6 @@ class Forge extends BaseForge
      * @var string
      */
     protected $dropIndexStr = 'DROP INDEX %s';
-
-    /**
-     * @var Connection
-     */
-    protected $db;
 
     /**
      * UNSIGNED support

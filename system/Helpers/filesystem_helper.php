@@ -24,9 +24,10 @@ if (! function_exists('directory_map')) {
      * directory will be mapped as well.
      *
      * @param string $sourceDir      Path to source
-     * @param int    $directoryDepth Depth of directories to traverse
-     *                               (0 = fully recursive, 1 = current dir, etc)
+     * @param int    $directoryDepth Depth of directories to traverse (0 = fully recursive, 1 = current dir, etc)
      * @param bool   $hidden         Whether to show hidden files
+     *
+     * @return array<array-key, array<array-key, mixed>|string>
      */
     function directory_map(string $sourceDir, int $directoryDepth = 0, bool $hidden = false): array
     {
@@ -200,6 +201,8 @@ if (! function_exists('get_filenames')) {
      * @param bool|null $includePath Whether to include the path as part of the filename; false for no path, null for a relative path, true for full path
      * @param bool      $hidden      Whether to include hidden files (files beginning with a period)
      * @param bool      $includeDir  Whether to include directories
+     *
+     * @return list<string>
      */
     function get_filenames(
         string $sourceDir,

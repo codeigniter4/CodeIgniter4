@@ -37,11 +37,6 @@ use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 #[Group('SeparateProcess')]
 final class RedirectResponseTest extends CIUnitTestCase
 {
-    /**
-     * @var RouteCollection
-     */
-    protected $routes;
-
     private MockIncomingRequest $request;
     private App $config;
 

@@ -48,6 +48,10 @@ final class RulesTest extends TraditionalRulesTest
         ],
     ];
 
+    /**
+     * @param array<array-key, array<array-key, mixed>|string> $rules
+     * @param array<array-key, mixed>                          $data
+     */
     #[DataProvider('providePermitEmptyStrict')]
     public function testPermitEmptyStrict(array $rules, array $data, bool $expected): void
     {
@@ -55,6 +59,9 @@ final class RulesTest extends TraditionalRulesTest
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{array<array-key, array<array-key, mixed>|string>, array<array-key, mixed>, bool}>
+     */
     public static function providePermitEmptyStrict(): iterable
     {
         yield from [
@@ -114,6 +121,9 @@ final class RulesTest extends TraditionalRulesTest
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{int, string, bool}>
+     */
     public static function provideGreaterThanEqualStrict(): iterable
     {
         yield from [
@@ -139,6 +149,9 @@ final class RulesTest extends TraditionalRulesTest
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{int, string, bool}>
+     */
     public static function provideGreaterThanStrict(): iterable
     {
         yield from [
@@ -165,6 +178,9 @@ final class RulesTest extends TraditionalRulesTest
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{int, string, bool}>
+     */
     public static function provideLessThanStrict(): iterable
     {
         yield from [
@@ -192,6 +208,9 @@ final class RulesTest extends TraditionalRulesTest
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{int, string|null, bool}>
+     */
     public static function provideLessEqualThanStrict(): iterable
     {
         yield from [
@@ -205,6 +224,9 @@ final class RulesTest extends TraditionalRulesTest
         ];
     }
 
+    /**
+     * @param array<array-key, mixed> $data
+     */
     #[DataProvider('provideMatches')]
     public function testMatches(array $data, bool $expected): void
     {
@@ -212,6 +234,9 @@ final class RulesTest extends TraditionalRulesTest
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{array<array-key, mixed>, bool}>
+     */
     public static function provideMatches(): iterable
     {
         yield from [
@@ -227,6 +252,9 @@ final class RulesTest extends TraditionalRulesTest
         ];
     }
 
+    /**
+     * @param array<array-key, mixed> $data
+     */
     #[DataProvider('provideDiffers')]
     public function testDiffers(array $data, bool $expected): void
     {
@@ -234,6 +262,9 @@ final class RulesTest extends TraditionalRulesTest
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{array<array-key, mixed>, bool}>
+     */
     public static function provideDiffers(): iterable
     {
         yield from [

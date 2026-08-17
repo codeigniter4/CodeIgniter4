@@ -31,7 +31,7 @@ class FileCollection
      * Populated the first time either files(), file(), or hasFile()
      * is called.
      *
-     * @var array|null
+     * @var array<string, array<array-key, UploadedFile>|UploadedFile>|null
      */
     protected $files;
 
@@ -40,7 +40,7 @@ class FileCollection
      * Each element in the array will be an instance of UploadedFile.
      * The key of each element will be the client filename.
      *
-     * @return array|null
+     * @return array<string, array<array-key, UploadedFile>|UploadedFile>|null
      */
     public function all()
     {
@@ -167,7 +167,9 @@ class FileCollection
      * Given a file array, will create UploadedFile instances. Will
      * loop over an array and create objects for each.
      *
-     * @return list<UploadedFile>|UploadedFile
+     * @param array<string, mixed> $array
+     *
+     * @return array<array-key, array<array-key, UploadedFile>|UploadedFile>|UploadedFile
      */
     protected function createFileObject(array $array)
     {
@@ -203,6 +205,10 @@ class FileCollection
      * of this method.
      *
      * @see http://php.net/manual/en/reserved.variables.files.php#118294
+     *
+     * @param array<string, mixed> $data
+     *
+     * @return array<string, mixed>
      */
     protected function fixFilesArray(array $data): array
     {
@@ -246,8 +252,8 @@ class FileCollection
     /**
      * Navigate through an array looking for a particular index
      *
-     * @param array $index The index sequence we are navigating down
-     * @param array $value The portion of the array to process
+     * @param list<string>                                                  $index The index sequence we are navigating down
+     * @param array<array-key, array<array-key, UploadedFile>|UploadedFile> $value The portion of the array to process
      *
      * @return list<UploadedFile>|UploadedFile|null
      */

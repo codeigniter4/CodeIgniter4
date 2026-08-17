@@ -87,7 +87,7 @@ class Router implements RouterInterface
      * An array of binds that were collected
      * so they can be sent to closure routes.
      *
-     * @var array
+     * @var list<string>
      */
     protected $params = [];
 
@@ -109,14 +109,14 @@ class Router implements RouterInterface
     /**
      * The route that was matched for this request.
      *
-     * @var array|null
+     * @var array{string, (callable(mixed...): (ResponseInterface|string|void))|string}|null
      */
     protected $matchedRoute;
 
     /**
      * The options set for the matched route.
      *
-     * @var array|null
+     * @var array<string, int|string>|null
      */
     protected $matchedRouteOptions;
 
@@ -347,7 +347,7 @@ class Router implements RouterInterface
      * Returns the routing information that was matched for this
      * request, if a route was defined.
      *
-     * @return array|null
+     * @return array{string, (callable(mixed...): (ResponseInterface|string|void))|string}|null
      */
     public function getMatchedRoute()
     {
@@ -357,7 +357,7 @@ class Router implements RouterInterface
     /**
      * Returns all options set for the matched route
      *
-     * @return array|null
+     * @return array<string, int|string>|null
      */
     public function getMatchedRouteOptions()
     {
@@ -563,6 +563,8 @@ class Router implements RouterInterface
 
     /**
      * Replace string `$n` with `$matches[n]` value.
+     *
+     * @param list<string> $matches
      */
     private function replaceBackReferences(string $input, array $matches): string
     {
@@ -596,9 +598,9 @@ class Router implements RouterInterface
     /**
      * Scans the controller directory, attempting to locate a controller matching the supplied uri $segments
      *
-     * @param array $segments URI segments
+     * @param list<string> $segments URI segments
      *
-     * @return array returns an array of remaining uri segments that don't map onto a directory
+     * @return list<string> Returns an array of remaining uri segments that don't map onto a directory
      *
      * @deprecated 4.1.2 this function name does not properly describe its behavior so it has been deprecated
      *
@@ -612,9 +614,9 @@ class Router implements RouterInterface
     /**
      * Scans the controller directory, attempting to locate a controller matching the supplied uri $segments
      *
-     * @param array $segments URI segments
+     * @param list<string> $segments URI segments
      *
-     * @return array returns an array of remaining uri segments that don't map onto a directory
+     * @return list<string> Returns an array of remaining uri segments that don't map onto a directory
      *
      * @deprecated 4.2.0 Not used. Moved to AutoRouter class.
      */
@@ -915,7 +917,7 @@ class Router implements RouterInterface
      * Returns the route attributes collected during routing
      * for the current route.
      *
-     * @return array{class: list<string>, method: list<string>}
+     * @return array{class: list<RouteAttributeInterface>, method: list<RouteAttributeInterface>}
      */
     public function getRouteAttributes(): array
     {

@@ -25,6 +25,7 @@ use Throwable;
  * @template TConnection
  * @template TStatement
  * @template TResult
+ * @template TDb of BaseConnection
  *
  * @implements PreparedQueryInterface<TConnection, TStatement, TResult>
  */
@@ -67,7 +68,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
     /**
      * A reference to the db connection to use.
      *
-     * @var BaseConnection<TConnection, TResult>
+     * @var TDb
      */
     protected $db;
 

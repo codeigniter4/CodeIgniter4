@@ -20,7 +20,7 @@ use CodeIgniter\Exceptions\BadMethodCallException;
 /**
  * Prepared query for Postgre
  *
- * @extends BasePreparedQuery<resource, resource, resource>
+ * @extends BasePreparedQuery<resource, resource, resource, Connection>
  */
 class PreparedQuery extends BasePreparedQuery
 {
@@ -30,13 +30,6 @@ class PreparedQuery extends BasePreparedQuery
      * @var array
      */
     protected $parameters = [];
-
-    /**
-     * A reference to the db connection to use.
-     *
-     * @var Connection
-     */
-    protected $db;
 
     public function __construct(Connection $db)
     {

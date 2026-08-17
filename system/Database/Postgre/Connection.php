@@ -52,9 +52,24 @@ class Connection extends BaseConnection
      */
     public $escapeChar = '"';
 
+    /**
+     * @var string|null
+     */
     protected $connect_timeout;
+
+    /**
+     * @var string|null
+     */
     protected $options;
+
+    /**
+     * @var string|null
+     */
     protected $sslmode;
+
+    /**
+     * @var string|null
+     */
     protected $service;
 
     /**

@@ -59,6 +59,9 @@ class RulesTest extends CIUnitTestCase
         $this->validation->reset();
     }
 
+    /**
+     * @param array<array-key, mixed> $data
+     */
     #[DataProvider('provideRequired')]
     public function testRequired(array $data, bool $expected): void
     {
@@ -66,6 +69,9 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{array<array-key, mixed>, bool}>
+     */
     public static function provideRequired(): iterable
     {
         yield from [
@@ -79,6 +85,10 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
+    /**
+     * @param array<array-key, array<array-key, mixed>|string> $rules
+     * @param array<array-key, mixed>                          $data
+     */
     #[DataProvider('provideIfExist')]
     public function testIfExist(array $rules, array $data, bool $expected): void
     {
@@ -86,6 +96,9 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{array<array-key, array<array-key, mixed>|string>, array<array-key, mixed>, bool}>
+     */
     public static function provideIfExist(): iterable
     {
         yield from [
@@ -143,6 +156,10 @@ class RulesTest extends CIUnitTestCase
         $this->validation->run($data);
     }
 
+    /**
+     * @param array<array-key, array<array-key, mixed>|string> $rules
+     * @param array<array-key, mixed>                          $data
+     */
     #[DataProvider('providePermitEmpty')]
     public function testPermitEmpty(array $rules, array $data, bool $expected): void
     {
@@ -150,6 +167,9 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{array<array-key, array<array-key, mixed>|string>, array<array-key, mixed>, bool}>
+     */
     public static function providePermitEmpty(): iterable
     {
         yield from [
@@ -310,6 +330,9 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
+    /**
+     * @param array<array-key, mixed> $data
+     */
     #[DataProvider('provideMatches')]
     public function testMatches(array $data, bool $expected): void
     {
@@ -317,6 +340,9 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{array<array-key, mixed>, bool}>
+     */
     public static function provideMatches(): iterable
     {
         yield from [
@@ -332,6 +358,9 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
+    /**
+     * @param array<array-key, mixed> $data
+     */
     #[DataProvider('provideMatchesNestedCases')]
     public function testMatchesNested(array $data, bool $expected): void
     {
@@ -383,6 +412,9 @@ class RulesTest extends CIUnitTestCase
         );
     }
 
+    /**
+     * @param array<array-key, mixed> $data
+     */
     #[DataProvider('provideDiffers')]
     public function testDiffers(array $data, bool $expected): void
     {
@@ -390,6 +422,9 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{array<array-key, mixed>, bool}>
+     */
     public static function provideDiffers(): iterable
     {
         yield from [
@@ -405,6 +440,9 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
+    /**
+     * @param array<array-key, mixed> $data
+     */
     #[DataProvider('provideMatchesNestedCases')]
     public function testDiffersNested(array $data, bool $expected): void
     {
@@ -412,6 +450,9 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame(! $expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{array<array-key, mixed>, bool}>
+     */
     public static function provideMatchesNestedCases(): iterable
     {
         yield from [
@@ -464,6 +505,9 @@ class RulesTest extends CIUnitTestCase
         );
     }
 
+    /**
+     * @param array<array-key, mixed> $data
+     */
     #[DataProvider('provideEquals')]
     public function testEquals(array $data, string $param, bool $expected): void
     {
@@ -471,6 +515,9 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{array<array-key, mixed>, string, bool}>
+     */
     public static function provideEquals(): iterable
     {
         yield from [
@@ -489,6 +536,9 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run(['foo' => $data]));
     }
 
+    /**
+     * @return iterable<array{string|null, string, bool}>
+     */
     public static function provideMinLengthCases(): iterable
     {
         yield from [
@@ -522,6 +572,9 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run(['foo' => $data]));
     }
 
+    /**
+     * @return iterable<array{int|string|null, bool}>
+     */
     public static function provideExactLength(): iterable
     {
         yield from [
@@ -550,6 +603,9 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{string|null, string|null, bool}>
+     */
     public static function provideGreaterThan(): iterable
     {
         yield from [
@@ -573,6 +629,9 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{string|null, string|null, bool}>
+     */
     public static function provideGreaterThanEqual(): iterable
     {
         yield from [
@@ -597,6 +656,9 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{string|null, string|null, bool}>
+     */
     public static function provideLessThan(): iterable
     {
         yield from [
@@ -621,6 +683,9 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{string|null, string|null, bool}>
+     */
     public static function provideLessThanEqual(): iterable
     {
         yield from [
@@ -653,6 +718,9 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame(! $expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{string|null, string|null, bool}>
+     */
     public static function provideInList(): iterable
     {
         yield from [
@@ -687,6 +755,9 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{string, string|null, bool}>
+     */
     public static function provideRequiredWith(): iterable
     {
         yield from [
@@ -719,8 +790,9 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
+    /** @see https://github.com/codeigniter4/CodeIgniter4/issues/7557 */
     /**
-     * @see https://github.com/codeigniter4/CodeIgniter4/issues/7557
+     * @param array<array-key, mixed> $data
      */
     #[DataProvider('provideRequiredWithAndOtherRules')]
     public function testRequiredWithAndOtherRules(bool $expected, array $data): void
@@ -734,6 +806,9 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $result);
     }
 
+    /**
+     * @return iterable<array{bool, array<array-key, mixed>}>
+     */
     public static function provideRequiredWithAndOtherRules(): iterable
     {
         yield from [
@@ -756,6 +831,9 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
+    /**
+     * @param array<array-key, mixed> $data
+     */
     #[DataProvider('provideRequiredWithAndOtherRuleWithValueZero')]
     public function testRequiredWithAndOtherRuleWithValueZero(bool $expected, array $data): void
     {
@@ -769,6 +847,9 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $result);
     }
 
+    /**
+     * @return iterable<array{bool, array<array-key, mixed>}>
+     */
     public static function provideRequiredWithAndOtherRuleWithValueZero(): iterable
     {
         yield from [
@@ -797,6 +878,9 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{string, string|null, bool}>
+     */
     public static function provideRequiredWithout(): iterable
     {
         yield from [
@@ -841,6 +925,9 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($result, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{string, string, string, bool}>
+     */
     public static function provideRequiredWithoutMultiple(): iterable
     {
         yield from [
@@ -877,6 +964,9 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
+    /**
+     * @param array<array-key, mixed> $data
+     */
     #[DataProvider('provideRequiredWithoutMultipleWithoutFields')]
     public function testRequiredWithoutMultipleWithoutFields(array $data, bool $result): void
     {
@@ -885,6 +975,9 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($result, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{array<array-key, mixed>, bool}>
+     */
     public static function provideRequiredWithoutMultipleWithoutFields(): iterable
     {
         yield from [
@@ -917,6 +1010,10 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
+    /**
+     * @param array<array-key, array<array-key, mixed>|string> $rules
+     * @param array<array-key, mixed>                          $data
+     */
     #[DataProvider('provideFieldExists')]
     public function testFieldExists(array $rules, array $data, bool $expected): void
     {
@@ -924,6 +1021,9 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{array<array-key, array<array-key, mixed>|string>, array<array-key, mixed>, bool}>
+     */
     public static function provideFieldExists(): iterable
     {
         // Do not use `foo`, because there is a lang file `Foo`, and

@@ -20,6 +20,8 @@ use Throwable;
 
 /**
  * Forge for SQLSRV
+ *
+ * @extends BaseForge<Connection>
  */
 class Forge extends BaseForge
 {

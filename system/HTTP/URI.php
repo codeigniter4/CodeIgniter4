@@ -522,7 +522,7 @@ class URI implements Stringable
      */
     public function getFragment(): string
     {
-        return $this->fragment ?? '';
+        return $this->fragment;
     }
 
     /**
@@ -857,6 +857,8 @@ class URI implements Stringable
     /**
      * A convenience method to pass an array of items in as the Query
      * portion of the URI.
+     *
+     * @param array<string, mixed> $query
      *
      * @return $this
      *

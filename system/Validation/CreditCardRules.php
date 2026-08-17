@@ -31,7 +31,7 @@ class CreditCardRules
      *  prefixes    - List of possible prefixes for the card
      *  checkdigit  - Boolean on whether we should do a modulus10 check on the numbers.
      *
-     * @var array
+     * @var array<string, array{name: string, length: string, prefixes: string, checkdigit: bool}>
      */
     protected $cards = [
         'American Express' => [

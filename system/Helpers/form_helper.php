@@ -23,9 +23,9 @@ if (! function_exists('form_open')) {
      *
      * Creates the opening portion of the form.
      *
-     * @param string       $action     the URI segments of the form destination
-     * @param array|string $attributes a key/value pair of attributes, or string representation
-     * @param array        $hidden     a key/value pair hidden data
+     * @param string                            $action     The URI segments of the form destination
+     * @param array<string, scalar|null>|string $attributes A key/value pair of attributes, or string representation
+     * @param array<string, mixed>              $hidden     A key/value pair hidden data
      */
     function form_open(string $action = '', $attributes = [], array $hidden = []): string
     {
@@ -80,9 +80,9 @@ if (! function_exists('form_open_multipart')) {
      *
      * Creates the opening portion of the form, but with "multipart/form-data".
      *
-     * @param string       $action     The URI segments of the form destination
-     * @param array|string $attributes A key/value pair of attributes, or the same as a string
-     * @param array        $hidden     A key/value pair hidden data
+     * @param string                            $action     The URI segments of the form destination
+     * @param array<string, scalar|null>|string $attributes A key/value pair of attributes, or the same as a string
+     * @param array<string, mixed>              $hidden     A key/value pair hidden data
      */
     function form_open_multipart(string $action = '', $attributes = [], array $hidden = []): string
     {
@@ -103,8 +103,8 @@ if (! function_exists('form_hidden')) {
      * Generates hidden fields. You can pass a simple key/value string or
      * an associative array with multiple values.
      *
-     * @param array|string $name  Field name or associative array to create multiple fields
-     * @param array|string $value Field value
+     * @param array<string, mixed>|string         $name  Field name or associative array to create multiple fields
+     * @param array<array-key, mixed>|string|null $value Field value
      */
     function form_hidden($name, $value = '', bool $recursing = false): string
     {
@@ -140,8 +140,8 @@ if (! function_exists('form_input')) {
      * Text Input Field. If 'type' is passed in the $type field, it will be
      * used as the input type, for making 'email', 'phone', etc input fields.
      *
-     * @param array|string        $data
-     * @param array|object|string $extra string, array, object that can be cast to array
+     * @param array<string, scalar|null>|string        $data
+     * @param array<string, scalar|null>|object|string $extra String, array, object that can be cast to array
      */
     function form_input($data = '', string $value = '', $extra = '', string $type = 'text'): string
     {
@@ -161,8 +161,8 @@ if (! function_exists('form_password')) {
      *
      * Identical to the input function but adds the "password" type
      *
-     * @param array|string        $data
-     * @param array|object|string $extra string, array, object that can be cast to array
+     * @param array<string, scalar|null>|string        $data
+     * @param array<string, scalar|null>|object|string $extra String, array, object that can be cast to array
      */
     function form_password($data = '', string $value = '', $extra = ''): string
     {
@@ -181,8 +181,8 @@ if (! function_exists('form_upload')) {
      *
      * Identical to the input function but adds the "file" type
      *
-     * @param array|string        $data
-     * @param array|object|string $extra string, array, object that can be cast to array
+     * @param array<string, scalar|null>|string        $data
+     * @param array<string, scalar|null>|object|string $extra String, array, object that can be cast to array
      */
     function form_upload($data = '', string $value = '', $extra = ''): string
     {
@@ -205,8 +205,8 @@ if (! function_exists('form_textarea')) {
     /**
      * Textarea field
      *
-     * @param array|string        $data
-     * @param array|object|string $extra string, array, object that can be cast to array
+     * @param array<string, scalar|null>|string        $data
+     * @param array<string, scalar|null>|object|string $extra String, array, object that can be cast to array
      */
     function form_textarea($data = '', string $value = '', $extra = ''): string
     {
@@ -241,8 +241,10 @@ if (! function_exists('form_multiselect')) {
     /**
      * Multi-select menu
      *
-     * @param array|string        $name
-     * @param array|object|string $extra string, array, object that can be cast to array
+     * @param array<string, mixed>|string                       $name
+     * @param array<array-key, array<array-key, string>|string> $options
+     * @param array<array-key, int|string>                      $selected
+     * @param array<string, scalar|null>|object|string          $extra    String, array, object that can be cast to array
      */
     function form_multiselect($name = '', array $options = [], array $selected = [], $extra = ''): string
     {
@@ -260,10 +262,10 @@ if (! function_exists('form_dropdown')) {
     /**
      * Drop-down Menu
      *
-     * @param array|string        $data
-     * @param array|string        $options
-     * @param array|string        $selected
-     * @param array|object|string $extra    string, array, object that can be cast to array
+     * @param array<string, mixed>|string                              $data
+     * @param array<array-key, array<array-key, string>|string>|string $options
+     * @param array<array-key, int|string>|string                      $selected
+     * @param array<string, scalar|null>|object|string                 $extra    String, array, object that can be cast to array
      */
     function form_dropdown($data = '', $options = [], $selected = [], $extra = ''): string
     {
@@ -348,8 +350,8 @@ if (! function_exists('form_checkbox')) {
     /**
      * Checkbox Field
      *
-     * @param array|string        $data
-     * @param array|object|string $extra string, array, object that can be cast to array
+     * @param array<string, scalar|null>|string        $data
+     * @param array<string, scalar|null>|object|string $extra String, array, object that can be cast to array
      */
     function form_checkbox($data = '', string $value = '', bool $checked = false, $extra = ''): string
     {
@@ -381,8 +383,8 @@ if (! function_exists('form_radio')) {
     /**
      * Radio Button
      *
-     * @param array|string        $data
-     * @param array|object|string $extra string, array, object that can be cast to array
+     * @param array<string, scalar|null>|string        $data
+     * @param array<string, scalar|null>|object|string $extra String, array, object that can be cast to array
      */
     function form_radio($data = '', string $value = '', bool $checked = false, $extra = ''): string
     {
@@ -399,8 +401,8 @@ if (! function_exists('form_submit')) {
     /**
      * Submit Button
      *
-     * @param array|string        $data
-     * @param array|object|string $extra string, array, object that can be cast to array
+     * @param array<string, scalar|null>|string        $data
+     * @param array<string, scalar|null>|object|string $extra String, array, object that can be cast to array
      */
     function form_submit($data = '', string $value = '', $extra = ''): string
     {
@@ -412,8 +414,8 @@ if (! function_exists('form_reset')) {
     /**
      * Reset Button
      *
-     * @param array|string        $data
-     * @param array|object|string $extra string, array, object that can be cast to array
+     * @param array<string, scalar|null>|string        $data
+     * @param array<string, scalar|null>|object|string $extra String, array, object that can be cast to array
      */
     function form_reset($data = '', string $value = '', $extra = ''): string
     {
@@ -425,8 +427,8 @@ if (! function_exists('form_button')) {
     /**
      * Form Button
      *
-     * @param array|string        $data
-     * @param array|object|string $extra string, array, object that can be cast to array
+     * @param array<string, scalar|null>|string        $data
+     * @param array<string, scalar|null>|object|string $extra String, array, object that can be cast to array
      */
     function form_button($data = '', string $content = '', $extra = ''): string
     {
@@ -450,9 +452,9 @@ if (! function_exists('form_label')) {
     /**
      * Form Label Tag
      *
-     * @param string $labelText  The text to appear onscreen
-     * @param string $id         The id the label applies to
-     * @param array  $attributes Additional attributes
+     * @param string                     $labelText  The text to appear onscreen
+     * @param string                     $id         The id the label applies to
+     * @param array<string, scalar|null> $attributes Additional attributes
      */
     function form_label(string $labelText = '', string $id = '', array $attributes = []): string
     {
@@ -477,6 +479,8 @@ if (! function_exists('form_datalist')) {
      * The <datalist> element specifies a list of pre-defined options for an <input> element.
      * Users will see a drop-down list of pre-defined options as they input data.
      * The list attribute of the <input> element, must refer to the id attribute of the <datalist> element.
+     *
+     * @param list<string> $options
      */
     function form_datalist(string $name, string $value, array $options): string
     {
@@ -506,8 +510,8 @@ if (! function_exists('form_fieldset')) {
      * Used to produce <fieldset><legend>text</legend>.  To close fieldset
      * use form_fieldset_close()
      *
-     * @param string $legendText The legend text
-     * @param array  $attributes Additional attributes
+     * @param string                     $legendText The legend text
+     * @param array<string, scalar|null> $attributes Additional attributes
      */
     function form_fieldset(string $legendText = '', array $attributes = []): string
     {
@@ -770,8 +774,8 @@ if (! function_exists('parse_form_attributes')) {
      *
      * @internal
      *
-     * @param array|string $attributes List of attributes
-     * @param array        $default    Default values
+     * @param array<string, scalar|null>|string $attributes List of attributes
+     * @param array<string, scalar|null>        $default    Default values
      */
     function parse_form_attributes($attributes, array $default): string
     {

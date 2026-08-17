@@ -160,6 +160,9 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($isStrict, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{string|null, bool, bool}>
+     */
     public static function provideValidUrl(): iterable
     {
         yield from [
@@ -286,6 +289,9 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{string|null, bool}>
+     */
     public static function provideValidEmail(): iterable
     {
         yield from [
@@ -318,6 +324,9 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{string|null, bool}>
+     */
     public static function provideValidEmails(): iterable
     {
         yield from [
@@ -362,6 +371,9 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{string|null, string|null, bool}>
+     */
     public static function provideValidIP(): iterable
     {
         yield from [
@@ -430,6 +442,9 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{int|string, bool}>
+     */
     public static function provideString(): iterable
     {
         yield from [
@@ -462,6 +477,9 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{int|string, bool}>
+     */
     public static function provideAlpha(): iterable
     {
         yield from [
@@ -502,6 +520,9 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{string|null, bool}>
+     */
     public static function provideAlphaSpace(): iterable
     {
         yield from [
@@ -546,6 +567,9 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{string|null, bool}>
+     */
     public static function alphaNumericProvider(): iterable
     {
         yield from [
@@ -582,6 +606,9 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{string|null, bool}>
+     */
     public static function provideAlphaNumericPunct(): iterable
     {
         yield from [
@@ -710,6 +737,9 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{string|null, bool}>
+     */
     public static function provideAlphaDash(): iterable
     {
         yield from [
@@ -746,6 +776,9 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{string|null, bool}>
+     */
     public static function provideHex(): iterable
     {
         yield from [
@@ -782,6 +815,9 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{string|null, bool}>
+     */
     public static function provideNumeric(): iterable
     {
         yield from [
@@ -856,6 +892,9 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{mixed, bool}>
+     */
     public static function provideInvalidIntegerType(): iterable
     {
         // TypeError : CodeIgniter\Validation\FormatRules::integer(): Argument #1 ($str) must be of type ?string, array given
@@ -900,6 +939,9 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{string|null, bool}>
+     */
     public static function provideInteger(): iterable
     {
         yield from [
@@ -952,6 +994,9 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{string|null, bool}>
+     */
     public static function provideDecimal(): iterable
     {
         yield from [
@@ -1008,6 +1053,9 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{string|null, bool}>
+     */
     public static function provideNatural(): iterable
     {
         yield from [
@@ -1048,6 +1096,9 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{string|null, bool}>
+     */
     public static function provideNaturalNoZero(): iterable
     {
         yield from [
@@ -1088,6 +1139,9 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{string|null, bool}>
+     */
     public static function provideBase64(): iterable
     {
         yield from [
@@ -1124,6 +1178,9 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{string|null, bool}>
+     */
     public static function provideJson(): iterable
     {
         yield from [
@@ -1180,6 +1237,9 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{string|null, bool}>
+     */
     public static function provideTimeZone(): iterable
     {
         yield from [
@@ -1216,6 +1276,9 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    /**
+     * @return iterable<array{string|null, string|null, bool}>
+     */
     public static function provideValidDate(): iterable
     {
         yield from [

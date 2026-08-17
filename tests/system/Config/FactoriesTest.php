@@ -87,7 +87,10 @@ final class FactoriesTest extends CIUnitTestCase
     {
         // Simulate having a $widgets property in App\Config\Factory
         $config = new class () extends Factory {
-            public $widgets = ['bar' => 'bam'];
+            /**
+             * @var array<string, string>
+             */
+            public array $widgets = ['bar' => 'bam'];
         };
         Factories::injectMock('config', Factory::class, $config);
 

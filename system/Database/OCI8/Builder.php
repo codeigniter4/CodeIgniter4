@@ -19,6 +19,8 @@ use CodeIgniter\Database\RawSql;
 
 /**
  * Builder for OCI8
+ *
+ * @extends BaseBuilder<Connection>
  */
 class Builder extends BaseBuilder
 {
@@ -47,13 +49,6 @@ class Builder extends BaseBuilder
      * @var string
      */
     protected $countString = 'SELECT COUNT(1) ';
-
-    /**
-     * A reference to the database connection.
-     *
-     * @var Connection
-     */
-    protected $db;
 
     /**
      * Generates a platform-specific insert string from the supplied data.

@@ -95,6 +95,9 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expectedPath, $uri->getPath());
     }
 
+    /**
+     * @return iterable<array{string, string, string}>
+     */
     public static function provideSimpleUri(): iterable
     {
         return [
@@ -342,6 +345,9 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expectedPath, $uri->getPath());
     }
 
+    /**
+     * @return iterable<array{string, string, string}>
+     */
     public static function provideSetPath(): iterable
     {
         return [
@@ -411,6 +417,9 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, $uri->getPath());
     }
 
+    /**
+     * @return iterable<array{string, string}>
+     */
     public static function providePathGetsFiltered(): iterable
     {
         return [
@@ -596,6 +605,9 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, $uri->getAuthority());
     }
 
+    /**
+     * @return iterable<array{string, string}>
+     */
     public static function provideAuthorityReturnsExceptedValues(): iterable
     {
         return [
@@ -648,6 +660,9 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, (string) $uri);
     }
 
+    /**
+     * @return iterable<array{string, int}>
+     */
     public static function provideAuthorityRemovesDefaultPorts(): iterable
     {
         return [
@@ -682,6 +697,9 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, URI::removeDotSegments($path));
     }
 
+    /**
+     * @return iterable<array{string, string}>
+     */
     public static function provideRemoveDotSegments(): iterable
     {
         return [
@@ -812,6 +830,9 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, (string) $new);
     }
 
+    /**
+     * @return iterable<array{string, string}>
+     */
     public static function defaultResolutions(): iterable
     {
         return [
@@ -1116,7 +1137,10 @@ final class URITest extends CIUnitTestCase
             (string) $request->getUri(),
         );
         $this->assertSame('/ci/v4/controller/method', $request->getUri()->getPath());
-        $this->assertSame('controller/method', $request->getUri()->getRoutePath());
+
+        $requestUri = $request->getUri();
+        $this->assertInstanceOf(SiteURI::class, $requestUri);
+        $this->assertSame('controller/method', $requestUri->getRoutePath());
 
         // standalone
         $uri = new URI('http://example.com/ci/v4/controller/method');

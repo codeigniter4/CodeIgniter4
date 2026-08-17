@@ -27,14 +27,14 @@ class Message implements MessageInterface
     /**
      * Protocol version
      *
-     * @var string
+     * @var string|null
      */
     protected $protocolVersion;
 
     /**
      * List of valid protocol versions
      *
-     * @var array
+     * @var list<string>
      */
     protected $validProtocolVersions = [
         '1.0',
