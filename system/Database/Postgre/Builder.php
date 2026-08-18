@@ -30,7 +30,7 @@ class Builder extends BaseBuilder
     /**
      * ORDER BY random keyword
      *
-     * @var array
+     * @var list<string>
      */
     protected $randomKeyword = [
         'RANDOM()',
@@ -140,7 +140,7 @@ class Builder extends BaseBuilder
      * we simply do a DELETE and an INSERT on the first key/value
      * combo, assuming that it's either the primary key or a unique key.
      *
-     * @param array|null $set An associative array of insert values
+     * @param array<string, mixed>|null $set An associative array of insert values
      *
      * @return BaseResult|false|Query|string
      *

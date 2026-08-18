@@ -73,6 +73,11 @@ parameters:
             path: ../../tests/system/RESTful/ResourceControllerTest.php
 
         -
+            message: '#^Call to an undefined method CodeIgniter\\Test\\TestResponse\:\:ohno\(\)\.$#'
+            count: 1
+            path: ../../tests/system/Test/ControllerTestTraitTest.php
+
+        -
             message: '#^Call to an undefined method CodeIgniter\\View\\Table\:\:compileTemplate\(\)\.$#'
             count: 2
             path: ../../tests/system/View/TableTest.php
@@ -96,8 +101,3 @@ parameters:
             message: '#^Call to an undefined method CodeIgniter\\View\\Table\:\:setFromDBResult\(\)\.$#'
             count: 1
             path: ../../tests/system/View/TableTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\Test\\TestResponse\:\:ohno\(\)\.$#'
-            count: 1
-            path: ../../tests/system/Test/ControllerTestTraitTest.php

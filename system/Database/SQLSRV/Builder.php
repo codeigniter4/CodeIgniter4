@@ -36,7 +36,7 @@ class Builder extends BaseBuilder
     /**
      * ORDER BY random keyword
      *
-     * @var array
+     * @var list<string>
      */
     protected $randomKeyword = [
         'NEWID()',
@@ -644,7 +644,7 @@ class Builder extends BaseBuilder
      * Compiles the select statement based on the other functions called
      * and runs the query
      *
-     * @return ResultInterface
+     * @return false|ResultInterface|string
      */
     public function get(?int $limit = null, int $offset = 0, bool $reset = true)
     {

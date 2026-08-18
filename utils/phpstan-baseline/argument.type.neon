@@ -1,27 +1,7 @@
-# total 54 errors
+# total 33 errors
 
 parameters:
     ignoreErrors:
-        -
-            message: '#^Parameter \#3 \.\.\.\$arrays of function array_map expects array, int\|string given\.$#'
-            count: 1
-            path: ../../system/Database/BaseBuilder.php
-
-        -
-            message: '#^Parameter \#3 \.\.\.\$arrays of function array_map expects array, int\|string given\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/Builder.php
-
-        -
-            message: '#^Parameter \#3 \.\.\.\$arrays of function array_map expects array, int\|string given\.$#'
-            count: 1
-            path: ../../system/Database/Postgre/Builder.php
-
-        -
-            message: '#^Parameter \#3 \.\.\.\$arrays of function array_map expects array, int\|string given\.$#'
-            count: 1
-            path: ../../system/Database/SQLite3/Builder.php
-
         -
             message: '#^Parameter \#2 \$to of method CodeIgniter\\Router\\RouteCollection\:\:add\(\) expects array\<mixed\>\|\(Closure\(mixed \.\.\.\)\: \(CodeIgniter\\HTTP\\ResponseInterface\|string\|void\)\)\|string, Closure\(mixed\)\: CodeIgniter\\HTTP\\ResponseInterface given\.$#'
             count: 1
@@ -51,21 +31,6 @@ parameters:
             message: '#^Parameter \#3 \$classname of static method CodeIgniter\\Config\\Factories\:\:define\(\) expects class\-string, string given\.$#'
             count: 2
             path: ../../tests/system/Config/FactoriesTest.php
-
-        -
-            message: '#^Parameter \#1 \$from of method CodeIgniter\\Database\\BaseBuilder\<CodeIgniter\\Database\\BaseConnection\>\:\:from\(\) expects array\|string, null given\.$#'
-            count: 1
-            path: ../../tests/system/Database/Builder/FromTest.php
-
-        -
-            message: '#^Parameter \#3 \$subject of function str_replace expects array\<string\>\|string, CodeIgniter\\Database\\ResultInterface given\.$#'
-            count: 10
-            path: ../../tests/system/Database/Builder/GetTest.php
-
-        -
-            message: '#^Parameter \#3 \$subject of function str_replace expects array\<string\>\|string, CodeIgniter\\Database\\ResultInterface\|false given\.$#'
-            count: 6
-            path: ../../tests/system/Database/Builder/GetTest.php
 
         -
             message: '#^Parameter \#1 \$fields of method CodeIgniter\\Database\\Forge\<CodeIgniter\\Database\\BaseConnection\>\:\:addField\(\) expects array\<string, array\|string\>\|string, array\<int, string\> given\.$#'
@@ -128,6 +93,16 @@ parameters:
             path: ../../tests/system/Test/FeatureTestTraitTest.php
 
         -
+            message: '#^Parameter \#1 \$body of method CodeIgniter\\HTTP\\Response\:\:setJSON\(\) expects array\<mixed\>\|object\|string, false given\.$#'
+            count: 1
+            path: ../../tests/system/Test/TestResponseTest.php
+
+        -
+            message: '#^Parameter \#1 \$body of method CodeIgniter\\HTTP\\Response\:\:setJSON\(\) expects array\<mixed\>\|object\|string, true given\.$#'
+            count: 1
+            path: ../../tests/system/Test/TestResponseTest.php
+
+        -
             message: '#^Parameter \#2 \$context of method CodeIgniter\\View\\Parser\:\:setData\(\) expects ''attr''\|''css''\|''html''\|''js''\|''raw''\|''url''\|null, ''unknown'' given\.$#'
             count: 3
             path: ../../tests/system/View/ParserTest.php
@@ -151,13 +126,3 @@ parameters:
             message: '#^Parameter \#2 \$resultID of class CodeIgniter\\View\\DBResultDummy constructor expects mysqli_result, null given\.$#'
             count: 2
             path: ../../tests/system/View/TableTest.php
-
-        -
-            message: '#^Parameter \#1 \$body of method CodeIgniter\\HTTP\\Response\:\:setJSON\(\) expects array\<mixed\>\|object\|string, false given\.$#'
-            count: 1
-            path: ../../tests/system/Test/TestResponseTest.php
-
-        -
-            message: '#^Parameter \#1 \$body of method CodeIgniter\\HTTP\\Response\:\:setJSON\(\) expects array\<mixed\>\|object\|string, true given\.$#'
-            count: 1
-            path: ../../tests/system/Test/TestResponseTest.php
