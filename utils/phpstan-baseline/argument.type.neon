@@ -1,4 +1,4 @@
-# total 33 errors
+# total 31 errors
 
 parameters:
     ignoreErrors:
@@ -31,11 +31,6 @@ parameters:
             message: '#^Parameter \#3 \$classname of static method CodeIgniter\\Config\\Factories\:\:define\(\) expects class\-string, string given\.$#'
             count: 2
             path: ../../tests/system/Config/FactoriesTest.php
-
-        -
-            message: '#^Parameter \#1 \$fields of method CodeIgniter\\Database\\Forge\<CodeIgniter\\Database\\BaseConnection\>\:\:addField\(\) expects array\<string, array\|string\>\|string, array\<int, string\> given\.$#'
-            count: 2
-            path: ../../tests/system/Database/Live/ForgeTest.php
 
         -
             message: '#^Parameter \#1 \$db of class CodeIgniter\\Database\\SQLite3\\Table constructor expects CodeIgniter\\Database\\SQLite3\\Connection, CodeIgniter\\Database\\BaseConnection given\.$#'

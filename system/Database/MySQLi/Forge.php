@@ -24,8 +24,6 @@ class Forge extends BaseForge
 {
     /**
      * CREATE DATABASE statement
-     *
-     * @var string
      */
     protected $createDatabaseStr = 'CREATE DATABASE %s CHARACTER SET %s COLLATE %s';
 
@@ -38,8 +36,6 @@ class Forge extends BaseForge
 
     /**
      * DROP CONSTRAINT statement
-     *
-     * @var string
      */
     protected $dropConstraintStr = 'ALTER TABLE %s DROP FOREIGN KEY %s';
 
@@ -56,7 +52,7 @@ class Forge extends BaseForge
     /**
      * UNSIGNED support
      *
-     * @var array
+     * @var list<string>
      */
     protected $_unsigned = [
         'TINYINT',
@@ -76,7 +72,7 @@ class Forge extends BaseForge
     /**
      * Table Options list which required to be quoted
      *
-     * @var array
+     * @var list<string>
      */
     protected $_quoted_table_options = [
         'COMMENT',
@@ -100,7 +96,7 @@ class Forge extends BaseForge
     /**
      * CREATE TABLE attributes
      *
-     * @param array $attributes Associative array of table attributes
+     * @param array<string, mixed> $attributes Associative array of table attributes
      */
     protected function _createTableAttributes(array $attributes): string
     {
@@ -129,16 +125,6 @@ class Forge extends BaseForge
         return $sql;
     }
 
-    /**
-     * ALTER TABLE
-     *
-     * @param string       $alterType       ALTER type
-     * @param string       $table           Table name
-     * @param array|string $processedFields Processed column definitions
-     *                                      or column names to DROP
-     *
-     * @return ($alterType is 'DROP' ? string : list<string>)
-     */
     protected function _alterTable(string $alterType, string $table, $processedFields)
     {
         if ($alterType === 'DROP') {
@@ -187,11 +173,6 @@ class Forge extends BaseForge
                 . $extraClause;
     }
 
-    /**
-     * Generates SQL to add indexes
-     *
-     * @param bool $asQuery When true returns stand alone SQL, else partial SQL used with CREATE TABLE
-     */
     protected function _processIndexes(string $table, bool $asQuery = false): array
     {
         $sqls  = [''];

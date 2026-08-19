@@ -34,7 +34,7 @@ class Forge extends BaseForge
     /**
      * UNSIGNED support
      *
-     * @var array|bool
+     * @var array<array-key, string>|bool
      */
     protected $_unsigned = false;
 
@@ -59,11 +59,6 @@ class Forge extends BaseForge
         }
     }
 
-    /**
-     * Create database
-     *
-     * @param bool $ifNotExists Whether to add IF NOT EXISTS condition
-     */
     public function createDatabase(string $dbName, bool $ifNotExists = false): bool
     {
         // In SQLite, a database is created when you connect to the database.
@@ -132,12 +127,6 @@ class Forge extends BaseForge
         return $result;
     }
 
-    /**
-     * @param array|string $processedFields Processed column definitions
-     *                                      or column names to DROP
-     *
-     * @return ($alterType is 'DROP' ? string : list<string>|null)
-     */
     protected function _alterTable(string $alterType, string $table, $processedFields)
     {
         switch ($alterType) {
