@@ -1,4 +1,4 @@
-# total 26 errors
+# total 15 errors
 
 parameters:
     ignoreErrors:
@@ -66,61 +66,6 @@ parameters:
             message: '#^Method CodeIgniter\\Helpers\\URLHelper\\SiteUrlTest\:\:createRequest\(\) has parameter \$body with no type specified\.$#'
             count: 1
             path: ../../tests/system/Helpers/URLHelper/SiteUrlTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\Controllers\\BlogController\:\:getSomeMethod\(\) has parameter \$first with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Router/Controllers/BlogController.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\Controllers\\Index\:\:getIndex\(\) has parameter \$p1 with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Router/Controllers/Index.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\Controllers\\Mycontroller\:\:getSomemethod\(\) has parameter \$first with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Router/Controllers/Mycontroller.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\Controllers\\Remap\:\:_remap\(\) has parameter \$params with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Router/Controllers/Remap.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\Controllers\\SubDir\\BlogController\:\:getSomeMethod\(\) has parameter \$first with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Router/Controllers/SubDir/BlogController.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\Controllers\\Subfolder\\Home\:\:getIndex\(\) has parameter \$p1 with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Router/Controllers/Subfolder/Home.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\Controllers\\Subfolder\\Home\:\:getIndex\(\) has parameter \$p2 with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Router/Controllers/Subfolder/Home.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\Controllers\\Subfolder\\Sub\\BlogController\:\:getSomeMethod\(\) has parameter \$first with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Router/Controllers/Subfolder/Sub/BlogController.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\DefinedRouteCollectorTest\:\:createRouteCollection\(\) has parameter \$moduleConfig with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Router/DefinedRouteCollectorTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\RouteCollectionReverseRouteTest\:\:getCollector\(\) has parameter \$moduleConfig with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Router/RouteCollectionReverseRouteTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\RouteCollectionTest\:\:getCollector\(\) has parameter \$moduleConfig with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Router/RouteCollectionTest.php
 
         -
             message: '#^Method CodeIgniter\\Security\\SecurityCSRFSessionRandomizeTokenTest\:\:createSession\(\) has parameter \$options with no type specified\.$#'
