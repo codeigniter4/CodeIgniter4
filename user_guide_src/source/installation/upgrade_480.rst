@@ -82,6 +82,27 @@ the URI. Such calls must now pass a ``URI``:
 Any other call that omitted ``$uri`` or passed ``null`` already failed with
 ``Call to a member function getHost() on null``, so it needs no migration.
 
+RedirectException Default Status Code
+======================================
+
+``CodeIgniter\HTTP\Exceptions\RedirectException`` no longer redeclares the inherited ``$code`` property to store the status applied to a
+``Response`` whose status is outside the 301-308 range. If you have a subclass that overrode ``$code`` for this purpose, override the new
+``$defaultStatusCode`` property instead:
+
+.. code-block:: php
+
+    // Before
+    class MyRedirectException extends RedirectException
+    {
+        protected $code = 307;
+    }
+
+    // After
+    class MyRedirectException extends RedirectException
+    {
+        protected int $defaultStatusCode = 307;
+    }
+
 *********************
 Breaking Enhancements
 *********************
