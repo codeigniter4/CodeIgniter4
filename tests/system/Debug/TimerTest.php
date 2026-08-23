@@ -176,7 +176,7 @@ final class TimerTest extends CIUnitTestCase
         $this->expectException(ArgumentCountError::class);
 
         $timer = new Timer();
-        $timer->record('error', 'strlen');
+        $timer->record('error', 'strlen'); // @phpstan-ignore argument.type (Needed for testing)
     }
 
     public function testCommonNoNameExpectTimer(): void

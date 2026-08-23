@@ -190,6 +190,9 @@ class Toolbar
 
     /**
      * Called within the view to display the timeline itself.
+     *
+     * @param list<array{hasTimelineData: bool, timelineData: list<array<string, mixed>>}> $collectors
+     * @param array<string, string>                                                        $styles
      */
     protected function renderTimeline(array $collectors, float $startTime, int $segmentCount, int $segmentDuration, array &$styles): string
     {
@@ -202,6 +205,9 @@ class Toolbar
 
     /**
      * Recursively renders timeline elements and their children.
+     *
+     * @param list<array<string, mixed>> $rows
+     * @param array<string, string>      $styles
      */
     protected function renderTimelineRecursive(array $rows, float $startTime, int $segmentCount, int $segmentDuration, array &$styles, int &$styleCount, int $level = 0, bool $isChild = false): string
     {
@@ -268,7 +274,9 @@ class Toolbar
     /**
      * Returns a sorted array of timeline data arrays from the collectors.
      *
-     * @param array $collectors
+     * @param list<array{hasTimelineData: bool, timelineData: list<array<string, mixed>>}> $collectors
+     *
+     * @return list<array<string, mixed>>
      */
     protected function collectTimelineData($collectors): array
     {
@@ -305,6 +313,10 @@ class Toolbar
 
     /**
      * Arranges the already sorted timeline data into a parent => child structure.
+     *
+     * @param list<array<string, mixed>> $elements
+     *
+     * @return list<array<string, mixed>>
      */
     protected function structureTimelineData(array $elements): array
     {
@@ -333,6 +345,8 @@ class Toolbar
     /**
      * Returns an array of data from all of the modules
      * that should be displayed in the 'Vars' tab.
+     *
+     * @return array<string, mixed>
      */
     protected function collectVarData(): array
     {

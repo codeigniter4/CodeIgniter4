@@ -28,7 +28,7 @@ class Timer
     /**
      * List of all timers.
      *
-     * @var array
+     * @var array<string, array{start: float, end: float|null}>
      */
     protected $timers = [];
 
@@ -107,6 +107,8 @@ class Timer
      * Returns the array of timers, with the duration pre-calculated for you.
      *
      * @param int $decimals Number of decimal places
+     *
+     * @return array<string, array{start: float, end: float, duration: float}>
      */
     public function getTimers(int $decimals = 4): array
     {

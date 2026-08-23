@@ -26,6 +26,8 @@ Changes
 Deprecations
 ************
 
+- **Debug Toolbar:** Deprecated the unused ``CodeIgniter\Debug\Toolbar\Collectors\Views::$views`` property.
+
 **********
 Bugs Fixed
 **********
