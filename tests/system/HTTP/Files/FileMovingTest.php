@@ -215,6 +215,34 @@ final class FileMovingTest extends CIUnitTestCase
         $this->assertTrue($file->hasMoved());
     }
 
+    public function testPathnameAfterMoveReflectsTheMovedFile(): void
+    {
+        $finalFilename = 'fileA.txt';
+        service('superglobals')->setFilesArray([
+            'userfile1' => [
+                'name'     => $finalFilename,
+                'type'     => 'text/plain',
+                'size'     => 124,
+                'tmp_name' => '/tmp/fileA.txt',
+                'error'    => 0,
+            ],
+        ]);
+
+        $collection = new FileCollection();
+
+        $destination = $this->destination;
+
+        if (! is_dir($destination)) {
+            mkdir($destination, 0777, true);
+        }
+
+        $file = $collection->getFile('userfile1');
+        $this->assertInstanceOf(UploadedFile::class, $file);
+
+        $file->move($destination, $file->getName(), false);
+        $this->assertSame($destination . '/' . $finalFilename, $file->getPathname());
+    }
+
     public function testStore(): void
     {
         $finalFilename = 'fileA';

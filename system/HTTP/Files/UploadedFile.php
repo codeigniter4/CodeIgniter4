@@ -123,7 +123,7 @@ class UploadedFile extends File implements UploadedFileInterface
      * @param bool        $overwrite  State for indicating whether to overwrite the previously generated file with the same
      *                                name or not.
      *
-     * @return bool
+     * @return static
      */
     public function move(string $targetPath, ?string $name = null, bool $overwrite = false)
     {
@@ -165,7 +165,9 @@ class UploadedFile extends File implements UploadedFileInterface
         $this->path = $targetPath;
         $this->name = basename($destination);
 
-        return true;
+        parent::__construct($destination, false);
+
+        return $this;
     }
 
     /**

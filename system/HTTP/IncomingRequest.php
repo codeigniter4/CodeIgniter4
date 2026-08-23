@@ -56,8 +56,6 @@ class IncomingRequest extends Request
      * everything this cares about (and the router, etc) is the portion
      * AFTER the baseURL. So, if hosted in a sub-folder this will
      * appear different than actual URI path. If you need that use getPath().
-     *
-     * @var URI
      */
     protected $uri;
 
