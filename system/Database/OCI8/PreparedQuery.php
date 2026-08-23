@@ -30,16 +30,6 @@ class PreparedQuery extends BasePreparedQuery
      */
     private ?string $lastInsertTableName = null;
 
-    /**
-     * Prepares the query against the database, and saves the connection
-     * info necessary to execute the query later.
-     *
-     * NOTE: This version is based on SQL code. Child classes should
-     * override this method.
-     *
-     * @param array $options Passed to the connection's prepare statement.
-     *                       Unused in the OCI8 driver.
-     */
     public function _prepare(string $sql, array $options = []): PreparedQuery
     {
         if (! $this->statement = oci_parse($this->db->connID, $this->parameterize($sql))) {
@@ -57,10 +47,6 @@ class PreparedQuery extends BasePreparedQuery
         return $this;
     }
 
-    /**
-     * Takes a new set of data and runs it against the currently
-     * prepared query. Upon success, will return a Results object.
-     */
     public function _execute(array $data): bool
     {
         if (! isset($this->statement)) {
@@ -93,8 +79,6 @@ class PreparedQuery extends BasePreparedQuery
     }
 
     /**
-     * Returns the statement resource for the prepared query or false when preparing failed.
-     *
      * @return resource|null
      */
     public function _getResult()
@@ -102,9 +86,6 @@ class PreparedQuery extends BasePreparedQuery
         return $this->statement;
     }
 
-    /**
-     * Deallocate prepared statements.
-     */
     protected function _close(): bool
     {
         return oci_free_statement($this->statement);

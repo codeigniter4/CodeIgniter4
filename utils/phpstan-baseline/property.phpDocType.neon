@@ -1,47 +1,7 @@
-# total 17 errors
+# total 9 errors
 
 parameters:
     ignoreErrors:
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\MySQLi\\Utils\:\:\$listDatabases is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$listDatabases\.$#'
-            count: 1
-            path: ../../system/Database/MySQLi/Utils.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\MySQLi\\Utils\:\:\$optimizeTable is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$optimizeTable\.$#'
-            count: 1
-            path: ../../system/Database/MySQLi/Utils.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\OCI8\\Utils\:\:\$listDatabases is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$listDatabases\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/Utils.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\Postgre\\Utils\:\:\$listDatabases is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$listDatabases\.$#'
-            count: 1
-            path: ../../system/Database/Postgre/Utils.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\Postgre\\Utils\:\:\$optimizeTable is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$optimizeTable\.$#'
-            count: 1
-            path: ../../system/Database/Postgre/Utils.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLSRV\\Utils\:\:\$listDatabases is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$listDatabases\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/Utils.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLSRV\\Utils\:\:\$optimizeTable is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$optimizeTable\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/Utils.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLite3\\Utils\:\:\$optimizeTable is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$optimizeTable\.$#'
-            count: 1
-            path: ../../system/Database/SQLite3/Utils.php
-
         -
             message: '#^PHPDoc type int of property CodeIgniter\\Exceptions\\PageNotFoundException\:\:\$code is not the same as PHPDoc type mixed of overridden property Exception\:\:\$code\.$#'
             count: 1

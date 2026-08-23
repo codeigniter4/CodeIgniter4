@@ -44,15 +44,6 @@ class PreparedQuery extends BasePreparedQuery
     protected $result;
 
     /**
-     * Prepares the query against the database, and saves the connection
-     * info necessary to execute the query later.
-     *
-     * NOTE: This version is based on SQL code. Child classes should
-     * override this method.
-     *
-     * @param array $options Passed to the connection's prepare statement.
-     *                       Unused in the MySQLi driver.
-     *
      * @throws Exception
      */
     public function _prepare(string $sql, array $options = []): PreparedQuery
@@ -77,10 +68,6 @@ class PreparedQuery extends BasePreparedQuery
         return $this;
     }
 
-    /**
-     * Takes a new set of data and runs it against the currently
-     * prepared query. Upon success, will return a Results object.
-     */
     public function _execute(array $data): bool
     {
         if (! isset($this->statement)) {
@@ -99,8 +86,6 @@ class PreparedQuery extends BasePreparedQuery
     }
 
     /**
-     * Returns the result object for the prepared query or false on failure.
-     *
      * @return PgSqlResult|null
      */
     public function _getResult()
@@ -108,9 +93,6 @@ class PreparedQuery extends BasePreparedQuery
         return $this->result;
     }
 
-    /**
-     * Deallocate prepared statements.
-     */
     protected function _close(): bool
     {
         return pg_query($this->db->connID, 'DEALLOCATE "' . $this->db->escapeIdentifiers($this->name) . '"') !== false;
