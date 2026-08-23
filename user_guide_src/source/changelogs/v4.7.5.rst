@@ -22,6 +22,8 @@ Message Changes
 Changes
 *******
 
+- **Response:** ``setJSON()`` and ``setXML()``, and the ``FormatterInterface::format()`` contract implemented by ``JSONFormatter`` and ``XMLFormatter``, now type their body/data parameter as ``mixed`` instead of ``array|object|string``, matching what they already accepted at runtime (e.g., scalars and ``bool``).
+
 ************
 Deprecations
 ************
