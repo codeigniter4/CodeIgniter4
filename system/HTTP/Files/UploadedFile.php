@@ -165,6 +165,8 @@ class UploadedFile extends File implements UploadedFileInterface
         $this->path = $targetPath;
         $this->name = basename($destination);
 
+        parent::__construct($destination, false);
+
         return $this;
     }
 
