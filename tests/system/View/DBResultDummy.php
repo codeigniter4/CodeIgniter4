@@ -27,7 +27,7 @@ class DBResultDummy extends Result
     }
 
     /**
-     * @return array<int, array<string, string>>
+     * @return list<array<string, string>>
      */
     public function getResultArray(): array
     {

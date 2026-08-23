@@ -67,7 +67,7 @@ final class BaseResultTest extends CIUnitTestCase
             }
 
             /**
-             * @return list<object>
+             * @return list<stdClass>
              */
             public function getFieldData(): array
             {
@@ -84,7 +84,7 @@ final class BaseResultTest extends CIUnitTestCase
             }
 
             /**
-             * @return false|list<array<string,mixed>>|null
+             * @return array<string, mixed>|false|null
              */
             protected function fetchAssoc(): array|bool|null
             {

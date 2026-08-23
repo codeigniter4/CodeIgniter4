@@ -481,7 +481,7 @@ class Connection extends BaseConnection
                     $type = 'PRIMARY';
                 } elseif ($index['Index_type'] === 'FULLTEXT') {
                     $type = 'FULLTEXT';
-                } elseif ($index['Non_unique']) {
+                } elseif ((bool) $index['Non_unique']) {
                     $type = $index['Index_type'] === 'SPATIAL' ? 'SPATIAL' : 'INDEX';
                 } else {
                     $type = 'UNIQUE';

@@ -1,4 +1,4 @@
-# total 518 errors
+# total 470 errors
 
 parameters:
     ignoreErrors:
@@ -443,91 +443,6 @@ parameters:
             path: ../../system/Database/BasePreparedQuery.php
 
         -
-            message: '#^Method CodeIgniter\\Database\\BaseResult\:\:fetchAssoc\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseResult.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseResult\:\:getCustomResultObject\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseResult.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseResult\:\:getFieldData\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseResult.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseResult\:\:getFieldNames\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseResult.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseResult\:\:getFirstRow\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseResult.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseResult\:\:getLastRow\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseResult.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseResult\:\:getNextRow\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseResult.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseResult\:\:getPreviousRow\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseResult.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseResult\:\:getResultArray\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseResult.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseResult\:\:getResult\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseResult.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseResult\:\:getRowArray\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseResult.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseResult\:\:getRow\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseResult.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseResult\:\:getUnbufferedRow\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseResult.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseResult\:\:setRow\(\) has parameter \$key with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseResult.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseResult\:\:setRow\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseResult.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\BaseResult\:\:\$customResultObject type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseResult.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\BaseResult\:\:\$rowData type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseResult.php
-
-        -
             message: '#^Method CodeIgniter\\Database\\BaseUtils\:\:_backup\(\) has parameter \$prefs with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/BaseUtils.php
@@ -663,21 +578,6 @@ parameters:
             path: ../../system/Database/MySQLi/PreparedQuery.php
 
         -
-            message: '#^Method CodeIgniter\\Database\\MySQLi\\Result\:\:fetchAssoc\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/MySQLi/Result.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\MySQLi\\Result\:\:getFieldData\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/MySQLi/Result.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\MySQLi\\Result\:\:getFieldNames\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/MySQLi/Result.php
-
-        -
             message: '#^Method CodeIgniter\\Database\\MySQLi\\Utils\:\:_backup\(\) has parameter \$prefs with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/MySQLi/Utils.php
@@ -708,21 +608,6 @@ parameters:
             path: ../../system/Database/OCI8/PreparedQuery.php
 
         -
-            message: '#^Method CodeIgniter\\Database\\OCI8\\Result\:\:fetchAssoc\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/Result.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\OCI8\\Result\:\:getFieldData\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/Result.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\OCI8\\Result\:\:getFieldNames\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/Result.php
-
-        -
             message: '#^Method CodeIgniter\\Database\\OCI8\\Utils\:\:_backup\(\) has parameter \$prefs with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/OCI8/Utils.php
@@ -741,21 +626,6 @@ parameters:
             message: '#^Method CodeIgniter\\Database\\Postgre\\PreparedQuery\:\:_prepare\(\) has parameter \$options with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/Postgre/PreparedQuery.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Postgre\\Result\:\:fetchAssoc\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Postgre/Result.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Postgre\\Result\:\:getFieldData\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Postgre/Result.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Postgre\\Result\:\:getFieldNames\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Postgre/Result.php
 
         -
             message: '#^Method CodeIgniter\\Database\\Postgre\\Utils\:\:_backup\(\) has parameter \$prefs with no value type specified in iterable type array\.$#'
@@ -788,81 +658,6 @@ parameters:
             path: ../../system/Database/Query.php
 
         -
-            message: '#^Method CodeIgniter\\Database\\ResultInterface\:\:getCustomResultObject\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/ResultInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\ResultInterface\:\:getFieldData\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/ResultInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\ResultInterface\:\:getFieldNames\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/ResultInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\ResultInterface\:\:getFirstRow\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/ResultInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\ResultInterface\:\:getLastRow\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/ResultInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\ResultInterface\:\:getNextRow\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/ResultInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\ResultInterface\:\:getPreviousRow\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/ResultInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\ResultInterface\:\:getResultArray\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/ResultInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\ResultInterface\:\:getResultObject\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/ResultInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\ResultInterface\:\:getResult\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/ResultInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\ResultInterface\:\:getRowArray\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/ResultInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\ResultInterface\:\:getRow\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/ResultInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\ResultInterface\:\:getUnbufferedRow\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/ResultInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\ResultInterface\:\:setRow\(\) has parameter \$key with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/ResultInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\ResultInterface\:\:setRow\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/ResultInterface.php
-
-        -
             message: '#^Method CodeIgniter\\Database\\SQLSRV\\Connection\:\:__construct\(\) has parameter \$params with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/SQLSRV/Connection.php
@@ -888,21 +683,6 @@ parameters:
             path: ../../system/Database/SQLSRV/PreparedQuery.php
 
         -
-            message: '#^Method CodeIgniter\\Database\\SQLSRV\\Result\:\:fetchAssoc\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/Result.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\SQLSRV\\Result\:\:getFieldData\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/Result.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\SQLSRV\\Result\:\:getFieldNames\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/Result.php
-
-        -
             message: '#^Method CodeIgniter\\Database\\SQLSRV\\Utils\:\:_backup\(\) has parameter \$prefs with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/SQLSRV/Utils.php
@@ -916,21 +696,6 @@ parameters:
             message: '#^Method CodeIgniter\\Database\\SQLite3\\PreparedQuery\:\:_prepare\(\) has parameter \$options with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/SQLite3/PreparedQuery.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\SQLite3\\Result\:\:fetchAssoc\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLite3/Result.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\SQLite3\\Result\:\:getFieldData\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLite3/Result.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\SQLite3\\Result\:\:getFieldNames\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLite3/Result.php
 
         -
             message: '#^Method CodeIgniter\\Database\\SQLite3\\Table\:\:addForeignKey\(\) has parameter \$foreignKeys with no value type specified in iterable type array\.$#'
@@ -2556,11 +2321,6 @@ parameters:
             message: '#^Method CodeIgniter\\Throttle\\ThrottleTest\:\:testTokenTimeCalculationUCs\(\) has parameter \$checkInputs with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/Throttle/ThrottleTest.php
-
-        -
-            message: '#^Method CodeIgniter\\View\\DBResultDummy\:\:getFieldNames\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/View/DBResultDummy.php
 
         -
             message: '#^Method CodeIgniter\\View\\ParserTest\:\:provideEscHandling\(\) return type has no value type specified in iterable type iterable\.$#'
