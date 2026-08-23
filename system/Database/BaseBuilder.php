@@ -64,35 +64,35 @@ class BaseBuilder
     /**
      * QB FROM data
      *
-     * @var array
+     * @var list<string>
      */
     protected $QBFrom = [];
 
     /**
      * QB JOIN data
      *
-     * @var array
+     * @var list<string>
      */
     protected $QBJoin = [];
 
     /**
      * QB WHERE data
      *
-     * @var array
+     * @var list<array{condition: RawSql|string, escape: bool}>
      */
     protected $QBWhere = [];
 
     /**
      * QB GROUP BY data
      *
-     * @var array
+     * @var list<array{field: string, escape: bool}|string>
      */
     public $QBGroupBy = [];
 
     /**
      * QB HAVING data
      *
-     * @var array
+     * @var list<array{condition: RawSql|string, escape: bool}>
      */
     protected $QBHaving = [];
 
@@ -136,7 +136,7 @@ class BaseBuilder
     /**
      * QB ORDER BY data
      *
-     * @var array|string|null
+     * @var list<array{field: string, direction: string, escape: bool}|string>|string|null
      */
     public $QBOrderBy = [];
 
@@ -190,10 +190,10 @@ class BaseBuilder
      * and is reset by resetWrite()
      *
      * @var array{
-     *   updateFieldsAdditional?: array,
+     *   updateFieldsAdditional?: array<string, RawSql|string>,
      *   tableIdentity?: string,
-     *   updateFields?: array,
-     *   constraints?: array,
+     *   updateFields?: array<string, RawSql|string>,
+     *   constraints?: array<array-key, RawSql|string>,
      *   setQueryAsData?: string,
      *   sql?: string,
      *   alias?: string,
@@ -226,7 +226,7 @@ class BaseBuilder
     /**
      * ORDER BY random keyword
      *
-     * @var array
+     * @var list<string>
      */
     protected $randomKeyword = [
         'RAND()',
@@ -248,7 +248,7 @@ class BaseBuilder
      * their values for later binding
      * in the Query object.
      *
-     * @var array
+     * @var array<string, array{mixed, bool}>
      */
     protected $binds = [];
 
@@ -256,7 +256,7 @@ class BaseBuilder
      * Collects the key count for named parameters
      * in the Query object.
      *
-     * @var array
+     * @var array<string, int>
      */
     protected $bindsKeyCount = [];
 
@@ -294,7 +294,7 @@ class BaseBuilder
     /**
      * Tables relation types
      *
-     * @var array
+     * @var list<string>
      */
     protected $joinTypes = [
         'LEFT',
@@ -322,7 +322,8 @@ class BaseBuilder
     /**
      * Constructor
      *
-     * @param array|string|TableName $tableName tablename or tablenames with or without aliases
+     * @param array<array-key, string>|string|TableName $tableName tablename or tablenames with or without aliases
+     * @param array<string, mixed>|null                 $options
      *
      * Examples of $tableName: `mytable`, `jobs j`, `jobs j, users u`, `['jobs j','users u']`
      *
@@ -393,6 +394,8 @@ class BaseBuilder
     /**
      * Returns an array of bind values and their
      * named parameters for binding in the Query object later.
+     *
+     * @return array<string, array{mixed, bool}>
      */
     public function getBinds(): array
     {
@@ -601,7 +604,7 @@ class BaseBuilder
     /**
      * Generates the FROM portion of the query
      *
-     * @param array|string $from
+     * @param array<array-key, string>|string|null $from
      */
     public function from($from, bool $overwrite = false): self
     {
@@ -757,8 +760,8 @@ class BaseBuilder
      * Generates the WHERE portion of the query.
      * Separates multiple calls with 'AND'.
      *
-     * @param array|RawSql|string $key
-     * @param mixed               $value
+     * @param array<string, mixed>|RawSql|string $key
+     * @param mixed                              $value
      *
      * @return $this
      */
@@ -773,8 +776,8 @@ class BaseBuilder
      * Generates the WHERE portion of the query.
      * Separates multiple calls with 'OR'.
      *
-     * @param array|RawSql|string $key
-     * @param mixed               $value
+     * @param array<string, mixed>|RawSql|string $key
+     * @param mixed                              $value
      *
      * @return $this
      */
@@ -1087,8 +1090,8 @@ class BaseBuilder
      * @used-by having()
      * @used-by orHaving()
      *
-     * @param array|RawSql|string $key
-     * @param mixed               $value
+     * @param array<string, mixed>|RawSql|string $key
+     * @param mixed                              $value
      *
      * @return $this
      */
@@ -1210,7 +1213,7 @@ class BaseBuilder
      * Generates a WHERE field IN('item', 'item') SQL query,
      * joined with 'AND' if appropriate.
      *
-     * @param array|BaseBuilder|(Closure(BaseBuilder): BaseBuilder)|null $values The values searched on, or anonymous function with subquery
+     * @param array<array-key, mixed>|BaseBuilder|(Closure(BaseBuilder): BaseBuilder)|null $values The values searched on, or anonymous function with subquery
      *
      * @return $this
      */
@@ -1223,7 +1226,7 @@ class BaseBuilder
      * Generates a WHERE field IN('item', 'item') SQL query,
      * joined with 'OR' if appropriate.
      *
-     * @param array|BaseBuilder|(Closure(BaseBuilder): BaseBuilder)|null $values The values searched on, or anonymous function with subquery
+     * @param array<array-key, mixed>|BaseBuilder|(Closure(BaseBuilder): BaseBuilder)|null $values The values searched on, or anonymous function with subquery
      *
      * @return $this
      */
@@ -1236,7 +1239,7 @@ class BaseBuilder
      * Generates a WHERE field NOT IN('item', 'item') SQL query,
      * joined with 'AND' if appropriate.
      *
-     * @param array|BaseBuilder|(Closure(BaseBuilder): BaseBuilder)|null $values The values searched on, or anonymous function with subquery
+     * @param array<array-key, mixed>|BaseBuilder|(Closure(BaseBuilder): BaseBuilder)|null $values The values searched on, or anonymous function with subquery
      *
      * @return $this
      */
@@ -1249,7 +1252,7 @@ class BaseBuilder
      * Generates a WHERE field NOT IN('item', 'item') SQL query,
      * joined with 'OR' if appropriate.
      *
-     * @param array|BaseBuilder|(Closure(BaseBuilder): BaseBuilder)|null $values The values searched on, or anonymous function with subquery
+     * @param array<array-key, mixed>|BaseBuilder|(Closure(BaseBuilder): BaseBuilder)|null $values The values searched on, or anonymous function with subquery
      *
      * @return $this
      */
@@ -1262,7 +1265,7 @@ class BaseBuilder
      * Generates a HAVING field IN('item', 'item') SQL query,
      * joined with 'AND' if appropriate.
      *
-     * @param array|BaseBuilder|(Closure(BaseBuilder): BaseBuilder)|null $values The values searched on, or anonymous function with subquery
+     * @param array<array-key, mixed>|BaseBuilder|(Closure(BaseBuilder): BaseBuilder)|null $values The values searched on, or anonymous function with subquery
      *
      * @return $this
      */
@@ -1275,7 +1278,7 @@ class BaseBuilder
      * Generates a HAVING field IN('item', 'item') SQL query,
      * joined with 'OR' if appropriate.
      *
-     * @param array|BaseBuilder|(Closure(BaseBuilder): BaseBuilder)|null $values The values searched on, or anonymous function with subquery
+     * @param array<array-key, mixed>|BaseBuilder|(Closure(BaseBuilder): BaseBuilder)|null $values The values searched on, or anonymous function with subquery
      *
      * @return $this
      */
@@ -1288,7 +1291,7 @@ class BaseBuilder
      * Generates a HAVING field NOT IN('item', 'item') SQL query,
      * joined with 'AND' if appropriate.
      *
-     * @param array|BaseBuilder|(Closure(BaseBuilder):BaseBuilder)|null $values The values searched on, or anonymous function with subquery
+     * @param array<array-key, mixed>|BaseBuilder|(Closure(BaseBuilder): BaseBuilder)|null $values The values searched on, or anonymous function with subquery
      *
      * @return $this
      */
@@ -1301,7 +1304,7 @@ class BaseBuilder
      * Generates a HAVING field NOT IN('item', 'item') SQL query,
      * joined with 'OR' if appropriate.
      *
-     * @param array|BaseBuilder|(Closure(BaseBuilder): BaseBuilder)|null $values The values searched on, or anonymous function with subquery
+     * @param array<array-key, mixed>|BaseBuilder|(Closure(BaseBuilder): BaseBuilder)|null $values The values searched on, or anonymous function with subquery
      *
      * @return $this
      */
@@ -1366,7 +1369,7 @@ class BaseBuilder
      * Generates a %LIKE% portion of the query.
      * Separates multiple calls with 'AND'.
      *
-     * @param array|RawSql|string $field
+     * @param array<string, mixed>|RawSql|string $field
      *
      * @return $this
      */
@@ -1391,7 +1394,7 @@ class BaseBuilder
      * Generates a NOT LIKE portion of the query.
      * Separates multiple calls with 'AND'.
      *
-     * @param array|RawSql|string $field
+     * @param array<string, mixed>|RawSql|string $field
      *
      * @return $this
      */
@@ -1404,7 +1407,7 @@ class BaseBuilder
      * Generates a %LIKE% portion of the query.
      * Separates multiple calls with 'OR'.
      *
-     * @param array|RawSql|string $field
+     * @param array<string, mixed>|RawSql|string $field
      *
      * @return $this
      */
@@ -1429,7 +1432,7 @@ class BaseBuilder
      * Generates a NOT LIKE portion of the query.
      * Separates multiple calls with 'OR'.
      *
-     * @param array|RawSql|string $field
+     * @param array<string, mixed>|RawSql|string $field
      *
      * @return $this
      */
@@ -1442,7 +1445,7 @@ class BaseBuilder
      * Generates a %LIKE% portion of the query.
      * Separates multiple calls with 'AND'.
      *
-     * @param array|RawSql|string $field
+     * @param array<string, mixed>|RawSql|string $field
      *
      * @return $this
      */
@@ -1455,7 +1458,7 @@ class BaseBuilder
      * Generates a NOT LIKE portion of the query.
      * Separates multiple calls with 'AND'.
      *
-     * @param array|RawSql|string $field
+     * @param array<string, mixed>|RawSql|string $field
      *
      * @return $this
      */
@@ -1468,7 +1471,7 @@ class BaseBuilder
      * Generates a %LIKE% portion of the query.
      * Separates multiple calls with 'OR'.
      *
-     * @param array|RawSql|string $field
+     * @param array<string, mixed>|RawSql|string $field
      *
      * @return $this
      */
@@ -1481,7 +1484,7 @@ class BaseBuilder
      * Generates a NOT LIKE portion of the query.
      * Separates multiple calls with 'OR'.
      *
-     * @param array|RawSql|string $field
+     * @param array<string, mixed>|RawSql|string $field
      *
      * @return $this
      */
@@ -1834,7 +1837,7 @@ class BaseBuilder
     }
 
     /**
-     * @param array|string $by
+     * @param array<array-key, string>|string $by
      *
      * @return $this
      */
@@ -1867,8 +1870,8 @@ class BaseBuilder
     /**
      * Separates multiple calls with 'AND'.
      *
-     * @param array|RawSql|string $key
-     * @param mixed               $value
+     * @param array<string, mixed>|RawSql|string $key
+     * @param mixed                              $value
      *
      * @return $this
      */
@@ -1880,8 +1883,8 @@ class BaseBuilder
     /**
      * Separates multiple calls with 'OR'.
      *
-     * @param array|RawSql|string $key
-     * @param mixed               $value
+     * @param array<string, mixed>|RawSql|string $key
+     * @param mixed                              $value
      *
      * @return $this
      */
@@ -2040,9 +2043,9 @@ class BaseBuilder
     /**
      * Allows key/value pairs to be set for insert(), update() or replace().
      *
-     * @param array|object|string $key    Field name, or an array of field/value pairs, or an object
-     * @param mixed               $value  Field value, if $key is a single field
-     * @param bool|null           $escape Whether to escape values
+     * @param array<string, mixed>|object|string $key    Field name, or an array of field/value pairs, or an object
+     * @param mixed                              $value  Field value, if $key is a single field
+     * @param bool|null                          $escape Whether to escape values
      *
      * @return $this
      */
@@ -2071,6 +2074,8 @@ class BaseBuilder
 
     /**
      * Returns the previously set() data, alternatively resetting it if needed.
+     *
+     * @return array<string, string>|list<list<int|string>>
      */
     public function getSetData(bool $clean = false): array
     {
@@ -2117,7 +2122,7 @@ class BaseBuilder
      * Compiles the select statement based on the other functions called
      * and runs the query
      *
-     * @return false|ResultInterface
+     * @return false|ResultInterface|string
      */
     public function get(?int $limit = null, int $offset = 0, bool $reset = true)
     {
@@ -2395,7 +2400,7 @@ class BaseBuilder
     /**
      * Compiles the set conditions and returns the sql statement
      *
-     * @return array
+     * @return list<array{condition: RawSql|string, escape: bool}>
      */
     public function getCompiledQBWhere()
     {
@@ -2405,9 +2410,9 @@ class BaseBuilder
     /**
      * Allows the where clause, limit and offset to be added directly
      *
-     * @param array|string $where
+     * @param array<string, mixed>|RawSql|string|null $where
      *
-     * @return ResultInterface
+     * @return false|ResultInterface|string
      */
     public function getWhere($where = null, ?int $limit = null, ?int $offset = 0, bool $reset = true)
     {
@@ -2495,8 +2500,8 @@ class BaseBuilder
     /**
      * Allows a row or multiple rows to be set for batch inserts/upserts/updates
      *
-     * @param array|object $set
-     * @param string       $alias alias for sql table
+     * @param array<array-key, mixed>|object $set
+     * @param string                         $alias alias for sql table
      *
      * @return $this|null
      */
@@ -2578,7 +2583,7 @@ class BaseBuilder
     /**
      * Converts call to batchUpsert
      *
-     * @param array|object|null $set
+     * @param array<array-key, mixed>|object|null $set
      *
      * @return false|int|list<string> Number of affected rows or FALSE on failure, SQL array when testMode
      *
@@ -2614,7 +2619,7 @@ class BaseBuilder
     /**
      * Compiles batch upsert strings and runs the queries
      *
-     * @param array|object|null $set a dataset
+     * @param array<array-key, mixed>|object|null $set a dataset
      *
      * @return false|int|list<string> Number of affected rows or FALSE on failure, SQL array when testMode
      *
@@ -2703,7 +2708,7 @@ class BaseBuilder
      *
      * @param list<RawSql>|list<string>|string $set
      * @param bool                             $addToDefault adds update fields to the default ones
-     * @param array|null                       $ignore       ignores items in set
+     * @param list<string>|null                $ignore       ignores items in set
      *
      * @return $this
      */
@@ -2745,7 +2750,7 @@ class BaseBuilder
     /**
      * Sets constraints for batch upsert, update
      *
-     * @param array|RawSql|string|null $set A string of columns, key value pairs, or RawSql
+     * @param array<array-key, RawSql|string>|RawSql|string|null $set A string of columns, key value pairs, or RawSql
      *
      * @return $this
      */
@@ -2781,8 +2786,8 @@ class BaseBuilder
     /**
      * Sets data source as a query for insertBatch()/updateBatch()/upsertBatch()/deleteBatch()
      *
-     * @param BaseBuilder|RawSql $query
-     * @param array|string|null  $columns an array or comma delimited string of columns
+     * @param BaseBuilder|RawSql       $query
+     * @param list<string>|string|null $columns an array or comma delimited string of columns
      */
     public function setQueryAsData($query, ?string $alias = null, $columns = null): BaseBuilder
     {
@@ -2826,6 +2831,8 @@ class BaseBuilder
 
     /**
      * Gets column names from a select query
+     *
+     * @return list<string>
      */
     protected function fieldsFromQuery(string $sql): array
     {
@@ -2834,6 +2841,10 @@ class BaseBuilder
 
     /**
      * Converts value array of array to array of strings
+     *
+     * @param list<array<array-key, int|string>> $values
+     *
+     * @return list<string>
      */
     protected function formatValues(array $values): array
     {
@@ -2843,7 +2854,7 @@ class BaseBuilder
     /**
      * Compiles batch insert strings and runs the queries
      *
-     * @param array|object|null $set a dataset
+     * @param array<array-key, mixed>|object|null $set a dataset
      *
      * @return false|int|list<string> Number of rows inserted or FALSE on no data to perform an insert operation, SQL array when testMode
      */
@@ -2936,7 +2947,7 @@ class BaseBuilder
     /**
      * Compiles an insert string and runs the query
      *
-     * @param array|object|null $set
+     * @param array<array-key, mixed>|object|null $set
      *
      * @return BaseResult|bool|Query
      *
@@ -3032,6 +3043,8 @@ class BaseBuilder
     /**
      * Compiles a replace into string and runs the query
      *
+     * @param array<string, mixed>|null $set
+     *
      * @return BaseResult|false|Query|string
      *
      * @throws DatabaseException
@@ -3105,8 +3118,8 @@ class BaseBuilder
     /**
      * Compiles an update string and runs the query.
      *
-     * @param array|object|null        $set
-     * @param array|RawSql|string|null $where
+     * @param array<array-key, mixed>|object|null     $set
+     * @param array<string, mixed>|RawSql|string|null $where
      *
      * @throws DatabaseException
      */
@@ -3208,8 +3221,8 @@ class BaseBuilder
     /**
      * Sets data and calls batchExecute to run queries
      *
-     * @param array|object|null        $set         a dataset
-     * @param array|RawSql|string|null $constraints
+     * @param array<array-key, mixed>|object|null                $set         a dataset
+     * @param array<array-key, RawSql|string>|RawSql|string|null $constraints
      *
      * @return false|int|list<string> Number of rows affected or FALSE on failure, SQL array when testMode
      */
@@ -3460,8 +3473,8 @@ class BaseBuilder
     /**
      * Sets data and calls batchExecute to run queries
      *
-     * @param array|object|null $set         a dataset
-     * @param array|RawSql|null $constraints
+     * @param array<array-key, mixed>|object|null         $set         a dataset
+     * @param array<array-key, RawSql|string>|RawSql|null $constraints
      *
      * @return false|int|list<string> Number of rows affected or FALSE on failure, SQL array when testMode
      */
@@ -3497,9 +3510,9 @@ class BaseBuilder
      *
      * @used-by batchExecute()
      *
-     * @param string           $table  Protected table name
-     * @param list<string>     $keys   QBKeys
-     * @param list<int|string> $values QBSet
+     * @param string                 $table  Protected table name
+     * @param list<string>           $keys   QBKeys
+     * @param list<list<int|string>> $values QBSet
      */
     protected function _deleteBatch(string $table, array $keys, array $values): string
     {
@@ -3715,7 +3728,7 @@ class BaseBuilder
     /**
      * Used to track SQL statements written with aliased tables.
      *
-     * @param array|string $table The table to inspect
+     * @param array<array-key, string>|string $table The table to inspect
      *
      * @return string|null
      */
@@ -4111,9 +4124,9 @@ class BaseBuilder
     /**
      * Takes an object as input and converts the class variables to array key/vals
      *
-     * @param array|object $object
+     * @param array<string, mixed>|object $object
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function objectToArray($object)
     {
@@ -4139,9 +4152,9 @@ class BaseBuilder
     /**
      * Takes an object as input and converts the class variables to array key/vals
      *
-     * @param array|object $object
+     * @param array<string, mixed>|object $object
      *
-     * @return array
+     * @return array<string, mixed>|list<array<string, mixed>>
      */
     protected function batchObjectToArray($object)
     {
@@ -4202,7 +4215,7 @@ class BaseBuilder
     /**
      * Resets the query builder values.  Called by the get() function
      *
-     * @param array $qbResetItems An array of fields to reset
+     * @param array<string, mixed> $qbResetItems An array of fields to reset
      *
      * @return void
      */
@@ -4282,7 +4295,7 @@ class BaseBuilder
     /**
      * Returns the SQL string operator
      *
-     * @return array|false|string
+     * @return false|list<string>|string
      */
     protected function getOperator(string $str, bool $list = false)
     {

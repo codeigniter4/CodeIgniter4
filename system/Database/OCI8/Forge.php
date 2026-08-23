@@ -31,29 +31,21 @@ class Forge extends BaseForge
 
     /**
      * CREATE DATABASE statement
-     *
-     * @var false
      */
     protected $createDatabaseStr = false;
 
     /**
      * DROP TABLE IF EXISTS statement
-     *
-     * @var false
      */
     protected $dropTableIfStr = false;
 
     /**
      * DROP DATABASE statement
-     *
-     * @var false
      */
     protected $dropDatabaseStr = false;
 
     /**
      * UNSIGNED support
-     *
-     * @var array|bool
      */
     protected $unsigned = false;
 
@@ -66,35 +58,19 @@ class Forge extends BaseForge
 
     /**
      * RENAME TABLE statement
-     *
-     * @var string
      */
     protected $renameTableStr = 'ALTER TABLE %s RENAME TO %s';
 
     /**
      * DROP CONSTRAINT statement
-     *
-     * @var string
      */
     protected $dropConstraintStr = 'ALTER TABLE %s DROP CONSTRAINT %s';
 
     /**
      * Foreign Key Allowed Actions
-     *
-     * @var array
      */
     protected $fkAllowActions = ['CASCADE', 'SET NULL', 'NO ACTION'];
 
-    /**
-     * ALTER TABLE
-     *
-     * @param string       $alterType       ALTER type
-     * @param string       $table           Table name
-     * @param array|string $processedFields Processed column definitions
-     *                                      or column names to DROP
-     *
-     * @return ($alterType is 'DROP' ? string : list<string>)
-     */
     protected function _alterTable(string $alterType, string $table, $processedFields)
     {
         $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);

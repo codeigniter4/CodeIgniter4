@@ -724,13 +724,13 @@ class ValidationTest extends CIUnitTestCase
         $this->validation->setRule(
             'foo',
             'Foo',
-            ['foo'        => 'is_numeric'],
+            ['foo' => 'is_numeric'],
             ['is_numeric' => 'Nope. Not a number.'],
         );
         $this->validation->setRule(
             'bar',
             'Bar',
-            ['bar'        => 'is_numeric'],
+            ['bar' => 'is_numeric'],
             ['is_numeric' => 'Nope. Not a number.'],
         );
         $result = $this->validation->run($data);
@@ -1627,13 +1627,13 @@ class ValidationTest extends CIUnitTestCase
         yield 'dot-on-end-fail' => [
             false,
             ['status.*' => 'if_exist|in_list[status_1,status_2]'],
-            ['status'   => ['bad-status']],
+            ['status' => ['bad-status']],
         ];
 
         yield 'dot-on-end-pass' => [
             true,
             ['status.*' => 'if_exist|in_list[status_1,status_2]'],
-            ['status'   => ['status_1']],
+            ['status' => ['status_1']],
         ];
 
         yield 'dot-on-middle-fail' => [

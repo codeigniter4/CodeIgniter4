@@ -34,7 +34,7 @@ class Builder extends BaseBuilder
     /**
      * ORDER BY random keyword
      *
-     * @var array
+     * @var list<string>
      */
     protected $randomKeyword = [
         '"DBMS_RANDOM"."RANDOM"',

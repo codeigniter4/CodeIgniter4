@@ -44,7 +44,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         Services::injectMock('superglobals', new Superglobals());
     }
 
-    protected function getCollector(array $config = [], array $files = [], $moduleConfig = null): RouteCollection
+    protected function getCollector(array $config = [], array $files = [], ?Modules $moduleConfig = null): RouteCollection
     {
         $defaults = [
             'Config' => APPPATH . 'Config',
@@ -56,7 +56,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $loader = service('locator');
 
-        if ($moduleConfig === null) {
+        if (! $moduleConfig instanceof Modules) {
             $moduleConfig          = new Modules();
             $moduleConfig->enabled = false;
         }

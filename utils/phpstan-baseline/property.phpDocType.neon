@@ -1,4 +1,4 @@
-# total 34 errors
+# total 22 errors
 
 parameters:
     ignoreErrors:
@@ -6,11 +6,6 @@ parameters:
             message: '#^PHPDoc type string of property CodeIgniter\\Database\\MySQLi\\Connection\:\:\$escapeChar is not the same as PHPDoc type array\|string of overridden property CodeIgniter\\Database\\BaseConnection\<mysqli,mysqli_result\>\:\:\$escapeChar\.$#'
             count: 1
             path: ../../system/Database/MySQLi/Connection.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\MySQLi\\Forge\:\:\$createDatabaseStr is not the same as PHPDoc type string\|false of overridden property CodeIgniter\\Database\\Forge\<CodeIgniter\\Database\\MySQLi\\Connection\>\:\:\$createDatabaseStr\.$#'
-            count: 1
-            path: ../../system/Database/MySQLi/Forge.php
 
         -
             message: '#^PHPDoc type string of property CodeIgniter\\Database\\MySQLi\\Utils\:\:\$listDatabases is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$listDatabases\.$#'
@@ -26,26 +21,6 @@ parameters:
             message: '#^PHPDoc type string of property CodeIgniter\\Database\\OCI8\\Connection\:\:\$escapeChar is not the same as PHPDoc type array\|string of overridden property CodeIgniter\\Database\\BaseConnection\<resource,resource\>\:\:\$escapeChar\.$#'
             count: 1
             path: ../../system/Database/OCI8/Connection.php
-
-        -
-            message: '#^PHPDoc type false of property CodeIgniter\\Database\\OCI8\\Forge\:\:\$createDatabaseStr is not the same as PHPDoc type string\|false of overridden property CodeIgniter\\Database\\Forge\<CodeIgniter\\Database\\OCI8\\Connection\>\:\:\$createDatabaseStr\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/Forge.php
-
-        -
-            message: '#^PHPDoc type false of property CodeIgniter\\Database\\OCI8\\Forge\:\:\$dropDatabaseStr is not the same as PHPDoc type string\|false of overridden property CodeIgniter\\Database\\Forge\<CodeIgniter\\Database\\OCI8\\Connection\>\:\:\$dropDatabaseStr\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/Forge.php
-
-        -
-            message: '#^PHPDoc type false of property CodeIgniter\\Database\\OCI8\\Forge\:\:\$dropTableIfStr is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\Forge\<CodeIgniter\\Database\\OCI8\\Connection\>\:\:\$dropTableIfStr\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/Forge.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\OCI8\\Forge\:\:\$renameTableStr is not the same as PHPDoc type string\|false of overridden property CodeIgniter\\Database\\Forge\<CodeIgniter\\Database\\OCI8\\Connection\>\:\:\$renameTableStr\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/Forge.php
 
         -
             message: '#^PHPDoc type string of property CodeIgniter\\Database\\OCI8\\Utils\:\:\$listDatabases is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$listDatabases\.$#'
@@ -73,21 +48,6 @@ parameters:
             path: ../../system/Database/SQLSRV/Connection.php
 
         -
-            message: '#^PHPDoc type array of property CodeIgniter\\Database\\SQLSRV\\Forge\:\:\$unsigned is not the same as PHPDoc type array\|bool of overridden property CodeIgniter\\Database\\Forge\<CodeIgniter\\Database\\SQLSRV\\Connection\>\:\:\$unsigned\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/Forge.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLSRV\\Forge\:\:\$createDatabaseStr is not the same as PHPDoc type string\|false of overridden property CodeIgniter\\Database\\Forge\<CodeIgniter\\Database\\SQLSRV\\Connection\>\:\:\$createDatabaseStr\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/Forge.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLSRV\\Forge\:\:\$renameTableStr is not the same as PHPDoc type string\|false of overridden property CodeIgniter\\Database\\Forge\<CodeIgniter\\Database\\SQLSRV\\Connection\>\:\:\$renameTableStr\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/Forge.php
-
-        -
             message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLSRV\\Utils\:\:\$listDatabases is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$listDatabases\.$#'
             count: 1
             path: ../../system/Database/SQLSRV/Utils.php
@@ -113,6 +73,16 @@ parameters:
             path: ../../system/Exceptions/PageNotFoundException.php
 
         -
+            message: '#^PHPDoc type int of property CodeIgniter\\HTTP\\Exceptions\\RedirectException\:\:\$code is not the same as PHPDoc type mixed of overridden property Exception\:\:\$code\.$#'
+            count: 1
+            path: ../../system/HTTP/Exceptions/RedirectException.php
+
+        -
+            message: '#^PHPDoc type CodeIgniter\\HTTP\\URI of property CodeIgniter\\HTTP\\IncomingRequest\:\:\$uri is not the same as PHPDoc type CodeIgniter\\HTTP\\URI\|null of overridden property CodeIgniter\\HTTP\\OutgoingRequest\:\:\$uri\.$#'
+            count: 1
+            path: ../../system/HTTP/IncomingRequest.php
+
+        -
             message: '#^PHPDoc type string of property CodeIgniter\\Session\\Handlers\\FileHandler\:\:\$savePath is not the same as PHPDoc type array\<string, mixed\>\|string of overridden property CodeIgniter\\Session\\Handlers\\BaseHandler\:\:\$savePath\.$#'
             count: 1
             path: ../../system/Session/Handlers/FileHandler.php
@@ -123,29 +93,9 @@ parameters:
             path: ../../tests/system/Database/Builder/InsertTest.php
 
         -
-            message: '#^PHPDoc type CodeIgniter\\Test\\Mock\\MockConnection of property CodeIgniter\\Database\\Builder\\UnionTest\:\:\$db is not the same as PHPDoc type CodeIgniter\\Database\\BaseConnection of overridden property CodeIgniter\\Test\\CIUnitTestCase\:\:\$db\.$#'
-            count: 1
-            path: ../../tests/system/Database/Builder/UnionTest.php
-
-        -
             message: '#^PHPDoc type CodeIgniter\\Test\\Mock\\MockConnection of property CodeIgniter\\Database\\Builder\\UpdateTest\:\:\$db is not the same as PHPDoc type CodeIgniter\\Database\\BaseConnection of overridden property CodeIgniter\\Test\\CIUnitTestCase\:\:\$db\.$#'
             count: 1
             path: ../../tests/system/Database/Builder/UpdateTest.php
-
-        -
-            message: '#^PHPDoc type CodeIgniter\\Test\\Mock\\MockConnection of property CodeIgniter\\Database\\Builder\\WhenTest\:\:\$db is not the same as PHPDoc type CodeIgniter\\Database\\BaseConnection of overridden property CodeIgniter\\Test\\CIUnitTestCase\:\:\$db\.$#'
-            count: 1
-            path: ../../tests/system/Database/Builder/WhenTest.php
-
-        -
-            message: '#^PHPDoc type CodeIgniter\\Test\\Mock\\MockConnection of property CodeIgniter\\Database\\Builder\\WhereTest\:\:\$db is not the same as PHPDoc type CodeIgniter\\Database\\BaseConnection of overridden property CodeIgniter\\Test\\CIUnitTestCase\:\:\$db\.$#'
-            count: 1
-            path: ../../tests/system/Database/Builder/WhereTest.php
-
-        -
-            message: '#^PHPDoc type CodeIgniter\\Database\\SQLite3\\Connection of property CodeIgniter\\Database\\Live\\SQLite3\\GetIndexDataTest\:\:\$db is not the same as PHPDoc type CodeIgniter\\Database\\BaseConnection of overridden property CodeIgniter\\Test\\CIUnitTestCase\:\:\$db\.$#'
-            count: 1
-            path: ../../tests/system/Database/Live/SQLite3/GetIndexDataTest.php
 
         -
             message: '#^PHPDoc type Tests\\Support\\Models\\EventModel of property CodeIgniter\\Models\\EventsModelTest\:\:\$model is not the same as PHPDoc type CodeIgniter\\Model of overridden property CodeIgniter\\Models\\LiveModelTestCase\:\:\$model\.$#'
@@ -161,13 +111,3 @@ parameters:
             message: '#^PHPDoc type CodeIgniter\\Router\\RouteCollection of property CodeIgniter\\RESTful\\ResourcePresenterTest\:\:\$routes is not the same as PHPDoc type CodeIgniter\\Router\\RouteCollection\|null of overridden property CodeIgniter\\Test\\CIUnitTestCase\:\:\$routes\.$#'
             count: 1
             path: ../../tests/system/RESTful/ResourcePresenterTest.php
-
-        -
-            message: '#^PHPDoc type CodeIgniter\\HTTP\\URI of property CodeIgniter\\HTTP\\IncomingRequest\:\:\$uri is not the same as PHPDoc type CodeIgniter\\HTTP\\URI\|null of overridden property CodeIgniter\\HTTP\\OutgoingRequest\:\:\$uri\.$#'
-            count: 1
-            path: ../../system/HTTP/IncomingRequest.php
-
-        -
-            message: '#^PHPDoc type int of property CodeIgniter\\HTTP\\Exceptions\\RedirectException\:\:\$code is not the same as PHPDoc type mixed of overridden property Exception\:\:\$code\.$#'
-            count: 1
-            path: ../../system/HTTP/Exceptions/RedirectException.php

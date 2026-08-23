@@ -27,8 +27,6 @@ class Forge extends BaseForge
 {
     /**
      * DROP CONSTRAINT statement
-     *
-     * @var string
      */
     protected $dropConstraintStr;
 
@@ -52,8 +50,6 @@ class Forge extends BaseForge
      * CREATE DATABASE IF statement
      *
      * @todo missing charset & collat
-     *
-     * @var string
      */
     protected $createDatabaseStr = 'CREATE DATABASE %s ';
 
@@ -72,15 +68,11 @@ class Forge extends BaseForge
      *
      * @see https://docs.microsoft.com/en-us/sql/relational-databases/system-stored-procedures/sp-rename-transact-sql?view=sql-server-2017
      * 'EXEC sp_rename %s , %s ;'
-     *
-     * @var string
      */
     protected $renameTableStr;
 
     /**
      * UNSIGNED support
-     *
-     * @var array
      */
     protected $unsigned = [
         'TINYINT'  => 'SMALLINT',
@@ -91,15 +83,11 @@ class Forge extends BaseForge
 
     /**
      * Foreign Key Allowed Actions
-     *
-     * @var array
      */
     protected $fkAllowActions = ['CASCADE', 'SET NULL', 'NO ACTION', 'RESTRICT', 'SET DEFAULT'];
 
     /**
      * CREATE TABLE statement
-     *
-     * @var string
      */
     protected $createTableStr;
 
@@ -114,13 +102,6 @@ class Forge extends BaseForge
         $this->dropIndexStr      = 'DROP INDEX %s ON ' . $this->db->escapeIdentifiers($this->db->schema) . '.%s';
     }
 
-    /**
-     * Create database
-     *
-     * @param bool $ifNotExists Whether to add IF NOT EXISTS condition
-     *
-     * @throws DatabaseException
-     */
     public function createDatabase(string $dbName, bool $ifNotExists = false): bool
     {
         if ($ifNotExists) {
@@ -180,20 +161,11 @@ class Forge extends BaseForge
         return parent::dropDatabase($dbName);
     }
 
-    /**
-     * CREATE TABLE attributes
-     */
     protected function _createTableAttributes(array $attributes): string
     {
         return '';
     }
 
-    /**
-     * @param array|string $processedFields Processed column definitions
-     *                                      or column names to DROP
-     *
-     * @return ($alterType is 'DROP' ? string : false|list<string>)
-     */
     protected function _alterTable(string $alterType, string $table, $processedFields)
     {
         // Handle DROP here
@@ -327,11 +299,6 @@ class Forge extends BaseForge
         return $this->db->simpleQuery($sql);
     }
 
-    /**
-     * Generates SQL to add indexes
-     *
-     * @param bool $asQuery When true returns stand alone SQL, else partial SQL used with CREATE TABLE
-     */
     protected function _processIndexes(string $table, bool $asQuery = false): array
     {
         $sqls = [];

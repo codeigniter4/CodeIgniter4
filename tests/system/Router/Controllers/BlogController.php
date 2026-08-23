@@ -21,7 +21,7 @@ class BlogController extends Controller
     {
     }
 
-    public function getSomeMethod($first = ''): void
+    public function getSomeMethod(string $first = ''): void
     {
     }
 }
