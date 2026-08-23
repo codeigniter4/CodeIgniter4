@@ -76,6 +76,18 @@ final class RedirectExceptionTest extends TestCase
         $this->assertSame(302, $response->getStatusCode());
     }
 
+    public function testResponseWithoutStatusCodeUsesSubclassDefault(): void
+    {
+        $exception = new class (service('response')->setHeader('Location', 'location')) extends RedirectException {
+            protected int $defaultStatusCode = 307;
+        };
+
+        $response = $exception->getResponse();
+
+        $this->assertSame('location', $response->getHeaderLine('location'));
+        $this->assertSame(307, $response->getStatusCode());
+    }
+
     public function testLoggingLocationHeader(): void
     {
         Time::setTestNow('2023-11-25 12:00:00');

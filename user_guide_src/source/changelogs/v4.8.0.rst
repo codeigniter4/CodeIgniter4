@@ -42,7 +42,7 @@ Behavior Changes
 - **Filters:** HTTP method matching for method-based filters is now case-sensitive. The keys in ``Config\Filters::$methods`` must exactly match the request method
   (e.g., ``GET``, ``POST``). Lowercase method names (e.g., ``post``) will no longer match.
 - **HTTP:** Routes defined with ``$routes->add()`` now also match HTTP ``QUERY`` requests. If the route has CSRF protection, remember that CSRF verification does not protect safe methods such as ``GET`` and ``QUERY``.
-- **HTTP:** ``CodeIgniter\HTTP\Exceptions\RedirectException`` no longer redeclares the inherited ``$code`` property. The status applied to a ``Response`` passed to the constructor without a 3xx status now comes from the new ``protected int $defaultStatusCode = 302`` property. Subclasses that overrode ``$code`` to change that status must override ``$defaultStatusCode`` instead.
+- **HTTP:** ``CodeIgniter\HTTP\Exceptions\RedirectException`` no longer redeclares the inherited ``$code`` property. The status applied to a ``Response`` passed to the constructor whose status is outside the 301-308 range now comes from the new ``protected int $defaultStatusCode = 302`` property. Subclasses that overrode ``$code`` to change that status must override ``$defaultStatusCode`` instead.
 - **Testing:** Tests using the ``FeatureTestTrait`` must now use uppercase HTTP method names when performing a request when using the ``call()`` method directly
   (e.g., ``$this->call('GET', '/path')`` instead of ``$this->call('get', '/path')``). Additionally, setting method-based routes using ``withRoutes()`` must
   also use uppercase method names (e.g., ``$this->withRoutes([['GET', 'home', 'Home::index']])``).
