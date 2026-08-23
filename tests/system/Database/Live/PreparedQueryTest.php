@@ -17,6 +17,7 @@ use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Query;
 use CodeIgniter\Database\ResultInterface;
+use CodeIgniter\Database\SQLSRV\Connection as SQLSRVConnection;
 use CodeIgniter\Exceptions\BadMethodCallException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
@@ -76,6 +77,8 @@ final class PreparedQueryTest extends CIUnitTestCase
         }
 
         if ($this->db->DBDriver === 'SQLSRV') {
+            $this->assertInstanceOf(SQLSRVConnection::class, $this->db);
+
             $database = $this->db->getDatabase();
             $expected = "INSERT INTO {$ec}{$database}{$ec}.{$ec}{$this->db->schema}{$ec}.{$ec}{$pre}user{$ec} ({$ec}name{$ec},{$ec}email{$ec},{$ec}country{$ec}) VALUES ({$placeholders})";
         } else {

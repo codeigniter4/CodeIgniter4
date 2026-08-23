@@ -39,7 +39,7 @@ class Connection extends BaseConnection
     /**
      * Identifier escape character
      *
-     * @var string
+     * @var list<string>|string
      */
     public $escapeChar = '`';
 
@@ -119,11 +119,6 @@ class Connection extends BaseConnection
         }
     }
 
-    /**
-     * Close the database connection.
-     *
-     * @return void
-     */
     protected function _close()
     {
         $this->connID->close();
@@ -198,11 +193,6 @@ class Connection extends BaseConnection
         return $this->connID->escapeString($str);
     }
 
-    /**
-     * Generates the SQL for listing tables in a platform-dependent manner.
-     *
-     * @param string|null $tableName If $tableName is provided will return only this table if exists.
-     */
     protected function _listTables(bool $prefixLimit = false, ?string $tableName = null): string
     {
         if ((string) $tableName !== '') {
@@ -218,11 +208,6 @@ class Connection extends BaseConnection
                     : '');
     }
 
-    /**
-     * Generates a platform-specific query string so that the column names can be fetched.
-     *
-     * @param string|TableName $table
-     */
     protected function _listColumns($table = ''): string
     {
         if ($table instanceof TableName) {
@@ -281,10 +266,6 @@ class Connection extends BaseConnection
     }
 
     /**
-     * Returns an array of objects with field data
-     *
-     * @return list<stdClass>
-     *
      * @throws DatabaseException
      */
     protected function _fieldData(string $table): array
@@ -319,10 +300,6 @@ class Connection extends BaseConnection
     }
 
     /**
-     * Returns an array of objects with index data
-     *
-     * @return array<string, stdClass>
-     *
      * @throws DatabaseException
      */
     protected function _indexData(string $table): array
@@ -375,11 +352,6 @@ class Connection extends BaseConnection
         return $retVal;
     }
 
-    /**
-     * Returns an array of objects with Foreign key data
-     *
-     * @return array<string, stdClass>
-     */
     protected function _foreignKeyData(string $table): array
     {
         if (! $this->supportsForeignKeys()) {
@@ -446,25 +418,16 @@ class Connection extends BaseConnection
         return $this->connID->lastInsertRowID();
     }
 
-    /**
-     * Begin Transaction
-     */
     protected function _transBegin(): bool
     {
         return $this->connID->exec('BEGIN TRANSACTION');
     }
 
-    /**
-     * Commit Transaction
-     */
     protected function _transCommit(): bool
     {
         return $this->connID->exec('END TRANSACTION');
     }
 
-    /**
-     * Rollback Transaction
-     */
     protected function _transRollback(): bool
     {
         return $this->connID->exec('ROLLBACK');

@@ -47,7 +47,7 @@ class Connection extends BaseConnection
     /**
      * Identifier escape character
      *
-     * @var string
+     * @var list<string>|string
      */
     public $escapeChar = '"';
 
@@ -157,11 +157,6 @@ class Connection extends BaseConnection
         $this->DSN = $output;
     }
 
-    /**
-     * Close the database connection.
-     *
-     * @return void
-     */
     protected function _close()
     {
         pg_close($this->connID);
@@ -251,15 +246,6 @@ class Connection extends BaseConnection
         return pg_affected_rows($this->resultID);
     }
 
-    /**
-     * "Smart" Escape String
-     *
-     * Escapes data based on type
-     *
-     * @param mixed $str
-     *
-     * @return ($str is array ? array : float|int|string)
-     */
     public function escape($str)
     {
         if (! $this->connID) {
@@ -297,11 +283,6 @@ class Connection extends BaseConnection
         return pg_escape_string($this->connID, $str);
     }
 
-    /**
-     * Generates the SQL for listing tables in a platform-dependent manner.
-     *
-     * @param string|null $tableName If $tableName is provided will return only this table if exists.
-     */
     protected function _listTables(bool $prefixLimit = false, ?string $tableName = null): string
     {
         $sql = 'SELECT "table_name" FROM "information_schema"."tables" WHERE "table_schema" = \'' . $this->schema . "'";
@@ -319,11 +300,6 @@ class Connection extends BaseConnection
         return $sql;
     }
 
-    /**
-     * Generates a platform-specific query string so that the column names can be fetched.
-     *
-     * @param string|TableName $table
-     */
     protected function _listColumns($table = ''): string
     {
         if ($table instanceof TableName) {
@@ -339,10 +315,6 @@ class Connection extends BaseConnection
     }
 
     /**
-     * Returns an array of objects with field data
-     *
-     * @return list<stdClass>
-     *
      * @throws DatabaseException
      */
     protected function _fieldData(string $table): array
@@ -374,10 +346,6 @@ class Connection extends BaseConnection
     }
 
     /**
-     * Returns an array of objects with index data
-     *
-     * @return array<string, stdClass>
-     *
      * @throws DatabaseException
      */
     protected function _indexData(string $table): array
@@ -413,10 +381,6 @@ class Connection extends BaseConnection
     }
 
     /**
-     * Returns an array of objects with Foreign key data
-     *
-     * @return array<string, stdClass>
-     *
      * @throws DatabaseException
      */
     protected function _foreignKeyData(string $table): array
@@ -593,25 +557,16 @@ class Connection extends BaseConnection
         return pg_set_client_encoding($this->connID, $charset) === 0;
     }
 
-    /**
-     * Begin Transaction
-     */
     protected function _transBegin(): bool
     {
         return (bool) pg_query($this->connID, 'BEGIN');
     }
 
-    /**
-     * Commit Transaction
-     */
     protected function _transCommit(): bool
     {
         return (bool) pg_query($this->connID, 'COMMIT');
     }
 
-    /**
-     * Rollback Transaction
-     */
     protected function _transRollback(): bool
     {
         return (bool) pg_query($this->connID, 'ROLLBACK');

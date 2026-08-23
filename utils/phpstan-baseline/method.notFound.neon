@@ -1,4 +1,4 @@
-# total 32 errors
+# total 27 errors
 
 parameters:
     ignoreErrors:
@@ -21,21 +21,6 @@ parameters:
             message: '#^Call to an undefined method CodeIgniter\\Router\\RouteCollectionInterface\:\:get\(\)\.$#'
             count: 2
             path: ../../tests/system/Commands/Utilities/Routes/FilterFinderTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\Database\\BaseConnection\:\:escapeLikeStringDirect\(\)\.$#'
-            count: 1
-            path: ../../tests/system/Database/Live/EscapeTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\Database\\BaseConnection\:\:getCursor\(\)\.$#'
-            count: 1
-            path: ../../tests/system/Database/Live/OCI8/CallStoredProcedureTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\Database\\BaseConnection\:\:storedProcedure\(\)\.$#'
-            count: 3
-            path: ../../tests/system/Database/Live/OCI8/CallStoredProcedureTest.php
 
         -
             message: '#^Call to an undefined method CodeIgniter\\HTTP\\ResponseInterface\:\:pretend\(\)\.$#'

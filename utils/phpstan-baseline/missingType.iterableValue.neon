@@ -1,4 +1,4 @@
-# total 470 errors
+# total 440 errors
 
 parameters:
     ignoreErrors:
@@ -318,116 +318,6 @@ parameters:
             path: ../../system/DataConverter/DataConverter.php
 
         -
-            message: '#^Class CodeIgniter\\Database\\BaseConnection has PHPDoc tag @property\-read for property \$aliasedTables with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
-            message: '#^Class CodeIgniter\\Database\\BaseConnection has PHPDoc tag @property\-read for property \$dateFormat with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
-            message: '#^Class CodeIgniter\\Database\\BaseConnection has PHPDoc tag @property\-read for property \$encrypt with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
-            message: '#^Class CodeIgniter\\Database\\BaseConnection has PHPDoc tag @property\-read for property \$failover with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
-            message: '#^Class CodeIgniter\\Database\\BaseConnection has PHPDoc tag @property\-read for property \$reservedIdentifiers with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseConnection\:\:__construct\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseConnection\:\:callFunction\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseConnection\:\:escapeIdentifiers\(\) has parameter \$item with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseConnection\:\:escapeIdentifiers\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseConnection\:\:escape\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseConnection\:\:foreignKeyDataToObjects\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseConnection\:\:prepare\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseConnection\:\:protectIdentifiers\(\) has parameter \$item with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseConnection\:\:protectIdentifiers\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseConnection\:\:setAliasedTables\(\) has parameter \$aliases with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseConnection\:\:table\(\) has parameter \$tableName with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\BaseConnection\:\:\$dataCache type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\BaseConnection\:\:\$encrypt type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\BaseConnection\:\:\$escapeChar type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\BaseConnection\:\:\$failover type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\BaseConnection\:\:\$pregEscapeChar type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\BaseConnection\:\:\$reservedIdentifiers type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
             message: '#^Method CodeIgniter\\Database\\BasePreparedQuery\:\:_execute\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/BasePreparedQuery.php
@@ -486,21 +376,6 @@ parameters:
             message: '#^Property CodeIgniter\\Database\\Config\:\:\$instances type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/Config.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\ConnectionInterface\:\:callFunction\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/ConnectionInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\ConnectionInterface\:\:escape\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/ConnectionInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\ConnectionInterface\:\:table\(\) has parameter \$tableName with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/ConnectionInterface.php
 
         -
             message: '#^Method CodeIgniter\\Database\\Database\:\:initDriver\(\) has parameter \$argument with no value type specified in iterable type array\.$#'
@@ -583,21 +458,6 @@ parameters:
             path: ../../system/Database/MySQLi/Utils.php
 
         -
-            message: '#^Method CodeIgniter\\Database\\OCI8\\Connection\:\:bindParams\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/Connection.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\OCI8\\Connection\:\:storedProcedure\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/Connection.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\OCI8\\Connection\:\:\$reservedIdentifiers type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/Connection.php
-
-        -
             message: '#^Method CodeIgniter\\Database\\OCI8\\PreparedQuery\:\:_execute\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/OCI8/PreparedQuery.php
@@ -611,11 +471,6 @@ parameters:
             message: '#^Method CodeIgniter\\Database\\OCI8\\Utils\:\:_backup\(\) has parameter \$prefs with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/OCI8/Utils.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Postgre\\Connection\:\:escape\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Postgre/Connection.php
 
         -
             message: '#^Method CodeIgniter\\Database\\Postgre\\PreparedQuery\:\:_execute\(\) has parameter \$data with no value type specified in iterable type array\.$#'
@@ -656,11 +511,6 @@ parameters:
             message: '#^Property CodeIgniter\\Database\\Query\:\:\$binds type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/Query.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\SQLSRV\\Connection\:\:__construct\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/Connection.php
 
         -
             message: '#^Method CodeIgniter\\Database\\SQLSRV\\PreparedQuery\:\:_execute\(\) has parameter \$data with no value type specified in iterable type array\.$#'
