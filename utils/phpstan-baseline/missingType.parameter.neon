@@ -1,4 +1,4 @@
-# total 12 errors
+# total 9 errors
 
 parameters:
     ignoreErrors:
@@ -36,21 +36,6 @@ parameters:
             message: '#^Method CodeIgniter\\Filters\\FiltersTest\:\:createFilters\(\) has parameter \$request with no type specified\.$#'
             count: 1
             path: ../../tests/system/Filters/FiltersTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Helpers\\URLHelper\\CurrentUrlTest\:\:createRequest\(\) has parameter \$body with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Helpers/URLHelper/CurrentUrlTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Helpers\\URLHelper\\MiscUrlTest\:\:testUrlTo\(\) has parameter \$args with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Helpers/URLHelper/MiscUrlTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Helpers\\URLHelper\\SiteUrlTest\:\:createRequest\(\) has parameter \$body with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Helpers/URLHelper/SiteUrlTest.php
 
         -
             message: '#^Method CodeIgniter\\Security\\SecurityCSRFSessionRandomizeTokenTest\:\:createSession\(\) has parameter \$options with no type specified\.$#'

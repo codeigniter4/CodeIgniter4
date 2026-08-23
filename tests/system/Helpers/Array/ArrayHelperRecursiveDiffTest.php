@@ -22,6 +22,9 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class ArrayHelperRecursiveDiffTest extends CIUnitTestCase
 {
+    /**
+     * @var array<array-key, mixed>
+     */
     private array $compareWith;
 
     protected function setUp(): void

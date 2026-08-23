@@ -22,6 +22,9 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class ArrayHelperSortValuesByNaturalTest extends CIUnitTestCase
 {
+    /**
+     * @var list<int|string>
+     */
     private array $arrayWithStringValues = [
         'apple10',
         'banana',
@@ -37,6 +40,10 @@ final class ArrayHelperSortValuesByNaturalTest extends CIUnitTestCase
         'Яблоко',
         'apple',
     ];
+
+    /**
+     * @var list<list<int|string>>
+     */
     private array $arrayWithArrayValues = [
         ['apple', 'Banana'],
         ['apple10', 'Apple'],

@@ -89,7 +89,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame('http://www.example.jp/public/index.php/', current_url());
     }
 
-    private function createRequest(?App $config = null, $body = null, ?string $path = null): void
+    private function createRequest(?App $config = null, ?string $body = null, ?string $path = null): void
     {
         $config ??= new App();
 
@@ -281,6 +281,9 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame($expected, url_is($testPath));
     }
 
+    /**
+     * @return iterable<array{string, string, bool}>
+     */
     public static function provideUrlIs(): iterable
     {
         return [
