@@ -1,4 +1,4 @@
-# total 21 errors
+# total 20 errors
 
 parameters:
     ignoreErrors:
@@ -41,11 +41,6 @@ parameters:
             message: '#^Call to an undefined method CodeIgniter\\HTTP\\ResponseInterface\:\:pretend\(\)\.$#'
             count: 1
             path: ../../tests/system/RESTful/ResourceControllerTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\Test\\TestResponse\:\:ohno\(\)\.$#'
-            count: 1
-            path: ../../tests/system/Test/ControllerTestTraitTest.php
 
         -
             message: '#^Call to an undefined method CodeIgniter\\View\\Table\:\:compileTemplate\(\)\.$#'

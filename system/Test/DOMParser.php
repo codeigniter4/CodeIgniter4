@@ -198,6 +198,8 @@ class DOMParser
     /**
      * Search the DOM using an XPath expression.
      *
+     * @param list<string> $paths
+     *
      * @return DOMNodeList|false
      */
     protected function doXPath(?string $search, string $element, array $paths = [])

@@ -40,6 +40,8 @@ final class TestResponseTest extends CIUnitTestCase
 
     /**
      * Provides status codes and their expected "OK"
+     *
+     * @return iterable<array{int, bool}>
      */
     public static function provideHttpStatusCodes(): iterable
     {
@@ -312,7 +314,7 @@ final class TestResponseTest extends CIUnitTestCase
     public function testGetJSONFalseJSON(): void
     {
         $this->getTestResponse('<h1>Hello World</h1>');
-        $this->response->setJSON(false, true);
+        $this->response->setJSON(false, true); // @phpstan-ignore argument.type (Needed for testing)
 
         // this should be FALSE - json_encode(false)
         $this->assertSame('false', $this->testResponse->getJSON());
@@ -321,7 +323,7 @@ final class TestResponseTest extends CIUnitTestCase
     public function testGetJSONTrueJSON(): void
     {
         $this->getTestResponse('<h1>Hello World</h1>');
-        $this->response->setJSON(true, true);
+        $this->response->setJSON(true, true); // @phpstan-ignore argument.type (Needed for testing)
 
         // this should be TRUE - json_encode(true)
         $this->assertSame('true', $this->testResponse->getJSON());
@@ -427,6 +429,10 @@ final class TestResponseTest extends CIUnitTestCase
         $this->testResponse->assertJSONExact($formatter->format($data));
     }
 
+    /**
+     * @param array<string, mixed> $responseOptions
+     * @param array<string, mixed> $headers
+     */
     protected function getTestResponse(?string $body = null, array $responseOptions = [], array $headers = []): void
     {
         $this->response = new Response(new App());

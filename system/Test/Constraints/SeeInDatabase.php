@@ -34,12 +34,14 @@ class SeeInDatabase extends Constraint
     /**
      * Data used to compare results against.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $data;
 
     /**
      * SeeInDatabase constructor.
+     *
+     * @param array<string, mixed> $data
      */
     public function __construct(ConnectionInterface $db, array $data)
     {
