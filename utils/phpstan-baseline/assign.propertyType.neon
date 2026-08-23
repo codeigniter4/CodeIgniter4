@@ -1,4 +1,4 @@
-# total 24 errors
+# total 22 errors
 
 parameters:
     ignoreErrors:
@@ -16,16 +16,6 @@ parameters:
             message: '#^Property CodeIgniter\\Commands\\Utilities\\Routes\\FilterFinderTest\:\:\$response \(CodeIgniter\\HTTP\\Response\) does not accept CodeIgniter\\HTTP\\ResponseInterface\.$#'
             count: 1
             path: ../../tests/system/Commands/Utilities/Routes/FilterFinderTest.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\Live\\SQLite3\\AlterTableTest\:\:\$forge \(CodeIgniter\\Database\\SQLite3\\Forge\) does not accept CodeIgniter\\Database\\Forge\.$#'
-            count: 1
-            path: ../../tests/system/Database/Live/SQLite3/AlterTableTest.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\Live\\SQLite3\\GetIndexDataTest\:\:\$forge \(CodeIgniter\\Database\\SQLite3\\Forge\) does not accept CodeIgniter\\Database\\Forge\.$#'
-            count: 1
-            path: ../../tests/system/Database/Live/SQLite3/GetIndexDataTest.php
 
         -
             message: '#^Property CodeIgniter\\Filters\\CSRFTest\:\:\$response \(CodeIgniter\\HTTP\\Response\|null\) does not accept CodeIgniter\\HTTP\\ResponseInterface\.$#'

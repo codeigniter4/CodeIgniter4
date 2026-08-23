@@ -41,8 +41,11 @@ final class GetIndexDataTest extends CIUnitTestCase
             'database' => 'database.db',
             'DBDebug'  => true,
         ];
-        $this->db    = db_connect($config, false);
-        $this->forge = Database::forge($config);
+        $this->db = db_connect($config, false);
+
+        $forge = Database::forge($config);
+        $this->assertInstanceOf(Forge::class, $forge);
+        $this->forge = $forge;
     }
 
     public function testGetIndexData(): void

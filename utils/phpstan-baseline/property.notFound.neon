@@ -1,12 +1,7 @@
-# total 21 errors
+# total 19 errors
 
 parameters:
     ignoreErrors:
-        -
-            message: '#^Access to an undefined property CodeIgniter\\Database\\BaseConnection\:\:\$schema\.$#'
-            count: 2
-            path: ../../tests/system/Database/Migrations/MigrationRunnerTest.php
-
         -
             message: '#^Access to an undefined property CodeIgniter\\Encryption\\EncrypterInterface\:\:\$key\.$#'
             count: 1
