@@ -1455,8 +1455,10 @@ class RouteCollection implements RouteCollectionInterface
 
     /**
      * @param array<array-key, mixed> $to
+     *
+     * @return array<array-key, mixed>|string
      */
-    private function processArrayCallableSyntax(string $from, array $to): string
+    private function processArrayCallableSyntax(string $from, array $to): array|string
     {
         // [classname, method]
         // eg, [Home::class, 'index']
@@ -1474,7 +1476,7 @@ class RouteCollection implements RouteCollectionInterface
             && is_callable($to[0], true, $callableName)
             && is_string($to[1])
         ) {
-            $to = '\\' . $callableName . '/' . $to[1];
+            return '\\' . $callableName . '/' . $to[1];
         }
 
         return $to;

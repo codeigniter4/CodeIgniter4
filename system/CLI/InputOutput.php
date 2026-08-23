@@ -51,7 +51,7 @@ class InputOutput
         $input = fgets(fopen('php://stdin', 'rb'));
 
         if ($input === false) {
-            $input = '';
+            return '';
         }
 
         return $input;

@@ -1157,7 +1157,7 @@ trait TimeTrait
         }
 
         if ($time instanceof DateTime || $time instanceof DateTimeImmutable) {
-            $time = $time->setTimezone(new DateTimeZone('UTC'));
+            return $time->setTimezone(new DateTimeZone('UTC'));
         }
 
         return $time;
