@@ -50,7 +50,7 @@ class Forge
     /**
      * List of unique keys.
      *
-     * @var array
+     * @var list<int>
      */
     protected $uniqueKeys = [];
 
@@ -64,7 +64,7 @@ class Forge
     /**
      * List of foreign keys.
      *
-     * @var array
+     * @var list<array{field: list<string>, referenceTable: string, referenceField: list<string>, onDelete: string, onUpdate: string, fkName: string}>
      */
     protected $foreignKeys = [];
 
@@ -146,7 +146,7 @@ class Forge
     /**
      * UNSIGNED support
      *
-     * @var array|bool
+     * @var array<array-key, string>|bool
      */
     protected $unsigned = true;
 
@@ -183,7 +183,7 @@ class Forge
     /**
      * Foreign Key Allowed Actions
      *
-     * @var array
+     * @var list<string>
      */
     protected $fkAllowActions = ['CASCADE', 'SET NULL', 'NO ACTION', 'RESTRICT', 'SET DEFAULT'];
 
@@ -324,7 +324,7 @@ class Forge
     /**
      * Add Key
      *
-     * @param array|string $key
+     * @param list<string>|string $key
      *
      * @return Forge
      */
@@ -346,7 +346,7 @@ class Forge
     /**
      * Add Primary Key
      *
-     * @param array|string $key
+     * @param list<string>|string $key
      *
      * @return Forge
      */
@@ -358,7 +358,7 @@ class Forge
     /**
      * Add Unique Key
      *
-     * @param array|string $key
+     * @param list<string>|string $key
      *
      * @return Forge
      */
@@ -370,7 +370,7 @@ class Forge
     /**
      * Add Field
      *
-     * @param array<string, array|string>|string $fields Field array or Field string
+     * @param array<array-key, array<string, mixed>|string>|string $fields Field array or Field string
      *
      * @return Forge
      */
@@ -544,7 +544,7 @@ class Forge
     }
 
     /**
-     * @param array $attributes Table attributes
+     * @param array<string, mixed> $attributes Table attributes
      *
      * @return bool
      *
@@ -590,7 +590,7 @@ class Forge
     }
 
     /**
-     * @param array $attributes Table attributes
+     * @param array<string, mixed> $attributes Table attributes
      *
      * @return string SQL string
      *
@@ -626,6 +626,9 @@ class Forge
         );
     }
 
+    /**
+     * @param array<string, mixed> $attributes
+     */
     protected function _createTableAttributes(array $attributes): string
     {
         $sql = '';
@@ -746,7 +749,7 @@ class Forge
     }
 
     /**
-     * @param array<string, array|string>|string $fields Field array or Field string
+     * @param array<array-key, array<string, mixed>|string>|string $fields Field array or Field string
      *
      * @throws DatabaseException
      */
@@ -804,7 +807,7 @@ class Forge
     }
 
     /**
-     * @param array<string, array|string>|string $fields Field array or Field string
+     * @param array<array-key, array<string, mixed>|string>|string $fields Field array or Field string
      *
      * @throws DatabaseException
      */
@@ -846,9 +849,9 @@ class Forge
     }
 
     /**
-     * @param 'ADD'|'CHANGE'|'DROP' $alterType
-     * @param array|string          $processedFields Processed column definitions
-     *                                               or column names to DROP
+     * @param 'ADD'|'CHANGE'|'DROP'                          $alterType
+     * @param list<array<string, mixed>>|list<string>|string $processedFields Processed column definitions
+     *                                                                        or column names to DROP
      *
      * @return ($alterType is 'DROP' ? string : false|list<string>|null)
      */
@@ -884,6 +887,8 @@ class Forge
 
     /**
      * Returns $processedFields array from $this->fields data.
+     *
+     * @return list<array<string, mixed>>
      */
     protected function _processFields(bool $createTable = false): array
     {
@@ -973,6 +978,8 @@ class Forge
 
     /**
      * Converts $processedField array to field definition string.
+     *
+     * @param array<string, mixed> $processedField
      */
     protected function _processColumn(array $processedField): string
     {
@@ -987,6 +994,8 @@ class Forge
 
     /**
      * Performs a data type mapping between different databases.
+     *
+     * @param array<string, mixed> $attributes
      *
      * @return void
      */
@@ -1004,6 +1013,9 @@ class Forge
      *        if $attributes['TYPE'] is found in the array
      *    - array(TYPE => UTYPE) will change $field['type'],
      *        from TYPE to UTYPE in case of a match
+     *
+     * @param array<string, mixed> $attributes
+     * @param array<string, mixed> $field
      *
      * @return void
      */
@@ -1038,6 +1050,9 @@ class Forge
     }
 
     /**
+     * @param array<string, mixed> $attributes
+     * @param array<string, mixed> $field
+     *
      * @return void
      */
     protected function _attributeDefault(array &$attributes, array &$field)
@@ -1062,6 +1077,9 @@ class Forge
     }
 
     /**
+     * @param array<string, mixed> $attributes
+     * @param array<string, mixed> $field
+     *
      * @return void
      */
     protected function _attributeUnique(array &$attributes, array &$field)
@@ -1072,6 +1090,9 @@ class Forge
     }
 
     /**
+     * @param array<string, mixed> $attributes
+     * @param array<string, mixed> $field
+     *
      * @return void
      */
     protected function _attributeAutoIncrement(array &$attributes, array &$field)
@@ -1164,6 +1185,8 @@ class Forge
      * Generates SQL to add indexes
      *
      * @param bool $asQuery When true returns stand alone SQL, else partial SQL used with CREATE TABLE
+     *
+     * @return list<string>
      */
     protected function _processIndexes(string $table, bool $asQuery = false): array
     {
@@ -1210,6 +1233,8 @@ class Forge
      * Generates SQL to add foreign keys
      *
      * @param bool $asQuery When true returns stand alone SQL, else partial SQL used with CREATE TABLE
+     *
+     * @return list<string>
      */
     protected function _processForeignKeys(string $table, bool $asQuery = false): array
     {

@@ -31,8 +31,6 @@ class Forge extends BaseForge
 
     /**
      * DROP CONSTRAINT statement
-     *
-     * @var string
      */
     protected $dropConstraintStr = 'ALTER TABLE %s DROP CONSTRAINT %s';
 
@@ -46,7 +44,7 @@ class Forge extends BaseForge
     /**
      * UNSIGNED support
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $_unsigned = [
         'INT2'     => 'INTEGER',
@@ -72,19 +70,13 @@ class Forge extends BaseForge
     /**
      * CREATE TABLE attributes
      *
-     * @param array $attributes Associative array of table attributes
+     * @param array<string, mixed> $attributes Associative array of table attributes
      */
     protected function _createTableAttributes(array $attributes): string
     {
         return '';
     }
 
-    /**
-     * @param array|string $processedFields Processed column definitions
-     *                                      or column names to DROP
-     *
-     * @return ($alterType is 'DROP' ? string : false|list<string>)
-     */
     protected function _alterTable(string $alterType, string $table, $processedFields)
     {
         if (in_array($alterType, ['DROP', 'ADD'], true)) {

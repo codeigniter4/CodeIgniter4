@@ -1,4 +1,4 @@
-# total 581 errors
+# total 518 errors
 
 parameters:
     ignoreErrors:
@@ -613,141 +613,6 @@ parameters:
             path: ../../system/Database/Database.php
 
         -
-            message: '#^Method CodeIgniter\\Database\\Forge\:\:_alterTable\(\) has parameter \$processedFields with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Forge\:\:_attributeAutoIncrement\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Forge\:\:_attributeAutoIncrement\(\) has parameter \$field with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Forge\:\:_attributeDefault\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Forge\:\:_attributeDefault\(\) has parameter \$field with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Forge\:\:_attributeType\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Forge\:\:_attributeUnique\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Forge\:\:_attributeUnique\(\) has parameter \$field with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Forge\:\:_attributeUnsigned\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Forge\:\:_attributeUnsigned\(\) has parameter \$field with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Forge\:\:_createTableAttributes\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Forge\:\:_createTable\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Forge\:\:_processColumn\(\) has parameter \$processedField with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Forge\:\:_processFields\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Forge\:\:_processForeignKeys\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Forge\:\:_processIndexes\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Forge\:\:addColumn\(\) has parameter \$fields with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Forge\:\:addField\(\) has parameter \$fields with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Forge\:\:addKey\(\) has parameter \$key with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Forge\:\:addPrimaryKey\(\) has parameter \$key with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Forge\:\:addUniqueKey\(\) has parameter \$key with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Forge\:\:createTable\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Forge\:\:modifyColumn\(\) has parameter \$fields with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\Forge\:\:\$fkAllowActions type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\Forge\:\:\$foreignKeys type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\Forge\:\:\$uniqueKeys type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\Forge\:\:\$unsigned type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
             message: '#^Method CodeIgniter\\Database\\MigrationRunner\:\:__construct\(\) has parameter \$db with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/MigrationRunner.php
@@ -786,36 +651,6 @@ parameters:
             message: '#^Property CodeIgniter\\Database\\MigrationRunner\:\:\$cliMessages type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/MigrationRunner.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\MySQLi\\Forge\:\:_alterTable\(\) has parameter \$processedFields with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/MySQLi/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\MySQLi\\Forge\:\:_createTableAttributes\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/MySQLi/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\MySQLi\\Forge\:\:_processColumn\(\) has parameter \$processedField with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/MySQLi/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\MySQLi\\Forge\:\:_processIndexes\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/MySQLi/Forge.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\MySQLi\\Forge\:\:\$_quoted_table_options type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/MySQLi/Forge.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\MySQLi\\Forge\:\:\$_unsigned type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/MySQLi/Forge.php
 
         -
             message: '#^Method CodeIgniter\\Database\\MySQLi\\PreparedQuery\:\:_execute\(\) has parameter \$data with no value type specified in iterable type array\.$#'
@@ -863,41 +698,6 @@ parameters:
             path: ../../system/Database/OCI8/Connection.php
 
         -
-            message: '#^Method CodeIgniter\\Database\\OCI8\\Forge\:\:_alterTable\(\) has parameter \$processedFields with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\OCI8\\Forge\:\:_attributeAutoIncrement\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\OCI8\\Forge\:\:_attributeAutoIncrement\(\) has parameter \$field with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\OCI8\\Forge\:\:_attributeType\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\OCI8\\Forge\:\:_processColumn\(\) has parameter \$processedField with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/Forge.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\OCI8\\Forge\:\:\$fkAllowActions type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/Forge.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\OCI8\\Forge\:\:\$unsigned type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/Forge.php
-
-        -
             message: '#^Method CodeIgniter\\Database\\OCI8\\PreparedQuery\:\:_execute\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/OCI8/PreparedQuery.php
@@ -931,41 +731,6 @@ parameters:
             message: '#^Method CodeIgniter\\Database\\Postgre\\Connection\:\:escape\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/Postgre/Connection.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Postgre\\Forge\:\:_alterTable\(\) has parameter \$processedFields with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Postgre/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Postgre\\Forge\:\:_attributeAutoIncrement\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Postgre/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Postgre\\Forge\:\:_attributeAutoIncrement\(\) has parameter \$field with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Postgre/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Postgre\\Forge\:\:_attributeType\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Postgre/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Postgre\\Forge\:\:_createTableAttributes\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Postgre/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Postgre\\Forge\:\:_processColumn\(\) has parameter \$processedField with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Postgre/Forge.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\Postgre\\Forge\:\:\$_unsigned type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Postgre/Forge.php
 
         -
             message: '#^Method CodeIgniter\\Database\\Postgre\\PreparedQuery\:\:_execute\(\) has parameter \$data with no value type specified in iterable type array\.$#'
@@ -1103,51 +868,6 @@ parameters:
             path: ../../system/Database/SQLSRV/Connection.php
 
         -
-            message: '#^Method CodeIgniter\\Database\\SQLSRV\\Forge\:\:_alterTable\(\) has parameter \$processedFields with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\SQLSRV\\Forge\:\:_attributeAutoIncrement\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\SQLSRV\\Forge\:\:_attributeAutoIncrement\(\) has parameter \$field with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\SQLSRV\\Forge\:\:_attributeType\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\SQLSRV\\Forge\:\:_createTableAttributes\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\SQLSRV\\Forge\:\:_processColumn\(\) has parameter \$processedField with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\SQLSRV\\Forge\:\:_processIndexes\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/Forge.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\SQLSRV\\Forge\:\:\$fkAllowActions type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/Forge.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\SQLSRV\\Forge\:\:\$unsigned type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/Forge.php
-
-        -
             message: '#^Method CodeIgniter\\Database\\SQLSRV\\PreparedQuery\:\:_execute\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/SQLSRV/PreparedQuery.php
@@ -1186,41 +906,6 @@ parameters:
             message: '#^Method CodeIgniter\\Database\\SQLSRV\\Utils\:\:_backup\(\) has parameter \$prefs with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/SQLSRV/Utils.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\SQLite3\\Forge\:\:_alterTable\(\) has parameter \$processedFields with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLite3/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\SQLite3\\Forge\:\:_attributeAutoIncrement\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLite3/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\SQLite3\\Forge\:\:_attributeAutoIncrement\(\) has parameter \$field with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLite3/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\SQLite3\\Forge\:\:_attributeType\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLite3/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\SQLite3\\Forge\:\:_processColumn\(\) has parameter \$processedField with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLite3/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\SQLite3\\Forge\:\:_processForeignKeys\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLite3/Forge.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\SQLite3\\Forge\:\:\$_unsigned type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLite3/Forge.php
 
         -
             message: '#^Method CodeIgniter\\Database\\SQLite3\\PreparedQuery\:\:_execute\(\) has parameter \$data with no value type specified in iterable type array\.$#'
