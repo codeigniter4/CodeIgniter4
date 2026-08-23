@@ -218,7 +218,7 @@ class File extends SplFileInfo
         $size     = $this->getSize() / $divider;
 
         if ($unit !== FileSizeUnit::B) {
-            $size = number_format($size, $precision);
+            return number_format($size, $precision);
         }
 
         return $size;

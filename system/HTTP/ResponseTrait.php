@@ -224,7 +224,7 @@ trait ResponseTrait
         $body = $this->body;
 
         if ($this->bodyFormat !== 'xml') {
-            $body = service('format')->getFormatter('application/xml')->format($body);
+            return service('format')->getFormatter('application/xml')->format($body);
         }
 
         return $body;
@@ -249,7 +249,7 @@ trait ResponseTrait
 
         // Nothing much to do for a string...
         if (! is_string($body) || $format === 'json-unencoded') {
-            $body = service('format')->getFormatter($mime)->format($body);
+            return service('format')->getFormatter($mime)->format($body);
         }
 
         return $body;

@@ -204,7 +204,7 @@ class DotEnv
     protected function resolveNestedVariables(string $value): string
     {
         if (str_contains($value, '$')) {
-            $value = preg_replace_callback(
+            return preg_replace_callback(
                 '/\${([a-zA-Z0-9_\.]+)}/',
                 function ($matchedPatterns) {
                     $nestedVariable = $this->getVariable($matchedPatterns[1]);

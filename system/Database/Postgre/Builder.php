@@ -57,7 +57,7 @@ class Builder extends BaseBuilder
         $sql = parent::compileIgnore($statement);
 
         if ($sql !== '') {
-            $sql = ' ' . trim($sql);
+            return ' ' . trim($sql);
         }
 
         return $sql;

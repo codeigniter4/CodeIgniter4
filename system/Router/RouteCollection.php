@@ -1474,7 +1474,7 @@ class RouteCollection implements RouteCollectionInterface
             && is_callable($to[0], true, $callableName)
             && is_string($to[1])
         ) {
-            $to = '\\' . $callableName . '/' . $to[1];
+            return '\\' . $callableName . '/' . $to[1];
         }
 
         return $to;
