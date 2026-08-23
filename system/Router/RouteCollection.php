@@ -1455,8 +1455,10 @@ class RouteCollection implements RouteCollectionInterface
 
     /**
      * @param array<array-key, mixed> $to
+     *
+     * @return array<array-key, mixed>|string
      */
-    private function processArrayCallableSyntax(string $from, array $to): string
+    private function processArrayCallableSyntax(string $from, array $to): array|string
     {
         // [classname, method]
         // eg, [Home::class, 'index']
