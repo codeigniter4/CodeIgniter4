@@ -54,7 +54,7 @@ class Connection extends BaseConnection
     /**
      * Identifier escape character
      *
-     * @var string
+     * @var list<string>|string
      */
     public $escapeChar = '"';
 
@@ -84,9 +84,6 @@ class Connection extends BaseConnection
      */
     protected $_reserved_identifiers = ['*'];
 
-    /**
-     * Class constructor
-     */
     public function __construct(array $params)
     {
         parent::__construct($params);
@@ -166,11 +163,6 @@ class Connection extends BaseConnection
         return implode("\n", $errors);
     }
 
-    /**
-     * Close the database connection.
-     *
-     * @return void
-     */
     protected function _close()
     {
         sqlsrv_close($this->connID);
@@ -192,11 +184,6 @@ class Connection extends BaseConnection
         return (int) ($this->query('SELECT SCOPE_IDENTITY() AS insert_id')->getRow()->insert_id ?? 0);
     }
 
-    /**
-     * Generates the SQL for listing tables in a platform-dependent manner.
-     *
-     * @param string|null $tableName If $tableName is provided will return only this table if exists.
-     */
     protected function _listTables(bool $prefixLimit = false, ?string $tableName = null): string
     {
         $sql = 'SELECT [TABLE_NAME] AS "name"'
@@ -216,11 +203,6 @@ class Connection extends BaseConnection
         return $sql;
     }
 
-    /**
-     * Generates a platform-specific query string so that the column names can be fetched.
-     *
-     * @param string|TableName $table
-     */
     protected function _listColumns($table = ''): string
     {
         if ($table instanceof TableName) {
@@ -236,10 +218,6 @@ class Connection extends BaseConnection
     }
 
     /**
-     * Returns an array of objects with index data
-     *
-     * @return array<string, stdClass>
-     *
      * @throws DatabaseException
      */
     protected function _indexData(string $table): array
@@ -273,11 +251,6 @@ class Connection extends BaseConnection
     }
 
     /**
-     * Returns an array of objects with Foreign key data
-     * referenced_object_id  parent_object_id
-     *
-     * @return array<string, stdClass>
-     *
      * @throws DatabaseException
      */
     protected function _foreignKeyData(string $table): array
@@ -340,10 +313,6 @@ class Connection extends BaseConnection
     }
 
     /**
-     * Returns an array of objects with field data
-     *
-     * @return list<stdClass>
-     *
      * @throws DatabaseException
      */
     protected function _fieldData(string $table): array
@@ -412,25 +381,16 @@ class Connection extends BaseConnection
         return $default;
     }
 
-    /**
-     * Begin Transaction
-     */
     protected function _transBegin(): bool
     {
         return sqlsrv_begin_transaction($this->connID);
     }
 
-    /**
-     * Commit Transaction
-     */
     protected function _transCommit(): bool
     {
         return sqlsrv_commit($this->connID);
     }
 
-    /**
-     * Rollback Transaction
-     */
     protected function _transRollback(): bool
     {
         return sqlsrv_rollback($this->connID);

@@ -1,12 +1,7 @@
-# total 22 errors
+# total 17 errors
 
 parameters:
     ignoreErrors:
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\MySQLi\\Connection\:\:\$escapeChar is not the same as PHPDoc type array\|string of overridden property CodeIgniter\\Database\\BaseConnection\<mysqli,mysqli_result\>\:\:\$escapeChar\.$#'
-            count: 1
-            path: ../../system/Database/MySQLi/Connection.php
-
         -
             message: '#^PHPDoc type string of property CodeIgniter\\Database\\MySQLi\\Utils\:\:\$listDatabases is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$listDatabases\.$#'
             count: 1
@@ -18,19 +13,9 @@ parameters:
             path: ../../system/Database/MySQLi/Utils.php
 
         -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\OCI8\\Connection\:\:\$escapeChar is not the same as PHPDoc type array\|string of overridden property CodeIgniter\\Database\\BaseConnection\<resource,resource\>\:\:\$escapeChar\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/Connection.php
-
-        -
             message: '#^PHPDoc type string of property CodeIgniter\\Database\\OCI8\\Utils\:\:\$listDatabases is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$listDatabases\.$#'
             count: 1
             path: ../../system/Database/OCI8/Utils.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\Postgre\\Connection\:\:\$escapeChar is not the same as PHPDoc type array\|string of overridden property CodeIgniter\\Database\\BaseConnection\<PgSql\\Connection,PgSql\\Result\>\:\:\$escapeChar\.$#'
-            count: 1
-            path: ../../system/Database/Postgre/Connection.php
 
         -
             message: '#^PHPDoc type string of property CodeIgniter\\Database\\Postgre\\Utils\:\:\$listDatabases is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$listDatabases\.$#'
@@ -43,11 +28,6 @@ parameters:
             path: ../../system/Database/Postgre/Utils.php
 
         -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLSRV\\Connection\:\:\$escapeChar is not the same as PHPDoc type array\|string of overridden property CodeIgniter\\Database\\BaseConnection\<resource,resource\>\:\:\$escapeChar\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/Connection.php
-
-        -
             message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLSRV\\Utils\:\:\$listDatabases is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$listDatabases\.$#'
             count: 1
             path: ../../system/Database/SQLSRV/Utils.php
@@ -56,11 +36,6 @@ parameters:
             message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLSRV\\Utils\:\:\$optimizeTable is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$optimizeTable\.$#'
             count: 1
             path: ../../system/Database/SQLSRV/Utils.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLite3\\Connection\:\:\$escapeChar is not the same as PHPDoc type array\|string of overridden property CodeIgniter\\Database\\BaseConnection\<SQLite3,SQLite3Result\>\:\:\$escapeChar\.$#'
-            count: 1
-            path: ../../system/Database/SQLite3/Connection.php
 
         -
             message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLite3\\Utils\:\:\$optimizeTable is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$optimizeTable\.$#'

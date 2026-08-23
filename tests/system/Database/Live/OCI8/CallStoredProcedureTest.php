@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live\OCI8;
 
+use CodeIgniter\Database\OCI8\Connection as OCI8Connection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use PHPUnit\Framework\Attributes\Group;
@@ -38,6 +39,8 @@ final class CallStoredProcedureTest extends CIUnitTestCase
 
     public function testCallPackageProcedure(): void
     {
+        $this->assertInstanceOf(OCI8Connection::class, $this->db);
+
         $result = '0';
 
         $this->db->storedProcedure('calculator.plus', [
@@ -60,6 +63,8 @@ final class CallStoredProcedureTest extends CIUnitTestCase
 
     public function testCallStoredProcedure(): void
     {
+        $this->assertInstanceOf(OCI8Connection::class, $this->db);
+
         $result = '0';
 
         $this->db->storedProcedure('plus', [
@@ -82,6 +87,8 @@ final class CallStoredProcedureTest extends CIUnitTestCase
 
     public function testCallStoredProcedureForCursor(): void
     {
+        $this->assertInstanceOf(OCI8Connection::class, $this->db);
+
         $result = $this->db->getCursor();
 
         $this->db->storedProcedure('one', [

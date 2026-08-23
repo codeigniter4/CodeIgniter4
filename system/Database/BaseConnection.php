@@ -25,35 +25,35 @@ use Stringable;
 use Throwable;
 
 /**
- * @property-read array      $aliasedTables
- * @property-read string     $charset
- * @property-read bool       $compress
- * @property-read float      $connectDuration
- * @property-read float      $connectTime
- * @property-read string     $database
- * @property-read array      $dateFormat
- * @property-read string     $DBCollat
- * @property-read bool       $DBDebug
- * @property-read string     $DBDriver
- * @property-read string     $DBPrefix
- * @property-read string     $DSN
- * @property-read array|bool $encrypt
- * @property-read array      $failover
- * @property-read string     $hostname
- * @property-read Query      $lastQuery
- * @property-read string     $password
- * @property-read bool       $pConnect
- * @property-read int|string $port
- * @property-read bool       $pretend
- * @property-read string     $queryClass
- * @property-read array      $reservedIdentifiers
- * @property-read bool       $strictOn
- * @property-read string     $subdriver
- * @property-read string     $swapPre
- * @property-read int        $transDepth
- * @property-read bool       $transFailure
- * @property-read bool       $transStatus
- * @property-read string     $username
+ * @property-read list<string>                    $aliasedTables
+ * @property-read string                          $charset
+ * @property-read bool                            $compress
+ * @property-read float                           $connectDuration
+ * @property-read float                           $connectTime
+ * @property-read string                          $database
+ * @property-read array<string, string>           $dateFormat
+ * @property-read string                          $DBCollat
+ * @property-read bool                            $DBDebug
+ * @property-read string                          $DBDriver
+ * @property-read string                          $DBPrefix
+ * @property-read string                          $DSN
+ * @property-read array<string, bool|string>|bool $encrypt
+ * @property-read list<array<string, mixed>>      $failover
+ * @property-read string                          $hostname
+ * @property-read Query                           $lastQuery
+ * @property-read string                          $password
+ * @property-read bool                            $pConnect
+ * @property-read int|string                      $port
+ * @property-read bool                            $pretend
+ * @property-read string                          $queryClass
+ * @property-read list<string>                    $reservedIdentifiers
+ * @property-read bool                            $strictOn
+ * @property-read string                          $subdriver
+ * @property-read string                          $swapPre
+ * @property-read int                             $transDepth
+ * @property-read bool                            $transFailure
+ * @property-read bool                            $transStatus
+ * @property-read string                          $username
  *
  * @template TConnection
  * @template TResult
@@ -177,7 +177,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Encryption flag/data
      *
-     * @var array|bool
+     * @var array<string, bool|string>|bool
      */
     protected $encrypt = false;
 
@@ -202,7 +202,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Settings for a failover connection.
      *
-     * @var array
+     * @var list<array<string, mixed>>
      */
     protected $failover = [];
 
@@ -240,14 +240,14 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * Identifiers that must NOT be escaped.
      *
-     * @var array
+     * @var list<string>
      */
     protected $reservedIdentifiers = ['*'];
 
     /**
      * Identifier escape character
      *
-     * @var array|string
+     * @var list<string>|string
      */
     public $escapeChar = '"';
 
@@ -268,15 +268,12 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * RegExp used to escape identifiers
      *
-     * @var array
+     * @var list<string>
      */
     protected $pregEscapeChar = [];
 
     /**
-     * Holds previously looked up data
-     * for performance reasons.
-     *
-     * @var array
+     * @var array<string, mixed>
      */
     public $dataCache = [];
 
@@ -374,7 +371,7 @@ abstract class BaseConnection implements ConnectionInterface
     ];
 
     /**
-     * Saves our connection settings.
+     * @param array<string, mixed> $params
      */
     public function __construct(array $params)
     {
@@ -738,6 +735,8 @@ abstract class BaseConnection implements ConnectionInterface
      * Sets the Table Aliases to use. These are typically
      * collected during use of the Builder, and set here
      * so queries are built correctly.
+     *
+     * @param list<string> $aliases
      *
      * @return $this
      */
@@ -1111,7 +1110,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Returns a non-shared new instance of the query builder for this connection.
      *
-     * @param array|string|TableName $tableName
+     * @param array<array-key, string>|string|TableName $tableName
      *
      * @return BaseBuilder
      *
@@ -1156,6 +1155,7 @@ abstract class BaseConnection implements ConnectionInterface
      *           })
      *
      * @param Closure(BaseConnection): mixed $func
+     * @param array<string, mixed>           $options
      *
      * @return BasePreparedQuery|null
      */
@@ -1242,12 +1242,12 @@ abstract class BaseConnection implements ConnectionInterface
      * insert the table prefix (if it exists) in the proper position, and escape only
      * the correct identifiers.
      *
-     * @param array|int|string|TableName $item
-     * @param bool                       $prefixSingle       Prefix a table name with no segments?
-     * @param bool                       $protectIdentifiers Protect table or column names?
-     * @param bool                       $fieldExists        Supplied $item contains a column name?
+     * @param array<array-key, mixed>|int|string|TableName $item
+     * @param bool                                         $prefixSingle       Prefix a table name with no segments?
+     * @param bool                                         $protectIdentifiers Protect table or column names?
+     * @param bool                                         $fieldExists        Supplied $item contains a column name?
      *
-     * @return ($item is array ? array : string)
+     * @return ($item is array ? array<array-key, mixed> : string)
      */
     public function protectIdentifiers($item, bool $prefixSingle = false, ?bool $protectIdentifiers = null, bool $fieldExists = true)
     {
@@ -1448,9 +1448,9 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * This function escapes column and table names
      *
-     * @param array|string $item
+     * @param array<array-key, mixed>|string $item
      *
-     * @return ($item is array ? array : string)
+     * @return ($item is array ? array<array-key, mixed> : string)
      */
     public function escapeIdentifiers($item)
     {
@@ -1534,7 +1534,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @param mixed $str
      *
-     * @return ($str is array ? array : float|int|string)
+     * @return ($str is array ? array<array-key, mixed> : float|int|string)
      */
     public function escape($str)
     {
@@ -1638,7 +1638,7 @@ abstract class BaseConnection implements ConnectionInterface
      * This function enables you to call PHP database functions that are not natively included
      * in CodeIgniter, in a platform independent manner.
      *
-     * @param array ...$params
+     * @param mixed ...$params
      *
      * @throws DatabaseException
      */
@@ -1682,7 +1682,7 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function listTables(bool $constrainByPrefix = false)
     {
-        if (isset($this->dataCache['table_names']) && $this->dataCache['table_names']) {
+        if (($this->dataCache['table_names'] ?? []) !== []) {
             $tables = $constrainByPrefix
                 ? preg_grep("/^{$this->DBPrefix}/", $this->dataCache['table_names'])
                 : $this->dataCache['table_names'];
@@ -1847,21 +1847,18 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Converts array of arrays generated by _foreignKeyData() to array of objects
      *
-     * @return array<string, stdClass>
+     * @param array<array-key, array{
+     *     constraint_name: string|null,
+     *     table_name: string,
+     *     column_name: list<string>,
+     *     foreign_table_name: string,
+     *     foreign_column_name: list<string>,
+     *     on_delete: string,
+     *     on_update: string|null,
+     *     match: string|null,
+     * }> $data
      *
-     * array[
-     *    {constraint_name} =>
-     *        stdClass[
-     *            'constraint_name'     => string,
-     *            'table_name'          => string,
-     *            'column_name'         => string[],
-     *            'foreign_table_name'  => string,
-     *            'foreign_column_name' => string[],
-     *            'on_delete'           => string,
-     *            'on_update'           => string,
-     *            'match'               => string
-     *        ]
-     * ]
+     * @return array<string, stdClass>
      */
     protected function foreignKeyDataToObjects(array $data)
     {

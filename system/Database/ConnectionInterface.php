@@ -118,7 +118,7 @@ interface ConnectionInterface
     /**
      * Returns an instance of the query builder for this connection.
      *
-     * @param array|string $tableName Table name.
+     * @param array<array-key, string>|string $tableName Table name.
      *
      * @return BaseBuilder Builder.
      */
@@ -139,7 +139,7 @@ interface ConnectionInterface
      *
      * @param mixed $str
      *
-     * @return ($str is array ? array : float|int|string)
+     * @return ($str is array ? array<array-key, mixed> : float|int|string)
      */
     public function escape($str);
 
@@ -147,7 +147,7 @@ interface ConnectionInterface
      * Allows for custom calls to the database engine that are not
      * supported through our database layer.
      *
-     * @param array ...$params
+     * @param mixed ...$params
      *
      * @return mixed
      */
