@@ -1,4 +1,4 @@
-# total 13 errors
+# total 12 errors
 
 parameters:
     ignoreErrors:
@@ -26,11 +26,6 @@ parameters:
             message: '#^Method CodeIgniter\\Config\\FactoriesTest\:\:getFactoriesStaticProperty\(\) has parameter \$params with no type specified\.$#'
             count: 1
             path: ../../tests/system/Config/FactoriesTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Migrations\\MigrationRunnerTest\:\:resetTables\(\) has parameter \$db with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Database/Migrations/MigrationRunnerTest.php
 
         -
             message: '#^Method CodeIgniter\\Entity\\EntityTest\:\:getCastEntity\(\) has parameter \$data with no type specified\.$#'
