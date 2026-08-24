@@ -1,27 +1,7 @@
-# total 8 errors
+# total 4 errors
 
 parameters:
     ignoreErrors:
-        -
-            message: '#^Method CodeIgniter\\Commands\\Utilities\\Routes\\AutoRouterImproved\\Controllers\\Dash_folder\\Dash_controller\:\:getDash_method\(\) has parameter \$p1 with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Commands/Utilities/Routes/AutoRouterImproved/Controllers/Dash_folder/Dash_controller.php
-
-        -
-            message: '#^Method CodeIgniter\\Commands\\Utilities\\Routes\\AutoRouterImproved\\Controllers\\Dash_folder\\Dash_controller\:\:getDash_method\(\) has parameter \$p2 with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Commands/Utilities/Routes/AutoRouterImproved/Controllers/Dash_folder/Dash_controller.php
-
-        -
-            message: '#^Method CodeIgniter\\Commands\\Utilities\\Routes\\AutoRouterImproved\\Controllers\\Dash_folder\\Dash_controller\:\:getSomemethod\(\) has parameter \$p1 with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Commands/Utilities/Routes/AutoRouterImproved/Controllers/Dash_folder/Dash_controller.php
-
-        -
-            message: '#^Method CodeIgniter\\Commands\\Utilities\\Routes\\AutoRouterImproved\\Controllers\\SubDir\\BlogController\:\:getSomeMethod\(\) has parameter \$first with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Commands/Utilities/Routes/AutoRouterImproved/Controllers/SubDir/BlogController.php
-
         -
             message: '#^Method CodeIgniter\\Entity\\EntityTest\:\:getCastEntity\(\) has parameter \$data with no type specified\.$#'
             count: 1

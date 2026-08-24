@@ -31,6 +31,9 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
         $this->resetServices(true);
     }
 
+    /**
+     * @param array<string, array<string, list<string>>> $filterConfigFilters
+     */
     private function createAutoRouteCollector(array $filterConfigFilters): AutoRouteCollector
     {
         $routes = service('routes');
