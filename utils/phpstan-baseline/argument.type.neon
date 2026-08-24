@@ -1,4 +1,4 @@
-# total 30 errors
+# total 25 errors
 
 parameters:
     ignoreErrors:
@@ -58,11 +58,6 @@ parameters:
             path: ../../tests/system/Helpers/NumberHelperTest.php
 
         -
-            message: '#^Parameter \#1 \$request of method CodeIgniter\\CodeIgniter\:\:setRequest\(\) expects CodeIgniter\\HTTP\\CLIRequest\|CodeIgniter\\HTTP\\IncomingRequest, CodeIgniter\\HTTP\\Request given\.$#'
-            count: 1
-            path: ../../tests/system/HomeTest.php
-
-        -
             message: '#^Parameter \#2 \$message of method CodeIgniter\\Log\\Handlers\\ChromeLoggerHandler\:\:handle\(\) expects string, stdClass given\.$#'
             count: 1
             path: ../../tests/system/Log/Handlers/ChromeLoggerHandlerTest.php
@@ -71,26 +66,6 @@ parameters:
             message: '#^Parameter \#1 \$format of method CodeIgniter\\RESTful\\ResourceController\:\:setFormat\(\) expects ''json''\|''xml'', ''Nonsense'' given\.$#'
             count: 1
             path: ../../tests/system/RESTful/ResourceControllerTest.php
-
-        -
-            message: '#^Parameter \#1 \$request of method CodeIgniter\\CodeIgniter\:\:setRequest\(\) expects CodeIgniter\\HTTP\\CLIRequest\|CodeIgniter\\HTTP\\IncomingRequest, CodeIgniter\\HTTP\\Request given\.$#'
-            count: 1
-            path: ../../tests/system/Test/FeatureTestAutoRoutingImprovedTest.php
-
-        -
-            message: '#^Parameter \#1 \$request of method CodeIgniter\\CodeIgniter\:\:setRequest\(\) expects CodeIgniter\\HTTP\\CLIRequest\|CodeIgniter\\HTTP\\IncomingRequest, CodeIgniter\\HTTP\\Request given\.$#'
-            count: 1
-            path: ../../tests/system/Test/FeatureTestTraitTest.php
-
-        -
-            message: '#^Parameter \#1 \$body of method CodeIgniter\\HTTP\\Response\:\:setJSON\(\) expects array\<mixed\>\|object\|string, false given\.$#'
-            count: 1
-            path: ../../tests/system/Test/TestResponseTest.php
-
-        -
-            message: '#^Parameter \#1 \$body of method CodeIgniter\\HTTP\\Response\:\:setJSON\(\) expects array\<mixed\>\|object\|string, true given\.$#'
-            count: 1
-            path: ../../tests/system/Test/TestResponseTest.php
 
         -
             message: '#^Parameter \#2 \$context of method CodeIgniter\\View\\Parser\:\:setData\(\) expects ''attr''\|''css''\|''html''\|''js''\|''raw''\|''url''\|null, ''unknown'' given\.$#'

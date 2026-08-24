@@ -1,4 +1,4 @@
-# total 22 errors
+# total 20 errors
 
 parameters:
     ignoreErrors:
@@ -61,11 +61,6 @@ parameters:
             message: '#^Property Config\\Cookie\:\:\$samesite \(''''\|''Lax''\|''None''\|''Strict''\) does not accept ''Invalid''\.$#'
             count: 1
             path: ../../tests/system/Session/SessionTest.php
-
-        -
-            message: '#^Property CodeIgniter\\Test\\ControllerTestTraitTest\:\:\$uri \(string\) does not accept CodeIgniter\\HTTP\\SiteURI\.$#'
-            count: 2
-            path: ../../tests/system/Test/ControllerTestTraitTest.php
 
         -
             message: '#^Property CodeIgniter\\View\\ParserPluginTest\:\:\$validator \(CodeIgniter\\Validation\\Validation\) does not accept CodeIgniter\\Validation\\ValidationInterface\.$#'
