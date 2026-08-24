@@ -1,4 +1,4 @@
-# total 139 errors
+# total 127 errors
 
 parameters:
     ignoreErrors:
@@ -161,66 +161,6 @@ parameters:
             message: '#^Property CodeIgniter\\Email\\Email\:\:\$tmpArchive type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Email/Email.php
-
-        -
-            message: '#^Method CodeIgniter\\Encryption\\EncrypterInterface\:\:decrypt\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Encryption/EncrypterInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Encryption\\EncrypterInterface\:\:encrypt\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Encryption/EncrypterInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Encryption\\Encryption\:\:__get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Encryption/Encryption.php
-
-        -
-            message: '#^Property CodeIgniter\\Encryption\\Encryption\:\:\$drivers type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Encryption/Encryption.php
-
-        -
-            message: '#^Method CodeIgniter\\Encryption\\Handlers\\OpenSSLHandler\:\:decrypt\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Encryption/Handlers/OpenSSLHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Encryption\\Handlers\\OpenSSLHandler\:\:encrypt\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Encryption/Handlers/OpenSSLHandler.php
-
-        -
-            message: '#^Property CodeIgniter\\Encryption\\Handlers\\OpenSSLHandler\:\:\$digestSize type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Encryption/Handlers/OpenSSLHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Encryption\\Handlers\\SodiumHandler\:\:decrypt\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Encryption/Handlers/SodiumHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Encryption\\Handlers\\SodiumHandler\:\:encrypt\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Encryption/Handlers/SodiumHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Encryption\\Handlers\\SodiumHandler\:\:parseParams\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Encryption/Handlers/SodiumHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Encryption\\KeyRotationDecorator\:\:decrypt\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Encryption/KeyRotationDecorator.php
-
-        -
-            message: '#^Method CodeIgniter\\Encryption\\KeyRotationDecorator\:\:encrypt\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Encryption/KeyRotationDecorator.php
 
         -
             message: '#^Method CodeIgniter\\Exceptions\\PageNotFoundException\:\:lang\(\) has parameter \$args with no value type specified in iterable type array\.$#'

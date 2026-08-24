@@ -1,52 +1,7 @@
-# total 19 errors
+# total 6 errors
 
 parameters:
     ignoreErrors:
-        -
-            message: '#^Access to an undefined property CodeIgniter\\Encryption\\EncrypterInterface\:\:\$key\.$#'
-            count: 1
-            path: ../../tests/system/Encryption/EncryptionTest.php
-
-        -
-            message: '#^Access to an undefined property CodeIgniter\\Encryption\\Encryption\:\:\$bogus\.$#'
-            count: 2
-            path: ../../tests/system/Encryption/EncryptionTest.php
-
-        -
-            message: '#^Access to an undefined property CodeIgniter\\Encryption\\EncrypterInterface\:\:\$cipher\.$#'
-            count: 1
-            path: ../../tests/system/Encryption/Handlers/OpenSSLHandlerTest.php
-
-        -
-            message: '#^Access to an undefined property CodeIgniter\\Encryption\\EncrypterInterface\:\:\$key\.$#'
-            count: 3
-            path: ../../tests/system/Encryption/Handlers/OpenSSLHandlerTest.php
-
-        -
-            message: '#^Access to an undefined property CodeIgniter\\Encryption\\EncrypterInterface\:\:\$blockSize\.$#'
-            count: 1
-            path: ../../tests/system/Encryption/Handlers/SodiumHandlerTest.php
-
-        -
-            message: '#^Access to an undefined property CodeIgniter\\Encryption\\EncrypterInterface\:\:\$driver\.$#'
-            count: 1
-            path: ../../tests/system/Encryption/Handlers/SodiumHandlerTest.php
-
-        -
-            message: '#^Access to an undefined property CodeIgniter\\Encryption\\EncrypterInterface\:\:\$key\.$#'
-            count: 2
-            path: ../../tests/system/Encryption/Handlers/SodiumHandlerTest.php
-
-        -
-            message: '#^Access to an undefined property CodeIgniter\\Encryption\\EncrypterInterface\:\:\$cipher\.$#'
-            count: 1
-            path: ../../tests/system/Encryption/KeyRotationDecoratorTest.php
-
-        -
-            message: '#^Access to an undefined property CodeIgniter\\Encryption\\EncrypterInterface\:\:\$key\.$#'
-            count: 1
-            path: ../../tests/system/Encryption/KeyRotationDecoratorTest.php
-
         -
             message: '#^Access to an undefined property CodeIgniter\\I18n\\TimeLegacy\:\:\$foobar\.$#'
             count: 1

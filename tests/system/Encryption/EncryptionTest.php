@@ -15,6 +15,7 @@ namespace CodeIgniter\Encryption;
 
 use CodeIgniter\Config\Services as CodeIgniterServices;
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
+use CodeIgniter\Encryption\Handlers\OpenSSLHandler;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
@@ -156,6 +157,7 @@ final class EncryptionTest extends CIUnitTestCase
 
         $config->key = 'Abracadabra';
         $encrypter   = Services::encrypter($config, true);
+        $this->assertInstanceOf(OpenSSLHandler::class, $encrypter);
         $this->assertSame('anything', $encrypter->key);
     }
 
@@ -166,7 +168,7 @@ final class EncryptionTest extends CIUnitTestCase
 
     public function testMagicIssetFalse(): void
     {
-        $this->assertFalse(isset($this->encryption->bogus));
+        $this->assertFalse(isset($this->encryption->bogus)); // @phpstan-ignore property.notFound
     }
 
     public function testMagicGet(): void
@@ -176,7 +178,7 @@ final class EncryptionTest extends CIUnitTestCase
 
     public function testMagicGetMissing(): void
     {
-        $this->assertNull($this->encryption->bogus);
+        $this->assertNull($this->encryption->bogus); // @phpstan-ignore property.notFound
     }
 
     public function testDecryptEncryptedDataByCI3AES128CBC(): void
