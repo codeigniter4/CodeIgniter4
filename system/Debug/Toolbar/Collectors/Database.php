@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Debug\Toolbar\Collectors;
 
+use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Query;
 use CodeIgniter\I18n\Time;
 use Config\Toolbar;
@@ -55,7 +56,7 @@ class Database extends BaseCollector
     /**
      * Array of database connections.
      *
-     * @var array
+     * @var array<string, BaseConnection>
      */
     protected $connections;
 
@@ -63,7 +64,7 @@ class Database extends BaseCollector
      * The query instances that have been collected
      * through the DBQuery Event.
      *
-     * @var array
+     * @var list<array{query: Query, string: string, duplicate: bool, trace: list<array<string, mixed>>}>
      */
     protected static $queries = [];
 
@@ -113,7 +114,13 @@ class Database extends BaseCollector
     /**
      * Returns timeline data formatted for the toolbar.
      *
-     * @return array The formatted data or an empty array.
+     * @return list<array{
+     *   name: string,
+     *   component: string,
+     *   start: float|string|null,
+     *   duration: string,
+     *   query?: string,
+     * }>
      */
     protected function formatTimelineData(): array
     {
@@ -144,6 +151,16 @@ class Database extends BaseCollector
 
     /**
      * Returns the data of this collector to be formatted in the toolbar
+     *
+     * @return array{queries: list<array{
+     *   hover: string,
+     *   class: string,
+     *   duration: string,
+     *   sql: string,
+     *   trace: list<array<string, mixed>>,
+     *   trace-file: string,
+     *   qid: string
+     * }>}
      */
     public function display(): array
     {

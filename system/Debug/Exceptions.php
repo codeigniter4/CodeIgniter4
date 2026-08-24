@@ -355,6 +355,8 @@ class Exceptions
     /**
      * Gathers the variables that will be made available to the view.
      *
+     * @return array{title: string, type: string, code: int, message: string, file: string, line: int, trace: list<array<string, mixed>>}
+     *
      * @deprecated 4.4.0 No longer used. Moved to BaseExceptionHandler.
      */
     protected function collectVars(Throwable $exception, int $statusCode): array
@@ -386,9 +388,10 @@ class Exceptions
     /**
      * Mask sensitive data in the trace.
      *
-     * @param array $trace
+     * @param list<array<string, mixed>> $trace
+     * @param list<string>               $keysToMask
      *
-     * @return array
+     * @return list<array<string, mixed>>
      *
      * @deprecated 4.4.0 No longer used. Moved to BaseExceptionHandler.
      */
@@ -402,9 +405,10 @@ class Exceptions
     }
 
     /**
-     * @param array|object $args
+     * @param array<array-key, mixed>|object $args
+     * @param list<string>                   $keysToMask
      *
-     * @return array|object
+     * @return array<array-key, mixed>|object
      *
      * @deprecated 4.4.0 No longer used. Moved to BaseExceptionHandler.
      */
@@ -441,6 +445,8 @@ class Exceptions
 
     /**
      * Determines the HTTP status code and the exit status code for this request.
+     *
+     * @return array{int, int}
      */
     protected function determineCodes(Throwable $exception): array
     {

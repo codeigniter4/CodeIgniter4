@@ -52,6 +52,8 @@ class Files extends BaseCollector
 
     /**
      * Returns the data of this collector to be formatted in the toolbar
+     *
+     * @return array{coreFiles: list<array{path: string, name: string}>, userFiles: list<array{path: string, name: string}>}
      */
     public function display(): array
     {

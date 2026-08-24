@@ -1,4 +1,4 @@
-# total 31 errors
+# total 30 errors
 
 parameters:
     ignoreErrors:
@@ -51,11 +51,6 @@ parameters:
             message: '#^Parameter \#1 \$set of method CodeIgniter\\Database\\BaseBuilder\<CodeIgniter\\Database\\BaseConnection\>\:\:updateFields\(\) expects list\<CodeIgniter\\Database\\RawSql\|string\>\|string, array\{updated_at\: CodeIgniter\\Database\\RawSql\} given\.$#'
             count: 2
             path: ../../tests/system/Database/Live/UpsertTest.php
-
-        -
-            message: '#^Parameter \#2 \$callable of method CodeIgniter\\Debug\\Timer\:\:record\(\) expects callable\(\)\: mixed, ''strlen'' given\.$#'
-            count: 1
-            path: ../../tests/system/Debug/TimerTest.php
 
         -
             message: '#^Parameter \#1 \$num of function number_to_size expects int\|string, float given\.$#'

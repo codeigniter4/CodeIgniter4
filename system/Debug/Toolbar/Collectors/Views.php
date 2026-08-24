@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 use CodeIgniter\View\RendererInterface;
+use CodeIgniter\View\View;
 
 /**
  * Views collector
@@ -70,10 +71,15 @@ class Views extends BaseCollector
     /**
      * Views counter
      *
-     * @var array
+     * @var array{}
+     *
+     * @deprecated 4.7.5 Unused.
      */
     protected $views = [];
 
+    /**
+     * @phpstan-assert View $this->viewer
+     */
     private function initViewer(): void
     {
         $this->viewer ??= service('renderer');
@@ -82,6 +88,8 @@ class Views extends BaseCollector
     /**
      * Child classes should implement this to return the timeline data
      * formatted for correct usage.
+     *
+     * @return list<array{name: string, component: string, start: float, duration: float}>
      */
     protected function formatTimelineData(): array
     {
@@ -118,6 +126,8 @@ class Views extends BaseCollector
      *          'bar' => 'baz'
      *      ],
      *  ];
+     *
+     * @return array<string, array<string, mixed>>
      */
     public function getVarData(): array
     {
