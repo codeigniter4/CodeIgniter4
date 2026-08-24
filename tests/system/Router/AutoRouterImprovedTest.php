@@ -528,6 +528,9 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         ], $router->getPos());
     }
 
+    /**
+     * @return iterable<string, array{string, string|null, string, string, int, int|null, int|null}>
+     */
     public static function provideTranslateUriToCamelCase(): iterable
     {
         yield from [
@@ -587,6 +590,9 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router->getRoute($uri, Method::GET);
     }
 
+    /**
+     * @return iterable<string, array{string, string}>
+     */
     public static function provideRejectTranslateUriToCamelCase(): iterable
     {
         yield from [
