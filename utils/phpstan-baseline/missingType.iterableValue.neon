@@ -1,4 +1,4 @@
-# total 440 errors
+# total 415 errors
 
 parameters:
     ignoreErrors:
@@ -318,41 +318,6 @@ parameters:
             path: ../../system/DataConverter/DataConverter.php
 
         -
-            message: '#^Method CodeIgniter\\Database\\BasePreparedQuery\:\:_execute\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BasePreparedQuery.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BasePreparedQuery\:\:_prepare\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BasePreparedQuery.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BasePreparedQuery\:\:prepare\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BasePreparedQuery.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseUtils\:\:_backup\(\) has parameter \$prefs with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseUtils.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseUtils\:\:backup\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseUtils.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseUtils\:\:getXMLFromResult\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseUtils.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseUtils\:\:listDatabases\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseUtils.php
-
-        -
             message: '#^Method CodeIgniter\\Database\\Config\:\:connect\(\) has parameter \$group with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/Config.php
@@ -443,56 +408,6 @@ parameters:
             path: ../../system/Database/MigrationRunner.php
 
         -
-            message: '#^Method CodeIgniter\\Database\\MySQLi\\PreparedQuery\:\:_execute\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/MySQLi/PreparedQuery.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\MySQLi\\PreparedQuery\:\:_prepare\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/MySQLi/PreparedQuery.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\MySQLi\\Utils\:\:_backup\(\) has parameter \$prefs with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/MySQLi/Utils.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\OCI8\\PreparedQuery\:\:_execute\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/PreparedQuery.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\OCI8\\PreparedQuery\:\:_prepare\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/PreparedQuery.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\OCI8\\Utils\:\:_backup\(\) has parameter \$prefs with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/Utils.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Postgre\\PreparedQuery\:\:_execute\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Postgre/PreparedQuery.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Postgre\\PreparedQuery\:\:_prepare\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Postgre/PreparedQuery.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Postgre\\Utils\:\:_backup\(\) has parameter \$prefs with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Postgre/Utils.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\PreparedQueryInterface\:\:prepare\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/PreparedQueryInterface.php
-
-        -
             message: '#^Method CodeIgniter\\Database\\Query\:\:matchNamedBinds\(\) has parameter \$binds with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/Query.php
@@ -511,41 +426,6 @@ parameters:
             message: '#^Property CodeIgniter\\Database\\Query\:\:\$binds type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/Query.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\SQLSRV\\PreparedQuery\:\:_execute\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/PreparedQuery.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\SQLSRV\\PreparedQuery\:\:_prepare\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/PreparedQuery.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\SQLSRV\\PreparedQuery\:\:parameterize\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/PreparedQuery.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\SQLSRV\\PreparedQuery\:\:\$parameters type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/PreparedQuery.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\SQLSRV\\Utils\:\:_backup\(\) has parameter \$prefs with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/Utils.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\SQLite3\\PreparedQuery\:\:_execute\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLite3/PreparedQuery.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\SQLite3\\PreparedQuery\:\:_prepare\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLite3/PreparedQuery.php
 
         -
             message: '#^Method CodeIgniter\\Database\\SQLite3\\Table\:\:addForeignKey\(\) has parameter \$foreignKeys with no value type specified in iterable type array\.$#'
@@ -576,11 +456,6 @@ parameters:
             message: '#^Property CodeIgniter\\Database\\SQLite3\\Table\:\:\$keys type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/SQLite3/Table.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\SQLite3\\Utils\:\:_backup\(\) has parameter \$prefs with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLite3/Utils.php
 
         -
             message: '#^Method CodeIgniter\\Debug\\BaseExceptionHandler\:\:collectVars\(\) return type has no value type specified in iterable type array\.$#'

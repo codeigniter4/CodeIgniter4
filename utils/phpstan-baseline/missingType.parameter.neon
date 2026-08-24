@@ -1,17 +1,7 @@
-# total 15 errors
+# total 13 errors
 
 parameters:
     ignoreErrors:
-        -
-            message: '#^Method CodeIgniter\\Database\\BasePreparedQuery\:\:execute\(\) has parameter \$data with no type specified\.$#'
-            count: 1
-            path: ../../system/Database/BasePreparedQuery.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\PreparedQueryInterface\:\:execute\(\) has parameter \$data with no type specified\.$#'
-            count: 1
-            path: ../../system/Database/PreparedQueryInterface.php
-
         -
             message: '#^Method CodeIgniter\\Commands\\Utilities\\Routes\\AutoRouterImproved\\Controllers\\Dash_folder\\Dash_controller\:\:getDash_method\(\) has parameter \$p1 with no type specified\.$#'
             count: 1
