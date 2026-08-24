@@ -345,16 +345,16 @@ from what you expose through your API, making it easier to maintain and evolve y
     <span class="k">public</span> <span class="k">function</span> <span class="nf">toArray</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$resource</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="p">[</span>
-            <span class="s1">&#39;id&#39;</span>         <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;name&#39;</span>       <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;email&#39;</span>      <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;created_at&#39;</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;created_at&#39;</span><span class="p">],</span>
+            <span class="s1">'id'</span>         <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'id'</span><span class="p">],</span>
+            <span class="s1">'name'</span>       <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'name'</span><span class="p">],</span>
+            <span class="s1">'email'</span>      <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'email'</span><span class="p">],</span>
+            <span class="s1">'created_at'</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'created_at'</span><span class="p">],</span>
         <span class="p">];</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
 <span class="c1">// In your controller</span>
-<span class="nv">$user</span>        <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="nv">$user</span>        <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">'UserModel'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 <span class="nv">$transformer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">UserTransformer</span><span class="p">();</span>
 
 <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respond</span><span class="p">(</span><span class="nv">$transformer</span><span class="o">-&gt;</span><span class="na">transform</span><span class="p">(</span><span class="nv">$user</span><span class="p">));</span>
@@ -382,10 +382,10 @@ a parameter, allowing you to access and transform its data.</p>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">toArray</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$resource</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="p">[</span>
-            <span class="s1">&#39;id&#39;</span>           <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;username&#39;</span>     <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>  <span class="c1">// Renaming the field</span>
-            <span class="s1">&#39;email&#39;</span>        <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;member_since&#39;</span> <span class="o">=&gt;</span> <span class="nb">date</span><span class="p">(</span><span class="s1">&#39;Y-m-d&#39;</span><span class="p">,</span> <span class="nb">strtotime</span><span class="p">(</span><span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;created_at&#39;</span><span class="p">])),</span> <span class="c1">// Formatting</span>
+            <span class="s1">'id'</span>           <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'id'</span><span class="p">],</span>
+            <span class="s1">'username'</span>     <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'name'</span><span class="p">],</span>  <span class="c1">// Renaming the field</span>
+            <span class="s1">'email'</span>        <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'email'</span><span class="p">],</span>
+            <span class="s1">'member_since'</span> <span class="o">=&gt;</span> <span class="nb">date</span><span class="p">(</span><span class="s1">'Y-m-d'</span><span class="p">,</span> <span class="nb">strtotime</span><span class="p">(</span><span class="nv">$resource</span><span class="p">[</span><span class="s1">'created_at'</span><span class="p">])),</span> <span class="c1">// Formatting</span>
         <span class="p">];</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -450,10 +450,10 @@ it to the client.</p>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">show</span><span class="p">(</span><span class="nv">$id</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="nv">$user</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
+        <span class="nv">$user</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">'UserModel'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$user</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failNotFound</span><span class="p">(</span><span class="s1">&#39;User not found&#39;</span><span class="p">);</span>
+            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failNotFound</span><span class="p">(</span><span class="s1">'User not found'</span><span class="p">);</span>
         <span class="p">}</span>
 
         <span class="nv">$transformer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">UserTransformer</span><span class="p">();</span>
@@ -463,7 +463,7 @@ it to the client.</p>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$users</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+        <span class="nv">$users</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">'UserModel'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 
         <span class="nv">$transformer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">UserTransformer</span><span class="p">();</span>
 
@@ -489,23 +489,23 @@ This allows API clients to request only specific fields they need, reducing band
     <span class="k">public</span> <span class="k">function</span> <span class="nf">toArray</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$resource</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="p">[</span>
-            <span class="s1">&#39;id&#39;</span>         <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;name&#39;</span>       <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;email&#39;</span>      <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;created_at&#39;</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;created_at&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;updated_at&#39;</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;updated_at&#39;</span><span class="p">],</span>
+            <span class="s1">'id'</span>         <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'id'</span><span class="p">],</span>
+            <span class="s1">'name'</span>       <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'name'</span><span class="p">],</span>
+            <span class="s1">'email'</span>      <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'email'</span><span class="p">],</span>
+            <span class="s1">'created_at'</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'created_at'</span><span class="p">],</span>
+            <span class="s1">'updated_at'</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'updated_at'</span><span class="p">],</span>
         <span class="p">];</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
 <span class="c1">// Request: GET /users/1?fields=id,name</span>
-<span class="c1">// Response: {&quot;id&quot;: 1, &quot;name&quot;: &quot;John Doe&quot;}</span>
+<span class="c1">// Response: {"id": 1, "name": "John Doe"}</span>
 </pre></div>
 </div>
 <p>A request to <code class="docutils literal notranslate"><span class="pre">/users/1?fields=id,name</span></code> would return only:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;John Doe&quot;</span>
+<span class="w">    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Doe"</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -524,18 +524,18 @@ fields are allowed by overriding the <code class="docutils literal notranslate">
     <span class="k">public</span> <span class="k">function</span> <span class="nf">toArray</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$resource</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="p">[</span>
-            <span class="s1">&#39;id&#39;</span>         <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;name&#39;</span>       <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;email&#39;</span>      <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;created_at&#39;</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;created_at&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;updated_at&#39;</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;updated_at&#39;</span><span class="p">],</span>
+            <span class="s1">'id'</span>         <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'id'</span><span class="p">],</span>
+            <span class="s1">'name'</span>       <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'name'</span><span class="p">],</span>
+            <span class="s1">'email'</span>      <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'email'</span><span class="p">],</span>
+            <span class="s1">'created_at'</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'created_at'</span><span class="p">],</span>
+            <span class="s1">'updated_at'</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'updated_at'</span><span class="p">],</span>
         <span class="p">];</span>
     <span class="p">}</span>
 
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">getAllowedFields</span><span class="p">()</span><span class="o">:</span> <span class="o">?</span><span class="k">array</span>
     <span class="p">{</span>
         <span class="c1">// Only these fields can be requested</span>
-        <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">];</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s1">'id'</span><span class="p">,</span> <span class="s1">'name'</span><span class="p">,</span> <span class="s1">'created_at'</span><span class="p">];</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -566,23 +566,23 @@ resource name. Inside these methods, you can access the current resource being t
     <span class="k">public</span> <span class="k">function</span> <span class="nf">toArray</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$resource</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="p">[</span>
-            <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">],</span>
+            <span class="s1">'id'</span>    <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'id'</span><span class="p">],</span>
+            <span class="s1">'name'</span>  <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'name'</span><span class="p">],</span>
+            <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'email'</span><span class="p">],</span>
         <span class="p">];</span>
     <span class="p">}</span>
 
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">includePosts</span><span class="p">()</span><span class="o">:</span> <span class="k">array</span>
     <span class="p">{</span>
         <span class="c1">// Use $this-&gt;resource to access the current resource being transformed</span>
-        <span class="nv">$posts</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;PostModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+        <span class="nv">$posts</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">'PostModel'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">'user_id'</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">[</span><span class="s1">'id'</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 
         <span class="k">return</span> <span class="p">(</span><span class="k">new</span> <span class="nx">PostTransformer</span><span class="p">())</span><span class="o">-&gt;</span><span class="na">transformMany</span><span class="p">(</span><span class="nv">$posts</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">includeComments</span><span class="p">()</span><span class="o">:</span> <span class="k">array</span>
     <span class="p">{</span>
-        <span class="nv">$comments</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;CommentModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+        <span class="nv">$comments</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">'CommentModel'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">'user_id'</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">[</span><span class="s1">'id'</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 
         <span class="k">return</span> <span class="p">(</span><span class="k">new</span> <span class="nx">CommentTransformer</span><span class="p">())</span><span class="o">-&gt;</span><span class="na">transformMany</span><span class="p">(</span><span class="nv">$comments</span><span class="p">);</span>
     <span class="p">}</span>
@@ -594,19 +594,19 @@ The <code class="docutils literal notranslate"><span class="pre">$this-&gt;resou
 <p>Clients can now request: <code class="docutils literal notranslate"><span class="pre">/users/1?include=posts,comments</span></code></p>
 <p>The response would include:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;john@example.com&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;posts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Doe"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john@example.com"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"posts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;First Post&quot;</span>
+<span class="w">            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"First Post"</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;comments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="nt">"comments"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Great article!&quot;</span>
+<span class="w">            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Great article!"</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">]</span>
 <span class="p">}</span>
@@ -640,37 +640,37 @@ transformer, that request’s scope is honored.</p>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">toArray</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$resource</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="p">[</span>
-            <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">],</span>
+            <span class="s1">'id'</span>    <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'id'</span><span class="p">],</span>
+            <span class="s1">'name'</span>  <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'name'</span><span class="p">],</span>
+            <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'email'</span><span class="p">],</span>
         <span class="p">];</span>
     <span class="p">}</span>
 
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">getAllowedIncludes</span><span class="p">()</span><span class="o">:</span> <span class="o">?</span><span class="k">array</span>
     <span class="p">{</span>
         <span class="c1">// Only these relationships can be included</span>
-        <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;posts&#39;</span><span class="p">,</span> <span class="s1">&#39;comments&#39;</span><span class="p">];</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s1">'posts'</span><span class="p">,</span> <span class="s1">'comments'</span><span class="p">];</span>
     <span class="p">}</span>
 
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">includePosts</span><span class="p">()</span><span class="o">:</span> <span class="k">array</span>
     <span class="p">{</span>
-        <span class="nv">$posts</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;PostModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+        <span class="nv">$posts</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">'PostModel'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">'user_id'</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">[</span><span class="s1">'id'</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 
         <span class="k">return</span> <span class="p">(</span><span class="k">new</span> <span class="nx">PostTransformer</span><span class="p">())</span><span class="o">-&gt;</span><span class="na">transformMany</span><span class="p">(</span><span class="nv">$posts</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">includeComments</span><span class="p">()</span><span class="o">:</span> <span class="k">array</span>
     <span class="p">{</span>
-        <span class="nv">$comments</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;CommentModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+        <span class="nv">$comments</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">'CommentModel'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">'user_id'</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">[</span><span class="s1">'id'</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 
         <span class="k">return</span> <span class="p">(</span><span class="k">new</span> <span class="nx">CommentTransformer</span><span class="p">())</span><span class="o">-&gt;</span><span class="na">transformMany</span><span class="p">(</span><span class="nv">$comments</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">includeOrders</span><span class="p">()</span><span class="o">:</span> <span class="k">array</span>
     <span class="p">{</span>
-        <span class="c1">// This method exists but won&#39;t be callable from the API</span>
-        <span class="c1">// because &#39;orders&#39; is not in getAllowedIncludes()</span>
-        <span class="nv">$orders</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;OrderModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+        <span class="c1">// This method exists but won't be callable from the API</span>
+        <span class="c1">// because 'orders' is not in getAllowedIncludes()</span>
+        <span class="nv">$orders</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">'OrderModel'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">'user_id'</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">[</span><span class="s1">'id'</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 
         <span class="k">return</span> <span class="p">(</span><span class="k">new</span> <span class="nx">OrderTransformer</span><span class="p">())</span><span class="o">-&gt;</span><span class="na">transformMany</span><span class="p">(</span><span class="nv">$orders</span><span class="p">);</span>
     <span class="p">}</span>
@@ -689,9 +689,9 @@ transformer, that request’s scope is honored.</p>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">toArray</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$resource</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="p">[</span>
-            <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">],</span>
+            <span class="s1">'id'</span>    <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'id'</span><span class="p">],</span>
+            <span class="s1">'name'</span>  <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'name'</span><span class="p">],</span>
+            <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'email'</span><span class="p">],</span>
         <span class="p">];</span>
     <span class="p">}</span>
 
@@ -734,7 +734,7 @@ will be thrown.</p>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$users</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+        <span class="nv">$users</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">'UserModel'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 
         <span class="nv">$transformer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">UserTransformer</span><span class="p">();</span>
         <span class="nv">$data</span>        <span class="o">=</span> <span class="nv">$transformer</span><span class="o">-&gt;</span><span class="na">transformMany</span><span class="p">(</span><span class="nv">$users</span><span class="p">);</span>
@@ -760,9 +760,9 @@ method to get the data:</p>
 <span class="k">use</span> <span class="nx">App\Transformers\UserTransformer</span><span class="p">;</span>
 
 <span class="nv">$user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">([</span>
-    <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;John Doe&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;john@example.com&#39;</span><span class="p">,</span>
+    <span class="s1">'id'</span>    <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">'name'</span>  <span class="o">=&gt;</span> <span class="s1">'John Doe'</span><span class="p">,</span>
+    <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="s1">'john@example.com'</span><span class="p">,</span>
 <span class="p">]);</span>
 
 <span class="nv">$transformer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">UserTransformer</span><span class="p">();</span>
@@ -778,9 +778,9 @@ method to get the data:</p>
 <span class="k">use</span> <span class="nx">App\Transformers\UserTransformer</span><span class="p">;</span>
 
 <span class="nv">$userData</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;John Doe&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;john@example.com&#39;</span><span class="p">,</span>
+    <span class="s1">'id'</span>    <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">'name'</span>  <span class="o">=&gt;</span> <span class="s1">'John Doe'</span><span class="p">,</span>
+    <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="s1">'john@example.com'</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="nv">$transformer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">UserTransformer</span><span class="p">();</span>
@@ -797,8 +797,8 @@ method to get the data:</p>
 
 <span class="nv">$user</span>        <span class="o">=</span> <span class="k">new</span> <span class="nx">\stdClass</span><span class="p">();</span>
 <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">id</span>    <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<span class="nv">$user</span><span class="o">-&gt;</span><span class="na">name</span>  <span class="o">=</span> <span class="s1">&#39;John Doe&#39;</span><span class="p">;</span>
-<span class="nv">$user</span><span class="o">-&gt;</span><span class="na">email</span> <span class="o">=</span> <span class="s1">&#39;john@example.com&#39;</span><span class="p">;</span>
+<span class="nv">$user</span><span class="o">-&gt;</span><span class="na">name</span>  <span class="o">=</span> <span class="s1">'John Doe'</span><span class="p">;</span>
+<span class="nv">$user</span><span class="o">-&gt;</span><span class="na">email</span> <span class="o">=</span> <span class="s1">'john@example.com'</span><span class="p">;</span>
 
 <span class="nv">$transformer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">UserTransformer</span><span class="p">();</span>
 <span class="nv">$result</span>      <span class="o">=</span> <span class="nv">$transformer</span><span class="o">-&gt;</span><span class="na">transform</span><span class="p">(</span><span class="nv">$user</span><span class="p">);</span>
@@ -819,9 +819,9 @@ method to get the data:</p>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">toArray</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$resource</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="p">[</span>
-            <span class="s1">&#39;version&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;1.0&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;status&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;active&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;API is running&#39;</span><span class="p">,</span>
+            <span class="s1">'version'</span> <span class="o">=&gt;</span> <span class="s1">'1.0'</span><span class="p">,</span>
+            <span class="s1">'status'</span>  <span class="o">=&gt;</span> <span class="s1">'active'</span><span class="p">,</span>
+            <span class="s1">'message'</span> <span class="o">=&gt;</span> <span class="s1">'API is running'</span><span class="p">,</span>
         <span class="p">];</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -890,11 +890,11 @@ to include in the API response, accessing data from the <code class="docutils li
     <span class="k">public</span> <span class="k">function</span> <span class="nf">toArray</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$resource</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="p">[</span>
-            <span class="s1">&#39;id&#39;</span>          <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;name&#39;</span>        <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;price&#39;</span>       <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;price&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;in_stock&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;stock_quantity&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="s1">&#39;description&#39;</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">],</span>
+            <span class="s1">'id'</span>          <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'id'</span><span class="p">],</span>
+            <span class="s1">'name'</span>        <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'name'</span><span class="p">],</span>
+            <span class="s1">'price'</span>       <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'price'</span><span class="p">],</span>
+            <span class="s1">'in_stock'</span>    <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'stock_quantity'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s1">'description'</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'description'</span><span class="p">],</span>
         <span class="p">];</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -927,7 +927,7 @@ If it’s an Entity, extracts its array representation first. Otherwise, casts i
 
 <span class="k">use</span> <span class="nx">App\Transformers\UserTransformer</span><span class="p">;</span>
 
-<span class="nv">$user</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="nv">$user</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">'UserModel'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 
 <span class="nv">$transformer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">UserTransformer</span><span class="p">();</span>
 
@@ -935,7 +935,7 @@ If it’s an Entity, extracts its array representation first. Otherwise, casts i
 <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$transformer</span><span class="o">-&gt;</span><span class="na">transform</span><span class="p">(</span><span class="nv">$user</span><span class="p">);</span>
 
 <span class="c1">// Transform an array</span>
-<span class="nv">$userData</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;John Doe&#39;</span><span class="p">];</span>
+<span class="nv">$userData</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'id'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'John Doe'</span><span class="p">];</span>
 <span class="nv">$result</span>   <span class="o">=</span> <span class="nv">$transformer</span><span class="o">-&gt;</span><span class="na">transform</span><span class="p">(</span><span class="nv">$userData</span><span class="p">);</span>
 
 <span class="c1">// Use toArray() data</span>
@@ -966,7 +966,7 @@ includes are applied consistently to all items.</p>
 
 <span class="k">use</span> <span class="nx">App\Transformers\UserTransformer</span><span class="p">;</span>
 
-<span class="nv">$users</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+<span class="nv">$users</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">'UserModel'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 
 <span class="nv">$transformer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">UserTransformer</span><span class="p">();</span>
 <span class="nv">$results</span>     <span class="o">=</span> <span class="nv">$transformer</span><span class="o">-&gt;</span><span class="na">transformMany</span><span class="p">(</span><span class="nv">$users</span><span class="p">);</span>
@@ -1004,18 +1004,18 @@ to create a whitelist of allowed fields.</p>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">toArray</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$resource</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="p">[</span>
-            <span class="s1">&#39;id&#39;</span>         <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;name&#39;</span>       <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;email&#39;</span>      <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;created_at&#39;</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;created_at&#39;</span><span class="p">],</span>
+            <span class="s1">'id'</span>         <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'id'</span><span class="p">],</span>
+            <span class="s1">'name'</span>       <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'name'</span><span class="p">],</span>
+            <span class="s1">'email'</span>      <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'email'</span><span class="p">],</span>
+            <span class="s1">'created_at'</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'created_at'</span><span class="p">],</span>
         <span class="p">];</span>
     <span class="p">}</span>
 
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">getAllowedFields</span><span class="p">()</span><span class="o">:</span> <span class="o">?</span><span class="k">array</span>
     <span class="p">{</span>
         <span class="c1">// Clients can only request id, name, and created_at</span>
-        <span class="c1">// Attempting to request &#39;email&#39; will throw an ApiException</span>
-        <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">];</span>
+        <span class="c1">// Attempting to request 'email' will throw an ApiException</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s1">'id'</span><span class="p">,</span> <span class="s1">'name'</span><span class="p">,</span> <span class="s1">'created_at'</span><span class="p">];</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -1047,22 +1047,22 @@ Return an array of include names to create a whitelist. Return an empty array to
     <span class="k">public</span> <span class="k">function</span> <span class="nf">toArray</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$resource</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="p">[</span>
-            <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">],</span>
+            <span class="s1">'id'</span>    <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'id'</span><span class="p">],</span>
+            <span class="s1">'name'</span>  <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'name'</span><span class="p">],</span>
+            <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'email'</span><span class="p">],</span>
         <span class="p">];</span>
     <span class="p">}</span>
 
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">getAllowedIncludes</span><span class="p">()</span><span class="o">:</span> <span class="o">?</span><span class="k">array</span>
     <span class="p">{</span>
-        <span class="c1">// Only &#39;posts&#39; can be included via ?include=posts</span>
-        <span class="c1">// Attempting to include &#39;orders&#39; will throw an ApiException</span>
-        <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;posts&#39;</span><span class="p">];</span>
+        <span class="c1">// Only 'posts' can be included via ?include=posts</span>
+        <span class="c1">// Attempting to include 'orders' will throw an ApiException</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s1">'posts'</span><span class="p">];</span>
     <span class="p">}</span>
 
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">includePosts</span><span class="p">()</span><span class="o">:</span> <span class="k">array</span>
     <span class="p">{</span>
-        <span class="nv">$posts</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;PostModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+        <span class="nv">$posts</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">'PostModel'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">'user_id'</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">[</span><span class="s1">'id'</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 
         <span class="k">return</span> <span class="p">(</span><span class="k">new</span> <span class="nx">PostTransformer</span><span class="p">())</span><span class="o">-&gt;</span><span class="na">transformMany</span><span class="p">(</span><span class="nv">$posts</span><span class="p">);</span>
     <span class="p">}</span>
@@ -1070,7 +1070,7 @@ Return an array of include names to create a whitelist. Return an empty array to
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">includeOrders</span><span class="p">()</span><span class="o">:</span> <span class="k">array</span>
     <span class="p">{</span>
         <span class="c1">// This method exists but cannot be called via the API</span>
-        <span class="nv">$orders</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;OrderModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+        <span class="nv">$orders</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">'OrderModel'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">'user_id'</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">[</span><span class="s1">'id'</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 
         <span class="k">return</span> <span class="p">(</span><span class="k">new</span> <span class="nx">OrderTransformer</span><span class="p">())</span><span class="o">-&gt;</span><span class="na">transformMany</span><span class="p">(</span><span class="nv">$orders</span><span class="p">);</span>
     <span class="p">}</span>
@@ -1165,7 +1165,7 @@ requested includes have proper handler methods defined.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

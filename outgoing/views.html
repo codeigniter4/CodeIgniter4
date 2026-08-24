@@ -341,7 +341,7 @@ not read the <a class="reference internal" href="../incoming/controllers.html"><
 <h2><a class="toc-backref" href="#id4" role="doc-backlink">Displaying a View</a><a class="headerlink" href="#displaying-a-view" title="Link to this heading"></a></h2>
 <p>To load and display a particular view file you will use the <a class="reference internal" href="../general/common_functions.html#view" title="view"><code class="xref php php-func docutils literal notranslate"><span class="pre">view()</span></code></a>
 function like following code in your controller:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'name'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Where <em>name</em> is the name of your view file.</p>
@@ -363,7 +363,7 @@ and put this in it:</p>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;blog_view&#39;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'blog_view'</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -372,7 +372,7 @@ and put this in it:</p>
 Add the following code:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">App\Controllers\Blog</span><span class="p">;</span>
 
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nx">Blog</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">]);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'blog'</span><span class="p">,</span> <span class="p">[</span><span class="nx">Blog</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="s1">'index'</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>If you visit your site, you should see your new view. The URL was similar to this:</p>
@@ -397,13 +397,13 @@ content view, and a footer view. That might look something like this:</p>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s1">&#39;page_title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Your title&#39;</span><span class="p">,</span>
+            <span class="s1">'page_title'</span> <span class="o">=&gt;</span> <span class="s1">'Your title'</span><span class="p">,</span>
         <span class="p">];</span>
 
-        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;header&#39;</span><span class="p">)</span>
-            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;menu&#39;</span><span class="p">)</span>
-            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">)</span>
-            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;footer&#39;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'header'</span><span class="p">)</span>
+            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'menu'</span><span class="p">)</span>
+            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'content'</span><span class="p">,</span> <span class="nv">$data</span><span class="p">)</span>
+            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'footer'</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -414,7 +414,7 @@ content view, and a footer view. That might look something like this:</p>
 <h2><a class="toc-backref" href="#id6" role="doc-backlink">Storing Views within Sub-directories</a><a class="headerlink" href="#storing-views-within-sub-directories" title="Link to this heading"></a></h2>
 <p>Your view files can also be stored within sub-directories if you prefer that type of organization.
 When doing so you will need to include the directory name loading the view. Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;directory_name/file_name&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'directory_name/file_name'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -430,7 +430,7 @@ example, you could load the <strong>blog_view.php</strong> file from <strong>exa
 (specifying the end directory <code class="docutils literal notranslate"><span class="pre">Views</span></code> as in <code class="docutils literal notranslate"><span class="pre">Example\Blog\Views\</span></code> is not required):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;Example\Blog\blog_view&#39;</span><span class="p">);</span>
+<span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'Example\Blog\blog_view'</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -451,7 +451,7 @@ This allows you to customize the output of modules or packages without modifying
 <section id="configuration">
 <h3><a class="toc-backref" href="#id9" role="doc-backlink">Configuration</a><a class="headerlink" href="#configuration" title="Link to this heading"></a></h3>
 <p>By default, overrides are looked for in the <strong>app/Views/overrides</strong> directory. You can configure this location via the <code class="docutils literal notranslate"><span class="pre">$appOverridesFolder</span></code> property in <strong>app/Config/View.php</strong>:</p>
-<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">public string $appOverridesFolder = &#39;overrides&#39;;</span>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">public string $appOverridesFolder = 'overrides';</span>
 </pre></div>
 </div>
 <p>If you prefer to map namespaces directly to the root of <strong>app/Views</strong> (without a subdirectory), you can set this value to an empty string (<code class="docutils literal notranslate"><span class="pre">''</span></code>).</p>
@@ -492,13 +492,13 @@ include it: <strong>app/Views/overrides/Example/Blog/Views/blog_view.php</strong
 <p>You can cache a view with the <a class="reference internal" href="../general/common_functions.html#view" title="view"><code class="xref php php-func docutils literal notranslate"><span class="pre">view()</span></code></a> function by passing a <code class="docutils literal notranslate"><span class="pre">cache</span></code>
 option with the number of seconds to cache the view for, in the third parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Cache the view for 60 seconds</span>
-<span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;file_name&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;cache&#39;</span> <span class="o">=&gt;</span> <span class="mi">60</span><span class="p">]);</span>
+<span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'file_name'</span><span class="p">,</span> <span class="nv">$data</span><span class="p">,</span> <span class="p">[</span><span class="s1">'cache'</span> <span class="o">=&gt;</span> <span class="mi">60</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>By default, the view will be cached using the same name as the view file itself. You can customize this by passing
 along <code class="docutils literal notranslate"><span class="pre">cache_name</span></code> and the cache ID you wish to use:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Cache the view for 60 seconds</span>
-<span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;file_name&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;cache&#39;</span> <span class="o">=&gt;</span> <span class="mi">60</span><span class="p">,</span> <span class="s1">&#39;cache_name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;my_cached_view&#39;</span><span class="p">]);</span>
+<span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'file_name'</span><span class="p">,</span> <span class="nv">$data</span><span class="p">,</span> <span class="p">[</span><span class="s1">'cache'</span> <span class="o">=&gt;</span> <span class="mi">60</span><span class="p">,</span> <span class="s1">'cache_name'</span> <span class="o">=&gt;</span> <span class="s1">'my_cached_view'</span><span class="p">]);</span>
 </pre></div>
 </div>
 </section>
@@ -508,12 +508,12 @@ along <code class="docutils literal notranslate"><span class="pre">cache_name</s
 parameter of the <a class="reference internal" href="../general/common_functions.html#view" title="view"><code class="xref php php-func docutils literal notranslate"><span class="pre">view()</span></code></a> function.</p>
 <p>Here’s an example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;title&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;heading&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My Heading&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My Message&#39;</span><span class="p">,</span>
+    <span class="s1">'title'</span>   <span class="o">=&gt;</span> <span class="s1">'My title'</span><span class="p">,</span>
+    <span class="s1">'heading'</span> <span class="o">=&gt;</span> <span class="s1">'My Heading'</span><span class="p">,</span>
+    <span class="s1">'message'</span> <span class="o">=&gt;</span> <span class="s1">'My Message'</span><span class="p">,</span>
 <span class="p">];</span>
 
-<span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;blog_view&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+<span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'blog_view'</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Let’s try it with your controller file. Open it and add this code:</p>
@@ -525,10 +525,10 @@ parameter of the <a class="reference internal" href="../general/common_functions
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span>   <span class="o">=</span> <span class="s1">&#39;My Real Title&#39;</span><span class="p">;</span>
-        <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;heading&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;My Real Heading&#39;</span><span class="p">;</span>
+        <span class="nv">$data</span><span class="p">[</span><span class="s1">'title'</span><span class="p">]</span>   <span class="o">=</span> <span class="s1">'My Real Title'</span><span class="p">;</span>
+        <span class="nv">$data</span><span class="p">[</span><span class="s1">'heading'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'My Real Heading'</span><span class="p">;</span>
 
-        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;blog_view&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'blog_view'</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -554,12 +554,12 @@ the desired data to each <code class="docutils literal notranslate"><span class=
 other views, potentially causing issues. If you would prefer to clean the data after one call, you can pass the <code class="docutils literal notranslate"><span class="pre">saveData</span></code> option
 into the <code class="docutils literal notranslate"><span class="pre">$option</span></code> array in the third parameter.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;title&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;heading&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My Heading&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My Message&#39;</span><span class="p">,</span>
+    <span class="s1">'title'</span>   <span class="o">=&gt;</span> <span class="s1">'My title'</span><span class="p">,</span>
+    <span class="s1">'heading'</span> <span class="o">=&gt;</span> <span class="s1">'My Heading'</span><span class="p">,</span>
+    <span class="s1">'message'</span> <span class="o">=&gt;</span> <span class="s1">'My Message'</span><span class="p">,</span>
 <span class="p">];</span>
 
-<span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;blog_view&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;saveData&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
+<span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'blog_view'</span><span class="p">,</span> <span class="nv">$data</span><span class="p">,</span> <span class="p">[</span><span class="s1">'saveData'</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>Additionally, if you would like the default functionality of the <code class="docutils literal notranslate"><span class="pre">view()</span></code> function to be that it does clear the data
@@ -581,12 +581,12 @@ typically be in the form of a multi-dimensional array.</p>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s1">&#39;todo_list&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;Clean House&#39;</span><span class="p">,</span> <span class="s1">&#39;Call Mom&#39;</span><span class="p">,</span> <span class="s1">&#39;Run Errands&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;title&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;My Real Title&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;heading&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;My Real Heading&#39;</span><span class="p">,</span>
+            <span class="s1">'todo_list'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'Clean House'</span><span class="p">,</span> <span class="s1">'Call Mom'</span><span class="p">,</span> <span class="s1">'Run Errands'</span><span class="p">],</span>
+            <span class="s1">'title'</span>     <span class="o">=&gt;</span> <span class="s1">'My Real Title'</span><span class="p">,</span>
+            <span class="s1">'heading'</span>   <span class="o">=&gt;</span> <span class="s1">'My Real Heading'</span><span class="p">,</span>
         <span class="p">];</span>
 
-        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;blog_view&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'blog_view'</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -628,7 +628,7 @@ typically be in the form of a multi-dimensional array.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

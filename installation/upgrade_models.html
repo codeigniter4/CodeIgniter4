@@ -350,12 +350,12 @@ Inserting data is also easier than before. In CI4 there is an <code class="docut
     <span class="k">public</span> <span class="k">function</span> <span class="nf">set_news</span><span class="p">(</span><span class="nv">$title</span><span class="p">,</span> <span class="nv">$slug</span><span class="p">,</span> <span class="nv">$text</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
-            <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span>
-            <span class="s1">&#39;slug&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$slug</span><span class="p">,</span>
-            <span class="s1">&#39;text&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$text</span><span class="p">,</span>
+            <span class="s1">'title'</span> <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span>
+            <span class="s1">'slug'</span>  <span class="o">=&gt;</span> <span class="nv">$slug</span><span class="p">,</span>
+            <span class="s1">'text'</span>  <span class="o">=&gt;</span> <span class="nv">$text</span><span class="p">,</span>
         <span class="p">);</span>
 
-        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="s1">&#39;news&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="s1">'news'</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -373,14 +373,14 @@ Inserting data is also easier than before. In CI4 there is an <code class="docut
 <span class="k">class</span> <span class="nc">NewsModel</span> <span class="k">extends</span> <span class="nx">Model</span>
 <span class="p">{</span>
     <span class="c1">// Sets the table name.</span>
-    <span class="k">protected</span> <span class="nv">$table</span> <span class="o">=</span> <span class="s1">&#39;news&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$table</span> <span class="o">=</span> <span class="s1">'news'</span><span class="p">;</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">setNews</span><span class="p">(</span><span class="nv">$title</span><span class="p">,</span> <span class="nv">$slug</span><span class="p">,</span> <span class="nv">$text</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span>
-            <span class="s1">&#39;slug&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$slug</span><span class="p">,</span>
-            <span class="s1">&#39;text&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$text</span><span class="p">,</span>
+            <span class="s1">'title'</span> <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span>
+            <span class="s1">'slug'</span>  <span class="o">=&gt;</span> <span class="nv">$slug</span><span class="p">,</span>
+            <span class="s1">'text'</span>  <span class="o">=&gt;</span> <span class="nv">$text</span><span class="p">,</span>
         <span class="p">];</span>
 
         <span class="c1">// Gets the Query Builder for the table, and calls `insert()`.</span>
@@ -402,20 +402,20 @@ use features in CodeIgniter’s Model.</p>
 <span class="k">class</span> <span class="nc">NewsModel</span> <span class="k">extends</span> <span class="nx">Model</span>
 <span class="p">{</span>
     <span class="c1">// Sets the table name.</span>
-    <span class="k">protected</span> <span class="nv">$table</span> <span class="o">=</span> <span class="s1">&#39;news&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$table</span> <span class="o">=</span> <span class="s1">'news'</span><span class="p">;</span>
 
     <span class="c1">// Sets the field names to allow to insert/update.</span>
-    <span class="k">protected</span> <span class="nv">$allowedFields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;slug&#39;</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">];</span>
+    <span class="k">protected</span> <span class="nv">$allowedFields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'title'</span><span class="p">,</span> <span class="s1">'slug'</span><span class="p">,</span> <span class="s1">'text'</span><span class="p">];</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">setNews</span><span class="p">(</span><span class="nv">$title</span><span class="p">,</span> <span class="nv">$slug</span><span class="p">,</span> <span class="nv">$text</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span>
-            <span class="s1">&#39;slug&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$slug</span><span class="p">,</span>
-            <span class="s1">&#39;text&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$text</span><span class="p">,</span>
+            <span class="s1">'title'</span> <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span>
+            <span class="s1">'slug'</span>  <span class="o">=&gt;</span> <span class="nv">$slug</span><span class="p">,</span>
+            <span class="s1">'text'</span>  <span class="o">=&gt;</span> <span class="nv">$text</span><span class="p">,</span>
         <span class="p">];</span>
 
-        <span class="c1">// Uses Model&#39;s`insert()` method.</span>
+        <span class="c1">// Uses Model's`insert()` method.</span>
         <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -437,7 +437,7 @@ use features in CodeIgniter’s Model.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

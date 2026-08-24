@@ -332,7 +332,7 @@ this functionality.</p>
     <span class="c1">// ...</span>
 
     <span class="k">public</span> <span class="k">array</span> <span class="nv">$methods</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;POST&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;csrf&#39;</span><span class="p">],</span>
+        <span class="s1">'POST'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'csrf'</span><span class="p">],</span>
     <span class="p">];</span>
 
     <span class="c1">// ...</span>
@@ -360,13 +360,13 @@ file contains the following:</p>
 <span class="k">use</span> <span class="nx">App\Controllers\News</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">App\Controllers\Pages</span><span class="p">;</span>
 
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;news&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nx">News</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">]);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;news/new&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nx">News</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="s1">&#39;new&#39;</span><span class="p">]);</span> <span class="c1">// Add this line</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;news&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nx">News</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="s1">&#39;create&#39;</span><span class="p">]);</span> <span class="c1">// Add this line</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;news/(:segment)&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nx">News</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="s1">&#39;show&#39;</span><span class="p">]);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'news'</span><span class="p">,</span> <span class="p">[</span><span class="nx">News</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="s1">'index'</span><span class="p">]);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'news/new'</span><span class="p">,</span> <span class="p">[</span><span class="nx">News</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="s1">'new'</span><span class="p">]);</span> <span class="c1">// Add this line</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">'news'</span><span class="p">,</span> <span class="p">[</span><span class="nx">News</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="s1">'create'</span><span class="p">]);</span> <span class="c1">// Add this line</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'news/(:segment)'</span><span class="p">,</span> <span class="p">[</span><span class="nx">News</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="s1">'show'</span><span class="p">]);</span>
 
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;pages&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nx">Pages</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">]);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;(:segment)&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nx">Pages</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="s1">&#39;view&#39;</span><span class="p">]);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'pages'</span><span class="p">,</span> <span class="p">[</span><span class="nx">Pages</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="s1">'index'</span><span class="p">]);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'(:segment)'</span><span class="p">,</span> <span class="p">[</span><span class="nx">Pages</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="s1">'view'</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>The route directive for <code class="docutils literal notranslate"><span class="pre">'news/new'</span></code> is placed before the directive for <code class="docutils literal notranslate"><span class="pre">'news/(:segment)'</span></code> to ensure that the form to create a news item is displayed.</p>
@@ -386,21 +386,21 @@ the slug from our title in the model.</p>
 <p>Create a new view at <strong>app/Views/news/create.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;&lt;?=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$title</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
 
-<span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">session</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getFlashdata</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">session</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getFlashdata</span><span class="p">(</span><span class="s1">'error'</span><span class="p">)</span> <span class="cp">?&gt;</span>
 <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">validation_list_errors</span><span class="p">()</span> <span class="cp">?&gt;</span>
 
-<span class="p">&lt;</span><span class="nt">form</span> <span class="na">action</span><span class="o">=</span><span class="s">&quot;/news&quot;</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;post&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">form</span> <span class="na">action</span><span class="o">=</span><span class="s">"/news"</span> <span class="na">method</span><span class="o">=</span><span class="s">"post"</span><span class="p">&gt;</span>
     <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">csrf_field</span><span class="p">()</span> <span class="cp">?&gt;</span>
 
-    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;title&quot;</span><span class="p">&gt;</span>Title<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;input&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;title&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">set_value</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">"title"</span><span class="p">&gt;</span>Title<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"input"</span> <span class="na">name</span><span class="o">=</span><span class="s">"title"</span> <span class="na">value</span><span class="o">=</span><span class="s">"</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">set_value</span><span class="p">(</span><span class="s1">'title'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">"</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
 
-    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;body&quot;</span><span class="p">&gt;</span>Text<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">textarea</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;body&quot;</span> <span class="na">cols</span><span class="o">=</span><span class="s">&quot;45&quot;</span> <span class="na">rows</span><span class="o">=</span><span class="s">&quot;4&quot;</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">set_value</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">textarea</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">"body"</span><span class="p">&gt;</span>Text<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">textarea</span> <span class="na">name</span><span class="o">=</span><span class="s">"body"</span> <span class="na">cols</span><span class="o">=</span><span class="s">"45"</span> <span class="na">rows</span><span class="o">=</span><span class="s">"4"</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">set_value</span><span class="p">(</span><span class="s1">'body'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">textarea</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
 
-    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Create news item&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"submit"</span> <span class="na">name</span><span class="o">=</span><span class="s">"submit"</span> <span class="na">value</span><span class="o">=</span><span class="s">"Create news item"</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
 </pre></div>
 </div>
@@ -434,11 +434,11 @@ old input data when errors occur.</p>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">new</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">);</span>
+        <span class="nx">helper</span><span class="p">(</span><span class="s1">'form'</span><span class="p">);</span>
 
-        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;templates/header&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Create a news item&#39;</span><span class="p">])</span>
-            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;news/create&#39;</span><span class="p">)</span>
-            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;templates/footer&#39;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'templates/header'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'title'</span> <span class="o">=&gt;</span> <span class="s1">'Create a news item'</span><span class="p">])</span>
+            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'news/create'</span><span class="p">)</span>
+            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'templates/footer'</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -470,14 +470,14 @@ loaded before use.</p>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">create</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">);</span>
+        <span class="nx">helper</span><span class="p">(</span><span class="s1">'form'</span><span class="p">);</span>
 
-        <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">([</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;body&#39;</span><span class="p">]);</span>
+        <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">([</span><span class="s1">'title'</span><span class="p">,</span> <span class="s1">'body'</span><span class="p">]);</span>
 
         <span class="c1">// Checks whether the submitted data passed the validation rules.</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validateData</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="p">[</span>
-            <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[255]|min_length[3]&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;body&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[5000]|min_length[10]&#39;</span><span class="p">,</span>
+            <span class="s1">'title'</span> <span class="o">=&gt;</span> <span class="s1">'required|max_length[255]|min_length[3]'</span><span class="p">,</span>
+            <span class="s1">'body'</span>  <span class="o">=&gt;</span> <span class="s1">'required|max_length[5000]|min_length[10]'</span><span class="p">,</span>
         <span class="p">]))</span> <span class="p">{</span>
             <span class="c1">// The validation fails, so returns the form.</span>
             <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">new</span><span class="p">();</span>
@@ -489,14 +489,14 @@ loaded before use.</p>
         <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="nx">NewsModel</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
 
         <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">([</span>
-            <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$post</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;slug&#39;</span>  <span class="o">=&gt;</span> <span class="nx">url_title</span><span class="p">(</span><span class="nv">$post</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">],</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">),</span>
-            <span class="s1">&#39;body&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$post</span><span class="p">[</span><span class="s1">&#39;body&#39;</span><span class="p">],</span>
+            <span class="s1">'title'</span> <span class="o">=&gt;</span> <span class="nv">$post</span><span class="p">[</span><span class="s1">'title'</span><span class="p">],</span>
+            <span class="s1">'slug'</span>  <span class="o">=&gt;</span> <span class="nx">url_title</span><span class="p">(</span><span class="nv">$post</span><span class="p">[</span><span class="s1">'title'</span><span class="p">],</span> <span class="s1">'-'</span><span class="p">,</span> <span class="k">true</span><span class="p">),</span>
+            <span class="s1">'body'</span>  <span class="o">=&gt;</span> <span class="nv">$post</span><span class="p">[</span><span class="s1">'body'</span><span class="p">],</span>
         <span class="p">]);</span>
 
-        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;templates/header&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Create a news item&#39;</span><span class="p">])</span>
-            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;news/success&#39;</span><span class="p">)</span>
-            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;templates/footer&#39;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'templates/header'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'title'</span> <span class="o">=&gt;</span> <span class="s1">'Create a news item'</span><span class="p">])</span>
+            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'news/success'</span><span class="p">)</span>
+            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'templates/footer'</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -566,9 +566,9 @@ fields in the <code class="docutils literal notranslate"><span class="pre">$allo
 
 <span class="k">class</span> <span class="nc">NewsModel</span> <span class="k">extends</span> <span class="nx">Model</span>
 <span class="p">{</span>
-    <span class="k">protected</span> <span class="nv">$table</span> <span class="o">=</span> <span class="s1">&#39;news&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$table</span> <span class="o">=</span> <span class="s1">'news'</span><span class="p">;</span>
 
-    <span class="k">protected</span> <span class="nv">$allowedFields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;slug&#39;</span><span class="p">,</span> <span class="s1">&#39;body&#39;</span><span class="p">];</span>
+    <span class="k">protected</span> <span class="nv">$allowedFields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'title'</span><span class="p">,</span> <span class="s1">'slug'</span><span class="p">,</span> <span class="s1">'body'</span><span class="p">];</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -631,7 +631,7 @@ files that you created or modified.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

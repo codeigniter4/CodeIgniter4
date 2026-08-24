@@ -402,7 +402,7 @@ It is also called as <strong>URI string</strong>.</p></td>
 <p class="admonition-title">Important</p>
 <p>Users upgrading from versions prior to v4.4.7 will need to add the following
 to <strong>app/Config/App.php</strong> in order to use this feature:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">string</span> <span class="nv">$permittedURIChars</span> <span class="o">=</span> <span class="s1">&#39;a-z 0-9~%.:_\-&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">string</span> <span class="nv">$permittedURIChars</span> <span class="o">=</span> <span class="s1">'a-z 0-9~%.:_\-'</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
@@ -431,7 +431,7 @@ does not contain not permitted strings.</p>
 <p>If you want to use Unicode for URI paths, modify it to allow the characters to
 be used. For example, if you want to use Bengali, you will need to set the
 following value in <strong>app/Config/App.php</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">string</span> <span class="nv">$permittedURIChars</span> <span class="o">=</span> <span class="s1">&#39;a-z 0-9~%.:_\-\x{0980}-\x{09ff}&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">string</span> <span class="nv">$permittedURIChars</span> <span class="o">=</span> <span class="s1">'a-z 0-9~%.:_\-\x{0980}-\x{09ff}'</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>A full list of Unicode ranges can be found at Wikipedia’s <a class="reference external" href="https://en.wikipedia.org/wiki/Unicode_block">Unicode block</a>.</p>
@@ -494,7 +494,7 @@ settings of the root and alias directives), and then sends the request to the in
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

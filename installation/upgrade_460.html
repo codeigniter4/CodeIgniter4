@@ -359,8 +359,8 @@ cases. But the bugs have been fixed.</p>
 <p>The results of the <code class="docutils literal notranslate"><span class="pre">Time</span></code> comparison may differ due to these fixes:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$time1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">&#39;2024-01-01 12:00:00.654321&#39;</span><span class="p">);</span>
-<span class="nv">$time2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">&#39;2024-01-01 12:00:00&#39;</span><span class="p">);</span>
+<span class="nv">$time1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">'2024-01-01 12:00:00.654321'</span><span class="p">);</span>
+<span class="nv">$time2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">'2024-01-01 12:00:00'</span><span class="p">);</span>
 
 <span class="nv">$time1</span><span class="o">-&gt;</span><span class="na">equals</span><span class="p">(</span><span class="nv">$time2</span><span class="p">);</span>
 <span class="c1">// Before: true</span>
@@ -370,13 +370,13 @@ cases. But the bugs have been fixed.</p>
 <p>In a such case, you need to remove the microseconds:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$time1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">&#39;2024-01-01 12:00:00.654321&#39;</span><span class="p">);</span>
-<span class="nv">$time2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">&#39;2024-01-01 12:00:00&#39;</span><span class="p">);</span>
+<span class="nv">$time1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">'2024-01-01 12:00:00.654321'</span><span class="p">);</span>
+<span class="nv">$time2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">'2024-01-01 12:00:00'</span><span class="p">);</span>
 
 <span class="c1">// Removes the microseconds.</span>
 <span class="nv">$time1</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromFormat</span><span class="p">(</span>
-    <span class="s1">&#39;Y-m-d H:i:s&#39;</span><span class="p">,</span>
-    <span class="nv">$time1</span><span class="o">-&gt;</span><span class="na">format</span><span class="p">(</span><span class="s1">&#39;Y-m-d H:i:s&#39;</span><span class="p">),</span>
+    <span class="s1">'Y-m-d H:i:s'</span><span class="p">,</span>
+    <span class="nv">$time1</span><span class="o">-&gt;</span><span class="na">format</span><span class="p">(</span><span class="s1">'Y-m-d H:i:s'</span><span class="p">),</span>
     <span class="nv">$time1</span><span class="o">-&gt;</span><span class="na">getTimezone</span><span class="p">(),</span>
 <span class="p">);</span>
 
@@ -388,16 +388,16 @@ cases. But the bugs have been fixed.</p>
 <p>The following cases now keeps microseconds:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromFormat</span><span class="p">(</span><span class="s1">&#39;Y-m-d H:i:s.u&#39;</span><span class="p">,</span> <span class="s1">&#39;2024-07-09 09:13:34.654321&#39;</span><span class="p">);</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">format</span><span class="p">(</span><span class="s1">&#39;Y-m-d H:i:s.u&#39;</span><span class="p">);</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromFormat</span><span class="p">(</span><span class="s1">'Y-m-d H:i:s.u'</span><span class="p">,</span> <span class="s1">'2024-07-09 09:13:34.654321'</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">format</span><span class="p">(</span><span class="s1">'Y-m-d H:i:s.u'</span><span class="p">);</span>
 <span class="c1">// Before: 2024-07-09 09:13:34.000000</span>
 <span class="c1">//  After: 2024-07-09 09:13:34.654321</span>
 </pre></div>
 </div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$time</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">&#39;1 hour ago&#39;</span><span class="p">);</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">format</span><span class="p">(</span><span class="s1">&#39;Y-m-d H:i:s.u&#39;</span><span class="p">);</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">'1 hour ago'</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">format</span><span class="p">(</span><span class="s1">'Y-m-d H:i:s.u'</span><span class="p">);</span>
 <span class="c1">// Before: 2024-07-26 21:05:57.000000</span>
 <span class="c1">//  After: 2024-07-26 21:05:57.857235</span>
 </pre></div>
@@ -406,7 +406,7 @@ cases. But the bugs have been fixed.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
 <span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">();</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">format</span><span class="p">(</span><span class="s1">&#39;Y-m-d H:i:s.u&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">format</span><span class="p">(</span><span class="s1">'Y-m-d H:i:s.u'</span><span class="p">);</span>
 <span class="c1">// Before: 2024-07-26 21:39:32.249072</span>
 <span class="c1">//  After: 2024-07-26 21:39:32.249072</span>
 </pre></div>
@@ -414,10 +414,10 @@ cases. But the bugs have been fixed.</p>
 <p>Also, methods that returns an <code class="docutils literal notranslate"><span class="pre">int</span></code> still lose the microseconds.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$time1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">&#39;2024-01-01 12:00:00&#39;</span><span class="p">);</span>
+<span class="nv">$time1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">'2024-01-01 12:00:00'</span><span class="p">);</span>
 <span class="k">echo</span> <span class="nv">$time1</span><span class="o">-&gt;</span><span class="na">getTimestamp</span><span class="p">();</span> <span class="c1">// 1704110400</span>
 
-<span class="nv">$time2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">&#39;2024-01-01 12:00:00.654321&#39;</span><span class="p">);</span>
+<span class="nv">$time2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">'2024-01-01 12:00:00.654321'</span><span class="p">);</span>
 <span class="k">echo</span> <span class="nv">$time2</span><span class="o">-&gt;</span><span class="na">getTimestamp</span><span class="p">();</span> <span class="c1">// 1704110400</span>
 </pre></div>
 </div>
@@ -430,18 +430,18 @@ wrong date/time.</p>
 <p>This bug has been fixed, and it now behaves in the same way as <code class="docutils literal notranslate"><span class="pre">DateTimeImmutable</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="c1">// The Application Timezone is &quot;UTC&quot;.</span>
+<span class="c1">// The Application Timezone is "UTC".</span>
 
-<span class="c1">// Set $time1 timezone to &quot;America/Chicago&quot;.</span>
-<span class="nv">$time1</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;2024-08-20&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
+<span class="c1">// Set $time1 timezone to "America/Chicago".</span>
+<span class="nv">$time1</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'2024-08-20'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">);</span>
 
-<span class="c1">// The timestamp is &quot;2024-08-20 00:00&quot; in &quot;UTC&quot;.</span>
-<span class="nv">$stamp</span> <span class="o">=</span> <span class="nb">strtotime</span><span class="p">(</span><span class="s1">&#39;2024-08-20&#39;</span><span class="p">);</span> <span class="c1">// 1724112000</span>
+<span class="c1">// The timestamp is "2024-08-20 00:00" in "UTC".</span>
+<span class="nv">$stamp</span> <span class="o">=</span> <span class="nb">strtotime</span><span class="p">(</span><span class="s1">'2024-08-20'</span><span class="p">);</span> <span class="c1">// 1724112000</span>
 
-<span class="c1">// But $time2 timezone is &quot;America/Chicago&quot;.</span>
+<span class="c1">// But $time2 timezone is "America/Chicago".</span>
 <span class="nv">$time2</span> <span class="o">=</span> <span class="nv">$time1</span><span class="o">-&gt;</span><span class="na">setTimestamp</span><span class="p">(</span><span class="nv">$stamp</span><span class="p">);</span>
 
-<span class="k">echo</span> <span class="nv">$time2</span><span class="o">-&gt;</span><span class="na">format</span><span class="p">(</span><span class="s1">&#39;Y-m-d H:i:s P&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$time2</span><span class="o">-&gt;</span><span class="na">format</span><span class="p">(</span><span class="s1">'Y-m-d H:i:s P'</span><span class="p">);</span>
 <span class="c1">// Before: 2024-08-20 00:00:00 -05:00</span>
 <span class="c1">//  After: 2024-08-19 19:00:00 -05:00</span>
 </pre></div>
@@ -449,18 +449,18 @@ wrong date/time.</p>
 <p>Note that if you use the default timezone, the behavior is not changed:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="c1">// The Application Timezone is &quot;America/Chicago&quot;.</span>
+<span class="c1">// The Application Timezone is "America/Chicago".</span>
 
-<span class="c1">// $time1 timezone is &quot;America/Chicago&quot;.</span>
-<span class="nv">$time1</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;2024-08-20&#39;</span><span class="p">);</span>
+<span class="c1">// $time1 timezone is "America/Chicago".</span>
+<span class="nv">$time1</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'2024-08-20'</span><span class="p">);</span>
 
-<span class="c1">// The timestamp is &quot;2024-08-20 00:00&quot; in &quot;America/Chicago&quot;.</span>
-<span class="nv">$stamp</span> <span class="o">=</span> <span class="nb">strtotime</span><span class="p">(</span><span class="s1">&#39;2024-08-20&#39;</span><span class="p">);</span> <span class="c1">// 1724130000</span>
+<span class="c1">// The timestamp is "2024-08-20 00:00" in "America/Chicago".</span>
+<span class="nv">$stamp</span> <span class="o">=</span> <span class="nb">strtotime</span><span class="p">(</span><span class="s1">'2024-08-20'</span><span class="p">);</span> <span class="c1">// 1724130000</span>
 
-<span class="c1">// $time2 timezone is also &quot;America/Chicago&quot;.</span>
+<span class="c1">// $time2 timezone is also "America/Chicago".</span>
 <span class="nv">$time2</span> <span class="o">=</span> <span class="nv">$time1</span><span class="o">-&gt;</span><span class="na">setTimestamp</span><span class="p">(</span><span class="nv">$stamp</span><span class="p">);</span>
 
-<span class="k">echo</span> <span class="nv">$time2</span><span class="o">-&gt;</span><span class="na">format</span><span class="p">(</span><span class="s1">&#39;Y-m-d H:i:s P&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$time2</span><span class="o">-&gt;</span><span class="na">format</span><span class="p">(</span><span class="s1">'Y-m-d H:i:s P'</span><span class="p">);</span>
 <span class="c1">// Before: 2024-08-20 00:00:00 -05:00</span>
 <span class="c1">//  After: 2024-08-20 00:00:00 -05:00</span>
 </pre></div>
@@ -496,15 +496,15 @@ classes in the packages/modules need to be fixed.</p>
     <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">Pager</span><span class="p">()</span><span class="o">:</span> <span class="k">array</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="p">[</span>
-            <span class="s1">&#39;templates&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;module_pager&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;MyModule\Views\Pager&#39;</span><span class="p">,</span>
+            <span class="s1">'templates'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">'module_pager'</span> <span class="o">=&gt;</span> <span class="s1">'MyModule\Views\Pager'</span><span class="p">,</span>
             <span class="p">],</span>
         <span class="p">];</span>
     <span class="p">}</span>
 
     <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">hack</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
-        <span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span><span class="s1">&#39;Cache&#39;</span><span class="p">);</span>
+        <span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span><span class="s1">'Cache'</span><span class="p">);</span>
 
         <span class="c1">// Does something.</span>
     <span class="p">}</span>
@@ -638,7 +638,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

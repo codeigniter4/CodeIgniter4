@@ -326,15 +326,15 @@ stored within the <strong>app/Database/Seeds</strong> directory. The name of the
     <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;darth&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;darth@theempire.com&#39;</span><span class="p">,</span>
+            <span class="s1">'username'</span> <span class="o">=&gt;</span> <span class="s1">'darth'</span><span class="p">,</span>
+            <span class="s1">'email'</span>    <span class="o">=&gt;</span> <span class="s1">'darth@theempire.com'</span><span class="p">,</span>
         <span class="p">];</span>
 
         <span class="c1">// Simple Queries</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;INSERT INTO users (username, email) VALUES(:username:, :email:)&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">'INSERT INTO users (username, email) VALUES(:username:, :email:)'</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
 
         <span class="c1">// Using Query Builder</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">'users'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -354,9 +354,9 @@ but organize the tasks into separate seeder files:</p>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;UserSeeder&#39;</span><span class="p">);</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;CountrySeeder&#39;</span><span class="p">);</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;JobSeeder&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">'UserSeeder'</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">'CountrySeeder'</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">'JobSeeder'</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -373,8 +373,8 @@ anywhere the autoloader can find them. This is great for more modular code bases
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;UserSeeder&#39;</span><span class="p">);</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;My\Database\Seeds\CountrySeeder&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">'UserSeeder'</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">'My\Database\Seeds\CountrySeeder'</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -386,7 +386,7 @@ anywhere the autoloader can find them. This is great for more modular code bases
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$seeder</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">seeder</span><span class="p">();</span>
-<span class="nv">$seeder</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;TestSeeder&#39;</span><span class="p">);</span>
+<span class="nv">$seeder</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">'TestSeeder'</span><span class="p">);</span>
 </pre></div>
 </div>
 <section id="using-a-different-database-group">
@@ -395,8 +395,8 @@ anywhere the autoloader can find them. This is great for more modular code bases
 as the first parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$seeder</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">seeder</span><span class="p">(</span><span class="s1">&#39;group_name&#39;</span><span class="p">);</span>
-<span class="nv">$seeder</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;TestSeeder&#39;</span><span class="p">);</span>
+<span class="nv">$seeder</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">seeder</span><span class="p">(</span><span class="s1">'group_name'</span><span class="p">);</span>
+<span class="nv">$seeder</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">'TestSeeder'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>When using <code class="docutils literal notranslate"><span class="pre">call()</span></code> to run child seeders, the database connection is automatically passed to them.
@@ -412,7 +412,7 @@ you can set the <code class="docutils literal notranslate"><span class="pre">$DB
 
 <span class="k">class</span> <span class="nc">UserSeeder</span> <span class="k">extends</span> <span class="nx">Seeder</span>
 <span class="p">{</span>
-    <span class="k">protected</span> <span class="nv">$DBGroup</span> <span class="o">=</span> <span class="s1">&#39;group_name&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$DBGroup</span> <span class="o">=</span> <span class="s1">'group_name'</span><span class="p">;</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">()</span>
     <span class="p">{</span>
@@ -470,7 +470,7 @@ a dedicated controller:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

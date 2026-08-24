@@ -324,7 +324,7 @@ While in most production scenarios you would use file, database, or cache-backed
 <span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span><span class="nx">SessionConfig</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
 
 <span class="c1">// Initialize ArrayHandler with config and optional IP</span>
-<span class="nv">$arrayHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ArrayHandler</span><span class="p">(</span><span class="nv">$config</span><span class="p">,</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">);</span>
+<span class="nv">$arrayHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ArrayHandler</span><span class="p">(</span><span class="nv">$config</span><span class="p">,</span> <span class="s1">'127.0.0.1'</span><span class="p">);</span>
 
 <span class="c1">// Create session instance for testing</span>
 <span class="nv">$testSession</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Session</span><span class="p">(</span><span class="nv">$arrayHandler</span><span class="p">,</span> <span class="nv">$config</span><span class="p">);</span>
@@ -337,13 +337,13 @@ While in most production scenarios you would use file, database, or cache-backed
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Set session data</span>
-<span class="nv">$testSession</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">,</span> <span class="s1">&#39;CodeIgniter4&#39;</span><span class="p">);</span>
+<span class="nv">$testSession</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">'framework'</span><span class="p">,</span> <span class="s1">'CodeIgniter4'</span><span class="p">);</span>
 
 <span class="c1">// Retrieve session data</span>
-<span class="k">echo</span> <span class="nv">$testSession</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">);</span> <span class="c1">// outputs &#39;CodeIgniter4&#39;</span>
+<span class="k">echo</span> <span class="nv">$testSession</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'framework'</span><span class="p">);</span> <span class="c1">// outputs 'CodeIgniter4'</span>
 
 <span class="c1">// Remove session data</span>
-<span class="nv">$testSession</span><span class="o">-&gt;</span><span class="na">remove</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">);</span>
+<span class="nv">$testSession</span><span class="o">-&gt;</span><span class="na">remove</span><span class="p">(</span><span class="s1">'framework'</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -374,7 +374,7 @@ after the object is destroyed (typically at the end of a request or test), the d
         <span class="nv">$config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SessionConfig</span><span class="p">();</span>
 
         <span class="c1">// Initialize ArrayHandler with config</span>
-        <span class="nv">$arrayHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ArrayHandler</span><span class="p">(</span><span class="nv">$config</span><span class="p">,</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">);</span>
+        <span class="nv">$arrayHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ArrayHandler</span><span class="p">(</span><span class="nv">$config</span><span class="p">,</span> <span class="s1">'127.0.0.1'</span><span class="p">);</span>
 
         <span class="c1">// Create session instance</span>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">testSession</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Session</span><span class="p">(</span><span class="nv">$arrayHandler</span><span class="p">,</span> <span class="nv">$config</span><span class="p">);</span>
@@ -383,14 +383,14 @@ after the object is destroyed (typically at the end of a request or test), the d
     <span class="k">public</span> <span class="k">function</span> <span class="nf">testFrameworkNameInSession</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
         <span class="c1">// Set a session value</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">testSession</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">,</span> <span class="s1">&#39;CodeIgniter&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">testSession</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">'framework'</span><span class="p">,</span> <span class="s1">'CodeIgniter'</span><span class="p">);</span>
 
         <span class="c1">// Assert the value exists and is correct</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSame</span><span class="p">(</span><span class="s1">&#39;CodeIgniter&#39;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">testSession</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">));</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSame</span><span class="p">(</span><span class="s1">'CodeIgniter'</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">testSession</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'framework'</span><span class="p">));</span>
 
         <span class="c1">// Remove the session value</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">testSession</span><span class="o">-&gt;</span><span class="na">remove</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">);</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertNull</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">testSession</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">));</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">testSession</span><span class="o">-&gt;</span><span class="na">remove</span><span class="p">(</span><span class="s1">'framework'</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertNull</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">testSession</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'framework'</span><span class="p">));</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -406,19 +406,19 @@ not a response object.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Set a session value</span>
-<span class="nv">$testSession</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">,</span> <span class="s1">&#39;CodeIgniter4&#39;</span><span class="p">);</span>
+<span class="nv">$testSession</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">'framework'</span><span class="p">,</span> <span class="s1">'CodeIgniter4'</span><span class="p">);</span>
 
 <span class="c1">// Assert the state of the session using PHPUnit assertions</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSame</span><span class="p">(</span><span class="s1">&#39;CodeIgniter4&#39;</span><span class="p">,</span> <span class="nv">$testSession</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">));</span> <span class="c1">// Value exists</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSame</span><span class="p">(</span><span class="s1">'CodeIgniter4'</span><span class="p">,</span> <span class="nv">$testSession</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'framework'</span><span class="p">));</span> <span class="c1">// Value exists</span>
 
 <span class="c1">// Not empty</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertNotEmpty</span><span class="p">(</span><span class="nv">$testSession</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">));</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertNotEmpty</span><span class="p">(</span><span class="nv">$testSession</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'framework'</span><span class="p">));</span>
 
-<span class="c1">// Remove the value and assert it&#39;s gone</span>
-<span class="nv">$testSession</span><span class="o">-&gt;</span><span class="na">remove</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">);</span>
+<span class="c1">// Remove the value and assert it's gone</span>
+<span class="nv">$testSession</span><span class="o">-&gt;</span><span class="na">remove</span><span class="p">(</span><span class="s1">'framework'</span><span class="p">);</span>
 
 <span class="c1">// Should be null</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertNull</span><span class="p">(</span><span class="nv">$testSession</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">));</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertNull</span><span class="p">(</span><span class="nv">$testSession</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'framework'</span><span class="p">));</span>
 </pre></div>
 </div>
 </section>
@@ -451,7 +451,7 @@ For full details and examples, see: <a class="reference internal" href="feature.
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

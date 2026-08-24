@@ -346,20 +346,20 @@ etc., incorrectly.</p>
 <span class="nv">$validation</span> <span class="o">=</span> <span class="nx">Services</span><span class="o">::</span><span class="na">validation</span><span class="p">();</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;contacts&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Joe Smith&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;just&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-            <span class="s1">&#39;friends&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="p">[</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;SATO Taro&#39;</span><span class="p">],</span>
-                <span class="p">[</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Li Ming&#39;</span><span class="p">],</span>
-                <span class="p">[</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Heinz Müller&#39;</span><span class="p">],</span>
+    <span class="s1">'contacts'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'Joe Smith'</span><span class="p">,</span>
+        <span class="s1">'just'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">'friends'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="p">[</span><span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'SATO Taro'</span><span class="p">],</span>
+                <span class="p">[</span><span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'Li Ming'</span><span class="p">],</span>
+                <span class="p">[</span><span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'Heinz Müller'</span><span class="p">],</span>
             <span class="p">],</span>
         <span class="p">],</span>
     <span class="p">],</span>
 <span class="p">];</span>
 
 <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">(</span>
-    <span class="p">[</span><span class="s1">&#39;contacts.*.name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[8]&#39;</span><span class="p">],</span>
+    <span class="p">[</span><span class="s1">'contacts.*.name'</span> <span class="o">=&gt;</span> <span class="s1">'required|max_length[8]'</span><span class="p">],</span>
 <span class="p">);</span>
 
 <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span> <span class="c1">// false</span>
@@ -368,13 +368,13 @@ etc., incorrectly.</p>
 <span class="cm">/*</span>
 <span class="cm"> Before: Captured `contacts.*.*.*.name` incorrectly.</span>
 <span class="cm"> [</span>
-<span class="cm">   contacts.just.friends.0.name =&gt; &quot;The contacts.*.name field cannot exceed 8 characters in length.&quot;,</span>
-<span class="cm">   contacts.just.friends.2.name =&gt; &quot;The contacts.*.name field cannot exceed 8 characters in length.&quot;,</span>
+<span class="cm">   contacts.just.friends.0.name =&gt; "The contacts.*.name field cannot exceed 8 characters in length.",</span>
+<span class="cm">   contacts.just.friends.2.name =&gt; "The contacts.*.name field cannot exceed 8 characters in length.",</span>
 <span class="cm"> ]</span>
 
 <span class="cm"> After: Captures no data for `contacts.*.name`.</span>
 <span class="cm"> [</span>
-<span class="cm">   contacts.*.name =&gt; string (38) &quot;The contacts.*.name field is required.&quot;,</span>
+<span class="cm">   contacts.*.name =&gt; string (38) "The contacts.*.name field is required.",</span>
 <span class="cm"> ]</span>
 <span class="cm">*/</span>
 </pre></div>
@@ -442,7 +442,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

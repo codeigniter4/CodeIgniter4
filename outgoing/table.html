@@ -330,10 +330,10 @@ method described in the function reference below).</p>
 <span class="nv">$table</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\Table</span><span class="p">();</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Color&#39;</span><span class="p">,</span> <span class="s1">&#39;Size&#39;</span><span class="p">],</span>
-    <span class="p">[</span><span class="s1">&#39;Fred&#39;</span><span class="p">,</span> <span class="s1">&#39;Blue&#39;</span><span class="p">,</span> <span class="s1">&#39;Small&#39;</span><span class="p">],</span>
-    <span class="p">[</span><span class="s1">&#39;Mary&#39;</span><span class="p">,</span> <span class="s1">&#39;Red&#39;</span><span class="p">,</span> <span class="s1">&#39;Large&#39;</span><span class="p">],</span>
-    <span class="p">[</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Green&#39;</span><span class="p">,</span> <span class="s1">&#39;Medium&#39;</span><span class="p">],</span>
+    <span class="p">[</span><span class="s1">'Name'</span><span class="p">,</span> <span class="s1">'Color'</span><span class="p">,</span> <span class="s1">'Size'</span><span class="p">],</span>
+    <span class="p">[</span><span class="s1">'Fred'</span><span class="p">,</span> <span class="s1">'Blue'</span><span class="p">,</span> <span class="s1">'Small'</span><span class="p">],</span>
+    <span class="p">[</span><span class="s1">'Mary'</span><span class="p">,</span> <span class="s1">'Red'</span><span class="p">,</span> <span class="s1">'Large'</span><span class="p">],</span>
+    <span class="p">[</span><span class="s1">'John'</span><span class="p">,</span> <span class="s1">'Green'</span><span class="p">,</span> <span class="s1">'Medium'</span><span class="p">],</span>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
@@ -347,7 +347,7 @@ method described in the class reference below).</p>
 
 <span class="nv">$table</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\Table</span><span class="p">();</span>
 
-<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM my_table&#39;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">'SELECT * FROM my_table'</span><span class="p">);</span>
 
 <span class="k">echo</span> <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">(</span><span class="nv">$query</span><span class="p">);</span>
 </pre></div>
@@ -358,11 +358,11 @@ parameters:</p>
 
 <span class="nv">$table</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\Table</span><span class="p">();</span>
 
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">(</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Color&#39;</span><span class="p">,</span> <span class="s1">&#39;Size&#39;</span><span class="p">);</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">(</span><span class="s1">'Name'</span><span class="p">,</span> <span class="s1">'Color'</span><span class="p">,</span> <span class="s1">'Size'</span><span class="p">);</span>
 
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">&#39;Fred&#39;</span><span class="p">,</span> <span class="s1">&#39;Blue&#39;</span><span class="p">,</span> <span class="s1">&#39;Small&#39;</span><span class="p">);</span>
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">&#39;Mary&#39;</span><span class="p">,</span> <span class="s1">&#39;Red&#39;</span><span class="p">,</span> <span class="s1">&#39;Large&#39;</span><span class="p">);</span>
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Green&#39;</span><span class="p">,</span> <span class="s1">&#39;Medium&#39;</span><span class="p">);</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">'Fred'</span><span class="p">,</span> <span class="s1">'Blue'</span><span class="p">,</span> <span class="s1">'Small'</span><span class="p">);</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">'Mary'</span><span class="p">,</span> <span class="s1">'Red'</span><span class="p">,</span> <span class="s1">'Large'</span><span class="p">);</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">'John'</span><span class="p">,</span> <span class="s1">'Green'</span><span class="p">,</span> <span class="s1">'Medium'</span><span class="p">);</span>
 
 <span class="k">echo</span> <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">();</span>
 </pre></div>
@@ -373,11 +373,11 @@ arrays are used:</p>
 
 <span class="nv">$table</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\Table</span><span class="p">();</span>
 
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">([</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Color&#39;</span><span class="p">,</span> <span class="s1">&#39;Size&#39;</span><span class="p">]);</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">([</span><span class="s1">'Name'</span><span class="p">,</span> <span class="s1">'Color'</span><span class="p">,</span> <span class="s1">'Size'</span><span class="p">]);</span>
 
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">([</span><span class="s1">&#39;Fred&#39;</span><span class="p">,</span> <span class="s1">&#39;Blue&#39;</span><span class="p">,</span> <span class="s1">&#39;Small&#39;</span><span class="p">]);</span>
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">([</span><span class="s1">&#39;Mary&#39;</span><span class="p">,</span> <span class="s1">&#39;Red&#39;</span><span class="p">,</span> <span class="s1">&#39;Large&#39;</span><span class="p">]);</span>
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">([</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Green&#39;</span><span class="p">,</span> <span class="s1">&#39;Medium&#39;</span><span class="p">]);</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">([</span><span class="s1">'Fred'</span><span class="p">,</span> <span class="s1">'Blue'</span><span class="p">,</span> <span class="s1">'Small'</span><span class="p">]);</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">([</span><span class="s1">'Mary'</span><span class="p">,</span> <span class="s1">'Red'</span><span class="p">,</span> <span class="s1">'Large'</span><span class="p">]);</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">([</span><span class="s1">'John'</span><span class="p">,</span> <span class="s1">'Green'</span><span class="p">,</span> <span class="s1">'Medium'</span><span class="p">]);</span>
 
 <span class="k">echo</span> <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">();</span>
 </pre></div>
@@ -390,38 +390,38 @@ specify the design of your layout. Here is the template prototype:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$template</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;table_open&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;table border=&quot;0&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">'table_open'</span> <span class="o">=&gt;</span> <span class="s1">'&lt;table border="0" cellpadding="4" cellspacing="0"&gt;'</span><span class="p">,</span>
 
-    <span class="s1">&#39;thead_open&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&lt;thead&gt;&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;thead_close&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/thead&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">'thead_open'</span>  <span class="o">=&gt;</span> <span class="s1">'&lt;thead&gt;'</span><span class="p">,</span>
+    <span class="s1">'thead_close'</span> <span class="o">=&gt;</span> <span class="s1">'&lt;/thead&gt;'</span><span class="p">,</span>
 
-    <span class="s1">&#39;heading_row_start&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&lt;tr&gt;&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;heading_row_end&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/tr&gt;&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;heading_cell_start&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;th&gt;&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;heading_cell_end&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/th&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">'heading_row_start'</span>  <span class="o">=&gt;</span> <span class="s1">'&lt;tr&gt;'</span><span class="p">,</span>
+    <span class="s1">'heading_row_end'</span>    <span class="o">=&gt;</span> <span class="s1">'&lt;/tr&gt;'</span><span class="p">,</span>
+    <span class="s1">'heading_cell_start'</span> <span class="o">=&gt;</span> <span class="s1">'&lt;th&gt;'</span><span class="p">,</span>
+    <span class="s1">'heading_cell_end'</span>   <span class="o">=&gt;</span> <span class="s1">'&lt;/th&gt;'</span><span class="p">,</span>
 
-    <span class="s1">&#39;tfoot_open&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&lt;tfoot&gt;&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;tfoot_close&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/tfoot&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">'tfoot_open'</span>  <span class="o">=&gt;</span> <span class="s1">'&lt;tfoot&gt;'</span><span class="p">,</span>
+    <span class="s1">'tfoot_close'</span> <span class="o">=&gt;</span> <span class="s1">'&lt;/tfoot&gt;'</span><span class="p">,</span>
 
-    <span class="s1">&#39;footing_row_start&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&lt;tr&gt;&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;footing_row_end&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/tr&gt;&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;footing_cell_start&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;td&gt;&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;footing_cell_end&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/td&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">'footing_row_start'</span>  <span class="o">=&gt;</span> <span class="s1">'&lt;tr&gt;'</span><span class="p">,</span>
+    <span class="s1">'footing_row_end'</span>    <span class="o">=&gt;</span> <span class="s1">'&lt;/tr&gt;'</span><span class="p">,</span>
+    <span class="s1">'footing_cell_start'</span> <span class="o">=&gt;</span> <span class="s1">'&lt;td&gt;'</span><span class="p">,</span>
+    <span class="s1">'footing_cell_end'</span>   <span class="o">=&gt;</span> <span class="s1">'&lt;/td&gt;'</span><span class="p">,</span>
 
-    <span class="s1">&#39;tbody_open&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&lt;tbody&gt;&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;tbody_close&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/tbody&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">'tbody_open'</span>  <span class="o">=&gt;</span> <span class="s1">'&lt;tbody&gt;'</span><span class="p">,</span>
+    <span class="s1">'tbody_close'</span> <span class="o">=&gt;</span> <span class="s1">'&lt;/tbody&gt;'</span><span class="p">,</span>
 
-    <span class="s1">&#39;row_start&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&lt;tr&gt;&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;row_end&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/tr&gt;&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;cell_start&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;td&gt;&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;cell_end&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/td&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">'row_start'</span>  <span class="o">=&gt;</span> <span class="s1">'&lt;tr&gt;'</span><span class="p">,</span>
+    <span class="s1">'row_end'</span>    <span class="o">=&gt;</span> <span class="s1">'&lt;/tr&gt;'</span><span class="p">,</span>
+    <span class="s1">'cell_start'</span> <span class="o">=&gt;</span> <span class="s1">'&lt;td&gt;'</span><span class="p">,</span>
+    <span class="s1">'cell_end'</span>   <span class="o">=&gt;</span> <span class="s1">'&lt;/td&gt;'</span><span class="p">,</span>
 
-    <span class="s1">&#39;row_alt_start&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&lt;tr&gt;&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;row_alt_end&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/tr&gt;&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;cell_alt_start&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;td&gt;&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;cell_alt_end&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/td&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">'row_alt_start'</span>  <span class="o">=&gt;</span> <span class="s1">'&lt;tr&gt;'</span><span class="p">,</span>
+    <span class="s1">'row_alt_end'</span>    <span class="o">=&gt;</span> <span class="s1">'&lt;/tr&gt;'</span><span class="p">,</span>
+    <span class="s1">'cell_alt_start'</span> <span class="o">=&gt;</span> <span class="s1">'&lt;td&gt;'</span><span class="p">,</span>
+    <span class="s1">'cell_alt_end'</span>   <span class="o">=&gt;</span> <span class="s1">'&lt;/td&gt;'</span><span class="p">,</span>
 
-    <span class="s1">&#39;table_close&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/table&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">'table_close'</span> <span class="o">=&gt;</span> <span class="s1">'&lt;/table&gt;'</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setTemplate</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
@@ -439,7 +439,7 @@ example, only the table opening tag is being changed:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$template</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;table_open&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;table border=&quot;1&quot; cellpadding=&quot;2&quot; cellspacing=&quot;1&quot; class=&quot;mytable&quot;&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">'table_open'</span> <span class="o">=&gt;</span> <span class="s1">'&lt;table border="1" cellpadding="2" cellspacing="1" class="mytable"&gt;'</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setTemplate</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
@@ -450,7 +450,7 @@ to the Table constructor:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$customSettings</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;table_open&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;table border=&quot;1&quot; cellpadding=&quot;2&quot; cellspacing=&quot;1&quot; class=&quot;mytable&quot;&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">'table_open'</span> <span class="o">=&gt;</span> <span class="s1">'&lt;table border="1" cellpadding="2" cellspacing="1" class="mytable"&gt;'</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="nv">$table</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\Table</span><span class="p">(</span><span class="nv">$customSettings</span><span class="p">);</span>
@@ -474,17 +474,17 @@ an empty cell will be placed in its place.</p>
 
 <span class="nv">$table</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\Table</span><span class="p">();</span>
 
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">([</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Color&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Size&#39;</span><span class="p">])</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">([</span><span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'Name'</span><span class="p">,</span> <span class="s1">'color'</span> <span class="o">=&gt;</span> <span class="s1">'Color'</span><span class="p">,</span> <span class="s1">'size'</span> <span class="o">=&gt;</span> <span class="s1">'Size'</span><span class="p">])</span>
     <span class="o">-&gt;</span><span class="na">setSyncRowsWithHeading</span><span class="p">(</span><span class="k">true</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">([</span><span class="s1">&#39;color&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Blue&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Fred&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Small&#39;</span><span class="p">])</span>
-    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">([</span><span class="s1">&#39;size&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Large&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;24&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mary&#39;</span><span class="p">])</span>
-    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">([</span><span class="s1">&#39;color&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Green&#39;</span><span class="p">]);</span>
+    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">([</span><span class="s1">'color'</span> <span class="o">=&gt;</span> <span class="s1">'Blue'</span><span class="p">,</span> <span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'Fred'</span><span class="p">,</span> <span class="s1">'size'</span> <span class="o">=&gt;</span> <span class="s1">'Small'</span><span class="p">])</span>
+    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">([</span><span class="s1">'size'</span> <span class="o">=&gt;</span> <span class="s1">'Large'</span><span class="p">,</span> <span class="s1">'age'</span> <span class="o">=&gt;</span> <span class="s1">'24'</span><span class="p">,</span> <span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'Mary'</span><span class="p">])</span>
+    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">([</span><span class="s1">'color'</span> <span class="o">=&gt;</span> <span class="s1">'Green'</span><span class="p">]);</span>
 
 <span class="k">echo</span> <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">();</span>
 <span class="cp">?&gt;</span>
 
 <span class="cm">&lt;!-- Generates a table with this prototype: --&gt;</span>
-<span class="p">&lt;</span><span class="nt">table</span> <span class="na">border</span><span class="o">=</span><span class="s">&quot;0&quot;</span> <span class="na">cellpadding</span><span class="o">=</span><span class="s">&quot;4&quot;</span> <span class="na">cellspacing</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">table</span> <span class="na">border</span><span class="o">=</span><span class="s">"0"</span> <span class="na">cellpadding</span><span class="o">=</span><span class="s">"4"</span> <span class="na">cellspacing</span><span class="o">=</span><span class="s">"0"</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">thead</span><span class="p">&gt;</span>
         <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
             <span class="p">&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Name<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
@@ -523,23 +523,23 @@ the rearrangement of columns takes place.</p>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">[</span>
-        <span class="s1">&#39;color&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Blue&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Fred&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;size&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Small&#39;</span><span class="p">,</span>
+        <span class="s1">'color'</span> <span class="o">=&gt;</span> <span class="s1">'Blue'</span><span class="p">,</span>
+        <span class="s1">'name'</span>  <span class="o">=&gt;</span> <span class="s1">'Fred'</span><span class="p">,</span>
+        <span class="s1">'size'</span>  <span class="o">=&gt;</span> <span class="s1">'Small'</span><span class="p">,</span>
     <span class="p">],</span>
     <span class="p">[</span>
-        <span class="s1">&#39;size&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Large&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;age&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;24&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mary&#39;</span><span class="p">,</span>
+        <span class="s1">'size'</span> <span class="o">=&gt;</span> <span class="s1">'Large'</span><span class="p">,</span>
+        <span class="s1">'age'</span>  <span class="o">=&gt;</span> <span class="s1">'24'</span><span class="p">,</span>
+        <span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'Mary'</span><span class="p">,</span>
     <span class="p">],</span>
     <span class="p">[</span>
-        <span class="s1">&#39;color&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Green&#39;</span><span class="p">,</span>
+        <span class="s1">'color'</span> <span class="o">=&gt;</span> <span class="s1">'Green'</span><span class="p">,</span>
     <span class="p">],</span>
 <span class="p">];</span>
 
 <span class="nv">$table</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\Table</span><span class="p">();</span>
 
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">([</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Color&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Size&#39;</span><span class="p">])</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">([</span><span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'Name'</span><span class="p">,</span> <span class="s1">'color'</span> <span class="o">=&gt;</span> <span class="s1">'Color'</span><span class="p">,</span> <span class="s1">'size'</span> <span class="o">=&gt;</span> <span class="s1">'Size'</span><span class="p">])</span>
     <span class="o">-&gt;</span><span class="na">setSyncRowsWithHeading</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
 
 <span class="k">echo</span> <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
@@ -560,10 +560,10 @@ the rearrangement of columns takes place.</p>
 
 <span class="nv">$table</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\Table</span><span class="p">();</span>
 
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">(</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Color&#39;</span><span class="p">,</span> <span class="s1">&#39;Size&#39;</span><span class="p">);</span>
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">&#39;Fred&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;strong&gt;Blue&lt;/strong&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;Small&#39;</span><span class="p">);</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">(</span><span class="s1">'Name'</span><span class="p">,</span> <span class="s1">'Color'</span><span class="p">,</span> <span class="s1">'Size'</span><span class="p">);</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">'Fred'</span><span class="p">,</span> <span class="s1">'&lt;strong&gt;Blue&lt;/strong&gt;'</span><span class="p">,</span> <span class="s1">'Small'</span><span class="p">);</span>
 
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">function</span> <span class="o">=</span> <span class="s1">&#39;htmlspecialchars&#39;</span><span class="p">;</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">function</span> <span class="o">=</span> <span class="s1">'htmlspecialchars'</span><span class="p">;</span>
 <span class="k">echo</span> <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">();</span>
 </pre></div>
 </div>
@@ -611,7 +611,7 @@ the rearrangement of columns takes place.</p>
 <p>Permits you to add a caption to the table.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setCaption</span><span class="p">(</span><span class="s1">&#39;Colors&#39;</span><span class="p">);</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setCaption</span><span class="p">(</span><span class="s1">'Colors'</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -635,9 +635,9 @@ the rearrangement of columns takes place.</p>
 <p>Permits you to set the table heading. You can submit an array or discrete params:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">(</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Color&#39;</span><span class="p">,</span> <span class="s1">&#39;Size&#39;</span><span class="p">);</span> <span class="c1">// or</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">(</span><span class="s1">'Name'</span><span class="p">,</span> <span class="s1">'Color'</span><span class="p">,</span> <span class="s1">'Size'</span><span class="p">);</span> <span class="c1">// or</span>
 
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">([</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Color&#39;</span><span class="p">,</span> <span class="s1">&#39;Size&#39;</span><span class="p">]);</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">([</span><span class="s1">'Name'</span><span class="p">,</span> <span class="s1">'Color'</span><span class="p">,</span> <span class="s1">'Size'</span><span class="p">]);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -661,9 +661,9 @@ the rearrangement of columns takes place.</p>
 <p>Permits you to set the table footing. You can submit an array or discrete params:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setFooting</span><span class="p">(</span><span class="s1">&#39;Subtotal&#39;</span><span class="p">,</span> <span class="nv">$subtotal</span><span class="p">,</span> <span class="nv">$notes</span><span class="p">);</span> <span class="c1">// or</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setFooting</span><span class="p">(</span><span class="s1">'Subtotal'</span><span class="p">,</span> <span class="nv">$subtotal</span><span class="p">,</span> <span class="nv">$notes</span><span class="p">);</span> <span class="c1">// or</span>
 
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setFooting</span><span class="p">([</span><span class="s1">&#39;Subtotal&#39;</span><span class="p">,</span> <span class="nv">$subtotal</span><span class="p">,</span> <span class="nv">$notes</span><span class="p">]);</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setFooting</span><span class="p">([</span><span class="s1">'Subtotal'</span><span class="p">,</span> <span class="nv">$subtotal</span><span class="p">,</span> <span class="nv">$notes</span><span class="p">]);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -687,22 +687,22 @@ the rearrangement of columns takes place.</p>
 <p>Permits you to add a row to your table. You can submit an array or discrete params:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">&#39;Blue&#39;</span><span class="p">,</span> <span class="s1">&#39;Red&#39;</span><span class="p">,</span> <span class="s1">&#39;Green&#39;</span><span class="p">);</span> <span class="c1">// or</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">'Blue'</span><span class="p">,</span> <span class="s1">'Red'</span><span class="p">,</span> <span class="s1">'Green'</span><span class="p">);</span> <span class="c1">// or</span>
 
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">([</span><span class="s1">&#39;Blue&#39;</span><span class="p">,</span> <span class="s1">&#39;Red&#39;</span><span class="p">,</span> <span class="s1">&#39;Green&#39;</span><span class="p">]);</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">([</span><span class="s1">'Blue'</span><span class="p">,</span> <span class="s1">'Red'</span><span class="p">,</span> <span class="s1">'Green'</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>If you would like to set an individual cell’s tag attributes, you can use an associative array for that cell.
 The associative key <strong>data</strong> defines the cell’s data. Any other key =&gt; val pairs are added as key=’val’ attributes to the tag:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$cell</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;data&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Blue&#39;</span><span class="p">,</span> <span class="s1">&#39;class&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;highlight&#39;</span><span class="p">,</span> <span class="s1">&#39;colspan&#39;</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">];</span>
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="nv">$cell</span><span class="p">,</span> <span class="s1">&#39;Red&#39;</span><span class="p">,</span> <span class="s1">&#39;Green&#39;</span><span class="p">);</span>
+<span class="nv">$cell</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'data'</span> <span class="o">=&gt;</span> <span class="s1">'Blue'</span><span class="p">,</span> <span class="s1">'class'</span> <span class="o">=&gt;</span> <span class="s1">'highlight'</span><span class="p">,</span> <span class="s1">'colspan'</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">];</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="nv">$cell</span><span class="p">,</span> <span class="s1">'Red'</span><span class="p">,</span> <span class="s1">'Green'</span><span class="p">);</span>
 
 <span class="cp">?&gt;</span>
 
 <span class="cm">&lt;!-- Generates: --&gt;</span>
-<span class="p">&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">&#39;highlight&#39;</span> <span class="na">colspan</span><span class="o">=</span><span class="s">&#39;2&#39;</span><span class="p">&gt;</span>Blue<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Red<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Green<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">'highlight'</span> <span class="na">colspan</span><span class="o">=</span><span class="s">'2'</span><span class="p">&gt;</span>Blue<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Red<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Green<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -728,7 +728,7 @@ The associative key <strong>data</strong> defines the cell’s data. Any other k
 This allows a single array with many elements to be displayed in a table that has a fixed column count. Consider this example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;three&#39;</span><span class="p">,</span> <span class="s1">&#39;four&#39;</span><span class="p">,</span> <span class="s1">&#39;five&#39;</span><span class="p">,</span> <span class="s1">&#39;six&#39;</span><span class="p">,</span> <span class="s1">&#39;seven&#39;</span><span class="p">,</span> <span class="s1">&#39;eight&#39;</span><span class="p">,</span> <span class="s1">&#39;nine&#39;</span><span class="p">,</span> <span class="s1">&#39;ten&#39;</span><span class="p">,</span> <span class="s1">&#39;eleven&#39;</span><span class="p">,</span> <span class="s1">&#39;twelve&#39;</span><span class="p">];</span>
+<span class="nv">$list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'one'</span><span class="p">,</span> <span class="s1">'two'</span><span class="p">,</span> <span class="s1">'three'</span><span class="p">,</span> <span class="s1">'four'</span><span class="p">,</span> <span class="s1">'five'</span><span class="p">,</span> <span class="s1">'six'</span><span class="p">,</span> <span class="s1">'seven'</span><span class="p">,</span> <span class="s1">'eight'</span><span class="p">,</span> <span class="s1">'nine'</span><span class="p">,</span> <span class="s1">'ten'</span><span class="p">,</span> <span class="s1">'eleven'</span><span class="p">,</span> <span class="s1">'twelve'</span><span class="p">];</span>
 
 <span class="nv">$newList</span> <span class="o">=</span> <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">makeColumns</span><span class="p">(</span><span class="nv">$list</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
 
@@ -737,7 +737,7 @@ This allows a single array with many elements to be displayed in a table that ha
 <span class="cp">?&gt;</span>
 
 <span class="cm">&lt;!-- Generates a table with this prototype: --&gt;</span>
-<span class="p">&lt;</span><span class="nt">table</span> <span class="na">border</span><span class="o">=</span><span class="s">&quot;0&quot;</span> <span class="na">cellpadding</span><span class="o">=</span><span class="s">&quot;4&quot;</span> <span class="na">cellspacing</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">table</span> <span class="na">border</span><span class="o">=</span><span class="s">"0"</span> <span class="na">cellpadding</span><span class="o">=</span><span class="s">"4"</span> <span class="na">cellspacing</span><span class="o">=</span><span class="s">"0"</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
         <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>one<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
         <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>two<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
@@ -783,7 +783,7 @@ This allows a single array with many elements to be displayed in a table that ha
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$template</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;table_open&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;table border=&quot;1&quot; cellpadding=&quot;2&quot; cellspacing=&quot;1&quot; class=&quot;mytable&quot;&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">'table_open'</span> <span class="o">=&gt;</span> <span class="s1">'&lt;table border="1" cellpadding="2" cellspacing="1" class="mytable"&gt;'</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setTemplate</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
@@ -811,7 +811,7 @@ This allows a single array with many elements to be displayed in a table that ha
 You might, for example, set a non-breaking space:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setEmpty</span><span class="p">(</span><span class="s1">&#39;&amp;nbsp;&#39;</span><span class="p">);</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setEmpty</span><span class="p">(</span><span class="s1">'&amp;nbsp;'</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -836,21 +836,21 @@ generated to clear the previous table information.</p>
 
 <span class="nv">$table</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\Table</span><span class="p">();</span>
 
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setCaption</span><span class="p">(</span><span class="s1">&#39;Preferences&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">(</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Color&#39;</span><span class="p">,</span> <span class="s1">&#39;Size&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">&#39;Fred&#39;</span><span class="p">,</span> <span class="s1">&#39;Blue&#39;</span><span class="p">,</span> <span class="s1">&#39;Small&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">&#39;Mary&#39;</span><span class="p">,</span> <span class="s1">&#39;Red&#39;</span><span class="p">,</span> <span class="s1">&#39;Large&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Green&#39;</span><span class="p">,</span> <span class="s1">&#39;Medium&#39;</span><span class="p">);</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setCaption</span><span class="p">(</span><span class="s1">'Preferences'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">(</span><span class="s1">'Name'</span><span class="p">,</span> <span class="s1">'Color'</span><span class="p">,</span> <span class="s1">'Size'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">'Fred'</span><span class="p">,</span> <span class="s1">'Blue'</span><span class="p">,</span> <span class="s1">'Small'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">'Mary'</span><span class="p">,</span> <span class="s1">'Red'</span><span class="p">,</span> <span class="s1">'Large'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">'John'</span><span class="p">,</span> <span class="s1">'Green'</span><span class="p">,</span> <span class="s1">'Medium'</span><span class="p">);</span>
 
 <span class="k">echo</span> <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">();</span>
 
 <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">clear</span><span class="p">();</span>
 
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setCaption</span><span class="p">(</span><span class="s1">&#39;Shipping&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">(</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Day&#39;</span><span class="p">,</span> <span class="s1">&#39;Delivery&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">&#39;Fred&#39;</span><span class="p">,</span> <span class="s1">&#39;Wednesday&#39;</span><span class="p">,</span> <span class="s1">&#39;Express&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">&#39;Mary&#39;</span><span class="p">,</span> <span class="s1">&#39;Monday&#39;</span><span class="p">,</span> <span class="s1">&#39;Air&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Saturday&#39;</span><span class="p">,</span> <span class="s1">&#39;Overnight&#39;</span><span class="p">);</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setCaption</span><span class="p">(</span><span class="s1">'Shipping'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">(</span><span class="s1">'Name'</span><span class="p">,</span> <span class="s1">'Day'</span><span class="p">,</span> <span class="s1">'Delivery'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">'Fred'</span><span class="p">,</span> <span class="s1">'Wednesday'</span><span class="p">,</span> <span class="s1">'Express'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">'Mary'</span><span class="p">,</span> <span class="s1">'Monday'</span><span class="p">,</span> <span class="s1">'Air'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">'John'</span><span class="p">,</span> <span class="s1">'Saturday'</span><span class="p">,</span> <span class="s1">'Overnight'</span><span class="p">);</span>
 
 <span class="k">echo</span> <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">();</span>
 </pre></div>
@@ -890,7 +890,7 @@ sure to set this value before calling the first <code class="docutils literal no
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

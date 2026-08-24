@@ -328,7 +328,7 @@
 <p>The feature to check if URIs do not contain not permitted strings has been added.
 This check is equivalent to the URI Security found in CodeIgniter 3.</p>
 <p>We recommend you enable this feature. Add the following to <strong>app/Config/App.php</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">string</span> <span class="nv">$permittedURIChars</span> <span class="o">=</span> <span class="s1">&#39;a-z 0-9~%.:_\-&#39;</span><span class="p">;</span><span class="o">.</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">string</span> <span class="nv">$permittedURIChars</span> <span class="o">=</span> <span class="s1">'a-z 0-9~%.:_\-'</span><span class="p">;</span><span class="o">.</span>
 </pre></div>
 </div>
 <p>See <a class="reference internal" href="../general/urls.html#urls-uri-security"><span class="std std-ref">URI Security</span></a> for details.</p>
@@ -355,8 +355,8 @@ This check is equivalent to the URI Security found in CodeIgniter 3.</p>
 different values when URL-decoded, change them to the URL-decoded values.</p>
 <p>E.g.,:</p>
 <div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">public array $globals = [</span>
-<span class="x">    &#39;before&#39; =&gt; [</span>
-<span class="x">        &#39;csrf&#39; =&gt; [&#39;except&#39; =&gt; &#39;%E6%97%A5%E6%9C%AC%E8%AA%9E/*&#39;],</span>
+<span class="x">    'before' =&gt; [</span>
+<span class="x">        'csrf' =&gt; ['except' =&gt; '%E6%97%A5%E6%9C%AC%E8%AA%9E/*'],</span>
 <span class="x">    ],</span>
 <span class="x">    // ...</span>
 <span class="x">];</span>
@@ -364,8 +364,8 @@ different values when URL-decoded, change them to the URL-decoded values.</p>
 </div>
 <p>↓</p>
 <div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">public array $globals = [</span>
-<span class="x">    &#39;before&#39; =&gt; [</span>
-<span class="x">        &#39;csrf&#39; =&gt; [&#39;except&#39; =&gt; &#39;日本語/*&#39;],</span>
+<span class="x">    'before' =&gt; [</span>
+<span class="x">        'csrf' =&gt; ['except' =&gt; '日本語/*'],</span>
 <span class="x">    ],</span>
 <span class="x">    // ...</span>
 <span class="x">];</span>
@@ -448,7 +448,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

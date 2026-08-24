@@ -400,7 +400,7 @@ inside the controller:</p>
 
 <span class="k">class</span> <span class="nc">MyController</span> <span class="k">extends</span> <span class="nx">BaseController</span>
 <span class="p">{</span>
-    <span class="k">protected</span> <span class="nv">$helpers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">,</span> <span class="s1">&#39;form&#39;</span><span class="p">];</span>
+    <span class="k">protected</span> <span class="nv">$helpers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'url'</span><span class="p">,</span> <span class="s1">'form'</span><span class="p">];</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -455,18 +455,18 @@ rule and message array formats, as well as available rules:</p>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">product</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$id</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s1">&#39;id&#39;</span>   <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">,</span>
-            <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span>
+            <span class="s1">'id'</span>   <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">,</span>
+            <span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">(</span><span class="s1">'name'</span><span class="p">),</span>
         <span class="p">];</span>
 
         <span class="nv">$rule</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s1">&#39;id&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[255]&#39;</span><span class="p">,</span>
+            <span class="s1">'id'</span>   <span class="o">=&gt;</span> <span class="s1">'integer'</span><span class="p">,</span>
+            <span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'required|max_length[255]'</span><span class="p">,</span>
         <span class="p">];</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validateData</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="nv">$rule</span><span class="p">))</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;store/product&#39;</span><span class="p">,</span> <span class="p">[</span>
-                <span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validator</span><span class="o">-&gt;</span><span class="na">getErrors</span><span class="p">(),</span>
+            <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'store/product'</span><span class="p">,</span> <span class="p">[</span>
+                <span class="s1">'errors'</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validator</span><span class="o">-&gt;</span><span class="na">getErrors</span><span class="p">(),</span>
             <span class="p">]);</span>
         <span class="p">}</span>
 
@@ -510,12 +510,12 @@ rule and message array formats, as well as available rules:</p>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">updateUser</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$userID</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">([</span>
-            <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;required|is_unique[users.email,id,</span><span class="si">{</span><span class="nv">$userID</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span>
-            <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required|alpha_numeric_spaces&#39;</span><span class="p">,</span>
+            <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="s2">"required|is_unique[users.email,id,</span><span class="si">{</span><span class="nv">$userID</span><span class="si">}</span><span class="s2">]"</span><span class="p">,</span>
+            <span class="s1">'name'</span>  <span class="o">=&gt;</span> <span class="s1">'required|alpha_numeric_spaces'</span><span class="p">,</span>
         <span class="p">]))</span> <span class="p">{</span>
             <span class="c1">// The validation failed.</span>
-            <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;users/update&#39;</span><span class="p">,</span> <span class="p">[</span>
-                <span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validator</span><span class="o">-&gt;</span><span class="na">getErrors</span><span class="p">(),</span>
+            <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'users/update'</span><span class="p">,</span> <span class="p">[</span>
+                <span class="s1">'errors'</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validator</span><span class="o">-&gt;</span><span class="na">getErrors</span><span class="p">(),</span>
             <span class="p">]);</span>
         <span class="p">}</span>
 
@@ -556,10 +556,10 @@ the <code class="docutils literal notranslate"><span class="pre">$rules</span></
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">updateUser</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$userID</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">(</span><span class="s1">&#39;userRules&#39;</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">(</span><span class="s1">'userRules'</span><span class="p">))</span> <span class="p">{</span>
             <span class="c1">// The validation failed.</span>
-            <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;users/update&#39;</span><span class="p">,</span> <span class="p">[</span>
-                <span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validator</span><span class="o">-&gt;</span><span class="na">getErrors</span><span class="p">(),</span>
+            <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'users/update'</span><span class="p">,</span> <span class="p">[</span>
+                <span class="s1">'errors'</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validator</span><span class="o">-&gt;</span><span class="na">getErrors</span><span class="p">(),</span>
             <span class="p">]);</span>
         <span class="p">}</span>
 
@@ -664,7 +664,7 @@ controllers. You can extend this class in any new controller.</p>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="k">return</span> <span class="s1">&#39;Hello World!&#39;</span><span class="p">;</span>
+        <span class="k">return</span> <span class="s1">'Hello World!'</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -732,7 +732,7 @@ Here is an example based on PSR-4 Autoloader:</p>
 <span class="cm"> * \&lt;NamespaceName&gt;(\&lt;SubNamespaceNames&gt;)*\&lt;ClassName&gt;</span>
 <span class="cm"> */</span>
 
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;helloworld&#39;</span><span class="p">,</span> <span class="s1">&#39;\App\Controllers\HelloWorld::index&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'helloworld'</span><span class="p">,</span> <span class="s1">'\App\Controllers\HelloWorld::index'</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -756,12 +756,12 @@ controller gets called.</strong></p>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="k">return</span> <span class="s1">&#39;Hello World!&#39;</span><span class="p">;</span>
+        <span class="k">return</span> <span class="s1">'Hello World!'</span><span class="p">;</span>
     <span class="p">}</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">comment</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="k">return</span> <span class="s1">&#39;I am not flat!&#39;</span><span class="p">;</span>
+        <span class="k">return</span> <span class="s1">'I am not flat!'</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -805,12 +805,12 @@ site root URL is requested.</p>
 <p>Let’s try it with the <code class="docutils literal notranslate"><span class="pre">Helloworld</span></code> controller.</p>
 <p>To specify a default controller open your <strong>app/Config/Routing.php</strong>
 file and set this property:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">string</span> <span class="nv">$defaultController</span> <span class="o">=</span> <span class="s1">&#39;Helloworld&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">string</span> <span class="nv">$defaultController</span> <span class="o">=</span> <span class="s1">'Helloworld'</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Where <code class="docutils literal notranslate"><span class="pre">Helloworld</span></code> is the name of the controller class you want to be used.</p>
 <p>And comment out the line in <strong>app/Config/Routes.php</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;Home::index&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'/'</span><span class="p">,</span> <span class="s1">'Home::index'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If you now browse to your site without specifying any URI segments you’ll
@@ -895,7 +895,7 @@ be passed as a parameter to the <code class="docutils literal notranslate"><span
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">_remap</span><span class="p">(</span><span class="nv">$method</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nv">$method</span> <span class="o">===</span> <span class="s1">&#39;some_method&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$method</span> <span class="o">===</span> <span class="s1">'some_method'</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="p">{</span><span class="nv">$method</span><span class="p">}();</span>
         <span class="p">}</span>
 
@@ -915,7 +915,7 @@ to emulate CodeIgniter’s default behavior.</p>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">_remap</span><span class="p">(</span><span class="nv">$method</span><span class="p">,</span> <span class="o">...</span><span class="nv">$params</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="nv">$method</span> <span class="o">=</span> <span class="s1">&#39;process_&#39;</span> <span class="o">.</span> <span class="nv">$method</span><span class="p">;</span>
+        <span class="nv">$method</span> <span class="o">=</span> <span class="s1">'process_'</span> <span class="o">.</span> <span class="nv">$method</span><span class="p">;</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="nb">method_exists</span><span class="p">(</span><span class="nv">$this</span><span class="p">,</span> <span class="nv">$method</span><span class="p">))</span> <span class="p">{</span>
             <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="p">{</span><span class="nv">$method</span><span class="p">}(</span><span class="o">...</span><span class="nv">$params</span><span class="p">);</span>
@@ -949,7 +949,7 @@ to emulate CodeIgniter’s default behavior.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

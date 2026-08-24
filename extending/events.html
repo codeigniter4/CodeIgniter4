@@ -332,7 +332,7 @@ a callable that will be run when that event is triggered:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Events\Events</span><span class="p">;</span>
 
-<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;pre_system&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;MyClass&#39;</span><span class="p">,</span> <span class="s1">&#39;myFunction&#39;</span><span class="p">]);</span>
+<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">'pre_system'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'MyClass'</span><span class="p">,</span> <span class="s1">'myFunction'</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>In this example, whenever the <code class="docutils literal notranslate"><span class="pre">pre_system</span></code> event is executed, an instance of <code class="docutils literal notranslate"><span class="pre">MyClass</span></code> is created and the
@@ -343,17 +343,17 @@ a callable that will be run when that event is triggered:</p>
 <span class="k">use</span> <span class="nx">CodeIgniter\Events\Events</span><span class="p">;</span>
 
 <span class="c1">// Call a standalone function</span>
-<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;pre_system&#39;</span><span class="p">,</span> <span class="s1">&#39;some_function&#39;</span><span class="p">);</span>
+<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">'pre_system'</span><span class="p">,</span> <span class="s1">'some_function'</span><span class="p">);</span>
 
 <span class="c1">// Call on an instance method</span>
 <span class="nv">$user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\App\Libraries\User</span><span class="p">();</span>
-<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;pre_system&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nv">$user</span><span class="p">,</span> <span class="s1">&#39;someMethod&#39;</span><span class="p">]);</span>
+<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">'pre_system'</span><span class="p">,</span> <span class="p">[</span><span class="nv">$user</span><span class="p">,</span> <span class="s1">'someMethod'</span><span class="p">]);</span>
 
 <span class="c1">// Call on a static method</span>
-<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;pre_system&#39;</span><span class="p">,</span> <span class="s1">&#39;SomeClass::someMethod&#39;</span><span class="p">);</span>
+<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">'pre_system'</span><span class="p">,</span> <span class="s1">'SomeClass::someMethod'</span><span class="p">);</span>
 
 <span class="c1">// Use a Closure</span>
-<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;pre_system&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="o">...</span><span class="nv">$params</span><span class="p">)</span> <span class="p">{</span>
+<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">'pre_system'</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="o">...</span><span class="nv">$params</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">});</span>
 </pre></div>
@@ -367,7 +367,7 @@ are executed first, with a value of 1 having the highest priority, and there bei
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Events\Events</span><span class="p">;</span>
 
-<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;post_controller_constructor&#39;</span><span class="p">,</span> <span class="s1">&#39;some_function&#39;</span><span class="p">,</span> <span class="mi">25</span><span class="p">);</span>
+<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">'post_controller_constructor'</span><span class="p">,</span> <span class="s1">'some_function'</span><span class="p">,</span> <span class="mi">25</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Any subscribers with the same priority will be executed in the order they were defined.</p>
@@ -396,7 +396,7 @@ the subscribers will stop.</p>
 need to call the <code class="docutils literal notranslate"><span class="pre">trigger()</span></code> method on the <strong>Events</strong> class with the name of the event:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">\CodeIgniter\Events\Events</span><span class="o">::</span><span class="na">trigger</span><span class="p">(</span><span class="s1">&#39;some_event&#39;</span><span class="p">);</span>
+<span class="nx">\CodeIgniter\Events\Events</span><span class="o">::</span><span class="na">trigger</span><span class="p">(</span><span class="s1">'some_event'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can pass any number of arguments to the subscribers by adding them as additional parameters. Subscribers will be
@@ -405,9 +405,9 @@ given the arguments in the same order as defined:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Events\Events</span><span class="p">;</span>
 
-<span class="nx">Events</span><span class="o">::</span><span class="na">trigger</span><span class="p">(</span><span class="s1">&#39;some_event&#39;</span><span class="p">,</span> <span class="nv">$foo</span><span class="p">,</span> <span class="nv">$bar</span><span class="p">,</span> <span class="nv">$baz</span><span class="p">);</span>
+<span class="nx">Events</span><span class="o">::</span><span class="na">trigger</span><span class="p">(</span><span class="s1">'some_event'</span><span class="p">,</span> <span class="nv">$foo</span><span class="p">,</span> <span class="nv">$bar</span><span class="p">,</span> <span class="nv">$baz</span><span class="p">);</span>
 
-<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;some_event&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$foo</span><span class="p">,</span> <span class="nv">$bar</span><span class="p">,</span> <span class="nv">$baz</span><span class="p">)</span> <span class="p">{</span>
+<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">'some_event'</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$foo</span><span class="p">,</span> <span class="nv">$bar</span><span class="p">,</span> <span class="nv">$baz</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">});</span>
 </pre></div>
@@ -481,7 +481,7 @@ at the end of system execution, after the execution of “after” controller fi
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

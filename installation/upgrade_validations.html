@@ -357,9 +357,9 @@ where <code class="docutils literal notranslate"><span class="pre">$data</span><
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$isValid</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validateData</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="p">[</span>
-    <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required|min_length[3]&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|valid_email&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;phone&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|numeric|max_length[10]&#39;</span><span class="p">,</span>
+    <span class="s1">'name'</span>  <span class="o">=&gt;</span> <span class="s1">'required|min_length[3]'</span><span class="p">,</span>
+    <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="s1">'required|valid_email'</span><span class="p">,</span>
+    <span class="s1">'phone'</span> <span class="o">=&gt;</span> <span class="s1">'required|numeric|max_length[10]'</span><span class="p">,</span>
 <span class="p">]);</span>
 </pre></div>
 </div>
@@ -379,21 +379,21 @@ where <code class="docutils literal notranslate"><span class="pre">$data</span><
 
     <span class="o">&lt;?</span><span class="nx">php</span> <span class="k">echo</span> <span class="nx">validation_errors</span><span class="p">();</span> <span class="cp">?&gt;</span>
 
-    <span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">);</span> <span class="cp">?&gt;</span>
+    <span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">'form'</span><span class="p">);</span> <span class="cp">?&gt;</span>
 
     <span class="p">&lt;</span><span class="nt">h5</span><span class="p">&gt;</span>Username<span class="p">&lt;/</span><span class="nt">h5</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;username&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"text"</span> <span class="na">name</span><span class="o">=</span><span class="s">"username"</span> <span class="na">value</span><span class="o">=</span><span class="s">""</span> <span class="na">size</span><span class="o">=</span><span class="s">"50"</span> <span class="p">/&gt;</span>
 
     <span class="p">&lt;</span><span class="nt">h5</span><span class="p">&gt;</span>Password<span class="p">&lt;/</span><span class="nt">h5</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;password&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"text"</span> <span class="na">name</span><span class="o">=</span><span class="s">"password"</span> <span class="na">value</span><span class="o">=</span><span class="s">""</span> <span class="na">size</span><span class="o">=</span><span class="s">"50"</span> <span class="p">/&gt;</span>
 
     <span class="p">&lt;</span><span class="nt">h5</span><span class="p">&gt;</span>Password Confirm<span class="p">&lt;/</span><span class="nt">h5</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;passconf&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"text"</span> <span class="na">name</span><span class="o">=</span><span class="s">"passconf"</span> <span class="na">value</span><span class="o">=</span><span class="s">""</span> <span class="na">size</span><span class="o">=</span><span class="s">"50"</span> <span class="p">/&gt;</span>
 
     <span class="p">&lt;</span><span class="nt">h5</span><span class="p">&gt;</span>Email Address<span class="p">&lt;/</span><span class="nt">h5</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;email&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"text"</span> <span class="na">name</span><span class="o">=</span><span class="s">"email"</span> <span class="na">value</span><span class="o">=</span><span class="s">""</span> <span class="na">size</span><span class="o">=</span><span class="s">"50"</span> <span class="p">/&gt;</span>
 
-    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Submit&quot;</span> <span class="p">/&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"submit"</span> <span class="na">value</span><span class="o">=</span><span class="s">"Submit"</span> <span class="p">/&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 
     <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
 
@@ -408,16 +408,16 @@ where <code class="docutils literal notranslate"><span class="pre">$data</span><
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">helper</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">));</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">helper</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'form'</span><span class="p">,</span> <span class="s1">'url'</span><span class="p">));</span>
 
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">library</span><span class="p">(</span><span class="s1">&#39;form_validation&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">library</span><span class="p">(</span><span class="s1">'form_validation'</span><span class="p">);</span>
 
         <span class="c1">// Set validation rules</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">form_validation</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">()</span> <span class="o">==</span> <span class="k">FALSE</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">(</span><span class="s1">&#39;myform&#39;</span><span class="p">);</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">(</span><span class="s1">'myform'</span><span class="p">);</span>
         <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">(</span><span class="s1">&#39;formsuccess&#39;</span><span class="p">);</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">(</span><span class="s1">'formsuccess'</span><span class="p">);</span>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -435,21 +435,21 @@ where <code class="docutils literal notranslate"><span class="pre">$data</span><
 
     <span class="o">&lt;?=</span> <span class="nx">validation_list_errors</span><span class="p">()</span> <span class="cp">?&gt;</span>
 
-    <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+    <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">'form'</span><span class="p">)</span> <span class="cp">?&gt;</span>
 
     <span class="p">&lt;</span><span class="nt">h5</span><span class="p">&gt;</span>Username<span class="p">&lt;/</span><span class="nt">h5</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;username&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"text"</span> <span class="na">name</span><span class="o">=</span><span class="s">"username"</span> <span class="na">value</span><span class="o">=</span><span class="s">""</span> <span class="na">size</span><span class="o">=</span><span class="s">"50"</span> <span class="p">/&gt;</span>
 
     <span class="p">&lt;</span><span class="nt">h5</span><span class="p">&gt;</span>Password<span class="p">&lt;/</span><span class="nt">h5</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;password&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"text"</span> <span class="na">name</span><span class="o">=</span><span class="s">"password"</span> <span class="na">value</span><span class="o">=</span><span class="s">""</span> <span class="na">size</span><span class="o">=</span><span class="s">"50"</span> <span class="p">/&gt;</span>
 
     <span class="p">&lt;</span><span class="nt">h5</span><span class="p">&gt;</span>Password Confirm<span class="p">&lt;/</span><span class="nt">h5</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;passconf&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"text"</span> <span class="na">name</span><span class="o">=</span><span class="s">"passconf"</span> <span class="na">value</span><span class="o">=</span><span class="s">""</span> <span class="na">size</span><span class="o">=</span><span class="s">"50"</span> <span class="p">/&gt;</span>
 
     <span class="p">&lt;</span><span class="nt">h5</span><span class="p">&gt;</span>Email Address<span class="p">&lt;/</span><span class="nt">h5</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;email&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"text"</span> <span class="na">name</span><span class="o">=</span><span class="s">"email"</span> <span class="na">value</span><span class="o">=</span><span class="s">""</span> <span class="na">size</span><span class="o">=</span><span class="s">"50"</span> <span class="p">/&gt;</span>
 
-    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Submit&quot;</span> <span class="p">/&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"submit"</span> <span class="na">value</span><span class="o">=</span><span class="s">"Submit"</span> <span class="p">/&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 
     <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
 
@@ -468,17 +468,17 @@ where <code class="docutils literal notranslate"><span class="pre">$data</span><
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">);</span>
+        <span class="nx">helper</span><span class="p">(</span><span class="s1">'form'</span><span class="p">);</span>
 
         <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">();</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validateData</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="p">[</span>
             <span class="c1">// Validation rules</span>
         <span class="p">]))</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;myform&#39;</span><span class="p">);</span>
+            <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'myform'</span><span class="p">);</span>
         <span class="p">}</span>
 
-        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;formsuccess&#39;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'formsuccess'</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -499,7 +499,7 @@ where <code class="docutils literal notranslate"><span class="pre">$data</span><
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

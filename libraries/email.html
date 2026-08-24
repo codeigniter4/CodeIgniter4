@@ -335,15 +335,15 @@ set your preferences in the <strong>app/Config/Email.php</strong> file.</p>
 <p>Here is a basic example demonstrating how you might send email:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$email</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">);</span>
+<span class="nv">$email</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'email'</span><span class="p">);</span>
 
-<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="s1">&#39;your@example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;Your Name&#39;</span><span class="p">);</span>
-<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="s1">&#39;someone@example.com&#39;</span><span class="p">);</span>
-<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setCC</span><span class="p">(</span><span class="s1">&#39;another@another-example.com&#39;</span><span class="p">);</span>
-<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setBCC</span><span class="p">(</span><span class="s1">&#39;them@their-example.com&#39;</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="s1">'your@example.com'</span><span class="p">,</span> <span class="s1">'Your Name'</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="s1">'someone@example.com'</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setCC</span><span class="p">(</span><span class="s1">'another@another-example.com'</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setBCC</span><span class="p">(</span><span class="s1">'them@their-example.com'</span><span class="p">);</span>
 
-<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setSubject</span><span class="p">(</span><span class="s1">&#39;Email Test&#39;</span><span class="p">);</span>
-<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setMessage</span><span class="p">(</span><span class="s1">&#39;Testing the email class.&#39;</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setSubject</span><span class="p">(</span><span class="s1">'Email Test'</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setMessage</span><span class="p">(</span><span class="s1">'Testing the email class.'</span><span class="p">);</span>
 
 <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">();</span>
 </pre></div>
@@ -362,10 +362,10 @@ email initialize method. Here is an example of how you might set some
 preferences:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;protocol&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;sendmail&#39;</span><span class="p">;</span>
-<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;mailPath&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;/usr/sbin/sendmail&#39;</span><span class="p">;</span>
-<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;charset&#39;</span><span class="p">]</span>  <span class="o">=</span> <span class="s1">&#39;iso-8859-1&#39;</span><span class="p">;</span>
-<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;wordWrap&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">'protocol'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'sendmail'</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">'mailPath'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'/usr/sbin/sendmail'</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">'charset'</span><span class="p">]</span>  <span class="o">=</span> <span class="s1">'iso-8859-1'</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">'wordWrap'</span><span class="p">]</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
 
 <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">initialize</span><span class="p">(</span><span class="nv">$config</span><span class="p">);</span>
 </pre></div>
@@ -604,13 +604,13 @@ message like this:</p>
 <p>Sets the email address and name of the person sending the email:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="s1">&#39;you@example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;Your Name&#39;</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="s1">'you@example.com'</span><span class="p">,</span> <span class="s1">'Your Name'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can also set a Return-Path, to help redirect undelivered mail:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="s1">&#39;you@example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;Your Name&#39;</span><span class="p">,</span> <span class="s1">&#39;returned_emails@example.com&#39;</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="s1">'you@example.com'</span><span class="p">,</span> <span class="s1">'Your Name'</span><span class="p">,</span> <span class="s1">'returned_emails@example.com'</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -641,7 +641,7 @@ your protocol.</p>
 information in the <a class="reference external" href="#setFrom">setFrom</a> method is used. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setReplyTo</span><span class="p">(</span><span class="s1">&#39;you@example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;Your Name&#39;</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setReplyTo</span><span class="p">(</span><span class="s1">'you@example.com'</span><span class="p">,</span> <span class="s1">'Your Name'</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -666,17 +666,17 @@ information in the <a class="reference external" href="#setFrom">setFrom</a> met
 a comma separated list or an array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="s1">&#39;someone@example.com&#39;</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="s1">'someone@example.com'</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="s1">&#39;one@example.com, two@example.com, three@example.com&#39;</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="s1">'one@example.com, two@example.com, three@example.com'</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">([</span><span class="s1">&#39;one@example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;two@example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;three@example.com&#39;</span><span class="p">]);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">([</span><span class="s1">'one@example.com'</span><span class="p">,</span> <span class="s1">'two@example.com'</span><span class="p">,</span> <span class="s1">'three@example.com'</span><span class="p">]);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -744,7 +744,7 @@ the emails to batches, with each batch not exceeding the specified
 <p>Sets the email subject:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setSubject</span><span class="p">(</span><span class="s1">&#39;This is my subject&#39;</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setSubject</span><span class="p">(</span><span class="s1">'This is my subject'</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -768,7 +768,7 @@ the emails to batches, with each batch not exceeding the specified
 <p>Sets the email message body:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setMessage</span><span class="p">(</span><span class="s1">&#39;This is my message&#39;</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setMessage</span><span class="p">(</span><span class="s1">'This is my message'</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -792,7 +792,7 @@ the emails to batches, with each batch not exceeding the specified
 <p>Sets the alternative email message body:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setAltMessage</span><span class="p">(</span><span class="s1">&#39;This is the alternative message&#39;</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setAltMessage</span><span class="p">(</span><span class="s1">'This is the alternative message'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This is an optional message string which can be used if you send
@@ -823,8 +823,8 @@ and strip the tags.</p>
 <p>Appends additional headers to the email:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">&#39;Header1&#39;</span><span class="p">,</span> <span class="s1">&#39;Value1&#39;</span><span class="p">);</span>
-<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">&#39;Header2&#39;</span><span class="p">,</span> <span class="s1">&#39;Value2&#39;</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">'Header1'</span><span class="p">,</span> <span class="s1">'Value1'</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">'Header2'</span><span class="p">,</span> <span class="s1">'Value2'</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -854,9 +854,9 @@ permitting the data to be reset between cycles.</p>
     <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">clear</span><span class="p">();</span>
 
     <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="nv">$address</span><span class="p">);</span>
-    <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="s1">&#39;your@example.com&#39;</span><span class="p">);</span>
-    <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setSubject</span><span class="p">(</span><span class="s1">&#39;Here is your info &#39;</span> <span class="o">.</span> <span class="nv">$name</span><span class="p">);</span>
-    <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setMessage</span><span class="p">(</span><span class="s1">&#39;Hi &#39;</span> <span class="o">.</span> <span class="nv">$name</span> <span class="o">.</span> <span class="s1">&#39; Here is the info you requested.&#39;</span><span class="p">);</span>
+    <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="s1">'your@example.com'</span><span class="p">);</span>
+    <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setSubject</span><span class="p">(</span><span class="s1">'Here is your info '</span> <span class="o">.</span> <span class="nv">$name</span><span class="p">);</span>
+    <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setMessage</span><span class="p">(</span><span class="s1">'Hi '</span> <span class="o">.</span> <span class="nv">$name</span> <span class="o">.</span> <span class="s1">' Here is the info you requested.'</span><span class="p">);</span>
     <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
@@ -900,7 +900,7 @@ successful. To stop this behaviour pass false:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">if</span> <span class="p">(</span><span class="nv">$email</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">(</span><span class="k">false</span><span class="p">))</span> <span class="p">{</span>
-    <span class="c1">// Parameters won&#39;t be cleared</span>
+    <span class="c1">// Parameters won't be cleared</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -943,28 +943,28 @@ parameter. For multiple attachments use the method multiple times.
 For example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">attach</span><span class="p">(</span><span class="s1">&#39;/path/to/photo1.jpg&#39;</span><span class="p">);</span>
-<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">attach</span><span class="p">(</span><span class="s1">&#39;/path/to/photo2.jpg&#39;</span><span class="p">);</span>
-<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">attach</span><span class="p">(</span><span class="s1">&#39;/path/to/photo3.jpg&#39;</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">attach</span><span class="p">(</span><span class="s1">'/path/to/photo1.jpg'</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">attach</span><span class="p">(</span><span class="s1">'/path/to/photo2.jpg'</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">attach</span><span class="p">(</span><span class="s1">'/path/to/photo3.jpg'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>To use the default disposition (attachment), leave the second parameter blank,
 otherwise use a custom disposition:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">attach</span><span class="p">(</span><span class="s1">&#39;image.jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;inline&#39;</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">attach</span><span class="p">(</span><span class="s1">'image.jpg'</span><span class="p">,</span> <span class="s1">'inline'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can also use a URL:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">attach</span><span class="p">(</span><span class="s1">&#39;http://example.com/filename.pdf&#39;</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">attach</span><span class="p">(</span><span class="s1">'http://example.com/filename.pdf'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If you’d like to use a custom file name, you can use the third parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">attach</span><span class="p">(</span><span class="s1">&#39;filename.pdf&#39;</span><span class="p">,</span> <span class="s1">&#39;attachment&#39;</span><span class="p">,</span> <span class="s1">&#39;report.pdf&#39;</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">attach</span><span class="p">(</span><span class="s1">'filename.pdf'</span><span class="p">,</span> <span class="s1">'attachment'</span><span class="p">,</span> <span class="s1">'report.pdf'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If you need to use a buffer string instead of a real - physical - file you can
@@ -972,7 +972,7 @@ use the first parameter as buffer, the third parameter as file name and the four
 parameter as mime-type:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">attach</span><span class="p">(</span><span class="nv">$buffer</span><span class="p">,</span> <span class="s1">&#39;attachment&#39;</span><span class="p">,</span> <span class="s1">&#39;report.pdf&#39;</span><span class="p">,</span> <span class="s1">&#39;application/pdf&#39;</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">attach</span><span class="p">(</span><span class="nv">$buffer</span><span class="p">,</span> <span class="s1">'attachment'</span><span class="p">,</span> <span class="s1">'report.pdf'</span><span class="p">,</span> <span class="s1">'application/pdf'</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -997,13 +997,13 @@ parameter as mime-type:</p>
 (picture) attachment into HTML. First parameter must be the already attached file name.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$filename</span> <span class="o">=</span> <span class="s1">&#39;/img/photo1.jpg&#39;</span><span class="p">;</span>
+<span class="nv">$filename</span> <span class="o">=</span> <span class="s1">'/img/photo1.jpg'</span><span class="p">;</span>
 <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">attach</span><span class="p">(</span><span class="nv">$filename</span><span class="p">);</span>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$list</span> <span class="k">as</span> <span class="nv">$address</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="nv">$address</span><span class="p">);</span>
     <span class="nv">$cid</span> <span class="o">=</span> <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setAttachmentCID</span><span class="p">(</span><span class="nv">$filename</span><span class="p">);</span>
-    <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setMessage</span><span class="p">(</span><span class="s1">&#39;&lt;img src=&quot;cid:&#39;</span> <span class="o">.</span> <span class="nv">$cid</span> <span class="o">.</span> <span class="s1">&#39;&quot; alt=&quot;photo1&quot;&gt;&#39;</span><span class="p">);</span>
+    <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setMessage</span><span class="p">(</span><span class="s1">'&lt;img src="cid:'</span> <span class="o">.</span> <span class="nv">$cid</span> <span class="o">.</span> <span class="s1">'" alt="photo1"&gt;'</span><span class="p">);</span>
     <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
@@ -1043,7 +1043,7 @@ Valid options are: <strong>headers</strong>, <strong>subject</strong>, <strong>b
 <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
 
 <span class="c1">// Will only print the email headers, excluding the message subject and body</span>
-<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">printDebugger</span><span class="p">([</span><span class="s1">&#39;headers&#39;</span><span class="p">]);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">printDebugger</span><span class="p">([</span><span class="s1">'headers'</span><span class="p">]);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -1069,7 +1069,7 @@ Valid options are: <strong>headers</strong>, <strong>subject</strong>, <strong>b
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

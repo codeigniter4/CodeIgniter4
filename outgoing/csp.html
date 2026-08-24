@@ -387,37 +387,37 @@ name or an array of them:</p>
 <span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">reportOnly</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
 
 <span class="c1">// specify the origin to use if none provided for a directive</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">setDefaultSrc</span><span class="p">(</span><span class="s1">&#39;cdn.example.com&#39;</span><span class="p">);</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">setDefaultSrc</span><span class="p">(</span><span class="s1">'cdn.example.com'</span><span class="p">);</span>
 
-<span class="c1">// specify the URL that &quot;report-only&quot; reports get sent to</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">setReportURI</span><span class="p">(</span><span class="s1">&#39;http://example.com/csp/reports&#39;</span><span class="p">);</span>
+<span class="c1">// specify the URL that "report-only" reports get sent to</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">setReportURI</span><span class="p">(</span><span class="s1">'http://example.com/csp/reports'</span><span class="p">);</span>
 
 <span class="c1">// specify that HTTP requests be upgraded to HTTPS</span>
 <span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">upgradeInsecureRequests</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
 
 <span class="c1">// add types or origins to CSP directives</span>
 <span class="c1">// assuming that the default treatment is to block rather than just report</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addBaseURI</span><span class="p">(</span><span class="s1">&#39;example.com&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span> <span class="c1">// report only</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addChildSrc</span><span class="p">(</span><span class="s1">&#39;https://youtube.com&#39;</span><span class="p">);</span> <span class="c1">// blocked</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addConnectSrc</span><span class="p">(</span><span class="s1">&#39;https://*.facebook.com&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span> <span class="c1">// blocked</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addFontSrc</span><span class="p">(</span><span class="s1">&#39;fonts.example.com&#39;</span><span class="p">);</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addFormAction</span><span class="p">(</span><span class="s1">&#39;self&#39;</span><span class="p">);</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addFrameAncestor</span><span class="p">(</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span> <span class="c1">// report this one</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addImageSrc</span><span class="p">(</span><span class="s1">&#39;cdn.example.com&#39;</span><span class="p">);</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addMediaSrc</span><span class="p">(</span><span class="s1">&#39;cdn.example.com&#39;</span><span class="p">);</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addManifestSrc</span><span class="p">(</span><span class="s1">&#39;cdn.example.com&#39;</span><span class="p">);</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addObjectSrc</span><span class="p">(</span><span class="s1">&#39;cdn.example.com&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span> <span class="c1">// reject from here</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addPluginType</span><span class="p">(</span><span class="s1">&#39;application/pdf&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span> <span class="c1">// reject this media type</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addScriptSrc</span><span class="p">(</span><span class="s1">&#39;scripts.example.com&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span> <span class="c1">// allow but report requests from here</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addStyleSrc</span><span class="p">(</span><span class="s1">&#39;css.example.com&#39;</span><span class="p">);</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addSandbox</span><span class="p">([</span><span class="s1">&#39;allow-forms&#39;</span><span class="p">,</span> <span class="s1">&#39;allow-scripts&#39;</span><span class="p">]);</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addBaseURI</span><span class="p">(</span><span class="s1">'example.com'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span> <span class="c1">// report only</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addChildSrc</span><span class="p">(</span><span class="s1">'https://youtube.com'</span><span class="p">);</span> <span class="c1">// blocked</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addConnectSrc</span><span class="p">(</span><span class="s1">'https://*.facebook.com'</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span> <span class="c1">// blocked</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addFontSrc</span><span class="p">(</span><span class="s1">'fonts.example.com'</span><span class="p">);</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addFormAction</span><span class="p">(</span><span class="s1">'self'</span><span class="p">);</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addFrameAncestor</span><span class="p">(</span><span class="s1">'none'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span> <span class="c1">// report this one</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addImageSrc</span><span class="p">(</span><span class="s1">'cdn.example.com'</span><span class="p">);</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addMediaSrc</span><span class="p">(</span><span class="s1">'cdn.example.com'</span><span class="p">);</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addManifestSrc</span><span class="p">(</span><span class="s1">'cdn.example.com'</span><span class="p">);</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addObjectSrc</span><span class="p">(</span><span class="s1">'cdn.example.com'</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span> <span class="c1">// reject from here</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addPluginType</span><span class="p">(</span><span class="s1">'application/pdf'</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span> <span class="c1">// reject this media type</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addScriptSrc</span><span class="p">(</span><span class="s1">'scripts.example.com'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span> <span class="c1">// allow but report requests from here</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addStyleSrc</span><span class="p">(</span><span class="s1">'css.example.com'</span><span class="p">);</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addSandbox</span><span class="p">([</span><span class="s1">'allow-forms'</span><span class="p">,</span> <span class="s1">'allow-scripts'</span><span class="p">]);</span>
 
 <span class="c1">// the following CSP3 directives are available in v4.7.0 and later</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addScriptSrcAttr</span><span class="p">(</span><span class="s1">&#39;trusted.com&#39;</span><span class="p">);</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addScriptSrcElem</span><span class="p">(</span><span class="s1">&#39;trusted.com&#39;</span><span class="p">);</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addStyleSrcAttr</span><span class="p">(</span><span class="s1">&#39;trusted.com&#39;</span><span class="p">);</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addStyleSrcElem</span><span class="p">(</span><span class="s1">&#39;trusted.com&#39;</span><span class="p">);</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addWorkerSrc</span><span class="p">(</span><span class="s1">&#39;workers.example.com&#39;</span><span class="p">);</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addScriptSrcAttr</span><span class="p">(</span><span class="s1">'trusted.com'</span><span class="p">);</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addScriptSrcElem</span><span class="p">(</span><span class="s1">'trusted.com'</span><span class="p">);</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addStyleSrcAttr</span><span class="p">(</span><span class="s1">'trusted.com'</span><span class="p">);</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addStyleSrcElem</span><span class="p">(</span><span class="s1">'trusted.com'</span><span class="p">);</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addWorkerSrc</span><span class="p">(</span><span class="s1">'workers.example.com'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The first parameter to each of the “add” methods is an appropriate string value,
@@ -433,10 +433,10 @@ that youtube.com was allowed, and then provide several allowed but reported sour
 <span class="c1">// get the CSP instance</span>
 <span class="nv">$csp</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">getCSP</span><span class="p">();</span>
 
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addChildSrc</span><span class="p">(</span><span class="s1">&#39;https://youtube.com&#39;</span><span class="p">);</span> <span class="c1">// allowed</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addChildSrc</span><span class="p">(</span><span class="s1">'https://youtube.com'</span><span class="p">);</span> <span class="c1">// allowed</span>
 <span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">reportOnly</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addChildSrc</span><span class="p">(</span><span class="s1">&#39;https://metube.com&#39;</span><span class="p">);</span> <span class="c1">// allowed but reported</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addChildSrc</span><span class="p">(</span><span class="s1">&#39;https://ourtube.com&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span> <span class="c1">// allowed</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addChildSrc</span><span class="p">(</span><span class="s1">'https://metube.com'</span><span class="p">);</span> <span class="c1">// allowed but reported</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addChildSrc</span><span class="p">(</span><span class="s1">'https://ourtube.com'</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span> <span class="c1">// allowed</span>
 </pre></div>
 </div>
 </section>
@@ -454,15 +454,15 @@ this directive, make sure the reporting endpoints are already defined using the 
 <span class="c1">// get the CSP instance</span>
 <span class="nv">$csp</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">getCSP</span><span class="p">();</span>
 
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">setReportURI</span><span class="p">(</span><span class="s1">&#39;https://example.com/csp-reports&#39;</span><span class="p">);</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">setReportURI</span><span class="p">(</span><span class="s1">'https://example.com/csp-reports'</span><span class="p">);</span>
 
 <span class="c1">// Starting in v4.7.0, you can use the setReportToEndpoint() method</span>
 <span class="c1">// to set the reporting endpoint for CSP reports</span>
 <span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addReportingEndpoints</span><span class="p">([</span>
-    <span class="s1">&#39;default&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;https://example.com/csp-reports&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;reports&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;https://example.com/other-csp-reports&#39;</span><span class="p">,</span>
+    <span class="s1">'default'</span> <span class="o">=&gt;</span> <span class="s1">'https://example.com/csp-reports'</span><span class="p">,</span>
+    <span class="s1">'reports'</span> <span class="o">=&gt;</span> <span class="s1">'https://example.com/other-csp-reports'</span><span class="p">,</span>
 <span class="p">]);</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">setReportToEndpoint</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">);</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">setReportToEndpoint</span><span class="p">(</span><span class="s1">'default'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>For backward compatibility with browsers that do not support the <code class="docutils literal notranslate"><span class="pre">report-to</span></code> directive, CodeIgniter4 will also
@@ -477,7 +477,7 @@ method:</p>
 <span class="c1">// get the CSP instance</span>
 <span class="nv">$csp</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">getCSP</span><span class="p">();</span>
 
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">clearDirective</span><span class="p">(</span><span class="s1">&#39;style-src&#39;</span><span class="p">);</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">clearDirective</span><span class="p">(</span><span class="s1">'style-src'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -494,12 +494,12 @@ life, and is most secure when generated on the fly. To make this simple, you can
 <code class="docutils literal notranslate"><span class="pre">{csp-script-nonce}</span></code> placeholder in the tag and it will be handled for you automatically:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Original</span>
 <span class="o">&lt;</span><span class="nx">script</span> <span class="p">{</span><span class="nx">csp</span><span class="o">-</span><span class="nx">script</span><span class="o">-</span><span class="nx">nonce</span><span class="p">}</span><span class="o">&gt;</span>
-    <span class="nx">console</span><span class="o">.</span><span class="nb">log</span><span class="p">(</span><span class="s2">&quot;Script won&#39;t run as it doesn&#39;t contain a nonce attribute&quot;</span><span class="p">);</span>
+    <span class="nx">console</span><span class="o">.</span><span class="nb">log</span><span class="p">(</span><span class="s2">"Script won't run as it doesn't contain a nonce attribute"</span><span class="p">);</span>
 <span class="o">&lt;/</span><span class="nx">script</span><span class="o">&gt;</span>
 
 <span class="c1">// Becomes</span>
-<span class="o">&lt;</span><span class="nx">script</span> <span class="nx">nonce</span><span class="o">=</span><span class="s2">&quot;Eskdikejidojdk978Ad8jf&quot;</span><span class="o">&gt;</span>
-    <span class="nx">console</span><span class="o">.</span><span class="nb">log</span><span class="p">(</span><span class="s2">&quot;Script won&#39;t run as it doesn&#39;t contain a nonce attribute&quot;</span><span class="p">);</span>
+<span class="o">&lt;</span><span class="nx">script</span> <span class="nx">nonce</span><span class="o">=</span><span class="s2">"Eskdikejidojdk978Ad8jf"</span><span class="o">&gt;</span>
+    <span class="nx">console</span><span class="o">.</span><span class="nb">log</span><span class="p">(</span><span class="s2">"Script won't run as it doesn't contain a nonce attribute"</span><span class="p">);</span>
 <span class="o">&lt;/</span><span class="nx">script</span><span class="o">&gt;</span>
 
 <span class="c1">// OR</span>
@@ -520,12 +520,12 @@ with setting <code class="docutils literal notranslate"><span class="pre">$autoN
 <p>In this case, you can use the functions, <a class="reference internal" href="../general/common_functions.html#csp_script_nonce" title="csp_script_nonce"><code class="xref php php-func docutils literal notranslate"><span class="pre">csp_script_nonce()</span></code></a> and <a class="reference internal" href="../general/common_functions.html#csp_style_nonce" title="csp_style_nonce"><code class="xref php php-func docutils literal notranslate"><span class="pre">csp_style_nonce()</span></code></a>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Original</span>
 <span class="o">&lt;</span><span class="nx">script</span> <span class="o">&lt;?=</span> <span class="nx">csp_script_nonce</span><span class="p">()</span> <span class="cp">?&gt;</span>&gt;
-    console.log(&quot;Script won&#39;t run as it doesn&#39;t contain a nonce attribute&quot;);
+    console.log("Script won't run as it doesn't contain a nonce attribute");
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
 // Becomes
-<span class="p">&lt;</span><span class="nt">script</span> <span class="na">nonce</span><span class="o">=</span><span class="s">&quot;Eskdikejidojdk978Ad8jf&quot;</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Script won&#39;t run as it doesn&#39;t contain a nonce attribute&quot;</span><span class="p">);</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">nonce</span><span class="o">=</span><span class="s">"Eskdikejidojdk978Ad8jf"</span><span class="p">&gt;</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Script won't run as it doesn't contain a nonce attribute"</span><span class="p">);</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
 // OR
@@ -550,7 +550,7 @@ with setting <code class="docutils literal notranslate"><span class="pre">$autoN
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

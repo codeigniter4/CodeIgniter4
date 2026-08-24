@@ -323,7 +323,7 @@ and capable of supporting multiple paginators on a single page.</p>
 to load it manually:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$pager</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;pager&#39;</span><span class="p">);</span>
+<span class="nv">$pager</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'pager'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -347,11 +347,11 @@ It even reads the current page it should display from the current URL via a <cod
         <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="nx">UserModel</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
 
         <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s1">&#39;users&#39;</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
-            <span class="s1">&#39;pager&#39;</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">pager</span><span class="p">,</span>
+            <span class="s1">'users'</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+            <span class="s1">'pager'</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">pager</span><span class="p">,</span>
         <span class="p">];</span>
 
-        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;users/index&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'users/index'</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -375,8 +375,8 @@ method.</p>
 <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="nx">UserModel</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;users&#39;</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;ban&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
-    <span class="s1">&#39;pager&#39;</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">pager</span><span class="p">,</span>
+    <span class="s1">'users'</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">'ban'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+    <span class="s1">'pager'</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">pager</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -393,7 +393,7 @@ method.</p>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">banned</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">builder</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;ban&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">builder</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">'ban'</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 
         <span class="k">return</span> <span class="nv">$this</span><span class="p">;</span> <span class="c1">// This will allow the call chain to be used.</span>
     <span class="p">}</span>
@@ -406,8 +406,8 @@ method.</p>
 <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="nx">UserModel</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;users&#39;</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">banned</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
-    <span class="s1">&#39;pager&#39;</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">pager</span><span class="p">,</span>
+    <span class="s1">'users'</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">banned</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+    <span class="s1">'pager'</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">pager</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -423,19 +423,19 @@ method.</p>
 
 <span class="k">class</span> <span class="nc">NewsModel</span> <span class="k">extends</span> <span class="nx">Model</span>
 <span class="p">{</span>
-    <span class="k">protected</span> <span class="nv">$table</span> <span class="o">=</span> <span class="s1">&#39;news&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$table</span> <span class="o">=</span> <span class="s1">'news'</span><span class="p">;</span>
 
     <span class="c1">// ...</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">getPagination</span><span class="p">(</span><span class="o">?</span><span class="nx">int</span> <span class="nv">$perPage</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
     <span class="p">{</span>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">builder</span><span class="p">()</span>
-            <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;news.*, category.name&#39;</span><span class="p">)</span>
-            <span class="o">-&gt;</span><span class="na">join</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;news.category_id = category.id&#39;</span><span class="p">);</span>
+            <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">'news.*, category.name'</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">join</span><span class="p">(</span><span class="s1">'category'</span><span class="p">,</span> <span class="s1">'news.category_id = category.id'</span><span class="p">);</span>
 
         <span class="k">return</span> <span class="p">[</span>
-            <span class="s1">&#39;news&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="nv">$perPage</span><span class="p">),</span>
-            <span class="s1">&#39;pager&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">pager</span><span class="p">,</span>
+            <span class="s1">'news'</span>  <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="nv">$perPage</span><span class="p">),</span>
+            <span class="s1">'pager'</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">pager</span><span class="p">,</span>
         <span class="p">];</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -490,19 +490,19 @@ methods to keep the data separate:</p>
         <span class="nv">$pageModel</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="nx">PageModel</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
 
         <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s1">&#39;users&#39;</span> <span class="o">=&gt;</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;group1&#39;</span><span class="p">),</span>
-            <span class="s1">&#39;pages&#39;</span> <span class="o">=&gt;</span> <span class="nv">$pageModel</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="s1">&#39;group2&#39;</span><span class="p">),</span>
-            <span class="s1">&#39;pager&#39;</span> <span class="o">=&gt;</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">pager</span><span class="p">,</span>
+            <span class="s1">'users'</span> <span class="o">=&gt;</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s1">'group1'</span><span class="p">),</span>
+            <span class="s1">'pages'</span> <span class="o">=&gt;</span> <span class="nv">$pageModel</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="s1">'group2'</span><span class="p">),</span>
+            <span class="s1">'pager'</span> <span class="o">=&gt;</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">pager</span><span class="p">,</span>
         <span class="p">];</span>
 
-        <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;users/index&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+        <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'users/index'</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 <span class="cp">?&gt;</span>
 
 <span class="cm">&lt;!-- In your view file: --&gt;</span>
-<span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">links</span><span class="p">(</span><span class="s1">&#39;group1&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
-<span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">simpleLinks</span><span class="p">(</span><span class="s1">&#39;group2&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">links</span><span class="p">(</span><span class="s1">'group1'</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">simpleLinks</span><span class="p">(</span><span class="s1">'group2'</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 </section>
@@ -517,7 +517,7 @@ handy when you have a different manner than the default <code class="docutils li
 <span class="nv">$userModel</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="nx">UserModel</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
 <span class="nv">$page</span>      <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
 
-<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;group1&#39;</span><span class="p">,</span> <span class="nv">$page</span><span class="p">);</span>
+<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s1">'group1'</span><span class="p">,</span> <span class="nv">$page</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -528,7 +528,7 @@ segment number to use as the fourth argument. URIs generated by the pager would 
 like <strong>https://domain.tld/foo/bar/[pageNumber]</strong> instead of <strong>https://domain.tld/foo/bar?page=[pageNumber]</strong>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;group1&#39;</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="nv">$segment</span><span class="p">);</span>
+<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s1">'group1'</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="nv">$segment</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Please note: <code class="docutils literal notranslate"><span class="pre">$segment</span></code> value cannot be greater than the number of URI segments plus 1.</p>
@@ -549,9 +549,9 @@ the total number of items as the first, second, and third parameters, respective
     <span class="p">{</span>
         <span class="c1">// ...</span>
 
-        <span class="nv">$pager</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;pager&#39;</span><span class="p">);</span>
+        <span class="nv">$pager</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'pager'</span><span class="p">);</span>
 
-        <span class="nv">$page</span>    <span class="o">=</span> <span class="p">(</span><span class="nx">int</span><span class="p">)</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getGet</span><span class="p">(</span><span class="s1">&#39;page&#39;</span><span class="p">)</span> <span class="o">??</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="nv">$page</span>    <span class="o">=</span> <span class="p">(</span><span class="nx">int</span><span class="p">)</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getGet</span><span class="p">(</span><span class="s1">'page'</span><span class="p">)</span> <span class="o">??</span> <span class="mi">1</span><span class="p">);</span>
         <span class="nv">$perPage</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
         <span class="nv">$total</span>   <span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
 
@@ -560,10 +560,10 @@ the total number of items as the first, second, and third parameters, respective
 
         <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
             <span class="c1">// ...</span>
-            <span class="s1">&#39;pager_links&#39;</span> <span class="o">=&gt;</span> <span class="nv">$pager_links</span><span class="p">,</span>
+            <span class="s1">'pager_links'</span> <span class="o">=&gt;</span> <span class="nv">$pager_links</span><span class="p">,</span>
         <span class="p">];</span>
 
-        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;users/index&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'users/index'</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 <span class="cp">?&gt;</span>
@@ -575,21 +575,21 @@ the total number of items as the first, second, and third parameters, respective
 <p>This will, by default, display the links in the normal manner, as a series of links, but you can change the display
 template used by passing in the name of the template as the fourth parameter. More details can be found in the following
 sections:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">makeLinks</span><span class="p">(</span><span class="nv">$page</span><span class="p">,</span> <span class="nv">$perPage</span><span class="p">,</span> <span class="nv">$total</span><span class="p">,</span> <span class="s1">&#39;template_name&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">makeLinks</span><span class="p">(</span><span class="nv">$page</span><span class="p">,</span> <span class="nv">$perPage</span><span class="p">,</span> <span class="nv">$total</span><span class="p">,</span> <span class="s1">'template_name'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>It is also possible to use a URI segment for the page number, instead of the page query parameter, as described in
 the previous section. Specify the segment number to use as the fifth parameter to <code class="docutils literal notranslate"><span class="pre">makeLinks()</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">makeLinks</span><span class="p">(</span><span class="nv">$page</span><span class="p">,</span> <span class="nv">$perPage</span><span class="p">,</span> <span class="nv">$total</span><span class="p">,</span> <span class="s1">&#39;template_name&#39;</span><span class="p">,</span> <span class="nv">$segment</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">makeLinks</span><span class="p">(</span><span class="nv">$page</span><span class="p">,</span> <span class="nv">$perPage</span><span class="p">,</span> <span class="nv">$total</span><span class="p">,</span> <span class="s1">'template_name'</span><span class="p">,</span> <span class="nv">$segment</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Please note: <code class="docutils literal notranslate"><span class="pre">$segment</span></code> value cannot be greater than the number of URI segments plus 1.</p>
 <p>If you need to show many pagers on one page then the additional parameter which will define a group could be helpful:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$pager</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;pager&#39;</span><span class="p">);</span>
-<span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">setPath</span><span class="p">(</span><span class="s1">&#39;path/for/my-group&#39;</span><span class="p">,</span> <span class="s1">&#39;my-group&#39;</span><span class="p">);</span> <span class="c1">// Additionally you could define path for every group.</span>
-<span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">makeLinks</span><span class="p">(</span><span class="nv">$page</span><span class="p">,</span> <span class="nv">$perPage</span><span class="p">,</span> <span class="nv">$total</span><span class="p">,</span> <span class="s1">&#39;template_name&#39;</span><span class="p">,</span> <span class="nv">$segment</span><span class="p">,</span> <span class="s1">&#39;my-group&#39;</span><span class="p">);</span>
+<span class="nv">$pager</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'pager'</span><span class="p">);</span>
+<span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">setPath</span><span class="p">(</span><span class="s1">'path/for/my-group'</span><span class="p">,</span> <span class="s1">'my-group'</span><span class="p">);</span> <span class="c1">// Additionally you could define path for every group.</span>
+<span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">makeLinks</span><span class="p">(</span><span class="nv">$page</span><span class="p">,</span> <span class="nv">$perPage</span><span class="p">,</span> <span class="nv">$total</span><span class="p">,</span> <span class="s1">'template_name'</span><span class="p">,</span> <span class="nv">$segment</span><span class="p">,</span> <span class="s1">'my-group'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Pagination library uses <strong>page</strong> query parameter for HTTP queries by default (if no group or <code class="docutils literal notranslate"><span class="pre">default</span></code> group name given) or <code class="docutils literal notranslate"><span class="pre">page_[groupName]</span></code> for custom group names.</p>
@@ -607,7 +607,7 @@ the previous section. Specify the segment number to use as the fifth parameter t
 <p>The <code class="docutils literal notranslate"><span class="pre">only()</span></code> method allows you to limit this just to queries already expected:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">only</span><span class="p">([</span><span class="s1">&#39;search&#39;</span><span class="p">,</span> <span class="s1">&#39;order&#39;</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">links</span><span class="p">();</span>
+<span class="k">echo</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">only</span><span class="p">([</span><span class="s1">'search'</span><span class="p">,</span> <span class="s1">'order'</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">links</span><span class="p">();</span>
 <span class="c1">// Page 3 link: https://domain.tld?search=foo&amp;order=asc&amp;page=3</span>
 </pre></div>
 </div>
@@ -628,8 +628,8 @@ that is used by editing <strong>app/Config/Pager.php</strong>:</p>
 <span class="k">class</span> <span class="nc">Pager</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$templates</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;default_full&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;CodeIgniter\Pager\Views\default_full&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;default_simple&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;CodeIgniter\Pager\Views\default_simple&#39;</span><span class="p">,</span>
+        <span class="s1">'default_full'</span>   <span class="o">=&gt;</span> <span class="s1">'CodeIgniter\Pager\Views\default_full'</span><span class="p">,</span>
+        <span class="s1">'default_simple'</span> <span class="o">=&gt;</span> <span class="s1">'CodeIgniter\Pager\Views\default_simple'</span><span class="p">,</span>
     <span class="p">];</span>
 
     <span class="c1">// ...</span>
@@ -643,12 +643,12 @@ methods, respectively. To change the way those are displayed application-wide, y
 you place that file at <strong>app/Views/Pagers/foundation_full.php</strong>. Since the <strong>application</strong> directory is
 namespaced as <code class="docutils literal notranslate"><span class="pre">App</span></code>, and all directories underneath it map directly to segments of the namespace, you can locate
 the view file through it’s namespace:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;default_full&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;App\Views\Pagers\foundation_full&#39;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="s1">'default_full'</span> <span class="o">=&gt;</span> <span class="s1">'App\Views\Pagers\foundation_full'</span>
 </pre></div>
 </div>
 <p>Since it is under the standard <strong>app/Views</strong> directory, though, you do not need to namespace it since the
 <code class="docutils literal notranslate"><span class="pre">view()</span></code> method can locate it by filename. In that case, you can simply give the sub-directory and file name:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;default_full&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Pagers/foundation_full&#39;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="s1">'default_full'</span> <span class="o">=&gt;</span> <span class="s1">'Pagers/foundation_full'</span>
 </pre></div>
 </div>
 <p>Once you have created the view and set it in the configuration, it will automatically be used. You don’t have to
@@ -663,9 +663,9 @@ file. A common situation would be needing different styles for the frontend and 
 <span class="k">class</span> <span class="nc">Pager</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$templates</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;default_full&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;CodeIgniter\Pager\Views\default_full&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;default_simple&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;CodeIgniter\Pager\Views\default_simple&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;front_full&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;App\Views\Pagers\foundation_full&#39;</span><span class="p">,</span>
+        <span class="s1">'default_full'</span>   <span class="o">=&gt;</span> <span class="s1">'CodeIgniter\Pager\Views\default_full'</span><span class="p">,</span>
+        <span class="s1">'default_simple'</span> <span class="o">=&gt;</span> <span class="s1">'CodeIgniter\Pager\Views\default_simple'</span><span class="p">,</span>
+        <span class="s1">'front_full'</span>     <span class="o">=&gt;</span> <span class="s1">'App\Views\Pagers\foundation_full'</span><span class="p">,</span>
     <span class="p">];</span>
 
     <span class="c1">// ...</span>
@@ -674,9 +674,9 @@ file. A common situation would be needing different styles for the frontend and 
 </div>
 <p>Once configured, you can specify it as a the last parameter in the <code class="docutils literal notranslate"><span class="pre">links()</span></code>, <code class="docutils literal notranslate"><span class="pre">simpleLinks()</span></code>, and <code class="docutils literal notranslate"><span class="pre">makeLinks()</span></code>
 methods:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">links</span><span class="p">(</span><span class="s1">&#39;group1&#39;</span><span class="p">,</span> <span class="s1">&#39;front_full&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
-<span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">simpleLinks</span><span class="p">(</span><span class="s1">&#39;group2&#39;</span><span class="p">,</span> <span class="s1">&#39;front_full&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
-<span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">makeLinks</span><span class="p">(</span><span class="nv">$page</span><span class="p">,</span> <span class="nv">$perPage</span><span class="p">,</span> <span class="nv">$total</span><span class="p">,</span> <span class="s1">&#39;front_full&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">links</span><span class="p">(</span><span class="s1">'group1'</span><span class="p">,</span> <span class="s1">'front_full'</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">simpleLinks</span><span class="p">(</span><span class="s1">'group2'</span><span class="p">,</span> <span class="s1">'front_full'</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">makeLinks</span><span class="p">(</span><span class="nv">$page</span><span class="p">,</span> <span class="nv">$perPage</span><span class="p">,</span> <span class="nv">$total</span><span class="p">,</span> <span class="s1">'front_full'</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 </section>
@@ -687,38 +687,38 @@ You should not create unnecessary wrapping divs since it might be used in multip
 usefulness. It is easiest to demonstrate creating a new view by showing you the existing <code class="docutils literal notranslate"><span class="pre">default_full</span></code> template:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">setSurroundCount</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="cp">?&gt;</span>
 
-<span class="p">&lt;</span><span class="nt">nav</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">&quot;Page navigation&quot;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;pagination&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">nav</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">"Page navigation"</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">"pagination"</span><span class="p">&gt;</span>
     <span class="cp">&lt;?php</span> <span class="k">if</span> <span class="p">(</span><span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">hasPrevious</span><span class="p">())</span> <span class="o">:</span> <span class="cp">?&gt;</span>
         <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
-            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">getFirst</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="s">&quot;</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Pager.first&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="p">&gt;</span>
-                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">aria-hidden</span><span class="o">=</span><span class="s">&quot;true&quot;</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Pager.first&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">getFirst</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="s">"</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">"</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Pager.first'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">"</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">aria-hidden</span><span class="o">=</span><span class="s">"true"</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Pager.first'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
             <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
         <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
         <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
-            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">getPrevious</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="s">&quot;</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Pager.previous&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="p">&gt;</span>
-                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">aria-hidden</span><span class="o">=</span><span class="s">&quot;true&quot;</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Pager.previous&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">getPrevious</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="s">"</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">"</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Pager.previous'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">"</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">aria-hidden</span><span class="o">=</span><span class="s">"true"</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Pager.previous'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
             <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
         <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
     <span class="cp">&lt;?php</span> <span class="k">endif</span> <span class="cp">?&gt;</span>
 
     <span class="cp">&lt;?php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">links</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$link</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
-        <span class="p">&lt;</span><span class="nt">li</span> <span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$link</span><span class="p">[</span><span class="s1">&#39;active&#39;</span><span class="p">]</span> <span class="o">?</span> <span class="s1">&#39;class=&quot;active&quot;&#39;</span> <span class="o">:</span> <span class="s1">&#39;&#39;</span> <span class="cp">?&gt;</span><span class="p">&gt;</span>
-            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$link</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">]</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="p">&gt;</span>
-                <span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$link</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="cp">?&gt;</span>
+        <span class="p">&lt;</span><span class="nt">li</span> <span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$link</span><span class="p">[</span><span class="s1">'active'</span><span class="p">]</span> <span class="o">?</span> <span class="s1">'class="active"'</span> <span class="o">:</span> <span class="s1">''</span> <span class="cp">?&gt;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$link</span><span class="p">[</span><span class="s1">'uri'</span><span class="p">]</span> <span class="cp">?&gt;</span><span class="s">"</span><span class="p">&gt;</span>
+                <span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$link</span><span class="p">[</span><span class="s1">'title'</span><span class="p">]</span> <span class="cp">?&gt;</span>
             <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
         <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
     <span class="cp">&lt;?php</span> <span class="k">endforeach</span> <span class="cp">?&gt;</span>
 
     <span class="cp">&lt;?php</span> <span class="k">if</span> <span class="p">(</span><span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">hasNext</span><span class="p">())</span> <span class="o">:</span> <span class="cp">?&gt;</span>
         <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
-            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">getNext</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="s">&quot;</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Pager.next&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="p">&gt;</span>
-                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">aria-hidden</span><span class="o">=</span><span class="s">&quot;true&quot;</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Pager.next&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">getNext</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="s">"</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">"</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Pager.next'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">"</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">aria-hidden</span><span class="o">=</span><span class="s">"true"</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Pager.next'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
             <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
         <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
         <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
-            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">getLast</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="s">&quot;</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Pager.last&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="p">&gt;</span>
-                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">aria-hidden</span><span class="o">=</span><span class="s">&quot;true&quot;</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Pager.last&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">getLast</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="s">"</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">"</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Pager.last'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">"</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">aria-hidden</span><span class="o">=</span><span class="s">"true"</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Pager.last'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
             <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
         <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
     <span class="cp">&lt;?php</span> <span class="k">endif</span> <span class="cp">?&gt;</span>
@@ -769,47 +769,47 @@ title, which is just the number, and a boolean that tells whether the link is th
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$link</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;active&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
-    <span class="s1">&#39;uri&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;https://example.com/foo?page=2&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;title&#39;</span>  <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">'active'</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+    <span class="s1">'uri'</span>    <span class="o">=&gt;</span> <span class="s1">'https://example.com/foo?page=2'</span><span class="p">,</span>
+    <span class="s1">'title'</span>  <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
 <p>In the code presented for the standard pagination structure, the methods <a class="reference internal" href="#getprevious-getnext">getPrevious() &amp; getNext()</a> are used to obtain the links to the previous and next pagination groups respectively.</p>
 <p>If you want to use the pagination structure where prev and next will be links to the previous and next pages based on the current page, just replace the <a class="reference internal" href="#getprevious-getnext">getPrevious() &amp; getNext()</a> methods with <a class="reference internal" href="#getpreviouspage-getnextpage">getPreviousPage() &amp; getNextPage()</a>, and the methods <a class="reference internal" href="#hasprevious-hasnext">hasPrevious() &amp; hasNext()</a> by <a class="reference internal" href="#haspreviouspage-hasnextpage">hasPreviousPage() &amp; hasNextPage()</a> respectively.</p>
 <p>See the following example with these changes:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">nav</span> <span class="nx">aria</span><span class="o">-</span><span class="nx">label</span><span class="o">=</span><span class="s2">&quot;&lt;?= lang(&#39;Pager.pageNavigation&#39;) ?&gt;&quot;</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">ul</span> <span class="nx">class</span><span class="o">=</span><span class="s2">&quot;pagination&quot;</span><span class="o">&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">nav</span> <span class="nx">aria</span><span class="o">-</span><span class="nx">label</span><span class="o">=</span><span class="s2">"&lt;?= lang('Pager.pageNavigation') ?&gt;"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">ul</span> <span class="nx">class</span><span class="o">=</span><span class="s2">"pagination"</span><span class="o">&gt;</span>
         <span class="o">&lt;?</span><span class="nx">php</span> <span class="k">if</span> <span class="p">(</span><span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">hasPreviousPage</span><span class="p">())</span> <span class="o">:</span> <span class="cp">?&gt;</span>
             <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
-                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">getFirst</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="s">&quot;</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Pager.first&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="p">&gt;</span>
-                    <span class="p">&lt;</span><span class="nt">span</span> <span class="na">aria-hidden</span><span class="o">=</span><span class="s">&quot;true&quot;</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Pager.first&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">getFirst</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="s">"</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">"</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Pager.first'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">"</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">span</span> <span class="na">aria-hidden</span><span class="o">=</span><span class="s">"true"</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Pager.first'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
                 <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
             <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
             <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
-                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">getPreviousPage</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="s">&quot;</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Pager.previous&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="p">&gt;</span>
-                    <span class="p">&lt;</span><span class="nt">span</span> <span class="na">aria-hidden</span><span class="o">=</span><span class="s">&quot;true&quot;</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Pager.previous&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">getPreviousPage</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="s">"</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">"</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Pager.previous'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">"</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">span</span> <span class="na">aria-hidden</span><span class="o">=</span><span class="s">"true"</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Pager.previous'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
                 <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
             <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
         <span class="cp">&lt;?php</span> <span class="k">endif</span> <span class="cp">?&gt;</span>
 
         <span class="cp">&lt;?php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">links</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$link</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
-            <span class="p">&lt;</span><span class="nt">li</span> <span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$link</span><span class="p">[</span><span class="s1">&#39;active&#39;</span><span class="p">]</span> <span class="o">?</span> <span class="s1">&#39;class=&quot;active&quot;&#39;</span> <span class="o">:</span> <span class="s1">&#39;&#39;</span> <span class="cp">?&gt;</span><span class="p">&gt;</span>
-                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$link</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">]</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="p">&gt;</span>
-                    <span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$link</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="cp">?&gt;</span>
+            <span class="p">&lt;</span><span class="nt">li</span> <span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$link</span><span class="p">[</span><span class="s1">'active'</span><span class="p">]</span> <span class="o">?</span> <span class="s1">'class="active"'</span> <span class="o">:</span> <span class="s1">''</span> <span class="cp">?&gt;</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$link</span><span class="p">[</span><span class="s1">'uri'</span><span class="p">]</span> <span class="cp">?&gt;</span><span class="s">"</span><span class="p">&gt;</span>
+                    <span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$link</span><span class="p">[</span><span class="s1">'title'</span><span class="p">]</span> <span class="cp">?&gt;</span>
                 <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
             <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
         <span class="cp">&lt;?php</span> <span class="k">endforeach</span> <span class="cp">?&gt;</span>
 
         <span class="cp">&lt;?php</span> <span class="k">if</span> <span class="p">(</span><span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">hasNextPage</span><span class="p">())</span> <span class="o">:</span> <span class="cp">?&gt;</span>
             <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
-                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">getNextPage</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="s">&quot;</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Pager.next&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="p">&gt;</span>
-                    <span class="p">&lt;</span><span class="nt">span</span> <span class="na">aria-hidden</span><span class="o">=</span><span class="s">&quot;true&quot;</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Pager.next&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">getNextPage</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="s">"</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">"</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Pager.next'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">"</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">span</span> <span class="na">aria-hidden</span><span class="o">=</span><span class="s">"true"</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Pager.next'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
                 <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
             <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
             <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
-                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">getLast</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="s">&quot;</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Pager.last&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="p">&gt;</span>
-                    <span class="p">&lt;</span><span class="nt">span</span> <span class="na">aria-hidden</span><span class="o">=</span><span class="s">&quot;true&quot;</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Pager.last&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">getLast</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="s">"</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">"</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Pager.last'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">"</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">span</span> <span class="na">aria-hidden</span><span class="o">=</span><span class="s">"true"</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Pager.last'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
                 <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
             <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
         <span class="cp">&lt;?php</span> <span class="k">endif</span> <span class="cp">?&gt;</span>
@@ -888,9 +888,9 @@ retrieve the last page number.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">setSurroundCount</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="cp">?&gt;</span>
 
 <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
-    Showing <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;font-medium&quot;</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">getPerPageStart</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-    to <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;font-medium&quot;</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">getPerPageEnd</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-    of <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;font-medium&quot;</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">getTotal</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span> results
+    Showing <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"font-medium"</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">getPerPageStart</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+    to <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"font-medium"</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">getPerPageEnd</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+    of <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"font-medium"</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">getTotal</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span> results
 <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
 </pre></div>
 </div>
@@ -926,7 +926,7 @@ retrieve the last page number.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

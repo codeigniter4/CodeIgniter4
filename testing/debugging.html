@@ -468,7 +468,7 @@ the Collector to work:</p>
 
     <span class="k">protected</span> <span class="nv">$hasVarData</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
 
-    <span class="k">protected</span> <span class="nv">$title</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$title</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -509,10 +509,10 @@ it to sort it correctly and display the correct information. The inner arrays mu
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$data</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;name&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>     <span class="c1">// Name displayed on the left of the timeline</span>
-    <span class="s1">&#39;component&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>     <span class="c1">// Name of the Component listed in the middle of timeline</span>
-    <span class="s1">&#39;start&#39;</span>     <span class="o">=&gt;</span> <span class="mf">0.00</span><span class="p">,</span>   <span class="c1">// start time, like microtime(true)</span>
-    <span class="s1">&#39;duration&#39;</span>  <span class="o">=&gt;</span> <span class="mf">0.00</span><span class="p">,</span>   <span class="c1">// duration, like mircrotime(true) - microtime(true)</span>
+    <span class="s1">'name'</span>      <span class="o">=&gt;</span> <span class="s1">''</span><span class="p">,</span>     <span class="c1">// Name displayed on the left of the timeline</span>
+    <span class="s1">'component'</span> <span class="o">=&gt;</span> <span class="s1">''</span><span class="p">,</span>     <span class="c1">// Name of the Component listed in the middle of timeline</span>
+    <span class="s1">'start'</span>     <span class="o">=&gt;</span> <span class="mf">0.00</span><span class="p">,</span>   <span class="c1">// start time, like microtime(true)</span>
+    <span class="s1">'duration'</span>  <span class="o">=&gt;</span> <span class="mf">0.00</span><span class="p">,</span>   <span class="c1">// duration, like mircrotime(true) - microtime(true)</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -529,13 +529,13 @@ outer array’s key is the name of the section on the Vars tab:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;section 1&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;bar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;baz&#39;</span><span class="p">,</span>
+    <span class="s1">'section 1'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'foo'</span> <span class="o">=&gt;</span> <span class="s1">'bar'</span><span class="p">,</span>
+        <span class="s1">'bar'</span> <span class="o">=&gt;</span> <span class="s1">'baz'</span><span class="p">,</span>
     <span class="p">],</span>
-    <span class="s1">&#39;section 2&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;bar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;baz&#39;</span><span class="p">,</span>
+    <span class="s1">'section 2'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'foo'</span> <span class="o">=&gt;</span> <span class="s1">'bar'</span><span class="p">,</span>
+        <span class="s1">'bar'</span> <span class="o">=&gt;</span> <span class="s1">'baz'</span><span class="p">,</span>
     <span class="p">],</span>
 <span class="p">];</span>
 </pre></div>
@@ -567,7 +567,7 @@ outer array’s key is the name of the section on the Vars tab:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

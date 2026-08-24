@@ -366,35 +366,35 @@ You need to upgrade the migration table definition and its data.</p></li>
 <p>Path: <strong>application/migrations</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nb">defined</span><span class="p">(</span><span class="s1">&#39;BASEPATH&#39;</span><span class="p">)</span> <span class="k">OR</span> <span class="k">exit</span><span class="p">(</span><span class="s1">&#39;No direct script access allowed&#39;</span><span class="p">);</span>
+<span class="nb">defined</span><span class="p">(</span><span class="s1">'BASEPATH'</span><span class="p">)</span> <span class="k">OR</span> <span class="k">exit</span><span class="p">(</span><span class="s1">'No direct script access allowed'</span><span class="p">);</span>
 
 <span class="k">class</span> <span class="nc">Migration_Add_blog</span> <span class="k">extends</span> <span class="nx">CI_Migration</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">up</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">dbforge</span><span class="o">-&gt;</span><span class="na">add_field</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
-            <span class="s1">&#39;blog_id&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
-                <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;INT&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
-                <span class="s1">&#39;unsigned&#39;</span>       <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-                <span class="s1">&#39;auto_increment&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+            <span class="s1">'blog_id'</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                <span class="s1">'type'</span>           <span class="o">=&gt;</span> <span class="s1">'INT'</span><span class="p">,</span>
+                <span class="s1">'constraint'</span>     <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
+                <span class="s1">'unsigned'</span>       <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+                <span class="s1">'auto_increment'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
             <span class="p">),</span>
-            <span class="s1">&#39;blog_title&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
-                <span class="s1">&#39;type&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;constraint&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;100&#39;</span><span class="p">,</span>
+            <span class="s1">'blog_title'</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                <span class="s1">'type'</span>       <span class="o">=&gt;</span> <span class="s1">'VARCHAR'</span><span class="p">,</span>
+                <span class="s1">'constraint'</span> <span class="o">=&gt;</span> <span class="s1">'100'</span><span class="p">,</span>
             <span class="p">),</span>
-            <span class="s1">&#39;blog_description&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
-                <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;null&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+            <span class="s1">'blog_description'</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                <span class="s1">'type'</span> <span class="o">=&gt;</span> <span class="s1">'TEXT'</span><span class="p">,</span>
+                <span class="s1">'null'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
             <span class="p">),</span>
         <span class="p">));</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">dbforge</span><span class="o">-&gt;</span><span class="na">add_key</span><span class="p">(</span><span class="s1">&#39;blog_id&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">dbforge</span><span class="o">-&gt;</span><span class="na">create_table</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">dbforge</span><span class="o">-&gt;</span><span class="na">add_key</span><span class="p">(</span><span class="s1">'blog_id'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">dbforge</span><span class="o">-&gt;</span><span class="na">create_table</span><span class="p">(</span><span class="s1">'blog'</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">down</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">dbforge</span><span class="o">-&gt;</span><span class="na">drop_table</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">dbforge</span><span class="o">-&gt;</span><span class="na">drop_table</span><span class="p">(</span><span class="s1">'blog'</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -414,28 +414,28 @@ You need to upgrade the migration table definition and its data.</p></li>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">up</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">addField</span><span class="p">([</span>
-            <span class="s1">&#39;blog_id&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;INT&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
-                <span class="s1">&#39;unsigned&#39;</span>       <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-                <span class="s1">&#39;auto_increment&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+            <span class="s1">'blog_id'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">'type'</span>           <span class="o">=&gt;</span> <span class="s1">'INT'</span><span class="p">,</span>
+                <span class="s1">'constraint'</span>     <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
+                <span class="s1">'unsigned'</span>       <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+                <span class="s1">'auto_increment'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
             <span class="p">],</span>
-            <span class="s1">&#39;blog_title&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;type&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;constraint&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;100&#39;</span><span class="p">,</span>
+            <span class="s1">'blog_title'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">'type'</span>       <span class="o">=&gt;</span> <span class="s1">'VARCHAR'</span><span class="p">,</span>
+                <span class="s1">'constraint'</span> <span class="o">=&gt;</span> <span class="s1">'100'</span><span class="p">,</span>
             <span class="p">],</span>
-            <span class="s1">&#39;blog_description&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;null&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+            <span class="s1">'blog_description'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">'type'</span> <span class="o">=&gt;</span> <span class="s1">'TEXT'</span><span class="p">,</span>
+                <span class="s1">'null'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
             <span class="p">],</span>
         <span class="p">]);</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="s1">&#39;blog_id&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="s1">'blog_id'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">'blog'</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">down</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">dropTable</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">dropTable</span><span class="p">(</span><span class="s1">'blog'</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -484,7 +484,7 @@ You need to upgrade the migration table definition and its data.</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

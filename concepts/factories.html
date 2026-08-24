@@ -389,7 +389,7 @@ by using the magic static method of the Factories class, <code class="docutils l
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Config\Factories</span><span class="p">;</span>
 
-<span class="nv">$users</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">);</span>
+<span class="nv">$users</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">'UserModel'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If you don’t have <code class="docutils literal notranslate"><span class="pre">App\Models\UserModel</span></code>, it searches for <code class="docutils literal notranslate"><span class="pre">Models\UserModel</span></code> in all namespaces.</p>
@@ -403,7 +403,7 @@ you get back the instance as before:</p>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">someFunction</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$users</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">);</span>
+        <span class="nv">$users</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">'UserModel'</span><span class="p">);</span>
 
         <span class="c1">// ...</span>
     <span class="p">}</span>
@@ -417,7 +417,7 @@ you get back the instance as before:</p>
 The following code loads <strong>app/Libraries/Sub/SubLib.php</strong> if it exists:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Config\Factories</span><span class="p">;</span>
 
-<span class="nv">$lib</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">libraries</span><span class="p">(</span><span class="s1">&#39;Sub/SubLib&#39;</span><span class="p">);</span>
+<span class="nv">$lib</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">libraries</span><span class="p">(</span><span class="s1">'Sub/SubLib'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -427,7 +427,7 @@ The following code loads <strong>app/Libraries/Sub/SubLib.php</strong> if it exi
 <p>You could also request a fully qualified classname:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Config\Factories</span><span class="p">;</span>
 
-<span class="nv">$users</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;Blog\Models\UserModel&#39;</span><span class="p">);</span>
+<span class="nv">$users</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">'Blog\Models\UserModel'</span><span class="p">);</span>
 <span class="c1">// Or</span>
 <span class="nv">$users</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="nx">\Blog\Models\UserModel</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
 </pre></div>
@@ -443,7 +443,7 @@ the instance of <code class="docutils literal notranslate"><span class="pre">App
 option <code class="docutils literal notranslate"><span class="pre">preferApp</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Config\Factories</span><span class="p">;</span>
 
-<span class="nv">$users</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;Blog\Models\UserModel&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;preferApp&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
+<span class="nv">$users</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">'Blog\Models\UserModel'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'preferApp'</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
 </pre></div>
 </div>
 </div>
@@ -458,10 +458,10 @@ option <code class="docutils literal notranslate"><span class="pre">preferApp</s
 <p>The first is <a class="reference internal" href="../general/common_functions.html#config" title="config"><code class="xref php php-func docutils literal notranslate"><span class="pre">config()</span></code></a> which returns a new instance of a Config class. The only required parameter is the class name:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$appConfig</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span><span class="s1">&#39;App&#39;</span><span class="p">);</span>
+<span class="nv">$appConfig</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span><span class="s1">'App'</span><span class="p">);</span>
 
 <span class="c1">// The code above is the same as the code below.</span>
-<span class="nv">$appConfig</span> <span class="o">=</span> <span class="nx">\CodeIgniter\Config\Factories</span><span class="o">::</span><span class="na">config</span><span class="p">(</span><span class="s1">&#39;App&#39;</span><span class="p">);</span>
+<span class="nv">$appConfig</span> <span class="o">=</span> <span class="nx">\CodeIgniter\Config\Factories</span><span class="o">::</span><span class="na">config</span><span class="p">(</span><span class="s1">'App'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -470,10 +470,10 @@ option <code class="docutils literal notranslate"><span class="pre">preferApp</s
 <p>The second function, <a class="reference internal" href="../general/common_functions.html#model" title="model"><code class="xref php php-func docutils literal notranslate"><span class="pre">model()</span></code></a> returns a new instance of a Model class. The only required parameter is the class name:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$user</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">);</span>
+<span class="nv">$user</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">'UserModel'</span><span class="p">);</span>
 
 <span class="c1">// The code above is the same as the code below.</span>
-<span class="nv">$user</span> <span class="o">=</span> <span class="nx">\CodeIgniter\Config\Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">);</span>
+<span class="nv">$user</span> <span class="o">=</span> <span class="nx">\CodeIgniter\Config\Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">'UserModel'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -487,7 +487,7 @@ option <code class="docutils literal notranslate"><span class="pre">preferApp</s
 the <code class="docutils literal notranslate"><span class="pre">Factories::define()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Config\Factories</span><span class="p">;</span>
 
-<span class="nx">Factories</span><span class="o">::</span><span class="na">define</span><span class="p">(</span><span class="s1">&#39;models&#39;</span><span class="p">,</span> <span class="s1">&#39;Myth\Auth\Models\UserModel&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Models\UserModel&#39;</span><span class="p">);</span>
+<span class="nx">Factories</span><span class="o">::</span><span class="na">define</span><span class="p">(</span><span class="s1">'models'</span><span class="p">,</span> <span class="s1">'Myth\Auth\Models\UserModel'</span><span class="p">,</span> <span class="s1">'App\Models\UserModel'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The first parameter is a component. The second parameter is a class alias
@@ -495,7 +495,7 @@ the <code class="docutils literal notranslate"><span class="pre">Factories::defi
 is the true fully qualified classname to be loaded.</p>
 <p>After that, if you load <code class="docutils literal notranslate"><span class="pre">Myth\Auth\Models\UserModel</span></code> with Factories, the
 <code class="docutils literal notranslate"><span class="pre">App\Models\UserModel</span></code> instance will be returned:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$users</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;Myth\Auth\Models\UserModel&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$users</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">'Myth\Auth\Models\UserModel'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -511,8 +511,8 @@ to access user records always go through that connection:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Config\Factories</span><span class="p">;</span>
 
-<span class="nv">$conn</span>  <span class="o">=</span> <span class="nx">db_connect</span><span class="p">(</span><span class="s1">&#39;auth&#39;</span><span class="p">);</span>
-<span class="nv">$users</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">,</span> <span class="p">[],</span> <span class="nv">$conn</span><span class="p">);</span>
+<span class="nv">$conn</span>  <span class="o">=</span> <span class="nx">db_connect</span><span class="p">(</span><span class="s1">'auth'</span><span class="p">);</span>
+<span class="nv">$users</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">'UserModel'</span><span class="p">,</span> <span class="p">[],</span> <span class="nv">$conn</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Now any time the <code class="docutils literal notranslate"><span class="pre">UserModel</span></code> is loaded from <code class="docutils literal notranslate"><span class="pre">Factories</span></code> it will in fact be returning a
@@ -597,7 +597,7 @@ your <strong>app/Config/Factory.php</strong> file might look like this:</p>
 <span class="k">class</span> <span class="nc">Factory</span> <span class="k">extends</span> <span class="nx">BaseFactory</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$filters</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;instanceOf&#39;</span> <span class="o">=&gt;</span> <span class="nx">FilterInterface</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+        <span class="s1">'instanceOf'</span> <span class="o">=&gt;</span> <span class="nx">FilterInterface</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
     <span class="p">];</span>
 <span class="p">}</span>
 </pre></div>
@@ -622,7 +622,7 @@ default path <cite>Library</cite>.</p>
 <span class="k">class</span> <span class="nc">Factory</span> <span class="k">extends</span> <span class="nx">BaseFactory</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$library</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;path&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Libraries&#39;</span><span class="p">,</span>
+        <span class="s1">'path'</span> <span class="o">=&gt;</span> <span class="s1">'Libraries'</span><span class="p">,</span>
     <span class="p">];</span>
 <span class="p">}</span>
 </pre></div>
@@ -630,7 +630,7 @@ default path <cite>Library</cite>.</p>
 <p>Now you can load your libraries with the <code class="docutils literal notranslate"><span class="pre">Factories::library()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Config\Factories</span><span class="p">;</span>
 
-<span class="nv">$someLib</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">library</span><span class="p">(</span><span class="s1">&#39;SomeLib&#39;</span><span class="p">);</span>
+<span class="nv">$someLib</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">library</span><span class="p">(</span><span class="s1">'SomeLib'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -645,9 +645,9 @@ merged with the default values and stored for the next call:</p>
 <span class="k">use</span> <span class="nx">CodeIgniter\Config\Factories</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Filters\FilterInterface</span><span class="p">;</span>
 
-<span class="nx">Factories</span><span class="o">::</span><span class="na">setOptions</span><span class="p">(</span><span class="s1">&#39;filters&#39;</span><span class="p">,</span> <span class="p">[</span>
-    <span class="s1">&#39;instanceOf&#39;</span> <span class="o">=&gt;</span> <span class="nx">FilterInterface</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
-    <span class="s1">&#39;prefersApp&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+<span class="nx">Factories</span><span class="o">::</span><span class="na">setOptions</span><span class="p">(</span><span class="s1">'filters'</span><span class="p">,</span> <span class="p">[</span>
+    <span class="s1">'instanceOf'</span> <span class="o">=&gt;</span> <span class="nx">FilterInterface</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+    <span class="s1">'prefersApp'</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
 <span class="p">]);</span>
 </pre></div>
 </div>
@@ -663,8 +663,8 @@ a component. By adding a second parameter to the magic static call, you can cont
 that single call will return a new or shared instance:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Config\Factories</span><span class="p">;</span>
 
-<span class="nv">$users</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;getShared&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]);</span>  <span class="c1">// Default; will always be the same instance</span>
-<span class="nv">$other</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;getShared&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span> <span class="c1">// Will always create a new instance</span>
+<span class="nv">$users</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">'UserModel'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'getShared'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]);</span>  <span class="c1">// Default; will always be the same instance</span>
+<span class="nv">$other</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">'UserModel'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'getShared'</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span> <span class="c1">// Will always create a new instance</span>
 </pre></div>
 </div>
 </section>
@@ -764,7 +764,7 @@ for them, and you must manually delete the cache file.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

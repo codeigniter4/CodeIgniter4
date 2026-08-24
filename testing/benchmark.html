@@ -329,8 +329,8 @@ the <code class="docutils literal notranslate"><span class="pre">start()</span><
 of the timer. It is only used for you to reference later to know which measurement is which:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$benchmark</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;timer&#39;</span><span class="p">);</span>
-<span class="nv">$benchmark</span><span class="o">-&gt;</span><span class="na">start</span><span class="p">(</span><span class="s1">&#39;render view&#39;</span><span class="p">);</span>
+<span class="nv">$benchmark</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'timer'</span><span class="p">);</span>
+<span class="nv">$benchmark</span><span class="o">-&gt;</span><span class="na">start</span><span class="p">(</span><span class="s1">'render view'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -339,7 +339,7 @@ of the timer. It is only used for you to reference later to know which measureme
 <p>The <code class="docutils literal notranslate"><span class="pre">stop()</span></code> method takes the name of the timer that you want to stop as the only parameter, also:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$benchmark</span><span class="o">-&gt;</span><span class="na">stop</span><span class="p">(</span><span class="s1">&#39;render view&#39;</span><span class="p">);</span>
+<span class="nv">$benchmark</span><span class="o">-&gt;</span><span class="na">stop</span><span class="p">(</span><span class="s1">'render view'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The name is not case-sensitive, but otherwise must match the name you gave it when you started the timer.</p>
@@ -351,10 +351,10 @@ and stop timers:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Start the timer</span>
-<span class="nx">timer</span><span class="p">(</span><span class="s1">&#39;render view&#39;</span><span class="p">);</span>
+<span class="nx">timer</span><span class="p">(</span><span class="s1">'render view'</span><span class="p">);</span>
 <span class="c1">// Stop a running timer,</span>
 <span class="c1">// if one of this name has been started</span>
-<span class="nx">timer</span><span class="p">(</span><span class="s1">&#39;render view&#39;</span><span class="p">);</span>
+<span class="nx">timer</span><span class="p">(</span><span class="s1">'render view'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -368,46 +368,46 @@ a no-parameter callable and measures its execution time. Methods <code class="do
 automatically around the function call.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$benchmark</span><span class="o">-&gt;</span><span class="na">record</span><span class="p">(</span><span class="s1">&#39;slow_function&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span> <span class="nx">slow_function</span><span class="p">(</span><span class="s1">&#39;...&#39;</span><span class="p">);</span> <span class="p">});</span>
+<span class="nv">$benchmark</span><span class="o">-&gt;</span><span class="na">record</span><span class="p">(</span><span class="s1">'slow_function'</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span> <span class="nx">slow_function</span><span class="p">(</span><span class="s1">'...'</span><span class="p">);</span> <span class="p">});</span>
 
 <span class="cm">/*</span>
 <span class="cm"> * Same as:</span>
 <span class="cm"> *</span>
-<span class="cm"> * $benchmark-&gt;start(&#39;slow_function&#39;);</span>
-<span class="cm"> * slow_function(&#39;...&#39;);</span>
-<span class="cm"> * $benchmark-&gt;stop(&#39;slow_function&#39;);</span>
+<span class="cm"> * $benchmark-&gt;start('slow_function');</span>
+<span class="cm"> * slow_function('...');</span>
+<span class="cm"> * $benchmark-&gt;stop('slow_function');</span>
 <span class="cm">*/</span>
 </pre></div>
 </div>
 <p>You can also return the callable’s return value for further processing.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$length</span> <span class="o">=</span> <span class="nv">$benchmark</span><span class="o">-&gt;</span><span class="na">record</span><span class="p">(</span><span class="s1">&#39;string length&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="nx">fn</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nb">strlen</span><span class="p">(</span><span class="s1">&#39;CI4&#39;</span><span class="p">));</span>
+<span class="nv">$length</span> <span class="o">=</span> <span class="nv">$benchmark</span><span class="o">-&gt;</span><span class="na">record</span><span class="p">(</span><span class="s1">'string length'</span><span class="p">,</span> <span class="k">static</span> <span class="nx">fn</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nb">strlen</span><span class="p">(</span><span class="s1">'CI4'</span><span class="p">));</span>
 
 <span class="cm">/*</span>
 <span class="cm"> * $length = 3</span>
 <span class="cm"> *</span>
 <span class="cm"> * Same as:</span>
 <span class="cm"> *</span>
-<span class="cm"> * $benchmark-&gt;start(&#39;string length&#39;);</span>
-<span class="cm"> * $length = strlen(&#39;CI4&#39;);</span>
-<span class="cm"> * $benchmark-&gt;stop(&#39;string length&#39;);</span>
+<span class="cm"> * $benchmark-&gt;start('string length');</span>
+<span class="cm"> * $length = strlen('CI4');</span>
+<span class="cm"> * $benchmark-&gt;stop('string length');</span>
 <span class="cm">*/</span>
 </pre></div>
 </div>
 <p>The same functionality is also available when passing callable to <code class="docutils literal notranslate"><span class="pre">timer()</span></code> as second parameter.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$length</span> <span class="o">=</span> <span class="nx">timer</span><span class="p">(</span><span class="s1">&#39;string length&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="nx">fn</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nb">strlen</span><span class="p">(</span><span class="s1">&#39;CI4&#39;</span><span class="p">));</span>
+<span class="nv">$length</span> <span class="o">=</span> <span class="nx">timer</span><span class="p">(</span><span class="s1">'string length'</span><span class="p">,</span> <span class="k">static</span> <span class="nx">fn</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nb">strlen</span><span class="p">(</span><span class="s1">'CI4'</span><span class="p">));</span>
 
 <span class="cm">/*</span>
 <span class="cm"> * $length = 3</span>
 <span class="cm"> *</span>
 <span class="cm"> * Same as:</span>
 <span class="cm"> *</span>
-<span class="cm"> * timer(&#39;string length&#39;);</span>
-<span class="cm"> * $length = strlen(&#39;CI4&#39;);</span>
-<span class="cm"> * timer(&#39;string length&#39;);</span>
+<span class="cm"> * timer('string length');</span>
+<span class="cm"> * $length = strlen('CI4');</span>
+<span class="cm"> * timer('string length');</span>
 <span class="cm">*/</span>
 </pre></div>
 </div>
@@ -423,10 +423,10 @@ This returns an array of benchmark information, including start, end, and durati
 <span class="cm">/*</span>
 <span class="cm"> * Produces:</span>
 <span class="cm"> * [</span>
-<span class="cm"> *     &#39;render view&#39;  =&gt; [</span>
-<span class="cm"> *         &#39;start&#39;    =&gt; 1234567890,</span>
-<span class="cm"> *         &#39;end&#39;      =&gt; 1345678920,</span>
-<span class="cm"> *         &#39;duration&#39; =&gt; 15.4315, // number of seconds</span>
+<span class="cm"> *     'render view'  =&gt; [</span>
+<span class="cm"> *         'start'    =&gt; 1234567890,</span>
+<span class="cm"> *         'end'      =&gt; 1345678920,</span>
+<span class="cm"> *         'duration' =&gt; 15.4315, // number of seconds</span>
 <span class="cm"> *     ]</span>
 <span class="cm"> * ]</span>
 <span class="cm"> */</span>
@@ -448,7 +448,7 @@ the duration of a single timer, in seconds, with the <code class="docutils liter
 the timer to display. The second is the number of decimal places to display. This defaults to 4:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">timer</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getElapsedTime</span><span class="p">(</span><span class="s1">&#39;render view&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">timer</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getElapsedTime</span><span class="p">(</span><span class="s1">'render view'</span><span class="p">);</span>
 <span class="c1">// Displays: 0.0234</span>
 </pre></div>
 </div>
@@ -469,8 +469,8 @@ this test by. The second parameter is the Closure, itself:</p>
 
 <span class="nv">$iterator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Debug\Iterator</span><span class="p">();</span>
 
-<span class="nv">$iterator</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;double&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$word</span> <span class="o">=</span> <span class="s1">&#39;little&#39;</span><span class="p">)</span> <span class="p">{</span>
-    <span class="s2">&quot;Some basic </span><span class="si">{</span><span class="nv">$word</span><span class="si">}</span><span class="s2"> string test.&quot;</span><span class="p">;</span>
+<span class="nv">$iterator</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">'double'</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$word</span> <span class="o">=</span> <span class="s1">'little'</span><span class="p">)</span> <span class="p">{</span>
+    <span class="s2">"Some basic </span><span class="si">{</span><span class="nv">$word</span><span class="si">}</span><span class="s2"> string test."</span><span class="p">;</span>
 <span class="p">});</span>
 </pre></div>
 </div>
@@ -510,7 +510,7 @@ If you don’t want the results, you can pass in <code class="docutils literal n
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

@@ -342,25 +342,25 @@ defines metadata about your package and its dependencies.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">init</span></code> command helps you create it.</p>
 <p>For example, <strong>composer.json</strong> might look like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;your-vendor/your-package&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;Your package description&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;library&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;license&quot;</span><span class="o">:</span> <span class="s2">&quot;MIT&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;autoload&quot;</span><span class="o">:</span> <span class="p">{</span>
-        <span class="s2">&quot;psr-4&quot;</span><span class="o">:</span> <span class="p">{</span>
-            <span class="s2">&quot;YourVendor</span><span class="se">\\</span><span class="s2">YourPackage</span><span class="se">\\</span><span class="s2">&quot;</span><span class="o">:</span> <span class="s2">&quot;src/&quot;</span>
+    <span class="s2">"name"</span><span class="o">:</span> <span class="s2">"your-vendor/your-package"</span><span class="p">,</span>
+    <span class="s2">"description"</span><span class="o">:</span> <span class="s2">"Your package description"</span><span class="p">,</span>
+    <span class="s2">"type"</span><span class="o">:</span> <span class="s2">"library"</span><span class="p">,</span>
+    <span class="s2">"license"</span><span class="o">:</span> <span class="s2">"MIT"</span><span class="p">,</span>
+    <span class="s2">"autoload"</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">"psr-4"</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">"YourVendor</span><span class="se">\\</span><span class="s2">YourPackage</span><span class="se">\\</span><span class="s2">"</span><span class="o">:</span> <span class="s2">"src/"</span>
         <span class="p">}</span>
     <span class="p">},</span>
-    <span class="s2">&quot;authors&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="s2">"authors"</span><span class="o">:</span> <span class="p">[</span>
         <span class="p">{</span>
-            <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;Your Name&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;email&quot;</span><span class="o">:</span> <span class="s2">&quot;yourname@example.com&quot;</span>
+            <span class="s2">"name"</span><span class="o">:</span> <span class="s2">"Your Name"</span><span class="p">,</span>
+            <span class="s2">"email"</span><span class="o">:</span> <span class="s2">"yourname@example.com"</span>
         <span class="p">}</span>
     <span class="p">],</span>
-    <span class="s2">&quot;require&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">"require"</span><span class="o">:</span> <span class="p">{</span>
         <span class="c1">// Any dependencies required by your package go here</span>
     <span class="p">},</span>
-    <span class="s2">&quot;require-dev&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">"require-dev"</span><span class="o">:</span> <span class="p">{</span>
         <span class="c1">// Any development dependencies (e.g., PHPUnit) go here</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -383,9 +383,9 @@ Uniqueness is especially important when publishing.</p>
 <p>The package name then determines the vendor namespace in <code class="docutils literal notranslate"><span class="pre">autoload.psr4</span></code>.</p>
 <p>If your package name is <code class="docutils literal notranslate"><span class="pre">your-vendor/your-package</span></code>, the vendor namespace must
 be <code class="docutils literal notranslate"><span class="pre">YourVendor</span></code>. So you would write like the following:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;autoload&quot;</span><span class="o">:</span> <span class="p">{</span>
-    <span class="s2">&quot;psr-4&quot;</span><span class="o">:</span> <span class="p">{</span>
-        <span class="s2">&quot;YourVendor</span><span class="se">\\</span><span class="s2">YourPackage</span><span class="se">\\</span><span class="s2">&quot;</span><span class="o">:</span> <span class="s2">&quot;src/&quot;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="s2">"autoload"</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">"psr-4"</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">"YourVendor</span><span class="se">\\</span><span class="s2">YourPackage</span><span class="se">\\</span><span class="s2">"</span><span class="o">:</span> <span class="s2">"src/"</span>
     <span class="p">}</span>
 <span class="p">},</span>
 </pre></div>
@@ -435,9 +435,9 @@ project root folder.</p>
  <span class="nv">$finder</span> <span class="o">=</span> <span class="nx">Finder</span><span class="o">::</span><span class="na">create</span><span class="p">()</span>
      <span class="o">-&gt;</span><span class="na">files</span><span class="p">()</span>
      <span class="o">-&gt;</span><span class="na">in</span><span class="p">([</span>
-<span class="o">-</span>        <span class="no">__DIR__</span> <span class="o">.</span> <span class="s1">&#39;/app/&#39;</span><span class="p">,</span>
-<span class="o">+</span>        <span class="no">__DIR__</span> <span class="o">.</span> <span class="s1">&#39;/src/&#39;</span><span class="p">,</span>
-         <span class="no">__DIR__</span> <span class="o">.</span> <span class="s1">&#39;/tests/&#39;</span><span class="p">,</span>
+<span class="o">-</span>        <span class="no">__DIR__</span> <span class="o">.</span> <span class="s1">'/app/'</span><span class="p">,</span>
+<span class="o">+</span>        <span class="no">__DIR__</span> <span class="o">.</span> <span class="s1">'/src/'</span><span class="p">,</span>
+         <span class="no">__DIR__</span> <span class="o">.</span> <span class="s1">'/tests/'</span><span class="p">,</span>
      <span class="p">])</span>
      <span class="o">-&gt;</span><span class="na">exclude</span><span class="p">([</span>
 </pre></div>
@@ -451,8 +451,8 @@ project root folder.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="c1">// ...</span>
     <span class="p">},</span>
-    <span class="s2">&quot;scripts&quot;</span><span class="o">:</span> <span class="p">{</span>
-        <span class="s2">&quot;cs-fix&quot;</span><span class="o">:</span> <span class="s2">&quot;php-cs-fixer fix --ansi --verbose --diff&quot;</span>
+    <span class="s2">"scripts"</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">"cs-fix"</span><span class="o">:</span> <span class="s2">"php-cs-fixer fix --ansi --verbose --diff"</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -501,7 +501,7 @@ when creating your own packages:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

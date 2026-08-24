@@ -363,9 +363,9 @@ on whether it is valid or not.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">isValidIP</span><span class="p">(</span><span class="nv">$ip</span><span class="p">))</span> <span class="p">{</span>
-    <span class="k">echo</span> <span class="s1">&#39;Not Valid&#39;</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s1">'Not Valid'</span><span class="p">;</span>
 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="k">echo</span> <span class="s1">&#39;Valid&#39;</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s1">'Valid'</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -457,14 +457,14 @@ an IP format. The default checks for both formats.</p>
 <a class="reference internal" href="incomingrequest.html"><span class="doc">IncomingRequest Class</span></a>, only it fetches server data (<code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code>):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getServer</span><span class="p">(</span><span class="s1">&#39;some_data&#39;</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getServer</span><span class="p">(</span><span class="s1">'some_data'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>To return an array of multiple <code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code> values, pass all the required keys
 as an array.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getServer</span><span class="p">([</span><span class="s1">&#39;SERVER_PROTOCOL&#39;</span><span class="p">,</span> <span class="s1">&#39;REQUEST_URI&#39;</span><span class="p">]);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getServer</span><span class="p">([</span><span class="s1">'SERVER_PROTOCOL'</span><span class="p">,</span> <span class="s1">'REQUEST_URI'</span><span class="p">]);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -495,14 +495,14 @@ as an array.</p>
 <a class="reference internal" href="incomingrequest.html"><span class="doc">IncomingRequest Class</span></a>, only it fetches env data (<code class="docutils literal notranslate"><span class="pre">$_ENV</span></code>):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getEnv</span><span class="p">(</span><span class="s1">&#39;some_data&#39;</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getEnv</span><span class="p">(</span><span class="s1">'some_data'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>To return an array of multiple <code class="docutils literal notranslate"><span class="pre">$_ENV</span></code> values, pass all the required keys
 as an array.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getEnv</span><span class="p">([</span><span class="s1">&#39;CI_ENVIRONMENT&#39;</span><span class="p">,</span> <span class="s1">&#39;S3_BUCKET&#39;</span><span class="p">]);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getEnv</span><span class="p">([</span><span class="s1">'CI_ENVIRONMENT'</span><span class="p">,</span> <span class="s1">'S3_BUCKET'</span><span class="p">]);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -564,7 +564,7 @@ Can optionally filter the input when you retrieve it by passing in a filter.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

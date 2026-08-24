@@ -324,15 +324,15 @@ relative URI to an existing one and have it resolved safely and correctly.</p>
 <p>Creating a URI instance is as simple as creating a new class instance.</p>
 <p>When you create the new instance, you can pass a full or partial URL in the constructor and it will be parsed
 into its appropriate sections:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">'http://www.example.com/some/path'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Alternatively, you can use the <a class="reference internal" href="../general/common_functions.html#service" title="service"><code class="xref php php-func docutils literal notranslate"><span class="pre">service()</span></code></a> function to return an instance for you:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;uri&#39;</span><span class="p">,</span> <span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'uri'</span><span class="p">,</span> <span class="s1">'http://www.example.com/some/path'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Since v4.4.0, if you don’t pass a URL, it returns the current URI:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;uri&#39;</span><span class="p">);</span> <span class="c1">// returns the current SiteURI instance.</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'uri'</span><span class="p">);</span> <span class="c1">// returns the current SiteURI instance.</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -377,7 +377,7 @@ using the URI class’ static <code class="docutils literal notranslate"><span c
 <span class="nv">$uriString</span> <span class="o">=</span> <span class="nx">URI</span><span class="o">::</span><span class="na">createURIString</span><span class="p">(</span><span class="nv">$scheme</span><span class="p">,</span> <span class="nv">$authority</span><span class="p">,</span> <span class="nv">$path</span><span class="p">,</span> <span class="nv">$query</span><span class="p">,</span> <span class="nv">$fragment</span><span class="p">);</span>
 
 <span class="c1">// Creates: http://exmample.com/some/path?foo=bar#first-heading</span>
-<span class="k">echo</span> <span class="nx">URI</span><span class="o">::</span><span class="na">createURIString</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">,</span> <span class="s1">&#39;example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;some/path&#39;</span><span class="p">,</span> <span class="s1">&#39;foo=bar&#39;</span><span class="p">,</span> <span class="s1">&#39;first-heading&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">URI</span><span class="o">::</span><span class="na">createURIString</span><span class="p">(</span><span class="s1">'http'</span><span class="p">,</span> <span class="s1">'example.com'</span><span class="p">,</span> <span class="s1">'some/path'</span><span class="p">,</span> <span class="s1">'foo=bar'</span><span class="p">,</span> <span class="s1">'first-heading'</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition important">
@@ -396,10 +396,10 @@ details on what those parts are, and how to work with them.</p>
 <p>The scheme is frequently ‘http’ or ‘https’, but any scheme is supported, including ‘file’, ‘mailto’, etc.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
+<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">'http://www.example.com/some/path'</span><span class="p">);</span>
 
-<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getScheme</span><span class="p">();</span> <span class="c1">// &#39;http&#39;</span>
-<span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setScheme</span><span class="p">(</span><span class="s1">&#39;https&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getScheme</span><span class="p">();</span> <span class="c1">// 'http'</span>
+<span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setScheme</span><span class="p">(</span><span class="s1">'https'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -410,7 +410,7 @@ the host and the port number. You can retrieve all of these pieces as one single
 method, or you can manipulate the individual parts.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;ftp://user:password@example.com:21/some/path&#39;</span><span class="p">);</span>
+<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">'ftp://user:password@example.com:21/some/path'</span><span class="p">);</span>
 
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getAuthority</span><span class="p">();</span>  <span class="c1">// user@example.com:21</span>
 </pre></div>
@@ -461,10 +461,10 @@ this as part of the Authority, you can also retrieve it yourself:</p>
 <code class="docutils literal notranslate"><span class="pre">getHost()</span></code> and <code class="docutils literal notranslate"><span class="pre">setHost()</span></code> methods:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
+<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">'http://www.example.com/some/path'</span><span class="p">);</span>
 
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getHost</span><span class="p">();</span>   <span class="c1">// www.example.com</span>
-<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setHost</span><span class="p">(</span><span class="s1">&#39;anotherexample.com&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getHost</span><span class="p">();</span>    <span class="c1">// anotherexample.com</span>
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setHost</span><span class="p">(</span><span class="s1">'anotherexample.com'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getHost</span><span class="p">();</span>    <span class="c1">// anotherexample.com</span>
 </pre></div>
 </div>
 </section>
@@ -473,7 +473,7 @@ this as part of the Authority, you can also retrieve it yourself:</p>
 <p>The port is an integer number between 0 and 65535. Each scheme has a default value associated with it.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;ftp://user:password@example.com:21/some/path&#39;</span><span class="p">);</span>
+<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">'ftp://user:password@example.com:21/some/path'</span><span class="p">);</span>
 
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getPort</span><span class="p">();</span>   <span class="c1">// 21</span>
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setPort</span><span class="p">(</span><span class="mi">2201</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getPort</span><span class="p">();</span> <span class="c1">// 2201</span>
@@ -487,10 +487,10 @@ this as part of the Authority, you can also retrieve it yourself:</p>
 can be used to manipulate it:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
+<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">'http://www.example.com/some/path'</span><span class="p">);</span>
 
-<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getPath</span><span class="p">();</span>                            <span class="c1">// &#39;/some/path&#39;</span>
-<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setPath</span><span class="p">(</span><span class="s1">&#39;/another/path&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getPath</span><span class="p">();</span>  <span class="c1">// &#39;/another/path&#39;</span>
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getPath</span><span class="p">();</span>                            <span class="c1">// '/some/path'</span>
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setPath</span><span class="p">(</span><span class="s1">'/another/path'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getPath</span><span class="p">();</span>  <span class="c1">// '/another/path'</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -514,10 +514,10 @@ method always returns the full URI path with leading <code class="docutils liter
 be set as a string currently.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com?foo=bar&#39;</span><span class="p">);</span>
+<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">'http://www.example.com?foo=bar'</span><span class="p">);</span>
 
-<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getQuery</span><span class="p">();</span>  <span class="c1">// &#39;foo=bar&#39;</span>
-<span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setQuery</span><span class="p">(</span><span class="s1">&#39;foo=bar&amp;bar=baz&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getQuery</span><span class="p">();</span>  <span class="c1">// 'foo=bar'</span>
+<span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setQuery</span><span class="p">(</span><span class="s1">'foo=bar&amp;bar=baz'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">setQuery()</span></code> method overwrites existing query variables.</p>
@@ -531,7 +531,7 @@ be set as a string currently.</p>
 <p>You can set query values using an array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setQueryArray</span><span class="p">([</span><span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;baz&#39;</span><span class="p">]);</span>
+<span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setQueryArray</span><span class="p">([</span><span class="s1">'foo'</span> <span class="o">=&gt;</span> <span class="s1">'bar'</span><span class="p">,</span> <span class="s1">'bar'</span> <span class="o">=&gt;</span> <span class="s1">'baz'</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">setQueryArray()</span></code> method overwrites existing query variables.</p>
@@ -543,7 +543,7 @@ query variables collection without destroying the existing query variables with 
 parameter is the name of the variable, and the second parameter is the value:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">addQuery</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">);</span>
+<span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">addQuery</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">,</span> <span class="s1">'bar'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -553,13 +553,13 @@ parameter is the name of the variable, and the second parameter is the value:</p
 <em>only</em> or an <em>except</em> key:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com?foo=bar&amp;bar=baz&amp;baz=foz&#39;</span><span class="p">);</span>
+<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">'http://www.example.com?foo=bar&amp;bar=baz&amp;baz=foz'</span><span class="p">);</span>
 
-<span class="c1">// Returns &#39;foo=bar&#39;</span>
-<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getQuery</span><span class="p">([</span><span class="s1">&#39;only&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">]]);</span>
+<span class="c1">// Returns 'foo=bar'</span>
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getQuery</span><span class="p">([</span><span class="s1">'only'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'foo'</span><span class="p">]]);</span>
 
-<span class="c1">// Returns &#39;foo=bar&amp;baz=foz&#39;</span>
-<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getQuery</span><span class="p">([</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;bar&#39;</span><span class="p">]]);</span>
+<span class="c1">// Returns 'foo=bar&amp;baz=foz'</span>
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getQuery</span><span class="p">([</span><span class="s1">'except'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'bar'</span><span class="p">]]);</span>
 </pre></div>
 </div>
 <p>This only changes the values returned during this one call.</p>
@@ -570,13 +570,13 @@ parameter is the name of the variable, and the second parameter is the value:</p
 you can use the <code class="docutils literal notranslate"><span class="pre">stripQuery()</span></code> and <code class="docutils literal notranslate"><span class="pre">keepQuery()</span></code> methods to change the actual object’s query variable collection:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com?foo=bar&amp;bar=baz&amp;baz=foz&#39;</span><span class="p">);</span>
+<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">'http://www.example.com?foo=bar&amp;bar=baz&amp;baz=foz'</span><span class="p">);</span>
 
-<span class="c1">// Leaves just the &#39;baz&#39; variable</span>
-<span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">stripQuery</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">);</span>
+<span class="c1">// Leaves just the 'baz' variable</span>
+<span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">stripQuery</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">,</span> <span class="s1">'bar'</span><span class="p">);</span>
 
-<span class="c1">// Leaves just the &#39;foo&#39; variable</span>
-<span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">keepQuery</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
+<span class="c1">// Leaves just the 'foo' variable</span>
+<span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">keepQuery</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -593,10 +593,10 @@ If you want to use more liberal rules (which allow key names to contain dots), y
 to an on-page anchor. Media URI’s can make use of them in various other ways.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path#first-heading&#39;</span><span class="p">);</span>
+<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">'http://www.example.com/some/path#first-heading'</span><span class="p">);</span>
 
-<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getFragment</span><span class="p">();</span>   <span class="c1">// &#39;first-heading&#39;</span>
-<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setFragment</span><span class="p">(</span><span class="s1">&#39;second-heading&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getFragment</span><span class="p">();</span>    <span class="c1">// &#39;second-heading&#39;</span>
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getFragment</span><span class="p">();</span>   <span class="c1">// 'first-heading'</span>
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setFragment</span><span class="p">(</span><span class="s1">'second-heading'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getFragment</span><span class="p">();</span>    <span class="c1">// 'second-heading'</span>
 </pre></div>
 </div>
 </section>
@@ -616,8 +616,8 @@ what the values of the segments are. The segments start at 1 being the furthest 
 
 <span class="c1">// URI = http://example.com/users/15/profile</span>
 
-<span class="c1">// Prints &#39;15&#39;</span>
-<span class="k">if</span> <span class="p">(</span><span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getSegment</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">===</span> <span class="s1">&#39;users&#39;</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">// Prints '15'</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getSegment</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">===</span> <span class="s1">'users'</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getSegment</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
@@ -627,15 +627,15 @@ what the values of the segments are. The segments start at 1 being the furthest 
 
 <span class="c1">// URI = http://example.com/users/15/profile</span>
 
-<span class="c1">// will print &#39;profile&#39;</span>
-<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getSegment</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">);</span>
-<span class="c1">// will print &#39;bar&#39;</span>
-<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getSegment</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">);</span>
+<span class="c1">// will print 'profile'</span>
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getSegment</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">'foo'</span><span class="p">);</span>
+<span class="c1">// will print 'bar'</span>
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getSegment</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s1">'bar'</span><span class="p">);</span>
 <span class="c1">// will throw an exception</span>
-<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getSegment</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;baz&#39;</span><span class="p">);</span>
-<span class="c1">// will print &#39;baz&#39;</span>
-<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setSilent</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getSegment</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;baz&#39;</span><span class="p">);</span>
-<span class="c1">// will print &#39;&#39; (empty string)</span>
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getSegment</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s1">'baz'</span><span class="p">);</span>
+<span class="c1">// will print 'baz'</span>
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setSilent</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getSegment</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s1">'baz'</span><span class="p">);</span>
+<span class="c1">// will print '' (empty string)</span>
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setSilent</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getSegment</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -659,9 +659,9 @@ throwing exceptions with the <code class="docutils literal notranslate"><span cl
 <span class="cm">/*</span>
 <span class="cm"> * Produces:</span>
 <span class="cm"> * [</span>
-<span class="cm"> *     0 =&gt; &#39;users&#39;,</span>
-<span class="cm"> *     1 =&gt; &#39;15&#39;,</span>
-<span class="cm"> *     2 =&gt; &#39;profile&#39;,</span>
+<span class="cm"> *     0 =&gt; 'users',</span>
+<span class="cm"> *     1 =&gt; '15',</span>
+<span class="cm"> *     2 =&gt; 'profile',</span>
 <span class="cm"> * ]</span>
 <span class="cm"> */</span>
 </pre></div>
@@ -695,7 +695,7 @@ that will prevent throwing exceptions.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

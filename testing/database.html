@@ -397,12 +397,12 @@ by adding a couple of class properties to your test.</p>
     <span class="k">protected</span> <span class="nv">$migrate</span>     <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
     <span class="k">protected</span> <span class="nv">$migrateOnce</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
     <span class="k">protected</span> <span class="nv">$refresh</span>     <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
-    <span class="k">protected</span> <span class="nv">$namespace</span>   <span class="o">=</span> <span class="s1">&#39;Tests\Support&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$namespace</span>   <span class="o">=</span> <span class="s1">'Tests\Support'</span><span class="p">;</span>
 
     <span class="c1">// For Seeds</span>
     <span class="k">protected</span> <span class="nv">$seedOnce</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
-    <span class="k">protected</span> <span class="nv">$seed</span>     <span class="o">=</span> <span class="s1">&#39;TestSeeder&#39;</span><span class="p">;</span>
-    <span class="k">protected</span> <span class="nv">$basePath</span> <span class="o">=</span> <span class="s1">&#39;path/to/database/files&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$seed</span>     <span class="o">=</span> <span class="s1">'TestSeeder'</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$basePath</span> <span class="o">=</span> <span class="s1">'path/to/database/files'</span><span class="p">;</span>
 
     <span class="c1">// ...</span>
 <span class="p">}</span>
@@ -485,10 +485,10 @@ array with the data to insert into the table.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;joe@example.com&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Joe Cool&#39;</span><span class="p">,</span>
+    <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="s1">'joe@example.com'</span><span class="p">,</span>
+    <span class="s1">'name'</span>  <span class="o">=&gt;</span> <span class="s1">'Joe Cool'</span><span class="p">,</span>
 <span class="p">];</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">hasInDatabase</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">hasInDatabase</span><span class="p">(</span><span class="s1">'users'</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -501,7 +501,7 @@ array with the data to insert into the table.</p>
 row is found, it will only return the first one.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$username</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">grabFromDatabase</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;joe@example.com&#39;</span><span class="p">]);</span>
+<span class="nv">$username</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">grabFromDatabase</span><span class="p">(</span><span class="s1">'users'</span><span class="p">,</span> <span class="s1">'username'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="s1">'joe@example.com'</span><span class="p">]);</span>
 </pre></div>
 </div>
 </section>
@@ -514,10 +514,10 @@ row is found, it will only return the first one.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$criteria</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;joe@example.com&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;active&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">'email'</span>  <span class="o">=&gt;</span> <span class="s1">'joe@example.com'</span><span class="p">,</span>
+    <span class="s1">'active'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
 <span class="p">];</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">dontSeeInDatabase</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="nv">$criteria</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">dontSeeInDatabase</span><span class="p">(</span><span class="s1">'users'</span><span class="p">,</span> <span class="nv">$criteria</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -527,10 +527,10 @@ row is found, it will only return the first one.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$criteria</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;joe@example.com&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;active&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">'email'</span>  <span class="o">=&gt;</span> <span class="s1">'joe@example.com'</span><span class="p">,</span>
+    <span class="s1">'active'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
 <span class="p">];</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">seeInDatabase</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="nv">$criteria</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">seeInDatabase</span><span class="p">(</span><span class="s1">'users'</span><span class="p">,</span> <span class="nv">$criteria</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -540,9 +540,9 @@ row is found, it will only return the first one.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$criteria</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;active&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">'active'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
 <span class="p">];</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">seeNumRecords</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="nv">$criteria</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">seeNumRecords</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">'users'</span><span class="p">,</span> <span class="nv">$criteria</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -562,7 +562,7 @@ row is found, it will only return the first one.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

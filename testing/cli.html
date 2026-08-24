@@ -385,18 +385,18 @@ the output array.</p></li>
         <span class="nv">$io</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MockInputOutput</span><span class="p">();</span>
         <span class="nx">CLI</span><span class="o">::</span><span class="na">setInputOutput</span><span class="p">(</span><span class="nv">$io</span><span class="p">);</span>
 
-        <span class="c1">// User will input &quot;a&quot; (invalid value) and &quot;0&quot;.</span>
-        <span class="nv">$io</span><span class="o">-&gt;</span><span class="na">setInputs</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">]);</span>
+        <span class="c1">// User will input "a" (invalid value) and "0".</span>
+        <span class="nv">$io</span><span class="o">-&gt;</span><span class="na">setInputs</span><span class="p">([</span><span class="s1">'a'</span><span class="p">,</span> <span class="s1">'0'</span><span class="p">]);</span>
 
-        <span class="nx">command</span><span class="p">(</span><span class="s1">&#39;db:table&#39;</span><span class="p">);</span>
+        <span class="nx">command</span><span class="p">(</span><span class="s1">'db:table'</span><span class="p">);</span>
 
         <span class="c1">// Get the whole output string.</span>
         <span class="nv">$output</span> <span class="o">=</span> <span class="nv">$io</span><span class="o">-&gt;</span><span class="na">getOutput</span><span class="p">();</span>
 
-        <span class="nv">$expected</span> <span class="o">=</span> <span class="s1">&#39;Which table do you want to see? [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]: a&#39;</span><span class="p">;</span>
+        <span class="nv">$expected</span> <span class="o">=</span> <span class="s1">'Which table do you want to see? [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]: a'</span><span class="p">;</span>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertStringContainsString</span><span class="p">(</span><span class="nv">$expected</span><span class="p">,</span> <span class="nv">$output</span><span class="p">);</span>
 
-        <span class="nv">$expected</span> <span class="o">=</span> <span class="s1">&#39;Data of Table &quot;db_migrations&quot;:&#39;</span><span class="p">;</span>
+        <span class="nv">$expected</span> <span class="o">=</span> <span class="s1">'Data of Table "db_migrations":'</span><span class="p">;</span>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertStringContainsString</span><span class="p">(</span><span class="nv">$expected</span><span class="p">,</span> <span class="nv">$output</span><span class="p">);</span>
 
         <span class="c1">// Remove MockInputOutput.</span>
@@ -440,15 +440,15 @@ might be helpful. The <code class="docutils literal notranslate"><span class="pr
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">testSomeOutput</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;first.&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'first.'</span><span class="p">);</span>
 
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSame</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">first.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getStreamFilterBuffer</span><span class="p">());</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSame</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">first.</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getStreamFilterBuffer</span><span class="p">());</span>
 
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">resetStreamFilterBuffer</span><span class="p">();</span>
 
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;second.&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'second.'</span><span class="p">);</span>
 
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSame</span><span class="p">(</span><span class="s2">&quot;second.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getStreamFilterBuffer</span><span class="p">());</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSame</span><span class="p">(</span><span class="s2">"second.</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getStreamFilterBuffer</span><span class="p">());</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -488,7 +488,7 @@ add a filter to streams.</p>
         <span class="nx">CITestStreamFilter</span><span class="o">::</span><span class="na">registration</span><span class="p">();</span>
         <span class="nx">CITestStreamFilter</span><span class="o">::</span><span class="na">addOutputFilter</span><span class="p">();</span>
 
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;first.&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'first.'</span><span class="p">);</span>
 
         <span class="nx">CITestStreamFilter</span><span class="o">::</span><span class="na">removeOutputFilter</span><span class="p">();</span>
     <span class="p">}</span>
@@ -546,11 +546,11 @@ while registered.</p>
         <span class="c1">// Register the PhpStreamWrapper.</span>
         <span class="nx">PhpStreamWrapper</span><span class="o">::</span><span class="na">register</span><span class="p">();</span>
 
-        <span class="c1">// Set the user input to &#39;red&#39;. It will be provided as `php://stdin` output.</span>
-        <span class="nv">$expected</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span><span class="p">;</span>
+        <span class="c1">// Set the user input to 'red'. It will be provided as `php://stdin` output.</span>
+        <span class="nv">$expected</span> <span class="o">=</span> <span class="s1">'red'</span><span class="p">;</span>
         <span class="nx">PhpStreamWrapper</span><span class="o">::</span><span class="na">setContent</span><span class="p">(</span><span class="nv">$expected</span><span class="p">);</span>
 
-        <span class="nv">$output</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">&#39;What is your favorite color?&#39;</span><span class="p">);</span>
+        <span class="nv">$output</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">'What is your favorite color?'</span><span class="p">);</span>
 
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSame</span><span class="p">(</span><span class="nv">$expected</span><span class="p">,</span> <span class="nv">$output</span><span class="p">);</span>
 
@@ -578,7 +578,7 @@ while registered.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

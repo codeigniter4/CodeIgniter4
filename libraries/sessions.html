@@ -335,7 +335,7 @@ class should be magically initialized.</p>
 <p>To access and initialize the session:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$session</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;session&#39;</span><span class="p">,</span> <span class="nv">$config</span><span class="p">);</span>
+<span class="nv">$session</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'session'</span><span class="p">,</span> <span class="nv">$config</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">$config</span></code> parameter is optional - your application configuration.
@@ -429,13 +429,13 @@ that are further explained below: <a class="reference internal" href="#flashdata
 variable, you will do this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$name</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">];</span>
+<span class="nv">$name</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">'name'</span><span class="p">];</span>
 </pre></div>
 </div>
 <p>Or through the conventional accessor method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$name</span> <span class="o">=</span> <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">);</span>
+<span class="nv">$name</span> <span class="o">=</span> <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'name'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Or through the magic getter:</p>
@@ -447,7 +447,7 @@ variable, you will do this:</p>
 <p>Or even through the session helper method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$name</span> <span class="o">=</span> <span class="nx">session</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">);</span>
+<span class="nv">$name</span> <span class="o">=</span> <span class="nx">session</span><span class="p">(</span><span class="s1">'name'</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -491,9 +491,9 @@ an example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$newdata</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;username&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;johndoe&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;johndoe@some-site.com&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;logged_in&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="s1">'username'</span>  <span class="o">=&gt;</span> <span class="s1">'johndoe'</span><span class="p">,</span>
+    <span class="s1">'email'</span>     <span class="o">=&gt;</span> <span class="s1">'johndoe@some-site.com'</span><span class="p">,</span>
+    <span class="s1">'logged_in'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="nv">$newdata</span><span class="p">);</span>
@@ -503,16 +503,16 @@ an example:</p>
 supports this syntax:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;some_name&#39;</span><span class="p">,</span> <span class="s1">&#39;some_value&#39;</span><span class="p">);</span>
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">'some_name'</span><span class="p">,</span> <span class="s1">'some_value'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If you want to verify that a session value exists, simply check with
 <code class="docutils literal notranslate"><span class="pre">isset()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="c1">// returns false if the &#39;some_name&#39; item doesn&#39;t exist or is null,</span>
+<span class="c1">// returns false if the 'some_name' item doesn't exist or is null,</span>
 <span class="c1">// true otherwise:</span>
-<span class="k">if</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;some_name&#39;</span><span class="p">]))</span> <span class="p">{</span>
+<span class="k">if</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">'some_name'</span><span class="p">]))</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -520,7 +520,7 @@ supports this syntax:</p>
 <p>Or you can call <code class="docutils literal notranslate"><span class="pre">has()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">has</span><span class="p">(</span><span class="s1">&#39;some_name&#39;</span><span class="p">);</span>
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">has</span><span class="p">(</span><span class="s1">'some_name'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -537,9 +537,9 @@ For instance, if the <code class="docutils literal notranslate"><span class="pre
 <span class="sd"> *         [sport] =&gt; running</span>
 <span class="sd"> *     )</span>
 <span class="sd"> */</span>
-<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;hobbies&#39;</span><span class="p">,</span> <span class="p">[</span>
-    <span class="s1">&#39;music&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;rock&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;sport&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;running&#39;</span><span class="p">,</span>
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">'hobbies'</span><span class="p">,</span> <span class="p">[</span>
+    <span class="s1">'music'</span> <span class="o">=&gt;</span> <span class="s1">'rock'</span><span class="p">,</span>
+    <span class="s1">'sport'</span> <span class="o">=&gt;</span> <span class="s1">'running'</span><span class="p">,</span>
 <span class="p">]);</span>
 
 <span class="sd">/**</span>
@@ -550,9 +550,9 @@ For instance, if the <code class="docutils literal notranslate"><span class="pre
 <span class="sd"> *         [sport] =&gt; tennis</span>
 <span class="sd"> *     )</span>
 <span class="sd"> */</span>
-<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">push</span><span class="p">(</span><span class="s1">&#39;hobbies&#39;</span><span class="p">,</span> <span class="p">[</span>
-    <span class="s1">&#39;food&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;cooking&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;sport&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;tennis&#39;</span><span class="p">,</span>
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">push</span><span class="p">(</span><span class="s1">'hobbies'</span><span class="p">,</span> <span class="p">[</span>
+    <span class="s1">'food'</span>  <span class="o">=&gt;</span> <span class="s1">'cooking'</span><span class="p">,</span>
+    <span class="s1">'sport'</span> <span class="o">=&gt;</span> <span class="s1">'tennis'</span><span class="p">,</span>
 <span class="p">]);</span>
 </pre></div>
 </div>
@@ -563,11 +563,11 @@ For instance, if the <code class="docutils literal notranslate"><span class="pre
 done through <code class="docutils literal notranslate"><span class="pre">unset()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nb">unset</span><span class="p">(</span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;some_name&#39;</span><span class="p">]);</span>
+<span class="nb">unset</span><span class="p">(</span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">'some_name'</span><span class="p">]);</span>
 <span class="c1">// or multiple values:</span>
 <span class="nb">unset</span><span class="p">(</span>
-    <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;some_name&#39;</span><span class="p">],</span>
-    <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;another_name&#39;</span><span class="p">]</span>
+    <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">'some_name'</span><span class="p">],</span>
+    <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">'another_name'</span><span class="p">]</span>
 <span class="p">);</span>
 </pre></div>
 </div>
@@ -577,13 +577,13 @@ session key. For example, if you wanted to remove <code class="docutils literal 
 session data array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">remove</span><span class="p">(</span><span class="s1">&#39;some_name&#39;</span><span class="p">);</span>
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">remove</span><span class="p">(</span><span class="s1">'some_name'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This method also accepts an array of item keys to unset:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$array_items</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">];</span>
+<span class="nv">$array_items</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'username'</span><span class="p">,</span> <span class="s1">'email'</span><span class="p">];</span>
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">remove</span><span class="p">(</span><span class="nv">$array_items</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -599,27 +599,27 @@ managed inside the CodeIgniter session handler.</p>
 <p>To mark an existing item as “flashdata”:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsFlashdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsFlashdata</span><span class="p">(</span><span class="s1">'item'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If you want to mark multiple items as flashdata, simply pass the keys as an
 array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsFlashdata</span><span class="p">([</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="s1">&#39;item2&#39;</span><span class="p">]);</span>
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsFlashdata</span><span class="p">([</span><span class="s1">'item'</span><span class="p">,</span> <span class="s1">'item2'</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>To add flashdata:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;value&#39;</span><span class="p">;</span>
-<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsFlashdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
+<span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">'item'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'value'</span><span class="p">;</span>
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsFlashdata</span><span class="p">(</span><span class="s1">'item'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Or alternatively, using the <code class="docutils literal notranslate"><span class="pre">setFlashdata()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">setFlashdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">);</span>
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">setFlashdata</span><span class="p">(</span><span class="s1">'item'</span><span class="p">,</span> <span class="s1">'value'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can also pass an array to <code class="docutils literal notranslate"><span class="pre">setFlashdata()</span></code>, in the same manner as
@@ -628,7 +628,7 @@ array:</p>
 through <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$item</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">];</span>
+<span class="nv">$item</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">'item'</span><span class="p">];</span>
 </pre></div>
 </div>
 <div class="admonition important">
@@ -641,7 +641,7 @@ grabbing all data from the session, however.</p>
 any other kind), you can also use the <code class="docutils literal notranslate"><span class="pre">getFlashdata()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">getFlashdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">getFlashdata</span><span class="p">(</span><span class="s1">'item'</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -660,8 +660,8 @@ additional request, you can do so using the <code class="docutils literal notran
 You can either pass a single item or an array of flashdata items to keep.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">keepFlashdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
-<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">keepFlashdata</span><span class="p">([</span><span class="s1">&#39;item1&#39;</span><span class="p">,</span> <span class="s1">&#39;item2&#39;</span><span class="p">,</span> <span class="s1">&#39;item3&#39;</span><span class="p">]);</span>
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">keepFlashdata</span><span class="p">(</span><span class="s1">'item'</span><span class="p">);</span>
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">keepFlashdata</span><span class="p">([</span><span class="s1">'item1'</span><span class="p">,</span> <span class="s1">'item2'</span><span class="p">,</span> <span class="s1">'item3'</span><span class="p">]);</span>
 </pre></div>
 </div>
 </section>
@@ -676,42 +676,42 @@ CodeIgniter session handler.</p>
 (in seconds!) to the <code class="docutils literal notranslate"><span class="pre">markAsTempdata()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="c1">// &#39;item&#39; will be erased after 300 seconds</span>
-<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsTempdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="mi">300</span><span class="p">);</span>
+<span class="c1">// 'item' will be erased after 300 seconds</span>
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsTempdata</span><span class="p">(</span><span class="s1">'item'</span><span class="p">,</span> <span class="mi">300</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can mark multiple items as tempdata in two ways, depending on whether
 you want them all to have the same expiry time or not:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="c1">// Both &#39;item&#39; and &#39;item2&#39; will expire after 300 seconds</span>
-<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsTempdata</span><span class="p">([</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="s1">&#39;item2&#39;</span><span class="p">],</span> <span class="mi">300</span><span class="p">);</span>
+<span class="c1">// Both 'item' and 'item2' will expire after 300 seconds</span>
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsTempdata</span><span class="p">([</span><span class="s1">'item'</span><span class="p">,</span> <span class="s1">'item2'</span><span class="p">],</span> <span class="mi">300</span><span class="p">);</span>
 
-<span class="c1">// &#39;item&#39; will be erased after 300 seconds, while &#39;item2&#39;</span>
+<span class="c1">// 'item' will be erased after 300 seconds, while 'item2'</span>
 <span class="c1">// will do so after only 240 seconds</span>
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsTempdata</span><span class="p">([</span>
-    <span class="s1">&#39;item&#39;</span>  <span class="o">=&gt;</span> <span class="mi">300</span><span class="p">,</span>
-    <span class="s1">&#39;item2&#39;</span> <span class="o">=&gt;</span> <span class="mi">240</span><span class="p">,</span>
+    <span class="s1">'item'</span>  <span class="o">=&gt;</span> <span class="mi">300</span><span class="p">,</span>
+    <span class="s1">'item2'</span> <span class="o">=&gt;</span> <span class="mi">240</span><span class="p">,</span>
 <span class="p">]);</span>
 </pre></div>
 </div>
 <p>To add tempdata:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;value&#39;</span><span class="p">;</span>
-<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsTempdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="mi">300</span><span class="p">);</span> <span class="c1">// Expire in 5 minutes</span>
+<span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">'item'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'value'</span><span class="p">;</span>
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsTempdata</span><span class="p">(</span><span class="s1">'item'</span><span class="p">,</span> <span class="mi">300</span><span class="p">);</span> <span class="c1">// Expire in 5 minutes</span>
 </pre></div>
 </div>
 <p>Or alternatively, using the <code class="docutils literal notranslate"><span class="pre">setTempdata()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">setTempdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="mi">300</span><span class="p">);</span>
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">setTempdata</span><span class="p">(</span><span class="s1">'item'</span><span class="p">,</span> <span class="s1">'value'</span><span class="p">,</span> <span class="mi">300</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can also pass an array to <code class="docutils literal notranslate"><span class="pre">setTempdata()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$tempdata</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;newuser&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Thanks for joining!&#39;</span><span class="p">];</span>
+<span class="nv">$tempdata</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'newuser'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span> <span class="s1">'message'</span> <span class="o">=&gt;</span> <span class="s1">'Thanks for joining!'</span><span class="p">];</span>
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">setTempdata</span><span class="p">(</span><span class="nv">$tempdata</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="nv">$expire</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -724,7 +724,7 @@ time-to-live value of 300 seconds (or 5 minutes) will be used.</p>
 <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> superglobal array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$item</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">];</span>
+<span class="nv">$item</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">'item'</span><span class="p">];</span>
 </pre></div>
 </div>
 <div class="admonition important">
@@ -737,7 +737,7 @@ grabbing all data from the session, however.</p>
 other kind), you can also use the <code class="docutils literal notranslate"><span class="pre">getTempdata()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">getTempdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">getTempdata</span><span class="p">(</span><span class="s1">'item'</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -755,7 +755,7 @@ found.</p>
 unset it from the <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nb">unset</span><span class="p">(</span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">]);</span>
+<span class="nb">unset</span><span class="p">(</span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">'item'</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>However, this won’t remove the marker that makes this specific item to be
@@ -764,7 +764,7 @@ intend to reuse that same key in the same request, you’d want to use
 <code class="docutils literal notranslate"><span class="pre">removeTempdata()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">removeTempdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">removeTempdata</span><span class="p">(</span><span class="s1">'item'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -773,28 +773,28 @@ intend to reuse that same key in the same request, you’d want to use
 <p>Since session data values like Flashdata and Tempdata are differentiated only by internal flags, you can change a value’s type without rewriting its data.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">session</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setFlashdata</span><span class="p">(</span><span class="s1">&#39;alerts&#39;</span><span class="p">,</span> <span class="s1">&#39;Operation successful!&#39;</span><span class="p">);</span>
+<span class="nx">session</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setFlashdata</span><span class="p">(</span><span class="s1">'alerts'</span><span class="p">,</span> <span class="s1">'Operation successful!'</span><span class="p">);</span>
 
 <span class="cm">/*</span>
-<span class="cm"> * Get flash value &#39;Operation successful!&#39; in another controller.</span>
+<span class="cm"> * Get flash value 'Operation successful!' in another controller.</span>
 <span class="cm"> *</span>
-<span class="cm"> * echo session()-&gt;getFlashdata(&#39;alerts&#39;);</span>
+<span class="cm"> * echo session()-&gt;getFlashdata('alerts');</span>
 <span class="cm"> */</span>
 
 <span class="c1">// You can switch the session key type from Flashdata to Tempdata like this:</span>
-<span class="nx">session</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">markAsTempdata</span><span class="p">(</span><span class="s1">&#39;alerts&#39;</span><span class="p">);</span>
+<span class="nx">session</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">markAsTempdata</span><span class="p">(</span><span class="s1">'alerts'</span><span class="p">);</span>
 
 <span class="c1">// Or simply rewrite it directly</span>
-<span class="nx">session</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setTempdata</span><span class="p">(</span><span class="s1">&#39;alerts&#39;</span><span class="p">,</span> <span class="s1">&#39;Operation successful!&#39;</span><span class="p">);</span>
+<span class="nx">session</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setTempdata</span><span class="p">(</span><span class="s1">'alerts'</span><span class="p">,</span> <span class="s1">'Operation successful!'</span><span class="p">);</span>
 
 <span class="cm">/*</span>
-<span class="cm"> * Get temp value &#39;Operation successful!&#39; in another controller.</span>
+<span class="cm"> * Get temp value 'Operation successful!' in another controller.</span>
 <span class="cm"> *</span>
-<span class="cm"> * echo session()-&gt;getTempdata(&#39;alerts&#39;);</span>
+<span class="cm"> * echo session()-&gt;getTempdata('alerts');</span>
 <span class="cm"> *</span>
-<span class="cm"> * But flash value will be empty &#39;null&#39;.</span>
+<span class="cm"> * But flash value will be empty 'null'.</span>
 <span class="cm"> *</span>
-<span class="cm"> * echo session()-&gt;getFlashdata(&#39;alerts&#39;);</span>
+<span class="cm"> * echo session()-&gt;getFlashdata('alerts');</span>
 <span class="cm"> */</span>
 </pre></div>
 </div>
@@ -1089,7 +1089,7 @@ you would do this:</p>
     <span class="k">public</span> <span class="nx">string</span> <span class="nv">$driver</span> <span class="o">=</span> <span class="nx">DatabaseHandler</span><span class="o">::</span><span class="na">class</span><span class="p">;</span>
 
     <span class="c1">// ...</span>
-    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$savePath</span> <span class="o">=</span> <span class="s1">&#39;ci_sessions&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$savePath</span> <span class="o">=</span> <span class="s1">'ci_sessions'</span><span class="p">;</span>
 
     <span class="c1">// ...</span>
 <span class="p">}</span>
@@ -1110,14 +1110,14 @@ you would do this:</p>
 </pre></div>
 </div>
 <p>For PostgreSQL:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">CREATE</span> <span class="nx">TABLE</span> <span class="s2">&quot;ci_sessions&quot;</span> <span class="p">(</span>
-    <span class="s2">&quot;id&quot;</span> <span class="nx">varchar</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-    <span class="s2">&quot;ip_address&quot;</span> <span class="nx">inet</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-    <span class="s2">&quot;timestamp&quot;</span> <span class="nx">timestamptz</span> <span class="k">DEFAULT</span> <span class="nx">CURRENT_TIMESTAMP</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-    <span class="s2">&quot;data&quot;</span> <span class="nx">bytea</span> <span class="k">DEFAULT</span> <span class="s1">&#39;&#39;</span> <span class="k">NOT</span> <span class="k">NULL</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">CREATE</span> <span class="nx">TABLE</span> <span class="s2">"ci_sessions"</span> <span class="p">(</span>
+    <span class="s2">"id"</span> <span class="nx">varchar</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="s2">"ip_address"</span> <span class="nx">inet</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="s2">"timestamp"</span> <span class="nx">timestamptz</span> <span class="k">DEFAULT</span> <span class="nx">CURRENT_TIMESTAMP</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="s2">"data"</span> <span class="nx">bytea</span> <span class="k">DEFAULT</span> <span class="s1">''</span> <span class="k">NOT</span> <span class="k">NULL</span>
 <span class="p">);</span>
 
-<span class="nx">CREATE</span> <span class="nx">INDEX</span> <span class="s2">&quot;ci_sessions_timestamp&quot;</span> <span class="nx">ON</span> <span class="s2">&quot;ci_sessions&quot;</span> <span class="p">(</span><span class="s2">&quot;timestamp&quot;</span><span class="p">);</span>
+<span class="nx">CREATE</span> <span class="nx">INDEX</span> <span class="s2">"ci_sessions_timestamp"</span> <span class="nx">ON</span> <span class="s2">"ci_sessions"</span> <span class="p">(</span><span class="s2">"timestamp"</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -1145,7 +1145,7 @@ setting</strong>. The examples below work both on MySQL and PostgreSQL:</p>
 <p class="admonition-title">Important</p>
 <p>If you don’t add the correct primary key, the following error
 may occur:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">Uncaught</span> <span class="nx">mysqli_sql_exception</span><span class="o">:</span> <span class="nx">Duplicate</span> <span class="nx">entry</span> <span class="s1">&#39;ci_session:***&#39;</span> <span class="k">for</span> <span class="nb">key</span> <span class="s1">&#39;ci_sessions.PRIMARY&#39;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">Uncaught</span> <span class="nx">mysqli_sql_exception</span><span class="o">:</span> <span class="nx">Duplicate</span> <span class="nx">entry</span> <span class="s1">'ci_session:***'</span> <span class="k">for</span> <span class="nb">key</span> <span class="s1">'ci_sessions.PRIMARY'</span>
 </pre></div>
 </div>
 </div>
@@ -1165,7 +1165,7 @@ in the <strong>app/Config/Session.php</strong> file to the name of the group to 
 <span class="k">class</span> <span class="nc">Session</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="c1">// ...</span>
-    <span class="k">public</span> <span class="o">?</span><span class="nx">string</span> <span class="nv">$DBGroup</span> <span class="o">=</span> <span class="s1">&#39;groupName&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="o">?</span><span class="nx">string</span> <span class="nv">$DBGroup</span> <span class="o">=</span> <span class="s1">'groupName'</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1230,14 +1230,14 @@ sufficient:</p>
     <span class="k">public</span> <span class="nx">string</span> <span class="nv">$driver</span> <span class="o">=</span> <span class="nx">RedisHandler</span><span class="o">::</span><span class="na">class</span><span class="p">;</span>
 
     <span class="c1">// ...</span>
-    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$savePath</span> <span class="o">=</span> <span class="s1">&#39;tcp://localhost:6379&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$savePath</span> <span class="o">=</span> <span class="s1">'tcp://localhost:6379'</span><span class="p">;</span>
 
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>Starting with v4.5.0, you can use Redis ACL (username and password):</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">string</span> <span class="nv">$savePath</span> <span class="o">=</span> <span class="s1">&#39;tcp://localhost:6379?auth[user]=username&amp;auth[pass]=password&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">string</span> <span class="nv">$savePath</span> <span class="o">=</span> <span class="s1">'tcp://localhost:6379?auth[user]=username&amp;auth[pass]=password'</span><span class="p">;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -1284,7 +1284,7 @@ being just a <code class="docutils literal notranslate"><span class="pre">host:p
     <span class="k">public</span> <span class="nx">string</span> <span class="nv">$driver</span> <span class="o">=</span> <span class="nx">MemcachedHandler</span><span class="o">::</span><span class="na">class</span><span class="p">;</span>
 
     <span class="c1">// ...</span>
-    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$savePath</span> <span class="o">=</span> <span class="s1">&#39;localhost:11211&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$savePath</span> <span class="o">=</span> <span class="s1">'localhost:11211'</span><span class="p">;</span>
 
     <span class="c1">// ...</span>
 <span class="p">}</span>
@@ -1311,7 +1311,7 @@ separate the multiple server paths with commas:</p>
 
     <span class="c1">// localhost will be given higher priority (5) here,</span>
     <span class="c1">// compared to 192.0.2.1 with a weight of 1.</span>
-    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$savePath</span> <span class="o">=</span> <span class="s1">&#39;localhost:11211:5,192.0.2.1:11211:1&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$savePath</span> <span class="o">=</span> <span class="s1">'localhost:11211:5,192.0.2.1:11211:1'</span><span class="p">;</span>
 
     <span class="c1">// ...</span>
 <span class="p">}</span>
@@ -1334,7 +1334,7 @@ separate the multiple server paths with commas:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

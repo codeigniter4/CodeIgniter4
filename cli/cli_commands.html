@@ -347,9 +347,9 @@ should contain the following code:</p>
 
 <span class="k">class</span> <span class="nc">AppInfo</span> <span class="k">extends</span> <span class="nx">BaseCommand</span>
 <span class="p">{</span>
-    <span class="k">protected</span> <span class="nv">$group</span>       <span class="o">=</span> <span class="s1">&#39;Demo&#39;</span><span class="p">;</span>
-    <span class="k">protected</span> <span class="nv">$name</span>        <span class="o">=</span> <span class="s1">&#39;app:info&#39;</span><span class="p">;</span>
-    <span class="k">protected</span> <span class="nv">$description</span> <span class="o">=</span> <span class="s1">&#39;Displays basic application information.&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$group</span>       <span class="o">=</span> <span class="s1">'Demo'</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$name</span>        <span class="o">=</span> <span class="s1">'app:info'</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$description</span> <span class="o">=</span> <span class="s1">'Displays basic application information.'</span><span class="p">;</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">(</span><span class="k">array</span> <span class="nv">$params</span><span class="p">)</span>
     <span class="p">{</span>
@@ -377,7 +377,7 @@ any CLI arguments after the command name for your use. If the CLI string was:</p
 <p>Then <strong>foo</strong> is the command name, and the <code class="docutils literal notranslate"><span class="pre">$params</span></code> array would be:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$params</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="s1">&#39;baz&#39;</span><span class="p">];</span>
+<span class="nv">$params</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'bar'</span><span class="p">,</span> <span class="s1">'baz'</span><span class="p">];</span>
 </pre></div>
 </div>
 <p>This can also be accessed through the <a class="reference internal" href="cli_library.html"><span class="doc">CLI</span></a> library, but this already has your command removed
@@ -396,12 +396,12 @@ from the string. These parameters can be used to customize how your scripts beha
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">(</span><span class="k">array</span> <span class="nv">$params</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;PHP Version: &#39;</span> <span class="o">.</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="k">PHP_VERSION</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">));</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;CI Version: &#39;</span> <span class="o">.</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="nx">\CodeIgniter\CodeIgniter</span><span class="o">::</span><span class="na">CI_VERSION</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">));</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;APPPATH: &#39;</span> <span class="o">.</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="nx">APPPATH</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">));</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;SYSTEMPATH: &#39;</span> <span class="o">.</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="nx">SYSTEMPATH</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">));</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;ROOTPATH: &#39;</span> <span class="o">.</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="nx">ROOTPATH</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">));</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Included files: &#39;</span> <span class="o">.</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="nb">count</span><span class="p">(</span><span class="nb">get_included_files</span><span class="p">()),</span> <span class="s1">&#39;yellow&#39;</span><span class="p">));</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'PHP Version: '</span> <span class="o">.</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="k">PHP_VERSION</span><span class="p">,</span> <span class="s1">'yellow'</span><span class="p">));</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'CI Version: '</span> <span class="o">.</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="nx">\CodeIgniter\CodeIgniter</span><span class="o">::</span><span class="na">CI_VERSION</span><span class="p">,</span> <span class="s1">'yellow'</span><span class="p">));</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'APPPATH: '</span> <span class="o">.</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="nx">APPPATH</span><span class="p">,</span> <span class="s1">'yellow'</span><span class="p">));</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'SYSTEMPATH: '</span> <span class="o">.</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="nx">SYSTEMPATH</span><span class="p">,</span> <span class="s1">'yellow'</span><span class="p">));</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'ROOTPATH: '</span> <span class="o">.</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="nx">ROOTPATH</span><span class="p">,</span> <span class="s1">'yellow'</span><span class="p">));</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Included files: '</span> <span class="o">.</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="nb">count</span><span class="p">(</span><span class="nb">get_included_files</span><span class="p">()),</span> <span class="s1">'yellow'</span><span class="p">));</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -440,8 +440,8 @@ be familiar with when creating your own commands. It also has a <a class="refere
 <p>This method allows you to run other commands during the execution of your current command:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;command_one&#39;</span><span class="p">);</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;command_two&#39;</span><span class="p">,</span> <span class="nv">$params</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">'command_one'</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">'command_two'</span><span class="p">,</span> <span class="nv">$params</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -491,10 +491,10 @@ be familiar with when creating your own commands. It also has a <a class="refere
 up descriptions:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
 
-<span class="nv">$length</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">array_map</span><span class="p">(</span><span class="s1">&#39;strlen&#39;</span><span class="p">,</span> <span class="nb">array_keys</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">options</span><span class="p">)));</span>
+<span class="nv">$length</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">array_map</span><span class="p">(</span><span class="s1">'strlen'</span><span class="p">,</span> <span class="nb">array_keys</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">options</span><span class="p">)));</span>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">options</span> <span class="k">as</span> <span class="nv">$option</span> <span class="o">=&gt;</span> <span class="nv">$description</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">setPad</span><span class="p">(</span><span class="nv">$option</span><span class="p">,</span> <span class="nv">$length</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;green&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="nv">$description</span><span class="p">);</span>
+    <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">setPad</span><span class="p">(</span><span class="nv">$option</span><span class="p">,</span> <span class="nv">$length</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">'green'</span><span class="p">)</span> <span class="o">.</span> <span class="nv">$description</span><span class="p">);</span>
 <span class="p">}</span>
 <span class="cm">/*</span>
 <span class="cm"> * Output will be:</span>
@@ -540,7 +540,7 @@ up descriptions:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

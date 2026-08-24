@@ -466,25 +466,25 @@ and expected that the <code class="docutils literal notranslate"><span class="pr
 <p>If affected, configure the key properly via <code class="docutils literal notranslate"><span class="pre">Config\Encryption</span></code> or pass a custom config to the
 service instead of relying on <code class="docutils literal notranslate"><span class="pre">$params</span></code> side effects.</p>
 <p><strong>Example of affected code:</strong></p>
-<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">$config      = config(&#39;Encryption&#39;);</span>
-<span class="x">$config-&gt;key = &#39;your-encryption-key&#39;;</span>
-<span class="x">$handler     = service(&#39;encrypter&#39;, $config);</span>
-<span class="x">$handler-&gt;encrypt($data, &#39;temporary-key&#39;);</span>
-<span class="x">// Old: $handler-&gt;key is now &#39;temporary-key&#39;</span>
-<span class="x">// New: $handler-&gt;key remains unchanged (&#39;your-encryption-key&#39;)</span>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">$config      = config('Encryption');</span>
+<span class="x">$config-&gt;key = 'your-encryption-key';</span>
+<span class="x">$handler     = service('encrypter', $config);</span>
+<span class="x">$handler-&gt;encrypt($data, 'temporary-key');</span>
+<span class="x">// Old: $handler-&gt;key is now 'temporary-key'</span>
+<span class="x">// New: $handler-&gt;key remains unchanged ('your-encryption-key')</span>
 
 <span class="x">$handler-&gt;encrypt($moreData);</span>
-<span class="x">// Old: Would use &#39;temporary-key&#39;</span>
-<span class="x">// New: Uses default key (&#39;your-encryption-key&#39;)</span>
+<span class="x">// Old: Would use 'temporary-key'</span>
+<span class="x">// New: Uses default key ('your-encryption-key')</span>
 </pre></div>
 </div>
 <p><strong>Migration:</strong></p>
 <p>To use a different encryption key permanently, pass a custom config when creating the service:</p>
-<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">$config      = config(&#39;Encryption&#39;);</span>
-<span class="x">$config-&gt;key = &#39;your-custom-encryption-key&#39;;</span>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">$config      = config('Encryption');</span>
+<span class="x">$config-&gt;key = 'your-custom-encryption-key';</span>
 
 <span class="x">// Get a new handler instance with the custom config (not shared)</span>
-<span class="x">$handler = service(&#39;encrypter&#39;, $config, false);</span>
+<span class="x">$handler = service('encrypter', $config, false);</span>
 </pre></div>
 </div>
 </section>
@@ -791,7 +791,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

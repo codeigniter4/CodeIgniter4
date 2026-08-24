@@ -354,7 +354,7 @@ directory in the main project root:</p>
     <span class="c1">// ...</span>
     <span class="k">public</span> <span class="nv">$psr4</span> <span class="o">=</span> <span class="p">[</span>
         <span class="nx">APP_NAMESPACE</span> <span class="o">=&gt;</span> <span class="nx">APPPATH</span><span class="p">,</span>
-        <span class="s1">&#39;Acme\Blog&#39;</span>   <span class="o">=&gt;</span> <span class="nx">ROOTPATH</span> <span class="o">.</span> <span class="s1">&#39;acme/Blog&#39;</span><span class="p">,</span>
+        <span class="s1">'Acme\Blog'</span>   <span class="o">=&gt;</span> <span class="nx">ROOTPATH</span> <span class="o">.</span> <span class="s1">'acme/Blog'</span><span class="p">,</span>
     <span class="p">];</span>
 
     <span class="c1">// ...</span>
@@ -404,9 +404,9 @@ your classes. All we need to do is provide the list of paths to those files and 
     <span class="c1">// ...</span>
 
     <span class="k">public</span> <span class="nv">$files</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;path/to/my/functions.php&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;path/to/my/constants.php&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;path/to/my/bootstrap.php&#39;</span><span class="p">,</span>
+        <span class="s1">'path/to/my/functions.php'</span><span class="p">,</span>
+        <span class="s1">'path/to/my/constants.php'</span><span class="p">,</span>
+        <span class="s1">'path/to/my/bootstrap.php'</span><span class="p">,</span>
     <span class="p">];</span>
 
     <span class="c1">// ...</span>
@@ -460,9 +460,9 @@ PSR-0 namespaced packages will not be detected.</p>
     <span class="c1">// ...</span>
 
     <span class="k">public</span> <span class="nv">$composerPackages</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;only&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'only'</span> <span class="o">=&gt;</span> <span class="p">[</span>
             <span class="c1">// List up all packages to auto-discover</span>
-            <span class="s1">&#39;codeigniter4/shield&#39;</span><span class="p">,</span>
+            <span class="s1">'codeigniter4/shield'</span><span class="p">,</span>
         <span class="p">],</span>
     <span class="p">];</span>
 
@@ -482,9 +482,9 @@ PSR-0 namespaced packages will not be detected.</p>
     <span class="c1">// ...</span>
 
     <span class="k">public</span> <span class="nv">$composerPackages</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;exclude&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'exclude'</span> <span class="o">=&gt;</span> <span class="p">[</span>
             <span class="c1">// List up packages to exclude.</span>
-            <span class="s1">&#39;pestphp/pest&#39;</span><span class="p">,</span>
+            <span class="s1">'pestphp/pest'</span><span class="p">,</span>
         <span class="p">],</span>
     <span class="p">];</span>
 
@@ -555,9 +555,9 @@ following:</p>
     <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">Filters</span><span class="p">()</span><span class="o">:</span> <span class="k">array</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="p">[</span>
-            <span class="s1">&#39;aliases&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;session&#39;</span> <span class="o">=&gt;</span> <span class="nx">SessionAuth</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
-                <span class="s1">&#39;tokens&#39;</span>  <span class="o">=&gt;</span> <span class="nx">TokenAuth</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+            <span class="s1">'aliases'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">'session'</span> <span class="o">=&gt;</span> <span class="nx">SessionAuth</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+                <span class="s1">'tokens'</span>  <span class="o">=&gt;</span> <span class="nx">TokenAuth</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
             <span class="p">],</span>
         <span class="p">];</span>
     <span class="p">}</span>
@@ -575,7 +575,7 @@ It will cause errors if you attempt to redefine that class.</p>
 <p>In the module’s <strong>Config/Filters.php</strong> file, you need to define the aliases of the filters you use:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$filters</span><span class="o">-&gt;</span><span class="na">aliases</span><span class="p">[</span><span class="s1">&#39;menus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">\App\Filters\MenusFilter</span><span class="o">::</span><span class="na">class</span><span class="p">;</span>
+<span class="nv">$filters</span><span class="o">-&gt;</span><span class="na">aliases</span><span class="p">[</span><span class="s1">'menus'</span><span class="p">]</span> <span class="o">=</span> <span class="nx">\App\Filters\MenusFilter</span><span class="o">::</span><span class="na">class</span><span class="p">;</span>
 </pre></div>
 </div>
 </section>
@@ -586,14 +586,14 @@ but must be specified within the Routes file itself:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Routes.php</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">,</span> <span class="s1">&#39;\Acme\Blog\Controllers\Blog::index&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'blog'</span><span class="p">,</span> <span class="s1">'\Acme\Blog\Controllers\Blog::index'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>To reduce the amount of typing needed here, the <strong>group</strong> routing feature is helpful:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;namespace&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Acme\Blog\Controllers&#39;</span><span class="p">],</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;Blog::index&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">'blog'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'namespace'</span> <span class="o">=&gt;</span> <span class="s1">'Acme\Blog\Controllers'</span><span class="p">],</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'/'</span><span class="p">,</span> <span class="s1">'Blog::index'</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
 </div>
@@ -646,7 +646,7 @@ is provided. If calling on the CLI, you will need to provide double backslashes:
 directory:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">);</span>
+<span class="nx">helper</span><span class="p">(</span><span class="s1">'blog'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can specify namespaces. See <a class="reference internal" href="helpers.html#helpers-loading-from-specified-namespace"><span class="std std-ref">Loading from Specified Namespace</span></a> for details.</p>
@@ -693,7 +693,7 @@ information.</p>
 <p>Views can be loaded using the class namespace as described in the <a class="reference internal" href="../outgoing/views.html#namespaced-views"><span class="std std-ref">views</span></a> documentation:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;Acme\Blog\Views\index&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'Acme\Blog\Views\index'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -712,7 +712,7 @@ information.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

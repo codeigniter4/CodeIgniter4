@@ -404,16 +404,16 @@ namespace has changed.</p>
 <h4>Changing App Namespace<a class="headerlink" href="#changing-app-namespace" title="Link to this heading"></a></h4>
 <p>You may change this namespace by editing the <strong>app/Config/Constants.php</strong> file and setting the
 new namespace value under the <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code> setting:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nb">defined</span><span class="p">(</span><span class="s1">&#39;APP_NAMESPACE&#39;</span><span class="p">)</span> <span class="o">||</span> <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;APP_NAMESPACE&#39;</span><span class="p">,</span> <span class="s1">&#39;App&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nb">defined</span><span class="p">(</span><span class="s1">'APP_NAMESPACE'</span><span class="p">)</span> <span class="o">||</span> <span class="nb">define</span><span class="p">(</span><span class="s1">'APP_NAMESPACE'</span><span class="p">,</span> <span class="s1">'App'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>And if you use Composer autoloader, you also need to change the <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace
 in your <strong>composer.json</strong>, and run <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">dump-autoload</span></code>.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>{
     ...
-    &quot;autoload&quot;: {
-        &quot;psr-4&quot;: {
-            &quot;App\\&quot;: &quot;app/&quot;    &lt;-- Change
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"    &lt;-- Change
         },
         ...
     },
@@ -444,7 +444,7 @@ you can load those classes using the classmap:</p>
 <span class="p">{</span>
     <span class="c1">// ...</span>
     <span class="k">public</span> <span class="nv">$classmap</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;Markdown&#39;</span> <span class="o">=&gt;</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;ThirdParty/markdown.php&#39;</span><span class="p">,</span>
+        <span class="s1">'Markdown'</span> <span class="o">=&gt;</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">'ThirdParty/markdown.php'</span><span class="p">,</span>
     <span class="p">];</span>
 
     <span class="c1">// ...</span>
@@ -537,7 +537,7 @@ package via Composer, you also need to delete the cache file.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

@@ -363,28 +363,28 @@ as <strong>2022-01-31-013057_AddBlog.php</strong>.</p>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">up</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">addField</span><span class="p">([</span>
-            <span class="s1">&#39;blog_id&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;INT&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
-                <span class="s1">&#39;unsigned&#39;</span>       <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-                <span class="s1">&#39;auto_increment&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+            <span class="s1">'blog_id'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">'type'</span>           <span class="o">=&gt;</span> <span class="s1">'INT'</span><span class="p">,</span>
+                <span class="s1">'constraint'</span>     <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
+                <span class="s1">'unsigned'</span>       <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+                <span class="s1">'auto_increment'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
             <span class="p">],</span>
-            <span class="s1">&#39;blog_title&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;type&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;constraint&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;100&#39;</span><span class="p">,</span>
+            <span class="s1">'blog_title'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">'type'</span>       <span class="o">=&gt;</span> <span class="s1">'VARCHAR'</span><span class="p">,</span>
+                <span class="s1">'constraint'</span> <span class="o">=&gt;</span> <span class="s1">'100'</span><span class="p">,</span>
             <span class="p">],</span>
-            <span class="s1">&#39;blog_description&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;null&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+            <span class="s1">'blog_description'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">'type'</span> <span class="o">=&gt;</span> <span class="s1">'TEXT'</span><span class="p">,</span>
+                <span class="s1">'null'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
             <span class="p">],</span>
         <span class="p">]);</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="s1">&#39;blog_id&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="s1">'blog_id'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">'blog'</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">down</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">dropTable</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">dropTable</span><span class="p">(</span><span class="s1">'blog'</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -441,7 +441,7 @@ match the name of the database group exactly:</p>
 
 <span class="k">class</span> <span class="nc">AddBlog</span> <span class="k">extends</span> <span class="nx">Migration</span>
 <span class="p">{</span>
-    <span class="k">protected</span> <span class="nv">$DBGroup</span> <span class="o">=</span> <span class="s1">&#39;alternate_db_group&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$DBGroup</span> <span class="o">=</span> <span class="s1">'alternate_db_group'</span><span class="p">;</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">up</span><span class="p">()</span>
     <span class="p">{</span>
@@ -472,7 +472,7 @@ it finds in <strong>Database/Migrations</strong>.</p>
 configuration file:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$psr4</span> <span class="o">=</span> <span class="p">[</span>
     <span class="nx">APP_NAMESPACE</span> <span class="o">=&gt;</span> <span class="nx">APPPATH</span><span class="p">,</span>
-    <span class="s1">&#39;MyCompany&#39;</span>   <span class="o">=&gt;</span> <span class="nx">ROOTPATH</span> <span class="o">.</span> <span class="s1">&#39;MyCompany&#39;</span><span class="p">,</span>
+    <span class="s1">'MyCompany'</span>   <span class="o">=&gt;</span> <span class="nx">ROOTPATH</span> <span class="o">.</span> <span class="s1">'MyCompany'</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -777,7 +777,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

@@ -331,7 +331,7 @@ as it runs as a filter and has no manual interaction.</p>
 <p>If you find a case where you do need direct access though, you may load it through the Services file:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$security</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;security&#39;</span><span class="p">);</span>
+<span class="nv">$security</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'security'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -354,8 +354,8 @@ Otherwise, the CSRF protection may be bypassed.</p>
 <li><p>Check the request method in the controller method before processing.</p></li>
 </ol>
 <p>E.g.:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">&#39;post&#39;</span><span class="p">))</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">405</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setBody</span><span class="p">(</span><span class="s1">&#39;Method Not Allowed&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">'post'</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">405</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setBody</span><span class="p">(</span><span class="s1">'Method Not Allowed'</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -372,8 +372,8 @@ In previous versions, you need to use
 <li><p>Check the request method in the controller method before processing.</p></li>
 </ol>
 <p>E.g.:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">&#39;post&#39;</span><span class="p">))</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">405</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setBody</span><span class="p">(</span><span class="s1">&#39;Method Not Allowed&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">'post'</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">405</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setBody</span><span class="p">(</span><span class="s1">'Method Not Allowed'</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -406,7 +406,7 @@ on OWASP Cross-Site Request Forgery Prevention Cheat Sheet.</p>
 
 <span class="k">class</span> <span class="nc">Security</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
-    <span class="k">public</span> <span class="nv">$csrfProtection</span> <span class="o">=</span> <span class="s1">&#39;session&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nv">$csrfProtection</span> <span class="o">=</span> <span class="s1">'session'</span><span class="p">;</span>
 
     <span class="c1">// ...</span>
 <span class="p">}</span>
@@ -500,7 +500,7 @@ parameter value to <code class="docutils literal notranslate"><span class="pre">
 </pre></div>
 </div>
 <p>When redirected, an <code class="docutils literal notranslate"><span class="pre">error</span></code> flash message is set and can be displayed to the end user with the following code in your view:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">session</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getFlashdata</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">session</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getFlashdata</span><span class="p">(</span><span class="s1">'error'</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 <p>This provides a nicer experience than simply crashing.</p>
@@ -520,9 +520,9 @@ and enabling the <cite>csrf</cite> filter globally:</p>
 <span class="k">class</span> <span class="nc">Filters</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$globals</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-            <span class="c1">// &#39;honeypot&#39;,</span>
-            <span class="s1">&#39;csrf&#39;</span><span class="p">,</span>
+        <span class="s1">'before'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="c1">// 'honeypot',</span>
+            <span class="s1">'csrf'</span><span class="p">,</span>
         <span class="p">],</span>
     <span class="p">];</span>
 
@@ -542,8 +542,8 @@ by adding them as exceptions in the filter:</p>
 <span class="k">class</span> <span class="nc">Filters</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$globals</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-            <span class="s1">&#39;csrf&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;api/record/save&#39;</span><span class="p">]],</span>
+        <span class="s1">'before'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">'csrf'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'except'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'api/record/save'</span><span class="p">]],</span>
         <span class="p">],</span>
     <span class="p">];</span>
 
@@ -561,8 +561,8 @@ by adding them as exceptions in the filter:</p>
 <span class="k">class</span> <span class="nc">Filters</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$globals</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-            <span class="s1">&#39;csrf&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;api/record/[0-9]+&#39;</span><span class="p">]],</span>
+        <span class="s1">'before'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">'csrf'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'except'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'api/record/[0-9]+'</span><span class="p">]],</span>
         <span class="p">],</span>
     <span class="p">];</span>
 
@@ -580,8 +580,8 @@ by adding them as exceptions in the filter:</p>
 <span class="k">class</span> <span class="nc">Filters</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$methods</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;GET&#39;</span>  <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;csrf&#39;</span><span class="p">],</span>
-        <span class="s1">&#39;POST&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;csrf&#39;</span><span class="p">],</span>
+        <span class="s1">'GET'</span>  <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'csrf'</span><span class="p">],</span>
+        <span class="s1">'POST'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'csrf'</span><span class="p">],</span>
     <span class="p">];</span>
 
     <span class="c1">// ...</span>
@@ -607,12 +607,12 @@ In most cases it is requested using the <code class="docutils literal notranslat
 </div>
 <p>If not, then you can use the always available <code class="docutils literal notranslate"><span class="pre">csrf_token()</span></code>
 and <code class="docutils literal notranslate"><span class="pre">csrf_hash()</span></code> functions</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;hidden&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;&lt;?= csrf_token() ?&gt;&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;&lt;?= csrf_hash() ?&gt;&quot;</span> <span class="o">/&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"hidden"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"&lt;?= csrf_token() ?&gt;"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"&lt;?= csrf_hash() ?&gt;"</span> <span class="o">/&gt;</span>
 </pre></div>
 </div>
 <p>Additionally, you can use the <code class="docutils literal notranslate"><span class="pre">csrf_field()</span></code> method to generate this
 hidden input field for you:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Generates: &lt;input type=&quot;hidden&quot; name=&quot;{csrf_token}&quot; value=&quot;{csrf_hash}&quot; /&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Generates: &lt;input type="hidden" name="{csrf_token}" value="{csrf_hash}" /&gt;</span>
 <span class="o">&lt;?=</span> <span class="nx">csrf_field</span><span class="p">()</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
@@ -621,7 +621,7 @@ The next way to pass the CSRF token is a special Http header that’s name is av
 <code class="docutils literal notranslate"><span class="pre">csrf_header()</span></code> function.</p>
 <p>Additionally, you can use the <code class="docutils literal notranslate"><span class="pre">csrf_meta()</span></code> method to generate this handy
 meta tag for you:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Generates: &lt;meta name=&quot;{csrf_header}&quot; content=&quot;{csrf_hash}&quot; /&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Generates: &lt;meta name="{csrf_header}" content="{csrf_hash}" /&gt;</span>
 <span class="o">&lt;?=</span> <span class="nx">csrf_meta</span><span class="p">()</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
@@ -653,7 +653,7 @@ particularly useful for files that were supplied via user input. The first param
 the second optional parameter, <code class="docutils literal notranslate"><span class="pre">$relativePath</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$path</span> <span class="o">=</span> <span class="nv">$security</span><span class="o">-&gt;</span><span class="na">sanitizeFilename</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getVar</span><span class="p">(</span><span class="s1">&#39;filepath&#39;</span><span class="p">));</span>
+<span class="nv">$path</span> <span class="o">=</span> <span class="nv">$security</span><span class="o">-&gt;</span><span class="na">sanitizeFilename</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getVar</span><span class="p">(</span><span class="s1">'filepath'</span><span class="p">));</span>
 </pre></div>
 </div>
 <p>This method is an alias for the <code class="docutils literal notranslate"><span class="pre">sanitize_filename()</span></code> function from the Security helper.</p>
@@ -673,7 +673,7 @@ the second optional parameter, <code class="docutils literal notranslate"><span 
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

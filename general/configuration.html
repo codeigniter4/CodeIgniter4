@@ -368,14 +368,14 @@ environment variables at instantiation.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Get shared instance with config function</span>
-<span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span><span class="s1">&#39;Pager&#39;</span><span class="p">);</span>
+<span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span><span class="s1">'Pager'</span><span class="p">);</span>
 
 <span class="c1">// Access config class with namespace</span>
-<span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span><span class="s1">&#39;Config\\Pager&#39;</span><span class="p">);</span>
+<span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span><span class="s1">'Config\\Pager'</span><span class="p">);</span>
 <span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span><span class="nx">\Config\Pager</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
 
 <span class="c1">// Creating a new object with config function</span>
-<span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span><span class="s1">&#39;Pager&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+<span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span><span class="s1">'Pager'</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If no namespace is provided, it will look for the file in the <strong>app/Config</strong>
@@ -398,7 +398,7 @@ This behavior has been fixed in v4.4.0, and returns the specified instance.</p>
 <p>All configuration object properties are public, so you access the settings like any other property:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span><span class="s1">&#39;Pager&#39;</span><span class="p">);</span>
+<span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span><span class="s1">'Pager'</span><span class="p">);</span>
 <span class="c1">// Access settings as object properties</span>
 <span class="nv">$pageSize</span> <span class="o">=</span> <span class="nv">$config</span><span class="o">-&gt;</span><span class="na">perPage</span><span class="p">;</span>
 </pre></div>
@@ -421,8 +421,8 @@ The default file location (recommended for most cases) is <strong>app/Config</st
 
 <span class="k">class</span> <span class="nc">CustomClass</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
-    <span class="k">public</span> <span class="nv">$siteName</span>  <span class="o">=</span> <span class="s1">&#39;My Great Site&#39;</span><span class="p">;</span>
-    <span class="k">public</span> <span class="nv">$siteEmail</span> <span class="o">=</span> <span class="s1">&#39;webmaster@example.com&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nv">$siteName</span>  <span class="o">=</span> <span class="s1">'My Great Site'</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nv">$siteEmail</span> <span class="o">=</span> <span class="s1">'webmaster@example.com'</span><span class="p">;</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -466,9 +466,9 @@ overwritten.</p>
 <code class="docutils literal notranslate"><span class="pre">getenv()</span></code>, <code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code>, or <code class="docutils literal notranslate"><span class="pre">$_ENV</span></code>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$s3_bucket</span> <span class="o">=</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">&#39;S3_BUCKET&#39;</span><span class="p">);</span>
-<span class="nv">$s3_bucket</span> <span class="o">=</span> <span class="nv">$_ENV</span><span class="p">[</span><span class="s1">&#39;S3_BUCKET&#39;</span><span class="p">];</span>
-<span class="nv">$s3_bucket</span> <span class="o">=</span> <span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">&#39;S3_BUCKET&#39;</span><span class="p">];</span>
+<span class="nv">$s3_bucket</span> <span class="o">=</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">'S3_BUCKET'</span><span class="p">);</span>
+<span class="nv">$s3_bucket</span> <span class="o">=</span> <span class="nv">$_ENV</span><span class="p">[</span><span class="s1">'S3_BUCKET'</span><span class="p">];</span>
+<span class="nv">$s3_bucket</span> <span class="o">=</span> <span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">'S3_BUCKET'</span><span class="p">];</span>
 </pre></div>
 </div>
 <div class="admonition warning">
@@ -480,9 +480,9 @@ overwritten.</p>
 <h4>Nesting Variables<a class="headerlink" href="#nesting-variables" title="Link to this heading"></a></h4>
 <p>To save on typing, you can reuse variables that you’ve already specified in the file by wrapping the
 variable name within <code class="docutils literal notranslate"><span class="pre">${...}</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">BASE_DIR</span> <span class="o">=</span> <span class="s2">&quot;/var/webroot/project-root&quot;</span>
-<span class="nx">CACHE_DIR</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">BASE_DIR</span><span class="si">}</span><span class="s2">/cache&quot;</span>
-<span class="nx">TMP_DIR</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">BASE_DIR</span><span class="si">}</span><span class="s2">/tmp&quot;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">BASE_DIR</span> <span class="o">=</span> <span class="s2">"/var/webroot/project-root"</span>
+<span class="nx">CACHE_DIR</span> <span class="o">=</span> <span class="s2">"</span><span class="si">${</span><span class="nv">BASE_DIR</span><span class="si">}</span><span class="s2">/cache"</span>
+<span class="nx">TMP_DIR</span> <span class="o">=</span> <span class="s2">"</span><span class="si">${</span><span class="nv">BASE_DIR</span><span class="si">}</span><span class="s2">/tmp"</span>
 </pre></div>
 </div>
 </section>
@@ -495,12 +495,12 @@ This problem is solved by “<em>namespacing</em>” the variables.</p>
 when incorporated into the environment. This is done by including a distinguishing
 prefix followed by a dot (.), and then the variable name itself.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// not namespaced variables</span>
-<span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;George&quot;</span>
+<span class="nx">name</span> <span class="o">=</span> <span class="s2">"George"</span>
 <span class="nx">db</span> <span class="o">=</span> <span class="nx">my_db</span>
 
 <span class="c1">// namespaced variables</span>
-<span class="nx">address</span><span class="o">.</span><span class="nx">city</span> <span class="o">=</span> <span class="s2">&quot;Berlin&quot;</span>
-<span class="nx">address</span><span class="o">.</span><span class="nx">country</span> <span class="o">=</span> <span class="s2">&quot;Germany&quot;</span>
+<span class="nx">address</span><span class="o">.</span><span class="nx">city</span> <span class="o">=</span> <span class="s2">"Berlin"</span>
+<span class="nx">address</span><span class="o">.</span><span class="nx">country</span> <span class="o">=</span> <span class="s2">"Germany"</span>
 <span class="nx">frontend</span><span class="o">.</span><span class="nx">db</span> <span class="o">=</span> <span class="nx">sales</span>
 <span class="nx">backend</span><span class="o">.</span><span class="nx">db</span> <span class="o">=</span> <span class="nx">admin</span>
 <span class="nx">BackEnd</span><span class="o">.</span><span class="nx">db</span> <span class="o">=</span> <span class="nx">admin</span>
@@ -594,23 +594,23 @@ contains a dot.</p>
 <span class="nx">Config\SimpleConfig</span><span class="o">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">George</span>
 
 <span class="c1">// array namespaced variables</span>
-<span class="nx">Config\SimpleConfig</span><span class="o">.</span><span class="nx">address</span><span class="o">.</span><span class="nx">city</span> <span class="o">=</span> <span class="s2">&quot;Berlin&quot;</span>
-<span class="nx">Config\SimpleConfig</span><span class="o">.</span><span class="nx">address</span><span class="o">.</span><span class="nx">country</span> <span class="o">=</span> <span class="s2">&quot;Germany&quot;</span>
+<span class="nx">Config\SimpleConfig</span><span class="o">.</span><span class="nx">address</span><span class="o">.</span><span class="nx">city</span> <span class="o">=</span> <span class="s2">"Berlin"</span>
+<span class="nx">Config\SimpleConfig</span><span class="o">.</span><span class="nx">address</span><span class="o">.</span><span class="nx">country</span> <span class="o">=</span> <span class="s2">"Germany"</span>
 </pre></div>
 </div>
 <p>If this was referring to a SimpleConfig configuration object, the above example would be treated as:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$address</span><span class="p">[</span><span class="s1">&#39;city&#39;</span><span class="p">]</span>    <span class="o">=</span> <span class="s1">&#39;Berlin&#39;</span><span class="p">;</span>
-<span class="nv">$address</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Germany&#39;</span><span class="p">;</span>
+<span class="nv">$address</span><span class="p">[</span><span class="s1">'city'</span><span class="p">]</span>    <span class="o">=</span> <span class="s1">'Berlin'</span><span class="p">;</span>
+<span class="nv">$address</span><span class="p">[</span><span class="s1">'country'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'Germany'</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Any other elements of the <code class="docutils literal notranslate"><span class="pre">$address</span></code> property would be unchanged.</p>
 <p>You can also use the array property name as a prefix. If the environment file
 held the following then the result would be the same as above.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// array namespaced variables</span>
-<span class="nx">Config\SimpleConfig</span><span class="o">.</span><span class="nx">address</span><span class="o">.</span><span class="nx">city</span> <span class="o">=</span> <span class="s2">&quot;Berlin&quot;</span>
-<span class="nx">address</span><span class="o">.</span><span class="nx">country</span> <span class="o">=</span> <span class="s2">&quot;Germany&quot;</span>
+<span class="nx">Config\SimpleConfig</span><span class="o">.</span><span class="nx">address</span><span class="o">.</span><span class="nx">city</span> <span class="o">=</span> <span class="s2">"Berlin"</span>
+<span class="nx">address</span><span class="o">.</span><span class="nx">country</span> <span class="o">=</span> <span class="s2">"Germany"</span>
 </pre></div>
 </div>
 </section>
@@ -658,8 +658,8 @@ the single <code class="docutils literal notranslate"><span class="pre">Pager()<
     <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">Pager</span><span class="p">()</span><span class="o">:</span> <span class="k">array</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="p">[</span>
-            <span class="s1">&#39;templates&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;module_pager&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;MyModule\Views\Pager&#39;</span><span class="p">,</span>
+            <span class="s1">'templates'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">'module_pager'</span> <span class="o">=&gt;</span> <span class="s1">'MyModule\Views\Pager'</span><span class="p">,</span>
             <span class="p">],</span>
         <span class="p">];</span>
     <span class="p">}</span>
@@ -709,9 +709,9 @@ the method named for the configuration class and incorporate any returned proper
 <span class="k">class</span> <span class="nc">MySalesConfig</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nx">int</span> <span class="nv">$target</span>        <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
-    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$campaign</span>   <span class="o">=</span> <span class="s1">&#39;Winter Wonderland&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$campaign</span>   <span class="o">=</span> <span class="s1">'Winter Wonderland'</span><span class="p">;</span>
     <span class="k">public</span> <span class="k">static</span> <span class="nv">$registrars</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;\App\Models\RegionalSales&#39;</span><span class="p">,</span>
+        <span class="s1">'\App\Models\RegionalSales'</span><span class="p">,</span>
     <span class="p">];</span>
 <span class="p">}</span>
 </pre></div>
@@ -726,7 +726,7 @@ the method named for the configuration class and incorporate any returned proper
     <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">MySalesConfig</span><span class="p">()</span><span class="o">:</span> <span class="k">array</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="p">[</span>
-            <span class="s1">&#39;target&#39;</span> <span class="o">=&gt;</span> <span class="mi">45</span><span class="p">,</span>
+            <span class="s1">'target'</span> <span class="o">=&gt;</span> <span class="mi">45</span><span class="p">,</span>
         <span class="p">];</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -738,7 +738,7 @@ by treating <code class="docutils literal notranslate"><span class="pre">Regiona
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$target</span>   <span class="o">=</span> <span class="mi">45</span><span class="p">;</span>
-<span class="nv">$campaign</span> <span class="o">=</span> <span class="s1">&#39;Winter Wonderland&#39;</span><span class="p">;</span>
+<span class="nv">$campaign</span> <span class="o">=</span> <span class="s1">'Winter Wonderland'</span><span class="p">;</span>
 </pre></div>
 </div>
 </section>
@@ -761,20 +761,20 @@ the actual Config values.</p>
 </div>
 <p>The output is like the following:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Config\App#6 (12) (
-    public &#39;baseURL&#39; -&gt; string (22) &quot;http://localhost:8080/&quot;
-    public &#39;allowedHostnames&#39; -&gt; array (0) []
-    public &#39;indexPage&#39; -&gt; string (9) &quot;index.php&quot;
-    public &#39;uriProtocol&#39; -&gt; string (11) &quot;REQUEST_URI&quot;
-    public &#39;defaultLocale&#39; -&gt; string (2) &quot;en&quot;
-    public &#39;negotiateLocale&#39; -&gt; boolean false
-    public &#39;supportedLocales&#39; -&gt; array (1) [
-        0 =&gt; string (2) &quot;en&quot;
+    public 'baseURL' -&gt; string (22) "http://localhost:8080/"
+    public 'allowedHostnames' -&gt; array (0) []
+    public 'indexPage' -&gt; string (9) "index.php"
+    public 'uriProtocol' -&gt; string (11) "REQUEST_URI"
+    public 'defaultLocale' -&gt; string (2) "en"
+    public 'negotiateLocale' -&gt; boolean false
+    public 'supportedLocales' -&gt; array (1) [
+        0 =&gt; string (2) "en"
     ]
-    public &#39;appTimezone&#39; -&gt; string (3) &quot;UTC&quot;
-    public &#39;charset&#39; -&gt; string (5) &quot;UTF-8&quot;
-    public &#39;forceGlobalSecureRequests&#39; -&gt; boolean false
-    public &#39;proxyIPs&#39; -&gt; array (0) []
-    public &#39;CSPEnabled&#39; -&gt; boolean false
+    public 'appTimezone' -&gt; string (3) "UTC"
+    public 'charset' -&gt; string (5) "UTF-8"
+    public 'forceGlobalSecureRequests' -&gt; boolean false
+    public 'proxyIPs' -&gt; array (0) []
+    public 'CSPEnabled' -&gt; boolean false
 )
 
 Config Caching: Disabled
@@ -802,7 +802,7 @@ See <a class="reference internal" href="../concepts/factories.html#factories-con
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

@@ -322,34 +322,34 @@
     <span class="k">public</span> <span class="k">function</span> <span class="nf">up</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">addField</span><span class="p">([</span>
-            <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;unsigned&#39;</span>       <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-                <span class="s1">&#39;auto_increment&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+            <span class="s1">'id'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">'type'</span>           <span class="o">=&gt;</span> <span class="s1">'INTEGER'</span><span class="p">,</span>
+                <span class="s1">'unsigned'</span>       <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+                <span class="s1">'auto_increment'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
             <span class="p">],</span>
-            <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;type&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;constraint&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;255&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;null&#39;</span>       <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+            <span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">'type'</span>       <span class="o">=&gt;</span> <span class="s1">'VARCHAR'</span><span class="p">,</span>
+                <span class="s1">'constraint'</span> <span class="o">=&gt;</span> <span class="s1">'255'</span><span class="p">,</span>
+                <span class="s1">'null'</span>       <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
             <span class="p">],</span>
-            <span class="s1">&#39;created_at&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;DATETIME&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;null&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+            <span class="s1">'created_at'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">'type'</span> <span class="o">=&gt;</span> <span class="s1">'DATETIME'</span><span class="p">,</span>
+                <span class="s1">'null'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
             <span class="p">],</span>
-            <span class="s1">&#39;updated_at&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;DATETIME&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;null&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+            <span class="s1">'updated_at'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">'type'</span> <span class="o">=&gt;</span> <span class="s1">'DATETIME'</span><span class="p">,</span>
+                <span class="s1">'null'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
             <span class="p">],</span>
         <span class="p">]);</span>
 
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">addPrimaryKey</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">);</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">addUniqueKey</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">);</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">&#39;authors&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">addPrimaryKey</span><span class="p">(</span><span class="s1">'id'</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">addUniqueKey</span><span class="p">(</span><span class="s1">'name'</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">'authors'</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">down</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">dropTable</span><span class="p">(</span><span class="s1">&#39;authors&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">dropTable</span><span class="p">(</span><span class="s1">'authors'</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -367,43 +367,43 @@
     <span class="k">public</span> <span class="k">function</span> <span class="nf">up</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">addField</span><span class="p">([</span>
-            <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;unsigned&#39;</span>       <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-                <span class="s1">&#39;auto_increment&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+            <span class="s1">'id'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">'type'</span>           <span class="o">=&gt;</span> <span class="s1">'INTEGER'</span><span class="p">,</span>
+                <span class="s1">'unsigned'</span>       <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+                <span class="s1">'auto_increment'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
             <span class="p">],</span>
-            <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;type&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;constraint&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;255&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;null&#39;</span>       <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+            <span class="s1">'title'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">'type'</span>       <span class="o">=&gt;</span> <span class="s1">'VARCHAR'</span><span class="p">,</span>
+                <span class="s1">'constraint'</span> <span class="o">=&gt;</span> <span class="s1">'255'</span><span class="p">,</span>
+                <span class="s1">'null'</span>       <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
             <span class="p">],</span>
-            <span class="s1">&#39;author_id&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;type&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;unsigned&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-                <span class="s1">&#39;null&#39;</span>     <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+            <span class="s1">'author_id'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">'type'</span>     <span class="o">=&gt;</span> <span class="s1">'INTEGER'</span><span class="p">,</span>
+                <span class="s1">'unsigned'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+                <span class="s1">'null'</span>     <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
             <span class="p">],</span>
-            <span class="s1">&#39;year&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;null&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+            <span class="s1">'year'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">'type'</span> <span class="o">=&gt;</span> <span class="s1">'INTEGER'</span><span class="p">,</span>
+                <span class="s1">'null'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
             <span class="p">],</span>
-            <span class="s1">&#39;created_at&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;DATETIME&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;null&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+            <span class="s1">'created_at'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">'type'</span> <span class="o">=&gt;</span> <span class="s1">'DATETIME'</span><span class="p">,</span>
+                <span class="s1">'null'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
             <span class="p">],</span>
-            <span class="s1">&#39;updated_at&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;DATETIME&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;null&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+            <span class="s1">'updated_at'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">'type'</span> <span class="o">=&gt;</span> <span class="s1">'DATETIME'</span><span class="p">,</span>
+                <span class="s1">'null'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
             <span class="p">],</span>
         <span class="p">]);</span>
 
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">addPrimaryKey</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">);</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">addForeignKey</span><span class="p">(</span><span class="s1">&#39;author_id&#39;</span><span class="p">,</span> <span class="s1">&#39;authors&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">);</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">&#39;books&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">addPrimaryKey</span><span class="p">(</span><span class="s1">'id'</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">addForeignKey</span><span class="p">(</span><span class="s1">'author_id'</span><span class="p">,</span> <span class="s1">'authors'</span><span class="p">,</span> <span class="s1">'id'</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">'books'</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">down</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">dropTable</span><span class="p">(</span><span class="s1">&#39;books&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">dropTable</span><span class="p">(</span><span class="s1">'books'</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -435,40 +435,40 @@
     <span class="p">{</span>
         <span class="c1">// Define author data and insert</span>
         <span class="nv">$authorData</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="p">[</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Frank Herbert&#39;</span><span class="p">],</span>
-            <span class="p">[</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;William Gibson&#39;</span><span class="p">],</span>
-            <span class="p">[</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Ursula K. Le Guin&#39;</span><span class="p">],</span>
+            <span class="p">[</span><span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'Frank Herbert'</span><span class="p">],</span>
+            <span class="p">[</span><span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'William Gibson'</span><span class="p">],</span>
+            <span class="p">[</span><span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'Ursula K. Le Guin'</span><span class="p">],</span>
         <span class="p">];</span>
 
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;authors&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">insertBatch</span><span class="p">(</span><span class="nv">$authorData</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">'authors'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">insertBatch</span><span class="p">(</span><span class="nv">$authorData</span><span class="p">);</span>
 
         <span class="c1">// Get all inserted authors, keyed by name for easy lookup</span>
-        <span class="nv">$authors</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;authors&#39;</span><span class="p">)</span>
+        <span class="nv">$authors</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">'authors'</span><span class="p">)</span>
             <span class="o">-&gt;</span><span class="na">get</span><span class="p">()</span>
             <span class="o">-&gt;</span><span class="na">getResultArray</span><span class="p">();</span>
 
-        <span class="nv">$authorsByName</span> <span class="o">=</span> <span class="nb">array_column</span><span class="p">(</span><span class="nv">$authors</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">);</span>
+        <span class="nv">$authorsByName</span> <span class="o">=</span> <span class="nb">array_column</span><span class="p">(</span><span class="nv">$authors</span><span class="p">,</span> <span class="s1">'id'</span><span class="p">,</span> <span class="s1">'name'</span><span class="p">);</span>
 
         <span class="c1">// Define books with author references</span>
         <span class="nv">$books</span> <span class="o">=</span> <span class="p">[</span>
             <span class="p">[</span>
-                <span class="s1">&#39;title&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;Dune&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;author_id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$authorsByName</span><span class="p">[</span><span class="s1">&#39;Frank Herbert&#39;</span><span class="p">],</span>
-                <span class="s1">&#39;year&#39;</span>      <span class="o">=&gt;</span> <span class="mi">1965</span><span class="p">,</span>
+                <span class="s1">'title'</span>     <span class="o">=&gt;</span> <span class="s1">'Dune'</span><span class="p">,</span>
+                <span class="s1">'author_id'</span> <span class="o">=&gt;</span> <span class="nv">$authorsByName</span><span class="p">[</span><span class="s1">'Frank Herbert'</span><span class="p">],</span>
+                <span class="s1">'year'</span>      <span class="o">=&gt;</span> <span class="mi">1965</span><span class="p">,</span>
             <span class="p">],</span>
             <span class="p">[</span>
-                <span class="s1">&#39;title&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;Neuromancer&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;author_id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$authorsByName</span><span class="p">[</span><span class="s1">&#39;William Gibson&#39;</span><span class="p">],</span>
-                <span class="s1">&#39;year&#39;</span>      <span class="o">=&gt;</span> <span class="mi">1984</span><span class="p">,</span>
+                <span class="s1">'title'</span>     <span class="o">=&gt;</span> <span class="s1">'Neuromancer'</span><span class="p">,</span>
+                <span class="s1">'author_id'</span> <span class="o">=&gt;</span> <span class="nv">$authorsByName</span><span class="p">[</span><span class="s1">'William Gibson'</span><span class="p">],</span>
+                <span class="s1">'year'</span>      <span class="o">=&gt;</span> <span class="mi">1984</span><span class="p">,</span>
             <span class="p">],</span>
             <span class="p">[</span>
-                <span class="s1">&#39;title&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;The Left Hand of Darkness&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;author_id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$authorsByName</span><span class="p">[</span><span class="s1">&#39;Ursula K. Le Guin&#39;</span><span class="p">],</span>
-                <span class="s1">&#39;year&#39;</span>      <span class="o">=&gt;</span> <span class="mi">1969</span><span class="p">,</span>
+                <span class="s1">'title'</span>     <span class="o">=&gt;</span> <span class="s1">'The Left Hand of Darkness'</span><span class="p">,</span>
+                <span class="s1">'author_id'</span> <span class="o">=&gt;</span> <span class="nv">$authorsByName</span><span class="p">[</span><span class="s1">'Ursula K. Le Guin'</span><span class="p">],</span>
+                <span class="s1">'year'</span>      <span class="o">=&gt;</span> <span class="mi">1969</span><span class="p">,</span>
             <span class="p">],</span>
         <span class="p">];</span>
 
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;books&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">insertBatch</span><span class="p">(</span><span class="nv">$books</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">'books'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">insertBatch</span><span class="p">(</span><span class="nv">$books</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -498,9 +498,9 @@
 
 <span class="k">class</span> <span class="nc">AuthorModel</span> <span class="k">extends</span> <span class="nx">Model</span>
 <span class="p">{</span>
-    <span class="k">protected</span> <span class="nv">$table</span>         <span class="o">=</span> <span class="s1">&#39;authors&#39;</span><span class="p">;</span>
-    <span class="k">protected</span> <span class="nv">$primaryKey</span>    <span class="o">=</span> <span class="s1">&#39;id&#39;</span><span class="p">;</span>
-    <span class="k">protected</span> <span class="nv">$allowedFields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">];</span>
+    <span class="k">protected</span> <span class="nv">$table</span>         <span class="o">=</span> <span class="s1">'authors'</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$primaryKey</span>    <span class="o">=</span> <span class="s1">'id'</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$allowedFields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'name'</span><span class="p">];</span>
     <span class="k">protected</span> <span class="nv">$useTimestamps</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
@@ -514,9 +514,9 @@
 
 <span class="k">class</span> <span class="nc">BookModel</span> <span class="k">extends</span> <span class="nx">Model</span>
 <span class="p">{</span>
-    <span class="k">protected</span> <span class="nv">$table</span>         <span class="o">=</span> <span class="s1">&#39;books&#39;</span><span class="p">;</span>
-    <span class="k">protected</span> <span class="nv">$primaryKey</span>    <span class="o">=</span> <span class="s1">&#39;id&#39;</span><span class="p">;</span>
-    <span class="k">protected</span> <span class="nv">$allowedFields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;author_id&#39;</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">];</span>
+    <span class="k">protected</span> <span class="nv">$table</span>         <span class="o">=</span> <span class="s1">'books'</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$primaryKey</span>    <span class="o">=</span> <span class="s1">'id'</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$allowedFields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'title'</span><span class="p">,</span> <span class="s1">'author_id'</span><span class="p">,</span> <span class="s1">'year'</span><span class="p">];</span>
     <span class="k">protected</span> <span class="nv">$useTimestamps</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
@@ -539,7 +539,7 @@ You’ll build the <code class="docutils literal notranslate"><span class="pre">
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

@@ -331,14 +331,14 @@ actions:</p>
 in your controller by calling the global function <code class="docutils literal notranslate"><span class="pre">service()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$image</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">);</span>
+<span class="nv">$image</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'image'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can pass the alias for the image library you wish to use into the global
 function <code class="docutils literal notranslate"><span class="pre">service()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$image</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;imagick&#39;</span><span class="p">);</span>
+<span class="nv">$image</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'image'</span><span class="p">,</span> <span class="s1">'imagick'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The available Handlers are as follows:</p>
@@ -374,9 +374,9 @@ intend to perform, then call one of the available processing functions.</p>
 <p>For example, to create an image thumbnail you’ll do this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$image</span><span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">fit</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;center&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic_thumb.jpg&#39;</span><span class="p">);</span>
+<span class="nv">$image</span><span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">'/path/to/image/mypic.jpg'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">fit</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">'center'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">'/path/to/image/mypic_thumb.jpg'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The above code tells the library to look for an image
@@ -391,11 +391,11 @@ is used and passed through each method, applying the results on top of the
 previous results:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$image</span><span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
+<span class="nv">$image</span><span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">'/path/to/image/mypic.jpg'</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">reorient</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">rotate</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">crop</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic_thumb.jpg&#39;</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">'/path/to/image/mypic_thumb.jpg'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This example would take the same image and first fix any mobile phone orientation issues,
@@ -431,9 +431,9 @@ input, validate it against the formats your application allows, including any fo
 </div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$image</span><span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
+<span class="nv">$image</span><span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">'/path/to/image/mypic.jpg'</span><span class="p">)</span>
     <span class="c1">// processing methods</span>
-    <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/image/my_low_quality_pic.jpg&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">'/path/to/image/my_low_quality_pic.jpg'</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -444,9 +444,9 @@ input, validate it against the formats your application allows, including any fo
 You will need to include the image resource or you will end up with an exact copy:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$image</span><span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
+<span class="nv">$image</span><span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">'/path/to/image/mypic.jpg'</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">withResource</span><span class="p">()</span>
-    <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/image/my_low_quality_pic.jpg&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">'/path/to/image/my_low_quality_pic.jpg'</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -470,12 +470,12 @@ the error message. A good practice is to catch the exceptions, showing an
 error upon failure, like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$image</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">);</span>
+<span class="nv">$image</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'image'</span><span class="p">);</span>
 
 <span class="k">try</span> <span class="p">{</span>
-    <span class="nv">$image</span><span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
-        <span class="o">-&gt;</span><span class="na">fit</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;center&#39;</span><span class="p">)</span>
-        <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic_thumb.jpg&#39;</span><span class="p">);</span>
+    <span class="nv">$image</span><span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">'/path/to/image/mypic.jpg'</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">fit</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">'center'</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">'/path/to/image/mypic_thumb.jpg'</span><span class="p">);</span>
 <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">\CodeIgniter\Images\Exceptions\ImageException</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getMessage</span><span class="p">();</span>
 <span class="p">}</span>
@@ -485,7 +485,7 @@ error upon failure, like this:</p>
 <h3><a class="toc-backref" href="#id5" role="doc-backlink">Cropping Images</a><a class="headerlink" href="#cropping-images" title="Link to this heading"></a></h3>
 <p>Images can be cropped so that only a portion of the original image remains. This is often used when creating
 thumbnail images that should match a certain size/aspect ratio. This is handled with the <code class="docutils literal notranslate"><span class="pre">crop()</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">crop</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$width</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$height</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$x</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$y</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">bool</span> <span class="nv">$maintainRatio</span> <span class="o">=</span> <span class="k">false</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$masterDim</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">crop</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$width</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$height</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$x</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$y</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">bool</span> <span class="nv">$maintainRatio</span> <span class="o">=</span> <span class="k">false</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$masterDim</span> <span class="o">=</span> <span class="s1">'auto'</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -500,18 +500,18 @@ thumbnail images that should match a certain size/aspect ratio. This is handled 
 offset values:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$info</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
+<span class="nv">$info</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'image'</span><span class="p">,</span> <span class="s1">'imagick'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">'/path/to/image/mypic.jpg'</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">getFile</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">getProperties</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
 
-<span class="nv">$xOffset</span> <span class="o">=</span> <span class="p">(</span><span class="nv">$info</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">25</span><span class="p">;</span>
-<span class="nv">$yOffset</span> <span class="o">=</span> <span class="p">(</span><span class="nv">$info</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">25</span><span class="p">;</span>
+<span class="nv">$xOffset</span> <span class="o">=</span> <span class="p">(</span><span class="nv">$info</span><span class="p">[</span><span class="s1">'width'</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">25</span><span class="p">;</span>
+<span class="nv">$yOffset</span> <span class="o">=</span> <span class="p">(</span><span class="nv">$info</span><span class="p">[</span><span class="s1">'height'</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">25</span><span class="p">;</span>
 
-<span class="nx">service</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
+<span class="nx">service</span><span class="p">(</span><span class="s1">'image'</span><span class="p">,</span> <span class="s1">'imagick'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">'/path/to/image/mypic.jpg'</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">crop</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="nv">$xOffset</span><span class="p">,</span> <span class="nv">$yOffset</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">'/path/to/new/image.jpg'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -525,10 +525,10 @@ offset values:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">$imageType</span></code> is one of PHP’s image type constants (see for example <a class="reference external" href="https://www.php.net/manual/en/function.image-type-to-mime-type.php">https://www.php.net/manual/en/function.image-type-to-mime-type.php</a>):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">service</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
+<span class="nx">service</span><span class="p">(</span><span class="s1">'image'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">'/path/to/image/mypic.jpg'</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">convert</span><span class="p">(</span><span class="nx">IMAGETYPE_PNG</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.png&#39;</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">'/path/to/new/image.png'</span><span class="p">);</span>
 </pre></div>
 </div>
 </li>
@@ -546,7 +546,7 @@ offset values:</p>
 <li><p>Crop the original image.</p></li>
 <li><p>Resize to the final dimensions.</p></li>
 </ul>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">fit</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$width</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$height</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$position</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">fit</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$width</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$height</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$position</span> <span class="o">=</span> <span class="s1">'center'</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -557,10 +557,10 @@ offset values:</p>
 <p>This provides a much simpler way to crop that will always maintain the aspect ratio:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">service</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">fit</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
+<span class="nx">service</span><span class="p">(</span><span class="s1">'image'</span><span class="p">,</span> <span class="s1">'imagick'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">'/path/to/image/mypic.jpg'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">fit</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="s1">'left'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">'/path/to/new/image.jpg'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -580,15 +580,15 @@ offset values:</p>
 </ul>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">service</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.png&#39;</span><span class="p">)</span>
+<span class="nx">service</span><span class="p">(</span><span class="s1">'image'</span><span class="p">,</span> <span class="s1">'imagick'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">'/path/to/image/mypic.png'</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">flatten</span><span class="p">()</span>
-    <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">'/path/to/new/image.jpg'</span><span class="p">);</span>
 
-<span class="nx">service</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.png&#39;</span><span class="p">)</span>
+<span class="nx">service</span><span class="p">(</span><span class="s1">'image'</span><span class="p">,</span> <span class="s1">'imagick'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">'/path/to/image/mypic.png'</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">flatten</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">112</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">'/path/to/new/image.jpg'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -603,17 +603,17 @@ offset values:</p>
 </ul>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">service</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">flip</span><span class="p">(</span><span class="s1">&#39;horizontal&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
+<span class="nx">service</span><span class="p">(</span><span class="s1">'image'</span><span class="p">,</span> <span class="s1">'imagick'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">'/path/to/image/mypic.jpg'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">flip</span><span class="p">(</span><span class="s1">'horizontal'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">'/path/to/new/image.jpg'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
 <section id="resizing-images">
 <h3><a class="toc-backref" href="#id10" role="doc-backlink">Resizing Images</a><a class="headerlink" href="#resizing-images" title="Link to this heading"></a></h3>
 <p>Images can be resized to fit any dimension you require with the <code class="docutils literal notranslate"><span class="pre">resize()</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">resize</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$width</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$height</span><span class="p">,</span> <span class="nx">bool</span> <span class="nv">$maintainRatio</span> <span class="o">=</span> <span class="k">false</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$masterDim</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">resize</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$width</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$height</span><span class="p">,</span> <span class="nx">bool</span> <span class="nv">$maintainRatio</span> <span class="o">=</span> <span class="k">false</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$masterDim</span> <span class="o">=</span> <span class="s1">'auto'</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -627,10 +627,10 @@ image to fit the desired dimensions. If <code class="docutils literal notranslat
 while the other dimension will be altered to match the original image’s aspect ratio.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">service</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">resize</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="s1">&#39;height&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
+<span class="nx">service</span><span class="p">(</span><span class="s1">'image'</span><span class="p">,</span> <span class="s1">'imagick'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">'/path/to/image/mypic.jpg'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">resize</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="s1">'height'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">'/path/to/new/image.jpg'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -661,17 +661,17 @@ products.</p>
 that allow you to specify how the text should be displayed:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">service</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">text</span><span class="p">(</span><span class="s1">&#39;Copyright 2017 My Photo Co&#39;</span><span class="p">,</span> <span class="p">[</span>
-        <span class="s1">&#39;color&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;#fff&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;opacity&#39;</span>    <span class="o">=&gt;</span> <span class="mf">0.5</span><span class="p">,</span>
-        <span class="s1">&#39;withShadow&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-        <span class="s1">&#39;hAlign&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;vAlign&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;bottom&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;fontSize&#39;</span>   <span class="o">=&gt;</span> <span class="mi">20</span><span class="p">,</span>
+<span class="nx">service</span><span class="p">(</span><span class="s1">'image'</span><span class="p">,</span> <span class="s1">'imagick'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">'/path/to/image/mypic.jpg'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">text</span><span class="p">(</span><span class="s1">'Copyright 2017 My Photo Co'</span><span class="p">,</span> <span class="p">[</span>
+        <span class="s1">'color'</span>      <span class="o">=&gt;</span> <span class="s1">'#fff'</span><span class="p">,</span>
+        <span class="s1">'opacity'</span>    <span class="o">=&gt;</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="s1">'withShadow'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+        <span class="s1">'hAlign'</span>     <span class="o">=&gt;</span> <span class="s1">'center'</span><span class="p">,</span>
+        <span class="s1">'vAlign'</span>     <span class="o">=&gt;</span> <span class="s1">'bottom'</span><span class="p">,</span>
+        <span class="s1">'fontSize'</span>   <span class="o">=&gt;</span> <span class="mi">20</span><span class="p">,</span>
     <span class="p">])</span>
-    <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">'/path/to/new/image.jpg'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The possible options that are recognized are as follows:</p>
@@ -703,10 +703,10 @@ as they’re required for image display. However, all privacy-sensitive informat
 camera details, and timestamps will be completely removed.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">service</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
+<span class="nx">service</span><span class="p">(</span><span class="s1">'image'</span><span class="p">,</span> <span class="s1">'imagick'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">'/path/to/image/mypic.jpg'</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">clearMetadata</span><span class="p">()</span>
-    <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">'/path/to/new/image.jpg'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -725,7 +725,7 @@ camera details, and timestamps will be completely removed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

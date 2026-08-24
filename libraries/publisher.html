@@ -357,21 +357,21 @@ or source and destination into the constructor:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Publisher\Publisher</span><span class="p">;</span>
 
-<span class="nv">$vendorPublisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="nx">ROOTPATH</span> <span class="o">.</span> <span class="s1">&#39;vendor&#39;</span><span class="p">);</span>
-<span class="nv">$filterPublisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="s1">&#39;/path/to/module/Filters&#39;</span><span class="p">,</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Filters&#39;</span><span class="p">);</span>
+<span class="nv">$vendorPublisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="nx">ROOTPATH</span> <span class="o">.</span> <span class="s1">'vendor'</span><span class="p">);</span>
+<span class="nv">$filterPublisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="s1">'/path/to/module/Filters'</span><span class="p">,</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">'Filters'</span><span class="p">);</span>
 
 <span class="c1">// Once the source and destination are set you may start adding relative input files</span>
-<span class="nv">$frameworkPublisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="nx">ROOTPATH</span> <span class="o">.</span> <span class="s1">&#39;vendor/codeigniter4/codeigniter4&#39;</span><span class="p">);</span>
+<span class="nv">$frameworkPublisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="nx">ROOTPATH</span> <span class="o">.</span> <span class="s1">'vendor/codeigniter4/codeigniter4'</span><span class="p">);</span>
 
-<span class="c1">// All &quot;path&quot; commands are relative to $source</span>
-<span class="nv">$frameworkPublisher</span><span class="o">-&gt;</span><span class="na">addPath</span><span class="p">(</span><span class="s1">&#39;app/Config/Cookie.php&#39;</span><span class="p">);</span>
+<span class="c1">// All "path" commands are relative to $source</span>
+<span class="nv">$frameworkPublisher</span><span class="o">-&gt;</span><span class="na">addPath</span><span class="p">(</span><span class="s1">'app/Config/Cookie.php'</span><span class="p">);</span>
 
 <span class="c1">// You may also add from outside the source, but the files will not be merged into subdirectories</span>
 <span class="nv">$frameworkPublisher</span><span class="o">-&gt;</span><span class="na">addFiles</span><span class="p">([</span>
-    <span class="s1">&#39;/opt/mail/susan&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;/opt/mail/ubuntu&#39;</span><span class="p">,</span>
+    <span class="s1">'/opt/mail/susan'</span><span class="p">,</span>
+    <span class="s1">'/opt/mail/ubuntu'</span><span class="p">,</span>
 <span class="p">]);</span>
-<span class="nv">$frameworkPublisher</span><span class="o">-&gt;</span><span class="na">addDirectory</span><span class="p">(</span><span class="nx">SUPPORTPATH</span> <span class="o">.</span> <span class="s1">&#39;Images&#39;</span><span class="p">);</span>
+<span class="nv">$frameworkPublisher</span><span class="o">-&gt;</span><span class="na">addDirectory</span><span class="p">(</span><span class="nx">SUPPORTPATH</span> <span class="o">.</span> <span class="s1">'Images'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Once all the files are staged use one of the output commands (<strong>copy()</strong> or <strong>merge()</strong>) to process the staged files
@@ -403,7 +403,7 @@ the powerful <code class="docutils literal notranslate"><span class="pre">Autolo
     <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">publish</span><span class="p">();</span>
 
     <span class="k">if</span> <span class="p">(</span><span class="nv">$result</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">error</span><span class="p">(</span><span class="nv">$publisher</span><span class="o">::</span><span class="na">class</span> <span class="o">.</span> <span class="s1">&#39; failed to publish!&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">error</span><span class="p">(</span><span class="nv">$publisher</span><span class="o">::</span><span class="na">class</span> <span class="o">.</span> <span class="s1">' failed to publish!'</span><span class="p">,</span> <span class="s1">'red'</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -414,7 +414,7 @@ different directory and it will return any child classes found:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Publisher\Publisher</span><span class="p">;</span>
 
-<span class="nv">$memePublishers</span> <span class="o">=</span> <span class="nx">Publisher</span><span class="o">::</span><span class="na">discover</span><span class="p">(</span><span class="s1">&#39;CatGIFs&#39;</span><span class="p">);</span>
+<span class="nv">$memePublishers</span> <span class="o">=</span> <span class="nx">Publisher</span><span class="o">::</span><span class="na">discover</span><span class="p">(</span><span class="s1">'CatGIFs'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Most of the time you will not need to handle your own discovery, just use the provided “publish” command:</p>
@@ -435,7 +435,7 @@ second parameter of the <code class="docutils literal notranslate"><span class="
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Publisher\Publisher</span><span class="p">;</span>
 
-<span class="nv">$memePublishers</span> <span class="o">=</span> <span class="nx">Publisher</span><span class="o">::</span><span class="na">discover</span><span class="p">(</span><span class="s1">&#39;Publishers&#39;</span><span class="p">,</span> <span class="s1">&#39;Namespace\Vendor\Package&#39;</span><span class="p">);</span>
+<span class="nv">$memePublishers</span> <span class="o">=</span> <span class="nx">Publisher</span><span class="o">::</span><span class="na">discover</span><span class="p">(</span><span class="s1">'Publishers'</span><span class="p">,</span> <span class="s1">'Namespace\Vendor\Package'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The specified namespace must be known to CodeIgniter. You can check the list of all namespaces using the “spark namespaces” command:</p>
@@ -481,16 +481,16 @@ You can set up <a class="reference internal" href="../cli/cli_commands.html"><sp
 
 <span class="k">class</span> <span class="nc">DailyPhoto</span> <span class="k">extends</span> <span class="nx">BaseCommand</span>
 <span class="p">{</span>
-    <span class="k">protected</span> <span class="nv">$group</span>       <span class="o">=</span> <span class="s1">&#39;Publication&#39;</span><span class="p">;</span>
-    <span class="k">protected</span> <span class="nv">$name</span>        <span class="o">=</span> <span class="s1">&#39;publish:daily&#39;</span><span class="p">;</span>
-    <span class="k">protected</span> <span class="nv">$description</span> <span class="o">=</span> <span class="s1">&#39;Publishes the latest daily photo to the homepage.&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$group</span>       <span class="o">=</span> <span class="s1">'Publication'</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$name</span>        <span class="o">=</span> <span class="s1">'publish:daily'</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$description</span> <span class="o">=</span> <span class="s1">'Publishes the latest daily photo to the homepage.'</span><span class="p">;</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">(</span><span class="k">array</span> <span class="nv">$params</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="nv">$publisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="s1">&#39;/path/to/photos/&#39;</span><span class="p">,</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;assets/images&#39;</span><span class="p">);</span>
+        <span class="nv">$publisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="s1">'/path/to/photos/'</span><span class="p">,</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">'assets/images'</span><span class="p">);</span>
 
         <span class="k">try</span> <span class="p">{</span>
-            <span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">addPath</span><span class="p">(</span><span class="s1">&#39;daily_photo.jpg&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">copy</span><span class="p">(</span><span class="k">true</span><span class="p">);</span> <span class="c1">// `true` to enable overwrites</span>
+            <span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">addPath</span><span class="p">(</span><span class="s1">'daily_photo.jpg'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">copy</span><span class="p">(</span><span class="k">true</span><span class="p">);</span> <span class="c1">// `true` to enable overwrites</span>
         <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">Throwable</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
             <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">showError</span><span class="p">(</span><span class="nv">$e</span><span class="p">);</span>
         <span class="p">}</span>
@@ -503,7 +503,7 @@ coming from an external API? You can use <code class="docutils literal notransla
 resource and publish it out instead:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">addUri</span><span class="p">(</span><span class="s1">&#39;https://example.com/feeds/daily_photo.jpg&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">copy</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+<span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">addUri</span><span class="p">(</span><span class="s1">'https://example.com/feeds/daily_photo.jpg'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">copy</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -523,11 +523,11 @@ to keep up with. You can create a publication definition in your project to sync
     <span class="sd">/**</span>
 <span class="sd">     * Tell Publisher where to get the files.</span>
 <span class="sd">     * Since we will use Composer to download</span>
-<span class="sd">     * them we point to the &quot;vendor&quot; directory.</span>
+<span class="sd">     * them we point to the "vendor" directory.</span>
 <span class="sd">     *</span>
 <span class="sd">     * @var string</span>
 <span class="sd">     */</span>
-    <span class="k">protected</span> <span class="nv">$source</span> <span class="o">=</span> <span class="nx">VENDORPATH</span> <span class="o">.</span> <span class="s1">&#39;twbs/bootstrap/&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$source</span> <span class="o">=</span> <span class="nx">VENDORPATH</span> <span class="o">.</span> <span class="s1">'twbs/bootstrap/'</span><span class="p">;</span>
 
     <span class="sd">/**</span>
 <span class="sd">     * FCPATH is always the default destination,</span>
@@ -536,20 +536,20 @@ to keep up with. You can create a publication definition in your project to sync
 <span class="sd">     *</span>
 <span class="sd">     * @var string</span>
 <span class="sd">     */</span>
-    <span class="k">protected</span> <span class="nv">$destination</span> <span class="o">=</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;bootstrap&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$destination</span> <span class="o">=</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">'bootstrap'</span><span class="p">;</span>
 
     <span class="sd">/**</span>
-<span class="sd">     * Use the &quot;publish&quot; method to indicate that this</span>
+<span class="sd">     * Use the "publish" method to indicate that this</span>
 <span class="sd">     * class is ready to be discovered and automated.</span>
 <span class="sd">     */</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">publish</span><span class="p">()</span><span class="o">:</span> <span class="nx">bool</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="nv">$this</span>
             <span class="c1">// Add all the files relative to $source</span>
-            <span class="o">-&gt;</span><span class="na">addPath</span><span class="p">(</span><span class="s1">&#39;dist&#39;</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">addPath</span><span class="p">(</span><span class="s1">'dist'</span><span class="p">)</span>
 
             <span class="c1">// Indicate we only want the minimized versions</span>
-            <span class="o">-&gt;</span><span class="na">retainPattern</span><span class="p">(</span><span class="s1">&#39;*.min.*&#39;</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">retainPattern</span><span class="p">(</span><span class="s1">'*.min.*'</span><span class="p">)</span>
 
             <span class="c1">// Merge-and-replace to retain the original directory structure</span>
             <span class="o">-&gt;</span><span class="na">merge</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
@@ -608,23 +608,23 @@ into an application for use:</p>
 
 <span class="k">class</span> <span class="nc">AuthPublish</span> <span class="k">extends</span> <span class="nx">BaseCommand</span>
 <span class="p">{</span>
-    <span class="k">protected</span> <span class="nv">$group</span>       <span class="o">=</span> <span class="s1">&#39;Auth&#39;</span><span class="p">;</span>
-    <span class="k">protected</span> <span class="nv">$name</span>        <span class="o">=</span> <span class="s1">&#39;auth:publish&#39;</span><span class="p">;</span>
-    <span class="k">protected</span> <span class="nv">$description</span> <span class="o">=</span> <span class="s1">&#39;Publish Auth components into the current application.&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$group</span>       <span class="o">=</span> <span class="s1">'Auth'</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$name</span>        <span class="o">=</span> <span class="s1">'auth:publish'</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$description</span> <span class="o">=</span> <span class="s1">'Publish Auth components into the current application.'</span><span class="p">;</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">(</span><span class="k">array</span> <span class="nv">$params</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="c1">// Use the Autoloader to figure out the module path</span>
-        <span class="nv">$source</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;autoloader&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getNamespace</span><span class="p">(</span><span class="s1">&#39;Math\\Auth&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+        <span class="nv">$source</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'autoloader'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getNamespace</span><span class="p">(</span><span class="s1">'Math\\Auth'</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
 
         <span class="nv">$publisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="nv">$source</span><span class="p">,</span> <span class="nx">APPPATH</span><span class="p">);</span>
 
         <span class="k">try</span> <span class="p">{</span>
             <span class="c1">// Add only the desired components</span>
             <span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">addPaths</span><span class="p">([</span>
-                <span class="s1">&#39;Controllers&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Database/Migrations&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Models&#39;</span><span class="p">,</span>
+                <span class="s1">'Controllers'</span><span class="p">,</span>
+                <span class="s1">'Database/Migrations'</span><span class="p">,</span>
+                <span class="s1">'Models'</span><span class="p">,</span>
             <span class="p">])</span><span class="o">-&gt;</span><span class="na">merge</span><span class="p">(</span><span class="k">false</span><span class="p">);</span> <span class="c1">// Be careful not to overwrite anything</span>
         <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">Throwable</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
             <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">showError</span><span class="p">(</span><span class="nv">$e</span><span class="p">);</span>
@@ -636,7 +636,7 @@ into an application for use:</p>
         <span class="k">foreach</span> <span class="p">(</span><span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">getPublished</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$file</span><span class="p">)</span> <span class="p">{</span>
             <span class="c1">// Replace the namespace</span>
             <span class="nv">$contents</span> <span class="o">=</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="nv">$file</span><span class="p">);</span>
-            <span class="nv">$contents</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39;namespace Math\\Auth&#39;</span><span class="p">,</span> <span class="s1">&#39;namespace &#39;</span> <span class="o">.</span> <span class="nx">APP_NAMESPACE</span><span class="p">,</span> <span class="nv">$contents</span><span class="p">);</span>
+            <span class="nv">$contents</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s1">'namespace Math\\Auth'</span><span class="p">,</span> <span class="s1">'namespace '</span> <span class="o">.</span> <span class="nx">APP_NAMESPACE</span><span class="p">,</span> <span class="nv">$contents</span><span class="p">);</span>
             <span class="nb">file_put_contents</span><span class="p">(</span><span class="nv">$file</span><span class="p">,</span> <span class="nv">$contents</span><span class="p">);</span>
         <span class="p">}</span>
     <span class="p">}</span>
@@ -730,10 +730,10 @@ Be mindful of duplicate basename collisions, for example:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Publisher\Publisher</span><span class="p">;</span>
 
-<span class="nv">$publisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="s1">&#39;/home/source&#39;</span><span class="p">,</span> <span class="s1">&#39;/home/destination&#39;</span><span class="p">);</span>
+<span class="nv">$publisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="s1">'/home/source'</span><span class="p">,</span> <span class="s1">'/home/destination'</span><span class="p">);</span>
 <span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">addPaths</span><span class="p">([</span>
-    <span class="s1">&#39;pencil/lead.png&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;metal/lead.png&#39;</span><span class="p">,</span>
+    <span class="s1">'pencil/lead.png'</span><span class="p">,</span>
+    <span class="s1">'metal/lead.png'</span><span class="p">,</span>
 <span class="p">]);</span>
 
 <span class="c1">// This is bad! Only one file will remain at /home/destination/lead.png</span>
@@ -754,13 +754,13 @@ affect other files in the destination. Returns success or failure, use <code cla
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Publisher\Publisher</span><span class="p">;</span>
 
-<span class="nv">$publisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="s1">&#39;/home/source&#39;</span><span class="p">,</span> <span class="s1">&#39;/home/destination&#39;</span><span class="p">);</span>
+<span class="nv">$publisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="s1">'/home/source'</span><span class="p">,</span> <span class="s1">'/home/destination'</span><span class="p">);</span>
 <span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">addPaths</span><span class="p">([</span>
-    <span class="s1">&#39;pencil/lead.png&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;metal/lead.png&#39;</span><span class="p">,</span>
+    <span class="s1">'pencil/lead.png'</span><span class="p">,</span>
+    <span class="s1">'metal/lead.png'</span><span class="p">,</span>
 <span class="p">]);</span>
 
-<span class="c1">// Results in &quot;/home/destination/pencil/lead.png&quot; and &quot;/home/destination/metal/lead.png&quot;</span>
+<span class="c1">// Results in "/home/destination/pencil/lead.png" and "/home/destination/metal/lead.png"</span>
 <span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">merge</span><span class="p">();</span>
 </pre></div>
 </div>
@@ -778,16 +778,16 @@ affect other files in the destination. Returns success or failure, use <code cla
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Publisher\Publisher</span><span class="p">;</span>
 
-<span class="nv">$source</span>    <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;autoloader&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getNamespace</span><span class="p">(</span><span class="s1">&#39;CodeIgniter\\Shield&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+<span class="nv">$source</span>    <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'autoloader'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getNamespace</span><span class="p">(</span><span class="s1">'CodeIgniter\\Shield'</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
 <span class="nv">$publisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="nv">$source</span><span class="p">,</span> <span class="nx">APPPATH</span><span class="p">);</span>
 
-<span class="nv">$file</span> <span class="o">=</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Config/Auth.php&#39;</span><span class="p">;</span>
+<span class="nv">$file</span> <span class="o">=</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">'Config/Auth.php'</span><span class="p">;</span>
 
 <span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">replace</span><span class="p">(</span>
     <span class="nv">$file</span><span class="p">,</span>
     <span class="p">[</span>
-        <span class="s1">&#39;use CodeIgniter\Config\BaseConfig;&#39;</span> <span class="o">.</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;class App extends BaseConfig&#39;</span>              <span class="o">=&gt;</span> <span class="s1">&#39;class App extends \Some\Package\SomeConfig&#39;</span><span class="p">,</span>
+        <span class="s1">'use CodeIgniter\Config\BaseConfig;'</span> <span class="o">.</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="o">=&gt;</span> <span class="s1">''</span><span class="p">,</span>
+        <span class="s1">'class App extends BaseConfig'</span>              <span class="o">=&gt;</span> <span class="s1">'class App extends \Some\Package\SomeConfig'</span><span class="p">,</span>
     <span class="p">],</span>
 <span class="p">);</span>
 </pre></div>
@@ -803,15 +803,15 @@ affect other files in the destination. Returns success or failure, use <code cla
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Publisher\Publisher</span><span class="p">;</span>
 
-<span class="nv">$source</span>    <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;autoloader&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getNamespace</span><span class="p">(</span><span class="s1">&#39;CodeIgniter\\Shield&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+<span class="nv">$source</span>    <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'autoloader'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getNamespace</span><span class="p">(</span><span class="s1">'CodeIgniter\\Shield'</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
 <span class="nv">$publisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="nv">$source</span><span class="p">,</span> <span class="nx">APPPATH</span><span class="p">);</span>
 
-<span class="nv">$file</span> <span class="o">=</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Config/App.php&#39;</span><span class="p">;</span>
+<span class="nv">$file</span> <span class="o">=</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">'Config/App.php'</span><span class="p">;</span>
 
 <span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">addLineAfter</span><span class="p">(</span>
     <span class="nv">$file</span><span class="p">,</span>
-    <span class="s1">&#39;    public int $myOwnConfig = 1000;&#39;</span><span class="p">,</span> <span class="c1">// Adds this line</span>
-    <span class="s1">&#39;public bool $CSPEnabled = false;&#39;</span><span class="p">,</span>     <span class="c1">// After this line</span>
+    <span class="s1">'    public int $myOwnConfig = 1000;'</span><span class="p">,</span> <span class="c1">// Adds this line</span>
+    <span class="s1">'public bool $CSPEnabled = false;'</span><span class="p">,</span>     <span class="c1">// After this line</span>
 <span class="p">);</span>
 </pre></div>
 </div>
@@ -826,15 +826,15 @@ affect other files in the destination. Returns success or failure, use <code cla
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Publisher\Publisher</span><span class="p">;</span>
 
-<span class="nv">$source</span>    <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;autoloader&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getNamespace</span><span class="p">(</span><span class="s1">&#39;CodeIgniter\\Shield&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+<span class="nv">$source</span>    <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'autoloader'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getNamespace</span><span class="p">(</span><span class="s1">'CodeIgniter\\Shield'</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
 <span class="nv">$publisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="nv">$source</span><span class="p">,</span> <span class="nx">APPPATH</span><span class="p">);</span>
 
-<span class="nv">$file</span> <span class="o">=</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Config/App.php&#39;</span><span class="p">;</span>
+<span class="nv">$file</span> <span class="o">=</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">'Config/App.php'</span><span class="p">;</span>
 
 <span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">addLineBefore</span><span class="p">(</span>
     <span class="nv">$file</span><span class="p">,</span>
-    <span class="s1">&#39;    public int $myOwnConfig = 1000;&#39;</span><span class="p">,</span> <span class="c1">// Add this line</span>
-    <span class="s1">&#39;public bool $CSPEnabled = false;&#39;</span><span class="p">,</span>     <span class="c1">// Before this line</span>
+    <span class="s1">'    public int $myOwnConfig = 1000;'</span><span class="p">,</span> <span class="c1">// Add this line</span>
+    <span class="s1">'public bool $CSPEnabled = false;'</span><span class="p">,</span>     <span class="c1">// Before this line</span>
 <span class="p">);</span>
 </pre></div>
 </div>
@@ -855,7 +855,7 @@ affect other files in the destination. Returns success or failure, use <code cla
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

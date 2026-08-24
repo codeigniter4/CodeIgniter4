@@ -349,7 +349,7 @@ driver must already be running, since the Forge class relies on it.</p>
 the database you want to manage isn’t the default one:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">myforge</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">forge</span><span class="p">(</span><span class="s1">&#39;other_db&#39;</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">myforge</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">forge</span><span class="p">(</span><span class="s1">'other_db'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>In the above example, we’re passing the name of a different database group
@@ -363,8 +363,8 @@ to connect to as the first parameter.</p>
 Returns true/false based on success or failure:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">if</span> <span class="p">(</span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createDatabase</span><span class="p">(</span><span class="s1">&#39;my_db&#39;</span><span class="p">))</span> <span class="p">{</span>
-    <span class="k">echo</span> <span class="s1">&#39;Database created!&#39;</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createDatabase</span><span class="p">(</span><span class="s1">'my_db'</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s1">'Database created!'</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -372,7 +372,7 @@ Returns true/false based on success or failure:</p>
 or will check if a database exists before creating it (depending on DBMS).</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createDatabase</span><span class="p">(</span><span class="s1">&#39;my_db&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createDatabase</span><span class="p">(</span><span class="s1">'my_db'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * gives CREATE DATABASE IF NOT EXISTS `my_db`</span>
 <span class="cm"> * or will check if a database exists</span>
@@ -386,8 +386,8 @@ or will check if a database exists before creating it (depending on DBMS).</p>
 Returns true/false based on success or failure:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">if</span> <span class="p">(</span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropDatabase</span><span class="p">(</span><span class="s1">&#39;my_db&#39;</span><span class="p">))</span> <span class="p">{</span>
-    <span class="k">echo</span> <span class="s1">&#39;Database deleted!&#39;</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropDatabase</span><span class="p">(</span><span class="s1">'my_db'</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s1">'Database deleted!'</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -434,12 +434,12 @@ Many datatypes (for example <code class="docutils literal notranslate"><span cla
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;users&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;type&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;constraint&#39;</span> <span class="o">=&gt;</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="s1">'users'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'type'</span>       <span class="o">=&gt;</span> <span class="s1">'VARCHAR'</span><span class="p">,</span>
+        <span class="s1">'constraint'</span> <span class="o">=&gt;</span> <span class="mi">100</span><span class="p">,</span>
     <span class="p">],</span>
 <span class="p">];</span>
-<span class="c1">// will translate to &quot;users VARCHAR(100)&quot; when the field is added.</span>
+<span class="c1">// will translate to "users VARCHAR(100)" when the field is added.</span>
 </pre></div>
 </div>
 <p>Additionally, the following key/values can be used:</p>
@@ -456,30 +456,30 @@ such as <code class="docutils literal notranslate"><span class="pre">INTEGER</sp
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;INT&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
-        <span class="s1">&#39;unsigned&#39;</span>       <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-        <span class="s1">&#39;auto_increment&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="s1">'id'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'type'</span>           <span class="o">=&gt;</span> <span class="s1">'INT'</span><span class="p">,</span>
+        <span class="s1">'constraint'</span>     <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s1">'unsigned'</span>       <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+        <span class="s1">'auto_increment'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
     <span class="p">],</span>
-    <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;type&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;constraint&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;100&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;unique&#39;</span>     <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="s1">'title'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'type'</span>       <span class="o">=&gt;</span> <span class="s1">'VARCHAR'</span><span class="p">,</span>
+        <span class="s1">'constraint'</span> <span class="o">=&gt;</span> <span class="s1">'100'</span><span class="p">,</span>
+        <span class="s1">'unique'</span>     <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
     <span class="p">],</span>
-    <span class="s1">&#39;author&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;type&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;constraint&#39;</span> <span class="o">=&gt;</span> <span class="mi">100</span><span class="p">,</span>
-        <span class="s1">&#39;default&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;King of Town&#39;</span><span class="p">,</span>
+    <span class="s1">'author'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'type'</span>       <span class="o">=&gt;</span> <span class="s1">'VARCHAR'</span><span class="p">,</span>
+        <span class="s1">'constraint'</span> <span class="o">=&gt;</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="s1">'default'</span>    <span class="o">=&gt;</span> <span class="s1">'King of Town'</span><span class="p">,</span>
     <span class="p">],</span>
-    <span class="s1">&#39;description&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;null&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="s1">'description'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'type'</span> <span class="o">=&gt;</span> <span class="s1">'TEXT'</span><span class="p">,</span>
+        <span class="s1">'null'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
     <span class="p">],</span>
-    <span class="s1">&#39;status&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;type&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;ENUM&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;constraint&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;publish&#39;</span><span class="p">,</span> <span class="s1">&#39;pending&#39;</span><span class="p">,</span> <span class="s1">&#39;draft&#39;</span><span class="p">],</span>
-        <span class="s1">&#39;default&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;pending&#39;</span><span class="p">,</span>
+    <span class="s1">'status'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'type'</span>       <span class="o">=&gt;</span> <span class="s1">'ENUM'</span><span class="p">,</span>
+        <span class="s1">'constraint'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'publish'</span><span class="p">,</span> <span class="s1">'pending'</span><span class="p">,</span> <span class="s1">'draft'</span><span class="p">],</span>
+        <span class="s1">'default'</span>    <span class="o">=&gt;</span> <span class="s1">'pending'</span><span class="p">,</span>
     <span class="p">],</span>
 <span class="p">];</span>
 <span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addField</span><span class="p">(</span><span class="nv">$fields</span><span class="p">);</span>
@@ -536,22 +536,22 @@ Previous versions converted to <code class="docutils literal notranslate"><span 
 <span class="k">use</span> <span class="nx">CodeIgniter\Database\RawSql</span><span class="p">;</span>
 
 <span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;INT&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
-        <span class="s1">&#39;unsigned&#39;</span>       <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-        <span class="s1">&#39;auto_increment&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="s1">'id'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'type'</span>           <span class="o">=&gt;</span> <span class="s1">'INT'</span><span class="p">,</span>
+        <span class="s1">'constraint'</span>     <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s1">'unsigned'</span>       <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+        <span class="s1">'auto_increment'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
     <span class="p">],</span>
-    <span class="s1">&#39;created_at&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;type&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;TIMESTAMP&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;default&#39;</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">RawSql</span><span class="p">(</span><span class="s1">&#39;CURRENT_TIMESTAMP&#39;</span><span class="p">),</span>
+    <span class="s1">'created_at'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'type'</span>    <span class="o">=&gt;</span> <span class="s1">'TIMESTAMP'</span><span class="p">,</span>
+        <span class="s1">'default'</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">RawSql</span><span class="p">(</span><span class="s1">'CURRENT_TIMESTAMP'</span><span class="p">),</span>
     <span class="p">],</span>
 <span class="p">];</span>
 <span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addField</span><span class="p">(</span><span class="nv">$fields</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm">gives:</span>
-<span class="cm">    &quot;id&quot; INT(5) UNSIGNED NOT NULL AUTO_INCREMENT,</span>
-<span class="cm">    &quot;created_at&quot; TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL</span>
+<span class="cm">    "id" INT(5) UNSIGNED NOT NULL AUTO_INCREMENT,</span>
+<span class="cm">    "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL</span>
 <span class="cm">*/</span>
 </pre></div>
 </div>
@@ -566,7 +566,7 @@ Previous versions converted to <code class="docutils literal notranslate"><span 
 string into the field definitions with <code class="docutils literal notranslate"><span class="pre">addField()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addField</span><span class="p">(</span><span class="s2">&quot;label varchar(100) NOT NULL DEFAULT &#39;default label&#39;&quot;</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addField</span><span class="p">(</span><span class="s2">"label varchar(100) NOT NULL DEFAULT 'default label'"</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -585,7 +585,7 @@ id will automatically be assigned as an INT(9) auto_incrementing
 Primary Key.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addField</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addField</span><span class="p">(</span><span class="s1">'id'</span><span class="p">);</span>
 <span class="c1">// gives `id` INT(9) NOT NULL AUTO_INCREMENT</span>
 </pre></div>
 </div>
@@ -606,20 +606,20 @@ exists.</p>
 below is for MySQL.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="s1">&#39;blog_id&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="s1">'blog_id'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 <span class="c1">// gives PRIMARY KEY `blog_id` (`blog_id`)</span>
 
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="s1">&#39;blog_id&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="s1">&#39;site_id&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="s1">'blog_id'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="s1">'site_id'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 <span class="c1">// gives PRIMARY KEY `blog_id_site_id` (`blog_id`, `site_id`)</span>
 
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="s1">&#39;blog_name&#39;</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="s1">'blog_name'</span><span class="p">);</span>
 <span class="c1">// gives KEY `blog_name` (`blog_name`)</span>
 
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">([</span><span class="s1">&#39;blog_name&#39;</span><span class="p">,</span> <span class="s1">&#39;blog_label&#39;</span><span class="p">],</span> <span class="k">false</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="s1">&#39;my_key_name&#39;</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">([</span><span class="s1">'blog_name'</span><span class="p">,</span> <span class="s1">'blog_label'</span><span class="p">],</span> <span class="k">false</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="s1">'my_key_name'</span><span class="p">);</span>
 <span class="c1">// gives KEY `my_key_name` (`blog_name`, `blog_label`)</span>
 
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">([</span><span class="s1">&#39;blog_id&#39;</span><span class="p">,</span> <span class="s1">&#39;uri&#39;</span><span class="p">],</span> <span class="k">false</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="s1">&#39;my_key_name&#39;</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">([</span><span class="s1">'blog_id'</span><span class="p">,</span> <span class="s1">'uri'</span><span class="p">],</span> <span class="k">false</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="s1">'my_key_name'</span><span class="p">);</span>
 <span class="c1">// gives UNIQUE KEY `my_key_name` (`blog_id`, `uri`)</span>
 </pre></div>
 </div>
@@ -633,10 +633,10 @@ below is for MySQL.</p>
 and unique keys with specific methods:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addPrimaryKey</span><span class="p">(</span><span class="s1">&#39;blog_id&#39;</span><span class="p">,</span> <span class="s1">&#39;pd_name&#39;</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addPrimaryKey</span><span class="p">(</span><span class="s1">'blog_id'</span><span class="p">,</span> <span class="s1">'pd_name'</span><span class="p">);</span>
 <span class="c1">// gives PRIMARY KEY `pd_name` (`blog_id`)</span>
 
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addUniqueKey</span><span class="p">([</span><span class="s1">&#39;blog_id&#39;</span><span class="p">,</span> <span class="s1">&#39;uri&#39;</span><span class="p">],</span> <span class="s1">&#39;key_name&#39;</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addUniqueKey</span><span class="p">([</span><span class="s1">'blog_id'</span><span class="p">,</span> <span class="s1">'uri'</span><span class="p">],</span> <span class="s1">'key_name'</span><span class="p">);</span>
 <span class="c1">// gives UNIQUE KEY `key_name` (`blog_id`, `uri`)</span>
 </pre></div>
 </div>
@@ -652,23 +652,23 @@ and unique keys with specific methods:</p>
 you may add them directly in forge:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addForeignKey</span><span class="p">(</span><span class="s1">&#39;users_id&#39;</span><span class="p">,</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addForeignKey</span><span class="p">(</span><span class="s1">'users_id'</span><span class="p">,</span> <span class="s1">'users'</span><span class="p">,</span> <span class="s1">'id'</span><span class="p">);</span>
 <span class="c1">// gives CONSTRAINT `TABLENAME_users_id_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`id`)</span>
 
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addForeignKey</span><span class="p">([</span><span class="s1">&#39;users_id&#39;</span><span class="p">,</span> <span class="s1">&#39;users_name&#39;</span><span class="p">],</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">]);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addForeignKey</span><span class="p">([</span><span class="s1">'users_id'</span><span class="p">,</span> <span class="s1">'users_name'</span><span class="p">],</span> <span class="s1">'users'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'id'</span><span class="p">,</span> <span class="s1">'name'</span><span class="p">]);</span>
 <span class="c1">// gives CONSTRAINT `TABLENAME_users_id_foreign` FOREIGN KEY(`users_id`, `users_name`) REFERENCES `users`(`id`, `name`)</span>
 </pre></div>
 </div>
 <p>You can specify the desired action for the “on update” and “on delete” properties of the constraint as well as the name:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addForeignKey</span><span class="p">(</span><span class="s1">&#39;users_id&#39;</span><span class="p">,</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;CASCADE&#39;</span><span class="p">,</span> <span class="s1">&#39;CASCADE&#39;</span><span class="p">,</span> <span class="s1">&#39;my_fk_name&#39;</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addForeignKey</span><span class="p">(</span><span class="s1">'users_id'</span><span class="p">,</span> <span class="s1">'users'</span><span class="p">,</span> <span class="s1">'id'</span><span class="p">,</span> <span class="s1">'CASCADE'</span><span class="p">,</span> <span class="s1">'CASCADE'</span><span class="p">,</span> <span class="s1">'my_fk_name'</span><span class="p">);</span>
 <span class="c1">// gives CONSTRAINT `my_fk_name` FOREIGN KEY(`users_id`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE</span>
 
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addForeignKey</span><span class="p">(</span><span class="s1">&#39;users_id&#39;</span><span class="p">,</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;CASCADE&#39;</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addForeignKey</span><span class="p">(</span><span class="s1">'users_id'</span><span class="p">,</span> <span class="s1">'users'</span><span class="p">,</span> <span class="s1">'id'</span><span class="p">,</span> <span class="s1">''</span><span class="p">,</span> <span class="s1">'CASCADE'</span><span class="p">);</span>
 <span class="c1">// gives CONSTRAINT `TABLENAME_users_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`id`) ON DELETE CASCADE</span>
 
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addForeignKey</span><span class="p">([</span><span class="s1">&#39;users_id&#39;</span><span class="p">,</span> <span class="s1">&#39;users_name&#39;</span><span class="p">],</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="s1">&#39;CASCADE&#39;</span><span class="p">,</span> <span class="s1">&#39;CASCADE&#39;</span><span class="p">,</span> <span class="s1">&#39;my_fk_name&#39;</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addForeignKey</span><span class="p">([</span><span class="s1">'users_id'</span><span class="p">,</span> <span class="s1">'users_name'</span><span class="p">],</span> <span class="s1">'users'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'id'</span><span class="p">,</span> <span class="s1">'name'</span><span class="p">],</span> <span class="s1">'CASCADE'</span><span class="p">,</span> <span class="s1">'CASCADE'</span><span class="p">,</span> <span class="s1">'my_fk_name'</span><span class="p">);</span>
 <span class="c1">// gives CONSTRAINT `my_fk_name` FOREIGN KEY(`users_id`, `users_name`) REFERENCES `users`(`id`, `name`) ON DELETE CASCADE ON UPDATE CASCADE</span>
 </pre></div>
 </div>
@@ -683,22 +683,22 @@ you may add them directly in forge:</p>
 with</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">'table_name'</span><span class="p">);</span>
 <span class="c1">// gives CREATE TABLE table_name</span>
 </pre></div>
 </div>
 <p>An optional second parameter set to true will create the table only if it doesn’t already exist.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">'table_name'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 <span class="c1">// creates table only if table does not exist</span>
 </pre></div>
 </div>
 <p>You could also pass optional table attributes, such as MySQL’s <code class="docutils literal notranslate"><span class="pre">ENGINE</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ENGINE&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;InnoDB&#39;</span><span class="p">];</span>
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
+<span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'ENGINE'</span> <span class="o">=&gt;</span> <span class="s1">'InnoDB'</span><span class="p">];</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">'table_name'</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
 <span class="c1">// produces: CREATE TABLE `table_name` (...) ENGINE = InnoDB DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci</span>
 </pre></div>
 </div>
@@ -718,10 +718,10 @@ and <em>DBCollat</em> values, as long as they are not empty (MySQL only).</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Produces: DROP TABLE `table_name`</span>
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropTable</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropTable</span><span class="p">(</span><span class="s1">'table_name'</span><span class="p">);</span>
 
 <span class="c1">// Produces: DROP TABLE IF EXISTS `table_name`</span>
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropTable</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropTable</span><span class="p">(</span><span class="s1">'table_name'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>A third parameter can be passed to add a <code class="docutils literal notranslate"><span class="pre">CASCADE</span></code> option, which might be required for some
@@ -729,7 +729,7 @@ drivers to handle removal of tables with foreign keys.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Produces: DROP TABLE `table_name` CASCADE</span>
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropTable</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropTable</span><span class="p">(</span><span class="s1">'table_name'</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -751,9 +751,9 @@ will be <code class="docutils literal notranslate"><span class="pre">NULL</span>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;preferences&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">],</span>
+    <span class="s1">'preferences'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'type'</span> <span class="o">=&gt;</span> <span class="s1">'TEXT'</span><span class="p">],</span>
 <span class="p">];</span>
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addColumn</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="nv">$fields</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addColumn</span><span class="p">(</span><span class="s1">'table_name'</span><span class="p">,</span> <span class="nv">$fields</span><span class="p">);</span>
 <span class="c1">// Executes: ALTER TABLE `table_name` ADD `preferences` TEXT</span>
 </pre></div>
 </div>
@@ -764,12 +764,12 @@ will be <code class="docutils literal notranslate"><span class="pre">NULL</span>
 
 <span class="c1">// Will place the new column after the `another_field` column:</span>
 <span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;preferences&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span> <span class="s1">&#39;after&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;another_field&#39;</span><span class="p">],</span>
+    <span class="s1">'preferences'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'type'</span> <span class="o">=&gt;</span> <span class="s1">'TEXT'</span><span class="p">,</span> <span class="s1">'after'</span> <span class="o">=&gt;</span> <span class="s1">'another_field'</span><span class="p">],</span>
 <span class="p">];</span>
 
 <span class="c1">// Will place the new column at the start of the table definition:</span>
 <span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;preferences&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span> <span class="s1">&#39;first&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">],</span>
+    <span class="s1">'preferences'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'type'</span> <span class="o">=&gt;</span> <span class="s1">'TEXT'</span><span class="p">,</span> <span class="s1">'first'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">],</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -782,14 +782,14 @@ will be <code class="docutils literal notranslate"><span class="pre">NULL</span>
 <p>Used to remove a column from a table.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropColumn</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="s1">&#39;column_to_drop&#39;</span><span class="p">);</span> <span class="c1">// to drop one single column</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropColumn</span><span class="p">(</span><span class="s1">'table_name'</span><span class="p">,</span> <span class="s1">'column_to_drop'</span><span class="p">);</span> <span class="c1">// to drop one single column</span>
 </pre></div>
 </div>
 <p>Used to remove multiple columns from a table.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropColumn</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="s1">&#39;column_1,column_2&#39;</span><span class="p">);</span>      <span class="c1">// by proving comma separated column names</span>
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropColumn</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;column_1&#39;</span><span class="p">,</span> <span class="s1">&#39;column_2&#39;</span><span class="p">]);</span> <span class="c1">// by proving array of column names</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropColumn</span><span class="p">(</span><span class="s1">'table_name'</span><span class="p">,</span> <span class="s1">'column_1,column_2'</span><span class="p">);</span>      <span class="c1">// by proving comma separated column names</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropColumn</span><span class="p">(</span><span class="s1">'table_name'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'column_1'</span><span class="p">,</span> <span class="s1">'column_2'</span><span class="p">]);</span> <span class="c1">// by proving array of column names</span>
 </pre></div>
 </div>
 </section>
@@ -804,13 +804,13 @@ change the name, you can add a “name” key into the field defining array.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;old_name&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;new_name&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;null&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+    <span class="s1">'old_name'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'new_name'</span><span class="p">,</span>
+        <span class="s1">'type'</span> <span class="o">=&gt;</span> <span class="s1">'TEXT'</span><span class="p">,</span>
+        <span class="s1">'null'</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
     <span class="p">],</span>
 <span class="p">];</span>
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">modifyColumn</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="nv">$fields</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">modifyColumn</span><span class="p">(</span><span class="s1">'table_name'</span><span class="p">,</span> <span class="nv">$fields</span><span class="p">);</span>
 <span class="c1">// gives ALTER TABLE `table_name` CHANGE `old_name` `new_name` TEXT NOT NULL</span>
 </pre></div>
 </div>
@@ -842,10 +842,10 @@ if you specify <code class="docutils literal notranslate"><span class="pre">'nul
 <code class="docutils literal notranslate"><span class="pre">addUniqueKey()</span></code> or <code class="docutils literal notranslate"><span class="pre">addForeignKey()</span></code> and <code class="docutils literal notranslate"><span class="pre">processIndexes()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">([</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="k">false</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="s1">&#39;category_name&#39;</span><span class="p">);</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">addPrimaryKey</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;pk_actions&#39;</span><span class="p">);</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">addForeignKey</span><span class="p">(</span><span class="s1">&#39;userid&#39;</span><span class="p">,</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;userid_fk&#39;</span><span class="p">);</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">processIndexes</span><span class="p">(</span><span class="s1">&#39;actions&#39;</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">([</span><span class="s1">'category'</span><span class="p">,</span> <span class="s1">'name'</span><span class="p">],</span> <span class="k">false</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="s1">'category_name'</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">addPrimaryKey</span><span class="p">(</span><span class="s1">'id'</span><span class="p">,</span> <span class="s1">'pk_actions'</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">addForeignKey</span><span class="p">(</span><span class="s1">'userid'</span><span class="p">,</span> <span class="s1">'user'</span><span class="p">,</span> <span class="s1">'id'</span><span class="p">,</span> <span class="s1">''</span><span class="p">,</span> <span class="s1">''</span><span class="p">,</span> <span class="s1">'userid_fk'</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">processIndexes</span><span class="p">(</span><span class="s1">'actions'</span><span class="p">);</span>
 <span class="cm">/* gives:</span>
 <span class="cm">ALTER TABLE `actions` ADD KEY `category_name` (`category`, `name`);</span>
 <span class="cm">ALTER TABLE `actions` ADD CONSTRAINT `pk_actions` PRIMARY KEY(`id`);</span>
@@ -864,7 +864,7 @@ if you specify <code class="docutils literal notranslate"><span class="pre">'nul
 
 <span class="c1">// MySQLi Produces: ALTER TABLE `tablename` DROP PRIMARY KEY</span>
 <span class="c1">// Others Produces: ALTER TABLE `tablename` DROP CONSTRAINT `pk_tablename`</span>
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropPrimaryKey</span><span class="p">(</span><span class="s1">&#39;tablename&#39;</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropPrimaryKey</span><span class="p">(</span><span class="s1">'tablename'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -875,7 +875,7 @@ if you specify <code class="docutils literal notranslate"><span class="pre">'nul
 
 <span class="c1">// For Indexes Produces:        DROP INDEX `users_index` ON `tablename`</span>
 <span class="c1">// For Unique Indexes Produces: ALTER TABLE `tablename` DROP CONSTRAINT `users_index`</span>
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropKey</span><span class="p">(</span><span class="s1">&#39;tablename&#39;</span><span class="p">,</span> <span class="s1">&#39;users_index&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropKey</span><span class="p">(</span><span class="s1">'tablename'</span><span class="p">,</span> <span class="s1">'users_index'</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -885,7 +885,7 @@ if you specify <code class="docutils literal notranslate"><span class="pre">'nul
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Produces: ALTER TABLE `tablename` DROP FOREIGN KEY `users_foreign`</span>
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropForeignKey</span><span class="p">(</span><span class="s1">&#39;tablename&#39;</span><span class="p">,</span> <span class="s1">&#39;users_foreign&#39;</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropForeignKey</span><span class="p">(</span><span class="s1">'tablename'</span><span class="p">,</span> <span class="s1">'users_foreign'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -894,7 +894,7 @@ if you specify <code class="docutils literal notranslate"><span class="pre">'nul
 <p>Executes a TABLE rename</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">renameTable</span><span class="p">(</span><span class="s1">&#39;old_table_name&#39;</span><span class="p">,</span> <span class="s1">&#39;new_table_name&#39;</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">renameTable</span><span class="p">(</span><span class="s1">'old_table_name'</span><span class="p">,</span> <span class="s1">'new_table_name'</span><span class="p">);</span>
 <span class="c1">// gives ALTER TABLE `old_table_name` RENAME TO `new_table_name`</span>
 </pre></div>
 </div>
@@ -1276,7 +1276,7 @@ See <a class="reference internal" href="#adding-keys-to-a-table">Adding Keys to 
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

@@ -337,10 +337,10 @@ of files you set or build:</p>
 <span class="k">use</span> <span class="nx">CodeIgniter\Files\FileCollection</span><span class="p">;</span>
 
 <span class="nv">$files</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FileCollection</span><span class="p">([</span>
-    <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;index.php&#39;</span><span class="p">,</span>
-    <span class="nx">ROOTPATH</span> <span class="o">.</span> <span class="s1">&#39;spark&#39;</span><span class="p">,</span>
+    <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">'index.php'</span><span class="p">,</span>
+    <span class="nx">ROOTPATH</span> <span class="o">.</span> <span class="s1">'spark'</span><span class="p">,</span>
 <span class="p">]);</span>
-<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">addDirectory</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Filters&#39;</span><span class="p">);</span>
+<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">addDirectory</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">'Filters'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>After you have input the files you would like to work with you may remove files
@@ -348,10 +348,10 @@ or use the filtering commands to remove or retain files matching a certain regex
 or glob-style pattern:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">removeFile</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Filters/DevelopToolbar.php&#39;</span><span class="p">);</span>
+<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">removeFile</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">'Filters/DevelopToolbar.php'</span><span class="p">);</span>
 
-<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">removePattern</span><span class="p">(</span><span class="s1">&#39;#\.gitkeep#&#39;</span><span class="p">);</span>
-<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">retainPattern</span><span class="p">(</span><span class="s1">&#39;*.php&#39;</span><span class="p">);</span>
+<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">removePattern</span><span class="p">(</span><span class="s1">'#\.gitkeep#'</span><span class="p">);</span>
+<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">retainPattern</span><span class="p">(</span><span class="s1">'*.php'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>When your collection is complete, you can use <code class="docutils literal notranslate"><span class="pre">get()</span></code> to retrieve the final
@@ -359,11 +359,11 @@ list of file paths, or take advantage of <code class="docutils literal notransla
 iterable to work directly with each <code class="docutils literal notranslate"><span class="pre">File</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="s1">&#39;My files: &#39;</span> <span class="o">.</span> <span class="nb">implode</span><span class="p">(</span><span class="nx">PHP_EOL</span><span class="p">,</span> <span class="nv">$files</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">());</span>
-<span class="k">echo</span> <span class="s1">&#39;I have &#39;</span> <span class="o">.</span> <span class="nb">count</span><span class="p">(</span><span class="nv">$files</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39; files!&#39;</span><span class="p">;</span>
+<span class="k">echo</span> <span class="s1">'My files: '</span> <span class="o">.</span> <span class="nb">implode</span><span class="p">(</span><span class="nx">PHP_EOL</span><span class="p">,</span> <span class="nv">$files</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">());</span>
+<span class="k">echo</span> <span class="s1">'I have '</span> <span class="o">.</span> <span class="nb">count</span><span class="p">(</span><span class="nv">$files</span><span class="p">)</span> <span class="o">.</span> <span class="s1">' files!'</span><span class="p">;</span>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$files</span> <span class="k">as</span> <span class="nv">$file</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">echo</span> <span class="s1">&#39;Moving &#39;</span> <span class="o">.</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getBasename</span><span class="p">()</span> <span class="o">.</span> <span class="s1">&#39;, &#39;</span> <span class="o">.</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSizeByUnit</span><span class="p">(</span><span class="s1">&#39;mb&#39;</span><span class="p">);</span>
+    <span class="k">echo</span> <span class="s1">'Moving '</span> <span class="o">.</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getBasename</span><span class="p">()</span> <span class="o">.</span> <span class="s1">', '</span> <span class="o">.</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSizeByUnit</span><span class="p">(</span><span class="s1">'mb'</span><span class="p">);</span>
     <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">move</span><span class="p">(</span><span class="nx">WRITABLE</span> <span class="o">.</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getRandomName</span><span class="p">());</span>
 <span class="p">}</span>
 </pre></div>
@@ -394,7 +394,7 @@ methods.</p>
 <span class="p">{</span>
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">define</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Config&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">retainPattern</span><span class="p">(</span><span class="s1">&#39;*.php&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">'Config'</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">retainPattern</span><span class="p">(</span><span class="s1">'*.php'</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -455,13 +455,13 @@ is provided then all files are subject.</p>
 <span class="k">use</span> <span class="nx">CodeIgniter\Files\FileCollection</span><span class="p">;</span>
 
 <span class="nv">$files</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FileCollection</span><span class="p">();</span>
-<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Config&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span> <span class="c1">// Adds all Config files and directories</span>
+<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">'Config'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span> <span class="c1">// Adds all Config files and directories</span>
 
-<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">removePattern</span><span class="p">(</span><span class="s1">&#39;*tion.php&#39;</span><span class="p">);</span> <span class="c1">// Would remove Encryption.php, Validation.php, and boot/production.php</span>
-<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">removePattern</span><span class="p">(</span><span class="s1">&#39;*tion.php&#39;</span><span class="p">,</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Config/boot&#39;</span><span class="p">);</span> <span class="c1">// Would only remove boot/production.php</span>
+<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">removePattern</span><span class="p">(</span><span class="s1">'*tion.php'</span><span class="p">);</span> <span class="c1">// Would remove Encryption.php, Validation.php, and boot/production.php</span>
+<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">removePattern</span><span class="p">(</span><span class="s1">'*tion.php'</span><span class="p">,</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">'Config/boot'</span><span class="p">);</span> <span class="c1">// Would only remove boot/production.php</span>
 
-<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">retainPattern</span><span class="p">(</span><span class="s1">&#39;#A.+php$#&#39;</span><span class="p">);</span> <span class="c1">// Would keep only Autoload.php</span>
-<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">retainPattern</span><span class="p">(</span><span class="s1">&#39;#d.+php$#&#39;</span><span class="p">,</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Config/boot&#39;</span><span class="p">);</span> <span class="c1">// Would keep everything but boot/production.php and boot/testing.php</span>
+<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">retainPattern</span><span class="p">(</span><span class="s1">'#A.+php$#'</span><span class="p">);</span> <span class="c1">// Would keep only Autoload.php</span>
+<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">retainPattern</span><span class="p">(</span><span class="s1">'#d.+php$#'</span><span class="p">,</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">'Config/boot'</span><span class="p">);</span> <span class="c1">// Would keep everything but boot/production.php and boot/testing.php</span>
 </pre></div>
 </div>
 </section>
@@ -471,7 +471,7 @@ is provided then all files are subject.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">retainMultiplePatterns</span><span class="p">([</span><span class="s1">&#39;*.css&#39;</span><span class="p">,</span> <span class="s1">&#39;*.js&#39;</span><span class="p">]);</span> <span class="c1">// Would keep only *.css and *.js files</span>
+<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">retainMultiplePatterns</span><span class="p">([</span><span class="s1">'*.css'</span><span class="p">,</span> <span class="s1">'*.js'</span><span class="p">]);</span> <span class="c1">// Would keep only *.css and *.js files</span>
 </pre></div>
 </div>
 </section>
@@ -502,7 +502,7 @@ directly (e.g. <code class="docutils literal notranslate"><span class="pre">fore
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

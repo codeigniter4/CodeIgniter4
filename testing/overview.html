@@ -451,7 +451,7 @@ parent as well so extended test cases do not interfere with staging:</p>
     <span class="p">{</span>
         <span class="k">parent</span><span class="o">::</span><span class="na">setUp</span><span class="p">();</span> <span class="c1">// Do not forget</span>
 
-        <span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">);</span>
+        <span class="nx">helper</span><span class="p">(</span><span class="s1">'text'</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="c1">// ...</span>
@@ -515,13 +515,13 @@ logged in user:</p>
 <span class="nv">$logger</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Log\Logger</span><span class="p">(</span><span class="nv">$config</span><span class="p">);</span>
 
 <span class="c1">// check verbatim the log message</span>
-<span class="nv">$logger</span><span class="o">-&gt;</span><span class="na">log</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s2">&quot;That&#39;s no moon&quot;</span><span class="p">);</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertLogged</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s2">&quot;That&#39;s no moon&quot;</span><span class="p">);</span>
+<span class="nv">$logger</span><span class="o">-&gt;</span><span class="na">log</span><span class="p">(</span><span class="s1">'error'</span><span class="p">,</span> <span class="s2">"That's no moon"</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertLogged</span><span class="p">(</span><span class="s1">'error'</span><span class="p">,</span> <span class="s2">"That's no moon"</span><span class="p">);</span>
 
 <span class="c1">// check that a portion of the message is found in the logs</span>
-<span class="nv">$exception</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\RuntimeException</span><span class="p">(</span><span class="s1">&#39;Hello world.&#39;</span><span class="p">);</span>
-<span class="nv">$logger</span><span class="o">-&gt;</span><span class="na">log</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="nv">$exception</span><span class="o">-&gt;</span><span class="na">getTraceAsString</span><span class="p">());</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertLogContains</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s1">&#39;{main}&#39;</span><span class="p">);</span>
+<span class="nv">$exception</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\RuntimeException</span><span class="p">(</span><span class="s1">'Hello world.'</span><span class="p">);</span>
+<span class="nv">$logger</span><span class="o">-&gt;</span><span class="na">log</span><span class="p">(</span><span class="s1">'error'</span><span class="p">,</span> <span class="nv">$exception</span><span class="o">-&gt;</span><span class="na">getTraceAsString</span><span class="p">());</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertLogContains</span><span class="p">(</span><span class="s1">'error'</span><span class="p">,</span> <span class="s1">'{main}'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -532,13 +532,13 @@ logged in user:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Events\Events</span><span class="p">;</span>
 
-<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$arg</span><span class="p">)</span> <span class="k">use</span> <span class="p">(</span><span class="o">&amp;</span><span class="nv">$result</span><span class="p">)</span> <span class="p">{</span>
+<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$arg</span><span class="p">)</span> <span class="k">use</span> <span class="p">(</span><span class="o">&amp;</span><span class="nv">$result</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$arg</span><span class="p">;</span>
 <span class="p">});</span>
 
-<span class="nx">Events</span><span class="o">::</span><span class="na">trigger</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">);</span>
+<span class="nx">Events</span><span class="o">::</span><span class="na">trigger</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">,</span> <span class="s1">'bar'</span><span class="p">);</span>
 
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEventTriggered</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEventTriggered</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -547,13 +547,13 @@ logged in user:</p>
 <p>Ensure that a header or cookie was actually emitted:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setCookie</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">);</span>
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setCookie</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">,</span> <span class="s1">'bar'</span><span class="p">);</span>
 
 <span class="nb">ob_start</span><span class="p">();</span>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">();</span>
 <span class="nv">$output</span> <span class="o">=</span> <span class="nb">ob_get_clean</span><span class="p">();</span> <span class="c1">// in case you want to check the actual body</span>
 
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertHeaderEmitted</span><span class="p">(</span><span class="s1">&#39;Set-Cookie: foo=bar&#39;</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertHeaderEmitted</span><span class="p">(</span><span class="s1">'Set-Cookie: foo=bar'</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -568,13 +568,13 @@ in PHPUnit.</p>
 <p>Ensure that a header or cookie was not emitted:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setCookie</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">);</span>
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setCookie</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">,</span> <span class="s1">'bar'</span><span class="p">);</span>
 
 <span class="nb">ob_start</span><span class="p">();</span>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">();</span>
 <span class="nv">$output</span> <span class="o">=</span> <span class="nb">ob_get_clean</span><span class="p">();</span> <span class="c1">// in case you want to check the actual body</span>
 
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertHeaderNotEmitted</span><span class="p">(</span><span class="s1">&#39;Set-Cookie: banana&#39;</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertHeaderNotEmitted</span><span class="p">(</span><span class="s1">'Set-Cookie: banana'</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -593,8 +593,8 @@ between expected and actual time is within the prescribed tolerance:</p>
 <span class="k">use</span> <span class="nx">CodeIgniter\Debug\Timer</span><span class="p">;</span>
 
 <span class="nv">$timer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Timer</span><span class="p">();</span>
-<span class="nv">$timer</span><span class="o">-&gt;</span><span class="na">start</span><span class="p">(</span><span class="s1">&#39;longjohn&#39;</span><span class="p">,</span> <span class="nb">strtotime</span><span class="p">(</span><span class="s1">&#39;-11 minutes&#39;</span><span class="p">));</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertCloseEnough</span><span class="p">(</span><span class="mi">11</span> <span class="o">*</span> <span class="mi">60</span><span class="p">,</span> <span class="nv">$timer</span><span class="o">-&gt;</span><span class="na">getElapsedTime</span><span class="p">(</span><span class="s1">&#39;longjohn&#39;</span><span class="p">));</span>
+<span class="nv">$timer</span><span class="o">-&gt;</span><span class="na">start</span><span class="p">(</span><span class="s1">'longjohn'</span><span class="p">,</span> <span class="nb">strtotime</span><span class="p">(</span><span class="s1">'-11 minutes'</span><span class="p">));</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertCloseEnough</span><span class="p">(</span><span class="mi">11</span> <span class="o">*</span> <span class="mi">60</span><span class="p">,</span> <span class="nv">$timer</span><span class="o">-&gt;</span><span class="na">getElapsedTime</span><span class="p">(</span><span class="s1">'longjohn'</span><span class="p">));</span>
 </pre></div>
 </div>
 <p>The above test will allow the actual time to be either 660 or 661 seconds.</p>
@@ -608,8 +608,8 @@ between expected and actual time, formatted as strings, is within the prescribed
 <span class="k">use</span> <span class="nx">CodeIgniter\Debug\Timer</span><span class="p">;</span>
 
 <span class="nv">$timer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Timer</span><span class="p">();</span>
-<span class="nv">$timer</span><span class="o">-&gt;</span><span class="na">start</span><span class="p">(</span><span class="s1">&#39;longjohn&#39;</span><span class="p">,</span> <span class="nb">strtotime</span><span class="p">(</span><span class="s1">&#39;-11 minutes&#39;</span><span class="p">));</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertCloseEnoughString</span><span class="p">(</span><span class="mi">11</span> <span class="o">*</span> <span class="mi">60</span><span class="p">,</span> <span class="nv">$timer</span><span class="o">-&gt;</span><span class="na">getElapsedTime</span><span class="p">(</span><span class="s1">&#39;longjohn&#39;</span><span class="p">));</span>
+<span class="nv">$timer</span><span class="o">-&gt;</span><span class="na">start</span><span class="p">(</span><span class="s1">'longjohn'</span><span class="p">,</span> <span class="nb">strtotime</span><span class="p">(</span><span class="s1">'-11 minutes'</span><span class="p">));</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertCloseEnoughString</span><span class="p">(</span><span class="mi">11</span> <span class="o">*</span> <span class="mi">60</span><span class="p">,</span> <span class="nv">$timer</span><span class="o">-&gt;</span><span class="na">getElapsedTime</span><span class="p">(</span><span class="s1">'longjohn'</span><span class="p">));</span>
 </pre></div>
 </div>
 <p>The above test will allow the actual time to be either 660 or 661 seconds.</p>
@@ -630,11 +630,11 @@ parameter is an instance of the class to test. The second parameter is the name 
 <span class="c1">// Create an instance of the class to test</span>
 <span class="nv">$obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Foo</span><span class="p">();</span>
 
-<span class="c1">// Get the invoker for the &#39;privateMethod&#39; method.</span>
-<span class="nv">$method</span> <span class="o">=</span> <span class="nx">self</span><span class="o">::</span><span class="na">getPrivateMethodInvoker</span><span class="p">(</span><span class="nv">$obj</span><span class="p">,</span> <span class="s1">&#39;privateMethod&#39;</span><span class="p">);</span>
+<span class="c1">// Get the invoker for the 'privateMethod' method.</span>
+<span class="nv">$method</span> <span class="o">=</span> <span class="nx">self</span><span class="o">::</span><span class="na">getPrivateMethodInvoker</span><span class="p">(</span><span class="nv">$obj</span><span class="p">,</span> <span class="s1">'privateMethod'</span><span class="p">);</span>
 
 <span class="c1">// Test the results</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEquals</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="nv">$method</span><span class="p">(</span><span class="s1">&#39;param1&#39;</span><span class="p">,</span> <span class="s1">&#39;param2&#39;</span><span class="p">));</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEquals</span><span class="p">(</span><span class="s1">'bar'</span><span class="p">,</span> <span class="nv">$method</span><span class="p">(</span><span class="s1">'param1'</span><span class="p">,</span> <span class="s1">'param2'</span><span class="p">));</span>
 </pre></div>
 </div>
 </section>
@@ -650,7 +650,7 @@ instance of the class to test. The second parameter is the name of the property.
 <span class="nv">$obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Foo</span><span class="p">();</span>
 
 <span class="c1">// Test the value</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEquals</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getPrivateProperty</span><span class="p">(</span><span class="nv">$obj</span><span class="p">,</span> <span class="s1">&#39;baz&#39;</span><span class="p">));</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEquals</span><span class="p">(</span><span class="s1">'bar'</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getPrivateProperty</span><span class="p">(</span><span class="nv">$obj</span><span class="p">,</span> <span class="s1">'baz'</span><span class="p">));</span>
 </pre></div>
 </div>
 </section>
@@ -666,7 +666,7 @@ parameter is the name of the property to set the value of. The third parameter i
 <span class="nv">$obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Foo</span><span class="p">();</span>
 
 <span class="c1">// Set the value</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">setPrivateProperty</span><span class="p">(</span><span class="nv">$obj</span><span class="p">,</span> <span class="s1">&#39;baz&#39;</span><span class="p">,</span> <span class="s1">&#39;oops!&#39;</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">setPrivateProperty</span><span class="p">(</span><span class="nv">$obj</span><span class="p">,</span> <span class="s1">'baz'</span><span class="p">,</span> <span class="s1">'oops!'</span><span class="p">);</span>
 
 <span class="c1">// Do normal testing...</span>
 </pre></div>
@@ -697,9 +697,9 @@ set properties of a service so that it behaves in a certain way, or replace a se
     <span class="k">public</span> <span class="k">function</span> <span class="nf">testSomething</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="nv">$curlrequest</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getMockBuilder</span><span class="p">(</span><span class="nx">CURLRequest</span><span class="o">::</span><span class="na">class</span><span class="p">)</span>
-            <span class="o">-&gt;</span><span class="na">onlyMethods</span><span class="p">([</span><span class="s1">&#39;request&#39;</span><span class="p">])</span>
+            <span class="o">-&gt;</span><span class="na">onlyMethods</span><span class="p">([</span><span class="s1">'request'</span><span class="p">])</span>
             <span class="o">-&gt;</span><span class="na">getMock</span><span class="p">();</span>
-        <span class="nx">Services</span><span class="o">::</span><span class="na">injectMock</span><span class="p">(</span><span class="s1">&#39;curlrequest&#39;</span><span class="p">,</span> <span class="nv">$curlrequest</span><span class="p">);</span>
+        <span class="nx">Services</span><span class="o">::</span><span class="na">injectMock</span><span class="p">(</span><span class="s1">'curlrequest'</span><span class="p">,</span> <span class="nv">$curlrequest</span><span class="p">);</span>
 
         <span class="c1">// Do normal testing here....</span>
     <span class="p">}</span>
@@ -751,7 +751,7 @@ component name:</p>
         <span class="k">parent</span><span class="o">::</span><span class="na">setUp</span><span class="p">();</span>
 
         <span class="nv">$model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MockUserModel</span><span class="p">();</span>
-        <span class="nx">Factories</span><span class="o">::</span><span class="na">injectMock</span><span class="p">(</span><span class="s1">&#39;models&#39;</span><span class="p">,</span> <span class="nx">UserModel</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="nv">$model</span><span class="p">);</span>
+        <span class="nx">Factories</span><span class="o">::</span><span class="na">injectMock</span><span class="p">(</span><span class="s1">'models'</span><span class="p">,</span> <span class="nx">UserModel</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="nv">$model</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -786,11 +786,11 @@ at will during testing.</p>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">testFixTime</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
-        <span class="c1">// Fix the current time to &quot;2023-11-25 12:00:00&quot;.</span>
-        <span class="nx">Time</span><span class="o">::</span><span class="na">setTestNow</span><span class="p">(</span><span class="s1">&#39;2023-11-25 12:00:00&#39;</span><span class="p">);</span>
+        <span class="c1">// Fix the current time to "2023-11-25 12:00:00".</span>
+        <span class="nx">Time</span><span class="o">::</span><span class="na">setTestNow</span><span class="p">(</span><span class="s1">'2023-11-25 12:00:00'</span><span class="p">);</span>
 
         <span class="c1">// This assertion always passes.</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSame</span><span class="p">(</span><span class="s1">&#39;2023-11-25 12:00:00&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">string</span><span class="p">)</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">());</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSame</span><span class="p">(</span><span class="s1">'2023-11-25 12:00:00'</span><span class="p">,</span> <span class="p">(</span><span class="nx">string</span><span class="p">)</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">());</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -815,7 +815,7 @@ parameters.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

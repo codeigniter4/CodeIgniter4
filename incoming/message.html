@@ -411,41 +411,41 @@ While the header is converted internally as described above, you can access the 
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// These are all the same:</span>
-<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;HOST&#39;</span><span class="p">);</span>
-<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Host&#39;</span><span class="p">);</span>
-<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;host&#39;</span><span class="p">);</span>
+<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">'HOST'</span><span class="p">);</span>
+<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">'Host'</span><span class="p">);</span>
+<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">'host'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If the header has multiple values, <code class="docutils literal notranslate"><span class="pre">getValue()</span></code> will return as an array of values. You can use the <code class="docutils literal notranslate"><span class="pre">getValueLine()</span></code>
 method to retrieve the values as a string:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">'Accept-Language'</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Outputs something like:</span>
-<span class="cm"> * &#39;Accept-Language: en,en-US&#39;</span>
+<span class="cm"> * 'Accept-Language: en,en-US'</span>
 <span class="cm"> */</span>
 
-<span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getValue</span><span class="p">();</span>
+<span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">'Accept-Language'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getValue</span><span class="p">();</span>
 <span class="cm">/*</span>
 <span class="cm"> * Outputs something like:</span>
 <span class="cm"> * [</span>
-<span class="cm"> *     &#39;en&#39;,</span>
-<span class="cm"> *     &#39;en-US&#39;,</span>
+<span class="cm"> *     'en',</span>
+<span class="cm"> *     'en-US',</span>
 <span class="cm"> * ]</span>
 <span class="cm"> */</span>
 
-<span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getValueLine</span><span class="p">();</span>
+<span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">'Accept-Language'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getValueLine</span><span class="p">();</span>
 <span class="cm">/*</span>
 <span class="cm"> * Outputs something like:</span>
-<span class="cm"> * en,en-US&#39;</span>
+<span class="cm"> * en,en-US'</span>
 <span class="cm"> */</span>
 </pre></div>
 </div>
 <p>You can filter the header by passing a filter value in as the second parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Document-URI&#39;</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_URL</span><span class="p">);</span>
+<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">'Document-URI'</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_URL</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -488,10 +488,10 @@ method to retrieve the values as a string:</p>
 of the header values when the header has multiple values. The values are appropriately joined:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeaderLine</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeaderLine</span><span class="p">(</span><span class="s1">'Accept-Language'</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Outputs:</span>
-<span class="cm"> * &#39;en,en-US&#39;</span>
+<span class="cm"> * 'en,en-US'</span>
 <span class="cm"> */</span>
 </pre></div>
 </div>
@@ -519,7 +519,7 @@ doesn’t already exist in the collection, it will be created. The <code class="
 or an array of strings:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">&#39;Host&#39;</span><span class="p">,</span> <span class="s1">&#39;codeigniter.com&#39;</span><span class="p">);</span>
+<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">'Host'</span><span class="p">,</span> <span class="s1">'codeigniter.com'</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -543,7 +543,7 @@ or an array of strings:</p>
 <p>Removes the header from the Message. <code class="docutils literal notranslate"><span class="pre">$name</span></code> is the case-insensitive name of the header:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">removeHeader</span><span class="p">(</span><span class="s1">&#39;Host&#39;</span><span class="p">);</span>
+<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">removeHeader</span><span class="p">(</span><span class="s1">'Host'</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -569,7 +569,7 @@ or an array of strings:</p>
 If it is a string then a LogicException will be thrown.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">appendHeader</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">,</span> <span class="s1">&#39;en-US; q=0.8&#39;</span><span class="p">);</span>
+<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">appendHeader</span><span class="p">(</span><span class="s1">'Accept-Language'</span><span class="p">,</span> <span class="s1">'en-US; q=0.8'</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -595,7 +595,7 @@ If it is a string then a LogicException will be thrown.</p>
 If it is a string then a LogicException will be thrown.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">prependHeader</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">,</span> <span class="s1">&#39;en,&#39;</span><span class="p">);</span>
+<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">prependHeader</span><span class="p">(</span><span class="s1">'Accept-Language'</span><span class="p">,</span> <span class="s1">'en,'</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -624,8 +624,8 @@ If it is a string then a LogicException will be thrown.</p>
 Use this only when you set multiple headers with the same name,</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">addHeader</span><span class="p">(</span><span class="s1">&#39;Set-Cookie&#39;</span><span class="p">,</span> <span class="s1">&#39;logged_in=no; Path=/&#39;</span><span class="p">);</span>
-<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">addHeader</span><span class="p">(</span><span class="s1">&#39;Set-Cookie&#39;</span><span class="p">,</span> <span class="s1">&#39;sessid=123456; Path=/&#39;</span><span class="p">);</span>
+<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">addHeader</span><span class="p">(</span><span class="s1">'Set-Cookie'</span><span class="p">,</span> <span class="s1">'logged_in=no; Path=/'</span><span class="p">);</span>
+<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">addHeader</span><span class="p">(</span><span class="s1">'Set-Cookie'</span><span class="p">,</span> <span class="s1">'sessid=123456; Path=/'</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -665,7 +665,7 @@ return <code class="docutils literal notranslate"><span class="pre">1.1</span></
 <code class="docutils literal notranslate"><span class="pre">1.0</span></code>, <code class="docutils literal notranslate"><span class="pre">1.1</span></code>, <code class="docutils literal notranslate"><span class="pre">2.0</span></code> and <code class="docutils literal notranslate"><span class="pre">3.0</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">setProtocolVersion</span><span class="p">(</span><span class="s1">&#39;1.1&#39;</span><span class="p">);</span>
+<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">setProtocolVersion</span><span class="p">(</span><span class="s1">'1.1'</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -687,7 +687,7 @@ return <code class="docutils literal notranslate"><span class="pre">1.1</span></
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

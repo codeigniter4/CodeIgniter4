@@ -335,12 +335,12 @@ requirements are not met.</p>
 <p>The following example shows a common usage pattern within your controllers.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$foo</span> <span class="o">=</span> <span class="nx">cache</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">))</span> <span class="p">{</span>
-    <span class="k">echo</span> <span class="s1">&#39;Saving to the cache!&lt;br&gt;&#39;</span><span class="p">;</span>
-    <span class="nv">$foo</span> <span class="o">=</span> <span class="s1">&#39;foobarbaz!&#39;</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$foo</span> <span class="o">=</span> <span class="nx">cache</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s1">'Saving to the cache!&lt;br&gt;'</span><span class="p">;</span>
+    <span class="nv">$foo</span> <span class="o">=</span> <span class="s1">'foobarbaz!'</span><span class="p">;</span>
 
     <span class="c1">// Save into the cache for 5 minutes</span>
-    <span class="nx">cache</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="nv">$foo</span><span class="p">,</span> <span class="mi">300</span><span class="p">);</span>
+    <span class="nx">cache</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">,</span> <span class="nv">$foo</span><span class="p">,</span> <span class="mi">300</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="k">echo</span> <span class="nv">$foo</span><span class="p">;</span>
@@ -349,9 +349,9 @@ requirements are not met.</p>
 <p>You can grab an instance of the cache engine directly through the global function <code class="docutils literal notranslate"><span class="pre">service()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$cache</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;cache&#39;</span><span class="p">);</span>
+<span class="nv">$cache</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'cache'</span><span class="p">);</span>
 
-<span class="nv">$foo</span> <span class="o">=</span> <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
+<span class="nv">$foo</span> <span class="o">=</span> <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -457,7 +457,7 @@ item does not exist, the method will return null.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$foo</span> <span class="o">=</span> <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;my_cached_item&#39;</span><span class="p">);</span>
+<span class="nv">$foo</span> <span class="o">=</span> <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'my_cached_item'</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -507,7 +507,7 @@ method will return <code class="docutils literal notranslate"><span class="pre">
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;cache_item_id&#39;</span><span class="p">,</span> <span class="s1">&#39;data_to_cache&#39;</span><span class="p">);</span>
+<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">'cache_item_id'</span><span class="p">,</span> <span class="s1">'data_to_cache'</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -533,7 +533,7 @@ deletion fails, the method will return false.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="s1">&#39;cache_item_id&#39;</span><span class="p">);</span>
+<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="s1">'cache_item_id'</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -564,8 +564,8 @@ Due to limitations, it couldn’t be implemented for Memcached and Wincache hand
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">deleteMatching</span><span class="p">(</span><span class="s1">&#39;prefix_*&#39;</span><span class="p">);</span> <span class="c1">// deletes all items of which keys start with &quot;prefix_&quot;</span>
-<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">deleteMatching</span><span class="p">(</span><span class="s1">&#39;*_suffix&#39;</span><span class="p">);</span> <span class="c1">// deletes all items of which keys end with &quot;_suffix&quot;</span>
+<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">deleteMatching</span><span class="p">(</span><span class="s1">'prefix_*'</span><span class="p">);</span> <span class="c1">// deletes all items of which keys start with "prefix_"</span>
+<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">deleteMatching</span><span class="p">(</span><span class="s1">'*_suffix'</span><span class="p">);</span> <span class="c1">// deletes all items of which keys end with "_suffix"</span>
 </pre></div>
 </div>
 <p>For more information on glob-style syntax, please see
@@ -593,9 +593,9 @@ Due to limitations, it couldn’t be implemented for Memcached and Wincache hand
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="c1">// &#39;iterator&#39; has a value of 2</span>
-<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">increment</span><span class="p">(</span><span class="s1">&#39;iterator&#39;</span><span class="p">);</span> <span class="c1">// &#39;iterator&#39; is now 3</span>
-<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">increment</span><span class="p">(</span><span class="s1">&#39;iterator&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span> <span class="c1">// &#39;iterator&#39; is now 6</span>
+<span class="c1">// 'iterator' has a value of 2</span>
+<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">increment</span><span class="p">(</span><span class="s1">'iterator'</span><span class="p">);</span> <span class="c1">// 'iterator' is now 3</span>
+<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">increment</span><span class="p">(</span><span class="s1">'iterator'</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span> <span class="c1">// 'iterator' is now 6</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -621,9 +621,9 @@ Due to limitations, it couldn’t be implemented for Memcached and Wincache hand
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="c1">// &#39;iterator&#39; has a value of 6</span>
-<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">decrement</span><span class="p">(</span><span class="s1">&#39;iterator&#39;</span><span class="p">);</span> <span class="c1">// &#39;iterator&#39; is now 5</span>
-<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">decrement</span><span class="p">(</span><span class="s1">&#39;iterator&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// &#39;iterator&#39; is now 3</span>
+<span class="c1">// 'iterator' has a value of 6</span>
+<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">decrement</span><span class="p">(</span><span class="s1">'iterator'</span><span class="p">);</span> <span class="c1">// 'iterator' is now 5</span>
+<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">decrement</span><span class="p">(</span><span class="s1">'iterator'</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// 'iterator' is now 3</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -695,7 +695,7 @@ cache.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">getMetadata</span><span class="p">(</span><span class="s1">&#39;my_cached_item&#39;</span><span class="p">));</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">getMetadata</span><span class="p">(</span><span class="s1">'my_cached_item'</span><span class="p">));</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -765,10 +765,10 @@ come where disk I/O will negate positive gains by caching.</p>
     <span class="c1">// ...</span>
 
     <span class="k">public</span> <span class="nv">$memcached</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;host&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;port&#39;</span>   <span class="o">=&gt;</span> <span class="mi">11211</span><span class="p">,</span>
-        <span class="s1">&#39;weight&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="s1">&#39;raw&#39;</span>    <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+        <span class="s1">'host'</span>   <span class="o">=&gt;</span> <span class="s1">'127.0.0.1'</span><span class="p">,</span>
+        <span class="s1">'port'</span>   <span class="o">=&gt;</span> <span class="mi">11211</span><span class="p">,</span>
+        <span class="s1">'weight'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">'raw'</span>    <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
     <span class="p">];</span>
 
     <span class="c1">// ...</span>
@@ -800,13 +800,13 @@ To use it, you need <a class="reference external" href="https://github.com/phpre
     <span class="c1">// ...</span>
 
     <span class="k">public</span> <span class="nv">$redis</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;host&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;password&#39;</span>   <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
-        <span class="s1">&#39;port&#39;</span>       <span class="o">=&gt;</span> <span class="mi">6379</span><span class="p">,</span>
-        <span class="s1">&#39;async&#39;</span>      <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span> <span class="c1">// specific to Predis and ignored by the native Redis extension</span>
-        <span class="s1">&#39;persistent&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
-        <span class="s1">&#39;timeout&#39;</span>    <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="s1">&#39;database&#39;</span>   <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s1">'host'</span>       <span class="o">=&gt;</span> <span class="s1">'127.0.0.1'</span><span class="p">,</span>
+        <span class="s1">'password'</span>   <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
+        <span class="s1">'port'</span>       <span class="o">=&gt;</span> <span class="mi">6379</span><span class="p">,</span>
+        <span class="s1">'async'</span>      <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span> <span class="c1">// specific to Predis and ignored by the native Redis extension</span>
+        <span class="s1">'persistent'</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+        <span class="s1">'timeout'</span>    <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s1">'database'</span>   <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
     <span class="p">];</span>
 
     <span class="c1">// ...</span>
@@ -847,7 +847,7 @@ support your chosen cache.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

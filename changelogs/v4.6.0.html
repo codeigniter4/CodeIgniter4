@@ -428,8 +428,8 @@ Pragma: no-cache
 </pre></div>
 </div>
 <p>So if we set <strong>Expires</strong> header one more time we will end up with a duplicated header:</p>
-<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">$response-&gt;removeHeader(&#39;Expires&#39;); // has no effect</span>
-<span class="x">return $response-&gt;setHeader(&#39;Expires&#39;, &#39;Sun, 17 Nov 2024 14:17:37 GMT&#39;);</span>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">$response-&gt;removeHeader('Expires'); // has no effect</span>
+<span class="x">return $response-&gt;setHeader('Expires', 'Sun, 17 Nov 2024 14:17:37 GMT');</span>
 </pre></div>
 </div>
 <p>Response headers:</p>
@@ -709,7 +709,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

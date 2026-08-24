@@ -364,7 +364,7 @@ been deprecated as of PHP 7.2.</p>
 <p>Like all services in CodeIgniter, it can be loaded via <code class="docutils literal notranslate"><span class="pre">Config\Services</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$encrypter</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;encrypter&#39;</span><span class="p">);</span>
+<span class="nv">$encrypter</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'encrypter'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Assuming you have set your starting key (see <a class="reference internal" href="#configuration"><span class="std std-ref">Configuring the Library</span></a>),
@@ -372,7 +372,7 @@ encrypting and decrypting data is simple - pass the appropriate string to <code 
 and/or <code class="docutils literal notranslate"><span class="pre">decrypt()</span></code> methods:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$plainText</span>  <span class="o">=</span> <span class="s1">&#39;This is a plain-text message!&#39;</span><span class="p">;</span>
+<span class="nv">$plainText</span>  <span class="o">=</span> <span class="s1">'This is a plain-text message!'</span><span class="p">;</span>
 <span class="nv">$ciphertext</span> <span class="o">=</span> <span class="nv">$encrypter</span><span class="o">-&gt;</span><span class="na">encrypt</span><span class="p">(</span><span class="nv">$plainText</span><span class="p">);</span>
 
 <span class="c1">// Outputs: This is a plain-text message!</span>
@@ -426,10 +426,10 @@ an instance of the <code class="docutils literal notranslate"><span class="pre">
 <span class="k">use</span> <span class="nx">Config\Encryption</span><span class="p">;</span>
 
 <span class="nv">$config</span>         <span class="o">=</span> <span class="nx">config</span><span class="p">(</span><span class="nx">Encryption</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
-<span class="nv">$config</span><span class="o">-&gt;</span><span class="na">key</span>    <span class="o">=</span> <span class="s1">&#39;aBigsecret_ofAtleast32Characters&#39;</span><span class="p">;</span>
-<span class="nv">$config</span><span class="o">-&gt;</span><span class="na">driver</span> <span class="o">=</span> <span class="s1">&#39;OpenSSL&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="o">-&gt;</span><span class="na">key</span>    <span class="o">=</span> <span class="s1">'aBigsecret_ofAtleast32Characters'</span><span class="p">;</span>
+<span class="nv">$config</span><span class="o">-&gt;</span><span class="na">driver</span> <span class="o">=</span> <span class="s1">'OpenSSL'</span><span class="p">;</span>
 
-<span class="nv">$encrypter</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;encrypter&#39;</span><span class="p">,</span> <span class="nv">$config</span><span class="p">);</span>
+<span class="nv">$encrypter</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'encrypter'</span><span class="p">,</span> <span class="nv">$config</span><span class="p">);</span>
 </pre></div>
 </div>
 <section id="configuration-to-maintain-compatibility-with-ci3">
@@ -444,18 +444,18 @@ If you need to decrypt such data, use the following settings to maintain compati
 <span class="k">use</span> <span class="nx">Config\Encryption</span><span class="p">;</span>
 
 <span class="nv">$config</span>         <span class="o">=</span> <span class="k">new</span> <span class="nx">Encryption</span><span class="p">();</span>
-<span class="nv">$config</span><span class="o">-&gt;</span><span class="na">driver</span> <span class="o">=</span> <span class="s1">&#39;OpenSSL&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="o">-&gt;</span><span class="na">driver</span> <span class="o">=</span> <span class="s1">'OpenSSL'</span><span class="p">;</span>
 
-<span class="c1">// Your CI3&#39;s &#39;encryption_key&#39;</span>
-<span class="nv">$config</span><span class="o">-&gt;</span><span class="na">key</span> <span class="o">=</span> <span class="nb">hex2bin</span><span class="p">(</span><span class="s1">&#39;64c70b0b8d45b80b9eba60b8b3c8a34d0193223d20fea46f8644b848bf7ce67f&#39;</span><span class="p">);</span>
-<span class="c1">// Your CI3&#39;s &#39;cipher&#39; and &#39;mode&#39;</span>
-<span class="nv">$config</span><span class="o">-&gt;</span><span class="na">cipher</span> <span class="o">=</span> <span class="s1">&#39;AES-128-CBC&#39;</span><span class="p">;</span>
+<span class="c1">// Your CI3's 'encryption_key'</span>
+<span class="nv">$config</span><span class="o">-&gt;</span><span class="na">key</span> <span class="o">=</span> <span class="nb">hex2bin</span><span class="p">(</span><span class="s1">'64c70b0b8d45b80b9eba60b8b3c8a34d0193223d20fea46f8644b848bf7ce67f'</span><span class="p">);</span>
+<span class="c1">// Your CI3's 'cipher' and 'mode'</span>
+<span class="nv">$config</span><span class="o">-&gt;</span><span class="na">cipher</span> <span class="o">=</span> <span class="s1">'AES-128-CBC'</span><span class="p">;</span>
 
 <span class="nv">$config</span><span class="o">-&gt;</span><span class="na">rawData</span>        <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
-<span class="nv">$config</span><span class="o">-&gt;</span><span class="na">encryptKeyInfo</span> <span class="o">=</span> <span class="s1">&#39;encryption&#39;</span><span class="p">;</span>
-<span class="nv">$config</span><span class="o">-&gt;</span><span class="na">authKeyInfo</span>    <span class="o">=</span> <span class="s1">&#39;authentication&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="o">-&gt;</span><span class="na">encryptKeyInfo</span> <span class="o">=</span> <span class="s1">'encryption'</span><span class="p">;</span>
+<span class="nv">$config</span><span class="o">-&gt;</span><span class="na">authKeyInfo</span>    <span class="o">=</span> <span class="s1">'authentication'</span><span class="p">;</span>
 
-<span class="nv">$encrypter</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;encrypter&#39;</span><span class="p">,</span> <span class="nv">$config</span><span class="p">);</span>
+<span class="nv">$encrypter</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'encrypter'</span><span class="p">,</span> <span class="nv">$config</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -532,7 +532,7 @@ and set:</p>
 
 <span class="k">class</span> <span class="nc">Encryption</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
-    <span class="k">public</span> <span class="nv">$key</span> <span class="o">=</span> <span class="s1">&#39;YOUR KEY&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nv">$key</span> <span class="o">=</span> <span class="s1">'YOUR KEY'</span><span class="p">;</span>
 
     <span class="c1">// ...</span>
 <span class="p">}</span>
@@ -551,7 +551,7 @@ a more friendly manner. For example:</p>
 
 <span class="c1">// Put the same value with hex2bin(),</span>
 <span class="c1">// so that it is still passed as binary to the library:</span>
-<span class="nv">$key</span> <span class="o">=</span> <span class="nb">hex2bin</span><span class="p">(</span><span class="s1">&#39;your-hex-encoded-key&#39;</span><span class="p">);</span>
+<span class="nv">$key</span> <span class="o">=</span> <span class="nb">hex2bin</span><span class="p">(</span><span class="s1">'your-hex-encoded-key'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You might find the same technique useful for the results
@@ -579,9 +579,9 @@ the library.</p>
 <span class="k">class</span> <span class="nc">Encryption</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="c1">// In Encryption, you may use</span>
-    <span class="k">public</span> <span class="nv">$key</span> <span class="o">=</span> <span class="s1">&#39;hex2bin:&lt;your-hex-encoded-key&gt;&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nv">$key</span> <span class="o">=</span> <span class="s1">'hex2bin:&lt;your-hex-encoded-key&gt;'</span><span class="p">;</span>
     <span class="c1">// or</span>
-    <span class="k">public</span> <span class="nv">$key</span> <span class="o">=</span> <span class="s1">&#39;base64:&lt;your-base64-encoded-key&gt;&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nv">$key</span> <span class="o">=</span> <span class="s1">'base64:&lt;your-base64-encoded-key&gt;'</span><span class="p">;</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -624,11 +624,11 @@ with old keys while using a new key for all new encryption operations.</p>
 
 <span class="k">class</span> <span class="nc">Encryption</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
-    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$key</span> <span class="o">=</span> <span class="s1">&#39;hex2bin:your_new_encryption_key_in_hex&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$key</span> <span class="o">=</span> <span class="s1">'hex2bin:your_new_encryption_key_in_hex'</span><span class="p">;</span>
 
     <span class="k">public</span> <span class="k">array</span><span class="o">|</span><span class="nx">string</span> <span class="nv">$previousKeys</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;hex2bin:your_old_encryption_key_in_hex&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;hex2bin:another_old_key_if_needed&#39;</span><span class="p">,</span>
+        <span class="s1">'hex2bin:your_old_encryption_key_in_hex'</span><span class="p">,</span>
+        <span class="s1">'hex2bin:another_old_key_if_needed'</span><span class="p">,</span>
     <span class="p">];</span>
 
     <span class="c1">// ... other config options</span>
@@ -776,7 +776,7 @@ the operating system’s sources (<em>i.e.</em> <code class="docutils literal no
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$encrypter</span> <span class="o">=</span> <span class="nv">$encryption</span><span class="o">-&gt;</span><span class="na">initialize</span><span class="p">([</span><span class="s1">&#39;cipher&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;AES-256-CTR&#39;</span><span class="p">]);</span>
+<span class="nv">$encrypter</span> <span class="o">=</span> <span class="nv">$encryption</span><span class="o">-&gt;</span><span class="na">initialize</span><span class="p">([</span><span class="s1">'cipher'</span> <span class="o">=&gt;</span> <span class="s1">'AES-256-CTR'</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>Please refer to the <a class="reference internal" href="#configuration"><span class="std std-ref">Configuring the Library</span></a> section for detailed info.</p>
@@ -816,11 +816,11 @@ on runtime, pass the <code class="docutils literal notranslate"><span class="pre
 <p>Examples:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$ciphertext</span> <span class="o">=</span> <span class="nv">$encrypter</span><span class="o">-&gt;</span><span class="na">encrypt</span><span class="p">(</span><span class="s1">&#39;My secret message&#39;</span><span class="p">);</span>
-<span class="nv">$ciphertext</span> <span class="o">=</span> <span class="nv">$encrypter</span><span class="o">-&gt;</span><span class="na">encrypt</span><span class="p">(</span><span class="s1">&#39;My secret message&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;key&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;New secret key&#39;</span><span class="p">]);</span>
-<span class="nv">$ciphertext</span> <span class="o">=</span> <span class="nv">$encrypter</span><span class="o">-&gt;</span><span class="na">encrypt</span><span class="p">(</span><span class="s1">&#39;My secret message&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;key&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;New secret key&#39;</span><span class="p">,</span> <span class="s1">&#39;blockSize&#39;</span> <span class="o">=&gt;</span> <span class="mi">32</span><span class="p">]);</span>
-<span class="nv">$ciphertext</span> <span class="o">=</span> <span class="nv">$encrypter</span><span class="o">-&gt;</span><span class="na">encrypt</span><span class="p">(</span><span class="s1">&#39;My secret message&#39;</span><span class="p">,</span> <span class="s1">&#39;New secret key&#39;</span><span class="p">);</span>
-<span class="nv">$ciphertext</span> <span class="o">=</span> <span class="nv">$encrypter</span><span class="o">-&gt;</span><span class="na">encrypt</span><span class="p">(</span><span class="s1">&#39;My secret message&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;blockSize&#39;</span> <span class="o">=&gt;</span> <span class="mi">32</span><span class="p">]);</span>
+<span class="nv">$ciphertext</span> <span class="o">=</span> <span class="nv">$encrypter</span><span class="o">-&gt;</span><span class="na">encrypt</span><span class="p">(</span><span class="s1">'My secret message'</span><span class="p">);</span>
+<span class="nv">$ciphertext</span> <span class="o">=</span> <span class="nv">$encrypter</span><span class="o">-&gt;</span><span class="na">encrypt</span><span class="p">(</span><span class="s1">'My secret message'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'key'</span> <span class="o">=&gt;</span> <span class="s1">'New secret key'</span><span class="p">]);</span>
+<span class="nv">$ciphertext</span> <span class="o">=</span> <span class="nv">$encrypter</span><span class="o">-&gt;</span><span class="na">encrypt</span><span class="p">(</span><span class="s1">'My secret message'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'key'</span> <span class="o">=&gt;</span> <span class="s1">'New secret key'</span><span class="p">,</span> <span class="s1">'blockSize'</span> <span class="o">=&gt;</span> <span class="mi">32</span><span class="p">]);</span>
+<span class="nv">$ciphertext</span> <span class="o">=</span> <span class="nv">$encrypter</span><span class="o">-&gt;</span><span class="na">encrypt</span><span class="p">(</span><span class="s1">'My secret message'</span><span class="p">,</span> <span class="s1">'New secret key'</span><span class="p">);</span>
+<span class="nv">$ciphertext</span> <span class="o">=</span> <span class="nv">$encrypter</span><span class="o">-&gt;</span><span class="na">encrypt</span><span class="p">(</span><span class="s1">'My secret message'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'blockSize'</span> <span class="o">=&gt;</span> <span class="mi">32</span><span class="p">]);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -855,10 +855,10 @@ on runtime, pass the <code class="docutils literal notranslate"><span class="pre
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nv">$encrypter</span><span class="o">-&gt;</span><span class="na">decrypt</span><span class="p">(</span><span class="nv">$ciphertext</span><span class="p">);</span>
-<span class="k">echo</span> <span class="nv">$encrypter</span><span class="o">-&gt;</span><span class="na">decrypt</span><span class="p">(</span><span class="nv">$ciphertext</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;key&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;New secret key&#39;</span><span class="p">]);</span>
-<span class="k">echo</span> <span class="nv">$encrypter</span><span class="o">-&gt;</span><span class="na">decrypt</span><span class="p">(</span><span class="nv">$ciphertext</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;key&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;New secret key&#39;</span><span class="p">,</span> <span class="s1">&#39;blockSize&#39;</span> <span class="o">=&gt;</span> <span class="mi">32</span><span class="p">]);</span>
-<span class="k">echo</span> <span class="nv">$encrypter</span><span class="o">-&gt;</span><span class="na">decrypt</span><span class="p">(</span><span class="nv">$ciphertext</span><span class="p">,</span> <span class="s1">&#39;New secret key&#39;</span><span class="p">);</span>
-<span class="k">echo</span> <span class="nv">$encrypter</span><span class="o">-&gt;</span><span class="na">decrypt</span><span class="p">(</span><span class="nv">$ciphertext</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;blockSize&#39;</span> <span class="o">=&gt;</span> <span class="mi">32</span><span class="p">]);</span>
+<span class="k">echo</span> <span class="nv">$encrypter</span><span class="o">-&gt;</span><span class="na">decrypt</span><span class="p">(</span><span class="nv">$ciphertext</span><span class="p">,</span> <span class="p">[</span><span class="s1">'key'</span> <span class="o">=&gt;</span> <span class="s1">'New secret key'</span><span class="p">]);</span>
+<span class="k">echo</span> <span class="nv">$encrypter</span><span class="o">-&gt;</span><span class="na">decrypt</span><span class="p">(</span><span class="nv">$ciphertext</span><span class="p">,</span> <span class="p">[</span><span class="s1">'key'</span> <span class="o">=&gt;</span> <span class="s1">'New secret key'</span><span class="p">,</span> <span class="s1">'blockSize'</span> <span class="o">=&gt;</span> <span class="mi">32</span><span class="p">]);</span>
+<span class="k">echo</span> <span class="nv">$encrypter</span><span class="o">-&gt;</span><span class="na">decrypt</span><span class="p">(</span><span class="nv">$ciphertext</span><span class="p">,</span> <span class="s1">'New secret key'</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$encrypter</span><span class="o">-&gt;</span><span class="na">decrypt</span><span class="p">(</span><span class="nv">$ciphertext</span><span class="p">,</span> <span class="p">[</span><span class="s1">'blockSize'</span> <span class="o">=&gt;</span> <span class="mi">32</span><span class="p">]);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -880,7 +880,7 @@ on runtime, pass the <code class="docutils literal notranslate"><span class="pre
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

@@ -350,7 +350,7 @@ to use as a service. The method typically returns a <strong>shared instance</str
 it might have into it. Then, we would replace our timer creation code with code that calls this global function or Services class:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$timer</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;timer&#39;</span><span class="p">);</span>
+<span class="nv">$timer</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'timer'</span><span class="p">);</span>
 
 <span class="c1">// The code above is the same as the code below.</span>
 <span class="nv">$timer</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">timer</span><span class="p">();</span>
@@ -371,7 +371,7 @@ error-resistant.</p>
 <p>As many CodeIgniter classes are provided as services, you can get them like the following:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$timer</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;timer&#39;</span><span class="p">);</span>
+<span class="nv">$timer</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'timer'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">$timer</span></code> is an instance of the Timer class, and if you call <code class="docutils literal notranslate"><span class="pre">service('timer')</span></code> again, you will get the exactly same instance.</p>
@@ -379,16 +379,16 @@ error-resistant.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$options1</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;baseURI&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://example.com/api/v1/&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;timeout&#39;</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s1">'baseURI'</span> <span class="o">=&gt;</span> <span class="s1">'http://example.com/api/v1/'</span><span class="p">,</span>
+    <span class="s1">'timeout'</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span>
 <span class="p">];</span>
-<span class="nv">$client1</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;curlrequest&#39;</span><span class="p">,</span> <span class="nv">$options1</span><span class="p">);</span>
+<span class="nv">$client1</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'curlrequest'</span><span class="p">,</span> <span class="nv">$options1</span><span class="p">);</span>
 
 <span class="nv">$options2</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;baseURI&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://another.example.com/api/v2/&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;timeout&#39;</span> <span class="o">=&gt;</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="s1">'baseURI'</span> <span class="o">=&gt;</span> <span class="s1">'http://another.example.com/api/v2/'</span><span class="p">,</span>
+    <span class="s1">'timeout'</span> <span class="o">=&gt;</span> <span class="mi">10</span><span class="p">,</span>
 <span class="p">];</span>
-<span class="nv">$client2</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;curlrequest&#39;</span><span class="p">,</span> <span class="nv">$options2</span><span class="p">);</span>
+<span class="nv">$client2</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'curlrequest'</span><span class="p">,</span> <span class="nv">$options2</span><span class="p">);</span>
 <span class="c1">// $options2 does not work.</span>
 <span class="c1">// $client2 is the exactly same instance as $client1.</span>
 </pre></div>
@@ -414,7 +414,7 @@ file always returns a SHARED instance of the class, so calling the function mult
 always return the same instance:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$logger</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;logger&#39;</span><span class="p">);</span>
+<span class="nv">$logger</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'logger'</span><span class="p">);</span>
 
 <span class="c1">// The code above is the same as the code below.</span>
 <span class="nv">$logger</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">logger</span><span class="p">();</span>
@@ -427,10 +427,10 @@ always return the same instance:</p>
 <p>If the creation method requires additional parameters, they can be passed after the service name:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$renderer</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;renderer&#39;</span><span class="p">,</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;views/&#39;</span><span class="p">);</span>
+<span class="nv">$renderer</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'renderer'</span><span class="p">,</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">'views/'</span><span class="p">);</span>
 
 <span class="c1">// The code above is the same as the code below.</span>
-<span class="nv">$renderer</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">renderer</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;views/&#39;</span><span class="p">);</span>
+<span class="nv">$renderer</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">renderer</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">'views/'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -440,7 +440,7 @@ always return the same instance:</p>
 the class:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$logger</span> <span class="o">=</span> <span class="nx">single_service</span><span class="p">(</span><span class="s1">&#39;logger&#39;</span><span class="p">);</span>
+<span class="nv">$logger</span> <span class="o">=</span> <span class="nx">single_service</span><span class="p">(</span><span class="s1">'logger'</span><span class="p">);</span>
 
 <span class="c1">// The code above is the same as the code below.</span>
 <span class="nv">$logger</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">logger</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
@@ -485,7 +485,7 @@ instead of <code class="docutils literal notranslate"><span class="pre">CodeIgni
 
     <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">routes</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="nx">\App\Router\MyRouteCollection</span><span class="p">(</span><span class="k">static</span><span class="o">::</span><span class="na">locator</span><span class="p">(),</span> <span class="nx">config</span><span class="p">(</span><span class="s1">&#39;Modules&#39;</span><span class="p">));</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">\App\Router\MyRouteCollection</span><span class="p">(</span><span class="k">static</span><span class="o">::</span><span class="na">locator</span><span class="p">(),</span> <span class="nx">config</span><span class="p">(</span><span class="s1">'Modules'</span><span class="p">));</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -508,7 +508,7 @@ as a constructor parameter. The service method looks like this:</p>
 <span class="p">{</span>
     <span class="c1">// ...</span>
 
-    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">renderer</span><span class="p">(</span><span class="nv">$viewPath</span> <span class="o">=</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;views/&#39;</span><span class="p">)</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">renderer</span><span class="p">(</span><span class="nv">$viewPath</span> <span class="o">=</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">'views/'</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\View</span><span class="p">(</span><span class="nv">$viewPath</span><span class="p">);</span>
     <span class="p">}</span>
@@ -519,7 +519,7 @@ as a constructor parameter. The service method looks like this:</p>
 the path it uses:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$renderer</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">renderer</span><span class="p">(</span><span class="s1">&#39;/shared/views/&#39;</span><span class="p">);</span>
+<span class="nv">$renderer</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">renderer</span><span class="p">(</span><span class="s1">'/shared/views/'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -543,10 +543,10 @@ within the class, and, if not, creates a new one. All of the factory methods pro
     <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">routes</span><span class="p">(</span><span class="nv">$getShared</span> <span class="o">=</span> <span class="k">true</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="nv">$getShared</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="k">static</span><span class="o">::</span><span class="na">getSharedInstance</span><span class="p">(</span><span class="s1">&#39;routes&#39;</span><span class="p">);</span>
+            <span class="k">return</span> <span class="k">static</span><span class="o">::</span><span class="na">getSharedInstance</span><span class="p">(</span><span class="s1">'routes'</span><span class="p">);</span>
         <span class="p">}</span>
 
-        <span class="k">return</span> <span class="k">new</span> <span class="nx">\App\Router\MyRouteCollection</span><span class="p">(</span><span class="k">static</span><span class="o">::</span><span class="na">locator</span><span class="p">(),</span> <span class="nx">config</span><span class="p">(</span><span class="s1">&#39;Modules&#39;</span><span class="p">));</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">\App\Router\MyRouteCollection</span><span class="p">(</span><span class="k">static</span><span class="o">::</span><span class="na">locator</span><span class="p">(),</span> <span class="nx">config</span><span class="p">(</span><span class="s1">'Modules'</span><span class="p">));</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -586,7 +586,7 @@ models, etc, and you’d like to make some of the classes available as a service
 would simply use the framework’s <code class="docutils literal notranslate"><span class="pre">Config\Services</span></code> class to grab your service:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$postManager</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;postManager&#39;</span><span class="p">);</span>
+<span class="nv">$postManager</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'postManager'</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -621,7 +621,7 @@ clear the cache, and force the service discovery again when needed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

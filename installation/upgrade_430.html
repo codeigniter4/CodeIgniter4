@@ -416,17 +416,17 @@ and delete the <strong>vendor/</strong> directory, and run <code class="docutils
 you need to remove the following lines, and run <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">update</span></code>.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>{
     ...
-    &quot;require&quot;: {
+    "require": {
         ...
-        &quot;kint-php/kint&quot;: &quot;^4.2&quot;,  &lt;-- Remove this line
+        "kint-php/kint": "^4.2",  &lt;-- Remove this line
         ...
     },
     ...
-    &quot;scripts&quot;: {
-        &quot;post-update-cmd&quot;: [
-            &quot;CodeIgniter\\ComposerScripts::postUpdate&quot;  &lt;-- Remove this line
+    "scripts": {
+        "post-update-cmd": [
+            "CodeIgniter\\ComposerScripts::postUpdate"  &lt;-- Remove this line
         ],
-        &quot;test&quot;: &quot;phpunit&quot;
+        "test": "phpunit"
     },
     ...
 }
@@ -469,7 +469,7 @@ a validation object <em>before a new validation is run</em>:</p>
 <span class="p">}</span>
 
 <span class="c1">// In the view of the redirected page</span>
-<span class="o">&lt;?=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;Validation&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">listErrors</span><span class="p">()</span> <span class="cp">?&gt;</span>
+<span class="o">&lt;?=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'Validation'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">listErrors</span><span class="p">()</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 <p>This behavior was a bug and fixed in v4.3.0.</p>
@@ -508,14 +508,14 @@ instead of the Validation object.</p>
 </pre></div>
 </div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Before</span>
-<span class="nv">$time1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">&#39;2022-10-31 12:00&#39;</span><span class="p">);</span>
-<span class="nv">$time2</span> <span class="o">=</span> <span class="nv">$time1</span><span class="o">-&gt;</span><span class="na">modify</span><span class="p">(</span><span class="s1">&#39;+1 day&#39;</span><span class="p">);</span>
+<span class="nv">$time1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">'2022-10-31 12:00'</span><span class="p">);</span>
+<span class="nv">$time2</span> <span class="o">=</span> <span class="nv">$time1</span><span class="o">-&gt;</span><span class="na">modify</span><span class="p">(</span><span class="s1">'+1 day'</span><span class="p">);</span>
 <span class="k">echo</span> <span class="nv">$time1</span><span class="p">;</span> <span class="c1">// 2022-11-01 12:00:00</span>
 <span class="k">echo</span> <span class="nv">$time2</span><span class="p">;</span> <span class="c1">// 2022-11-01 12:00:00</span>
 
 <span class="c1">// After</span>
-<span class="nv">$time1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">&#39;2022-10-31 12:00&#39;</span><span class="p">);</span>
-<span class="nv">$time2</span> <span class="o">=</span> <span class="nv">$time1</span><span class="o">-&gt;</span><span class="na">modify</span><span class="p">(</span><span class="s1">&#39;+1 day&#39;</span><span class="p">);</span>
+<span class="nv">$time1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">'2022-10-31 12:00'</span><span class="p">);</span>
+<span class="nv">$time2</span> <span class="o">=</span> <span class="nv">$time1</span><span class="o">-&gt;</span><span class="na">modify</span><span class="p">(</span><span class="s1">'+1 day'</span><span class="p">);</span>
 <span class="k">echo</span> <span class="nv">$time1</span><span class="p">;</span> <span class="c1">// 2022-10-31 12:00:00</span>
 <span class="k">echo</span> <span class="nv">$time2</span><span class="p">;</span> <span class="c1">// 2022-11-01 12:00:00</span>
 </pre></div>
@@ -528,9 +528,9 @@ instead of the Validation object.</p>
 
 <span class="k">protected</span> <span class="k">function</span> <span class="nf">setUp</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
 <span class="p">{</span>
-    <span class="nx">CITestStreamFilter</span><span class="o">::</span><span class="nv">$buffer</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
-    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">streamFilter</span>         <span class="o">=</span> <span class="nb">stream_filter_append</span><span class="p">(</span><span class="nx">STDOUT</span><span class="p">,</span> <span class="s1">&#39;CITestStreamFilter&#39;</span><span class="p">);</span>
-    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">streamFilter</span>         <span class="o">=</span> <span class="nb">stream_filter_append</span><span class="p">(</span><span class="nx">STDERR</span><span class="p">,</span> <span class="s1">&#39;CITestStreamFilter&#39;</span><span class="p">);</span>
+    <span class="nx">CITestStreamFilter</span><span class="o">::</span><span class="nv">$buffer</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">streamFilter</span>         <span class="o">=</span> <span class="nb">stream_filter_append</span><span class="p">(</span><span class="nx">STDOUT</span><span class="p">,</span> <span class="s1">'CITestStreamFilter'</span><span class="p">);</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">streamFilter</span>         <span class="o">=</span> <span class="nb">stream_filter_append</span><span class="p">(</span><span class="nx">STDERR</span><span class="p">,</span> <span class="s1">'CITestStreamFilter'</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="k">protected</span> <span class="k">function</span> <span class="nf">tearDown</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
@@ -574,14 +574,14 @@ You will need to adjust any code depending on this method to use the new structu
 <span class="sd"> * @return array[</span>
 <span class="sd"> *    {constraint_name} =&gt;</span>
 <span class="sd"> *        stdClass[</span>
-<span class="sd"> *            &#39;constraint_name&#39;     =&gt; string,</span>
-<span class="sd"> *            &#39;table_name&#39;          =&gt; string,</span>
-<span class="sd"> *            &#39;column_name&#39;         =&gt; string[],</span>
-<span class="sd"> *            &#39;foreign_table_name&#39;  =&gt; string,</span>
-<span class="sd"> *            &#39;foreign_column_name&#39; =&gt; string[],</span>
-<span class="sd"> *            &#39;on_delete&#39;           =&gt; string,</span>
-<span class="sd"> *            &#39;on_update&#39;           =&gt; string,</span>
-<span class="sd"> *            &#39;match&#39;               =&gt; string</span>
+<span class="sd"> *            'constraint_name'     =&gt; string,</span>
+<span class="sd"> *            'table_name'          =&gt; string,</span>
+<span class="sd"> *            'column_name'         =&gt; string[],</span>
+<span class="sd"> *            'foreign_table_name'  =&gt; string,</span>
+<span class="sd"> *            'foreign_column_name' =&gt; string[],</span>
+<span class="sd"> *            'on_delete'           =&gt; string,</span>
+<span class="sd"> *            'on_update'           =&gt; string,</span>
+<span class="sd"> *            'match'               =&gt; string</span>
 <span class="sd"> *        ]</span>
 <span class="sd"> * ]</span>
 <span class="sd"> */</span>
@@ -816,7 +816,7 @@ All atomic type properties in <code class="docutils literal notranslate"><span c
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

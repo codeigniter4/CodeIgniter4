@@ -367,7 +367,7 @@ See <a class="reference internal" href="../testing/cli.html#testing-cli-input"><
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
 
-<span class="nv">$color</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">&#39;What is your favorite color?&#39;</span><span class="p">);</span>
+<span class="nv">$color</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">'What is your favorite color?'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can provide a default answer that will be used if the user just hits enter by passing the default in the
@@ -376,7 +376,7 @@ second parameter:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
 
-<span class="nv">$color</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">&#39;What is your favorite color?&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">);</span>
+<span class="nv">$color</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">'What is your favorite color?'</span><span class="p">,</span> <span class="s1">'blue'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can restrict the acceptable answers by passing in an array of allowed answers as the second parameter:</p>
@@ -384,7 +384,7 @@ second parameter:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
 
-<span class="nv">$overwrite</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">&#39;File exists. Overwrite?&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]);</span>
+<span class="nv">$overwrite</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">'File exists. Overwrite?'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'y'</span><span class="p">,</span> <span class="s1">'n'</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>Finally, you can pass <a class="reference internal" href="../libraries/validation.html#validation"><span class="std std-ref">validation</span></a> rules to the answer input as the third parameter:</p>
@@ -392,7 +392,7 @@ second parameter:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
 
-<span class="nv">$email</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">&#39;What is your email?&#39;</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="s1">&#39;required|valid_email&#39;</span><span class="p">);</span>
+<span class="nv">$email</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">'What is your email?'</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="s1">'required|valid_email'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Validation rules can also be written in the array syntax:</p>
@@ -400,7 +400,7 @@ second parameter:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
 
-<span class="nv">$email</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">&#39;What is your email?&#39;</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;required&#39;</span><span class="p">,</span> <span class="s1">&#39;valid_email&#39;</span><span class="p">]);</span>
+<span class="nv">$email</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">'What is your email?'</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="p">[</span><span class="s1">'required'</span><span class="p">,</span> <span class="s1">'valid_email'</span><span class="p">]);</span>
 </pre></div>
 </div>
 </section>
@@ -412,7 +412,7 @@ second parameter:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
 
-<span class="nv">$fruit</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">promptByKey</span><span class="p">(</span><span class="s1">&#39;These are your choices:&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;The red apple&#39;</span><span class="p">,</span> <span class="s1">&#39;The plump orange&#39;</span><span class="p">,</span> <span class="s1">&#39;The ripe banana&#39;</span><span class="p">]);</span>
+<span class="nv">$fruit</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">promptByKey</span><span class="p">(</span><span class="s1">'These are your choices:'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'The red apple'</span><span class="p">,</span> <span class="s1">'The plump orange'</span><span class="p">,</span> <span class="s1">'The ripe banana'</span><span class="p">]);</span>
 <span class="cm">/*</span>
 <span class="cm"> * These are your choices:</span>
 <span class="cm"> *   [0]  The red apple</span>
@@ -428,10 +428,10 @@ second parameter:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
 
-<span class="nv">$fruit</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">promptByKey</span><span class="p">([</span><span class="s1">&#39;These are your choices:&#39;</span><span class="p">,</span> <span class="s1">&#39;Which would you like?&#39;</span><span class="p">],</span> <span class="p">[</span>
-    <span class="s1">&#39;apple&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;The red apple&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;orange&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The plump orange&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;banana&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The ripe banana&#39;</span><span class="p">,</span>
+<span class="nv">$fruit</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">promptByKey</span><span class="p">([</span><span class="s1">'These are your choices:'</span><span class="p">,</span> <span class="s1">'Which would you like?'</span><span class="p">],</span> <span class="p">[</span>
+    <span class="s1">'apple'</span>  <span class="o">=&gt;</span> <span class="s1">'The red apple'</span><span class="p">,</span>
+    <span class="s1">'orange'</span> <span class="o">=&gt;</span> <span class="s1">'The plump orange'</span><span class="p">,</span>
+    <span class="s1">'banana'</span> <span class="o">=&gt;</span> <span class="s1">'The ripe banana'</span><span class="p">,</span>
 <span class="p">]);</span>
 <span class="cm">/*</span>
 <span class="cm"> * These are your choices:</span>
@@ -455,7 +455,7 @@ second parameter:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
 
-<span class="nv">$hobbies</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">promptByMultipleKeys</span><span class="p">(</span><span class="s1">&#39;Select your hobbies:&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Playing game&#39;</span><span class="p">,</span> <span class="s1">&#39;Sleep&#39;</span><span class="p">,</span> <span class="s1">&#39;Badminton&#39;</span><span class="p">]);</span>
+<span class="nv">$hobbies</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">promptByMultipleKeys</span><span class="p">(</span><span class="s1">'Select your hobbies:'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'Playing game'</span><span class="p">,</span> <span class="s1">'Sleep'</span><span class="p">,</span> <span class="s1">'Badminton'</span><span class="p">]);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Select your hobbies:</span>
 <span class="cm"> *   [0]  Playing game</span>
@@ -465,10 +465,10 @@ second parameter:</p>
 <span class="cm"> * You can specify multiple values separated by commas.</span>
 <span class="cm"> * [0, 1, 2]:</span>
 <span class="cm"> *</span>
-<span class="cm"> * if your answer is &#39;0,2&#39;, the return is the key and the value of the options :</span>
+<span class="cm"> * if your answer is '0,2', the return is the key and the value of the options :</span>
 <span class="cm"> * [</span>
-<span class="cm"> *   [0] =&gt; &quot;Playing game&quot;,</span>
-<span class="cm"> *   [2] =&gt; &quot;Badminton&quot;</span>
+<span class="cm"> *   [0] =&gt; "Playing game",</span>
+<span class="cm"> *   [2] =&gt; "Badminton"</span>
 <span class="cm"> * ]</span>
 <span class="cm"> */</span>
 </pre></div>
@@ -490,7 +490,7 @@ method which takes the string to output as the first parameter:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
 
-<span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;The rain in Spain falls mainly on the plains.&#39;</span><span class="p">);</span>
+<span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'The rain in Spain falls mainly on the plains.'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can change the color of the text by passing in a color name as the second parameter:</p>
@@ -498,7 +498,7 @@ method which takes the string to output as the first parameter:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
 
-<span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;File created.&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">);</span>
+<span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'File created.'</span><span class="p">,</span> <span class="s1">'green'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This could be used to differentiate messages by status, or create ‘headers’ by using a different color. You can
@@ -507,7 +507,7 @@ even set background colors by passing the color name in as the third parameter:<
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
 
-<span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;File overwritten.&#39;</span><span class="p">,</span> <span class="s1">&#39;light_red&#39;</span><span class="p">,</span> <span class="s1">&#39;dark_gray&#39;</span><span class="p">);</span>
+<span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'File overwritten.'</span><span class="p">,</span> <span class="s1">'light_red'</span><span class="p">,</span> <span class="s1">'dark_gray'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The following foreground colors are available:</p>
@@ -568,7 +568,7 @@ it inside of a <code class="docutils literal notranslate"><span class="pre">writ
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
 
-<span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">&quot;fileA </span><span class="se">\t</span><span class="s2">&quot;</span> <span class="o">.</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="s1">&#39;/path/to/file&#39;</span><span class="p">,</span> <span class="s1">&#39;white&#39;</span><span class="p">),</span> <span class="s1">&#39;yellow&#39;</span><span class="p">);</span>
+<span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">"fileA </span><span class="se">\t</span><span class="s2">"</span> <span class="o">.</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="s1">'/path/to/file'</span><span class="p">,</span> <span class="s1">'white'</span><span class="p">),</span> <span class="s1">'yellow'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This example would write a single line to the window, with <code class="docutils literal notranslate"><span class="pre">fileA</span></code> in yellow, followed by a tab, and then
@@ -584,7 +584,7 @@ exactly as you would the <code class="docutils literal notranslate"><span class=
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
 
-<span class="nx">CLI</span><span class="o">::</span><span class="na">error</span><span class="p">(</span><span class="s1">&#39;Cannot write to file: &#39;</span> <span class="o">.</span> <span class="nv">$file</span><span class="p">);</span>
+<span class="nx">CLI</span><span class="o">::</span><span class="na">error</span><span class="p">(</span><span class="s1">'Cannot write to file: '</span> <span class="o">.</span> <span class="nv">$file</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -597,8 +597,8 @@ window and not go off screen:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
 
-<span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="s2">&quot;task1</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">);</span>
-<span class="nx">CLI</span><span class="o">::</span><span class="na">wrap</span><span class="p">(</span><span class="s1">&#39;Some long description goes here that might be longer than the current window.&#39;</span><span class="p">);</span>
+<span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="s2">"task1</span><span class="se">\t</span><span class="s2">"</span><span class="p">,</span> <span class="s1">'yellow'</span><span class="p">);</span>
+<span class="nx">CLI</span><span class="o">::</span><span class="na">wrap</span><span class="p">(</span><span class="s1">'Some long description goes here that might be longer than the current window.'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>By default, the string will wrap at the terminal width. Windows currently doesn’t provide a way to determine
@@ -622,23 +622,23 @@ every line after the first line, so that you will have a crisp column edge on th
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
 
 <span class="nv">$titles</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;task1a&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;task1abc&#39;</span><span class="p">,</span>
+    <span class="s1">'task1a'</span><span class="p">,</span>
+    <span class="s1">'task1abc'</span><span class="p">,</span>
 <span class="p">];</span>
 <span class="nv">$descriptions</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;Lorem Ipsum is simply dummy text of the printing and typesetting industry.&#39;</span><span class="p">,</span>
-    <span class="s2">&quot;Lorem Ipsum has been the industry&#39;s standard dummy text ever since the&quot;</span><span class="p">,</span>
+    <span class="s1">'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'</span><span class="p">,</span>
+    <span class="s2">"Lorem Ipsum has been the industry's standard dummy text ever since the"</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="c1">// Determine the maximum length of all titles</span>
 <span class="c1">// to determine the width of the left column</span>
-<span class="nv">$maxlen</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">array_map</span><span class="p">(</span><span class="s1">&#39;strlen&#39;</span><span class="p">,</span> <span class="nv">$titles</span><span class="p">));</span>
+<span class="nv">$maxlen</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">array_map</span><span class="p">(</span><span class="s1">'strlen'</span><span class="p">,</span> <span class="nv">$titles</span><span class="p">));</span>
 
 <span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="nb">count</span><span class="p">(</span><span class="nv">$titles</span><span class="p">);</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span>
         <span class="c1">// Display the title on the left of the row</span>
         <span class="nb">substr</span><span class="p">(</span>
-            <span class="nv">$titles</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span> <span class="o">.</span> <span class="nb">str_repeat</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="nv">$maxlen</span> <span class="o">+</span> <span class="mi">3</span><span class="p">),</span>
+            <span class="nv">$titles</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span> <span class="o">.</span> <span class="nb">str_repeat</span><span class="p">(</span><span class="s1">' '</span><span class="p">,</span> <span class="nv">$maxlen</span> <span class="o">+</span> <span class="mi">3</span><span class="p">),</span>
             <span class="mi">0</span><span class="p">,</span>
             <span class="nv">$maxlen</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span>
         <span class="p">)</span> <span class="o">.</span>
@@ -655,7 +655,7 @@ every line after the first line, so that you will have a crisp column edge on th
            text of the printing and
            typesetting industry.
 task1abc   Lorem Ipsum has been the
-           industry&#39;s standard dummy
+           industry's standard dummy
            text ever since the
 </pre></div>
 </div>
@@ -718,10 +718,10 @@ pass <code class="docutils literal notranslate"><span class="pre">false</span></
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
 
-<span class="nv">$thead</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span> <span class="s1">&#39;Title&#39;</span><span class="p">,</span> <span class="s1">&#39;Updated At&#39;</span><span class="p">,</span> <span class="s1">&#39;Active&#39;</span><span class="p">];</span>
+<span class="nv">$thead</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'ID'</span><span class="p">,</span> <span class="s1">'Title'</span><span class="p">,</span> <span class="s1">'Updated At'</span><span class="p">,</span> <span class="s1">'Active'</span><span class="p">];</span>
 <span class="nv">$tbody</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;A great item title&#39;</span><span class="p">,</span> <span class="s1">&#39;2017-11-15 10:35:02&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-    <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="s1">&#39;Another great item title&#39;</span><span class="p">,</span> <span class="s1">&#39;2017-11-16 13:46:54&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="s1">'A great item title'</span><span class="p">,</span> <span class="s1">'2017-11-15 10:35:02'</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="s1">'Another great item title'</span><span class="p">,</span> <span class="s1">'2017-11-16 13:46:54'</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
 <span class="p">];</span>
 
 <span class="nx">CLI</span><span class="o">::</span><span class="na">table</span><span class="p">(</span><span class="nv">$tbody</span><span class="p">,</span> <span class="nv">$thead</span><span class="p">);</span>
@@ -770,7 +770,7 @@ waiting for a key press.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

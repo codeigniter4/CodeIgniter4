@@ -424,18 +424,18 @@ location within the directory, like <code class="docutils literal notranslate"><
 <span class="nv">$userModel</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\App\Models\UserModel</span><span class="p">();</span>
 
 <span class="c1">// Create a shared instance of the model.</span>
-<span class="nv">$userModel</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">);</span>
+<span class="nv">$userModel</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">'UserModel'</span><span class="p">);</span>
 <span class="c1">// or</span>
-<span class="nv">$userModel</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;App\Models\UserModel&#39;</span><span class="p">);</span>
+<span class="nv">$userModel</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">'App\Models\UserModel'</span><span class="p">);</span>
 <span class="c1">// or</span>
 <span class="nv">$userModel</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="nx">\App\Models\UserModel</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
 
 <span class="c1">// Create a new class with the model() function.</span>
-<span class="nv">$userModel</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+<span class="nv">$userModel</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">'UserModel'</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
 
 <span class="c1">// Create shared instance with a supplied database connection.</span>
-<span class="nv">$db</span>        <span class="o">=</span> <span class="nx">db_connect</span><span class="p">(</span><span class="s1">&#39;custom&#39;</span><span class="p">);</span>
-<span class="nv">$userModel</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="nv">$db</span><span class="p">);</span>
+<span class="nv">$db</span>        <span class="o">=</span> <span class="nx">db_connect</span><span class="p">(</span><span class="s1">'custom'</span><span class="p">);</span>
+<span class="nv">$userModel</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">'UserModel'</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="nv">$db</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">model()</span></code> uses <code class="docutils literal notranslate"><span class="pre">Factories::models()</span></code> internally.
@@ -489,11 +489,11 @@ extra steps without repeating the constructor parameters, for example extending 
 
     <span class="sd">/**</span>
 <span class="sd">     * Called during initialization. Appends</span>
-<span class="sd">     * our custom field to the module&#39;s model.</span>
+<span class="sd">     * our custom field to the module's model.</span>
 <span class="sd">     */</span>
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">initialize</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">allowedFields</span><span class="p">[]</span> <span class="o">=</span> <span class="s1">&#39;middlename&#39;</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">allowedFields</span><span class="p">[]</span> <span class="o">=</span> <span class="s1">'middlename'</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -516,7 +516,7 @@ connection.</p>
 
 <span class="k">class</span> <span class="nc">UserModel</span> <span class="k">extends</span> <span class="nx">Model</span>
 <span class="p">{</span>
-    <span class="k">protected</span> <span class="nv">$DBGroup</span> <span class="o">=</span> <span class="s1">&#39;group_name&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$DBGroup</span> <span class="o">=</span> <span class="s1">'group_name'</span><span class="p">;</span>
 
     <span class="c1">// ...</span>
 <span class="p">}</span>
@@ -538,25 +538,25 @@ what table to use and how we can find the required records:</p>
 
 <span class="k">class</span> <span class="nc">UserModel</span> <span class="k">extends</span> <span class="nx">Model</span>
 <span class="p">{</span>
-    <span class="k">protected</span> <span class="nv">$table</span>      <span class="o">=</span> <span class="s1">&#39;users&#39;</span><span class="p">;</span>
-    <span class="k">protected</span> <span class="nv">$primaryKey</span> <span class="o">=</span> <span class="s1">&#39;id&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$table</span>      <span class="o">=</span> <span class="s1">'users'</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$primaryKey</span> <span class="o">=</span> <span class="s1">'id'</span><span class="p">;</span>
 
     <span class="k">protected</span> <span class="nv">$useAutoIncrement</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
 
-    <span class="k">protected</span> <span class="nv">$returnType</span>     <span class="o">=</span> <span class="s1">&#39;array&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$returnType</span>     <span class="o">=</span> <span class="s1">'array'</span><span class="p">;</span>
     <span class="k">protected</span> <span class="nv">$useSoftDeletes</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
 
-    <span class="k">protected</span> <span class="nv">$allowedFields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">];</span>
+    <span class="k">protected</span> <span class="nv">$allowedFields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'name'</span><span class="p">,</span> <span class="s1">'email'</span><span class="p">];</span>
 
     <span class="k">protected</span> <span class="nx">bool</span> <span class="nv">$allowEmptyInserts</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
     <span class="k">protected</span> <span class="nx">bool</span> <span class="nv">$updateOnlyChanged</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
 
     <span class="c1">// Dates</span>
     <span class="k">protected</span> <span class="nv">$useTimestamps</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
-    <span class="k">protected</span> <span class="nv">$dateFormat</span>    <span class="o">=</span> <span class="s1">&#39;datetime&#39;</span><span class="p">;</span>
-    <span class="k">protected</span> <span class="nv">$createdField</span>  <span class="o">=</span> <span class="s1">&#39;created_at&#39;</span><span class="p">;</span>
-    <span class="k">protected</span> <span class="nv">$updatedField</span>  <span class="o">=</span> <span class="s1">&#39;updated_at&#39;</span><span class="p">;</span>
-    <span class="k">protected</span> <span class="nv">$deletedField</span>  <span class="o">=</span> <span class="s1">&#39;deleted_at&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$dateFormat</span>    <span class="o">=</span> <span class="s1">'datetime'</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$createdField</span>  <span class="o">=</span> <span class="s1">'created_at'</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$updatedField</span>  <span class="o">=</span> <span class="s1">'updated_at'</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$deletedField</span>  <span class="o">=</span> <span class="s1">'deleted_at'</span><span class="p">;</span>
 
     <span class="c1">// Validation</span>
     <span class="k">protected</span> <span class="nv">$validationRules</span>      <span class="o">=</span> <span class="p">[];</span>
@@ -826,10 +826,10 @@ where the key is the name of the field, and the value is the data type:</p>
 <span class="p">{</span>
     <span class="c1">// ...</span>
     <span class="k">protected</span> <span class="k">array</span> <span class="nv">$casts</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;id&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;int&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;birthdate&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;?datetime&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;hobbies&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;json-array&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;active&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;int-bool&#39;</span><span class="p">,</span>
+        <span class="s1">'id'</span>        <span class="o">=&gt;</span> <span class="s1">'int'</span><span class="p">,</span>
+        <span class="s1">'birthdate'</span> <span class="o">=&gt;</span> <span class="s1">'?datetime'</span><span class="p">,</span>
+        <span class="s1">'hobbies'</span>   <span class="o">=&gt;</span> <span class="s1">'json-array'</span><span class="p">,</span>
+        <span class="s1">'active'</span>    <span class="o">=&gt;</span> <span class="s1">'int-bool'</span><span class="p">,</span>
     <span class="p">];</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
@@ -917,17 +917,17 @@ or <code class="docutils literal notranslate"><span class="pre">datetime[us]</sp
 fractional part of the Time. But <strong>Query Builder</strong> does not. So you still need
 to use the <code class="docutils literal notranslate"><span class="pre">format()</span></code> method when you pass the Time to Query Builder’s methods
 like <code class="docutils literal notranslate"><span class="pre">where()</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;SomeModel&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">'SomeModel'</span><span class="p">);</span>
 
 <span class="nv">$now</span> <span class="o">=</span> <span class="nx">\CodeIgniter\I18n\Time</span><span class="o">::</span><span class="na">now</span><span class="p">();</span>
 
 <span class="c1">// The following code passes the microseconds to Query Builder.</span>
-<span class="nv">$model</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;my_dt_field&#39;</span><span class="p">,</span> <span class="nv">$now</span><span class="o">-&gt;</span><span class="na">format</span><span class="p">(</span><span class="s1">&#39;Y-m-d H:i:s.u&#39;</span><span class="p">))</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
-<span class="c1">// Generates: SELECT * FROM `my_table` WHERE `my_dt_field` = &#39;2024-07-28 18:57:58.900326&#39;</span>
+<span class="nv">$model</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">'my_dt_field'</span><span class="p">,</span> <span class="nv">$now</span><span class="o">-&gt;</span><span class="na">format</span><span class="p">(</span><span class="s1">'Y-m-d H:i:s.u'</span><span class="p">))</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+<span class="c1">// Generates: SELECT * FROM `my_table` WHERE `my_dt_field` = '2024-07-28 18:57:58.900326'</span>
 
 <span class="c1">// But the following code loses the microseconds.</span>
-<span class="nv">$model</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;my_dt_field&#39;</span><span class="p">,</span> <span class="nv">$now</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
-<span class="c1">// Generates: SELECT * FROM `my_table` WHERE `my_dt_field` = &#39;2024-07-28 18:57:58&#39;</span>
+<span class="nv">$model</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">'my_dt_field'</span><span class="p">,</span> <span class="nv">$now</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+<span class="c1">// Generates: SELECT * FROM `my_table` WHERE `my_dt_field` = '2024-07-28 18:57:58'</span>
 </pre></div>
 </div>
 </div>
@@ -985,7 +985,7 @@ Let’s say the class will be located in the <strong>app/Models/Cast</strong> di
         <span class="nv">$decoded</span> <span class="o">=</span> <span class="nb">base64_decode</span><span class="p">(</span><span class="nv">$value</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="nv">$decoded</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">throw</span> <span class="k">new</span> <span class="nx">InvalidArgumentException</span><span class="p">(</span><span class="s1">&#39;Cannot decode: &#39;</span> <span class="o">.</span> <span class="nv">$value</span><span class="p">);</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nx">InvalidArgumentException</span><span class="p">(</span><span class="s1">'Cannot decode: '</span> <span class="o">.</span> <span class="nv">$value</span><span class="p">);</span>
         <span class="p">}</span>
 
         <span class="k">return</span> <span class="nv">$decoded</span><span class="p">;</span>
@@ -1028,7 +1028,7 @@ don’t implement the appropriate method:</p>
         <span class="nv">$decoded</span> <span class="o">=</span> <span class="nb">base64_decode</span><span class="p">(</span><span class="nv">$value</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="nv">$decoded</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">throw</span> <span class="k">new</span> <span class="nx">InvalidArgumentException</span><span class="p">(</span><span class="s1">&#39;Cannot decode: &#39;</span> <span class="o">.</span> <span class="nv">$value</span><span class="p">);</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nx">InvalidArgumentException</span><span class="p">(</span><span class="s1">'Cannot decode: '</span> <span class="o">.</span> <span class="nv">$value</span><span class="p">);</span>
         <span class="p">}</span>
 
         <span class="k">return</span> <span class="nv">$decoded</span><span class="p">;</span>
@@ -1053,12 +1053,12 @@ don’t implement the appropriate method:</p>
 
     <span class="c1">// Specify the type for the field</span>
     <span class="k">protected</span> <span class="k">array</span> <span class="nv">$casts</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;column1&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;base64&#39;</span><span class="p">,</span>
+        <span class="s1">'column1'</span> <span class="o">=&gt;</span> <span class="s1">'base64'</span><span class="p">,</span>
     <span class="p">];</span>
 
     <span class="c1">// Bind the type to the handler</span>
     <span class="k">protected</span> <span class="k">array</span> <span class="nv">$castHandlers</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;base64&#39;</span> <span class="o">=&gt;</span> <span class="nx">CastBase64</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+        <span class="s1">'base64'</span> <span class="o">=&gt;</span> <span class="nx">CastBase64</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
     <span class="p">];</span>
 
     <span class="c1">// ...</span>
@@ -1084,12 +1084,12 @@ with a comma like <code class="docutils literal notranslate"><span class="pre">t
 
     <span class="c1">// Define a type with parameters</span>
     <span class="k">protected</span> <span class="k">array</span> <span class="nv">$casts</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;column1&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;class[App\SomeClass, param2, param3]&#39;</span><span class="p">,</span>
+        <span class="s1">'column1'</span> <span class="o">=&gt;</span> <span class="s1">'class[App\SomeClass, param2, param3]'</span><span class="p">,</span>
     <span class="p">];</span>
 
     <span class="c1">// Bind the type to the handler</span>
     <span class="k">protected</span> <span class="k">array</span> <span class="nv">$castHandlers</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;class&#39;</span> <span class="o">=&gt;</span> <span class="nx">SomeHandler</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+        <span class="s1">'class'</span> <span class="o">=&gt;</span> <span class="nx">SomeHandler</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
     <span class="p">];</span>
 
     <span class="c1">// ...</span>
@@ -1114,11 +1114,11 @@ with a comma like <code class="docutils literal notranslate"><span class="pre">t
 <span class="cm">         * Output:</span>
 <span class="cm">         * array(3) {</span>
 <span class="cm">         *   [0]=&gt;</span>
-<span class="cm">         *   string(13) &quot;App\SomeClass&quot;</span>
+<span class="cm">         *   string(13) "App\SomeClass"</span>
 <span class="cm">         *   [1]=&gt;</span>
-<span class="cm">         *   string(6) &quot;param2&quot;</span>
+<span class="cm">         *   string(6) "param2"</span>
 <span class="cm">         *   [2]=&gt;</span>
-<span class="cm">         *   string(6) &quot;param3&quot;</span>
+<span class="cm">         *   string(6) "param3"</span>
 <span class="cm">         * }</span>
 <span class="cm">         */</span>
     <span class="p">}</span>
@@ -1184,7 +1184,7 @@ that model’s table, effectively acting like <code class="docutils literal notr
 <p>This query may be modified by interjecting Query Builder commands as needed prior to calling this method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;active&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">'active'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>You can pass in a limit and offset values as the first and second
@@ -1200,7 +1200,7 @@ parameters, respectively:</p>
 <p>Returns the first row in the result set. This is best used in combination with the query builder.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;deleted&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">first</span><span class="p">();</span>
+<span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">'deleted'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">first</span><span class="p">();</span>
 </pre></div>
 </div>
 </section>
@@ -1242,17 +1242,17 @@ which indicates the success or failure of the query.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;darth&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;d.vader@theempire.com&#39;</span><span class="p">,</span>
+    <span class="s1">'username'</span> <span class="o">=&gt;</span> <span class="s1">'darth'</span><span class="p">,</span>
+    <span class="s1">'email'</span>    <span class="o">=&gt;</span> <span class="s1">'d.vader@theempire.com'</span><span class="p">,</span>
 <span class="p">];</span>
 
-<span class="c1">// Inserts data and returns inserted row&#39;s primary key</span>
+<span class="c1">// Inserts data and returns inserted row's primary key</span>
 <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 
 <span class="c1">// Inserts data and returns true on success and false on failure</span>
 <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
 
-<span class="c1">// Returns inserted row&#39;s primary key</span>
+<span class="c1">// Returns inserted row's primary key</span>
 <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">getInsertID</span><span class="p">();</span>
 </pre></div>
 </div>
@@ -1279,8 +1279,8 @@ of the columns in a <a class="reference internal" href="#table">$table</a>, whil
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;darth&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;d.vader@theempire.com&#39;</span><span class="p">,</span>
+    <span class="s1">'username'</span> <span class="o">=&gt;</span> <span class="s1">'darth'</span><span class="p">,</span>
+    <span class="s1">'email'</span>    <span class="o">=&gt;</span> <span class="s1">'d.vader@theempire.com'</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span><span class="nv">$id</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
@@ -1298,7 +1298,7 @@ execute and all records in the table would be updated.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;active&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">'active'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="nv">$data</span><span class="p">);</span>
@@ -1309,8 +1309,8 @@ update command, with the added benefit of validation, events, etc:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$userModel</span>
-    <span class="o">-&gt;</span><span class="na">whereIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-    <span class="o">-&gt;</span><span class="na">set</span><span class="p">([</span><span class="s1">&#39;active&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="o">-&gt;</span><span class="na">whereIn</span><span class="p">(</span><span class="s1">'id'</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+    <span class="o">-&gt;</span><span class="na">set</span><span class="p">([</span><span class="s1">'active'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">])</span>
     <span class="o">-&gt;</span><span class="na">update</span><span class="p">();</span>
 </pre></div>
 </div>
@@ -1322,21 +1322,21 @@ automatically, based on whether it finds an array key matching the <strong>prima
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Defined as a model property</span>
-<span class="nv">$primaryKey</span> <span class="o">=</span> <span class="s1">&#39;id&#39;</span><span class="p">;</span>
+<span class="nv">$primaryKey</span> <span class="o">=</span> <span class="s1">'id'</span><span class="p">;</span>
 
 <span class="c1">// Does an insert()</span>
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;darth&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;d.vader@theempire.com&#39;</span><span class="p">,</span>
+    <span class="s1">'username'</span> <span class="o">=&gt;</span> <span class="s1">'darth'</span><span class="p">,</span>
+    <span class="s1">'email'</span>    <span class="o">=&gt;</span> <span class="s1">'d.vader@theempire.com'</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 
-<span class="c1">// Performs an update, since the primary key, &#39;id&#39;, is found.</span>
+<span class="c1">// Performs an update, since the primary key, 'id', is found.</span>
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;id&#39;</span>       <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span>
-    <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;darth&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;d.vader@theempire.com&#39;</span><span class="p">,</span>
+    <span class="s1">'id'</span>       <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s1">'username'</span> <span class="o">=&gt;</span> <span class="s1">'darth'</span><span class="p">,</span>
+    <span class="s1">'email'</span>    <span class="o">=&gt;</span> <span class="s1">'d.vader@theempire.com'</span><span class="p">,</span>
 <span class="p">];</span>
 <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 </pre></div>
@@ -1383,10 +1383,10 @@ simplest, they might look like this:</p>
 
 <span class="k">class</span> <span class="nc">JobModel</span> <span class="k">extends</span> <span class="nx">Model</span>
 <span class="p">{</span>
-    <span class="k">protected</span> <span class="nv">$table</span>         <span class="o">=</span> <span class="s1">&#39;jobs&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$table</span>         <span class="o">=</span> <span class="s1">'jobs'</span><span class="p">;</span>
     <span class="k">protected</span> <span class="nv">$returnType</span>    <span class="o">=</span> <span class="nx">\App\Entities\Job</span><span class="o">::</span><span class="na">class</span><span class="p">;</span>
     <span class="k">protected</span> <span class="nv">$allowedFields</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">,</span>
+        <span class="s1">'name'</span><span class="p">,</span> <span class="s1">'description'</span><span class="p">,</span>
     <span class="p">];</span>
 <span class="p">}</span>
 </pre></div>
@@ -1400,7 +1400,7 @@ model’s <code class="docutils literal notranslate"><span class="pre">save()</s
 <span class="nv">$job</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="mi">15</span><span class="p">);</span>
 
 <span class="c1">// Make some changes</span>
-<span class="nv">$job</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="s1">&#39;Foobar&#39;</span><span class="p">;</span>
+<span class="nv">$job</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="s1">'Foobar'</span><span class="p">;</span>
 
 <span class="c1">// Save the changes</span>
 <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="nv">$job</span><span class="p">);</span>
@@ -1462,7 +1462,7 @@ date and time. You can force a permanent delete by setting the second parameter 
 previously:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">();</span>
+<span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">'id'</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">();</span>
 </pre></div>
 </div>
 </section>
@@ -1520,14 +1520,14 @@ fields and rules that should be applied.</p>
     <span class="c1">// ...</span>
 
     <span class="k">protected</span> <span class="nv">$validationRules</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;username&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[30]|alpha_numeric_space|min_length[3]&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;email&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[254]|valid_email|is_unique[users.email]&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;password&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[255]|min_length[8]&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;pass_confirm&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required_with[password]|max_length[255]|matches[password]&#39;</span><span class="p">,</span>
+        <span class="s1">'username'</span>     <span class="o">=&gt;</span> <span class="s1">'required|max_length[30]|alpha_numeric_space|min_length[3]'</span><span class="p">,</span>
+        <span class="s1">'email'</span>        <span class="o">=&gt;</span> <span class="s1">'required|max_length[254]|valid_email|is_unique[users.email]'</span><span class="p">,</span>
+        <span class="s1">'password'</span>     <span class="o">=&gt;</span> <span class="s1">'required|max_length[255]|min_length[8]'</span><span class="p">,</span>
+        <span class="s1">'pass_confirm'</span> <span class="o">=&gt;</span> <span class="s1">'required_with[password]|max_length[255]|matches[password]'</span><span class="p">,</span>
     <span class="p">];</span>
     <span class="k">protected</span> <span class="nv">$validationMessages</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-            <span class="s1">&#39;is_unique&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Sorry. That email has already been taken. Please choose another.&#39;</span><span class="p">,</span>
+        <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">'is_unique'</span> <span class="o">=&gt;</span> <span class="s1">'Sorry. That email has already been taken. Please choose another.'</span><span class="p">,</span>
         <span class="p">],</span>
     <span class="p">];</span>
 <span class="p">}</span>
@@ -1547,7 +1547,7 @@ group you created:</p>
 <span class="p">{</span>
     <span class="c1">// ...</span>
 
-    <span class="k">protected</span> <span class="nv">$validationRules</span> <span class="o">=</span> <span class="s1">&#39;users&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$validationRules</span> <span class="o">=</span> <span class="s1">'users'</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1572,8 +1572,8 @@ group you created:</p>
 <p>Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$fieldName</span>  <span class="o">=</span> <span class="s1">&#39;username&#39;</span><span class="p">;</span>
-<span class="nv">$fieldRules</span> <span class="o">=</span> <span class="s1">&#39;required|max_length[30]|alpha_numeric_space|min_length[3]&#39;</span><span class="p">;</span>
+<span class="nv">$fieldName</span>  <span class="o">=</span> <span class="s1">'username'</span><span class="p">;</span>
+<span class="nv">$fieldRules</span> <span class="o">=</span> <span class="s1">'required|max_length[30]|alpha_numeric_space|min_length[3]'</span><span class="p">;</span>
 
 <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">setValidationRule</span><span class="p">(</span><span class="nv">$fieldName</span><span class="p">,</span> <span class="nv">$fieldRules</span><span class="p">);</span>
 </pre></div>
@@ -1595,11 +1595,11 @@ group you created:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$validationRules</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[30]|alpha_numeric_space|min_length[3]&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;rules&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[254]|valid_email|is_unique[users.email]&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-            <span class="s1">&#39;required&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;We really need your email.&#39;</span><span class="p">,</span>
+    <span class="s1">'username'</span> <span class="o">=&gt;</span> <span class="s1">'required|max_length[30]|alpha_numeric_space|min_length[3]'</span><span class="p">,</span>
+    <span class="s1">'email'</span>    <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'rules'</span>  <span class="o">=&gt;</span> <span class="s1">'required|max_length[254]|valid_email|is_unique[users.email]'</span><span class="p">,</span>
+        <span class="s1">'errors'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">'required'</span> <span class="o">=&gt;</span> <span class="s1">'We really need your email.'</span><span class="p">,</span>
         <span class="p">],</span>
     <span class="p">],</span>
 <span class="p">];</span>
@@ -1624,9 +1624,9 @@ group you created:</p>
 <p>Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$fieldName</span>              <span class="o">=</span> <span class="s1">&#39;name&#39;</span><span class="p">;</span>
+<span class="nv">$fieldName</span>              <span class="o">=</span> <span class="s1">'name'</span><span class="p">;</span>
 <span class="nv">$fieldValidationMessage</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;required&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Your name is required here&#39;</span><span class="p">,</span>
+    <span class="s1">'required'</span> <span class="o">=&gt;</span> <span class="s1">'Your name is required here'</span><span class="p">,</span>
 <span class="p">];</span>
 <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">setValidationMessage</span><span class="p">(</span><span class="nv">$fieldName</span><span class="p">,</span> <span class="nv">$fieldValidationMessage</span><span class="p">);</span>
 </pre></div>
@@ -1648,9 +1648,9 @@ group you created:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$fieldValidationMessage</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;required&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;Your baby name is missing.&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;min_length&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Too short, man!&#39;</span><span class="p">,</span>
+    <span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'required'</span>   <span class="o">=&gt;</span> <span class="s1">'Your baby name is missing.'</span><span class="p">,</span>
+        <span class="s1">'min_length'</span> <span class="o">=&gt;</span> <span class="s1">'Too short, man!'</span><span class="p">,</span>
     <span class="p">],</span>
 <span class="p">];</span>
 <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">setValidationMessages</span><span class="p">(</span><span class="nv">$fieldValidationMessage</span><span class="p">);</span>
@@ -1670,14 +1670,14 @@ the model will return boolean <strong>false</strong>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">if</span> <span class="p">(</span><span class="nv">$model</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;updateUser&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">errors</span><span class="p">()]);</span>
+    <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'updateUser'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'errors'</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">errors</span><span class="p">()]);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>This returns an array with the field names and their associated errors that can be used to either show all of the
 errors at the top of the form, or to display them individually:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="k">empty</span><span class="p">(</span><span class="nv">$errors</span><span class="p">))</span><span class="o">:</span> <span class="cp">?&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;alert alert-danger&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"alert alert-danger"</span><span class="p">&gt;</span>
     <span class="cp">&lt;?php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$errors</span> <span class="k">as</span> <span class="nv">$field</span> <span class="o">=&gt;</span> <span class="nv">$error</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
         <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$error</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
     <span class="cp">&lt;?php</span> <span class="k">endforeach</span> <span class="cp">?&gt;</span>
@@ -1707,10 +1707,10 @@ whose key is either <code class="docutils literal notranslate"><span class="pre"
 value an array of fieldnames of interest:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="c1">// get the rules for all but the &quot;username&quot; field</span>
-<span class="nv">$rules</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">getValidationRules</span><span class="p">([</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]]);</span>
-<span class="c1">// get the rules for only the &quot;city&quot; and &quot;state&quot; fields</span>
-<span class="nv">$rules</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">getValidationRules</span><span class="p">([</span><span class="s1">&#39;only&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;city&#39;</span><span class="p">,</span> <span class="s1">&#39;state&#39;</span><span class="p">]]);</span>
+<span class="c1">// get the rules for all but the "username" field</span>
+<span class="nv">$rules</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">getValidationRules</span><span class="p">([</span><span class="s1">'except'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'username'</span><span class="p">]]);</span>
+<span class="c1">// get the rules for only the "city" and "state" fields</span>
+<span class="nv">$rules</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">getValidationRules</span><span class="p">([</span><span class="s1">'only'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'city'</span><span class="p">,</span> <span class="s1">'state'</span><span class="p">]]);</span>
 </pre></div>
 </div>
 </section>
@@ -1731,8 +1731,8 @@ replaced by the <strong>value</strong> of the matched incoming field. An example
     <span class="c1">// ...</span>
 
     <span class="k">protected</span> <span class="nv">$validationRules</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;max_length[19]|is_natural_no_zero&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[254]|valid_email|is_unique[users.email,id,{id}]&#39;</span><span class="p">,</span>
+        <span class="s1">'id'</span>    <span class="o">=&gt;</span> <span class="s1">'max_length[19]|is_natural_no_zero'</span><span class="p">,</span>
+        <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="s1">'required|max_length[254]|valid_email|is_unique[users.email,id,{id}]'</span><span class="p">,</span>
     <span class="p">];</span>
 <span class="p">}</span>
 </pre></div>
@@ -1747,8 +1747,8 @@ that has an id matching the placeholder’s value. Assuming that the form POST d
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$_POST</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="mi">4</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;foo@example.com&#39;</span><span class="p">,</span>
+    <span class="s1">'id'</span>    <span class="o">=&gt;</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="s1">'foo@example.com'</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -1764,8 +1764,8 @@ that has an id matching the placeholder’s value. Assuming that the form POST d
     <span class="c1">// ...</span>
 
     <span class="k">protected</span> <span class="nv">$validationRules</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;max_length[19]|is_natural_no_zero&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[254]|valid_email|is_unique[users.email,id,4]&#39;</span><span class="p">,</span>
+        <span class="s1">'id'</span>    <span class="o">=&gt;</span> <span class="s1">'max_length[19]|is_natural_no_zero'</span><span class="p">,</span>
+        <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="s1">'required|max_length[254]|valid_email|is_unique[users.email,id,4]'</span><span class="p">,</span>
     <span class="p">];</span>
 <span class="p">}</span>
 </pre></div>
@@ -1796,7 +1796,7 @@ or primary keys do not get changed.</p>
 <span class="p">{</span>
     <span class="c1">// ...</span>
 
-    <span class="k">protected</span> <span class="nv">$allowedFields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;address&#39;</span><span class="p">];</span>
+    <span class="k">protected</span> <span class="nv">$allowedFields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'name'</span><span class="p">,</span> <span class="s1">'email'</span><span class="p">,</span> <span class="s1">'address'</span><span class="p">];</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1825,7 +1825,7 @@ it is reset to its default value.</p>
 <p>Returns data from the next <strong>find*()</strong> method as associative arrays:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">asArray</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;active&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">asArray</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">'status'</span><span class="p">,</span> <span class="s1">'active'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 </pre></div>
 </div>
 </section>
@@ -1835,10 +1835,10 @@ it is reset to its default value.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Return as standard objects</span>
-<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">asObject</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;active&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">asObject</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">'status'</span><span class="p">,</span> <span class="s1">'active'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 
 <span class="c1">// Return as custom class instances</span>
-<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">asObject</span><span class="p">(</span><span class="s1">&#39;User&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;active&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">asObject</span><span class="p">(</span><span class="s1">'User'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">'status'</span><span class="p">,</span> <span class="s1">'active'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 </pre></div>
 </div>
 </section>
@@ -1886,7 +1886,7 @@ Pass the table name in as a parameter, but be aware that this will <strong>not</
 a shared instance:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$groupBuilder</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">builder</span><span class="p">(</span><span class="s1">&#39;groups&#39;</span><span class="p">);</span>
+<span class="nv">$groupBuilder</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">builder</span><span class="p">(</span><span class="s1">'groups'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -1896,8 +1896,8 @@ a shared instance:</p>
 very elegant use:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;active&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;last_login&#39;</span><span class="p">,</span> <span class="s1">&#39;asc&#39;</span><span class="p">)</span>
+<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">'status'</span><span class="p">,</span> <span class="s1">'active'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">'last_login'</span><span class="p">,</span> <span class="s1">'asc'</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 </pre></div>
 </div>
@@ -1967,12 +1967,12 @@ have the full information.</p>
 
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">hashPassword</span><span class="p">(</span><span class="k">array</span> <span class="nv">$data</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;password&#39;</span><span class="p">]))</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="s1">'password'</span><span class="p">]))</span> <span class="p">{</span>
             <span class="k">return</span> <span class="nv">$data</span><span class="p">;</span>
         <span class="p">}</span>
 
-        <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;password_hash&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">password_hash</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;password&#39;</span><span class="p">],</span> <span class="nx">PASSWORD_DEFAULT</span><span class="p">);</span>
-        <span class="nb">unset</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;password&#39;</span><span class="p">]);</span>
+        <span class="nv">$data</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="s1">'password_hash'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">password_hash</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="s1">'password'</span><span class="p">],</span> <span class="nx">PASSWORD_DEFAULT</span><span class="p">);</span>
+        <span class="nb">unset</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="s1">'password'</span><span class="p">]);</span>
 
         <span class="k">return</span> <span class="nv">$data</span><span class="p">;</span>
     <span class="p">}</span>
@@ -1995,8 +1995,8 @@ use the same callback in multiple events:</p>
 <span class="p">{</span>
     <span class="c1">// ...</span>
 
-    <span class="k">protected</span> <span class="nv">$beforeInsert</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;hashPassword&#39;</span><span class="p">];</span>
-    <span class="k">protected</span> <span class="nv">$beforeUpdate</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;hashPassword&#39;</span><span class="p">];</span>
+    <span class="k">protected</span> <span class="nv">$beforeInsert</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'hashPassword'</span><span class="p">];</span>
+    <span class="k">protected</span> <span class="nv">$beforeUpdate</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'hashPassword'</span><span class="p">];</span>
 
     <span class="c1">// ...</span>
 <span class="p">}</span>
@@ -2136,16 +2136,16 @@ boolean, <code class="docutils literal notranslate"><span class="pre">returnData
 <span class="p">{</span>
     <span class="c1">// ...</span>
 
-    <span class="k">protected</span> <span class="nv">$beforeFind</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;checkCache&#39;</span><span class="p">];</span>
+    <span class="k">protected</span> <span class="nv">$beforeFind</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'checkCache'</span><span class="p">];</span>
 
     <span class="c1">// ...</span>
 
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">checkCache</span><span class="p">(</span><span class="k">array</span> <span class="nv">$data</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="c1">// Check if the requested item is already in our cache</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nv">$item</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getCachedItem</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]))</span> <span class="p">{</span>
-            <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span>       <span class="o">=</span> <span class="nv">$item</span><span class="p">;</span>
-            <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;returnData&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">'id'</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nv">$item</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getCachedItem</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]))</span> <span class="p">{</span>
+            <span class="nv">$data</span><span class="p">[</span><span class="s1">'data'</span><span class="p">]</span>       <span class="o">=</span> <span class="nv">$item</span><span class="p">;</span>
+            <span class="nv">$data</span><span class="p">[</span><span class="s1">'returnData'</span><span class="p">]</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
 
             <span class="k">return</span> <span class="nv">$data</span><span class="p">;</span>
         <span class="p">}</span>
@@ -2194,7 +2194,7 @@ Model gives you out of the box, and create a fully custom experience.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

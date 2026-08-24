@@ -453,7 +453,7 @@ may cause an error request with unnecessary headers and body.</p>
 <p>To load with the Services class call the <code class="docutils literal notranslate"><span class="pre">curlrequest()</span></code> method or global function <code class="docutils literal notranslate"><span class="pre">service()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$client</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;curlrequest&#39;</span><span class="p">);</span> <span class="c1">// Since v4.5.0, this code is recommended due to performance improvements</span>
+<span class="nv">$client</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'curlrequest'</span><span class="p">);</span> <span class="c1">// Since v4.5.0, this code is recommended due to performance improvements</span>
 
 <span class="c1">// The code above is the same as the code below.</span>
 <span class="nv">$client</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">curlrequest</span><span class="p">();</span>
@@ -464,10 +464,10 @@ The options are described later in this document:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$options</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;baseURI&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://example.com/api/v1/&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;timeout&#39;</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s1">'baseURI'</span> <span class="o">=&gt;</span> <span class="s1">'http://example.com/api/v1/'</span><span class="p">,</span>
+    <span class="s1">'timeout'</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span>
 <span class="p">];</span>
-<span class="nv">$client</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;curlrequest&#39;</span><span class="p">,</span> <span class="nv">$options</span><span class="p">);</span>
+<span class="nv">$client</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'curlrequest'</span><span class="p">,</span> <span class="nv">$options</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -501,10 +501,10 @@ you have complete control over how the information is handled.</p>
 a Response instance to you. This takes the HTTP method, the url and an array of options as the parameters.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$client</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;curlrequest&#39;</span><span class="p">);</span>
+<span class="nv">$client</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'curlrequest'</span><span class="p">);</span>
 
-<span class="nv">$response</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;https://api.github.com/user&#39;</span><span class="p">,</span> <span class="p">[</span>
-    <span class="s1">&#39;auth&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;pass&#39;</span><span class="p">],</span>
+<span class="nv">$response</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'https://api.github.com/user'</span><span class="p">,</span> <span class="p">[</span>
+    <span class="s1">'auth'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'user'</span><span class="p">,</span> <span class="s1">'pass'</span><span class="p">],</span>
 <span class="p">]);</span>
 </pre></div>
 </div>
@@ -524,21 +524,21 @@ available to you:</p>
 
 <span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getStatusCode</span><span class="p">();</span>
 <span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getBody</span><span class="p">();</span>
-<span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">);</span>
-<span class="nv">$language</span> <span class="o">=</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">negotiateLanguage</span><span class="p">([</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="s1">&#39;fr&#39;</span><span class="p">]);</span>
+<span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">'Content-Type'</span><span class="p">);</span>
+<span class="nv">$language</span> <span class="o">=</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">negotiateLanguage</span><span class="p">([</span><span class="s1">'en'</span><span class="p">,</span> <span class="s1">'fr'</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>While the <code class="docutils literal notranslate"><span class="pre">request()</span></code> method is the most flexible, you can also use the following shortcut methods. They
 each take the URL as the first parameter and an array of options as the second:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;http://example.com&#39;</span><span class="p">);</span>
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="s1">&#39;http://example.com&#39;</span><span class="p">);</span>
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">head</span><span class="p">(</span><span class="s1">&#39;http://example.com&#39;</span><span class="p">);</span>
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">options</span><span class="p">(</span><span class="s1">&#39;http://example.com&#39;</span><span class="p">);</span>
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">patch</span><span class="p">(</span><span class="s1">&#39;http://example.com&#39;</span><span class="p">);</span>
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">put</span><span class="p">(</span><span class="s1">&#39;http://example.com&#39;</span><span class="p">);</span>
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;http://example.com&#39;</span><span class="p">);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'http://example.com'</span><span class="p">);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="s1">'http://example.com'</span><span class="p">);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">head</span><span class="p">(</span><span class="s1">'http://example.com'</span><span class="p">);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">options</span><span class="p">(</span><span class="s1">'http://example.com'</span><span class="p">);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">patch</span><span class="p">(</span><span class="s1">'http://example.com'</span><span class="p">);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">put</span><span class="p">(</span><span class="s1">'http://example.com'</span><span class="p">);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">'http://example.com'</span><span class="p">);</span>
 </pre></div>
 </div>
 <section id="base-uri">
@@ -548,15 +548,15 @@ set a base URI, and then make all requests with that client using relative URLs.
 when working with APIs:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$client</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;curlrequest&#39;</span><span class="p">,</span> <span class="p">[</span>
-    <span class="s1">&#39;baseURI&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;https://example.com/api/v1/&#39;</span><span class="p">,</span>
+<span class="nv">$client</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'curlrequest'</span><span class="p">,</span> <span class="p">[</span>
+    <span class="s1">'baseURI'</span> <span class="o">=&gt;</span> <span class="s1">'https://example.com/api/v1/'</span><span class="p">,</span>
 <span class="p">]);</span>
 
 <span class="c1">// GET http:example.com/api/v1/photos</span>
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'photos'</span><span class="p">);</span>
 
 <span class="c1">// GET http:example.com/api/v1/photos/13</span>
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="s1">&#39;photos/13&#39;</span><span class="p">);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="s1">'photos/13'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>When a relative URI is provided to the <code class="docutils literal notranslate"><span class="pre">request()</span></code> method or any of the shortcut methods, it will be combined
@@ -616,11 +616,11 @@ methods. The most commonly used methods let you determine the response itself.</
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Get a header line</span>
-<span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getHeaderLine</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getHeaderLine</span><span class="p">(</span><span class="s1">'Content-Type'</span><span class="p">);</span>
 
 <span class="c1">// Get all headers</span>
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">headers</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$name</span> <span class="o">=&gt;</span> <span class="nv">$value</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">echo</span> <span class="nv">$name</span> <span class="o">.</span> <span class="s1">&#39;: &#39;</span> <span class="o">.</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getHeaderLine</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span> <span class="o">.</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$name</span> <span class="o">.</span> <span class="s1">': '</span> <span class="o">.</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getHeaderLine</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span> <span class="o">.</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -634,7 +634,7 @@ methods. The most commonly used methods let you determine the response itself.</
 to ensure that your script handles that:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">if</span> <span class="p">(</span><span class="nb">str_contains</span><span class="p">(</span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;content-type&#39;</span><span class="p">),</span> <span class="s1">&#39;application/json&#39;</span><span class="p">))</span> <span class="p">{</span>
+<span class="k">if</span> <span class="p">(</span><span class="nb">str_contains</span><span class="p">(</span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">'content-type'</span><span class="p">),</span> <span class="s1">'application/json'</span><span class="p">))</span> <span class="p">{</span>
     <span class="nv">$body</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$body</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
@@ -652,12 +652,12 @@ back. The <code class="docutils literal notranslate"><span class="pre">allow_red
 <p>If you set the value to <code class="docutils literal notranslate"><span class="pre">true</span></code>, then it will follow redirects:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;allow_redirects&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'http://example.com'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'allow_redirects'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Sets the following defaults:</span>
-<span class="cm"> *   &#39;max&#39;       =&gt; 5,                // Maximum number of redirects to follow before stopping</span>
-<span class="cm"> *   &#39;strict&#39;    =&gt; true,             // Ensure POST requests stay POST requests through redirects</span>
-<span class="cm"> *   &#39;protocols&#39; =&gt; [&#39;http&#39;, &#39;https&#39;] // Restrict redirects to one or more protocols</span>
+<span class="cm"> *   'max'       =&gt; 5,                // Maximum number of redirects to follow before stopping</span>
+<span class="cm"> *   'strict'    =&gt; true,             // Ensure POST requests stay POST requests through redirects</span>
+<span class="cm"> *   'protocols' =&gt; ['http', 'https'] // Restrict redirects to one or more protocols</span>
 <span class="cm"> */</span>
 </pre></div>
 </div>
@@ -669,15 +669,15 @@ do not expect and may enable SSRF attacks.</p>
 <p>Setting it to <code class="docutils literal notranslate"><span class="pre">false</span></code> will apply the default settings to the request:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;allow_redirects&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'http://example.com'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'allow_redirects'</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>You can pass in array as the value of the <code class="docutils literal notranslate"><span class="pre">allow_redirects</span></code> option to specify new settings in place of the defaults:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;allow_redirects&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-    <span class="s1">&#39;max&#39;</span>       <span class="o">=&gt;</span> <span class="mi">10</span><span class="p">,</span>
-    <span class="s1">&#39;protocols&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;https&#39;</span><span class="p">],</span> <span class="c1">// Force HTTPS domains only.</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'http://example.com'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'allow_redirects'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+    <span class="s1">'max'</span>       <span class="o">=&gt;</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="s1">'protocols'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'https'</span><span class="p">],</span> <span class="c1">// Force HTTPS domains only.</span>
 <span class="p">]]);</span>
 </pre></div>
 </div>
@@ -695,7 +695,7 @@ array where the first element is the username, and the second is the password. T
 the type of authentication to use, either <code class="docutils literal notranslate"><span class="pre">basic</span></code> or <code class="docutils literal notranslate"><span class="pre">digest</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;auth&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="s1">&#39;digest&#39;</span><span class="p">]]);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'http://example.com'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'auth'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'username'</span><span class="p">,</span> <span class="s1">'password'</span><span class="p">,</span> <span class="s1">'digest'</span><span class="p">]]);</span>
 </pre></div>
 </div>
 </section>
@@ -705,14 +705,14 @@ the type of authentication to use, either <code class="docutils literal notransl
 The first way is to use the <code class="docutils literal notranslate"><span class="pre">setBody()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">setBody</span><span class="p">(</span><span class="nv">$body</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;PUT&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">setBody</span><span class="p">(</span><span class="nv">$body</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'PUT'</span><span class="p">,</span> <span class="s1">'http://example.com'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The second method is by passing a <code class="docutils literal notranslate"><span class="pre">body</span></code> option in. This is provided to maintain Guzzle API compatibility,
 and functions the exact same way as the previous example. The value must be a string:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;PUT&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;body&#39;</span> <span class="o">=&gt;</span> <span class="nv">$body</span><span class="p">]);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'PUT'</span><span class="p">,</span> <span class="s1">'http://example.com'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'body'</span> <span class="o">=&gt;</span> <span class="nv">$body</span><span class="p">]);</span>
 </pre></div>
 </div>
 </section>
@@ -723,7 +723,7 @@ file as the <code class="docutils literal notranslate"><span class="pre">cert</s
 as the path to the certificate, and the second as the password:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;cert&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;/path/server.pem&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">]]);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'/'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'cert'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'/path/server.pem'</span><span class="p">,</span> <span class="s1">'password'</span><span class="p">]]);</span>
 </pre></div>
 </div>
 </section>
@@ -734,7 +734,7 @@ modify this value, you can do so by passing the amount of time in seconds with t
 You can pass 0 to wait indefinitely:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;connect_timeout&#39;</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">]);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'http://example.com'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'connect_timeout'</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">]);</span>
 </pre></div>
 </div>
 </section>
@@ -745,7 +745,7 @@ to save cookie values to. This is done using the <code class="docutils literal n
 An example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;cookie&#39;</span> <span class="o">=&gt;</span> <span class="nx">WRITEPATH</span> <span class="o">.</span> <span class="s1">&#39;CookieSaver.txt&#39;</span><span class="p">]);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'http://example.com'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'cookie'</span> <span class="o">=&gt;</span> <span class="nx">WRITEPATH</span> <span class="o">.</span> <span class="s1">'CookieSaver.txt'</span><span class="p">]);</span>
 </pre></div>
 </div>
 </section>
@@ -758,13 +758,13 @@ server via <code class="docutils literal notranslate"><span class="pre">spark</s
 the server’s error log.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;debug&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'http://example.com'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'debug'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>You can pass a filename as the value for debug to have the output written to a file:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;debug&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/usr/local/curl_log.txt&#39;</span><span class="p">]);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'http://example.com'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'debug'</span> <span class="o">=&gt;</span> <span class="s1">'/usr/local/curl_log.txt'</span><span class="p">]);</span>
 </pre></div>
 </div>
 </section>
@@ -774,7 +774,7 @@ the server’s error log.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Delay for 2 seconds</span>
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;delay&#39;</span> <span class="o">=&gt;</span> <span class="mi">2000</span><span class="p">]);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'http://example.com'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'delay'</span> <span class="o">=&gt;</span> <span class="mi">2000</span><span class="p">]);</span>
 </pre></div>
 </div>
 </section>
@@ -788,7 +788,7 @@ modify this value, you can do so by passing an amount of time in seconds with th
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Modify default DNS Cache Timeout</span>
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;dns_cache_timeout&#39;</span> <span class="o">=&gt;</span> <span class="mi">360</span><span class="p">]);</span> <span class="c1">// seconds</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'/'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'dns_cache_timeout'</span> <span class="o">=&gt;</span> <span class="mi">360</span><span class="p">]);</span> <span class="c1">// seconds</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -803,10 +803,10 @@ the <code class="docutils literal notranslate"><span class="pre">form_params</sp
 if it’s not already set:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="s1">&#39;/post&#39;</span><span class="p">,</span> <span class="p">[</span>
-    <span class="s1">&#39;form_params&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;baz&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;hi&#39;</span><span class="p">,</span> <span class="s1">&#39;there&#39;</span><span class="p">],</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/post'</span><span class="p">,</span> <span class="p">[</span>
+    <span class="s1">'form_params'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'foo'</span> <span class="o">=&gt;</span> <span class="s1">'bar'</span><span class="p">,</span>
+        <span class="s1">'baz'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'hi'</span><span class="p">,</span> <span class="s1">'there'</span><span class="p">],</span>
     <span class="p">],</span>
 <span class="p">]);</span>
 </pre></div>
@@ -826,8 +826,8 @@ requests.</p>
 <p>By default, the request is sent using a fresh connection. You can disable this behavior using the <code class="docutils literal notranslate"><span class="pre">fresh_connect</span></code> option:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;fresh_connect&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]);</span>
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;fresh_connect&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'http://example.com'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'fresh_connect'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'http://example.com'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'fresh_connect'</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
 </pre></div>
 </div>
 </section>
@@ -838,11 +838,11 @@ array of headers in as an option. Each key is the name of a header, and each val
 representing the header field values:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="p">[</span>
-    <span class="s1">&#39;headers&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;User-Agent&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;testing/1.0&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Accept&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;X-Foo&#39;</span>      <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;Bar&#39;</span><span class="p">,</span> <span class="s1">&#39;Baz&#39;</span><span class="p">],</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'/'</span><span class="p">,</span> <span class="p">[</span>
+    <span class="s1">'headers'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'User-Agent'</span> <span class="o">=&gt;</span> <span class="s1">'testing/1.0'</span><span class="p">,</span>
+        <span class="s1">'Accept'</span>     <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+        <span class="s1">'X-Foo'</span>      <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'Bar'</span><span class="p">,</span> <span class="s1">'Baz'</span><span class="p">],</span>
     <span class="p">],</span>
 <span class="p">]);</span>
 </pre></div>
@@ -858,11 +858,11 @@ greater than or equal to 400.</p>
 return the content instead:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;/status/500&#39;</span><span class="p">);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'/status/500'</span><span class="p">);</span>
 <span class="c1">// If the response code is 500, an HTTPException is thrown,</span>
 <span class="c1">// and a detailed error report is displayed if in development mode.</span>
 
-<span class="nv">$response</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;/status/500&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;http_errors&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
+<span class="nv">$response</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'/status/500'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'http_errors'</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
 <span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getStatusCode</span><span class="p">();</span> <span class="c1">// 500</span>
 <span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getBody</span><span class="p">();</span>       <span class="c1">// You can see the response body.</span>
 </pre></div>
@@ -875,7 +875,7 @@ of <code class="docutils literal notranslate"><span class="pre">application/json
 this option can be any value that <code class="docutils literal notranslate"><span class="pre">json_encode()</span></code> accepts:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$response</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;PUT&#39;</span><span class="p">,</span> <span class="s1">&#39;/put&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;json&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">]]);</span>
+<span class="nv">$response</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'PUT'</span><span class="p">,</span> <span class="s1">'/put'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'json'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'foo'</span> <span class="o">=&gt;</span> <span class="s1">'bar'</span><span class="p">]]);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -894,10 +894,10 @@ of POST data to send. For safer usage, the legacy method of uploading files by p
 has been disabled. Any files that you want to send must be passed as instances of CURLFile:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="s1">&#39;/post&#39;</span><span class="p">,</span> <span class="p">[</span>
-    <span class="s1">&#39;multipart&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;foo&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;userfile&#39;</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">\CURLFile</span><span class="p">(</span><span class="s1">&#39;/path/to/file.txt&#39;</span><span class="p">),</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/post'</span><span class="p">,</span> <span class="p">[</span>
+    <span class="s1">'multipart'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'foo'</span>      <span class="o">=&gt;</span> <span class="s1">'bar'</span><span class="p">,</span>
+        <span class="s1">'userfile'</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">\CURLFile</span><span class="p">(</span><span class="s1">'/path/to/file.txt'</span><span class="p">),</span>
     <span class="p">],</span>
 <span class="p">]);</span>
 </pre></div>
@@ -918,9 +918,9 @@ requests.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span>
-    <span class="s1">&#39;GET&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span>
-    <span class="p">[</span><span class="s1">&#39;proxy&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://localhost:3128&#39;</span><span class="p">],</span>
+    <span class="s1">'GET'</span><span class="p">,</span>
+    <span class="s1">'http://example.com'</span><span class="p">,</span>
+    <span class="p">[</span><span class="s1">'proxy'</span> <span class="o">=&gt;</span> <span class="s1">'http://localhost:3128'</span><span class="p">],</span>
 <span class="p">);</span>
 </pre></div>
 </div>
@@ -931,7 +931,7 @@ requests.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Send a GET request to /get?foo=bar</span>
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;/get&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;query&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">]]);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'/get'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'query'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'foo'</span> <span class="o">=&gt;</span> <span class="s1">'bar'</span><span class="p">]]);</span>
 </pre></div>
 </div>
 </section>
@@ -941,7 +941,7 @@ requests.</p>
 option. The value should be the number of seconds you want the functions to execute for. Use 0 to wait indefinitely:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;timeout&#39;</span> <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">]);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'http://example.com'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'timeout'</span> <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">]);</span>
 </pre></div>
 </div>
 </section>
@@ -950,7 +950,7 @@ option. The value should be the number of seconds you want the functions to exec
 <p>Allows specifying the User Agent for requests:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;user_agent&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;CodeIgniter Framework v4&#39;</span><span class="p">]);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'http://example.com'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'user_agent'</span> <span class="o">=&gt;</span> <span class="s1">'CodeIgniter Framework v4'</span><span class="p">]);</span>
 </pre></div>
 </div>
 </section>
@@ -963,14 +963,14 @@ to a string that contains the path to a CA bundle to enable verification with a 
 is true:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="c1">// Use the system&#39;s CA bundle (this is the default setting)</span>
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;verify&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]);</span>
+<span class="c1">// Use the system's CA bundle (this is the default setting)</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'/'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'verify'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]);</span>
 
 <span class="c1">// Use a custom SSL certificate on disk.</span>
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;verify&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/path/to/cert.pem&#39;</span><span class="p">]);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'/'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'verify'</span> <span class="o">=&gt;</span> <span class="s1">'/path/to/cert.pem'</span><span class="p">]);</span>
 
 <span class="c1">// Disable validation entirely. (Insecure!)</span>
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;verify&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'/'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'verify'</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
 </pre></div>
 </div>
 </section>
@@ -983,7 +983,7 @@ is true:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Force ipv4 resolve</span>
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;force_ip_resolve&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;v4&#39;</span><span class="p">]);</span> <span class="c1">// v4 or v6</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'/'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'force_ip_resolve'</span> <span class="o">=&gt;</span> <span class="s1">'v4'</span><span class="p">]);</span> <span class="c1">// v4 or v6</span>
 </pre></div>
 </div>
 </section>
@@ -994,7 +994,7 @@ or <code class="docutils literal notranslate"><span class="pre">1.1</span></code
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Force HTTP/1.0</span>
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;version&#39;</span> <span class="o">=&gt;</span> <span class="mf">1.0</span><span class="p">]);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'/'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'version'</span> <span class="o">=&gt;</span> <span class="mf">1.0</span><span class="p">]);</span>
 </pre></div>
 </div>
 </section>
@@ -1013,7 +1013,7 @@ or <code class="docutils literal notranslate"><span class="pre">1.1</span></code
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

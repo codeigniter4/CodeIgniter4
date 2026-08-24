@@ -358,7 +358,7 @@ with different supported languages.</p>
 <span class="p">{</span>
     <span class="c1">// ...</span>
 
-    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$defaultLocale</span> <span class="o">=</span> <span class="s1">&#39;en&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$defaultLocale</span> <span class="o">=</span> <span class="s1">'en'</span><span class="p">;</span>
 
     <span class="c1">// ...</span>
 <span class="p">}</span>
@@ -423,7 +423,7 @@ the following example, the <code class="docutils literal notranslate"><span clas
 <span class="p">{</span>
     <span class="c1">// ...</span>
 
-    <span class="k">public</span> <span class="k">array</span> <span class="nv">$supportedLocales</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="s1">&#39;es&#39;</span><span class="p">,</span> <span class="s1">&#39;fr-FR&#39;</span><span class="p">];</span>
+    <span class="k">public</span> <span class="k">array</span> <span class="nv">$supportedLocales</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'en'</span><span class="p">,</span> <span class="s1">'es'</span><span class="p">,</span> <span class="s1">'fr-FR'</span><span class="p">];</span>
 
     <span class="c1">// ...</span>
 <span class="p">}</span>
@@ -435,7 +435,7 @@ the following example, the <code class="docutils literal notranslate"><span clas
 <p>The second method uses a custom placeholder to detect the desired locale and set it on the Request. The
 placeholder <code class="docutils literal notranslate"><span class="pre">{locale}</span></code> can be placed as a segment in your route. If present, the contents of the matching
 segment will be your locale:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;{locale}/books&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Books::index&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'{locale}/books'</span><span class="p">,</span> <span class="s1">'App\Books::index'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>In this example, if the user tried to visit <strong>http://example.com/fr/books</strong>, then the locale would be
@@ -459,7 +459,7 @@ file:</p>
 <p>If you want to set the locale directly, you may use the <code class="docutils literal notranslate"><span class="pre">setLocale()</span></code> method in
 the <a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">IncomingRequest Class</span></a>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="sd">/** @var \CodeIgniter\HTTP\IncomingRequest $request */</span>
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">setLocale</span><span class="p">(</span><span class="s1">&#39;ja&#39;</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">setLocale</span><span class="p">(</span><span class="s1">'ja'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Before setting the locale, you must set valid locales. Because any attempt to
@@ -477,7 +477,7 @@ in <strong>app/Config/App.php</strong>:</p>
 <span class="p">{</span>
     <span class="c1">// ...</span>
 
-    <span class="k">public</span> <span class="k">array</span> <span class="nv">$supportedLocales</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="s1">&#39;es&#39;</span><span class="p">,</span> <span class="s1">&#39;fr-FR&#39;</span><span class="p">];</span>
+    <span class="k">public</span> <span class="k">array</span> <span class="nv">$supportedLocales</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'en'</span><span class="p">,</span> <span class="s1">'es'</span><span class="p">,</span> <span class="s1">'fr-FR'</span><span class="p">];</span>
 
     <span class="c1">// ...</span>
 <span class="p">}</span>
@@ -497,8 +497,8 @@ locale. This is set to the <code class="docutils literal notranslate"><span clas
 <p>If you want to change the locale after instantiating the language class, use the
 <code class="docutils literal notranslate"><span class="pre">Language::setLocale()</span></code> method.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="sd">/** @var \CodeIgniter\Language\Language $lang */</span>
-<span class="nv">$lang</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;language&#39;</span><span class="p">);</span>
-<span class="nv">$lang</span><span class="o">-&gt;</span><span class="na">setLocale</span><span class="p">(</span><span class="s1">&#39;ja&#39;</span><span class="p">);</span>
+<span class="nv">$lang</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'language'</span><span class="p">);</span>
+<span class="nv">$lang</span><span class="o">-&gt;</span><span class="na">setLocale</span><span class="p">(</span><span class="s1">'ja'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -521,7 +521,7 @@ If your controller is extending <code class="docutils literal notranslate"><span
 </pre></div>
 </div>
 <p>Alternatively, you can use the <a class="reference internal" href="../concepts/services.html"><span class="doc">Services class</span></a> to retrieve the current request:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$locale</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;request&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getLocale</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$locale</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'request'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getLocale</span><span class="p">();</span>
 </pre></div>
 </div>
 </section>
@@ -551,7 +551,7 @@ You might name it simply: <strong>Errors.php</strong>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">return</span> <span class="p">[</span>
-    <span class="s1">&#39;languageKey&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The actual message to be shown.&#39;</span><span class="p">,</span>
+    <span class="s1">'languageKey'</span> <span class="o">=&gt;</span> <span class="s1">'The actual message to be shown.'</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -563,9 +563,9 @@ You might name it simply: <strong>Errors.php</strong>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">return</span> <span class="p">[</span>
-    <span class="s1">&#39;languageKey&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;nested&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-            <span class="s1">&#39;key&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The actual message to be shown.&#39;</span><span class="p">,</span>
+    <span class="s1">'languageKey'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'nested'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">'key'</span> <span class="o">=&gt;</span> <span class="s1">'The actual message to be shown.'</span><span class="p">,</span>
         <span class="p">],</span>
     <span class="p">],</span>
 <span class="p">];</span>
@@ -574,12 +574,12 @@ You might name it simply: <strong>Errors.php</strong>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">return</span> <span class="p">[</span>
-    <span class="s1">&#39;errorEmailMissing&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;You must submit an email address&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;errorURLMissing&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;You must submit a URL&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;errorUsernameMissing&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;You must submit a username&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;nested&#39;</span>               <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;error&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-            <span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;A specific error message&#39;</span><span class="p">,</span>
+    <span class="s1">'errorEmailMissing'</span>    <span class="o">=&gt;</span> <span class="s1">'You must submit an email address'</span><span class="p">,</span>
+    <span class="s1">'errorURLMissing'</span>      <span class="o">=&gt;</span> <span class="s1">'You must submit a URL'</span><span class="p">,</span>
+    <span class="s1">'errorUsernameMissing'</span> <span class="o">=&gt;</span> <span class="s1">'You must submit a username'</span><span class="p">,</span>
+    <span class="s1">'nested'</span>               <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'error'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">'message'</span> <span class="o">=&gt;</span> <span class="s1">'A specific error message'</span><span class="p">,</span>
         <span class="p">],</span>
     <span class="p">],</span>
 <span class="p">];</span>
@@ -592,11 +592,11 @@ You might name it simply: <strong>Errors.php</strong>.</p>
 filename and the language key as the first parameter, separated by a period (<code class="docutils literal notranslate"><span class="pre">.</span></code>).</p>
 <p>For example, to load the <code class="docutils literal notranslate"><span class="pre">errorEmailMissing</span></code> string from the <strong>Errors.php</strong>
 language file, you would do the following:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Errors.errorEmailMissing&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Errors.errorEmailMissing'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>For nested definition, you would do the following:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Errors.nested.error.message&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Errors.nested.error.message'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If the requested language key doesn’t exist in the file for the current locale (after <a class="reference internal" href="#language-fallback">Language Fallback</a>), the string will be passed
@@ -615,23 +615,23 @@ A great overview can be found over at <a class="reference external" href="https:
 
 <span class="c1">// The language file, Tests.php:</span>
 <span class="k">return</span> <span class="p">[</span>
-    <span class="s1">&#39;apples&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;I have {0, number} apples.&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;men&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;The top {1, number} men out-performed the remaining {0, number}&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;namedApples&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;I have {number_apples, number, integer} apples.&#39;</span><span class="p">,</span>
+    <span class="s1">'apples'</span>      <span class="o">=&gt;</span> <span class="s1">'I have {0, number} apples.'</span><span class="p">,</span>
+    <span class="s1">'men'</span>         <span class="o">=&gt;</span> <span class="s1">'The top {1, number} men out-performed the remaining {0, number}'</span><span class="p">,</span>
+    <span class="s1">'namedApples'</span> <span class="o">=&gt;</span> <span class="s1">'I have {number_apples, number, integer} apples.'</span><span class="p">,</span>
 <span class="p">];</span>
 
-<span class="c1">// Displays &quot;I have 3 apples.&quot;</span>
-<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.apples&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">]);</span>
+<span class="c1">// Displays "I have 3 apples."</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Tests.apples'</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>The first item in the placeholder corresponds to the index of the item in the array, if it’s numerical:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Displays &quot;The top 23 men out-performed the remaining 20&quot;</span>
-<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.men&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">23</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Displays "The top 23 men out-performed the remaining 20"</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Tests.men'</span><span class="p">,</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">23</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>You can also use named keys to make it easier to keep things straight, if you’d like:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Displays &quot;I have 3 apples.&quot;</span>
-<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.namedApples&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;number_apples&#39;</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Displays "I have 3 apples."</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Tests.namedApples'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'number_apples'</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>Obviously, you can do more than just number replacement. According to the
@@ -650,42 +650,42 @@ library, the following types of data can be replaced:</p>
 
 <span class="c1">// The language file, Tests.php</span>
 <span class="k">return</span> <span class="p">[</span>
-    <span class="s1">&#39;shortTime&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;The time is now {0, time, short}.&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;mediumTime&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The time is now {0, time, medium}.&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;longTime&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;The time is now {0, time, long}.&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;fullTime&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;The time is now {0, time, full}.&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;shortDate&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;The date is now {0, date, short}.&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;mediumDate&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The date is now {0, date, medium}.&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;longDate&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;The date is now {0, date, long}.&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;fullDate&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;The date is now {0, date, full}.&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;spelledOut&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;34 is {0, spellout}&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;ordinal&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;The ordinal is {0, ordinal}&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;duration&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;It has been {0, duration}&#39;</span><span class="p">,</span>
+    <span class="s1">'shortTime'</span>  <span class="o">=&gt;</span> <span class="s1">'The time is now {0, time, short}.'</span><span class="p">,</span>
+    <span class="s1">'mediumTime'</span> <span class="o">=&gt;</span> <span class="s1">'The time is now {0, time, medium}.'</span><span class="p">,</span>
+    <span class="s1">'longTime'</span>   <span class="o">=&gt;</span> <span class="s1">'The time is now {0, time, long}.'</span><span class="p">,</span>
+    <span class="s1">'fullTime'</span>   <span class="o">=&gt;</span> <span class="s1">'The time is now {0, time, full}.'</span><span class="p">,</span>
+    <span class="s1">'shortDate'</span>  <span class="o">=&gt;</span> <span class="s1">'The date is now {0, date, short}.'</span><span class="p">,</span>
+    <span class="s1">'mediumDate'</span> <span class="o">=&gt;</span> <span class="s1">'The date is now {0, date, medium}.'</span><span class="p">,</span>
+    <span class="s1">'longDate'</span>   <span class="o">=&gt;</span> <span class="s1">'The date is now {0, date, long}.'</span><span class="p">,</span>
+    <span class="s1">'fullDate'</span>   <span class="o">=&gt;</span> <span class="s1">'The date is now {0, date, full}.'</span><span class="p">,</span>
+    <span class="s1">'spelledOut'</span> <span class="o">=&gt;</span> <span class="s1">'34 is {0, spellout}'</span><span class="p">,</span>
+    <span class="s1">'ordinal'</span>    <span class="o">=&gt;</span> <span class="s1">'The ordinal is {0, ordinal}'</span><span class="p">,</span>
+    <span class="s1">'duration'</span>   <span class="o">=&gt;</span> <span class="s1">'It has been {0, duration}'</span><span class="p">,</span>
 <span class="p">];</span>
 
-<span class="c1">// Displays &quot;The time is now 11:18 PM&quot;</span>
-<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.shortTime&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
-<span class="c1">// Displays &quot;The time is now 11:18:50 PM&quot;</span>
-<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.mediumTime&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
-<span class="c1">// Displays &quot;The time is now 11:19:09 PM CDT&quot;</span>
-<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.longTime&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
-<span class="c1">// Displays &quot;The time is now 11:19:26 PM Central Daylight Time&quot;</span>
-<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.fullTime&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
+<span class="c1">// Displays "The time is now 11:18 PM"</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Tests.shortTime'</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
+<span class="c1">// Displays "The time is now 11:18:50 PM"</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Tests.mediumTime'</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
+<span class="c1">// Displays "The time is now 11:19:09 PM CDT"</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Tests.longTime'</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
+<span class="c1">// Displays "The time is now 11:19:26 PM Central Daylight Time"</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Tests.fullTime'</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
 
-<span class="c1">// Displays &quot;The date is now 8/14/16&quot;</span>
-<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.shortDate&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
-<span class="c1">// Displays &quot;The date is now Aug 14, 2016&quot;</span>
-<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.mediumDate&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
-<span class="c1">// Displays &quot;The date is now August 14, 2016&quot;</span>
-<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.longDate&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
-<span class="c1">// Displays &quot;The date is now Sunday, August 14, 2016&quot;</span>
-<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.fullDate&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
+<span class="c1">// Displays "The date is now 8/14/16"</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Tests.shortDate'</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
+<span class="c1">// Displays "The date is now Aug 14, 2016"</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Tests.mediumDate'</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
+<span class="c1">// Displays "The date is now August 14, 2016"</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Tests.longDate'</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
+<span class="c1">// Displays "The date is now Sunday, August 14, 2016"</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Tests.fullDate'</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
 
-<span class="c1">// Displays &quot;34 is thirty-four&quot;</span>
-<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.spelledOut&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">34</span><span class="p">]);</span>
+<span class="c1">// Displays "34 is thirty-four"</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Tests.spelledOut'</span><span class="p">,</span> <span class="p">[</span><span class="mi">34</span><span class="p">]);</span>
 
-<span class="c1">// Displays &quot;It has been 408,676:24:35&quot;</span>
-<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.ordinal&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
+<span class="c1">// Displays "It has been 408,676:24:35"</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Tests.ordinal'</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
 </pre></div>
 </div>
 <p>You should be sure to read up on the MessageFormatter class and the underlying ICU formatting to get a better
@@ -698,13 +698,13 @@ earlier will give you an excellent idea as to the options available.</p>
 third parameter to the <a class="reference internal" href="../general/common_functions.html#lang" title="lang"><code class="xref php php-func docutils literal notranslate"><span class="pre">lang()</span></code></a> function.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="c1">// Displays &quot;The time is now 23:21:28 GMT-5&quot;</span>
-<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Test.longTime&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()],</span> <span class="s1">&#39;ru-RU&#39;</span><span class="p">);</span>
+<span class="c1">// Displays "The time is now 23:21:28 GMT-5"</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Test.longTime'</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()],</span> <span class="s1">'ru-RU'</span><span class="p">);</span>
 
-<span class="c1">// Displays &quot;£7.41&quot;</span>
-<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;{price, number, currency}&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;price&#39;</span> <span class="o">=&gt;</span> <span class="mf">7.41</span><span class="p">],</span> <span class="s1">&#39;en-GB&#39;</span><span class="p">);</span>
-<span class="c1">// Displays &quot;$7.41&quot;</span>
-<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;{price, number, currency}&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;price&#39;</span> <span class="o">=&gt;</span> <span class="mf">7.41</span><span class="p">],</span> <span class="s1">&#39;en-US&#39;</span><span class="p">);</span>
+<span class="c1">// Displays "£7.41"</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'{price, number, currency}'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'price'</span> <span class="o">=&gt;</span> <span class="mf">7.41</span><span class="p">],</span> <span class="s1">'en-GB'</span><span class="p">);</span>
+<span class="c1">// Displays "$7.41"</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'{price, number, currency}'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'price'</span> <span class="o">=&gt;</span> <span class="mf">7.41</span><span class="p">],</span> <span class="s1">'en-US'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If you want to change the current locale, see <a class="reference internal" href="#language-locale">Language Locale</a>.</p>
@@ -717,18 +717,18 @@ third parameter to the <a class="reference internal" href="../general/common_fun
 <span class="c1">// Language/en/Fruit.php</span>
 
 <span class="k">return</span> <span class="p">[</span>
-    <span class="s1">&#39;list&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;Apples&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Bananas&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Grapes&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Lemons&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Oranges&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Strawberries&#39;</span><span class="p">,</span>
+    <span class="s1">'list'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'Apples'</span><span class="p">,</span>
+        <span class="s1">'Bananas'</span><span class="p">,</span>
+        <span class="s1">'Grapes'</span><span class="p">,</span>
+        <span class="s1">'Lemons'</span><span class="p">,</span>
+        <span class="s1">'Oranges'</span><span class="p">,</span>
+        <span class="s1">'Strawberries'</span><span class="p">,</span>
     <span class="p">],</span>
 <span class="p">];</span>
 
-<span class="c1">// Displays &quot;Apples, Bananas, Grapes, Lemons, Oranges, Strawberries&quot;</span>
-<span class="k">echo</span> <span class="nb">implode</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">,</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Fruit.list&#39;</span><span class="p">));</span>
+<span class="c1">// Displays "Apples, Bananas, Grapes, Lemons, Oranges, Strawberries"</span>
+<span class="k">echo</span> <span class="nb">implode</span><span class="p">(</span><span class="s1">', '</span><span class="p">,</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Fruit.list'</span><span class="p">));</span>
 </pre></div>
 </div>
 </section>
@@ -792,15 +792,15 @@ neither listed by <code class="docutils literal notranslate"><span class="pre">-
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Controllers/Translation/Lang.php</span>
-<span class="nv">$message</span>  <span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Text.info.success&#39;</span><span class="p">);</span>
-<span class="nv">$message2</span> <span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Text.paragraph&#39;</span><span class="p">);</span>
+<span class="nv">$message</span>  <span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Text.info.success'</span><span class="p">);</span>
+<span class="nv">$message2</span> <span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">'Text.paragraph'</span><span class="p">);</span>
 
 <span class="c1">// The following will be saved in Language/en/Text.php</span>
 <span class="k">return</span> <span class="p">[</span>
-    <span class="s1">&#39;info&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;success&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Text.info.success&#39;</span><span class="p">,</span>
+    <span class="s1">'info'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'success'</span> <span class="o">=&gt;</span> <span class="s1">'Text.info.success'</span><span class="p">,</span>
     <span class="p">],</span>
-    <span class="s1">&#39;paragraph&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Text.paragraph&#39;</span><span class="p">,</span>
+    <span class="s1">'paragraph'</span> <span class="o">=&gt;</span> <span class="s1">'Text.paragraph'</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -879,7 +879,7 @@ If there were duplicate keys in the target locale, they are saved.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

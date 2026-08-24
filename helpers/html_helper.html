@@ -309,7 +309,7 @@
 <p>This helper is loaded using the following code:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;html&#39;</span><span class="p">);</span>
+<span class="nx">helper</span><span class="p">(</span><span class="s1">'html'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -338,8 +338,8 @@
 image source. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">img</span><span class="p">(</span><span class="s1">&#39;images/picture.jpg&#39;</span><span class="p">);</span>
-<span class="c1">// &lt;img src=&quot;http://site.com/images/picture.jpg&quot;&gt;</span>
+<span class="k">echo</span> <span class="nx">img</span><span class="p">(</span><span class="s1">'images/picture.jpg'</span><span class="p">);</span>
+<span class="c1">// &lt;img src="http://site.com/images/picture.jpg"&gt;</span>
 </pre></div>
 </div>
 <p>There is an optional second parameter, a true/false value, that
@@ -347,8 +347,8 @@ specifies if the <em>src</em> should have <code class="docutils literal notransl
 Presumably, this would be if you were using a media controller:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">img</span><span class="p">(</span><span class="s1">&#39;images/picture.jpg&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
-<span class="c1">// &lt;img src=&quot;http://site.com/index.php/images/picture.jpg&quot; alt=&quot;&quot;&gt;</span>
+<span class="k">echo</span> <span class="nx">img</span><span class="p">(</span><span class="s1">'images/picture.jpg'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="c1">// &lt;img src="http://site.com/index.php/images/picture.jpg" alt=""&gt;</span>
 </pre></div>
 </div>
 <p>Additionally, an associative array can be passed as the first parameter,
@@ -358,17 +358,17 @@ is not provided, CodeIgniter will generate one with empty string.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$imageProperties</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;src&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;images/picture.jpg&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;alt&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;Me, demonstrating how to eat 4 slices of pizza at one time&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;class&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;post_images&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;width&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;200&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;height&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;200&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;title&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;That was quite a night&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;rel&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;lightbox&#39;</span><span class="p">,</span>
+    <span class="s1">'src'</span>    <span class="o">=&gt;</span> <span class="s1">'images/picture.jpg'</span><span class="p">,</span>
+    <span class="s1">'alt'</span>    <span class="o">=&gt;</span> <span class="s1">'Me, demonstrating how to eat 4 slices of pizza at one time'</span><span class="p">,</span>
+    <span class="s1">'class'</span>  <span class="o">=&gt;</span> <span class="s1">'post_images'</span><span class="p">,</span>
+    <span class="s1">'width'</span>  <span class="o">=&gt;</span> <span class="s1">'200'</span><span class="p">,</span>
+    <span class="s1">'height'</span> <span class="o">=&gt;</span> <span class="s1">'200'</span><span class="p">,</span>
+    <span class="s1">'title'</span>  <span class="o">=&gt;</span> <span class="s1">'That was quite a night'</span><span class="p">,</span>
+    <span class="s1">'rel'</span>    <span class="o">=&gt;</span> <span class="s1">'lightbox'</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="nx">img</span><span class="p">(</span><span class="nv">$imageProperties</span><span class="p">);</span>
-<span class="c1">// &lt;img src=&quot;http://site.com/index.php/images/picture.jpg&quot; alt=&quot;Me, demonstrating how to eat 4 slices of pizza at one time&quot; class=&quot;post_images&quot; width=&quot;200&quot; height=&quot;200&quot; title=&quot;That was quite a night&quot; rel=&quot;lightbox&quot;&gt;</span>
+<span class="c1">// &lt;img src="http://site.com/index.php/images/picture.jpg" alt="Me, demonstrating how to eat 4 slices of pizza at one time" class="post_images" width="200" height="200" title="That was quite a night" rel="lightbox"&gt;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -394,7 +394,7 @@ is not provided, CodeIgniter will generate one with empty string.</p>
 Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$src</span> <span class="o">=</span> <span class="nx">img_data</span><span class="p">(</span><span class="s1">&#39;public/images/picture.jpg&#39;</span><span class="p">);</span> <span class="c1">// data:image/jpg;base64,R0lGODl...</span>
+<span class="nv">$src</span> <span class="o">=</span> <span class="nx">img_data</span><span class="p">(</span><span class="s1">'public/images/picture.jpg'</span><span class="p">);</span> <span class="c1">// data:image/jpg;base64,R0lGODl...</span>
 <span class="k">echo</span> <span class="nx">img</span><span class="p">(</span><span class="nv">$src</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -402,7 +402,7 @@ Example:</p>
 function will use your Mimes config to guess:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$src</span> <span class="o">=</span> <span class="nx">img_data</span><span class="p">(</span><span class="s1">&#39;path/img_without_extension&#39;</span><span class="p">,</span> <span class="s1">&#39;image/png&#39;</span><span class="p">);</span> <span class="c1">// data:image/png;base64,HT5A822...</span>
+<span class="nv">$src</span> <span class="o">=</span> <span class="nx">img_data</span><span class="p">(</span><span class="s1">'path/img_without_extension'</span><span class="p">,</span> <span class="s1">'image/png'</span><span class="p">);</span> <span class="c1">// data:image/png;base64,HT5A822...</span>
 </pre></div>
 </div>
 <p>Note that <code class="docutils literal notranslate"><span class="pre">$path</span></code> must exist and be a readable image format supported by the <code class="docutils literal notranslate"><span class="pre">data:</span></code> protocol.
@@ -440,18 +440,18 @@ the page specified by <code class="docutils literal notranslate"><span class="pr
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">link_tag</span><span class="p">(</span><span class="s1">&#39;css/mystyles.css&#39;</span><span class="p">);</span>
-<span class="c1">// &lt;link href=&quot;http://site.com/css/mystyles.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;</span>
+<span class="k">echo</span> <span class="nx">link_tag</span><span class="p">(</span><span class="s1">'css/mystyles.css'</span><span class="p">);</span>
+<span class="c1">// &lt;link href="http://site.com/css/mystyles.css" rel="stylesheet" type="text/css"&gt;</span>
 </pre></div>
 </div>
 <p>Further examples:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">link_tag</span><span class="p">(</span><span class="s1">&#39;favicon.ico&#39;</span><span class="p">,</span> <span class="s1">&#39;shortcut icon&#39;</span><span class="p">,</span> <span class="s1">&#39;image/ico&#39;</span><span class="p">);</span>
-<span class="c1">// &lt;link href=&quot;http://site.com/favicon.ico&quot; rel=&quot;shortcut icon&quot; type=&quot;image/ico&quot;&gt;</span>
+<span class="k">echo</span> <span class="nx">link_tag</span><span class="p">(</span><span class="s1">'favicon.ico'</span><span class="p">,</span> <span class="s1">'shortcut icon'</span><span class="p">,</span> <span class="s1">'image/ico'</span><span class="p">);</span>
+<span class="c1">// &lt;link href="http://site.com/favicon.ico" rel="shortcut icon" type="image/ico"&gt;</span>
 
-<span class="k">echo</span> <span class="nx">link_tag</span><span class="p">(</span><span class="s1">&#39;feed&#39;</span><span class="p">,</span> <span class="s1">&#39;alternate&#39;</span><span class="p">,</span> <span class="s1">&#39;application/rss+xml&#39;</span><span class="p">,</span> <span class="s1">&#39;My RSS Feed&#39;</span><span class="p">);</span>
-<span class="c1">// &lt;link href=&quot;http://site.com/feed&quot; rel=&quot;alternate&quot; type=&quot;application/rss+xml&quot; title=&quot;My RSS Feed&quot;&gt;</span>
+<span class="k">echo</span> <span class="nx">link_tag</span><span class="p">(</span><span class="s1">'feed'</span><span class="p">,</span> <span class="s1">'alternate'</span><span class="p">,</span> <span class="s1">'application/rss+xml'</span><span class="p">,</span> <span class="s1">'My RSS Feed'</span><span class="p">);</span>
+<span class="c1">// &lt;link href="http://site.com/feed" rel="alternate" type="application/rss+xml" title="My RSS Feed"&gt;</span>
 </pre></div>
 </div>
 <p>Alternately, an associative array can be passed to the <code class="docutils literal notranslate"><span class="pre">link_tag()</span></code> function
@@ -459,14 +459,14 @@ for complete control over all attributes and values:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$link</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;href&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;css/printer.css&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;rel&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;stylesheet&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;type&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;text/css&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;media&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;print&#39;</span><span class="p">,</span>
+    <span class="s1">'href'</span>  <span class="o">=&gt;</span> <span class="s1">'css/printer.css'</span><span class="p">,</span>
+    <span class="s1">'rel'</span>   <span class="o">=&gt;</span> <span class="s1">'stylesheet'</span><span class="p">,</span>
+    <span class="s1">'type'</span>  <span class="o">=&gt;</span> <span class="s1">'text/css'</span><span class="p">,</span>
+    <span class="s1">'media'</span> <span class="o">=&gt;</span> <span class="s1">'print'</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">link_tag</span><span class="p">(</span><span class="nv">$link</span><span class="p">);</span>
-<span class="c1">// &lt;link href=&quot;http://site.com/css/printer.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;print&quot;&gt;</span>
+<span class="c1">// &lt;link href="http://site.com/css/printer.css" rel="stylesheet" type="text/css" media="print"&gt;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -494,18 +494,18 @@ the page specified by <code class="docutils literal notranslate"><span class="pr
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">script_tag</span><span class="p">(</span><span class="s1">&#39;js/mystyles.js&#39;</span><span class="p">);</span>
-<span class="c1">// &lt;script src=&quot;http://site.com/js/mystyles.js&quot;&gt;&lt;/script&gt;</span>
+<span class="k">echo</span> <span class="nx">script_tag</span><span class="p">(</span><span class="s1">'js/mystyles.js'</span><span class="p">);</span>
+<span class="c1">// &lt;script src="http://site.com/js/mystyles.js"&gt;&lt;/script&gt;</span>
 </pre></div>
 </div>
 <p>Alternately, an associative array can be passed to the <code class="docutils literal notranslate"><span class="pre">script_tag()</span></code> function
 for complete control over all attributes and values:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$script</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;src&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;js/printer.js&#39;</span><span class="p">,</span> <span class="s1">&#39;defer&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">];</span>
+<span class="nv">$script</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'src'</span> <span class="o">=&gt;</span> <span class="s1">'js/printer.js'</span><span class="p">,</span> <span class="s1">'defer'</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">script_tag</span><span class="p">(</span><span class="nv">$script</span><span class="p">);</span>
-<span class="c1">// &lt;script src=&quot;http://site.com/js/printer.js&quot; defer&gt;&lt;/script&gt;</span>
+<span class="c1">// &lt;script src="http://site.com/js/printer.js" defer&gt;&lt;/script&gt;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -532,22 +532,22 @@ multi-dimensional array. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$list</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;red&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;blue&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;green&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;yellow&#39;</span><span class="p">,</span>
+    <span class="s1">'red'</span><span class="p">,</span>
+    <span class="s1">'blue'</span><span class="p">,</span>
+    <span class="s1">'green'</span><span class="p">,</span>
+    <span class="s1">'yellow'</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;class&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;boldlist&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;mylist&#39;</span><span class="p">,</span>
+    <span class="s1">'class'</span> <span class="o">=&gt;</span> <span class="s1">'boldlist'</span><span class="p">,</span>
+    <span class="s1">'id'</span>    <span class="o">=&gt;</span> <span class="s1">'mylist'</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">ul</span><span class="p">(</span><span class="nv">$list</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The above code will produce this:</p>
-<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;boldlist&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;mylist&quot;</span><span class="p">&gt;</span>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">"boldlist"</span> <span class="na">id</span><span class="o">=</span><span class="s">"mylist"</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>red<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>blue<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>green<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
@@ -559,36 +559,36 @@ multi-dimensional array. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;class&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;boldlist&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;mylist&#39;</span><span class="p">,</span>
+    <span class="s1">'class'</span> <span class="o">=&gt;</span> <span class="s1">'boldlist'</span><span class="p">,</span>
+    <span class="s1">'id'</span>    <span class="o">=&gt;</span> <span class="s1">'mylist'</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="nv">$list</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;colors&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;red&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;blue&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;green&#39;</span><span class="p">,</span>
+    <span class="s1">'colors'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'red'</span><span class="p">,</span>
+        <span class="s1">'blue'</span><span class="p">,</span>
+        <span class="s1">'green'</span><span class="p">,</span>
     <span class="p">],</span>
-    <span class="s1">&#39;shapes&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;round&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;square&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;circles&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-            <span class="s1">&#39;ellipse&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;oval&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;sphere&#39;</span><span class="p">,</span>
+    <span class="s1">'shapes'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'round'</span><span class="p">,</span>
+        <span class="s1">'square'</span><span class="p">,</span>
+        <span class="s1">'circles'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">'ellipse'</span><span class="p">,</span>
+            <span class="s1">'oval'</span><span class="p">,</span>
+            <span class="s1">'sphere'</span><span class="p">,</span>
         <span class="p">],</span>
     <span class="p">],</span>
-    <span class="s1">&#39;moods&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;happy&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;upset&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-            <span class="s1">&#39;defeated&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;dejected&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;disheartened&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;depressed&#39;</span><span class="p">,</span>
+    <span class="s1">'moods'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'happy'</span><span class="p">,</span>
+        <span class="s1">'upset'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">'defeated'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">'dejected'</span><span class="p">,</span>
+                <span class="s1">'disheartened'</span><span class="p">,</span>
+                <span class="s1">'depressed'</span><span class="p">,</span>
             <span class="p">],</span>
-            <span class="s1">&#39;annoyed&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;cross&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;angry&#39;</span><span class="p">,</span>
+            <span class="s1">'annoyed'</span><span class="p">,</span>
+            <span class="s1">'cross'</span><span class="p">,</span>
+            <span class="s1">'angry'</span><span class="p">,</span>
         <span class="p">],</span>
     <span class="p">],</span>
 <span class="p">];</span>
@@ -597,7 +597,7 @@ multi-dimensional array. Example:</p>
 </pre></div>
 </div>
 <p>The above code will produce this:</p>
-<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;boldlist&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;mylist&quot;</span><span class="p">&gt;</span>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">"boldlist"</span> <span class="na">id</span><span class="o">=</span><span class="s">"mylist"</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>colors
         <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
             <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>red<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
@@ -688,50 +688,50 @@ Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$tracks</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="nx">track</span><span class="p">(</span><span class="s1">&#39;subtitles_no.vtt&#39;</span><span class="p">,</span> <span class="s1">&#39;subtitles&#39;</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">,</span> <span class="s1">&#39;Norwegian No&#39;</span><span class="p">),</span>
-    <span class="nx">track</span><span class="p">(</span><span class="s1">&#39;subtitles_yes.vtt&#39;</span><span class="p">,</span> <span class="s1">&#39;subtitles&#39;</span><span class="p">,</span> <span class="s1">&#39;yes&#39;</span><span class="p">,</span> <span class="s1">&#39;Norwegian Yes&#39;</span><span class="p">),</span>
+    <span class="nx">track</span><span class="p">(</span><span class="s1">'subtitles_no.vtt'</span><span class="p">,</span> <span class="s1">'subtitles'</span><span class="p">,</span> <span class="s1">'no'</span><span class="p">,</span> <span class="s1">'Norwegian No'</span><span class="p">),</span>
+    <span class="nx">track</span><span class="p">(</span><span class="s1">'subtitles_yes.vtt'</span><span class="p">,</span> <span class="s1">'subtitles'</span><span class="p">,</span> <span class="s1">'yes'</span><span class="p">,</span> <span class="s1">'Norwegian Yes'</span><span class="p">),</span>
 <span class="p">];</span>
 
-<span class="k">echo</span> <span class="nx">video</span><span class="p">(</span><span class="s1">&#39;test.mp4&#39;</span><span class="p">,</span> <span class="s1">&#39;Your browser does not support the video tag.&#39;</span><span class="p">,</span> <span class="s1">&#39;controls&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">video</span><span class="p">(</span><span class="s1">'test.mp4'</span><span class="p">,</span> <span class="s1">'Your browser does not support the video tag.'</span><span class="p">,</span> <span class="s1">'controls'</span><span class="p">);</span>
 
 <span class="k">echo</span> <span class="nx">video</span><span class="p">(</span>
-    <span class="s1">&#39;http://www.codeigniter.com/test.mp4&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Your browser does not support the video tag.&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;controls&#39;</span><span class="p">,</span>
+    <span class="s1">'http://www.codeigniter.com/test.mp4'</span><span class="p">,</span>
+    <span class="s1">'Your browser does not support the video tag.'</span><span class="p">,</span>
+    <span class="s1">'controls'</span><span class="p">,</span>
     <span class="nv">$tracks</span><span class="p">,</span>
 <span class="p">);</span>
 
 <span class="k">echo</span> <span class="nx">video</span><span class="p">(</span>
     <span class="p">[</span>
-        <span class="nx">source</span><span class="p">(</span><span class="s1">&#39;movie.mp4&#39;</span><span class="p">,</span> <span class="s1">&#39;video/mp4&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">),</span>
-        <span class="nx">source</span><span class="p">(</span><span class="s1">&#39;movie.ogg&#39;</span><span class="p">,</span> <span class="s1">&#39;video/ogg&#39;</span><span class="p">),</span>
-        <span class="nx">source</span><span class="p">(</span><span class="s1">&#39;movie.mov&#39;</span><span class="p">,</span> <span class="s1">&#39;video/quicktime&#39;</span><span class="p">),</span>
-        <span class="nx">source</span><span class="p">(</span><span class="s1">&#39;movie.ogv&#39;</span><span class="p">,</span> <span class="s1">&#39;video/ogv; codecs=dirac, speex&#39;</span><span class="p">),</span>
+        <span class="nx">source</span><span class="p">(</span><span class="s1">'movie.mp4'</span><span class="p">,</span> <span class="s1">'video/mp4'</span><span class="p">,</span> <span class="s1">'class="test"'</span><span class="p">),</span>
+        <span class="nx">source</span><span class="p">(</span><span class="s1">'movie.ogg'</span><span class="p">,</span> <span class="s1">'video/ogg'</span><span class="p">),</span>
+        <span class="nx">source</span><span class="p">(</span><span class="s1">'movie.mov'</span><span class="p">,</span> <span class="s1">'video/quicktime'</span><span class="p">),</span>
+        <span class="nx">source</span><span class="p">(</span><span class="s1">'movie.ogv'</span><span class="p">,</span> <span class="s1">'video/ogv; codecs=dirac, speex'</span><span class="p">),</span>
     <span class="p">],</span>
-    <span class="s1">&#39;Your browser does not support the video tag.&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;class=&quot;test&quot; controls&#39;</span><span class="p">,</span>
+    <span class="s1">'Your browser does not support the video tag.'</span><span class="p">,</span>
+    <span class="s1">'class="test" controls'</span><span class="p">,</span>
     <span class="nv">$tracks</span><span class="p">,</span>
 <span class="p">);</span>
 </pre></div>
 </div>
 <p>The above code will produce this:</p>
-<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">video</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;test.mp4&quot;</span> <span class="na">controls</span><span class="p">&gt;</span>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">video</span> <span class="na">src</span><span class="o">=</span><span class="s">"test.mp4"</span> <span class="na">controls</span><span class="p">&gt;</span>
   Your browser does not support the video tag.
 <span class="p">&lt;/</span><span class="nt">video</span><span class="p">&gt;</span>
 
-<span class="p">&lt;</span><span class="nt">video</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;http://www.codeigniter.com/test.mp4&quot;</span> <span class="na">controls</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">track</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;subtitles_no.vtt&quot;</span> <span class="na">kind</span><span class="o">=</span><span class="s">&quot;subtitles&quot;</span> <span class="na">srclang</span><span class="o">=</span><span class="s">&quot;no&quot;</span> <span class="na">label</span><span class="o">=</span><span class="s">&quot;Norwegian No&quot;</span> <span class="p">/&gt;</span>
-  <span class="p">&lt;</span><span class="nt">track</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;subtitles_yes.vtt&quot;</span> <span class="na">kind</span><span class="o">=</span><span class="s">&quot;subtitles&quot;</span> <span class="na">srclang</span><span class="o">=</span><span class="s">&quot;yes&quot;</span> <span class="na">label</span><span class="o">=</span><span class="s">&quot;Norwegian Yes&quot;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">video</span> <span class="na">src</span><span class="o">=</span><span class="s">"http://www.codeigniter.com/test.mp4"</span> <span class="na">controls</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">track</span> <span class="na">src</span><span class="o">=</span><span class="s">"subtitles_no.vtt"</span> <span class="na">kind</span><span class="o">=</span><span class="s">"subtitles"</span> <span class="na">srclang</span><span class="o">=</span><span class="s">"no"</span> <span class="na">label</span><span class="o">=</span><span class="s">"Norwegian No"</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">track</span> <span class="na">src</span><span class="o">=</span><span class="s">"subtitles_yes.vtt"</span> <span class="na">kind</span><span class="o">=</span><span class="s">"subtitles"</span> <span class="na">srclang</span><span class="o">=</span><span class="s">"yes"</span> <span class="na">label</span><span class="o">=</span><span class="s">"Norwegian Yes"</span> <span class="p">/&gt;</span>
   Your browser does not support the video tag.
 <span class="p">&lt;/</span><span class="nt">video</span><span class="p">&gt;</span>
 
-<span class="p">&lt;</span><span class="nt">video</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;test&quot;</span> <span class="na">controls</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">source</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;movie.mp4&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;video/mp4&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;test&quot;</span> <span class="p">/&gt;</span>
-  <span class="p">&lt;</span><span class="nt">source</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;movie.ogg&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;video/ogg&quot;</span> <span class="p">/&gt;</span>
-  <span class="p">&lt;</span><span class="nt">source</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;movie.mov&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;video/quicktime&quot;</span> <span class="p">/&gt;</span>
-  <span class="p">&lt;</span><span class="nt">source</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;movie.ogv&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;video/ogv; codecs=dirac, speex&quot;</span> <span class="p">/&gt;</span>
-  <span class="p">&lt;</span><span class="nt">track</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;subtitles_no.vtt&quot;</span> <span class="na">kind</span><span class="o">=</span><span class="s">&quot;subtitles&quot;</span> <span class="na">srclang</span><span class="o">=</span><span class="s">&quot;no&quot;</span> <span class="na">label</span><span class="o">=</span><span class="s">&quot;Norwegian No&quot;</span> <span class="p">/&gt;</span>
-  <span class="p">&lt;</span><span class="nt">track</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;subtitles_yes.vtt&quot;</span> <span class="na">kind</span><span class="o">=</span><span class="s">&quot;subtitles&quot;</span> <span class="na">srclang</span><span class="o">=</span><span class="s">&quot;yes&quot;</span> <span class="na">label</span><span class="o">=</span><span class="s">&quot;Norwegian Yes&quot;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">video</span> <span class="na">class</span><span class="o">=</span><span class="s">"test"</span> <span class="na">controls</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">source</span> <span class="na">src</span><span class="o">=</span><span class="s">"movie.mp4"</span> <span class="na">type</span><span class="o">=</span><span class="s">"video/mp4"</span> <span class="na">class</span><span class="o">=</span><span class="s">"test"</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">source</span> <span class="na">src</span><span class="o">=</span><span class="s">"movie.ogg"</span> <span class="na">type</span><span class="o">=</span><span class="s">"video/ogg"</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">source</span> <span class="na">src</span><span class="o">=</span><span class="s">"movie.mov"</span> <span class="na">type</span><span class="o">=</span><span class="s">"video/quicktime"</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">source</span> <span class="na">src</span><span class="o">=</span><span class="s">"movie.ogv"</span> <span class="na">type</span><span class="o">=</span><span class="s">"video/ogv; codecs=dirac, speex"</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">track</span> <span class="na">src</span><span class="o">=</span><span class="s">"subtitles_no.vtt"</span> <span class="na">kind</span><span class="o">=</span><span class="s">"subtitles"</span> <span class="na">srclang</span><span class="o">=</span><span class="s">"no"</span> <span class="na">label</span><span class="o">=</span><span class="s">"Norwegian No"</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">track</span> <span class="na">src</span><span class="o">=</span><span class="s">"subtitles_yes.vtt"</span> <span class="na">kind</span><span class="o">=</span><span class="s">"subtitles"</span> <span class="na">srclang</span><span class="o">=</span><span class="s">"yes"</span> <span class="na">label</span><span class="o">=</span><span class="s">"Norwegian Yes"</span> <span class="p">/&gt;</span>
   Your browser does not support the video tag.
 <span class="p">&lt;/</span><span class="nt">video</span><span class="p">&gt;</span>
 </pre></div>
@@ -783,8 +783,8 @@ Example:</p>
 Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">source</span><span class="p">(</span><span class="s1">&#39;movie.mp4&#39;</span><span class="p">,</span> <span class="s1">&#39;video/mp4&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">);</span>
-<span class="c1">// &lt;source src=&quot;movie.mp4&quot; type=&quot;video/mp4&quot; class=&quot;test&quot;&gt;</span>
+<span class="k">echo</span> <span class="nx">source</span><span class="p">(</span><span class="s1">'movie.mp4'</span><span class="p">,</span> <span class="s1">'video/mp4'</span><span class="p">,</span> <span class="s1">'class="test"'</span><span class="p">);</span>
+<span class="c1">// &lt;source src="movie.mp4" type="video/mp4" class="test"&gt;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -812,8 +812,8 @@ Example:</p>
 embed source. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">embed</span><span class="p">(</span><span class="s1">&#39;movie.mov&#39;</span><span class="p">,</span> <span class="s1">&#39;video/quicktime&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">);</span>
-<span class="c1">// &lt;embed src=&quot;movie.mov&quot; type=&quot;video/quicktime&quot; class=&quot;test&quot;&gt;</span>
+<span class="k">echo</span> <span class="nx">embed</span><span class="p">(</span><span class="s1">'movie.mov'</span><span class="p">,</span> <span class="s1">'video/quicktime'</span><span class="p">,</span> <span class="s1">'class="test"'</span><span class="p">);</span>
+<span class="c1">// &lt;embed src="movie.mov" type="video/quicktime" class="test"&gt;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -842,25 +842,25 @@ embed source. Example:</p>
 object data. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">object</span><span class="p">(</span><span class="s1">&#39;movie.swf&#39;</span><span class="p">,</span> <span class="s1">&#39;application/x-shockwave-flash&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">object</span><span class="p">(</span><span class="s1">'movie.swf'</span><span class="p">,</span> <span class="s1">'application/x-shockwave-flash'</span><span class="p">,</span> <span class="s1">'class="test"'</span><span class="p">);</span>
 
 <span class="k">echo</span> <span class="nx">object</span><span class="p">(</span>
-    <span class="s1">&#39;movie.swf&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;application/x-shockwave-flash&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">,</span>
+    <span class="s1">'movie.swf'</span><span class="p">,</span>
+    <span class="s1">'application/x-shockwave-flash'</span><span class="p">,</span>
+    <span class="s1">'class="test"'</span><span class="p">,</span>
     <span class="p">[</span>
-        <span class="nx">param</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="s1">&#39;ref&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">),</span>
-        <span class="nx">param</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="s1">&#39;world&#39;</span><span class="p">,</span> <span class="s1">&#39;ref&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">),</span>
+        <span class="nx">param</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">,</span> <span class="s1">'bar'</span><span class="p">,</span> <span class="s1">'ref'</span><span class="p">,</span> <span class="s1">'class="test"'</span><span class="p">),</span>
+        <span class="nx">param</span><span class="p">(</span><span class="s1">'hello'</span><span class="p">,</span> <span class="s1">'world'</span><span class="p">,</span> <span class="s1">'ref'</span><span class="p">,</span> <span class="s1">'class="test"'</span><span class="p">),</span>
     <span class="p">],</span>
 <span class="p">);</span>
 </pre></div>
 </div>
 <p>The above code will produce this:</p>
-<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">object</span> <span class="na">data</span><span class="o">=</span><span class="s">&quot;movie.swf&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;test&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">object</span><span class="p">&gt;</span>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">object</span> <span class="na">data</span><span class="o">=</span><span class="s">"movie.swf"</span> <span class="na">class</span><span class="o">=</span><span class="s">"test"</span><span class="p">&gt;&lt;/</span><span class="nt">object</span><span class="p">&gt;</span>
 
-<span class="p">&lt;</span><span class="nt">object</span> <span class="na">data</span><span class="o">=</span><span class="s">&quot;movie.swf&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;test&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">param</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;foo&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;ref&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;bar&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;test&quot;</span> <span class="p">/&gt;</span>
-  <span class="p">&lt;</span><span class="nt">param</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;hello&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;ref&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;world&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;test&quot;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">object</span> <span class="na">data</span><span class="o">=</span><span class="s">"movie.swf"</span> <span class="na">class</span><span class="o">=</span><span class="s">"test"</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">param</span> <span class="na">name</span><span class="o">=</span><span class="s">"foo"</span> <span class="na">type</span><span class="o">=</span><span class="s">"ref"</span> <span class="na">value</span><span class="o">=</span><span class="s">"bar"</span> <span class="na">class</span><span class="o">=</span><span class="s">"test"</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">param</span> <span class="na">name</span><span class="o">=</span><span class="s">"hello"</span> <span class="na">type</span><span class="o">=</span><span class="s">"ref"</span> <span class="na">value</span><span class="o">=</span><span class="s">"world"</span> <span class="na">class</span><span class="o">=</span><span class="s">"test"</span> <span class="p">/&gt;</span>
 <span class="p">&lt;/</span><span class="nt">object</span><span class="p">&gt;</span>
 </pre></div>
 </div>
@@ -888,8 +888,8 @@ object data. Example:</p>
 param source. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">param</span><span class="p">(</span><span class="s1">&#39;movie.mov&#39;</span><span class="p">,</span> <span class="s1">&#39;video/quicktime&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">);</span>
-<span class="c1">// &lt;param src=&quot;movie.mov&quot; type=&quot;video/quicktime&quot; class=&quot;test&quot;&gt;</span>
+<span class="k">echo</span> <span class="nx">param</span><span class="p">(</span><span class="s1">'movie.mov'</span><span class="p">,</span> <span class="s1">'video/quicktime'</span><span class="p">,</span> <span class="s1">'class="test"'</span><span class="p">);</span>
+<span class="c1">// &lt;param src="movie.mov" type="video/quicktime" class="test"&gt;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -917,8 +917,8 @@ param source. Example:</p>
 formatted in WebVTT format. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">track</span><span class="p">(</span><span class="s1">&#39;subtitles_no.vtt&#39;</span><span class="p">,</span> <span class="s1">&#39;subtitles&#39;</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">,</span> <span class="s1">&#39;Norwegian No&#39;</span><span class="p">);</span>
-<span class="c1">// &lt;track src=&quot;subtitles_no.vtt&quot; kind=&quot;subtitles&quot; srclang=&quot;no&quot; label=&quot;Norwegian No&quot;&gt;</span>
+<span class="k">echo</span> <span class="nx">track</span><span class="p">(</span><span class="s1">'subtitles_no.vtt'</span><span class="p">,</span> <span class="s1">'subtitles'</span><span class="p">,</span> <span class="s1">'no'</span><span class="p">,</span> <span class="s1">'Norwegian No'</span><span class="p">);</span>
+<span class="c1">// &lt;track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No"&gt;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -947,8 +947,8 @@ is used by default, but many doctypes are available.</p>
 <span class="k">echo</span> <span class="nx">doctype</span><span class="p">();</span>
 <span class="c1">// &lt;!DOCTYPE html&gt;</span>
 
-<span class="k">echo</span> <span class="nx">doctype</span><span class="p">(</span><span class="s1">&#39;html4-trans&#39;</span><span class="p">);</span>
-<span class="c1">// &lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01//EN&quot; &quot;http://www.w3.org/TR/html4/strict.dtd&quot;&gt;</span>
+<span class="k">echo</span> <span class="nx">doctype</span><span class="p">(</span><span class="s1">'html4-trans'</span><span class="p">);</span>
+<span class="c1">// &lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"&gt;</span>
 </pre></div>
 </div>
 <p>The following is a list of the pre-defined doctypes. These are
@@ -1056,7 +1056,7 @@ pulled from <strong>app/Config/DocTypes.php</strong>, or they could be overridde
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

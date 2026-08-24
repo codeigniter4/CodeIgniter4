@@ -377,7 +377,7 @@ a response status code in the 200 or 300’s. An empty body is not considered va
 <h4>assertRedirectTo()<a class="headerlink" href="#assertredirectto" title="Link to this heading"></a></h4>
 <p>Asserts that the Response is an instance of RedirectResponse and the destination
 matches the uri given.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertRedirectTo</span><span class="p">(</span><span class="s1">&#39;foo/bar&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertRedirectTo</span><span class="p">(</span><span class="s1">'foo/bar'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -385,7 +385,7 @@ matches the uri given.</p>
 <h4>getRedirectUrl()<a class="headerlink" href="#getredirecturl" title="Link to this heading"></a></h4>
 <p>Returns the URL set for a RedirectResponse, or null for failure.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$url</span> <span class="o">=</span> <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">getRedirectUrl</span><span class="p">();</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEquals</span><span class="p">(</span><span class="nx">site_url</span><span class="p">(</span><span class="s1">&#39;foo/bar&#39;</span><span class="p">),</span> <span class="nv">$url</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEquals</span><span class="p">(</span><span class="nx">site_url</span><span class="p">(</span><span class="s1">'foo/bar'</span><span class="p">),</span> <span class="nv">$url</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -403,14 +403,14 @@ matches the uri given.</p>
 <h4>assertSessionHas(string $key, $value = null)<a class="headerlink" href="#assertsessionhas-string-key-value-null" title="Link to this heading"></a></h4>
 <p>Asserts that a value exists in the resulting session. If $value is passed, will also assert that the variable’s value
 matches what was specified.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSessionHas</span><span class="p">(</span><span class="s1">&#39;logged_in&#39;</span><span class="p">,</span> <span class="mi">123</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSessionHas</span><span class="p">(</span><span class="s1">'logged_in'</span><span class="p">,</span> <span class="mi">123</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
 <section id="assertsessionmissing-string-key">
 <h4>assertSessionMissing(string $key)<a class="headerlink" href="#assertsessionmissing-string-key" title="Link to this heading"></a></h4>
 <p>Asserts that the resulting session does not include the specified $key.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSessionMissing</span><span class="p">(</span><span class="s1">&#39;logged_in&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSessionMissing</span><span class="p">(</span><span class="s1">'logged_in'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -421,14 +421,14 @@ matches what was specified.</p>
 <h4>assertHeader(string $key, $value = null)<a class="headerlink" href="#assertheader-string-key-value-null" title="Link to this heading"></a></h4>
 <p>Asserts that a header named <code class="docutils literal notranslate"><span class="pre">$key</span></code> exists in the response. If <code class="docutils literal notranslate"><span class="pre">$value</span></code> is not empty, will also assert that
 the values match.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertHeader</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/html&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertHeader</span><span class="p">(</span><span class="s1">'Content-Type'</span><span class="p">,</span> <span class="s1">'text/html'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
 <section id="assertheadermissing-string-key">
 <h4>assertHeaderMissing(string $key)<a class="headerlink" href="#assertheadermissing-string-key" title="Link to this heading"></a></h4>
 <p>Asserts that a header name <code class="docutils literal notranslate"><span class="pre">$key</span></code> does not exist in the response.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertHeader</span><span class="p">(</span><span class="s1">&#39;Accepts&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertHeader</span><span class="p">(</span><span class="s1">'Accepts'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -439,14 +439,14 @@ the values match.</p>
 <h4>assertCookie(string $key, $value = null, string $prefix = ‘’)<a class="headerlink" href="#assertcookie-string-key-value-null-string-prefix" title="Link to this heading"></a></h4>
 <p>Asserts that a cookie named <code class="docutils literal notranslate"><span class="pre">$key</span></code> exists in the response. If <code class="docutils literal notranslate"><span class="pre">$value</span></code> is not empty, will also assert that
 the values match. You can set the cookie prefix, if needed, by passing it in as the third parameter.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertCookie</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertCookie</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">,</span> <span class="s1">'bar'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
 <section id="assertcookiemissing-string-key">
 <h4>assertCookieMissing(string $key)<a class="headerlink" href="#assertcookiemissing-string-key" title="Link to this heading"></a></h4>
 <p>Asserts that a cookie named <code class="docutils literal notranslate"><span class="pre">$key</span></code> does not exist in the response.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertCookieMissing</span><span class="p">(</span><span class="s1">&#39;ci_session&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertCookieMissing</span><span class="p">(</span><span class="s1">'ci_session'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -454,7 +454,7 @@ the values match. You can set the cookie prefix, if needed, by passing it in as 
 <h4>assertCookieExpired(string $key, string $prefix = ‘’)<a class="headerlink" href="#assertcookieexpired-string-key-string-prefix" title="Link to this heading"></a></h4>
 <p>Asserts that a cookie named <code class="docutils literal notranslate"><span class="pre">$key</span></code> exists, but has expired. You can set the cookie prefix, if needed, by passing it
 in as the second parameter.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertCookieExpired</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertCookieExpired</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -468,35 +468,35 @@ are useful for using within assertions in your tests.</p>
 <p>Returns a boolean true/false based on whether the text on the page exists either
 by itself, or more specifically within
 a tag, as specified by type, class, or id:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check that &quot;Hello World&quot; is on the page</span>
-<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">see</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">))</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check that "Hello World" is on the page</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">see</span><span class="p">(</span><span class="s1">'Hello World'</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 
-<span class="c1">// Check that &quot;Hello World&quot; is within an h1 tag</span>
-<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">see</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span> <span class="s1">&#39;h1&#39;</span><span class="p">))</span> <span class="p">{</span>
+<span class="c1">// Check that "Hello World" is within an h1 tag</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">see</span><span class="p">(</span><span class="s1">'Hello World'</span><span class="p">,</span> <span class="s1">'h1'</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 
-<span class="c1">// Check that &quot;Hello World&quot; is within an element with the &quot;notice&quot; class</span>
-<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">see</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span> <span class="s1">&#39;.notice&#39;</span><span class="p">))</span> <span class="p">{</span>
+<span class="c1">// Check that "Hello World" is within an element with the "notice" class</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">see</span><span class="p">(</span><span class="s1">'Hello World'</span><span class="p">,</span> <span class="s1">'.notice'</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 
-<span class="c1">// Check that &quot;Hello World&quot; is within an element with id of &quot;title&quot;</span>
-<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">see</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span> <span class="s1">&#39;#title&#39;</span><span class="p">))</span> <span class="p">{</span>
+<span class="c1">// Check that "Hello World" is within an element with id of "title"</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">see</span><span class="p">(</span><span class="s1">'Hello World'</span><span class="p">,</span> <span class="s1">'#title'</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">dontSee()</span></code> method is the exact opposite:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Checks that &quot;Hello World&quot; does NOT exist on the page</span>
-<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">dontSee</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">))</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Checks that "Hello World" does NOT exist on the page</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">dontSee</span><span class="p">(</span><span class="s1">'Hello World'</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 
-<span class="c1">// Checks that &quot;Hellow World&quot; does NOT exist within any h1 tag</span>
-<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">dontSee</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span> <span class="s1">&#39;h1&#39;</span><span class="p">))</span> <span class="p">{</span>
+<span class="c1">// Checks that "Hellow World" does NOT exist within any h1 tag</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">dontSee</span><span class="p">(</span><span class="s1">'Hello World'</span><span class="p">,</span> <span class="s1">'h1'</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -506,18 +506,18 @@ a tag, as specified by type, class, or id:</p>
 <h4>seeElement()<a class="headerlink" href="#seeelement" title="Link to this heading"></a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">seeElement()</span></code> and <code class="docutils literal notranslate"><span class="pre">dontSeeElement()</span></code> are very similar to the previous methods, but do not look at the
 values of the elements. Instead, they simply check that the elements exist on the page:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check that an element with class &#39;notice&#39; exists</span>
-<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeElement</span><span class="p">(</span><span class="s1">&#39;.notice&#39;</span><span class="p">))</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check that an element with class 'notice' exists</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeElement</span><span class="p">(</span><span class="s1">'.notice'</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 
-<span class="c1">// Check that an element with id &#39;title&#39; exists</span>
-<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeElement</span><span class="p">(</span><span class="s1">&#39;#title&#39;</span><span class="p">))</span> <span class="p">{</span>
+<span class="c1">// Check that an element with id 'title' exists</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeElement</span><span class="p">(</span><span class="s1">'#title'</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 
-<span class="c1">// Verify that an element with id &#39;title&#39; does NOT exist</span>
-<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">dontSeeElement</span><span class="p">(</span><span class="s1">&#39;#title&#39;</span><span class="p">))</span> <span class="p">{</span>
+<span class="c1">// Verify that an element with id 'title' does NOT exist</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">dontSeeElement</span><span class="p">(</span><span class="s1">'#title'</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -526,13 +526,13 @@ values of the elements. Instead, they simply check that the elements exist on th
 <section id="seelink">
 <h4>seeLink()<a class="headerlink" href="#seelink" title="Link to this heading"></a></h4>
 <p>You can use <code class="docutils literal notranslate"><span class="pre">seeLink()</span></code> to ensure that a link appears on the page with the specified text:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check that a link exists with &#39;Upgrade Account&#39; as the text::</span>
-<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeLink</span><span class="p">(</span><span class="s1">&#39;Upgrade Account&#39;</span><span class="p">))</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check that a link exists with 'Upgrade Account' as the text::</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeLink</span><span class="p">(</span><span class="s1">'Upgrade Account'</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 
-<span class="c1">// Check that a link exists with &#39;Upgrade Account&#39; as the text, AND a class of &#39;upsell&#39;</span>
-<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeLink</span><span class="p">(</span><span class="s1">&#39;Upgrade Account&#39;</span><span class="p">,</span> <span class="s1">&#39;.upsell&#39;</span><span class="p">))</span> <span class="p">{</span>
+<span class="c1">// Check that a link exists with 'Upgrade Account' as the text, AND a class of 'upsell'</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeLink</span><span class="p">(</span><span class="s1">'Upgrade Account'</span><span class="p">,</span> <span class="s1">'.upsell'</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -541,13 +541,13 @@ values of the elements. Instead, they simply check that the elements exist on th
 <section id="seeinfield">
 <h4>seeInField()<a class="headerlink" href="#seeinfield" title="Link to this heading"></a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">seeInField()</span></code> method checks for any input tags exist with the name and value:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check that an input exists named &#39;user&#39; with the value &#39;John Snow&#39;</span>
-<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeInField</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;John Snow&#39;</span><span class="p">))</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check that an input exists named 'user' with the value 'John Snow'</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeInField</span><span class="p">(</span><span class="s1">'user'</span><span class="p">,</span> <span class="s1">'John Snow'</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 
 <span class="c1">// Check a multi-dimensional input</span>
-<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeInField</span><span class="p">(</span><span class="s1">&#39;user[name]&#39;</span><span class="p">,</span> <span class="s1">&#39;John Snow&#39;</span><span class="p">))</span> <span class="p">{</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeInField</span><span class="p">(</span><span class="s1">'user[name]'</span><span class="p">,</span> <span class="s1">'John Snow'</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -556,13 +556,13 @@ values of the elements. Instead, they simply check that the elements exist on th
 <section id="seecheckboxischecked">
 <h4>seeCheckboxIsChecked()<a class="headerlink" href="#seecheckboxischecked" title="Link to this heading"></a></h4>
 <p>Finally, you can check if a checkbox exists and is checked with the <code class="docutils literal notranslate"><span class="pre">seeCheckboxIsChecked()</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check if checkbox is checked with class of &#39;foo&#39;</span>
-<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeCheckboxIsChecked</span><span class="p">(</span><span class="s1">&#39;.foo&#39;</span><span class="p">))</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check if checkbox is checked with class of 'foo'</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeCheckboxIsChecked</span><span class="p">(</span><span class="s1">'.foo'</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 
-<span class="c1">// Check if checkbox with id of &#39;bar&#39; is checked</span>
-<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeCheckboxIsChecked</span><span class="p">(</span><span class="s1">&#39;#bar&#39;</span><span class="p">))</span> <span class="p">{</span>
+<span class="c1">// Check if checkbox with id of 'bar' is checked</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeCheckboxIsChecked</span><span class="p">(</span><span class="s1">'#bar'</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -576,25 +576,25 @@ values of the elements. Instead, they simply check that the elements exist on th
 <p>You can use <code class="docutils literal notranslate"><span class="pre">seeXPath()</span></code> to take advantage of the full power that xpath gives you.
 This method is aimed at more advanced users who want to write a more complex expressions
 using the DOMXPath object directly:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check that h1 element which contains class &quot;heading&quot; is on the page</span>
-<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeXPath</span><span class="p">(</span><span class="s1">&#39;//h1[contains(@class, &quot;heading&quot;)]&#39;</span><span class="p">))</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check that h1 element which contains class "heading" is on the page</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeXPath</span><span class="p">(</span><span class="s1">'//h1[contains(@class, "heading")]'</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 
-<span class="c1">// Check that h1 element which contains class &quot;heading&quot; have a text &quot;Hello World&quot;</span>
-<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeXPath</span><span class="p">(</span><span class="s1">&#39;//h1[contains(@class, &quot;heading&quot;)][contains(.,&quot;Hello world&quot;)]&#39;</span><span class="p">))</span> <span class="p">{</span>
+<span class="c1">// Check that h1 element which contains class "heading" have a text "Hello World"</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeXPath</span><span class="p">(</span><span class="s1">'//h1[contains(@class, "heading")][contains(.,"Hello world")]'</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">dontSeeXPath()</span></code> method is the exact opposite:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check that h1 element which contains class &quot;heading&quot; does NOT exist on the page</span>
-<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">dontSeeXPath</span><span class="p">(</span><span class="s1">&#39;//h1[contains(@class, &quot;heading&quot;)]&#39;</span><span class="p">))</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check that h1 element which contains class "heading" does NOT exist on the page</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">dontSeeXPath</span><span class="p">(</span><span class="s1">'//h1[contains(@class, "heading")]'</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 
-<span class="c1">// Check that h1 element which contains class &quot;heading&quot; and text &quot;Hello World&quot; does NOT exist on the page</span>
-<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">dontSeeXPath</span><span class="p">(</span><span class="s1">&#39;//h1[contains(@class, &quot;heading&quot;)][contains(.,&quot;Hello world&quot;)]&#39;</span><span class="p">))</span> <span class="p">{</span>
+<span class="c1">// Check that h1 element which contains class "heading" and text "Hello World" does NOT exist on the page</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">dontSeeXPath</span><span class="p">(</span><span class="s1">'//h1[contains(@class, "heading")][contains(.,"Hello world")]'</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -609,39 +609,39 @@ assertions.</p>
 <h4>assertSee(string $search = null, string $element = null)<a class="headerlink" href="#assertsee-string-search-null-string-element-null" title="Link to this heading"></a></h4>
 <p>Asserts that text/HTML is on the page, either by itself or - more specifically - within
 a tag, as specified by type, class, or id:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Verify that &quot;Hello World&quot; is on the page</span>
-<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSee</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Verify that "Hello World" is on the page</span>
+<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSee</span><span class="p">(</span><span class="s1">'Hello World'</span><span class="p">);</span>
 
-<span class="c1">// Verify that &quot;Hello World&quot; is within an h1 tag</span>
-<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSee</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span> <span class="s1">&#39;h1&#39;</span><span class="p">);</span>
+<span class="c1">// Verify that "Hello World" is within an h1 tag</span>
+<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSee</span><span class="p">(</span><span class="s1">'Hello World'</span><span class="p">,</span> <span class="s1">'h1'</span><span class="p">);</span>
 
-<span class="c1">// Verify that &quot;Hello World&quot; is within an element with the &quot;notice&quot; class</span>
-<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSee</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span> <span class="s1">&#39;.notice&#39;</span><span class="p">);</span>
+<span class="c1">// Verify that "Hello World" is within an element with the "notice" class</span>
+<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSee</span><span class="p">(</span><span class="s1">'Hello World'</span><span class="p">,</span> <span class="s1">'.notice'</span><span class="p">);</span>
 
-<span class="c1">// Verify that &quot;Hello World&quot; is within an element with id of &quot;title&quot;</span>
-<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSee</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span> <span class="s1">&#39;#title&#39;</span><span class="p">);</span>
+<span class="c1">// Verify that "Hello World" is within an element with id of "title"</span>
+<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSee</span><span class="p">(</span><span class="s1">'Hello World'</span><span class="p">,</span> <span class="s1">'#title'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
 <section id="assertdontsee-string-search-null-string-element-null">
 <h4>assertDontSee(string $search = null, string $element = null)<a class="headerlink" href="#assertdontsee-string-search-null-string-element-null" title="Link to this heading"></a></h4>
 <p>Asserts the exact opposite of the <code class="docutils literal notranslate"><span class="pre">assertSee()</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Verify that &quot;Hello World&quot; does NOT exist on the page</span>
-<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">assertDontSee</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Verify that "Hello World" does NOT exist on the page</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">assertDontSee</span><span class="p">(</span><span class="s1">'Hello World'</span><span class="p">);</span>
 
-<span class="c1">// Verify that &quot;Hello World&quot; does NOT exist within any h1 tag</span>
-<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">assertDontSee</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span> <span class="s1">&#39;h1&#39;</span><span class="p">);</span>
+<span class="c1">// Verify that "Hello World" does NOT exist within any h1 tag</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">assertDontSee</span><span class="p">(</span><span class="s1">'Hello World'</span><span class="p">,</span> <span class="s1">'h1'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
 <section id="assertseeelement-string-search">
 <h4>assertSeeElement(string $search)<a class="headerlink" href="#assertseeelement-string-search" title="Link to this heading"></a></h4>
 <p>Similar to <code class="docutils literal notranslate"><span class="pre">assertSee()</span></code>, however this only checks for an existing element. It does not check for specific text:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Verify that an element with class &#39;notice&#39; exists</span>
-<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">assertSeeElement</span><span class="p">(</span><span class="s1">&#39;.notice&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Verify that an element with class 'notice' exists</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">assertSeeElement</span><span class="p">(</span><span class="s1">'.notice'</span><span class="p">);</span>
 
-<span class="c1">// Verify that an element with id &#39;title&#39; exists</span>
-<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">assertSeeElement</span><span class="p">(</span><span class="s1">&#39;#title&#39;</span><span class="p">);</span>
+<span class="c1">// Verify that an element with id 'title' exists</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">assertSeeElement</span><span class="p">(</span><span class="s1">'#title'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -649,30 +649,30 @@ a tag, as specified by type, class, or id:</p>
 <h4>assertDontSeeElement(string $search)<a class="headerlink" href="#assertdontseeelement-string-search" title="Link to this heading"></a></h4>
 <p>Similar to <code class="docutils literal notranslate"><span class="pre">assertSee()</span></code>, however this only checks for an existing element that is missing. It does not check for
 specific text:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Verify that an element with id &#39;title&#39; does NOT exist</span>
-<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">assertDontSeeElement</span><span class="p">(</span><span class="s1">&#39;#title&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Verify that an element with id 'title' does NOT exist</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">assertDontSeeElement</span><span class="p">(</span><span class="s1">'#title'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
 <section id="assertseelink-string-text-string-details-null">
 <h4>assertSeeLink(string $text, string $details = null)<a class="headerlink" href="#assertseelink-string-text-string-details-null" title="Link to this heading"></a></h4>
 <p>Asserts that an anchor tag is found with matching <code class="docutils literal notranslate"><span class="pre">$text</span></code> as the body of the tag:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Verify that a link exists with &#39;Upgrade Account&#39; as the text::</span>
-<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">assertSeeLink</span><span class="p">(</span><span class="s1">&#39;Upgrade Account&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Verify that a link exists with 'Upgrade Account' as the text::</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">assertSeeLink</span><span class="p">(</span><span class="s1">'Upgrade Account'</span><span class="p">);</span>
 
-<span class="c1">// Verify that a link exists with &#39;Upgrade Account&#39; as the text, AND a class of &#39;upsell&#39;</span>
-<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">assertSeeLink</span><span class="p">(</span><span class="s1">&#39;Upgrade Account&#39;</span><span class="p">,</span> <span class="s1">&#39;.upsell&#39;</span><span class="p">);</span>
+<span class="c1">// Verify that a link exists with 'Upgrade Account' as the text, AND a class of 'upsell'</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">assertSeeLink</span><span class="p">(</span><span class="s1">'Upgrade Account'</span><span class="p">,</span> <span class="s1">'.upsell'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
 <section id="assertseeinfield-string-field-string-value-null">
 <h4>assertSeeInField(string $field, string $value = null)<a class="headerlink" href="#assertseeinfield-string-field-string-value-null" title="Link to this heading"></a></h4>
 <p>Asserts that an input tag exists with the name and value:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Verify that an input exists named &#39;user&#39; with the value &#39;John Snow&#39;</span>
-<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">assertSeeInField</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;John Snow&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Verify that an input exists named 'user' with the value 'John Snow'</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">assertSeeInField</span><span class="p">(</span><span class="s1">'user'</span><span class="p">,</span> <span class="s1">'John Snow'</span><span class="p">);</span>
 
 <span class="c1">// Verify a multi-dimensional input</span>
-<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">assertSeeInField</span><span class="p">(</span><span class="s1">&#39;user[name]&#39;</span><span class="p">,</span> <span class="s1">&#39;John Snow&#39;</span><span class="p">);</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">assertSeeInField</span><span class="p">(</span><span class="s1">'user[name]'</span><span class="p">,</span> <span class="s1">'John Snow'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -686,14 +686,14 @@ can help to test the responses.</p>
 <p>This method will return the body of the response as a JSON string:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
 <span class="cm"> * Response body is this:</span>
-<span class="cm"> * [&#39;foo&#39; =&gt; &#39;bar&#39;]</span>
+<span class="cm"> * ['foo' =&gt; 'bar']</span>
 <span class="cm"> */</span>
 
 <span class="nv">$json</span> <span class="o">=</span> <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">getJSON</span><span class="p">();</span>
 <span class="cm">/*</span>
 <span class="cm"> * $json is this:</span>
 <span class="cm"> * {</span>
-<span class="cm"> *     &quot;foo&quot;: &quot;bar&quot;</span>
+<span class="cm"> *     "foo": "bar"</span>
 <span class="cm"> * }</span>
 <span class="cm">`*/</span>
 </pre></div>
@@ -714,12 +714,12 @@ can help to test the responses.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
 <span class="cm"> * Response body is this:</span>
 <span class="cm"> * [</span>
-<span class="cm"> *     &#39;config&#39; =&gt; [&#39;key-a&#39;, &#39;key-b&#39;],</span>
+<span class="cm"> *     'config' =&gt; ['key-a', 'key-b'],</span>
 <span class="cm"> * ]</span>
 <span class="cm"> */</span>
 
 <span class="c1">// Is true</span>
-<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertJSONFragment</span><span class="p">([</span><span class="s1">&#39;config&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;key-a&#39;</span><span class="p">]]);</span>
+<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertJSONFragment</span><span class="p">([</span><span class="s1">'config'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'key-a'</span><span class="p">]]);</span>
 </pre></div>
 </div>
 </section>
@@ -750,7 +750,7 @@ can help to test the responses.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

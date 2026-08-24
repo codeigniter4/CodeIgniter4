@@ -340,7 +340,7 @@ changes.</p>
 array. Here is a string example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">site_url</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">site_url</span><span class="p">(</span><span class="s1">'news/local/123'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The above example would return something like:
@@ -348,7 +348,7 @@ array. Here is a string example:</p>
 <p>Here is an example of segments passed as an array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$segments</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;news&#39;</span><span class="p">,</span> <span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;123&#39;</span><span class="p">];</span>
+<span class="nv">$segments</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'news'</span><span class="p">,</span> <span class="s1">'local'</span><span class="p">,</span> <span class="s1">'123'</span><span class="p">];</span>
 <span class="k">echo</span> <span class="nx">site_url</span><span class="p">(</span><span class="nv">$segments</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -398,7 +398,7 @@ an array. Here is a string example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Returns like `http://example.com/blog/post/123`</span>
-<span class="k">echo</span> <span class="nx">base_url</span><span class="p">(</span><span class="s1">&#39;blog/post/123&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">base_url</span><span class="p">(</span><span class="s1">'blog/post/123'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The above example would return something like:
@@ -408,14 +408,14 @@ the protocol-relative link:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Returns like `//example.com/blog/post/123`</span>
-<span class="k">echo</span> <span class="nx">base_url</span><span class="p">(</span><span class="s1">&#39;blog/post/123&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">base_url</span><span class="p">(</span><span class="s1">'blog/post/123'</span><span class="p">,</span> <span class="s1">''</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This is useful because unlike <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">site_url()</span></code></a>, you can supply a
 string to a file, such as an image or stylesheet. For example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">base_url</span><span class="p">(</span><span class="s1">&#39;images/icons/edit.png&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">base_url</span><span class="p">(</span><span class="s1">'images/icons/edit.png'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This would give you something like:
@@ -594,14 +594,14 @@ associative array.</p>
 <p>Here are some examples:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">,</span> <span class="s1">&#39;My News&#39;</span><span class="p">,</span> <span class="s1">&#39;title=&quot;News title&quot;&#39;</span><span class="p">);</span>
-<span class="c1">// Prints: &lt;a href=&quot;http://example.com/index.php/news/local/123&quot; title=&quot;News title&quot;&gt;My News&lt;/a&gt;</span>
+<span class="k">echo</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">'news/local/123'</span><span class="p">,</span> <span class="s1">'My News'</span><span class="p">,</span> <span class="s1">'title="News title"'</span><span class="p">);</span>
+<span class="c1">// Prints: &lt;a href="http://example.com/index.php/news/local/123" title="News title"&gt;My News&lt;/a&gt;</span>
 
-<span class="k">echo</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">,</span> <span class="s1">&#39;My News&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The best news!&#39;</span><span class="p">]);</span>
-<span class="c1">// Prints: &lt;a href=&quot;http://example.com/index.php/news/local/123&quot; title=&quot;The best news!&quot;&gt;My News&lt;/a&gt;</span>
+<span class="k">echo</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">'news/local/123'</span><span class="p">,</span> <span class="s1">'My News'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'title'</span> <span class="o">=&gt;</span> <span class="s1">'The best news!'</span><span class="p">]);</span>
+<span class="c1">// Prints: &lt;a href="http://example.com/index.php/news/local/123" title="The best news!"&gt;My News&lt;/a&gt;</span>
 
-<span class="k">echo</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;Click here&#39;</span><span class="p">);</span>
-<span class="c1">// Prints: &lt;a href=&quot;http://example.com/index.php&quot;&gt;Click here&lt;/a&gt;</span>
+<span class="k">echo</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">''</span><span class="p">,</span> <span class="s1">'Click here'</span><span class="p">);</span>
+<span class="c1">// Prints: &lt;a href="http://example.com/index.php"&gt;Click here&lt;/a&gt;</span>
 </pre></div>
 </div>
 <p>As above, you may specify an alternate configuration.
@@ -642,17 +642,17 @@ your own browser settings.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$atts</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;width&#39;</span>       <span class="o">=&gt;</span> <span class="mi">800</span><span class="p">,</span>
-    <span class="s1">&#39;height&#39;</span>      <span class="o">=&gt;</span> <span class="mi">600</span><span class="p">,</span>
-    <span class="s1">&#39;scrollbars&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;yes&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;status&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;yes&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;resizable&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;yes&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;screenx&#39;</span>     <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="s1">&#39;screeny&#39;</span>     <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="s1">&#39;window_name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;_blank&#39;</span><span class="p">,</span>
+    <span class="s1">'width'</span>       <span class="o">=&gt;</span> <span class="mi">800</span><span class="p">,</span>
+    <span class="s1">'height'</span>      <span class="o">=&gt;</span> <span class="mi">600</span><span class="p">,</span>
+    <span class="s1">'scrollbars'</span>  <span class="o">=&gt;</span> <span class="s1">'yes'</span><span class="p">,</span>
+    <span class="s1">'status'</span>      <span class="o">=&gt;</span> <span class="s1">'yes'</span><span class="p">,</span>
+    <span class="s1">'resizable'</span>   <span class="o">=&gt;</span> <span class="s1">'yes'</span><span class="p">,</span>
+    <span class="s1">'screenx'</span>     <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">'screeny'</span>     <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">'window_name'</span> <span class="o">=&gt;</span> <span class="s1">'_blank'</span><span class="p">,</span>
 <span class="p">];</span>
 
-<span class="k">echo</span> <span class="nx">anchor_popup</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">,</span> <span class="s1">&#39;Click Me!&#39;</span><span class="p">,</span> <span class="nv">$atts</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">anchor_popup</span><span class="p">(</span><span class="s1">'news/local/123'</span><span class="p">,</span> <span class="s1">'Click Me!'</span><span class="p">,</span> <span class="nv">$atts</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>As above, you may specify an alternate configuration.
@@ -667,7 +667,7 @@ function to use all of its defaults simply pass an empty array in the
 third parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">anchor_popup</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">,</span> <span class="s1">&#39;Click Me!&#39;</span><span class="p">,</span> <span class="p">[]);</span>
+<span class="k">echo</span> <span class="nx">anchor_popup</span><span class="p">(</span><span class="s1">'news/local/123'</span><span class="p">,</span> <span class="s1">'Click Me!'</span><span class="p">,</span> <span class="p">[]);</span>
 </pre></div>
 </div>
 </div>
@@ -709,15 +709,15 @@ HTML attribute to the anchor tag.</p>
 <p>Creates a standard HTML e-mail link. Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">mailto</span><span class="p">(</span><span class="s1">&#39;me@my-site.com&#39;</span><span class="p">,</span> <span class="s1">&#39;Click Here to Contact Me&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">mailto</span><span class="p">(</span><span class="s1">'me@my-site.com'</span><span class="p">,</span> <span class="s1">'Click Here to Contact Me'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>As with the <a class="reference internal" href="#anchor" title="anchor"><code class="xref php php-func docutils literal notranslate"><span class="pre">anchor()</span></code></a> tab above, you can set attributes using the
 third parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mail me&#39;</span><span class="p">];</span>
-<span class="k">echo</span> <span class="nx">mailto</span><span class="p">(</span><span class="s1">&#39;me@my-site.com&#39;</span><span class="p">,</span> <span class="s1">&#39;Contact Me&#39;</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
+<span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'title'</span> <span class="o">=&gt;</span> <span class="s1">'Mail me'</span><span class="p">];</span>
+<span class="k">echo</span> <span class="nx">mailto</span><span class="p">(</span><span class="s1">'me@my-site.com'</span><span class="p">,</span> <span class="s1">'Contact Me'</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -781,20 +781,20 @@ above.</p>
 <p>Converts only URLs:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">);</span>
+<span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">'url'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Converts only e-mail addresses:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">);</span>
+<span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">'email'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The third parameter determines whether links are shown in a new window.
 The value can be true or false (boolean):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">'both'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -826,7 +826,7 @@ useful if, for example, you have a blog in which you’d like to use the
 title of your entries in the URL. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$title</span>     <span class="o">=</span> <span class="s2">&quot;What&#39;s wrong with CSS?&quot;</span><span class="p">;</span>
+<span class="nv">$title</span>     <span class="o">=</span> <span class="s2">"What's wrong with CSS?"</span><span class="p">;</span>
 <span class="nv">$url_title</span> <span class="o">=</span> <span class="nx">url_title</span><span class="p">(</span><span class="nv">$title</span><span class="p">);</span>
 <span class="c1">// Produces: Whats-wrong-with-CSS</span>
 </pre></div>
@@ -836,8 +836,8 @@ are used. Preferred options are: <code class="docutils literal notranslate"><spa
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$title</span>     <span class="o">=</span> <span class="s2">&quot;What&#39;s wrong with CSS?&quot;</span><span class="p">;</span>
-<span class="nv">$url_title</span> <span class="o">=</span> <span class="nx">url_title</span><span class="p">(</span><span class="nv">$title</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">);</span>
+<span class="nv">$title</span>     <span class="o">=</span> <span class="s2">"What's wrong with CSS?"</span><span class="p">;</span>
+<span class="nv">$url_title</span> <span class="o">=</span> <span class="nx">url_title</span><span class="p">(</span><span class="nv">$title</span><span class="p">,</span> <span class="s1">'_'</span><span class="p">);</span>
 <span class="c1">// Produces: Whats_wrong_with_CSS</span>
 </pre></div>
 </div>
@@ -846,8 +846,8 @@ forced. By default they are not. Options are boolean true/false.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$title</span>     <span class="o">=</span> <span class="s2">&quot;What&#39;s wrong with CSS?&quot;</span><span class="p">;</span>
-<span class="nv">$url_title</span> <span class="o">=</span> <span class="nx">url_title</span><span class="p">(</span><span class="nv">$title</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="nv">$title</span>     <span class="o">=</span> <span class="s2">"What's wrong with CSS?"</span><span class="p">;</span>
+<span class="nv">$url_title</span> <span class="o">=</span> <span class="nx">url_title</span><span class="p">(</span><span class="nv">$title</span><span class="p">,</span> <span class="s1">'-'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 <span class="c1">// Produces: whats-wrong-with-css</span>
 </pre></div>
 </div>
@@ -895,18 +895,18 @@ accented characters automatically.</p>
 <p>Here are some examples:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="c1">// Outputs &quot;blog&quot;</span>
-<span class="k">echo</span> <span class="nx">parse_subdomain</span><span class="p">(</span><span class="s1">&#39;blog.example.com&#39;</span><span class="p">);</span>
+<span class="c1">// Outputs "blog"</span>
+<span class="k">echo</span> <span class="nx">parse_subdomain</span><span class="p">(</span><span class="s1">'blog.example.com'</span><span class="p">);</span>
 
 <span class="c1">// Outputs an empty string</span>
-<span class="k">echo</span> <span class="nx">parse_subdomain</span><span class="p">(</span><span class="s1">&#39;example.com&#39;</span><span class="p">);</span>
-<span class="k">echo</span> <span class="nx">parse_subdomain</span><span class="p">(</span><span class="s1">&#39;example.co.uk&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">parse_subdomain</span><span class="p">(</span><span class="s1">'example.com'</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">parse_subdomain</span><span class="p">(</span><span class="s1">'example.co.uk'</span><span class="p">);</span>
 
-<span class="c1">// Outputs &quot;shop&quot; - correctly handles two-part TLDs</span>
-<span class="k">echo</span> <span class="nx">parse_subdomain</span><span class="p">(</span><span class="s1">&#39;shop.example.co.uk&#39;</span><span class="p">);</span>
+<span class="c1">// Outputs "shop" - correctly handles two-part TLDs</span>
+<span class="k">echo</span> <span class="nx">parse_subdomain</span><span class="p">(</span><span class="s1">'shop.example.co.uk'</span><span class="p">);</span>
 
-<span class="c1">// Outputs &quot;shop.old&quot;</span>
-<span class="k">echo</span> <span class="nx">parse_subdomain</span><span class="p">(</span><span class="s1">&#39;shop.old.example.co.uk&#39;</span><span class="p">);</span>
+<span class="c1">// Outputs "shop.old"</span>
+<span class="k">echo</span> <span class="nx">parse_subdomain</span><span class="p">(</span><span class="s1">'shop.old.example.co.uk'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can customize the list of known two-part TLDs by adding them to the
@@ -935,7 +935,7 @@ is missing from a URL.</p>
 <p>Pass the URL string to the function like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$url</span> <span class="o">=</span> <span class="nx">prep_url</span><span class="p">(</span><span class="s1">&#39;example.com&#39;</span><span class="p">);</span>
+<span class="nv">$url</span> <span class="o">=</span> <span class="nx">prep_url</span><span class="p">(</span><span class="s1">'example.com'</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -965,12 +965,12 @@ is missing from a URL.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// The route is defined as:</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;Home::index&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'/'</span><span class="p">,</span> <span class="s1">'Home::index'</span><span class="p">);</span>
 
 <span class="cp">?&gt;</span>
 
-<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">url_to</span><span class="p">(</span><span class="s1">&#39;Home::index&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<span class="cm">&lt;!-- Result: &#39;http://example.com/&#39; --&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">url_to</span><span class="p">(</span><span class="s1">'Home::index'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">"</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="cm">&lt;!-- Result: 'http://example.com/' --&gt;</span>
 </pre></div>
 </div>
 <p>You can also add arguments to the route.
@@ -978,12 +978,12 @@ Here is an example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// The route is defined as:</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;pages/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;Page::index/$1&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'pages/(:segment)'</span><span class="p">,</span> <span class="s1">'Page::index/$1'</span><span class="p">);</span>
 
 <span class="cp">?&gt;</span>
 
-<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">url_to</span><span class="p">(</span><span class="s1">&#39;Page::index&#39;</span><span class="p">,</span> <span class="s1">&#39;home&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<span class="cm">&lt;!-- Result: &#39;http://example.com/pages/home&#39; --&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">url_to</span><span class="p">(</span><span class="s1">'Page::index'</span><span class="p">,</span> <span class="s1">'home'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">"</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="cm">&lt;!-- Result: 'http://example.com/pages/home' --&gt;</span>
 </pre></div>
 </div>
 <p>This is useful because you can still change your routes after putting links
@@ -993,15 +993,15 @@ into your views.</p>
 
 <span class="c1">// The route is defined as:</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span>
-    <span class="s1">&#39;{locale}/users/(:num)/gallery/(:num)&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Galleries::showUserGallery/$1/$2&#39;</span><span class="p">,</span>
-    <span class="p">[</span><span class="s1">&#39;as&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;user_gallery&#39;</span><span class="p">],</span>
+    <span class="s1">'{locale}/users/(:num)/gallery/(:num)'</span><span class="p">,</span>
+    <span class="s1">'Galleries::showUserGallery/$1/$2'</span><span class="p">,</span>
+    <span class="p">[</span><span class="s1">'as'</span> <span class="o">=&gt;</span> <span class="s1">'user_gallery'</span><span class="p">],</span>
 <span class="p">);</span>
 
 <span class="cp">?&gt;</span>
 
-<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">url_to</span><span class="p">(</span><span class="s1">&#39;user_gallery&#39;</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="s1">&#39;en&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="p">&gt;</span>View Gallery<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<span class="cm">&lt;!-- Result: &#39;http://example.com/en/users/15/gallery/12&#39; --&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">url_to</span><span class="p">(</span><span class="s1">'user_gallery'</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="s1">'en'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">"</span><span class="p">&gt;</span>View Gallery<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="cm">&lt;!-- Result: 'http://example.com/en/users/15/gallery/12' --&gt;</span>
 </pre></div>
 </div>
 <p>For full details, see the <a class="reference internal" href="../incoming/routing.html#reverse-routing"><span class="std std-ref">Reverse Routing</span></a> and <a class="reference internal" href="../incoming/routing.html#using-named-routes"><span class="std std-ref">Named Routes</span></a>.</p>
@@ -1023,7 +1023,7 @@ into your views.</p>
 <p>Compares the current URL’s path against the given path to see if they match. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">if</span> <span class="p">(</span><span class="nx">url_is</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">))</span> <span class="p">{</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">url_is</span><span class="p">(</span><span class="s1">'admin'</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -1034,7 +1034,7 @@ if your baseURL is <code class="docutils literal notranslate"><span class="pre">
 any other applicable characters in the URL:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">if</span> <span class="p">(</span><span class="nx">url_is</span><span class="p">(</span><span class="s1">&#39;admin*&#39;</span><span class="p">))</span> <span class="p">{</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">url_is</span><span class="p">(</span><span class="s1">'admin*'</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -1063,7 +1063,7 @@ any other applicable characters in the URL:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

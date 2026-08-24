@@ -319,12 +319,12 @@
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Router\Attributes\Filter</span><span class="p">;</span>
 
-<span class="p">#[</span><span class="nd">Filter</span><span class="p">(</span><span class="nx">by</span><span class="o">:</span> <span class="s1">&#39;auth&#39;</span><span class="p">)]</span>
+<span class="p">#[</span><span class="nd">Filter</span><span class="p">(</span><span class="nx">by</span><span class="o">:</span> <span class="s1">'auth'</span><span class="p">)]</span>
 <span class="k">class</span> <span class="nc">AdminController</span> <span class="k">extends</span> <span class="nx">BaseController</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;welcome_message&#39;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'welcome_message'</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -337,14 +337,14 @@
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Router\Attributes\Filter</span><span class="p">;</span>
 
-<span class="p">#[</span><span class="nd">Filter</span><span class="p">(</span><span class="nx">by</span><span class="o">:</span> <span class="s1">&#39;group&#39;</span><span class="p">,</span> <span class="nx">having</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="s1">&#39;superadmin&#39;</span><span class="p">])]</span>
+<span class="p">#[</span><span class="nd">Filter</span><span class="p">(</span><span class="nx">by</span><span class="o">:</span> <span class="s1">'group'</span><span class="p">,</span> <span class="nx">having</span><span class="o">:</span> <span class="p">[</span><span class="s1">'admin'</span><span class="p">,</span> <span class="s1">'superadmin'</span><span class="p">])]</span>
 <span class="k">class</span> <span class="nc">AdminController</span> <span class="k">extends</span> <span class="nx">BaseController</span>
 <span class="p">{</span>
-    <span class="p">#[</span><span class="nd">Filter</span><span class="p">(</span><span class="nx">by</span><span class="o">:</span> <span class="s1">&#39;permission&#39;</span><span class="p">,</span> <span class="nx">having</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;users.manage&#39;</span><span class="p">])]</span>
+    <span class="p">#[</span><span class="nd">Filter</span><span class="p">(</span><span class="nx">by</span><span class="o">:</span> <span class="s1">'permission'</span><span class="p">,</span> <span class="nx">having</span><span class="o">:</span> <span class="p">[</span><span class="s1">'users.manage'</span><span class="p">])]</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">users</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="c1">// Will have &#39;group&#39; filter with [&#39;admin&#39;, &#39;superadmin&#39;]</span>
-        <span class="c1">// and &#39;permission&#39; filter with [&#39;users.manage&#39;]</span>
+        <span class="c1">// Will have 'group' filter with ['admin', 'superadmin']</span>
+        <span class="c1">// and 'permission' filter with ['users.manage']</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -368,21 +368,21 @@
 
 <span class="k">class</span> <span class="nc">HomeController</span> <span class="k">extends</span> <span class="nx">BaseController</span>
 <span class="p">{</span>
-    <span class="c1">// Apply the filter by it&#39;s alias name</span>
-    <span class="p">#[</span><span class="nd">Filter</span><span class="p">(</span><span class="nx">by</span><span class="o">:</span> <span class="s1">&#39;csrf&#39;</span><span class="p">)]</span>
+    <span class="c1">// Apply the filter by it's alias name</span>
+    <span class="p">#[</span><span class="nd">Filter</span><span class="p">(</span><span class="nx">by</span><span class="o">:</span> <span class="s1">'csrf'</span><span class="p">)]</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
     <span class="p">{</span>
     <span class="p">}</span>
 
     <span class="c1">// Apply a filter with arguments</span>
-    <span class="p">#[</span><span class="nd">Filter</span><span class="p">(</span><span class="nx">by</span><span class="o">:</span> <span class="s1">&#39;throttle&#39;</span><span class="p">,</span> <span class="nx">having</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;60&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">])]</span>
+    <span class="p">#[</span><span class="nd">Filter</span><span class="p">(</span><span class="nx">by</span><span class="o">:</span> <span class="s1">'throttle'</span><span class="p">,</span> <span class="nx">having</span><span class="o">:</span> <span class="p">[</span><span class="s1">'60'</span><span class="p">,</span> <span class="s1">'1'</span><span class="p">])]</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">api</span><span class="p">()</span>
     <span class="p">{</span>
     <span class="p">}</span>
 
     <span class="c1">// Multiple filters can be applied by repeating the attribute</span>
-    <span class="p">#[</span><span class="nd">Filter</span><span class="p">(</span><span class="nx">by</span><span class="o">:</span> <span class="s1">&#39;auth&#39;</span><span class="p">)]</span>
-    <span class="p">#[</span><span class="nd">Filter</span><span class="p">(</span><span class="nx">by</span><span class="o">:</span> <span class="s1">&#39;csrf&#39;</span><span class="p">)]</span>
+    <span class="p">#[</span><span class="nd">Filter</span><span class="p">(</span><span class="nx">by</span><span class="o">:</span> <span class="s1">'auth'</span><span class="p">)]</span>
+    <span class="p">#[</span><span class="nd">Filter</span><span class="p">(</span><span class="nx">by</span><span class="o">:</span> <span class="s1">'csrf'</span><span class="p">)]</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">admin</span><span class="p">()</span>
     <span class="p">{</span>
     <span class="p">}</span>
@@ -409,23 +409,23 @@ the environment the application is running in. Here’s an example of how to use
 <span class="k">use</span> <span class="nx">CodeIgniter\Router\Attributes\Restrict</span><span class="p">;</span>
 
 <span class="c1">// Restrict access by environment</span>
-<span class="p">#[</span><span class="nd">Restrict</span><span class="p">(</span><span class="nx">environment</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;development&#39;</span><span class="p">,</span> <span class="s1">&#39;!production&#39;</span><span class="p">])]</span>
+<span class="p">#[</span><span class="nd">Restrict</span><span class="p">(</span><span class="nx">environment</span><span class="o">:</span> <span class="p">[</span><span class="s1">'development'</span><span class="p">,</span> <span class="s1">'!production'</span><span class="p">])]</span>
 <span class="k">class</span> <span class="nc">HomeController</span> <span class="k">extends</span> <span class="nx">BaseController</span>
 <span class="p">{</span>
     <span class="c1">// Restrict access by hostname</span>
-    <span class="p">#[</span><span class="nd">Restrict</span><span class="p">(</span><span class="nx">hostname</span><span class="o">:</span> <span class="s1">&#39;localhost&#39;</span><span class="p">)]</span>
+    <span class="p">#[</span><span class="nd">Restrict</span><span class="p">(</span><span class="nx">hostname</span><span class="o">:</span> <span class="s1">'localhost'</span><span class="p">)]</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
     <span class="p">{</span>
     <span class="p">}</span>
 
     <span class="c1">// Multiple allowed hosts</span>
-    <span class="p">#[</span><span class="nd">Restrict</span><span class="p">(</span><span class="nx">hostname</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;dev.example.com&#39;</span><span class="p">])]</span>
+    <span class="p">#[</span><span class="nd">Restrict</span><span class="p">(</span><span class="nx">hostname</span><span class="o">:</span> <span class="p">[</span><span class="s1">'localhost'</span><span class="p">,</span> <span class="s1">'127.0.0.1'</span><span class="p">,</span> <span class="s1">'dev.example.com'</span><span class="p">])]</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">devOnly</span><span class="p">()</span>
     <span class="p">{</span>
     <span class="p">}</span>
 
     <span class="c1">// Restrict to subdomain, e.g. admin.example.com</span>
-    <span class="p">#[</span><span class="nd">Restrict</span><span class="p">(</span><span class="nx">subdomain</span><span class="o">:</span> <span class="s1">&#39;admin&#39;</span><span class="p">)]</span>
+    <span class="p">#[</span><span class="nd">Restrict</span><span class="p">(</span><span class="nx">subdomain</span><span class="o">:</span> <span class="s1">'admin'</span><span class="p">)]</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">deleteItem</span><span class="p">(</span><span class="nv">$id</span><span class="p">)</span>
     <span class="p">{</span>
     <span class="p">}</span>
@@ -444,18 +444,18 @@ the environment the application is running in. Here’s an example of how to use
 
 <span class="k">class</span> <span class="nc">HomeController</span> <span class="k">extends</span> <span class="nx">BaseController</span>
 <span class="p">{</span>
-    <span class="c1">// Cache this method&#39;s response for 2 hours</span>
+    <span class="c1">// Cache this method's response for 2 hours</span>
     <span class="p">#[</span><span class="nd">Cache</span><span class="p">(</span><span class="k">for</span><span class="o">:</span> <span class="mi">2</span> <span class="o">*</span> <span class="nx">HOUR</span><span class="p">)]</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;welcome_message&#39;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'welcome_message'</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="c1">// Custom cache key</span>
-    <span class="p">#[</span><span class="nd">Cache</span><span class="p">(</span><span class="k">for</span><span class="o">:</span> <span class="mi">10</span> <span class="o">*</span> <span class="nx">MINUTE</span><span class="p">,</span> <span class="nb">key</span><span class="o">:</span> <span class="s1">&#39;custom_cache_key&#39;</span><span class="p">)]</span>
+    <span class="p">#[</span><span class="nd">Cache</span><span class="p">(</span><span class="k">for</span><span class="o">:</span> <span class="mi">10</span> <span class="o">*</span> <span class="nx">MINUTE</span><span class="p">,</span> <span class="nb">key</span><span class="o">:</span> <span class="s1">'custom_cache_key'</span><span class="p">)]</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">custom</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="k">return</span> <span class="s1">&#39;This response is cached with a custom key for 10 minutes.&#39;</span><span class="p">;</span>
+        <span class="k">return</span> <span class="s1">'This response is cached with a custom key for 10 minutes.'</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -501,7 +501,7 @@ the environment the application is running in. Here’s an example of how to use
 <span class="sd">     */</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">before</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">)</span><span class="o">:</span> <span class="nx">RequestInterface</span><span class="o">|</span><span class="nx">ResponseInterface</span><span class="o">|</span><span class="k">null</span>
     <span class="p">{</span>
-        <span class="c1">// We don&#39;t need to do anything before the controller runs</span>
+        <span class="c1">// We don't need to do anything before the controller runs</span>
         <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
     <span class="p">}</span>
 
@@ -532,12 +532,12 @@ the environment the application is running in. Here’s an example of how to use
     <span class="sd">/**</span>
 <span class="sd">     * Add a single custom header</span>
 <span class="sd">     */</span>
-    <span class="p">#[</span><span class="nd">AddHeader</span><span class="p">(</span><span class="s1">&#39;X-API-Version&#39;</span><span class="p">,</span> <span class="s1">&#39;2.0&#39;</span><span class="p">)]</span>
+    <span class="p">#[</span><span class="nd">AddHeader</span><span class="p">(</span><span class="s1">'X-API-Version'</span><span class="p">,</span> <span class="s1">'2.0'</span><span class="p">)]</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">userInfo</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setJSON</span><span class="p">([</span>
-            <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;John Doe&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;john@example.com&#39;</span><span class="p">,</span>
+            <span class="s1">'name'</span>  <span class="o">=&gt;</span> <span class="s1">'John Doe'</span><span class="p">,</span>
+            <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="s1">'john@example.com'</span><span class="p">,</span>
         <span class="p">]);</span>
     <span class="p">}</span>
 
@@ -545,14 +545,14 @@ the environment the application is running in. Here’s an example of how to use
 <span class="sd">     * Add multiple custom headers using the IS_REPEATABLE attribute option.</span>
 <span class="sd">     * Each AddHeader attribute will be executed in order.</span>
 <span class="sd">     */</span>
-    <span class="p">#[</span><span class="nd">AddHeader</span><span class="p">(</span><span class="s1">&#39;X-API-Version&#39;</span><span class="p">,</span> <span class="s1">&#39;2.0&#39;</span><span class="p">)]</span>
-    <span class="p">#[</span><span class="nd">AddHeader</span><span class="p">(</span><span class="s1">&#39;X-Rate-Limit&#39;</span><span class="p">,</span> <span class="s1">&#39;100&#39;</span><span class="p">)]</span>
-    <span class="p">#[</span><span class="nd">AddHeader</span><span class="p">(</span><span class="s1">&#39;X-Content-Source&#39;</span><span class="p">,</span> <span class="s1">&#39;cache&#39;</span><span class="p">)]</span>
+    <span class="p">#[</span><span class="nd">AddHeader</span><span class="p">(</span><span class="s1">'X-API-Version'</span><span class="p">,</span> <span class="s1">'2.0'</span><span class="p">)]</span>
+    <span class="p">#[</span><span class="nd">AddHeader</span><span class="p">(</span><span class="s1">'X-Rate-Limit'</span><span class="p">,</span> <span class="s1">'100'</span><span class="p">)]</span>
+    <span class="p">#[</span><span class="nd">AddHeader</span><span class="p">(</span><span class="s1">'X-Content-Source'</span><span class="p">,</span> <span class="s1">'cache'</span><span class="p">)]</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">statistics</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setJSON</span><span class="p">([</span>
-            <span class="s1">&#39;users&#39;</span> <span class="o">=&gt;</span> <span class="mi">1500</span><span class="p">,</span>
-            <span class="s1">&#39;posts&#39;</span> <span class="o">=&gt;</span> <span class="mi">3200</span><span class="p">,</span>
+            <span class="s1">'users'</span> <span class="o">=&gt;</span> <span class="mi">1500</span><span class="p">,</span>
+            <span class="s1">'posts'</span> <span class="o">=&gt;</span> <span class="mi">3200</span><span class="p">,</span>
         <span class="p">]);</span>
     <span class="p">}</span>
 
@@ -561,13 +561,13 @@ the environment the application is running in. Here’s an example of how to use
 <span class="sd">     * The Cache attribute will cache the response,</span>
 <span class="sd">     * and AddHeader will add the custom header.</span>
 <span class="sd">     */</span>
-    <span class="p">#[</span><span class="nd">AddHeader</span><span class="p">(</span><span class="s1">&#39;X-Powered-By&#39;</span><span class="p">,</span> <span class="s1">&#39;My Custom API&#39;</span><span class="p">)]</span>
+    <span class="p">#[</span><span class="nd">AddHeader</span><span class="p">(</span><span class="s1">'X-Powered-By'</span><span class="p">,</span> <span class="s1">'My Custom API'</span><span class="p">)]</span>
     <span class="p">#[</span><span class="nd">Cache</span><span class="p">(</span><span class="k">for</span><span class="o">:</span> <span class="mi">3600</span><span class="p">)]</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">dashboard</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setJSON</span><span class="p">([</span>
-            <span class="s1">&#39;status&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;operational&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;uptime&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;99.9%&#39;</span><span class="p">,</span>
+            <span class="s1">'status'</span> <span class="o">=&gt;</span> <span class="s1">'operational'</span><span class="p">,</span>
+            <span class="s1">'uptime'</span> <span class="o">=&gt;</span> <span class="s1">'99.9%'</span><span class="p">,</span>
         <span class="p">]);</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -588,7 +588,7 @@ the environment the application is running in. Here’s an example of how to use
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

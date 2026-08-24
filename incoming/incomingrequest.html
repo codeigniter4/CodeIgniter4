@@ -345,7 +345,7 @@ classes, in addition to the methods listed below.</p>
 get a copy of it through the <a class="reference internal" href="../concepts/services.html"><span class="doc">Services class</span></a>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$request</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;request&#39;</span><span class="p">);</span>
+<span class="nv">$request</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'request'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>It’s preferable, though, to pass the request in as a dependency if the class is anything other than
@@ -366,7 +366,7 @@ the controller, where you can save it as a class property:</p>
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="nv">$someClass</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SomeClass</span><span class="p">(</span><span class="nx">service</span><span class="p">(</span><span class="s1">&#39;request&#39;</span><span class="p">));</span>
+<span class="nv">$someClass</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SomeClass</span><span class="p">(</span><span class="nx">service</span><span class="p">(</span><span class="s1">'request'</span><span class="p">));</span>
 </pre></div>
 </div>
 </section>
@@ -407,19 +407,19 @@ or <code class="docutils literal notranslate"><span class="pre">'json'</span></c
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Checks HTTP methods. Returns boolean.</span>
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">&#39;get&#39;</span><span class="p">);</span>
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">&#39;post&#39;</span><span class="p">);</span>
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">&#39;put&#39;</span><span class="p">);</span>
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">&#39;delete&#39;</span><span class="p">);</span>
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">);</span>
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">&#39;patch&#39;</span><span class="p">);</span>
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">&#39;options&#39;</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">'get'</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">'post'</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">'put'</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">'delete'</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">'head'</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">'patch'</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">'options'</span><span class="p">);</span>
 
 <span class="c1">// Checks if it is an AJAX request. The same as `$request-&gt;isAJAX()`.</span>
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">&#39;ajax&#39;</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">'ajax'</span><span class="p">);</span>
 
 <span class="c1">// Checks if it is a JSON request.</span>
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">&#39;json&#39;</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">'json'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -428,7 +428,7 @@ or <code class="docutils literal notranslate"><span class="pre">'json'</span></c
 <p>You can check the HTTP method that this request represents with the <code class="docutils literal notranslate"><span class="pre">getMethod()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="c1">// Returns &#39;POST&#39;</span>
+<span class="c1">// Returns 'POST'</span>
 <span class="nv">$method</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">();</span>
 </pre></div>
 </div>
@@ -440,7 +440,7 @@ defined in all-uppercase US-ASCII letters.</p>
 string (i.e., <code class="docutils literal notranslate"><span class="pre">'get'</span></code>, <code class="docutils literal notranslate"><span class="pre">'post'</span></code>, etc). But it was a bug.</p>
 </div>
 <p>You can get a lowercase version by wrapping the call in <code class="docutils literal notranslate"><span class="pre">strtolower()</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Returns &#39;get&#39;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Returns 'get'</span>
 <span class="nv">$method</span> <span class="o">=</span> <span class="nb">strtolower</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">());</span>
 </pre></div>
 </div>
@@ -486,13 +486,13 @@ use data without having to test whether an item exists first. In other words, no
 like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$something</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">]</span> <span class="o">??</span> <span class="k">null</span><span class="p">;</span>
+<span class="nv">$something</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">'foo'</span><span class="p">]</span> <span class="o">??</span> <span class="k">null</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>With CodeIgniter’s built-in methods you can simply do this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$something</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
+<span class="nv">$something</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">);</span>
 </pre></div>
 </div>
 <section id="getting-data">
@@ -589,18 +589,18 @@ data that you want or you can use “dot” notation to dig into the JSON to get
 <span class="cm">/*</span>
 <span class="cm"> * With a request body of:</span>
 <span class="cm"> * {</span>
-<span class="cm"> *     &quot;foo&quot;: &quot;bar&quot;,</span>
-<span class="cm"> *     &quot;fizz&quot;: {</span>
-<span class="cm"> *         &quot;buzz&quot;: &quot;baz&quot;</span>
+<span class="cm"> *     "foo": "bar",</span>
+<span class="cm"> *     "fizz": {</span>
+<span class="cm"> *         "buzz": "baz"</span>
 <span class="cm"> *     }</span>
 <span class="cm"> * }</span>
 <span class="cm"> */</span>
 
-<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getJsonVar</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
-<span class="c1">// $data = &quot;bar&quot;</span>
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getJsonVar</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">);</span>
+<span class="c1">// $data = "bar"</span>
 
-<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getJsonVar</span><span class="p">(</span><span class="s1">&#39;fizz.buzz&#39;</span><span class="p">);</span>
-<span class="c1">// $data = &quot;baz&quot;</span>
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getJsonVar</span><span class="p">(</span><span class="s1">'fizz.buzz'</span><span class="p">);</span>
+<span class="c1">// $data = "baz"</span>
 </pre></div>
 </div>
 <p>If you want the result to be an associative array instead of an object, you can
@@ -608,11 +608,11 @@ pass true in the second parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// With the same request as above</span>
-<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getJsonVar</span><span class="p">(</span><span class="s1">&#39;fizz&#39;</span><span class="p">);</span>
-<span class="c1">// $data-&gt;buzz = &quot;baz&quot;</span>
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getJsonVar</span><span class="p">(</span><span class="s1">'fizz'</span><span class="p">);</span>
+<span class="c1">// $data-&gt;buzz = "baz"</span>
 
-<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getJsonVar</span><span class="p">(</span><span class="s1">&#39;fizz&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
-<span class="c1">// $data = [&quot;buzz&quot; =&gt; &quot;baz&quot;]</span>
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getJsonVar</span><span class="p">(</span><span class="s1">'fizz'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="c1">// $data = ["buzz" =&gt; "baz"]</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -636,8 +636,8 @@ pass true in the second parameter:</p>
 <span class="cm">/*</span>
 <span class="cm"> * Outputs:</span>
 <span class="cm"> * [</span>
-<span class="cm"> *     &#39;Param1&#39; =&gt; &#39;Value1&#39;,</span>
-<span class="cm"> *     &#39;Param2&#39; =&gt; &#39;Value2&#39;,</span>
+<span class="cm"> *     'Param1' =&gt; 'Value1',</span>
+<span class="cm"> *     'Param2' =&gt; 'Value2',</span>
 <span class="cm"> * ]</span>
 <span class="cm"> */</span>
 </pre></div>
@@ -645,32 +645,32 @@ pass true in the second parameter:</p>
 <p>You can also use <code class="docutils literal notranslate"><span class="pre">getRawInputVar()</span></code>, to get the specified variable from raw stream and filter it.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="c1">// When the request body is &#39;foo=one&amp;bar=two&amp;baz[]=10&amp;baz[]=20&#39;</span>
-<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getRawInputVar</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">));</span>
+<span class="c1">// When the request body is 'foo=one&amp;bar=two&amp;baz[]=10&amp;baz[]=20'</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getRawInputVar</span><span class="p">(</span><span class="s1">'bar'</span><span class="p">));</span>
 <span class="c1">// Outputs: two</span>
 
 <span class="c1">// foo=one&amp;bar=two&amp;baz[]=10&amp;baz[]=20</span>
-<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getRawInputVar</span><span class="p">([</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">]));</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getRawInputVar</span><span class="p">([</span><span class="s1">'foo'</span><span class="p">,</span> <span class="s1">'bar'</span><span class="p">]));</span>
 <span class="cm">/*</span>
 <span class="cm"> * Outputs:</span>
 <span class="cm"> * [</span>
-<span class="cm"> *      &#39;foo&#39; =&gt; &#39;one&#39;,</span>
-<span class="cm"> *      &#39;bar&#39; =&gt; &#39;two&#39;</span>
+<span class="cm"> *      'foo' =&gt; 'one',</span>
+<span class="cm"> *      'bar' =&gt; 'two'</span>
 <span class="cm"> * ]</span>
 <span class="cm"> */</span>
 
 <span class="c1">// foo=one&amp;bar=two&amp;baz[]=10&amp;baz[]=20</span>
-<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getRawInputVar</span><span class="p">(</span><span class="s1">&#39;baz&#39;</span><span class="p">));</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getRawInputVar</span><span class="p">(</span><span class="s1">'baz'</span><span class="p">));</span>
 <span class="cm">/*</span>
 <span class="cm"> * Outputs:</span>
 <span class="cm"> * [</span>
-<span class="cm"> *      &#39;10&#39;,</span>
-<span class="cm"> *      &#39;20&#39;</span>
+<span class="cm"> *      '10',</span>
+<span class="cm"> *      '20'</span>
 <span class="cm"> * ]</span>
 <span class="cm"> */</span>
 
 <span class="c1">// foo=one&amp;bar=two&amp;baz[]=10&amp;baz[]=20</span>
-<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getRawInputVar</span><span class="p">(</span><span class="s1">&#39;baz.0&#39;</span><span class="p">));</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getRawInputVar</span><span class="p">(</span><span class="s1">'baz.0'</span><span class="p">));</span>
 <span class="c1">// Outputs: 10</span>
 </pre></div>
 </div>
@@ -684,7 +684,7 @@ filter types</a>.</p>
 <p>Filtering a POST variable would look like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$email</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_EMAIL</span><span class="p">);</span>
+<span class="nv">$email</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">(</span><span class="s1">'email'</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_EMAIL</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>All of the methods mentioned above support the filter type passed in as the second parameter, with the
@@ -703,9 +703,9 @@ an array of all headers, with the key as the name of the header, and the value i
 <span class="cm">/*</span>
 <span class="cm"> * Outputs:</span>
 <span class="cm"> * [</span>
-<span class="cm"> *     &#39;Host&#39;          =&gt; CodeIgniter\HTTP\Header,</span>
-<span class="cm"> *     &#39;Cache-Control&#39; =&gt; CodeIgniter\HTTP\Header,</span>
-<span class="cm"> *     &#39;Accept&#39;        =&gt; CodeIgniter\HTTP\Header,</span>
+<span class="cm"> *     'Host'          =&gt; CodeIgniter\HTTP\Header,</span>
+<span class="cm"> *     'Cache-Control' =&gt; CodeIgniter\HTTP\Header,</span>
+<span class="cm"> *     'Accept'        =&gt; CodeIgniter\HTTP\Header,</span>
 <span class="cm"> * ]</span>
 <span class="cm"> */</span>
 </pre></div>
@@ -715,16 +715,16 @@ specified header object in a case-insensitive manner if it exists. If not, then 
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// these are all equivalent</span>
-<span class="nv">$host</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;host&#39;</span><span class="p">);</span>
-<span class="nv">$host</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Host&#39;</span><span class="p">);</span>
-<span class="nv">$host</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;HOST&#39;</span><span class="p">);</span>
+<span class="nv">$host</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">'host'</span><span class="p">);</span>
+<span class="nv">$host</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">'Host'</span><span class="p">);</span>
+<span class="nv">$host</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">'HOST'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can always use <code class="docutils literal notranslate"><span class="pre">hasHeader()</span></code> to see if the header existed in this request:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">if</span> <span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">hasHeader</span><span class="p">(</span><span class="s1">&#39;DNT&#39;</span><span class="p">))</span> <span class="p">{</span>
-    <span class="c1">// Don&#39;t track something...</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">hasHeader</span><span class="p">(</span><span class="s1">'DNT'</span><span class="p">))</span> <span class="p">{</span>
+    <span class="c1">// Don't track something...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -732,7 +732,7 @@ specified header object in a case-insensitive manner if it exists. If not, then 
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Accept-Encoding: gzip, deflate, sdch</span>
-<span class="k">echo</span> <span class="s1">&#39;Accept-Encoding: &#39;</span> <span class="o">.</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getHeaderLine</span><span class="p">(</span><span class="s1">&#39;accept-encoding&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="s1">'Accept-Encoding: '</span> <span class="o">.</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getHeaderLine</span><span class="p">(</span><span class="s1">'accept-encoding'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If you need the entire header, with the name and values in a single string, simply cast the header as a string:</p>
@@ -790,14 +790,14 @@ and uses best practices to minimize any security risks.</p>
 <p>You can retrieve a single file uploaded on its own, based on the filename given in the HTML file input:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$file</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getFile</span><span class="p">(</span><span class="s1">&#39;userfile&#39;</span><span class="p">);</span>
+<span class="nv">$file</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getFile</span><span class="p">(</span><span class="s1">'userfile'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can retrieve an array of same-named files uploaded as part of a
 multi-file upload, based on the filename given in the HTML file input:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$files</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getFileMultiple</span><span class="p">(</span><span class="s1">&#39;userfile&#39;</span><span class="p">);</span>
+<span class="nv">$files</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getFileMultiple</span><span class="p">(</span><span class="s1">'userfile'</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -810,11 +810,11 @@ multi-file upload, based on the filename given in the HTML file input:</p>
 <p>You can easily negotiate content types with the request through the <code class="docutils literal notranslate"><span class="pre">negotiate()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$language</span>    <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;language&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;en-US&#39;</span><span class="p">,</span> <span class="s1">&#39;en-GB&#39;</span><span class="p">,</span> <span class="s1">&#39;fr&#39;</span><span class="p">,</span> <span class="s1">&#39;es-mx&#39;</span><span class="p">]);</span>
-<span class="nv">$imageType</span>   <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;media&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;image/png&#39;</span><span class="p">,</span> <span class="s1">&#39;image/jpg&#39;</span><span class="p">]);</span>
-<span class="nv">$charset</span>     <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;charset&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">,</span> <span class="s1">&#39;UTF-16&#39;</span><span class="p">]);</span>
-<span class="nv">$contentType</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;media&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;text/html&#39;</span><span class="p">,</span> <span class="s1">&#39;text/xml&#39;</span><span class="p">]);</span>
-<span class="nv">$encoding</span>    <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;encoding&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;gzip&#39;</span><span class="p">,</span> <span class="s1">&#39;compress&#39;</span><span class="p">]);</span>
+<span class="nv">$language</span>    <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">'language'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'en-US'</span><span class="p">,</span> <span class="s1">'en-GB'</span><span class="p">,</span> <span class="s1">'fr'</span><span class="p">,</span> <span class="s1">'es-mx'</span><span class="p">]);</span>
+<span class="nv">$imageType</span>   <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">'media'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'image/png'</span><span class="p">,</span> <span class="s1">'image/jpg'</span><span class="p">]);</span>
+<span class="nv">$charset</span>     <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">'charset'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'UTF-8'</span><span class="p">,</span> <span class="s1">'UTF-16'</span><span class="p">]);</span>
+<span class="nv">$contentType</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">'media'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'text/html'</span><span class="p">,</span> <span class="s1">'text/xml'</span><span class="p">]);</span>
+<span class="nv">$encoding</span>    <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">'encoding'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'gzip'</span><span class="p">,</span> <span class="s1">'compress'</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>See the <a class="reference internal" href="content_negotiation.html"><span class="doc">Content Negotiation</span></a> page for more details.</p>
@@ -950,7 +950,7 @@ another, more appropriate method.</p>
 <p>The first parameter will contain the name of the GET item you are looking for:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getGet</span><span class="p">(</span><span class="s1">&#39;some_data&#39;</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getGet</span><span class="p">(</span><span class="s1">'some_data'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The method returns null if the item you are attempting to retrieve
@@ -959,7 +959,7 @@ does not exist.</p>
 filters. Pass in the desired filter type as the second parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getGet</span><span class="p">(</span><span class="s1">&#39;some_data&#39;</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_FULL_SPECIAL_CHARS</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getGet</span><span class="p">(</span><span class="s1">'some_data'</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_FULL_SPECIAL_CHARS</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>To return an array of all GET items call without any parameters.</p>
@@ -975,14 +975,14 @@ you want to use:</p>
 <p>To return an array of multiple GET parameters, pass all the required keys as an array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getGet</span><span class="p">([</span><span class="s1">&#39;field1&#39;</span><span class="p">,</span> <span class="s1">&#39;field2&#39;</span><span class="p">]);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getGet</span><span class="p">([</span><span class="s1">'field1'</span><span class="p">,</span> <span class="s1">'field2'</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>Same rule applied here, to retrieve the parameters with filtering, set the second parameter to
 the filter type to apply:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getGet</span><span class="p">([</span><span class="s1">&#39;field1&#39;</span><span class="p">,</span> <span class="s1">&#39;field2&#39;</span><span class="p">],</span> <span class="nx">FILTER_SANITIZE_FULL_SPECIAL_CHARS</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getGet</span><span class="p">([</span><span class="s1">'field1'</span><span class="p">,</span> <span class="s1">'field2'</span><span class="p">],</span> <span class="nx">FILTER_SANITIZE_FULL_SPECIAL_CHARS</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1036,7 +1036,7 @@ It will search through both POST and GET streams for data, looking first in POST
 then in GET:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getPostGet</span><span class="p">(</span><span class="s1">&#39;field1&#39;</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getPostGet</span><span class="p">(</span><span class="s1">'field1'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If an array of indexes is specified, the method returns an associative array and applies
@@ -1071,7 +1071,7 @@ It will search through both GET and POST streams for data, looking first in GET,
 then in POST:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getGetPost</span><span class="p">(</span><span class="s1">&#39;field1&#39;</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getGetPost</span><span class="p">(</span><span class="s1">'field1'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If an array of indexes is specified, the method returns an associative array and applies
@@ -1103,14 +1103,14 @@ Although GET data will be preferred in case of name conflict.</p>
 <p>This method is identical to <code class="docutils literal notranslate"><span class="pre">getPost()</span></code> and <code class="docutils literal notranslate"><span class="pre">getGet()</span></code>, only it fetches cookie data:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getCookie</span><span class="p">(</span><span class="s1">&#39;some_cookie&#39;</span><span class="p">);</span>
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getCookie</span><span class="p">(</span><span class="s1">&#39;some_cookie&#39;</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_FULL_SPECIAL_CHARS</span><span class="p">);</span> <span class="c1">// with filter</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getCookie</span><span class="p">(</span><span class="s1">'some_cookie'</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getCookie</span><span class="p">(</span><span class="s1">'some_cookie'</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_FULL_SPECIAL_CHARS</span><span class="p">);</span> <span class="c1">// with filter</span>
 </pre></div>
 </div>
 <p>To return an array of multiple cookie values, pass all the required keys as an array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getCookie</span><span class="p">([</span><span class="s1">&#39;some_cookie&#39;</span><span class="p">,</span> <span class="s1">&#39;some_cookie2&#39;</span><span class="p">]);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getCookie</span><span class="p">([</span><span class="s1">'some_cookie'</span><span class="p">,</span> <span class="s1">'some_cookie2'</span><span class="p">]);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -1145,14 +1145,14 @@ your configured <code class="docutils literal notranslate"><span class="pre">Con
 methods, only it fetches Server data (<code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code>):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getServer</span><span class="p">(</span><span class="s1">&#39;some_data&#39;</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getServer</span><span class="p">(</span><span class="s1">'some_data'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>To return an array of multiple <code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code> values, pass all the required keys
 as an array.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getServer</span><span class="p">([</span><span class="s1">&#39;SERVER_PROTOCOL&#39;</span><span class="p">,</span> <span class="s1">&#39;REQUEST_URI&#39;</span><span class="p">]);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getServer</span><span class="p">([</span><span class="s1">'SERVER_PROTOCOL'</span><span class="p">,</span> <span class="s1">'REQUEST_URI'</span><span class="p">]);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1213,7 +1213,7 @@ the complete App configuration for base URLs.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

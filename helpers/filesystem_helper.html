@@ -305,7 +305,7 @@ files and directories.</p>
 <p>This helper is loaded using the following code:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;filesystem&#39;</span><span class="p">);</span>
+<span class="nx">helper</span><span class="p">(</span><span class="s1">'filesystem'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -333,7 +333,7 @@ files and directories.</p>
 <p>Examples:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$map</span> <span class="o">=</span> <span class="nx">directory_map</span><span class="p">(</span><span class="s1">&#39;./mydirectory/&#39;</span><span class="p">);</span>
+<span class="nv">$map</span> <span class="o">=</span> <span class="nx">directory_map</span><span class="p">(</span><span class="s1">'./mydirectory/'</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -345,7 +345,7 @@ you wish to control the recursion depth, you can do so using the second
 parameter (integer). A depth of <code class="docutils literal notranslate"><span class="pre">1</span></code> will only map the top level directory:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$map</span> <span class="o">=</span> <span class="nx">directory_map</span><span class="p">(</span><span class="s1">&#39;./mydirectory/&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="nv">$map</span> <span class="o">=</span> <span class="nx">directory_map</span><span class="p">(</span><span class="s1">'./mydirectory/'</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>By default, hidden files will not be included in the returned array and
@@ -353,7 +353,7 @@ hidden directories will be skipped. To override this behavior, you may
 set a third parameter to <code class="docutils literal notranslate"><span class="pre">true</span></code> (boolean):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$map</span> <span class="o">=</span> <span class="nx">directory_map</span><span class="p">(</span><span class="s1">&#39;./mydirectory/&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="nv">$map</span> <span class="o">=</span> <span class="nx">directory_map</span><span class="p">(</span><span class="s1">'./mydirectory/'</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Each folder name will be an array index, while its contained files will
@@ -363,7 +363,7 @@ be numerically indexed. Here is an example of a typical array:</p>
         <span class="p">(</span>
             <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">benchmark</span><span class="o">.</span><span class="nx">html</span>
             <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">config</span><span class="o">.</span><span class="nx">html</span>
-            <span class="p">[</span><span class="s2">&quot;database/&quot;</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="k">Array</span>
+            <span class="p">[</span><span class="s2">"database/"</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="k">Array</span>
                 <span class="p">(</span>
                     <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">query_builder</span><span class="o">.</span><span class="nx">html</span>
                     <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">binds</span><span class="o">.</span><span class="nx">html</span>
@@ -407,9 +407,9 @@ into the target directory, i.e. “mirror” its contents.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">try</span> <span class="p">{</span>
-    <span class="nx">directory_mirror</span><span class="p">(</span><span class="nv">$uploadedImages</span><span class="p">,</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;images/&#39;</span><span class="p">);</span>
+    <span class="nx">directory_mirror</span><span class="p">(</span><span class="nv">$uploadedImages</span><span class="p">,</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">'images/'</span><span class="p">);</span>
 <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">\Throwable</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">echo</span> <span class="s1">&#39;Failed to export uploads!&#39;</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s1">'Failed to export uploads!'</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -439,19 +439,19 @@ function will create it.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$data</span> <span class="o">=</span> <span class="s1">&#39;Some file data&#39;</span><span class="p">;</span>
+<span class="nv">$data</span> <span class="o">=</span> <span class="s1">'Some file data'</span><span class="p">;</span>
 
-<span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nx">write_file</span><span class="p">(</span><span class="s1">&#39;./path/to/file.php&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">))</span> <span class="p">{</span>
-    <span class="k">echo</span> <span class="s1">&#39;Unable to write the file&#39;</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nx">write_file</span><span class="p">(</span><span class="s1">'./path/to/file.php'</span><span class="p">,</span> <span class="nv">$data</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s1">'Unable to write the file'</span><span class="p">;</span>
 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="k">echo</span> <span class="s1">&#39;File written!&#39;</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s1">'File written!'</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>You can optionally set the write mode via the third parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">write_file</span><span class="p">(</span><span class="s1">&#39;./path/to/file.php&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">,</span> <span class="s1">&#39;r+&#39;</span><span class="p">);</span>
+<span class="nx">write_file</span><span class="p">(</span><span class="s1">'./path/to/file.php'</span><span class="p">,</span> <span class="nv">$data</span><span class="p">,</span> <span class="s1">'r+'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The default mode is <code class="docutils literal notranslate"><span class="pre">'wb'</span></code>. Please see <a class="reference external" href="https://www.php.net/manual/en/function.fopen.php">fopen()</a> in the PHP manual
@@ -497,7 +497,7 @@ are always relative to the main site index.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">delete_files</span><span class="p">(</span><span class="s1">&#39;./path/to/directory/&#39;</span><span class="p">);</span>
+<span class="nx">delete_files</span><span class="p">(</span><span class="s1">'./path/to/directory/'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If the second parameter is set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, any directories contained within the supplied
@@ -505,7 +505,7 @@ root path will be deleted as well.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">delete_files</span><span class="p">(</span><span class="s1">&#39;./path/to/directory/&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="nx">delete_files</span><span class="p">(</span><span class="s1">'./path/to/directory/'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -544,7 +544,7 @@ a full file path.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$controllers</span> <span class="o">=</span> <span class="nx">get_filenames</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Controllers/&#39;</span><span class="p">);</span>
+<span class="nv">$controllers</span> <span class="o">=</span> <span class="nx">get_filenames</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">'Controllers/'</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -573,7 +573,7 @@ operation.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$models_info</span> <span class="o">=</span> <span class="nx">get_dir_file_info</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Models/&#39;</span><span class="p">);</span>
+<span class="nv">$models_info</span> <span class="o">=</span> <span class="nx">get_dir_file_info</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">'Models/'</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -622,7 +622,7 @@ information you want returned.</p>
 standard symbolic notation of file permissions.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">symbolic_permissions</span><span class="p">(</span><span class="nb">fileperms</span><span class="p">(</span><span class="s1">&#39;./index.php&#39;</span><span class="p">));</span>  <span class="c1">// -rw-r--r--</span>
+<span class="k">echo</span> <span class="nx">symbolic_permissions</span><span class="p">(</span><span class="nb">fileperms</span><span class="p">(</span><span class="s1">'./index.php'</span><span class="p">));</span>  <span class="c1">// -rw-r--r--</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -647,7 +647,7 @@ standard symbolic notation of file permissions.</p>
 a three character octal notation of file permissions.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">octal_permissions</span><span class="p">(</span><span class="nb">fileperms</span><span class="p">(</span><span class="s1">&#39;./index.php&#39;</span><span class="p">));</span> <span class="c1">// 644</span>
+<span class="k">echo</span> <span class="nx">octal_permissions</span><span class="p">(</span><span class="nb">fileperms</span><span class="p">(</span><span class="s1">'./index.php'</span><span class="p">));</span> <span class="c1">// 644</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -672,7 +672,7 @@ a three character octal notation of file permissions.</p>
 <p>Compares two files to see if they are the same (based on their MD5 hash).</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">same_file</span><span class="p">(</span><span class="nv">$newFile</span><span class="p">,</span> <span class="nv">$oldFile</span><span class="p">)</span> <span class="o">?</span> <span class="s1">&#39;Same!&#39;</span> <span class="o">:</span> <span class="s1">&#39;Different!&#39;</span><span class="p">;</span>
+<span class="k">echo</span> <span class="nx">same_file</span><span class="p">(</span><span class="nv">$newFile</span><span class="p">,</span> <span class="nv">$oldFile</span><span class="p">)</span> <span class="o">?</span> <span class="s1">'Same!'</span> <span class="o">:</span> <span class="s1">'Different!'</span><span class="p">;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -700,19 +700,19 @@ cause an error to be triggered if the path cannot be resolved.</p>
 <p>Examples:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$file</span> <span class="o">=</span> <span class="s1">&#39;/etc/php5/apache2/php.ini&#39;</span><span class="p">;</span>
-<span class="k">echo</span> <span class="nx">set_realpath</span><span class="p">(</span><span class="nv">$file</span><span class="p">);</span> <span class="c1">// Prints &#39;/etc/php5/apache2/php.ini&#39;</span>
+<span class="nv">$file</span> <span class="o">=</span> <span class="s1">'/etc/php5/apache2/php.ini'</span><span class="p">;</span>
+<span class="k">echo</span> <span class="nx">set_realpath</span><span class="p">(</span><span class="nv">$file</span><span class="p">);</span> <span class="c1">// Prints '/etc/php5/apache2/php.ini'</span>
 
-<span class="nv">$non_existent_file</span> <span class="o">=</span> <span class="s1">&#39;/path/to/non-exist-file.txt&#39;</span><span class="p">;</span>
+<span class="nv">$non_existent_file</span> <span class="o">=</span> <span class="s1">'/path/to/non-exist-file.txt'</span><span class="p">;</span>
 <span class="k">echo</span> <span class="nx">set_realpath</span><span class="p">(</span><span class="nv">$non_existent_file</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>    <span class="c1">// Shows an error, as the path cannot be resolved</span>
-<span class="k">echo</span> <span class="nx">set_realpath</span><span class="p">(</span><span class="nv">$non_existent_file</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>   <span class="c1">// Prints &#39;/path/to/non-exist-file.txt&#39;</span>
+<span class="k">echo</span> <span class="nx">set_realpath</span><span class="p">(</span><span class="nv">$non_existent_file</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>   <span class="c1">// Prints '/path/to/non-exist-file.txt'</span>
 
-<span class="nv">$directory</span> <span class="o">=</span> <span class="s1">&#39;/etc/php5&#39;</span><span class="p">;</span>
-<span class="k">echo</span> <span class="nx">set_realpath</span><span class="p">(</span><span class="nv">$directory</span><span class="p">);</span>  <span class="c1">// Prints &#39;/etc/php5/&#39;</span>
+<span class="nv">$directory</span> <span class="o">=</span> <span class="s1">'/etc/php5'</span><span class="p">;</span>
+<span class="k">echo</span> <span class="nx">set_realpath</span><span class="p">(</span><span class="nv">$directory</span><span class="p">);</span>  <span class="c1">// Prints '/etc/php5/'</span>
 
-<span class="nv">$non_existent_directory</span> <span class="o">=</span> <span class="s1">&#39;/path/to/nowhere&#39;</span><span class="p">;</span>
+<span class="nv">$non_existent_directory</span> <span class="o">=</span> <span class="s1">'/path/to/nowhere'</span><span class="p">;</span>
 <span class="k">echo</span> <span class="nx">set_realpath</span><span class="p">(</span><span class="nv">$non_existent_directory</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>   <span class="c1">// Shows an error, as the path cannot be resolved</span>
-<span class="k">echo</span> <span class="nx">set_realpath</span><span class="p">(</span><span class="nv">$non_existent_directory</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>  <span class="c1">// Prints &#39;/path/to/nowhere&#39;</span>
+<span class="k">echo</span> <span class="nx">set_realpath</span><span class="p">(</span><span class="nv">$non_existent_directory</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>  <span class="c1">// Prints '/path/to/nowhere'</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -732,7 +732,7 @@ cause an error to be triggered if the path cannot be resolved.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

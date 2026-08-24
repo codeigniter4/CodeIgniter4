@@ -331,10 +331,10 @@ and the second parameter is an array or string of parameters to pass to the meth
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// In a View.</span>
 
 <span class="c1">// Simple Cell</span>
-<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;App\Cells\MyClass::myMethod&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;param1&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;value1&#39;</span><span class="p">,</span> <span class="s1">&#39;param2&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;value2&#39;</span><span class="p">])</span> <span class="cp">?&gt;</span>
+<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">'App\Cells\MyClass::myMethod'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'param1'</span> <span class="o">=&gt;</span> <span class="s1">'value1'</span><span class="p">,</span> <span class="s1">'param2'</span> <span class="o">=&gt;</span> <span class="s1">'value2'</span><span class="p">])</span> <span class="cp">?&gt;</span>
 
 // Controlled Cell
-<span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;App\Cells\MyCell&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;param1&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;value1&#39;</span><span class="p">,</span> <span class="s1">&#39;param2&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;value2&#39;</span><span class="p">])</span> <span class="cp">?&gt;</span>
+<span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">'App\Cells\MyCell'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'param1'</span> <span class="o">=&gt;</span> <span class="s1">'value1'</span><span class="p">,</span> <span class="s1">'param2'</span> <span class="o">=&gt;</span> <span class="s1">'value2'</span><span class="p">])</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 <p>The string that the Cell returns will be inserted into the view where the
@@ -346,7 +346,7 @@ and the second parameter is an array or string of parameters to pass to the meth
 </div>
 <p>If you do not include the full namespace for the class, it will assume in can be found in the <code class="docutils literal notranslate"><span class="pre">App\Cells</span></code> namespace. So, the following example would attempt to find the <code class="docutils literal notranslate"><span class="pre">MyClass</span></code> class in <strong>app/Cells/MyClass.php</strong>. If it is not found there, all namespaces will be scanned until it is found, searching within a <strong>Cells</strong> subdirectory of each namespace:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// In a View.</span>
-<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;MyClass::myMethod&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;param1&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;value1&#39;</span><span class="p">,</span> <span class="s1">&#39;param2&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;value2&#39;</span><span class="p">])</span> <span class="cp">?&gt;</span>
+<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">'MyClass::myMethod'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'param1'</span> <span class="o">=&gt;</span> <span class="s1">'value1'</span><span class="p">,</span> <span class="s1">'param2'</span> <span class="o">=&gt;</span> <span class="s1">'value2'</span><span class="p">])</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 </section>
@@ -354,7 +354,7 @@ and the second parameter is an array or string of parameters to pass to the meth
 <h3><a class="toc-backref" href="#id6" role="doc-backlink">Passing Parameters as Key/Value String</a><a class="headerlink" href="#passing-parameters-as-key-value-string" title="Link to this heading"></a></h3>
 <p>You can also pass the parameters along as a key/value string:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// In a View.</span>
-<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;MyClass::myMethod&#39;</span><span class="p">,</span> <span class="s1">&#39;param1=value1, param2=value2&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">'MyClass::myMethod'</span><span class="p">,</span> <span class="s1">'param1=value1, param2=value2'</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 </section>
@@ -370,20 +370,20 @@ and the second parameter is an array or string of parameters to pass to the meth
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">show</span><span class="p">(</span><span class="k">array</span> <span class="nv">$params</span><span class="p">)</span><span class="o">:</span> <span class="nx">string</span>
     <span class="p">{</span>
-        <span class="k">return</span> <span class="s2">&quot;&lt;div class=</span><span class="se">\&quot;</span><span class="s2">alert alert-</span><span class="si">{</span><span class="nv">$params</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">&gt;</span><span class="si">{</span><span class="nv">$params</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;/div&gt;&quot;</span><span class="p">;</span>
+        <span class="k">return</span> <span class="s2">"&lt;div class=</span><span class="se">\"</span><span class="s2">alert alert-</span><span class="si">{</span><span class="nv">$params</span><span class="p">[</span><span class="s1">'type'</span><span class="p">]</span><span class="si">}</span><span class="se">\"</span><span class="s2">&gt;</span><span class="si">{</span><span class="nv">$params</span><span class="p">[</span><span class="s1">'message'</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;/div&gt;"</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>You would call it from within a view like:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// In a View.</span>
-<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;AlertMessage::show&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;success&#39;</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The user has been updated.&#39;</span><span class="p">])</span> <span class="cp">?&gt;</span>
+<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">'AlertMessage::show'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'type'</span> <span class="o">=&gt;</span> <span class="s1">'success'</span><span class="p">,</span> <span class="s1">'message'</span> <span class="o">=&gt;</span> <span class="s1">'The user has been updated.'</span><span class="p">])</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 <p>Additionally, you can use parameter names that match the parameter variables in the method for better readability.
 When you use it this way, all of the parameters must always be specified in the view cell call:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// In a View.</span>
-<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;Blog::recentPosts&#39;</span><span class="p">,</span> <span class="s1">&#39;category=codeigniter, limit=5&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">'Blog::recentPosts'</span><span class="p">,</span> <span class="s1">'category=codeigniter, limit=5'</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -398,12 +398,12 @@ When you use it this way, all of the parameters must always be specified in the 
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">recentPosts</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$category</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$limit</span><span class="p">)</span><span class="o">:</span> <span class="nx">string</span>
     <span class="p">{</span>
-        <span class="nv">$posts</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">blogModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="nv">$category</span><span class="p">)</span>
-            <span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;published_on&#39;</span><span class="p">,</span> <span class="s1">&#39;desc&#39;</span><span class="p">)</span>
+        <span class="nv">$posts</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">blogModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">'category'</span><span class="p">,</span> <span class="nv">$category</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">'published_on'</span><span class="p">,</span> <span class="s1">'desc'</span><span class="p">)</span>
             <span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="nv">$limit</span><span class="p">)</span>
             <span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
 
-        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;recentPosts&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;posts&#39;</span> <span class="o">=&gt;</span> <span class="nv">$posts</span><span class="p">]);</span>
+        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'recentPosts'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'posts'</span> <span class="o">=&gt;</span> <span class="nv">$posts</span><span class="p">]);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -445,13 +445,13 @@ without the <code class="docutils literal notranslate"><span class="pre">_cell</
 </pre></div>
 </div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// app/Cells/alert_message.php</span>
-<span class="o">&lt;</span><span class="nx">div</span> <span class="nx">class</span><span class="o">=</span><span class="s2">&quot;alert alert-&lt;?= esc(</span><span class="si">$type</span><span class="s2">, &#39;attr&#39;) ?&gt;&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">div</span> <span class="nx">class</span><span class="o">=</span><span class="s2">"alert alert-&lt;?= esc(</span><span class="si">$type</span><span class="s2">, 'attr') ?&gt;"</span><span class="o">&gt;</span>
     <span class="o">&lt;?=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$message</span><span class="p">)</span> <span class="cp">?&gt;</span>
 <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Called in main View:</span>
-<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;AlertMessageCell&#39;</span><span class="p">,</span> <span class="s1">&#39;type=warning, message=Failed.&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">'AlertMessageCell'</span><span class="p">,</span> <span class="s1">'type=warning, message=Failed.'</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -467,8 +467,8 @@ without the <code class="docutils literal notranslate"><span class="pre">_cell</
 
 <span class="k">class</span> <span class="nc">AlertMessageCell</span> <span class="k">extends</span> <span class="nx">Cell</span>
 <span class="p">{</span>
-    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$type</span>    <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
-    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$message</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$type</span>    <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$message</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -495,7 +495,7 @@ without the <code class="docutils literal notranslate"><span class="pre">_cell</
     <span class="k">public</span> <span class="nv">$type</span><span class="p">;</span>
     <span class="k">public</span> <span class="nv">$message</span><span class="p">;</span>
 
-    <span class="k">protected</span> <span class="nx">string</span> <span class="nv">$view</span> <span class="o">=</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Views/cells/alerts.php&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nx">string</span> <span class="nv">$view</span> <span class="o">=</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">'Views/cells/alerts.php'</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -517,7 +517,7 @@ without the <code class="docutils literal notranslate"><span class="pre">_cell</
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">render</span><span class="p">()</span><span class="o">:</span> <span class="nx">string</span>
     <span class="p">{</span>
-        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">(</span><span class="s1">&#39;my/custom/view&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;extra&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;data&#39;</span><span class="p">]);</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">(</span><span class="s1">'my/custom/view'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'extra'</span> <span class="o">=&gt;</span> <span class="s1">'data'</span><span class="p">]);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -527,7 +527,7 @@ without the <code class="docutils literal notranslate"><span class="pre">_cell</
 <h3><a class="toc-backref" href="#id13" role="doc-backlink">Computed Properties</a><a class="headerlink" href="#computed-properties" title="Link to this heading"></a></h3>
 <p>If you need to perform additional logic for one or more properties you can use computed properties. These require setting the property to either <code class="docutils literal notranslate"><span class="pre">protected</span></code> or <code class="docutils literal notranslate"><span class="pre">private</span></code> and implementing a public method whose name consists of the property name surrounded by <code class="docutils literal notranslate"><span class="pre">get</span></code> and <code class="docutils literal notranslate"><span class="pre">Property</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// In a View. Initialize the protected properties.</span>
-<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;AlertMessageCell&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;note&#39;</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;test&#39;</span><span class="p">])</span> <span class="cp">?&gt;</span>
+<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">'AlertMessageCell'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'type'</span> <span class="o">=&gt;</span> <span class="s1">'note'</span><span class="p">,</span> <span class="s1">'message'</span> <span class="o">=&gt;</span> <span class="s1">'test'</span><span class="p">])</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -546,7 +546,7 @@ without the <code class="docutils literal notranslate"><span class="pre">_cell</
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">mount</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">computed</span> <span class="o">=</span> <span class="nb">sprintf</span><span class="p">(</span><span class="s1">&#39;%s - %s&#39;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">type</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">message</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">computed</span> <span class="o">=</span> <span class="nb">sprintf</span><span class="p">(</span><span class="s1">'%s - %s'</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">type</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">message</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">getComputedProperty</span><span class="p">()</span><span class="o">:</span> <span class="nx">string</span>
@@ -599,7 +599,7 @@ You may have noticed that not only method calls are allowed in the template: the
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">linkPost</span><span class="p">(</span><span class="nv">$post</span><span class="p">)</span><span class="o">:</span> <span class="nx">string</span>
     <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">&#39;posts/&#39;</span> <span class="o">.</span> <span class="nv">$post</span><span class="o">-&gt;</span><span class="na">id</span><span class="p">,</span> <span class="nv">$post</span><span class="o">-&gt;</span><span class="na">title</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">'posts/'</span> <span class="o">.</span> <span class="nv">$post</span><span class="o">-&gt;</span><span class="na">id</span><span class="p">,</span> <span class="nv">$post</span><span class="o">-&gt;</span><span class="na">title</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -628,7 +628,7 @@ You may have noticed that not only method calls are allowed in the template: the
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">mount</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">posts</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;PostModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="s1">&#39;DESC&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">posts</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">'PostModel'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">'created_at'</span><span class="p">,</span> <span class="s1">'DESC'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -648,19 +648,19 @@ You may have noticed that not only method calls are allowed in the template: the
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">mount</span><span class="p">(</span><span class="o">?</span><span class="nx">int</span> <span class="nv">$categoryId</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">posts</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;PostModel&#39;</span><span class="p">)</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">posts</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">'PostModel'</span><span class="p">)</span>
             <span class="o">-&gt;</span><span class="na">when</span><span class="p">(</span>
                 <span class="nv">$categoryId</span><span class="p">,</span>
-                <span class="k">static</span> <span class="nx">fn</span> <span class="p">(</span><span class="nv">$query</span><span class="p">,</span> <span class="nv">$categoryId</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;category_id&#39;</span><span class="p">,</span> <span class="nv">$categoryId</span><span class="p">),</span>
+                <span class="k">static</span> <span class="nx">fn</span> <span class="p">(</span><span class="nv">$query</span><span class="p">,</span> <span class="nv">$categoryId</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">'category_id'</span><span class="p">,</span> <span class="nv">$categoryId</span><span class="p">),</span>
             <span class="p">)</span>
-            <span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="s1">&#39;DESC&#39;</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">'created_at'</span><span class="p">,</span> <span class="s1">'DESC'</span><span class="p">)</span>
             <span class="o">-&gt;</span><span class="na">findAll</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Called in main View:</span>
-<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;RecentPostsCell&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;categoryId&#39;</span> <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">])</span> <span class="cp">?&gt;</span>
+<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">'RecentPostsCell'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'categoryId'</span> <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">])</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 </section>
@@ -670,13 +670,13 @@ You may have noticed that not only method calls are allowed in the template: the
 <p>You can cache the results of the view cell call by passing the number of seconds to cache the data for as the
 third parameter. This will use the currently configured cache engine:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Cache the view for 5 minutes</span>
-<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;App\Cells\Blog::recentPosts&#39;</span><span class="p">,</span> <span class="s1">&#39;limit=5&#39;</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">'App\Cells\Blog::recentPosts'</span><span class="p">,</span> <span class="s1">'limit=5'</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 <p>You can provide a custom name to use instead of the auto-generated one if you like, by passing the new name
 as the fourth parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Cache the view for 5 minutes</span>
-<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;App\Cells\Blog::recentPosts&#39;</span><span class="p">,</span> <span class="s1">&#39;limit=5&#39;</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="s1">&#39;newcacheid&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">'App\Cells\Blog::recentPosts'</span><span class="p">,</span> <span class="s1">'limit=5'</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="s1">'newcacheid'</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 </section>
@@ -694,7 +694,7 @@ as the fourth parameter:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

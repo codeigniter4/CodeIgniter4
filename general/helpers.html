@@ -346,7 +346,7 @@ in your <a class="reference internal" href="../incoming/controllers.html"><span 
 <p>Loading a helper file is quite simple using the following method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">);</span>
+<span class="nx">helper</span><span class="p">(</span><span class="s1">'name'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The above code loads the <strong>name_helper.php</strong> file.</p>
@@ -360,7 +360,7 @@ such as Linux.</p>
 <strong>cookie_helper.php</strong>, you would do this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;cookie&#39;</span><span class="p">);</span>
+<span class="nx">helper</span><span class="p">(</span><span class="s1">'cookie'</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -400,7 +400,7 @@ to be loaded, as well as any helpers you’ve created specifically for this appl
 an array of file names in and all of them will be loaded:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">helper</span><span class="p">([</span><span class="s1">&#39;cookie&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">]);</span>
+<span class="nx">helper</span><span class="p">([</span><span class="s1">'cookie'</span><span class="p">,</span> <span class="s1">'date'</span><span class="p">]);</span>
 </pre></div>
 </div>
 </section>
@@ -432,13 +432,13 @@ code into its own namespace, <code class="docutils literal notranslate"><span cl
 use the following command to load the helper for us:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;Example\Blog\blog&#39;</span><span class="p">);</span>
+<span class="nx">helper</span><span class="p">(</span><span class="s1">'Example\Blog\blog'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can also use the following way:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;Example\Blog\Helpers\blog&#39;</span><span class="p">);</span>
+<span class="nx">helper</span><span class="p">(</span><span class="s1">'Example\Blog\Helpers\blog'</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -465,7 +465,7 @@ use, you’ll call it the way you would a standard PHP function.</p>
 <p>For example, to create a link using the <a class="reference internal" href="../helpers/url_helper.html#anchor" title="anchor"><code class="xref php php-func docutils literal notranslate"><span class="pre">anchor()</span></code></a> function in one of
 your view files you would do this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
-<span class="o">&lt;?=</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">&#39;blog/comments&#39;</span><span class="p">,</span> <span class="s1">&#39;Click Here&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<span class="o">&lt;?=</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">'blog/comments'</span><span class="p">,</span> <span class="s1">'Click Here'</span><span class="p">)</span> <span class="cp">?&gt;</span>
 <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </pre></div>
 </div>
@@ -485,7 +485,7 @@ URI to the controller/method you wish to link to.</p>
 <span class="k">use</span> <span class="nx">CodeIgniter\CodeIgniter</span><span class="p">;</span>
 
 <span class="sd">/**</span>
-<span class="sd"> * Returns CodeIgniter&#39;s version.</span>
+<span class="sd"> * Returns CodeIgniter's version.</span>
 <span class="sd"> */</span>
 <span class="k">function</span> <span class="nf">ci_version</span><span class="p">()</span><span class="o">:</span> <span class="nx">string</span>
 <span class="p">{</span>
@@ -564,7 +564,7 @@ Browse each one to see what they do.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

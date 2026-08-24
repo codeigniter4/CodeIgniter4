@@ -322,11 +322,11 @@
 in the previous versions did not use the <code class="docutils literal notranslate"><span class="pre">$secure</span></code> and <code class="docutils literal notranslate"><span class="pre">$httponly</span></code> values in <code class="docutils literal notranslate"><span class="pre">Config\Cookie</span></code>.
 The following code did not issue a cookie with the secure flag even if you set <code class="docutils literal notranslate"><span class="pre">$secure</span> <span class="pre">=</span> <span class="pre">true</span></code>
 in <code class="docutils literal notranslate"><span class="pre">Config\Cookie</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;cookie&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">'cookie'</span><span class="p">);</span>
 
 <span class="nv">$cookie</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span>
-    <span class="s1">&#39;value&#39;</span> <span class="o">=&gt;</span> <span class="nv">$value</span><span class="p">,</span>
+    <span class="s1">'name'</span>  <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span>
+    <span class="s1">'value'</span> <span class="o">=&gt;</span> <span class="nv">$value</span><span class="p">,</span>
 <span class="p">];</span>
 <span class="nx">set_cookie</span><span class="p">(</span><span class="nv">$cookie</span><span class="p">);</span>
 <span class="c1">// or</span>
@@ -338,10 +338,10 @@ The above code issues a cookie with the secure flag if you set <code class="docu
 in <code class="docutils literal notranslate"><span class="pre">Config\Cookie</span></code>.</p>
 <p>If your code depends on this bug, please change it to explicitly specify the necessary options:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$cookie</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;name&#39;</span>     <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span>
-    <span class="s1">&#39;value&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$value</span><span class="p">,</span>
-    <span class="s1">&#39;secure&#39;</span>   <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span> <span class="c1">// Set explicitly</span>
-    <span class="s1">&#39;httponly&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span> <span class="c1">// Set explicitly</span>
+    <span class="s1">'name'</span>     <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span>
+    <span class="s1">'value'</span>    <span class="o">=&gt;</span> <span class="nv">$value</span><span class="p">,</span>
+    <span class="s1">'secure'</span>   <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span> <span class="c1">// Set explicitly</span>
+    <span class="s1">'httponly'</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span> <span class="c1">// Set explicitly</span>
 <span class="p">];</span>
 <span class="nx">set_cookie</span><span class="p">(</span><span class="nv">$cookie</span><span class="p">);</span>
 <span class="c1">// or</span>
@@ -383,7 +383,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

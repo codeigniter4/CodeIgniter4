@@ -344,23 +344,23 @@ prototype:</p>
     <span class="c1">// ...</span>
 
     <span class="k">public</span> <span class="k">array</span> <span class="nv">$default</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;DSN&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;hostname&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;database&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;database_name&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;DBDriver&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;MySQLi&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;DBPrefix&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;pConnect&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
-        <span class="s1">&#39;DBDebug&#39;</span>  <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-        <span class="s1">&#39;charset&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;utf8mb4&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;DBCollat&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;utf8mb4_general_ci&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;swapPre&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;encrypt&#39;</span>  <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
-        <span class="s1">&#39;compress&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
-        <span class="s1">&#39;strictOn&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
-        <span class="s1">&#39;failover&#39;</span> <span class="o">=&gt;</span> <span class="p">[],</span>
-        <span class="s1">&#39;port&#39;</span>     <span class="o">=&gt;</span> <span class="mi">3306</span><span class="p">,</span>
+        <span class="s1">'DSN'</span>      <span class="o">=&gt;</span> <span class="s1">''</span><span class="p">,</span>
+        <span class="s1">'hostname'</span> <span class="o">=&gt;</span> <span class="s1">'localhost'</span><span class="p">,</span>
+        <span class="s1">'username'</span> <span class="o">=&gt;</span> <span class="s1">'root'</span><span class="p">,</span>
+        <span class="s1">'password'</span> <span class="o">=&gt;</span> <span class="s1">''</span><span class="p">,</span>
+        <span class="s1">'database'</span> <span class="o">=&gt;</span> <span class="s1">'database_name'</span><span class="p">,</span>
+        <span class="s1">'DBDriver'</span> <span class="o">=&gt;</span> <span class="s1">'MySQLi'</span><span class="p">,</span>
+        <span class="s1">'DBPrefix'</span> <span class="o">=&gt;</span> <span class="s1">''</span><span class="p">,</span>
+        <span class="s1">'pConnect'</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+        <span class="s1">'DBDebug'</span>  <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+        <span class="s1">'charset'</span>  <span class="o">=&gt;</span> <span class="s1">'utf8mb4'</span><span class="p">,</span>
+        <span class="s1">'DBCollat'</span> <span class="o">=&gt;</span> <span class="s1">'utf8mb4_general_ci'</span><span class="p">,</span>
+        <span class="s1">'swapPre'</span>  <span class="o">=&gt;</span> <span class="s1">''</span><span class="p">,</span>
+        <span class="s1">'encrypt'</span>  <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+        <span class="s1">'compress'</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+        <span class="s1">'strictOn'</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+        <span class="s1">'failover'</span> <span class="o">=&gt;</span> <span class="p">[],</span>
+        <span class="s1">'port'</span>     <span class="o">=&gt;</span> <span class="mi">3306</span><span class="p">,</span>
     <span class="p">];</span>
 
     <span class="c1">// ...</span>
@@ -383,7 +383,7 @@ will try to build it with the rest of the provided settings.</p>
 you’re using the driver’s underlying native PHP extension, like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span>    <span class="c1">// OCI8</span>
     <span class="k">public</span> <span class="k">array</span> <span class="nv">$default</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;DSN&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;//localhost/XE&#39;</span><span class="p">,</span>
+        <span class="s1">'DSN'</span> <span class="o">=&gt;</span> <span class="s1">'//localhost/XE'</span><span class="p">,</span>
         <span class="c1">// ...</span>
     <span class="p">];</span>
 </pre></div>
@@ -392,7 +392,7 @@ you’re using the driver’s underlying native PHP extension, like this:</p>
 <h5>DSN in Universal Manner<a class="headerlink" href="#dsn-in-universal-manner" title="Link to this heading"></a></h5>
 <p>You can also set a DSN in universal manner (URL like). In that case DSNs must have this prototype:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span>    <span class="k">public</span> <span class="k">array</span> <span class="nv">$default</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;DSN&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;DBDriver://username:password@hostname:port/database&#39;</span><span class="p">,</span>
+        <span class="s1">'DSN'</span> <span class="o">=&gt;</span> <span class="s1">'DBDriver://username:password@hostname:port/database'</span><span class="p">,</span>
         <span class="c1">// ...</span>
     <span class="p">];</span>
 </pre></div>
@@ -401,14 +401,14 @@ you’re using the driver’s underlying native PHP extension, like this:</p>
 add the config variables as a query string:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span>    <span class="c1">// MySQLi</span>
     <span class="k">public</span> <span class="k">array</span> <span class="nv">$default</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;DSN&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;MySQLi://username:password@hostname:3306/database?charset=utf8mb4&amp;DBCollat=utf8mb4_general_ci&#39;</span><span class="p">,</span>
+        <span class="s1">'DSN'</span> <span class="o">=&gt;</span> <span class="s1">'MySQLi://username:password@hostname:3306/database?charset=utf8mb4&amp;DBCollat=utf8mb4_general_ci'</span><span class="p">,</span>
         <span class="c1">// ...</span>
     <span class="p">];</span>
 </pre></div>
 </div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span>    <span class="c1">// Postgre</span>
     <span class="k">public</span> <span class="k">array</span> <span class="nv">$default</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;DSN&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Postgre://username:password@hostname:5432/database?charset=utf8&amp;connect_timeout=5&amp;sslmode=require&#39;</span><span class="p">,</span>
+        <span class="s1">'DSN'</span> <span class="o">=&gt;</span> <span class="s1">'Postgre://username:password@hostname:5432/database?charset=utf8&amp;connect_timeout=5&amp;sslmode=require'</span><span class="p">,</span>
         <span class="c1">// ...</span>
     <span class="p">];</span>
 </pre></div>
@@ -437,38 +437,38 @@ These failovers can be specified by setting the failover for a connection like t
 
     <span class="k">public</span> <span class="k">array</span> <span class="nv">$default</span> <span class="o">=</span> <span class="p">[</span>
         <span class="c1">// ...</span>
-        <span class="s1">&#39;failover&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'failover'</span> <span class="o">=&gt;</span> <span class="p">[</span>
             <span class="p">[</span>
-                <span class="s1">&#39;hostname&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;localhost1&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;database&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;DBDriver&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;MySQLi&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;DBPrefix&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;pConnect&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-                <span class="s1">&#39;DBDebug&#39;</span>  <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-                <span class="s1">&#39;charset&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;utf8mb4&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;DBCollat&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;utf8mb4_general_ci&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;swapPre&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;encrypt&#39;</span>  <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
-                <span class="s1">&#39;compress&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
-                <span class="s1">&#39;strictOn&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+                <span class="s1">'hostname'</span> <span class="o">=&gt;</span> <span class="s1">'localhost1'</span><span class="p">,</span>
+                <span class="s1">'username'</span> <span class="o">=&gt;</span> <span class="s1">''</span><span class="p">,</span>
+                <span class="s1">'password'</span> <span class="o">=&gt;</span> <span class="s1">''</span><span class="p">,</span>
+                <span class="s1">'database'</span> <span class="o">=&gt;</span> <span class="s1">''</span><span class="p">,</span>
+                <span class="s1">'DBDriver'</span> <span class="o">=&gt;</span> <span class="s1">'MySQLi'</span><span class="p">,</span>
+                <span class="s1">'DBPrefix'</span> <span class="o">=&gt;</span> <span class="s1">''</span><span class="p">,</span>
+                <span class="s1">'pConnect'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+                <span class="s1">'DBDebug'</span>  <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+                <span class="s1">'charset'</span>  <span class="o">=&gt;</span> <span class="s1">'utf8mb4'</span><span class="p">,</span>
+                <span class="s1">'DBCollat'</span> <span class="o">=&gt;</span> <span class="s1">'utf8mb4_general_ci'</span><span class="p">,</span>
+                <span class="s1">'swapPre'</span>  <span class="o">=&gt;</span> <span class="s1">''</span><span class="p">,</span>
+                <span class="s1">'encrypt'</span>  <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+                <span class="s1">'compress'</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+                <span class="s1">'strictOn'</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
             <span class="p">],</span>
             <span class="p">[</span>
-                <span class="s1">&#39;hostname&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;localhost2&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;database&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;DBDriver&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;MySQLi&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;DBPrefix&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;pConnect&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-                <span class="s1">&#39;DBDebug&#39;</span>  <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-                <span class="s1">&#39;charset&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;utf8mb4&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;DBCollat&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;utf8mb4_general_ci&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;swapPre&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;encrypt&#39;</span>  <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
-                <span class="s1">&#39;compress&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
-                <span class="s1">&#39;strictOn&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+                <span class="s1">'hostname'</span> <span class="o">=&gt;</span> <span class="s1">'localhost2'</span><span class="p">,</span>
+                <span class="s1">'username'</span> <span class="o">=&gt;</span> <span class="s1">''</span><span class="p">,</span>
+                <span class="s1">'password'</span> <span class="o">=&gt;</span> <span class="s1">''</span><span class="p">,</span>
+                <span class="s1">'database'</span> <span class="o">=&gt;</span> <span class="s1">''</span><span class="p">,</span>
+                <span class="s1">'DBDriver'</span> <span class="o">=&gt;</span> <span class="s1">'MySQLi'</span><span class="p">,</span>
+                <span class="s1">'DBPrefix'</span> <span class="o">=&gt;</span> <span class="s1">''</span><span class="p">,</span>
+                <span class="s1">'pConnect'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+                <span class="s1">'DBDebug'</span>  <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+                <span class="s1">'charset'</span>  <span class="o">=&gt;</span> <span class="s1">'utf8mb4'</span><span class="p">,</span>
+                <span class="s1">'DBCollat'</span> <span class="o">=&gt;</span> <span class="s1">'utf8mb4_general_ci'</span><span class="p">,</span>
+                <span class="s1">'swapPre'</span>  <span class="o">=&gt;</span> <span class="s1">''</span><span class="p">,</span>
+                <span class="s1">'encrypt'</span>  <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+                <span class="s1">'compress'</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+                <span class="s1">'strictOn'</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
             <span class="p">],</span>
         <span class="p">],</span>
         <span class="c1">// ...</span>
@@ -499,22 +499,22 @@ example, to set up a “test” environment you would do this:</p>
     <span class="c1">// ...</span>
 
     <span class="k">public</span> <span class="k">array</span> <span class="nv">$test</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;DSN&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;hostname&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;database&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;database_name&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;DBDriver&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;MySQLi&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;DBPrefix&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;pConnect&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-        <span class="s1">&#39;DBDebug&#39;</span>  <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-        <span class="s1">&#39;charset&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;utf8mb4&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;DBCollat&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;utf8mb4_general_ci&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;swapPre&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;compress&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
-        <span class="s1">&#39;encrypt&#39;</span>  <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
-        <span class="s1">&#39;strictOn&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
-        <span class="s1">&#39;failover&#39;</span> <span class="o">=&gt;</span> <span class="p">[],</span>
+        <span class="s1">'DSN'</span>      <span class="o">=&gt;</span> <span class="s1">''</span><span class="p">,</span>
+        <span class="s1">'hostname'</span> <span class="o">=&gt;</span> <span class="s1">'localhost'</span><span class="p">,</span>
+        <span class="s1">'username'</span> <span class="o">=&gt;</span> <span class="s1">'root'</span><span class="p">,</span>
+        <span class="s1">'password'</span> <span class="o">=&gt;</span> <span class="s1">''</span><span class="p">,</span>
+        <span class="s1">'database'</span> <span class="o">=&gt;</span> <span class="s1">'database_name'</span><span class="p">,</span>
+        <span class="s1">'DBDriver'</span> <span class="o">=&gt;</span> <span class="s1">'MySQLi'</span><span class="p">,</span>
+        <span class="s1">'DBPrefix'</span> <span class="o">=&gt;</span> <span class="s1">''</span><span class="p">,</span>
+        <span class="s1">'pConnect'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+        <span class="s1">'DBDebug'</span>  <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+        <span class="s1">'charset'</span>  <span class="o">=&gt;</span> <span class="s1">'utf8mb4'</span><span class="p">,</span>
+        <span class="s1">'DBCollat'</span> <span class="o">=&gt;</span> <span class="s1">'utf8mb4_general_ci'</span><span class="p">,</span>
+        <span class="s1">'swapPre'</span>  <span class="o">=&gt;</span> <span class="s1">''</span><span class="p">,</span>
+        <span class="s1">'compress'</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+        <span class="s1">'encrypt'</span>  <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+        <span class="s1">'strictOn'</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+        <span class="s1">'failover'</span> <span class="o">=&gt;</span> <span class="p">[],</span>
     <span class="p">];</span>
 
     <span class="c1">// ...</span>
@@ -533,7 +533,7 @@ variable located in the config file:</p>
 <span class="p">{</span>
     <span class="c1">// ...</span>
 
-    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$defaultGroup</span> <span class="o">=</span> <span class="s1">&#39;test&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$defaultGroup</span> <span class="o">=</span> <span class="s1">'test'</span><span class="p">;</span>
 
     <span class="c1">// ...</span>
 <span class="p">}</span>
@@ -584,16 +584,16 @@ within the class’ constructor:</p>
 database settings. You only need to enter the values that change from what is in the
 default group’s configuration settings. The values should follow this format, where
 <code class="docutils literal notranslate"><span class="pre">default</span></code> is the group name:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">database</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nx">username</span> <span class="o">=</span> <span class="s1">&#39;root&#39;</span><span class="p">;</span>
-<span class="nx">database</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nx">password</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
-<span class="nx">database</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nx">database</span> <span class="o">=</span> <span class="s1">&#39;ci4&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">database</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nx">username</span> <span class="o">=</span> <span class="s1">'root'</span><span class="p">;</span>
+<span class="nx">database</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nx">password</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+<span class="nx">database</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nx">database</span> <span class="o">=</span> <span class="s1">'ci4'</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>But you cannot add a new property by setting environment variables, nor change a
 scalar value to an array. See <a class="reference internal" href="../general/configuration.html#env-var-replacements-for-data"><span class="std std-ref">Environment Variables as Replacements for Data</span></a> for details.</p>
 <p>So if you want to use SSL with MySQL, you need a hack. For example, set the array
 values as a JSON string in your <strong>.env</strong> file:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">database</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nx">encrypt</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;ssl_verify&quot;</span><span class="o">:</span><span class="k">true</span><span class="p">,</span><span class="s2">&quot;ssl_ca&quot;</span><span class="o">:</span><span class="s2">&quot;/var/www/html/BaltimoreCyberTrustRoot.crt.pem&quot;</span><span class="p">}</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">database</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nx">encrypt</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"ssl_verify"</span><span class="o">:</span><span class="k">true</span><span class="p">,</span><span class="s2">"ssl_ca"</span><span class="o">:</span><span class="s2">"/var/www/html/BaltimoreCyberTrustRoot.crt.pem"</span><span class="p">}</span>
 </pre></div>
 </div>
 <p>and decode it in the constructor in the Config class:</p>
@@ -614,9 +614,9 @@ values as a JSON string in your <strong>.env</strong> file:</p>
     <span class="p">{</span>
         <span class="c1">// ...</span>
 
-        <span class="nv">$array</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">default</span><span class="p">[</span><span class="s1">&#39;encrypt&#39;</span><span class="p">],</span> <span class="k">true</span><span class="p">);</span>
+        <span class="nv">$array</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">default</span><span class="p">[</span><span class="s1">'encrypt'</span><span class="p">],</span> <span class="k">true</span><span class="p">);</span>
         <span class="k">if</span> <span class="p">(</span><span class="nb">is_array</span><span class="p">(</span><span class="nv">$array</span><span class="p">))</span> <span class="p">{</span>
-            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">default</span><span class="p">[</span><span class="s1">&#39;encrypt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$array</span><span class="p">;</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">default</span><span class="p">[</span><span class="s1">'encrypt'</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$array</span><span class="p">;</span>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -753,9 +753,9 @@ connection properly.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span>    <span class="c1">// MySQLi over a socket</span>
     <span class="k">public</span> <span class="k">array</span> <span class="nv">$default</span> <span class="o">=</span> <span class="p">[</span>
         <span class="c1">// ...</span>
-        <span class="s1">&#39;hostname&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/cloudsql/toolbox-tests:europe-north1:toolbox-db&#39;</span><span class="p">,</span>
+        <span class="s1">'hostname'</span> <span class="o">=&gt;</span> <span class="s1">'/cloudsql/toolbox-tests:europe-north1:toolbox-db'</span><span class="p">,</span>
         <span class="c1">// ...</span>
-        <span class="s1">&#39;DBDriver&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;MySQLi&#39;</span><span class="p">,</span>
+        <span class="s1">'DBDriver'</span> <span class="o">=&gt;</span> <span class="s1">'MySQLi'</span><span class="p">,</span>
         <span class="c1">// ...</span>
     <span class="p">];</span>
 </pre></div>
@@ -790,7 +790,7 @@ connection properly.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

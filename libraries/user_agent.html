@@ -336,13 +336,13 @@ is available:</p>
 <span class="nv">$agent</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getUserAgent</span><span class="p">();</span>
 
 <span class="k">if</span> <span class="p">(</span><span class="nv">$agent</span><span class="o">-&gt;</span><span class="na">isBrowser</span><span class="p">())</span> <span class="p">{</span>
-    <span class="nv">$currentAgent</span> <span class="o">=</span> <span class="nv">$agent</span><span class="o">-&gt;</span><span class="na">getBrowser</span><span class="p">()</span> <span class="o">.</span> <span class="s1">&#39; &#39;</span> <span class="o">.</span> <span class="nv">$agent</span><span class="o">-&gt;</span><span class="na">getVersion</span><span class="p">();</span>
+    <span class="nv">$currentAgent</span> <span class="o">=</span> <span class="nv">$agent</span><span class="o">-&gt;</span><span class="na">getBrowser</span><span class="p">()</span> <span class="o">.</span> <span class="s1">' '</span> <span class="o">.</span> <span class="nv">$agent</span><span class="o">-&gt;</span><span class="na">getVersion</span><span class="p">();</span>
 <span class="p">}</span> <span class="k">elseif</span> <span class="p">(</span><span class="nv">$agent</span><span class="o">-&gt;</span><span class="na">isRobot</span><span class="p">())</span> <span class="p">{</span>
     <span class="nv">$currentAgent</span> <span class="o">=</span> <span class="nv">$agent</span><span class="o">-&gt;</span><span class="na">getRobot</span><span class="p">();</span>
 <span class="p">}</span> <span class="k">elseif</span> <span class="p">(</span><span class="nv">$agent</span><span class="o">-&gt;</span><span class="na">isMobile</span><span class="p">())</span> <span class="p">{</span>
     <span class="nv">$currentAgent</span> <span class="o">=</span> <span class="nv">$agent</span><span class="o">-&gt;</span><span class="na">getMobile</span><span class="p">();</span>
 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="nv">$currentAgent</span> <span class="o">=</span> <span class="s1">&#39;Unidentified User Agent&#39;</span><span class="p">;</span>
+    <span class="nv">$currentAgent</span> <span class="o">=</span> <span class="s1">'Unidentified User Agent'</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="k">echo</span> <span class="nv">$currentAgent</span><span class="p">;</span>
@@ -376,10 +376,10 @@ is available:</p>
 <p>Returns true/false (boolean) if the user agent is a known web browser.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">if</span> <span class="p">(</span><span class="nv">$agent</span><span class="o">-&gt;</span><span class="na">isBrowser</span><span class="p">(</span><span class="s1">&#39;Safari&#39;</span><span class="p">))</span> <span class="p">{</span>
-    <span class="k">echo</span> <span class="s1">&#39;You are using Safari.&#39;</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$agent</span><span class="o">-&gt;</span><span class="na">isBrowser</span><span class="p">(</span><span class="s1">'Safari'</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s1">'You are using Safari.'</span><span class="p">;</span>
 <span class="p">}</span> <span class="k">elseif</span> <span class="p">(</span><span class="nv">$agent</span><span class="o">-&gt;</span><span class="na">isBrowser</span><span class="p">())</span> <span class="p">{</span>
-    <span class="k">echo</span> <span class="s1">&#39;You are using a browser.&#39;</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s1">'You are using a browser.'</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -410,12 +410,12 @@ browsers or change the strings.</p>
 <p>Returns true/false (boolean) if the user agent is a known mobile device.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">if</span> <span class="p">(</span><span class="nv">$agent</span><span class="o">-&gt;</span><span class="na">isMobile</span><span class="p">(</span><span class="s1">&#39;iphone&#39;</span><span class="p">))</span> <span class="p">{</span>
-    <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;iphone/home&#39;</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$agent</span><span class="o">-&gt;</span><span class="na">isMobile</span><span class="p">(</span><span class="s1">'iphone'</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'iphone/home'</span><span class="p">);</span>
 <span class="p">}</span> <span class="k">elseif</span> <span class="p">(</span><span class="nv">$agent</span><span class="o">-&gt;</span><span class="na">isMobile</span><span class="p">())</span> <span class="p">{</span>
-    <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;mobile/home&#39;</span><span class="p">);</span>
+    <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'mobile/home'</span><span class="p">);</span>
 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;web/home&#39;</span><span class="p">);</span>
+    <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'web/home'</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -602,7 +602,7 @@ that commonly visit your site are missing from the list you can add them to your
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

@@ -337,32 +337,32 @@ To store the file you could use <code class="docutils literal notranslate"><span
     <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="k">parent</span><span class="o">::</span><span class="na">__construct</span><span class="p">();</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">helper</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">));</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">helper</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'form'</span><span class="p">,</span> <span class="s1">'url'</span><span class="p">));</span>
     <span class="p">}</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">(</span><span class="s1">&#39;upload_form&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;error&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39; &#39;</span> <span class="p">));</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">(</span><span class="s1">'upload_form'</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">'error'</span> <span class="o">=&gt;</span> <span class="s1">' '</span> <span class="p">));</span>
     <span class="p">}</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">do_upload</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;upload_path&#39;</span><span class="p">]</span>   <span class="o">=</span> <span class="s1">&#39;./uploads/&#39;</span><span class="p">;</span>
-        <span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;allowed_types&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;png|jpg|gif&#39;</span><span class="p">;</span>
-        <span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;max_size&#39;</span><span class="p">]</span>      <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
-        <span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;max_width&#39;</span><span class="p">]</span>     <span class="o">=</span> <span class="mi">1024</span><span class="p">;</span>
-        <span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;max_height&#39;</span><span class="p">]</span>    <span class="o">=</span> <span class="mi">768</span><span class="p">;</span>
+        <span class="nv">$config</span><span class="p">[</span><span class="s1">'upload_path'</span><span class="p">]</span>   <span class="o">=</span> <span class="s1">'./uploads/'</span><span class="p">;</span>
+        <span class="nv">$config</span><span class="p">[</span><span class="s1">'allowed_types'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'png|jpg|gif'</span><span class="p">;</span>
+        <span class="nv">$config</span><span class="p">[</span><span class="s1">'max_size'</span><span class="p">]</span>      <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+        <span class="nv">$config</span><span class="p">[</span><span class="s1">'max_width'</span><span class="p">]</span>     <span class="o">=</span> <span class="mi">1024</span><span class="p">;</span>
+        <span class="nv">$config</span><span class="p">[</span><span class="s1">'max_height'</span><span class="p">]</span>    <span class="o">=</span> <span class="mi">768</span><span class="p">;</span>
 
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">library</span><span class="p">(</span><span class="s1">&#39;upload&#39;</span><span class="p">,</span> <span class="nv">$config</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">library</span><span class="p">(</span><span class="s1">'upload'</span><span class="p">,</span> <span class="nv">$config</span><span class="p">);</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">upload</span><span class="o">-&gt;</span><span class="na">do_upload</span><span class="p">(</span><span class="s1">&#39;userfile&#39;</span><span class="p">))</span> <span class="p">{</span>
-            <span class="nv">$error</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;error&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">upload</span><span class="o">-&gt;</span><span class="na">display_errors</span><span class="p">());</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">upload</span><span class="o">-&gt;</span><span class="na">do_upload</span><span class="p">(</span><span class="s1">'userfile'</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nv">$error</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">'error'</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">upload</span><span class="o">-&gt;</span><span class="na">display_errors</span><span class="p">());</span>
 
-            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">(</span><span class="s1">&#39;upload_form&#39;</span><span class="p">,</span> <span class="nv">$error</span><span class="p">);</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">(</span><span class="s1">'upload_form'</span><span class="p">,</span> <span class="nv">$error</span><span class="p">);</span>
         <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;upload_data&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">upload</span><span class="o">-&gt;</span><span class="na">data</span><span class="p">());</span>
+            <span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">'upload_data'</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">upload</span><span class="o">-&gt;</span><span class="na">data</span><span class="p">());</span>
 
-            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">(</span><span class="s1">&#39;upload_success&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">(</span><span class="s1">'upload_success'</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -379,29 +379,29 @@ To store the file you could use <code class="docutils literal notranslate"><span
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;upload_form&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;error&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39; &#39;</span><span class="p">]);</span>
+        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'upload_form'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'error'</span> <span class="o">=&gt;</span> <span class="s1">' '</span><span class="p">]);</span>
     <span class="p">}</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">do_upload</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validateData</span><span class="p">([],</span> <span class="p">[</span>
-            <span class="s1">&#39;userfile&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;uploaded[userfile]&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;max_size[userfile,100]&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;mime_in[userfile,image/png,image/jpg,image/gif]&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;ext_in[userfile,png,jpg,gif]&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;max_dims[userfile,1024,768]&#39;</span><span class="p">,</span>
+            <span class="s1">'userfile'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">'uploaded[userfile]'</span><span class="p">,</span>
+                <span class="s1">'max_size[userfile,100]'</span><span class="p">,</span>
+                <span class="s1">'mime_in[userfile,image/png,image/jpg,image/gif]'</span><span class="p">,</span>
+                <span class="s1">'ext_in[userfile,png,jpg,gif]'</span><span class="p">,</span>
+                <span class="s1">'max_dims[userfile,1024,768]'</span><span class="p">,</span>
             <span class="p">],</span>
         <span class="p">]);</span>
 
-        <span class="nv">$file</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getFile</span><span class="p">(</span><span class="s1">&#39;userfile&#39;</span><span class="p">);</span>
+        <span class="nv">$file</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getFile</span><span class="p">(</span><span class="s1">'userfile'</span><span class="p">);</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$path</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">store</span><span class="p">())</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;upload_form&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;error&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;upload failed&#39;</span><span class="p">]);</span>
+            <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'upload_form'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'error'</span> <span class="o">=&gt;</span> <span class="s1">'upload failed'</span><span class="p">]);</span>
         <span class="p">}</span>
-        <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;upload_file_path&#39;</span> <span class="o">=&gt;</span> <span class="nv">$path</span><span class="p">];</span>
+        <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'upload_file_path'</span> <span class="o">=&gt;</span> <span class="nv">$path</span><span class="p">];</span>
 
-        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;upload_success&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'upload_success'</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -422,7 +422,7 @@ To store the file you could use <code class="docutils literal notranslate"><span
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

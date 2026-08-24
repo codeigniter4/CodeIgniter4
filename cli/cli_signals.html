@@ -398,7 +398,7 @@ to your command class and register signals in your command’s <code class="docu
             <span class="nb">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
         <span class="p">}</span>
 
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Command terminated gracefully&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Command terminated gracefully'</span><span class="p">,</span> <span class="s1">'green'</span><span class="p">);</span>
 
         <span class="k">return</span> <span class="nx">EXIT_SUCCESS</span><span class="p">;</span>
     <span class="p">}</span>
@@ -422,10 +422,10 @@ to your command class and register signals in your command’s <code class="docu
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">registerSignals</span><span class="p">(</span>
             <span class="p">[</span><span class="nx">SIGTERM</span><span class="p">,</span> <span class="nx">SIGINT</span><span class="p">,</span> <span class="nx">SIGUSR1</span><span class="p">,</span> <span class="nx">SIGUSR2</span><span class="p">],</span>
             <span class="p">[</span>
-                <span class="nx">SIGTERM</span> <span class="o">=&gt;</span> <span class="s1">&#39;onGracefulShutdown&#39;</span><span class="p">,</span>
-                <span class="nx">SIGINT</span>  <span class="o">=&gt;</span> <span class="s1">&#39;onInterrupt&#39;</span><span class="p">,</span>
-                <span class="nx">SIGUSR1</span> <span class="o">=&gt;</span> <span class="s1">&#39;onToggleDebug&#39;</span><span class="p">,</span>
-                <span class="nx">SIGUSR2</span> <span class="o">=&gt;</span> <span class="s1">&#39;onStatusReport&#39;</span><span class="p">,</span>
+                <span class="nx">SIGTERM</span> <span class="o">=&gt;</span> <span class="s1">'onGracefulShutdown'</span><span class="p">,</span>
+                <span class="nx">SIGINT</span>  <span class="o">=&gt;</span> <span class="s1">'onInterrupt'</span><span class="p">,</span>
+                <span class="nx">SIGUSR1</span> <span class="o">=&gt;</span> <span class="s1">'onToggleDebug'</span><span class="p">,</span>
+                <span class="nx">SIGUSR2</span> <span class="o">=&gt;</span> <span class="s1">'onStatusReport'</span><span class="p">,</span>
             <span class="p">],</span>
         <span class="p">);</span>
 
@@ -440,25 +440,25 @@ to your command class and register signals in your command’s <code class="docu
 
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">onGracefulShutdown</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$signal</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Received SIGTERM - shutting down gracefully...&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Received SIGTERM - shutting down gracefully...'</span><span class="p">,</span> <span class="s1">'yellow'</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">onInterrupt</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$signal</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Received SIGINT - stopping!&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Received SIGINT - stopping!'</span><span class="p">,</span> <span class="s1">'red'</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">onToggleDebug</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$signal</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
         <span class="c1">// Custom debug mode</span>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">debugMode</span> <span class="o">=</span> <span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">debugMode</span><span class="p">;</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Debug mode: &#39;</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">debugMode</span> <span class="o">?</span> <span class="s1">&#39;ON&#39;</span> <span class="o">:</span> <span class="s1">&#39;OFF&#39;</span><span class="p">),</span> <span class="s1">&#39;blue&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Debug mode: '</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">debugMode</span> <span class="o">?</span> <span class="s1">'ON'</span> <span class="o">:</span> <span class="s1">'OFF'</span><span class="p">),</span> <span class="s1">'blue'</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">onStatusReport</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$signal</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
         <span class="nv">$state</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getProcessState</span><span class="p">();</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Status: &#39;</span> <span class="o">.</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$state</span><span class="p">,</span> <span class="nx">JSON_PRETTY_PRINT</span><span class="p">),</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Status: '</span> <span class="o">.</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$state</span><span class="p">,</span> <span class="nx">JSON_PRETTY_PRINT</span><span class="p">),</span> <span class="s1">'cyan'</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -493,27 +493,27 @@ to your command class and register signals in your command’s <code class="docu
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">onInterruption</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$signal</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
         <span class="nv">$signalName</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getSignalName</span><span class="p">(</span><span class="nv">$signal</span><span class="p">);</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">&quot;Received </span><span class="si">{</span><span class="nv">$signalName</span><span class="si">}</span><span class="s2"> - handling generically&quot;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">"Received </span><span class="si">{</span><span class="nv">$signalName</span><span class="si">}</span><span class="s2"> - handling generically"</span><span class="p">,</span> <span class="s1">'yellow'</span><span class="p">);</span>
 
         <span class="k">switch</span> <span class="p">(</span><span class="nv">$signal</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">case</span> <span class="nx">SIGTERM</span><span class="o">:</span>
-                <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Graceful shutdown requested&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">);</span>
+                <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Graceful shutdown requested'</span><span class="p">,</span> <span class="s1">'green'</span><span class="p">);</span>
                 <span class="k">break</span><span class="p">;</span>
 
             <span class="k">case</span> <span class="nx">SIGINT</span><span class="o">:</span>
-                <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Immediate shutdown requested&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">);</span>
+                <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Immediate shutdown requested'</span><span class="p">,</span> <span class="s1">'red'</span><span class="p">);</span>
                 <span class="k">break</span><span class="p">;</span>
 
             <span class="k">case</span> <span class="nx">SIGHUP</span><span class="o">:</span>
-                <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Configuration reload requested&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">);</span>
+                <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Configuration reload requested'</span><span class="p">,</span> <span class="s1">'blue'</span><span class="p">);</span>
                 <span class="k">break</span><span class="p">;</span>
 
             <span class="k">case</span> <span class="nx">SIGUSR1</span><span class="o">:</span>
-                <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;User signal 1 received&#39;</span><span class="p">,</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
+                <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'User signal 1 received'</span><span class="p">,</span> <span class="s1">'cyan'</span><span class="p">);</span>
                 <span class="k">break</span><span class="p">;</span>
 
             <span class="k">default</span><span class="o">:</span>
-                <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Unknown signal received&#39;</span><span class="p">,</span> <span class="s1">&#39;light_gray&#39;</span><span class="p">);</span>
+                <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Unknown signal received'</span><span class="p">,</span> <span class="s1">'light_gray'</span><span class="p">);</span>
                 <span class="k">break</span><span class="p">;</span>
         <span class="p">}</span>
     <span class="p">}</span>
@@ -537,7 +537,7 @@ to create atomic operations:</p>
     <span class="p">{</span>
         <span class="c1">// Critical section - no interruptions allowed</span>
         <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">withSignalsBlocked</span><span class="p">(</span><span class="k">function</span> <span class="p">()</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$orderData</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Starting critical transaction - signals blocked&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">);</span>
+            <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Starting critical transaction - signals blocked'</span><span class="p">,</span> <span class="s1">'yellow'</span><span class="p">);</span>
 
             <span class="c1">// Start database transaction</span>
             <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transStart</span><span class="p">();</span>
@@ -547,15 +547,15 @@ to create atomic operations:</p>
                 <span class="nv">$orderId</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">createOrder</span><span class="p">(</span><span class="nv">$orderData</span><span class="p">);</span>
 
                 <span class="c1">// Update inventory</span>
-                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">updateInventory</span><span class="p">(</span><span class="nv">$orderData</span><span class="p">[</span><span class="s1">&#39;items&#39;</span><span class="p">]);</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">updateInventory</span><span class="p">(</span><span class="nv">$orderData</span><span class="p">[</span><span class="s1">'items'</span><span class="p">]);</span>
 
                 <span class="c1">// Process payment</span>
-                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">processPayment</span><span class="p">(</span><span class="nv">$orderId</span><span class="p">,</span> <span class="nv">$orderData</span><span class="p">[</span><span class="s1">&#39;payment&#39;</span><span class="p">]);</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">processPayment</span><span class="p">(</span><span class="nv">$orderId</span><span class="p">,</span> <span class="nv">$orderData</span><span class="p">[</span><span class="s1">'payment'</span><span class="p">]);</span>
 
                 <span class="c1">// Commit transaction</span>
                 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transCommit</span><span class="p">();</span>
 
-                <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Transaction completed successfully&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">);</span>
+                <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Transaction completed successfully'</span><span class="p">,</span> <span class="s1">'green'</span><span class="p">);</span>
 
                 <span class="k">return</span> <span class="nv">$orderId</span><span class="p">;</span>
             <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">\Exception</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
@@ -566,8 +566,8 @@ to create atomic operations:</p>
             <span class="p">}</span>
         <span class="p">});</span>
 
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Critical section complete - signals restored&#39;</span><span class="p">,</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">&quot;Order </span><span class="si">{</span><span class="nv">$result</span><span class="si">}</span><span class="s2"> processed successfully&quot;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Critical section complete - signals restored'</span><span class="p">,</span> <span class="s1">'cyan'</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">"Order </span><span class="si">{</span><span class="nv">$result</span><span class="si">}</span><span class="s2"> processed successfully"</span><span class="p">,</span> <span class="s1">'green'</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -591,8 +591,8 @@ to create atomic operations:</p>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">registerSignals</span><span class="p">(</span>
             <span class="p">[</span><span class="nx">SIGTERM</span><span class="p">,</span> <span class="nx">SIGINT</span><span class="p">,</span> <span class="nx">SIGTSTP</span><span class="p">,</span> <span class="nx">SIGCONT</span><span class="p">],</span>
             <span class="p">[</span>
-                <span class="nx">SIGTSTP</span> <span class="o">=&gt;</span> <span class="s1">&#39;onPause&#39;</span><span class="p">,</span>
-                <span class="nx">SIGCONT</span> <span class="o">=&gt;</span> <span class="s1">&#39;onResume&#39;</span><span class="p">,</span>
+                <span class="nx">SIGTSTP</span> <span class="o">=&gt;</span> <span class="s1">'onPause'</span><span class="p">,</span>
+                <span class="nx">SIGCONT</span> <span class="o">=&gt;</span> <span class="s1">'onResume'</span><span class="p">,</span>
             <span class="p">],</span>
         <span class="p">);</span>
 
@@ -606,33 +606,33 @@ to create atomic operations:</p>
 
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">onPause</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$signal</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Pausing - saving current date...&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Pausing - saving current date...'</span><span class="p">,</span> <span class="s1">'yellow'</span><span class="p">);</span>
 
         <span class="c1">// Save current timestamp</span>
         <span class="nv">$state</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s1">&#39;timestamp&#39;</span> <span class="o">=&gt;</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getTimestamp</span><span class="p">(),</span>
+            <span class="s1">'timestamp'</span> <span class="o">=&gt;</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getTimestamp</span><span class="p">(),</span>
         <span class="p">];</span>
 
-        <span class="nb">file_put_contents</span><span class="p">(</span><span class="nx">WRITEPATH</span> <span class="o">.</span> <span class="s1">&#39;app_state.json&#39;</span><span class="p">,</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$state</span><span class="p">));</span>
+        <span class="nb">file_put_contents</span><span class="p">(</span><span class="nx">WRITEPATH</span> <span class="o">.</span> <span class="s1">'app_state.json'</span><span class="p">,</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$state</span><span class="p">));</span>
 
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;State saved. Process will now suspend.&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'State saved. Process will now suspend.'</span><span class="p">,</span> <span class="s1">'green'</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">onResume</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$signal</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Resuming - restoring...&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Resuming - restoring...'</span><span class="p">,</span> <span class="s1">'green'</span><span class="p">);</span>
 
-        <span class="nv">$file</span> <span class="o">=</span> <span class="nx">WRITEPATH</span> <span class="o">.</span> <span class="s1">&#39;app_state.json&#39;</span><span class="p">;</span>
+        <span class="nv">$file</span> <span class="o">=</span> <span class="nx">WRITEPATH</span> <span class="o">.</span> <span class="s1">'app_state.json'</span><span class="p">;</span>
 
         <span class="c1">// Restore saved state</span>
         <span class="k">if</span> <span class="p">(</span><span class="nb">file_exists</span><span class="p">(</span><span class="nv">$file</span><span class="p">))</span> <span class="p">{</span>
             <span class="nv">$state</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="nv">$file</span><span class="p">),</span> <span class="k">true</span><span class="p">);</span>
-            <span class="nv">$date</span>  <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromTimestamp</span><span class="p">(</span><span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">format</span><span class="p">(</span><span class="s1">&#39;Y-m-d H:i:s&#39;</span><span class="p">);</span>
+            <span class="nv">$date</span>  <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromTimestamp</span><span class="p">(</span><span class="nv">$state</span><span class="p">[</span><span class="s1">'timestamp'</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">format</span><span class="p">(</span><span class="s1">'Y-m-d H:i:s'</span><span class="p">);</span>
 
-            <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Restored from &#39;</span> <span class="o">.</span> <span class="nv">$date</span><span class="p">,</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
+            <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Restored from '</span> <span class="o">.</span> <span class="nv">$date</span><span class="p">,</span> <span class="s1">'cyan'</span><span class="p">);</span>
         <span class="p">}</span>
 
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Resuming normal operation...&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Resuming normal operation...'</span><span class="p">,</span> <span class="s1">'green'</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -746,25 +746,25 @@ php<span class="w"> </span>spark<span class="w"> </span>long:running:command<spa
     <span class="p">{</span>
         <span class="nv">$state</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getProcessState</span><span class="p">();</span>
 
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;=== PROCESS DEBUG INFO ===&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">);</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;PID: &#39;</span> <span class="o">.</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;pid&#39;</span><span class="p">],</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Running: &#39;</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;running&#39;</span><span class="p">]</span> <span class="o">?</span> <span class="s1">&#39;YES&#39;</span> <span class="o">:</span> <span class="s1">&#39;NO&#39;</span><span class="p">),</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;PCNTL Available: &#39;</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;pcntl_available&#39;</span><span class="p">]</span> <span class="o">?</span> <span class="s1">&#39;YES&#39;</span> <span class="o">:</span> <span class="s1">&#39;NO&#39;</span><span class="p">),</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Signals Registered: &#39;</span> <span class="o">.</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;registered_signals&#39;</span><span class="p">],</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Signal Names: &#39;</span> <span class="o">.</span> <span class="nb">implode</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">,</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;registered_signals_names&#39;</span><span class="p">]),</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Explicit Mappings: &#39;</span> <span class="o">.</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;explicit_mappings&#39;</span><span class="p">],</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Signals Blocked: &#39;</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;signals_blocked&#39;</span><span class="p">]</span> <span class="o">?</span> <span class="s1">&#39;YES&#39;</span> <span class="o">:</span> <span class="s1">&#39;NO&#39;</span><span class="p">),</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Memory Usage: &#39;</span> <span class="o">.</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;memory_usage_mb&#39;</span><span class="p">]</span> <span class="o">.</span> <span class="s1">&#39; MB&#39;</span><span class="p">,</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Peak Memory: &#39;</span> <span class="o">.</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;memory_peak_mb&#39;</span><span class="p">]</span> <span class="o">.</span> <span class="s1">&#39; MB&#39;</span><span class="p">,</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'=== PROCESS DEBUG INFO ==='</span><span class="p">,</span> <span class="s1">'yellow'</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'PID: '</span> <span class="o">.</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">'pid'</span><span class="p">],</span> <span class="s1">'cyan'</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Running: '</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$state</span><span class="p">[</span><span class="s1">'running'</span><span class="p">]</span> <span class="o">?</span> <span class="s1">'YES'</span> <span class="o">:</span> <span class="s1">'NO'</span><span class="p">),</span> <span class="s1">'cyan'</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'PCNTL Available: '</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$state</span><span class="p">[</span><span class="s1">'pcntl_available'</span><span class="p">]</span> <span class="o">?</span> <span class="s1">'YES'</span> <span class="o">:</span> <span class="s1">'NO'</span><span class="p">),</span> <span class="s1">'cyan'</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Signals Registered: '</span> <span class="o">.</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">'registered_signals'</span><span class="p">],</span> <span class="s1">'cyan'</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Signal Names: '</span> <span class="o">.</span> <span class="nb">implode</span><span class="p">(</span><span class="s1">', '</span><span class="p">,</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">'registered_signals_names'</span><span class="p">]),</span> <span class="s1">'cyan'</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Explicit Mappings: '</span> <span class="o">.</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">'explicit_mappings'</span><span class="p">],</span> <span class="s1">'cyan'</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Signals Blocked: '</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$state</span><span class="p">[</span><span class="s1">'signals_blocked'</span><span class="p">]</span> <span class="o">?</span> <span class="s1">'YES'</span> <span class="o">:</span> <span class="s1">'NO'</span><span class="p">),</span> <span class="s1">'cyan'</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Memory Usage: '</span> <span class="o">.</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">'memory_usage_mb'</span><span class="p">]</span> <span class="o">.</span> <span class="s1">' MB'</span><span class="p">,</span> <span class="s1">'cyan'</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Peak Memory: '</span> <span class="o">.</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">'memory_peak_mb'</span><span class="p">]</span> <span class="o">.</span> <span class="s1">' MB'</span><span class="p">,</span> <span class="s1">'cyan'</span><span class="p">);</span>
 
         <span class="c1">// POSIX info (if available)</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;session_id&#39;</span><span class="p">]))</span> <span class="p">{</span>
-            <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Session ID: &#39;</span> <span class="o">.</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;session_id&#39;</span><span class="p">],</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
-            <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Process Group: &#39;</span> <span class="o">.</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;process_group&#39;</span><span class="p">],</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
-            <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Has Terminal: &#39;</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;has_controlling_terminal&#39;</span><span class="p">]</span> <span class="o">?</span> <span class="s1">&#39;YES&#39;</span> <span class="o">:</span> <span class="s1">&#39;NO&#39;</span><span class="p">),</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$state</span><span class="p">[</span><span class="s1">'session_id'</span><span class="p">]))</span> <span class="p">{</span>
+            <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Session ID: '</span> <span class="o">.</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">'session_id'</span><span class="p">],</span> <span class="s1">'cyan'</span><span class="p">);</span>
+            <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Process Group: '</span> <span class="o">.</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">'process_group'</span><span class="p">],</span> <span class="s1">'cyan'</span><span class="p">);</span>
+            <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Has Terminal: '</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$state</span><span class="p">[</span><span class="s1">'has_controlling_terminal'</span><span class="p">]</span> <span class="o">?</span> <span class="s1">'YES'</span> <span class="o">:</span> <span class="s1">'NO'</span><span class="p">),</span> <span class="s1">'cyan'</span><span class="p">);</span>
         <span class="p">}</span>
 
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;========================&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'========================'</span><span class="p">,</span> <span class="s1">'yellow'</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -811,8 +811,8 @@ php<span class="w"> </span>spark<span class="w"> </span>long:running:command<spa
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">registerSignals</span><span class="p">(</span>
     <span class="p">[</span><span class="nx">SIGTERM</span><span class="p">,</span> <span class="nx">SIGINT</span><span class="p">,</span> <span class="nx">SIGUSR1</span><span class="p">],</span>
     <span class="p">[</span>
-        <span class="nx">SIGTERM</span> <span class="o">=&gt;</span> <span class="s1">&#39;handleGracefulShutdown&#39;</span><span class="p">,</span>
-        <span class="nx">SIGUSR1</span> <span class="o">=&gt;</span> <span class="s1">&#39;handleReload&#39;</span><span class="p">,</span>
+        <span class="nx">SIGTERM</span> <span class="o">=&gt;</span> <span class="s1">'handleGracefulShutdown'</span><span class="p">,</span>
+        <span class="nx">SIGUSR1</span> <span class="o">=&gt;</span> <span class="s1">'handleReload'</span><span class="p">,</span>
     <span class="p">],</span>
 <span class="p">);</span>
 </pre></div>
@@ -848,7 +848,7 @@ php<span class="w"> </span>spark<span class="w"> </span>long:running:command<spa
     <span class="nb">usleep</span><span class="p">(</span><span class="mi">100000</span><span class="p">);</span> <span class="c1">// 0.1 seconds</span>
 <span class="p">}</span>
 
-<span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Process terminated gracefully.&#39;</span><span class="p">);</span>
+<span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Process terminated gracefully.'</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -871,7 +871,7 @@ php<span class="w"> </span>spark<span class="w"> </span>long:running:command<spa
 
 <span class="c1">// Check for termination before expensive operations</span>
 <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">shouldTerminate</span><span class="p">())</span> <span class="p">{</span>
-    <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Termination requested, skipping file processing.&#39;</span><span class="p">);</span>
+    <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Termination requested, skipping file processing.'</span><span class="p">);</span>
 
     <span class="k">return</span><span class="p">;</span>
 <span class="p">}</span>
@@ -880,7 +880,7 @@ php<span class="w"> </span>spark<span class="w"> </span>long:running:command<spa
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$largeDataSet</span> <span class="k">as</span> <span class="nv">$item</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// Check periodically during long operations</span>
     <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">shouldTerminate</span><span class="p">())</span> <span class="p">{</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Termination requested during processing.&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Termination requested during processing.'</span><span class="p">);</span>
         <span class="k">break</span><span class="p">;</span>
     <span class="p">}</span>
 
@@ -905,7 +905,7 @@ php<span class="w"> </span>spark<span class="w"> </span>long:running:command<spa
 
 <span class="c1">// Request termination based on conditions</span>
 <span class="k">if</span> <span class="p">(</span><span class="nv">$errorCount</span> <span class="o">&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">maxErrors</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">&quot;Too many errors (</span><span class="si">{</span><span class="nv">$errorCount</span><span class="si">}</span><span class="s2">), requesting termination.&quot;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">);</span>
+    <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">"Too many errors (</span><span class="si">{</span><span class="nv">$errorCount</span><span class="si">}</span><span class="s2">), requesting termination."</span><span class="p">,</span> <span class="s1">'red'</span><span class="p">);</span>
     <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">requestTermination</span><span class="p">();</span>
 
     <span class="k">return</span><span class="p">;</span>
@@ -994,20 +994,20 @@ Only SIGKILL (unblockable) can still terminate the process.</p>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">registerSignals</span><span class="p">([</span><span class="nx">SIGTERM</span><span class="p">,</span> <span class="nx">SIGINT</span><span class="p">,</span> <span class="nx">SIGUSR1</span><span class="p">,</span> <span class="nx">SIGUSR2</span><span class="p">]);</span>
 
         <span class="c1">// Map signals to specific methods at runtime</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">mapSignal</span><span class="p">(</span><span class="nx">SIGUSR1</span><span class="p">,</span> <span class="s1">&#39;handleReload&#39;</span><span class="p">);</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">mapSignal</span><span class="p">(</span><span class="nx">SIGUSR2</span><span class="p">,</span> <span class="s1">&#39;handleStatusDump&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">mapSignal</span><span class="p">(</span><span class="nx">SIGUSR1</span><span class="p">,</span> <span class="s1">'handleReload'</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">mapSignal</span><span class="p">(</span><span class="nx">SIGUSR2</span><span class="p">,</span> <span class="s1">'handleStatusDump'</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="c1">// Custom signal handlers</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">handleReload</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$signal</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Received reload signal, reloading configuration...&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Received reload signal, reloading configuration...'</span><span class="p">);</span>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">reloadConfig</span><span class="p">();</span>
     <span class="p">}</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">handleStatusDump</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$signal</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;=== Process Status ===&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'=== Process Status ==='</span><span class="p">);</span>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">printStatus</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getProcessState</span><span class="p">());</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -1051,7 +1051,7 @@ Only SIGKILL (unblockable) can still terminate the process.</p>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">onInterruption</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$signal</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
         <span class="nv">$signalName</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getSignalName</span><span class="p">(</span><span class="nv">$signal</span><span class="p">);</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">&quot;Received signal: </span><span class="si">{</span><span class="nv">$signalName</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="nv">$signal</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">"Received signal: </span><span class="si">{</span><span class="nv">$signalName</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="nv">$signal</span><span class="si">}</span><span class="s2">)"</span><span class="p">,</span> <span class="s1">'yellow'</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -1119,13 +1119,13 @@ signal handling status, and terminal control information.</p>
     <span class="p">{</span>
         <span class="nv">$state</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getProcessState</span><span class="p">();</span>
 
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;=== Process Debug Information ===&#39;</span><span class="p">);</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">&quot;PID: </span><span class="si">{</span><span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;pid&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">);</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Running: &#39;</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;running&#39;</span><span class="p">]</span> <span class="o">?</span> <span class="s1">&#39;Yes&#39;</span> <span class="o">:</span> <span class="s1">&#39;No&#39;</span><span class="p">));</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">&quot;Memory Usage: </span><span class="si">{</span><span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;memory_usage_mb&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> MB&quot;</span><span class="p">);</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">&quot;Peak Memory: </span><span class="si">{</span><span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;memory_peak_mb&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> MB&quot;</span><span class="p">);</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Registered Signals: &#39;</span> <span class="o">.</span> <span class="nb">implode</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">,</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;registered_signals_names&#39;</span><span class="p">]));</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Signals Blocked: &#39;</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;signals_blocked&#39;</span><span class="p">]</span> <span class="o">?</span> <span class="s1">&#39;Yes&#39;</span> <span class="o">:</span> <span class="s1">&#39;No&#39;</span><span class="p">));</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'=== Process Debug Information ==='</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">"PID: </span><span class="si">{</span><span class="nv">$state</span><span class="p">[</span><span class="s1">'pid'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Running: '</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$state</span><span class="p">[</span><span class="s1">'running'</span><span class="p">]</span> <span class="o">?</span> <span class="s1">'Yes'</span> <span class="o">:</span> <span class="s1">'No'</span><span class="p">));</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">"Memory Usage: </span><span class="si">{</span><span class="nv">$state</span><span class="p">[</span><span class="s1">'memory_usage_mb'</span><span class="p">]</span><span class="si">}</span><span class="s2"> MB"</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">"Peak Memory: </span><span class="si">{</span><span class="nv">$state</span><span class="p">[</span><span class="s1">'memory_peak_mb'</span><span class="p">]</span><span class="si">}</span><span class="s2"> MB"</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Registered Signals: '</span> <span class="o">.</span> <span class="nb">implode</span><span class="p">(</span><span class="s1">', '</span><span class="p">,</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">'registered_signals_names'</span><span class="p">]));</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'Signals Blocked: '</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$state</span><span class="p">[</span><span class="s1">'signals_blocked'</span><span class="p">]</span> <span class="o">?</span> <span class="s1">'Yes'</span> <span class="o">:</span> <span class="s1">'No'</span><span class="p">));</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -1164,7 +1164,7 @@ signal handling status, and terminal control information.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

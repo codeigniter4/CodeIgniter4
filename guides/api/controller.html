@@ -383,21 +383,21 @@ We’ll use <code class="xref php php-class docutils literal notranslate"><span 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">toArray</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$resource</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="p">[</span>
-            <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;year&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">],</span>
+            <span class="s1">'id'</span>    <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'id'</span><span class="p">],</span>
+            <span class="s1">'title'</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'title'</span><span class="p">],</span>
+            <span class="s1">'year'</span>  <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">'year'</span><span class="p">],</span>
         <span class="p">];</span>
     <span class="p">}</span>
 
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">includeAuthor</span><span class="p">(</span><span class="k">array</span> <span class="nv">$book</span><span class="p">)</span><span class="o">:</span> <span class="o">?</span><span class="k">array</span>
     <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$book</span><span class="p">[</span><span class="s1">&#39;author_id&#39;</span><span class="p">])</span> <span class="o">||</span> <span class="k">empty</span><span class="p">(</span><span class="nv">$book</span><span class="p">[</span><span class="s1">&#39;author_name&#39;</span><span class="p">]))</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$book</span><span class="p">[</span><span class="s1">'author_id'</span><span class="p">])</span> <span class="o">||</span> <span class="k">empty</span><span class="p">(</span><span class="nv">$book</span><span class="p">[</span><span class="s1">'author_name'</span><span class="p">]))</span> <span class="p">{</span>
             <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
         <span class="p">}</span>
 
         <span class="k">return</span> <span class="p">[</span>
-            <span class="s1">&#39;id&#39;</span>   <span class="o">=&gt;</span> <span class="nv">$book</span><span class="p">[</span><span class="s1">&#39;author_id&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="nv">$book</span><span class="p">[</span><span class="s1">&#39;author_name&#39;</span><span class="p">],</span>
+            <span class="s1">'id'</span>   <span class="o">=&gt;</span> <span class="nv">$book</span><span class="p">[</span><span class="s1">'author_id'</span><span class="p">],</span>
+            <span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="nv">$book</span><span class="p">[</span><span class="s1">'author_name'</span><span class="p">],</span>
         <span class="p">];</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -416,7 +416,7 @@ We’ll use <code class="xref php php-class docutils literal notranslate"><span 
 <span class="x">     */</span>
 <span class="x">    public function getIndex(?int $id = null): ResponseInterface</span>
 <span class="x">    {</span>
-<span class="x">        $model       = model(&#39;BookModel&#39;);</span>
+<span class="x">        $model       = model('BookModel');</span>
 <span class="x">        $transformer = new BookTransformer();</span>
 
 <span class="x">        // If an ID is provided, fetch a single record</span>
@@ -424,7 +424,7 @@ We’ll use <code class="xref php php-class docutils literal notranslate"><span 
 <span class="x">            $book = $model-&gt;withAuthorInfo()-&gt;find($id);</span>
 
 <span class="x">            if (! $book) {</span>
-<span class="x">                return $this-&gt;failNotFound(&#39;Book not found&#39;);</span>
+<span class="x">                return $this-&gt;failNotFound('Book not found');</span>
 <span class="x">            }</span>
 
 <span class="x">            return $this-&gt;respond($transformer-&gt;transform($book));</span>
@@ -454,8 +454,8 @@ We’ll use <code class="xref php php-class docutils literal notranslate"><span 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">withAuthorInfo</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="nv">$this</span>
-            <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;books.*, authors.name as author_name&#39;</span><span class="p">)</span>
-            <span class="o">-&gt;</span><span class="na">join</span><span class="p">(</span><span class="s1">&#39;authors&#39;</span><span class="p">,</span> <span class="s1">&#39;books.author_id = authors.id&#39;</span><span class="p">);</span>
+            <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">'books.*, authors.name as author_name'</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">join</span><span class="p">(</span><span class="s1">'authors'</span><span class="p">,</span> <span class="s1">'books.author_id = authors.id'</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -474,36 +474,36 @@ We’ll use <code class="xref php php-class docutils literal notranslate"><span 
 </ul>
 <p>You should see a paginated list of books in JSON format:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Dune&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;author&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Frank Herbert&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;year&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1965</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-11-08 00:00:00&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;updated_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-11-08 00:00:00&quot;</span>
+<span class="w">            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dune"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"author"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Frank Herbert"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"year"</span><span class="p">:</span><span class="w"> </span><span class="mi">1965</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-11-08 00:00:00"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-11-08 00:00:00"</span>
 <span class="w">        </span><span class="p">},</span>
 <span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Neuromancer&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;author&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;William Gibson&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;year&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1984</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-11-08 00:00:00&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;updated_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-11-08 00:00:00&quot;</span>
+<span class="w">            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Neuromancer"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"author"</span><span class="p">:</span><span class="w"> </span><span class="s2">"William Gibson"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"year"</span><span class="p">:</span><span class="w"> </span><span class="mi">1984</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-11-08 00:00:00"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-11-08 00:00:00"</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;meta&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;page&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;perPage&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;total&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;totalPages&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">    </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"page"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"perPage"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"totalPages"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
 <span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">&quot;links&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;self&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:8080/api/books?page=1&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;first&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:8080/api/books?page=1&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;last&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:8080/api/books?page=1&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;prev&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;next&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">    </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:8080/api/books?page=1"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"first"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:8080/api/books?page=1"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"last"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:8080/api/books?page=1"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"prev"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -535,7 +535,7 @@ We’ll use <code class="xref php php-class docutils literal notranslate"><span 
 <span class="sd">     */</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">getIndex</span><span class="p">(</span><span class="o">?</span><span class="nx">int</span> <span class="nv">$id</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span><span class="o">:</span> <span class="nx">ResponseInterface</span>
     <span class="p">{</span>
-        <span class="nv">$model</span>       <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;BookModel&#39;</span><span class="p">);</span>
+        <span class="nv">$model</span>       <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">'BookModel'</span><span class="p">);</span>
         <span class="nv">$transformer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BookTransformer</span><span class="p">();</span>
 
         <span class="c1">// If an ID is provided, fetch a single record</span>
@@ -543,7 +543,7 @@ We’ll use <code class="xref php php-class docutils literal notranslate"><span 
             <span class="nv">$book</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">withAuthorInfo</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
 
             <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$book</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failNotFound</span><span class="p">(</span><span class="s1">&#39;Book not found&#39;</span><span class="p">);</span>
+                <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failNotFound</span><span class="p">(</span><span class="s1">'Book not found'</span><span class="p">);</span>
             <span class="p">}</span>
 
             <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respond</span><span class="p">(</span><span class="nv">$transformer</span><span class="o">-&gt;</span><span class="na">transform</span><span class="p">(</span><span class="nv">$book</span><span class="p">));</span>
@@ -565,19 +565,19 @@ We’ll use <code class="xref php php-class docutils literal notranslate"><span 
         <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getRawInput</span><span class="p">();</span>
 
         <span class="nv">$rules</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s1">&#39;title&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;required|string|max_length[255]&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;author_id&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|integer|is_not_unique[authors.id]&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;year&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;required|integer|greater_than_equal_to[2000]|less_than_equal_to[&#39;</span> <span class="o">.</span> <span class="nb">date</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39;]&#39;</span><span class="p">,</span>
+            <span class="s1">'title'</span>     <span class="o">=&gt;</span> <span class="s1">'required|string|max_length[255]'</span><span class="p">,</span>
+            <span class="s1">'author_id'</span> <span class="o">=&gt;</span> <span class="s1">'required|integer|is_not_unique[authors.id]'</span><span class="p">,</span>
+            <span class="s1">'year'</span>      <span class="o">=&gt;</span> <span class="s1">'required|integer|greater_than_equal_to[2000]|less_than_equal_to['</span> <span class="o">.</span> <span class="nb">date</span><span class="p">(</span><span class="s1">'Y'</span><span class="p">)</span> <span class="o">.</span> <span class="s1">']'</span><span class="p">,</span>
         <span class="p">];</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">(</span><span class="nv">$rules</span><span class="p">))</span> <span class="p">{</span>
             <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failValidationErrors</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validator</span><span class="o">-&gt;</span><span class="na">getErrors</span><span class="p">());</span>
         <span class="p">}</span>
 
-        <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;BookModel&#39;</span><span class="p">);</span>
+        <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">'BookModel'</span><span class="p">);</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">))</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failNotFound</span><span class="p">(</span><span class="s1">&#39;Book not found&#39;</span><span class="p">);</span>
+            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failNotFound</span><span class="p">(</span><span class="s1">'Book not found'</span><span class="p">);</span>
         <span class="p">}</span>
 
         <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span><span class="nv">$id</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
@@ -597,16 +597,16 @@ We’ll use <code class="xref php php-class docutils literal notranslate"><span 
         <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">();</span>
 
         <span class="nv">$rules</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s1">&#39;title&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;required|string|max_length[255]&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;author_id&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|integer|is_not_unique[authors.id]&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;year&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;required|integer|greater_than_equal_to[2000]|less_than_equal_to[&#39;</span> <span class="o">.</span> <span class="nb">date</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39;]&#39;</span><span class="p">,</span>
+            <span class="s1">'title'</span>     <span class="o">=&gt;</span> <span class="s1">'required|string|max_length[255]'</span><span class="p">,</span>
+            <span class="s1">'author_id'</span> <span class="o">=&gt;</span> <span class="s1">'required|integer|is_not_unique[authors.id]'</span><span class="p">,</span>
+            <span class="s1">'year'</span>      <span class="o">=&gt;</span> <span class="s1">'required|integer|greater_than_equal_to[2000]|less_than_equal_to['</span> <span class="o">.</span> <span class="nb">date</span><span class="p">(</span><span class="s1">'Y'</span><span class="p">)</span> <span class="o">.</span> <span class="s1">']'</span><span class="p">,</span>
         <span class="p">];</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">(</span><span class="nv">$rules</span><span class="p">))</span> <span class="p">{</span>
             <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failValidationErrors</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validator</span><span class="o">-&gt;</span><span class="na">getErrors</span><span class="p">());</span>
         <span class="p">}</span>
 
-        <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;BookModel&#39;</span><span class="p">);</span>
+        <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">'BookModel'</span><span class="p">);</span>
         <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 
         <span class="nv">$newBook</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">withAuthorInfo</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$model</span><span class="o">-&gt;</span><span class="na">insertID</span><span class="p">());</span>
@@ -621,15 +621,15 @@ We’ll use <code class="xref php php-class docutils literal notranslate"><span 
 <span class="sd">     */</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">deleteIndex</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$id</span><span class="p">)</span><span class="o">:</span> <span class="nx">ResponseInterface</span>
     <span class="p">{</span>
-        <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;BookModel&#39;</span><span class="p">);</span>
+        <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">'BookModel'</span><span class="p">);</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">))</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failNotFound</span><span class="p">(</span><span class="s1">&#39;Book not found&#39;</span><span class="p">);</span>
+            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failNotFound</span><span class="p">(</span><span class="s1">'Book not found'</span><span class="p">);</span>
         <span class="p">}</span>
 
         <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
 
-        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respondDeleted</span><span class="p">([</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">]);</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respondDeleted</span><span class="p">([</span><span class="s1">'id'</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">]);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -661,7 +661,7 @@ DELETE /api/books/delete/(:id) -&gt; deleteDelete($id)
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

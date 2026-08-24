@@ -382,8 +382,8 @@ uppercase like “GET”, “POST”, and so on.</p>
 <h4>app/Config/Filters.php<a class="headerlink" href="#app-config-filters-php" title="Link to this heading"></a></h4>
 <p>You should update the keys to uppercase in <code class="docutils literal notranslate"><span class="pre">$methods</span></code> in <strong>app/Config/Filters.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">array</span> <span class="nv">$methods</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;POST&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;invalidchars&#39;</span><span class="p">,</span> <span class="s1">&#39;csrf&#39;</span><span class="p">],</span>
-    <span class="s1">&#39;GET&#39;</span>  <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;csrf&#39;</span><span class="p">],</span>
+    <span class="s1">'POST'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'invalidchars'</span><span class="p">,</span> <span class="s1">'csrf'</span><span class="p">],</span>
+    <span class="s1">'GET'</span>  <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'csrf'</span><span class="p">],</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -395,8 +395,8 @@ method. But this bug has been fixed.</p>
 <p>Now you must pass the correct HTTP method names like <code class="docutils literal notranslate"><span class="pre">GET</span></code>, <code class="docutils literal notranslate"><span class="pre">POST</span></code>. Otherwise
 you would get the error response:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$client</span>   <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">curlrequest</span><span class="p">();</span>
-<span class="nv">$response</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="s1">&#39;https://www.google.com/&#39;</span><span class="p">,</span> <span class="p">[</span>
-    <span class="s1">&#39;http_errors&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+<span class="nv">$response</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'get'</span><span class="p">,</span> <span class="s1">'https://www.google.com/'</span><span class="p">,</span> <span class="p">[</span>
+    <span class="s1">'http_errors'</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
 <span class="p">]);</span>
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getStatusCode</span><span class="p">();</span> <span class="c1">// In previous versions: 200</span>
                             <span class="c1">//      In this version: 405</span>
@@ -411,13 +411,13 @@ options in inner <code class="docutils literal notranslate"><span class="pre">gr
 <p>Check and correct your route configuration as it could change the values of the
 options applied.</p>
 <p>For example,</p>
-<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">$routes-&gt;group(&#39;admin&#39;, [&#39;filter&#39; =&gt; &#39;csrf&#39;], static function ($routes) {</span>
-<span class="x">    $routes-&gt;get(&#39;/&#39;, static function () {</span>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">$routes-&gt;group('admin', ['filter' =&gt; 'csrf'], static function ($routes) {</span>
+<span class="x">    $routes-&gt;get('/', static function () {</span>
 <span class="x">        // ...</span>
 <span class="x">    });</span>
 
-<span class="x">    $routes-&gt;group(&#39;users&#39;, [&#39;namespace&#39; =&gt; &#39;Users&#39;], static function ($routes) {</span>
-<span class="x">        $routes-&gt;get(&#39;/&#39;, static function () {</span>
+<span class="x">    $routes-&gt;group('users', ['namespace' =&gt; 'Users'], static function ($routes) {</span>
+<span class="x">        $routes-&gt;get('/', static function () {</span>
 <span class="x">            // ...</span>
 <span class="x">        });</span>
 <span class="x">    });</span>
@@ -454,12 +454,12 @@ reversed.</p>
 <blockquote>
 <div><p>When you have the following configuration:</p>
 <div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">// In app/Config/Routes.php</span>
-<span class="x">$routes-&gt;get(&#39;/&#39;, &#39;Home::index&#39;, [&#39;filter&#39; =&gt; [&#39;route1&#39;, &#39;route2&#39;]]);</span>
+<span class="x">$routes-&gt;get('/', 'Home::index', ['filter' =&gt; ['route1', 'route2']]);</span>
 
 <span class="x">// In app/Config/Filters.php</span>
 <span class="x">public array $filters = [</span>
-<span class="x">    &#39;filter1&#39; =&gt; [&#39;before&#39; =&gt; &#39;*&#39;, &#39;after&#39; =&gt; &#39;*&#39;],</span>
-<span class="x">    &#39;filter2&#39; =&gt; [&#39;before&#39; =&gt; &#39;*&#39;, &#39;after&#39; =&gt; &#39;*&#39;],</span>
+<span class="x">    'filter1' =&gt; ['before' =&gt; '*', 'after' =&gt; '*'],</span>
+<span class="x">    'filter2' =&gt; ['before' =&gt; '*', 'after' =&gt; '*'],</span>
 <span class="x">];</span>
 </pre></div>
 </div>
@@ -534,7 +534,7 @@ for details.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">set404Override</span><span class="p">(</span><span class="k">static</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="nx">response</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
 
-    <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;my_errors/not_found.html&#39;</span><span class="p">);</span>
+    <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'my_errors/not_found.html'</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
 </div>
@@ -570,22 +570,22 @@ and it is recommended that you merge the updated versions with your application:
 <p>The following items are added in the <code class="docutils literal notranslate"><span class="pre">$aliases</span></code> property:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">array</span> <span class="nv">$aliases</span> <span class="o">=</span> <span class="p">[</span>
     <span class="c1">// ...</span>
-    <span class="s1">&#39;forcehttps&#39;</span>    <span class="o">=&gt;</span> <span class="nx">\CodeIgniter\Filters\ForceHTTPS</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
-    <span class="s1">&#39;pagecache&#39;</span>     <span class="o">=&gt;</span> <span class="nx">\CodeIgniter\Filters\PageCache</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
-    <span class="s1">&#39;performance&#39;</span>   <span class="o">=&gt;</span> <span class="nx">\CodeIgniter\Filters\PerformanceMetrics</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+    <span class="s1">'forcehttps'</span>    <span class="o">=&gt;</span> <span class="nx">\CodeIgniter\Filters\ForceHTTPS</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+    <span class="s1">'pagecache'</span>     <span class="o">=&gt;</span> <span class="nx">\CodeIgniter\Filters\PageCache</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+    <span class="s1">'performance'</span>   <span class="o">=&gt;</span> <span class="nx">\CodeIgniter\Filters\PerformanceMetrics</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
 <p>A new property <code class="docutils literal notranslate"><span class="pre">$required</span></code> is added, and set as the following:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">array</span> <span class="nv">$required</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;forcehttps&#39;</span><span class="p">,</span> <span class="c1">// Force Global Secure Requests</span>
-        <span class="s1">&#39;pagecache&#39;</span><span class="p">,</span>  <span class="c1">// Web Page Caching</span>
+    <span class="s1">'before'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'forcehttps'</span><span class="p">,</span> <span class="c1">// Force Global Secure Requests</span>
+        <span class="s1">'pagecache'</span><span class="p">,</span>  <span class="c1">// Web Page Caching</span>
     <span class="p">],</span>
-    <span class="s1">&#39;after&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;pagecache&#39;</span><span class="p">,</span>   <span class="c1">// Web Page Caching</span>
-        <span class="s1">&#39;performance&#39;</span><span class="p">,</span> <span class="c1">// Performance Metrics</span>
-        <span class="s1">&#39;toolbar&#39;</span><span class="p">,</span>     <span class="c1">// Debug Toolbar</span>
+    <span class="s1">'after'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'pagecache'</span><span class="p">,</span>   <span class="c1">// Web Page Caching</span>
+        <span class="s1">'performance'</span><span class="p">,</span> <span class="c1">// Performance Metrics</span>
+        <span class="s1">'toolbar'</span><span class="p">,</span>     <span class="c1">// Debug Toolbar</span>
     <span class="p">],</span>
 <span class="p">];</span>
 </pre></div>
@@ -701,7 +701,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

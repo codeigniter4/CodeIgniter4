@@ -306,7 +306,7 @@ numeric data in a locale-aware manner.</p>
 <p>This helper is loaded using the following code:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;number&#39;</span><span class="p">);</span>
+<span class="nx">helper</span><span class="p">(</span><span class="s1">'number'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -362,9 +362,9 @@ locale taken from the headers, or the app-default:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Generates 11.2 TB</span>
-<span class="k">echo</span> <span class="nx">number_to_size</span><span class="p">(</span><span class="mi">12345678912345</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;en_US&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">number_to_size</span><span class="p">(</span><span class="mi">12345678912345</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'en_US'</span><span class="p">);</span>
 <span class="c1">// Generates 11,2 TB</span>
-<span class="k">echo</span> <span class="nx">number_to_size</span><span class="p">(</span><span class="mi">12345678912345</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;fr_FR&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">number_to_size</span><span class="p">(</span><span class="mi">12345678912345</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'fr_FR'</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -399,7 +399,7 @@ for numbers up to the quadrillions. Examples:</p>
 <span class="k">echo</span> <span class="nx">number_to_amount</span><span class="p">(</span><span class="mi">123456</span><span class="p">);</span> <span class="c1">// Returns 123 thousand</span>
 <span class="k">echo</span> <span class="nx">number_to_amount</span><span class="p">(</span><span class="mi">123456789</span><span class="p">);</span> <span class="c1">// Returns 123 million</span>
 <span class="k">echo</span> <span class="nx">number_to_amount</span><span class="p">(</span><span class="mi">1234567890123</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// Returns 1.23 trillion</span>
-<span class="k">echo</span> <span class="nx">number_to_amount</span><span class="p">(</span><span class="s1">&#39;123,456,789,012&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// Returns 123.46 billion</span>
+<span class="k">echo</span> <span class="nx">number_to_amount</span><span class="p">(</span><span class="s1">'123,456,789,012'</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// Returns 123.46 billion</span>
 </pre></div>
 </div>
 <p>An optional second parameter allows you to set the precision of the result:</p>
@@ -411,7 +411,7 @@ for numbers up to the quadrillions. Examples:</p>
 <p>An optional third parameter allows the locale to be specified:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">number_to_amount</span><span class="p">(</span><span class="s1">&#39;123,456,789,012&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;de_DE&#39;</span><span class="p">);</span> <span class="c1">// Returns 123,46 billion</span>
+<span class="k">echo</span> <span class="nx">number_to_amount</span><span class="p">(</span><span class="s1">'123,456,789,012'</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'de_DE'</span><span class="p">);</span> <span class="c1">// Returns 123,46 billion</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -438,10 +438,10 @@ for numbers up to the quadrillions. Examples:</p>
 <p>Converts a number in common currency formats, like USD, EUR, GBP, etc:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">&#39;USD&#39;</span><span class="p">,</span> <span class="s1">&#39;en_US&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>  <span class="c1">// Returns $1,234.56</span>
-<span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">&#39;EUR&#39;</span><span class="p">,</span> <span class="s1">&#39;de_DE&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>  <span class="c1">// Returns 1.234,56 €</span>
-<span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">&#39;GBP&#39;</span><span class="p">,</span> <span class="s1">&#39;en_GB&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>  <span class="c1">// Returns £1,234.56</span>
-<span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">&#39;YEN&#39;</span><span class="p">,</span> <span class="s1">&#39;ja_JP&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>  <span class="c1">// Returns YEN 1,234.56</span>
+<span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">'USD'</span><span class="p">,</span> <span class="s1">'en_US'</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>  <span class="c1">// Returns $1,234.56</span>
+<span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">'EUR'</span><span class="p">,</span> <span class="s1">'de_DE'</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>  <span class="c1">// Returns 1.234,56 €</span>
+<span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">'GBP'</span><span class="p">,</span> <span class="s1">'en_GB'</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>  <span class="c1">// Returns £1,234.56</span>
+<span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">'YEN'</span><span class="p">,</span> <span class="s1">'ja_JP'</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>  <span class="c1">// Returns YEN 1,234.56</span>
 </pre></div>
 </div>
 <p>If you don’t specify a locale, the Request locale is used.</p>
@@ -490,7 +490,7 @@ It will return <code class="docutils literal notranslate"><span class="pre">null
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

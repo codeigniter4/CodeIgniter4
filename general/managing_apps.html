@@ -318,7 +318,7 @@ your main <strong>app/Config/Paths.php</strong> and set a <em>full server path</
 <span class="p">{</span>
     <span class="c1">// ...</span>
 
-    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$appDirectory</span> <span class="o">=</span> <span class="s1">&#39;/path/to/your/app&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$appDirectory</span> <span class="o">=</span> <span class="s1">'/path/to/your/app'</span><span class="p">;</span>
 
     <span class="c1">// ...</span>
 <span class="p">}</span>
@@ -328,13 +328,13 @@ your main <strong>app/Config/Paths.php</strong> and set a <em>full server path</
 they can find the <strong>Paths</strong> configuration file:</p>
 <ul>
 <li><p><strong>spark</strong> runs command line apps.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">require</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;../app/Config/Paths.php&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">require</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">'../app/Config/Paths.php'</span><span class="p">;</span>
 <span class="c1">// ^^^ Change this line if you move your application folder</span>
 </pre></div>
 </div>
 </li>
 <li><p><strong>public/index.php</strong> is the front controller for your webapp.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">require</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;../app/Config/Paths.php&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">require</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">'../app/Config/Paths.php'</span><span class="p">;</span>
 <span class="c1">// ^^^ Change this line if you move your application folder</span>
 </pre></div>
 </div>
@@ -392,7 +392,7 @@ of those would be set to refer to the shared common <strong>codeigniter4/framewo
 <span class="p">{</span>
     <span class="c1">// ...</span>
 
-    <span class="k">public</span> <span class="nv">$systemDirectory</span> <span class="o">=</span> <span class="no">__DIR__</span> <span class="o">.</span> <span class="s1">&#39;/../../../vendor/codeigniter4/framework/system&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nv">$systemDirectory</span> <span class="o">=</span> <span class="no">__DIR__</span> <span class="o">.</span> <span class="s1">'/../../../vendor/codeigniter4/framework/system'</span><span class="p">;</span>
 
     <span class="c1">// ...</span>
 <span class="p">}</span>
@@ -402,7 +402,7 @@ of those would be set to refer to the shared common <strong>codeigniter4/framewo
 of those:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nb">defined</span><span class="p">(</span><span class="s1">&#39;COMPOSER_PATH&#39;</span><span class="p">)</span> <span class="o">||</span> <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;COMPOSER_PATH&#39;</span><span class="p">,</span> <span class="nx">ROOTPATH</span> <span class="o">.</span> <span class="s1">&#39;../vendor/autoload.php&#39;</span><span class="p">);</span>
+<span class="nb">defined</span><span class="p">(</span><span class="s1">'COMPOSER_PATH'</span><span class="p">)</span> <span class="o">||</span> <span class="nb">define</span><span class="p">(</span><span class="s1">'COMPOSER_PATH'</span><span class="p">,</span> <span class="nx">ROOTPATH</span> <span class="o">.</span> <span class="s1">'../vendor/autoload.php'</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -444,7 +444,7 @@ database, mail server, or third-party APIs.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

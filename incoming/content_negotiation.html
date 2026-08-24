@@ -334,7 +334,7 @@ likely choosing a JPEG image to return.</p>
 <p>You can load an instance of the class manually through the Service class:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$negotiate</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;negotiator&#39;</span><span class="p">);</span>
+<span class="nv">$negotiate</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'negotiator'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This will grab the current request instance and automatically inject it into the Negotiator class.</p>
@@ -343,7 +343,7 @@ instance. While you cannot access it directly this way, you can easily access al
 method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;media&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">]);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">'media'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'foo'</span><span class="p">,</span> <span class="s1">'bar'</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>When accessed this way, the first parameter is the type of content you’re trying to find a match for, while the
@@ -368,12 +368,12 @@ be able to return data as raw HTML, JSON, or XML. This list should be provided i
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$supported</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;text/html&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;application/xml&#39;</span><span class="p">,</span>
+    <span class="s1">'application/json'</span><span class="p">,</span>
+    <span class="s1">'text/html'</span><span class="p">,</span>
+    <span class="s1">'application/xml'</span><span class="p">,</span>
 <span class="p">];</span>
 
-<span class="nv">$format</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;media&#39;</span><span class="p">,</span> <span class="nv">$supported</span><span class="p">);</span>
+<span class="nv">$format</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">'media'</span><span class="p">,</span> <span class="nv">$supported</span><span class="p">);</span>
 <span class="c1">// or</span>
 <span class="nv">$format</span> <span class="o">=</span> <span class="nv">$negotiate</span><span class="o">-&gt;</span><span class="na">media</span><span class="p">(</span><span class="nv">$supported</span><span class="p">);</span>
 </pre></div>
@@ -384,7 +384,7 @@ In some cases, though, you might need to enforce the format to be a strict match
 final value, it will return an empty string if no match is found:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$format</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;media&#39;</span><span class="p">,</span> <span class="nv">$supported</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="nv">$format</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">'media'</span><span class="p">,</span> <span class="nv">$supported</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 <span class="c1">// or</span>
 <span class="nv">$format</span> <span class="o">=</span> <span class="nv">$negotiate</span><span class="o">-&gt;</span><span class="na">media</span><span class="p">(</span><span class="nv">$supported</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 </pre></div>
@@ -405,11 +405,11 @@ and German you would do something like:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$supported</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;en&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;de&#39;</span><span class="p">,</span>
+    <span class="s1">'en'</span><span class="p">,</span>
+    <span class="s1">'de'</span><span class="p">,</span>
 <span class="p">];</span>
 
-<span class="nv">$lang</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;language&#39;</span><span class="p">,</span> <span class="nv">$supported</span><span class="p">);</span>
+<span class="nv">$lang</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">'language'</span><span class="p">,</span> <span class="nv">$supported</span><span class="p">);</span>
 <span class="c1">// or</span>
 <span class="nv">$lang</span> <span class="o">=</span> <span class="nv">$negotiate</span><span class="o">-&gt;</span><span class="na">language</span><span class="p">(</span><span class="nv">$supported</span><span class="p">);</span>
 </pre></div>
@@ -443,11 +443,11 @@ supports German and English (United States):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$supported</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;de&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;en-US&#39;</span><span class="p">,</span>
+    <span class="s1">'de'</span><span class="p">,</span>
+    <span class="s1">'en-US'</span><span class="p">,</span>
 <span class="p">];</span>
 
-<span class="nv">$lang</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;language&#39;</span><span class="p">,</span> <span class="nv">$supported</span><span class="p">);</span>
+<span class="nv">$lang</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">'language'</span><span class="p">,</span> <span class="nv">$supported</span><span class="p">);</span>
 <span class="c1">// or</span>
 <span class="nv">$lang</span> <span class="o">=</span> <span class="nv">$negotiate</span><span class="o">-&gt;</span><span class="na">language</span><span class="p">(</span><span class="nv">$supported</span><span class="p">);</span>
 </pre></div>
@@ -477,9 +477,9 @@ specify the type of compression the client supports:</p>
 <p>Your web server will define what types of compression you can use. Some, like Apache, only support <strong>gzip</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$type</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;encoding&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;gzip&#39;</span><span class="p">]);</span>
+<span class="nv">$type</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">'encoding'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'gzip'</span><span class="p">]);</span>
 <span class="c1">// or</span>
-<span class="nv">$type</span> <span class="o">=</span> <span class="nv">$negotiate</span><span class="o">-&gt;</span><span class="na">encoding</span><span class="p">([</span><span class="s1">&#39;gzip&#39;</span><span class="p">]);</span>
+<span class="nv">$type</span> <span class="o">=</span> <span class="nv">$negotiate</span><span class="o">-&gt;</span><span class="na">encoding</span><span class="p">([</span><span class="s1">'gzip'</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>See more at <a class="reference external" href="https://en.wikipedia.org/wiki/HTTP_compression">Wikipedia</a>.</p>
@@ -494,9 +494,9 @@ specify the type of compression the client supports:</p>
 <p>By default, if no matches are found, <strong>utf-8</strong> will be returned:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$charset</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;charset&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;utf-8&#39;</span><span class="p">]);</span>
+<span class="nv">$charset</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">'charset'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'utf-8'</span><span class="p">]);</span>
 <span class="c1">// or</span>
-<span class="nv">$charset</span> <span class="o">=</span> <span class="nv">$negotiate</span><span class="o">-&gt;</span><span class="na">charset</span><span class="p">([</span><span class="s1">&#39;utf-8&#39;</span><span class="p">]);</span>
+<span class="nv">$charset</span> <span class="o">=</span> <span class="nv">$negotiate</span><span class="o">-&gt;</span><span class="na">charset</span><span class="p">([</span><span class="s1">'utf-8'</span><span class="p">]);</span>
 </pre></div>
 </div>
 </section>
@@ -515,7 +515,7 @@ specify the type of compression the client supports:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

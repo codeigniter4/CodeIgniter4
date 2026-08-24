@@ -383,10 +383,10 @@ of the time you will want to specify the formatters to use as the second paramet
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\Fabricator</span><span class="p">;</span>
 
 <span class="nv">$formatters</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;first&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;firstName&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;phoneNumber&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;imageUrl&#39;</span><span class="p">,</span>
+    <span class="s1">'first'</span>  <span class="o">=&gt;</span> <span class="s1">'firstName'</span><span class="p">,</span>
+    <span class="s1">'email'</span>  <span class="o">=&gt;</span> <span class="s1">'email'</span><span class="p">,</span>
+    <span class="s1">'phone'</span>  <span class="o">=&gt;</span> <span class="s1">'phoneNumber'</span><span class="p">,</span>
+    <span class="s1">'avatar'</span> <span class="o">=&gt;</span> <span class="s1">'imageUrl'</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="nv">$fabricator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Fabricator</span><span class="p">(</span><span class="nx">UserModel</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="nv">$formatters</span><span class="p">);</span>
@@ -411,22 +411,22 @@ method where you can define exactly what the faked data should look like:</p>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">fake</span><span class="p">(</span><span class="nx">Generator</span> <span class="o">&amp;</span><span class="nv">$faker</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="p">[</span>
-            <span class="s1">&#39;first&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">firstName</span><span class="p">(),</span>
-            <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">email</span><span class="p">(),</span>
-            <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">phoneNumber</span><span class="p">(),</span>
-            <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="nx">\Faker\Provider\Image</span><span class="o">::</span><span class="na">imageUrl</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span> <span class="mi">400</span><span class="p">),</span>
-            <span class="s1">&#39;login&#39;</span>  <span class="o">=&gt;</span> <span class="nx">config</span><span class="p">(</span><span class="s1">&#39;Auth&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">allowRemembering</span> <span class="o">?</span> <span class="nb">date</span><span class="p">(</span><span class="s1">&#39;Y-m-d&#39;</span><span class="p">)</span> <span class="o">:</span> <span class="k">null</span><span class="p">,</span>
+            <span class="s1">'first'</span>  <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">firstName</span><span class="p">(),</span>
+            <span class="s1">'email'</span>  <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">email</span><span class="p">(),</span>
+            <span class="s1">'phone'</span>  <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">phoneNumber</span><span class="p">(),</span>
+            <span class="s1">'avatar'</span> <span class="o">=&gt;</span> <span class="nx">\Faker\Provider\Image</span><span class="o">::</span><span class="na">imageUrl</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span> <span class="mi">400</span><span class="p">),</span>
+            <span class="s1">'login'</span>  <span class="o">=&gt;</span> <span class="nx">config</span><span class="p">(</span><span class="s1">'Auth'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">allowRemembering</span> <span class="o">?</span> <span class="nb">date</span><span class="p">(</span><span class="s1">'Y-m-d'</span><span class="p">)</span> <span class="o">:</span> <span class="k">null</span><span class="p">,</span>
         <span class="p">];</span>
 
         <span class="cm">/*</span>
 <span class="cm">         * Or you can return a return type object.</span>
 
 <span class="cm">        return new User([</span>
-<span class="cm">            &#39;first&#39;  =&gt; $faker-&gt;firstName(),</span>
-<span class="cm">            &#39;email&#39;  =&gt; $faker-&gt;email(),</span>
-<span class="cm">            &#39;phone&#39;  =&gt; $faker-&gt;phoneNumber(),</span>
-<span class="cm">            &#39;avatar&#39; =&gt; \Faker\Provider\Image::imageUrl(800, 400),</span>
-<span class="cm">            &#39;login&#39;  =&gt; config(&#39;Auth&#39;)-&gt;allowRemembering ? date(&#39;Y-m-d&#39;) : null,</span>
+<span class="cm">            'first'  =&gt; $faker-&gt;firstName(),</span>
+<span class="cm">            'email'  =&gt; $faker-&gt;email(),</span>
+<span class="cm">            'phone'  =&gt; $faker-&gt;phoneNumber(),</span>
+<span class="cm">            'avatar' =&gt; \Faker\Provider\Image::imageUrl(800, 400),</span>
+<span class="cm">            'login'  =&gt; config('Auth')-&gt;allowRemembering ? date('Y-m-d') : null,</span>
 <span class="cm">        ]);</span>
 
 <span class="cm">        */</span>
@@ -471,9 +471,9 @@ dedicated methods.</p>
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\Fabricator</span><span class="p">;</span>
 
 <span class="nv">$fabricator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Fabricator</span><span class="p">(</span><span class="nx">UserModel</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
-<span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">setUnique</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">);</span> <span class="c1">// sets generated emails to be always unique</span>
-<span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">setOptional</span><span class="p">(</span><span class="s1">&#39;group_id&#39;</span><span class="p">);</span> <span class="c1">// sets group id to be optional, with 50% chance to be `null`</span>
-<span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">setValid</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="nx">fn</span> <span class="p">(</span><span class="nx">int</span> <span class="nv">$age</span><span class="p">)</span><span class="o">:</span> <span class="nx">bool</span> <span class="o">=&gt;</span> <span class="nv">$age</span> <span class="o">&gt;=</span> <span class="mi">18</span><span class="p">);</span> <span class="c1">// sets age to be 18 and above only</span>
+<span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">setUnique</span><span class="p">(</span><span class="s1">'email'</span><span class="p">);</span> <span class="c1">// sets generated emails to be always unique</span>
+<span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">setOptional</span><span class="p">(</span><span class="s1">'group_id'</span><span class="p">);</span> <span class="c1">// sets group id to be optional, with 50% chance to be `null`</span>
+<span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">setValid</span><span class="p">(</span><span class="s1">'age'</span><span class="p">,</span> <span class="k">static</span> <span class="nx">fn</span> <span class="p">(</span><span class="nx">int</span> <span class="nv">$age</span><span class="p">)</span><span class="o">:</span> <span class="nx">bool</span> <span class="o">=&gt;</span> <span class="nv">$age</span> <span class="o">&gt;=</span> <span class="mi">18</span><span class="p">);</span> <span class="c1">// sets age to be 18 and above only</span>
 
 <span class="nv">$users</span> <span class="o">=</span> <span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
 </pre></div>
@@ -491,14 +491,14 @@ the <code class="docutils literal notranslate"><span class="pre">fake()</span></
 
 <span class="k">class</span> <span class="nc">UserModel</span>
 <span class="p">{</span>
-    <span class="k">protected</span> <span class="nv">$table</span> <span class="o">=</span> <span class="s1">&#39;users&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$table</span> <span class="o">=</span> <span class="s1">'users'</span><span class="p">;</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">fake</span><span class="p">(</span><span class="nx">Generator</span> <span class="o">&amp;</span><span class="nv">$faker</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="p">[</span>
-            <span class="s1">&#39;first&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">firstName</span><span class="p">(),</span>
-            <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">unique</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">email</span><span class="p">(),</span>
-            <span class="s1">&#39;group_id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">optional</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">passthrough</span><span class="p">(</span><span class="nb">mt_rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">Fabricator</span><span class="o">::</span><span class="na">getCount</span><span class="p">(</span><span class="s1">&#39;groups&#39;</span><span class="p">))),</span>
+            <span class="s1">'first'</span>    <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">firstName</span><span class="p">(),</span>
+            <span class="s1">'email'</span>    <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">unique</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">email</span><span class="p">(),</span>
+            <span class="s1">'group_id'</span> <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">optional</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">passthrough</span><span class="p">(</span><span class="nb">mt_rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">Fabricator</span><span class="o">::</span><span class="na">getCount</span><span class="p">(</span><span class="s1">'groups'</span><span class="p">))),</span>
         <span class="p">];</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -514,7 +514,7 @@ support your locale. Specify a locale in the third parameter while initiating a 
 <span class="k">use</span> <span class="nx">App\Models\UserModel</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\Fabricator</span><span class="p">;</span>
 
-<span class="nv">$fabricator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Fabricator</span><span class="p">(</span><span class="nx">UserModel</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="s1">&#39;fr_FR&#39;</span><span class="p">);</span>
+<span class="nv">$fabricator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Fabricator</span><span class="p">(</span><span class="nx">UserModel</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="s1">'fr_FR'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If no locale is specified it will use the one defined in <strong>app/Config/App.php</strong> as <code class="docutils literal notranslate"><span class="pre">defaultLocale</span></code>.
@@ -537,11 +537,11 @@ You can check the locale of an existing fabricator using its <code class="docuti
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="p">[</span>
-    <span class="s1">&#39;first&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Maynard&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;king.alford@example.org&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;201-886-0269 x3767&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://lorempixel.com/800/400/&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;login&#39;</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
+    <span class="s1">'first'</span>  <span class="o">=&gt;</span> <span class="s1">'Maynard'</span><span class="p">,</span>
+    <span class="s1">'email'</span>  <span class="o">=&gt;</span> <span class="s1">'king.alford@example.org'</span><span class="p">,</span>
+    <span class="s1">'phone'</span>  <span class="o">=&gt;</span> <span class="s1">'201-886-0269 x3767'</span><span class="p">,</span>
+    <span class="s1">'avatar'</span> <span class="o">=&gt;</span> <span class="s1">'http://lorempixel.com/800/400/'</span><span class="p">,</span>
+    <span class="s1">'login'</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -557,7 +557,7 @@ force a type using the methods directly:</p>
 
 <span class="nv">$userArray</span>  <span class="o">=</span> <span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">makeArray</span><span class="p">();</span>
 <span class="nv">$userObject</span> <span class="o">=</span> <span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">makeObject</span><span class="p">();</span>
-<span class="nv">$userEntity</span> <span class="o">=</span> <span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">makeObject</span><span class="p">(</span><span class="s1">&#39;App\Entities\User&#39;</span><span class="p">);</span>
+<span class="nv">$userEntity</span> <span class="o">=</span> <span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">makeObject</span><span class="p">(</span><span class="s1">'App\Entities\User'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The return from <code class="docutils literal notranslate"><span class="pre">make()</span></code> is ready to be used in tests or inserted into the database. Alternatively
@@ -567,14 +567,14 @@ from <code class="docutils literal notranslate"><span class="pre">create()</span
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="p">[</span>
-    <span class="s1">&#39;id&#39;</span>         <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="s1">&#39;first&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;Rachel&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;bradley72@gmail.com&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;phone&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;741-241-2356&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;avatar&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;http://lorempixel.com/800/400/&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;login&#39;</span>      <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
-    <span class="s1">&#39;created_at&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;2020-05-08 14:52:10&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;updated_at&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;2020-05-08 14:52:10&#39;</span><span class="p">,</span>
+    <span class="s1">'id'</span>         <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">'first'</span>      <span class="o">=&gt;</span> <span class="s1">'Rachel'</span><span class="p">,</span>
+    <span class="s1">'email'</span>      <span class="o">=&gt;</span> <span class="s1">'bradley72@gmail.com'</span><span class="p">,</span>
+    <span class="s1">'phone'</span>      <span class="o">=&gt;</span> <span class="s1">'741-241-2356'</span><span class="p">,</span>
+    <span class="s1">'avatar'</span>     <span class="o">=&gt;</span> <span class="s1">'http://lorempixel.com/800/400/'</span><span class="p">,</span>
+    <span class="s1">'login'</span>      <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
+    <span class="s1">'created_at'</span> <span class="o">=&gt;</span> <span class="s1">'2020-05-08 14:52:10'</span><span class="p">,</span>
+    <span class="s1">'updated_at'</span> <span class="o">=&gt;</span> <span class="s1">'2020-05-08 14:52:10'</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -592,7 +592,7 @@ the object with extra database fields above without actually touching the databa
 <span class="nv">$user</span> <span class="o">=</span> <span class="nv">$fabricator</span><span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertIsNumeric</span><span class="p">(</span><span class="nv">$user</span><span class="o">-&gt;</span><span class="na">id</span><span class="p">);</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">dontSeeInDatabase</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">id</span><span class="p">]);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">dontSeeInDatabase</span><span class="p">(</span><span class="s1">'user'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'id'</span> <span class="o">=&gt;</span> <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">id</span><span class="p">]);</span>
 </pre></div>
 </div>
 </section>
@@ -603,7 +603,7 @@ compromising your formatters configuration. Rather then creating a new fabricato
 you can use <code class="docutils literal notranslate"><span class="pre">setOverrides()</span></code> to specify the value for any fields:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">setOverrides</span><span class="p">([</span><span class="s1">&#39;first&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Bobby&#39;</span><span class="p">]);</span>
+<span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">setOverrides</span><span class="p">([</span><span class="s1">'first'</span> <span class="o">=&gt;</span> <span class="s1">'Bobby'</span><span class="p">]);</span>
 <span class="nv">$bobbyUser</span> <span class="o">=</span> <span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">();</span>
 </pre></div>
 </div>
@@ -611,19 +611,19 @@ you can use <code class="docutils literal notranslate"><span class="pre">setOver
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="p">[</span>
-    <span class="s1">&#39;first&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Bobby&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;latta.kindel@company.org&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;251-806-2169&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://lorempixel.com/800/400/&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;login&#39;</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
+    <span class="s1">'first'</span>  <span class="o">=&gt;</span> <span class="s1">'Bobby'</span><span class="p">,</span>
+    <span class="s1">'email'</span>  <span class="o">=&gt;</span> <span class="s1">'latta.kindel@company.org'</span><span class="p">,</span>
+    <span class="s1">'phone'</span>  <span class="o">=&gt;</span> <span class="s1">'251-806-2169'</span><span class="p">,</span>
+    <span class="s1">'avatar'</span> <span class="o">=&gt;</span> <span class="s1">'http://lorempixel.com/800/400/'</span><span class="p">,</span>
+    <span class="s1">'login'</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="p">[</span>
-    <span class="s1">&#39;first&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Bobby&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;melissa.strike@fabricon.us&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;525-214-2656 x23546&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://lorempixel.com/800/400/&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;login&#39;</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
+    <span class="s1">'first'</span>  <span class="o">=&gt;</span> <span class="s1">'Bobby'</span><span class="p">,</span>
+    <span class="s1">'email'</span>  <span class="o">=&gt;</span> <span class="s1">'melissa.strike@fabricon.us'</span><span class="p">,</span>
+    <span class="s1">'phone'</span>  <span class="o">=&gt;</span> <span class="s1">'525-214-2656 x23546'</span><span class="p">,</span>
+    <span class="s1">'avatar'</span> <span class="o">=&gt;</span> <span class="s1">'http://lorempixel.com/800/400/'</span><span class="p">,</span>
+    <span class="s1">'login'</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -631,7 +631,7 @@ you can use <code class="docutils literal notranslate"><span class="pre">setOver
 override or only for a single action:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">setOverrides</span><span class="p">([</span><span class="s1">&#39;first&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Bobby&#39;</span><span class="p">],</span> <span class="nv">$persist</span> <span class="o">=</span> <span class="k">false</span><span class="p">);</span>
+<span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">setOverrides</span><span class="p">([</span><span class="s1">'first'</span> <span class="o">=&gt;</span> <span class="s1">'Bobby'</span><span class="p">],</span> <span class="nv">$persist</span> <span class="o">=</span> <span class="k">false</span><span class="p">);</span>
 <span class="nv">$bobbyUser</span> <span class="o">=</span> <span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">();</span>
 <span class="nv">$bobbyUser</span> <span class="o">=</span> <span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">();</span>
 </pre></div>
@@ -640,19 +640,19 @@ override or only for a single action:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="p">[</span>
-    <span class="s1">&#39;first&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Bobby&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;belingadon142@example.org&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;741-857-1933 x1351&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://lorempixel.com/800/400/&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;login&#39;</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
+    <span class="s1">'first'</span>  <span class="o">=&gt;</span> <span class="s1">'Bobby'</span><span class="p">,</span>
+    <span class="s1">'email'</span>  <span class="o">=&gt;</span> <span class="s1">'belingadon142@example.org'</span><span class="p">,</span>
+    <span class="s1">'phone'</span>  <span class="o">=&gt;</span> <span class="s1">'741-857-1933 x1351'</span><span class="p">,</span>
+    <span class="s1">'avatar'</span> <span class="o">=&gt;</span> <span class="s1">'http://lorempixel.com/800/400/'</span><span class="p">,</span>
+    <span class="s1">'login'</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="p">[</span>
-    <span class="s1">&#39;first&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Hans&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;hoppifur@metraxalon.com&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;487-235-7006&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://lorempixel.com/800/400/&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;login&#39;</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
+    <span class="s1">'first'</span>  <span class="o">=&gt;</span> <span class="s1">'Hans'</span><span class="p">,</span>
+    <span class="s1">'email'</span>  <span class="o">=&gt;</span> <span class="s1">'hoppifur@metraxalon.com'</span><span class="p">,</span>
+    <span class="s1">'phone'</span>  <span class="o">=&gt;</span> <span class="s1">'487-235-7006'</span><span class="p">,</span>
+    <span class="s1">'avatar'</span> <span class="o">=&gt;</span> <span class="s1">'http://lorempixel.com/800/400/'</span><span class="p">,</span>
+    <span class="s1">'login'</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -664,8 +664,8 @@ override or only for a single action:</p>
 the <code class="docutils literal notranslate"><span class="pre">fake($model,</span> <span class="pre">$overrides,</span> <span class="pre">$persist</span> <span class="pre">=</span> <span class="pre">true)</span></code> function to do just this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">);</span>
-<span class="nv">$user</span> <span class="o">=</span> <span class="nx">fake</span><span class="p">(</span><span class="s1">&#39;App\Models\UserModel&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Gerry&#39;</span><span class="p">]);</span>
+<span class="nx">helper</span><span class="p">(</span><span class="s1">'test'</span><span class="p">);</span>
+<span class="nv">$user</span> <span class="o">=</span> <span class="nx">fake</span><span class="p">(</span><span class="s1">'App\Models\UserModel'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'Gerry'</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>This is equivalent to:</p>
@@ -673,8 +673,8 @@ the <code class="docutils literal notranslate"><span class="pre">fake($model,</s
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\Fabricator</span><span class="p">;</span>
 
-<span class="nv">$fabricator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Fabricator</span><span class="p">(</span><span class="s1">&#39;App\Models\UserModel&#39;</span><span class="p">);</span>
-<span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">setOverrides</span><span class="p">([</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Gerry&#39;</span><span class="p">]);</span>
+<span class="nv">$fabricator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Fabricator</span><span class="p">(</span><span class="s1">'App\Models\UserModel'</span><span class="p">);</span>
+<span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">setOverrides</span><span class="p">([</span><span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'Gerry'</span><span class="p">]);</span>
 <span class="nv">$user</span> <span class="o">=</span> <span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">();</span>
 </pre></div>
 </div>
@@ -698,14 +698,14 @@ Your model’s fake method could look like this:</p>
 
 <span class="k">class</span> <span class="nc">UserModel</span>
 <span class="p">{</span>
-    <span class="k">protected</span> <span class="nv">$table</span> <span class="o">=</span> <span class="s1">&#39;users&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$table</span> <span class="o">=</span> <span class="s1">'users'</span><span class="p">;</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">fake</span><span class="p">(</span><span class="nx">Generator</span> <span class="o">&amp;</span><span class="nv">$faker</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="p">[</span>
-            <span class="s1">&#39;first&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">firstName</span><span class="p">(),</span>
-            <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">email</span><span class="p">(),</span>
-            <span class="s1">&#39;group_id&#39;</span> <span class="o">=&gt;</span> <span class="nb">mt_rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">Fabricator</span><span class="o">::</span><span class="na">getCount</span><span class="p">(</span><span class="s1">&#39;groups&#39;</span><span class="p">)),</span>
+            <span class="s1">'first'</span>    <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">firstName</span><span class="p">(),</span>
+            <span class="s1">'email'</span>    <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">email</span><span class="p">(),</span>
+            <span class="s1">'group_id'</span> <span class="o">=&gt;</span> <span class="nb">mt_rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">Fabricator</span><span class="o">::</span><span class="na">getCount</span><span class="p">(</span><span class="s1">'groups'</span><span class="p">)),</span>
         <span class="p">];</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -756,7 +756,7 @@ you deleted a fake item but wanted to track the change.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

@@ -365,9 +365,9 @@ to run as the parameter:</p>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">testShowCategories</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">withUri</span><span class="p">(</span><span class="s1">&#39;http://example.com/categories&#39;</span><span class="p">)</span>
+        <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">withUri</span><span class="p">(</span><span class="s1">'http://example.com/categories'</span><span class="p">)</span>
             <span class="o">-&gt;</span><span class="na">controller</span><span class="p">(</span><span class="nx">ForumController</span><span class="o">::</span><span class="na">class</span><span class="p">)</span>
-            <span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="s1">&#39;showCategories&#39;</span><span class="p">);</span>
+            <span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="s1">'showCategories'</span><span class="p">);</span>
 
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertTrue</span><span class="p">(</span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">isOK</span><span class="p">());</span>
     <span class="p">}</span>
@@ -393,7 +393,7 @@ to run as the parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$results</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">controller</span><span class="p">(</span><span class="nx">\App\Controllers\ForumController</span><span class="o">::</span><span class="na">class</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="s1">&#39;showCategories&#39;</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="s1">'showCategories'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>By specifying the second and subsequent parameters, you can pass them to the controller method.</p>
@@ -406,11 +406,11 @@ for details.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$config</span>              <span class="o">=</span> <span class="k">new</span> <span class="nx">\Config\App</span><span class="p">();</span>
-<span class="nv">$config</span><span class="o">-&gt;</span><span class="na">appTimezone</span> <span class="o">=</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="o">-&gt;</span><span class="na">appTimezone</span> <span class="o">=</span> <span class="s1">'America/Chicago'</span><span class="p">;</span>
 
 <span class="nv">$results</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">withConfig</span><span class="p">(</span><span class="nv">$config</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">controller</span><span class="p">(</span><span class="nx">\App\Controllers\ForumController</span><span class="o">::</span><span class="na">class</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="s1">&#39;showCategories&#39;</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="s1">'showCategories'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If you do not provide one, the application’s App config file will be used.</p>
@@ -422,7 +422,7 @@ for details.</p>
 
 <span class="nv">$request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\IncomingRequest</span><span class="p">(</span>
     <span class="k">new</span> <span class="nx">\Config\App</span><span class="p">(),</span>
-    <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://example.com&#39;</span><span class="p">),</span>
+    <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">'http://example.com'</span><span class="p">),</span>
     <span class="k">null</span><span class="p">,</span>
     <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\UserAgent</span><span class="p">(),</span>
 <span class="p">);</span>
@@ -431,7 +431,7 @@ for details.</p>
 
 <span class="nv">$results</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">withRequest</span><span class="p">(</span><span class="nv">$request</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">controller</span><span class="p">(</span><span class="nx">\App\Controllers\ForumController</span><span class="o">::</span><span class="na">class</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="s1">&#39;showCategories&#39;</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="s1">'showCategories'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If you do not provide one, a new IncomingRequest instance with the default application values will be passed
@@ -446,7 +446,7 @@ into your controller.</p>
 
 <span class="nv">$results</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">withResponse</span><span class="p">(</span><span class="nv">$response</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">controller</span><span class="p">(</span><span class="nx">\App\Controllers\ForumController</span><span class="o">::</span><span class="na">class</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="s1">&#39;showCategories&#39;</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="s1">'showCategories'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If you do not provide one, a new Response instance with the default application values will be passed
@@ -462,7 +462,7 @@ into your controller.</p>
 <span class="nv">$results</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">withResponse</span><span class="p">(</span><span class="nv">$response</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">withLogger</span><span class="p">(</span><span class="nv">$logger</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">controller</span><span class="p">(</span><span class="nx">\App\Controllers\ForumController</span><span class="o">::</span><span class="na">class</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="s1">&#39;showCategories&#39;</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="s1">'showCategories'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If you do not provide one, a new Logger instance with the default configuration values will be passed
@@ -475,9 +475,9 @@ This is helpful if you need to check URI segments within your controller. The on
 representing a valid URI:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$results</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">withUri</span><span class="p">(</span><span class="s1">&#39;http://example.com/forums/categories&#39;</span><span class="p">)</span>
+<span class="nv">$results</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">withUri</span><span class="p">(</span><span class="s1">'http://example.com/forums/categories'</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">controller</span><span class="p">(</span><span class="nx">\App\Controllers\ForumController</span><span class="o">::</span><span class="na">class</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="s1">&#39;showCategories&#39;</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="s1">'showCategories'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>It is a good practice to always provide the URI during testing to avoid surprises.</p>
@@ -495,11 +495,11 @@ set.</p>
 you need to set a JSON value as the body. The only parameter is a string that represents the body of the request:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$body</span> <span class="o">=</span> <span class="nb">json_encode</span><span class="p">([</span><span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">]);</span>
+<span class="nv">$body</span> <span class="o">=</span> <span class="nb">json_encode</span><span class="p">([</span><span class="s1">'foo'</span> <span class="o">=&gt;</span> <span class="s1">'bar'</span><span class="p">]);</span>
 
 <span class="nv">$results</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">withBody</span><span class="p">(</span><span class="nv">$body</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">controller</span><span class="p">(</span><span class="nx">\App\Controllers\ForumController</span><span class="o">::</span><span class="na">class</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="s1">&#39;showCategories&#39;</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="s1">'showCategories'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -561,9 +561,9 @@ on an unfiltered route you could add it to the Config:</p>
 
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">testFilterFailsOnAdminRoute</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">filtersConfig</span><span class="o">-&gt;</span><span class="na">globals</span><span class="p">[</span><span class="s1">&#39;before&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;admin-only-filter&#39;</span><span class="p">];</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">filtersConfig</span><span class="o">-&gt;</span><span class="na">globals</span><span class="p">[</span><span class="s1">'before'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'admin-only-filter'</span><span class="p">];</span>
 
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertHasFilters</span><span class="p">(</span><span class="s1">&#39;unfiltered/route&#39;</span><span class="p">,</span> <span class="s1">&#39;before&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertHasFilters</span><span class="p">(</span><span class="s1">'unfiltered/route'</span><span class="p">,</span> <span class="s1">'before'</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="c1">// ...</span>
@@ -597,7 +597,7 @@ a large performance advantage over Controller and HTTP Testing.</p>
 <p>Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getFiltersForRoute</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;after&#39;</span><span class="p">);</span> <span class="c1">// [&#39;toolbar&#39;]</span>
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getFiltersForRoute</span><span class="p">(</span><span class="s1">'/'</span><span class="p">,</span> <span class="s1">'after'</span><span class="p">);</span> <span class="c1">// ['toolbar']</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -639,10 +639,10 @@ method using these properties to test your Filter code safely and check the resu
 
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">testUnauthorizedAccessRedirects</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$caller</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getFilterCaller</span><span class="p">(</span><span class="s1">&#39;permission&#39;</span><span class="p">,</span> <span class="s1">&#39;before&#39;</span><span class="p">);</span>
-        <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$caller</span><span class="p">(</span><span class="s1">&#39;MayEditWidgets&#39;</span><span class="p">);</span>
+        <span class="nv">$caller</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getFilterCaller</span><span class="p">(</span><span class="s1">'permission'</span><span class="p">,</span> <span class="s1">'before'</span><span class="p">);</span>
+        <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$caller</span><span class="p">(</span><span class="s1">'MayEditWidgets'</span><span class="p">);</span>
 
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertInstanceOf</span><span class="p">(</span><span class="s1">&#39;CodeIgniter\HTTP\RedirectResponse&#39;</span><span class="p">,</span> <span class="nv">$result</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertInstanceOf</span><span class="p">(</span><span class="s1">'CodeIgniter\HTTP\RedirectResponse'</span><span class="p">,</span> <span class="nv">$result</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -661,7 +661,7 @@ to streamline your test methods.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Make sure users are logged in before checking their account</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertFilter</span><span class="p">(</span><span class="s1">&#39;users/account&#39;</span><span class="p">,</span> <span class="s1">&#39;before&#39;</span><span class="p">,</span> <span class="s1">&#39;login&#39;</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertFilter</span><span class="p">(</span><span class="s1">'users/account'</span><span class="p">,</span> <span class="s1">'before'</span><span class="p">,</span> <span class="s1">'login'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -671,7 +671,7 @@ to streamline your test methods.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Make sure API calls do not try to use the Debug Toolbar</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertNotFilter</span><span class="p">(</span><span class="s1">&#39;api/v1/widgets&#39;</span><span class="p">,</span> <span class="s1">&#39;after&#39;</span><span class="p">,</span> <span class="s1">&#39;toolbar&#39;</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertNotFilter</span><span class="p">(</span><span class="s1">'api/v1/widgets'</span><span class="p">,</span> <span class="s1">'after'</span><span class="p">,</span> <span class="s1">'toolbar'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -681,7 +681,7 @@ to streamline your test methods.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Make sure that filters are enabled</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertHasFilters</span><span class="p">(</span><span class="s1">&#39;filtered/route&#39;</span><span class="p">,</span> <span class="s1">&#39;after&#39;</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertHasFilters</span><span class="p">(</span><span class="s1">'filtered/route'</span><span class="p">,</span> <span class="s1">'after'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -691,7 +691,7 @@ to streamline your test methods.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Make sure no filters run for our static pages</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertNotHasFilters</span><span class="p">(</span><span class="s1">&#39;about/contact&#39;</span><span class="p">,</span> <span class="s1">&#39;before&#39;</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertNotHasFilters</span><span class="p">(</span><span class="s1">'about/contact'</span><span class="p">,</span> <span class="s1">'before'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -711,7 +711,7 @@ to streamline your test methods.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

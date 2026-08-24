@@ -347,12 +347,12 @@ use the new <code class="docutils literal notranslate"><span class="pre">Validat
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// In Controller.</span>
 
 <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validateData</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="p">[</span>
-    <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|min_length[10]&#39;</span><span class="p">,</span>
+    <span class="s1">'username'</span> <span class="o">=&gt;</span> <span class="s1">'required'</span><span class="p">,</span>
+    <span class="s1">'password'</span> <span class="o">=&gt;</span> <span class="s1">'required|min_length[10]'</span><span class="p">,</span>
 <span class="p">]))</span> <span class="p">{</span>
     <span class="c1">// The validation failed.</span>
-    <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span class="p">,</span> <span class="p">[</span>
-        <span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validator</span><span class="o">-&gt;</span><span class="na">getErrors</span><span class="p">(),</span>
+    <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'login'</span><span class="p">,</span> <span class="p">[</span>
+        <span class="s1">'errors'</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validator</span><span class="o">-&gt;</span><span class="na">getErrors</span><span class="p">(),</span>
     <span class="p">]);</span>
 <span class="p">}</span>
 
@@ -374,12 +374,12 @@ use the new <code class="docutils literal notranslate"><span class="pre">Validat
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// URI: http://example.com/one/two</span>
 
 <span class="c1">// Before:</span>
-<span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setSegment</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;three&#39;</span><span class="p">);</span>
+<span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setSegment</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s1">'three'</span><span class="p">);</span>
 <span class="c1">// The URI will be http://example.com/one/two/three</span>
 
 <span class="c1">// After:</span>
-<span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setSegment</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;three&#39;</span><span class="p">);</span> <span class="c1">// Will throw Exception</span>
-<span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setSegment</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;three&#39;</span><span class="p">);</span>
+<span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setSegment</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s1">'three'</span><span class="p">);</span> <span class="c1">// Will throw Exception</span>
+<span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setSegment</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">'three'</span><span class="p">);</span>
 <span class="c1">// The URI will be http://example.com/one/two/three</span>
 </pre></div>
 </div>
@@ -424,7 +424,7 @@ See <a class="reference internal" href="../changelogs/v4.4.0.html#v440-factories
 <code class="docutils literal notranslate"><span class="pre">model('Myth\Auth\Models\UserModel')</span></code> (the code may be in the third-party packages),
 and you expect to load your <code class="docutils literal notranslate"><span class="pre">App\Models\UserModel</span></code>, you need to define the
 classname to be loaded before the first loading of that class:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">Factories</span><span class="o">::</span><span class="na">define</span><span class="p">(</span><span class="s1">&#39;models&#39;</span><span class="p">,</span> <span class="s1">&#39;Myth\Auth\Models\UserModel&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Models\UserModel&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">Factories</span><span class="o">::</span><span class="na">define</span><span class="p">(</span><span class="s1">'models'</span><span class="p">,</span> <span class="s1">'Myth\Auth\Models\UserModel'</span><span class="p">,</span> <span class="s1">'App\Models\UserModel'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>See <a class="reference internal" href="../concepts/factories.html#factories-defining-classname-to-be-loaded"><span class="std std-ref">Defining Classname to be Loaded</span></a> for details.</p>
@@ -519,7 +519,7 @@ for <a class="reference internal" href="../testing/debugging.html#debug-toolbar-
 <span class="sd">+     * NOTE: The ROOTPATH will be prepended to all values.</span>
 <span class="sd">+     */</span>
 <span class="o">+</span>    <span class="k">public</span> <span class="k">array</span> <span class="nv">$watchedDirectories</span> <span class="o">=</span> <span class="p">[</span>
-<span class="o">+</span>        <span class="s1">&#39;app&#39;</span><span class="p">,</span>
+<span class="o">+</span>        <span class="s1">'app'</span><span class="p">,</span>
 <span class="o">+</span>    <span class="p">];</span>
 <span class="o">+</span>
 <span class="o">+</span>    <span class="sd">/**</span>
@@ -531,7 +531,7 @@ for <a class="reference internal" href="../testing/debugging.html#debug-toolbar-
 <span class="sd">+     * used to determine if the hot-reload feature should reload the page or not.</span>
 <span class="sd">+     */</span>
 <span class="o">+</span>    <span class="k">public</span> <span class="k">array</span> <span class="nv">$watchedExtensions</span> <span class="o">=</span> <span class="p">[</span>
-<span class="o">+</span>        <span class="s1">&#39;php&#39;</span><span class="p">,</span> <span class="s1">&#39;css&#39;</span><span class="p">,</span> <span class="s1">&#39;js&#39;</span><span class="p">,</span> <span class="s1">&#39;html&#39;</span><span class="p">,</span> <span class="s1">&#39;svg&#39;</span><span class="p">,</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span> <span class="s1">&#39;env&#39;</span><span class="p">,</span>
+<span class="o">+</span>        <span class="s1">'php'</span><span class="p">,</span> <span class="s1">'css'</span><span class="p">,</span> <span class="s1">'js'</span><span class="p">,</span> <span class="s1">'html'</span><span class="p">,</span> <span class="s1">'svg'</span><span class="p">,</span> <span class="s1">'json'</span><span class="p">,</span> <span class="s1">'env'</span><span class="p">,</span>
 <span class="o">+</span>    <span class="p">];</span>
  <span class="p">}</span>
 </pre></div>
@@ -550,13 +550,13 @@ for <a class="reference internal" href="../testing/debugging.html#debug-toolbar-
 
  <span class="o">/*</span>
   <span class="o">*</span> <span class="o">--------------------------------------------------------------------</span>
-<span class="o">@@</span> <span class="o">-</span><span class="mi">44</span><span class="p">,</span><span class="mi">5</span> <span class="o">+</span><span class="mi">45</span><span class="p">,</span><span class="mi">11</span> <span class="o">@@</span> <span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;pre_system&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
+<span class="o">@@</span> <span class="o">-</span><span class="mi">44</span><span class="p">,</span><span class="mi">5</span> <span class="o">+</span><span class="mi">45</span><span class="p">,</span><span class="mi">11</span> <span class="o">@@</span> <span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">'pre_system'</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
      <span class="k">if</span> <span class="p">(</span><span class="nx">CI_DEBUG</span> <span class="o">&amp;&amp;</span> <span class="o">!</span> <span class="nx">is_cli</span><span class="p">())</span> <span class="p">{</span>
-         <span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;DBQuery&#39;</span><span class="p">,</span> <span class="s1">&#39;CodeIgniter\Debug\Toolbar\Collectors\Database::collect&#39;</span><span class="p">);</span>
+         <span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">'DBQuery'</span><span class="p">,</span> <span class="s1">'CodeIgniter\Debug\Toolbar\Collectors\Database::collect'</span><span class="p">);</span>
          <span class="nx">Services</span><span class="o">::</span><span class="na">toolbar</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">respond</span><span class="p">();</span>
 <span class="o">+</span>        <span class="c1">// Hot Reload route - for framework use on the hot reloader.</span>
-<span class="o">+</span>        <span class="k">if</span> <span class="p">(</span><span class="nx">ENVIRONMENT</span> <span class="o">===</span> <span class="s1">&#39;development&#39;</span><span class="p">)</span> <span class="p">{</span>
-<span class="o">+</span>            <span class="nx">Services</span><span class="o">::</span><span class="na">routes</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;__hot-reload&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
+<span class="o">+</span>        <span class="k">if</span> <span class="p">(</span><span class="nx">ENVIRONMENT</span> <span class="o">===</span> <span class="s1">'development'</span><span class="p">)</span> <span class="p">{</span>
+<span class="o">+</span>            <span class="nx">Services</span><span class="o">::</span><span class="na">routes</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'__hot-reload'</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
 <span class="o">+</span>                <span class="p">(</span><span class="k">new</span> <span class="nx">HotReloader</span><span class="p">())</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">();</span>
 <span class="o">+</span>            <span class="p">});</span>
 <span class="o">+</span>        <span class="p">}</span>
@@ -673,7 +673,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

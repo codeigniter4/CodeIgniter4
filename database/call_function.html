@@ -306,7 +306,7 @@ function, which is <strong>not</strong> natively supported by CodeIgniter. You c
 do so like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$db</span><span class="o">-&gt;</span><span class="na">callFunction</span><span class="p">(</span><span class="s1">&#39;get_client_info&#39;</span><span class="p">);</span>
+<span class="nv">$db</span><span class="o">-&gt;</span><span class="na">callFunction</span><span class="p">(</span><span class="s1">'get_client_info'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You must supply the name of the function, <strong>without</strong> the <code class="docutils literal notranslate"><span class="pre">mysql_</span></code>
@@ -319,7 +319,7 @@ how useful this function can be in terms of portability.</p>
 the second parameter.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$db</span><span class="o">-&gt;</span><span class="na">callFunction</span><span class="p">(</span><span class="s1">&#39;some_function&#39;</span><span class="p">,</span> <span class="nv">$param1</span><span class="p">,</span> <span class="nv">$param2</span> <span class="cm">/* , ... */</span><span class="p">);</span>
+<span class="nv">$db</span><span class="o">-&gt;</span><span class="na">callFunction</span><span class="p">(</span><span class="s1">'some_function'</span><span class="p">,</span> <span class="nv">$param1</span><span class="p">,</span> <span class="nv">$param2</span> <span class="cm">/* , ... */</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Often, you will either need to supply a database connection ID or a
@@ -332,7 +332,7 @@ database result ID. The connection ID can be accessed using:</p>
 <p>The result ID can be accessed from within your result object, like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;SOME QUERY&#39;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">'SOME QUERY'</span><span class="p">);</span>
 
 <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">resultID</span><span class="p">;</span>
 </pre></div>
@@ -352,7 +352,7 @@ database result ID. The connection ID can be accessed using:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

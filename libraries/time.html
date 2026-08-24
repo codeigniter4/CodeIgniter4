@@ -355,10 +355,10 @@ This can be any string that PHP’s <a class="reference external" href="https://
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$myTime</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">&#39;2024-01-01&#39;</span><span class="p">);</span>
-<span class="nv">$myTime</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">&#39;2024-01-01 12:00:00&#39;</span><span class="p">);</span>
-<span class="nv">$myTime</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">&#39;now&#39;</span><span class="p">);</span>
-<span class="nv">$myTime</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">&#39;+3 week&#39;</span><span class="p">);</span>
+<span class="nv">$myTime</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">'2024-01-01'</span><span class="p">);</span>
+<span class="nv">$myTime</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">'2024-01-01 12:00:00'</span><span class="p">);</span>
+<span class="nv">$myTime</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">'now'</span><span class="p">);</span>
+<span class="nv">$myTime</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">'+3 week'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can pass in strings representing the timezone and the locale in the second and the third parameters, respectively. The timezone
@@ -369,7 +369,7 @@ provided, the application defaults will be used.</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$myTime</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">&#39;now&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">,</span> <span class="s1">&#39;en_US&#39;</span><span class="p">);</span>
+<span class="nv">$myTime</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">'now'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">,</span> <span class="s1">'en_US'</span><span class="p">);</span>
 </pre></div>
 </div>
 <section id="now">
@@ -381,7 +381,7 @@ in the second and third parameters, respectively. If no locale or timezone is pr
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$myTime</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">(</span><span class="s1">&#39;America/Chicago&#39;</span><span class="p">,</span> <span class="s1">&#39;en_US&#39;</span><span class="p">);</span>
+<span class="nv">$myTime</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">(</span><span class="s1">'America/Chicago'</span><span class="p">,</span> <span class="s1">'en_US'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -393,7 +393,7 @@ constructor as the first parameter, a timezone as the second parameter, and the 
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$myTime</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;next Tuesday&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">,</span> <span class="s1">&#39;en_US&#39;</span><span class="p">);</span>
+<span class="nv">$myTime</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'next Tuesday'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">,</span> <span class="s1">'en_US'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -405,7 +405,7 @@ for the timezone and locale in the first and second parameters:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$myTime</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">today</span><span class="p">(</span><span class="s1">&#39;America/Chicago&#39;</span><span class="p">,</span> <span class="s1">&#39;en_US&#39;</span><span class="p">);</span>
+<span class="nv">$myTime</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">today</span><span class="p">(</span><span class="s1">'America/Chicago'</span><span class="p">,</span> <span class="s1">'en_US'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -417,7 +417,7 @@ for the timezone and locale in the first and second parameters:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$myTime</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">yesterday</span><span class="p">(</span><span class="s1">&#39;America/Chicago&#39;</span><span class="p">,</span> <span class="s1">&#39;en_US&#39;</span><span class="p">);</span>
+<span class="nv">$myTime</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">yesterday</span><span class="p">(</span><span class="s1">'America/Chicago'</span><span class="p">,</span> <span class="s1">'en_US'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -429,7 +429,7 @@ for the timezone and locale in the first and second parameters:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$myTime</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">tomorrow</span><span class="p">(</span><span class="s1">&#39;America/Chicago&#39;</span><span class="p">,</span> <span class="s1">&#39;en_US&#39;</span><span class="p">);</span>
+<span class="nv">$myTime</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">tomorrow</span><span class="p">(</span><span class="s1">'America/Chicago'</span><span class="p">,</span> <span class="s1">'en_US'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -444,7 +444,7 @@ fourth and fifth parameters:</p>
 
 <span class="nv">$today</span>       <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromDate</span><span class="p">();</span>     <span class="c1">// Uses current year, month, and day</span>
 <span class="nv">$anniversary</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromDate</span><span class="p">(</span><span class="mi">2018</span><span class="p">);</span> <span class="c1">// Uses current month and day</span>
-<span class="nv">$date</span>        <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromDate</span><span class="p">(</span><span class="mi">2018</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">,</span> <span class="s1">&#39;en_US&#39;</span><span class="p">);</span>
+<span class="nv">$date</span>        <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromDate</span><span class="p">(</span><span class="mi">2018</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">,</span> <span class="s1">'en_US'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -484,7 +484,7 @@ and returns a <code class="docutils literal notranslate"><span class="pre">Time<
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromFormat</span><span class="p">(</span><span class="s1">&#39;j-M-Y&#39;</span><span class="p">,</span> <span class="s1">&#39;15-Feb-2009&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromFormat</span><span class="p">(</span><span class="s1">'j-M-Y'</span><span class="p">,</span> <span class="s1">'15-Feb-2009'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -496,7 +496,7 @@ create a new Time instance:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromTimestamp</span><span class="p">(</span><span class="mi">1501821586</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">,</span> <span class="s1">&#39;en_US&#39;</span><span class="p">);</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromTimestamp</span><span class="p">(</span><span class="mi">1501821586</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">,</span> <span class="s1">'en_US'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If you do not explicitly pass a timezone, it returns a Time instance with <strong>UTC</strong>.</p>
@@ -520,8 +520,8 @@ instance passed in:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$dt</span>   <span class="o">=</span> <span class="k">new</span> <span class="nx">\DateTime</span><span class="p">(</span><span class="s1">&#39;now&#39;</span><span class="p">);</span>
-<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromInstance</span><span class="p">(</span><span class="nv">$dt</span><span class="p">,</span> <span class="s1">&#39;en_US&#39;</span><span class="p">);</span>
+<span class="nv">$dt</span>   <span class="o">=</span> <span class="k">new</span> <span class="nx">\DateTime</span><span class="p">(</span><span class="s1">'now'</span><span class="p">);</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromInstance</span><span class="p">(</span><span class="nv">$dt</span><span class="p">,</span> <span class="s1">'en_US'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -554,12 +554,12 @@ A full listing of values can be found <a class="reference external" href="https:
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
 <span class="c1">// Locale: en</span>
-<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 9, 2016 12:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">toLocalizedString</span><span class="p">(</span><span class="s1">&#39;MMM d, yyyy&#39;</span><span class="p">);</span> <span class="c1">// March 9, 2016</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'March 9, 2016 12:00:00'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">toLocalizedString</span><span class="p">(</span><span class="s1">'MMM d, yyyy'</span><span class="p">);</span> <span class="c1">// March 9, 2016</span>
 
 <span class="c1">// Locale: fa</span>
-<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 9, 2016 12:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">toLocalizedString</span><span class="p">(</span><span class="s1">&#39;MMM d, yyyy&#39;</span><span class="p">);</span> <span class="c1">// مارس ۹, ۲۰۱۶</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'March 9, 2016 12:00:00'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">toLocalizedString</span><span class="p">(</span><span class="s1">'MMM d, yyyy'</span><span class="p">);</span> <span class="c1">// مارس ۹, ۲۰۱۶</span>
 </pre></div>
 </div>
 </section>
@@ -572,11 +572,11 @@ This will return a localized version of string formatted as (<code class="docuti
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
 <span class="c1">// Locale: en</span>
-<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 9, 2016 12:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'March 9, 2016 12:00:00'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">);</span>
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">toDateTimeString</span><span class="p">();</span> <span class="c1">// 2016-03-09 12:00:00</span>
 
 <span class="c1">// Locale: fa</span>
-<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 9, 2016 12:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'March 9, 2016 12:00:00'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">);</span>
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">toDateTimeString</span><span class="p">();</span> <span class="c1">// ۲۰۱۶-۰۳-۰۹ ۱۲:۰۰:۰۰</span>
 </pre></div>
 </div>
@@ -589,11 +589,11 @@ This will return a localized version of string formatted as (<code class="docuti
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
 <span class="c1">// Locale: en</span>
-<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 9, 2016 12:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'March 9, 2016 12:00:00'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">);</span>
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">toDateString</span><span class="p">();</span> <span class="c1">// 2016-03-09</span>
 
 <span class="c1">// Locale: fa</span>
-<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 9, 2016 12:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'March 9, 2016 12:00:00'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">);</span>
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">toDateString</span><span class="p">();</span> <span class="c1">// ۲۰۱۶-۰۳-۰۹</span>
 </pre></div>
 </div>
@@ -606,11 +606,11 @@ This will return a localized version of string formatted as (<code class="docuti
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
 <span class="c1">// Locale: en</span>
-<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 9, 2016 12:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'March 9, 2016 12:00:00'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">);</span>
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">toTimeString</span><span class="p">();</span> <span class="c1">// 12:00:00</span>
 
 <span class="c1">// Locale: fa</span>
-<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 9, 2016 12:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'March 9, 2016 12:00:00'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">);</span>
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">toTimeString</span><span class="p">();</span> <span class="c1">// ۱۲:۰۰:۰۰</span>
 </pre></div>
 </div>
@@ -625,7 +625,7 @@ human readable format that is geared towards being easily understood. It can cre
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
 <span class="c1">// Assume current time is: March 10, 2017 (America/Chicago)</span>
-<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 9, 2016 12:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'March 9, 2016 12:00:00'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">);</span>
 
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">humanize</span><span class="p">();</span> <span class="c1">// 1 year ago</span>
 </pre></div>
@@ -682,22 +682,22 @@ like <code class="docutils literal notranslate"><span class="pre">getYear()</spa
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;August 12, 2016 4:15:23pm&#39;</span><span class="p">);</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'August 12, 2016 4:15:23pm'</span><span class="p">);</span>
 
 <span class="c1">// The output may vary based on locale.</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getYear</span><span class="p">();</span>   <span class="c1">// &#39;2016&#39;</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getMonth</span><span class="p">();</span>  <span class="c1">// &#39;8&#39;</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getDay</span><span class="p">();</span>    <span class="c1">// &#39;12&#39;</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getHour</span><span class="p">();</span>   <span class="c1">// &#39;16&#39;</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getMinute</span><span class="p">();</span> <span class="c1">// &#39;15&#39;</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getSecond</span><span class="p">();</span> <span class="c1">// &#39;23&#39;</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getYear</span><span class="p">();</span>   <span class="c1">// '2016'</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getMonth</span><span class="p">();</span>  <span class="c1">// '8'</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getDay</span><span class="p">();</span>    <span class="c1">// '12'</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getHour</span><span class="p">();</span>   <span class="c1">// '16'</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getMinute</span><span class="p">();</span> <span class="c1">// '15'</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getSecond</span><span class="p">();</span> <span class="c1">// '23'</span>
 
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">year</span><span class="p">;</span>   <span class="c1">// &#39;2016&#39;</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">month</span><span class="p">;</span>  <span class="c1">// &#39;8&#39;</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">day</span><span class="p">;</span>    <span class="c1">// &#39;12&#39;</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">hour</span><span class="p">;</span>   <span class="c1">// &#39;16&#39;</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">minute</span><span class="p">;</span> <span class="c1">// &#39;15&#39;</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">second</span><span class="p">;</span> <span class="c1">// &#39;23&#39;</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">year</span><span class="p">;</span>   <span class="c1">// '2016'</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">month</span><span class="p">;</span>  <span class="c1">// '8'</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">day</span><span class="p">;</span>    <span class="c1">// '12'</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">hour</span><span class="p">;</span>   <span class="c1">// '16'</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">minute</span><span class="p">;</span> <span class="c1">// '15'</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">second</span><span class="p">;</span> <span class="c1">// '23'</span>
 </pre></div>
 </div>
 <p>In addition to these, a number of methods exist to provide additional information about the date:</p>
@@ -705,22 +705,22 @@ like <code class="docutils literal notranslate"><span class="pre">getYear()</spa
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;August 12, 2016 4:15:23pm&#39;</span><span class="p">);</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'August 12, 2016 4:15:23pm'</span><span class="p">);</span>
 
 <span class="c1">// The output may vary based on locale.</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getDayOfWeek</span><span class="p">();</span>   <span class="c1">// &#39;6&#39;</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getDayOfYear</span><span class="p">();</span>   <span class="c1">// &#39;225&#39;</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getWeekOfMonth</span><span class="p">();</span> <span class="c1">// &#39;2&#39;</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getWeekOfYear</span><span class="p">();</span>  <span class="c1">// &#39;33&#39;</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getDayOfWeek</span><span class="p">();</span>   <span class="c1">// '6'</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getDayOfYear</span><span class="p">();</span>   <span class="c1">// '225'</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getWeekOfMonth</span><span class="p">();</span> <span class="c1">// '2'</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getWeekOfYear</span><span class="p">();</span>  <span class="c1">// '33'</span>
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getTimestamp</span><span class="p">();</span>   <span class="c1">// 1471018523 - UNIX timestamp (locale independent)</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getQuarter</span><span class="p">();</span>     <span class="c1">// &#39;3&#39;</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getQuarter</span><span class="p">();</span>     <span class="c1">// '3'</span>
 
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">dayOfWeek</span><span class="p">;</span>   <span class="c1">// &#39;6&#39;</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">dayOfYear</span><span class="p">;</span>   <span class="c1">// &#39;225&#39;</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">weekOfMonth</span><span class="p">;</span> <span class="c1">// &#39;2&#39;</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">weekOfYear</span><span class="p">;</span>  <span class="c1">// &#39;33&#39;</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">dayOfWeek</span><span class="p">;</span>   <span class="c1">// '6'</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">dayOfYear</span><span class="p">;</span>   <span class="c1">// '225'</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">weekOfMonth</span><span class="p">;</span> <span class="c1">// '2'</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">weekOfYear</span><span class="p">;</span>  <span class="c1">// '33'</span>
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">timestamp</span><span class="p">;</span>   <span class="c1">// 1471018523</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">quarter</span><span class="p">;</span>     <span class="c1">// &#39;3&#39;</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">quarter</span><span class="p">;</span>     <span class="c1">// '3'</span>
 </pre></div>
 </div>
 <section id="getage">
@@ -731,7 +731,7 @@ the age of someone based on their birthday:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;5 years ago&#39;</span><span class="p">);</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'5 years ago'</span><span class="p">);</span>
 
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getAge</span><span class="p">();</span> <span class="c1">// 5</span>
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">age</span><span class="p">;</span>      <span class="c1">// 5</span>
@@ -758,7 +758,7 @@ the age of someone based on their birthday:</p>
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
 <span class="k">echo</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getLocal</span><span class="p">();</span>           <span class="c1">// true</span>
-<span class="k">echo</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">(</span><span class="s1">&#39;Europe/London&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">local</span><span class="p">;</span> <span class="c1">// false</span>
+<span class="k">echo</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">(</span><span class="s1">'Europe/London'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">local</span><span class="p">;</span> <span class="c1">// false</span>
 </pre></div>
 </div>
 </section>
@@ -769,8 +769,8 @@ the age of someone based on their birthday:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="k">echo</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">(</span><span class="s1">&#39;America/Chicago&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getUtc</span><span class="p">();</span> <span class="c1">// false</span>
-<span class="k">echo</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">(</span><span class="s1">&#39;UTC&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">utc</span><span class="p">;</span>                  <span class="c1">// true</span>
+<span class="k">echo</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">(</span><span class="s1">'America/Chicago'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getUtc</span><span class="p">();</span> <span class="c1">// false</span>
+<span class="k">echo</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">(</span><span class="s1">'UTC'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">utc</span><span class="p">;</span>                  <span class="c1">// true</span>
 </pre></div>
 </div>
 </section>
@@ -797,8 +797,8 @@ instance:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="k">echo</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">(</span><span class="s1">&#39;America/Chicago&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getTimezoneName</span><span class="p">();</span> <span class="c1">// America/Chicago</span>
-<span class="k">echo</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">(</span><span class="s1">&#39;Europe/London&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">timezoneName</span><span class="p">;</span>        <span class="c1">// Europe/London</span>
+<span class="k">echo</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">(</span><span class="s1">'America/Chicago'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getTimezoneName</span><span class="p">();</span> <span class="c1">// America/Chicago</span>
+<span class="k">echo</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">(</span><span class="s1">'Europe/London'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">timezoneName</span><span class="p">;</span>        <span class="c1">// Europe/London</span>
 </pre></div>
 </div>
 </section>
@@ -819,8 +819,8 @@ thrown.</p>
 
 <span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setYear</span><span class="p">(</span><span class="mi">2017</span><span class="p">);</span>
 <span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setMonth</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>       <span class="c1">// April</span>
-<span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setMonth</span><span class="p">(</span><span class="s1">&#39;April&#39;</span><span class="p">);</span>
-<span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setMonth</span><span class="p">(</span><span class="s1">&#39;Feb&#39;</span><span class="p">);</span>   <span class="c1">// February</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setMonth</span><span class="p">(</span><span class="s1">'April'</span><span class="p">);</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setMonth</span><span class="p">(</span><span class="s1">'Feb'</span><span class="p">);</span>   <span class="c1">// February</span>
 <span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setDay</span><span class="p">(</span><span class="mi">25</span><span class="p">);</span>
 <span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setHour</span><span class="p">(</span><span class="mi">14</span><span class="p">);</span>       <span class="c1">// 2:00 pm</span>
 <span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setMinute</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
@@ -834,8 +834,8 @@ thrown.</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$time</span>  <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;13 May 2020 10:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
-<span class="nv">$time2</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setTimezone</span><span class="p">(</span><span class="s1">&#39;Europe/London&#39;</span><span class="p">);</span> <span class="c1">// Returns new instance converted to new timezone</span>
+<span class="nv">$time</span>  <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'13 May 2020 10:00'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">);</span>
+<span class="nv">$time2</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setTimezone</span><span class="p">(</span><span class="s1">'Europe/London'</span><span class="p">);</span> <span class="c1">// Returns new instance converted to new timezone</span>
 
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getTimezoneName</span><span class="p">();</span>  <span class="c1">// American/Chicago</span>
 <span class="k">echo</span> <span class="nv">$time2</span><span class="o">-&gt;</span><span class="na">getTimezoneName</span><span class="p">();</span> <span class="c1">// Europe/London</span>
@@ -852,10 +852,10 @@ thrown.</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="c1">// The Application Timezone is &quot;America/Chicago&quot;.</span>
+<span class="c1">// The Application Timezone is "America/Chicago".</span>
 
-<span class="nv">$time</span>  <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;May 10, 2017&#39;</span><span class="p">);</span>
-<span class="nv">$time2</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setTimestamp</span><span class="p">(</span><span class="nb">strtotime</span><span class="p">(</span><span class="s1">&#39;April 1, 2017&#39;</span><span class="p">));</span>
+<span class="nv">$time</span>  <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'May 10, 2017'</span><span class="p">);</span>
+<span class="nv">$time2</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setTimestamp</span><span class="p">(</span><span class="nb">strtotime</span><span class="p">(</span><span class="s1">'April 1, 2017'</span><span class="p">));</span>
 
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">toDateTimeString</span><span class="p">();</span>  <span class="c1">// 2017-05-10 00:00:00</span>
 <span class="k">echo</span> <span class="nv">$time2</span><span class="o">-&gt;</span><span class="na">toDateTimeString</span><span class="p">();</span> <span class="c1">// 2017-04-01 00:00:00</span>
@@ -945,8 +945,8 @@ that way:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$time1</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;January 10, 2017 21:50:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
-<span class="nv">$time2</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;January 11, 2017 03:50:00&#39;</span><span class="p">,</span> <span class="s1">&#39;Europe/London&#39;</span><span class="p">);</span>
+<span class="nv">$time1</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'January 10, 2017 21:50:00'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">);</span>
+<span class="nv">$time2</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'January 11, 2017 03:50:00'</span><span class="p">,</span> <span class="s1">'Europe/London'</span><span class="p">);</span>
 
 <span class="nv">$time1</span><span class="o">-&gt;</span><span class="na">equals</span><span class="p">(</span><span class="nv">$time2</span><span class="p">);</span> <span class="c1">// true</span>
 </pre></div>
@@ -956,7 +956,7 @@ a manner that a new DateTime instance can understand. When passing a string as t
 a timezone string in as the second parameter. If no timezone is given, the system default will be used:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$time1</span><span class="o">-&gt;</span><span class="na">equals</span><span class="p">(</span><span class="s1">&#39;January 11, 2017 03:50:00&#39;</span><span class="p">,</span> <span class="s1">&#39;Europe/London&#39;</span><span class="p">);</span> <span class="c1">// true</span>
+<span class="nv">$time1</span><span class="o">-&gt;</span><span class="na">equals</span><span class="p">(</span><span class="s1">'January 11, 2017 03:50:00'</span><span class="p">,</span> <span class="s1">'Europe/London'</span><span class="p">);</span> <span class="c1">// true</span>
 </pre></div>
 </div>
 </section>
@@ -968,11 +968,11 @@ all identical:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$time1</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;January 10, 2017 21:50:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
-<span class="nv">$time2</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;January 11, 2017 03:50:00&#39;</span><span class="p">,</span> <span class="s1">&#39;Europe/London&#39;</span><span class="p">);</span>
+<span class="nv">$time1</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'January 10, 2017 21:50:00'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">);</span>
+<span class="nv">$time2</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'January 11, 2017 03:50:00'</span><span class="p">,</span> <span class="s1">'Europe/London'</span><span class="p">);</span>
 
 <span class="nv">$time1</span><span class="o">-&gt;</span><span class="na">sameAs</span><span class="p">(</span><span class="nv">$time2</span><span class="p">);</span> <span class="c1">// false</span>
-<span class="nv">$time2</span><span class="o">-&gt;</span><span class="na">sameAs</span><span class="p">(</span><span class="s1">&#39;January 10, 2017 21:50:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span> <span class="c1">// true</span>
+<span class="nv">$time2</span><span class="o">-&gt;</span><span class="na">sameAs</span><span class="p">(</span><span class="s1">'January 10, 2017 21:50:00'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">);</span> <span class="c1">// true</span>
 </pre></div>
 </div>
 </section>
@@ -984,8 +984,8 @@ both times:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$time1</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;January 10, 2017 21:50:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
-<span class="nv">$time2</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;January 11, 2017 03:50:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
+<span class="nv">$time1</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'January 10, 2017 21:50:00'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">);</span>
+<span class="nv">$time2</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'January 11, 2017 03:50:00'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">);</span>
 
 <span class="nv">$time1</span><span class="o">-&gt;</span><span class="na">isBefore</span><span class="p">(</span><span class="nv">$time2</span><span class="p">);</span> <span class="c1">// true</span>
 <span class="nv">$time2</span><span class="o">-&gt;</span><span class="na">isBefore</span><span class="p">(</span><span class="nv">$time1</span><span class="p">);</span> <span class="c1">// false</span>
@@ -996,7 +996,7 @@ a manner that a new DateTime instance can understand. When passing a string as t
 a timezone string in as the second parameter. If no timezone is given, the system default will be used:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$time1</span><span class="o">-&gt;</span><span class="na">isBefore</span><span class="p">(</span><span class="s1">&#39;March 15, 2013&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span> <span class="c1">// false</span>
+<span class="nv">$time1</span><span class="o">-&gt;</span><span class="na">isBefore</span><span class="p">(</span><span class="s1">'March 15, 2013'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">);</span> <span class="c1">// false</span>
 </pre></div>
 </div>
 </section>
@@ -1007,8 +1007,8 @@ a timezone string in as the second parameter. If no timezone is given, the syste
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$time1</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;January 10, 2017 21:50:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
-<span class="nv">$time2</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;January 11, 2017 03:50:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
+<span class="nv">$time1</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'January 10, 2017 21:50:00'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">);</span>
+<span class="nv">$time2</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'January 11, 2017 03:50:00'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">);</span>
 
 <span class="nv">$time1</span><span class="o">-&gt;</span><span class="na">isAfter</span><span class="p">(</span><span class="nv">$time2</span><span class="p">);</span> <span class="c1">// false</span>
 <span class="nv">$time2</span><span class="o">-&gt;</span><span class="na">isAfter</span><span class="p">(</span><span class="nv">$time1</span><span class="p">);</span> <span class="c1">// true</span>
@@ -1026,7 +1026,7 @@ It returns a boolean true/false:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;yesterday&#39;</span><span class="p">);</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'yesterday'</span><span class="p">);</span>
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">isPast</span><span class="p">();</span> <span class="c1">// true</span>
 </pre></div>
 </div>
@@ -1042,7 +1042,7 @@ It returns a boolean true/false:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;tomorrow&#39;</span><span class="p">);</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'tomorrow'</span><span class="p">);</span>
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">isFuture</span><span class="p">();</span> <span class="c1">// true</span>
 </pre></div>
 </div>
@@ -1058,11 +1058,11 @@ a string is passed in the first parameter, the second parameter can be a timezon
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 10, 2017&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'March 10, 2017'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">);</span>
 
 <span class="nv">$diff</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">difference</span><span class="p">(</span><span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">());</span>
-<span class="nv">$diff</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">difference</span><span class="p">(</span><span class="k">new</span> <span class="nx">\DateTime</span><span class="p">(</span><span class="s1">&#39;July 4, 1975&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">));</span>
-<span class="nv">$diff</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">difference</span><span class="p">(</span><span class="s1">&#39;July 4, 1975 13:32:05&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
+<span class="nv">$diff</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">difference</span><span class="p">(</span><span class="k">new</span> <span class="nx">\DateTime</span><span class="p">(</span><span class="s1">'July 4, 1975'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">));</span>
+<span class="nv">$diff</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">difference</span><span class="p">(</span><span class="s1">'July 4, 1975 13:32:05'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Once you have the TimeDifference instance, you have several methods you can use to find information about the difference
@@ -1072,8 +1072,8 @@ the original time:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$current</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 10, 2017&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
-<span class="nv">$test</span>    <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 10, 2010&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
+<span class="nv">$current</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'March 10, 2017'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">);</span>
+<span class="nv">$test</span>    <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'March 10, 2010'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">);</span>
 
 <span class="nv">$diff</span> <span class="o">=</span> <span class="nv">$current</span><span class="o">-&gt;</span><span class="na">difference</span><span class="p">(</span><span class="nv">$test</span><span class="p">);</span>
 
@@ -1099,8 +1099,8 @@ time zone, the comparison is performed as is, without conversion to UTC.</p>
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
 <span class="c1">// 31 Mar 2024 - Daylight Saving Time Starts</span>
-<span class="nv">$current</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;2024-03-31&#39;</span><span class="p">,</span> <span class="s1">&#39;Europe/Madrid&#39;</span><span class="p">);</span>
-<span class="nv">$test</span>    <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;2024-04-01&#39;</span><span class="p">,</span> <span class="s1">&#39;Europe/Madrid&#39;</span><span class="p">);</span>
+<span class="nv">$current</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'2024-03-31'</span><span class="p">,</span> <span class="s1">'Europe/Madrid'</span><span class="p">);</span>
+<span class="nv">$test</span>    <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'2024-04-01'</span><span class="p">,</span> <span class="s1">'Europe/Madrid'</span><span class="p">);</span>
 
 <span class="nv">$diff</span> <span class="o">=</span> <span class="nv">$current</span><span class="o">-&gt;</span><span class="na">difference</span><span class="p">(</span><span class="nv">$test</span><span class="p">);</span>
 
@@ -1132,8 +1132,8 @@ human readable format that is geared towards being easily understood. It can cre
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$current</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 10, 2017&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
-<span class="nv">$test</span>    <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 9, 2016 12:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
+<span class="nv">$current</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'March 10, 2017'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">);</span>
+<span class="nv">$test</span>    <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">'March 9, 2016 12:00:00'</span><span class="p">,</span> <span class="s1">'America/Chicago'</span><span class="p">);</span>
 
 <span class="nv">$diff</span> <span class="o">=</span> <span class="nv">$current</span><span class="o">-&gt;</span><span class="na">difference</span><span class="p">(</span><span class="nv">$test</span><span class="p">);</span>
 
@@ -1190,7 +1190,7 @@ If you want to overwrite them, create <strong>app/Language/{locale}/Time.php</st
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 

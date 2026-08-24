@@ -311,7 +311,7 @@ forms.</p>
 <p>This helper is loaded using the following code:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">);</span>
+<span class="nx">helper</span><span class="p">(</span><span class="s1">'form'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -324,17 +324,17 @@ elements. In order to do that safely, you’ll need to use the
 <p>Consider the following example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$string</span> <span class="o">=</span> <span class="s1">&#39;Here is a string containing &quot;quoted&quot; text.&#39;</span><span class="p">;</span>
+<span class="nv">$string</span> <span class="o">=</span> <span class="s1">'Here is a string containing "quoted" text.'</span><span class="p">;</span>
 
 <span class="cp">?&gt;</span>
 
-<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;myfield&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$string</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"text"</span> <span class="na">name</span><span class="o">=</span><span class="s">"myfield"</span> <span class="na">value</span><span class="o">=</span><span class="s">"</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$string</span> <span class="cp">?&gt;</span><span class="s">"</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 <p>Since the above string contains a set of quotes, it will cause the form
 to break. The <a class="reference internal" href="../general/common_functions.html#esc" title="esc"><code class="xref php php-func docutils literal notranslate"><span class="pre">esc()</span></code></a> function converts HTML special
 characters so that it can be used safely:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;myfield&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;&lt;?= esc(</span><span class="si">$string</span><span class="s2">) ?&gt;&quot;</span><span class="o">&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"myfield"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"&lt;?= esc(</span><span class="si">$string</span><span class="s2">) ?&gt;"</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -376,23 +376,23 @@ it permits your site to be more portable in the event your URLs ever change.</p>
 <p>Here’s a simple example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">&#39;email/send&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">'email/send'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The above example would create a form that points to your site URL plus the
 “email/send” URI segments, like this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;http://example.com/index.php/email/send&quot;</span> <span class="nx">method</span><span class="o">=</span><span class="s2">&quot;post&quot;</span> <span class="nx">accept</span><span class="o">-</span><span class="nx">charset</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="o">&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">"http://example.com/index.php/email/send"</span> <span class="nx">method</span><span class="o">=</span><span class="s2">"post"</span> <span class="nx">accept</span><span class="o">-</span><span class="nx">charset</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>You can also add <code class="docutils literal notranslate"><span class="pre">{locale}</span></code> like the following:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">&#39;{locale}/email/send&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">'{locale}/email/send'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The above example would create a form that points to your site URL plus the current request locale with
 “email/send” URI segments, like this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;http://example.com/index.php/en/email/send&quot;</span> <span class="nx">method</span><span class="o">=</span><span class="s2">&quot;post&quot;</span> <span class="nx">accept</span><span class="o">-</span><span class="nx">charset</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="o">&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">"http://example.com/index.php/en/email/send"</span> <span class="nx">method</span><span class="o">=</span><span class="s2">"post"</span> <span class="nx">accept</span><span class="o">-</span><span class="nx">charset</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p><strong>Adding Attributes</strong></p>
@@ -401,29 +401,29 @@ it permits your site to be more portable in the event your URLs ever change.</p>
 parameter, like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;class&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;myform&#39;</span><span class="p">];</span>
-<span class="k">echo</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">&#39;email/send&#39;</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
+<span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'class'</span> <span class="o">=&gt;</span> <span class="s1">'email'</span><span class="p">,</span> <span class="s1">'id'</span> <span class="o">=&gt;</span> <span class="s1">'myform'</span><span class="p">];</span>
+<span class="k">echo</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">'email/send'</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Alternatively, you can specify the second parameter as a string:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">&#39;email/send&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;email&quot; id=&quot;myform&quot;&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">'email/send'</span><span class="p">,</span> <span class="s1">'class="email" id="myform"'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The above examples would create a form similar to this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;http://example.com/index.php/email/send&quot;</span> <span class="nx">class</span><span class="o">=</span><span class="s2">&quot;email&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;myform&quot;</span> <span class="nx">method</span><span class="o">=</span><span class="s2">&quot;post&quot;</span> <span class="nx">accept</span><span class="o">-</span><span class="nx">charset</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="o">&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">"http://example.com/index.php/email/send"</span> <span class="nx">class</span><span class="o">=</span><span class="s2">"email"</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"myform"</span> <span class="nx">method</span><span class="o">=</span><span class="s2">"post"</span> <span class="nx">accept</span><span class="o">-</span><span class="nx">charset</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>If <a class="reference internal" href="../libraries/security.html#cross-site-request-forgery"><span class="std std-ref">CSRF</span></a> filter is turned on <code class="docutils literal notranslate"><span class="pre">form_open()</span></code> will generate CSRF field at the beginning of the form. You can specify ID of this field by passing <strong>csrf_id</strong> as an element of the <code class="docutils literal notranslate"><span class="pre">$attributes</span></code> array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">&#39;/u/sign-up&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;csrf_id&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;my-id&#39;</span><span class="p">]);</span>
+<span class="k">echo</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">'/u/sign-up'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'csrf_id'</span> <span class="o">=&gt;</span> <span class="s1">'my-id'</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>will return:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;http://example.com/index.php/u/sign-up&quot;</span> <span class="nx">method</span><span class="o">=</span><span class="s2">&quot;post&quot;</span> <span class="nx">accept</span><span class="o">-</span><span class="nx">charset</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;hidden&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;my-id&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;csrf_test_name&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;964ede6e0ae8a680f7b8eab69136717d&quot;</span><span class="o">&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">"http://example.com/index.php/u/sign-up"</span> <span class="nx">method</span><span class="o">=</span><span class="s2">"post"</span> <span class="nx">accept</span><span class="o">-</span><span class="nx">charset</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"hidden"</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"my-id"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"csrf_test_name"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"964ede6e0ae8a680f7b8eab69136717d"</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -441,15 +441,15 @@ But if you enable CSRF filter with <code class="docutils literal notranslate"><s
 third parameter, like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$hidden</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Joe&#39;</span><span class="p">,</span> <span class="s1">&#39;member_id&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;234&#39;</span><span class="p">];</span>
-<span class="k">echo</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">&#39;email/send&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nv">$hidden</span><span class="p">);</span>
+<span class="nv">$hidden</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'username'</span> <span class="o">=&gt;</span> <span class="s1">'Joe'</span><span class="p">,</span> <span class="s1">'member_id'</span> <span class="o">=&gt;</span> <span class="s1">'234'</span><span class="p">];</span>
+<span class="k">echo</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">'email/send'</span><span class="p">,</span> <span class="s1">''</span><span class="p">,</span> <span class="nv">$hidden</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can skip the second parameter by passing any false value to it.</p>
 <p>The above example would create a form similar to this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;http://example.com/index.php/email/send&quot;</span> <span class="nx">method</span><span class="o">=</span><span class="s2">&quot;post&quot;</span> <span class="nx">accept</span><span class="o">-</span><span class="nx">charset</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;hidden&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;username&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;Joe&quot;</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;hidden&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;member_id&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;234&quot;</span><span class="o">&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">"http://example.com/index.php/email/send"</span> <span class="nx">method</span><span class="o">=</span><span class="s2">"post"</span> <span class="nx">accept</span><span class="o">-</span><span class="nx">charset</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"hidden"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"username"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"Joe"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"hidden"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"member_id"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"234"</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -499,25 +499,25 @@ would like to use the form to upload files with.</p>
 name/value string to create one field:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">form_hidden</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;johndoe&#39;</span><span class="p">);</span>
-<span class="c1">// Would produce: &lt;input type=&quot;hidden&quot; name=&quot;username&quot; value=&quot;johndoe&quot;&gt;</span>
+<span class="nx">form_hidden</span><span class="p">(</span><span class="s1">'username'</span><span class="p">,</span> <span class="s1">'johndoe'</span><span class="p">);</span>
+<span class="c1">// Would produce: &lt;input type="hidden" name="username" value="johndoe"&gt;</span>
 </pre></div>
 </div>
 <p>… or you can submit an associative array to create multiple fields:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;John Doe&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;john@example.com&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;url&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span>
+    <span class="s1">'name'</span>  <span class="o">=&gt;</span> <span class="s1">'John Doe'</span><span class="p">,</span>
+    <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="s1">'john@example.com'</span><span class="p">,</span>
+    <span class="s1">'url'</span>   <span class="o">=&gt;</span> <span class="s1">'http://example.com'</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">form_hidden</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Would produce:</span>
-<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;name&quot; value=&quot;John Doe&quot;&gt;</span>
-<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;email&quot; value=&quot;john@example.com&quot;&gt;</span>
-<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;url&quot; value=&quot;http://example.com&quot;&gt;</span>
+<span class="cm"> * &lt;input type="hidden" name="name" value="John Doe"&gt;</span>
+<span class="cm"> * &lt;input type="hidden" name="email" value="john@example.com"&gt;</span>
+<span class="cm"> * &lt;input type="hidden" name="url" value="http://example.com"&gt;</span>
 <span class="cm"> */</span>
 </pre></div>
 </div>
@@ -525,17 +525,17 @@ name/value string to create one field:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;John Doe&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;john@example.com&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;url&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span>
+    <span class="s1">'name'</span>  <span class="o">=&gt;</span> <span class="s1">'John Doe'</span><span class="p">,</span>
+    <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="s1">'john@example.com'</span><span class="p">,</span>
+    <span class="s1">'url'</span>   <span class="o">=&gt;</span> <span class="s1">'http://example.com'</span><span class="p">,</span>
 <span class="p">];</span>
 
-<span class="k">echo</span> <span class="nx">form_hidden</span><span class="p">(</span><span class="s1">&#39;my_array&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">form_hidden</span><span class="p">(</span><span class="s1">'my_array'</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Would produce:</span>
-<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;my_array[name]&quot; value=&quot;John Doe&quot;&gt;</span>
-<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;my_array[email]&quot; value=&quot;john@example.com&quot;&gt;</span>
-<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;my_array[url]&quot; value=&quot;http://example.com&quot;&gt;</span>
+<span class="cm"> * &lt;input type="hidden" name="my_array[name]" value="John Doe"&gt;</span>
+<span class="cm"> * &lt;input type="hidden" name="my_array[email]" value="john@example.com"&gt;</span>
+<span class="cm"> * &lt;input type="hidden" name="my_array[url]" value="http://example.com"&gt;</span>
 <span class="cm"> */</span>
 </pre></div>
 </div>
@@ -543,17 +543,17 @@ name/value string to create one field:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;type&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;hidden&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;hiddenemail&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;value&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;john@example.com&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;class&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;hiddenemail&#39;</span><span class="p">,</span>
+    <span class="s1">'type'</span>  <span class="o">=&gt;</span> <span class="s1">'hidden'</span><span class="p">,</span>
+    <span class="s1">'name'</span>  <span class="o">=&gt;</span> <span class="s1">'email'</span><span class="p">,</span>
+    <span class="s1">'id'</span>    <span class="o">=&gt;</span> <span class="s1">'hiddenemail'</span><span class="p">,</span>
+    <span class="s1">'value'</span> <span class="o">=&gt;</span> <span class="s1">'john@example.com'</span><span class="p">,</span>
+    <span class="s1">'class'</span> <span class="o">=&gt;</span> <span class="s1">'hiddenemail'</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Would produce:</span>
-<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;email&quot; value=&quot;john@example.com&quot; id=&quot;hiddenemail&quot; class=&quot;hiddenemail&quot;&gt;</span>
+<span class="cm"> * &lt;input type="hidden" name="email" value="john@example.com" id="hiddenemail" class="hiddenemail"&gt;</span>
 <span class="cm"> */</span>
 </pre></div>
 </div>
@@ -582,10 +582,10 @@ name/value string to create one field:</p>
 the field name and value in the first and second parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;johndoe&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="s1">'username'</span><span class="p">,</span> <span class="s1">'johndoe'</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Would produce:</span>
-<span class="cm"> * &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;johndoe&quot;&gt;</span>
+<span class="cm"> * &lt;input type="text" name="username" value="johndoe"&gt;</span>
 <span class="cm"> */</span>
 </pre></div>
 </div>
@@ -594,17 +594,17 @@ form to contain:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;name&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;username&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;id&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;username&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;value&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;johndoe&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;maxlength&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;100&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;size&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;50&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;style&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;width:50%&#39;</span><span class="p">,</span>
+    <span class="s1">'name'</span>      <span class="o">=&gt;</span> <span class="s1">'username'</span><span class="p">,</span>
+    <span class="s1">'id'</span>        <span class="o">=&gt;</span> <span class="s1">'username'</span><span class="p">,</span>
+    <span class="s1">'value'</span>     <span class="o">=&gt;</span> <span class="s1">'johndoe'</span><span class="p">,</span>
+    <span class="s1">'maxlength'</span> <span class="o">=&gt;</span> <span class="s1">'100'</span><span class="p">,</span>
+    <span class="s1">'size'</span>      <span class="o">=&gt;</span> <span class="s1">'50'</span><span class="p">,</span>
+    <span class="s1">'style'</span>     <span class="o">=&gt;</span> <span class="s1">'width:50%'</span><span class="p">,</span>
 <span class="p">];</span>
 <span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Would produce:</span>
-<span class="cm"> * &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;johndoe&quot; id=&quot;username&quot; maxlength=&quot;100&quot; size=&quot;50&quot; style=&quot;width:50%&quot;&gt;</span>
+<span class="cm"> * &lt;input type="text" name="username" value="johndoe" id="username" maxlength="100" size="50" style="width:50%"&gt;</span>
 <span class="cm"> */</span>
 </pre></div>
 </div>
@@ -612,15 +612,15 @@ form to contain:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;name&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;username&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;id&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;username&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;value&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;required&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="s1">'name'</span>     <span class="o">=&gt;</span> <span class="s1">'username'</span><span class="p">,</span>
+    <span class="s1">'id'</span>       <span class="o">=&gt;</span> <span class="s1">'username'</span><span class="p">,</span>
+    <span class="s1">'value'</span>    <span class="o">=&gt;</span> <span class="s1">''</span><span class="p">,</span>
+    <span class="s1">'required'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
 <span class="p">];</span>
 <span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Would produce:</span>
-<span class="cm"> * &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;&quot; id=&quot;username&quot; required&gt;</span>
+<span class="cm"> * &lt;input type="text" name="username" value="" id="username" required&gt;</span>
 <span class="cm"> */</span>
 </pre></div>
 </div>
@@ -628,32 +628,32 @@ form to contain:</p>
 JavaScript, you can pass it as a string in the third parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$js</span> <span class="o">=</span> <span class="s1">&#39;onClick=&quot;some_function ()&quot;&#39;</span><span class="p">;</span>
-<span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;johndoe&#39;</span><span class="p">,</span> <span class="nv">$js</span><span class="p">);</span>
+<span class="nv">$js</span> <span class="o">=</span> <span class="s1">'onClick="some_function ()"'</span><span class="p">;</span>
+<span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="s1">'username'</span><span class="p">,</span> <span class="s1">'johndoe'</span><span class="p">,</span> <span class="nv">$js</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Would produce:</span>
-<span class="cm"> * &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;johndoe&quot; onClick=&quot;some_function ()&quot;&gt;</span>
+<span class="cm"> * &lt;input type="text" name="username" value="johndoe" onClick="some_function ()"&gt;</span>
 <span class="cm"> */</span>
 </pre></div>
 </div>
 <p>Or you can pass it as an array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$js</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;onClick&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;some_function ();&#39;</span><span class="p">];</span>
-<span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;johndoe&#39;</span><span class="p">,</span> <span class="nv">$js</span><span class="p">);</span>
+<span class="nv">$js</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'onClick'</span> <span class="o">=&gt;</span> <span class="s1">'some_function ();'</span><span class="p">];</span>
+<span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="s1">'username'</span><span class="p">,</span> <span class="s1">'johndoe'</span><span class="p">,</span> <span class="nv">$js</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Would produce:</span>
-<span class="cm"> * &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;johndoe&quot; onClick=&quot;some_function ();&quot;&gt;</span>
+<span class="cm"> * &lt;input type="text" name="username" value="johndoe" onClick="some_function ();"&gt;</span>
 <span class="cm"> */</span>
 </pre></div>
 </div>
 <p>To support the expanded range of HTML5 input fields, you can pass an input type in as the fourth parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;joe@example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;placeholder&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Email Address...&#39;</span><span class="p">],</span> <span class="s1">&#39;email&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="s1">'email'</span><span class="p">,</span> <span class="s1">'joe@example.com'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'placeholder'</span> <span class="o">=&gt;</span> <span class="s1">'Email Address...'</span><span class="p">],</span> <span class="s1">'email'</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Would produce:</span>
-<span class="cm"> * &lt;input type=&quot;email&quot; name=&quot;email&quot; value=&quot;joe@example.com&quot; placeholder=&quot;Email Address...&quot;&gt;</span>
+<span class="cm"> * &lt;input type="email" name="email" value="joe@example.com" placeholder="Email Address..."&gt;</span>
 <span class="cm"> */</span>
 </pre></div>
 </div>
@@ -760,32 +760,32 @@ multiple select for you.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$options</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;small&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Small Shirt&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;med&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;Medium Shirt&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;large&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Large Shirt&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;xlarge&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Extra Large Shirt&#39;</span><span class="p">,</span>
+    <span class="s1">'small'</span>  <span class="o">=&gt;</span> <span class="s1">'Small Shirt'</span><span class="p">,</span>
+    <span class="s1">'med'</span>    <span class="o">=&gt;</span> <span class="s1">'Medium Shirt'</span><span class="p">,</span>
+    <span class="s1">'large'</span>  <span class="o">=&gt;</span> <span class="s1">'Large Shirt'</span><span class="p">,</span>
+    <span class="s1">'xlarge'</span> <span class="o">=&gt;</span> <span class="s1">'Extra Large Shirt'</span><span class="p">,</span>
 <span class="p">];</span>
 
-<span class="nv">$shirts_on_sale</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;small&#39;</span><span class="p">,</span> <span class="s1">&#39;large&#39;</span><span class="p">];</span>
-<span class="k">echo</span> <span class="nx">form_dropdown</span><span class="p">(</span><span class="s1">&#39;shirts&#39;</span><span class="p">,</span> <span class="nv">$options</span><span class="p">,</span> <span class="s1">&#39;large&#39;</span><span class="p">);</span>
+<span class="nv">$shirts_on_sale</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'small'</span><span class="p">,</span> <span class="s1">'large'</span><span class="p">];</span>
+<span class="k">echo</span> <span class="nx">form_dropdown</span><span class="p">(</span><span class="s1">'shirts'</span><span class="p">,</span> <span class="nv">$options</span><span class="p">,</span> <span class="s1">'large'</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Would produce:</span>
-<span class="cm"> * &lt;select name=&quot;shirts&quot;&gt;</span>
-<span class="cm"> *     &lt;option value=&quot;small&quot;&gt;Small Shirt&lt;/option&gt;</span>
-<span class="cm"> *     &lt;option value=&quot;med&quot;&gt;Medium Shirt&lt;/option&gt;</span>
-<span class="cm"> *     &lt;option value=&quot;large&quot; selected=&quot;selected&quot;&gt;Large Shirt&lt;/option&gt;</span>
-<span class="cm"> *     &lt;option value=&quot;xlarge&quot;&gt;Extra Large Shirt&lt;/option&gt;</span>
+<span class="cm"> * &lt;select name="shirts"&gt;</span>
+<span class="cm"> *     &lt;option value="small"&gt;Small Shirt&lt;/option&gt;</span>
+<span class="cm"> *     &lt;option value="med"&gt;Medium Shirt&lt;/option&gt;</span>
+<span class="cm"> *     &lt;option value="large" selected="selected"&gt;Large Shirt&lt;/option&gt;</span>
+<span class="cm"> *     &lt;option value="xlarge"&gt;Extra Large Shirt&lt;/option&gt;</span>
 <span class="cm"> * &lt;/select&gt;</span>
 <span class="cm"> */</span>
 
-<span class="k">echo</span> <span class="nx">form_dropdown</span><span class="p">(</span><span class="s1">&#39;shirts&#39;</span><span class="p">,</span> <span class="nv">$options</span><span class="p">,</span> <span class="nv">$shirts_on_sale</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">form_dropdown</span><span class="p">(</span><span class="s1">'shirts'</span><span class="p">,</span> <span class="nv">$options</span><span class="p">,</span> <span class="nv">$shirts_on_sale</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Would produce:</span>
-<span class="cm"> * &lt;select name=&quot;shirts&quot; multiple=&quot;multiple&quot;&gt;</span>
-<span class="cm"> *     &lt;option value=&quot;small&quot; selected=&quot;selected&quot;&gt;Small Shirt&lt;/option&gt;</span>
-<span class="cm"> *     &lt;option value=&quot;med&quot;&gt;Medium Shirt&lt;/option&gt;</span>
-<span class="cm"> *     &lt;option value=&quot;large&quot; selected=&quot;selected&quot;&gt;Large Shirt&lt;/option&gt;</span>
-<span class="cm"> *     &lt;option value=&quot;xlarge&quot;&gt;Extra Large Shirt&lt;/option&gt;</span>
+<span class="cm"> * &lt;select name="shirts" multiple="multiple"&gt;</span>
+<span class="cm"> *     &lt;option value="small" selected="selected"&gt;Small Shirt&lt;/option&gt;</span>
+<span class="cm"> *     &lt;option value="med"&gt;Medium Shirt&lt;/option&gt;</span>
+<span class="cm"> *     &lt;option value="large" selected="selected"&gt;Large Shirt&lt;/option&gt;</span>
+<span class="cm"> *     &lt;option value="xlarge"&gt;Extra Large Shirt&lt;/option&gt;</span>
 <span class="cm"> * &lt;/select&gt;</span>
 <span class="cm"> */</span>
 </pre></div>
@@ -795,18 +795,18 @@ an id attribute or JavaScript, you can pass it as a string in the fourth
 parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$js</span> <span class="o">=</span> <span class="s1">&#39;id=&quot;shirts&quot; onChange=&quot;some_function();&quot;&#39;</span><span class="p">;</span>
-<span class="k">echo</span> <span class="nx">form_dropdown</span><span class="p">(</span><span class="s1">&#39;shirts&#39;</span><span class="p">,</span> <span class="nv">$options</span><span class="p">,</span> <span class="s1">&#39;large&#39;</span><span class="p">,</span> <span class="nv">$js</span><span class="p">);</span>
+<span class="nv">$js</span> <span class="o">=</span> <span class="s1">'id="shirts" onChange="some_function();"'</span><span class="p">;</span>
+<span class="k">echo</span> <span class="nx">form_dropdown</span><span class="p">(</span><span class="s1">'shirts'</span><span class="p">,</span> <span class="nv">$options</span><span class="p">,</span> <span class="s1">'large'</span><span class="p">,</span> <span class="nv">$js</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Or you can pass it as an array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$js</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;id&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;shirts&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;onChange&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;some_function();&#39;</span><span class="p">,</span>
+    <span class="s1">'id'</span>       <span class="o">=&gt;</span> <span class="s1">'shirts'</span><span class="p">,</span>
+    <span class="s1">'onChange'</span> <span class="o">=&gt;</span> <span class="s1">'some_function();'</span><span class="p">,</span>
 <span class="p">];</span>
-<span class="k">echo</span> <span class="nx">form_dropdown</span><span class="p">(</span><span class="s1">&#39;shirts&#39;</span><span class="p">,</span> <span class="nv">$options</span><span class="p">,</span> <span class="s1">&#39;large&#39;</span><span class="p">,</span> <span class="nv">$js</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">form_dropdown</span><span class="p">(</span><span class="s1">'shirts'</span><span class="p">,</span> <span class="nv">$options</span><span class="p">,</span> <span class="s1">'large'</span><span class="p">,</span> <span class="nv">$js</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If the array passed as <code class="docutils literal notranslate"><span class="pre">$options</span></code> is a multidimensional array, then
@@ -863,8 +863,8 @@ syntax, e.g., foo[].</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">form_fieldset</span><span class="p">(</span><span class="s1">&#39;Address Information&#39;</span><span class="p">);</span>
-<span class="k">echo</span> <span class="s2">&quot;&lt;p&gt;fieldset content here&lt;/p&gt;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+<span class="k">echo</span> <span class="nx">form_fieldset</span><span class="p">(</span><span class="s1">'Address Information'</span><span class="p">);</span>
+<span class="k">echo</span> <span class="s2">"&lt;p&gt;fieldset content here&lt;/p&gt;</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
 <span class="k">echo</span> <span class="nx">form_fieldset_close</span><span class="p">();</span>
 
 <span class="cp">?&gt;</span>
@@ -881,18 +881,18 @@ second parameter if you prefer to set additional attributes:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;address_info&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;class&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;address_info&#39;</span><span class="p">,</span>
+    <span class="s1">'id'</span>    <span class="o">=&gt;</span> <span class="s1">'address_info'</span><span class="p">,</span>
+    <span class="s1">'class'</span> <span class="o">=&gt;</span> <span class="s1">'address_info'</span><span class="p">,</span>
 <span class="p">];</span>
 
-<span class="k">echo</span> <span class="nx">form_fieldset</span><span class="p">(</span><span class="s1">&#39;Address Information&#39;</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
-<span class="k">echo</span> <span class="s2">&quot;&lt;p&gt;fieldset content here&lt;/p&gt;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+<span class="k">echo</span> <span class="nx">form_fieldset</span><span class="p">(</span><span class="s1">'Address Information'</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
+<span class="k">echo</span> <span class="s2">"&lt;p&gt;fieldset content here&lt;/p&gt;</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
 <span class="k">echo</span> <span class="nx">form_fieldset_close</span><span class="p">();</span>
 
 <span class="cp">?&gt;</span>
 
 <span class="cm">&lt;!-- Produces: --&gt;</span>
-<span class="p">&lt;</span><span class="nt">fieldset</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;address_info&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;address_info&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">fieldset</span> <span class="na">id</span><span class="o">=</span><span class="s">"address_info"</span> <span class="na">class</span><span class="o">=</span><span class="s">"address_info"</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">legend</span><span class="p">&gt;</span>Address Information<span class="p">&lt;/</span><span class="nt">legend</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>form content here<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">fieldset</span><span class="p">&gt;</span>
@@ -921,7 +921,7 @@ function is it permits you to pass data to it which will be added below
 the tag. For example</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$string</span> <span class="o">=</span> <span class="s1">&#39;&lt;/div&gt;&lt;/div&gt;&#39;</span><span class="p">;</span>
+<span class="nv">$string</span> <span class="o">=</span> <span class="s1">'&lt;/div&gt;&lt;/div&gt;'</span><span class="p">;</span>
 <span class="k">echo</span> <span class="nx">form_fieldset_close</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
 <span class="c1">// Would produce: &lt;/fieldset&gt;&lt;/div&gt;&lt;/div&gt;</span>
 </pre></div>
@@ -950,8 +950,8 @@ the tag. For example</p>
 <p>Lets you generate a checkbox field. Simple example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">form_checkbox</span><span class="p">(</span><span class="s1">&#39;newsletter&#39;</span><span class="p">,</span> <span class="s1">&#39;accept&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
-<span class="c1">// Would produce:  &lt;input type=&quot;checkbox&quot; name=&quot;newsletter&quot; value=&quot;accept&quot; checked=&quot;checked&quot;&gt;</span>
+<span class="k">echo</span> <span class="nx">form_checkbox</span><span class="p">(</span><span class="s1">'newsletter'</span><span class="p">,</span> <span class="s1">'accept'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="c1">// Would produce:  &lt;input type="checkbox" name="newsletter" value="accept" checked="checked"&gt;</span>
 </pre></div>
 </div>
 <p>The third parameter contains a boolean true/false to determine whether
@@ -961,15 +961,15 @@ array of attributes to the function:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;name&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;newsletter&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;id&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;newsletter&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;value&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;accept&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;checked&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-    <span class="s1">&#39;style&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;margin:10px&#39;</span><span class="p">,</span>
+    <span class="s1">'name'</span>    <span class="o">=&gt;</span> <span class="s1">'newsletter'</span><span class="p">,</span>
+    <span class="s1">'id'</span>      <span class="o">=&gt;</span> <span class="s1">'newsletter'</span><span class="p">,</span>
+    <span class="s1">'value'</span>   <span class="o">=&gt;</span> <span class="s1">'accept'</span><span class="p">,</span>
+    <span class="s1">'checked'</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="s1">'style'</span>   <span class="o">=&gt;</span> <span class="s1">'margin:10px'</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">form_checkbox</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
-<span class="c1">// Would produce: &lt;input type=&quot;checkbox&quot; name=&quot;newsletter&quot; id=&quot;newsletter&quot; value=&quot;accept&quot; checked=&quot;checked&quot; style=&quot;margin:10px&quot;&gt;</span>
+<span class="c1">// Would produce: &lt;input type="checkbox" name="newsletter" id="newsletter" value="accept" checked="checked" style="margin:10px"&gt;</span>
 </pre></div>
 </div>
 <p>Also as with other functions, if you would like the tag to contain
@@ -977,15 +977,15 @@ additional data like JavaScript, you can pass it as a string in the
 fourth parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$js</span> <span class="o">=</span> <span class="s1">&#39;onClick=&quot;some_function()&quot;&#39;</span><span class="p">;</span>
-<span class="k">echo</span> <span class="nx">form_checkbox</span><span class="p">(</span><span class="s1">&#39;newsletter&#39;</span><span class="p">,</span> <span class="s1">&#39;accept&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="nv">$js</span><span class="p">);</span>
+<span class="nv">$js</span> <span class="o">=</span> <span class="s1">'onClick="some_function()"'</span><span class="p">;</span>
+<span class="k">echo</span> <span class="nx">form_checkbox</span><span class="p">(</span><span class="s1">'newsletter'</span><span class="p">,</span> <span class="s1">'accept'</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="nv">$js</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Or you can pass it as an array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$js</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;onClick&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;some_function();&#39;</span><span class="p">];</span>
-<span class="k">echo</span> <span class="nx">form_checkbox</span><span class="p">(</span><span class="s1">&#39;newsletter&#39;</span><span class="p">,</span> <span class="s1">&#39;accept&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="nv">$js</span><span class="p">);</span>
+<span class="nv">$js</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'onClick'</span> <span class="o">=&gt;</span> <span class="s1">'some_function();'</span><span class="p">];</span>
+<span class="k">echo</span> <span class="nx">form_checkbox</span><span class="p">(</span><span class="s1">'newsletter'</span><span class="p">,</span> <span class="s1">'accept'</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="nv">$js</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1034,8 +1034,8 @@ function above except that it uses the “radio” input type.</p>
 <p>Lets you generate a &lt;label&gt;. Simple example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">form_label</span><span class="p">(</span><span class="s1">&#39;What is your Name&#39;</span><span class="p">,</span> <span class="s1">&#39;username&#39;</span><span class="p">);</span>
-<span class="c1">// Would produce:  &lt;label for=&quot;username&quot;&gt;What is your Name&lt;/label&gt;</span>
+<span class="k">echo</span> <span class="nx">form_label</span><span class="p">(</span><span class="s1">'What is your Name'</span><span class="p">,</span> <span class="s1">'username'</span><span class="p">);</span>
+<span class="c1">// Would produce:  &lt;label for="username"&gt;What is your Name&lt;/label&gt;</span>
 </pre></div>
 </div>
 <p>Similar to other functions, you can submit an associative array in the
@@ -1044,12 +1044,12 @@ third parameter if you prefer to set additional attributes.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;class&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;mycustomclass&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;style&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;color: #000;&#39;</span><span class="p">,</span>
+    <span class="s1">'class'</span> <span class="o">=&gt;</span> <span class="s1">'mycustomclass'</span><span class="p">,</span>
+    <span class="s1">'style'</span> <span class="o">=&gt;</span> <span class="s1">'color: #000;'</span><span class="p">,</span>
 <span class="p">];</span>
 
-<span class="k">echo</span> <span class="nx">form_label</span><span class="p">(</span><span class="s1">&#39;What is your Name&#39;</span><span class="p">,</span> <span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
-<span class="c1">// Would produce:  &lt;label for=&quot;username&quot; class=&quot;mycustomclass&quot; style=&quot;color: #000;&quot;&gt;What is your Name&lt;/label&gt;</span>
+<span class="k">echo</span> <span class="nx">form_label</span><span class="p">(</span><span class="s1">'What is your Name'</span><span class="p">,</span> <span class="s1">'username'</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
+<span class="c1">// Would produce:  &lt;label for="username" class="mycustomclass" style="color: #000;"&gt;What is your Name&lt;/label&gt;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1075,8 +1075,8 @@ third parameter if you prefer to set additional attributes.</p>
 <p>Lets you generate a standard submit button. Simple example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">form_submit</span><span class="p">(</span><span class="s1">&#39;mysubmit&#39;</span><span class="p">,</span> <span class="s1">&#39;Submit Post!&#39;</span><span class="p">);</span>
-<span class="c1">// Would produce:  &lt;input type=&quot;submit&quot; name=&quot;mysubmit&quot; value=&quot;Submit Post!&quot;&gt;</span>
+<span class="k">echo</span> <span class="nx">form_submit</span><span class="p">(</span><span class="s1">'mysubmit'</span><span class="p">,</span> <span class="s1">'Submit Post!'</span><span class="p">);</span>
+<span class="c1">// Would produce:  &lt;input type="submit" name="mysubmit" value="Submit Post!"&gt;</span>
 </pre></div>
 </div>
 <p>Similar to other functions, you can submit an associative array in the
@@ -1128,8 +1128,8 @@ parameter lets you add extra data to your form, like JavaScript.</p>
 button name and content in the first and second parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nx">form_button</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;content&#39;</span><span class="p">);</span>
-<span class="c1">// Would produce: &lt;button name=&quot;name&quot; type=&quot;button&quot;&gt;Content&lt;/button&gt;</span>
+<span class="k">echo</span> <span class="nx">form_button</span><span class="p">(</span><span class="s1">'name'</span><span class="p">,</span> <span class="s1">'content'</span><span class="p">);</span>
+<span class="c1">// Would produce: &lt;button name="name" type="button"&gt;Content&lt;/button&gt;</span>
 </pre></div>
 </div>
 <p>Or you can pass an associative array containing any data you wish your
@@ -1137,23 +1137,23 @@ form to contain:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;name&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;button&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;id&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;button&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;value&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;type&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;reset&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;content&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Reset&#39;</span><span class="p">,</span>
+    <span class="s1">'name'</span>    <span class="o">=&gt;</span> <span class="s1">'button'</span><span class="p">,</span>
+    <span class="s1">'id'</span>      <span class="o">=&gt;</span> <span class="s1">'button'</span><span class="p">,</span>
+    <span class="s1">'value'</span>   <span class="o">=&gt;</span> <span class="s1">'true'</span><span class="p">,</span>
+    <span class="s1">'type'</span>    <span class="o">=&gt;</span> <span class="s1">'reset'</span><span class="p">,</span>
+    <span class="s1">'content'</span> <span class="o">=&gt;</span> <span class="s1">'Reset'</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">form_button</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
-<span class="c1">// Would produce: &lt;button name=&quot;button&quot; id=&quot;button&quot; value=&quot;true&quot; type=&quot;reset&quot;&gt;Reset&lt;/button&gt;</span>
+<span class="c1">// Would produce: &lt;button name="button" id="button" value="true" type="reset"&gt;Reset&lt;/button&gt;</span>
 </pre></div>
 </div>
 <p>If you would like your form to contain some additional data, like
 JavaScript, you can pass it as a string in the third parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$js</span> <span class="o">=</span> <span class="s1">&#39;onClick=&quot;some_function()&quot;&#39;</span><span class="p">;</span>
-<span class="k">echo</span> <span class="nx">form_button</span><span class="p">(</span><span class="s1">&#39;mybutton&#39;</span><span class="p">,</span> <span class="s1">&#39;Click Me&#39;</span><span class="p">,</span> <span class="nv">$js</span><span class="p">);</span>
+<span class="nv">$js</span> <span class="o">=</span> <span class="s1">'onClick="some_function()"'</span><span class="p">;</span>
+<span class="k">echo</span> <span class="nx">form_button</span><span class="p">(</span><span class="s1">'mybutton'</span><span class="p">,</span> <span class="s1">'Click Me'</span><span class="p">,</span> <span class="nv">$js</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1179,7 +1179,7 @@ function is it permits you to pass data to it which will be added below
 the tag. For example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$string</span> <span class="o">=</span> <span class="s1">&#39;&lt;/div&gt;&lt;/div&gt;&#39;</span><span class="p">;</span>
+<span class="nv">$string</span> <span class="o">=</span> <span class="s1">'&lt;/div&gt;&lt;/div&gt;'</span><span class="p">;</span>
 <span class="k">echo</span> <span class="nx">form_close</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
 <span class="c1">// Would produce:  &lt;/form&gt; &lt;/div&gt;&lt;/div&gt;</span>
 </pre></div>
@@ -1211,7 +1211,7 @@ field value. The third (optional) parameter allows you to turn off HTML escaping
 of the value, in case you need to use this function in combination with
 i.e., <a class="reference internal" href="#form_input" title="form_input"><code class="xref php php-func docutils literal notranslate"><span class="pre">form_input()</span></code></a> and avoid double-escaping.</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;quantity&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;&lt;?= set_value(&#39;quantity&#39;, &#39;0&#39;) ?&gt;&quot;</span> <span class="nx">size</span><span class="o">=</span><span class="s2">&quot;50&quot;</span><span class="o">&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"quantity"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"&lt;?= set_value('quantity', '0') ?&gt;"</span> <span class="nx">size</span><span class="o">=</span><span class="s2">"50"</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>The above form will show “0” when loaded for the first time.</p>
@@ -1241,10 +1241,10 @@ menu item that was selected.</p>
 parameter must contain the value of each item, and the third (optional)
 parameter lets you set an item as the default (use boolean true/false).</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">select</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;myselect&quot;</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;one&quot;</span> <span class="o">&lt;?=</span> <span class="nx">set_select</span><span class="p">(</span><span class="s1">&#39;myselect&#39;</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span> <span class="cp">?&gt;</span>&gt;One<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;two&quot;</span> <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">set_select</span><span class="p">(</span><span class="s1">&#39;myselect&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&gt;</span>Two<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;three&quot;</span> <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">set_select</span><span class="p">(</span><span class="s1">&#39;myselect&#39;</span><span class="p">,</span> <span class="s1">&#39;three&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&gt;</span>Three<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">select</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"myselect"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"one"</span> <span class="o">&lt;?=</span> <span class="nx">set_select</span><span class="p">(</span><span class="s1">'myselect'</span><span class="p">,</span> <span class="s1">'one'</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span> <span class="cp">?&gt;</span>&gt;One<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">"two"</span> <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">set_select</span><span class="p">(</span><span class="s1">'myselect'</span><span class="p">,</span> <span class="s1">'two'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&gt;</span>Two<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">"three"</span> <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">set_select</span><span class="p">(</span><span class="s1">'myselect'</span><span class="p">,</span> <span class="s1">'three'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&gt;</span>Three<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">select</span><span class="p">&gt;</span>
 </pre></div>
 </div>
@@ -1273,8 +1273,8 @@ parameter lets you set an item as the default (use boolean true/false).</p>
 parameter must contain its value, and the third (optional) parameter
 lets you set an item as the default (use boolean true/false).</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;checkbox&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;mycheck[]&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="o">&lt;?=</span> <span class="nx">set_checkbox</span><span class="p">(</span><span class="s1">&#39;mycheck&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>&gt;
-<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;checkbox&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;mycheck[]&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;2&quot;</span> <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">set_checkbox</span><span class="p">(</span><span class="s1">&#39;mycheck&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"checkbox"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"mycheck[]"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"1"</span> <span class="o">&lt;?=</span> <span class="nx">set_checkbox</span><span class="p">(</span><span class="s1">'mycheck'</span><span class="p">,</span> <span class="s1">'1'</span><span class="p">)</span> <span class="cp">?&gt;</span>&gt;
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"checkbox"</span> <span class="na">name</span><span class="o">=</span><span class="s">"mycheck[]"</span> <span class="na">value</span><span class="o">=</span><span class="s">"2"</span> <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">set_checkbox</span><span class="p">(</span><span class="s1">'mycheck'</span><span class="p">,</span> <span class="s1">'2'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1300,8 +1300,8 @@ lets you set an item as the default (use boolean true/false).</p>
 <p>Permits you to display radio buttons in the state they were submitted.
 This function is identical to the <a class="reference internal" href="#set_checkbox" title="set_checkbox"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_checkbox()</span></code></a> function above.</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;radio&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;myradio&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="o">&lt;?=</span> <span class="nx">set_radio</span><span class="p">(</span><span class="s1">&#39;myradio&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span> <span class="cp">?&gt;</span>&gt;
-<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;radio&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;myradio&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;2&quot;</span> <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">set_radio</span><span class="p">(</span><span class="s1">&#39;myradio&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"radio"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"myradio"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"1"</span> <span class="o">&lt;?=</span> <span class="nx">set_radio</span><span class="p">(</span><span class="s1">'myradio'</span><span class="p">,</span> <span class="s1">'1'</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span> <span class="cp">?&gt;</span>&gt;
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"radio"</span> <span class="na">name</span><span class="o">=</span><span class="s">"myradio"</span> <span class="na">value</span><span class="o">=</span><span class="s">"2"</span> <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">set_radio</span><span class="p">(</span><span class="s1">'myradio'</span><span class="p">,</span> <span class="s1">'2'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1402,7 +1402,7 @@ want to get the validation errors in model validation, see
 <a class="reference internal" href="../models/model.html#model-getting-validation-errors"><span class="std std-ref">Getting Validation Errors</span></a>.</p>
 </div>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">validation_show_error</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">validation_show_error</span><span class="p">(</span><span class="s1">'username'</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1422,7 +1422,7 @@ want to get the validation errors in model validation, see
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 24, 2026.
       </span></p>
   </div>
 
