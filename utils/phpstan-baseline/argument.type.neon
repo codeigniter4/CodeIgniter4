@@ -1,4 +1,4 @@
-# total 21 errors
+# total 12 errors
 
 parameters:
     ignoreErrors:
@@ -51,28 +51,3 @@ parameters:
             message: '#^Parameter \#1 \$format of method CodeIgniter\\RESTful\\ResourceController\:\:setFormat\(\) expects ''json''\|''xml'', ''Nonsense'' given\.$#'
             count: 1
             path: ../../tests/system/RESTful/ResourceControllerTest.php
-
-        -
-            message: '#^Parameter \#2 \$context of method CodeIgniter\\View\\Parser\:\:setData\(\) expects ''attr''\|''css''\|''html''\|''js''\|''raw''\|''url''\|null, ''unknown'' given\.$#'
-            count: 3
-            path: ../../tests/system/View/ParserTest.php
-
-        -
-            message: '#^Parameter \#1 \$array of method CodeIgniter\\View\\Table\:\:makeColumns\(\) expects list\<string\>, ''invalid_junk'' given\.$#'
-            count: 1
-            path: ../../tests/system/View/TableTest.php
-
-        -
-            message: '#^Parameter \#1 \$connID of class CodeIgniter\\View\\DBResultDummy constructor expects mysqli, null given\.$#'
-            count: 2
-            path: ../../tests/system/View/TableTest.php
-
-        -
-            message: '#^Parameter \#2 \$columnLimit of method CodeIgniter\\View\\Table\:\:makeColumns\(\) expects int, string given\.$#'
-            count: 1
-            path: ../../tests/system/View/TableTest.php
-
-        -
-            message: '#^Parameter \#2 \$resultID of class CodeIgniter\\View\\DBResultDummy constructor expects mysqli_result, null given\.$#'
-            count: 2
-            path: ../../tests/system/View/TableTest.php

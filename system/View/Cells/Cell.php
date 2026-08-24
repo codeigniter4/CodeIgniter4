@@ -71,6 +71,8 @@ class Cell implements Stringable
      * current scope and captures the output buffer instead of
      * relying on the view service.
      *
+     * @param array<string, mixed> $data
+     *
      * @throws LogicException
      */
     final protected function view(?string $view, array $data = []): string
@@ -129,6 +131,10 @@ class Cell implements Stringable
     /**
      * Allows the developer to define computed properties
      * as methods with `get` prefixed to the protected/private property name.
+     *
+     * @param array<string, mixed> $properties
+     *
+     * @return array<string, mixed>
      */
     private function includeComputedProperties(array $properties): array
     {

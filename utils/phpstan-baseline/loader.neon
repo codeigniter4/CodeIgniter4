@@ -1,4 +1,4 @@
-# total 279 errors
+# total 243 errors
 
 includes:
     - argument.type.neon
@@ -14,4 +14,3 @@ includes:
     - property.defaultValue.neon
     - property.notFound.neon
     - property.phpDocType.neon
-    - staticMethod.notFound.neon

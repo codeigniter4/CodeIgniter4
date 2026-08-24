@@ -1,4 +1,4 @@
-# total 178 errors
+# total 161 errors
 
 parameters:
     ignoreErrors:
@@ -393,64 +393,9 @@ parameters:
             path: ../../system/Typography/Typography.php
 
         -
-            message: '#^Method CodeIgniter\\View\\Cell\:\:determineClass\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/View/Cell.php
-
-        -
-            message: '#^Method CodeIgniter\\View\\Cell\:\:getMethodParams\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/View/Cell.php
-
-        -
-            message: '#^Method CodeIgniter\\View\\Cell\:\:getMethodParams\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/View/Cell.php
-
-        -
-            message: '#^Method CodeIgniter\\View\\Cell\:\:renderCell\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/View/Cell.php
-
-        -
-            message: '#^Method CodeIgniter\\View\\Cell\:\:renderSimpleClass\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/View/Cell.php
-
-        -
-            message: '#^Method CodeIgniter\\View\\Cells\\Cell\:\:fill\(\) has parameter \$params with no value type specified in iterable type array\.$#'
+            message: '#^Method class@anonymous/system/Traits/PropertiesTrait\.php\:51\:\:getProperties\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/View/Cells/Cell.php
-
-        -
-            message: '#^Method CodeIgniter\\View\\Cells\\Cell\:\:getNonPublicProperties\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/View/Cells/Cell.php
-
-        -
-            message: '#^Method CodeIgniter\\View\\Cells\\Cell\:\:includeComputedProperties\(\) has parameter \$properties with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/View/Cells/Cell.php
-
-        -
-            message: '#^Method CodeIgniter\\View\\Cells\\Cell\:\:includeComputedProperties\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/View/Cells/Cell.php
-
-        -
-            message: '#^Method CodeIgniter\\View\\Cells\\Cell\:\:view\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/View/Cells/Cell.php
-
-        -
-            message: '#^Method class@anonymous/system/Traits/PropertiesTrait\.php\:49\:\:getProperties\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/View/Cells/Cell.php
-
-        -
-            message: '#^Method CodeIgniter\\View\\Parser\:\:replaceSingle\(\) has parameter \$pattern with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/View/Parser.php
 
         -
             message: '#^Method CodeIgniter\\AutoReview\\ComposerJsonTest\:\:checkConfig\(\) has parameter \$fromComponent with no value type specified in iterable type array\.$#'
@@ -861,33 +806,3 @@ parameters:
             message: '#^Method CodeIgniter\\Throttle\\ThrottleTest\:\:testTokenTimeCalculationUCs\(\) has parameter \$checkInputs with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/Throttle/ThrottleTest.php
-
-        -
-            message: '#^Method CodeIgniter\\View\\ParserTest\:\:provideEscHandling\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/View/ParserTest.php
-
-        -
-            message: '#^Method CodeIgniter\\View\\TableTest\:\:orderedColumnUsecases\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/View/TableTest.php
-
-        -
-            message: '#^Method CodeIgniter\\View\\TableTest\:\:testAddRowAndGenerateOrderedColumns\(\) has parameter \$heading with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/View/TableTest.php
-
-        -
-            message: '#^Method CodeIgniter\\View\\TableTest\:\:testAddRowAndGenerateOrderedColumns\(\) has parameter \$row with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/View/TableTest.php
-
-        -
-            message: '#^Method CodeIgniter\\View\\TableTest\:\:testGenerateOrderedColumns\(\) has parameter \$heading with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/View/TableTest.php
-
-        -
-            message: '#^Method CodeIgniter\\View\\TableTest\:\:testGenerateOrderedColumns\(\) has parameter \$row with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/View/TableTest.php

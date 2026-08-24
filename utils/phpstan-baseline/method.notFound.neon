@@ -1,4 +1,4 @@
-# total 16 errors
+# total 8 errors
 
 parameters:
     ignoreErrors:
@@ -31,28 +31,3 @@ parameters:
             message: '#^Call to an undefined method CodeIgniter\\HTTP\\ResponseInterface\:\:pretend\(\)\.$#'
             count: 1
             path: ../../tests/system/RESTful/ResourceControllerTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\View\\Table\:\:compileTemplate\(\)\.$#'
-            count: 2
-            path: ../../tests/system/View/TableTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\View\\Table\:\:defaultTemplate\(\)\.$#'
-            count: 1
-            path: ../../tests/system/View/TableTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\View\\Table\:\:prepArgs\(\)\.$#'
-            count: 2
-            path: ../../tests/system/View/TableTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\View\\Table\:\:setFromArray\(\)\.$#'
-            count: 2
-            path: ../../tests/system/View/TableTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\View\\Table\:\:setFromDBResult\(\)\.$#'
-            count: 1
-            path: ../../tests/system/View/TableTest.php

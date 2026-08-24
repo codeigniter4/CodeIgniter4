@@ -27,6 +27,8 @@ trait PropertiesTrait
 {
     /**
      * Attempts to set the values of public class properties.
+     *
+     * @param array<string, mixed> $params
      */
     final public function fill(array $params): self
     {
@@ -61,6 +63,8 @@ trait PropertiesTrait
 
     /**
      * Get the protected and private properties of the class and return as an array.
+     *
+     * @return list<ReflectionProperty>
      */
     final public function getNonPublicProperties(): array
     {

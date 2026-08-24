@@ -438,6 +438,9 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame($expected, \esc($value));
     }
 
+    /**
+     * @return iterable<string, list<mixed>>
+     */
     public static function provideEscHandling(): iterable
     {
         return [
@@ -543,20 +546,20 @@ final class ParserTest extends CIUnitTestCase
     {
         $template = '{ foo | noescape}';
 
-        $this->parser->setData(['foo' => 'http://foo.com'], 'unknown');
+        $this->parser->setData(['foo' => 'http://foo.com'], 'unknown'); // @phpstan-ignore argument.type (deliberately invalid context)
         $this->assertSame('http://foo.com', $this->parser->renderString($template));
     }
 
     public function testAutoEscaping(): void
     {
-        $this->parser->setData(['foo' => 'http://foo.com'], 'unknown');
+        $this->parser->setData(['foo' => 'http://foo.com'], 'unknown'); // @phpstan-ignore argument.type (deliberately invalid context)
 
         $this->assertSame('html', $this->parser->shouldAddEscaping('{ foo | this | that }'));
     }
 
     public function testAutoEscapingNot(): void
     {
-        $this->parser->setData(['foo' => 'http://foo.com'], 'unknown');
+        $this->parser->setData(['foo' => 'http://foo.com'], 'unknown'); // @phpstan-ignore argument.type (deliberately invalid context)
         $this->assertFalse($this->parser->shouldAddEscaping('{ foo | noescape }'));
     }
 

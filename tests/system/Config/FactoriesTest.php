@@ -324,8 +324,8 @@ final class FactoriesTest extends CIUnitTestCase
 
     public function testCanLoadTwoCellsWithSameShortName(): void
     {
-        $cell1 = Factories::cells('\\' . SampleClass::class); // @phpstan-ignore staticMethod.notFound
-        $cell2 = Factories::cells('\\' . \Tests\Support\View\OtherCells\SampleClass::class); // @phpstan-ignore staticMethod.notFound
+        $cell1 = Factories::cells('\\' . SampleClass::class);
+        $cell2 = Factories::cells('\\' . \Tests\Support\View\OtherCells\SampleClass::class);
 
         $this->assertNotSame($cell1, $cell2);
     }
