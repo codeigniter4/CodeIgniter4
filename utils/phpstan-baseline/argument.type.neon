@@ -1,4 +1,4 @@
-# total 24 errors
+# total 21 errors
 
 parameters:
     ignoreErrors:
@@ -21,16 +21,6 @@ parameters:
             message: '#^Parameter \#2 \$to of method CodeIgniter\\Router\\RouteCollection\:\:add\(\) expects array\<mixed\>\|\(Closure\(mixed \.\.\.\)\: \(CodeIgniter\\HTTP\\ResponseInterface\|string\|void\)\)\|string, Closure\(mixed\)\: void given\.$#'
             count: 1
             path: ../../tests/system/CodeIgniterTest.php
-
-        -
-            message: '#^Parameter \#1 \$expected of method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) expects class\-string\<Config\\TestRegistrar\>, string given\.$#'
-            count: 1
-            path: ../../tests/system/Config/FactoriesTest.php
-
-        -
-            message: '#^Parameter \#3 \$classname of static method CodeIgniter\\Config\\Factories\:\:define\(\) expects class\-string, string given\.$#'
-            count: 2
-            path: ../../tests/system/Config/FactoriesTest.php
 
         -
             message: '#^Parameter \#1 \$db of class CodeIgniter\\Database\\SQLite3\\Table constructor expects CodeIgniter\\Database\\SQLite3\\Connection, CodeIgniter\\Database\\BaseConnection given\.$#'

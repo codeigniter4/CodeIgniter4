@@ -37,7 +37,7 @@ class BaseConfig
      * An optional array of classes that will act as Registrars
      * for rapidly setting config class properties.
      *
-     * @var array
+     * @var list<class-string|object>
      */
     public static $registrars = [];
 
@@ -70,6 +70,9 @@ class BaseConfig
      */
     protected static $moduleConfig;
 
+    /**
+     * @param array<string, mixed> $array
+     */
     public static function __set_state(array $array)
     {
         static::$override = false;

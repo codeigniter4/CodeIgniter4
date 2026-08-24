@@ -73,6 +73,9 @@ final class DotEnvTest extends CIUnitTestCase
         $this->assertSame($expected, getenv($varname));
     }
 
+    /**
+     * @return iterable<array{string, string}>
+     */
     public static function provideLoadsVars(): iterable
     {
         yield from [
