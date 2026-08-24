@@ -314,7 +314,7 @@ final class TestResponseTest extends CIUnitTestCase
     public function testGetJSONFalseJSON(): void
     {
         $this->getTestResponse('<h1>Hello World</h1>');
-        $this->response->setJSON(false, true); // @phpstan-ignore argument.type (Needed for testing)
+        $this->response->setJSON(false, true);
 
         // this should be FALSE - json_encode(false)
         $this->assertSame('false', $this->testResponse->getJSON());
@@ -323,7 +323,7 @@ final class TestResponseTest extends CIUnitTestCase
     public function testGetJSONTrueJSON(): void
     {
         $this->getTestResponse('<h1>Hello World</h1>');
-        $this->response->setJSON(true, true); // @phpstan-ignore argument.type (Needed for testing)
+        $this->response->setJSON(true, true);
 
         // this should be TRUE - json_encode(true)
         $this->assertSame('true', $this->testResponse->getJSON());

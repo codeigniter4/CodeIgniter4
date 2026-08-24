@@ -169,7 +169,7 @@ trait ResponseTrait
     /**
      * Converts the $body into JSON and sets the Content Type header.
      *
-     * @param array<array-key, mixed>|object|string $body
+     * @param mixed $body
      *
      * @return $this
      */
@@ -201,7 +201,7 @@ trait ResponseTrait
     /**
      * Converts $body into XML, and sets the correct Content-Type.
      *
-     * @param array<array-key, mixed>|string $body
+     * @param mixed $body
      *
      * @return $this
      */
@@ -234,8 +234,8 @@ trait ResponseTrait
      * Handles conversion of the data into the appropriate format,
      * and sets the correct Content-Type header for our response.
      *
-     * @param array<array-key, mixed>|object|string $body
-     * @param string                                $format Valid: json, xml
+     * @param mixed  $body
+     * @param string $format Valid: json, xml
      *
      * @return false|string
      *
