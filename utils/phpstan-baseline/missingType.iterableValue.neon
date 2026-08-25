@@ -1,4 +1,4 @@
-# total 127 errors
+# total 110 errors
 
 parameters:
     ignoreErrors:
@@ -81,86 +81,6 @@ parameters:
             message: '#^Method CodeIgniter\\DataConverter\\DataConverter\:\:toDataSource\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/DataConverter/DataConverter.php
-
-        -
-            message: '#^Method CodeIgniter\\Email\\Email\:\:__construct\(\) has parameter \$config with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Email/Email.php
-
-        -
-            message: '#^Method CodeIgniter\\Email\\Email\:\:cleanEmail\(\) has parameter \$email with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Email/Email.php
-
-        -
-            message: '#^Method CodeIgniter\\Email\\Email\:\:cleanEmail\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Email/Email.php
-
-        -
-            message: '#^Method CodeIgniter\\Email\\Email\:\:initialize\(\) has parameter \$config with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Email/Email.php
-
-        -
-            message: '#^Method CodeIgniter\\Email\\Email\:\:printDebugger\(\) has parameter \$include with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Email/Email.php
-
-        -
-            message: '#^Method CodeIgniter\\Email\\Email\:\:setArchiveValues\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Email/Email.php
-
-        -
-            message: '#^Method CodeIgniter\\Email\\Email\:\:setTo\(\) has parameter \$to with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Email/Email.php
-
-        -
-            message: '#^Method CodeIgniter\\Email\\Email\:\:validateEmail\(\) has parameter \$email with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Email/Email.php
-
-        -
-            message: '#^Property CodeIgniter\\Email\\Email\:\:\$BCCArray type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Email/Email.php
-
-        -
-            message: '#^Property CodeIgniter\\Email\\Email\:\:\$CCArray type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Email/Email.php
-
-        -
-            message: '#^Property CodeIgniter\\Email\\Email\:\:\$archive type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Email/Email.php
-
-        -
-            message: '#^Property CodeIgniter\\Email\\Email\:\:\$attachments type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Email/Email.php
-
-        -
-            message: '#^Property CodeIgniter\\Email\\Email\:\:\$debugMessage type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Email/Email.php
-
-        -
-            message: '#^Property CodeIgniter\\Email\\Email\:\:\$headers type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Email/Email.php
-
-        -
-            message: '#^Property CodeIgniter\\Email\\Email\:\:\$recipients type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Email/Email.php
-
-        -
-            message: '#^Property CodeIgniter\\Email\\Email\:\:\$tmpArchive type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Email/Email.php
 
         -
             message: '#^Method CodeIgniter\\Exceptions\\PageNotFoundException\:\:lang\(\) has parameter \$args with no value type specified in iterable type array\.$#'
@@ -501,11 +421,6 @@ parameters:
             message: '#^Method CodeIgniter\\Database\\Live\\UpdateTest\:\:testUpdateBatch\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/Database/Live/UpdateTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Email\\EmailTest\:\:provideEmailSendWithClearance\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Email/EmailTest.php
 
         -
             message: '#^Method CodeIgniter\\I18n\\TimeLegacyTest\:\:provideToStringDoesNotDependOnLocale\(\) return type has no value type specified in iterable type iterable\.$#'

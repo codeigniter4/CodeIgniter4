@@ -30,14 +30,14 @@ class Email
     /**
      * Properties from the last successful send.
      *
-     * @var array|null
+     * @var array<string, mixed>|null
      */
     public $archive;
 
     /**
      * Properties to be added to the next archive.
      *
-     * @var array
+     * @var array<string, list<string>|string>
      */
     protected $tmpArchive = [];
 
@@ -298,7 +298,7 @@ class Email
      *
      * @see Email::printDebugger()
      *
-     * @var array
+     * @var list<string>
      */
     protected $debugMessage = [];
 
@@ -312,35 +312,42 @@ class Email
     /**
      * Recipients
      *
-     * @var array|string
+     * @var list<string>
      */
     protected $recipients = [];
 
     /**
      * CC Recipients
      *
-     * @var array
+     * @var list<string>
      */
     protected $CCArray = [];
 
     /**
      * BCC Recipients
      *
-     * @var array
+     * @var list<string>
      */
     protected $BCCArray = [];
 
     /**
      * Message headers
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $headers = [];
 
     /**
      * Attachment data
      *
-     * @var array
+     * @var list<array{
+     *     name: array{0: string, 1: string|null},
+     *     disposition: string,
+     *     type: string,
+     *     content: string,
+     *     multipart: 'mixed'|'related',
+     *     cid?: string,
+     * }>
      */
     protected $attachments = [];
 
@@ -405,7 +412,7 @@ class Email
     protected static $func_overload;
 
     /**
-     * @param array|\Config\Email|null $config
+     * @param array<string, mixed>|\Config\Email|null $config
      */
     public function __construct($config = null)
     {
@@ -419,7 +426,7 @@ class Email
     /**
      * Initialize preferences
      *
-     * @param array|\Config\Email|null $config
+     * @param array<string, mixed>|\Config\Email|null $config
      *
      * @return $this
      */
@@ -554,7 +561,7 @@ class Email
     }
 
     /**
-     * @param array|string $to
+     * @param list<string>|string $to
      *
      * @return $this
      */
@@ -933,7 +940,7 @@ class Email
     }
 
     /**
-     * @param array|string $email
+     * @param list<string>|string $email
      *
      * @return bool
      */
@@ -972,9 +979,9 @@ class Email
     }
 
     /**
-     * @param array|string $email
+     * @param list<string>|string $email
      *
-     * @return array|string
+     * @return ($email is array ? list<string> : string)
      */
     public function cleanEmail($email)
     {
@@ -2121,8 +2128,8 @@ class Email
     }
 
     /**
-     * @param array|string $include List of raw data chunks to include in the output
-     *                              Valid options are: 'headers', 'subject', 'body'
+     * @param list<string>|string $include List of raw data chunks to include in the output
+     *                                     Valid options are: 'headers', 'subject', 'body'
      *
      * @return string
      */
@@ -2229,7 +2236,7 @@ class Email
     /**
      * Determines the values that should be stored in $archive.
      *
-     * @return array The updated archive values
+     * @return array<string, mixed> The updated archive values
      */
     protected function setArchiveValues(): array
     {
