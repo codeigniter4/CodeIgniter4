@@ -1,8 +1,0 @@
-# total 1 error
-
-parameters:
-    ignoreErrors:
-        -
-            message: '#^Call to an undefined static method CodeIgniter\\Config\\Factories\:\:cells\(\)\.$#'
-            count: 1
-            path: ../../system/View/Cell.php

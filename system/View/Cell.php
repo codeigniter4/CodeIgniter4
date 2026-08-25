@@ -78,9 +78,7 @@ class Cell
     {
         [$instance, $method] = $this->determineClass($library);
 
-        $class = is_object($instance)
-            ? $instance::class
-            : null;
+        $class = $instance::class;
 
         $params = $this->prepareParams($params);
 
@@ -160,6 +158,8 @@ class Cell
     /**
      * Given the library string, attempts to determine the class and method
      * to call.
+     *
+     * @return array{object, string}
      */
     protected function determineClass(string $library): array
     {
@@ -198,6 +198,8 @@ class Cell
 
     /**
      * Renders a cell that extends the BaseCell class.
+     *
+     * @param array<string, mixed> $params
      */
     final protected function renderCell(BaseCell $instance, string $method, array $params): string
     {
@@ -234,6 +236,10 @@ class Cell
      * Returns the values from $params that match the parameters
      * for a method, in the order they are defined. This allows
      * them to be passed directly into the method.
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return list<mixed>
      */
     private function getMethodParams(BaseCell $instance, string $method, array $params): array
     {
@@ -262,9 +268,9 @@ class Cell
      *
      * @todo Determine if this can be refactored to use $this-getMethodParams().
      *
-     * @param object $instance
+     * @param array<string, mixed> $params
      */
-    final protected function renderSimpleClass($instance, string $method, array $params, string $class): string
+    final protected function renderSimpleClass(object $instance, string $method, array $params, string $class): string
     {
         // Try to match up the parameter list we were provided
         // with the parameter name in the callback method.

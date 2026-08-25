@@ -543,9 +543,9 @@ class Parser extends View
      * Handles replacing a pseudo-variable with the actual content. Will double-check
      * for escaping brackets.
      *
-     * @param array|string $pattern
-     * @param string       $content
-     * @param string       $template
+     * @param array<array-key, string>|string $pattern
+     * @param string                          $content
+     * @param string                          $template
      */
     protected function replaceSingle($pattern, $content, $template, bool $escape = false): string
     {
