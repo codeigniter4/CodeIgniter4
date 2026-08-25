@@ -1,4 +1,4 @@
-# total 110 errors
+# total 95 errors
 
 parameters:
     ignoreErrors:
@@ -466,81 +466,6 @@ parameters:
             message: '#^Method CodeIgniter\\RESTful\\ResourceControllerTest\:\:invoke\(\) has parameter \$args with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/RESTful/ResourceControllerTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\AutoRouterImprovedTest\:\:provideRejectTranslateUriToCamelCase\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Router/AutoRouterImprovedTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\AutoRouterImprovedTest\:\:provideTranslateUriToCamelCase\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Router/AutoRouterImprovedTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\DefinedRouteCollectorTest\:\:createRouteCollection\(\) has parameter \$config with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Router/DefinedRouteCollectorTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\RouteCollectionReverseRouteTest\:\:getCollector\(\) has parameter \$config with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Router/RouteCollectionReverseRouteTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\RouteCollectionReverseRouteTest\:\:getCollector\(\) has parameter \$files with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Router/RouteCollectionReverseRouteTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\RouteCollectionReverseRouteTest\:\:provideReverseRoutingDefaultNamespaceAppController\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Router/RouteCollectionReverseRouteTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\RouteCollectionTest\:\:getCollector\(\) has parameter \$config with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Router/RouteCollectionTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\RouteCollectionTest\:\:getCollector\(\) has parameter \$files with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Router/RouteCollectionTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\RouteCollectionTest\:\:provideNestedGroupingWorksWithRootPrefix\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Router/RouteCollectionTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\RouteCollectionTest\:\:provideRouteDefaultNamespace\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Router/RouteCollectionTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\RouteCollectionTest\:\:provideRoutesOptionsWithSameFromTwoRoutes\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Router/RouteCollectionTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\RouteCollectionTest\:\:testNestedGroupingWorksWithRootPrefix\(\) has parameter \$expected with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Router/RouteCollectionTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\RouteCollectionTest\:\:testRoutesOptionsWithSameFromTwoRoutes\(\) has parameter \$options1 with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Router/RouteCollectionTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\RouteCollectionTest\:\:testRoutesOptionsWithSameFromTwoRoutes\(\) has parameter \$options2 with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Router/RouteCollectionTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Router\\RouterTest\:\:provideRedirectRoute\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Router/RouterTest.php
 
         -
             message: '#^Method CodeIgniter\\Throttle\\ThrottleTest\:\:provideTokenTimeCalculationUCs\(\) return type has no value type specified in iterable type iterable\.$#'
