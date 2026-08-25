@@ -94,6 +94,9 @@ final class SiteUrlCliTest extends CIUnitTestCase
         $this->assertSame($expectedBaseUrl, base_url($path, $scheme));
     }
 
+    /**
+     * @return iterable<array-key, array{string, string, string|null, bool, string, string, string}>
+     */
     public static function provideUrls(): iterable
     {
         // baseURL, indexPage, scheme, secure, path, expectedSiteUrl, expectedBaseUrl

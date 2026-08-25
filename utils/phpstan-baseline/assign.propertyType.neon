@@ -1,4 +1,4 @@
-# total 20 errors
+# total 19 errors
 
 parameters:
     ignoreErrors:
@@ -41,11 +41,6 @@ parameters:
             message: '#^Property CodeIgniter\\Filters\\HoneypotTest\:\:\$response \(CodeIgniter\\HTTP\\Response\|null\) does not accept CodeIgniter\\HTTP\\ResponseInterface\.$#'
             count: 4
             path: ../../tests/system/Filters/HoneypotTest.php
-
-        -
-            message: '#^Property CodeIgniter\\Helpers\\CookieHelperTest\:\:\$response \(CodeIgniter\\HTTP\\Response\) does not accept CodeIgniter\\HTTP\\ResponseInterface\.$#'
-            count: 1
-            path: ../../tests/system/Helpers/CookieHelperTest.php
 
         -
             message: '#^Property CodeIgniter\\Honeypot\\HoneypotTest\:\:\$response \(CodeIgniter\\HTTP\\Response\) does not accept CodeIgniter\\HTTP\\RequestInterface\|CodeIgniter\\HTTP\\ResponseInterface\|string\|null\.$#'

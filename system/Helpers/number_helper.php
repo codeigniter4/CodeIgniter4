@@ -19,16 +19,16 @@ if (! function_exists('number_to_size')) {
     /**
      * Formats a numbers as bytes, based on size, and adds the appropriate suffix
      *
-     * @param int|string            $num    Will be cast as int
+     * @param float|int|string      $num    Will be cast as int
      * @param non-empty-string|null $locale [optional]
      *
      * @return bool|string
      */
     function number_to_size($num, int $precision = 1, ?string $locale = null)
     {
-        // Strip any formatting & ensure numeric input
         try {
-            // @phpstan-ignore-next-line
+            // Strip any formatting & ensure numeric input
+            // @phpstan-ignore binaryOp.invalid
             $num = 0 + str_replace(',', '', (string) $num);
         } catch (ErrorException) {
             // Catch "Warning:  A non-numeric value encountered"

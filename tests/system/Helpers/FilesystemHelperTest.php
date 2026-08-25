@@ -188,13 +188,17 @@ final class FilesystemHelperTest extends CIUnitTestCase
         // skips the existing folder
         directory_mirror($root . 'src', $root . 'dest');
 
-        $structure = vfsStream::inspect(new vfsStreamStructureVisitor())->getStructure();
+        $visitor = vfsStream::inspect(new vfsStreamStructureVisitor());
+        $this->assertInstanceOf(vfsStreamStructureVisitor::class, $visitor);
+        $structure = $visitor->getStructure();
         $this->assertSame([], $structure['root']['dest']['AnEmptyFolder']);
 
         // skips the existing folder (the same as overwrite = true)
         directory_mirror($root . 'src', $root . 'dest', false);
 
-        $structure = vfsStream::inspect(new vfsStreamStructureVisitor())->getStructure();
+        $visitor = vfsStream::inspect(new vfsStreamStructureVisitor());
+        $this->assertInstanceOf(vfsStreamStructureVisitor::class, $visitor);
+        $structure = $visitor->getStructure();
         $this->assertSame([], $structure['root']['dest']['AnEmptyFolder']);
     }
 

@@ -1,4 +1,4 @@
-# total 25 errors
+# total 24 errors
 
 parameters:
     ignoreErrors:
@@ -51,11 +51,6 @@ parameters:
             message: '#^Parameter \#1 \$set of method CodeIgniter\\Database\\BaseBuilder\<CodeIgniter\\Database\\BaseConnection\>\:\:updateFields\(\) expects list\<CodeIgniter\\Database\\RawSql\|string\>\|string, array\{updated_at\: CodeIgniter\\Database\\RawSql\} given\.$#'
             count: 2
             path: ../../tests/system/Database/Live/UpsertTest.php
-
-        -
-            message: '#^Parameter \#1 \$num of function number_to_size expects int\|string, float given\.$#'
-            count: 1
-            path: ../../tests/system/Helpers/NumberHelperTest.php
 
         -
             message: '#^Parameter \#2 \$message of method CodeIgniter\\Log\\Handlers\\ChromeLoggerHandler\:\:handle\(\) expects string, stdClass given\.$#'

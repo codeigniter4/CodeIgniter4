@@ -252,6 +252,9 @@ final class InflectorHelperTest extends CIUnitTestCase
         $this->assertSame($suffix, ordinal($number));
     }
 
+    /**
+     * @return iterable<array{string, int}>
+     */
     public static function provideOrdinal(): iterable
     {
         return [
