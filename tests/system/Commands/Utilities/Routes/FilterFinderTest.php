@@ -47,13 +47,19 @@ final class FilterFinderTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->request  = service('request');
-        $this->response = service('response');
+        $this->request = service('request');
+
+        $response = service('response');
+        $this->assertInstanceOf(Response::class, $response);
+        $this->response = $response;
 
         $this->moduleConfig          = new Modules();
         $this->moduleConfig->enabled = false;
     }
 
+    /**
+     * @param array<string, string> $routes
+     */
     private function createRouteCollection(array $routes = []): RouteCollectionInterface
     {
         $collection = new RouteCollection(service('locator'), $this->moduleConfig, new Routing());
@@ -72,6 +78,9 @@ final class FilterFinderTest extends CIUnitTestCase
         return new Router($collection, $this->request);
     }
 
+    /**
+     * @param array<string, mixed> $config
+     */
     private function createFilters(array $config = []): Filters
     {
         $config = ($config !== []) ? $config : [
@@ -159,6 +168,7 @@ final class FilterFinderTest extends CIUnitTestCase
 
     public function testFindGlobalsAndRouteFiltersWithArguments(): void
     {
+        /** @var RouteCollection $collection */
         $collection = $this->createRouteCollection();
         $collection->get('admin', ' AdminController::index', ['filter' => 'honeypot:arg1,arg2']);
         $router  = $this->createRouter($collection);
@@ -177,6 +187,7 @@ final class FilterFinderTest extends CIUnitTestCase
 
     public function testFindClassesGlobalsAndRouteFiltersWithArguments(): void
     {
+        /** @var RouteCollection $collection */
         $collection = $this->createRouteCollection();
         $collection->get('admin', ' AdminController::index', ['filter' => 'honeypot:arg1,arg2']);
         $router  = $this->createRouter($collection);

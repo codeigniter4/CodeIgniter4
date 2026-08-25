@@ -33,6 +33,9 @@ final class SampleURIGeneratorTest extends CIUnitTestCase
         $this->assertSame($expected, $uri);
     }
 
+    /**
+     * @return iterable<string, array{string, string}>
+     */
     public static function provideGet(): iterable
     {
         yield from [

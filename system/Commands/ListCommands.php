@@ -15,12 +15,15 @@ namespace CodeIgniter\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Commands;
 
 /**
  * CI Help command for the spark script.
  *
  * Lists the basic usage information for the spark script,
  * and provides a way to list help for other commands.
+ *
+ * @phpstan-import-type commands_list from Commands
  */
 class ListCommands extends BaseCommand
 {
@@ -88,6 +91,8 @@ class ListCommands extends BaseCommand
     /**
      * Lists the commands with accompanying info.
      *
+     * @param commands_list $commands
+     *
      * @return int
      */
     protected function listFull(array $commands)
@@ -132,6 +137,8 @@ class ListCommands extends BaseCommand
 
     /**
      * Lists the commands only.
+     *
+     * @param commands_list $commands
      *
      * @return int
      */
