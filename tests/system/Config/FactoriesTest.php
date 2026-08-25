@@ -41,7 +41,7 @@ final class FactoriesTest extends CIUnitTestCase
         Factories::reset();
     }
 
-    protected function getFactoriesStaticProperty(...$params): mixed
+    protected function getFactoriesStaticProperty(string ...$params): mixed
     {
         // First parameter is the actual property
         $name = array_shift($params);
@@ -158,14 +158,14 @@ final class FactoriesTest extends CIUnitTestCase
 
     public function testCreatesByBasename(): void
     {
-        $result = Factories::widgets('SomeWidget', ['getShared' => false]);
+        $result = Factories::widgets('SomeWidget', ['getShared' => false]); // @phpstan-ignore staticMethod.notFound
 
         $this->assertInstanceOf(SomeWidget::class, $result);
     }
 
     public function testCreatesByClassname(): void
     {
-        $result = Factories::widgets(SomeWidget::class, ['getShared' => false]);
+        $result = Factories::widgets(SomeWidget::class, ['getShared' => false]); // @phpstan-ignore staticMethod.notFound
 
         $this->assertInstanceOf(SomeWidget::class, $result);
     }
@@ -179,22 +179,22 @@ final class FactoriesTest extends CIUnitTestCase
 
     public function testCreatesInvalid(): void
     {
-        $result = Factories::widgets('gfnusvjai', ['getShared' => false]);
+        $result = Factories::widgets('gfnusvjai', ['getShared' => false]); // @phpstan-ignore staticMethod.notFound
 
         $this->assertNull($result);
     }
 
     public function testIgnoresNonClass(): void
     {
-        $result = Factories::widgets('NopeWidget', ['getShared' => false]);
+        $result = Factories::widgets('NopeWidget', ['getShared' => false]); // @phpstan-ignore staticMethod.notFound
 
         $this->assertNull($result);
     }
 
     public function testReturnsSharedInstance(): void
     {
-        $widget1 = Factories::widgets('SomeWidget');
-        $widget2 = Factories::widgets(SomeWidget::class);
+        $widget1 = Factories::widgets('SomeWidget'); // @phpstan-ignore staticMethod.notFound
+        $widget2 = Factories::widgets(SomeWidget::class); // @phpstan-ignore staticMethod.notFound
 
         $this->assertSame($widget1, $widget2);
     }
@@ -203,7 +203,7 @@ final class FactoriesTest extends CIUnitTestCase
     {
         Factories::injectMock('widgets', 'Banana', new stdClass());
 
-        $result = Factories::widgets('Banana');
+        $result = Factories::widgets('Banana'); // @phpstan-ignore staticMethod.notFound
 
         $this->assertInstanceOf('stdClass', $result);
     }
@@ -212,7 +212,7 @@ final class FactoriesTest extends CIUnitTestCase
     {
         Factories::setOptions('tedwigs', ['component' => 'widgets']);
 
-        $result = Factories::tedwigs('SomeWidget');
+        $result = Factories::tedwigs('SomeWidget'); // @phpstan-ignore staticMethod.notFound
         $this->assertInstanceOf(SomeWidget::class, $result);
     }
 
@@ -228,10 +228,10 @@ final class FactoriesTest extends CIUnitTestCase
     {
         Factories::setOptions('widgets', ['instanceOf' => 'stdClass']);
 
-        $result = Factories::widgets('SomeWidget');
+        $result = Factories::widgets('SomeWidget'); // @phpstan-ignore staticMethod.notFound
         $this->assertInstanceOf(SomeWidget::class, $result);
 
-        $result = Factories::widgets('OtherWidget');
+        $result = Factories::widgets('OtherWidget'); // @phpstan-ignore staticMethod.notFound
         $this->assertNull($result);
     }
 
@@ -239,7 +239,7 @@ final class FactoriesTest extends CIUnitTestCase
     {
         Factories::injectMock('widgets', 'SomeWidget', new OtherWidget());
 
-        $result = Factories::widgets('SomeWidget', ['instanceOf' => 'stdClass']);
+        $result = Factories::widgets('SomeWidget', ['instanceOf' => 'stdClass']); // @phpstan-ignore staticMethod.notFound
         $this->assertInstanceOf(SomeWidget::class, $result);
     }
 
@@ -247,7 +247,7 @@ final class FactoriesTest extends CIUnitTestCase
     {
         Factories::setOptions('widgets', ['instanceOf' => 'stdClass']);
 
-        $result = Factories::widgets(OtherWidget::class, ['instanceOf' => null]);
+        $result = Factories::widgets(OtherWidget::class, ['instanceOf' => null]); // @phpstan-ignore staticMethod.notFound
         $this->assertInstanceOf(OtherWidget::class, $result);
     }
 
@@ -259,7 +259,7 @@ final class FactoriesTest extends CIUnitTestCase
             class_alias(SomeWidget::class, $class);
         }
 
-        $result = Factories::widgets('OtherWidget');
+        $result = Factories::widgets('OtherWidget'); // @phpstan-ignore staticMethod.notFound
         $this->assertInstanceOf(SomeWidget::class, $result);
     }
 
@@ -277,6 +277,7 @@ final class FactoriesTest extends CIUnitTestCase
 
         $result = Factories::config('TestRegistrar');
 
+        // @phpstan-ignore argument.type (Config\TestRegistrar is created at runtime by this test)
         $this->assertInstanceOf('Config\TestRegistrar', $result);
 
         // Delete the config class in App
@@ -317,14 +318,14 @@ final class FactoriesTest extends CIUnitTestCase
             class_alias(SomeWidget::class, $class);
         }
 
-        $result = Factories::widgets(OtherWidget::class);
+        $result = Factories::widgets(OtherWidget::class); // @phpstan-ignore staticMethod.notFound
         $this->assertInstanceOf(OtherWidget::class, $result);
     }
 
     public function testCanLoadTwoCellsWithSameShortName(): void
     {
-        $cell1 = Factories::cells('\\' . SampleClass::class);
-        $cell2 = Factories::cells('\\' . \Tests\Support\View\OtherCells\SampleClass::class);
+        $cell1 = Factories::cells('\\' . SampleClass::class); // @phpstan-ignore staticMethod.notFound
+        $cell2 = Factories::cells('\\' . \Tests\Support\View\OtherCells\SampleClass::class); // @phpstan-ignore staticMethod.notFound
 
         $this->assertNotSame($cell1, $cell2);
     }
@@ -369,6 +370,7 @@ final class FactoriesTest extends CIUnitTestCase
             UserModel::class,
         );
 
+        // @phpstan-ignore codeigniter.modelArgumentType (aliased to Tests\Support\Models\UserModel above)
         $model = model('CodeIgniter\Shield\Models\UserModel');
 
         $this->assertInstanceOf(UserModel::class, $model);
@@ -382,7 +384,7 @@ final class FactoriesTest extends CIUnitTestCase
         Factories::define(
             'models',
             'CodeIgniter\Shield\Models\UserModel',
-            'App\Models\UserModel',
+            'App\Models\UserModel', // @phpstan-ignore argument.type (deliberately does not exist)
         );
     }
 
@@ -398,7 +400,7 @@ final class FactoriesTest extends CIUnitTestCase
         Factories::define(
             'models',
             UserModel::class,
-            'App\Models\UserModel',
+            'App\Models\UserModel', // @phpstan-ignore argument.type (deliberately does not exist)
         );
     }
 

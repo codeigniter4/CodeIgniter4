@@ -1,4 +1,4 @@
-# total 9 errors
+# total 8 errors
 
 parameters:
     ignoreErrors:
@@ -21,11 +21,6 @@ parameters:
             message: '#^Method CodeIgniter\\Commands\\Utilities\\Routes\\AutoRouterImproved\\Controllers\\SubDir\\BlogController\:\:getSomeMethod\(\) has parameter \$first with no type specified\.$#'
             count: 1
             path: ../../tests/system/Commands/Utilities/Routes/AutoRouterImproved/Controllers/SubDir/BlogController.php
-
-        -
-            message: '#^Method CodeIgniter\\Config\\FactoriesTest\:\:getFactoriesStaticProperty\(\) has parameter \$params with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Config/FactoriesTest.php
 
         -
             message: '#^Method CodeIgniter\\Entity\\EntityTest\:\:getCastEntity\(\) has parameter \$data with no type specified\.$#'

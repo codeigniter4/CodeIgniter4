@@ -1,10 +1,9 @@
-# total 366 errors
+# total 312 errors
 
 includes:
     - argument.type.neon
     - arguments.count.neon
     - assign.propertyType.neon
-    - codeigniter.modelArgumentType.neon
     - deadCode.unreachable.neon
     - function.resultUnused.neon
     - method.childParameterType.neon

@@ -30,6 +30,9 @@ final class MimesTest extends CIUnitTestCase
         $this->assertSame($expected, Mimes::guessExtensionFromType($mime));
     }
 
+    /**
+     * @return iterable<string, array{string|null, string}>
+     */
     public static function provideGuessExtensionFromType(): iterable
     {
         return [
@@ -62,6 +65,9 @@ final class MimesTest extends CIUnitTestCase
         $this->assertSame($expected, Mimes::guessTypeFromExtension($ext));
     }
 
+    /**
+     * @return iterable<string, array{string|null, string}>
+     */
     public static function provideGuessTypeFromExtension(): iterable
     {
         return [
