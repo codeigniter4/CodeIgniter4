@@ -1,4 +1,4 @@
-# total 4 errors
+# total 3 errors
 
 parameters:
     ignoreErrors:
@@ -6,11 +6,6 @@ parameters:
             message: '#^Method CodeIgniter\\Entity\\EntityTest\:\:getCastEntity\(\) has parameter \$data with no type specified\.$#'
             count: 1
             path: ../../tests/system/Entity/EntityTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\FiltersTest\:\:createFilters\(\) has parameter \$request with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Filters/FiltersTest.php
 
         -
             message: '#^Method CodeIgniter\\Security\\SecurityCSRFSessionRandomizeTokenTest\:\:createSession\(\) has parameter \$options with no type specified\.$#'

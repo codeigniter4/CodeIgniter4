@@ -24,7 +24,7 @@ class PerformanceMetrics implements FilterInterface
     /**
      * We don't need to do anything here.
      *
-     * @param array|null $arguments
+     * @param list<string>|null $arguments
      */
     public function before(RequestInterface $request, $arguments = null)
     {
@@ -34,7 +34,7 @@ class PerformanceMetrics implements FilterInterface
     /**
      * Replaces the performance metrics.
      *
-     * @param array|null $arguments
+     * @param list<string>|null $arguments
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {

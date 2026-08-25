@@ -24,6 +24,7 @@ use CodeIgniter\Filters\fixtures\Multiple1;
 use CodeIgniter\Filters\fixtures\Multiple2;
 use CodeIgniter\Filters\fixtures\Role;
 use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Superglobals;
@@ -70,10 +71,12 @@ final class FiltersTest extends CIUnitTestCase
 
         Services::injectMock('superglobals', new Superglobals());
 
-        $this->response = service('response');
+        $response = service('response');
+        $this->assertInstanceOf(Response::class, $response);
+        $this->response = $response;
     }
 
-    private function createFilters(FiltersConfig $config, $request = null): Filters
+    private function createFilters(FiltersConfig $config, ?RequestInterface $request = null): Filters
     {
         $request ??= service('request');
 
@@ -213,10 +216,10 @@ final class FiltersTest extends CIUnitTestCase
     }
 
     /**
-     * @param array|string $except
+     * @param list<string>|string $except
      */
     #[DataProvider('provideProcessMethodProcessGlobalsWithExcept')]
-    public function testProcessMethodProcessGlobalsWithExcept($except): void
+    public function testProcessMethodProcessGlobalsWithExcept(array|string $except): void
     {
         service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
@@ -249,6 +252,9 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
+    /**
+     * @return iterable<array{list<string>|string}>
+     */
     public static function provideProcessMethodProcessGlobalsWithExcept(): iterable
     {
         return [
@@ -590,10 +596,11 @@ final class FiltersTest extends CIUnitTestCase
     }
 
     /**
-     * @param array|string $except
+     * @param list<string>|string                              $except
+     * @param array{before: list<string>, after: list<string>} $expected
      */
     #[DataProvider('provideBeforeExcept')]
-    public function testBeforeExcept(string $uri, $except, array $expected): void
+    public function testBeforeExcept(string $uri, array|string $except, array $expected): void
     {
         service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
@@ -619,6 +626,9 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
+    /**
+     * @return iterable<string, array{string, list<string>|string, array{before: list<string>, after: list<string>}}>
+     */
     public static function provideBeforeExcept(): iterable
     {
         return [

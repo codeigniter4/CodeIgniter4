@@ -1,4 +1,4 @@
-# total 161 errors
+# total 139 errors
 
 parameters:
     ignoreErrors:
@@ -226,81 +226,6 @@ parameters:
             message: '#^Method CodeIgniter\\Exceptions\\PageNotFoundException\:\:lang\(\) has parameter \$args with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Exceptions/PageNotFoundException.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\Filters\:\:checkExcept\(\) has parameter \$paths with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Filters/Filters.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\Filters\:\:checkPseudoRegex\(\) has parameter \$paths with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Filters/Filters.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\Filters\:\:getRequiredFilters\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Filters/Filters.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\Filters\:\:pathApplies\(\) has parameter \$paths with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Filters/Filters.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\Filters\:\:setToolbarToLast\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Filters/Filters.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\ForceHTTPS\:\:after\(\) has parameter \$arguments with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Filters/ForceHTTPS.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\ForceHTTPS\:\:before\(\) has parameter \$arguments with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Filters/ForceHTTPS.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\InvalidChars\:\:checkControl\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Filters/InvalidChars.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\InvalidChars\:\:checkControl\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Filters/InvalidChars.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\InvalidChars\:\:checkEncoding\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Filters/InvalidChars.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\InvalidChars\:\:checkEncoding\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Filters/InvalidChars.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\PageCache\:\:after\(\) has parameter \$arguments with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Filters/PageCache.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\PageCache\:\:before\(\) has parameter \$arguments with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Filters/PageCache.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\PerformanceMetrics\:\:after\(\) has parameter \$arguments with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Filters/PerformanceMetrics.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\PerformanceMetrics\:\:before\(\) has parameter \$arguments with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Filters/PerformanceMetrics.php
 
         -
             message: '#^Method CodeIgniter\\HotReloader\\DirectoryHasher\:\:hashApp\(\) return type has no value type specified in iterable type array\.$#'
@@ -641,41 +566,6 @@ parameters:
             message: '#^Method CodeIgniter\\Email\\EmailTest\:\:provideEmailSendWithClearance\(\) return type has no value type specified in iterable type iterable\.$#'
             count: 1
             path: ../../tests/system/Email/EmailTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\FiltersTest\:\:provideBeforeExcept\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Filters/FiltersTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\FiltersTest\:\:provideProcessMethodProcessGlobalsWithExcept\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Filters/FiltersTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\FiltersTest\:\:testBeforeExcept\(\) has parameter \$except with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Filters/FiltersTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\FiltersTest\:\:testBeforeExcept\(\) has parameter \$expected with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Filters/FiltersTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\FiltersTest\:\:testProcessMethodProcessGlobalsWithExcept\(\) has parameter \$except with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Filters/FiltersTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\InvalidCharsTest\:\:provideCheckControlStringWithControlCharsCausesException\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Filters/InvalidCharsTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\InvalidCharsTest\:\:provideCheckControlStringWithLineBreakAndTabReturnsTheString\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Filters/InvalidCharsTest.php
 
         -
             message: '#^Method CodeIgniter\\I18n\\TimeLegacyTest\:\:provideToStringDoesNotDependOnLocale\(\) return type has no value type specified in iterable type iterable\.$#'

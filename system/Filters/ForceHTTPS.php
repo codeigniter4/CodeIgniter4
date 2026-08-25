@@ -30,7 +30,7 @@ class ForceHTTPS implements FilterInterface
      * as set the HTTP Strict Transport Security (HSTS) header for those browsers
      * that support it.
      *
-     * @param array|null $arguments
+     * @param list<string>|null $arguments
      *
      * @return ResponseInterface|null
      */
@@ -56,7 +56,7 @@ class ForceHTTPS implements FilterInterface
     /**
      * We don't have anything to do here.
      *
-     * @param array|null $arguments
+     * @param list<string>|null $arguments
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
