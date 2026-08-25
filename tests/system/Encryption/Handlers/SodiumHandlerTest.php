@@ -47,10 +47,11 @@ final class SodiumHandlerTest extends CIUnitTestCase
         $this->config->key       = sodium_crypto_secretbox_keygen();
         $this->config->blockSize = 256;
         $encrypter               = $this->encryption->initialize($this->config);
+        $this->assertInstanceOf(SodiumHandler::class, $encrypter);
 
         $this->assertSame($this->config->key, $encrypter->key);
         $this->assertSame($this->config->blockSize, $encrypter->blockSize);
-        $this->assertNull($encrypter->driver);
+        $this->assertNull($encrypter->driver); // @phpstan-ignore property.notFound
     }
 
     public function testEmptyKeyThrowsErrorOnInitialize(): void
@@ -136,6 +137,7 @@ final class SodiumHandlerTest extends CIUnitTestCase
 
         $this->config->key = $originalKey;
         $encrypter         = $this->encryption->initialize($this->config);
+        $this->assertInstanceOf(SodiumHandler::class, $encrypter);
 
         $this->assertSame($originalKey, $encrypter->key);
 

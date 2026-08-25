@@ -19,6 +19,9 @@ use SensitiveParameter;
 /**
  * Encryption handling for OpenSSL library
  *
+ * @property-read string $cipher
+ * @property-read string $key
+ *
  * @see \CodeIgniter\Encryption\Handlers\OpenSSLHandlerTest
  */
 class OpenSSLHandler extends BaseHandler
@@ -33,7 +36,7 @@ class OpenSSLHandler extends BaseHandler
     /**
      * List of supported HMAC algorithms
      *
-     * @var array [name => digest size]
+     * @var array<string, int> [name => digest size]
      */
     protected array $digestSize = [
         'SHA224' => 28,

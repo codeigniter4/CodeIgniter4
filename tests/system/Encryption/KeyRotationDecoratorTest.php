@@ -193,6 +193,7 @@ final class KeyRotationDecoratorTest extends CIUnitTestCase
         $params->previousKeys = ['old-key'];
 
         $encrypter = $this->encryption->initialize($params);
+        $this->assertInstanceOf(KeyRotationDecorator::class, $encrypter);
 
         $this->assertSame('AES-128-CBC', $encrypter->cipher);
         $this->assertSame('test-key-very-long', $encrypter->key);
