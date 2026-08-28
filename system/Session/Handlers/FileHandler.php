@@ -24,8 +24,6 @@ class FileHandler extends BaseHandler
 {
     /**
      * Where to save the session files to.
-     *
-     * @var string
      */
     protected $savePath;
 
@@ -68,7 +66,7 @@ class FileHandler extends BaseHandler
     {
         parent::__construct($config, $ipAddress);
 
-        if ($this->savePath !== '') {
+        if (is_string($this->savePath) && $this->savePath !== '') {
             $this->savePath = rtrim($this->savePath, '/\\');
             ini_set('session.save_path', $this->savePath);
         } else {

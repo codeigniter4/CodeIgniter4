@@ -42,6 +42,8 @@ abstract class BaseResource extends Controller
     /**
      * Constructor.
      *
+     * @param CLIRequest|IncomingRequest $request
+     *
      * @return void
      */
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
