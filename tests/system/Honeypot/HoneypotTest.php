@@ -153,6 +153,7 @@ final class HoneypotTest extends CIUnitTestCase
     {
         $this->config->template = '';
         $this->expectException(HoneypotException::class);
+        $this->expectExceptionCode(500);
         $this->honeypot = new Honeypot($this->config);
     }
 
@@ -160,6 +161,7 @@ final class HoneypotTest extends CIUnitTestCase
     {
         $this->config->name = '';
         $this->expectException(HoneypotException::class);
+        $this->expectExceptionCode(500);
         $this->honeypot = new Honeypot($this->config);
     }
 
@@ -173,6 +175,7 @@ final class HoneypotTest extends CIUnitTestCase
         $uri     = 'admin/foo/bar';
 
         $this->expectException(HoneypotException::class);
+        $this->expectExceptionCode(403);
         $filters->run($uri, 'before');
     }
 
