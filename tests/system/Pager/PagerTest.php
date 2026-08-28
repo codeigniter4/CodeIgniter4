@@ -76,7 +76,9 @@ final class PagerTest extends CIUnitTestCase
 
         $details = $this->pager->getDetails();
 
-        $this->assertSame('foo/bar', $details['uri']->getRoutePath());
+        $uri = $details['uri'];
+        $this->assertInstanceOf(SiteURI::class, $uri);
+        $this->assertSame('foo/bar', $uri->getRoutePath());
     }
 
     public function testGetDetailsRecognizesPageQueryVar(): void

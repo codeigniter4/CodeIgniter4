@@ -97,7 +97,7 @@ class Image extends File
      *
      * A helper function that gets info about the file
      *
-     * @return array|bool
+     * @return array{width: int, height: int, image_type: int, size_str: string, mime_type: string}|bool
      */
     public function getProperties(bool $return = false)
     {
