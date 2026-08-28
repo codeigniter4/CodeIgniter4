@@ -229,7 +229,7 @@ class RotateKey extends AbstractCommand
         }
 
         if ($keep > 0) {
-            $result = array_slice($result, 0, $keep);
+            return array_slice($result, 0, $keep);
         }
 
         return $result;
