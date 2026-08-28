@@ -88,6 +88,17 @@ final class RedirectExceptionTest extends TestCase
         $this->assertSame(307, $response->getStatusCode());
     }
 
+    public function testStringMessageWithoutExplicitCodeDefaultsTo302(): void
+    {
+        $exception = new RedirectException('relative/uri');
+
+        $this->assertSame(302, $exception->getCode());
+
+        $response = $exception->getResponse();
+
+        $this->assertSame(302, $response->getStatusCode());
+    }
+
     public function testLoggingLocationHeader(): void
     {
         Time::setTestNow('2023-11-25 12:00:00');

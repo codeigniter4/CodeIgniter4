@@ -26,10 +26,12 @@ use Throwable;
  */
 class RedirectException extends RuntimeException implements ExceptionInterface, ResponsableInterface, HTTPExceptionInterface
 {
+    private const DEFAULT_STATUS_CODE = 302;
+
     /**
      * Status code applied to a Response whose status is outside the 301-308 range.
      */
-    protected int $defaultStatusCode = 302;
+    protected int $defaultStatusCode = self::DEFAULT_STATUS_CODE;
 
     protected ?ResponseInterface $response = null;
 
@@ -37,7 +39,7 @@ class RedirectException extends RuntimeException implements ExceptionInterface, 
      * @param ResponseInterface|string $message Response object or a string containing a relative URI.
      * @param int                      $code    HTTP status code to redirect if $message is a string.
      */
-    public function __construct($message = '', int $code = 0, ?Throwable $previous = null)
+    public function __construct($message = '', int $code = self::DEFAULT_STATUS_CODE, ?Throwable $previous = null)
     {
         if (! is_string($message) && ! $message instanceof ResponseInterface) {
             throw new InvalidArgumentException(
