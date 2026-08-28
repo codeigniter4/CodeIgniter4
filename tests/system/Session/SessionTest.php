@@ -667,7 +667,7 @@ final class SessionTest extends CIUnitTestCase
         $this->expectExceptionMessage(lang('Cookie.invalidSameSite', ['Invalid']));
 
         $config           = new CookieConfig();
-        $config->samesite = 'Invalid';
+        $config->samesite = 'Invalid'; // @phpstan-ignore assign.propertyType (Testing rejection of an invalid SameSite value)
 
         Factories::injectMock('config', CookieConfig::class, $config);
 

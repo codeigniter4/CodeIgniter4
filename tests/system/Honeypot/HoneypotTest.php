@@ -61,8 +61,11 @@ final class HoneypotTest extends CIUnitTestCase
         $superglobals->setServer('REQUEST_METHOD', 'POST');
         $superglobals->setPost($this->config->name, 'hey');
 
-        $this->request  = service('request', null, false);
-        $this->response = service('response');
+        $this->request = service('request', null, false);
+
+        $response = service('response');
+        $this->assertInstanceOf(Response::class, $response);
+        $this->response = $response;
     }
 
     public function testAttachHoneypot(): void
@@ -106,7 +109,10 @@ final class HoneypotTest extends CIUnitTestCase
         $config             = new App();
         $config->CSPEnabled = true;
         Factories::injectMock('config', 'App', $config);
-        $this->response = service('response', $config, false);
+
+        $response = service('response', $config, false);
+        $this->assertInstanceOf(Response::class, $response);
+        $this->response = $response;
 
         $this->config   = new HoneypotConfig();
         $this->honeypot = new Honeypot($this->config);
@@ -125,7 +131,10 @@ final class HoneypotTest extends CIUnitTestCase
         $config             = new App();
         $config->CSPEnabled = true;
         Factories::injectMock('config', 'App', $config);
-        $this->response = service('response', $config, false);
+
+        $response = service('response', $config, false);
+        $this->assertInstanceOf(Response::class, $response);
+        $this->response = $response;
 
         $this->config   = new HoneypotConfig();
         $this->honeypot = new Honeypot($this->config);
@@ -189,7 +198,11 @@ final class HoneypotTest extends CIUnitTestCase
         $uri     = 'admin/foo/bar';
 
         $this->response->setBody('<form></form>');
-        $this->response = $filters->run($uri, 'after');
+
+        $response = $filters->run($uri, 'after');
+        $this->assertInstanceOf(Response::class, $response);
+        $this->response = $response;
+
         $this->assertStringContainsString($this->config->name, (string) $this->response->getBody());
     }
 

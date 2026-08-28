@@ -16,7 +16,6 @@ namespace CodeIgniter;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
@@ -44,7 +43,7 @@ final class ControllerTest extends CIUnitTestCase
     /**
      * Current request.
      */
-    private Request $request;
+    private IncomingRequest $request;
 
     /**
      * Current response.
