@@ -80,6 +80,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $this->codeigniter = new MockCodeIgniter($config);
 
         $response = service('response');
+        $this->assertInstanceOf(Response::class, $response);
         $response->pretend();
     }
 

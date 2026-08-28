@@ -63,6 +63,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter = new MockCodeIgniter(new App());
 
         $response = service('response');
+        $this->assertInstanceOf(Response::class, $response);
         $response->pretend();
     }
 
@@ -985,10 +986,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $startController = self::getPrivateMethodInvoker($this->codeigniter, 'startController');
 
         $this->setPrivateProperty($this->codeigniter, 'method', '__invoke');
-        $startController();
-
-        // No PageNotFoundException
-        $this->expectNotToPerformAssertions();
+        $this->assertNull($startController());
     }
 
     public function testRouteAttributeCacheIntegration(): void
