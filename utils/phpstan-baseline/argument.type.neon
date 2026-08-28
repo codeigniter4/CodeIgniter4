@@ -1,4 +1,4 @@
-# total 12 errors
+# total 6 errors
 
 parameters:
     ignoreErrors:
@@ -21,26 +21,6 @@ parameters:
             message: '#^Parameter \#2 \$to of method CodeIgniter\\Router\\RouteCollection\:\:add\(\) expects array\<mixed\>\|\(Closure\(mixed \.\.\.\)\: \(CodeIgniter\\HTTP\\ResponseInterface\|string\|void\)\)\|string, Closure\(mixed\)\: void given\.$#'
             count: 1
             path: ../../tests/system/CodeIgniterTest.php
-
-        -
-            message: '#^Parameter \#1 \$db of class CodeIgniter\\Database\\SQLite3\\Table constructor expects CodeIgniter\\Database\\SQLite3\\Connection, CodeIgniter\\Database\\BaseConnection given\.$#'
-            count: 1
-            path: ../../tests/system/Database/Live/SQLite3/AlterTableTest.php
-
-        -
-            message: '#^Parameter \#1 \$set of method CodeIgniter\\Database\\BaseBuilder\<CodeIgniter\\Database\\BaseConnection\>\:\:updateFields\(\) expects list\<CodeIgniter\\Database\\RawSql\|string\>\|string, array\{0\: ''country'', updated_at\: CodeIgniter\\Database\\RawSql\} given\.$#'
-            count: 2
-            path: ../../tests/system/Database/Live/UpdateTest.php
-
-        -
-            message: '#^Parameter \#1 \$set of method CodeIgniter\\Database\\BaseBuilder\<CodeIgniter\\Database\\BaseConnection\>\:\:updateFields\(\) expects list\<CodeIgniter\\Database\\RawSql\|string\>\|string, array\{0\: ''name'', updated_at\: CodeIgniter\\Database\\RawSql\} given\.$#'
-            count: 1
-            path: ../../tests/system/Database/Live/UpdateTest.php
-
-        -
-            message: '#^Parameter \#1 \$set of method CodeIgniter\\Database\\BaseBuilder\<CodeIgniter\\Database\\BaseConnection\>\:\:updateFields\(\) expects list\<CodeIgniter\\Database\\RawSql\|string\>\|string, array\{updated_at\: CodeIgniter\\Database\\RawSql\} given\.$#'
-            count: 2
-            path: ../../tests/system/Database/Live/UpsertTest.php
 
         -
             message: '#^Parameter \#2 \$message of method CodeIgniter\\Log\\Handlers\\ChromeLoggerHandler\:\:handle\(\) expects string, stdClass given\.$#'

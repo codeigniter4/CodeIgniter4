@@ -63,7 +63,7 @@ final class AlterTableTest extends CIUnitTestCase
         $this->assertInstanceOf(Forge::class, $forge);
         $this->forge = $forge;
 
-        $this->table = new Table($this->db, $this->forge);
+        $this->table = new Table($db, $this->forge);
 
         $this->dropTables();
     }

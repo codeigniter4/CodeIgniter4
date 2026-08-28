@@ -27,6 +27,9 @@ final class ConfigTest extends CIUnitTestCase
 {
     use ReflectionHelper;
 
+    /**
+     * @var array<string, mixed>
+     */
     private array $group = [
         'DSN'      => '',
         'hostname' => 'localhost',
@@ -46,6 +49,10 @@ final class ConfigTest extends CIUnitTestCase
         'failover' => [],
         'port'     => 3306,
     ];
+
+    /**
+     * @var array<string, mixed>
+     */
     private array $dsnGroup = [
         'DSN'      => 'MySQLi://user:pass@localhost:3306/dbname?DBPrefix=test_&pConnect=true&charset=latin1&DBCollat=latin1_swedish_ci',
         'hostname' => '',
@@ -65,6 +72,10 @@ final class ConfigTest extends CIUnitTestCase
         'failover' => [],
         'port'     => 3306,
     ];
+
+    /**
+     * @var array<string, mixed>
+     */
     private array $dsnGroupPostgre = [
         'DSN'      => 'Postgre://user:pass@localhost:5432/dbname?DBPrefix=test_&connect_timeout=5&sslmode=1',
         'hostname' => '',
@@ -84,6 +95,10 @@ final class ConfigTest extends CIUnitTestCase
         'failover' => [],
         'port'     => 5432,
     ];
+
+    /**
+     * @var array<string, mixed>
+     */
     private array $dsnGroupPostgreNative = [
         'DSN'      => 'pgsql:host=localhost;port=5432;dbname=database_name',
         'hostname' => '',
@@ -214,6 +229,9 @@ final class ConfigTest extends CIUnitTestCase
         $this->assertSame($expected, $this->getPrivateProperty($conn, 'DSN'));
     }
 
+    /**
+     * @return iterable<int, array{string, string}>
+     */
     public static function provideConvertDSN(): iterable
     {
         yield from [

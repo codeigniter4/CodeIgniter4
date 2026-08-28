@@ -27,6 +27,9 @@ use TypeError;
 #[Group('Others')]
 final class BaseConnectionTest extends CIUnitTestCase
 {
+    /**
+     * @var array<string, mixed>
+     */
     private array $options = [
         'DSN'        => '',
         'hostname'   => 'localhost',
@@ -50,6 +53,10 @@ final class BaseConnectionTest extends CIUnitTestCase
             'time'     => 'H:i:s',
         ],
     ];
+
+    /**
+     * @var array<string, mixed>
+     */
     private array $failoverOptions = [
         'DSN'      => '',
         'hostname' => 'localhost',
@@ -337,6 +344,9 @@ final class BaseConnectionTest extends CIUnitTestCase
         $this->assertSame($expected, $return);
     }
 
+    /**
+     * @return iterable<string, array{bool, bool, bool, string, string}>
+     */
     public static function provideProtectIdentifiers(): iterable
     {
         yield from [

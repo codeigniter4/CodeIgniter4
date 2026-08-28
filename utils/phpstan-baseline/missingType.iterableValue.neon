@@ -1,4 +1,4 @@
-# total 95 errors
+# total 82 errors
 
 parameters:
     ignoreErrors:
@@ -356,71 +356,6 @@ parameters:
             message: '#^Method CodeIgniter\\DataConverter\\DataConverterTest\:\:testConvertDataToDB\(\) has parameter \$types with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/DataConverter/DataConverterTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseConnectionTest\:\:provideProtectIdentifiers\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Database/BaseConnectionTest.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\BaseConnectionTest\:\:\$failoverOptions type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Database/BaseConnectionTest.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\BaseConnectionTest\:\:\$options type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Database/BaseConnectionTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseQueryTest\:\:provideHighlightQueryKeywords\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Database/BaseQueryTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseQueryTest\:\:provideIsWriteType\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Database/BaseQueryTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\ConfigTest\:\:provideConvertDSN\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Database/ConfigTest.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\ConfigTest\:\:\$dsnGroup type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Database/ConfigTest.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\ConfigTest\:\:\$dsnGroupPostgre type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Database/ConfigTest.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\ConfigTest\:\:\$dsnGroupPostgreNative type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Database/ConfigTest.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\ConfigTest\:\:\$group type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Database/ConfigTest.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\Live\\MetadataTest\:\:\$expectedTables type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Database/Live/MetadataTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Live\\UpdateTest\:\:provideUpdateBatch\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Database/Live/UpdateTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Live\\UpdateTest\:\:testUpdateBatch\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Database/Live/UpdateTest.php
 
         -
             message: '#^Method CodeIgniter\\I18n\\TimeLegacyTest\:\:provideToStringDoesNotDependOnLocale\(\) return type has no value type specified in iterable type iterable\.$#'
