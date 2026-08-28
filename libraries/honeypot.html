@@ -295,7 +295,8 @@
 <p>The Honeypot Class makes it possible to determine when a Bot makes a request to a CodeIgniter4 application,
 if it’s enabled in <strong>app/Config/Filters.php</strong> file. This is done by attaching form fields to any form,
 and this form field is hidden from a human but accessible to a Bot. When data is entered into the field, it’s
-assumed the request is coming from a Bot, and you can throw a <code class="docutils literal notranslate"><span class="pre">HoneypotException</span></code>.</p>
+assumed the request is coming from a Bot. The bundled Honeypot filter throws a <code class="docutils literal notranslate"><span class="pre">HoneypotException</span></code> with
+an HTTP status code of 403 (Forbidden).</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#enabling-honeypot" id="id1">Enabling Honeypot</a></p></li>
@@ -365,7 +366,7 @@ If you enables CSP, you can remove <code class="docutils literal notranslate"><s
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 24, 2026.
+      <span class="lastupdated">Last updated on Aug 28, 2026.
       </span></p>
   </div>
 
