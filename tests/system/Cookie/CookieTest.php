@@ -28,6 +28,18 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class CookieTest extends CIUnitTestCase
 {
+    /**
+     * @var array{
+     *   prefix: string,
+     *   expires: int,
+     *   path: string,
+     *   domain: string,
+     *   secure: bool,
+     *   httponly: bool,
+     *   samesite: string,
+     *   raw: bool
+     * }
+     */
     private array $defaults;
 
     protected function setUp(): void
@@ -99,6 +111,9 @@ final class CookieTest extends CIUnitTestCase
         $this->assertSame($expected, $cookie->getPrefixedName());
     }
 
+    /**
+     * @return iterable<int, array{string, string, string}>
+     */
     public static function provideConfigPrefix(): iterable
     {
         yield from [
@@ -175,6 +190,9 @@ final class CookieTest extends CIUnitTestCase
         new Cookie('test', 'value', ['expires' => $expires]);
     }
 
+    /**
+     * @return iterable<string, array{bool|float|string}>
+     */
     public static function provideInvalidExpires(): iterable
     {
         $cases = [
@@ -188,6 +206,9 @@ final class CookieTest extends CIUnitTestCase
         }
     }
 
+    /**
+     * @param array<string, bool|string> $changed
+     */
     #[DataProvider('provideSetCookieHeaderCreation')]
     public function testSetCookieHeaderCreation(string $header, array $changed): void
     {
@@ -196,6 +217,9 @@ final class CookieTest extends CIUnitTestCase
         $this->assertSame(array_merge($cookie, $changed), $cookie);
     }
 
+    /**
+     * @return iterable<string, array{string, array<string, bool|string>}>
+     */
     public static function provideSetCookieHeaderCreation(): iterable
     {
         yield 'basic' => [

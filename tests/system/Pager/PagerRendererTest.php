@@ -622,7 +622,7 @@ final class PagerRendererTest extends CIUnitTestCase
     }
 
     /**
-     * @param array<string, array<string, mixed>> $details
+     * @param array{uri: URI, pageCount: int, total: int, currentPage: int, perPage: int} $details
      */
     #[DataProvider('providePageStartEnd')]
     public function testPageStartEnd(array $details, int $pageStart, int $pageEnd): void
@@ -635,7 +635,11 @@ final class PagerRendererTest extends CIUnitTestCase
     }
 
     /**
-     * @return array<string, array<string, mixed>> $details
+     * @return iterable<string, array{
+     *   details: array{uri: URI, pageCount: int, total: int, currentPage: int, perPage: int},
+     *   pageStart: int,
+     *   pageEnd: int
+     * }>
      */
     public static function providePageStartEnd(): iterable
     {

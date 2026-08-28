@@ -207,6 +207,9 @@ final class FindModelTest extends LiveModelTestCase
         $this->assertSame($total, (int) $user->total);
     }
 
+    /**
+     * @return iterable<int, array{bool, int}>
+     */
     public static function provideFirstAggregate(): iterable
     {
         return [
@@ -293,6 +296,9 @@ final class FindModelTest extends LiveModelTestCase
         $this->assertSame(2, (int) $user2->id);
     }
 
+    /**
+     * @return iterable<int, array{bool, bool}>
+     */
     public static function provideAggregateAndGroupBy(): iterable
     {
         return [

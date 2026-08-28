@@ -24,6 +24,18 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class CookieStoreTest extends CIUnitTestCase
 {
+    /**
+     * @var array{
+     *   prefix: string,
+     *   expires: int,
+     *   path: string,
+     *   domain: string,
+     *   secure: bool,
+     *   httponly: bool,
+     *   samesite: string,
+     *   raw: bool
+     * }
+     */
     private array $defaults;
 
     protected function setUp(): void

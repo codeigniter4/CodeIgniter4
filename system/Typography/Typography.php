@@ -46,7 +46,7 @@ class Typography
     /**
      * array of block level elements that require inner content to be within another block level element
      *
-     * @var array
+     * @var list<string>
      */
     public $innerBlockRequired = ['blockquote'];
 
@@ -316,6 +316,8 @@ class Typography
      * We don't want quotes converted within tags so we'll temporarily convert them to {@DQ} and {@SQ}
      * and we don't want double dashes converted to emdash entities, so they are marked with {@DD}
      * likewise double spaces are converted to {@NBS} to prevent entity conversion
+     *
+     * @param array<int|string, string> $match
      */
     protected function protectCharacters(array $match): string
     {

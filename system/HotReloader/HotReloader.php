@@ -61,6 +61,8 @@ final class HotReloader
 
     /**
      * Send an event to the browser.
+     *
+     * @param array<string, string> $data
      */
     private function sendEvent(string $event, array $data): void
     {

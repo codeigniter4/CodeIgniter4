@@ -649,18 +649,20 @@ final class CLITest extends CIUnitTestCase
     }
 
     /**
-     * @param array $tbody
-     * @param array $thead
-     * @param array $expected
+     * @param list<array<array-key, mixed>> $tbody
+     * @param list<string>                  $thead
      */
     #[DataProvider('provideTable')]
-    public function testTable($tbody, $thead, $expected): void
+    public function testTable(array $tbody, array $thead, string $expected): void
     {
         CLI::table($tbody, $thead);
 
         $this->assertSame($this->getStreamFilterBuffer(), $expected);
     }
 
+    /**
+     * @return iterable<int, array{list<array<array-key, mixed>>, list<string>, string}>
+     */
     public static function provideTable(): iterable
     {
         $head = [
