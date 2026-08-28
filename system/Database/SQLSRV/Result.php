@@ -24,17 +24,11 @@ use stdClass;
  */
 class Result extends BaseResult
 {
-    /**
-     * Gets the number of fields in the result set.
-     */
     public function getFieldCount(): int
     {
         return @sqlsrv_num_fields($this->resultID);
     }
 
-    /**
-     * Generates an array of column names in the result set.
-     */
     public function getFieldNames(): array
     {
         $fieldNames = [];
@@ -46,9 +40,6 @@ class Result extends BaseResult
         return $fieldNames;
     }
 
-    /**
-     * Generates an array of objects representing field meta-data.
-     */
     public function getFieldData(): array
     {
         static $dataTypes = [
@@ -103,11 +94,6 @@ class Result extends BaseResult
         return $retVal;
     }
 
-    /**
-     * Frees the current result.
-     *
-     * @return void
-     */
     public function freeResult()
     {
         if (is_resource($this->resultID)) {
@@ -116,13 +102,6 @@ class Result extends BaseResult
         }
     }
 
-    /**
-     * Moves the internal pointer to the desired offset. This is called
-     * internally before fetching results to make sure the result set
-     * starts at zero.
-     *
-     * @return bool
-     */
     public function dataSeek(int $n = 0)
     {
         if ($n > 0) {
@@ -136,24 +115,12 @@ class Result extends BaseResult
         return true;
     }
 
-    /**
-     * Returns the result set as an array.
-     *
-     * Overridden by driver classes.
-     *
-     * @return array|false|null
-     */
     protected function fetchAssoc()
     {
         return sqlsrv_fetch_array($this->resultID, SQLSRV_FETCH_ASSOC);
     }
 
-    /**
-     * Returns the result set as an object.
-     *
-     * @return Entity|false|object|stdClass
-     */
-    protected function fetchObject(string $className = 'stdClass')
+    protected function fetchObject(string $className = stdClass::class)
     {
         if (is_subclass_of($className, Entity::class)) {
             $data = $this->fetchAssoc();
@@ -164,9 +131,6 @@ class Result extends BaseResult
         return sqlsrv_fetch_object($this->resultID, $className);
     }
 
-    /**
-     * Returns the number of rows in the resultID (i.e., SQLSRV query result resource)
-     */
     public function getNumRows(): int
     {
         if (! is_int($this->numRows)) {

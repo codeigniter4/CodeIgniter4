@@ -44,6 +44,10 @@ final class RouteCollectionTest extends CIUnitTestCase
         Services::injectMock('superglobals', new Superglobals());
     }
 
+    /**
+     * @param array<non-empty-string, list<non-empty-string>|non-empty-string> $config
+     * @param array<array-key, mixed>                                          $files
+     */
     protected function getCollector(array $config = [], array $files = [], ?Modules $moduleConfig = null): RouteCollection
     {
         $defaults = [
@@ -507,6 +511,9 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $routes->getRoutes());
     }
 
+    /**
+     * @param array<string, string> $expected
+     */
     #[DataProvider('provideNestedGroupingWorksWithRootPrefix')]
     public function testNestedGroupingWorksWithRootPrefix(
         string $group,
@@ -531,6 +538,9 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $routes->getRoutes());
     }
 
+    /**
+     * @return iterable<int, array{string, string, array<string, string>}>
+     */
     public static function provideNestedGroupingWorksWithRootPrefix(): iterable
     {
         yield from [
@@ -1359,6 +1369,10 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($options, ['as' => 'admin', 'foo' => 'baz']);
     }
 
+    /**
+     * @param array<string, string> $options1
+     * @param array<string, string> $options2
+     */
     #[DataProvider('provideRoutesOptionsWithSameFromTwoRoutes')]
     public function testRoutesOptionsWithSameFromTwoRoutes(array $options1, array $options2): void
     {
@@ -1382,6 +1396,9 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($options, $options1);
     }
 
+    /**
+     * @return iterable<int, array{array<string, string>, array<string, string>}>
+     */
     public static function provideRoutesOptionsWithSameFromTwoRoutes(): iterable
     {
         yield from [
@@ -1876,6 +1893,9 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame('\\' . Product::class, $router->controllerName());
     }
 
+    /**
+     * @return iterable<string, array{string}>
+     */
     public static function provideRouteDefaultNamespace(): iterable
     {
         return [

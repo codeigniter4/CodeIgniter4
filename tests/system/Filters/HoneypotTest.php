@@ -65,8 +65,11 @@ final class HoneypotTest extends CIUnitTestCase
             'after'  => [],
         ];
 
-        $this->request  = service('request', null, false);
-        $this->response = service('response');
+        $this->request = service('request', null, false);
+
+        $response = service('response');
+        $this->assertInstanceOf(Response::class, $response);
+        $this->response = $response;
 
         $filters = new Filters($this->config, $this->request, $this->response);
         $uri     = 'admin/foo/bar';
@@ -83,8 +86,11 @@ final class HoneypotTest extends CIUnitTestCase
         ];
 
         service('superglobals')->unsetPost($this->honey->name);
-        $this->request  = service('request', null, false);
-        $this->response = service('response');
+        $this->request = service('request', null, false);
+
+        $response = service('response');
+        $this->assertInstanceOf(Response::class, $response);
+        $this->response = $response;
 
         $expected = $this->request;
 
@@ -104,14 +110,19 @@ final class HoneypotTest extends CIUnitTestCase
             'after'  => ['honeypot'],
         ];
 
-        $this->request  = service('request', null, false);
-        $this->response = service('response');
+        $this->request = service('request', null, false);
+
+        $response = service('response');
+        $this->assertInstanceOf(Response::class, $response);
+        $this->response = $response;
 
         $filters = new Filters($this->config, $this->request, $this->response);
         $uri     = 'admin/foo/bar';
 
         $this->response->setBody('<form></form>');
-        $this->response = $filters->run($uri, 'after');
+        $response = $filters->run($uri, 'after');
+        $this->assertInstanceOf(Response::class, $response);
+        $this->response = $response;
         $this->assertStringContainsString($this->honey->name, (string) $this->response->getBody());
     }
 
@@ -124,14 +135,19 @@ final class HoneypotTest extends CIUnitTestCase
             'after'  => ['honeypot'],
         ];
 
-        $this->request  = service('request', null, false);
-        $this->response = service('response');
+        $this->request = service('request', null, false);
+
+        $response = service('response');
+        $this->assertInstanceOf(Response::class, $response);
+        $this->response = $response;
 
         $filters = new Filters($this->config, $this->request, $this->response);
         $uri     = 'admin/foo/bar';
 
         $this->response->setBody('<div></div>');
-        $this->response = $filters->run($uri, 'after');
+        $response = $filters->run($uri, 'after');
+        $this->assertInstanceOf(Response::class, $response);
+        $this->response = $response;
         $this->assertStringNotContainsString($this->honey->name, (string) $this->response->getBody());
     }
 }

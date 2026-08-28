@@ -83,7 +83,8 @@ final class GeneralModelTest extends CIUnitTestCase
     {
         $this->expectException(BadMethodCallException::class);
         $this->expectExceptionMessage('Call to undefined method Tests\Support\Models\UserModel::undefinedMethodCall');
-        $this->createModel(UserModel::class)->undefinedMethodCall();
+
+        $this->createModel(UserModel::class)->undefinedMethodCall(); // @phpstan-ignore method.notFound (Testing Model::__call() fallback)
     }
 
     public function testSetAllowedFields(): void

@@ -34,6 +34,9 @@ final class TestLoggerTest extends CIUnitTestCase
         );
     }
 
+    /**
+     * @return iterable<string, array{bool, string, string, bool}>
+     */
     public static function provideDidLogMethod(): iterable
     {
         yield 'exact' => [

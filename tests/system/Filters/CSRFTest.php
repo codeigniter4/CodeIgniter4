@@ -61,8 +61,11 @@ final class CSRFTest extends CIUnitTestCase
             'after'  => [],
         ];
 
-        $this->request  = single_service('clirequest', null);
-        $this->response = single_service('response');
+        $this->request = single_service('clirequest', null);
+
+        $response = single_service('response');
+        $this->assertInstanceOf(Response::class, $response);
+        $this->response = $response;
 
         $filters = new Filters($this->config, $this->request, $this->response);
         $uri     = 'admin/foo/bar';
@@ -79,8 +82,11 @@ final class CSRFTest extends CIUnitTestCase
             'after'  => [],
         ];
 
-        $this->request  = single_service('incomingrequest', null);
-        $this->response = single_service('response');
+        $this->request = single_service('incomingrequest', null);
+
+        $response = single_service('response');
+        $this->assertInstanceOf(Response::class, $response);
+        $this->response = $response;
 
         $filters = new Filters($this->config, $this->request, $this->response);
         $uri     = 'admin/foo/bar';

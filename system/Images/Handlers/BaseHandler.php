@@ -23,6 +23,8 @@ use Config\Images;
  * Base image handling implementation.
  *
  * @template T of object
+ *
+ * @method string getPathname()
  */
 abstract class BaseHandler implements ImageHandlerInterface
 {
@@ -553,6 +555,8 @@ abstract class BaseHandler implements ImageHandlerInterface
      * @param float|int|null $height
      * @param float|int      $origWidth
      * @param float|int      $origHeight
+     *
+     * @return array{0: float|int, 1: float|int}
      */
     protected function calcAspectRatio($width, $height = null, $origWidth = 0, $origHeight = 0): array
     {
@@ -594,6 +598,8 @@ abstract class BaseHandler implements ImageHandlerInterface
      * @param float|int $origWidth
      * @param float|int $origHeight
      * @param string    $position
+     *
+     * @return array{0: float|int, 1: float|int}
      */
     protected function calcCropCoords($width, $height, $origWidth, $origHeight, $position): array
     {
@@ -684,6 +690,8 @@ abstract class BaseHandler implements ImageHandlerInterface
     /**
      * Provide access to the Image class' methods if they don't exist
      * on the handler itself.
+     *
+     * @param list<mixed> $args
      *
      * @return mixed
      */

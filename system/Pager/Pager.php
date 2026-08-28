@@ -34,14 +34,23 @@ class Pager implements PagerInterface
     /**
      * The group data.
      *
-     * @var array
+     * @var array<string, array{
+     *   currentUri: URI,
+     *   uri: URI,
+     *   hasMore: bool,
+     *   total: int|null,
+     *   perPage: int,
+     *   pageCount: int,
+     *   pageSelector: string,
+     *   currentPage: int
+     * }>
      */
     protected $groups = [];
 
     /**
      * URI segment for groups if provided.
      *
-     * @var array
+     * @var array<string, int>
      */
     protected $segment = [];
 
@@ -272,7 +281,7 @@ class Pager implements PagerInterface
 
         $segment = $this->segment[$group] ?? 0;
 
-        if ($segment) {
+        if ($segment !== 0) {
             $uri->setSegment($segment, $page);
         } else {
             $uri->addQuery($this->groups[$group]['pageSelector'], $page);
@@ -281,7 +290,7 @@ class Pager implements PagerInterface
         if ($this->only !== null) {
             $query = array_intersect_key(service('superglobals')->getGetArray(), array_flip($this->only));
 
-            if (! $segment) {
+            if ($segment === 0) {
                 $query[$this->groups[$group]['pageSelector']] = $page;
             }
 
@@ -357,12 +366,6 @@ class Pager implements PagerInterface
         return (int) $this->groups[$group]['perPage'];
     }
 
-    /**
-     * Returns an array with details about the results, including
-     * total, per_page, current_page, last_page, next_url, prev_url, from, to.
-     * Does not include the actual data. This data is suitable for adding
-     * a 'data' object to with the result set and converting to JSON.
-     */
     public function getDetails(string $group = 'default'): array
     {
         if (! array_key_exists($group, $this->groups)) {
@@ -380,6 +383,8 @@ class Pager implements PagerInterface
 
     /**
      * Sets only allowed queries on pagination links.
+     *
+     * @param list<string> $queries
      */
     public function only(array $queries): self
     {

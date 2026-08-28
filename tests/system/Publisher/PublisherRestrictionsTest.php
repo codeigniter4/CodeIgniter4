@@ -70,6 +70,9 @@ final class PublisherRestrictionsTest extends CIUnitTestCase
         $this->assertSame($expected, $errors[$file]->getMessage());
     }
 
+    /**
+     * @return iterable<string, array{string}>
+     */
     public static function provideDefaultPublicRestrictions(): iterable
     {
         yield from [
@@ -98,6 +101,9 @@ final class PublisherRestrictionsTest extends CIUnitTestCase
         $this->assertInstanceOf(Publisher::class, $publisher);
     }
 
+    /**
+     * @return iterable<string, array{string, bool}>
+     */
     public static function provideDestinations(): iterable
     {
         return [

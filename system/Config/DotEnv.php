@@ -51,6 +51,8 @@ class DotEnv
 
     /**
      * Parse the .env file into an array of key => value
+     *
+     * @return array<string, string>|null
      */
     public function parse(): ?array
     {
@@ -119,6 +121,8 @@ class DotEnv
     /**
      * Parses for assignment, cleans the $name and $value, and ensures
      * that nested variables are handled.
+     *
+     * @return array{string, string}
      */
     public function normaliseVariable(string $name, string $value = ''): array
     {
@@ -204,7 +208,7 @@ class DotEnv
     protected function resolveNestedVariables(string $value): string
     {
         if (str_contains($value, '$')) {
-            $value = preg_replace_callback(
+            return preg_replace_callback(
                 '/\${([a-zA-Z0-9_\.]+)}/',
                 function ($matchedPatterns) {
                     $nestedVariable = $this->getVariable($matchedPatterns[1]);

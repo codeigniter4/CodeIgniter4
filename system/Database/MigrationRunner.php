@@ -90,7 +90,7 @@ class MigrationRunner
     /**
      * used to return messages for CLI.
      *
-     * @var array
+     * @var list<string>
      */
     protected $cliMessages = [];
 
@@ -139,7 +139,7 @@ class MigrationRunner
      * default DB group so that it creates the `migrations` table in the default
      * DB group. Therefore, passing $db is for testing purposes only.
      *
-     * @param array|ConnectionInterface|string|null $db DB group. For testing purposes only.
+     * @param array<string, mixed>|ConnectionInterface|string|null $db DB group. For testing purposes only.
      *
      * @throws ConfigException
      */
@@ -440,7 +440,7 @@ class MigrationRunner
     /**
      * Retrieves list of available migration scripts
      *
-     * @return array List of all located migrations by their UID
+     * @return array<string, stdClass> List of all located migrations by their UID
      */
     public function findMigrations(): array
     {
@@ -466,6 +466,8 @@ class MigrationRunner
 
     /**
      * Retrieves a list of available migration scripts for one namespace
+     *
+     * @return list<stdClass>
      */
     public function findNamespaceMigrations(string $namespace): array
     {
@@ -611,6 +613,8 @@ class MigrationRunner
 
     /**
      * Retrieves messages formatted for CLI output
+     *
+     * @return list<string>
      */
     public function getCliMessages(): array
     {
@@ -694,6 +698,8 @@ class MigrationRunner
 
     /**
      * Grabs the full migration history from the database for a group
+     *
+     * @return list<stdClass>
      */
     public function getHistory(string $group = 'default'): array
     {
@@ -720,6 +726,8 @@ class MigrationRunner
      * Returns the migration history for a single batch.
      *
      * @param string $order
+     *
+     * @return list<stdClass>
      */
     public function getBatchHistory(int $batch, $order = 'asc'): array
     {
@@ -735,6 +743,8 @@ class MigrationRunner
 
     /**
      * Returns all the batches from the database history in order
+     *
+     * @return list<int>
      */
     public function getBatches(): array
     {

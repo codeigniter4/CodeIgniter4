@@ -200,7 +200,7 @@ interface ResponseInterface extends MessageInterface
     /**
      * Converts the $body into JSON and sets the Content Type header.
      *
-     * @param array<array-key, mixed>|object|string $body
+     * @param mixed $body
      *
      * @return $this
      */
@@ -218,7 +218,7 @@ interface ResponseInterface extends MessageInterface
     /**
      * Converts $body into XML, and sets the correct Content-Type.
      *
-     * @param array<array-key, mixed>|string $body
+     * @param mixed $body
      *
      * @return $this
      */

@@ -46,7 +46,7 @@ class PageCache implements FilterInterface
     /**
      * Checks page cache and return if found.
      *
-     * @param array|null $arguments
+     * @param list<string>|null $arguments
      *
      * @return ResponseInterface|null
      */
@@ -66,7 +66,7 @@ class PageCache implements FilterInterface
     /**
      * Cache the page.
      *
-     * @param array|null $arguments
+     * @param list<string>|null $arguments
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {

@@ -23,6 +23,17 @@ class Config
 {
     /**
      * Return toolbar config values as an array.
+     *
+     * @return array{
+     *   ciVersion: string,
+     *   phpVersion: string,
+     *   phpSAPI: string,
+     *   environment: string,
+     *   baseURL: string,
+     *   timezone: string,
+     *   locale: string,
+     *   cspEnabled: bool,
+     * }
      */
     public static function display(): array
     {

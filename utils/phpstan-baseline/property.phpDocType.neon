@@ -1,72 +1,7 @@
-# total 20 errors
+# total 5 errors
 
 parameters:
     ignoreErrors:
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\MySQLi\\Connection\:\:\$escapeChar is not the same as PHPDoc type array\|string of overridden property CodeIgniter\\Database\\BaseConnection\<mysqli,mysqli_result\>\:\:\$escapeChar\.$#'
-            count: 1
-            path: ../../system/Database/MySQLi/Connection.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\MySQLi\\Utils\:\:\$listDatabases is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$listDatabases\.$#'
-            count: 1
-            path: ../../system/Database/MySQLi/Utils.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\MySQLi\\Utils\:\:\$optimizeTable is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$optimizeTable\.$#'
-            count: 1
-            path: ../../system/Database/MySQLi/Utils.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\OCI8\\Connection\:\:\$escapeChar is not the same as PHPDoc type array\|string of overridden property CodeIgniter\\Database\\BaseConnection\<resource,resource\>\:\:\$escapeChar\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/Connection.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\OCI8\\Utils\:\:\$listDatabases is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$listDatabases\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/Utils.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\Postgre\\Connection\:\:\$escapeChar is not the same as PHPDoc type array\|string of overridden property CodeIgniter\\Database\\BaseConnection\<PgSql\\Connection,PgSql\\Result\>\:\:\$escapeChar\.$#'
-            count: 1
-            path: ../../system/Database/Postgre/Connection.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\Postgre\\Utils\:\:\$listDatabases is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$listDatabases\.$#'
-            count: 1
-            path: ../../system/Database/Postgre/Utils.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\Postgre\\Utils\:\:\$optimizeTable is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$optimizeTable\.$#'
-            count: 1
-            path: ../../system/Database/Postgre/Utils.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLSRV\\Connection\:\:\$escapeChar is not the same as PHPDoc type array\|string of overridden property CodeIgniter\\Database\\BaseConnection\<resource,resource\>\:\:\$escapeChar\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/Connection.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLSRV\\Utils\:\:\$listDatabases is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$listDatabases\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/Utils.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLSRV\\Utils\:\:\$optimizeTable is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$optimizeTable\.$#'
-            count: 1
-            path: ../../system/Database/SQLSRV/Utils.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLite3\\Connection\:\:\$escapeChar is not the same as PHPDoc type array\|string of overridden property CodeIgniter\\Database\\BaseConnection\<SQLite3,SQLite3Result\>\:\:\$escapeChar\.$#'
-            count: 1
-            path: ../../system/Database/SQLite3/Connection.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Database\\SQLite3\\Utils\:\:\$optimizeTable is not the same as PHPDoc type bool\|string of overridden property CodeIgniter\\Database\\BaseUtils\:\:\$optimizeTable\.$#'
-            count: 1
-            path: ../../system/Database/SQLite3/Utils.php
-
         -
             message: '#^PHPDoc type int of property CodeIgniter\\Exceptions\\PageNotFoundException\:\:\$code is not the same as PHPDoc type mixed of overridden property Exception\:\:\$code\.$#'
             count: 1
@@ -76,16 +11,6 @@ parameters:
             message: '#^PHPDoc type string of property CodeIgniter\\Session\\Handlers\\FileHandler\:\:\$savePath is not the same as PHPDoc type array\<string, mixed\>\|string of overridden property CodeIgniter\\Session\\Handlers\\BaseHandler\:\:\$savePath\.$#'
             count: 1
             path: ../../system/Session/Handlers/FileHandler.php
-
-        -
-            message: '#^PHPDoc type CodeIgniter\\Test\\Mock\\MockConnection of property CodeIgniter\\Database\\Builder\\InsertTest\:\:\$db is not the same as PHPDoc type CodeIgniter\\Database\\BaseConnection of overridden property CodeIgniter\\Test\\CIUnitTestCase\:\:\$db\.$#'
-            count: 1
-            path: ../../tests/system/Database/Builder/InsertTest.php
-
-        -
-            message: '#^PHPDoc type CodeIgniter\\Test\\Mock\\MockConnection of property CodeIgniter\\Database\\Builder\\UpdateTest\:\:\$db is not the same as PHPDoc type CodeIgniter\\Database\\BaseConnection of overridden property CodeIgniter\\Test\\CIUnitTestCase\:\:\$db\.$#'
-            count: 1
-            path: ../../tests/system/Database/Builder/UpdateTest.php
 
         -
             message: '#^PHPDoc type Tests\\Support\\Models\\EventModel of property CodeIgniter\\Models\\EventsModelTest\:\:\$model is not the same as PHPDoc type CodeIgniter\\Model of overridden property CodeIgniter\\Models\\LiveModelTestCase\:\:\$model\.$#'

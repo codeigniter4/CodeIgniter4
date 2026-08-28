@@ -128,6 +128,9 @@ final class FrameworkCodeTest extends TestCase
         ));
     }
 
+    /**
+     * @return iterable<class-string, array{class-string}>
+     */
     public static function provideEachTestClassHasCorrectGroupAttributeName(): iterable
     {
         foreach (self::getTestClasses() as $class) {

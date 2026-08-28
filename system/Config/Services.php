@@ -218,6 +218,8 @@ class Services extends BaseService
      *
      * @todo v4.8.0 Remove $config parameter since unused
      *
+     * @param array<string, mixed> $options
+     *
      * @return CURLRequest
      */
     public static function curlrequest(array $options = [], ?ResponseInterface $response = null, ?App $config = null, bool $getShared = true)
@@ -240,7 +242,7 @@ class Services extends BaseService
     /**
      * The Email class allows you to send email via mail, sendmail, SMTP.
      *
-     * @param array|EmailConfig|null $config
+     * @param array<string, mixed>|EmailConfig|null $config
      *
      * @return Email
      */
@@ -781,6 +783,13 @@ class Services extends BaseService
 
     /**
      * Superglobals.
+     *
+     * @param array<string, mixed>|null $server
+     * @param array<string, mixed>|null $get
+     * @param array<string, mixed>|null $post
+     * @param array<string, mixed>|null $cookie
+     * @param array<string, mixed>|null $files
+     * @param array<string, mixed>|null $request
      *
      * @return Superglobals
      */

@@ -44,6 +44,11 @@ final class DataConverterTest extends CIUnitTestCase
         $this->assertInstanceOf(DataConverter::class, $converter);
     }
 
+    /**
+     * @param array<string, string> $types
+     * @param array<string, mixed>  $dbData
+     * @param array<string, mixed>  $expected
+     */
     #[DataProvider('provideConvertDataFromDB')]
     public function testConvertDataFromDB(array $types, array $dbData, array $expected): void
     {
@@ -54,6 +59,9 @@ final class DataConverterTest extends CIUnitTestCase
         $this->assertSame($expected, $data);
     }
 
+    /**
+     * @return iterable<string, array{array<string, string>, array<string, mixed>, array<string, mixed>}>
+     */
     public static function provideConvertDataFromDB(): iterable
     {
         yield from [
@@ -326,6 +334,11 @@ final class DataConverterTest extends CIUnitTestCase
         ];
     }
 
+    /**
+     * @param array<string, string> $types
+     * @param array<string, mixed>  $phpData
+     * @param array<string, mixed>  $expected
+     */
     #[DataProvider('provideConvertDataToDB')]
     public function testConvertDataToDB(array $types, array $phpData, array $expected): void
     {
@@ -336,6 +349,9 @@ final class DataConverterTest extends CIUnitTestCase
         $this->assertSame($expected, $data);
     }
 
+    /**
+     * @return iterable<string, array{array<string, string>, array<string, mixed>, array<string, mixed>}>
+     */
     public static function provideConvertDataToDB(): iterable
     {
         yield from [
@@ -762,6 +778,8 @@ final class DataConverterTest extends CIUnitTestCase
     }
 
     /**
+     * @param array<string, string>                                           $types
+     * @param array<string, class-string>                                     $handlers
      * @param (Closure(array<string, mixed>): object)|string|null             $reconstructor
      * @param (Closure(object, bool, bool): array<string, mixed>)|string|null $extractor
      */

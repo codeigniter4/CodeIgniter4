@@ -71,6 +71,8 @@ final readonly class DataConverter
      *
      * @param array<string, mixed> $data DataSource data
      *
+     * @return array<string, mixed>
+     *
      * @internal
      */
     public function fromDataSource(array $data): array
@@ -88,6 +90,8 @@ final readonly class DataConverter
      * Converts PHP array to data for DataSource field types.
      *
      * @param array<string, mixed> $phpData PHP data
+     *
+     * @return array<string, mixed>
      *
      * @internal
      */

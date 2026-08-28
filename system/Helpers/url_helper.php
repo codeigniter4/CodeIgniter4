@@ -423,7 +423,7 @@ if (! function_exists('prep_url')) {
 
         // force replace http:// with https://
         if ($secure) {
-            $str = preg_replace('/^(?:http):/i', 'https:', $str);
+            return preg_replace('/^(?:http):/i', 'https:', $str);
         }
 
         return $str;

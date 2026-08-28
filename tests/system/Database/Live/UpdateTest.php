@@ -115,7 +115,8 @@ final class UpdateTest extends CIUnitTestCase
     }
 
     /**
-     * @param array<int, mixed> $expected
+     * @param list<array<string, int|string>> $data
+     * @param list<array<string, int|string>> $expected
      */
     #[DataProvider('provideUpdateBatch')]
     public function testUpdateBatch(string $constraints, array $data, array $expected): void
@@ -155,6 +156,9 @@ final class UpdateTest extends CIUnitTestCase
         $this->seeInDatabase($table, $expected[1]);
     }
 
+    /**
+     * @return iterable<string, array{string, list<array<string, int|string>>, list<array<string, int|string>>}>
+     */
     public static function provideUpdateBatch(): iterable
     {
         yield from [

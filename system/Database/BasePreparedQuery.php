@@ -77,15 +77,6 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
         $this->db = $db;
     }
 
-    /**
-     * Prepares the query against the database, and saves the connection
-     * info necessary to execute the query later.
-     *
-     * NOTE: This version is based on SQL code. Child classes should
-     * override this method.
-     *
-     * @return $this
-     */
     public function prepare(string $sql, array $options = [], string $queryClass = Query::class)
     {
         // We only support positional placeholders (?), so convert
@@ -108,18 +99,13 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
     }
 
     /**
-     * The database-dependent portion of the prepare statement.
+     * @param array<array-key, mixed> $options Passed to the connection's prepare statement. Only the SQLSRV driver uses it.
      *
      * @return $this
      */
     abstract public function _prepare(string $sql, array $options = []);
 
     /**
-     * Takes a new set of data and runs it against the currently
-     * prepared query. Upon success, will return a Results object.
-     *
-     * @return bool|ResultInterface<TConnection, TResult>
-     *
      * @throws DatabaseException
      */
     public function execute(...$data)
@@ -205,7 +191,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
     }
 
     /**
-     * The database dependant version of the execute method.
+     * @param list<mixed> $data
      */
     abstract public function _execute(array $data): bool;
 
@@ -262,14 +248,8 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
         }
     }
 
-    /**
-     * The database-dependent version of the close method.
-     */
     abstract protected function _close(): bool;
 
-    /**
-     * Returns the SQL that has been prepared.
-     */
     public function getQueryString(): string
     {
         if (! $this->query instanceof QueryInterface) {
@@ -287,17 +267,11 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
         return $this->errorString !== '';
     }
 
-    /**
-     * Returns the error code created while executing this statement.
-     */
     public function getErrorCode(): int
     {
         return $this->errorCode;
     }
 
-    /**
-     * Returns the error message created while executing this statement.
-     */
     public function getErrorMessage(): string
     {
         return $this->errorString;

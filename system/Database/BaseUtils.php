@@ -16,14 +16,12 @@ namespace CodeIgniter\Database;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
- * Class BaseUtils
+ * @template TDb of BaseConnection
  */
 abstract class BaseUtils
 {
     /**
-     * Database object
-     *
-     * @var object
+     * @var TDb
      */
     protected $db;
 
@@ -49,7 +47,7 @@ abstract class BaseUtils
     protected $repairTable = false;
 
     /**
-     * Class constructor
+     * @param TDb $db
      */
     public function __construct(ConnectionInterface $db)
     {
@@ -59,7 +57,7 @@ abstract class BaseUtils
     /**
      * List databases
      *
-     * @return array|bool
+     * @return bool|list<mixed>
      *
      * @throws DatabaseException
      */
@@ -229,6 +227,8 @@ abstract class BaseUtils
 
     /**
      * Generate XML data from a query result object
+     *
+     * @param array<string, string> $params
      */
     public function getXMLFromResult(ResultInterface $query, array $params = []): string
     {
@@ -264,9 +264,9 @@ abstract class BaseUtils
     /**
      * Database Backup
      *
-     * @param array|string $params
+     * @param array<string, mixed>|string $params
      *
-     * @return false|never|string
+     * @return false|string
      *
      * @throws DatabaseException
      */
@@ -320,9 +320,9 @@ abstract class BaseUtils
     }
 
     /**
-     * Platform dependent version of the backup function.
+     * @param array<string, mixed>|null $prefs
      *
-     * @return false|never|string
+     * @return false|string
      */
     abstract public function _backup(?array $prefs = null);
 }

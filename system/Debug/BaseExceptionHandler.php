@@ -51,6 +51,16 @@ abstract class BaseExceptionHandler
 
     /**
      * Gathers the variables that will be made available to the view.
+     *
+     * @return array{
+     *   title: string,
+     *   type: string,
+     *   code: int,
+     *   message: string,
+     *   file: string,
+     *   line: int,
+     *   trace: list<array<string, mixed>>,
+     * }
      */
     protected function collectVars(Throwable $exception, int $statusCode): array
     {
@@ -80,6 +90,11 @@ abstract class BaseExceptionHandler
 
     /**
      * Mask sensitive data in the trace.
+     *
+     * @param list<array<string, mixed>> $trace
+     * @param list<string>               $keysToMask
+     *
+     * @return list<array<string, mixed>>
      */
     protected function maskSensitiveData(array $trace, array $keysToMask, string $path = ''): array
     {
@@ -91,7 +106,10 @@ abstract class BaseExceptionHandler
     }
 
     /**
-     * @param array<int, string> $keysToMask
+     * @param array<array-key, mixed>|object $args
+     * @param list<string>                   $keysToMask
+     *
+     * @return array<array-key, mixed>|object
      */
     private function maskData(mixed $args, array $keysToMask, string $path = ''): mixed
     {

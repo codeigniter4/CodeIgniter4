@@ -1,4 +1,4 @@
-# total 6 errors
+# total 5 errors
 
 parameters:
     ignoreErrors:
@@ -6,11 +6,6 @@ parameters:
             message: '#^Parameter \#1 \$offset \(string\) of method CodeIgniter\\Cookie\\Cookie\:\:offsetSet\(\) should be contravariant with parameter \$offset \(string\|null\) of method ArrayAccess\<string,bool\|int\|string\>\:\:offsetSet\(\)$#'
             count: 1
             path: ../../system/Cookie/Cookie.php
-
-        -
-            message: '#^Parameter \#1 \$className \(class\-string\) of method CodeIgniter\\Database\\BaseResult\:\:getCustomResultObject\(\) should be contravariant with parameter \$className \(string\) of method CodeIgniter\\Database\\ResultInterface\<TConnection,TResult\>\:\:getCustomResultObject\(\)$#'
-            count: 1
-            path: ../../system/Database/BaseResult.php
 
         -
             message: '#^Parameter \#1 \$data \(array\{date\: string, timezone\: string, timezone_type\: int\}\) of method CodeIgniter\\I18n\\Time\:\:__unserialize\(\) should be contravariant with parameter \$data \(array\) of method DateTimeImmutable\:\:__unserialize\(\)$#'

@@ -28,11 +28,6 @@ use Tests\Support\Enum\StatusEnum;
 #[Group('Others')]
 final class InsertTest extends CIUnitTestCase
 {
-    /**
-     * @var MockConnection
-     */
-    protected $db;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -191,6 +186,7 @@ final class InsertTest extends CIUnitTestCase
             ],
         ];
 
+        $this->assertInstanceOf(MockConnection::class, $this->db);
         $this->db->shouldReturn('execute', new class () {});
         $builder->insertBatch($insertData, true);
 
@@ -226,6 +222,7 @@ final class InsertTest extends CIUnitTestCase
             ],
         ];
 
+        $this->assertInstanceOf(MockConnection::class, $this->db);
         $this->db->shouldReturn('execute', new class () {});
         $builder->ignore()->insertBatch($insertData, true, 1);
 
@@ -260,6 +257,7 @@ final class InsertTest extends CIUnitTestCase
             ],
         ];
 
+        $this->assertInstanceOf(MockConnection::class, $this->db);
         $this->db->shouldReturn('execute', new class () {});
         $builder->insertBatch($insertData, false);
 
@@ -284,6 +282,7 @@ final class InsertTest extends CIUnitTestCase
             ['ip' => '4.4.4.0', 'ip2' => '4.4.4.2'],
         ];
 
+        $this->assertInstanceOf(MockConnection::class, $this->db);
         $this->db->shouldReturn('execute', new class () {});
         $builder->insertBatch($data, true);
 

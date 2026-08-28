@@ -201,6 +201,8 @@ class Exceptions
 
     /**
      * Determines the HTTP status code and the exit status code for this request.
+     *
+     * @return array{int, int}
      */
     protected function determineCodes(Throwable $exception): array
     {

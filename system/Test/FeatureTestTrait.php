@@ -170,7 +170,8 @@ trait FeatureTestTrait
      * Calls a single URI, executes it, and returns a TestResponse
      * instance that can be used to run many assertions against.
      *
-     * @param uppercase-string $method HTTP verb
+     * @param uppercase-string             $method HTTP verb
+     * @param array<array-key, mixed>|null $params
      *
      * @return TestResponse
      */
@@ -219,7 +220,8 @@ trait FeatureTestTrait
     /**
      * Performs a GET request.
      *
-     * @param string $path URI path relative to baseURL. May include query.
+     * @param string                       $path   URI path relative to baseURL. May include query.
+     * @param array<array-key, mixed>|null $params
      *
      * @return TestResponse
      *
@@ -234,6 +236,8 @@ trait FeatureTestTrait
     /**
      * Performs a POST request.
      *
+     * @param array<array-key, mixed>|null $params
+     *
      * @return TestResponse
      *
      * @throws RedirectException
@@ -246,6 +250,8 @@ trait FeatureTestTrait
 
     /**
      * Performs a PUT request
+     *
+     * @param array<array-key, mixed>|null $params
      *
      * @return TestResponse
      *
@@ -260,6 +266,8 @@ trait FeatureTestTrait
     /**
      * Performss a PATCH request
      *
+     * @param array<array-key, mixed>|null $params
+     *
      * @return TestResponse
      *
      * @throws RedirectException
@@ -273,6 +281,8 @@ trait FeatureTestTrait
     /**
      * Performs a DELETE request.
      *
+     * @param array<array-key, mixed>|null $params
+     *
      * @return TestResponse
      *
      * @throws RedirectException
@@ -285,6 +295,8 @@ trait FeatureTestTrait
 
     /**
      * Performs an OPTIONS request.
+     *
+     * @param array<array-key, mixed>|null $params
      *
      * @return TestResponse
      *
@@ -371,10 +383,11 @@ trait FeatureTestTrait
      *
      * Always populate the GET vars based on the URI.
      *
-     * @param string               $name   Superglobal name (lowercase)
-     * @param non-empty-array|null $params
+     * @param string                                 $name    Superglobal name (lowercase)
+     * @param IncomingRequest                        $request
+     * @param non-empty-array<array-key, mixed>|null $params
      *
-     * @return Request
+     * @return IncomingRequest
      *
      * @throws ReflectionException
      */
@@ -410,7 +423,10 @@ trait FeatureTestTrait
      * This allows the body to be formatted in a way that the controller is going to
      * expect as in the case of testing a JSON or XML API.
      *
-     * @param array|null $params The parameters to be formatted and put in the body.
+     * @param IncomingRequest              $request
+     * @param array<array-key, mixed>|null $params  The parameters to be formatted and put in the body.
+     *
+     * @return IncomingRequest
      */
     protected function setRequestBody(Request $request, ?array $params = null): Request
     {

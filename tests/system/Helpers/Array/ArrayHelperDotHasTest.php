@@ -23,6 +23,9 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class ArrayHelperDotHasTest extends CIUnitTestCase
 {
+    /**
+     * @var array<string, mixed>
+     */
     private array $array = [
         'contacts' => [
             'friends' => [

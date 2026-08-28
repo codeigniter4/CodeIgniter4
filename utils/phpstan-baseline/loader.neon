@@ -1,18 +1,14 @@
-# total 688 errors
+# total 48 errors
 
 includes:
     - argument.type.neon
     - arguments.count.neon
     - assign.propertyType.neon
-    - codeigniter.modelArgumentType.neon
     - deadCode.unreachable.neon
     - function.resultUnused.neon
     - method.childParameterType.neon
-    - method.notFound.neon
     - missingType.callable.neon
     - missingType.iterableValue.neon
-    - missingType.parameter.neon
     - property.defaultValue.neon
-    - property.notFound.neon
     - property.phpDocType.neon
     - staticMethod.notFound.neon

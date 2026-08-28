@@ -140,7 +140,7 @@ use Config\WorkerMode;
  * @method static Security                   security(App $config = null, $getShared = true)
  * @method static Session                    session(ConfigSession $config = null, $getShared = true)
  * @method static SiteURIFactory             siteurifactory(App $config = null, Superglobals $superglobals = null, $getShared = true)
- * @method static Superglobals               superglobals(array $server = null, array $get = null, bool $getShared = true)
+ * @method static Superglobals               superglobals(array<string, mixed> $server = null, array<string, mixed> $get = null, bool $getShared = true)
  * @method static Throttler                  throttler($getShared = true)
  * @method static Timer                      timer($getShared = true)
  * @method static Toolbar                    toolbar(ConfigToolbar $config = null, $getShared = true)
@@ -313,6 +313,8 @@ class BaseService
     /**
      * Provides the ability to perform case-insensitive calling of service
      * names.
+     *
+     * @param array<array-key, mixed> $arguments
      *
      * @return object|null
      */

@@ -15,7 +15,6 @@ namespace CodeIgniter\Database\MySQLi;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use CodeIgniter\Database\TableName;
 use CodeIgniter\Exceptions\LogicException;
 use mysqli;
 use mysqli_result;
@@ -51,7 +50,7 @@ class Connection extends BaseConnection
     /**
      * Identifier escape character
      *
-     * @var string
+     * @var list<string>|string
      */
     public $escapeChar = '`';
 
@@ -293,11 +292,6 @@ class Connection extends BaseConnection
         return false;
     }
 
-    /**
-     * Close the database connection.
-     *
-     * @return void
-     */
     protected function _close()
     {
         $this->connID->close();
@@ -442,10 +436,7 @@ class Connection extends BaseConnection
     }
 
     /**
-     * Generates the SQL for listing tables in a platform-dependent manner.
      * Uses escapeLikeStringDirect().
-     *
-     * @param string|null $tableName If $tableName is provided will return only this table if exists.
      */
     protected function _listTables(bool $prefixLimit = false, ?string $tableName = null): string
     {
@@ -462,11 +453,6 @@ class Connection extends BaseConnection
         return $sql;
     }
 
-    /**
-     * Generates a platform-specific query string so that the column names can be fetched.
-     *
-     * @param string|TableName $table
-     */
     protected function _listColumns($table = ''): string
     {
         $tableName = $this->protectIdentifiers(
@@ -480,10 +466,6 @@ class Connection extends BaseConnection
     }
 
     /**
-     * Returns an array of objects with field data
-     *
-     * @return list<stdClass>
-     *
      * @throws DatabaseException
      */
     protected function _fieldData(string $table): array
@@ -512,10 +494,6 @@ class Connection extends BaseConnection
     }
 
     /**
-     * Returns an array of objects with index data
-     *
-     * @return array<string, stdClass>
-     *
      * @throws DatabaseException
      * @throws LogicException
      */
@@ -544,7 +522,7 @@ class Connection extends BaseConnection
                     $type = 'PRIMARY';
                 } elseif ($index['Index_type'] === 'FULLTEXT') {
                     $type = 'FULLTEXT';
-                } elseif ($index['Non_unique']) {
+                } elseif ((bool) $index['Non_unique']) {
                     $type = $index['Index_type'] === 'SPATIAL' ? 'SPATIAL' : 'INDEX';
                 } else {
                     $type = 'UNIQUE';
@@ -560,10 +538,6 @@ class Connection extends BaseConnection
     }
 
     /**
-     * Returns an array of objects with Foreign key data
-     *
-     * @return array<string, stdClass>
-     *
      * @throws DatabaseException
      */
     protected function _foreignKeyData(string $table): array
@@ -661,25 +635,16 @@ class Connection extends BaseConnection
         return $this->connID->insert_id;
     }
 
-    /**
-     * Begin Transaction
-     */
     protected function _transBegin(): bool
     {
         return $this->connID->begin_transaction();
     }
 
-    /**
-     * Commit Transaction
-     */
     protected function _transCommit(): bool
     {
         return $this->connID->commit();
     }
 
-    /**
-     * Rollback Transaction
-     */
     protected function _transRollback(): bool
     {
         return $this->connID->rollback();

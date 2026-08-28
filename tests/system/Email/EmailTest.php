@@ -58,6 +58,9 @@ final class EmailTest extends CIUnitTestCase
         }
     }
 
+    /**
+     * @return iterable<string, list<bool>>
+     */
     public static function provideEmailSendWithClearance(): iterable
     {
         return [

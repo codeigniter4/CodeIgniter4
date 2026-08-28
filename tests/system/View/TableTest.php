@@ -201,7 +201,7 @@ final class TableTest extends CIUnitTestCase
 
         $this->assertSame(
             $expected,
-            $this->table->prepArgs(['name', 'color', 'size']),
+            $this->table->prepArgs(['name', 'color', 'size']), // @phpstan-ignore method.notFound (Testing MockTable::__call() fallback)
         );
 
         // with cell attributes
@@ -213,7 +213,7 @@ final class TableTest extends CIUnitTestCase
 
         $this->assertSame(
             $expected,
-            $this->table->prepArgs(['name', 'color', 'size', ['data' => 'weight', 'class' => 'awesome']]),
+            $this->table->prepArgs(['name', 'color', 'size', ['data' => 'weight', 'class' => 'awesome']]), // @phpstan-ignore method.notFound (Testing MockTable::__call() fallback)
         );
     }
 
@@ -241,7 +241,7 @@ final class TableTest extends CIUnitTestCase
         ];
 
         foreach ($keys as $key) {
-            $this->assertArrayHasKey($key, $this->table->defaultTemplate());
+            $this->assertArrayHasKey($key, $this->table->defaultTemplate()); // @phpstan-ignore method.notFound (Testing MockTable::__call() fallback)
         }
     }
 
@@ -251,14 +251,14 @@ final class TableTest extends CIUnitTestCase
 
         // non default key
         $this->table->setTemplate(['nonsense' => 'foo']);
-        $this->table->compileTemplate();
+        $this->table->compileTemplate(); // @phpstan-ignore method.notFound (Testing MockTable::__call() fallback)
 
         $this->assertArrayHasKey('nonsense', $this->table->template);
         $this->assertSame('foo', $this->table->template['nonsense']);
 
         // override default
         $this->table->setTemplate(['table_close' => '</table junk>']);
-        $this->table->compileTemplate();
+        $this->table->compileTemplate(); // @phpstan-ignore method.notFound (Testing MockTable::__call() fallback)
 
         $this->assertArrayHasKey('table_close', $this->table->template);
         $this->assertSame('</table junk>', $this->table->template['table_close']);
@@ -267,9 +267,9 @@ final class TableTest extends CIUnitTestCase
     public function testMakeColumns(): void
     {
         // Test bogus parameters
-        $this->assertFalse($this->table->makeColumns('invalid_junk'));
+        $this->assertFalse($this->table->makeColumns('invalid_junk')); // @phpstan-ignore argument.type (deliberately wrong type)
         $this->assertFalse($this->table->makeColumns([]));
-        $this->assertFalse($this->table->makeColumns(['one', 'two'], '2.5'));
+        $this->assertFalse($this->table->makeColumns(['one', 'two'], '2.5')); // @phpstan-ignore argument.type (deliberately wrong type)
 
         // Now on to the actual column creation
 
@@ -345,12 +345,12 @@ final class TableTest extends CIUnitTestCase
         ];
 
         $this->table->autoHeading = false;
-        $this->table->setFromArray($data);
+        $this->table->setFromArray($data); // @phpstan-ignore method.notFound (Testing MockTable::__call() fallback)
         $this->assertEmpty($this->table->heading);
 
         $this->table->clear();
 
-        $this->table->setFromArray($data);
+        $this->table->setFromArray($data); // @phpstan-ignore method.notFound (Testing MockTable::__call() fallback)
         $this->assertCount(2, $this->table->rows);
 
         $expected = [
@@ -376,9 +376,9 @@ final class TableTest extends CIUnitTestCase
         $dummy->connID   = null;
         $dummy->resultID = null;
 
-        $DBResult = new DBResultDummy($dummy->connID, $dummy->resultID);
+        $DBResult = new DBResultDummy($dummy->connID, $dummy->resultID); // @phpstan-ignore argument.type, argument.type (deliberately null, exercising the fallback path)
 
-        $this->table->setFromDBResult($DBResult);
+        $this->table->setFromDBResult($DBResult); // @phpstan-ignore method.notFound (Testing MockTable::__call() fallback)
 
         $expected = [
             ['data' => 'name'],
@@ -733,7 +733,7 @@ final class TableTest extends CIUnitTestCase
         $dummy           = new stdClass();
         $dummy->connID   = null;
         $dummy->resultID = null;
-        $DBResult        = new DBResultDummy($dummy->connID, $dummy->resultID);
+        $DBResult        = new DBResultDummy($dummy->connID, $dummy->resultID); // @phpstan-ignore argument.type, argument.type (deliberately null, exercising the fallback path)
 
         $table = $this->table->generate($DBResult);
 
@@ -780,6 +780,10 @@ final class TableTest extends CIUnitTestCase
         $this->assertStringContainsString('<td>Fred</td><td><strong>Blue</strong></td><td>Small</td>', $generated);
     }
 
+    /**
+     * @param array<string, string>     $heading
+     * @param array<string, int|string> $row
+     */
     #[DataProvider('orderedColumnUsecases')]
     public function testAddRowAndGenerateOrderedColumns(array $heading, array $row, string $expectContainsString): void
     {
@@ -792,6 +796,10 @@ final class TableTest extends CIUnitTestCase
         $this->assertStringContainsString($expectContainsString, $generated);
     }
 
+    /**
+     * @param array<string, string>     $heading
+     * @param array<string, int|string> $row
+     */
     #[DataProvider('orderedColumnUsecases')]
     public function testGenerateOrderedColumns(array $heading, array $row, string $expectContainsString): void
     {
@@ -803,6 +811,9 @@ final class TableTest extends CIUnitTestCase
         $this->assertStringContainsString($expectContainsString, $generated);
     }
 
+    /**
+     * @return iterable<string, array{heading: array<string, string>, row: array<string, int|string>, expectContainsString: string}>
+     */
     public static function orderedColumnUsecases(): iterable
     {
         yield from [

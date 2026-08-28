@@ -179,7 +179,7 @@ trait ResponseTrait
     /**
      * Converts the $body into JSON and sets the Content Type header.
      *
-     * @param array<array-key, mixed>|object|string $body
+     * @param mixed $body
      *
      * @return $this
      */
@@ -211,7 +211,7 @@ trait ResponseTrait
     /**
      * Converts $body into XML, and sets the correct Content-Type.
      *
-     * @param array<array-key, mixed>|string $body
+     * @param mixed $body
      *
      * @return $this
      */
@@ -234,7 +234,7 @@ trait ResponseTrait
         $body = $this->body;
 
         if ($this->bodyFormat !== 'xml') {
-            $body = service('format')->getFormatter('application/xml')->format($body);
+            return service('format')->getFormatter('application/xml')->format($body);
         }
 
         return $body;
@@ -244,8 +244,8 @@ trait ResponseTrait
      * Handles conversion of the data into the appropriate format,
      * and sets the correct Content-Type header for our response.
      *
-     * @param array<array-key, mixed>|object|string $body
-     * @param string                                $format Valid: json, xml
+     * @param mixed  $body
+     * @param string $format Valid: json, xml
      *
      * @return false|string
      *
@@ -259,7 +259,7 @@ trait ResponseTrait
 
         // Nothing much to do for a string...
         if (! is_string($body) || $format === 'json-unencoded') {
-            $body = service('format')->getFormatter($mime)->format($body);
+            return service('format')->getFormatter($mime)->format($body);
         }
 
         return $body;

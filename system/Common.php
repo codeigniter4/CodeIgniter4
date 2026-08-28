@@ -814,6 +814,8 @@ if (! function_exists('log_message')) {
      *  - notice
      *  - info
      *  - debug
+     *
+     * @param array<string, mixed> $context
      */
     function log_message(string $level, string $message, array $context = []): void
     {
@@ -856,7 +858,7 @@ if (! function_exists('old')) {
      * @param string|null                                $default
      * @param 'attr'|'css'|'html'|'js'|'raw'|'url'|false $escape
      *
-     * @return array|string|null
+     * @return array<array-key, mixed>|string|null
      */
     function old(string $key, $default = null, $escape = 'html')
     {
@@ -1180,7 +1182,7 @@ if (! function_exists('stringify_attributes')) {
      * Helper function used to convert a string, array, or object
      * of attributes to a string.
      *
-     * @param array|object|string $attributes string, array, object that can be cast to array
+     * @param array<array-key, mixed>|object|string $attributes
      */
     function stringify_attributes($attributes, bool $js = false): string
     {
@@ -1247,7 +1249,8 @@ if (! function_exists('view')) {
      * NOTE: Does not provide any escaping of the data, so that must
      * all be handled manually by the developer.
      *
-     * @param array $options Options for saveData or third-party extensions.
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $options Options for saveData or third-party extensions.
      */
     function view(string $name, array $data = [], array $options = []): string
     {
@@ -1270,7 +1273,7 @@ if (! function_exists('view_cell')) {
      * View cells are used within views to insert HTML chunks that are managed
      * by other classes.
      *
-     * @param array|string|null $params
+     * @param array<array-key, mixed>|string|null $params
      *
      * @throws ReflectionException
      */

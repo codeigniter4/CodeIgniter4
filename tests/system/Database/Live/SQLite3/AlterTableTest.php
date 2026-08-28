@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\Live\SQLite3;
 
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Database\SQLite3\Connection;
 use CodeIgniter\Database\SQLite3\Forge;
 use CodeIgniter\Database\SQLite3\Table;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -54,9 +55,15 @@ final class AlterTableTest extends CIUnitTestCase
             'database' => ':memory:',
             'DBDebug'  => true,
         ];
-        $this->db    = db_connect($config);
-        $this->forge = Database::forge($config);
-        $this->table = new Table($this->db, $this->forge);
+        $db = db_connect($config);
+        $this->assertInstanceOf(Connection::class, $db);
+        $this->db = $db;
+
+        $forge = Database::forge($config);
+        $this->assertInstanceOf(Forge::class, $forge);
+        $this->forge = $forge;
+
+        $this->table = new Table($db, $this->forge);
 
         $this->dropTables();
     }

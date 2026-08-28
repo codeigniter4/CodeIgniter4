@@ -24,6 +24,9 @@ use RecursiveIterator;
  */
 final class IteratorFilter extends RecursiveFilterIterator implements RecursiveIterator
 {
+    /**
+     * @var list<string>
+     */
     private array $watchedExtensions = [];
 
     public function __construct(RecursiveIterator $iterator)

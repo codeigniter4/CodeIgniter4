@@ -80,6 +80,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $this->codeigniter = new MockCodeIgniter($config);
 
         $response = service('response');
+        $this->assertInstanceOf(Response::class, $response);
         $response->pretend();
     }
 
@@ -370,6 +371,9 @@ final class ResourceControllerTest extends CIUnitTestCase
         $this->assertSame($expected, $result);
     }
 
+    /**
+     * @param list<mixed> $args
+     */
     private function invoke(object $controller, string $method, array $args = []): object
     {
         $method = self::getPrivateMethodInvoker($controller, $method);

@@ -15,6 +15,7 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Exceptions\RuntimeException;
+use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use Config\Exceptions as ExceptionsConfig;
@@ -101,5 +102,6 @@ final class ExceptionsTest extends CIUnitTestCase
         $this->assertSame([500, EXIT_CONFIG], $determineCodes(new ConfigException('This.')));
         $this->assertSame([500, EXIT_CONFIG], $determineCodes(CastException::forInvalidInterface('This.')));
         $this->assertSame([500, EXIT_DATABASE], $determineCodes(new DatabaseException('This.')));
+        $this->assertSame([403, EXIT_CONFIG], $determineCodes(HoneypotException::isBot()));
     }
 }

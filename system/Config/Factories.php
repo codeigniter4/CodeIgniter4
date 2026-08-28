@@ -26,8 +26,9 @@ use CodeIgniter\Model;
  * large performance boost and helps keep code clean of lengthy
  * instantiation checks.
  *
+ * @method static object|null     cells(string $alias, array<string, bool|string|null> $options = [])
  * @method static BaseConfig|null config(...$arguments)
- * @method static Model|null      models(string $alias, array $options = [], ?ConnectionInterface &$conn = null)
+ * @method static Model|null      models(string $alias, array<string, bool|string|null> $options = [], ?ConnectionInterface &$conn = null)
  * @see \CodeIgniter\Config\FactoriesTest
  */
 final class Factories
@@ -127,6 +128,8 @@ final class Factories
      * Loads instances based on the method component name. Either
      * creates a new instance or returns an existing shared instance.
      *
+     * @param array<array-key, mixed> $arguments
+     *
      * @return object|null
      */
     public static function __callStatic(string $component, array $arguments)
@@ -140,7 +143,7 @@ final class Factories
         // Determine the component-specific options
         $options = array_merge(self::getOptions($component), $options);
 
-        if (! $options['getShared']) {
+        if (! (bool) $options['getShared']) {
             if (isset(self::$aliases[$options['component']][$alias])) {
                 $class = self::$aliases[$options['component']][$alias];
 
@@ -192,6 +195,9 @@ final class Factories
     /**
      * Gets the defined instance. If not exists, creates new one.
      *
+     * @param array<string, bool|string|null> $options
+     * @param array<array-key, mixed>         $arguments
+     *
      * @return object|null
      */
     private static function getDefinedInstance(array $options, string $alias, array $arguments)
@@ -230,6 +236,8 @@ final class Factories
 
     /**
      * Creates the shared instance.
+     *
+     * @param array<array-key, mixed> $arguments
      */
     private static function createInstance(string $component, string $class, array $arguments): void
     {
@@ -264,8 +272,8 @@ final class Factories
     /**
      * Finds a component class
      *
-     * @param array  $options The array of component-specific directives
-     * @param string $alias   Class alias. See the $aliases property.
+     * @param array<string, bool|string|null> $options The array of component-specific directives
+     * @param string                          $alias   Class alias. See the $aliases property.
      */
     private static function locateClass(array $options, string $alias): ?string
     {
@@ -341,8 +349,8 @@ final class Factories
     /**
      * Verifies that a class & config satisfy the "preferApp" option
      *
-     * @param array  $options The array of component-specific directives
-     * @param string $alias   Class alias. See the $aliases property.
+     * @param array<string, bool|string|null> $options The array of component-specific directives
+     * @param string                          $alias   Class alias. See the $aliases property.
      */
     private static function verifyPreferApp(array $options, string $alias): bool
     {
@@ -362,8 +370,8 @@ final class Factories
     /**
      * Verifies that a class & config satisfy the "instanceOf" option
      *
-     * @param array  $options The array of component-specific directives
-     * @param string $alias   Class alias. See the $aliases property.
+     * @param array<string, bool|string|null> $options The array of component-specific directives
+     * @param string                          $alias   Class alias. See the $aliases property.
      */
     private static function verifyInstanceOf(array $options, string $alias): bool
     {
@@ -408,8 +416,8 @@ final class Factories
     /**
      * Normalizes, stores, and returns the configuration for a specific component
      *
-     * @param string $component Lowercase, plural component name
-     * @param array  $values    option values
+     * @param string                          $component Lowercase, plural component name
+     * @param array<string, bool|string|null> $values    Option values
      *
      * @return array<string, bool|string|null> The result after applying defaults and normalization
      */
@@ -540,6 +548,12 @@ final class Factories
 
     /**
      * Sets component data
+     *
+     * @param array{
+     *   options: array<string, bool|string|null>,
+     *   aliases: array<string, class-string>,
+     *   instances: array<class-string, object>,
+     * } $data
      *
      * @internal For caching only
      */

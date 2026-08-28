@@ -14,8 +14,9 @@ declare(strict_types=1);
 namespace CodeIgniter\Honeypot\Exceptions;
 
 use CodeIgniter\Exceptions\ConfigException;
+use CodeIgniter\Exceptions\HTTPExceptionInterface;
 
-class HoneypotException extends ConfigException
+class HoneypotException extends ConfigException implements HTTPExceptionInterface
 {
     /**
      * Thrown when the template value of config is empty.
@@ -24,7 +25,7 @@ class HoneypotException extends ConfigException
      */
     public static function forNoTemplate()
     {
-        return new static(lang('Honeypot.noTemplate'));
+        return new static(lang('Honeypot.noTemplate'), 500);
     }
 
     /**
@@ -34,7 +35,7 @@ class HoneypotException extends ConfigException
      */
     public static function forNoNameField()
     {
-        return new static(lang('Honeypot.noNameField'));
+        return new static(lang('Honeypot.noNameField'), 500);
     }
 
     /**
@@ -44,6 +45,6 @@ class HoneypotException extends ConfigException
      */
     public static function isBot()
     {
-        return new static(lang('Honeypot.theClientIsABot'));
+        return new static(lang('Honeypot.theClientIsABot'), 403);
     }
 }

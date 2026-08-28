@@ -26,17 +26,11 @@ use stdClass;
  */
 class Result extends BaseResult
 {
-    /**
-     * Gets the number of fields in the result set.
-     */
     public function getFieldCount(): int
     {
         return pg_num_fields($this->resultID);
     }
 
-    /**
-     * Generates an array of column names in the result set.
-     */
     public function getFieldNames(): array
     {
         $fieldNames = [];
@@ -48,9 +42,6 @@ class Result extends BaseResult
         return $fieldNames;
     }
 
-    /**
-     * Generates an array of objects representing field meta-data.
-     */
     public function getFieldData(): array
     {
         $retVal = [];
@@ -69,11 +60,6 @@ class Result extends BaseResult
         return $retVal;
     }
 
-    /**
-     * Frees the current result.
-     *
-     * @return void
-     */
     public function freeResult()
     {
         if ($this->resultID !== false) {
@@ -82,38 +68,20 @@ class Result extends BaseResult
         }
     }
 
-    /**
-     * Moves the internal pointer to the desired offset. This is called
-     * internally before fetching results to make sure the result set
-     * starts at zero.
-     *
-     * @return bool
-     */
     public function dataSeek(int $n = 0)
     {
         return pg_result_seek($this->resultID, $n);
     }
 
     /**
-     * Returns the result set as an array.
-     *
-     * Overridden by driver classes.
-     *
-     * @return array|false
+     * @return array<string, mixed>|false
      */
     protected function fetchAssoc()
     {
         return pg_fetch_assoc($this->resultID);
     }
 
-    /**
-     * Returns the result set as an object.
-     *
-     * Overridden by child classes.
-     *
-     * @return Entity|false|object|stdClass
-     */
-    protected function fetchObject(string $className = 'stdClass')
+    protected function fetchObject(string $className = stdClass::class)
     {
         if (is_subclass_of($className, Entity::class)) {
             $data = $this->fetchAssoc();
@@ -124,9 +92,6 @@ class Result extends BaseResult
         return pg_fetch_object($this->resultID, null, $className);
     }
 
-    /**
-     * Returns the number of rows in the resultID (i.e., PostgreSQL query result resource)
-     */
     public function getNumRows(): int
     {
         if (! is_int($this->numRows)) {

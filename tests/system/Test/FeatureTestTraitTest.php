@@ -358,6 +358,9 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->get($httpGet);
     }
 
+    /**
+     * @return iterable<string, array{string, string, string}>
+     */
     public static function provideOpenCliRoutesFromHttpGot404(): iterable
     {
         return [

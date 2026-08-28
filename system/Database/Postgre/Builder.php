@@ -58,7 +58,7 @@ class Builder extends BaseBuilder
         $sql = parent::compileIgnore($statement);
 
         if ($sql !== '') {
-            $sql = ' ' . trim($sql);
+            return ' ' . trim($sql);
         }
 
         return $sql;
@@ -432,7 +432,7 @@ class Builder extends BaseBuilder
             $sql .= 'WHERE ' . implode(
                 ' AND ',
                 array_map(
-                    static function ($key, $value) use ($table, $alias, $that): string|RawSql {
+                    static function ($key, $value) use ($table, $alias, $that): RawSql|string {
                         if ($value instanceof RawSql && is_string($key)) {
                             return $table . '.' . $key . ' = ' . $value;
                         }

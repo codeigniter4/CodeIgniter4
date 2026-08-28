@@ -1,52 +1,7 @@
-# total 27 errors
+# total 2 errors
 
 parameters:
     ignoreErrors:
-        -
-            message: '#^Parameter \#1 \$expected of method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) expects class\-string\<Config\\TestRegistrar\>, string given\.$#'
-            count: 1
-            path: ../../tests/system/Config/FactoriesTest.php
-
-        -
-            message: '#^Parameter \#3 \$classname of static method CodeIgniter\\Config\\Factories\:\:define\(\) expects class\-string, string given\.$#'
-            count: 2
-            path: ../../tests/system/Config/FactoriesTest.php
-
-        -
-            message: '#^Parameter \#1 \$db of class CodeIgniter\\Database\\SQLite3\\Table constructor expects CodeIgniter\\Database\\SQLite3\\Connection, CodeIgniter\\Database\\BaseConnection given\.$#'
-            count: 1
-            path: ../../tests/system/Database/Live/SQLite3/AlterTableTest.php
-
-        -
-            message: '#^Parameter \#1 \$set of method CodeIgniter\\Database\\BaseBuilder\<CodeIgniter\\Database\\BaseConnection\>\:\:updateFields\(\) expects list\<CodeIgniter\\Database\\RawSql\|string\>\|string, array\{0\: ''country'', updated_at\: CodeIgniter\\Database\\RawSql\} given\.$#'
-            count: 2
-            path: ../../tests/system/Database/Live/UpdateTest.php
-
-        -
-            message: '#^Parameter \#1 \$set of method CodeIgniter\\Database\\BaseBuilder\<CodeIgniter\\Database\\BaseConnection\>\:\:updateFields\(\) expects list\<CodeIgniter\\Database\\RawSql\|string\>\|string, array\{0\: ''name'', updated_at\: CodeIgniter\\Database\\RawSql\} given\.$#'
-            count: 1
-            path: ../../tests/system/Database/Live/UpdateTest.php
-
-        -
-            message: '#^Parameter \#1 \$set of method CodeIgniter\\Database\\BaseBuilder\<CodeIgniter\\Database\\BaseConnection\>\:\:updateFields\(\) expects list\<CodeIgniter\\Database\\RawSql\|string\>\|string, array\{updated_at\: CodeIgniter\\Database\\RawSql\} given\.$#'
-            count: 2
-            path: ../../tests/system/Database/Live/UpsertTest.php
-
-        -
-            message: '#^Parameter \#2 \$callable of method CodeIgniter\\Debug\\Timer\:\:record\(\) expects callable\(\)\: mixed, ''strlen'' given\.$#'
-            count: 1
-            path: ../../tests/system/Debug/TimerTest.php
-
-        -
-            message: '#^Parameter \#1 \$num of function number_to_size expects int\|string, float given\.$#'
-            count: 1
-            path: ../../tests/system/Helpers/NumberHelperTest.php
-
-        -
-            message: '#^Parameter \#1 \$request of method CodeIgniter\\CodeIgniter\:\:setRequest\(\) expects CodeIgniter\\HTTP\\CLIRequest\|CodeIgniter\\HTTP\\IncomingRequest, CodeIgniter\\HTTP\\Request given\.$#'
-            count: 1
-            path: ../../tests/system/HomeTest.php
-
         -
             message: '#^Parameter \#2 \$message of method CodeIgniter\\Log\\Handlers\\ChromeLoggerHandler\:\:handle\(\) expects string, stdClass given\.$#'
             count: 1
@@ -56,48 +11,3 @@ parameters:
             message: '#^Parameter \#1 \$format of method CodeIgniter\\RESTful\\ResourceController\:\:setFormat\(\) expects ''json''\|''xml'', ''Nonsense'' given\.$#'
             count: 1
             path: ../../tests/system/RESTful/ResourceControllerTest.php
-
-        -
-            message: '#^Parameter \#1 \$request of method CodeIgniter\\CodeIgniter\:\:setRequest\(\) expects CodeIgniter\\HTTP\\CLIRequest\|CodeIgniter\\HTTP\\IncomingRequest, CodeIgniter\\HTTP\\Request given\.$#'
-            count: 1
-            path: ../../tests/system/Test/FeatureTestAutoRoutingImprovedTest.php
-
-        -
-            message: '#^Parameter \#1 \$request of method CodeIgniter\\CodeIgniter\:\:setRequest\(\) expects CodeIgniter\\HTTP\\CLIRequest\|CodeIgniter\\HTTP\\IncomingRequest, CodeIgniter\\HTTP\\Request given\.$#'
-            count: 1
-            path: ../../tests/system/Test/FeatureTestTraitTest.php
-
-        -
-            message: '#^Parameter \#1 \$body of method CodeIgniter\\HTTP\\Response\:\:setJSON\(\) expects array\<mixed\>\|object\|string, false given\.$#'
-            count: 1
-            path: ../../tests/system/Test/TestResponseTest.php
-
-        -
-            message: '#^Parameter \#1 \$body of method CodeIgniter\\HTTP\\Response\:\:setJSON\(\) expects array\<mixed\>\|object\|string, true given\.$#'
-            count: 1
-            path: ../../tests/system/Test/TestResponseTest.php
-
-        -
-            message: '#^Parameter \#2 \$context of method CodeIgniter\\View\\Parser\:\:setData\(\) expects ''attr''\|''css''\|''html''\|''js''\|''raw''\|''url''\|null, ''unknown'' given\.$#'
-            count: 3
-            path: ../../tests/system/View/ParserTest.php
-
-        -
-            message: '#^Parameter \#1 \$array of method CodeIgniter\\View\\Table\:\:makeColumns\(\) expects list\<string\>, ''invalid_junk'' given\.$#'
-            count: 1
-            path: ../../tests/system/View/TableTest.php
-
-        -
-            message: '#^Parameter \#1 \$connID of class CodeIgniter\\View\\DBResultDummy constructor expects mysqli, null given\.$#'
-            count: 2
-            path: ../../tests/system/View/TableTest.php
-
-        -
-            message: '#^Parameter \#2 \$columnLimit of method CodeIgniter\\View\\Table\:\:makeColumns\(\) expects int, string given\.$#'
-            count: 1
-            path: ../../tests/system/View/TableTest.php
-
-        -
-            message: '#^Parameter \#2 \$resultID of class CodeIgniter\\View\\DBResultDummy constructor expects mysqli_result, null given\.$#'
-            count: 2
-            path: ../../tests/system/View/TableTest.php

@@ -15,8 +15,14 @@ namespace CodeIgniter\Test;
 
 trait IniTestTrait
 {
+    /**
+     * @var array<string, false|string>
+     */
     private array $iniSettings = [];
 
+    /**
+     * @param list<string> $keys
+     */
     private function backupIniValues(array $keys): void
     {
         foreach ($keys as $key) {

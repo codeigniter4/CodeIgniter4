@@ -68,6 +68,9 @@ use Tests\Support\Config\Services;
 #[Group('SeparateProcess')]
 final class ServicesTest extends CIUnitTestCase
 {
+    /**
+     * @var array<array-key, mixed>
+     */
     private array $original;
 
     #[WithoutErrorHandler]
@@ -508,7 +511,7 @@ final class ServicesTest extends CIUnitTestCase
 
     public function testRedirectResponse(): void
     {
-        $result = Services::redirectResponse();
+        $result = Services::redirectresponse();
         $this->assertInstanceOf(RedirectResponse::class, $result);
     }
 

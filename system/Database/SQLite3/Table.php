@@ -35,14 +35,14 @@ class Table
     /**
      * All of the unique/primary keys in the table.
      *
-     * @var array
+     * @var array<string, array{fields: list<string>, type: string}>
      */
     protected $keys = [];
 
     /**
      * All of the foreign keys in the table.
      *
-     * @var array
+     * @var array<array-key, stdClass>
      */
     protected $foreignKeys = [];
 
@@ -230,6 +230,8 @@ class Table
 
     /**
      * Adds primary key
+     *
+     * @param array{fields?: list<string>} $fields
      */
     public function addPrimaryKey(array $fields): Table
     {
@@ -253,6 +255,8 @@ class Table
 
     /**
      * Add a foreign key
+     *
+     * @param list<array{field: list<string>, referenceTable: string, referenceField: list<string>, onDelete: string, onUpdate: string, fkName: string}> $foreignKeys
      *
      * @return $this
      */
@@ -374,9 +378,9 @@ class Table
      * Converts fields retrieved from the database to
      * the format needed for creating fields with Forge.
      *
-     * @param array|bool $fields
+     * @param bool|list<stdClass> $fields
      *
-     * @return ($fields is array ? array : mixed)
+     * @return ($fields is array ? array<string, array<string, bool|int|string|null>> : mixed)
      */
     protected function formatFields($fields)
     {
@@ -452,7 +456,7 @@ class Table
      *
      * @param array<string, stdClass> $keys
      *
-     * @return array<string, array{fields: string, type: string}>
+     * @return array<string, array{fields: list<string>, type: string}>
      */
     protected function formatKeys($keys)
     {

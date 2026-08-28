@@ -63,6 +63,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter = new MockCodeIgniter(new App());
 
         $response = service('response');
+        $this->assertInstanceOf(Response::class, $response);
         $response->pretend();
     }
 
@@ -831,7 +832,8 @@ final class CodeIgniterTest extends CIUnitTestCase
     }
 
     /**
-     * @param array|bool $cacheQueryStringValue
+     * @param bool|list<string> $cacheQueryStringValue
+     * @param list<string>      $testingUrls
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/pull/6410
      */
@@ -902,6 +904,9 @@ final class CodeIgniterTest extends CIUnitTestCase
         CITestStreamFilter::removeErrorFilter();
     }
 
+    /**
+     * @return iterable<string, array{bool|list<string>, int, list<string>}>
+     */
     public static function providePageCacheWithCacheQueryString(): iterable
     {
         $testingUrls = [
@@ -978,10 +983,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $startController = self::getPrivateMethodInvoker($this->codeigniter, 'startController');
 
         $this->setPrivateProperty($this->codeigniter, 'method', '__invoke');
-        $startController();
-
-        // No PageNotFoundException
-        $this->expectNotToPerformAssertions();
+        $this->assertNull($startController());
     }
 
     public function testRouteAttributeCacheIntegration(): void

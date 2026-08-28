@@ -2706,9 +2706,9 @@ class BaseBuilder
     /**
      * Sets update fields for upsert, update
      *
-     * @param list<RawSql>|list<string>|string $set
-     * @param bool                             $addToDefault adds update fields to the default ones
-     * @param list<string>|null                $ignore       ignores items in set
+     * @param array<array-key, RawSql|string>|string $set
+     * @param bool                                   $addToDefault Adds update fields to the default ones
+     * @param list<string>|null                      $ignore       Ignores items in set
      *
      * @return $this
      */

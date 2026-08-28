@@ -18,7 +18,7 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Exceptions\BadMethodCallException;
 
 /**
- * Prepared query for Postgre
+ * Prepared query for SQLSRV
  *
  * @extends BasePreparedQuery<resource, resource, resource, Connection>
  */
@@ -27,7 +27,7 @@ class PreparedQuery extends BasePreparedQuery
     /**
      * Parameters array used to store the dynamic variables.
      *
-     * @var array
+     * @var array<int, mixed>
      */
     protected $parameters = [];
 
@@ -37,13 +37,7 @@ class PreparedQuery extends BasePreparedQuery
     }
 
     /**
-     * Prepares the query against the database, and saves the connection
-     * info necessary to execute the query later.
-     *
-     * NOTE: This version is based on SQL code. Child classes should
-     * override this method.
-     *
-     * @param array $options Options takes an associative array;
+     * @param array<array-key, mixed> $options Positional array of bind values, keyed by placeholder index.
      *
      * @throws DatabaseException
      */
@@ -72,10 +66,6 @@ class PreparedQuery extends BasePreparedQuery
         return $this;
     }
 
-    /**
-     * Takes a new set of data and runs it against the currently
-     * prepared query.
-     */
     public function _execute(array $data): bool
     {
         if (! isset($this->statement)) {
@@ -104,8 +94,6 @@ class PreparedQuery extends BasePreparedQuery
     }
 
     /**
-     * Returns the statement resource for the prepared query or false when preparing failed.
-     *
      * @return resource|null
      */
     public function _getResult()
@@ -113,9 +101,6 @@ class PreparedQuery extends BasePreparedQuery
         return $this->statement;
     }
 
-    /**
-     * Deallocate prepared statements.
-     */
     protected function _close(): bool
     {
         return sqlsrv_free_stmt($this->statement);
@@ -124,7 +109,9 @@ class PreparedQuery extends BasePreparedQuery
     /**
      * Handle parameters.
      *
-     * @param array<int, mixed> $options
+     * @param array<array-key, mixed> $options
+     *
+     * @return list<mixed>
      */
     protected function parameterize(string $queryString, array $options): array
     {

@@ -30,6 +30,9 @@ use TypeError;
 #[Group('Others')]
 final class BaseConnectionTest extends CIUnitTestCase
 {
+    /**
+     * @var array<string, mixed>
+     */
     private array $options = [
         'DSN'        => '',
         'hostname'   => 'localhost',
@@ -52,6 +55,10 @@ final class BaseConnectionTest extends CIUnitTestCase
             'time'     => 'H:i:s',
         ],
     ];
+
+    /**
+     * @var array<string, mixed>
+     */
     private array $failoverOptions = [
         'DSN'      => '',
         'hostname' => 'localhost',
@@ -337,6 +344,9 @@ final class BaseConnectionTest extends CIUnitTestCase
         $this->assertSame($expected, $return);
     }
 
+    /**
+     * @return iterable<string, array{bool, bool, bool, string, string}>
+     */
     public static function provideProtectIdentifiers(): iterable
     {
         yield from [
@@ -755,7 +765,7 @@ final class BaseConnectionTest extends CIUnitTestCase
 
         $callbackRuns = 0;
 
-        $result = $db->transaction(static function (BaseConnection $connection) use (&$callbackRuns): string|false {
+        $result = $db->transaction(static function (BaseConnection $connection) use (&$callbackRuns): false|string {
             $callbackRuns++;
             $result = $connection->query('INSERT INTO job (name) VALUES (\'Retried Job\')');
 
@@ -827,7 +837,7 @@ final class BaseConnectionTest extends CIUnitTestCase
 
         $callbackRuns = 0;
 
-        $result = $db->transaction(static function (BaseConnection $connection) use (&$callbackRuns): string|false {
+        $result = $db->transaction(static function (BaseConnection $connection) use (&$callbackRuns): false|string {
             $callbackRuns++;
             $result = $connection->query('INSERT INTO job (name) VALUES (\'Failed Job\')');
 

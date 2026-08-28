@@ -39,6 +39,8 @@ final class TestResponseTest extends CIUnitTestCase
 
     /**
      * Provides status codes and their expected "OK"
+     *
+     * @return iterable<array{int, bool}>
      */
     public static function provideHttpStatusCodes(): iterable
     {
@@ -426,6 +428,10 @@ final class TestResponseTest extends CIUnitTestCase
         $this->testResponse->assertJSONExact($formatter->format($data));
     }
 
+    /**
+     * @param array<string, mixed> $responseOptions
+     * @param array<string, mixed> $headers
+     */
     protected function getTestResponse(?string $body = null, array $responseOptions = [], array $headers = []): void
     {
         $this->response = new Response();

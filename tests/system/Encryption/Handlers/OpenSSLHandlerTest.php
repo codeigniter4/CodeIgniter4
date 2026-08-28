@@ -46,6 +46,7 @@ final class OpenSSLHandlerTest extends CIUnitTestCase
         $params->key    = 'Something other than an empty string';
 
         $encrypter = $this->encryption->initialize($params);
+        $this->assertInstanceOf(OpenSSLHandler::class, $encrypter);
 
         $this->assertSame('AES-256-CTR', $encrypter->cipher);
         $this->assertSame('Something other than an empty string', $encrypter->key);
@@ -64,6 +65,7 @@ final class OpenSSLHandlerTest extends CIUnitTestCase
         $params->key    = '\xd0\xc9\x08\xc4\xde\x52\x12\x6e\xf8\xcc\xdb\x03\xea\xa0\x3a\x5c';
         // Default state (AES-256/Rijndael-256 in CTR mode)
         $encrypter = $this->encryption->initialize($params);
+        $this->assertInstanceOf(OpenSSLHandler::class, $encrypter);
 
         // Was the key properly set?
         $this->assertSame($params->key, $encrypter->key);
@@ -145,6 +147,7 @@ final class OpenSSLHandlerTest extends CIUnitTestCase
         $params->key    = 'original-key-value';
 
         $encrypter = $this->encryption->initialize($params);
+        $this->assertInstanceOf(OpenSSLHandler::class, $encrypter);
 
         $this->assertSame('original-key-value', $encrypter->key);
 

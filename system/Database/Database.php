@@ -31,12 +31,14 @@ class Database
      * Helps to keep track of all open connections for performance
      * monitoring, logging, etc.
      *
-     * @var array
+     * @var array<string, BaseConnection>
      */
     protected $connections = [];
 
     /**
      * Parses the connection binds and creates a Database Connection instance.
+     *
+     * @param array<string, mixed> $params
      *
      * @return BaseConnection
      *
@@ -94,6 +96,10 @@ class Database
     /**
      * Parses universal DSN string
      *
+     * @param array<string, mixed> $params
+     *
+     * @return array<string, mixed>
+     *
      * @throws InvalidArgumentException
      */
     protected function parseDSN(array $params): array
@@ -132,9 +138,9 @@ class Database
     /**
      * Creates a database object.
      *
-     * @param string                    $driver   Driver name. FQCN can be used.
-     * @param string                    $class    'Connection'|'Forge'|'Utils'
-     * @param array|ConnectionInterface $argument The constructor parameter or DB connection
+     * @param string                                   $driver   Driver name. FQCN can be used.
+     * @param string                                   $class    'Connection'|'Forge'|'Utils'
+     * @param array<string, mixed>|ConnectionInterface $argument The constructor parameter or DB connection
      *
      * @return BaseConnection|BaseUtils|Forge
      */

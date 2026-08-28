@@ -357,6 +357,8 @@ class TestResponse
 
     /**
      * Test that the response contains a matching JSON fragment.
+     *
+     * @param array<array-key, mixed> $fragment
      */
     public function assertJSONFragment(array $fragment, bool $strict = false): void
     {
@@ -378,7 +380,7 @@ class TestResponse
      * Asserts that the JSON exactly matches the passed in data.
      * If the value being passed in is a string, it must be a json_encoded string.
      *
-     * @param array|object|string $test
+     * @param array<array-key, mixed>|object|string $test
      */
     public function assertJSONExact($test): void
     {

@@ -568,22 +568,18 @@ final class EntityTest extends CIUnitTestCase
 
     public function testCastDateTimeWithTimestampTimezone(): void
     {
-        // Save the current timezone.
         $tz = date_default_timezone_get();
-
-        // Change the timezone other than UTC.
-        date_default_timezone_set('Asia/Tokyo'); // +09:00
+        date_default_timezone_set('Asia/Tokyo');
 
         $entity = $this->getCastEntity();
 
         $entity->eighth = 1722988800; // 2024-08-07 00:00:00 UTC
 
-        $this->assertInstanceOf(DateTimeInterface::class, $entity->eighth);
+        $this->assertInstanceOf(Time::class, $entity->eighth);
         // The timezone is the default timezone, not UTC.
         $this->assertSame('2024-08-07 09:00:00', $entity->eighth->format('Y-m-d H:i:s'));
         $this->assertSame('Asia/Tokyo', $entity->eighth->getTimezoneName());
 
-        // Restore timezone.
         date_default_timezone_set($tz);
     }
 
@@ -717,8 +713,8 @@ final class EntityTest extends CIUnitTestCase
         $check = $this->getPrivateProperty($entity, 'attributes')['tenth'];
         $this->assertSame('{"foo":"bar"}', $check);
 
-        $this->assertInstanceOf('stdClass', $entity->tenth);
-        $this->assertSame(['foo' => 'bar'], (array) $entity->tenth);
+        $this->assertInstanceOf(stdClass::class, $entity->tenth);
+        $this->assertSame('bar', $entity->tenth->foo);
     }
 
     public function testCastAsJSONArray(): void
@@ -1810,7 +1806,10 @@ final class EntityTest extends CIUnitTestCase
         };
     }
 
-    private function getCastEntity($data = null): object
+    /**
+     * @param array<string, mixed>|null $data
+     */
+    private function getCastEntity(?array $data = null): Entity
     {
         return new class ($data) extends Entity {
             protected $attributes = [

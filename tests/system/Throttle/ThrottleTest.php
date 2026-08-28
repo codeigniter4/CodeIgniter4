@@ -191,6 +191,9 @@ final class ThrottleTest extends CIUnitTestCase
         $this->assertEqualsWithDelta(10.0, round($this->cache->get('throttler_127.0.0.1')), PHP_FLOAT_EPSILON);
     }
 
+    /**
+     * @param list<array{testTime: int, cost: int, expectedCheckResult: bool, expectedTokenTime: int}> $checkInputs
+     */
     #[DataProvider('provideTokenTimeCalculationUCs')]
     public function testTokenTimeCalculationUCs(int $capacity, int $seconds, array $checkInputs): void
     {
@@ -209,6 +212,13 @@ final class ThrottleTest extends CIUnitTestCase
         }
     }
 
+    /**
+     * @return iterable<string, array{
+     *   capacity: int,
+     *   seconds: int,
+     *   checkInputs: list<array{testTime: int, cost: int, expectedCheckResult: bool, expectedTokenTime: int}>
+     * }>
+     */
     public static function provideTokenTimeCalculationUCs(): iterable
     {
         return [

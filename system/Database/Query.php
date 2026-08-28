@@ -44,7 +44,7 @@ class Query implements QueryInterface, Stringable
     /**
      * The binds and their values used for binding.
      *
-     * @var array
+     * @var array<array-key, array{0: mixed, 1: bool}>
      */
     protected $binds = [];
 
@@ -128,6 +128,8 @@ class Query implements QueryInterface, Stringable
 
     /**
      * Will store the variables to bind into the query later.
+     *
+     * @param array<array-key, mixed> $binds
      *
      * @return $this
      */
@@ -266,6 +268,9 @@ class Query implements QueryInterface, Stringable
         }
     }
 
+    /**
+     * @param array<array-key, array{0: mixed, 1: bool}> $binds
+     */
     protected function matchNamedBinds(string $sql, array $binds): string
     {
         $replacers = [];
@@ -287,6 +292,9 @@ class Query implements QueryInterface, Stringable
         return strtr($sql, $replacers);
     }
 
+    /**
+     * @param array<array-key, array{0: mixed, 1: bool}> $binds
+     */
     protected function matchSimpleBinds(string $sql, array $binds, int $bindCount, int $ml): string
     {
         if ($c = preg_match_all("/'[^']*'/", $sql, $matches) >= 1) {

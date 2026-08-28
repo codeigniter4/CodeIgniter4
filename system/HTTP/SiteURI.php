@@ -169,7 +169,7 @@ class SiteURI extends URI
         $indexPageRoutePath = $indexPage . $routePath;
 
         if ($indexPageRoutePath === '/') {
-            $indexPageRoutePath = '';
+            return '';
         }
 
         return $indexPageRoutePath;
@@ -375,7 +375,7 @@ class SiteURI extends URI
     private function stringifyRelativePath($relativePath): string
     {
         if (is_array($relativePath)) {
-            $relativePath = implode('/', $relativePath);
+            return implode('/', $relativePath);
         }
 
         return $relativePath;

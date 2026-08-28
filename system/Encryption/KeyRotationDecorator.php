@@ -22,6 +22,9 @@ use SensitiveParameter;
  * Wraps any EncrypterInterface implementation to provide automatic
  * fallback to previous encryption keys during decryption. This enables
  * seamless key rotation without requiring re-encryption of existing data.
+ *
+ * @property-read string|null $cipher
+ * @property-read string|null $key
  */
 class KeyRotationDecorator implements EncrypterInterface
 {
