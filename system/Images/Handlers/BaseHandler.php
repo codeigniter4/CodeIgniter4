@@ -23,6 +23,8 @@ use Config\Images;
  * Base image handling implementation.
  *
  * @template T of object
+ *
+ * @method string getPathname()
  */
 abstract class BaseHandler implements ImageHandlerInterface
 {

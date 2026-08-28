@@ -346,9 +346,12 @@ final class GDHandlerTest extends CIUnitTestCase
             $this->handler->save($this->start . 'work/ci-logo.' . $type);
             $this->assertTrue($this->root->hasChild('work/ci-logo.' . $type));
 
+            /** @var vfsStreamFile $child */
+            $child = $this->root->getChild('work/ci-logo.' . $type);
+
             $this->assertNotSame(
                 file_get_contents($this->origin . 'ci-logo.' . $type),
-                $this->root->getChild('work/ci-logo.' . $type)->getContent(),
+                $child->getContent(),
             );
         }
     }
@@ -380,9 +383,12 @@ final class GDHandlerTest extends CIUnitTestCase
             $this->handler->save($this->start . 'work/ci-logo.' . $type);
             $this->assertTrue($this->root->hasChild('work/ci-logo.' . $type));
 
+            /** @var vfsStreamFile $child */
+            $child = $this->root->getChild('work/ci-logo.' . $type);
+
             $this->assertNotSame(
                 file_get_contents($this->origin . 'ci-logo.' . $type),
-                $this->root->getChild('work/ci-logo.' . $type)->getContent(),
+                $child->getContent(),
             );
         }
     }
@@ -401,9 +407,12 @@ final class GDHandlerTest extends CIUnitTestCase
 
             $this->assertTrue($this->root->hasChild('work/ci-logo.' . $type));
 
+            /** @var vfsStreamFile $child */
+            $child = $this->root->getChild('work/ci-logo.' . $type);
+
             $this->assertNotSame(
                 file_get_contents($this->origin . 'ci-logo.' . $type),
-                $this->root->getChild('work/ci-logo.' . $type)->getContent(),
+                $child->getContent(),
             );
         }
     }
