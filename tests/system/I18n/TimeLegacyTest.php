@@ -317,7 +317,7 @@ final class TimeLegacyTest extends CIUnitTestCase
     {
         $time = TimeLegacy::parse('January 1, 2016');
 
-        $this->assertFalse(isset($time->foobar));
+        $this->assertFalse(isset($time->foobar)); // @phpstan-ignore property.notFound
     }
 
     public function testGetYear(): void
@@ -1128,7 +1128,7 @@ final class TimeLegacyTest extends CIUnitTestCase
     {
         $time = TimeLegacy::parse('August 12, 2016 4:15:23pm');
 
-        $this->assertNull($time->weekOfWeek);
+        $this->assertNull($time->weekOfWeek); // @phpstan-ignore property.notFound
     }
 
     public function testUnserializeTimeObject(): void
@@ -1163,6 +1163,9 @@ final class TimeLegacyTest extends CIUnitTestCase
         $this->assertSame('2017-03-10 12:00:00', (string) $time);
     }
 
+    /**
+     * @return iterable<int, array{0: string}>
+     */
     public static function provideToStringDoesNotDependOnLocale(): iterable
     {
         yield from [

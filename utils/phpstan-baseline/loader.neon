@@ -1,4 +1,4 @@
-# total 132 errors
+# total 124 errors
 
 includes:
     - argument.type.neon
@@ -12,5 +12,4 @@ includes:
     - missingType.iterableValue.neon
     - missingType.parameter.neon
     - property.defaultValue.neon
-    - property.notFound.neon
     - property.phpDocType.neon

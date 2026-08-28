@@ -1,4 +1,4 @@
-# total 82 errors
+# total 80 errors
 
 parameters:
     ignoreErrors:
@@ -356,16 +356,6 @@ parameters:
             message: '#^Method CodeIgniter\\DataConverter\\DataConverterTest\:\:testConvertDataToDB\(\) has parameter \$types with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/DataConverter/DataConverterTest.php
-
-        -
-            message: '#^Method CodeIgniter\\I18n\\TimeLegacyTest\:\:provideToStringDoesNotDependOnLocale\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/I18n/TimeLegacyTest.php
-
-        -
-            message: '#^Method CodeIgniter\\I18n\\TimeTest\:\:provideToStringDoesNotDependOnLocale\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/I18n/TimeTest.php
 
         -
             message: '#^Method CodeIgniter\\Models\\FindModelTest\:\:provideAggregateAndGroupBy\(\) return type has no value type specified in iterable type iterable\.$#'
