@@ -1,4 +1,4 @@
-# total 68 errors
+# total 58 errors
 
 parameters:
     ignoreErrors:
@@ -171,56 +171,6 @@ parameters:
             message: '#^Method class@anonymous/system/Traits/PropertiesTrait\.php\:51\:\:getProperties\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/View/Cells/Cell.php
-
-        -
-            message: '#^Method CodeIgniter\\AutoReview\\ComposerJsonTest\:\:checkConfig\(\) has parameter \$fromComponent with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/AutoReview/ComposerJsonTest.php
-
-        -
-            message: '#^Method CodeIgniter\\AutoReview\\ComposerJsonTest\:\:checkConfig\(\) has parameter \$fromMain with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/AutoReview/ComposerJsonTest.php
-
-        -
-            message: '#^Method CodeIgniter\\AutoReview\\ComposerJsonTest\:\:getComposerJson\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/AutoReview/ComposerJsonTest.php
-
-        -
-            message: '#^Property CodeIgniter\\AutoReview\\ComposerJsonTest\:\:\$devComposer type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/AutoReview/ComposerJsonTest.php
-
-        -
-            message: '#^Property CodeIgniter\\AutoReview\\ComposerJsonTest\:\:\$frameworkComposer type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/AutoReview/ComposerJsonTest.php
-
-        -
-            message: '#^Property CodeIgniter\\AutoReview\\ComposerJsonTest\:\:\$starterComposer type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/AutoReview/ComposerJsonTest.php
-
-        -
-            message: '#^Method CodeIgniter\\AutoReview\\FrameworkCodeTest\:\:getTestClasses\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/AutoReview/FrameworkCodeTest.php
-
-        -
-            message: '#^Method CodeIgniter\\AutoReview\\FrameworkCodeTest\:\:provideEachTestClassHasCorrectGroupAttributeName\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/AutoReview/FrameworkCodeTest.php
-
-        -
-            message: '#^Property CodeIgniter\\AutoReview\\FrameworkCodeTest\:\:\$recognizedGroupAttributeNames type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/AutoReview/FrameworkCodeTest.php
-
-        -
-            message: '#^Property CodeIgniter\\AutoReview\\FrameworkCodeTest\:\:\$testClasses type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/AutoReview/FrameworkCodeTest.php
 
         -
             message: '#^Method CodeIgniter\\CLI\\CLITest\:\:provideTable\(\) return type has no value type specified in iterable type iterable\.$#'
