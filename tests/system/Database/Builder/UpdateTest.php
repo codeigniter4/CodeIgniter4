@@ -26,11 +26,6 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class UpdateTest extends CIUnitTestCase
 {
-    /**
-     * @var MockConnection
-     */
-    protected $db;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -229,6 +224,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
+        $this->assertInstanceOf(MockConnection::class, $this->db);
         $this->db->shouldReturn('execute', new class () {});
         $builder->updateBatch($updateData, 'id');
 
@@ -268,6 +264,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ], 'id', $escape);
 
+        $this->assertInstanceOf(MockConnection::class, $this->db);
         $this->db->shouldReturn('execute', new class () {});
         $builder->updateBatch(null, 'id');
 
