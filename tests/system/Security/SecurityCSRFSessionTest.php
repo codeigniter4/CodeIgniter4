@@ -69,7 +69,10 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
         $this->injectSession($this->hash);
     }
 
-    private function createSession($options = []): Session
+    /**
+     * @param array<string, mixed> $options
+     */
+    private function createSession(array $options = []): Session
     {
         $defaults = [
             'driver'            => FileHandler::class,
