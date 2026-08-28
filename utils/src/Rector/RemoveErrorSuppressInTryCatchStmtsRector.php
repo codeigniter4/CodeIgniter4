@@ -61,7 +61,7 @@ final class RemoveErrorSuppressInTryCatchStmtsRector extends AbstractRector
 
         $this->traverseNodesWithCallable(
             $node->stmts,
-            static function (Node $subNode) use (&$hasChanged): int|Expr|null {
+            static function (Node $subNode) use (&$hasChanged): Expr|int|null {
                 if ($subNode instanceof Class_ || $subNode instanceof Function_) {
                     return NodeVisitor::DONT_TRAVERSE_CURRENT_AND_CHILDREN;
                 }

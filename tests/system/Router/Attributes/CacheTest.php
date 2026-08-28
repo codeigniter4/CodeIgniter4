@@ -221,7 +221,7 @@ final class CacheTest extends CIUnitTestCase
             ->getMock();
         $request->method('isCLI')->willReturn(false);
         $request->method('withMethod')->willReturnCallback(
-            static function (string $method) use ($request): MockObject&IncomingRequest {
+            static function (string $method) use ($request): IncomingRequest&MockObject {
                 $request->method('getMethod')->willReturn($method);
 
                 return $request;
