@@ -1,4 +1,4 @@
-# total 80 errors
+# total 68 errors
 
 parameters:
     ignoreErrors:
@@ -71,16 +71,6 @@ parameters:
             message: '#^Method CodeIgniter\\Cookie\\CookieStore\:\:validateCookies\(\) has parameter \$cookies with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Cookie/CookieStore.php
-
-        -
-            message: '#^Method CodeIgniter\\DataConverter\\DataConverter\:\:fromDataSource\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/DataConverter/DataConverter.php
-
-        -
-            message: '#^Method CodeIgniter\\DataConverter\\DataConverter\:\:toDataSource\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/DataConverter/DataConverter.php
 
         -
             message: '#^Method CodeIgniter\\Exceptions\\PageNotFoundException\:\:lang\(\) has parameter \$args with no value type specified in iterable type array\.$#'
@@ -306,56 +296,6 @@ parameters:
             message: '#^Property CodeIgniter\\Cookie\\CookieTest\:\:\$defaults type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/Cookie/CookieTest.php
-
-        -
-            message: '#^Method CodeIgniter\\DataConverter\\DataConverterTest\:\:createDataConverter\(\) has parameter \$handlers with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/DataConverter/DataConverterTest.php
-
-        -
-            message: '#^Method CodeIgniter\\DataConverter\\DataConverterTest\:\:createDataConverter\(\) has parameter \$types with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/DataConverter/DataConverterTest.php
-
-        -
-            message: '#^Method CodeIgniter\\DataConverter\\DataConverterTest\:\:provideConvertDataFromDB\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/DataConverter/DataConverterTest.php
-
-        -
-            message: '#^Method CodeIgniter\\DataConverter\\DataConverterTest\:\:provideConvertDataToDB\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/DataConverter/DataConverterTest.php
-
-        -
-            message: '#^Method CodeIgniter\\DataConverter\\DataConverterTest\:\:testConvertDataFromDB\(\) has parameter \$dbData with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/DataConverter/DataConverterTest.php
-
-        -
-            message: '#^Method CodeIgniter\\DataConverter\\DataConverterTest\:\:testConvertDataFromDB\(\) has parameter \$expected with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/DataConverter/DataConverterTest.php
-
-        -
-            message: '#^Method CodeIgniter\\DataConverter\\DataConverterTest\:\:testConvertDataFromDB\(\) has parameter \$types with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/DataConverter/DataConverterTest.php
-
-        -
-            message: '#^Method CodeIgniter\\DataConverter\\DataConverterTest\:\:testConvertDataToDB\(\) has parameter \$expected with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/DataConverter/DataConverterTest.php
-
-        -
-            message: '#^Method CodeIgniter\\DataConverter\\DataConverterTest\:\:testConvertDataToDB\(\) has parameter \$phpData with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/DataConverter/DataConverterTest.php
-
-        -
-            message: '#^Method CodeIgniter\\DataConverter\\DataConverterTest\:\:testConvertDataToDB\(\) has parameter \$types with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/DataConverter/DataConverterTest.php
 
         -
             message: '#^Method CodeIgniter\\Models\\FindModelTest\:\:provideAggregateAndGroupBy\(\) return type has no value type specified in iterable type iterable\.$#'
