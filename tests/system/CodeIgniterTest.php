@@ -119,7 +119,7 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // Inject mock router.
         $routes = service('routes');
-        $routes->add('pages/(:segment)', static function ($segment): void {
+        $routes->add('pages/(:segment)', static function (string $segment = ''): void {
             echo 'You want to see "' . esc($segment) . '" page.';
         });
         $router = service('router', $routes, service('incomingrequest'));
@@ -231,7 +231,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $routes = service('routes');
         $routes->add(
             'pages/(:segment)',
-            static fn ($segment): string => 'You want to see "' . esc($segment) . '" page.',
+            static fn (string $segment = ''): string => 'You want to see "' . esc($segment) . '" page.',
         );
         $router = service('router', $routes, service('incomingrequest'));
         Services::injectMock('router', $router);
@@ -253,12 +253,10 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // Inject mock router.
         $routes = service('routes');
-        $routes->add('pages/(:segment)', static function ($segment) {
-            $response = service('response');
-            $string   = "You want to see 'about' page.";
-
-            return $response->setBody($string);
-        });
+        $routes->add(
+            'pages/(:segment)',
+            static fn () => service('response')->setBody("You want to see 'about' page."),
+        );
         $router = service('router', $routes, service('incomingrequest'));
         Services::injectMock('router', $router);
 
@@ -282,11 +280,10 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // Inject mock router.
         $routes = service('routes');
-        $routes->add('pages/(:segment)', static function ($segment) {
-            $response = service('response');
-
-            return $response->download('some.txt', 'some text', true);
-        });
+        $routes->add(
+            'pages/(:segment)',
+            static fn () => service('response')->download('some.txt', 'some text', true),
+        );
         $router = service('router', $routes, service('incomingrequest'));
         Services::injectMock('router', $router);
 

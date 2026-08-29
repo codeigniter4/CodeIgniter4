@@ -619,7 +619,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * Offset to set.
      *
-     * @param string          $offset
+     * @param string|null     $offset
      * @param bool|int|string $value
      *
      * @throws LogicException
