@@ -1,8 +1,0 @@
-# total 1 error
-
-parameters:
-    ignoreErrors:
-        -
-            message: '#^Method class@anonymous/system/Traits/PropertiesTrait\.php\:51\:\:getProperties\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/View/Cells/Cell.php
