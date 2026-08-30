@@ -43,10 +43,18 @@ class InputOutput
     {
         // readline() can't be tested.
         if ($this->readlineSupport && ENVIRONMENT !== 'testing') {
-            return readline($prefix); // @codeCoverageIgnore
+            // @codeCoverageIgnoreStart
+            // Libedit reports "EditLine wrapper" and mangles the markers, so only GNU readline gets them.
+            if ($prefix !== null && ! str_contains(readline_info('library_version'), 'EditLine')) {
+                $prefix = $this->markAnsiNonPrinting($prefix);
+            }
+
+            return readline($prefix);
+            // @codeCoverageIgnoreEnd
         }
 
-        echo $prefix;
+        // self:: skips MockInputOutput's fwrite override, whose filter bookkeeping must not nest inside input().
+        self::fwrite(STDOUT, $prefix ?? '');
 
         $input = fgets(fopen('php://stdin', 'rb'));
 
@@ -76,5 +84,13 @@ class InputOutput
         }
 
         fwrite($handle, $string);
+    }
+
+    /**
+     * Wraps ANSI escape sequences in readline's non-printing markers so line-redraw column accounting skips them.
+     */
+    private function markAnsiNonPrinting(string $prefix): string
+    {
+        return preg_replace('/(\e\[[0-9;]*m)/', "\x01\$1\x02", $prefix);
     }
 }

@@ -17,6 +17,7 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\PhpStreamWrapper;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -141,6 +142,129 @@ final class CLITest extends CIUnitTestCase
         PhpStreamWrapper::restore();
 
         $this->assertSame('0', $output);
+    }
+
+    public function testPromptPassesPromptTextToInputReader(): void
+    {
+        $io = new class () extends InputOutput {
+            public ?string $receivedPrefix = null;
+
+            public function input(?string $prefix = null): string
+            {
+                $this->receivedPrefix = $prefix;
+
+                return 'red';
+            }
+        };
+        CLI::setInputOutput($io);
+
+        $output = CLI::prompt('What is your favorite color?');
+
+        CLI::resetInputOutput();
+
+        $this->assertSame('red', $output);
+        $this->assertSame('What is your favorite color? : ', $io->receivedPrefix);
+    }
+
+    public function testPromptPassesDefaultOptionInPromptText(): void
+    {
+        $io = new class () extends InputOutput {
+            public ?string $receivedPrefix = null;
+
+            public function input(?string $prefix = null): string
+            {
+                $this->receivedPrefix = $prefix;
+
+                return '';
+            }
+        };
+        CLI::setInputOutput($io);
+
+        $output = CLI::prompt('What is your favorite color?', 'red');
+
+        CLI::resetInputOutput();
+
+        $this->assertSame('red', $output);
+        $this->assertSame(
+            sprintf('What is your favorite color?  [%s]: ', CLI::color('red', 'green')),
+            $io->receivedPrefix,
+        );
+    }
+
+    public function testPromptByKeyPassesPromptTextToInputReader(): void
+    {
+        $io = new class () extends InputOutput {
+            public ?string $receivedPrefix = null;
+
+            public function input(?string $prefix = null): string
+            {
+                $this->receivedPrefix = $prefix;
+
+                return '1';
+            }
+        };
+        CLI::setInputOutput($io);
+
+        $output = CLI::promptByKey('Select your hobbies:', ['Playing game', 'Sleep', 'Badminton']);
+
+        CLI::resetInputOutput();
+
+        $this->assertSame('1', $output);
+        $this->assertSame(
+            PHP_EOL . sprintf('[%s, 1, 2]: ', CLI::color('0', 'green')),
+            $io->receivedPrefix,
+        );
+    }
+
+    public function testPromptByMultipleKeysPassesPromptTextToInputReader(): void
+    {
+        $io = new class () extends InputOutput {
+            public ?string $receivedPrefix = null;
+
+            public function input(?string $prefix = null): string
+            {
+                $this->receivedPrefix = $prefix;
+
+                return '0,1';
+            }
+        };
+        CLI::setInputOutput($io);
+
+        $output = CLI::promptByMultipleKeys('Select your hobbies:', ['Playing game', 'Sleep', 'Badminton']);
+
+        CLI::resetInputOutput();
+
+        $this->assertSame([0 => 'Playing game', 1 => 'Sleep'], $output);
+        $this->assertSame(
+            'You can specify multiple values separated by commas.' . PHP_EOL
+                . sprintf('[%s, 1, 2] : ', CLI::color('0', 'green')),
+            $io->receivedPrefix,
+        );
+    }
+
+    public function testInputWritesPrefixToStdout(): void
+    {
+        $io = new MockInputOutput();
+        $io->setInputs(['blue']);
+        CLI::setInputOutput($io);
+
+        $output = CLI::input('Name: ');
+
+        CLI::resetInputOutput();
+
+        $this->assertSame('blue', $output);
+        $this->assertSame('Name: blue' . PHP_EOL, $io->getOutput());
+    }
+
+    public function testMarkAnsiNonPrintingWrapsEscapeSequences(): void
+    {
+        $wrap = $this->getPrivateMethodInvoker(new InputOutput(), 'markAnsiNonPrinting');
+
+        $this->assertSame(
+            "What is your favorite color?  [\x01\e[0;32m\x02red\x01\e[0m\x02]: ",
+            $wrap(sprintf('What is your favorite color?  [%s]: ', CLI::color('red', 'green'))),
+        );
+        $this->assertSame('Name: ', $wrap('Name: '));
     }
 
     public function testPromptByKey(): void
