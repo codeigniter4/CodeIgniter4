@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Traits;
 
+use Closure;
 use ReflectionClass;
 use ReflectionProperty;
 
@@ -48,17 +49,11 @@ trait PropertiesTrait
      */
     final public function getPublicProperties(): array
     {
-        $worker = new class () {
-            /**
-             * @return array<string, mixed>
-             */
-            public function getProperties(object $obj): array
-            {
-                return get_object_vars($obj);
-            }
-        };
+        $fn = fn (): array => get_object_vars($this);
 
-        return $worker->getProperties($this);
+        $bound = Closure::bind($fn, $this, null);
+
+        return $bound();
     }
 
     /**

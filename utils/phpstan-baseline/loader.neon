@@ -1,4 +1,4 @@
-# total 13 errors
+# total 12 errors
 
 includes:
     - arguments.count.neon
@@ -6,6 +6,5 @@ includes:
     - deadCode.unreachable.neon
     - function.resultUnused.neon
     - method.childReturnType.neon
-    - missingType.iterableValue.neon
     - property.defaultValue.neon
     - property.phpDocType.neon
