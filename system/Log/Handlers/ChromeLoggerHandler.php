@@ -99,8 +99,8 @@ class ChromeLoggerHandler extends BaseHandler
      * will stop. Any handlers that have not run, yet, will not
      * be run.
      *
-     * @param string $level
-     * @param string $message
+     * @param string        $level
+     * @param object|string $message
      */
     public function handle($level, $message): bool
     {

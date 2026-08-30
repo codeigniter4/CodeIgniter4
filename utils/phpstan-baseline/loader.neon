@@ -1,12 +1,10 @@
-# total 24 errors
+# total 13 errors
 
 includes:
-    - argument.type.neon
     - arguments.count.neon
     - assign.propertyType.neon
     - deadCode.unreachable.neon
     - function.resultUnused.neon
-    - method.childParameterType.neon
     - method.childReturnType.neon
     - missingType.iterableValue.neon
     - property.defaultValue.neon

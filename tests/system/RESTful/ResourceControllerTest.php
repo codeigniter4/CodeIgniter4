@@ -310,7 +310,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $resource = new MockResourceController();
         $this->assertSame('json', $resource->getFormat());
 
-        $resource->setFormat('Nonsense');
+        $resource->setFormat('Nonsense'); // @phpstan-ignore argument.type (Testing that an invalid format is silently ignored)
         $this->assertSame('json', $resource->getFormat());
 
         $resource->setFormat('xml');
