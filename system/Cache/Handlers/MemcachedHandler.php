@@ -180,9 +180,11 @@ class MemcachedHandler extends BaseHandler
 
         $key = static::validateKey($key, $this->prefix);
 
-        // FIXME: third parameter isn't other handler actions.
-
-        return $this->memcached->decrement($key, $offset, $offset, 60);
+        // Memcached counters are unsigned, so a missing key can't be
+        // initialized to a negative value like the other handlers do.
+        // Fall back to Memcached::decrement()'s own default of 0 instead
+        // of $offset, so a new key no longer starts positive.
+        return $this->memcached->decrement($key, $offset, 0, 60);
     }
 
     public function clean(): bool
