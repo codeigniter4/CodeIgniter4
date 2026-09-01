@@ -208,9 +208,7 @@ class IncomingRequest extends Request
      */
     public function negotiate(string $type, array $supported, bool $strictMatch = false): string
     {
-        if ($this->negotiator === null) {
-            $this->negotiator = Services::negotiator($this, true);
-        }
+        $this->negotiator ??= Services::negotiator($this, true);
 
         return match (strtolower($type)) {
             'media'    => $this->negotiator->media($supported, $strictMatch),
@@ -750,9 +748,7 @@ class IncomingRequest extends Request
      */
     public function getFiles(): array
     {
-        if ($this->files === null) {
-            $this->files = new FileCollection();
-        }
+        $this->files ??= new FileCollection();
 
         return $this->files->all(); // return all files
     }
@@ -765,9 +761,7 @@ class IncomingRequest extends Request
      */
     public function getFileMultiple(string $fileID)
     {
-        if ($this->files === null) {
-            $this->files = new FileCollection();
-        }
+        $this->files ??= new FileCollection();
 
         return $this->files->getFileMultiple($fileID);
     }
@@ -780,9 +774,7 @@ class IncomingRequest extends Request
      */
     public function getFile(string $fileID)
     {
-        if ($this->files === null) {
-            $this->files = new FileCollection();
-        }
+        $this->files ??= new FileCollection();
 
         return $this->files->getFile($fileID);
     }

@@ -233,9 +233,7 @@ abstract class BaseUtils
     public function getXMLFromResult(ResultInterface $query, array $params = []): string
     {
         foreach (['root' => 'root', 'element' => 'element', 'newline' => "\n", 'tab' => "\t"] as $key => $val) {
-            if (! isset($params[$key])) {
-                $params[$key] = $val;
-            }
+            $params[$key] ??= $val;
         }
 
         $root    = $params['root'];

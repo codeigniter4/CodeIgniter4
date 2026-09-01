@@ -103,9 +103,7 @@ class Parser extends View
     public function render(string $view, ?array $options = null, ?bool $saveData = null): string
     {
         $start = microtime(true);
-        if ($saveData === null) {
-            $saveData = $this->config->saveData;
-        }
+        $saveData ??= $this->config->saveData;
 
         $fileExt = pathinfo($view, PATHINFO_EXTENSION);
         $view    = ($fileExt === '') ? $view . '.php' : $view; // allow Views as .html, .tpl, etc (from CI3)
@@ -135,9 +133,7 @@ class Parser extends View
             }
         }
 
-        if ($this->tempData === null) {
-            $this->tempData = $this->data;
-        }
+        $this->tempData ??= $this->data;
 
         $template = file_get_contents($file);
         $output   = $this->parse($template, $this->tempData, $options);
@@ -171,13 +167,9 @@ class Parser extends View
     public function renderString(string $template, ?array $options = null, ?bool $saveData = null): string
     {
         $start = microtime(true);
-        if ($saveData === null) {
-            $saveData = $this->config->saveData;
-        }
+        $saveData ??= $this->config->saveData;
 
-        if ($this->tempData === null) {
-            $this->tempData = $this->data;
-        }
+        $this->tempData ??= $this->data;
 
         $output = $this->parse($template, $this->tempData, $options);
 
@@ -494,9 +486,7 @@ class Parser extends View
         // Parse the PHP itself, or insert an error so they can debug
         ob_start();
 
-        if ($this->tempData === null) {
-            $this->tempData = $this->data;
-        }
+        $this->tempData ??= $this->data;
 
         extract($this->tempData);
 

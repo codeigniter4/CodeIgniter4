@@ -102,12 +102,8 @@ if (! function_exists('img')) {
         if (! is_array($src)) {
             $src = ['src' => $src];
         }
-        if (! isset($src['src'])) {
-            $src['src'] = $attributes['src'] ?? '';
-        }
-        if (! isset($src['alt'])) {
-            $src['alt'] = $attributes['alt'] ?? '';
-        }
+        $src['src'] ??= $attributes['src'] ?? '';
+        $src['alt'] ??= $attributes['alt'] ?? '';
 
         $img = '<img';
 

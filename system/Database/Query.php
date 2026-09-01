@@ -161,9 +161,7 @@ class Query implements QueryInterface, Stringable
     {
         $this->startTime = $start;
 
-        if ($end === null) {
-            $end = microtime(true);
-        }
+        $end ??= microtime(true);
 
         $this->endTime = $end;
 

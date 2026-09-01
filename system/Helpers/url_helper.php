@@ -546,9 +546,7 @@ if (! function_exists('parse_subdomain')) {
      */
     function parse_subdomain(?string $host = null): string
     {
-        if ($host === null) {
-            $host = service('request')->getUri()->getHost();
-        }
+        $host ??= service('request')->getUri()->getHost();
 
         // Handle localhost and IP addresses - they don't have subdomains
         if ($host === 'localhost' || filter_var($host, FILTER_VALIDATE_IP)) {

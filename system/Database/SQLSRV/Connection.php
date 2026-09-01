@@ -88,10 +88,7 @@ class Connection extends BaseConnection
     {
         parent::__construct($params);
 
-        // This is only supported as of SQLSRV 3.0
-        if ($this->scrollable === null) {
-            $this->scrollable = defined('SQLSRV_CURSOR_CLIENT_BUFFERED') ? SQLSRV_CURSOR_CLIENT_BUFFERED : false;
-        }
+        $this->scrollable ??= defined('SQLSRV_CURSOR_CLIENT_BUFFERED') ? SQLSRV_CURSOR_CLIENT_BUFFERED : false;
     }
 
     /**

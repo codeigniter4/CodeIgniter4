@@ -134,9 +134,7 @@ class FileHandler extends BaseHandler
                 return false;
             }
 
-            if (! isset($this->sessionID)) {
-                $this->sessionID = $id;
-            }
+            $this->sessionID ??= $id;
 
             if ($this->fileNew) {
                 chmod($this->filePath . $id, 0600);

@@ -1512,9 +1512,7 @@ class RouteCollection implements RouteCollectionInterface
             return false;
         }
 
-        if ($this->currentSubdomain === null) {
-            $this->currentSubdomain = parse_subdomain($this->httpHost);
-        }
+        $this->currentSubdomain ??= parse_subdomain($this->httpHost);
 
         if (! is_array($subdomains)) {
             $subdomains = [$subdomains];

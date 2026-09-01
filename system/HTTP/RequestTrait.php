@@ -338,9 +338,7 @@ trait RequestTrait
             }
         }
 
-        if (! isset($value)) {
-            $value = $this->globals[$name][$index] ?? null;
-        }
+        $value ??= $this->globals[$name][$index] ?? null;
 
         if (is_array($value)
             && (
@@ -379,9 +377,7 @@ trait RequestTrait
      */
     protected function populateGlobals(string $name)
     {
-        if (! isset($this->globals[$name])) {
-            $this->globals[$name] = [];
-        }
+        $this->globals[$name] ??= [];
 
         // Get data from Superglobals service instead of direct access
         $this->globals[$name] = service('superglobals')->getGlobalArray($name);

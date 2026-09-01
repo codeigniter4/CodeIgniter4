@@ -129,10 +129,7 @@ class Fabricator
 
         $this->model = $model;
 
-        // If no locale was specified then use the App default
-        if ($locale === null) {
-            $locale = config(App::class)->defaultLocale;
-        }
+        $locale ??= config(App::class)->defaultLocale;
 
         // There is no easy way to retrieve the locale from Faker so we will store it
         $this->locale = $locale;
