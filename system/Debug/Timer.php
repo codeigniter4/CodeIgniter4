@@ -96,9 +96,7 @@ class Timer
 
         $timer = $this->timers[$name];
 
-        if ($timer['end'] === null) {
-            $timer['end'] = microtime(true);
-        }
+        $timer['end'] ??= microtime(true);
 
         return (float) number_format($timer['end'] - $timer['start'], $decimals, '.', '');
     }
@@ -115,9 +113,7 @@ class Timer
         $timers = $this->timers;
 
         foreach ($timers as &$timer) {
-            if ($timer['end'] === null) {
-                $timer['end'] = microtime(true);
-            }
+            $timer['end'] ??= microtime(true);
 
             $timer['duration'] = (float) number_format($timer['end'] - $timer['start'], $decimals);
         }

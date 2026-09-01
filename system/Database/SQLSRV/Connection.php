@@ -47,7 +47,7 @@ class Connection extends BaseConnection
      * FALSE or SQLSRV_CURSOR_FORWARD would increase performance,
      * but would disable num_rows() (and possibly insert_id())
      *
-     * @var false|string
+     * @var false|string|null
      */
     public $scrollable;
 
@@ -88,10 +88,7 @@ class Connection extends BaseConnection
     {
         parent::__construct($params);
 
-        // This is only supported as of SQLSRV 3.0
-        if ($this->scrollable === null) {
-            $this->scrollable = defined('SQLSRV_CURSOR_CLIENT_BUFFERED') ? SQLSRV_CURSOR_CLIENT_BUFFERED : false;
-        }
+        $this->scrollable ??= defined('SQLSRV_CURSOR_CLIENT_BUFFERED') ? SQLSRV_CURSOR_CLIENT_BUFFERED : false;
     }
 
     /**

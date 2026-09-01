@@ -432,9 +432,7 @@ final class ParserTest extends CIUnitTestCase
     #[DataProvider('provideEscHandling')]
     public function testEscHandling($value, $expected = null): void
     {
-        if ($expected === null) {
-            $expected = $value;
-        }
+        $expected ??= $value;
         $this->assertSame($expected, \esc($value));
     }
 

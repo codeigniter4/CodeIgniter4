@@ -1488,9 +1488,7 @@ class BaseBuilder
             $direction = in_array($direction, ['ASC', 'DESC'], true) ? ' ' . $direction : '';
         }
 
-        if ($escape === null) {
-            $escape = $this->db->protectIdentifiers;
-        }
+        $escape ??= $this->db->protectIdentifiers;
 
         if ($escape === false) {
             $qbOrderBy[] = [

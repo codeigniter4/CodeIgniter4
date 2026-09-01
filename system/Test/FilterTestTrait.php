@@ -102,9 +102,7 @@ trait FilterTestTrait
         $this->filtersConfig ??= config(FiltersConfig::class);
         $this->filters ??= new Filters($this->filtersConfig, $this->request, $this->response);
 
-        if ($this->collection === null) {
-            $this->collection = service('routes')->loadRoutes();
-        }
+        $this->collection ??= service('routes')->loadRoutes();
 
         $this->doneFilterSetUp = true;
     }

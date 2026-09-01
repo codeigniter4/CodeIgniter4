@@ -101,9 +101,7 @@ class ListCommands extends BaseCommand
         $groups = [];
 
         foreach ($commands as $title => $command) {
-            if (! isset($groups[$command['group']])) {
-                $groups[$command['group']] = [];
-            }
+            $groups[$command['group']] ??= [];
 
             $groups[$command['group']][$title] = $command;
         }

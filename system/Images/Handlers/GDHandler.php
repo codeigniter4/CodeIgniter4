@@ -301,12 +301,10 @@ class GDHandler extends BaseHandler
      */
     protected function ensureResource()
     {
-        if ($this->resource === null) {
-            $this->resource = $this->getImageResource(
-                $this->image()->getPathname(),
-                $this->image()->imageType,
-            );
-        }
+        $this->resource ??= $this->getImageResource(
+            $this->image()->getPathname(),
+            $this->image()->imageType,
+        );
     }
 
     /**

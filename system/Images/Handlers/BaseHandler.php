@@ -538,9 +538,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 
         [$cropWidth, $cropHeight] = $this->calcAspectRatio($width, $height, $origWidth, $origHeight);
 
-        if ($height === null) {
-            $height = (int) ceil(($width / $cropWidth) * $cropHeight);
-        }
+        $height ??= (int) ceil(($width / $cropWidth) * $cropHeight);
 
         [$x, $y] = $this->calcCropCoords($cropWidth, $cropHeight, $origWidth, $origHeight, $position);
 

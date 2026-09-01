@@ -283,9 +283,7 @@ abstract class CIUnitTestCase extends TestCase
      */
     private function callTraitMethods(string $stage): void
     {
-        if ($this->traits === null) {
-            $this->traits = class_uses_recursive($this);
-        }
+        $this->traits ??= class_uses_recursive($this);
 
         foreach ($this->traits as $trait) {
             $method = $stage . class_basename($trait);

@@ -1648,9 +1648,7 @@ abstract class BaseModel
 
     protected function ensureValidation(): void
     {
-        if ($this->validation === null) {
-            $this->validation = service('validation', null, false);
-        }
+        $this->validation ??= service('validation', null, false);
     }
 
     /**

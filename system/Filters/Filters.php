@@ -556,13 +556,9 @@ class Filters
     {
         $alias ??= md5($class);
 
-        if (! isset($this->config->{$section})) {
-            $this->config->{$section} = [];
-        }
+        $this->config->{$section} ??= [];
 
-        if (! isset($this->config->{$section}[$position])) {
-            $this->config->{$section}[$position] = [];
-        }
+        $this->config->{$section}[$position] ??= [];
 
         $this->config->aliases[$alias] = $class;
 
