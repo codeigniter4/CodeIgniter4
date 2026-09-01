@@ -212,6 +212,11 @@ Class Reference
 
         .. literalinclude:: caching/008.php
 
+        .. important:: Memcached counters are unsigned and saturate at ``0`` instead of
+            going negative. Decrementing a key that does not yet exist initializes it
+            to ``0`` (rather than ``-$offset``, as the File, Redis, and Predis handlers
+            do), and decrementing an existing counter below ``0`` clamps it at ``0``.
+
     .. php:method:: clean()
 
         :returns: ``true`` on success, ``false`` on failure
