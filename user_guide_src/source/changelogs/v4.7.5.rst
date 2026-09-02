@@ -18,6 +18,8 @@ BREAKING
 Message Changes
 ***************
 
+- Added the ``Cookie.invalidCookieValue`` language string.
+
 *******
 Changes
 *******
@@ -36,6 +38,7 @@ Bugs Fixed
 
 - **CLIRequest:** Fixed a bug where ``parseCommand()`` could throw a TypeError when ``argv`` is missing.
 - **Content Security Policy:** Fixed a bug where empty ``Content-Security-Policy``, ``Content-Security-Policy-Report-Only``, and ``Reporting-Endpoints`` response headers were generated when no corresponding values existed.
+- **Cookie:** Fixed a bug where ``Cookie`` instances created with ``raw: true`` allowed invalid characters in cookie values rejected by ``setrawcookie()``.
 - **Helpers:** Fixed a bug where ``get_dir_file_info()`` returned incomplete entries for subdirectories and missing files instead of omitting them.
 - **Honeypot:** Fixed a bug where bot detection returned an HTTP 500 response instead of 403 (Forbidden).
 - **Logger:** Fixed a bug where interpolating a log message with array or non-stringable context values could raise PHP warnings or errors.
