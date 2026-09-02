@@ -404,22 +404,21 @@ class RouteCollection implements RouteCollectionInterface
 
     public function setDefaultNamespace(string $value): RouteCollectionInterface
     {
-        $this->defaultNamespace = esc(strip_tags($value));
-        $this->defaultNamespace = rtrim($this->defaultNamespace, '\\') . '\\';
+        $this->defaultNamespace = rtrim($value, '\\') . '\\';
 
         return $this;
     }
 
     public function setDefaultController(string $value): RouteCollectionInterface
     {
-        $this->defaultController = esc(strip_tags($value));
+        $this->defaultController = $value;
 
         return $this;
     }
 
     public function setDefaultMethod(string $value): RouteCollectionInterface
     {
-        $this->defaultMethod = esc(strip_tags($value));
+        $this->defaultMethod = $value;
 
         return $this;
     }
@@ -754,7 +753,7 @@ class RouteCollection implements RouteCollectionInterface
         // If a new controller is specified, then we replace the
         // $name value with the name of the new controller.
         if (isset($options['controller'])) {
-            $newName = ucfirst(esc(strip_tags($options['controller'])));
+            $newName = ucfirst($options['controller']);
         }
 
         // In order to allow customization of allowed id values
@@ -848,7 +847,7 @@ class RouteCollection implements RouteCollectionInterface
         // If a new controller is specified, then we replace the
         // $name value with the name of the new controller.
         if (isset($options['controller'])) {
-            $newName = ucfirst(esc(strip_tags($options['controller'])));
+            $newName = ucfirst($options['controller']);
         }
 
         // In order to allow customization of allowed id values
