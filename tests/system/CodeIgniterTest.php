@@ -1308,4 +1308,37 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertSame($csp->getStyleNonce(), RichRenderer::$css_nonce);
         $this->assertTrue(RichRenderer::$needs_pre_render);
     }
+
+    public function testGatherOutputCalledOnceWhenControllerReturnsResponse(): void
+    {
+        $this->resetServices();
+
+        $superglobals = service('superglobals');
+        $superglobals->setServer('argv', ['index.php', 'pages/test']);
+        $superglobals->setServer('argc', 2);
+        $superglobals->setServer('REQUEST_URI', '/pages/test');
+        $superglobals->setServer('SCRIPT_NAME', '/index.php');
+
+        $routes = service('routes');
+        $routes->add('pages/test', static fn () => service('response')->setBody('Test Body'));
+
+        $config      = new App();
+        $codeigniter = new class ($config) extends MockCodeIgniter {
+            public int $gatherOutputCalls = 0;
+
+            protected function gatherOutput(?Cache $cacheConfig = null, $returned = null): void
+            {
+                $this->gatherOutputCalls++;
+                parent::gatherOutput($cacheConfig, $returned);
+            }
+        };
+
+        ob_start();
+        $codeigniter->run($routes);
+        ob_end_clean();
+
+        // When startController() returns a ResponseInterface (e.g. from a closure route),
+        // gatherOutput() must be called exactly once — not twice as in the original bug.
+        $this->assertSame(1, $codeigniter->gatherOutputCalls);
+    }
 }

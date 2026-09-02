@@ -505,29 +505,29 @@ class CodeIgniter
         // If startController returned a Response (from an attribute or Closure), use it
         if ($returned instanceof ResponseInterface) {
             $this->gatherOutput($cacheConfig, $returned);
-        }
-        // Closure controller has run in startController().
-        elseif (! is_callable($this->controller)) {
-            $controller = $this->createController();
+        } else {
+            // Closure controller has run in startController().
+            if (! is_callable($this->controller)) {
+                $controller = $this->createController();
 
-            if (! method_exists($controller, '_remap') && ! is_callable([$controller, $this->method], false)) {
-                throw PageNotFoundException::forMethodNotFound($this->method);
+                if (! method_exists($controller, '_remap') && ! is_callable([$controller, $this->method], false)) {
+                    throw PageNotFoundException::forMethodNotFound($this->method);
+                }
+
+                // Is there a "post_controller_constructor" event?
+                Events::trigger('post_controller_constructor');
+
+                $returned = $this->runController($controller);
+            } else {
+                $this->benchmark->stop('controller_constructor');
+                $this->benchmark->stop('controller');
             }
 
-            // Is there a "post_controller_constructor" event?
-            Events::trigger('post_controller_constructor');
-
-            $returned = $this->runController($controller);
-        } else {
-            $this->benchmark->stop('controller_constructor');
-            $this->benchmark->stop('controller');
+            // If $returned is a string, then the controller output something,
+            // probably a view, instead of echoing it directly. Send it along
+            // so it can be used with the output.
+            $this->gatherOutput($cacheConfig, $returned);
         }
-
-        // If $returned is a string, then the controller output something,
-        // probably a view, instead of echoing it directly. Send it along
-        // so it can be used with the output.
-        $this->gatherOutput($cacheConfig, $returned);
-
         if ($this->enableFilters) {
             /** @var Filters $filters */
             $filters = service('filters');
