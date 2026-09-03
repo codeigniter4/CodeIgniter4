@@ -2,7 +2,9 @@ includes:
     - utils/phpstan-baseline/loader.neon
 
 parameters:
-    phpVersion: 80200
+    phpVersion:
+        min: 80200
+        max: 80599
     tmpDir: build/phpstan
     level: 6
     bootstrapFiles:
