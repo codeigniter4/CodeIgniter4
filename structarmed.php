@@ -11,6 +11,7 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+use Boundwize\StructArmed\Preset\Presets\CodeQualityPreset;
 use CodeIgniter\Cache\ResponseCache;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\Header;
@@ -45,6 +46,9 @@ return Architecture::define()
             __DIR__ . '/tests/system/Config/fixtures',
         ],
         __DIR__ . '/system/ThirdParty',
+        CodeQualityPreset::ANONYMOUS_FUNCTIONS_MUST_BE_STATIC => [
+            __DIR__ . '/system/View/Cells/Cell.php',
+        ],
     ])
     ->cacheDirectory(is_dir('/tmp') ? '/tmp/structarmed' : null)
     ->withPresets(Preset::PSR4(), Preset::CODEQUALITY())
