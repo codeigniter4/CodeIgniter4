@@ -458,7 +458,7 @@ if (! function_exists('strip_slashes')) {
      *
      * @return array<array-key, mixed>|string string or array
      */
-    function strip_slashes($str)
+    function strip_slashes($str): array|string
     {
         if (! is_array($str)) {
             return stripslashes($str);

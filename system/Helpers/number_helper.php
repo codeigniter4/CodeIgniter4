@@ -21,10 +21,8 @@ if (! function_exists('number_to_size')) {
      *
      * @param float|int|string      $num    Will be cast as int
      * @param non-empty-string|null $locale [optional]
-     *
-     * @return bool|string
      */
-    function number_to_size($num, int $precision = 1, ?string $locale = null)
+    function number_to_size($num, int $precision = 1, ?string $locale = null): bool|string
     {
         try {
             // Strip any formatting & ensure numeric input
@@ -76,10 +74,8 @@ if (! function_exists('number_to_amount')) {
      * @param int|string            $num       Will be cast as int
      * @param int                   $precision [optional] The optional number of decimal digits to round to.
      * @param non-empty-string|null $locale    [optional]
-     *
-     * @return bool|string
      */
-    function number_to_amount($num, int $precision = 0, ?string $locale = null)
+    function number_to_amount($num, int $precision = 0, ?string $locale = null): bool|string
     {
         // Strip any formatting & ensure numeric input
         try {

@@ -28,7 +28,7 @@ if (! function_exists('fake')) {
      *
      * @return array<string, mixed>|object
      */
-    function fake($model, ?array $overrides = null, $persist = true)
+    function fake($model, ?array $overrides = null, $persist = true): array|object
     {
         $fabricator = new Fabricator($model);
 
@@ -49,10 +49,8 @@ if (! function_exists('mock')) {
      * Used within our test suite to mock certain system tools.
      *
      * @param string $className Fully qualified class name
-     *
-     * @return object
      */
-    function mock(string $className)
+    function mock(string $className): object
     {
         $mockClass   = $className::$mockClass;
         $mockService = $className::$mockServiceName ?? '';

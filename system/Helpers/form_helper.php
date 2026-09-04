@@ -558,7 +558,7 @@ if (! function_exists('set_value')) {
      *
      * @return list<string>|string
      */
-    function set_value(string $field, $default = '', bool $htmlEscape = true)
+    function set_value(string $field, $default = '', bool $htmlEscape = true): array|string
     {
         $request = service('request');
 
@@ -695,7 +695,7 @@ if (! function_exists('validation_errors')) {
      *
      * @return array<string, string>
      */
-    function validation_errors()
+    function validation_errors(): array
     {
         $errors = session('_ci_validation_errors');
 

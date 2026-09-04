@@ -79,7 +79,7 @@ if (! function_exists('get_cookie')) {
      *
      * @see \CodeIgniter\HTTP\IncomingRequest::getCookie()
      */
-    function get_cookie($index, bool $xssClean = false, ?string $prefix = '')
+    function get_cookie($index, bool $xssClean = false, ?string $prefix = ''): array|string|null
     {
         if ($prefix === '') {
             $cookie = config(CookieConfig::class);

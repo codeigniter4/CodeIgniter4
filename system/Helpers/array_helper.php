@@ -21,10 +21,8 @@ if (! function_exists('dot_array_search')) {
      * wildcard searches, like foo.*.bar
      *
      * @param array<array-key, mixed> $array
-     *
-     * @return mixed
      */
-    function dot_array_search(string $index, array $array)
+    function dot_array_search(string $index, array $array): mixed
     {
         return ArrayHelper::dotSearch($index, $array);
     }
@@ -36,10 +34,8 @@ if (! function_exists('array_deep_search')) {
      *
      * @param int|string              $key
      * @param array<array-key, mixed> $array
-     *
-     * @return mixed
      */
-    function array_deep_search($key, array $array)
+    function array_deep_search($key, array $array): mixed
     {
         if (isset($array[$key])) {
             return $array[$key];
