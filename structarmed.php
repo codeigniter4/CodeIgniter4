@@ -10,7 +10,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
-
+use Boundwize\StructArmed\Rule\Rules\Function_\MustHaveReturnTypeFunctionRule;
 use Boundwize\StructArmed\Preset\Presets\CodeQualityPreset;
 use CodeIgniter\Cache\ResponseCache;
 use CodeIgniter\HTTP\CLIRequest;
@@ -52,6 +52,10 @@ return Architecture::define()
     ])
     ->cacheDirectory(is_dir('/tmp') ? '/tmp/structarmed' : null)
     ->withPresets(Preset::PSR4(), Preset::CODEQUALITY())
+
+    ->layer('Helpers', __DIR__ . '/system/Helpers')
+    ->rule('helpers.functions_must_have_return_type', new MustHaveReturnTypeFunctionRule('Helpers'))
+
     // Resolve CodeIgniter layers from class names because several layers share directories.
     ->layerPattern('API', '/^CodeIgniter\\\\API\\\\.*$/')
     ->layerPattern('Cache', '/^CodeIgniter\\\\Cache\\\\.*$/')
@@ -110,7 +114,7 @@ return Architecture::define()
         'Security'      => ['Cookie', 'HTTP', 'I18n', 'Session'],
         'Session'       => ['Cookie', 'Database', 'HTTP', 'I18n'],
         'Throttle'      => ['Cache', 'I18n'],
-        'Validation'    => ['Database', 'HTTP'],
+        'Validation'    => ['Database', 'HTTP', 'Helpers'],
         'View'          => ['Cache'],
     ])
     ->skipPathsForRuleset(['*test*'])

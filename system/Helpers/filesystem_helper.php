@@ -326,7 +326,7 @@ if (! function_exists('get_file_info')) {
      *  fileperms?: int
      * }|null
      */
-    function get_file_info(string $file, $returnedValues = ['name', 'server_path', 'size', 'date'])
+    function get_file_info(string $file, $returnedValues = ['name', 'server_path', 'size', 'date']): ?array
     {
         if (! is_file($file)) {
             return null;
