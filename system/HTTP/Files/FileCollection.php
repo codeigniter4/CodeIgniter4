@@ -189,7 +189,7 @@ class FileCollection
 
         return new UploadedFile(
             $array['tmp_name'] ?? null,
-            $array['name'] ?? null,
+            $array['name'],
             $array['type'] ?? null,
             ($array['size'] ?? null) === null ? null : (int) $array['size'],
             $array['error'] ?? null,

@@ -324,7 +324,7 @@ final class ArrayHelper
      * @param list<int|list<int|string>|string> $array
      * @param int|string|null                   $sortByIndex
      */
-    public static function sortValuesByNatural(array &$array, $sortByIndex = null): bool
+    public static function sortValuesByNatural(array &$array, $sortByIndex = null): true
     {
         return usort($array, static function ($currentValue, $nextValue) use ($sortByIndex): int {
             if ($sortByIndex !== null) {
