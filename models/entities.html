@@ -803,6 +803,12 @@ Unlike the rest of the data types that you can cast properties into, the:</p>
 <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="nv">$user</span><span class="p">);</span>
 </pre></div>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">array</span></code> cast uses PHP serialization. Only read values previously
+written through the same Entity cast. Never store untrusted serialized strings
+directly in an <code class="docutils literal notranslate"><span class="pre">array</span></code>-cast field.</p>
+</div>
 </section>
 <section id="csv-casting">
 <h4>CSV Casting<a class="headerlink" href="#csv-casting" title="Link to this heading"></a></h4>
