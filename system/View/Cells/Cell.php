@@ -111,7 +111,7 @@ class Cell implements Stringable
 
         $foundView = current($candidateViews);
 
-        return (function () use ($properties, $foundView): string {
+        return (static function () use ($properties, $foundView): string {
             extract($properties);
             ob_start();
             include $foundView;

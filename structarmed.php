@@ -47,7 +47,7 @@ return Architecture::define()
         __DIR__ . '/system/ThirdParty',
     ])
     ->cacheDirectory(is_dir('/tmp') ? '/tmp/structarmed' : null)
-    ->withPreset(Preset::PSR4())
+    ->withPresets(Preset::PSR4(), Preset::CODEQUALITY())
     // Resolve CodeIgniter layers from class names because several layers share directories.
     ->layerPattern('API', '/^CodeIgniter\\\\API\\\\.*$/')
     ->layerPattern('Cache', '/^CodeIgniter\\\\Cache\\\\.*$/')

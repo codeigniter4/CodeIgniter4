@@ -290,7 +290,7 @@ final class TimeTest extends CIUnitTestCase
 
     public function testCreateFromTimestampWithMicroseconds(): void
     {
-        $timestamp = 1489762800.654321;
+        $timestamp = 1_489_762_800.654321;
         $locale    = setlocale(LC_NUMERIC, '0');
 
         setlocale(LC_NUMERIC, 'de_DE.UTF-8', 'de_DE');
