@@ -341,4 +341,106 @@ final class CookieTest extends CIUnitTestCase
         $cookie = new Cookie('cookie', 'monster');
         unset($cookie['path']);
     }
+
+    #[DataProvider('provideValidationOfRawCookieValue')]
+    public function testValidationOfRawCookieValue(string $value): void
+    {
+        $this->expectException(CookieException::class);
+        new Cookie('test', $value, ['raw' => true]);
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideValidationOfRawCookieValue(): iterable
+    {
+        yield 'comma' => ['value,comma'];
+
+        yield 'semicolon' => ['value;semicolon'];
+
+        yield 'space' => ['value with space'];
+
+        yield 'tab' => ["value\twith_tab"];
+
+        yield 'carriage return' => ["value\rcarriage"];
+
+        yield 'newline' => ["value\nnewline"];
+
+        yield 'vertical tab' => ["value\vvertical_tab"];
+
+        yield 'form feed' => ["value\fform_feed"];
+
+        yield 'null byte' => ["value\0null_byte"];
+
+        yield 'CRLF' => ["value\r\nwith_crlf"];
+    }
+
+    #[DataProvider('provideFromHeaderStringValidationOfRawCookieValue')]
+    public function testFromHeaderStringValidationOfRawCookieValue(string $value): void
+    {
+        $this->expectException(CookieException::class);
+        Cookie::fromHeaderString("test={$value}; Path=/", true);
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideFromHeaderStringValidationOfRawCookieValue(): iterable
+    {
+        foreach (self::provideValidationOfRawCookieValue() as $name => $case) {
+            if ($name === 'semicolon') {
+                continue;
+            }
+
+            yield $name => $case;
+        }
+    }
+
+    public function testFromHeaderStringWithRawTrue(): void
+    {
+        $cookie = Cookie::fromHeaderString('test=valid_raw_value=123; Path=/', true);
+
+        $this->assertTrue($cookie->isRaw());
+        $this->assertSame('valid_raw_value=123', $cookie->getValue());
+    }
+
+    public function testFromHeaderStringWithRawFalseDecodesValue(): void
+    {
+        $cookie = Cookie::fromHeaderString('test=value%20with%20space; Path=/', false);
+
+        $this->assertFalse($cookie->isRaw());
+        $this->assertSame('value with space', $cookie->getValue());
+    }
+
+    public function testValidationOfRawCookieValueInWithValue(): void
+    {
+        $this->expectException(CookieException::class);
+        $cookie = new Cookie('test', 'valid_value', ['raw' => true]);
+        $cookie->withValue("injected\r\nvalue");
+    }
+
+    public function testValidationOfRawCookieValueInWithRaw(): void
+    {
+        $this->expectException(CookieException::class);
+        $cookie = new Cookie('test', "injected\r\nvalue", ['raw' => false]);
+        $cookie->withRaw(true);
+    }
+
+    public function testValidRawCookieRetainsValueWithoutEncoding(): void
+    {
+        $cookie = new Cookie('test', 'valid_raw_value=123', ['raw' => true]);
+
+        $this->assertSame('valid_raw_value=123', $cookie->getValue());
+        $this->assertStringContainsString('test=valid_raw_value=123', (string) $cookie);
+    }
+
+    public function testNonRawCookieSafelyEncodesCRLF(): void
+    {
+        $cookie = new Cookie('test', "value\r\nwith_crlf", ['raw' => false]);
+        $result = (string) $cookie;
+
+        $this->assertStringContainsString('%0D%0A', $result);
+        $this->assertStringNotContainsString("\r", $result);
+        $this->assertStringNotContainsString("\n", $result);
+    }
 }

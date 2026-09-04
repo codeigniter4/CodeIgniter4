@@ -16,6 +16,7 @@ return [
     'invalidExpiresTime'    => 'Invalid "{0}" type for "Expires" attribute. Expected: string, integer, DateTimeInterface object.',
     'invalidExpiresValue'   => 'The cookie expiration time is not valid.',
     'invalidCookieName'     => 'The cookie name "{0}" contains invalid characters.',
+    'invalidCookieValue'    => 'The cookie value contains invalid characters.',
     'emptyCookieName'       => 'The cookie name cannot be empty.',
     'invalidSecurePrefix'   => 'Using the "__Secure-" prefix requires setting the "Secure" attribute.',
     'invalidHostPrefix'     => 'Using the "__Host-" prefix must be set with the "Secure" flag, must not have a "Domain" attribute, and the "Path" is set to "/".',
