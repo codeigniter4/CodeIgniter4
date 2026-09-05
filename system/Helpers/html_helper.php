@@ -102,12 +102,8 @@ if (! function_exists('img')) {
         if (! is_array($src)) {
             $src = ['src' => $src];
         }
-        if (! isset($src['src'])) {
-            $src['src'] = $attributes['src'] ?? '';
-        }
-        if (! isset($src['alt'])) {
-            $src['alt'] = $attributes['alt'] ?? '';
-        }
+        $src['src'] ??= $attributes['src'] ?? '';
+        $src['alt'] ??= $attributes['alt'] ?? '';
 
         $img = '<img';
 
@@ -544,10 +540,8 @@ if (! function_exists('embed')) {
 if (! function_exists('_has_protocol')) {
     /**
      * Test the protocol of a URI.
-     *
-     * @return false|int
      */
-    function _has_protocol(string $url)
+    function _has_protocol(string $url): false|int
     {
         return preg_match('#^([a-z]+:)?//#i', $url);
     }

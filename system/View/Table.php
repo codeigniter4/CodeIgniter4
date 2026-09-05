@@ -503,9 +503,7 @@ class Table
         }
 
         foreach ($this->_defaultTemplate() as $field => $template) {
-            if (! isset($this->template[$field])) {
-                $this->template[$field] = $template;
-            }
+            $this->template[$field] ??= $template;
         }
     }
 

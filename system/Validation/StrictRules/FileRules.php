@@ -54,9 +54,7 @@ class FileRules
     public function uploaded(?string $blank, string $name): bool
     {
         $files = $this->request->getFileMultiple($name);
-        if ($files === null) {
-            $files = [$this->request->getFile($name)];
-        }
+        $files ??= [$this->request->getFile($name)];
 
         foreach ($files as $file) {
             if ($file === null) {
@@ -91,9 +89,7 @@ class FileRules
         $name = array_shift($paramArray);
 
         $files = $this->request->getFileMultiple($name);
-        if ($files === null) {
-            $files = [$this->request->getFile($name)];
-        }
+        $files ??= [$this->request->getFile($name)];
 
         foreach ($files as $file) {
             if ($file === null) {
@@ -128,9 +124,7 @@ class FileRules
         $name   = array_shift($params);
 
         $files = $this->request->getFileMultiple($name);
-        if ($files === null) {
-            $files = [$this->request->getFile($name)];
-        }
+        $files ??= [$this->request->getFile($name)];
 
         foreach ($files as $file) {
             if ($file === null) {
@@ -168,9 +162,7 @@ class FileRules
         $name   = array_shift($params);
 
         $files = $this->request->getFileMultiple($name);
-        if ($files === null) {
-            $files = [$this->request->getFile($name)];
-        }
+        $files ??= [$this->request->getFile($name)];
 
         foreach ($files as $file) {
             if ($file === null) {
@@ -204,9 +196,7 @@ class FileRules
         $name   = array_shift($params);
 
         $files = $this->request->getFileMultiple($name);
-        if ($files === null) {
-            $files = [$this->request->getFile($name)];
-        }
+        $files ??= [$this->request->getFile($name)];
 
         foreach ($files as $file) {
             if ($file === null) {
@@ -244,9 +234,7 @@ class FileRules
         $name   = array_shift($params);
 
         $files = $this->request->getFileMultiple($name);
-        if ($files === null) {
-            $files = [$this->request->getFile($name)];
-        }
+        $files ??= [$this->request->getFile($name)];
 
         foreach ($files as $file) {
             if ($file === null) {
@@ -292,9 +280,7 @@ class FileRules
         $name   = array_shift($params);
 
         $files = $this->request->getFileMultiple($name);
-        if ($files === null) {
-            $files = [$this->request->getFile($name)];
-        }
+        $files ??= [$this->request->getFile($name)];
 
         foreach ($files as $file) {
             if ($file === null) {

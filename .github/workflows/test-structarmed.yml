@@ -59,6 +59,7 @@ jobs:
           php-version: ${{ matrix.php-version }}
           extensions: intl
           tools: composer
+          coverage: none
 
       - name: Validate composer.json
         run: composer validate --strict

@@ -485,9 +485,7 @@ if (! function_exists('esc')) {
             static $escapers = [];
             $cacheKey        = strtolower($encoding ?? 'utf-8');
 
-            if (! isset($escapers[$cacheKey])) {
-                $escapers[$cacheKey] = new Escaper($encoding);
-            }
+            $escapers[$cacheKey] ??= new Escaper($encoding);
 
             $data = $escapers[$cacheKey]->{$method}($data);
         }
@@ -583,9 +581,7 @@ if (! function_exists('function_usable')) {
         static $_suhosin_func_blacklist;
 
         if (function_exists($functionName)) {
-            if (! isset($_suhosin_func_blacklist)) {
-                $_suhosin_func_blacklist = extension_loaded('suhosin') ? explode(',', trim(ini_get('suhosin.executor.func.blacklist'))) : [];
-            }
+            $_suhosin_func_blacklist ??= extension_loaded('suhosin') ? explode(',', trim(ini_get('suhosin.executor.func.blacklist'))) : [];
 
             return ! in_array($functionName, $_suhosin_func_blacklist, true);
         }

@@ -71,7 +71,7 @@ if (! function_exists('current_url')) {
      * @return string|URI When returning string, the query and fragment parts are removed.
      *                    When returning URI, the query and fragment parts are preserved.
      */
-    function current_url(bool $returnObject = false, ?IncomingRequest $request = null)
+    function current_url(bool $returnObject = false, ?IncomingRequest $request = null): string|URI
     {
         $request ??= service('request');
         /** @var CLIRequest|IncomingRequest $request */
@@ -87,10 +87,8 @@ if (! function_exists('previous_url')) {
      * we first check in a saved session variable, if it exists, and use that.
      * If that's not available, however, we'll use a sanitized url from $_SERVER['HTTP_REFERER']
      * which can be set by the user so is untrusted and not set by certain browsers/servers.
-     *
-     * @return string|URI
      */
-    function previous_url(bool $returnObject = false)
+    function previous_url(bool $returnObject = false): string|URI
     {
         // Grab from the session first, if we have it,
         // since it's more reliable and safer.
@@ -546,9 +544,7 @@ if (! function_exists('parse_subdomain')) {
      */
     function parse_subdomain(?string $host = null): string
     {
-        if ($host === null) {
-            $host = service('request')->getUri()->getHost();
-        }
+        $host ??= service('request')->getUri()->getHost();
 
         // Handle localhost and IP addresses - they don't have subdomains
         if ($host === 'localhost' || filter_var($host, FILTER_VALIDATE_IP)) {

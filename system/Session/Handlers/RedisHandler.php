@@ -228,9 +228,7 @@ class RedisHandler extends BaseHandler
     public function read($id): false|string
     {
         if (isset($this->redis) && $this->lockSession($id)) {
-            if (! isset($this->sessionID)) {
-                $this->sessionID = $id;
-            }
+            $this->sessionID ??= $id;
 
             $data = $this->redis->get($this->keyPrefix . $id);
 

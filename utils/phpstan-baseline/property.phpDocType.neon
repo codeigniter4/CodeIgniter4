@@ -1,4 +1,4 @@
-# total 5 errors
+# total 1 error
 
 parameters:
     ignoreErrors:
@@ -6,23 +6,3 @@ parameters:
             message: '#^PHPDoc type int of property CodeIgniter\\Exceptions\\PageNotFoundException\:\:\$code is not the same as PHPDoc type mixed of overridden property Exception\:\:\$code\.$#'
             count: 1
             path: ../../system/Exceptions/PageNotFoundException.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Session\\Handlers\\FileHandler\:\:\$savePath is not the same as PHPDoc type array\<string, mixed\>\|string of overridden property CodeIgniter\\Session\\Handlers\\BaseHandler\:\:\$savePath\.$#'
-            count: 1
-            path: ../../system/Session/Handlers/FileHandler.php
-
-        -
-            message: '#^PHPDoc type Tests\\Support\\Models\\EventModel of property CodeIgniter\\Models\\EventsModelTest\:\:\$model is not the same as PHPDoc type CodeIgniter\\Model of overridden property CodeIgniter\\Models\\LiveModelTestCase\:\:\$model\.$#'
-            count: 1
-            path: ../../tests/system/Models/EventsModelTest.php
-
-        -
-            message: '#^PHPDoc type CodeIgniter\\Router\\RouteCollection of property CodeIgniter\\RESTful\\ResourceControllerTest\:\:\$routes is not the same as PHPDoc type CodeIgniter\\Router\\RouteCollection\|null of overridden property CodeIgniter\\Test\\CIUnitTestCase\:\:\$routes\.$#'
-            count: 1
-            path: ../../tests/system/RESTful/ResourceControllerTest.php
-
-        -
-            message: '#^PHPDoc type CodeIgniter\\Router\\RouteCollection of property CodeIgniter\\RESTful\\ResourcePresenterTest\:\:\$routes is not the same as PHPDoc type CodeIgniter\\Router\\RouteCollection\|null of overridden property CodeIgniter\\Test\\CIUnitTestCase\:\:\$routes\.$#'
-            count: 1
-            path: ../../tests/system/RESTful/ResourcePresenterTest.php

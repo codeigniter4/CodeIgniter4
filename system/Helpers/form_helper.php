@@ -558,16 +558,14 @@ if (! function_exists('set_value')) {
      *
      * @return list<string>|string
      */
-    function set_value(string $field, $default = '', bool $htmlEscape = true)
+    function set_value(string $field, $default = '', bool $htmlEscape = true): array|string
     {
         $request = service('request');
 
         // Try any old input data we may have first
         $value = $request->getOldInput($field);
 
-        if ($value === null) {
-            $value = $request->getPost($field) ?? $default;
-        }
+        $value ??= $request->getPost($field) ?? $default;
 
         return ($htmlEscape) ? esc($value) : $value;
     }
@@ -586,9 +584,7 @@ if (! function_exists('set_select')) {
         // Try any old input data we may have first
         $input = $request->getOldInput($field);
 
-        if ($input === null) {
-            $input = $request->getPost($field);
-        }
+        $input ??= $request->getPost($field);
 
         if ($input === null) {
             return $default ? ' selected="selected"' : '';
@@ -622,9 +618,7 @@ if (! function_exists('set_checkbox')) {
         // Try any old input data we may have first
         $input = $request->getOldInput($field);
 
-        if ($input === null) {
-            $input = $request->getPost($field);
-        }
+        $input ??= $request->getPost($field);
 
         if (is_array($input)) {
             // Note: in_array('', array(0)) returns TRUE, do not use it
@@ -701,7 +695,7 @@ if (! function_exists('validation_errors')) {
      *
      * @return array<string, string>
      */
-    function validation_errors()
+    function validation_errors(): array
     {
         $errors = session('_ci_validation_errors');
 

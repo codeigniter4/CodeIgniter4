@@ -265,7 +265,7 @@ class Builder extends BaseBuilder
                 // @codeCoverageIgnore
             }
 
-            if (is_string(current(array_keys($constraints)))) {
+            if (is_string(array_key_first($constraints))) {
                 $concat1 = implode(' || ', array_keys($constraints));
                 $concat2 = implode(' || ', array_values($constraints));
             } else {

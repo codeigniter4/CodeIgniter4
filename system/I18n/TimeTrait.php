@@ -1306,10 +1306,14 @@ trait TimeTrait
     /**
      * This is called when we unserialize the Time object.
      *
-     * @param array{date: string, timezone: string, timezone_type: int} $data
+     * @param array<mixed, mixed> $data
      */
     public function __unserialize(array $data): void
     {
-        parent::__construct($data['date'], new DateTimeZone($data['timezone']));
+        $date     = $data['date'] ?? null;
+        $timezone = $data['timezone'] ?? null;
+        assert(is_string($date) && is_string($timezone));
+
+        parent::__construct($date, new DateTimeZone($timezone));
     }
 }

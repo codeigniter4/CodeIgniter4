@@ -525,9 +525,7 @@ trait ResponseTrait
             }
         }
 
-        if ($code === null) {
-            $code = 302;
-        }
+        $code ??= 302;
 
         match ($method) {
             'refresh' => $this->setHeader('Refresh', '0;url=' . $uri),

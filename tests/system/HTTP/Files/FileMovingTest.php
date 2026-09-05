@@ -98,6 +98,7 @@ final class FileMovingTest extends CIUnitTestCase
 
         $this->assertTrue($this->root->hasChild('destination/' . $finalFilename . '.txt'));
         $this->assertTrue($this->root->hasChild('destination/' . $finalFilename . '_1.txt'));
+        $this->assertSame(0666 & ~umask(), $this->root->getChild('destination/' . $finalFilename . '.txt')->getPermissions());
     }
 
     public function testMoveSanitizesClientNameByDefault(): void

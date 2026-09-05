@@ -506,9 +506,7 @@ abstract class BaseConnection implements ConnectionInterface
         $className = static::class;
         $requested = array_fill_keys($properties, true);
 
-        if (! isset(self::$propertyBuiltinTypesCache[$className])) {
-            self::$propertyBuiltinTypesCache[$className] = [];
-        }
+        self::$propertyBuiltinTypesCache[$className] ??= [];
 
         // Fill only the properties requested by this call that are not cached yet.
         $missing = array_diff_key($requested, self::$propertyBuiltinTypesCache[$className]);
@@ -2097,10 +2095,7 @@ abstract class BaseConnection implements ConnectionInterface
         foreach ($data as $row) {
             $name = $row['constraint_name'];
 
-            // for sqlite generate name
-            if ($name === null) {
-                $name = $row['table_name'] . '_' . implode('_', $row['column_name']) . '_foreign';
-            }
+            $name ??= $row['table_name'] . '_' . implode('_', $row['column_name']) . '_foreign';
 
             $obj                      = new stdClass();
             $obj->constraint_name     = $name;

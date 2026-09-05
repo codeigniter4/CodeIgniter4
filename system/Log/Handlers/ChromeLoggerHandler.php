@@ -101,7 +101,7 @@ class ChromeLoggerHandler extends BaseHandler
      * be run.
      *
      * @param string               $level
-     * @param string               $message
+     * @param object|string        $message
      * @param array<string, mixed> $context
      */
     public function handle($level, $message, array $context = []): bool

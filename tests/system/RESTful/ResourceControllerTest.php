@@ -51,11 +51,6 @@ final class ResourceControllerTest extends CIUnitTestCase
 {
     private CodeIgniter $codeigniter;
 
-    /**
-     * @var RouteCollection
-     */
-    protected $routes;
-
     #[WithoutErrorHandler]
     protected function setUp(): void
     {
@@ -67,14 +62,21 @@ final class ResourceControllerTest extends CIUnitTestCase
         Services::injectMock('superglobals', new Superglobals());
     }
 
+    private function routes(): RouteCollection
+    {
+        $this->assertInstanceOf(RouteCollection::class, $this->routes);
+
+        return $this->routes;
+    }
+
     private function createCodeigniter(): void
     {
         service('superglobals')->setServer('SERVER_PROTOCOL', 'HTTP/1.1');
 
         // Inject mock router.
         $this->routes = service('routes');
-        $this->routes->resource('work', ['controller' => '\\' . Worker::class]);
-        Services::injectMock('routes', $this->routes);
+        $this->routes()->resource('work', ['controller' => '\\' . Worker::class]);
+        Services::injectMock('routes', $this->routes());
 
         $config            = new App();
         $this->codeigniter = new MockCodeIgniter($config);
@@ -107,7 +109,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $this->createCodeigniter();
 
         ob_start();
-        $this->codeigniter->run($this->routes);
+        $this->codeigniter->run($this->routes());
         $output = ob_get_clean();
 
         $error = json_decode($output)->messages->error;
@@ -129,7 +131,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $this->createCodeigniter();
 
         ob_start();
-        $this->codeigniter->run($this->routes);
+        $this->codeigniter->run($this->routes());
         $output = ob_get_clean();
 
         $error = json_decode($output)->messages->error;
@@ -152,7 +154,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $this->createCodeigniter();
 
         ob_start();
-        $this->codeigniter->run($this->routes);
+        $this->codeigniter->run($this->routes());
         $output = ob_get_clean();
 
         $error = json_decode($output)->messages->error;
@@ -174,7 +176,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $this->createCodeigniter();
 
         ob_start();
-        $this->codeigniter->run($this->routes);
+        $this->codeigniter->run($this->routes());
         $output = ob_get_clean();
 
         $error = json_decode($output)->messages->error;
@@ -195,7 +197,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $this->createCodeigniter();
 
         ob_start();
-        $this->codeigniter->run($this->routes);
+        $this->codeigniter->run($this->routes());
         $output = ob_get_clean();
 
         $error = json_decode($output)->messages->error;
@@ -217,7 +219,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $this->createCodeigniter();
 
         ob_start();
-        $this->codeigniter->run($this->routes);
+        $this->codeigniter->run($this->routes());
         $output = ob_get_clean();
 
         $error = json_decode($output)->messages->error;
@@ -239,7 +241,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $this->createCodeigniter();
 
         ob_start();
-        $this->codeigniter->run($this->routes);
+        $this->codeigniter->run($this->routes());
         $output = ob_get_clean();
 
         $error = json_decode($output)->messages->error;
@@ -261,7 +263,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $this->createCodeigniter();
 
         ob_start();
-        $this->codeigniter->run($this->routes);
+        $this->codeigniter->run($this->routes());
         $output = ob_get_clean();
 
         $error = json_decode($output)->messages->error;
@@ -308,7 +310,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $resource = new MockResourceController();
         $this->assertSame('json', $resource->getFormat());
 
-        $resource->setFormat('Nonsense');
+        $resource->setFormat('Nonsense'); // @phpstan-ignore argument.type (Testing that an invalid format is silently ignored)
         $this->assertSame('json', $resource->getFormat());
 
         $resource->setFormat('xml');

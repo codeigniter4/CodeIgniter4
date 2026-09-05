@@ -1,14 +1,11 @@
-# total 48 errors
+# total 30 errors
 
 includes:
-    - argument.type.neon
     - arguments.count.neon
     - assign.propertyType.neon
     - deadCode.unreachable.neon
     - function.resultUnused.neon
-    - method.childParameterType.neon
     - missingType.callable.neon
-    - missingType.iterableValue.neon
     - property.defaultValue.neon
     - property.phpDocType.neon
     - staticMethod.notFound.neon

@@ -418,9 +418,7 @@ class Email
     {
         $this->initialize($config);
 
-        if (! isset(static::$func_overload)) {
-            static::$func_overload = extension_loaded('mbstring') && ini_get('mbstring.func_overload');
-        }
+        static::$func_overload ??= extension_loaded('mbstring') && ini_get('mbstring.func_overload');
     }
 
     /**
@@ -1461,10 +1459,7 @@ class Email
             }
         }
 
-        // We might already have this set for UTF-8
-        if (! isset($chars)) {
-            $chars = static::strlen($str);
-        }
+        $chars ??= static::strlen($str);
 
         $output = '=?' . $this->charset . '?Q?';
 

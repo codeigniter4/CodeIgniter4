@@ -163,9 +163,7 @@ class MemcachedHandler extends BaseHandler
     public function read($id): false|string
     {
         if (isset($this->memcached) && $this->lockSession($id)) {
-            if (! isset($this->sessionID)) {
-                $this->sessionID = $id;
-            }
+            $this->sessionID ??= $id;
 
             $data = (string) $this->memcached->get($this->keyPrefix . $id);
 

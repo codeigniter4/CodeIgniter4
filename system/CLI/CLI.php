@@ -236,12 +236,12 @@ class CLI
             $default = $options[0];
         }
 
-        static::fwrite(STDOUT, $field . (trim($field) !== '' ? ' ' : '') . $extraOutput . ': ');
         static::$lastWrite = 'write';
 
-        // Read the input from keyboard.
-        $input = trim(static::$io->input());
-        $input = ($input === '') ? (string) $default : $input;
+        // The reader renders the prompt itself, so readline redraws repaint it instead of erasing it.
+        $prompt = sprintf('%s%s%s: ', $field, trim($field) !== '' ? ' ' : '', $extraOutput);
+        $input  = trim(static::$io->input($prompt));
+        $input  = $input === '' ? (string) $default : $input;
 
         if ($validation !== []) {
             while (! static::validate('"' . trim($field) . '"', $input, $validation)) {

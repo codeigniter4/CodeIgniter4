@@ -45,11 +45,6 @@ final class ResourcePresenterTest extends CIUnitTestCase
 {
     private CodeIgniter $codeigniter;
 
-    /**
-     * @var RouteCollection
-     */
-    protected $routes;
-
     #[WithoutErrorHandler]
     protected function setUp(): void
     {
@@ -61,14 +56,21 @@ final class ResourcePresenterTest extends CIUnitTestCase
         Services::injectMock('superglobals', new Superglobals());
     }
 
+    private function routes(): RouteCollection
+    {
+        $this->assertInstanceOf(RouteCollection::class, $this->routes);
+
+        return $this->routes;
+    }
+
     private function createCodeigniter(): void
     {
         service('superglobals')->setServer('SERVER_PROTOCOL', 'HTTP/1.1');
 
         // Inject mock router.
         $this->routes = service('routes');
-        $this->routes->presenter('work', ['controller' => '\\' . Worker2::class]);
-        Services::injectMock('routes', $this->routes);
+        $this->routes()->presenter('work', ['controller' => '\\' . Worker2::class]);
+        Services::injectMock('routes', $this->routes());
 
         $config            = new App();
         $this->codeigniter = new MockCodeIgniter($config);
@@ -97,7 +99,7 @@ final class ResourcePresenterTest extends CIUnitTestCase
         $this->createCodeigniter();
 
         ob_start();
-        $this->codeigniter->run($this->routes);
+        $this->codeigniter->run($this->routes());
         $output = ob_get_clean();
 
         $this->assertSame(lang('RESTful.notImplemented', ['index']), $output);
@@ -119,7 +121,7 @@ final class ResourcePresenterTest extends CIUnitTestCase
         $this->createCodeigniter();
 
         ob_start();
-        $this->codeigniter->run($this->routes);
+        $this->codeigniter->run($this->routes());
         $output = ob_get_clean();
 
         $this->assertStringContainsString(lang('RESTful.notImplemented', ['show']), (string) $output);
@@ -140,7 +142,7 @@ final class ResourcePresenterTest extends CIUnitTestCase
         $this->createCodeigniter();
 
         ob_start();
-        $this->codeigniter->run($this->routes);
+        $this->codeigniter->run($this->routes());
         $output = ob_get_clean();
 
         $this->assertStringContainsString(lang('RESTful.notImplemented', ['new']), (string) $output);
@@ -161,7 +163,7 @@ final class ResourcePresenterTest extends CIUnitTestCase
         $this->createCodeigniter();
 
         ob_start();
-        $this->codeigniter->run($this->routes);
+        $this->codeigniter->run($this->routes());
         $output = ob_get_clean();
 
         $this->assertStringContainsString(lang('RESTful.notImplemented', ['create']), (string) $output);
@@ -183,7 +185,7 @@ final class ResourcePresenterTest extends CIUnitTestCase
         $this->createCodeigniter();
 
         ob_start();
-        $this->codeigniter->run($this->routes);
+        $this->codeigniter->run($this->routes());
         $output = ob_get_clean();
 
         $this->assertStringContainsString(lang('RESTful.notImplemented', ['remove']), (string) $output);
@@ -205,7 +207,7 @@ final class ResourcePresenterTest extends CIUnitTestCase
         $this->createCodeigniter();
 
         ob_start();
-        $this->codeigniter->run($this->routes);
+        $this->codeigniter->run($this->routes());
         $output = ob_get_clean();
 
         $this->assertStringContainsString(lang('RESTful.notImplemented', ['delete']), (string) $output);
@@ -228,7 +230,7 @@ final class ResourcePresenterTest extends CIUnitTestCase
         $this->createCodeigniter();
 
         ob_start();
-        $this->codeigniter->run($this->routes);
+        $this->codeigniter->run($this->routes());
         $output = ob_get_clean();
 
         $this->assertStringContainsString(lang('RESTful.notImplemented', ['edit']), (string) $output);
@@ -250,7 +252,7 @@ final class ResourcePresenterTest extends CIUnitTestCase
         $this->createCodeigniter();
 
         ob_start();
-        $this->codeigniter->run($this->routes);
+        $this->codeigniter->run($this->routes());
         $output = ob_get_clean();
 
         $this->assertStringContainsString(lang('RESTful.notImplemented', ['update']), (string) $output);

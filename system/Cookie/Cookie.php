@@ -130,6 +130,11 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     private static string $reservedCharsList = "=,; \t\r\n\v\f()<>@:\\\"/[]?{}";
 
     /**
+     * @see https://www.php.net/manual/en/function.setrawcookie.php
+     */
+    private static string $reservedValueCharsList = ",; \t\r\n\v\f\0";
+
+    /**
      * Set the default attributes to a Cookie instance by injecting
      * the values from the `CookieConfig` config or an array.
      *
@@ -265,6 +270,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
         $httponly = $options['httponly'];
 
         $this->validateName($name, $raw);
+        $this->validateValue($value, $raw);
         $this->validatePrefix($prefix, $secure, $path, $domain);
         $this->validateSameSite($samesite, $secure);
 
@@ -470,6 +476,8 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      */
     public function withValue(string $value)
     {
+        $this->validateValue($value, $this->raw);
+
         $cookie = clone $this;
 
         $cookie->value = $value;
@@ -578,6 +586,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     public function withRaw(bool $raw = true)
     {
         $this->validateName($this->name, $raw);
+        $this->validateValue($this->value, $raw);
 
         $cookie = clone $this;
 
@@ -619,7 +628,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * Offset to set.
      *
-     * @param string          $offset
+     * @param string|null     $offset
      * @param bool|int|string $value
      *
      * @throws LogicException
@@ -763,6 +772,21 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 
         if ($name === '') {
             throw CookieException::forEmptyCookieName();
+        }
+    }
+
+    /**
+     * Validates the cookie value.
+     *
+     * If `$raw` is true, values should not contain invalid characters
+     * as `setrawcookie()` will reject this.
+     *
+     * @throws CookieException
+     */
+    protected function validateValue(string $value, bool $raw): void
+    {
+        if ($raw && strpbrk($value, self::$reservedValueCharsList) !== false) {
+            throw CookieException::forInvalidCookieValue();
         }
     }
 

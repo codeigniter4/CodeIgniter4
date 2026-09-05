@@ -1813,9 +1813,7 @@ class ValidationTest extends CIUnitTestCase
      */
     protected function placeholderReplacementResultDetermination(string $placeholder = 'id', ?array $data = null): void
     {
-        if ($data === null) {
-            $data = [$placeholder => '12'];
-        }
+        $data ??= [$placeholder => '12'];
 
         $validationRules = self::getPrivateMethodInvoker($this->validation, 'fillPlaceholders')($this->validation->getRules(), $data);
         $fieldRules      = $validationRules['foo']['rules'] ?? $validationRules['foo'];

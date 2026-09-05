@@ -74,6 +74,8 @@ class Controller
     /**
      * Constructor.
      *
+     * @param CLIRequest|IncomingRequest $request
+     *
      * @return void
      *
      * @throws HTTPException|RedirectException

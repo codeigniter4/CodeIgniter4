@@ -1527,9 +1527,7 @@ class RouteCollection implements RouteCollectionInterface
             return false;
         }
 
-        if ($this->currentSubdomain === null) {
-            $this->currentSubdomain = parse_subdomain($this->httpHost);
-        }
+        $this->currentSubdomain ??= parse_subdomain($this->httpHost);
 
         if (! is_array($subdomains)) {
             $subdomains = [$subdomains];
@@ -1537,7 +1535,7 @@ class RouteCollection implements RouteCollectionInterface
 
         // Routes can be limited to any sub-domain. In that case, though,
         // it does require a sub-domain to be present.
-        if (! in_array($this->currentSubdomain, [null, ''], true) && in_array('*', $subdomains, true)) {
+        if ($this->currentSubdomain !== '' && in_array('*', $subdomains, true)) {
             return true;
         }
 

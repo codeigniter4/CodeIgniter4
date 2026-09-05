@@ -97,6 +97,13 @@ and `setrawcookie() <https://www.php.net/manual/en/function.setrawcookie.php>`_
 will reject cookies with invalid names. Additionally, cookie
 names cannot be an empty string.
 
+Validating the Value Attribute
+==============================
+
+If setting the ``$raw`` parameter to ``true``, the cookie value will also be validated.
+It must not contain control characters, spaces, tabs, or separator characters
+(``, ;``) as `setrawcookie() <https://www.php.net/manual/en/function.setrawcookie.php>`_ will reject them.
+
 Validating the Prefix Attribute
 ===============================
 

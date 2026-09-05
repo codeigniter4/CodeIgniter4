@@ -119,7 +119,7 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // Inject mock router.
         $routes = service('routes');
-        $routes->add('pages/(:segment)', static function ($segment): void {
+        $routes->add('pages/(:segment)', static function (string $segment = ''): void {
             echo 'You want to see "' . esc($segment) . '" page.';
         });
         $router = service('router', $routes, service('incomingrequest'));
@@ -231,7 +231,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $routes = service('routes');
         $routes->add(
             'pages/(:segment)',
-            static fn ($segment): string => 'You want to see "' . esc($segment) . '" page.',
+            static fn (string $segment = ''): string => 'You want to see "' . esc($segment) . '" page.',
         );
         $router = service('router', $routes, service('incomingrequest'));
         Services::injectMock('router', $router);
@@ -253,12 +253,10 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // Inject mock router.
         $routes = service('routes');
-        $routes->add('pages/(:segment)', static function ($segment) {
-            $response = service('response');
-            $string   = "You want to see 'about' page.";
-
-            return $response->setBody($string);
-        });
+        $routes->add(
+            'pages/(:segment)',
+            static fn () => service('response')->setBody("You want to see 'about' page."),
+        );
         $router = service('router', $routes, service('incomingrequest'));
         Services::injectMock('router', $router);
 
@@ -282,11 +280,10 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // Inject mock router.
         $routes = service('routes');
-        $routes->add('pages/(:segment)', static function ($segment) {
-            $response = service('response');
-
-            return $response->download('some.txt', 'some text', true);
-        });
+        $routes->add(
+            'pages/(:segment)',
+            static fn () => service('response')->download('some.txt', 'some text', true),
+        );
         $router = service('router', $routes, service('incomingrequest'));
         Services::injectMock('router', $router);
 
@@ -1329,5 +1326,38 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertNull(RichRenderer::$js_nonce);
         $this->assertNull(RichRenderer::$css_nonce);
         $this->assertTrue(RichRenderer::$needs_pre_render);
+    }
+
+    public function testGatherOutputCalledOnceWhenControllerReturnsResponse(): void
+    {
+        $this->resetServices();
+
+        $superglobals = service('superglobals');
+        $superglobals->setServer('argv', ['index.php', 'pages/test']);
+        $superglobals->setServer('argc', 2);
+        $superglobals->setServer('REQUEST_URI', '/pages/test');
+        $superglobals->setServer('SCRIPT_NAME', '/index.php');
+
+        $routes = service('routes');
+        $routes->add('pages/test', static fn () => service('response')->setBody('Test Body'));
+
+        $config      = new App();
+        $codeigniter = new class ($config) extends MockCodeIgniter {
+            public int $gatherOutputCalls = 0;
+
+            protected function gatherOutput($returned = null): void
+            {
+                $this->gatherOutputCalls++;
+                parent::gatherOutput($returned);
+            }
+        };
+
+        ob_start();
+        $codeigniter->run($routes);
+        ob_end_clean();
+
+        // When startController() returns a ResponseInterface (e.g. from a closure route),
+        // gatherOutput() must be called exactly once — not twice as in the original bug.
+        $this->assertSame(1, $codeigniter->gatherOutputCalls);
     }
 }

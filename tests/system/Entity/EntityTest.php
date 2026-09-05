@@ -573,7 +573,7 @@ final class EntityTest extends CIUnitTestCase
 
         $entity = $this->getCastEntity();
 
-        $entity->eighth = 1722988800; // 2024-08-07 00:00:00 UTC
+        $entity->eighth = 1_722_988_800; // 2024-08-07 00:00:00 UTC
 
         $this->assertInstanceOf(Time::class, $entity->eighth);
         // The timezone is the default timezone, not UTC.

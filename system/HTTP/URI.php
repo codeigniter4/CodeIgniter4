@@ -678,9 +678,7 @@ class URI implements Stringable
     {
         $parts = parse_url($str);
 
-        if (! isset($parts['path'])) {
-            $parts['path'] = $this->getPath();
-        }
+        $parts['path'] ??= $this->getPath();
 
         if (! isset($parts['host']) && $parts['path'] !== '') {
             $parts['host'] = $parts['path'];

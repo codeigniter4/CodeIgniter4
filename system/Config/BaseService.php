@@ -273,9 +273,7 @@ class BaseService
     public static function autoloader(bool $getShared = true)
     {
         if ($getShared) {
-            if (! isset(static::$instances['autoloader'])) {
-                static::$instances['autoloader'] = new Autoloader();
-            }
+            static::$instances['autoloader'] ??= new Autoloader();
 
             return static::$instances['autoloader'];
         }
