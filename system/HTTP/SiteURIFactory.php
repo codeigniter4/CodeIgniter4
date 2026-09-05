@@ -227,7 +227,7 @@ final readonly class SiteURIFactory
      */
     private function getHost(): ?string
     {
-        $httpHostPort = $this->superglobals->server('HTTP_HOST') ?? null;
+        $httpHostPort = $this->superglobals->server('HTTP_HOST');
 
         if ($httpHostPort !== null) {
             [$httpHost] = explode(':', $httpHostPort, 2);
