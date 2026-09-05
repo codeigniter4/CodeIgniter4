@@ -225,6 +225,12 @@ Commands
 - Added ``make:request`` generator command to scaffold :ref:`Form Request <form-requests>` classes.
 - Added ``key:rotate`` command to demote the current ``encryption.key`` to ``encryption.previousKeys`` in **.env** and generate a new key. See :ref:`spark-key-rotate`.
 - Added ``AbstractCommand::callSilently()`` to invoke another command with its output discarded, restoring the prior IO afterwards. See :ref:`modern-commands-call-silently`.
+- Added :php:class:`AbstractGeneratorCommand <CodeIgniter\\CLI\\AbstractGeneratorCommand>` and the ``#[GeneratorCommand]`` attribute, the modern
+  counterpart of ``GeneratorTrait`` for commands that generate files from templates. See :doc:`../cli/cli_modern_generators`.
+- Modern commands can now opt in to prompting for missing required arguments on interactive runs by implementing the new
+  ``PromptsForMissingInputInterface`` marker interface. Prompt labels can be customized via ``getArgumentPromptLabels()``, and an
+  ``afterPrompting()`` hook runs when prompting occurred. Non-interactive runs keep failing fast with the missing-arguments error.
+  See :ref:`prompts-for-missing-input`.
 - The ``migrate``, ``migrate:rollback``, ``migrate:refresh``, and ``migrate:status`` commands now accept long option names (``--namespace``, ``--group``, ``--batch``, ``--force``) alongside their existing short forms (``-n``, ``-g``, ``-b``, ``-f``).
 - The ``namespaces`` command now accepts long option names (``--config-only``, ``--raw``, ``--max-length``) alongside its existing short forms (``-c``, ``-r``, ``-m``).
 - The ``worker:install`` and ``worker:uninstall`` commands now accept the ``-f`` short option alongside ``--force``.

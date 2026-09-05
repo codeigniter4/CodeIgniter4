@@ -15,6 +15,7 @@ namespace CodeIgniter\CLI;
 
 use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\CLI\Attributes\Command;
+use CodeIgniter\CLI\Attributes\GeneratorCommand;
 use CodeIgniter\CLI\Exceptions\CommandNotFoundException;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\LogicException;
@@ -427,6 +428,20 @@ class Commands
             $this->logger->error($e->getMessage());
 
             return;
+        }
+
+        // Vetted at discovery so the registry never advertises a command whose constructor throws.
+        if ($class->isSubclassOf(AbstractGeneratorCommand::class)) {
+            try {
+                $generatorAttribute = $class->getAttributes(GeneratorCommand::class)[0]
+                    ?? throw new LogicException(lang('Commands.missingCommandAttribute', [$class->getName(), GeneratorCommand::class]));
+
+                $generatorAttribute->newInstance();
+            } catch (LogicException $e) {
+                $this->logger->error($e->getMessage());
+
+                return;
+            }
         }
 
         if ($attribute->group === '' || isset($this->modernCommands[$attribute->name])) {

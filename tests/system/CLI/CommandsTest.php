@@ -39,7 +39,9 @@ use Tests\Support\InvalidCommands\AliasClashCommand;
 use Tests\Support\InvalidCommands\AliasSecondClashCommand;
 use Tests\Support\InvalidCommands\AliasTargetCommand;
 use Tests\Support\InvalidCommands\EmptyCommandName;
+use Tests\Support\InvalidCommands\InvalidComponentGeneratorCommand;
 use Tests\Support\InvalidCommands\NoAttributeCommand;
+use Tests\Support\InvalidCommands\NoAttributeGeneratorCommand;
 
 /**
  * @internal
@@ -473,6 +475,62 @@ final class CommandsTest extends CIUnitTestCase
             ->method('findQualifiedNameFromPath')
             ->with($path)
             ->willReturn(EmptyCommandName::class);
+        Services::injectMock('locator', $locator);
+
+        $logger = $this->createMock(Logger::class);
+        $logger
+            ->expects($this->once())
+            ->method('error')
+            ->with($this->callback(static fn (string $message): bool => $message !== ''));
+
+        $commands = new Commands($logger);
+
+        $this->assertSame([], $commands->getModernCommands());
+    }
+
+    public function testDiscoveryLogsErrorForGeneratorCommandWithoutGeneratorAttribute(): void
+    {
+        $path = SUPPORTPATH . 'InvalidCommands/NoAttributeGeneratorCommand.php';
+
+        $locator = $this->createMock(FileLocatorInterface::class);
+        $locator
+            ->expects($this->once())
+            ->method('listFiles')
+            ->with('Commands/')
+            ->willReturn([$path]);
+        $locator
+            ->expects($this->once())
+            ->method('findQualifiedNameFromPath')
+            ->with($path)
+            ->willReturn(NoAttributeGeneratorCommand::class);
+        Services::injectMock('locator', $locator);
+
+        $logger = $this->createMock(Logger::class);
+        $logger
+            ->expects($this->once())
+            ->method('error')
+            ->with($this->callback(static fn (string $message): bool => $message !== ''));
+
+        $commands = new Commands($logger);
+
+        $this->assertSame([], $commands->getModernCommands());
+    }
+
+    public function testDiscoveryLogsErrorWhenGeneratorAttributeFailsToInstantiate(): void
+    {
+        $path = SUPPORTPATH . 'InvalidCommands/InvalidComponentGeneratorCommand.php';
+
+        $locator = $this->createMock(FileLocatorInterface::class);
+        $locator
+            ->expects($this->once())
+            ->method('listFiles')
+            ->with('Commands/')
+            ->willReturn([$path]);
+        $locator
+            ->expects($this->once())
+            ->method('findQualifiedNameFromPath')
+            ->with($path)
+            ->willReturn(InvalidComponentGeneratorCommand::class);
         Services::injectMock('locator', $locator);
 
         $logger = $this->createMock(Logger::class);

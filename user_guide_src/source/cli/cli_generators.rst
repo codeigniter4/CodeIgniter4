@@ -354,6 +354,10 @@ GeneratorTrait
 All generator commands must use the ``GeneratorTrait`` to fully utilize its methods that are used in code
 generation.
 
+.. note:: ``GeneratorTrait`` is the legacy way of building generator commands, tied to ``BaseCommand``.
+    New generator commands should extend ``AbstractGeneratorCommand`` instead.
+    See :doc:`cli_modern_generators`.
+
 *************************************************************
 Declaring the Location of a Custom Generator Command Template
 *************************************************************
