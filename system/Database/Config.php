@@ -61,9 +61,7 @@ class Config extends BaseConfig
         } else {
             $dbConfig = config(DbConfig::class);
 
-            if ($group === null) {
-                $group = service('environment')->isTesting() ? 'tests' : $dbConfig->defaultGroup;
-            }
+            $group ??= service('environment')->isTesting() ? 'tests' : $dbConfig->defaultGroup;
 
             assert(is_string($group));
 
