@@ -13,12 +13,14 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Session\Handlers;
 
+use CodeIgniter\Cache\Handlers\RedisSentinel;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Session\Exceptions\SessionException;
 use CodeIgniter\Session\PersistsConnection;
 use Config\Session as SessionConfig;
 use Redis;
 use RedisException;
+use RuntimeException;
 
 /**
  * Session handler using Redis for persistence.
@@ -29,6 +31,20 @@ class RedisHandler extends BaseHandler
 
     private const DEFAULT_PORT     = 6379;
     private const DEFAULT_PROTOCOL = 'tcp';
+
+    /**
+     * Sentinel configuration, when set takes precedence over $savePath.
+     *
+     * @var array{
+     *   service?: string,
+     *   nodes?: list<array{host: string, port?: int}>,
+     *   timeout?: float,
+     *   persistent?: bool,
+     *   password?: string|null,
+     *   database?: int
+     * }
+     */
+    protected array $sentinel = [];
 
     /**
      * phpRedis instance.
@@ -92,6 +108,9 @@ class RedisHandler extends BaseHandler
         // Add session cookie name for multiple session cookies.
         $this->keyPrefix .= $config->cookieName . ':';
 
+        // Store Sentinel configuration; when populated it overrides $savePath.
+        $this->sentinel = $config->sentinel;
+
         $this->setSavePath();
 
         if ($this->matchIP === true) {
@@ -104,6 +123,25 @@ class RedisHandler extends BaseHandler
 
     protected function setSavePath(): void
     {
+        // When a Sentinel cluster is configured, build a Sentinel-shaped save
+        // path and skip the single-host savePath parsing. This also means an
+        // empty $savePath is valid as long as $sentinel is populated.
+        if (($this->sentinel['nodes'] ?? []) !== []) {
+            $this->savePath = [
+                'sentinel'   => true,
+                'service'    => $this->sentinel['service'] ?? '',
+                'nodes'      => $this->sentinel['nodes'],
+                'password'   => $this->sentinel['password'] ?? null,
+                'database'   => $this->sentinel['database'] ?? 0,
+                'timeout'    => (float) ($this->sentinel['timeout'] ?? 0.0),
+                'persistent' => isset($this->sentinel['persistent'])
+                    ? filter_var($this->sentinel['persistent'], FILTER_VALIDATE_BOOL)
+                    : null,
+            ];
+
+            return;
+        }
+
         if ($this->savePath === '') {
             throw SessionException::forEmptySavepath();
         }
@@ -194,13 +232,34 @@ class RedisHandler extends BaseHandler
             }
         }
 
+        // When using Sentinel, discover the current master address first.
+        if (($this->savePath['sentinel'] ?? false) === true) {
+            try {
+                [$host, $port] = RedisSentinel::discoverMaster(
+                    $this->savePath['nodes'],
+                    $this->savePath['service'],
+                    $this->savePath['timeout'],
+                );
+            } catch (RuntimeException $e) {
+                $this->logger->error(
+                    'Session: Redis Sentinel unable to discover master "'
+                    . $this->savePath['service'] . '": ' . $e->getMessage(),
+                );
+
+                return false;
+            }
+        } else {
+            $host = $this->savePath['host'];
+            $port = $this->savePath['port'];
+        }
+
         $redis = new Redis();
 
         $funcConnection = isset($this->savePath['persistent']) && $this->savePath['persistent'] === true
             ? 'pconnect'
             : 'connect';
 
-        if ($redis->{$funcConnection}($this->savePath['host'], $this->savePath['port'], $this->savePath['timeout']) === false) {
+        if ($redis->{$funcConnection}($host, $port, $this->savePath['timeout']) === false) {
             $this->logger->error('Session: Unable to connect to Redis with the configured settings.');
         } elseif (isset($this->savePath['password']) && ! $redis->auth($this->savePath['password'])) {
             $this->logger->error('Session: Unable to authenticate to Redis instance.');
