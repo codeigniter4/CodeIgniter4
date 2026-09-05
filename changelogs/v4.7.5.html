@@ -337,6 +337,7 @@ ANSI color codes in the prompt (e.g., option defaults) are wrapped in readline�
 <li><p><strong>Helpers:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">get_dir_file_info()</span></code> returned incomplete entries for subdirectories and missing files instead of omitting them.</p></li>
 <li><p><strong>Honeypot:</strong> Fixed a bug where bot detection returned an HTTP 500 response instead of 403 (Forbidden).</p></li>
 <li><p><strong>Logger:</strong> Fixed a bug where interpolating a log message with array or non-stringable context values could raise PHP warnings or errors.</p></li>
+<li><p><strong>Cache:</strong> Fixed <code class="docutils literal notranslate"><span class="pre">MemcachedHandler::decrement()</span></code> initializing a non-existent counter to the positive offset. Missing counters are now initialized to <code class="docutils literal notranslate"><span class="pre">0</span></code>, reflecting Memcached’s unsigned, saturating counter semantics.</p></li>
 </ul>
 <p>See the repo’s
 <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a>

@@ -626,6 +626,13 @@ Due to limitations, it couldn’t be implemented for Memcached and Wincache hand
 <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">decrement</span><span class="p">(</span><span class="s1">'iterator'</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// 'iterator' is now 3</span>
 </pre></div>
 </div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Memcached counters are unsigned and saturate at <code class="docutils literal notranslate"><span class="pre">0</span></code> instead of
+going negative. Decrementing a key that does not yet exist initializes it
+to <code class="docutils literal notranslate"><span class="pre">0</span></code> (rather than <code class="docutils literal notranslate"><span class="pre">-$offset</span></code>, as the File, Redis, and Predis handlers
+do), and decrementing an existing counter below <code class="docutils literal notranslate"><span class="pre">0</span></code> clamps it at <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
+</div>
 </dd></dl>
 
 <dl class="php method">
