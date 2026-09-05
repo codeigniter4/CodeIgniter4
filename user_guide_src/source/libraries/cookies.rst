@@ -104,6 +104,20 @@ If setting the ``$raw`` parameter to ``true``, the cookie value will also be val
 It must not contain control characters, spaces, tabs, or separator characters
 (``, ;``) as `setrawcookie() <https://www.php.net/manual/en/function.setrawcookie.php>`_ will reject them.
 
+Validating the Path Attribute
+=============================
+
+The cookie path must not contain control characters, spaces, tabs, or separator characters
+(``, ;``) as `setcookie() <https://www.php.net/manual/en/function.setcookie.php>`_ and
+`setrawcookie() <https://www.php.net/manual/en/function.setrawcookie.php>`_ will reject them.
+
+Validating the Domain Attribute
+===============================
+
+The cookie domain must not contain control characters, spaces, tabs, or separator characters
+(``, ;``) as `setcookie() <https://www.php.net/manual/en/function.setcookie.php>`_ and
+`setrawcookie() <https://www.php.net/manual/en/function.setrawcookie.php>`_ will reject them.
+
 Validating the Prefix Attribute
 ===============================
 

@@ -232,11 +232,11 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      * @param string $name  The cookie's name
      * @param string $value The cookie's value
      * @param array{
-     *   prefix?: string,
+     *   prefix?: string|null,
      *   max-age?: int|numeric-string,
      *   expires?: DateTimeInterface|int|string,
-     *   path?: string,
-     *   domain?: string,
+     *   path?: string|null,
+     *   domain?: string|null,
      *   secure?: bool,
      *   httponly?: bool,
      *   samesite?: string,
@@ -258,9 +258,9 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
         }
 
         // to preserve backward compatibility with array-based cookies in previous CI versions
-        $prefix = ($options['prefix'] === '') ? self::$defaults['prefix'] : $options['prefix'];
-        $path   = ($options['path'] === '') ? self::$defaults['path'] : $options['path'];
-        $domain = ($options['domain'] === '') ? self::$defaults['domain'] : $options['domain'];
+        $prefix = in_array($options['prefix'], [null, ''], true) ? self::$defaults['prefix'] : $options['prefix'];
+        $path   = in_array($options['path'], [null, '', '0'], true) ? self::$defaults['path'] : $options['path'];
+        $domain = in_array($options['domain'], [null, ''], true) ? self::$defaults['domain'] : $options['domain'];
 
         // empty string SameSite should use the default for browsers
         $samesite = ($options['samesite'] === '') ? self::$defaults['samesite'] : $options['samesite'];
@@ -270,7 +270,12 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
         $httponly = $options['httponly'];
 
         $this->validateName($name, $raw);
+        if ($prefix !== '') {
+            $this->validateName($prefix, $raw);
+        }
         $this->validateValue($value, $raw);
+        $this->validatePath($path);
+        $this->validateDomain($domain);
         $this->validatePrefix($prefix, $secure, $path, $domain);
         $this->validateSameSite($samesite, $secure);
 
@@ -449,6 +454,9 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     public function withPrefix(string $prefix = '')
     {
         $this->validatePrefix($prefix, $this->secure, $this->path, $this->domain);
+        if ($prefix !== '') {
+            $this->validateName($prefix, $this->raw);
+        }
 
         $cookie = clone $this;
 
@@ -515,6 +523,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     public function withPath(?string $path)
     {
         $path = in_array($path, [null, '', '0'], true) ? self::$defaults['path'] : $path;
+        $this->validatePath($path);
         $this->validatePrefix($this->prefix, $this->secure, $path, $this->domain);
 
         $cookie = clone $this;
@@ -530,6 +539,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     public function withDomain(?string $domain)
     {
         $domain ??= self::$defaults['domain'];
+        $this->validateDomain($domain);
         $this->validatePrefix($this->prefix, $this->secure, $this->path, $domain);
 
         $cookie = clone $this;
@@ -586,6 +596,9 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     public function withRaw(bool $raw = true)
     {
         $this->validateName($this->name, $raw);
+        if ($this->prefix !== '') {
+            $this->validateName($this->prefix, $raw);
+        }
         $this->validateValue($this->value, $raw);
 
         $cookie = clone $this;
@@ -787,6 +800,30 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     {
         if ($raw && strpbrk($value, self::$reservedValueCharsList) !== false) {
             throw CookieException::forInvalidCookieValue();
+        }
+    }
+
+    /**
+     * Validates the cookie path per RFC 6265 and PHP setcookie() constraints.
+     *
+     * @throws CookieException
+     */
+    protected function validatePath(string $path): void
+    {
+        if (strpbrk($path, self::$reservedValueCharsList) !== false) {
+            throw CookieException::forInvalidCookiePath();
+        }
+    }
+
+    /**
+     * Validates the cookie domain per RFC 6265 and PHP setcookie() constraints.
+     *
+     * @throws CookieException
+     */
+    protected function validateDomain(string $domain): void
+    {
+        if ($domain !== '' && strpbrk($domain, self::$reservedValueCharsList) !== false) {
+            throw CookieException::forInvalidCookieDomain();
         }
     }
 
