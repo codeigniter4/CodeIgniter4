@@ -194,6 +194,35 @@ snapshot taken right after ``interact()`` returns and before bind and validate.
 Any change you make to ``$arguments`` or ``$options`` inside ``interact()``
 carries through to bind, validate, and ``execute()``.
 
+.. _prompts-for-missing-input:
+
+Prompting for Missing Arguments
+===============================
+
+A command can let the framework prompt for its missing required arguments
+instead of hand-rolling that logic in ``interact()``. Opt in by implementing
+the ``CodeIgniter\CLI\PromptsForMissingInputInterface`` marker interface:
+
+.. literalinclude:: cli_modern_commands/015.php
+
+On an interactive run, right before ``interact()`` is called, the framework
+compares the provided positional tokens against the declared required arguments
+and prompts (with the ``required`` validation rule) for each one still missing,
+in declaration order. Two hooks refine the behavior:
+
+- ``getArgumentPromptLabels(): array`` returns a map of argument name to
+  prompt label. Arguments without an entry fall back to a generic label naming
+  the argument.
+- ``afterPrompting(array &$arguments, array &$options): void``
+  runs after at least one prompt occurred. Useful to derive further input from
+  the answers.
+
+On a non-interactive run nothing is prompted, and a missing required argument
+fails validation with the usual missing-arguments error. Since the prompted
+values are appended before the raw input is snapshotted, they are also visible
+to ``interact()``, the unbound accessors, and anything forwarded through
+``$this->call(...)``.
+
 .. _non-interactive-mode:
 
 Non-Interactive Mode

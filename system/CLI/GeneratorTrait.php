@@ -157,7 +157,7 @@ trait GeneratorTrait
 
             if (
                 CLI::prompt(
-                    'Are you sure you want to continue?',
+                    lang('CLI.generator.confirmContinue'),
                     ['y', 'n'],
                     'required',
                 ) === 'n'

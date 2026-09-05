@@ -82,11 +82,9 @@ abstract class AbstractCommand
     private array $requiredArguments = [];
 
     /**
-     * Cache of resolved `Command` attributes keyed by class name.
-     *
-     * @var array<class-string<self>, Command>
+     * @var array<string, object>
      */
-    private static array $commandAttributeCache = [];
+    private static array $classAttributeCache = [];
 
     /**
      * The unbound arguments that can be passed to other commands when called via the `call()` method.
@@ -138,7 +136,7 @@ abstract class AbstractCommand
      */
     public function __construct(private readonly Commands $commands)
     {
-        $attribute = $this->getCommandAttribute();
+        $attribute = $this->resolveClassAttribute(Command::class);
 
         $this->name        = $attribute->name;
         $this->description = $attribute->description;
@@ -408,6 +406,8 @@ abstract class AbstractCommand
      *   1. Run `isAvailable()` to check if the command can be run in the current environment.
      *   2. `initialize()` and `interact()` are handed the raw parsed input by reference, in that order.
      *      Both can mutate the tokens before the framework interprets them against the declared definitions.
+     *      In between, a command implementing `PromptsForMissingInputInterface` is prompted for its missing
+     *      required arguments when running interactively.
      *      Note: the per-run interactive state is captured from `$options` before `initialize()` runs, so
      *      mutating `--no-interaction` from within `initialize()` will not affect this invocation. Use
      *      `setInteractive()` instead.
@@ -442,6 +442,10 @@ abstract class AbstractCommand
         $this->initialize($arguments, $options);
 
         if ($this->isInteractive()) {
+            if ($this instanceof PromptsForMissingInputInterface) {
+                $this->promptForMissingArguments($arguments, $options);
+            }
+
             $this->interact($arguments, $options);
         }
 
@@ -502,6 +506,30 @@ abstract class AbstractCommand
      * @param array<string, list<string>|string|null> $options   Parsed options from command line.
      */
     protected function interact(array &$arguments, array &$options): void
+    {
+    }
+
+    /**
+     * Map of argument name to the prompt label used when prompting for that missing argument.
+     *
+     * Consulted only when the command implements `PromptsForMissingInputInterface`.
+     *
+     * @return array<non-empty-string, string>
+     */
+    protected function getArgumentPromptLabels(): array
+    {
+        return [];
+    }
+
+    /**
+     * Hook called after at least one missing required argument has been prompted for.
+     *
+     * Called only when the command implements `PromptsForMissingInputInterface`.
+     *
+     * @param list<string>                            $arguments Parsed arguments from command line.
+     * @param array<string, list<string>|string|null> $options   Parsed options from command line.
+     */
+    protected function afterPrompting(array &$arguments, array &$options): void
     {
     }
 
@@ -728,6 +756,35 @@ abstract class AbstractCommand
             ->addOption(new Option(name: 'help', shortcut: 'h', description: 'Display help for the given command.'))
             ->addOption(new Option(name: 'no-header', description: 'Do not display the banner when running the command.'))
             ->addOption(new Option(name: 'no-interaction', shortcut: 'N', description: 'Do not ask any interactive questions.'));
+    }
+
+    /**
+     * Prompts for each missing required argument and appends the answers to the raw arguments.
+     *
+     * @param list<string>                            $arguments Parsed arguments from command line.
+     * @param array<string, list<string>|string|null> $options   Parsed options from command line.
+     */
+    private function promptForMissingArguments(array &$arguments, array &$options): void
+    {
+        // A null reader cannot satisfy a required prompt, so leave the missing arguments to validation.
+        if (CLI::getInputOutput() instanceof NullInputOutput) {
+            return;
+        }
+
+        $missing = array_slice($this->requiredArguments, count($arguments));
+
+        if ($missing === []) {
+            return;
+        }
+
+        $labels = $this->getArgumentPromptLabels();
+
+        foreach ($missing as $name) {
+            $arguments[] = CLI::prompt($labels[$name] ?? lang('CLI.argumentPrompt', [$name]), null, 'required');
+            CLI::newLine();
+        }
+
+        $this->afterPrompting($arguments, $options);
     }
 
     /**
@@ -1054,22 +1111,31 @@ abstract class AbstractCommand
     }
 
     /**
+     * Resolves a class-level attribute of this command, memoized per command class.
+     *
+     * @template T of object
+     *
+     * @param class-string<T> $attributeClass
+     *
+     * @return T
+     *
      * @throws LogicException
      */
-    private function getCommandAttribute(): Command
+    final protected function resolveClassAttribute(string $attributeClass): object
     {
-        $class = static::class;
+        $key = static::class . '@' . $attributeClass;
 
-        if (array_key_exists($class, self::$commandAttributeCache)) {
-            return self::$commandAttributeCache[$class];
+        if (! array_key_exists($key, self::$classAttributeCache)) {
+            $attribute = (new ReflectionClass($this))->getAttributes($attributeClass)[0]
+                ?? throw new LogicException(lang('Commands.missingCommandAttribute', [static::class, $attributeClass]));
+
+            self::$classAttributeCache[$key] = $attribute->newInstance();
         }
 
-        $attribute = (new ReflectionClass($this))->getAttributes(Command::class)[0]
-            ?? throw new LogicException(lang('Commands.missingCommandAttribute', [$class, Command::class]));
+        $instance = self::$classAttributeCache[$key];
+        assert($instance instanceof $attributeClass);
 
-        self::$commandAttributeCache[$class] = $attribute->newInstance();
-
-        return self::$commandAttributeCache[$class];
+        return $instance;
     }
 
     /**

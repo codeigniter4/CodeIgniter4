@@ -15,6 +15,7 @@ declare(strict_types=1);
 return [
     'altCommandPlural'   => 'Did you mean one of these?',
     'altCommandSingular' => 'Did you mean this?',
+    'argumentPrompt'     => 'Please provide a value for the "{0}" argument',
     'commandAlias'       => '[alias of {0}]',
     'commandNotFound'    => 'Command "{0}" not found.',
     'generator'          => [
@@ -36,11 +37,13 @@ return [
             'validation'  => 'Validation class name',
         ],
         'commandType'      => 'Command type',
+        'confirmContinue'  => 'Are you sure you want to continue?',
         'databaseGroup'    => 'Database group',
         'fileCreate'       => 'File created: {0}',
         'fileError'        => 'Error while creating file: "{0}"',
         'fileExist'        => 'File exists: "{0}"',
         'fileOverwrite'    => 'File overwritten: "{0}"',
+        'invalidClassName' => 'Class name "{0}" is not valid.',
         'parentClass'      => 'Parent class',
         'returnType'       => 'Return type',
         'tableName'        => 'Table name',

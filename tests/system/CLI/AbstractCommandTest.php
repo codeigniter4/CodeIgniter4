@@ -26,6 +26,7 @@ use CodeIgniter\CodeIgniter;
 use CodeIgniter\Commands\Help;
 use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\App;
 use Config\Services;
@@ -40,6 +41,7 @@ use Tests\Support\Commands\Modern\AppAboutCommand;
 use Tests\Support\Commands\Modern\InteractFixtureCommand;
 use Tests\Support\Commands\Modern\InteractiveStateProbeCommand;
 use Tests\Support\Commands\Modern\ParentCallsInteractFixtureCommand;
+use Tests\Support\Commands\Modern\PromptingFixtureCommand;
 use Tests\Support\Commands\Modern\TestFixtureCommand;
 use Tests\Support\Commands\Modern\UnavailableFixtureCommand;
 use Throwable;
@@ -62,6 +64,7 @@ final class AbstractCommandTest extends CIUnitTestCase
         CLI::reset();
 
         InteractiveStateProbeCommand::reset();
+        PromptingFixtureCommand::reset();
         UnavailableFixtureCommand::reset();
     }
 
@@ -1165,5 +1168,83 @@ final class AbstractCommandTest extends CIUnitTestCase
         $this->expectExceptionMessage('Validated option with name "missing" does not exist.');
 
         $command->callGetValidatedOption('missing');
+    }
+
+    public function testPromptsForMissingRequiredArgumentsWhenInteractive(): void
+    {
+        $io = new MockInputOutput();
+        $io->setInputs(['alpha', 'beta']);
+        CLI::setInputOutput($io);
+
+        $command = new PromptingFixtureCommand(new Commands());
+        $command->setInteractive(true);
+
+        $exitCode = $command->run([], []);
+
+        $this->assertSame(EXIT_SUCCESS, $exitCode);
+        $this->assertSame(['first' => 'alpha', 'second' => 'beta'], PromptingFixtureCommand::$receivedArguments);
+        $this->assertTrue(PromptingFixtureCommand::$afterHookCalled);
+
+        $output = $io->getOutput();
+        $this->assertStringContainsString('Please provide a value for the "first" argument', $output);
+        $this->assertStringContainsString('What is the second value?', $output);
+    }
+
+    public function testPromptsOnlyForMissingTailArguments(): void
+    {
+        $io = new MockInputOutput();
+        $io->setInputs(['beta']);
+        CLI::setInputOutput($io);
+
+        $command = new PromptingFixtureCommand(new Commands());
+        $command->setInteractive(true);
+
+        $command->run(['alpha'], []);
+
+        $this->assertSame(['first' => 'alpha', 'second' => 'beta'], PromptingFixtureCommand::$receivedArguments);
+        $this->assertStringNotContainsString('"first" argument', $io->getOutput());
+    }
+
+    public function testAfterHookIsSkippedWhenNothingIsPrompted(): void
+    {
+        $command = new PromptingFixtureCommand(new Commands());
+        $command->setInteractive(true);
+
+        $command->run(['alpha', 'beta'], []);
+
+        $this->assertFalse(PromptingFixtureCommand::$afterHookCalled);
+    }
+
+    public function testMissingRequiredArgumentsStillThrowWhenNotInteractive(): void
+    {
+        $command = new PromptingFixtureCommand(new Commands());
+        $command->setInteractive(false);
+
+        $this->expectException(ArgumentCountMismatchException::class);
+
+        $command->run([], []);
+    }
+
+    public function testPromptingIsSkippedWithNullInputOutput(): void
+    {
+        CLI::setInputOutput(new NullInputOutput());
+
+        $command = new PromptingFixtureCommand(new Commands());
+        $command->setInteractive(true);
+
+        $this->expectException(ArgumentCountMismatchException::class);
+
+        $command->run([], []);
+    }
+
+    public function testNonImplementingCommandIsNotPrompted(): void
+    {
+        $command = new TestFixtureCommand(new Commands());
+        $command->addArgument(new Argument(name: 'first', required: true));
+        $command->setInteractive(true);
+
+        $this->expectException(ArgumentCountMismatchException::class);
+
+        $command->run([], []);
     }
 }

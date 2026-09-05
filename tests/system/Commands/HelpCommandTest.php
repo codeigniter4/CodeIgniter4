@@ -206,6 +206,62 @@ final class HelpCommandTest extends CIUnitTestCase
         );
     }
 
+    public function testDescribeGeneratorCommand(): void
+    {
+        command('help make:testwidget');
+
+        $this->assertSame(
+            <<<'EOT'
+
+                Usage:
+                  make:testwidget [options] [--] <name>
+
+                Description:
+                  Fixture generator command.
+
+                Arguments:
+                  name                       The name of the class to generate.
+
+                Options:
+                  -h, --help                 Display help for the given command.
+                      --no-header            Do not display the banner when running the command.
+                  -N, --no-interaction       Do not ask any interactive questions.
+                  -n, --namespace=NAMESPACE  Set the root namespace. [default: "App"]
+                  -s, --suffix               Append the "Widget" suffix to the class name.
+                  -f, --force                Force overwrite existing file.
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
+    }
+
+    public function testDescribeGeneratorCommandWithTrimmedOptions(): void
+    {
+        command('help make:trimmedwidget');
+
+        $this->assertSame(
+            <<<'EOT'
+
+                Usage:
+                  make:trimmedwidget [options] [--] <name>
+
+                Description:
+                  Fixture generator command with trimmed options and forced suffixing.
+
+                Arguments:
+                  name                       The name of the class to generate.
+
+                Options:
+                  -h, --help                 Display help for the given command.
+                      --no-header            Do not display the banner when running the command.
+                  -N, --no-interaction       Do not ask any interactive questions.
+                  -n, --namespace=NAMESPACE  Set the root namespace. [default: "App"]
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
+    }
+
     public function testDescribeUnavailableCommand(): void
     {
         command('help test:unavailable');
