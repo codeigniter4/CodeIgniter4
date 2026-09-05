@@ -271,6 +271,68 @@ final class AlterTableTest extends CIUnitTestCase
         $this->seeInDatabase('foo', ['email' => 'funkalicious@example.com']);
     }
 
+    public function testDropColumnKeepsForeignKeyTableNameWhenPrefixIsSet(): void
+    {
+        $config = [
+            'DBDriver' => 'SQLite3',
+            'database' => ':memory:',
+            'DBDebug'  => true,
+            'DBPrefix' => 'db_',
+        ];
+
+        $db = db_connect($config, false);
+        $this->assertInstanceOf(Connection::class, $db);
+
+        $forge = Database::forge($db);
+        $this->assertInstanceOf(Forge::class, $forge);
+
+        // The referenced table must begin with a character that also appears in
+        // the prefix, or the prefix stripping cannot damage its name.
+        $forge->addField([
+            'id' => [
+                'type'           => 'integer',
+                'constraint'     => 11,
+                'unsigned'       => true,
+                'auto_increment' => true,
+            ],
+        ]);
+        $forge->addPrimaryKey('id');
+        $forge->createTable('bandit_fk');
+
+        $forge->addField([
+            'id' => [
+                'type'           => 'integer',
+                'constraint'     => 11,
+                'unsigned'       => true,
+                'auto_increment' => true,
+            ],
+            'key_id' => [
+                'type'       => 'integer',
+                'constraint' => 11,
+                'unsigned'   => true,
+            ],
+            'name' => [
+                'type'       => 'varchar',
+                'constraint' => 255,
+                'null'       => true,
+            ],
+        ]);
+        $forge->addPrimaryKey('id');
+        $forge->addForeignKey('key_id', 'bandit_fk', 'id');
+        $forge->createTable('bandit');
+
+        // Dropping a column rebuilds the table, recreating its foreign keys.
+        $this->assertTrue($forge->dropColumn('bandit', 'name'));
+
+        $keys = array_values($db->getForeignKeyData('bandit'));
+
+        $this->assertCount(1, $keys);
+        $this->assertSame($db->DBPrefix . 'bandit_fk', $keys[0]->foreign_table_name);
+
+        $forge->dropTable('bandit', true);
+        $forge->dropTable('bandit_fk', true);
+    }
+
     protected function createTable(string $tableName = 'foo'): void
     {
         // Create support table for foreign keys

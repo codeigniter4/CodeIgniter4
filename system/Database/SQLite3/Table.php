@@ -333,9 +333,16 @@ class Table
         }
 
         foreach ($this->foreignKeys as $foreignKey) {
+            $foreignTableName = $foreignKey->foreign_table_name;
+            $prefix           = $this->db->DBPrefix;
+
+            if ($prefix !== '' && str_starts_with($foreignTableName, $prefix)) {
+                $foreignTableName = substr($foreignTableName, strlen($prefix));
+            }
+
             $this->forge->addForeignKey(
                 $foreignKey->column_name,
-                trim($foreignKey->foreign_table_name, $this->db->DBPrefix),
+                $foreignTableName,
                 $foreignKey->foreign_column_name,
             );
         }
