@@ -151,7 +151,12 @@ final class MemcachedHandlerTest extends AbstractHandlerTestCase
 
         $this->assertSame(9, $memcachedHandler->decrement(self::$key1, 1));
         $this->assertFalse($memcachedHandler->decrement(self::$key2, 1));
-        $this->assertSame(1, $memcachedHandler->decrement(self::$key3, 1));
+        // A key that doesn't exist yet starts at 0, not at the offset
+        // (Memcached counters are unsigned, so it can't start negative).
+        $this->assertSame(0, $memcachedHandler->decrement(self::$key3, 5));
+        // Memcached stores counter values as decimal strings on the wire, so
+        // a plain get() on a counter key returns a string, not an int.
+        $this->assertSame('0', $memcachedHandler->get(self::$key3));
     }
 
     public function testClean(): void

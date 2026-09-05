@@ -45,6 +45,7 @@ Bugs Fixed
 - **Helpers:** Fixed a bug where ``get_dir_file_info()`` returned incomplete entries for subdirectories and missing files instead of omitting them.
 - **Honeypot:** Fixed a bug where bot detection returned an HTTP 500 response instead of 403 (Forbidden).
 - **Logger:** Fixed a bug where interpolating a log message with array or non-stringable context values could raise PHP warnings or errors.
+- **Cache:** Fixed ``MemcachedHandler::decrement()`` initializing a non-existent counter to the positive offset. Missing counters are now initialized to ``0``, reflecting Memcached's unsigned, saturating counter semantics.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
