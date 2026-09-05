@@ -31,13 +31,24 @@ $_SERVER['SCRIPT_NAME'] = '/index.php';
 // Full path
 $path = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . ltrim($uri, '/');
 
+// Security: prevent path traversal outside DOCUMENT_ROOT.
+// realpath() resolves ../, symlinks and returns false for non-existing paths.
+$realPath    = realpath($path);
+$realDocRoot = realpath($_SERVER['DOCUMENT_ROOT']);
+
 // If $path is an existing file or folder within the public folder
 // then let the request handle it like normal.
-if ($uri !== '/' && (is_file($path) || is_dir($path))) {
+if (
+    $uri !== '/'
+    && $realPath !== false
+    && $realDocRoot !== false
+    && ($realPath === $realDocRoot || str_starts_with($realPath, $realDocRoot . DIRECTORY_SEPARATOR))
+    && (is_file($realPath) || is_dir($realPath))
+) {
     return false;
 }
 
-unset($uri, $path);
+unset($uri, $path, $realPath, $realDocRoot);
 
 // Otherwise, we'll load the index file and let
 // the framework handle the request from here.
