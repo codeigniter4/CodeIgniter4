@@ -331,6 +331,7 @@
 <li><p><strong>CLI:</strong> Fixed a bug where pressing backspace in a <code class="docutils literal notranslate"><span class="pre">CLI::prompt()</span></code> erased the prompt text when the <code class="docutils literal notranslate"><span class="pre">readline</span></code> extension is enabled. The prompt is now passed to <code class="docutils literal notranslate"><span class="pre">readline()</span></code> so line redraws repaint it.
 ANSI color codes in the prompt (e.g., option defaults) are wrapped in readline’s non-printing markers under GNU readline so cursor positioning stays accurate.</p></li>
 <li><p><strong>CLIRequest:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">parseCommand()</span></code> could throw a TypeError when <code class="docutils literal notranslate"><span class="pre">argv</span></code> is missing.</p></li>
+<li><p><strong>CodeIgniter:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">gatherOutput()</span></code> could be called twice when <code class="docutils literal notranslate"><span class="pre">startController()</span></code> returned a <code class="docutils literal notranslate"><span class="pre">ResponseInterface</span></code> (e.g., from filter attributes or closure routes).</p></li>
 <li><p><strong>Content Security Policy:</strong> Fixed a bug where empty <code class="docutils literal notranslate"><span class="pre">Content-Security-Policy</span></code>, <code class="docutils literal notranslate"><span class="pre">Content-Security-Policy-Report-Only</span></code>, and <code class="docutils literal notranslate"><span class="pre">Reporting-Endpoints</span></code> response headers were generated when no corresponding values existed.</p></li>
 <li><p><strong>Cookie:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instances created with <code class="docutils literal notranslate"><span class="pre">raw:</span> <span class="pre">true</span></code> allowed invalid characters in cookie values rejected by <code class="docutils literal notranslate"><span class="pre">setrawcookie()</span></code>.</p></li>
 <li><p><strong>Helpers:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">get_dir_file_info()</span></code> returned incomplete entries for subdirectories and missing files instead of omitting them.</p></li>
@@ -355,7 +356,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Sep 04, 2026.
+      <span class="lastupdated">Last updated on Sep 05, 2026.
       </span></p>
   </div>
 
