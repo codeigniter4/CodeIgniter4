@@ -40,6 +40,7 @@ Bugs Fixed
   ANSI color codes in the prompt (e.g., option defaults) are wrapped in readline's non-printing markers under GNU readline so cursor positioning stays accurate.
 - **CLIRequest:** Fixed a bug where ``parseCommand()`` could throw a TypeError when ``argv`` is missing.
 - **CodeIgniter:** Fixed a bug where ``gatherOutput()`` could be called twice when ``startController()`` returned a ``ResponseInterface`` (e.g., from filter attributes or closure routes).
+- **Commands:** Fixed a bug in ``rewrite.php`` where files outside the document root could be served by the development server.
 - **Content Security Policy:** Fixed a bug where empty ``Content-Security-Policy``, ``Content-Security-Policy-Report-Only``, and ``Reporting-Endpoints`` response headers were generated when no corresponding values existed.
 - **Cookie:** Fixed a bug where ``Cookie`` instances created with ``raw: true`` allowed invalid characters in cookie values rejected by ``setrawcookie()``.
 - **Database:** Fixed a bug where rebuilding a SQLite3 table (e.g., ``Forge::dropColumn()``, ``Forge::modifyColumn()``, ``Forge::dropForeignKey()`` and ``Forge::dropPrimaryKey()``) corrupted the table names referenced by its foreign keys when ``DBPrefix`` was set.
