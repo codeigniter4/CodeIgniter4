@@ -103,6 +103,16 @@ RedirectException Default Status Code
         protected int $defaultStatusCode = 307;
     }
 
+RouteCollection Identifier Transformation
+=========================================
+
+``RouteCollection`` no longer applies ``esc(strip_tags())`` to namespace,
+controller, and method values, including custom controllers passed to
+``resource()`` and ``presenter()``. Applications relying on HTML tags being
+stripped or special characters being HTML-encoded must preprocess these values
+before passing them to the router. Values originating from untrusted sources
+should be restricted to an explicit allowlist of permitted handlers.
+
 *********************
 Breaking Enhancements
 *********************
