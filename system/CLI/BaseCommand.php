@@ -108,6 +108,8 @@ abstract class BaseCommand
     /**
      * Can be used by a command to run other commands.
      *
+     * For a modern command, integer-keyed params are passed as arguments and string-keyed params as options.
+     *
      * @param array<array-key, string|null> $params
      *
      * @return int|null
@@ -116,7 +118,23 @@ abstract class BaseCommand
      */
     protected function call(string $command, array $params = [])
     {
-        return $this->commands->runLegacy($command, $params);
+        if ($this->commands->hasLegacyCommand($command) || ! $this->commands->hasModernCommand($command)) {
+            return $this->commands->runLegacy($command, $params);
+        }
+
+        $arguments = [];
+        $options   = [];
+
+        foreach ($params as $key => $value) {
+            if (is_int($key)) {
+                assert(is_string($value));
+                $arguments[] = $value;
+            } else {
+                $options[$key] = $value;
+            }
+        }
+
+        return $this->commands->runCommand($command, $arguments, $options);
     }
 
     /**

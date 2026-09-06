@@ -60,6 +60,22 @@ final class BaseCommandTest extends CIUnitTestCase
         $this->assertStringContainsString('Displays basic usage information.', $this->getStreamFilterBuffer());
     }
 
+    public function testCallingModernCommand(): void
+    {
+        $command = new class (single_service('logger'), single_service('commands')) extends BaseCommand {
+            protected $group = 'Fixtures';
+            protected $name  = 'legacy:bridge';
+
+            public function run(array $params)
+            {
+                return $this->call('app:about', ['hello', 'foo' => 'provided', 'quux' => null]);
+            }
+        };
+
+        $this->assertSame(EXIT_SUCCESS, $command->run([]));
+        $this->assertStringContainsString('CodeIgniter Version:', $this->getStreamFilterBuffer());
+    }
+
     public function testShowError(): void
     {
         $command = new AppInfo(single_service('logger'), single_service('commands'));

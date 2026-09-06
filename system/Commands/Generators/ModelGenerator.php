@@ -130,7 +130,9 @@ class ModelGenerator extends BaseCommand
 
             // Call the entity generator with the fully-qualified class name so
             // it ends up under the correct sub-namespace/folder (eg. Admin).
-            $this->call('make:entity', array_merge([trim($entityClass, '\\')], $this->params));
+            $entityOptions = array_intersect_key($this->params, array_flip(['namespace', 'suffix', 'force']));
+
+            $this->call('make:entity', array_merge([trim($entityClass, '\\')], $entityOptions));
 
             $return = '\\' . trim($entityClass, '\\') . '::class';
         } else {

@@ -465,6 +465,11 @@ The ``help`` command understands both styles — it delegates to the legacy
 ``showHelp()`` method for legacy commands and renders a structured view for
 modern ones.
 
+A legacy command can call a modern one through ``$this->call()``: integer-keyed
+params become positional arguments and string-keyed params become options, and
+the modern command validates them like any other input. Unknown options or extra
+arguments that a legacy target would have ignored are rejected.
+
 .. note::
 
     Legacy commands remain supported while the framework's own built-in
