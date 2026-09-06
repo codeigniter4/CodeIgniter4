@@ -603,23 +603,33 @@ final class CookieTest extends CIUnitTestCase
         $this->assertSame('', $cookie3->getDomain());
     }
 
+    public function testValidationOfCookiePrefix(): void
+    {
+        $this->expectException(CookieException::class);
+        $this->expectExceptionMessage(lang('Cookie.invalidCookieName', ["bad\r\n"]));
+        new Cookie('test', 'val', ['prefix' => "bad\r\n"]);
+    }
+
+    public function testValidationOfCookiePrefixInWithPrefix(): void
+    {
+        $this->expectException(CookieException::class);
+        $this->expectExceptionMessage(lang('Cookie.invalidCookieName', ["bad\r\n"]));
+        $cookie = new Cookie('test', 'val');
+        $cookie->withPrefix("bad\r\n");
+    }
+
     public function testValidationOfRawCookiePrefix(): void
     {
         $this->expectException(CookieException::class);
+        $this->expectExceptionMessage(lang('Cookie.invalidCookieName', ["bad\r\n"]));
         new Cookie('test', 'val', ['prefix' => "bad\r\n", 'raw' => true]);
     }
 
     public function testValidationOfRawCookiePrefixInWithPrefix(): void
     {
         $this->expectException(CookieException::class);
+        $this->expectExceptionMessage(lang('Cookie.invalidCookieName', ["bad\r\n"]));
         $cookie = new Cookie('test', 'val', ['raw' => true]);
         $cookie->withPrefix("bad\r\n");
-    }
-
-    public function testValidationOfRawCookiePrefixInWithRaw(): void
-    {
-        $this->expectException(CookieException::class);
-        $cookie = new Cookie('test', 'val', ['prefix' => "bad\r\n", 'raw' => false]);
-        $cookie->withRaw(true);
     }
 }

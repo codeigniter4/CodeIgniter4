@@ -271,7 +271,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 
         $this->validateName($name, $raw);
         if ($prefix !== '') {
-            $this->validateName($prefix, $raw);
+            $this->validateName($prefix, true);
         }
         $this->validateValue($value, $raw);
         $this->validatePath($path);
@@ -455,7 +455,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     {
         $this->validatePrefix($prefix, $this->secure, $this->path, $this->domain);
         if ($prefix !== '') {
-            $this->validateName($prefix, $this->raw);
+            $this->validateName($prefix, true);
         }
 
         $cookie = clone $this;
@@ -597,7 +597,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     {
         $this->validateName($this->name, $raw);
         if ($this->prefix !== '') {
-            $this->validateName($this->prefix, $raw);
+            $this->validateName($this->prefix, true);
         }
         $this->validateValue($this->value, $raw);
 
