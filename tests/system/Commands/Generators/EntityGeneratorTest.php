@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Generators;
 
+use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\Group;
@@ -25,28 +26,46 @@ final class EntityGeneratorTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
+    private function getUndecoratedBuffer(): string
+    {
+        return preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()) ?? '';
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        CLI::reset();
+    }
+
     protected function tearDown(): void
     {
-        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', $this->getStreamFilterBuffer());
-        $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
-        $dir    = dirname($file);
-        if (is_file($file)) {
-            unlink($file);
-        }
-        if (is_dir($dir)) {
-            rmdir($dir);
+        parent::tearDown();
+
+        CLI::reset();
+
+        if (is_dir(APPPATH . 'Entities')) {
+            helper('filesystem');
+            delete_files(APPPATH . 'Entities', true);
+            rmdir(APPPATH . 'Entities');
         }
     }
 
     public function testGenerateEntity(): void
     {
         command('make:entity user');
+
+        $this->assertSame(
+            PHP_EOL . 'File created: ' . clean_path(APPPATH . 'Entities/User.php') . PHP_EOL,
+            $this->getUndecoratedBuffer(),
+        );
         $this->assertFileExists(APPPATH . 'Entities/User.php');
     }
 
-    public function testGenerateEntityWithOptionSuffix(): void
+    public function testGenerateEntityWithSuffix(): void
     {
-        command('make:entity user -suffix');
+        command('make:entity user --suffix');
+
         $this->assertFileExists(APPPATH . 'Entities/UserEntity.php');
     }
 }

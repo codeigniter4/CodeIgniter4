@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Generators;
 
+use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\Group;
@@ -25,15 +26,28 @@ final class FormRequestGeneratorTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
+    private function getUndecoratedBuffer(): string
+    {
+        return preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()) ?? '';
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        CLI::reset();
+    }
+
     protected function tearDown(): void
     {
         parent::tearDown();
 
-        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', $this->getStreamFilterBuffer());
-        $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
+        CLI::reset();
 
-        if (is_file($file)) {
-            unlink($file);
+        if (is_dir(APPPATH . 'Requests')) {
+            helper('filesystem');
+            delete_files(APPPATH . 'Requests', true);
+            rmdir(APPPATH . 'Requests');
         }
     }
 
@@ -41,18 +55,21 @@ final class FormRequestGeneratorTest extends CIUnitTestCase
     {
         command('make:request user');
 
-        $file = APPPATH . 'Requests/User.php';
-
-        $this->assertFileExists($file);
-        $this->assertStringContainsString(
-            'Defaults to true in FormRequest. Override only when authorization',
-            (string) file_get_contents($file),
+        $this->assertSame(
+            PHP_EOL . 'File created: ' . clean_path(APPPATH . 'Requests/User.php') . PHP_EOL,
+            $this->getUndecoratedBuffer(),
         );
+        $this->assertFileExists(APPPATH . 'Requests/User.php');
+
+        $content = file_get_contents(APPPATH . 'Requests/User.php');
+        $this->assertIsString($content);
+        $this->assertStringContainsString('Defaults to true in FormRequest. Override only when authorization', $content);
     }
 
-    public function testGenerateFormRequestWithOptionSuffix(): void
+    public function testGenerateFormRequestWithSuffix(): void
     {
-        command('make:request admin -suffix');
-        $this->assertFileExists(APPPATH . 'Requests/AdminRequest.php');
+        command('make:request user --suffix');
+
+        $this->assertFileExists(APPPATH . 'Requests/UserRequest.php');
     }
 }

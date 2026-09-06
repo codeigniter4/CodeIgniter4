@@ -19,8 +19,11 @@ To view the full description and usage information on a particular generator, us
 .. code-block:: console
 
     php spark help <generator_command>
+    php spark <generator_command> --help
 
 where ``<generator_command>`` will be replaced with the command to check.
+
+.. note:: The single-letter option shortcuts listed below (``-n``, ``-s``, ``-f``) are available since v4.8.0.
 
 .. note:: Do you need to have the generated code in a subfolder? Let's say if you want to create a controller
     class to reside in the ``Admin`` subfolder of the main ``Controllers`` folder, you will just need
@@ -156,9 +159,9 @@ Argument:
 
 Options:
 ========
-* ``--namespace``: Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
-* ``--suffix``: Append the component suffix to the generated class name.
-* ``--force``: Set this flag to overwrite existing files on destination.
+* ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--suffix`` (``-s``): Append the component suffix to the generated class name.
+* ``--force`` (``-f``): Set this flag to overwrite existing files on destination.
 
 make:filter
 -----------
@@ -177,9 +180,9 @@ Argument:
 
 Options:
 ========
-* ``--namespace``: Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
-* ``--suffix``: Append the component suffix to the generated class name.
-* ``--force``: Set this flag to overwrite existing files on destination.
+* ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--suffix`` (``-s``): Append the component suffix to the generated class name.
+* ``--force`` (``-f``): Set this flag to overwrite existing files on destination.
 
 make:model
 ----------
@@ -205,6 +208,27 @@ Options:
 * ``--suffix``: Append the component suffix to the generated class name.
 * ``--force``: Set this flag to overwrite existing files on destination.
 
+make:request
+------------
+
+Creates a new FormRequest file.
+
+Usage:
+======
+::
+
+    make:request <name> [options]
+
+Argument:
+=========
+* ``name``: The name of the FormRequest class. **[REQUIRED]**
+
+Options:
+========
+* ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--suffix`` (``-s``): Append the component suffix to the generated class name.
+* ``--force`` (``-f``): Set this flag to overwrite existing files on destination.
+
 make:seeder
 -----------
 
@@ -222,9 +246,9 @@ Argument:
 
 Options:
 ========
-* ``--namespace``: Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
-* ``--suffix``: Append the component suffix to the generated class name.
-* ``--force``: Set this flag to overwrite existing files on destination.
+* ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--suffix`` (``-s``): Append the component suffix to the generated class name.
+* ``--force`` (``-f``): Set this flag to overwrite existing files on destination.
 
 
 .. _cli-generators-make-test:
@@ -268,9 +292,9 @@ Argument:
 
 Options:
 ========
-* ``--namespace``: Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
-* ``--suffix``: Append the component suffix to the generated class name.
-* ``--force``: Set this flag to overwrite existing files on destination.
+* ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--suffix`` (``-s``): Append the component suffix to the generated class name.
+* ``--force`` (``-f``): Set this flag to overwrite existing files on destination.
 
 make:migration
 --------------
@@ -313,9 +337,9 @@ Argument:
 
 Options:
 ========
-* ``--namespace``: Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
-* ``--suffix``: Append the component suffix to the generated class name.
-* ``--force``: Set this flag to overwrite existing files on destination.
+* ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--suffix`` (``-s``): Append the component suffix to the generated class name.
+* ``--force`` (``-f``): Set this flag to overwrite existing files on destination.
 
 ****************************************
 Scaffolding a Complete Set of Stock Code

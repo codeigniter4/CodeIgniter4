@@ -13,76 +13,17 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Generators;
 
-use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\GeneratorTrait;
+use CodeIgniter\CLI\AbstractGeneratorCommand;
+use CodeIgniter\CLI\Attributes\Command;
+use CodeIgniter\CLI\Attributes\GeneratorCommand;
 
-/**
- * Generates a skeleton Validation file.
- */
-class ValidationGenerator extends BaseCommand
+#[Command(name: 'make:validation', description: 'Generates a new validation file.', group: 'Generators')]
+#[GeneratorCommand(
+    component: 'Validation',
+    template: 'validation.tpl.php',
+    directory: 'Validation',
+    classNameLang: 'CLI.generator.className.validation',
+)]
+class ValidationGenerator extends AbstractGeneratorCommand
 {
-    use GeneratorTrait;
-
-    /**
-     * The Command's Group
-     *
-     * @var string
-     */
-    protected $group = 'Generators';
-
-    /**
-     * The Command's Name
-     *
-     * @var string
-     */
-    protected $name = 'make:validation';
-
-    /**
-     * The Command's Description
-     *
-     * @var string
-     */
-    protected $description = 'Generates a new validation file.';
-
-    /**
-     * The Command's Usage
-     *
-     * @var string
-     */
-    protected $usage = 'make:validation <name> [options]';
-
-    /**
-     * The Command's Arguments
-     *
-     * @var array<string, string>
-     */
-    protected $arguments = [
-        'name' => 'The validation class name.',
-    ];
-
-    /**
-     * The Command's Options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [
-        '--namespace' => 'Set root namespace. Default: "APP_NAMESPACE".',
-        '--suffix'    => 'Append the component title to the class name (e.g. User => UserValidation).',
-        '--force'     => 'Force overwrite existing file.',
-    ];
-
-    /**
-     * Actually execute a command.
-     */
-    public function run(array $params)
-    {
-        $this->component = 'Validation';
-        $this->directory = 'Validation';
-        $this->template  = 'validation.tpl.php';
-
-        $this->classNameLang = 'CLI.generator.className.validation';
-        $this->generateClass($params);
-
-        return EXIT_SUCCESS;
-    }
 }

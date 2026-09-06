@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Generators;
 
+use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\Group;
@@ -25,28 +26,46 @@ final class SeederGeneratorTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
+    private function getUndecoratedBuffer(): string
+    {
+        return preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()) ?? '';
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        CLI::reset();
+    }
+
     protected function tearDown(): void
     {
         parent::tearDown();
 
-        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', $this->getStreamFilterBuffer());
-        $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
-        if (is_file($file)) {
-            unlink($file);
+        CLI::reset();
+
+        foreach (['Cars.php', 'CarsSeeder.php'] as $file) {
+            if (is_file(APPPATH . 'Database/Seeds/' . $file)) {
+                unlink(APPPATH . 'Database/Seeds/' . $file);
+            }
         }
     }
 
     public function testGenerateSeeder(): void
     {
         command('make:seeder cars');
-        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
+
+        $this->assertSame(
+            PHP_EOL . 'File created: ' . clean_path(APPPATH . 'Database/Seeds/Cars.php') . PHP_EOL,
+            $this->getUndecoratedBuffer(),
+        );
         $this->assertFileExists(APPPATH . 'Database/Seeds/Cars.php');
     }
 
-    public function testGenerateSeederWithOptionSuffix(): void
+    public function testGenerateSeederWithSuffix(): void
     {
-        command('make:seeder cars -suffix');
-        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
+        command('make:seeder cars --suffix');
+
         $this->assertFileExists(APPPATH . 'Database/Seeds/CarsSeeder.php');
     }
 }

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Generators;
 
+use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\Group;
@@ -25,24 +26,46 @@ final class FilterGeneratorTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
+    private function getUndecoratedBuffer(): string
+    {
+        return preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()) ?? '';
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        CLI::reset();
+    }
+
     protected function tearDown(): void
     {
-        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', $this->getStreamFilterBuffer());
-        $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
-        if (is_file($file)) {
-            unlink($file);
+        parent::tearDown();
+
+        CLI::reset();
+
+        foreach (['Admin.php', 'AdminFilter.php'] as $file) {
+            if (is_file(APPPATH . 'Filters/' . $file)) {
+                unlink(APPPATH . 'Filters/' . $file);
+            }
         }
     }
 
     public function testGenerateFilter(): void
     {
         command('make:filter admin');
+
+        $this->assertSame(
+            PHP_EOL . 'File created: ' . clean_path(APPPATH . 'Filters/Admin.php') . PHP_EOL,
+            $this->getUndecoratedBuffer(),
+        );
         $this->assertFileExists(APPPATH . 'Filters/Admin.php');
     }
 
-    public function testGenerateFilterWithOptionSuffix(): void
+    public function testGenerateFilterWithSuffix(): void
     {
-        command('make:filter admin -suffix');
+        command('make:filter admin --suffix');
+
         $this->assertFileExists(APPPATH . 'Filters/AdminFilter.php');
     }
 }

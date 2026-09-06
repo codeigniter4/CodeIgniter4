@@ -220,7 +220,7 @@ final class HelpCommandTest extends CIUnitTestCase
                   Fixture generator command.
 
                 Arguments:
-                  name                       The name of the class to generate.
+                  name                       The widget class name.
 
                 Options:
                   -h, --help                 Display help for the given command.
@@ -249,7 +249,7 @@ final class HelpCommandTest extends CIUnitTestCase
                   Fixture generator command with trimmed options and forced suffixing.
 
                 Arguments:
-                  name                       The name of the class to generate.
+                  name                       The widget class name.
 
                 Options:
                   -h, --help                 Display help for the given command.

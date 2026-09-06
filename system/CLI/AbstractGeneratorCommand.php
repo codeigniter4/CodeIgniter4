@@ -73,7 +73,7 @@ abstract class AbstractGeneratorCommand extends AbstractCommand implements Promp
     {
         $this->addArgument(new Argument(
             name: 'name',
-            description: 'The name of the class to generate.',
+            description: sprintf('The %s class name.', lcfirst($this->component)),
             required: true,
         ));
     }

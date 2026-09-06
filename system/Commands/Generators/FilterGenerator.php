@@ -13,76 +13,17 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Generators;
 
-use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\GeneratorTrait;
+use CodeIgniter\CLI\AbstractGeneratorCommand;
+use CodeIgniter\CLI\Attributes\Command;
+use CodeIgniter\CLI\Attributes\GeneratorCommand;
 
-/**
- * Generates a skeleton Filter file.
- */
-class FilterGenerator extends BaseCommand
+#[Command(name: 'make:filter', description: 'Generates a new filter file.', group: 'Generators')]
+#[GeneratorCommand(
+    component: 'Filter',
+    template: 'filter.tpl.php',
+    directory: 'Filters',
+    classNameLang: 'CLI.generator.className.filter',
+)]
+class FilterGenerator extends AbstractGeneratorCommand
 {
-    use GeneratorTrait;
-
-    /**
-     * The Command's Group
-     *
-     * @var string
-     */
-    protected $group = 'Generators';
-
-    /**
-     * The Command's Name
-     *
-     * @var string
-     */
-    protected $name = 'make:filter';
-
-    /**
-     * The Command's Description
-     *
-     * @var string
-     */
-    protected $description = 'Generates a new filter file.';
-
-    /**
-     * The Command's Usage
-     *
-     * @var string
-     */
-    protected $usage = 'make:filter <name> [options]';
-
-    /**
-     * The Command's Arguments
-     *
-     * @var array<string, string>
-     */
-    protected $arguments = [
-        'name' => 'The filter class name.',
-    ];
-
-    /**
-     * The Command's Options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [
-        '--namespace' => 'Set root namespace. Default: "APP_NAMESPACE".',
-        '--suffix'    => 'Append the component title to the class name (e.g. User => UserFilter).',
-        '--force'     => 'Force overwrite existing file.',
-    ];
-
-    /**
-     * Actually execute a command.
-     */
-    public function run(array $params)
-    {
-        $this->component = 'Filter';
-        $this->directory = 'Filters';
-        $this->template  = 'filter.tpl.php';
-
-        $this->classNameLang = 'CLI.generator.className.filter';
-        $this->generateClass($params);
-
-        return EXIT_SUCCESS;
-    }
 }

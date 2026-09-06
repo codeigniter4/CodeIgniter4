@@ -13,84 +13,17 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Generators;
 
-use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\GeneratorTrait;
+use CodeIgniter\CLI\AbstractGeneratorCommand;
+use CodeIgniter\CLI\Attributes\Command;
+use CodeIgniter\CLI\Attributes\GeneratorCommand;
 
-/**
- * Generates a skeleton transformer file.
- */
-class TransformerGenerator extends BaseCommand
+#[Command(name: 'make:transformer', description: 'Generates a new transformer file.', group: 'Generators')]
+#[GeneratorCommand(
+    component: 'Transformer',
+    template: 'transformer.tpl.php',
+    directory: 'Transformers',
+    classNameLang: 'CLI.generator.className.transformer',
+)]
+class TransformerGenerator extends AbstractGeneratorCommand
 {
-    use GeneratorTrait;
-
-    /**
-     * The Command's Group
-     *
-     * @var string
-     */
-    protected $group = 'Generators';
-
-    /**
-     * The Command's Name
-     *
-     * @var string
-     */
-    protected $name = 'make:transformer';
-
-    /**
-     * The Command's Description
-     *
-     * @var string
-     */
-    protected $description = 'Generates a new transformer file.';
-
-    /**
-     * The Command's Usage
-     *
-     * @var string
-     */
-    protected $usage = 'make:transformer <name> [options]';
-
-    /**
-     * The Command's Arguments
-     *
-     * @var array<string, string>
-     */
-    protected $arguments = [
-        'name' => 'The transformer class name.',
-    ];
-
-    /**
-     * The Command's Options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [
-        '--namespace' => 'Set root namespace. Default: "APP_NAMESPACE".',
-        '--suffix'    => 'Append the component title to the class name (e.g. User => UserTransformer).',
-        '--force'     => 'Force overwrite existing file.',
-    ];
-
-    /**
-     * Actually execute a command.
-     */
-    public function run(array $params)
-    {
-        $this->component = 'Transformer';
-        $this->directory = 'Transformers';
-        $this->template  = 'transformer.tpl.php';
-
-        $this->classNameLang = 'CLI.generator.className.transformer';
-        $this->generateClass($params);
-
-        return EXIT_SUCCESS;
-    }
-
-    /**
-     * Prepare options and do the necessary replacements.
-     */
-    protected function prepare(string $class): string
-    {
-        return $this->parseTemplate($class);
-    }
 }

@@ -13,76 +13,17 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Generators;
 
-use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\GeneratorTrait;
+use CodeIgniter\CLI\AbstractGeneratorCommand;
+use CodeIgniter\CLI\Attributes\Command;
+use CodeIgniter\CLI\Attributes\GeneratorCommand;
 
-/**
- * Generates a skeleton Entity file.
- */
-class EntityGenerator extends BaseCommand
+#[Command(name: 'make:entity', description: 'Generates a new entity file.', group: 'Generators')]
+#[GeneratorCommand(
+    component: 'Entity',
+    template: 'entity.tpl.php',
+    directory: 'Entities',
+    classNameLang: 'CLI.generator.className.entity',
+)]
+class EntityGenerator extends AbstractGeneratorCommand
 {
-    use GeneratorTrait;
-
-    /**
-     * The Command's Group
-     *
-     * @var string
-     */
-    protected $group = 'Generators';
-
-    /**
-     * The Command's Name
-     *
-     * @var string
-     */
-    protected $name = 'make:entity';
-
-    /**
-     * The Command's Description
-     *
-     * @var string
-     */
-    protected $description = 'Generates a new entity file.';
-
-    /**
-     * The Command's Usage
-     *
-     * @var string
-     */
-    protected $usage = 'make:entity <name> [options]';
-
-    /**
-     * The Command's Arguments
-     *
-     * @var array<string, string>
-     */
-    protected $arguments = [
-        'name' => 'The entity class name.',
-    ];
-
-    /**
-     * The Command's Options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [
-        '--namespace' => 'Set root namespace. Default: "APP_NAMESPACE".',
-        '--suffix'    => 'Append the component title to the class name (e.g. User => UserEntity).',
-        '--force'     => 'Force overwrite existing file.',
-    ];
-
-    /**
-     * Actually execute a command.
-     */
-    public function run(array $params)
-    {
-        $this->component = 'Entity';
-        $this->directory = 'Entities';
-        $this->template  = 'entity.tpl.php';
-
-        $this->classNameLang = 'CLI.generator.className.entity';
-        $this->generateClass($params);
-
-        return EXIT_SUCCESS;
-    }
 }

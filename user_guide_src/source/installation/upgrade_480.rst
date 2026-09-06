@@ -161,6 +161,8 @@ Config
 
 - app/Config/Filters.php
     - Added a new filter named ``requestid`` that adds a unique request ID to each request in the application's context.
+- app/Config/Generators.php
+    - ``Config\Generators::$views`` added entries for ``make:request``, ``make:test``, and ``make:transformer``, and dropped the stale ``session:migration`` entry.
 - app/Config/Mimes.php
     - ``Config\Mimes::$mimes`` added a new key ``md`` for Markdown files.
 - app/Config/Routing.php

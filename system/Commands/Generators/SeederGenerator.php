@@ -13,76 +13,17 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Generators;
 
-use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\GeneratorTrait;
+use CodeIgniter\CLI\AbstractGeneratorCommand;
+use CodeIgniter\CLI\Attributes\Command;
+use CodeIgniter\CLI\Attributes\GeneratorCommand;
 
-/**
- * Generates a skeleton seeder file.
- */
-class SeederGenerator extends BaseCommand
+#[Command(name: 'make:seeder', description: 'Generates a new seeder file.', group: 'Generators')]
+#[GeneratorCommand(
+    component: 'Seeder',
+    template: 'seeder.tpl.php',
+    directory: 'Database\\Seeds',
+    classNameLang: 'CLI.generator.className.seeder',
+)]
+class SeederGenerator extends AbstractGeneratorCommand
 {
-    use GeneratorTrait;
-
-    /**
-     * The Command's Group
-     *
-     * @var string
-     */
-    protected $group = 'Generators';
-
-    /**
-     * The Command's Name
-     *
-     * @var string
-     */
-    protected $name = 'make:seeder';
-
-    /**
-     * The Command's Description
-     *
-     * @var string
-     */
-    protected $description = 'Generates a new seeder file.';
-
-    /**
-     * The Command's Usage
-     *
-     * @var string
-     */
-    protected $usage = 'make:seeder <name> [options]';
-
-    /**
-     * The Command's Arguments
-     *
-     * @var array<string, string>
-     */
-    protected $arguments = [
-        'name' => 'The seeder class name.',
-    ];
-
-    /**
-     * The Command's Options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [
-        '--namespace' => 'Set root namespace. Default: "APP_NAMESPACE".',
-        '--suffix'    => 'Append the component title to the class name (e.g. User => UserSeeder).',
-        '--force'     => 'Force overwrite existing file.',
-    ];
-
-    /**
-     * Actually execute a command.
-     */
-    public function run(array $params)
-    {
-        $this->component = 'Seeder';
-        $this->directory = 'Database\Seeds';
-        $this->template  = 'seeder.tpl.php';
-
-        $this->classNameLang = 'CLI.generator.className.seeder';
-        $this->generateClass($params);
-
-        return EXIT_SUCCESS;
-    }
 }
