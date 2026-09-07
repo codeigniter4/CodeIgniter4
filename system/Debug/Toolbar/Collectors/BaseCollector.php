@@ -16,7 +16,7 @@ namespace CodeIgniter\Debug\Toolbar\Collectors;
 /**
  * Base Toolbar collector
  */
-class BaseCollector
+abstract class BaseCollector
 {
     /**
      * Whether this collector has data that can

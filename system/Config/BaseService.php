@@ -149,7 +149,7 @@ use Config\WorkerMode;
  * @method static ValidationInterface        validation(ConfigValidation $config = null, $getShared = true)
  * @method static Cell                       viewcell($getShared = true)
  */
-class BaseService
+abstract class BaseService
 {
     /**
      * Cache for instance of any services that

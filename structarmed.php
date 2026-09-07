@@ -10,37 +10,41 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
-use Boundwize\StructArmed\Rule\Rules\Function_\MustHaveReturnTypeFunctionRule;
-use Boundwize\StructArmed\Preset\Presets\CodeQualityPreset;
-use CodeIgniter\Cache\ResponseCache;
-use CodeIgniter\HTTP\CLIRequest;
-use CodeIgniter\HTTP\Header;
-use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\SSEResponse;
-use CodeIgniter\HTTP\StreamResponse;
-use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\DataCaster\DataCaster;
-use CodeIgniter\Entity\Cast\CastInterface;
-use CodeIgniter\Entity\Exceptions\CastException;
-use CodeIgniter\DataConverter\DataConverter;
-use CodeIgniter\Entity\Entity;
-use CodeIgniter\Entity\Cast\URICast;
-use CodeIgniter\HTTP\URI;
-use CodeIgniter\Log\Handlers\ChromeLoggerHandler;
-use CodeIgniter\Security\CheckPhpIni;
-use CodeIgniter\View\Table;
-use CodeIgniter\Database\BaseResult;
-use CodeIgniter\View\Plugins;
-use CodeIgniter\HTTP\ResponseTrait;
-use CodeIgniter\Pager\PagerInterface;
-use CodeIgniter\HTTP\Response;
-use CodeIgniter\HTTP\RedirectResponse;
-use CodeIgniter\HTTP\DownloadResponse;
-use CodeIgniter\Validation\Validation;
-use CodeIgniter\View\RendererInterface;
+
 use Boundwize\StructArmed\Architecture;
 use Boundwize\StructArmed\Preset\Preset;
+use Boundwize\StructArmed\Preset\Presets\CodeQualityPreset;
 use Boundwize\StructArmed\Preset\Presets\Psr4Preset;
+use Boundwize\StructArmed\Rule\Rules\Class_\ExtendedClassMustBeAbstractOrInstantiatedRule;
+use Boundwize\StructArmed\Rule\Rules\Function_\MustHaveReturnTypeFunctionRule;
+use CodeIgniter\Cache\ResponseCache;
+use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Database\BaseResult;
+use CodeIgniter\Database\Config;
+use CodeIgniter\DataCaster\DataCaster;
+use CodeIgniter\DataConverter\DataConverter;
+use CodeIgniter\Entity\Cast\CastInterface;
+use CodeIgniter\Entity\Cast\URICast;
+use CodeIgniter\Entity\Entity;
+use CodeIgniter\Entity\Exceptions\CastException;
+use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\DownloadResponse;
+use CodeIgniter\HTTP\Header;
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\RedirectResponse;
+use CodeIgniter\HTTP\Response;
+use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\HTTP\ResponseTrait;
+use CodeIgniter\HTTP\SSEResponse;
+use CodeIgniter\HTTP\StreamResponse;
+use CodeIgniter\HTTP\URI;
+use CodeIgniter\Log\Handlers\ChromeLoggerHandler;
+use CodeIgniter\Pager\PagerInterface;
+use CodeIgniter\Security\CheckPhpIni;
+use CodeIgniter\Validation\Validation;
+use CodeIgniter\View\Plugins;
+use CodeIgniter\View\RendererInterface;
+use CodeIgniter\View\Table;
 
 return Architecture::define()
     ->skip([
@@ -57,6 +61,9 @@ return Architecture::define()
 
     ->layer('Helpers', __DIR__ . '/system/Helpers')
     ->rule('helpers.functions_must_have_return_type', new MustHaveReturnTypeFunctionRule('Helpers'))
+
+    ->layerPattern('BaseClasses', '/^CodeIgniter\\\\.*Base.*$/')
+    ->rule('base_classes.must_be_abstract', new ExtendedClassMustBeAbstractOrInstantiatedRule('BaseClasses'))
 
     // Resolve CodeIgniter layers from class names because several layers share directories.
     ->layerPattern('API', '/^CodeIgniter\\\\API\\\\.*$/')
@@ -115,13 +122,13 @@ return Architecture::define()
         'Pager'         => ['URI', 'View'],
         'Publisher'     => ['Files', 'URI'],
         // +API = API + its allowed layers; +Controller = Controller + its allowed layers
-        'RESTful'       => ['+API', '+Controller'],
-        'Router'        => ['HTTP', 'I18n'],
-        'Security'      => ['Cookie', 'HTTP', 'I18n', 'Session'],
-        'Session'       => ['Cookie', 'Database', 'HTTP', 'I18n'],
-        'Throttle'      => ['Cache', 'I18n'],
-        'Validation'    => ['Database', 'HTTP', 'Helpers', 'I18n', 'Input'],
-        'View'          => ['Cache'],
+        'RESTful'    => ['+API', '+Controller'],
+        'Router'     => ['HTTP', 'I18n'],
+        'Security'   => ['Cookie', 'HTTP', 'I18n', 'Session'],
+        'Session'    => ['Cookie', 'Database', 'HTTP', 'I18n'],
+        'Throttle'   => ['Cache', 'I18n'],
+        'Validation' => ['Database', 'HTTP', 'Helpers', 'I18n', 'Input'],
+        'View'       => ['Cache'],
     ])
     ->skipPathsForRuleset(['*test*'])
     // Skip violations for class-specific dependencies.
@@ -135,7 +142,7 @@ return Architecture::define()
         CastInterface::class,
         CastException::class,
     ])
-    ->skipClassViolation(\CodeIgniter\DataCaster\Exceptions\CastException::class, [
+    ->skipClassViolation(CodeIgniter\DataCaster\Exceptions\CastException::class, [
         CastException::class,
     ])
     ->skipClassViolation(DataConverter::class, [
@@ -165,4 +172,5 @@ return Architecture::define()
     ->skipClassViolation(DownloadResponse::class, [PagerInterface::class])
     ->skipClassViolation(SSEResponse::class, [PagerInterface::class])
     ->skipClassViolation(StreamResponse::class, [PagerInterface::class])
-    ->skipClassViolation(Validation::class, [RendererInterface::class]);
+    ->skipClassViolation(Validation::class, [RendererInterface::class])
+    ->skipClassViolation(Config::class, [BaseConfig::class]);
