@@ -190,6 +190,57 @@ final class TimeTest extends CIUnitTestCase
         $this->assertSame(date('Y-m-d 00:00:00', strtotime('+1 day')), $time->toDateTimeString());
     }
 
+    public function testTodayWithTimezoneAcrossDateBoundary(): void
+    {
+        // When UTC is 2026-09-07 23:30:00, in Asia/Tokyo (+09:00) it is already 2026-09-08 08:30:00
+        Time::setTestNow('2026-09-07 23:30:00', 'UTC');
+
+        $tokyoToday = Time::today('Asia/Tokyo');
+        $this->assertSame('2026-09-08 00:00:00', $tokyoToday->toDateTimeString());
+
+        // When UTC is 2026-09-08 02:00:00, in America/New_York (-04:00 EDT) it is still 2026-09-07 22:00:00
+        Time::setTestNow('2026-09-08 02:00:00', 'UTC');
+
+        $nyToday = Time::today('America/New_York');
+        $this->assertSame('2026-09-07 00:00:00', $nyToday->toDateTimeString());
+
+        Time::setTestNow();
+    }
+
+    public function testYesterdayWithTimezoneAcrossDateBoundary(): void
+    {
+        // When UTC is 2026-09-07 23:30:00, in Tokyo it is 2026-09-08, so Tokyo yesterday is 2026-09-07
+        Time::setTestNow('2026-09-07 23:30:00', 'UTC');
+
+        $tokyoYesterday = Time::yesterday('Asia/Tokyo');
+        $this->assertSame('2026-09-07 00:00:00', $tokyoYesterday->toDateTimeString());
+
+        // When UTC is 2026-09-08 02:00:00, in NY it is 2026-09-07, so NY yesterday is 2026-09-06
+        Time::setTestNow('2026-09-08 02:00:00', 'UTC');
+
+        $nyYesterday = Time::yesterday('America/New_York');
+        $this->assertSame('2026-09-06 00:00:00', $nyYesterday->toDateTimeString());
+
+        Time::setTestNow();
+    }
+
+    public function testTomorrowWithTimezoneAcrossDateBoundary(): void
+    {
+        // When UTC is 2026-09-07 23:30:00, in Tokyo it is 2026-09-08, so Tokyo tomorrow is 2026-09-09
+        Time::setTestNow('2026-09-07 23:30:00', 'UTC');
+
+        $tokyoTomorrow = Time::tomorrow('Asia/Tokyo');
+        $this->assertSame('2026-09-09 00:00:00', $tokyoTomorrow->toDateTimeString());
+
+        // When UTC is 2026-09-08 02:00:00, in NY it is 2026-09-07, so NY tomorrow is 2026-09-08
+        Time::setTestNow('2026-09-08 02:00:00', 'UTC');
+
+        $nyTomorrow = Time::tomorrow('America/New_York');
+        $this->assertSame('2026-09-08 00:00:00', $nyTomorrow->toDateTimeString());
+
+        Time::setTestNow();
+    }
+
     public function testCreateFromDate(): void
     {
         $time = Time::createFromDate(2017, 03, 05, 'America/Chicago');
