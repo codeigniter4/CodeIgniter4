@@ -122,7 +122,7 @@ Validating the Prefix Attribute
 ===============================
 
 The cookie prefix must not contain control characters, spaces, tabs, or separator characters
-(``= , ; \t \r \n \v \f ( ) < > @ : \" / [ ] ? { }``) as `setcookie()` and
+(``= , ; \t \r \n \v \f \0``) as `setcookie() <https://www.php.net/manual/en/function.setcookie.php>`_ and
 `setrawcookie() <https://www.php.net/manual/en/function.setrawcookie.php>`_ will reject them.
 
 When using the ``__Secure-`` prefix, cookies must be set with the ``$secure`` flag set to ``true``. If

@@ -603,33 +603,79 @@ final class CookieTest extends CIUnitTestCase
         $this->assertSame('', $cookie3->getDomain());
     }
 
-    public function testValidationOfCookiePrefix(): void
+    #[DataProvider('provideValidationOfCookiePrefix')]
+    public function testValidationOfCookiePrefix(string $prefix): void
     {
         $this->expectException(CookieException::class);
-        $this->expectExceptionMessage(lang('Cookie.invalidCookieName', ["bad\r\n"]));
-        new Cookie('test', 'val', ['prefix' => "bad\r\n"]);
+        $this->expectExceptionMessage(lang('Cookie.invalidCookieName', [$prefix]));
+        new Cookie('test', 'val', ['prefix' => $prefix]);
     }
 
-    public function testValidationOfCookiePrefixInWithPrefix(): void
+    #[DataProvider('provideValidationOfCookiePrefix')]
+    public function testValidationOfCookiePrefixInWithPrefix(string $prefix): void
     {
         $this->expectException(CookieException::class);
-        $this->expectExceptionMessage(lang('Cookie.invalidCookieName', ["bad\r\n"]));
+        $this->expectExceptionMessage(lang('Cookie.invalidCookieName', [$prefix]));
         $cookie = new Cookie('test', 'val');
-        $cookie->withPrefix("bad\r\n");
+        $cookie->withPrefix($prefix);
     }
 
-    public function testValidationOfRawCookiePrefix(): void
+    #[DataProvider('provideValidationOfCookiePrefix')]
+    public function testValidationOfRawCookiePrefix(string $prefix): void
     {
         $this->expectException(CookieException::class);
-        $this->expectExceptionMessage(lang('Cookie.invalidCookieName', ["bad\r\n"]));
-        new Cookie('test', 'val', ['prefix' => "bad\r\n", 'raw' => true]);
+        $this->expectExceptionMessage(lang('Cookie.invalidCookieName', [$prefix]));
+        new Cookie('test', 'val', ['prefix' => $prefix, 'raw' => true]);
     }
 
-    public function testValidationOfRawCookiePrefixInWithPrefix(): void
+    #[DataProvider('provideValidationOfCookiePrefix')]
+    public function testValidationOfRawCookiePrefixInWithPrefix(string $prefix): void
     {
         $this->expectException(CookieException::class);
-        $this->expectExceptionMessage(lang('Cookie.invalidCookieName', ["bad\r\n"]));
+        $this->expectExceptionMessage(lang('Cookie.invalidCookieName', [$prefix]));
         $cookie = new Cookie('test', 'val', ['raw' => true]);
-        $cookie->withPrefix("bad\r\n");
+        $cookie->withPrefix($prefix);
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideValidationOfCookiePrefix(): iterable
+    {
+        yield 'equals' => ['prefix='];
+
+        yield 'comma' => ['prefix,'];
+
+        yield 'semicolon' => ['prefix;'];
+
+        yield 'space' => ['prefix '];
+
+        yield 'tab' => ["prefix\t"];
+
+        yield 'carriage return' => ["prefix\r"];
+
+        yield 'newline' => ["prefix\n"];
+
+        yield 'vertical tab' => ["prefix\v"];
+
+        yield 'form feed' => ["prefix\f"];
+
+        yield 'null byte' => ["prefix\0"];
+
+        yield 'CRLF' => ["prefix\r\n"];
+    }
+
+    public function testValidCookiePrefixAllowedSeparators(): void
+    {
+        $cookie = new Cookie('test', 'val', ['prefix' => 'ci:session/']);
+        $this->assertSame('ci:session/', $cookie->getPrefix());
+        $this->assertSame('ci:session/test', $cookie->getPrefixedName());
+
+        $cookie2 = $cookie->withPrefix('my-app:v1/');
+        $this->assertSame('my-app:v1/', $cookie2->getPrefix());
+        $this->assertSame('my-app:v1/test', $cookie2->getPrefixedName());
+
+        $cookie3 = new Cookie('test', 'val', ['prefix' => 'ci:session/', 'raw' => false]);
+        $this->assertSame('ci:session/test=val; Path=/; HttpOnly; SameSite=Lax', $cookie3->toHeaderString());
     }
 }

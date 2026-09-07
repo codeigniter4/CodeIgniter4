@@ -127,7 +127,14 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#attributes
      * @see https://tools.ietf.org/html/rfc2616#section-2.2
      */
-    private static string $reservedCharsList = "=,; \t\r\n\v\f()<>@:\\\"/[]?{}";
+    private static string $reservedCharsList = "=,; \t\r\n\v\f\0()<>@:\\\"/[]?{}";
+
+    /**
+     * Prohibited characters in cookie prefix and name per PHP setcookie() constraints.
+     *
+     * @see https://www.php.net/manual/en/function.setcookie.php
+     */
+    private static string $reservedPrefixCharsList = "=,; \t\r\n\v\f\0";
 
     /**
      * @see https://www.php.net/manual/en/function.setrawcookie.php
@@ -270,9 +277,6 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
         $httponly = $options['httponly'];
 
         $this->validateName($name, $raw);
-        if ($prefix !== '') {
-            $this->validateName($prefix, true);
-        }
         $this->validateValue($value, $raw);
         $this->validatePath($path);
         $this->validateDomain($domain);
@@ -454,9 +458,6 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     public function withPrefix(string $prefix = '')
     {
         $this->validatePrefix($prefix, $this->secure, $this->path, $this->domain);
-        if ($prefix !== '') {
-            $this->validateName($prefix, true);
-        }
 
         $cookie = clone $this;
 
@@ -596,9 +597,6 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     public function withRaw(bool $raw = true)
     {
         $this->validateName($this->name, $raw);
-        if ($this->prefix !== '') {
-            $this->validateName($this->prefix, true);
-        }
         $this->validateValue($this->value, $raw);
 
         $cookie = clone $this;
@@ -804,7 +802,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     }
 
     /**
-     * Validates the cookie path per RFC 6265 and PHP setcookie() constraints.
+     * Validates the cookie path per PHP setcookie() constraints.
      *
      * @throws CookieException
      */
@@ -816,7 +814,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     }
 
     /**
-     * Validates the cookie domain per RFC 6265 and PHP setcookie() constraints.
+     * Validates the cookie domain per PHP setcookie() constraints.
      *
      * @throws CookieException
      */
@@ -828,12 +826,17 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     }
 
     /**
-     * Validates the special prefixes if some attribute requirements are met.
+     * Validates the special prefixes if some attribute requirements are met,
+     * and ensures the prefix contains no PHP-prohibited characters.
      *
      * @throws CookieException
      */
     protected function validatePrefix(string $prefix, bool $secure, string $path, string $domain): void
     {
+        if (strpbrk($prefix, self::$reservedPrefixCharsList) !== false) {
+            throw CookieException::forInvalidCookieName($prefix);
+        }
+
         if (str_starts_with($prefix, '__Secure-') && ! $secure) {
             throw CookieException::forInvalidSecurePrefix();
         }
