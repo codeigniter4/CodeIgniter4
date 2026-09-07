@@ -71,7 +71,7 @@ class DownloadResponse extends Response
     {
         parent::__construct(config(App::class));
 
-        $this->filename = $filename;
+        $this->filename = str_replace(["\r", "\n"], '', $filename);
         $this->setMime  = $setMime;
 
         // Make sure the content type is either specified or detected
@@ -113,7 +113,7 @@ class DownloadResponse extends Response
      */
     public function setFileName(string $filename)
     {
-        $this->filename = $filename;
+        $this->filename = str_replace(["\r", "\n"], '', $filename);
 
         return $this;
     }
@@ -161,8 +161,8 @@ class DownloadResponse extends Response
      */
     private function getDownloadFileName(): string
     {
-        $filename  = $this->filename;
-        $x         = explode('.', $this->filename);
+        $filename = $this->filename;
+        $x        = explode('.', $filename);
         $extension = end($x);
 
         /* It was reported that browsers on Android 2.1 (and possibly older as well)

@@ -154,6 +154,30 @@ final class DownloadResponseTest extends CIUnitTestCase
         $this->assertSame('inline; filename="my\"quoted\"File.txt"; filename*=UTF-8\'\'my%22quoted%22File.txt', $response->getHeaderLine('Content-Disposition'));
     }
 
+    public function testContentDispositionSanitizesCRLF(): void
+    {
+        $response = new DownloadResponse("test\r\nfile.txt", false);
+        $response->buildHeaders();
+
+        $header = $response->getHeaderLine('Content-Disposition');
+        $this->assertStringNotContainsString("\r", $header);
+        $this->assertStringNotContainsString("\n", $header);
+        $this->assertSame('attachment; filename="testfile.txt"; filename*=UTF-8\'\'testfile.txt', $header);
+
+        $response = new DownloadResponse('report.pdf', false);
+        $response->setFileName("report\r\nSet-Cookie: evil=1\r\n.pdf");
+
+        // The filename must be sanitized to strip carriage returns and newlines,
+        // preventing HTTP response splitting / header injection without throwing an RFC 7230 error.
+        $response->buildHeaders();
+
+        $header = $response->getHeaderLine('Content-Disposition');
+        $this->assertStringNotContainsString("\r", $header);
+        $this->assertStringNotContainsString("\n", $header);
+        $this->assertFalse($response->hasHeader('Set-Cookie'));
+        $this->assertSame('attachment; filename="reportSet-Cookie: evil=1.pdf"; filename*=UTF-8\'\'reportSet-Cookie%3A%20evil%3D1.pdf', $header);
+    }
+
     public function testNoCache(): void
     {
         $response = new DownloadResponse('unit-test.txt', true);
