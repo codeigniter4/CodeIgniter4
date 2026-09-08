@@ -44,12 +44,16 @@ class InputOutput
         // readline() can't be tested.
         if ($this->readlineSupport && ENVIRONMENT !== 'testing') {
             // @codeCoverageIgnoreStart
-            // Libedit reports "EditLine wrapper" and mangles the markers, so only GNU readline gets them.
-            if ($prefix !== null && ! str_contains(readline_info('library_version'), 'EditLine')) {
-                $prefix = $this->markAnsiNonPrinting($prefix);
+            $prompt = $this->readlinePrompt($prefix, readline_info('library_version'));
+
+            if ($prompt !== null) {
+                return readline($prompt);
             }
 
-            return readline($prefix);
+            // The library cannot render the prompt, so write it ourselves and let readline() only read the line.
+            self::fwrite(STDOUT, $prefix ?? '');
+
+            return readline();
             // @codeCoverageIgnoreEnd
         }
 
@@ -84,6 +88,31 @@ class InputOutput
         }
 
         fwrite($handle, $string);
+    }
+
+    /**
+     * Builds the prompt handed to readline(), or returns null when the caller has to write
+     * the prompt to STDOUT itself because the line-editing library cannot render it.
+     *
+     * GNU readline gets ANSI sequences wrapped in its non-printing markers so line-redraw
+     * column accounting skips them. Libedit reports "EditLine wrapper" and mangles the
+     * markers, so it gets the raw prompt. Windows builds use WinEditLine, which prints ANSI
+     * sequences literally, and readline_info() omits the version there (php-src guards it
+     * with #ifndef PHP_WIN32), so they get no prompt.
+     *
+     * @param mixed $libraryVersion The value of readline_info('library_version')
+     */
+    private function readlinePrompt(?string $prefix, mixed $libraryVersion): ?string
+    {
+        if ($prefix === null || ! is_string($libraryVersion)) {
+            return null;
+        }
+
+        if (str_contains($libraryVersion, 'EditLine')) {
+            return $prefix;
+        }
+
+        return $this->markAnsiNonPrinting($prefix);
     }
 
     /**
