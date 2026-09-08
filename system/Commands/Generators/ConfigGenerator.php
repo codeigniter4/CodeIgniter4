@@ -13,90 +13,31 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Generators;
 
-use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\GeneratorTrait;
+use CodeIgniter\CLI\AbstractGeneratorCommand;
+use CodeIgniter\CLI\Attributes\Command;
+use CodeIgniter\CLI\Attributes\GeneratorCommand;
 
-/**
- * Generates a skeleton config file.
- */
-class ConfigGenerator extends BaseCommand
+#[Command(name: 'make:config', description: 'Generates a new config file.', group: 'Generators')]
+#[GeneratorCommand(
+    component: 'Config',
+    template: 'config.tpl.php',
+    directory: 'Config',
+    classNameLang: 'CLI.generator.className.config',
+)]
+class ConfigGenerator extends AbstractGeneratorCommand
 {
-    use GeneratorTrait;
-
-    /**
-     * The Command's Group
-     *
-     * @var string
-     */
-    protected $group = 'Generators';
-
-    /**
-     * The Command's Name
-     *
-     * @var string
-     */
-    protected $name = 'make:config';
-
-    /**
-     * The Command's Description
-     *
-     * @var string
-     */
-    protected $description = 'Generates a new config file.';
-
-    /**
-     * The Command's Usage
-     *
-     * @var string
-     */
-    protected $usage = 'make:config <name> [options]';
-
-    /**
-     * The Command's Arguments
-     *
-     * @var array<string, string>
-     */
-    protected $arguments = [
-        'name' => 'The config class name.',
-    ];
-
-    /**
-     * The Command's Options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [
-        '--namespace' => 'Set root namespace. Default: "APP_NAMESPACE".',
-        '--suffix'    => 'Append the component title to the class name (e.g. User => UserConfig).',
-        '--force'     => 'Force overwrite existing file.',
-    ];
-
-    /**
-     * Actually execute a command.
-     */
-    public function run(array $params)
+    protected function getReplacements(string $class): array
     {
-        $this->component = 'Config';
-        $this->directory = 'Config';
-        $this->template  = 'config.tpl.php';
+        $segments = explode('\\', $class);
+        array_pop($segments);
 
-        $this->classNameLang = 'CLI.generator.className.config';
-        $this->generateClass($params);
+        $namespace = implode('\\', $segments);
+        $prefix    = APP_NAMESPACE . '\\';
 
-        return EXIT_SUCCESS;
-    }
-
-    /**
-     * Prepare options and do the necessary replacements.
-     */
-    protected function prepare(string $class): string
-    {
-        $namespace = $this->getOption('namespace') ?? APP_NAMESPACE;
-
-        if ($namespace === APP_NAMESPACE) {
-            $class = substr($class, strlen($namespace . '\\'));
+        if (! str_starts_with($namespace, $prefix)) {
+            return [];
         }
 
-        return $this->parseTemplate($class);
+        return ['{namespace}' => substr($namespace, strlen($prefix))];
     }
 }

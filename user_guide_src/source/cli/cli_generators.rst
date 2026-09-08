@@ -108,9 +108,9 @@ Argument:
 
 Options:
 ========
-* ``--namespace``: Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
-* ``--suffix``: Append the component suffix to the generated class name.
-* ``--force``: Set this flag to overwrite existing files on destination.
+* ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--suffix`` (``-s``): Append the component suffix to the generated class name.
+* ``--force`` (``-f``): Set this flag to overwrite existing files on destination.
 
 make:controller
 ---------------
