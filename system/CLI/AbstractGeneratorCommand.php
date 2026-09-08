@@ -80,9 +80,9 @@ abstract class AbstractGeneratorCommand extends AbstractCommand implements Promp
 
     protected function provideDefaultOptions(): void
     {
-        parent::provideDefaultOptions();
-
         $this->provideGeneratorOptions();
+
+        parent::provideDefaultOptions();
     }
 
     /**

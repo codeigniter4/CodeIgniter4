@@ -84,11 +84,11 @@ final class AbstractGeneratorCommandTest extends CIUnitTestCase
         $this->assertSame(['name'], array_keys($arguments));
         $this->assertTrue($arguments['name']->required);
         $this->assertSame(
-            ['help', 'no-header', 'no-interaction', 'namespace', 'suffix', 'force'],
+            ['namespace', 'suffix', 'force', 'help', 'no-header', 'no-interaction'],
             array_keys($command->getOptionsDefinition()),
         );
         $this->assertSame(
-            ['h' => 'help', 'N' => 'no-interaction', 'n' => 'namespace', 's' => 'suffix', 'f' => 'force'],
+            ['n' => 'namespace', 's' => 'suffix', 'f' => 'force', 'h' => 'help', 'N' => 'no-interaction'],
             $command->getShortcuts(),
         );
         $this->assertSame('make:testwidget [options] [--] <name>', $command->getUsages()[0]);
@@ -99,7 +99,7 @@ final class AbstractGeneratorCommandTest extends CIUnitTestCase
         $command = new TrimmedOptionsGeneratorCommand(new Commands());
 
         $this->assertSame(
-            ['help', 'no-header', 'no-interaction', 'namespace'],
+            ['namespace', 'help', 'no-header', 'no-interaction'],
             array_keys($command->getOptionsDefinition()),
         );
     }

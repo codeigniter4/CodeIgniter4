@@ -129,11 +129,11 @@ Argument:
 
 Options:
 ========
-* ``--bare``: Extends from ``CodeIgniter\Controller`` instead of ``BaseController``.
-* ``--restful``: Extends from a RESTful resource. Choices are ``controller`` and ``presenter``. Defaults to ``controller``.
-* ``--namespace``: Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
-* ``--suffix``: Append the component suffix to the generated class name.
-* ``--force``: Set this flag to overwrite existing files on destination.
+* ``--bare`` (``-b``): Extends from ``CodeIgniter\Controller`` instead of ``BaseController``.
+* ``--restful`` (``-r``): Extends from a RESTful resource. Choices are ``controller`` and ``presenter``. Defaults to ``controller``.
+* ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--suffix`` (``-s``): Append the component suffix to the generated class name.
+* ``--force`` (``-f``): Set this flag to overwrite existing files on destination.
 
 .. note:: If you use ``--suffix``, the generated controller name will be like
     ``ProductController``. That violates the Controller naming convention

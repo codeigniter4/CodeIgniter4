@@ -13,126 +13,103 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Generators;
 
-use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\AbstractGeneratorCommand;
+use CodeIgniter\CLI\Attributes\Command;
+use CodeIgniter\CLI\Attributes\GeneratorCommand;
 use CodeIgniter\CLI\CLI;
-use CodeIgniter\CLI\GeneratorTrait;
+use CodeIgniter\CLI\Input\Option;
 use CodeIgniter\Controller;
 use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\RESTful\ResourcePresenter;
 
-/**
- * Generates a skeleton controller file.
- */
-class ControllerGenerator extends BaseCommand
+#[Command(name: 'make:controller', description: 'Generates a new controller file.', group: 'Generators')]
+#[GeneratorCommand(
+    component: 'Controller',
+    template: 'controller.tpl.php',
+    directory: 'Controllers',
+    classNameLang: 'CLI.generator.className.controller',
+)]
+class ControllerGenerator extends AbstractGeneratorCommand
 {
-    use GeneratorTrait;
-
-    /**
-     * The Command's Group
-     *
-     * @var string
-     */
-    protected $group = 'Generators';
-
-    /**
-     * The Command's Name
-     *
-     * @var string
-     */
-    protected $name = 'make:controller';
-
-    /**
-     * The Command's Description
-     *
-     * @var string
-     */
-    protected $description = 'Generates a new controller file.';
-
-    /**
-     * The Command's Usage
-     *
-     * @var string
-     */
-    protected $usage = 'make:controller <name> [options]';
-
-    /**
-     * The Command's Arguments
-     *
-     * @var array<string, string>
-     */
-    protected $arguments = [
-        'name' => 'The controller class name.',
-    ];
-
-    /**
-     * The Command's Options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [
-        '--bare'      => 'Extends from CodeIgniter\Controller instead of BaseController.',
-        '--restful'   => 'Extends from a RESTful resource, Options: [controller, presenter]. Default: "controller".',
-        '--namespace' => 'Set root namespace. Default: "APP_NAMESPACE".',
-        '--suffix'    => 'Append the component title to the class name (e.g. User => UserController).',
-        '--force'     => 'Force overwrite existing file.',
-    ];
-
-    /**
-     * Actually execute a command.
-     */
-    public function run(array $params)
+    protected function configure(): void
     {
-        $this->component = 'Controller';
-        $this->directory = 'Controllers';
-        $this->template  = 'controller.tpl.php';
+        parent::configure();
 
-        $this->classNameLang = 'CLI.generator.className.controller';
-        $this->generateClass($params);
+        $this
+            ->addOption(new Option(
+                name: 'bare',
+                shortcut: 'b',
+                description: 'Extend CodeIgniter\Controller instead of BaseController.',
+            ))
+            ->addOption(new Option(
+                name: 'restful',
+                shortcut: 'r',
+                description: 'Extend a RESTful resource: "controller" (default when no value is given) or "presenter".',
+                acceptsValue: true,
+                valueLabel: 'type',
+            ));
+    }
 
-        return EXIT_SUCCESS;
+    protected function interact(array &$arguments, array &$options): void
+    {
+        $type = $this->getUnboundOption('restful', $options);
+
+        if (! is_string($type) || $type === 'controller' || $type === 'presenter') {
+            return;
+        }
+
+        $options['restful'] = CLI::prompt(lang('CLI.generator.parentClass'), ['controller', 'presenter'], 'required');
+    }
+
+    protected function execute(array $arguments, array $options): int
+    {
+        $type = $this->getResourceType();
+
+        if (! in_array($type, [null, 'controller', 'presenter'], true)) {
+            CLI::error(lang('CLI.generator.invalidParentClass', [$type]));
+
+            return EXIT_ERROR;
+        }
+
+        return $this->generateClass();
+    }
+
+    protected function getReplacements(string $class): array
+    {
+        $parent = $this->getParentClass();
+
+        return ['{useStatement}' => $parent, '{extends}' => class_basename($parent)];
+    }
+
+    protected function getTemplateData(string $class): array
+    {
+        return ['type' => $this->getValidatedOption('bare') === true ? null : $this->getResourceType()];
+    }
+
+    private function getParentClass(): string
+    {
+        if ($this->getValidatedOption('bare') === true) {
+            return Controller::class;
+        }
+
+        return match ($this->getResourceType()) {
+            'controller' => ResourceController::class,
+            'presenter'  => ResourcePresenter::class,
+            default      => trim(APP_NAMESPACE, '\\') . '\\Controllers\\BaseController',
+        };
     }
 
     /**
-     * Prepare options and do the necessary replacements.
+     * Returns the RESTful resource type, or `null` when `--restful` was not passed.
      */
-    protected function prepare(string $class): string
+    private function getResourceType(): ?string
     {
-        $bare = $this->getOption('bare');
-        $rest = $this->getOption('restful');
-
-        $useStatement = trim(APP_NAMESPACE, '\\') . '\Controllers\BaseController';
-        $extends      = 'BaseController';
-
-        // Gets the appropriate parent class to extend.
-        if ($bare || $rest) {
-            if ($bare) {
-                $useStatement = Controller::class;
-                $extends      = 'Controller';
-            } elseif ($rest) {
-                $rest = is_string($rest) ? $rest : 'controller';
-
-                if (! in_array($rest, ['controller', 'presenter'], true)) {
-                    // @codeCoverageIgnoreStart
-                    $rest = CLI::prompt(lang('CLI.generator.parentClass'), ['controller', 'presenter'], 'required');
-                    CLI::newLine();
-                    // @codeCoverageIgnoreEnd
-                }
-
-                if ($rest === 'controller') {
-                    $useStatement = ResourceController::class;
-                    $extends      = 'ResourceController';
-                } elseif ($rest === 'presenter') {
-                    $useStatement = ResourcePresenter::class;
-                    $extends      = 'ResourcePresenter';
-                }
-            }
+        if (! $this->hasUnboundOption('restful')) {
+            return null;
         }
 
-        return $this->parseTemplate(
-            $class,
-            ['{useStatement}', '{extends}'],
-            [$useStatement, $extends],
-            ['type' => $rest],
-        );
+        $type = $this->getValidatedOption('restful');
+
+        return is_string($type) ? $type : 'controller';
     }
 }

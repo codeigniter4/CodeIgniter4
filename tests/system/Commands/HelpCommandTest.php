@@ -223,12 +223,12 @@ final class HelpCommandTest extends CIUnitTestCase
                   name                       The widget class name.
 
                 Options:
-                  -h, --help                 Display help for the given command.
-                      --no-header            Do not display the banner when running the command.
-                  -N, --no-interaction       Do not ask any interactive questions.
                   -n, --namespace=NAMESPACE  Set the root namespace. [default: "App"]
                   -s, --suffix               Append the "Widget" suffix to the class name.
                   -f, --force                Force overwrite existing file.
+                  -h, --help                 Display help for the given command.
+                      --no-header            Do not display the banner when running the command.
+                  -N, --no-interaction       Do not ask any interactive questions.
 
                 EOT,
             $this->getUndecoratedBuffer(),
@@ -252,10 +252,10 @@ final class HelpCommandTest extends CIUnitTestCase
                   name                       The widget class name.
 
                 Options:
+                  -n, --namespace=NAMESPACE  Set the root namespace. [default: "App"]
                   -h, --help                 Display help for the given command.
                       --no-header            Do not display the banner when running the command.
                   -N, --no-interaction       Do not ask any interactive questions.
-                  -n, --namespace=NAMESPACE  Set the root namespace. [default: "App"]
 
                 EOT,
             $this->getUndecoratedBuffer(),

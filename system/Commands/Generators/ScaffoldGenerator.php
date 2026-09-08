@@ -103,7 +103,9 @@ class ScaffoldGenerator extends BaseCommand
         if ($this->getOption('bare')) {
             $controllerOpts['bare'] = null;
         } elseif ($this->getOption('restful')) {
-            $controllerOpts['restful'] = $this->getOption('restful');
+            $restful = $this->getOption('restful');
+
+            $controllerOpts['restful'] = is_string($restful) ? $restful : null;
         }
 
         $modelOpts = [

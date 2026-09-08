@@ -13,7 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Generators;
 
+use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Commands;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -25,64 +28,115 @@ final class ControllerGeneratorTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        CLI::reset();
+    }
+
     protected function tearDown(): void
     {
-        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', $this->getStreamFilterBuffer());
-        $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
-        if (is_file($file)) {
-            unlink($file);
+        parent::tearDown();
+
+        CLI::reset();
+
+        foreach (['User.php', 'Blog.php', 'Order.php', 'Pay.php', 'Mixed.php', 'Bogus.php', 'DashboardController.php'] as $file) {
+            if (is_file(APPPATH . 'Controllers/' . $file)) {
+                unlink(APPPATH . 'Controllers/' . $file);
+            }
         }
     }
 
-    protected function getFileContents(string $filepath): string
+    private function getUndecoratedBuffer(): string
     {
-        if (! is_file($filepath)) {
-            return '';
-        }
+        return preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()) ?? '';
+    }
 
-        return (string) file_get_contents($filepath);
+    private function getContents(string $file): string
+    {
+        $contents = file_get_contents(APPPATH . 'Controllers/' . $file);
+        $this->assertIsString($contents);
+
+        return $contents;
     }
 
     public function testGenerateController(): void
     {
         command('make:controller user');
-        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
-        $file = APPPATH . 'Controllers/User.php';
-        $this->assertFileExists($file);
-        $this->assertStringContainsString('extends BaseController', $this->getFileContents($file));
+
+        $this->assertSame(
+            PHP_EOL . 'File created: ' . clean_path(APPPATH . 'Controllers/User.php') . PHP_EOL,
+            $this->getUndecoratedBuffer(),
+        );
+
+        $contents = $this->getContents('User.php');
+        $this->assertStringContainsString('use App\Controllers\BaseController;', $contents);
+        $this->assertStringContainsString('class User extends BaseController', $contents);
     }
 
-    public function testGenerateControllerWithOptionBare(): void
+    public function testGenerateControllerWithBare(): void
     {
-        command('make:controller blog -bare');
-        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
-        $file = APPPATH . 'Controllers/Blog.php';
-        $this->assertFileExists($file);
-        $this->assertStringContainsString('extends Controller', $this->getFileContents($file));
+        command('make:controller blog --bare');
+
+        $contents = $this->getContents('Blog.php');
+        $this->assertStringContainsString('use CodeIgniter\Controller;', $contents);
+        $this->assertStringContainsString('class Blog extends Controller', $contents);
     }
 
-    public function testGenerateControllerWithOptionRestful(): void
+    public function testGenerateControllerWithRestful(): void
     {
-        command('make:controller order -restful');
-        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
-        $file = APPPATH . 'Controllers/Order.php';
-        $this->assertFileExists($file);
-        $this->assertStringContainsString('extends ResourceController', $this->getFileContents($file));
+        command('make:controller order --restful');
+
+        $contents = $this->getContents('Order.php');
+        $this->assertStringContainsString('class Order extends ResourceController', $contents);
+        $this->assertStringContainsString('public function show($id = null)', $contents);
     }
 
-    public function testGenerateControllerWithOptionRestfulPresenter(): void
+    public function testGenerateControllerWithRestfulPresenter(): void
     {
-        command('make:controller pay -restful presenter');
-        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
-        $file = APPPATH . 'Controllers/Pay.php';
-        $this->assertFileExists($file);
-        $this->assertStringContainsString('extends ResourcePresenter', $this->getFileContents($file));
+        command('make:controller pay --restful presenter');
+
+        $contents = $this->getContents('Pay.php');
+        $this->assertStringContainsString('class Pay extends ResourcePresenter', $contents);
+        $this->assertStringContainsString('public function remove($id = null)', $contents);
     }
 
-    public function testGenerateControllerWithOptionSuffix(): void
+    public function testBareTakesPrecedenceOverRestful(): void
     {
-        command('make:controller dashboard -suffix');
-        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
+        command('make:controller mixed --bare --restful');
+
+        $contents = $this->getContents('Mixed.php');
+        $this->assertStringContainsString('class Mixed extends Controller', $contents);
+        $this->assertStringNotContainsString('public function show', $contents);
+    }
+
+    public function testInvalidRestfulTypeIsRejectedWhenNotInteractive(): void
+    {
+        command('make:controller bogus --restful api --no-interaction');
+
+        $this->assertSame(PHP_EOL . 'Parent class "api" is not valid.' . PHP_EOL, $this->getUndecoratedBuffer());
+        $this->assertFileDoesNotExist(APPPATH . 'Controllers/Bogus.php');
+    }
+
+    public function testInvalidRestfulTypePromptsWhenInteractive(): void
+    {
+        $io = new MockInputOutput();
+        $io->setInputs(['presenter']);
+        CLI::setInputOutput($io);
+
+        $command = new ControllerGenerator(new Commands());
+        $command->setInteractive(true);
+
+        $this->assertSame(EXIT_SUCCESS, $command->run(['pay'], ['restful' => 'api']));
+        $this->assertStringContainsString('Parent class', $io->getOutput());
+        $this->assertStringContainsString('class Pay extends ResourcePresenter', $this->getContents('Pay.php'));
+    }
+
+    public function testGenerateControllerWithSuffix(): void
+    {
+        command('make:controller dashboard --suffix');
+
         $this->assertFileExists(APPPATH . 'Controllers/DashboardController.php');
     }
 }

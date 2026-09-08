@@ -234,6 +234,8 @@ Commands
   and ``-f`` shortcuts for ``--namespace``, ``--suffix``, and ``--force``. See :doc:`../cli/cli_modern_generators`.
 - Legacy ``BaseCommand::call()`` can now invoke modern commands: integer-keyed params are passed as arguments and string-keyed params as
   options, which the target command validates like any other input.
+- The ``make:controller`` command now accepts ``-b`` and ``-r`` as shortcuts for ``--bare`` and ``--restful``, and rejects an invalid
+  ``--restful`` value on non-interactive runs instead of prompting.
 - Modern commands can now opt in to prompting for missing required arguments on interactive runs by implementing the new
   ``PromptsForMissingInputInterface`` marker interface. Prompt labels can be customized via ``getArgumentPromptLabels()``, and an
   ``afterPrompting()`` hook runs when prompting occurred. Non-interactive runs keep failing fast with the missing-arguments error.
