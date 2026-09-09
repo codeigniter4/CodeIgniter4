@@ -60,7 +60,7 @@ return Architecture::define()
     ->layer('Helpers', __DIR__ . '/system/Helpers')
     ->rule('helpers.functions_must_have_return_type', new MustHaveReturnTypeFunctionRule('Helpers'))
 
-    ->rule('base_classes.must_be_abstract', new ExtendedClassMustBeAbstractOrInstantiatedRule('BaseClasses', '/^CodeIgniter\\\\.*Base.*$/'))
+    ->rule('base_classes.must_be_abstract', new ExtendedClassMustBeAbstractOrInstantiatedRule('Source', '/^CodeIgniter\\\\.*Base.*$/'))
 
     // Resolve CodeIgniter layers from class names because several layers share directories.
     ->layerPattern('API', '/^CodeIgniter\\\\API\\\\.*$/')
