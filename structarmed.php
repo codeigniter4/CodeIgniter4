@@ -62,8 +62,7 @@ return Architecture::define()
     ->layer('Helpers', __DIR__ . '/system/Helpers')
     ->rule('helpers.functions_must_have_return_type', new MustHaveReturnTypeFunctionRule('Helpers'))
 
-    ->layerPattern('BaseClasses', '/^CodeIgniter\\\\.*Base.*$/')
-    ->rule('base_classes.must_be_abstract', new ExtendedClassMustBeAbstractOrInstantiatedRule('BaseClasses'))
+    ->rule('base_classes.must_be_abstract', new ExtendedClassMustBeAbstractOrInstantiatedRule('BaseClasses', '/^CodeIgniter\\\\.*Base.*$/'))
 
     // Resolve CodeIgniter layers from class names because several layers share directories.
     ->layerPattern('API', '/^CodeIgniter\\\\API\\\\.*$/')
@@ -172,5 +171,4 @@ return Architecture::define()
     ->skipClassViolation(DownloadResponse::class, [PagerInterface::class])
     ->skipClassViolation(SSEResponse::class, [PagerInterface::class])
     ->skipClassViolation(StreamResponse::class, [PagerInterface::class])
-    ->skipClassViolation(Validation::class, [RendererInterface::class])
-    ->skipClassViolation(Config::class, [BaseConfig::class]);
+    ->skipClassViolation(Validation::class, [RendererInterface::class]);
