@@ -94,6 +94,7 @@ Property Scope Changes
 Method Scope Changes
 ====================
 
+- **CLI:** ``CodeIgniter\CLI\Commands::getCommandAlternatives()`` is now public (previously protected).
 - **HTTP:** The following methods have changed their scope (visibility):
     - ``CodeIgniter\HTTP\URI::setUri()`` is now private (previously public).
     - ``CodeIgniter\HTTP\URI::refreshPath()`` is now protected (previously public).
@@ -240,6 +241,8 @@ Commands
   ``--restful`` value on non-interactive runs instead of prompting.
 - The ``make:model`` command now accepts ``-t``, ``-g``, and ``-r`` as shortcuts for ``--table``, ``--dbgroup``, and ``--return``, and rejects an
   invalid ``--return`` value on non-interactive runs instead of prompting.
+- **spark** now offers to run the closest matching command when a command name is mistyped on an interactive run.
+  See :ref:`correcting-a-mistyped-command`.
 - Modern commands can now opt in to prompting for missing required arguments on interactive runs by implementing the new
   ``PromptsForMissingInputInterface`` marker interface. Prompt labels can be customized via ``getArgumentPromptLabels()``, and an
   ``afterPrompting()`` hook runs when prompting occurred. Non-interactive runs keep failing fast with the missing-arguments error.
@@ -389,6 +392,7 @@ Message Changes
 - Added new language keys:
     - ``Cache.unsupportedLockStore`` (``CacheException::forUnsupportedLockStore()``)
     - ``CLI.commandAlias`` and ``CLI.helpAliases`` (command alias rendering in ``list`` and ``help``)
+    - ``CLI.altCommandNone``, ``CLI.altCommandRun``, and ``CLI.altCommandSelect`` (correcting a mistyped command)
     - ``CLI.generator.invalidReturnType`` (``make:model`` rejecting an invalid ``--return``)
     - ``Commands.invalidCommandAlias``, ``Commands.commandAliasSameAsName``, ``Commands.duplicateCommandAlias``, ``Commands.aliasClashesWithCommandName``, and ``Commands.aliasClashesWithAlias`` (command alias validation)
 

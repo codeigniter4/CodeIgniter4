@@ -69,6 +69,24 @@ class Console
 
         $this->command = array_shift($arguments) ?? self::DEFAULT_COMMAND;
 
+        if (
+            $this->isInteractive()
+            && ! $commands->hasLegacyCommand($this->command)
+            && ! $commands->hasModernCommand($this->command)
+        ) {
+            $alternatives = $commands->getCommandAlternatives($this->command);
+
+            if ($alternatives !== []) {
+                $alternative = $this->chooseAlternative($alternatives);
+
+                if ($alternative === null) {
+                    return EXIT_ERROR;
+                }
+
+                $this->command = $alternative;
+            }
+        }
+
         if ($commands->hasLegacyCommand($this->command)) {
             $legacyOptions = $this->options;
             unset($legacyOptions['no-header']);
@@ -115,6 +133,25 @@ class Console
     }
 
     /**
+     * Asks which suggested command to run instead, returning `null` when the user declines.
+     *
+     * @param list<string> $alternatives
+     */
+    private function chooseAlternative(array $alternatives): ?string
+    {
+        CLI::error(lang('CLI.commandNotFound', [$this->command]));
+        CLI::newLine();
+
+        if (count($alternatives) === 1) {
+            return CLI::prompt(lang('CLI.altCommandRun', [$alternatives[0]]), ['y', 'n']) === 'y' ? $alternatives[0] : null;
+        }
+
+        $chosen = (int) CLI::promptByKey(lang('CLI.altCommandSelect'), [...$alternatives, lang('CLI.altCommandNone')]);
+
+        return $alternatives[$chosen] ?? null;
+    }
+
+    /**
      * Checks whether any of the options are present in the command line.
      *
      * @param list<string> $options
@@ -128,5 +165,13 @@ class Console
         }
 
         return false;
+    }
+
+    private function isInteractive(): bool
+    {
+        return ! $this->hasParameterOption(['no-interaction', 'N'])
+            && ! CLI::getInputOutput() instanceof NullInputOutput
+            && defined('STDIN')
+            && CLI::streamSupports('stream_isatty', STDIN);
     }
 }

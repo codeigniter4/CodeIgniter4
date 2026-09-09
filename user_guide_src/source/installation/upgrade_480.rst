@@ -27,6 +27,12 @@ Previously, returning a non-integer value from a command run through ``spark`` w
 Starting with v4.8.0, this behavior is still supported but will trigger a deprecation notice. Commands should now return an integer exit code
 to ensure proper behavior across all platforms.
 
+Command Alternatives Visibility
+===============================
+
+``CodeIgniter\CLI\Commands::getCommandAlternatives()`` is now ``public``. If you extend ``Commands`` and override this method,
+change the override's visibility from ``protected`` to ``public``.
+
 Uploaded File Move Return Type
 ==============================
 

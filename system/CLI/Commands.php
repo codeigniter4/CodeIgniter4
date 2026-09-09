@@ -362,7 +362,7 @@ class Commands
      *
      * @return list<string>
      */
-    protected function getCommandAlternatives(string $name, array $collection = []): array
+    public function getCommandAlternatives(string $name, array $collection = []): array
     {
         if ($collection !== []) {
             @trigger_error(sprintf('Since v4.8.0, the $collection parameter of %s() is no longer used.', __METHOD__), E_USER_DEPRECATED);

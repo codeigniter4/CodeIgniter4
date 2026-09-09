@@ -13,7 +13,10 @@ declare(strict_types=1);
 
 // CLI language settings
 return [
+    'altCommandNone'     => 'none of these',
     'altCommandPlural'   => 'Did you mean one of these?',
+    'altCommandRun'      => 'Run "{0}" instead?',
+    'altCommandSelect'   => 'Select a command to run instead:',
     'altCommandSingular' => 'Did you mean this?',
     'argumentPrompt'     => 'Please provide a value for the "{0}" argument',
     'commandAlias'       => '[alias of {0}]',
