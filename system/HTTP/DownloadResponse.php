@@ -161,8 +161,8 @@ class DownloadResponse extends Response
      */
     private function getDownloadFileName(): string
     {
-        $filename = $this->filename;
-        $x        = explode('.', $filename);
+        $filename  = $this->filename;
+        $x         = explode('.', $filename);
         $extension = end($x);
 
         /* It was reported that browsers on Android 2.1 (and possibly older as well)
