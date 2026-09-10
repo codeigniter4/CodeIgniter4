@@ -144,7 +144,7 @@ trait TimeTrait
      */
     public static function today($timezone = null, ?string $locale = null)
     {
-        return static::now($timezone, $locale)->setTime(0, 0, 0, 0);
+        return (new static(null, $timezone, $locale))->setTime(0, 0, 0, 0);
     }
 
     /**
@@ -158,7 +158,7 @@ trait TimeTrait
      */
     public static function yesterday($timezone = null, ?string $locale = null)
     {
-        return static::now($timezone, $locale)->modify('-1 day')->setTime(0, 0, 0, 0);
+        return (new static(null, $timezone, $locale))->modify('-1 day')->setTime(0, 0, 0, 0);
     }
 
     /**
@@ -172,7 +172,7 @@ trait TimeTrait
      */
     public static function tomorrow($timezone = null, ?string $locale = null)
     {
-        return static::now($timezone, $locale)->modify('+1 day')->setTime(0, 0, 0, 0);
+        return (new static(null, $timezone, $locale))->modify('+1 day')->setTime(0, 0, 0, 0);
     }
 
     /**

@@ -171,9 +171,14 @@ final class TimeTest extends CIUnitTestCase
 
     public function testTodayLocalized(): void
     {
+        // Freeze time to avoid flakiness when server and London are on different calendar days
+        Time::setTestNow('2026-06-15 12:00:00', 'UTC');
+
         $time = Time::today('Europe/London');
 
-        $this->assertSame(date('Y-m-d 00:00:00'), $time->toDateTimeString());
+        $this->assertSame('2026-06-15 00:00:00', $time->toDateTimeString());
+
+        Time::setTestNow();
     }
 
     public function testYesterday(): void
