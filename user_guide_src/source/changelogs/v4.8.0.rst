@@ -238,6 +238,8 @@ Commands
   options, which the target command validates like any other input.
 - The ``make:controller`` command now accepts ``-b`` and ``-r`` as shortcuts for ``--bare`` and ``--restful``, and rejects an invalid
   ``--restful`` value on non-interactive runs instead of prompting.
+- The ``make:model`` command now accepts ``-t``, ``-g``, and ``-r`` as shortcuts for ``--table``, ``--dbgroup``, and ``--return``, and rejects an
+  invalid ``--return`` value on non-interactive runs instead of prompting.
 - Modern commands can now opt in to prompting for missing required arguments on interactive runs by implementing the new
   ``PromptsForMissingInputInterface`` marker interface. Prompt labels can be customized via ``getArgumentPromptLabels()``, and an
   ``afterPrompting()`` hook runs when prompting occurred. Non-interactive runs keep failing fast with the missing-arguments error.
@@ -387,6 +389,7 @@ Message Changes
 - Added new language keys:
     - ``Cache.unsupportedLockStore`` (``CacheException::forUnsupportedLockStore()``)
     - ``CLI.commandAlias`` and ``CLI.helpAliases`` (command alias rendering in ``list`` and ``help``)
+    - ``CLI.generator.invalidReturnType`` (``make:model`` rejecting an invalid ``--return``)
     - ``Commands.invalidCommandAlias``, ``Commands.commandAliasSameAsName``, ``Commands.duplicateCommandAlias``, ``Commands.aliasClashesWithCommandName``, and ``Commands.aliasClashesWithAlias`` (command alias validation)
 
 - Removed deprecated language keys tied to removed exception constructors:

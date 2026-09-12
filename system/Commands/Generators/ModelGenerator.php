@@ -13,132 +13,121 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Generators;
 
-use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\AbstractGeneratorCommand;
+use CodeIgniter\CLI\Attributes\Command;
+use CodeIgniter\CLI\Attributes\GeneratorCommand;
 use CodeIgniter\CLI\CLI;
-use CodeIgniter\CLI\GeneratorTrait;
+use CodeIgniter\CLI\Input\Option;
 
-/**
- * Generates a skeleton Model file.
- */
-class ModelGenerator extends BaseCommand
+#[Command(name: 'make:model', description: 'Generates a new model file.', group: 'Generators')]
+#[GeneratorCommand(
+    component: 'Model',
+    template: 'model.tpl.php',
+    directory: 'Models',
+    classNameLang: 'CLI.generator.className.model',
+)]
+class ModelGenerator extends AbstractGeneratorCommand
 {
-    use GeneratorTrait;
+    private const RETURN_TYPES = ['array', 'object', 'entity'];
 
-    /**
-     * The Command's Group
-     *
-     * @var string
-     */
-    protected $group = 'Generators';
-
-    /**
-     * The Command's Name
-     *
-     * @var string
-     */
-    protected $name = 'make:model';
-
-    /**
-     * The Command's Description
-     *
-     * @var string
-     */
-    protected $description = 'Generates a new model file.';
-
-    /**
-     * The Command's Usage
-     *
-     * @var string
-     */
-    protected $usage = 'make:model <name> [options]';
-
-    /**
-     * The Command's Arguments
-     *
-     * @var array<string, string>
-     */
-    protected $arguments = [
-        'name' => 'The model class name.',
-    ];
-
-    /**
-     * The Command's Options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [
-        '--table'     => 'Supply a table name. Default: "the lowercased plural of the class name".',
-        '--dbgroup'   => 'Database group to use. Default: "default".',
-        '--return'    => 'Return type, Options: [array, object, entity]. Default: "array".',
-        '--namespace' => 'Set root namespace. Default: "APP_NAMESPACE".',
-        '--suffix'    => 'Append the component title to the class name (e.g. User => UserModel).',
-        '--force'     => 'Force overwrite existing file.',
-    ];
-
-    /**
-     * Actually execute a command.
-     */
-    public function run(array $params)
+    protected function configure(): void
     {
-        $this->component = 'Model';
-        $this->directory = 'Models';
-        $this->template  = 'model.tpl.php';
+        parent::configure();
 
-        $this->classNameLang = 'CLI.generator.className.model';
-        $this->generateClass($params);
+        $this
+            ->addOption(new Option(
+                name: 'table',
+                shortcut: 't',
+                description: 'Table name. Defaults to the lowercased plural of the class name.',
+                acceptsValue: true,
+                valueLabel: 'name',
+            ))
+            ->addOption(new Option(
+                name: 'dbgroup',
+                shortcut: 'g',
+                description: 'Database group to use.',
+                acceptsValue: true,
+                valueLabel: 'group',
+            ))
+            ->addOption(new Option(
+                name: 'return',
+                shortcut: 'r',
+                description: 'Return type: "array", "object", or "entity".',
+                requiresValue: true,
+                valueLabel: 'type',
+                default: 'array',
+            ));
+    }
 
-        return EXIT_SUCCESS;
+    protected function interact(array &$arguments, array &$options): void
+    {
+        $return = $this->getUnboundOption('return', $options);
+
+        if (! is_string($return) || in_array($return, self::RETURN_TYPES, true)) {
+            return;
+        }
+
+        $options['return'] = CLI::prompt(lang('CLI.generator.returnType'), self::RETURN_TYPES, 'required');
+    }
+
+    protected function execute(array $arguments, array $options): int
+    {
+        $return = $this->getValidatedOption('return');
+
+        if (! in_array($return, self::RETURN_TYPES, true)) {
+            CLI::error(lang('CLI.generator.invalidReturnType', [$return]));
+
+            return EXIT_ERROR;
+        }
+
+        $exitCode = $this->generateClass();
+
+        if ($exitCode !== EXIT_SUCCESS || $return !== 'entity') {
+            return $exitCode;
+        }
+
+        $entityOptions = ['namespace' => $this->getValidatedOption('namespace')];
+
+        if ($this->getValidatedOption('force') === true) {
+            $entityOptions['force'] = null;
+        }
+
+        return $this->call('make:entity', [$this->getEntityClass($this->qualifyClassName())], $entityOptions);
+    }
+
+    protected function getReplacements(string $class): array
+    {
+        $table   = $this->getValidatedOption('table');
+        $dbGroup = $this->getValidatedOption('dbgroup');
+
+        $return = $this->getValidatedOption('return') === 'entity'
+            ? '\\' . $this->getEntityClass($class) . '::class'
+            : sprintf("'%s'", $this->getValidatedOption('return'));
+
+        return [
+            '{dbGroup}' => is_string($dbGroup) ? $dbGroup : '',
+            '{table}'   => is_string($table) ? $table : plural(strtolower($this->stripModelSuffix(class_basename($class)))),
+            '{return}'  => $return,
+        ];
+    }
+
+    protected function getTemplateData(string $class): array
+    {
+        return ['dbGroup' => $this->getValidatedOption('dbgroup')];
     }
 
     /**
-     * Prepare options and do the necessary replacements.
+     * Derives the entity class from the qualified model class, keeping any sub-namespace.
      */
-    protected function prepare(string $class): string
+    private function getEntityClass(string $class): string
     {
-        $table   = $this->getOption('table');
-        $dbGroup = $this->getOption('dbgroup');
-        $return  = $this->getOption('return');
+        $entity = $this->stripModelSuffix(str_replace('\\Models\\', '\\Entities\\', $class));
 
-        $baseClass = class_basename($class);
+        return $this->shouldAppendSuffix() ? $entity . 'Entity' : $entity;
+    }
 
-        if (preg_match('/^(\S+)Model$/i', $baseClass, $match) === 1) {
-            $baseClass = $match[1];
-        }
-
-        $table  = is_string($table) ? $table : plural(strtolower($baseClass));
-        $return = is_string($return) ? $return : 'array';
-
-        if (! in_array($return, ['array', 'object', 'entity'], true)) {
-            // @codeCoverageIgnoreStart
-            $return = CLI::prompt(lang('CLI.generator.returnType'), ['array', 'object', 'entity'], 'required');
-            CLI::newLine();
-            // @codeCoverageIgnoreEnd
-        }
-
-        if ($return === 'entity') {
-            // Build the fully-qualified entity class from the model class so
-            // that the generated Entity keeps any sub-namespaces (eg. Admin).
-            $entityClass = str_replace('Models', 'Entities', $class);
-
-            if (preg_match('/^(\S+)Model$/i', $entityClass, $match) === 1) {
-                $entityClass = $match[1];
-
-                if ($this->getOption('suffix')) {
-                    $entityClass .= 'Entity';
-                }
-            }
-
-            // Call the entity generator with the fully-qualified class name so
-            // it ends up under the correct sub-namespace/folder (eg. Admin).
-            $entityOptions = array_intersect_key($this->params, array_flip(['namespace', 'suffix', 'force']));
-
-            $this->call('make:entity', array_merge([trim($entityClass, '\\')], $entityOptions));
-
-            $return = '\\' . trim($entityClass, '\\') . '::class';
-        } else {
-            $return = "'{$return}'";
-        }
-
-        return $this->parseTemplate($class, ['{dbGroup}', '{table}', '{return}'], [$dbGroup, $table, $return], compact('dbGroup'));
+    private function stripModelSuffix(string $class): string
+    {
+        return preg_replace('/^(.+)Model$/i', '$1', $class) ?? $class;
     }
 }

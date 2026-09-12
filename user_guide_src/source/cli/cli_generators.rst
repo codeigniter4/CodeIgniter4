@@ -201,12 +201,12 @@ Argument:
 
 Options:
 ========
-* ``--dbgroup``: Database group to use. Defaults to ``default``.
-* ``--return``: Set the return type from ``array``, ``object``, or ``entity``. Defaults to ``array``.
-* ``--table``: Supply a different table name. Defaults to the pluralized class name.
-* ``--namespace``: Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
-* ``--suffix``: Append the component suffix to the generated class name.
-* ``--force``: Set this flag to overwrite existing files on destination.
+* ``--table`` (``-t``): Supply a different table name. Defaults to the pluralized class name.
+* ``--dbgroup`` (``-g``): Database group to use. Defaults to ``default``.
+* ``--return`` (``-r``): Set the return type from ``array``, ``object``, or ``entity``. Defaults to ``array``.
+* ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--suffix`` (``-s``): Append the component suffix to the generated class name.
+* ``--force`` (``-f``): Set this flag to overwrite existing files on destination.
 
 make:request
 ------------

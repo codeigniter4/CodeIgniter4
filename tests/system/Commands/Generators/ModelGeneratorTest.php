@@ -13,7 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Generators;
 
+use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Commands;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -25,140 +28,132 @@ final class ModelGeneratorTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        CLI::reset();
+    }
+
     protected function tearDown(): void
     {
         parent::tearDown();
 
-        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', $this->getStreamFilterBuffer());
-        $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
+        CLI::reset();
 
-        if (is_file($file)) {
-            unlink($file);
+        foreach (['User.php', 'Cars.php', 'UserModel.php', 'MyTableModel.php', 'Bogus.php'] as $file) {
+            if (is_file(APPPATH . 'Models/' . $file)) {
+                unlink(APPPATH . 'Models/' . $file);
+            }
+        }
+
+        helper('filesystem');
+
+        foreach ([APPPATH . 'Models/Admin', APPPATH . 'Entities'] as $dir) {
+            if (is_dir($dir)) {
+                delete_files($dir, true, false, true);
+                rmdir($dir);
+            }
         }
     }
 
-    private function getFileContent(string $filepath): string
+    private function getUndecoratedBuffer(): string
     {
-        if (! is_file($filepath)) {
-            return '';
-        }
+        return preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()) ?? '';
+    }
 
-        return (string) file_get_contents($filepath);
+    private function getContents(string $file): string
+    {
+        $contents = file_get_contents(APPPATH . $file);
+        $this->assertIsString($contents);
+
+        return $contents;
     }
 
     public function testGenerateModel(): void
     {
-        command('make:model user --table users');
-        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
-        $file = APPPATH . 'Models/User.php';
-        $this->assertFileExists($file);
-        $this->assertStringContainsString('extends Model', $this->getFileContent($file));
-        $this->assertStringContainsString('protected $table                  = \'users\';', $this->getFileContent($file));
-        $this->assertStringContainsString('protected $returnType             = \'array\';', $this->getFileContent($file));
+        command('make:model user');
+
+        $this->assertSame("\nFile created: APPPATH/Models/User.php\n", $this->getUndecoratedBuffer());
+
+        $contents = $this->getContents('Models/User.php');
+        $this->assertStringContainsString('class User extends Model', $contents);
+        $this->assertStringContainsString("protected \$table                  = 'users';", $contents);
+        $this->assertStringContainsString("protected \$returnType             = 'array';", $contents);
+        $this->assertStringNotContainsString('$DBGroup', $contents);
     }
 
     public function testGenerateModelWithOptionTable(): void
     {
-        command('make:model cars -table utilisateur');
-        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
-        $file = APPPATH . 'Models/Cars.php';
-        $this->assertFileExists($file);
-        $this->assertStringContainsString('protected $table                  = \'utilisateur\';', $this->getFileContent($file));
+        command('make:model cars --table utilisateur');
+
+        $this->assertStringContainsString("protected \$table                  = 'utilisateur';", $this->getContents('Models/Cars.php'));
     }
 
     public function testGenerateModelWithOptionDBGroup(): void
     {
-        command('make:model user -dbgroup testing');
-        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
-        $file = APPPATH . 'Models/User.php';
-        $this->assertFileExists($file);
-        $this->assertStringContainsString('protected $DBGroup                = \'testing\';', $this->getFileContent($file));
-    }
+        command('make:model user --dbgroup testing');
 
-    public function testGenerateModelWithOptionReturnArray(): void
-    {
-        command('make:model user --return array');
-        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
-        $file = APPPATH . 'Models/User.php';
-        $this->assertFileExists($file);
-        $this->assertStringContainsString('protected $returnType             = \'array\';', $this->getFileContent($file));
+        $this->assertStringContainsString("protected \$DBGroup                = 'testing';", $this->getContents('Models/User.php'));
     }
 
     public function testGenerateModelWithOptionReturnObject(): void
     {
         command('make:model user --return object');
-        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
-        $file = APPPATH . 'Models/User.php';
-        $this->assertFileExists($file);
-        $this->assertStringContainsString('protected $returnType             = \'object\';', $this->getFileContent($file));
+
+        $this->assertStringContainsString("protected \$returnType             = 'object';", $this->getContents('Models/User.php'));
     }
 
     public function testGenerateModelWithOptionReturnEntity(): void
     {
         command('make:model user --return entity');
-        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
 
-        $file = APPPATH . 'Models/User.php';
-        $this->assertFileExists($file);
-        $this->assertStringContainsString('protected $returnType             = \App\Entities\User::class;', $this->getFileContent($file));
+        $this->assertSame(
+            <<<'EOT'
 
-        if (is_file($file)) {
-            unlink($file);
-        }
+                File created: APPPATH/Models/User.php
+                File created: APPPATH/Entities/User.php
 
-        $file = APPPATH . 'Entities/User.php';
-        $this->assertFileExists($file);
-        $dir = dirname($file);
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
+        $this->assertStringContainsString(
+            'protected $returnType             = \App\Entities\User::class;',
+            $this->getContents('Models/User.php'),
+        );
+        $this->assertStringContainsString('class User extends Entity', $this->getContents('Entities/User.php'));
+    }
 
-        if (is_file($file)) {
-            unlink($file);
-        }
+    public function testGenerateModelWithShortcuts(): void
+    {
+        command('make:model user -t people -g testing -r object');
 
-        if (is_dir($dir)) {
-            rmdir($dir);
-        }
+        $contents = $this->getContents('Models/User.php');
+        $this->assertStringContainsString("protected \$DBGroup                = 'testing';", $contents);
+        $this->assertStringContainsString("protected \$table                  = 'people';", $contents);
+        $this->assertStringContainsString("protected \$returnType             = 'object';", $contents);
     }
 
     public function testGenerateModelWithOptionSuffix(): void
     {
         command('make:model user --suffix --return entity');
 
-        $model  = APPPATH . 'Models/UserModel.php';
-        $entity = APPPATH . 'Entities/UserEntity.php';
-
-        $this->assertFileExists($model);
-        $this->assertFileExists($entity);
-
-        unlink($model);
-        unlink($entity);
-        rmdir(dirname($entity));
+        $this->assertStringContainsString(
+            'protected $returnType             = \App\Entities\UserEntity::class;',
+            $this->getContents('Models/UserModel.php'),
+        );
+        $this->assertFileExists(APPPATH . 'Entities/UserEntity.php');
     }
 
     public function testGenerateModelWithSubNamespaceAndReturnEntity(): void
     {
         command('make:model admin/class --return entity');
 
-        $model  = APPPATH . 'Models/Admin/Class.php';
-        $entity = APPPATH . 'Entities/Admin/Class.php';
-
-        $this->assertFileExists($model);
-        $this->assertFileExists($entity);
-
-        if (is_file($model)) {
-            unlink($model);
-        }
-        $modelDir = dirname($model);
-        if (is_dir($modelDir)) {
-            rmdir($modelDir);
-        }
-
-        if (is_file($entity)) {
-            unlink($entity);
-        }
-        $entityDir = dirname($entity);
-        if (is_dir($entityDir)) {
-            rmdir($entityDir);
-        }
+        $this->assertStringContainsString(
+            'protected $returnType             = \App\Entities\Admin\Class::class;',
+            $this->getContents('Models/Admin/Class.php'),
+        );
+        $this->assertStringContainsString('namespace App\Entities\Admin;', $this->getContents('Entities/Admin/Class.php'));
     }
 
     /**
@@ -168,14 +163,57 @@ final class ModelGeneratorTest extends CIUnitTestCase
     {
         command('make:model MyTable --suffix --return entity');
 
-        $model  = APPPATH . 'Models/MyTableModel.php';
-        $entity = APPPATH . 'Entities/MyTableEntity.php';
+        $this->assertFileExists(APPPATH . 'Models/MyTableModel.php');
+        $this->assertFileExists(APPPATH . 'Entities/MyTableEntity.php');
+    }
 
-        $this->assertFileExists($model);
-        $this->assertFileExists($entity);
+    public function testEntityIsNotGeneratedWhenModelExists(): void
+    {
+        command('make:model user');
+        $this->resetStreamFilterBuffer();
 
-        unlink($model);
-        unlink($entity);
-        rmdir(dirname($entity));
+        command('make:model user --return entity');
+
+        $this->assertSame("File exists: \"APPPATH/Models/User.php\"\n", $this->getUndecoratedBuffer());
+        $this->assertFileDoesNotExist(APPPATH . 'Entities/User.php');
+    }
+
+    public function testForceIsForwardedToEntity(): void
+    {
+        command('make:model user --return entity');
+        $this->resetStreamFilterBuffer();
+
+        command('make:model user --return entity --force');
+
+        $this->assertSame(
+            <<<'EOT'
+                File overwritten: "APPPATH/Models/User.php"
+                File overwritten: "APPPATH/Entities/User.php"
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
+    }
+
+    public function testInvalidReturnTypeIsRejectedWhenNotInteractive(): void
+    {
+        command('make:model bogus --return json --no-interaction');
+
+        $this->assertSame("\nReturn type \"json\" is not valid.\n", $this->getUndecoratedBuffer());
+        $this->assertFileDoesNotExist(APPPATH . 'Models/Bogus.php');
+    }
+
+    public function testInvalidReturnTypePromptsWhenInteractive(): void
+    {
+        $io = new MockInputOutput();
+        $io->setInputs(['object']);
+        CLI::setInputOutput($io);
+
+        $command = new ModelGenerator(new Commands());
+        $command->setInteractive(true);
+
+        $this->assertSame(EXIT_SUCCESS, $command->run(['user'], ['return' => 'json']));
+        $this->assertStringContainsString('Return type', $io->getOutput());
+        $this->assertStringContainsString("protected \$returnType             = 'object';", $this->getContents('Models/User.php'));
     }
 }
