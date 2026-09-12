@@ -172,7 +172,7 @@ trait TimeTrait
      */
     public static function tomorrow($timezone = null, ?string $locale = null)
     {
-        return (new static(null, $timezone, $locale))->modify('+1 day')->setTime(0, 0, 0, 0);
+        return (new static(null, $timezone, $locale))->modify('tomorrow');
     }
 
     /**
