@@ -242,7 +242,11 @@ final class TimeTest extends CIUnitTestCase
 
         $nyTomorrow = Time::tomorrow('America/New_York');
         $this->assertSame('2026-09-08 00:00:00', $nyTomorrow->toDateTimeString());
+// Moving forward must select March 28 without normalizing into March 29.
+Time::setTestNow('2026-03-27 23:30:00', 'America/Nuuk');
 
+$nuukTomorrow = Time::tomorrow('America/Nuuk');
+$this->assertSame('2026-03-28 00:00:00', $nuukTomorrow->toDateTimeString());
         Time::setTestNow();
     }
 
