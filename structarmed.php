@@ -169,4 +169,5 @@ return Architecture::define()
     ->skipClassViolation(DownloadResponse::class, [PagerInterface::class])
     ->skipClassViolation(SSEResponse::class, [PagerInterface::class])
     ->skipClassViolation(StreamResponse::class, [PagerInterface::class])
-    ->skipClassViolation(Validation::class, [RendererInterface::class]);
+    ->skipClassViolation(Validation::class, [RendererInterface::class])
+    ->baseline(__DIR__ . '/structarmed-baseline.php');
