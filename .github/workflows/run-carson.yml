@@ -5,6 +5,8 @@ on:
     types:
       - opened
       - edited
+      - synchronize
+      - reopened
 
 permissions: {}
 
@@ -13,7 +15,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Run Carson
-        uses: NexusPHP/carson@62602be15470a18edd31f217b785863e997572d5 # v1.4.0
+        uses: NexusPHP/carson@3973bbb86351a78861b75bbf504f53a83aede4dc # v1.4.2
         with:
           app_id: ${{ secrets.CARSON_APP_ID }}
           private_key: ${{ secrets.CARSON_PRIVATE_KEY }}
