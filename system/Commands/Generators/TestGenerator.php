@@ -13,177 +13,65 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Generators;
 
-use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\CLI;
-use CodeIgniter\CLI\GeneratorTrait;
+use CodeIgniter\CLI\AbstractGeneratorCommand;
+use CodeIgniter\CLI\Attributes\Command;
+use CodeIgniter\CLI\Attributes\GeneratorCommand;
 
-/**
- * Generates a skeleton command file.
- */
-class TestGenerator extends BaseCommand
+#[Command(name: 'make:test', description: 'Generates a new test file.', group: 'Generators')]
+#[GeneratorCommand(
+    component: 'Test',
+    template: 'test.tpl.php',
+    classNameLang: 'CLI.generator.className.test',
+)]
+class TestGenerator extends AbstractGeneratorCommand
 {
-    use GeneratorTrait;
+    private const DEFAULT_NAMESPACE = 'Tests';
 
-    /**
-     * The Command's Group
-     *
-     * @var string
-     */
-    protected $group = 'Generators';
-
-    /**
-     * The Command's Name
-     *
-     * @var string
-     */
-    protected $name = 'make:test';
-
-    /**
-     * The Command's Description
-     *
-     * @var string
-     */
-    protected $description = 'Generates a new test file.';
-
-    /**
-     * The Command's Usage
-     *
-     * @var string
-     */
-    protected $usage = 'make:test <name> [options]';
-
-    /**
-     * The Command's Arguments
-     *
-     * @var array<string, string>
-     */
-    protected $arguments = [
-        'name' => 'The test class name.',
-    ];
-
-    /**
-     * The Command's Options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [
-        '--namespace' => 'Set root namespace. Default: "Tests".',
-        '--force'     => 'Force overwrite existing file.',
-    ];
-
-    /**
-     * Actually execute a command.
-     */
-    public function run(array $params)
+    protected function provideGeneratorOptions(): void
     {
-        // Ensure tests are always suffixed with 'Test'
-        $params['suffix'] = null;
-
-        $this->component = 'Test';
-        $this->template  = 'test.tpl.php';
-
-        $this->classNameLang = 'CLI.generator.className.test';
-
-        $autoload = service('autoloader');
-        $autoload->addNamespace('CodeIgniter', TESTPATH . 'system');
-        $autoload->addNamespace('Tests', ROOTPATH . 'tests');
-
-        $this->generateClass($params);
-
-        return EXIT_SUCCESS;
+        $this->addNamespaceOption(self::DEFAULT_NAMESPACE)->addForceOption();
     }
 
-    /**
-     * Gets the namespace from input or the default namespace.
-     */
+    protected function initialize(array &$arguments, array &$options): void
+    {
+        $autoloader = service('autoloader');
+        $autoloader->addNamespace('CodeIgniter', TESTPATH . 'system');
+        $autoloader->addNamespace(self::DEFAULT_NAMESPACE, ROOTPATH . 'tests');
+    }
+
+    protected function shouldAppendSuffix(): bool
+    {
+        return true;
+    }
+
     protected function getNamespace(): string
     {
-        if ($this->namespace !== null) {
-            return $this->namespace;
+        if ($this->hasUnboundOption('namespace')) {
+            return parent::getNamespace();
         }
 
-        if ($this->getOption('namespace') !== null) {
-            return trim(
-                str_replace(
-                    '/',
-                    '\\',
-                    $this->getOption('namespace'),
-                ),
-                '\\',
-            );
-        }
+        helper('inflector');
 
-        $class      = $this->normalizeInputClassName();
-        $classPaths = explode('\\', $class);
+        $name       = $this->getValidatedArgument('name');
+        $segments   = array_map(pascalize(...), explode('\\', str_replace('/', '\\', $name)));
+        $autoloader = service('autoloader');
 
-        $namespaces = service('autoloader')->getNamespace();
+        while ($segments !== []) {
+            array_pop($segments);
 
-        while ($classPaths !== []) {
-            array_pop($classPaths);
-            $namespace = implode('\\', $classPaths);
+            $namespace = implode('\\', $segments);
 
-            foreach (array_keys($namespaces) as $prefix) {
-                if ($prefix === $namespace) {
-                    // The input classname is FQCN, and use the namespace.
-                    return $namespace;
-                }
+            if ($namespace !== '' && $autoloader->getNamespace($namespace) !== []) {
+                return $namespace;
             }
         }
 
-        return 'Tests';
+        return self::DEFAULT_NAMESPACE;
     }
 
-    /**
-     * Builds the test file path from the class name.
-     *
-     * @param string $class namespaced classname.
-     */
-    protected function buildPath(string $class): string
+    protected function getBasePath(string $namespace): ?string
     {
-        $namespace = $this->getNamespace();
-
-        $base = $this->searchTestFilePath($namespace);
-
-        if ($base === null) {
-            CLI::error(
-                lang('CLI.namespaceNotDefined', [$namespace]),
-                'light_gray',
-                'red',
-            );
-            CLI::newLine();
-
-            return '';
-        }
-
-        $realpath = realpath($base);
-        $base     = ($realpath !== false) ? $realpath : $base;
-
-        $file = $base . DIRECTORY_SEPARATOR
-            . str_replace(
-                '\\',
-                DIRECTORY_SEPARATOR,
-                trim(str_replace($namespace . '\\', '', $class), '\\'),
-            ) . '.php';
-
-        return implode(
-            DIRECTORY_SEPARATOR,
-            array_slice(
-                explode(DIRECTORY_SEPARATOR, $file),
-                0,
-                -1,
-            ),
-        ) . DIRECTORY_SEPARATOR . $this->basename($file);
-    }
-
-    /**
-     * Returns test file path for the namespace.
-     */
-    private function searchTestFilePath(string $testNamespace): ?string
-    {
-        /** @var list<non-empty-string> $testPaths */
-        $testPaths = service('autoloader')->getNamespace($testNamespace);
-
-        foreach ($testPaths as $candidate) {
+        foreach (service('autoloader')->getNamespace($namespace) as $candidate) {
             if (str_contains($candidate, DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR)) {
                 return $candidate;
             }

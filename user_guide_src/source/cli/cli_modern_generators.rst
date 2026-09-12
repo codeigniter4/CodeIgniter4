@@ -166,6 +166,9 @@ Other Hooks
   ``namespace`` or the ``--namespace`` option.
 - ``buildPath(string $class): string`` maps the qualified class to a file path through the
   autoloader. Override for components with special file locations, like tests.
+- ``getBasePath(string $namespace): ?string`` picks the directory registered for the namespace.
+  The default takes the first autoloader entry. Override when the namespace maps to several
+  directories and a specific one is wanted, like the ``tests/`` copy of ``CodeIgniter``.
 - ``renderTemplate(array $data = []): string`` renders the resolved view.
 
 ****************************
@@ -260,9 +263,10 @@ Behavioural changes we need to be aware of when migrating:
   namespace. Declining the ``CodeIgniter`` namespace confirmation still exits with ``EXIT_SUCCESS``.
 - **The** ``CodeIgniter`` **namespace confirmation only prompts on interactive runs.** Non-interactive
   runs print the warning and proceed instead of blocking on input that will never arrive.
-- **The** ``CodeIgniter`` **namespace confirmation keys off the resolved namespace.** The trait compared
+- **The** ``CodeIgniter`` **namespace confirmation keys off the target path.** The trait compared
   the raw ``--namespace`` option, so an attribute-pinned ``CodeIgniter`` namespace or a spelling like
-  ``--namespace CodeIgniter/`` did not warn. The base class resolves through ``getNamespace()`` first.
+  ``--namespace CodeIgniter/`` did not warn. The base class warns exactly when the file would be written
+  under ``SYSTEMPATH``, so a ``CodeIgniter\Foo`` test class headed for ``tests/system`` is left alone.
 - **Placeholder replacement is single-pass.** Replacements are applied with ``strtr()``, so a
   replacement value that happens to contain another placeholder is no longer substituted again.
 
@@ -327,6 +331,13 @@ AbstractGeneratorCommand
         an empty string (after printing an error) when the namespace is not
         registered.
 
+    .. php:method:: getBasePath(string $namespace): ?string
+
+        :param string $namespace: The resolved root namespace.
+
+        Returns the directory registered for the namespace, or ``null`` when it
+        is not registered. The default takes the first autoloader entry.
+
     .. php:method:: renderTemplate(array $data = []): string
 
         :param array $data: View data for the template.
@@ -341,9 +352,11 @@ AbstractGeneratorCommand
         helpers :php:meth:`addNamespaceOption`, :php:meth:`addSuffixOption`, and
         :php:meth:`addForceOption`. Override to register a subset.
 
-    .. php:method:: addNamespaceOption(): static
+    .. php:method:: addNamespaceOption(string $default = APP_NAMESPACE): static
 
-        Registers the ``--namespace`` / ``-n`` option, defaulting to ``APP_NAMESPACE``.
+        :param string $default: The namespace used when the option is omitted.
+
+        Registers the ``--namespace`` / ``-n`` option.
 
     .. php:method:: addSuffixOption(): static
 
