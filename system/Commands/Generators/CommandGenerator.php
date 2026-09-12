@@ -13,111 +13,86 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Generators;
 
-use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\AbstractGeneratorCommand;
+use CodeIgniter\CLI\Attributes\Command;
+use CodeIgniter\CLI\Attributes\GeneratorCommand;
 use CodeIgniter\CLI\CLI;
-use CodeIgniter\CLI\GeneratorTrait;
+use CodeIgniter\CLI\Input\Option;
 
-/**
- * Generates a skeleton command file.
- */
-class CommandGenerator extends BaseCommand
+#[Command(name: 'make:command', description: 'Generates a new spark command.', group: 'Generators')]
+#[GeneratorCommand(
+    component: 'Command',
+    template: 'command.tpl.php',
+    directory: 'Commands',
+    classNameLang: 'CLI.generator.className.command',
+)]
+class CommandGenerator extends AbstractGeneratorCommand
 {
-    use GeneratorTrait;
-
-    /**
-     * The Command's Group
-     *
-     * @var string
-     */
-    protected $group = 'Generators';
-
-    /**
-     * The Command's Name
-     *
-     * @var string
-     */
-    protected $name = 'make:command';
-
-    /**
-     * The Command's Description
-     *
-     * @var string
-     */
-    protected $description = 'Generates a new spark command.';
-
-    /**
-     * The Command's Usage
-     *
-     * @var string
-     */
-    protected $usage = 'make:command <name> [options]';
-
-    /**
-     * The Command's Arguments
-     *
-     * @var array<string, string>
-     */
-    protected $arguments = [
-        'name' => 'The command class name.',
-    ];
-
-    /**
-     * The Command's Options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [
-        '--command'   => 'The command name. Default: "command:name"',
-        '--type'      => 'The command type. Options [basic, generator]. Default: "basic".',
-        '--group'     => 'The command group. Default: [basic -> "App", generator -> "Generators"].',
-        '--namespace' => 'Set root namespace. Default: "APP_NAMESPACE".',
-        '--suffix'    => 'Append the component title to the class name (e.g. User => UserCommand).',
-        '--force'     => 'Force overwrite existing file.',
-    ];
-
-    /**
-     * Actually execute a command.
-     */
-    public function run(array $params)
+    protected function configure(): void
     {
-        $this->component = 'Command';
-        $this->directory = 'Commands';
-        $this->template  = 'command.tpl.php';
+        parent::configure();
 
-        $this->classNameLang = 'CLI.generator.className.command';
-        $this->generateClass($params);
-
-        return EXIT_SUCCESS;
+        $this
+            ->addOption(new Option(
+                name: 'command',
+                shortcut: 'c',
+                description: 'The command name.',
+                requiresValue: true,
+                valueLabel: 'name',
+                default: 'command:name',
+            ))
+            ->addOption(new Option(
+                name: 'type',
+                shortcut: 't',
+                description: 'The command type: "basic" or "generator".',
+                requiresValue: true,
+                default: 'basic',
+            ))
+            ->addOption(new Option(
+                name: 'group',
+                shortcut: 'g',
+                description: 'The command group. Defaults to "App" for basic and "Generators" for generator commands.',
+                acceptsValue: true,
+            ));
     }
 
-    /**
-     * Prepare options and do the necessary replacements.
-     */
-    protected function prepare(string $class): string
+    protected function interact(array &$arguments, array &$options): void
     {
-        $command = $this->getOption('command');
-        $group   = $this->getOption('group');
-        $type    = $this->getOption('type');
+        $type = $this->getUnboundOption('type', $options);
 
-        $command = is_string($command) ? $command : 'command:name';
-        $type    = is_string($type) ? $type : 'basic';
-
-        if (! in_array($type, ['basic', 'generator'], true)) {
-            // @codeCoverageIgnoreStart
-            $type = CLI::prompt(lang('CLI.generator.commandType'), ['basic', 'generator'], 'required');
-            CLI::newLine();
-            // @codeCoverageIgnoreEnd
+        if (! is_string($type) || $type === 'basic' || $type === 'generator') {
+            return;
         }
+
+        $options['type'] = CLI::prompt(lang('CLI.generator.commandType'), ['basic', 'generator'], 'required');
+    }
+
+    protected function execute(array $arguments, array $options): int
+    {
+        $type = $this->getValidatedOption('type');
+
+        if ($type !== 'basic' && $type !== 'generator') {
+            CLI::error(lang('CLI.generator.invalidCommandType', [$type]));
+
+            return EXIT_ERROR;
+        }
+
+        return $this->generateClass();
+    }
+
+    protected function getReplacements(string $class): array
+    {
+        $group = $this->getValidatedOption('group');
 
         if (! is_string($group)) {
-            $group = $type === 'generator' ? 'Generators' : 'App';
+            $group = $this->getValidatedOption('type') === 'generator' ? 'Generators' : 'App';
         }
 
-        return $this->parseTemplate(
-            $class,
-            ['{group}', '{command}'],
-            [$group, $command],
-            ['type' => $type],
-        );
+        return ['{command}' => $this->getValidatedOption('command'), '{group}' => $group];
+    }
+
+    protected function getTemplateData(string $class): array
+    {
+        return ['type' => $this->getValidatedOption('type')];
     }
 }
