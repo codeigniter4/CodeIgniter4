@@ -313,12 +313,13 @@ Argument:
 
 Options:
 ========
-* ``--session``: Generate a migration file for database sessions.
-* ``--table``: Set the table name to use for database sessions. Defaults to ``ci_sessions``.
-* ``--dbgroup``: Set the database group for database sessions. Defaults to ``default`` group.
-* ``--namespace``: Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
-* ``--suffix``: Append the component suffix to the generated class name.
-* ``--force``: Set this flag to overwrite existing files on destination.
+* ``--session``: Generate a migration file for database sessions. The ``name`` argument is ignored.
+* ``--table`` (``-t``): Set the table name to use for database sessions. Defaults to ``ci_sessions``.
+* ``--dbgroup`` (``-g``): Set the database group for database sessions. Defaults to ``default`` group.
+* ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--suffix`` (``-s``): Append the component suffix to the generated class name.
+
+.. note:: ``make:migration`` has no ``--force`` option, since the timestamped file name never collides with an existing file.
 
 make:validation
 ---------------
