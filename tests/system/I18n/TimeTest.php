@@ -225,7 +225,11 @@ final class TimeTest extends CIUnitTestCase
 
         $nyYesterday = Time::yesterday('America/New_York');
         $this->assertSame('2026-09-06 00:00:00', $nyYesterday->toDateTimeString());
+// March 28 at 23:30 does not exist in Nuuk due to the DST transition.
+Time::setTestNow('2026-03-29 23:30:00', 'America/Nuuk');
 
+$nuukYesterday = Time::yesterday('America/Nuuk');
+$this->assertSame('2026-03-28 00:00:00', $nuukYesterday->toDateTimeString());
         Time::setTestNow();
     }
 
