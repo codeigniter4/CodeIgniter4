@@ -7,6 +7,16 @@ on:
       - edited
       - synchronize
       - reopened
+      - labeled
+  issues:
+    types:
+      - opened
+      - edited
+      - labeled
+  push:
+    branches:
+      - develop
+      - '4.*'
 
 permissions: {}
 

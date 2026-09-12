@@ -2,8 +2,32 @@
 
 version: 1
 subscribers:
+  - auto-labeler
+  - conflicts-notifier
   - pr-title-linter
 settings:
+  auto-labeler:
+    sync_labels: true
+    rules:
+      - label: '4.8' # @todo change value whenever the next minor version is changed
+        base_branch: ['^4\.8$']
+      - label: github_actions
+        files: ['.github/workflows/*']
+      - label: documentation
+        files:
+          all: ['user_guide_src/source/**']
+      - label: testing
+        files:
+          all: ['tests/**']
+  conflicts-notifier:
+    label: stale
+    message: |-
+      :wave: Hi, @{{user}}!
+
+      We detected conflicts in your PR against the base branch :speak_no_evil:
+      You may want to sync :arrows_counterclockwise: your branch with upstream!
+
+      Ref: [Syncing Your Branch](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/workflow.md#updating-your-branch)
   pr-title-linter:
     name: 'Carson / pr-title-linter'
     rules:
