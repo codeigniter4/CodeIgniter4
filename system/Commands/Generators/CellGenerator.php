@@ -13,95 +13,56 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Generators;
 
-use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\GeneratorTrait;
+use CodeIgniter\CLI\AbstractGeneratorCommand;
+use CodeIgniter\CLI\Attributes\Command;
+use CodeIgniter\CLI\Attributes\GeneratorCommand;
 use Config\Generators;
 
-/**
- * Generates a skeleton Cell and its view.
- */
-class CellGenerator extends BaseCommand
+#[Command(name: 'make:cell', description: 'Generates a new Controlled Cell file and its view.', group: 'Generators')]
+#[GeneratorCommand(
+    component: 'Cell',
+    template: 'cell.tpl.php',
+    directory: 'Cells',
+    classNameLang: 'CLI.generator.className.cell',
+)]
+class CellGenerator extends AbstractGeneratorCommand
 {
-    use GeneratorTrait;
-
-    /**
-     * The Command's Group
-     *
-     * @var string
-     */
-    protected $group = 'Generators';
-
-    /**
-     * The Command's Name
-     *
-     * @var string
-     */
-    protected $name = 'make:cell';
-
-    /**
-     * The Command's Description
-     *
-     * @var string
-     */
-    protected $description = 'Generates a new Controlled Cell file and its view.';
-
-    /**
-     * The Command's Usage
-     *
-     * @var string
-     */
-    protected $usage = 'make:cell <name> [options]';
-
-    /**
-     * The Command's Arguments
-     *
-     * @var array<string, string>
-     */
-    protected $arguments = [
-        'name' => 'The Controlled Cell class name.',
-    ];
-
-    /**
-     * The Command's Options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [
-        '--namespace' => 'Set root namespace. Default: "APP_NAMESPACE".',
-        '--force'     => 'Force overwrite existing file.',
-    ];
-
-    /**
-     * Actually execute a command.
-     */
-    public function run(array $params)
+    protected function provideGeneratorOptions(): void
     {
-        $this->component = 'Cell';
-        $this->directory = 'Cells';
+        $this->addNamespaceOption()->addForceOption();
+    }
 
-        $params = array_merge($params, ['suffix' => null]);
+    protected function shouldAppendSuffix(): bool
+    {
+        return true;
+    }
 
-        $this->templatePath  = config(Generators::class)->views[$this->name]['class'];
-        $this->template      = 'cell.tpl.php';
-        $this->classNameLang = 'CLI.generator.className.cell';
+    protected function execute(array $arguments, array $options): int
+    {
+        $views = config(Generators::class)->views[$this->getName()] ?? [];
 
-        $this->generateClass($params);
+        $this->templatePath = $views['class'] ?? null;
 
-        $this->templatePath  = config(Generators::class)->views[$this->name]['view'];
-        $this->template      = 'cell_view.tpl.php';
-        $this->classNameLang = 'CLI.generator.viewName.cell';
+        $classExitCode = $this->generateClass();
 
-        $className = $this->qualifyClassName();
-        $viewName  = decamelize(class_basename($className));
-        $viewName  = preg_replace(
-            '/([a-z][a-z0-9_\/\\\\]+)(_cell)$/i',
-            '$1',
-            $viewName,
-        ) ?? $viewName;
-        $namespace = substr($className, 0, strrpos($className, '\\') + 1);
+        $this->templatePath = $views['view'] ?? null;
+        $this->template     = 'cell_view.tpl.php';
 
-        $this->generateView($namespace . $viewName, $params);
+        $viewExitCode = $this->generateView($this->getViewName($this->qualifyClassName()));
 
-        return EXIT_SUCCESS;
+        return $classExitCode | $viewExitCode;
+    }
+
+    /**
+     * Derives the namespaced view name from the qualified cell class, dropping the `Cell` suffix.
+     */
+    private function getViewName(string $class): string
+    {
+        $segments = explode('\\', $class);
+        $basename = decamelize(array_pop($segments));
+
+        $segments[] = preg_replace('/_cell$/', '', $basename) ?? $basename;
+
+        return implode('\\', $segments);
     }
 }
