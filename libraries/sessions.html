@@ -1178,8 +1178,14 @@ from the cli to generate a migration file for you:</p>
 <span class="go">php spark migrate</span>
 </pre></div>
 </div>
-<p>This command will take the <code class="docutils literal notranslate"><span class="pre">$savePath</span></code> and <code class="docutils literal notranslate"><span class="pre">$matchIP</span></code> settings into account
-when it generates the code.</p>
+<p>This command reads the <code class="docutils literal notranslate"><span class="pre">$matchIP</span></code> setting to decide the primary key. The table
+name and database group are not read from <strong>app/Config/Session.php</strong>, so pass
+<code class="docutils literal notranslate"><span class="pre">--table</span></code> and <code class="docutils literal notranslate"><span class="pre">--dbgroup</span></code> when they differ from <code class="docutils literal notranslate"><span class="pre">ci_sessions</span></code> and <code class="docutils literal notranslate"><span class="pre">default</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:migration --session --table my_sessions --dbgroup sessions</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">--table</span></code> value should match <code class="docutils literal notranslate"><span class="pre">$savePath</span></code>, and the <code class="docutils literal notranslate"><span class="pre">--dbgroup</span></code> value
+should match <code class="docutils literal notranslate"><span class="pre">$DBGroup</span></code>.</p>
 </section>
 </section>
 </section>
@@ -1334,7 +1340,7 @@ separate the multiple server paths with commas:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Sep 12, 2026.
+      <span class="lastupdated">Last updated on Sep 13, 2026.
       </span></p>
   </div>
 
