@@ -272,8 +272,8 @@ Argument:
 
 Options:
 ========
-* ``--namespace``: Set the root namespace. Defaults to value of ``Tests``.
-* ``--force``: Set this flag to overwrite existing files on destination.
+* ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``Tests``.
+* ``--force`` (``-f``): Set this flag to overwrite existing files on destination.
 
 make:transformer
 ----------------

@@ -93,14 +93,14 @@ abstract class AbstractGeneratorCommand extends AbstractCommand implements Promp
         $this->addNamespaceOption()->addSuffixOption()->addForceOption();
     }
 
-    final protected function addNamespaceOption(): static
+    final protected function addNamespaceOption(string $default = APP_NAMESPACE): static
     {
         return $this->addOption(new Option(
             name: 'namespace',
             shortcut: 'n',
             description: 'Set the root namespace.',
             requiresValue: true,
-            default: APP_NAMESPACE,
+            default: $default,
         ));
     }
 
@@ -259,26 +259,32 @@ abstract class AbstractGeneratorCommand extends AbstractCommand implements Promp
     protected function buildPath(string $class): string
     {
         $namespace = $this->getNamespace();
+        $basePath  = $this->getBasePath($namespace);
 
-        $bases = service('autoloader')->getNamespace($namespace);
-        $base  = reset($bases);
-
-        if ($base === false || $base === '') {
+        if ($basePath === null) {
             CLI::error(lang('CLI.namespaceNotDefined', [$namespace]));
 
             return '';
         }
 
-        $realpath = realpath($base);
-        $base     = ($realpath !== false) ? $realpath : $base;
+        $realpath = realpath($basePath);
+        $basePath = ($realpath !== false) ? $realpath : $basePath;
 
         $prefix   = $namespace . '\\';
         $relative = str_starts_with($class, $prefix) ? substr($class, strlen($prefix)) : $class;
 
-        $file = $base . DIRECTORY_SEPARATOR
+        $file = $basePath . DIRECTORY_SEPARATOR
             . str_replace('\\', DIRECTORY_SEPARATOR, trim($relative, '\\')) . '.php';
 
         return dirname($file) . DIRECTORY_SEPARATOR . $this->basename($file);
+    }
+
+    /**
+     * Returns the directory registered for the namespace in the autoloader, or `null` when it is not defined.
+     */
+    protected function getBasePath(string $namespace): ?string
+    {
+        return service('autoloader')->getNamespace($namespace)[0] ?? null;
     }
 
     /**
@@ -321,7 +327,7 @@ abstract class AbstractGeneratorCommand extends AbstractCommand implements Promp
      */
     private function generateFile(string $target, string $content): int
     {
-        if ($this->getNamespace() === 'CodeIgniter') {
+        if (str_starts_with($target, SYSTEMPATH)) {
             CLI::write(lang('CLI.generator.usingCINamespace'), 'yellow');
 
             if (

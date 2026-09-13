@@ -32,88 +32,86 @@ final class TestGeneratorTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->resetStreamFilterBuffer();
+        CLI::reset();
     }
 
     protected function tearDown(): void
     {
         parent::tearDown();
 
-        $this->clearTestFiles();
-        $this->resetStreamFilterBuffer();
+        CLI::reset();
+
+        foreach (['FooTest.php', 'system/FooTest.php', '_support/FooTest.php'] as $file) {
+            if (is_file(ROOTPATH . 'tests/' . $file)) {
+                unlink(ROOTPATH . 'tests/' . $file);
+            }
+        }
+
+        if (is_dir(ROOTPATH . 'tests/Foo')) {
+            helper('filesystem');
+            delete_files(ROOTPATH . 'tests/Foo', true, false, true);
+            rmdir(ROOTPATH . 'tests/Foo');
+        }
     }
 
     private function getUndecoratedBuffer(): string
     {
-        return preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer());
-    }
-
-    private function clearTestFiles(): void
-    {
-        preg_match('/File created: (.*)/', $this->getUndecoratedBuffer(), $result);
-
-        $file = str_replace('ROOTPATH' . DIRECTORY_SEPARATOR, ROOTPATH, $result[1] ?? '');
-        if (is_file($file)) {
-            unlink($file);
-        }
-
-        $dir = dirname($file) . DIRECTORY_SEPARATOR;
-        if (is_dir($dir) && ! in_array($dir, ['/', TESTPATH, TESTPATH . 'system/', TESTPATH . '_support/'], true)) {
-            rmdir($dir);
-        }
+        return preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()) ?? '';
     }
 
     #[DataProvider('provideGenerateTestFiles')]
-    public function testGenerateTestFiles(string $name, string $expectedClass): void
+    public function testGenerateTestFiles(string $name, string $expectedFile, string $expectedNamespace): void
     {
-        command(sprintf('make:test %s', $name));
+        command('make:test ' . $name);
 
-        $expectedTestFile = str_replace('/', DIRECTORY_SEPARATOR, sprintf('%stests/%s.php', ROOTPATH, $expectedClass));
-        $expectedMessage  = sprintf('File created: %s', str_replace(ROOTPATH, 'ROOTPATH' . DIRECTORY_SEPARATOR, $expectedTestFile));
-        $this->assertStringContainsString($expectedMessage, $this->getUndecoratedBuffer());
-        $this->assertFileExists($expectedTestFile);
+        $this->assertSame(sprintf("\nFile created: ROOTPATH/tests/%s\n", $expectedFile), $this->getUndecoratedBuffer());
+
+        $contents = file_get_contents(ROOTPATH . 'tests/' . $expectedFile);
+        $this->assertIsString($contents);
+        $this->assertStringContainsString(sprintf('namespace %s;', $expectedNamespace), $contents);
+        $this->assertStringContainsString(sprintf('class %s extends CIUnitTestCase', basename($expectedFile, '.php')), $contents);
     }
 
     /**
-     * @return iterable<string, array{0: string, 1: string}>
+     * @return iterable<string, array{0: string, 1: string, 2: string}>
      */
     public static function provideGenerateTestFiles(): iterable
     {
-        yield 'simple class name' => ['Foo', 'FooTest'];
+        yield 'simple class name' => ['Foo', 'FooTest.php', 'Tests'];
 
-        yield 'namespaced class name' => ['Foo/Bar', 'Foo/BarTest'];
+        yield 'namespaced class name' => ['Foo/Bar', 'Foo/BarTest.php', 'Tests\Foo'];
 
-        yield 'class with suffix' => ['Foo/BarTest', 'Foo/BarTest'];
+        yield 'class with suffix' => ['Foo/BarTest', 'Foo/BarTest.php', 'Tests\Foo'];
 
-        // the 4 slashes are needed to escape here and in the command
-        yield 'namespace style class name' => ['Foo\\\\Bar', 'Foo/BarTest'];
+        yield 'namespace style class name' => ['Foo\\\\Bar', 'Foo/BarTest.php', 'Tests\Foo'];
+
+        yield 'fully qualified framework class' => ['CodeIgniter\\\\Foo', 'system/FooTest.php', 'CodeIgniter'];
+
+        yield 'fully qualified support class' => ['Tests\\\\Support\\\\Foo', '_support/FooTest.php', 'Tests\Support'];
+
+        yield 'explicit namespace' => ['Foo --namespace Tests\\\\Support', '_support/FooTest.php', 'Tests\Support'];
+    }
+
+    public function testUndefinedNamespaceFails(): void
+    {
+        command('make:test Foo --namespace Bogus');
+
+        $this->assertSame("\nNamespace \"Bogus\" is not defined.\n", $this->getUndecoratedBuffer());
+        $this->assertFileDoesNotExist(ROOTPATH . 'tests/FooTest.php');
     }
 
     public function testGenerateTestWithEmptyClassName(): void
     {
-        $expectedFile = ROOTPATH . 'tests/FooTest.php';
-        CLI::reset();
+        $io = new MockInputOutput();
+        $io->setInputs(['', 'Foo']);
+        CLI::setInputOutput($io);
 
-        try {
-            $io = new MockInputOutput();
-            CLI::setInputOutput($io);
+        command('make:test');
 
-            // Simulate running `make:test` with no input followed by entering `Foo`
-            $io->setInputs(['', 'Foo']);
-            command('make:test');
-
-            $expectedOutput = 'Test class name : ' . PHP_EOL;
-            $expectedOutput .= 'The "Test class name" field is required.' . PHP_EOL;
-            $expectedOutput .= 'Test class name : Foo' . PHP_EOL . PHP_EOL;
-            $expectedOutput .= 'File created: ROOTPATH/tests/FooTest.php' . PHP_EOL . PHP_EOL;
-            $this->assertSame($expectedOutput, preg_replace('/\e\[[^m]+m/', '', $io->getOutput()));
-            $this->assertFileExists($expectedFile);
-        } finally {
-            if (is_file($expectedFile)) {
-                unlink($expectedFile);
-            }
-
-            CLI::resetInputOutput();
-        }
+        $this->assertSame(
+            "Test class name : \nThe \"Test class name\" field is required.\nTest class name : Foo\n\nFile created: ROOTPATH/tests/FooTest.php\n",
+            preg_replace('/\e\[[^m]+m/', '', $io->getOutput()),
+        );
+        $this->assertFileExists(ROOTPATH . 'tests/FooTest.php');
     }
 }
