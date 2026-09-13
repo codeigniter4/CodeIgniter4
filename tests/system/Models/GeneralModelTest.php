@@ -46,15 +46,6 @@ final class GeneralModelTest extends CIUnitTestCase
     }
 
     /**
-     * @return iterable<string, array{string, string}>
-     */
-    public static function provideSubsecondDateFormats(): iterable
-    {
-        yield 'milliseconds' => ['Y-m-d H:i:s.v', '2024-07-09 09:13:34.654'];
-        yield 'microseconds' => ['Y-m-d H:i:s.u', '2024-07-09 09:13:34.654321'];
-    }
-
-    /**
      * Create an instance of Model for use in testing.
      */
     private function createModel(string $modelName, ?BaseConnection $db = null): Model
@@ -124,7 +115,7 @@ final class GeneralModelTest extends CIUnitTestCase
         $this->assertSame($allowed2, $this->getPrivateProperty($model, 'allowedFields'));
     }
 
-    #[DataProvider('provideSubsecondDateFormats')]
+    #[DataProvider('provideCurrentTimestampPreservesSubseconds')]
     public function testCurrentTimestampPreservesSubseconds(string $format, string $expected): void
     {
         Time::setTestNow('2024-07-09 09:13:34.654321');
@@ -134,6 +125,16 @@ final class GeneralModelTest extends CIUnitTestCase
         $date  = self::getPrivateMethodInvoker($model, 'setDate');
 
         $this->assertSame($expected, $date());
+    }
+
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function provideCurrentTimestampPreservesSubseconds(): iterable
+    {
+        yield 'milliseconds' => ['Y-m-d H:i:s.v', '2024-07-09 09:13:34.654'];
+
+        yield 'microseconds' => ['Y-m-d H:i:s.u', '2024-07-09 09:13:34.654321'];
     }
 
     public function testBuilderUsesModelTable(): void
