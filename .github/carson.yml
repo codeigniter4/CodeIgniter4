@@ -20,6 +20,12 @@ settings:
       - label: testing
         files:
           all: ['tests/**']
+      - label: bug
+        title: ['^fix(\([^)]*\))?: ']
+      - label: enhancement
+        title: ['^perf(\([^)]*\))?: ']
+      - label: refactor
+        title: ['^refactor(\([^)]*\))?: ']
   conflicts-notifier:
     label: stale
     message: |-
