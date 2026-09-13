@@ -50,7 +50,8 @@ return [
         'returnType'         => 'Return type',
         'tableName'          => 'Table name',
         'usingCINamespace'   => 'Warning: Using the "CodeIgniter" namespace will generate the file in the system directory.',
-        'viewName'           => [
+        // @deprecated v4.8.0 - never used
+        'viewName' => [
             'cell' => 'Cell view name',
         ],
     ],

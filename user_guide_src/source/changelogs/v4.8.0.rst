@@ -414,6 +414,7 @@ Deprecations
 - **CLI:** Returning a non-integer exit code from a command is now deprecated and will trigger a deprecation notice. Command methods should return an integer exit code (e.g., ``0`` for success, non-zero for errors) to ensure proper behavior across all platforms.
 - **CLI:** ``Commands::run()`` is now deprecated in favor of ``Commands::runLegacy()`` for legacy ``BaseCommand`` commands, and ``Commands::runCommand()`` for modern ``AbstractCommand`` commands.
 - **CLI:** The ``$commands`` parameter of ``Commands::verifyCommand()`` and the ``$collection`` parameter of ``Commands::getCommandAlternatives()`` are no longer used. Passing a non-empty array for either will trigger a deprecation notice.
+- **CLI:** The ``CLI.generator.viewName.cell`` language string is deprecated. It was never displayed, since ``make:cell`` only prompts for the class name.
 - **HTTP:** The ``CLIRequest::parseCommand()`` method is now deprecated and will be removed in a future release. The ``CLIRequest`` class now uses the new ``CommandLineParser`` class to handle command-line argument parsing.
 - **HTTP:** ``URI::setSilent()`` is now hard deprecated. This method was only previously marked as deprecated. It will now trigger a deprecation notice when used.
 
