@@ -45,6 +45,7 @@ return [
         'fileOverwrite'      => 'File overwritten: "{0}"',
         'invalidClassName'   => 'Class name "{0}" is not valid.',
         'invalidParentClass' => 'Parent class "{0}" is not valid.',
+        'invalidReturnType'  => 'Return type "{0}" is not valid.',
         'parentClass'        => 'Parent class',
         'returnType'         => 'Return type',
         'tableName'          => 'Table name',

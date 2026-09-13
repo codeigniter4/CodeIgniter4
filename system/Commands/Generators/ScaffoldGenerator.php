@@ -108,11 +108,11 @@ class ScaffoldGenerator extends BaseCommand
             $controllerOpts['restful'] = is_string($restful) ? $restful : null;
         }
 
-        $modelOpts = [
+        $modelOpts = array_filter([
             'table'   => $this->getOption('table'),
             'dbgroup' => $this->getOption('dbgroup'),
             'return'  => $this->getOption('return'),
-        ];
+        ], is_string(...));
 
         $class = $params[0] ?? CLI::getSegment(2);
 
