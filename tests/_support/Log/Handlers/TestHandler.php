@@ -50,9 +50,6 @@ class TestHandler extends FileHandler
 
     /**
      * Handles logging the message.
-     * If the handler returns false, then execution of handlers
-     * will stop. Any handlers that have not run, yet, will not
-     * be run.
      *
      * @param string $level
      * @param string $message

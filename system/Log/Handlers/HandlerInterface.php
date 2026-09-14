@@ -19,10 +19,9 @@ namespace CodeIgniter\Log\Handlers;
 interface HandlerInterface
 {
     /**
-     * Handles logging the message.
-     * If the handler returns false, then execution of handlers
-     * will stop. Any handlers that have not run, yet, will not
-     * be run.
+     * Handles logging the message. All configured handlers that
+     * can handle the given level are run, regardless of whether
+     * this (or any other) handler returns false.
      *
      * @param string $level
      * @param string $message
