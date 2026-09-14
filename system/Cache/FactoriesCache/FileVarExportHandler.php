@@ -23,7 +23,7 @@ final class FileVarExportHandler
 
         // Two processes may try to create the directory at the same time.
         // is_dir() confirms it exists, so suppressing the warning is safe.
-        if (! is_dir($this->path) && ! @mkdir($this->path, 0777, true) && ! is_dir($this->path)) {
+        if (! is_dir($this->path) && ! @mkdir($this->path, 0755, true) && ! is_dir($this->path)) {
             log_message('error', 'FactoriesCache: cannot create cache directory: ' . $this->path);
 
             return;
@@ -36,6 +36,8 @@ final class FileVarExportHandler
 
             return;
         }
+
+        @chmod($tmp, 0644);
 
         // Another process may have wiped the directory. Clean up on failure.
         if (! @rename($tmp, $this->path . "/{$key}")) {
