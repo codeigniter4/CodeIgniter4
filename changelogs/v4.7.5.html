@@ -342,6 +342,7 @@ On Windows, where the <code class="docutils literal notranslate"><span class="pr
 <li><p><strong>Files:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">File::move()</span></code> and <code class="docutils literal notranslate"><span class="pre">UploadedFile::move()</span></code> set executable and overly permissive file permissions (<code class="docutils literal notranslate"><span class="pre">0777</span> <span class="pre">&amp;</span> <span class="pre">~umask()</span></code> instead of <code class="docutils literal notranslate"><span class="pre">0666</span> <span class="pre">&amp;</span> <span class="pre">~umask()</span></code>), and <code class="docutils literal notranslate"><span class="pre">UploadedFile::move()</span></code> targeted the parent directory instead of the destination file for <code class="docutils literal notranslate"><span class="pre">chmod()</span></code>.</p></li>
 <li><p><strong>Helpers:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">get_dir_file_info()</span></code> returned incomplete entries for subdirectories and missing files instead of omitting them.</p></li>
 <li><p><strong>Honeypot:</strong> Fixed a bug where bot detection returned an HTTP 500 response instead of 403 (Forbidden).</p></li>
+<li><p><strong>I18n:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">Time::today()</span></code>, <code class="docutils literal notranslate"><span class="pre">Time::yesterday()</span></code>, and <code class="docutils literal notranslate"><span class="pre">Time::tomorrow()</span></code> ignored the specified <code class="docutils literal notranslate"><span class="pre">$timezone</span></code> and <code class="docutils literal notranslate"><span class="pre">setTestNow()</span></code> when calculating the day.</p></li>
 <li><p><strong>Logger:</strong> Fixed a bug where interpolating a log message with array or non-stringable context values could raise PHP warnings or errors.</p></li>
 <li><p><strong>Cache:</strong> Fixed <code class="docutils literal notranslate"><span class="pre">MemcachedHandler::decrement()</span></code> initializing a non-existent counter to the positive offset. Missing counters are now initialized to <code class="docutils literal notranslate"><span class="pre">0</span></code>, reflecting Memcached’s unsigned, saturating counter semantics.</p></li>
 </ul>
@@ -363,7 +364,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Sep 13, 2026.
+      <span class="lastupdated">Last updated on Sep 14, 2026.
       </span></p>
   </div>
 
