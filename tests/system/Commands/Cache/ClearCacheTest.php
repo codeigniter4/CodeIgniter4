@@ -13,7 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Cache;
 
+use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Autoloader\FileLocatorCached;
 use CodeIgniter\Cache\CacheFactory;
+use CodeIgniter\Cache\FactoriesCache\FileVarExportHandler;
 use CodeIgniter\Cache\Handlers\FileHandler;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Config\Factories;
@@ -91,6 +94,29 @@ final class ClearCacheTest extends CIUnitTestCase
 
         $this->assertNull(cache('foo'));
         $this->assertStringContainsString('Cache cleared.', $this->getStreamFilterBuffer());
+    }
+
+    public function testClearCacheDiscardsSharedLocatorCache(): void
+    {
+        $handler = new FileVarExportHandler();
+        $handler->delete('FileLocatorCache');
+
+        $locator = new FileLocatorCached(new FileLocator(service('autoloader')), $handler);
+        $locator->search('Config/App');
+        Services::injectMock('locator', $locator);
+
+        command('cache:clear');
+
+        $locator->search('Config/Cache');
+        $locator->__destruct();
+        Services::resetSingle('locator');
+
+        $cached = $handler->get('FileLocatorCache');
+
+        $this->assertArrayNotHasKey('Config/App', $cached['search']);
+        $this->assertArrayHasKey('Config/Cache', $cached['search']);
+
+        $handler->delete('FileLocatorCache');
     }
 
     public function testClearCacheFails(): void
