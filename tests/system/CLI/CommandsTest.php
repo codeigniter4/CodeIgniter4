@@ -575,7 +575,7 @@ final class CommandsTest extends CIUnitTestCase
         $this->expectExceptionMessage('Since v4.8.0, the $collection parameter of CodeIgniter\CLI\Commands::getCommandAlternatives() is no longer used.');
 
         $commands = new Commands();
-        self::getPrivateMethodInvoker($commands, 'getCommandAlternatives')('app:inf', $commands->getCommands());
+        $commands->getCommandAlternatives('app:inf', $commands->getCommands());
     }
 
     public function testDiscoveredLegacyCommandsCanBeOverridden(): void

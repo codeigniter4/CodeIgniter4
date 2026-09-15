@@ -21,6 +21,7 @@ use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCLIConfig;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
+use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
@@ -52,6 +53,25 @@ final class ConsoleTest extends CIUnitTestCase
         parent::tearDown();
 
         CLI::reset();
+    }
+
+    private function getUndecoratedBuffer(): string
+    {
+        return preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()) ?? '';
+    }
+
+    private function getUndecoratedIoOutput(MockInputOutput $io): string
+    {
+        return preg_replace('/\e\[[^m]+m/', '', $io->getOutput()) ?? '';
+    }
+
+    private function useInputs(string ...$inputs): MockInputOutput
+    {
+        $io = new MockInputOutput();
+        $io->setInputs($inputs);
+        CLI::setInputOutput($io);
+
+        return $io;
     }
 
     public function testHeaderShowsNormally(): void
@@ -119,6 +139,142 @@ final class ConsoleTest extends CIUnitTestCase
         (new Console())->run();
 
         $this->assertStringContainsString('Command "bogus" not found', $this->getStreamFilterBuffer());
+    }
+
+    public function testUnknownCommandRunsConfirmedSuggestion(): void
+    {
+        $this->initializeConsole('app:inf', '--no-header');
+        $io = $this->useInputs('y');
+
+        $console  = new Console();
+        $exitCode = $console->run();
+
+        $this->assertSame(EXIT_SUCCESS, $exitCode);
+        $this->assertSame('app:info', $console->getCommand());
+        $this->assertSame(
+            sprintf(
+                <<<'EOT'
+
+                    Command "app:inf" not found.
+
+                    Run "app:info" instead? [y, n]: y
+                    CodeIgniter Version: %s
+
+                    EOT,
+                CodeIgniter::CI_VERSION,
+            ),
+            $this->getUndecoratedIoOutput($io),
+        );
+    }
+
+    public function testUnknownCommandDeclinedSuggestionExitsWithError(): void
+    {
+        $this->initializeConsole('app:inf', '--no-header');
+        $io = $this->useInputs('n');
+
+        $console  = new Console();
+        $exitCode = $console->run();
+
+        $this->assertSame(EXIT_ERROR, $exitCode);
+        $this->assertSame('app:inf', $console->getCommand());
+        $this->assertSame(
+            <<<'EOT'
+
+                Command "app:inf" not found.
+
+                Run "app:info" instead? [y, n]: n
+
+                EOT,
+            $this->getUndecoratedIoOutput($io),
+        );
+    }
+
+    public function testUnknownCommandRunsSelectedSuggestion(): void
+    {
+        $this->initializeConsole('clear', '--no-header');
+        $io = $this->useInputs('0');
+
+        $console  = new Console();
+        $exitCode = $console->run();
+
+        $this->assertSame(EXIT_SUCCESS, $exitCode);
+        $this->assertSame('cache:clear', $console->getCommand());
+        $this->assertSame(
+            <<<'EOT'
+
+                Command "clear" not found.
+
+                Select a command to run instead:
+                  [0]  cache:clear
+                  [1]  debugbar:clear
+                  [2]  logs:clear
+                  [3]  none of these
+
+                [0, 1, 2, 3]: 0
+                Cache cleared using the "file" driver.
+
+                EOT,
+            $this->getUndecoratedIoOutput($io),
+        );
+    }
+
+    public function testUnknownCommandSelectingNoneExitsWithError(): void
+    {
+        $this->initializeConsole('clear', '--no-header');
+        $io = $this->useInputs('3');
+
+        $console  = new Console();
+        $exitCode = $console->run();
+
+        $this->assertSame(EXIT_ERROR, $exitCode);
+        $this->assertSame('clear', $console->getCommand());
+        $this->assertSame(
+            <<<'EOT'
+
+                Command "clear" not found.
+
+                Select a command to run instead:
+                  [0]  cache:clear
+                  [1]  debugbar:clear
+                  [2]  logs:clear
+                  [3]  none of these
+
+                [0, 1, 2, 3]: 3
+
+                EOT,
+            $this->getUndecoratedIoOutput($io),
+        );
+    }
+
+    public function testUnknownCommandDoesNotPromptWhenNotInteractive(): void
+    {
+        $this->initializeConsole('lst', '--no-header', '--no-interaction');
+        $exitCode = (new Console())->run();
+
+        $this->assertSame(EXIT_ERROR, $exitCode);
+        $this->assertSame(
+            <<<'EOT'
+
+                Command "lst" not found.
+
+                Did you mean this?
+                    list
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
+    }
+
+    public function testUnknownCommandDoesNotPromptWithNullInputOutput(): void
+    {
+        $this->initializeConsole('lst', '--no-header');
+        CLI::setInputOutput(new NullInputOutput());
+
+        $console  = new Console();
+        $exitCode = $console->run();
+
+        $this->assertSame(EXIT_ERROR, $exitCode);
+        $this->assertSame('lst', $console->getCommand());
     }
 
     public function testHelpCommandDetails(): void

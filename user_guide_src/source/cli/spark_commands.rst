@@ -106,6 +106,28 @@ You may always pass ``--no-header`` to suppress the header output, helpful for p
 
     Your environment is currently set as development.
 
+.. _correcting-a-mistyped-command:
+
+Correcting a Mistyped Command
+-----------------------------
+
+.. versionadded:: 4.8.0
+
+When the command name is not found, **spark** lists the closest matches. On an interactive
+run it also offers to run one of them: a single match asks for a ``y``/``n`` confirmation, and
+several matches present a numbered list with a "none of these" entry. Pressing Enter picks the
+highlighted default. Non-interactive runs (``--no-interaction`` / ``-N``, or piped input) only
+print the suggestions and exit with an error, as before.
+
+.. code-block:: console
+
+    php spark cache:clea
+
+    Command "cache:clea" not found.
+
+    Run "cache:clear" instead? [y, n]: y
+    Cache cleared using the "file" driver.
+
 Calling Commands
 ================
 
