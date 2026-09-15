@@ -36,7 +36,7 @@ final class RedisHandlerTest extends CIUnitTestCase
     private string $userIpAddress   = '127.0.0.1';
 
     /**
-     * @param array<string, bool|int|string|null> $options Replace values for `Config\Session`.
+     * @param array<string, mixed> $options Replace values for `Config\Session`.
      */
     protected function getInstance($options = []): RedisHandler
     {
@@ -306,6 +306,40 @@ final class RedisHandlerTest extends CIUnitTestCase
                 ],
             ],
         ];
+    }
+
+    /**
+     * When `$sentinel` is populated, `setSavePath()` builds a Sentinel-shaped
+     * array and `$savePath` is ignored. This is a pure unit test: no Sentinel
+     * server is contacted because `setSavePath()` runs in the constructor.
+     */
+    public function testSetSavePathWithSentinel(): void
+    {
+        $sentinel = [
+            'service' => 'mymaster',
+            'nodes'   => [
+                ['host' => '127.0.0.1', 'port' => 26379],
+                ['host' => 'sentinel2', 'port' => 26379],
+            ],
+            'timeout'    => 0.5,
+            'persistent' => true,
+            'password'   => 'secret',
+            'database'   => 1,
+        ];
+        $option  = ['sentinel' => $sentinel, 'savePath' => ''];
+        $handler = $this->getInstance($option);
+
+        $savePath = $this->getPrivateProperty($handler, 'savePath');
+
+        $this->assertSame([
+            'sentinel'   => true,
+            'service'    => 'mymaster',
+            'nodes'      => $sentinel['nodes'],
+            'password'   => 'secret',
+            'database'   => 1,
+            'timeout'    => 0.5,
+            'persistent' => true,
+        ], $savePath);
     }
 
     public function testConnectionReuse(): void
