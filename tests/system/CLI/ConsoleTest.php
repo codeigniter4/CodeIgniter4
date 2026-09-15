@@ -40,6 +40,7 @@ final class ConsoleTest extends CIUnitTestCase
         parent::setUp();
 
         Services::injectMock('superglobals', new Superglobals());
+        CLI::reset();
         CLI::init();
 
         (new DotEnv(ROOTPATH))->load();
