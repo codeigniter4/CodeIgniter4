@@ -35,13 +35,6 @@ final class CommandGeneratorTest extends CIUnitTestCase
             if (is_file($path)) {
                 unlink($path);
             }
-
-            $dir      = dirname($path);
-            $dirFiles = is_dir($dir) ? scandir($dir) : false;
-
-            if (str_starts_with($dir, APPPATH . 'Commands') && $dirFiles !== false && count($dirFiles) === 2) {
-                rmdir($dir);
-            }
         }
     }
 
