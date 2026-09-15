@@ -267,6 +267,43 @@ final class CLITest extends CIUnitTestCase
         $this->assertSame('Name: ', $wrap('Name: '));
     }
 
+    #[DataProvider('provideReadlinePromptDependsOnLibrary')]
+    public function testReadlinePromptDependsOnLibrary(mixed $libraryVersion, ?string $expected): void
+    {
+        $build = $this->getPrivateMethodInvoker(new InputOutput(), 'readlinePrompt');
+
+        $this->assertSame(
+            $expected,
+            $build(sprintf('What is your favorite color?  [%s]: ', CLI::color('red', 'green')), $libraryVersion),
+        );
+    }
+
+    /**
+     * @return iterable<string, array{0: mixed, 1: string|null}>
+     */
+    public static function provideReadlinePromptDependsOnLibrary(): iterable
+    {
+        yield 'GNU readline gets the prompt with non-printing markers' => [
+            '8.2',
+            "What is your favorite color?  [\x01\e[0;32m\x02red\x01\e[0m\x02]: ",
+        ];
+
+        yield 'libedit gets the raw prompt' => [
+            'EditLine wrapper',
+            "What is your favorite color?  [\e[0;32mred\e[0m]: ",
+        ];
+
+        // Official Windows builds use WinEditLine, which exposes no library version.
+        yield 'WinEditLine gets no prompt so the caller writes it' => [null, null];
+    }
+
+    public function testReadlinePromptWithoutPrefixReturnsNull(): void
+    {
+        $build = $this->getPrivateMethodInvoker(new InputOutput(), 'readlinePrompt');
+
+        $this->assertNull($build(null, '8.2'));
+    }
+
     public function testPromptByKey(): void
     {
         PhpStreamWrapper::register();

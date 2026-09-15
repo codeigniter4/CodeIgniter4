@@ -1,0 +1,32 @@
+name: Carson
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
+      - reopened
+      - labeled
+  issues:
+    types:
+      - opened
+      - edited
+      - labeled
+  push:
+    branches:
+      - develop
+      - '4.*'
+
+permissions: {}
+
+jobs:
+  carson:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Run Carson
+        uses: NexusPHP/carson@3973bbb86351a78861b75bbf504f53a83aede4dc # v1.4.2
+        with:
+          app_id: ${{ secrets.CARSON_APP_ID }}
+          private_key: ${{ secrets.CARSON_PRIVATE_KEY }}
+          log_level: info

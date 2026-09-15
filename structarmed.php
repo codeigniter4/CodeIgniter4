@@ -54,6 +54,7 @@ return Architecture::define()
             __DIR__ . '/system/View/Cells/Cell.php',
         ],
     ])
+    ->baseline(__DIR__ . '/structarmed-baseline.php')
     ->cacheDirectory(is_dir('/tmp') ? '/tmp/structarmed' : null)
     ->withPresets(Preset::PSR4(), Preset::CODEQUALITY())
 
