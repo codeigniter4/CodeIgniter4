@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Cache;
 
+use CodeIgniter\Autoloader\FileLocatorCached;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Cache;
@@ -79,6 +80,12 @@ class ClearCache extends BaseCommand
             CLI::error('Error while clearing the cache.');
 
             return EXIT_ERROR;
+        }
+
+        $locator = service('locator');
+
+        if ($handler === 'file' && $locator instanceof FileLocatorCached) {
+            $locator->deleteCache();
         }
 
         CLI::write(CLI::color('Cache cleared.', 'green'));
