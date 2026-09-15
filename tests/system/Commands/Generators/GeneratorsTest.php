@@ -101,7 +101,6 @@ final class GeneratorsTest extends CIUnitTestCase
         command('make:foo bar --suffix');
         $file1 = APPPATH . 'Commands/Bar.php';
         $file2 = APPPATH . 'Commands/BarCommand.php';
-        $dir   = dirname($file1);
 
         $this->assertFileExists($file1);
         $this->assertFileDoesNotExist($file2);
@@ -111,9 +110,6 @@ final class GeneratorsTest extends CIUnitTestCase
         }
         if (is_file($file2)) {
             unlink($file2);
-        }
-        if (is_dir($dir)) {
-            rmdir($dir);
         }
     }
 }
