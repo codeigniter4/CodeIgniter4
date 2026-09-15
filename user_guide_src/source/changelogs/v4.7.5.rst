@@ -53,6 +53,7 @@ Bugs Fixed
 - **Honeypot:** Fixed a bug where bot detection returned an HTTP 500 response instead of 403 (Forbidden).
 - **I18n:** Fixed a bug where ``Time::today()``, ``Time::yesterday()``, and ``Time::tomorrow()`` ignored the specified ``$timezone`` and ``setTestNow()`` when calculating the day.
 - **Logger:** Fixed a bug where interpolating a log message with array or non-stringable context values could raise PHP warnings or errors.
+- **Logger:** Fixed a bug where ``Logger::log()`` stopped running any remaining configured handlers after one handler returned ``false`` (e.g., ``FileHandler`` failing to open its log file due to file permissions), silently dropping the log message for every handler after it.
 - **Cache:** Fixed ``MemcachedHandler::decrement()`` initializing a non-existent counter to the positive offset. Missing counters are now initialized to ``0``, reflecting Memcached's unsigned, saturating counter semantics.
 
 See the repo's

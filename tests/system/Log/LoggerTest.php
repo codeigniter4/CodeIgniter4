@@ -18,6 +18,7 @@ use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Log\Exceptions\LogException;
+use CodeIgniter\Log\Handlers\BaseHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use PHPUnit\Framework\Attributes\Group;
@@ -106,6 +107,39 @@ final class LoggerTest extends CIUnitTestCase
         $logs = TestHandler::getLogs();
 
         $this->assertCount(0, $logs);
+    }
+
+    public function testLogRunsRemainingHandlersWhenAnEarlierHandlerReturnsFalse(): void
+    {
+        $config = new LoggerConfig();
+
+        $failingHandler = new class ([]) extends BaseHandler {
+            public static int $timesCalled = 0;
+
+            public function handle($level, $message): bool
+            {
+                self::$timesCalled++;
+
+                return false;
+            }
+        };
+
+        $config->handlers = [
+            $failingHandler::class => [
+                'handles' => ['debug'],
+            ],
+            TestHandler::class => [
+                'handles' => ['debug'],
+                'path'    => '',
+            ],
+        ];
+
+        $logger = new Logger($config);
+
+        $logger->log('debug', 'Test message');
+
+        $this->assertSame(1, $failingHandler::$timesCalled);
+        $this->assertCount(1, TestHandler::getLogs());
     }
 
     public function testLogInterpolatesMessage(): void
