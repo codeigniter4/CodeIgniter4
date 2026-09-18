@@ -163,6 +163,40 @@ final class AbstractGeneratorCommandTest extends CIUnitTestCase
         $this->assertStringContainsString('namespace App\Widgets\Sub\App;', $content);
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4495
+     */
+    public function testInteriorCaseIsPreserved(): void
+    {
+        $command = new GeneratorFixtureCommand(new Commands());
+        $command->setInteractive(false);
+
+        $exitCode = $command->run(['TestModule'], []);
+
+        $this->assertSame(EXIT_SUCCESS, $exitCode);
+        $this->assertFileExists(APPPATH . 'Widgets' . DIRECTORY_SEPARATOR . 'TestModule.php');
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4857
+     */
+    public function testNamespaceLikeNameIsNotTreatedAsNamespace(): void
+    {
+        $command = new GeneratorFixtureCommand(new Commands());
+        $command->setInteractive(false);
+
+        $exitCode = $command->run(['App_Lesson'], []);
+
+        $this->assertSame(EXIT_SUCCESS, $exitCode);
+
+        $target = APPPATH . 'Widgets' . DIRECTORY_SEPARATOR . 'AppLesson.php';
+        $this->assertFileExists($target);
+        $content = file_get_contents($target);
+        $this->assertIsString($content);
+        $this->assertStringContainsString('namespace App\Widgets;', $content);
+        $this->assertStringContainsString('class AppLesson extends BaseConfig', $content);
+    }
+
     public function testTrailingSeparatorInNameIsIgnored(): void
     {
         $command = new GeneratorFixtureCommand(new Commands());

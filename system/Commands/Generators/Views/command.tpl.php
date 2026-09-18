@@ -2,77 +2,28 @@
 
 namespace {namespace};
 
-use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\CLI;
 <?php if ($type === 'generator'): ?>
-use CodeIgniter\CLI\GeneratorTrait;
-<?php endif ?>
+use CodeIgniter\CLI\AbstractGeneratorCommand;
+use CodeIgniter\CLI\Attributes\Command;
+use CodeIgniter\CLI\Attributes\GeneratorCommand;
 
-class {class} extends BaseCommand
+#[Command(name: '{command}', description: '', group: '{group}')]
+#[GeneratorCommand(component: 'Command', template: 'command.tpl.php', directory: 'Commands')]
+class {class} extends AbstractGeneratorCommand
 {
-<?php if ($type === 'generator'): ?>
-    use GeneratorTrait;
-
-<?php endif ?>
-    /**
-     * The Command's Group
-     *
-     * @var string
-     */
-    protected $group = '{group}';
-
-    /**
-     * The Command's Name
-     *
-     * @var string
-     */
-    protected $name = '{command}';
-
-    /**
-     * The Command's Description
-     *
-     * @var string
-     */
-    protected $description = '';
-
-    /**
-     * The Command's Usage
-     *
-     * @var string
-     */
-    protected $usage = '{command} [arguments] [options]';
-
-    /**
-     * The Command's Arguments
-     *
-     * @var array
-     */
-    protected $arguments = [];
-
-    /**
-     * The Command's Options
-     *
-     * @var array
-     */
-    protected $options = [];
-
-    /**
-     * Actually execute a command.
-     *
-     * @param array $params
-     */
-    public function run(array $params)
-    {
-<?php if ($type === 'generator'): ?>
-        $this->component = 'Command';
-        $this->directory = 'Commands';
-        $this->template  = 'command.tpl.php';
-
-        $this->generateClass($params);
+}
 <?php else: ?>
-        // your command logic here
-<?php endif ?>
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
+
+#[Command(name: '{command}', description: '', group: '{group}')]
+class {class} extends AbstractCommand
+{
+    protected function execute(array $arguments, array $options): int
+    {
+        //
 
         return EXIT_SUCCESS;
     }
 }
+<?php endif ?>

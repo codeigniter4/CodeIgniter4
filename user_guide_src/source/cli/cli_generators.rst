@@ -84,12 +84,15 @@ Argument:
 
 Options:
 ========
-* ``--command``: The command name to run in spark. Defaults to ``command:name``.
-* ``--group``: The group/namespace of the command. Defaults to ``App`` for basic commands, and ``Generators`` for generator commands.
-* ``--type``: The type of command, whether a ``basic`` command or a ``generator`` command. Defaults to ``basic``.
-* ``--namespace``: Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
-* ``--suffix``: Append the component suffix to the generated class name.
-* ``--force``: Set this flag to overwrite existing files on destination.
+* ``--command`` (``-c``): The command name to run in spark. Defaults to ``command:name``.
+* ``--type`` (``-t``): The type of command, whether a ``basic`` command or a ``generator`` command. Defaults to ``basic``.
+* ``--group`` (``-g``): The group of the command. Defaults to ``App`` for basic commands, and ``Generators`` for generator commands.
+* ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--suffix`` (``-s``): Append the component suffix to the generated class name.
+* ``--force`` (``-f``): Set this flag to overwrite existing files on destination.
+
+.. note:: Since v4.8.0, the generated class is a :doc:`modern command <cli_modern_commands>`: a ``basic`` command extends
+    ``AbstractCommand``, and a ``generator`` command extends :doc:`AbstractGeneratorCommand <cli_modern_generators>`.
 
 make:config
 -----------

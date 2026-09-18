@@ -33,6 +33,8 @@ Behavior Changes
 - **Commands:** Generator commands migrated to ``AbstractGeneratorCommand`` now return ``EXIT_ERROR`` (previously ``EXIT_SUCCESS``) when the target file exists
   without ``--force``, when the namespace is not defined, or when the name does not form a valid class name. The ``CodeIgniter`` namespace confirmation is no
   longer prompted on non-interactive runs.
+- **Commands:** The ``make:command`` command now generates modern commands: a ``basic`` command extends ``AbstractCommand`` with the ``#[Command]`` attribute,
+  and a ``generator`` command extends ``AbstractGeneratorCommand`` with the ``#[GeneratorCommand]`` attribute.
 - **Commands:** The success and error messages from ``debugbar:clear``, ``cache:clear``, and ``cache:info`` now include the affected path or cache driver/handler so the user can see which resource was acted on (or rejected). Scripts asserting on the prior literal text will need to be updated.
 - **Commands:** Declining the ``key:generate`` overwrite prompt interactively now returns ``EXIT_SUCCESS`` instead of ``EXIT_ERROR``. Output messages were also reworded; CI/automation that branches on the exit code or greps the previous wording will need updating.
 - **Commands:** The ``migrate:rollback`` command no longer accepts the undocumented ``-g`` (database group) option. It never had any effect, since ``MigrationRunner::regress()`` ignores the group, and the modern command pipeline now rejects unknown options. Remove ``-g`` from any ``migrate:rollback`` invocation.
@@ -241,6 +243,8 @@ Commands
   ``--restful`` value on non-interactive runs instead of prompting.
 - The ``make:model`` command now accepts ``-t``, ``-g``, and ``-r`` as shortcuts for ``--table``, ``--dbgroup``, and ``--return``, and rejects an
   invalid ``--return`` value on non-interactive runs instead of prompting.
+- The ``make:command`` command now accepts ``-c``, ``-t``, and ``-g`` as shortcuts for ``--command``, ``--type``, and ``--group``, and rejects an
+  invalid ``--type`` value on non-interactive runs instead of prompting.
 - **spark** now offers to run the closest matching command when a command name is mistyped on an interactive run.
   See :ref:`correcting-a-mistyped-command`.
 - Modern commands can now opt in to prompting for missing required arguments on interactive runs by implementing the new
@@ -393,6 +397,7 @@ Message Changes
     - ``Cache.unsupportedLockStore`` (``CacheException::forUnsupportedLockStore()``)
     - ``CLI.commandAlias`` and ``CLI.helpAliases`` (command alias rendering in ``list`` and ``help``)
     - ``CLI.altCommandNone``, ``CLI.altCommandRun``, and ``CLI.altCommandSelect`` (correcting a mistyped command)
+    - ``CLI.generator.invalidCommandType`` (``make:command`` rejecting an invalid ``--type``)
     - ``CLI.generator.invalidReturnType`` (``make:model`` rejecting an invalid ``--return``)
     - ``Commands.invalidCommandAlias``, ``Commands.commandAliasSameAsName``, ``Commands.duplicateCommandAlias``, ``Commands.aliasClashesWithCommandName``, and ``Commands.aliasClashesWithAlias`` (command alias validation)
 
