@@ -93,7 +93,7 @@ final class TimerTest extends CIUnitTestCase
 
         $timers = $timer->getTimers();
 
-        $this->assertSame(0.0, $timers['test1']['start']);
+        $this->assertEqualsWithDelta(0.0, $timers['test1']['start'], PHP_FLOAT_EPSILON);
     }
 
     public function testThrowsExceptionStoppingNonTimer(): void
