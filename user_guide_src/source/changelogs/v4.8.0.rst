@@ -248,6 +248,8 @@ Commands
 - The ``make:command`` command now accepts ``-c``, ``-t``, and ``-g`` as shortcuts for ``--command``, ``--type``, and ``--group``, and rejects an
   invalid ``--type`` value on non-interactive runs instead of prompting.
 - The ``make:migration`` command now accepts ``-t`` and ``-g`` as shortcuts for ``--table`` and ``--dbgroup``.
+- The ``make:scaffold`` command now accepts ``-b``, ``-t``, and ``-g`` as shortcuts for ``--bare``, ``--table``, and ``--dbgroup``, and asks for a
+  missing class name once instead of once per generated file.
 - **spark** now offers to run the closest matching command when a command name is mistyped on an interactive run.
   See :ref:`correcting-a-mistyped-command`.
 - Modern commands can now opt in to prompting for missing required arguments on interactive runs by implementing the new

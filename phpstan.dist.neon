@@ -31,6 +31,9 @@ parameters:
     ignoreErrors:
         -
             identifier: missingType.generics
+        -
+            identifier: trait.unused
+            path: system/CLI/GeneratorTrait.php
     checkMissingCallableSignature: true
     treatPhpDocTypesAsCertain: false
     strictRules:
