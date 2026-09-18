@@ -283,7 +283,21 @@ class RouteCollection implements RouteCollectionInterface
         $this->fileLocator  = $locator;
         $this->moduleConfig = $moduleConfig;
 
-        $this->httpHost = service('request')->getServer('HTTP_HOST');
+        // Remove port from HTTP_HOST (supports domains, IPv4, and IPv6, e.g., [::1]:8080)
+        $httpHost = service('request')->getServer('HTTP_HOST');
+
+        if ($httpHost !== null) {
+            $host = parse_url('http://' . $httpHost, PHP_URL_HOST);
+
+            $isValid = $host && (
+                filter_var($host, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME)
+                || filter_var(trim($host, '[]'), FILTER_VALIDATE_IP)
+            );
+
+            $this->httpHost = $isValid ? strtolower($host) : null;
+        } else {
+            $this->httpHost = null;
+        }
 
         // Setup based on config file. Let routes file override.
         $this->defaultNamespace   = rtrim($routing->defaultNamespace, '\\') . '\\';
