@@ -86,6 +86,16 @@ final class TimerTest extends CIUnitTestCase
         $this->assertSame($expected, $timer->getElapsedTime('test1'));
     }
 
+    public function testStartWithZeroTime(): void
+    {
+        $timer = new Timer();
+        $timer->start('test1', 0.0);
+
+        $timers = $timer->getTimers();
+
+        $this->assertSame(0.0, $timers['test1']['start']);
+    }
+
     public function testThrowsExceptionStoppingNonTimer(): void
     {
         $this->expectException('RunTimeException');
