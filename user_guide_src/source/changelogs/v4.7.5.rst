@@ -39,6 +39,7 @@ Deprecations
 Bugs Fixed
 **********
 
+- **Autoloader:** Fixed a bug where ``FileLocatorCached::deleteCache()`` left the deleted data in memory, so it could be written back to the cache file on shutdown. ``spark optimize`` and ``spark cache:clear`` now clear the shared locator's cache instead of a separate instance.
 - **CLI:** Fixed a bug where pressing backspace in a ``CLI::prompt()`` erased the prompt text when the ``readline`` extension is enabled. The prompt is now passed to ``readline()`` so line redraws repaint it.
   ANSI color codes in the prompt (e.g., option defaults) are wrapped in readline's non-printing markers under GNU readline so cursor positioning stays accurate.
   On Windows, where the ``readline`` extension is built on WinEditLine, the prompt is written to STDOUT first because WinEditLine reports no library version and prints ANSI sequences literally.
