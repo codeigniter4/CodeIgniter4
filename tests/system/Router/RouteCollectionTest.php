@@ -607,11 +607,17 @@ final class RouteCollectionTest extends CIUnitTestCase
         }
     }
 
+    /**
+     * @return iterable<string, array{string, string, bool}>
+     */
     public static function provideHostnameOptionWithPortMatchesCorrectly(): iterable
     {
         yield from self::provideHostnameWithPortCases();
     }
 
+    /**
+     * @return iterable<string, array{string, string, bool}>
+     */
     public static function provideHostnameWithPortCases(): iterable
     {
         yield 'domain with dev port' => [
