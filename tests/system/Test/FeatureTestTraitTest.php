@@ -220,6 +220,60 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         }
     }
 
+    public function testUploadAfterJsonRequestUsesMultipartOnlyForUpload(): void
+    {
+        $source = tempnam(sys_get_temp_dir(), 'ci4-upload-');
+        file_put_contents($source, 'file contents');
+
+        try {
+            $this->withRoutes([
+                [
+                    'POST',
+                    'upload',
+                    static function (): string {
+                        $request = service('request');
+
+                        return $request->getHeaderLine('Content-Type') . ':'
+                            . ($request->getFile('document') === null ? 'absent' : 'present') . ':'
+                            . $request->getPost('title');
+                    },
+                ],
+            ]);
+
+            $this->assertSame(
+                'application/json:absent:First',
+                $this->withBodyFormat('json')->post('upload', ['title' => 'First'])->response()->getBody(),
+            );
+            $this->assertSame(
+                'multipart/form-data:present:Second',
+                $this->withFiles(['document' => new MockUploadedFile($source, 'document.txt')])
+                    ->post('upload', ['title' => 'Second'])->response()->getBody(),
+            );
+            $this->assertSame(
+                'application/json:absent:Third',
+                $this->post('upload', ['title' => 'Third'])->response()->getBody(),
+            );
+        } finally {
+            @unlink($source);
+        }
+    }
+
+    public function testMockUploadedFileWithoutMimeTypeHasStringClientMimeType(): void
+    {
+        $source = tempnam(sys_get_temp_dir(), 'ci4-upload-');
+        file_put_contents($source, 'file contents');
+
+        try {
+            $file = new MockUploadedFile($source, 'document.txt');
+
+            $this->assertTrue($file->isValid());
+            $this->assertSame('', $file->getClientMimeType());
+            $this->assertSame('text/plain', (new MockUploadedFile($source, 'document.txt', 'text/plain'))->getClientMimeType());
+        } finally {
+            @unlink($source);
+        }
+    }
+
     public function testCallValidationTwice(): void
     {
         $this->withRoutes([
