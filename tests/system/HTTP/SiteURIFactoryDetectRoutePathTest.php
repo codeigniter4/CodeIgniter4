@@ -258,6 +258,25 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
         $this->assertSame(['code' => 'good'], $_GET);
     }
 
+    public function testQueryStringKeepsRequestInSyncWithGet(): void
+    {
+        // /index.php?/ci/woot?code=good#pos
+        service('superglobals')
+            ->setServer('REQUEST_URI', '/index.php?/ci/woot?code=good')
+            ->setServer('QUERY_STRING', '/ci/woot?code=good')
+            ->setServer('SCRIPT_NAME', '/index.php')
+            ->setGet('/ci/woot?code', 'good');
+
+        $factory = $this->createSiteURIFactory(service('superglobals')->getServerArray());
+
+        $expected = 'ci/woot';
+        $this->assertSame($expected, $factory->detectRoutePath('QUERY_STRING'));
+
+        // getVar() reads from $_REQUEST, so the corrected GET value must be
+        // reflected there too, not just in $_GET.
+        $this->assertSame(['code' => 'good'], $_REQUEST); // @phpstan-ignore codeigniter.superglobalsOffsetAccess (checks the live superglobal written by the factory)
+    }
+
     public function testQueryStringEmpty(): void
     {
         // /index.php?

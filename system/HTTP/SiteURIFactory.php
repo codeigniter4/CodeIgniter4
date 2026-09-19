@@ -173,6 +173,10 @@ final readonly class SiteURIFactory
         parse_str($this->superglobals->server('QUERY_STRING'), $get);
         $this->superglobals->setGetArray($get);
 
+        // Keep $_REQUEST in sync with the parsed GET values, as getVar() and
+        // validation read from $_REQUEST rather than $_GET.
+        $this->syncRequestWithGet($get);
+
         return URI::removeDotSegments($path);
     }
 
@@ -205,7 +209,35 @@ final readonly class SiteURIFactory
         parse_str($this->superglobals->server('QUERY_STRING'), $get);
         $this->superglobals->setGetArray($get);
 
+        // Keep $_REQUEST in sync with the parsed GET values, as getVar() and
+        // validation read from $_REQUEST rather than $_GET.
+        $this->syncRequestWithGet($get);
+
         return URI::removeDotSegments($path);
+    }
+
+    /**
+     * Keep $_REQUEST in sync with the latest parsed GET values.
+     *
+     * `getVar()` and validation read from $_REQUEST rather than $_GET, so when
+     * the query string is rewritten here (e.g. `/index.php?/ci/woot?code=good#pos`),
+     * the GET-originated keys must be reflected in $_REQUEST too. Otherwise
+     * `getVar('code')` returns the stale or unset value.
+     *
+     * Only GET-originated keys are updated; values from POST, COOKIE and other
+     * sources are left untouched.
+     *
+     * @param array<array-key, array|bool|float|int|string|null> $get The parsed GET values
+     */
+    private function syncRequestWithGet(array $get): void
+    {
+        $request = $this->superglobals->getRequestArray();
+
+        foreach ($get as $key => $value) {
+            $request[$key] = $value;
+        }
+
+        $this->superglobals->setRequestArray($request);
     }
 
     /**
