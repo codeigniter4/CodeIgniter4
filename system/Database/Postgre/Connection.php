@@ -207,7 +207,13 @@ class Connection extends BaseConnection
     protected function execute(string $sql)
     {
         try {
-            return pg_query($this->connID, $sql);
+            $result = pg_query($this->connID, $sql);
+
+            if ($result === false && $this->DBDebug) {
+                throw new DatabaseException((string) pg_last_error($this->connID));
+            }
+
+            return $result;
         } catch (ErrorException $e) {
             $trace = array_slice($e->getTrace(), 2); // remove the call to error handler
 
