@@ -13,117 +13,120 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Generators;
 
-use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\CLI;
-use CodeIgniter\CLI\GeneratorTrait;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
+use CodeIgniter\CLI\Input\Argument;
+use CodeIgniter\CLI\Input\Option;
+use CodeIgniter\CLI\PromptsForMissingInputInterface;
 
-/**
- * Generates a complete set of scaffold files.
- */
-class ScaffoldGenerator extends BaseCommand
+#[Command(name: 'make:scaffold', description: 'Generates a complete set of scaffold files.', group: 'Generators')]
+class ScaffoldGenerator extends AbstractCommand implements PromptsForMissingInputInterface
 {
-    use GeneratorTrait;
-
-    /**
-     * The Command's Group
-     *
-     * @var string
-     */
-    protected $group = 'Generators';
-
-    /**
-     * The Command's Name
-     *
-     * @var string
-     */
-    protected $name = 'make:scaffold';
-
-    /**
-     * The Command's Description
-     *
-     * @var string
-     */
-    protected $description = 'Generates a complete set of scaffold files.';
-
-    /**
-     * The Command's Usage
-     *
-     * @var string
-     */
-    protected $usage = 'make:scaffold <name> [options]';
-
-    /**
-     * The Command's Arguments
-     *
-     * @var array<string, string>
-     */
-    protected $arguments = [
-        'name' => 'The class name',
-    ];
-
-    /**
-     * The Command's Options
-     *
-     * @var array<string, string>
-     */
-    protected $options = [
-        '--bare'      => 'Add the "--bare" option to controller component.',
-        '--restful'   => 'Add the "--restful" option to controller component.',
-        '--table'     => 'Add the "--table" option to the model component.',
-        '--dbgroup'   => 'Add the "--dbgroup" option to model component.',
-        '--return'    => 'Add the "--return" option to the model component.',
-        '--namespace' => 'Set root namespace. Default: "APP_NAMESPACE".',
-        '--suffix'    => 'Append the component title to the class name.',
-        '--force'     => 'Force overwrite existing file.',
-    ];
-
-    /**
-     * Actually execute a command.
-     */
-    public function run(array $params)
+    protected function configure(): void
     {
-        $this->params = $params;
+        $this
+            ->addArgument(new Argument(name: 'name', description: 'The class name.', required: true))
+            ->addOption(new Option(
+                name: 'bare',
+                shortcut: 'b',
+                description: 'Pass "--bare" to the controller.',
+            ))
+            ->addOption(new Option(
+                name: 'restful',
+                description: 'Pass "--restful" to the controller.',
+                acceptsValue: true,
+                valueLabel: 'type',
+            ))
+            ->addOption(new Option(
+                name: 'table',
+                shortcut: 't',
+                description: 'Pass "--table" to the model.',
+                acceptsValue: true,
+                valueLabel: 'name',
+            ))
+            ->addOption(new Option(
+                name: 'dbgroup',
+                shortcut: 'g',
+                description: 'Pass "--dbgroup" to the model.',
+                acceptsValue: true,
+                valueLabel: 'group',
+            ))
+            ->addOption(new Option(
+                name: 'return',
+                description: 'Pass "--return" to the model.',
+                acceptsValue: true,
+                valueLabel: 'type',
+            ))
+            ->addOption(new Option(
+                name: 'namespace',
+                shortcut: 'n',
+                description: 'Set the root namespace.',
+                requiresValue: true,
+                default: APP_NAMESPACE,
+            ))
+            ->addOption(new Option(
+                name: 'suffix',
+                shortcut: 's',
+                description: 'Append the component suffix to each class name.',
+            ))
+            ->addOption(new Option(
+                name: 'force',
+                shortcut: 'f',
+                description: 'Force overwrite existing files.',
+            ));
+    }
 
-        $options = [];
+    protected function getArgumentPromptLabels(): array
+    {
+        return ['name' => lang('CLI.generator.className.default')];
+    }
 
-        if ($this->getOption('namespace')) {
-            $options['namespace'] = $this->getOption('namespace');
+    protected function execute(array $arguments, array $options): int
+    {
+        $name   = [$arguments['name']];
+        $shared = ['namespace' => $options['namespace']];
+
+        if ($options['suffix'] === true) {
+            $shared['suffix'] = null;
         }
 
-        if ($this->getOption('suffix')) {
-            $options['suffix'] = null;
+        $forced = $options['force'] === true ? $shared + ['force' => null] : $shared;
+
+        return $this->call('make:controller', $name, $this->getControllerOptions($options) + $forced)
+            | $this->call('make:model', $name, $this->getModelOptions($options) + $forced)
+            | $this->call('make:migration', $name, $shared)
+            | $this->call('make:seeder', $name, $forced);
+    }
+
+    /**
+     * @param array<string, mixed> $options
+     *
+     * @return array<string, string|null>
+     */
+    private function getControllerOptions(array $options): array
+    {
+        if ($options['bare'] === true) {
+            return ['bare' => null];
         }
 
-        if ($this->getOption('force')) {
-            $options['force'] = null;
+        if (! $this->hasUnboundOption('restful')) {
+            return [];
         }
 
-        $controllerOpts = [];
+        return ['restful' => is_string($options['restful']) ? $options['restful'] : null];
+    }
 
-        if ($this->getOption('bare')) {
-            $controllerOpts['bare'] = null;
-        } elseif ($this->getOption('restful')) {
-            $restful = $this->getOption('restful');
-
-            $controllerOpts['restful'] = is_string($restful) ? $restful : null;
-        }
-
-        $modelOpts = array_filter([
-            'table'   => $this->getOption('table'),
-            'dbgroup' => $this->getOption('dbgroup'),
-            'return'  => $this->getOption('return'),
+    /**
+     * @param array<string, mixed> $options
+     *
+     * @return array<string, string>
+     */
+    private function getModelOptions(array $options): array
+    {
+        return array_filter([
+            'table'   => $options['table'],
+            'dbgroup' => $options['dbgroup'],
+            'return'  => $options['return'],
         ], is_string(...));
-
-        $class = $params[0] ?? CLI::getSegment(2);
-
-        // Call those commands!
-        $exit1 = $this->call('make:controller', array_merge([$class], $controllerOpts, $options));
-        $exit2 = $this->call('make:model', array_merge([$class], $modelOpts, $options));
-        $exit3 = $this->call('make:migration', array_merge([$class], array_diff_key($options, ['force' => null])));
-        $exit4 = $this->call('make:seeder', array_merge([$class], $options));
-
-        assert(is_int($exit1) && is_int($exit2) && is_int($exit3) && is_int($exit4));
-
-        return $exit1 | $exit2 | $exit3 | $exit4;
     }
 }

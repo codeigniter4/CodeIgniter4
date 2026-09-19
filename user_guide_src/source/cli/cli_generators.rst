@@ -376,6 +376,10 @@ will create the following files:
 To include an ``Entity`` class in the scaffolded files, just include the ``--return entity`` to the command
 and it will be passed to the model generator.
 
+.. note:: Since v4.8.0, ``make:scaffold`` accepts the ``-b``, ``-t``, ``-g``, ``-n``, ``-s``, and ``-f`` shortcuts.
+    ``--restful`` and ``--return`` have no shortcut here, since both use ``-r`` in their own commands.
+    When the class name is omitted on an interactive run, it is asked for once and reused for every generated file.
+
 **************
 GeneratorTrait
 **************
