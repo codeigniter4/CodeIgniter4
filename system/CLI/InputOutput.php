@@ -46,14 +46,14 @@ class InputOutput
             // @codeCoverageIgnoreStart
             $prompt = $this->readlinePrompt($prefix, readline_info('library_version'));
 
-            if ($prompt !== null) {
-                return readline($prompt);
+            if ($prompt === null) {
+                // The library cannot render the prompt, so write it ourselves and let readline() only read the line.
+                self::fwrite(STDOUT, $prefix ?? '');
             }
 
-            // The library cannot render the prompt, so write it ourselves and let readline() only read the line.
-            self::fwrite(STDOUT, $prefix ?? '');
+            $input = readline($prompt);
 
-            return readline();
+            return $input === false ? '' : $input;
             // @codeCoverageIgnoreEnd
         }
 

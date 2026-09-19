@@ -75,10 +75,27 @@ final class FileLocatorCachedTest extends FileLocatorTest
 
     public function testDeleteCache(): void
     {
-        $this->assertNotSame([], $this->handler->get('FileLocatorCache'));
+        $this->locator->search('Config/App');
+        $this->locator->__destruct();
+        $this->assertIsArray($this->handler->get('FileLocatorCache'));
 
         $this->locator->deleteCache();
 
         $this->assertFalse($this->handler->get('FileLocatorCache'));
+    }
+
+    public function testDeleteCacheDiscardsDataHeldInMemory(): void
+    {
+        $this->locator->getClassname(SYSTEMPATH . 'CodeIgniter.php');
+
+        $this->locator->deleteCache();
+
+        $this->locator->search('Config/App');
+        $this->locator->__destruct();
+
+        $cached = $this->handler->get('FileLocatorCache');
+
+        $this->assertArrayHasKey('search', $cached);
+        $this->assertArrayNotHasKey('getClassname', $cached);
     }
 }

@@ -273,6 +273,8 @@ abstract class CIUnitTestCase extends TestCase
 
         // Check for other trait methods
         $this->callTraitMethods('tearDown');
+
+        $this->resetIsWindowsMock();
     }
 
     /**
@@ -316,6 +318,14 @@ abstract class CIUnitTestCase extends TestCase
     protected function resetServices(bool $initAutoloader = true)
     {
         Services::reset($initAutoloader);
+    }
+
+    /**
+     * Resets the mocked is_windows() function back to default state.
+     */
+    protected function resetIsWindowsMock(): void
+    {
+        is_windows(null);
     }
 
     /**

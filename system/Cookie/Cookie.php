@@ -127,7 +127,14 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#attributes
      * @see https://tools.ietf.org/html/rfc2616#section-2.2
      */
-    private static string $reservedCharsList = "=,; \t\r\n\v\f()<>@:\\\"/[]?{}";
+    private static string $reservedCharsList = "=,; \t\r\n\v\f\0()<>@:\\\"/[]?{}";
+
+    /**
+     * Prohibited characters in cookie prefix and name per PHP setcookie() constraints.
+     *
+     * @see https://www.php.net/manual/en/function.setcookie.php
+     */
+    private static string $reservedPrefixCharsList = "=,; \t\r\n\v\f\0";
 
     /**
      * @see https://www.php.net/manual/en/function.setrawcookie.php
@@ -232,11 +239,11 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      * @param string $name  The cookie's name
      * @param string $value The cookie's value
      * @param array{
-     *   prefix?: string,
+     *   prefix?: string|null,
      *   max-age?: int|numeric-string,
      *   expires?: DateTimeInterface|int|string,
-     *   path?: string,
-     *   domain?: string,
+     *   path?: string|null,
+     *   domain?: string|null,
      *   secure?: bool,
      *   httponly?: bool,
      *   samesite?: string,
@@ -258,9 +265,9 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
         }
 
         // to preserve backward compatibility with array-based cookies in previous CI versions
-        $prefix = ($options['prefix'] === '') ? self::$defaults['prefix'] : $options['prefix'];
-        $path   = ($options['path'] === '') ? self::$defaults['path'] : $options['path'];
-        $domain = ($options['domain'] === '') ? self::$defaults['domain'] : $options['domain'];
+        $prefix = in_array($options['prefix'], [null, ''], true) ? self::$defaults['prefix'] : $options['prefix'];
+        $path   = in_array($options['path'], [null, '', '0'], true) ? self::$defaults['path'] : $options['path'];
+        $domain = in_array($options['domain'], [null, ''], true) ? self::$defaults['domain'] : $options['domain'];
 
         // empty string SameSite should use the default for browsers
         $samesite = ($options['samesite'] === '') ? self::$defaults['samesite'] : $options['samesite'];
@@ -271,6 +278,8 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 
         $this->validateName($name, $raw);
         $this->validateValue($value, $raw);
+        $this->validatePath($path);
+        $this->validateDomain($domain);
         $this->validatePrefix($prefix, $secure, $path, $domain);
         $this->validateSameSite($samesite, $secure);
 
@@ -515,6 +524,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     public function withPath(?string $path)
     {
         $path = in_array($path, [null, '', '0'], true) ? self::$defaults['path'] : $path;
+        $this->validatePath($path);
         $this->validatePrefix($this->prefix, $this->secure, $path, $this->domain);
 
         $cookie = clone $this;
@@ -530,6 +540,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     public function withDomain(?string $domain)
     {
         $domain ??= self::$defaults['domain'];
+        $this->validateDomain($domain);
         $this->validatePrefix($this->prefix, $this->secure, $this->path, $domain);
 
         $cookie = clone $this;
@@ -791,12 +802,41 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     }
 
     /**
-     * Validates the special prefixes if some attribute requirements are met.
+     * Validates the cookie path per PHP setcookie() constraints.
+     *
+     * @throws CookieException
+     */
+    protected function validatePath(string $path): void
+    {
+        if (strpbrk($path, self::$reservedValueCharsList) !== false) {
+            throw CookieException::forInvalidCookiePath();
+        }
+    }
+
+    /**
+     * Validates the cookie domain per PHP setcookie() constraints.
+     *
+     * @throws CookieException
+     */
+    protected function validateDomain(string $domain): void
+    {
+        if ($domain !== '' && strpbrk($domain, self::$reservedValueCharsList) !== false) {
+            throw CookieException::forInvalidCookieDomain();
+        }
+    }
+
+    /**
+     * Validates the special prefixes if some attribute requirements are met,
+     * and ensures the prefix contains no PHP-prohibited characters.
      *
      * @throws CookieException
      */
     protected function validatePrefix(string $prefix, bool $secure, string $path, string $domain): void
     {
+        if (strpbrk($prefix, self::$reservedPrefixCharsList) !== false) {
+            throw CookieException::forInvalidCookieName($prefix);
+        }
+
         if (str_starts_with($prefix, '__Secure-') && ! $secure) {
             throw CookieException::forInvalidSecurePrefix();
         }

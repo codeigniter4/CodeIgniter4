@@ -89,10 +89,28 @@ class MigrationGenerator extends BaseCommand
         if (array_key_exists('session', $params) || CLI::getOption('session')) {
             $table     = $params['table'] ?? CLI::getOption('table') ?? 'ci_sessions';
             $params[0] = "_create_{$table}_table";
+
+            $group  = $params['dbgroup'] ?? CLI::getOption('dbgroup');
+            $group  = is_string($group) ? $group : 'default';
+            $driver = config(Database::class)->{$group}['DBDriver'] ?? null;
+
+            if ($driver === null) {
+                CLI::error(lang('CLI.generator.undefinedDatabaseGroup', [$group]));
+
+                return EXIT_ERROR;
+            }
+
+            if ($driver !== 'MySQLi' && $driver !== 'Postgre') {
+                CLI::error(lang('CLI.generator.unsupportedSessionDriver', [$group, $driver]));
+
+                return EXIT_ERROR;
+            }
         }
 
         $this->classNameLang = 'CLI.generator.className.migration';
         $this->generateClass($params);
+
+        return EXIT_SUCCESS;
     }
 
     /**

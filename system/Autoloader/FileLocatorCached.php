@@ -84,6 +84,7 @@ final class FileLocatorCached implements FileLocatorInterface
      */
     public function deleteCache(): void
     {
+        $this->cache        = [];
         $this->cacheUpdated = false;
         $this->cacheHandler->delete($this->cacheKey);
     }

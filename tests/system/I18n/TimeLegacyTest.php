@@ -170,9 +170,14 @@ final class TimeLegacyTest extends CIUnitTestCase
 
     public function testTodayLocalized(): void
     {
+        // Freeze time to avoid flakiness when server and London are on different calendar days
+        TimeLegacy::setTestNow('2026-06-15 12:00:00', 'UTC');
+
         $time = TimeLegacy::today('Europe/London');
 
-        $this->assertSame(date('Y-m-d 00:00:00'), $time->toDateTimeString());
+        $this->assertSame('2026-06-15 00:00:00', $time->toDateTimeString());
+
+        TimeLegacy::setTestNow();
     }
 
     public function testYesterday(): void
