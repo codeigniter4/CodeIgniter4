@@ -3737,8 +3737,8 @@ class BaseBuilder
     protected function trackAliases($table)
     {
         if ($table instanceof RawSql) {
-            if (preg_match('/\)\s+(?:AS\s+)?([a-z_][a-z0-9_]*)\s*$/i', (string) $table, $matches)) {
-                $this->db->addTableAlias($matches[1]);
+            if (preg_match('/(?:\)\s+|^[^\s()]+\s+)(?:AS\s+)?("[a-z_][a-z0-9_]*"|`[a-z_][a-z0-9_]*`|\[[a-z_][a-z0-9_]*\]|[a-z_][a-z0-9_]*)\s*$/i', (string) $table, $matches)) {
+                $this->db->addTableAlias(trim($matches[1], '"`[]'));
             }
 
             return null;
