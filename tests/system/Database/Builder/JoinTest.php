@@ -148,6 +148,30 @@ final class JoinTest extends CIUnitTestCase
         $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
 
+    public function testJoinRawSqlOrdinaryTableAliasWithPrefix(): void
+    {
+        $this->db = new MockConnection(['DBPrefix' => 'ci_']);
+        $builder  = new BaseBuilder('users', $this->db);
+
+        $builder->join(new RawSql('posts recent'), 'recent.user_id = users.id');
+
+        $expectedSQL = 'SELECT * FROM "ci_users" JOIN posts recent ON "recent"."user_id" = "ci_users"."id"';
+
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+    }
+
+    public function testJoinRawSqlQuotedSubqueryAliasWithPrefix(): void
+    {
+        $this->db = new MockConnection(['DBPrefix' => 'ci_']);
+        $builder  = new BaseBuilder('users', $this->db);
+
+        $builder->join(new RawSql('(SELECT user_id FROM posts) AS "recent"'), 'recent.user_id = users.id');
+
+        $expectedSQL = 'SELECT * FROM "ci_users" JOIN (SELECT user_id FROM posts) AS "recent" ON "recent"."user_id" = "ci_users"."id"';
+
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+    }
+
     public function testPostgreJoinRawSqlTable(): void
     {
         $builder = new PostgreBuilder('users', $this->db);
