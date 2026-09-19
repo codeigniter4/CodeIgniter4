@@ -652,7 +652,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function join(string $table, $cond, string $type = '', ?bool $escape = null)
+    public function join(RawSql|string $table, $cond, string $type = '', ?bool $escape = null)
     {
         $type = $this->compileJoinType($type);
 
@@ -676,8 +676,12 @@ class BaseBuilder
     /**
      * Compiles the JOIN table name.
      */
-    protected function compileJoinTable(string $table, bool $escape): string
+    protected function compileJoinTable(RawSql|string $table, bool $escape): string
     {
+        if ($table instanceof RawSql) {
+            return (string) $table;
+        }
+
         if ($escape) {
             return $this->db->protectIdentifiers($table, true, null, false);
         }
@@ -3726,12 +3730,20 @@ class BaseBuilder
     /**
      * Used to track SQL statements written with aliased tables.
      *
-     * @param array<array-key, string>|string $table The table to inspect
+     * @param array<array-key, string>|RawSql|string $table The table to inspect
      *
      * @return string|null
      */
     protected function trackAliases($table)
     {
+        if ($table instanceof RawSql) {
+            if (preg_match('/\)\s+(?:AS\s+)?([a-z_][a-z0-9_]*)\s*$/i', (string) $table, $matches)) {
+                $this->db->addTableAlias($matches[1]);
+            }
+
+            return null;
+        }
+
         if (is_array($table)) {
             foreach ($table as $t) {
                 $this->trackAliases($t);

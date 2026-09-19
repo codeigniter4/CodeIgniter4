@@ -129,8 +129,12 @@ class Builder extends BaseBuilder
         return 'TRUNCATE TABLE ' . $this->getFullName($table);
     }
 
-    protected function compileJoinTable(string $table, bool $escape): string
+    protected function compileJoinTable(RawSql|string $table, bool $escape): string
     {
+        if ($table instanceof RawSql) {
+            return (string) $table;
+        }
+
         if ($escape) {
             $table = $this->db->protectIdentifiers($table, true, null, false);
         }

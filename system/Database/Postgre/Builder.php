@@ -369,7 +369,7 @@ class Builder extends BaseBuilder
      *
      * @return $this
      */
-    public function join(string $table, $cond, string $type = '', ?bool $escape = null)
+    public function join(RawSql|string $table, $cond, string $type = '', ?bool $escape = null)
     {
         if (! in_array('FULL OUTER', $this->joinTypes, true)) {
             $this->joinTypes = array_merge($this->joinTypes, ['FULL OUTER']);
