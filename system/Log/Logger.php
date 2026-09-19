@@ -266,10 +266,7 @@ class Logger implements LoggerInterface
                 continue;
             }
 
-            // If the handler returns false, then we don't execute any other handlers.
-            if (! $handler->setDateFormat($this->dateFormat)->handle($level, $message)) {
-                break;
-            }
+            $handler->setDateFormat($this->dateFormat)->handle($level, $message);
         }
     }
 
