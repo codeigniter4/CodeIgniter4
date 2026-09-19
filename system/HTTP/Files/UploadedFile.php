@@ -145,7 +145,7 @@ class UploadedFile extends File implements UploadedFileInterface
         $destination = $overwrite ? $targetPath . $name : $this->getDestination($targetPath . $name);
 
         try {
-            $this->hasMoved = move_uploaded_file($this->path, $destination);
+            $this->hasMoved = $this->moveFile($destination);
         } catch (Exception) {
             $error   = error_get_last();
             $message = strip_tags($error['message'] ?? '');
@@ -168,6 +168,11 @@ class UploadedFile extends File implements UploadedFileInterface
         parent::__construct($destination, false);
 
         return $this;
+    }
+
+    protected function moveFile(string $destination): bool
+    {
+        return move_uploaded_file($this->path, $destination);
     }
 
     /**

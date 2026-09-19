@@ -20,6 +20,7 @@ use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
+use CodeIgniter\Test\Mock\MockUploadedFile;
 use Config\App;
 use Config\Feature;
 use Config\Routing;
@@ -147,6 +148,76 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response = $this->post('home', ['foo' => 'Mars']);
 
         $response->assertSee('Hello Mars!');
+    }
+
+    public function testPostWithUploadedFile(): void
+    {
+        $source      = tempnam(sys_get_temp_dir(), 'ci4-upload-');
+        $destination = basename($source) . '.txt';
+        file_put_contents($source, 'file contents');
+
+        try {
+            $this->withRoutes([
+                [
+                    'POST',
+                    'upload',
+                    static function () use ($destination): string {
+                        $request = service('request');
+                        $file    = $request->getFile('document');
+
+                        if ($file === null || ! $file->isValid()) {
+                            return 'invalid upload';
+                        }
+
+                        $validation = service('validation');
+                        $validation->setRule('document', 'document', 'uploaded[document]');
+                        if (! $validation->run([])) {
+                            return 'invalid validation';
+                        }
+
+                        $file->move(sys_get_temp_dir(), $destination);
+
+                        return $request->getPost('title') . ':'
+                            . $request->getHeaderLine('Content-Type') . ':'
+                            . ($file->hasMoved() ? 'moved' : 'not moved');
+                    },
+                ],
+            ]);
+
+            $response = $this->withFiles([
+                'document' => new MockUploadedFile($source, 'document.txt', 'text/plain'),
+            ])->post('upload', ['title' => 'Report']);
+
+            $this->assertSame('Report:multipart/form-data:moved', $response->response()->getBody());
+            $this->assertSame('file contents', file_get_contents(sys_get_temp_dir() . '/' . $destination));
+        } finally {
+            @unlink($source);
+            @unlink(sys_get_temp_dir() . '/' . $destination);
+        }
+    }
+
+    public function testUploadedFilesAreClearedAfterRequest(): void
+    {
+        $source = tempnam(sys_get_temp_dir(), 'ci4-upload-');
+
+        try {
+            $this->withRoutes([
+                [
+                    'POST',
+                    'upload',
+                    static fn (): string => service('request')->getFile('document') === null ? 'absent' : 'present',
+                ],
+            ]);
+
+            $this->assertSame(
+                'present',
+                $this->withFiles(['document' => new MockUploadedFile($source, 'document.txt', 'text/plain')])
+                    ->post('upload')->response()->getBody(),
+            );
+            $this->assertSame('absent', $this->post('upload')->response()->getBody());
+        } finally {
+            @unlink($source);
+        }
     }
 
     public function testCallValidationTwice(): void
