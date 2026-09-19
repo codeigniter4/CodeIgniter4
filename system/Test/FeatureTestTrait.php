@@ -460,7 +460,7 @@ trait FeatureTestTrait
             $request->setBody($this->requestBody);
         }
 
-        if ($this->bodyFormat !== '') {
+        if ($this->bodyFormat !== '' && $request->getFiles() === []) {
             $formatMime = '';
             if ($this->bodyFormat === 'json') {
                 $formatMime = 'application/json';

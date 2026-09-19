@@ -28,7 +28,7 @@ class MockUploadedFile extends UploadedFile
         ?int $error = UPLOAD_ERR_OK,
         ?string $clientPath = null,
     ) {
-        parent::__construct($path, $originalName, $mimeType, $size, $error, $clientPath);
+        parent::__construct($path, $originalName, $mimeType ?? '', $size, $error, $clientPath);
     }
 
     public function isValid(): bool
