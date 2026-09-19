@@ -4,8 +4,11 @@ version: 1
 subscribers:
   - auto-labeler
   - conflicts-notifier
+  - no-response-closer
   - pr-title-linter
   - signed-commits
+  - template-enforcer
+  - welcome
 settings:
   auto-labeler:
     sync_labels: true
@@ -35,6 +38,15 @@ settings:
       You may want to sync :arrows_counterclockwise: your branch with upstream!
 
       Ref: [Syncing Your Branch](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/workflow.md#updating-your-branch)
+  no-response-closer:
+    rules:
+      - label: needs template
+        only: issues
+        days_until_close: 2
+        close_message: |-
+          Closing this issue: the description still does not follow the bug report template after {{days_until_close}} days.
+
+          Please open a new issue using the [bug report form](https://github.com/codeigniter4/CodeIgniter4/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml&title=Bug%3A+). For feature requests or support questions, please use the [forums](https://forum.codeigniter.com/forum-30.html).
   pr-title-linter:
     name: 'Carson / pr-title-linter'
     rules:
@@ -44,3 +56,46 @@ settings:
   signed-commits:
     name: 'Carson / signed-commits'
     treat_unsigned_as: failure
+  template-enforcer:
+    label: needs template
+    exempt_roles: [admin, maintain, write, triage]
+    message: |-
+      Hi there, @{{user}}! :wave:
+
+      It looks like you opened an issue without following the bug report template:
+
+      {{violations}}
+
+      * Bug report ([open an issue](https://github.com/codeigniter4/CodeIgniter4/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml&title=Bug%3A+))
+      * For feature request or support question, please use the [forums](https://forum.codeigniter.com/forum-30.html).
+
+      Please update the description to follow the template. The `{{label}}` label will be removed automatically once it does.
+    issues:
+      required_sections:
+        - '### PHP Version'
+        - '### CodeIgniter4 Version'
+  welcome:
+    first_time:
+      pull_request: |-
+        Hi there, @{{user}}! :wave:
+
+        Thank you for sending this PR!
+
+        We expect the following in all Pull Requests (PRs).
+        - PRs must be sent to the [appropriate branch](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#branching)
+        - All git commits must be [GPG-signed](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#signing)
+        - Must follow our [style guide](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#php-style)
+        - Be [commented](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#comments) in the PHP source file
+        - Be documented in the [user guide](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#user-guide)
+        - Be [unit tested](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#unit-testing)
+        - Pass all checks in GitHub Actions
+
+        > [!IMPORTANT]
+        > We expect all code changes or bug-fixes to be accompanied by one or more tests added to our test suite to prove the code works.
+
+        If pull requests do not comply with the above, they will likely be closed. Since we are a team of volunteers, we don't have any more time to work
+        on the framework than you do. Please make it as painless for your contributions to be included as possible.
+
+        See https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md
+      issue: false
+    returning: false
