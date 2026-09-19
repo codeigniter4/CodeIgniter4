@@ -579,6 +579,84 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $routes->getRoutes());
     }
 
+    #[DataProvider('provideHostnameOptionWithPortMatchesCorrectly')]
+    public function testHostnameOptionWithPortMatchesCorrectly(
+        string $incomingHost,
+        string $routeHostname,
+        bool $shouldMatch,
+    ): void {
+        $superglobals = service('superglobals');
+        $originalHost = $superglobals->server('HTTP_HOST');
+
+        try {
+            $superglobals->setServer('HTTP_HOST', $incomingHost);
+
+            $routes = $this->getCollector();
+            $routes->add('test-route', 'Controller::method', ['hostname' => $routeHostname]);
+
+            $expected = $shouldMatch ? ['test-route' => '\Controller::method'] : [];
+
+            $this->assertSame($expected, $routes->getRoutes());
+        } finally {
+            // Restore original HTTP_HOST or clear it if it wasn't set originally
+            if ($originalHost !== null) {
+                $superglobals->setServer('HTTP_HOST', $originalHost);
+            } else {
+                $superglobals->setServer('HTTP_HOST', []);
+            }
+        }
+    }
+
+    /**
+     * @return iterable<string, array{string, string, bool}>
+     */
+    public static function provideHostnameOptionWithPortMatchesCorrectly(): iterable
+    {
+        yield from self::provideHostnameWithPortCases();
+    }
+
+    /**
+     * @return iterable<string, array{string, string, bool}>
+     */
+    public static function provideHostnameWithPortCases(): iterable
+    {
+        yield 'domain with dev port' => [
+            'example.com:8080',
+            'example.com',
+            true,
+        ];
+
+        yield 'domain with custom port' => [
+            'example.com:3000',
+            'example.com',
+            true,
+        ];
+
+        yield 'case-insensitive domain with port' => [
+            'EXAMPLE.COM:8080',
+            'example.com',
+            true,
+        ];
+
+        yield 'IPv6 address with port' => [
+            '[::1]:8080',
+            '[::1]',
+            true,
+        ];
+
+        yield 'IPv6 address without port' => [
+            '[::1]',
+            '[::1]',
+            true,
+        ];
+
+        yield 'mismatched domain with port should not match' => [
+            'attacker.com:8080',
+            'example.com',
+            false,
+        ];
+    }
+
     public function testResourceScaffoldsCorrectly(): void
     {
         $routes = $this->getCollector();
