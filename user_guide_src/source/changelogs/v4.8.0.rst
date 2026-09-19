@@ -35,6 +35,8 @@ Behavior Changes
   longer prompted on non-interactive runs.
 - **Commands:** The ``make:command`` command now generates modern commands: a ``basic`` command extends ``AbstractCommand`` with the ``#[Command]`` attribute,
   and a ``generator`` command extends ``AbstractGeneratorCommand`` with the ``#[GeneratorCommand]`` attribute.
+- **Commands:** The ``make:migration`` command now rejects ``--force`` as an unknown option. It was previously accepted but ignored, since the
+  timestamped file name only collides with an existing file when the same name is generated twice within one second.
 - **Commands:** The success and error messages from ``debugbar:clear``, ``cache:clear``, and ``cache:info`` now include the affected path or cache driver/handler so the user can see which resource was acted on (or rejected). Scripts asserting on the prior literal text will need to be updated.
 - **Commands:** Declining the ``key:generate`` overwrite prompt interactively now returns ``EXIT_SUCCESS`` instead of ``EXIT_ERROR``. Output messages were also reworded; CI/automation that branches on the exit code or greps the previous wording will need updating.
 - **Commands:** The ``migrate:rollback`` command no longer accepts the undocumented ``-g`` (database group) option. It never had any effect, since ``MigrationRunner::regress()`` ignores the group, and the modern command pipeline now rejects unknown options. Remove ``-g`` from any ``migrate:rollback`` invocation.
@@ -245,6 +247,7 @@ Commands
   invalid ``--return`` value on non-interactive runs instead of prompting.
 - The ``make:command`` command now accepts ``-c``, ``-t``, and ``-g`` as shortcuts for ``--command``, ``--type``, and ``--group``, and rejects an
   invalid ``--type`` value on non-interactive runs instead of prompting.
+- The ``make:migration`` command now accepts ``-t`` and ``-g`` as shortcuts for ``--table`` and ``--dbgroup``.
 - **spark** now offers to run the closest matching command when a command name is mistyped on an interactive run.
   See :ref:`correcting-a-mistyped-command`.
 - Modern commands can now opt in to prompting for missing required arguments on interactive runs by implementing the new
