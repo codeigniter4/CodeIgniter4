@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\CLI;
 
+use App\Commands\AppAboutCommand as AppAboutCommandOverride;
+use App\Commands\AppInfo as AppInfoOverride;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\CLI\Exceptions\CommandNotFoundException;
@@ -68,23 +70,14 @@ final class CommandsTest extends CIUnitTestCase
         return preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()) ?? '';
     }
 
-    private function copyCommand(string $path): void
+    private function loadOverrideFixture(string $file): string
     {
-        if (! is_dir(APPPATH . 'Commands')) {
-            mkdir(APPPATH . 'Commands');
-        }
+        $path = SUPPORTPATH . '_command/' . $file;
 
-        copy($path, APPPATH . 'Commands/' . basename($path));
-        clearstatcache(true);
-    }
+        // The fixture sits outside any PSR-4 root, so the autoloader cannot load it.
+        require_once $path;
 
-    private function deleteCommand(string $path): void
-    {
-        if (is_file(APPPATH . 'Commands/' . basename($path))) {
-            unlink(APPPATH . 'Commands/' . basename($path));
-        }
-
-        clearstatcache(true);
+        return $path;
     }
 
     public function testRunOnUnknownCommand(): void
@@ -358,7 +351,7 @@ final class CommandsTest extends CIUnitTestCase
 
     public function testAliasClashingWithCommandNameFailsHard(): void
     {
-        $this->injectAliasLocator([
+        $this->injectFixtureLocator([
             AliasTargetCommand::class => SUPPORTPATH . 'InvalidCommands/AliasTargetCommand.php',
             AliasClashCommand::class  => SUPPORTPATH . 'InvalidCommands/AliasClashCommand.php',
         ]);
@@ -371,7 +364,7 @@ final class CommandsTest extends CIUnitTestCase
 
     public function testAliasClashingWithAnotherAliasFailsHard(): void
     {
-        $this->injectAliasLocator([
+        $this->injectFixtureLocator([
             AliasClashCommand::class       => SUPPORTPATH . 'InvalidCommands/AliasClashCommand.php',
             AliasSecondClashCommand::class => SUPPORTPATH . 'InvalidCommands/AliasSecondClashCommand.php',
         ]);
@@ -580,26 +573,28 @@ final class CommandsTest extends CIUnitTestCase
 
     public function testDiscoveredLegacyCommandsCanBeOverridden(): void
     {
-        $this->copyCommand(SUPPORTPATH . '_command/AppInfo.php');
+        $this->injectFixtureLocator([
+            AppInfoOverride::class => $this->loadOverrideFixture('AppInfo.php'),
+            AppInfo::class         => SUPPORTPATH . 'Commands/Legacy/AppInfo.php',
+        ]);
 
-        command('app:info');
+        (new Commands())->runLegacy('app:info', []);
 
         $this->assertStringContainsString('This is App\Commands\AppInfo', $this->getStreamFilterBuffer());
         $this->assertStringNotContainsString('CodeIgniter Version:', $this->getStreamFilterBuffer());
-
-        $this->deleteCommand(SUPPORTPATH . '_command/AppInfo.php');
     }
 
     public function testDiscoveredModernCommandsCanBeOverridden(): void
     {
-        $this->copyCommand(SUPPORTPATH . '_command/AppAboutCommand.php');
+        $this->injectFixtureLocator([
+            AppAboutCommandOverride::class => $this->loadOverrideFixture('AppAboutCommand.php'),
+            AppAboutCommand::class         => SUPPORTPATH . 'Commands/Modern/AppAboutCommand.php',
+        ]);
 
-        command('app:about a');
+        (new Commands())->runCommand('app:about', ['a'], []);
 
         $this->assertStringContainsString('This is App\Commands\AppAboutCommand', $this->getStreamFilterBuffer());
         $this->assertStringNotContainsString('CodeIgniter Version:', $this->getStreamFilterBuffer());
-
-        $this->deleteCommand(SUPPORTPATH . '_command/AppAboutCommand.php');
     }
 
     private function injectDuplicateLocator(): void
@@ -630,7 +625,7 @@ final class CommandsTest extends CIUnitTestCase
      *
      * @param array<class-string, string> $classToFile
      */
-    private function injectAliasLocator(array $classToFile): void
+    private function injectFixtureLocator(array $classToFile): void
     {
         $map = [];
 
