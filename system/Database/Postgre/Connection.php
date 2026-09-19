@@ -210,7 +210,7 @@ class Connection extends BaseConnection
             $result = pg_query($this->connID, $sql);
 
             if ($result === false && $this->DBDebug) {
-                throw new DatabaseException((string) pg_last_error($this->connID));
+                throw new DatabaseException(pg_last_error($this->connID));
             }
 
             return $result;
