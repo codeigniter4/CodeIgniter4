@@ -8,6 +8,7 @@ on:
       - synchronize
       - reopened
       - labeled
+      - ready_for_review
   issues:
     types:
       - opened
@@ -17,6 +18,8 @@ on:
     branches:
       - develop
       - '4.*'
+  schedule:
+    - cron: '0 0 * * *'
 
 permissions: {}
 
@@ -25,7 +28,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Run Carson
-        uses: NexusPHP/carson@44db1c01ff55b596cabec251fec6307dabd0852e # v1.4.3
+        uses: NexusPHP/carson@e4b2fde33f32c47455df218cf1765702c15c3b8b # v1.6.0
         with:
           app_id: ${{ secrets.CARSON_APP_ID }}
           private_key: ${{ secrets.CARSON_PRIVATE_KEY }}
