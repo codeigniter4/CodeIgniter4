@@ -19,9 +19,9 @@ Message Changes
 ***************
 
 - Added the ``CLI.generator.undefinedDatabaseGroup`` and ``CLI.generator.unsupportedSessionDriver`` language strings.
-- Added the ``Cookie.invalidCookieValue`` language string.
-- Added the ``Cookie.invalidCookiePath`` language string.
 - Added the ``Cookie.invalidCookieDomain`` language string.
+- Added the ``Cookie.invalidCookiePath`` language string.
+- Added the ``Cookie.invalidCookieValue`` language string.
 
 *******
 Changes
@@ -41,6 +41,7 @@ Bugs Fixed
 
 - **Autoloader:** Fixed a bug where ``FileLocatorCached::deleteCache()`` left the deleted data in memory, so it could be written back to the cache file on shutdown. ``spark optimize`` and ``spark cache:clear`` now clear the shared locator's cache instead of a separate instance.
 - **BaseModel:** Fixed a bug where auto-generated ``created_at``/``updated_at`` timestamps always rendered ``.000000`` for a ``'datetime'`` ``$dateFormat`` whose connection ``dateFormat`` mask includes ``.v``/``.u``, instead of the real sub-second value.
+- **Cache:** Fixed ``MemcachedHandler::decrement()`` initializing a non-existent counter to the positive offset. Missing counters are now initialized to ``0``, reflecting Memcached's unsigned, saturating counter semantics.
 - **CLI:** Fixed a bug where pressing backspace in a ``CLI::prompt()`` erased the prompt text when the ``readline`` extension is enabled. The prompt is now passed to ``readline()`` so line redraws repaint it.
   ANSI color codes in the prompt (e.g., option defaults) are wrapped in readline's non-printing markers under GNU readline so cursor positioning stays accurate.
   On Windows, where the ``readline`` extension is built on WinEditLine, the prompt is written to STDOUT first because WinEditLine reports no library version and prints ANSI sequences literally.
@@ -52,13 +53,12 @@ Bugs Fixed
 - **Cookie:** Fixed a bug where ``Cookie`` instances created with ``raw: true`` allowed invalid characters in cookie values rejected by ``setrawcookie()``.
 - **Cookie:** Fixed a bug where ``Cookie`` instances allowed invalid characters in path, domain, and prefix attributes rejected by ``setcookie()`` and ``setrawcookie()``.
 - **Database:** Fixed a bug where rebuilding a SQLite3 table (e.g., ``Forge::dropColumn()``, ``Forge::modifyColumn()``, ``Forge::dropForeignKey()`` and ``Forge::dropPrimaryKey()``) corrupted the table names referenced by its foreign keys when ``DBPrefix`` was set.
+- **Debug:** Fixed a bug where ``Timer::start()`` treated ``0.0`` as an empty value and substituted the current time.
 - **Files:** Fixed a bug where ``File::move()`` and ``UploadedFile::move()`` set executable and overly permissive file permissions (``0777 & ~umask()`` instead of ``0666 & ~umask()``), and ``UploadedFile::move()`` targeted the parent directory instead of the destination file for ``chmod()``.
 - **Helpers:** Fixed a bug where ``get_dir_file_info()`` returned incomplete entries for subdirectories and missing files instead of omitting them.
 - **Honeypot:** Fixed a bug where bot detection returned an HTTP 500 response instead of 403 (Forbidden).
 - **I18n:** Fixed a bug where ``Time::today()``, ``Time::yesterday()``, and ``Time::tomorrow()`` ignored the specified ``$timezone`` and ``setTestNow()`` when calculating the day.
 - **Logger:** Fixed a bug where interpolating a log message with array or non-stringable context values could raise PHP warnings or errors.
-- **Cache:** Fixed ``MemcachedHandler::decrement()`` initializing a non-existent counter to the positive offset. Missing counters are now initialized to ``0``, reflecting Memcached's unsigned, saturating counter semantics.
-- **Debug:** Fixed a bug where ``Timer::start()`` treated ``0.0`` as an empty value and substituted the current time.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
