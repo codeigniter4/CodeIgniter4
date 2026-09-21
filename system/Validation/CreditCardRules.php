@@ -200,7 +200,7 @@ class CreditCardRules
         $ccNumber = str_replace([' ', '-'], '', $ccNumber);
 
         // Non-numeric values cannot be a number...duh
-        if (! is_numeric($ccNumber)) {
+        if (! ctype_digit($ccNumber)) {
             return false;
         }
 
