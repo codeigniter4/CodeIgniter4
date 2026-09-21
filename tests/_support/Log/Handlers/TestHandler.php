@@ -58,22 +58,20 @@ class TestHandler extends FileHandler
 
     /**
      * Handles logging the message.
-     * If the handler returns false, then execution of handlers
-     * will stop. Any handlers that have not run, yet, will not
-     * be run.
+     * Always lets the remaining handlers run.
      *
      * @param string               $level
      * @param string               $message
      * @param array<string, mixed> $context
      */
-    public function handle($level, $message, array $context = []): bool
+    public function handle($level, $message, array $context = []): int
     {
         $date = Time::now()->format($this->dateFormat);
 
         self::$logs[]     = strtoupper($level) . ' - ' . $date . ' --> ' . $message;
         self::$contexts[] = $context;
 
-        return true;
+        return self::RESULT_CONTINUE;
     }
 
     public static function getLogs()

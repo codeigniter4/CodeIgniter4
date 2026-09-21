@@ -145,6 +145,43 @@ The context array may contain the CI global context data under the
 ``HandlerInterface::GLOBAL_CONTEXT_KEY`` (``'_ci_context'``) key when
 ``$logGlobalContext`` is enabled in ``Config\Logger``.
 
+``HandlerInterface::handle()`` now also returns ``int`` instead of ``bool``.
+The return value tells the ``Logger`` whether to run the remaining handlers:
+
+- ``HandlerInterface::RESULT_CONTINUE`` (``1``): the remaining handlers run.
+- ``HandlerInterface::RESULT_STOP`` (``2``): the chain stops and the handlers
+  that have not run yet are skipped.
+
+Previously, returning ``false`` stopped the chain and ``true`` continued it. The
+built-in handlers returned ``false`` when they failed to write, so a failing
+``FileHandler`` prevented the handlers after it from logging. They now always
+return ``RESULT_CONTINUE``.
+
+If you have a custom log handler that overrides ``handle()``, you must update the
+return type, and return the new constants:
+
+.. code-block:: php
+
+    // Before
+    public function handle($level, $message, array $context = []): bool
+    {
+        // ...
+        return true;  // continue with the next handler
+        // return false;  // stop the chain
+    }
+
+    // After
+    public function handle($level, $message, array $context = []): int
+    {
+        // ...
+        return self::RESULT_CONTINUE;  // continue with the next handler
+        // return self::RESULT_STOP;  // stop the chain
+    }
+
+.. note:: A ``handle()`` method that still declares a ``bool`` return type is
+    incompatible with the interface and will cause a fatal error when the class
+    is loaded.
+
 *************
 Project Files
 *************

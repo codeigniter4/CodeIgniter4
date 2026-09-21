@@ -81,6 +81,12 @@ Each handler's section will have one property in common: ``handles``, which is a
 
 .. literalinclude:: logging/004.php
 
+The handlers run in the order they are listed. A handler's ``handle()`` method returns
+``HandlerInterface::RESULT_CONTINUE`` to let the remaining handlers run, or
+``HandlerInterface::RESULT_STOP`` to stop the chain. The built-in handlers always
+continue, so a handler that fails (for example, a ``FileHandler`` that cannot write to
+the log directory) does not prevent the handlers after it from logging.
+
 Modifying the Message with Context
 ==================================
 

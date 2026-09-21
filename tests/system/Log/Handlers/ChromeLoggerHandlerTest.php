@@ -43,7 +43,7 @@ final class ChromeLoggerHandlerTest extends CIUnitTestCase
         $config->handlers['CodeIgniter\Log\Handlers\TestHandler']['handles'] = ['critical'];
 
         $logger = new ChromeLoggerHandler($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
-        $this->assertTrue($logger->handle('warning', 'This a log test'));
+        $this->assertSame(HandlerInterface::RESULT_CONTINUE, $logger->handle('warning', 'This a log test'));
     }
 
     public function testSendLogs(): void

@@ -35,7 +35,7 @@ final class ErrorlogHandlerTest extends CIUnitTestCase
         $logger = $this->getMockedHandler(['handles' => ['critical', 'error']]);
         $logger->method('errorLog')->willReturn(true);
         $logger->expects($this->once())->method('errorLog')->with("ERROR --> Test message.\n", 0);
-        $this->assertTrue($logger->handle('error', 'Test message.'));
+        $this->assertSame(HandlerInterface::RESULT_CONTINUE, $logger->handle('error', 'Test message.'));
     }
 
     public function testErrorLoggingAppendsContextAsJson(): void
@@ -44,7 +44,7 @@ final class ErrorlogHandlerTest extends CIUnitTestCase
         $logger->method('errorLog')->willReturn(true);
         $logger->expects($this->once())->method('errorLog')
             ->with("ERROR --> Test message. {\"_ci_context\":{\"foo\":\"bar\"}}\n", 0);
-        $this->assertTrue($logger->handle('error', 'Test message.', [HandlerInterface::GLOBAL_CONTEXT_KEY => ['foo' => 'bar']]));
+        $this->assertSame(HandlerInterface::RESULT_CONTINUE, $logger->handle('error', 'Test message.', [HandlerInterface::GLOBAL_CONTEXT_KEY => ['foo' => 'bar']]));
     }
 
     /**

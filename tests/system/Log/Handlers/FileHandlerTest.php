@@ -43,7 +43,7 @@ final class FileHandlerTest extends CIUnitTestCase
 
         $logger = new MockFileLogger($config->handlers[TestHandler::class]);
         $logger->setDateFormat('Y-m-d H:i:s:u');
-        $this->assertTrue($logger->handle('warning', 'This is a test log'));
+        $this->assertSame(HandlerInterface::RESULT_CONTINUE, $logger->handle('warning', 'This is a test log'));
     }
 
     public function testBasicHandle(): void
@@ -56,7 +56,19 @@ final class FileHandlerTest extends CIUnitTestCase
         $logger->setDateFormat('Y-m-d H:i:s:u');
         $expected = 'log-' . date('Y-m-d') . '.log';
         vfsStream::newFile($expected)->at(vfsStream::setup('root/charlie'))->withContent('This is a test log');
-        $this->assertTrue($logger->handle('warning', 'This is a test log'));
+        $this->assertSame(HandlerInterface::RESULT_CONTINUE, $logger->handle('warning', 'This is a test log'));
+    }
+
+    public function testHandleContinuesWhenFileCannotBeOpened(): void
+    {
+        $config                                          = new LoggerConfig();
+        $config->handlers[TestHandler::class]['path']    = $this->start . 'does-not-exist/';
+        $config->handlers[TestHandler::class]['handles'] = ['critical'];
+
+        $logger = new MockFileLogger($config->handlers[TestHandler::class]);
+        $logger->setDateFormat('Y-m-d H:i:s:u');
+
+        $this->assertSame(HandlerInterface::RESULT_CONTINUE, $logger->handle('warning', 'This is a test log'));
     }
 
     public function testHandleCreateFile(): void
