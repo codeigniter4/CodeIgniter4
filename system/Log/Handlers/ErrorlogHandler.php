@@ -62,15 +62,13 @@ class ErrorlogHandler extends BaseHandler
 
     /**
      * Handles logging the message.
-     * If the handler returns false, then execution of handlers
-     * will stop. Any handlers that have not run, yet, will not
-     * be run.
+     * Always lets the remaining handlers run, even if `error_log()` fails.
      *
      * @param string               $level
      * @param string               $message
      * @param array<string, mixed> $context
      */
-    public function handle($level, $message, array $context = []): bool
+    public function handle($level, $message, array $context = []): int
     {
         if ($context !== []) {
             $message .= ' ' . $this->encodeContext($context);
@@ -78,7 +76,9 @@ class ErrorlogHandler extends BaseHandler
 
         $message = strtoupper($level) . ' --> ' . $message . "\n";
 
-        return $this->errorLog($message, $this->messageType);
+        $this->errorLog($message, $this->messageType);
+
+        return self::RESULT_CONTINUE;
     }
 
     /**

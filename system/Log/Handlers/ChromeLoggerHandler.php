@@ -96,15 +96,13 @@ class ChromeLoggerHandler extends BaseHandler
 
     /**
      * Handles logging the message.
-     * If the handler returns false, then execution of handlers
-     * will stop. Any handlers that have not run, yet, will not
-     * be run.
+     * Always lets the remaining handlers run.
      *
      * @param string               $level
      * @param object|string        $message
      * @param array<string, mixed> $context
      */
-    public function handle($level, $message, array $context = []): bool
+    public function handle($level, $message, array $context = []): int
     {
         $message = $this->format($message);
 
@@ -129,7 +127,7 @@ class ChromeLoggerHandler extends BaseHandler
 
         $this->sendLogs();
 
-        return true;
+        return self::RESULT_CONTINUE;
     }
 
     /**

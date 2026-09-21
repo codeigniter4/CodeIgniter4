@@ -65,9 +65,8 @@ class FileHandler extends BaseHandler
 
     /**
      * Handles logging the message.
-     * If the handler returns false, then execution of handlers
-     * will stop. Any handlers that have not run, yet, will not
-     * be run.
+     * Always lets the remaining handlers run, even if writing
+     * the log file fails.
      *
      * @param string               $level
      * @param string               $message
@@ -75,7 +74,7 @@ class FileHandler extends BaseHandler
      *
      * @throws Exception
      */
-    public function handle($level, $message, array $context = []): bool
+    public function handle($level, $message, array $context = []): int
     {
         $filepath = $this->path . 'log-' . date('Y-m-d') . '.' . $this->fileExtension;
 
@@ -92,7 +91,7 @@ class FileHandler extends BaseHandler
         }
 
         if (! $fp = @fopen($filepath, 'ab')) {
-            return false;
+            return self::RESULT_CONTINUE;
         }
 
         // Instantiating DateTime with microseconds appended to initial date is needed for proper support of this format
@@ -130,6 +129,6 @@ class FileHandler extends BaseHandler
             @chmod($filepath, $this->filePermissions);
         }
 
-        return is_int($result);
+        return self::RESULT_CONTINUE;
     }
 }

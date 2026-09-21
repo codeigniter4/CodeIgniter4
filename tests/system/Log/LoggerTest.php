@@ -18,6 +18,8 @@ use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Log\Exceptions\LogException;
+use CodeIgniter\Log\Handlers\BaseHandler;
+use CodeIgniter\Log\Handlers\HandlerInterface;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use PHPUnit\Framework\Attributes\Group;
@@ -93,6 +95,67 @@ final class LoggerTest extends CIUnitTestCase
 
         $this->assertCount(1, $logs);
         $this->assertSame($expected, $logs[0]);
+    }
+
+    public function testLogRunsRemainingHandlersWhenAHandlerReturnsContinue(): void
+    {
+        $config           = new LoggerConfig();
+        $config->handlers = [
+            $this->getResultHandlerClass() => ['handles' => ['debug'], 'result' => HandlerInterface::RESULT_CONTINUE],
+            TestHandler::class             => ['handles' => ['debug']],
+        ];
+
+        $logger = new Logger($config);
+        $logger->log('debug', 'Test message');
+
+        $this->assertCount(1, TestHandler::getLogs());
+    }
+
+    public function testLogStopsRunningHandlersWhenAHandlerReturnsStop(): void
+    {
+        $config           = new LoggerConfig();
+        $config->handlers = [
+            $this->getResultHandlerClass() => ['handles' => ['debug'], 'result' => HandlerInterface::RESULT_STOP],
+            TestHandler::class             => ['handles' => ['debug']],
+        ];
+
+        // Handlers are created lazily and TestHandler resets its logs when
+        // created, so reset them here as it will never be reached.
+        new TestHandler([]);
+
+        $logger = new Logger($config);
+        $logger->log('debug', 'Test message');
+
+        $this->assertCount(0, TestHandler::getLogs());
+    }
+
+    /**
+     * Returns the class of a handler that returns the `result` value from its config.
+     *
+     * @return class-string<HandlerInterface>
+     */
+    private function getResultHandlerClass(): string
+    {
+        $handler = new class ([]) extends BaseHandler {
+            private int $result;
+
+            /**
+             * @param array{handles?: list<string>, result?: int} $config
+             */
+            public function __construct(array $config)
+            {
+                parent::__construct($config);
+
+                $this->result = $config['result'] ?? HandlerInterface::RESULT_CONTINUE;
+            }
+
+            public function handle($level, $message, array $context = []): int
+            {
+                return $this->result;
+            }
+        };
+
+        return $handler::class;
     }
 
     public function testLogDoesnotLogUnhandledLevels(): void
