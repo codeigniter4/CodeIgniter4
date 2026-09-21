@@ -1858,6 +1858,50 @@ class ValidationTest extends CIUnitTestCase
         ], $this->validation->getErrors());
     }
 
+    public function testParamIsNotResolvedAsFieldLabelForNonFieldReferenceRules(): void
+    {
+        $rules = [
+            'secret' => [
+                'label' => 'Internal Secret Field',
+                'rules' => 'required',
+            ],
+            'name' => [
+                'label' => 'Name',
+                'rules' => 'required|min_length[secret]',
+            ],
+        ];
+
+        $this->validation->setRules($rules);
+
+        $this->assertFalse($this->validation->run(['name' => 'a', 'secret' => 'x']));
+        $this->assertSame(
+            ['name' => 'The Name field must be at least secret characters in length.'],
+            $this->validation->getErrors(),
+        );
+    }
+
+    public function testParamResolvesFieldLabelForFieldReferenceRules(): void
+    {
+        $rules = [
+            'password' => [
+                'label' => 'Password',
+                'rules' => 'required',
+            ],
+            'password_confirmation' => [
+                'label' => 'Password Confirmation',
+                'rules' => 'matches[password]',
+            ],
+        ];
+
+        $this->validation->setRules($rules);
+
+        $this->assertFalse($this->validation->run(['password' => 'abc', 'password_confirmation' => 'def']));
+        $this->assertSame(
+            ['password_confirmation' => 'The Password Confirmation field does not match the Password field.'],
+            $this->validation->getErrors(),
+        );
+    }
+
     public function testRuleWithLeadingAsterisk(): void
     {
         $data = [
