@@ -4,6 +4,7 @@ version: 1
 subscribers:
   - auto-labeler
   - conflicts-notifier
+  - no-merge-commits
   - no-response-closer
   - pr-title-linter
   - signed-commits
@@ -38,6 +39,14 @@ settings:
       You may want to sync :arrows_counterclockwise: your branch with upstream!
 
       Ref: [Syncing Your Branch](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/workflow.md#updating-your-branch)
+  no-merge-commits:
+    name: 'Carson / no-merge-commits'
+    treat_merge_commits_as: failure
+    exempt_branches:
+      - head: '^develop$'
+        base: '^master$'
+      - head: '^4\.\d+$'
+        base: '^develop$'
   no-response-closer:
     rules:
       - label: needs template
