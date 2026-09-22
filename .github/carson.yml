@@ -71,18 +71,24 @@ settings:
     message: |-
       Hi there, @{{user}}! :wave:
 
-      It looks like you opened an issue without following the bug report template:
+      It looks like this {{type}} does not follow our template:
 
       {{violations}}
 
-      * Bug report ([open an issue](https://github.com/codeigniter4/CodeIgniter4/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml&title=Bug%3A+))
-      * For feature request or support question, please use the [forums](https://forum.codeigniter.com/forum-30.html).
-
       Please update the description to follow the template. The `{{label}}` label will be removed automatically once it does.
     issues:
-      required_sections:
-        - '### PHP Version'
-        - '### CodeIgniter4 Version'
+      rules:
+        - pattern: '### PHP Version[\s\S]*### CodeIgniter4 Version'
+          description: 'Use the [bug report form](https://github.com/codeigniter4/CodeIgniter4/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml&title=Bug%3A+), which asks for your PHP and CodeIgniter4 versions. For a feature request or support question, please use the [forums](https://forum.codeigniter.com/forum-30.html).'
+    pull_requests:
+      rules:
+        - pattern: '\*\*Description\*\*'
+          description: 'Keep the **Description** heading from the [pull request template](https://github.com/codeigniter4/CodeIgniter4/blob/develop/.github/PULL_REQUEST_TEMPLATE.md) and explain what you have changed, and why.'
+        - pattern: '\*\*Checklist:?\*\*'
+          description: 'Keep the **Checklist** from the pull request template and tick the items that apply. See [what we expect in a pull request](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md).'
+        - pattern: 'Explain what you have changed, and why\.'
+          description: 'Replace the placeholder text under **Description** with your own explanation.'
+          mode: forbid
   welcome:
     first_time:
       pull_request: |-
