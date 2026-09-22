@@ -199,7 +199,6 @@ class CreditCardRules
         // Remove any spaces and dashes
         $ccNumber = str_replace([' ', '-'], '', $ccNumber);
 
-        // Non-numeric values cannot be a number...duh
         if (! ctype_digit($ccNumber)) {
             return false;
         }
