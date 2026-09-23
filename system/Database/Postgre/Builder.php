@@ -467,13 +467,25 @@ class Builder extends BaseBuilder
             $constraints = $this->QBOptions['constraints'] ?? [];
 
             if ($constraints === []) {
-                $allIndexes = array_filter($this->db->getIndexData($table), static function ($index) use ($fieldNames): bool {
+                $tableIndexes = $this->db->getIndexData($table);
+
+                $uniqueIndexes = array_filter($tableIndexes, static function ($index) use ($fieldNames): bool {
                     $hasAllFields = count(array_intersect($index->fields, $fieldNames)) === count($index->fields);
 
-                    return ($index->type === 'UNIQUE' || $index->type === 'PRIMARY') && $hasAllFields;
+                    return $index->type === 'PRIMARY' && $hasAllFields;
                 });
 
-                foreach ($allIndexes as $index) {
+                // if no primary found then look for unique - since indexes have no order
+                if ($uniqueIndexes === []) {
+                    $uniqueIndexes = array_filter($tableIndexes, static function ($index) use ($fieldNames): bool {
+                        $hasAllFields = count(array_intersect($index->fields, $fieldNames)) === count($index->fields);
+
+                        return $index->type === 'UNIQUE' && $hasAllFields;
+                    });
+                }
+
+                // only take first index
+                foreach ($uniqueIndexes as $index) {
                     $constraints = $index->fields;
                     break;
                 }
