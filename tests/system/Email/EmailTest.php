@@ -713,7 +713,8 @@ final class EmailTest extends CIUnitTestCase
 
         // Priority 6 is invalid, falls back to 3
         $email->setPriority(6);
-        $this->assertSame(3, $this->getPrivateProperty($email, 'priority'));
+        $priority = $this->getPrivateProperty($email, 'priority');
+        $this->assertSame(3, $priority);
 
         // Priority 0 is invalid, falls back to 3
         $email->setPriority(0);

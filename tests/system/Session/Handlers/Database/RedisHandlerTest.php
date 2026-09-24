@@ -142,7 +142,8 @@ final class RedisHandlerTest extends CIUnitTestCase
         $expected = <<<'DATA'
             __ci_last_regenerate|i:1664607454;_ci_previous_url|s:32:"http://localhost:8080/index.php/";key|s:5:"value";
             DATA;
-        $this->assertSame($expected, $handler->read('555556b43phsnnf8if6bo33b635e4447'));
+        $data = $handler->read('555556b43phsnnf8if6bo33b635e4447');
+        $this->assertSame($expected, $data);
 
         $handler->close();
 

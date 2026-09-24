@@ -870,7 +870,8 @@ final class FormHelperTest extends CIUnitTestCase
     public function testSetSelect(): void
     {
         $_SESSION['_ci_old_input']['post']['foo'] = 'bar';
-        $this->assertSame(' selected="selected"', set_select('foo', 'bar'));
+        $selected                                 = set_select('foo', 'bar');
+        $this->assertSame(' selected="selected"', $selected);
 
         $_SESSION['_ci_old_input']['post']['foo'] = ['foo' => 'bar'];
         $this->assertSame(' selected="selected"', set_select('foo', 'bar'));
@@ -890,7 +891,8 @@ final class FormHelperTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame(' checked="checked"', set_checkbox('foo', 'bar'));
+        $checked = set_checkbox('foo', 'bar');
+        $this->assertSame(' checked="checked"', $checked);
 
         $_SESSION = [
             '_ci_old_input' => [
@@ -919,7 +921,8 @@ final class FormHelperTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame(' checked="checked"', set_checkbox('foo', '0'));
+        $checked = set_checkbox('foo', '0');
+        $this->assertSame(' checked="checked"', $checked);
 
         $_SESSION = [
             '_ci_old_input' => [

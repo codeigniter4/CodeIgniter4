@@ -962,7 +962,8 @@ final class ParserTest extends CIUnitTestCase
         $this->parser->setVar('teststring', 'Hello World');
 
         $expected = "<h1>Hello World</h1>\n";
-        $this->assertSame($expected, $this->parser->render('template1', ['cache' => 10, 'cache_name' => 'HelloWorld']));
+        $output   = $this->parser->render('template1', ['cache' => 10, 'cache_name' => 'HelloWorld']);
+        $this->assertSame($expected, $output);
         // this second renderings should go thru the cache
         $this->assertSame($expected, $this->parser->render('template1', ['cache' => 10, 'cache_name' => 'HelloWorld']));
     }
