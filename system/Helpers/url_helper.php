@@ -68,8 +68,8 @@ if (! function_exists('current_url')) {
      * @param bool                 $returnObject True to return an object instead of a string
      * @param IncomingRequest|null $request      A request to use when retrieving the path
      *
-     * @return string|URI When returning string, the query and fragment parts are removed.
-     *                    When returning URI, the query and fragment parts are preserved.
+     * @return ($returnObject is true ? URI : string) When returning string, the query and fragment parts are removed.
+     *                                                When returning URI, the query and fragment parts are preserved.
      */
     function current_url(bool $returnObject = false, ?IncomingRequest $request = null): string|URI
     {
@@ -87,6 +87,8 @@ if (! function_exists('previous_url')) {
      * we first check in a saved session variable, if it exists, and use that.
      * If that's not available, however, we'll use a sanitized url from $_SERVER['HTTP_REFERER']
      * which can be set by the user so is untrusted and not set by certain browsers/servers.
+     *
+     * @return ($returnObject is true ? URI : string)
      */
     function previous_url(bool $returnObject = false): string|URI
     {

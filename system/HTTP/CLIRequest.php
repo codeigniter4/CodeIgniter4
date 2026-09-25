@@ -236,7 +236,7 @@ class CLIRequest extends Request
      * @param int|null                      $filter A filter name to apply.
      * @param array<string, mixed>|int|null $flags
      *
-     * @return array{}|null
+     * @return ($index is string ? null : array{})
      */
     public function getGet($index = null, $filter = null, $flags = null)
     {
@@ -250,7 +250,7 @@ class CLIRequest extends Request
      * @param int|null                      $filter A filter name to apply
      * @param array<string, mixed>|int|null $flags
      *
-     * @return array{}|null
+     * @return ($index is string ? null : array{})
      */
     public function getPost($index = null, $filter = null, $flags = null)
     {
@@ -264,7 +264,7 @@ class CLIRequest extends Request
      * @param int|null                      $filter A filter name to apply
      * @param array<string, mixed>|int|null $flags
      *
-     * @return array{}|null
+     * @return ($index is string ? null : array{})
      */
     public function getPostGet($index = null, $filter = null, $flags = null)
     {
@@ -278,7 +278,7 @@ class CLIRequest extends Request
      * @param int|null                      $filter A filter name to apply
      * @param array<string, mixed>|int|null $flags
      *
-     * @return array{}|null
+     * @return ($index is string ? null : array{})
      */
     public function getGetPost($index = null, $filter = null, $flags = null)
     {
@@ -292,7 +292,7 @@ class CLIRequest extends Request
      * @param int|null                 $filter A filter name to be applied
      * @param mixed                    $flags
      *
-     * @return array{}|null
+     * @return ($index is string ? null : array{})
      */
     public function getCookie($index = null, $filter = null, $flags = null)
     {
@@ -302,7 +302,7 @@ class CLIRequest extends Request
     /**
      * @param list<string>|string|null $index
      *
-     * @return array{}|null
+     * @return ($index is string ? null : array{})
      */
     private function returnNullOrEmptyArray($index)
     {
