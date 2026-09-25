@@ -304,15 +304,7 @@ Since v4.2.0, ``$builder->join()`` accepts a ``CodeIgniter\Database\RawSql`` ins
 Since v4.8.0, the table can also be a ``RawSql`` instance. For example, you
 can join a subquery:
 
-.. code-block:: php
-
-    use CodeIgniter\Database\RawSql;
-
-    $builder->join(
-        new RawSql('(SELECT user_id, MAX(created_at) AS latest FROM posts GROUP BY user_id) recent'),
-        'recent.user_id = users.id',
-        'LEFT'
-    );
+.. literalinclude:: query_builder/134.php
 
 .. warning:: When you use ``RawSql``, you MUST escape the values and protect the identifiers manually. Failure to do so could result in SQL injections.
 
