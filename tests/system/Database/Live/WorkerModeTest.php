@@ -30,7 +30,6 @@ final class WorkerModeTest extends CIUnitTestCase
     protected function tearDown(): void
     {
         parent::tearDown();
-
         $this->setPrivateProperty(Config::class, 'instances', []);
     }
 

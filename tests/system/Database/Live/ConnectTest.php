@@ -57,11 +57,20 @@ final class ConnectTest extends CIUnitTestCase
         $this->group2['DBDriver'] = 'Postgre';
     }
 
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        $this->setPrivateProperty(Database::class, 'instances', []);
+    }
+
     public function testConnectWithMultipleCustomGroups(): void
     {
+        $this->group1['DBPrefix'] = uniqid('g1_', true);
+        $this->group2['DBPrefix'] = uniqid('g2_', true);
+
         // We should have our test database connection already.
-        $instances = $this->getPrivateProperty(Database::class, 'instances');
-        $this->assertCount(1, $instances);
+        $instances    = $this->getPrivateProperty(Database::class, 'instances');
+        $initialCount = count($instances);
 
         $db1 = Database::connect($this->group1);
         $db2 = Database::connect($this->group2);
@@ -69,7 +78,7 @@ final class ConnectTest extends CIUnitTestCase
         $this->assertNotSame($db1, $db2);
 
         $instances = $this->getPrivateProperty(Database::class, 'instances');
-        $this->assertCount(3, $instances);
+        $this->assertCount($initialCount + 2, $instances);
     }
 
     public function testConnectReturnsProvidedConnection(): void
