@@ -247,6 +247,22 @@ final class ConsoleTest extends CIUnitTestCase
         );
     }
 
+    public function testUnknownCommandDoesNotOfferHiddenCommand(): void
+    {
+        $this->initializeConsole('fixture:hiddenn', '--no-header');
+        $io = $this->useInputs();
+
+        $this->assertSame(EXIT_ERROR, (new Console())->run());
+        $this->assertSame(
+            <<<'EOT'
+
+                Command "fixture:hiddenn" not found.
+
+                EOT,
+            $this->getUndecoratedIoOutput($io),
+        );
+    }
+
     public function testUnknownCommandDoesNotPromptWhenNotInteractive(): void
     {
         $this->initializeConsole('lst', '--no-header', '--no-interaction');

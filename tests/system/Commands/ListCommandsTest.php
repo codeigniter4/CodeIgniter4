@@ -26,6 +26,7 @@ use PHPUnit\Framework\Attributes\Group;
 use ReflectionClass;
 use Tests\Support\Duplicates\DuplicateLegacy;
 use Tests\Support\Duplicates\DuplicateModern;
+use Tests\Support\Duplicates\HiddenDuplicateModern;
 
 /**
  * @internal
@@ -108,6 +109,57 @@ final class ListCommandsTest extends CIUnitTestCase
         $this->assertStringContainsString("fa\n", $buffer);
     }
 
+    public function testHiddenCommandIsNotListedInDetailedOutput(): void
+    {
+        command('list');
+
+        $buffer = $this->getUndecoratedBuffer();
+
+        $this->assertStringContainsString('fixture:aliased', $buffer);
+        $this->assertStringNotContainsString('fixture:hidden', $buffer);
+        $this->assertStringNotContainsString('fixture:secret', $buffer);
+    }
+
+    public function testHiddenCommandIsNotListedInSimpleOutput(): void
+    {
+        command('list --simple');
+
+        $buffer = $this->getUndecoratedBuffer();
+
+        $this->assertStringContainsString("fixture:aliased\n", $buffer);
+        $this->assertStringNotContainsString('fixture:hidden', $buffer);
+        $this->assertStringNotContainsString('fixture:secret', $buffer);
+    }
+
+    public function testLegacyCommandShadowingHiddenModernCommandIsListedInDetailedOutput(): void
+    {
+        $list = new ListCommands($this->discoveredRunnerWithDuplicate(HiddenDuplicateModern::class));
+        $this->resetStreamFilterBuffer();
+
+        $list->run([], []);
+
+        $this->assertMatchesRegularExpression(
+            '/\n {2}dup:test\s+Legacy fixture that collides with a modern command of the same name\.\n/',
+            $this->getUndecoratedBuffer(),
+        );
+    }
+
+    public function testLegacyCommandShadowingHiddenModernCommandIsListedInSimpleOutput(): void
+    {
+        $list = new ListCommands($this->discoveredRunnerWithDuplicate(HiddenDuplicateModern::class));
+        $this->resetStreamFilterBuffer();
+
+        $list->run([], ['simple' => null]);
+
+        $this->assertSame(
+            <<<'EOT'
+                dup:test
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
+    }
+
     public function testDuplicateCommandNameListedOnceInSimpleOutput(): void
     {
         $list = new ListCommands($this->mockRunnerWithDuplicate());
@@ -159,11 +211,13 @@ final class ListCommandsTest extends CIUnitTestCase
      * Runs real discovery against the colliding legacy/modern `dup:test`
      * fixtures so the alias suppression in `Commands::registerAliases()` is
      * exercised end to end, not stubbed.
+     *
+     * @param class-string<DuplicateModern|HiddenDuplicateModern> $modernClass
      */
-    private function discoveredRunnerWithDuplicate(): Commands
+    private function discoveredRunnerWithDuplicate(string $modernClass = DuplicateModern::class): Commands
     {
         $legacyFile = (new ReflectionClass(DuplicateLegacy::class))->getFileName();
-        $modernFile = (new ReflectionClass(DuplicateModern::class))->getFileName();
+        $modernFile = (new ReflectionClass($modernClass))->getFileName();
 
         $locator = $this->getMockBuilder(FileLocator::class)
             ->setConstructorArgs([service('autoloader')])
@@ -172,7 +226,7 @@ final class ListCommandsTest extends CIUnitTestCase
         $locator->method('listFiles')->with('Commands/')->willReturn([$legacyFile, $modernFile]);
         $locator->expects($this->exactly(2))->method('findQualifiedNameFromPath')->willReturnMap([
             [$legacyFile, DuplicateLegacy::class],
-            [$modernFile, DuplicateModern::class],
+            [$modernFile, $modernClass],
         ]);
         Services::injectMock('locator', $locator);
 
@@ -201,6 +255,7 @@ final class ListCommandsTest extends CIUnitTestCase
                     'group'       => 'Duplicates',
                     'description' => 'Modern dup description',
                     'aliases'     => [],
+                    'hidden'      => false,
                 ],
             ]);
         $runner->method('getCommandAliases')->willReturn([]);
