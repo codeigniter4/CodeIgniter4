@@ -28,7 +28,7 @@ use ReflectionException;
  * Command discovery and execution class.
  *
  * @phpstan-type legacy_commands array<string, array{class: class-string<BaseCommand>, file: string, group: string, description: string}>
- * @phpstan-type modern_commands array<string, array{class: class-string<AbstractCommand>, file: string, group: string, description: string, aliases: list<string>}>
+ * @phpstan-type modern_commands array<string, array{class: class-string<AbstractCommand>, file: string, group: string, description: string, aliases: list<string>, hidden: bool}>
  */
 class Commands
 {
@@ -190,6 +190,20 @@ class Commands
     public function hasModernCommand(string $name): bool
     {
         return $this->resolveCommand($name) !== null;
+    }
+
+    /**
+     * Checks whether the given command name or alias resolves to a hidden modern command that no legacy command shadows.
+     */
+    public function isHiddenCommand(string $name): bool
+    {
+        if (isset($this->commands[$name])) {
+            return false;
+        }
+
+        $resolved = $this->resolveCommand($name);
+
+        return $resolved !== null && $this->modernCommands[$resolved]['hidden'];
     }
 
     /**
@@ -356,7 +370,7 @@ class Commands
     }
 
     /**
-     * Finds alternative of `$name` across both legacy and modern commands.
+     * Finds alternative of `$name` across both legacy and modern commands, skipping hidden ones.
      *
      * @param legacy_commands $collection (no longer used)
      *
@@ -372,6 +386,10 @@ class Commands
         $alternatives = [];
 
         foreach (array_keys($this->commands + $this->modernCommands + $this->aliases) as $commandName) {
+            if ($this->isHiddenCommand($commandName)) {
+                continue;
+            }
+
             $lev = levenshtein($name, $commandName);
 
             if ($lev <= strlen($commandName) / 3 || str_contains($commandName, $name)) {
@@ -454,6 +472,7 @@ class Commands
             'group'       => $attribute->group,
             'description' => $attribute->description,
             'aliases'     => $attribute->aliases,
+            'hidden'      => $attribute->hidden,
         ];
     }
 }

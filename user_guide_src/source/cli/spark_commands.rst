@@ -45,6 +45,9 @@ sorted alphabetically:
 
     php spark list --simple
 
+.. note:: :ref:`Hidden commands <hidden-commands>` are left out of both lists, but still run
+    when called by name.
+
 Showing Help
 ------------
 
