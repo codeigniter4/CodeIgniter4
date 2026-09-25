@@ -53,6 +53,7 @@ Bugs Fixed
 - **Cookie:** Fixed a bug where ``Cookie`` instances created with ``raw: true`` allowed invalid characters in cookie values rejected by ``setrawcookie()``.
 - **Cookie:** Fixed a bug where ``Cookie`` instances allowed invalid characters in path, domain, and prefix attributes rejected by ``setcookie()`` and ``setrawcookie()``.
 - **Database:** Fixed a bug where rebuilding a SQLite3 table (e.g., ``Forge::dropColumn()``, ``Forge::modifyColumn()``, ``Forge::dropForeignKey()`` and ``Forge::dropPrimaryKey()``) corrupted the table names referenced by its foreign keys when ``DBPrefix`` was set.
+- **Database:** Fixed a bug where Postgre query failures were silently ignored when ``DBDebug`` was enabled and PHP warnings were disabled. A ``DatabaseException`` is now thrown.
 - **Debug:** Fixed a bug where ``Timer::start()`` treated ``0.0`` as an empty value and substituted the current time.
 - **Files:** Fixed a bug where ``File::move()`` and ``UploadedFile::move()`` set executable and overly permissive file permissions (``0777 & ~umask()`` instead of ``0666 & ~umask()``), and ``UploadedFile::move()`` targeted the parent directory instead of the destination file for ``chmod()``.
 - **Helpers:** Fixed a bug where ``get_dir_file_info()`` returned incomplete entries for subdirectories and missing files instead of omitting them.
