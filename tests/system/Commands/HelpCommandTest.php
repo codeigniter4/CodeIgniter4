@@ -19,6 +19,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\After;
 use PHPUnit\Framework\Attributes\Before;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -177,6 +178,47 @@ final class HelpCommandTest extends CIUnitTestCase
                 EOT,
             $this->getUndecoratedBuffer(),
         );
+    }
+
+    #[DataProvider('provideDescribeHiddenCommand')]
+    public function testDescribeHiddenCommand(string $command): void
+    {
+        command($command);
+
+        $this->assertSame(
+            <<<'EOT'
+
+                Usage:
+                  fixture:hidden [options]
+
+                Description:
+                  Fixture command exercising hidden commands.
+
+                Aliases:
+                  fixture:secret
+
+                Options:
+                  -h, --help            Display help for the given command.
+                      --no-header       Do not display the banner when running the command.
+                  -N, --no-interaction  Do not ask any interactive questions.
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideDescribeHiddenCommand(): iterable
+    {
+        yield 'help command' => ['help fixture:hidden'];
+
+        yield 'help option' => ['fixture:hidden --help'];
+
+        yield 'help shortcut' => ['fixture:hidden -h'];
+
+        yield 'help option on alias' => ['fixture:secret --help'];
     }
 
     public function testDescribeCommandViaAliasResolvesToCanonical(): void

@@ -219,6 +219,9 @@ Commands
 - Modern commands can now declare command aliases through an ``aliases`` list on the ``#[Command]`` attribute. Aliases resolve to the command
   at dispatch (``php spark <alias>`` and ``help <alias>``), are listed as their own rows in ``spark list``, and appear in an ``Aliases:`` section
   of ``help <command>``. An alias that collides with an existing command name or another alias is rejected at discovery. See :doc:`../cli/cli_modern_commands`.
+- Modern commands can now be hidden with ``hidden: true`` on the ``#[Command]`` attribute. A hidden command and its aliases are left out of
+  ``spark list`` and of the suggestions for a mistyped command name, but still run by exact name or alias and still have a ``help`` page.
+  ``AbstractCommand::isHidden()`` and ``Commands::isHiddenCommand()`` report the flag. See :ref:`hidden-commands`.
 - Every modern command now ships with a ``--no-interaction`` / ``-N`` flag that skips the ``interact()`` hook, plus public
   ``isInteractive()`` / ``setInteractive()`` methods on ``AbstractCommand``. ``isInteractive()`` also auto-detects piped or
   CI environments by probing STDIN for a TTY, and the state cascades to sub-commands invoked via ``$this->call(...)``.

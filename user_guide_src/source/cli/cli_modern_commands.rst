@@ -56,6 +56,8 @@ The attribute holds the command's identity:
   follows the same naming rules as ``name`` and must differ from it. Aliases resolve to the command at
   dispatch (``php spark <alias>`` and ``help <alias>`` both work), are listed as their own rows in the
   ``list`` output, and are shown in an ``Aliases:`` section of ``help <command>``.
+- ``hidden`` is an optional flag, ``false`` by default, that keeps the command out of listings.
+  See `Hidden Commands`_.
 
 The attribute itself validates these constraints at construction time. If you
 misspell ``name``, you will see the error at discovery rather than at run time.
@@ -64,6 +66,35 @@ alias is a hard error at discovery, since the runner could not tell which comman
 you meant.
 
 .. literalinclude:: cli_modern_commands/014.php
+
+.. _hidden-commands:
+
+Hidden Commands
+===============
+
+A hidden command is an ordinary command that spark does not advertise. It suits commands
+meant for scripts, cron jobs, or deployment tooling, which should stay runnable without
+cluttering the list people browse. Hide a command by setting ``hidden: true`` on its
+``#[Command]`` attribute:
+
+.. literalinclude:: cli_modern_commands/016.php
+
+A hidden command and its aliases are left out of:
+
+- the ``list`` output, including ``list --simple``;
+- the suggestions shown for a mistyped command name, including the offer to run one instead.
+
+Anything that names the command exactly still works:
+
+- ``php spark app:reindex``, or any of its aliases;
+- ``command('app:reindex')``, and ``call('app:reindex')`` from another command;
+- ``php spark help app:reindex``, or ``php spark app:reindex --help``.
+
+To check the flag in code, use ``isHidden()`` on a command instance, or
+``Commands::isHiddenCommand()`` with a command name or alias.
+
+.. note:: Hiding a command is not the same as leaving its ``group`` empty. A command with an
+    empty group is never discovered, so it cannot run at all.
 
 *****************
 Command Lifecycle
@@ -508,6 +539,11 @@ covered in the sections above and are not listed here.
     .. php:method:: getGroup(): string
 
         Returns the command group declared on the ``#[Command]`` attribute.
+
+    .. php:method:: isHidden(): bool
+
+        Returns whether the ``#[Command]`` attribute marks the command as hidden.
+        See `Hidden Commands`_.
 
     .. php:method:: getUsages(): array
 
