@@ -31,6 +31,20 @@ use CodeIgniter\View\RendererInterface;
 class Validation implements ValidationInterface
 {
     /**
+     * Rules whose parameter is a reference to another field name.
+     * Only for these rules the parameter is looked up in the field rules
+     * to resolve the label of the referenced field.
+     *
+     * @var list<string>
+     */
+    private const FIELD_REFERENCE_RULES = [
+        'matches',
+        'differs',
+        'required_with',
+        'required_without',
+    ];
+
+    /**
      * Files to load with validation functions.
      *
      * @var list<class-string>
@@ -873,7 +887,10 @@ class Validation implements ValidationInterface
 
         $args = [
             'field' => ($label === null || $label === '') ? $field : lang($label),
-            'param' => isset($this->rules[$param]['label']) ? lang($this->rules[$param]['label']) : $param,
+            'param' => in_array($rule, self::FIELD_REFERENCE_RULES, true)
+                && isset($this->rules[$param]['label'])
+                    ? lang($this->rules[$param]['label'])
+                    : $param,
             'value' => $value ?? '',
         ];
 
