@@ -388,6 +388,34 @@ final class Superglobals
     }
 
     /**
+     * Rebuilds $_REQUEST from $_GET, $_POST, and $_COOKIE according to the
+     * `request_order` (or `variables_order`) ini setting.
+     *
+     * PHP populates $_REQUEST only once at the start of the request. When
+     * $_GET is modified later (e.g. by SiteURIFactory), $_REQUEST becomes
+     * stale. This method re-synchronizes $_REQUEST with the current values.
+     *
+     * @return self
+     */
+    public function syncRequest(): self
+    {
+        $requestOrder = ini_get('request_order') ?: ini_get('variables_order') ?: 'GP';
+
+        $request = [];
+
+        foreach (str_split($requestOrder) as $type) {
+            match ($type) {
+                'G' => $request = array_merge($request, $this->get),
+                'P' => $request = array_merge($request, $this->post),
+                'C' => $request = array_merge($request, $this->cookie),
+                default => null,
+            };
+        }
+
+        return $this->setRequestArray($request);
+    }
+
+    /**
      * Get all $_FILES values.
      *
      * @return array<string, files_items>
