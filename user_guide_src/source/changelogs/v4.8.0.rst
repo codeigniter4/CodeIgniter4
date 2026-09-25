@@ -74,6 +74,7 @@ update your implementations to include the new methods or method changes to ensu
 Method Signature Changes
 ========================
 
+- **Database:** ``BaseBuilder::join()`` and ``BaseBuilder::compileJoinTable()`` now accept ``RawSql|string`` for the table argument. Custom builders overriding either method must accept both types. See :doc:`../installation/upgrade_480`.
 - **CLI:** The ``Console::run()`` method now accepts an optional ``array $tokens`` parameter. This allows you to pass an array of command tokens directly to the console runner, which is useful for testing or programmatically running commands. If not provided, it will default to using the global ``$argv``.
 - **CodeIgniter:** The deprecated parameters in methods have been removed:
     - ``CodeIgniter\CodeIgniter::handleRequest()`` no longer accepts the deprecated ``$cacheConfig`` and ``$returnResponse`` parameters.
@@ -283,6 +284,7 @@ Database
 Query Builder
 -------------
 
+- ``BaseBuilder::join()`` now accepts ``RawSql`` as the table argument, allowing raw JOIN targets such as subqueries. See :ref:`query-builder-join-rawsql`.
 - Added ``exists()`` and ``doesntExist()`` to Query Builder to check whether the current Query Builder query would return at least one row. See :ref:`query-builder-exists`.
 - Added ``explain()`` to Query Builder to run execution-plan queries for the current ``SELECT`` query. See :ref:`query-builder-explain`.
 - Added ``havingBetween()``, ``orHavingBetween()``, ``havingNotBetween()``, and ``orHavingNotBetween()`` to Query Builder. See :ref:`query-builder-having-between`.

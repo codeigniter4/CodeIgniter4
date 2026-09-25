@@ -121,6 +121,68 @@ final class JoinTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, $output);
     }
 
+    public function testJoinRawSqlTable(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $builder->join(
+            new RawSql('(SELECT user_id, MAX(created_at) AS latest FROM posts GROUP BY user_id) recent'),
+            'recent.user_id = users.id',
+            'LEFT',
+        );
+
+        $expectedSQL = 'SELECT * FROM "users" LEFT JOIN (SELECT user_id, MAX(created_at) AS latest FROM posts GROUP BY user_id) recent ON "recent"."user_id" = "users"."id"';
+
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+    }
+
+    public function testJoinRawSqlTableWithPrefix(): void
+    {
+        $this->db = new MockConnection(['DBPrefix' => 'ci_']);
+        $builder  = new BaseBuilder('users', $this->db);
+
+        $builder->join(new RawSql('(SELECT user_id FROM posts) recent'), 'recent.user_id = users.id');
+
+        $expectedSQL = 'SELECT * FROM "ci_users" JOIN (SELECT user_id FROM posts) recent ON "recent"."user_id" = "ci_users"."id"';
+
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+    }
+
+    public function testJoinRawSqlOrdinaryTableAliasWithPrefix(): void
+    {
+        $this->db = new MockConnection(['DBPrefix' => 'ci_']);
+        $builder  = new BaseBuilder('users', $this->db);
+
+        $builder->join(new RawSql('posts recent'), 'recent.user_id = users.id');
+
+        $expectedSQL = 'SELECT * FROM "ci_users" JOIN posts recent ON "recent"."user_id" = "ci_users"."id"';
+
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+    }
+
+    public function testJoinRawSqlQuotedSubqueryAliasWithPrefix(): void
+    {
+        $this->db = new MockConnection(['DBPrefix' => 'ci_']);
+        $builder  = new BaseBuilder('users', $this->db);
+
+        $builder->join(new RawSql('(SELECT user_id FROM posts) AS "recent"'), 'recent.user_id = users.id');
+
+        $expectedSQL = 'SELECT * FROM "ci_users" JOIN (SELECT user_id FROM posts) AS "recent" ON "recent"."user_id" = "ci_users"."id"';
+
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+    }
+
+    public function testPostgreJoinRawSqlTable(): void
+    {
+        $builder = new PostgreBuilder('users', $this->db);
+
+        $builder->join(new RawSql('(SELECT user_id FROM posts) recent'), 'recent.user_id = users.id', 'FULL OUTER');
+
+        $expectedSQL = 'SELECT * FROM "users" FULL OUTER JOIN (SELECT user_id FROM posts) recent ON "recent"."user_id" = "users"."id"';
+
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+    }
+
     public function testFullOuterJoin(): void
     {
         $builder = new PostgreBuilder('jobs', $this->db);
@@ -167,6 +229,18 @@ final class JoinTest extends CIUnitTestCase
         $builder->join('users u', new RawSql('u.id = jobs.id AND u.deleted_at IS NULL'), 'LEFT');
 
         $expectedSQL = 'SELECT * FROM "test"."dbo"."jobs" LEFT JOIN "test"."dbo"."users" "u" ON u.id = jobs.id AND u.deleted_at IS NULL';
+
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+    }
+
+    public function testSqlsrvJoinRawSqlTable(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $builder = new SQLSRVBuilder('users', $this->db);
+        $builder->join(new RawSql('(SELECT user_id FROM posts) recent'), 'recent.user_id = users.id', 'LEFT');
+
+        $expectedSQL = 'SELECT * FROM "test"."dbo"."users" LEFT JOIN (SELECT user_id FROM posts) recent ON "recent"."user_id" = "users"."id"';
 
         $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
     }
