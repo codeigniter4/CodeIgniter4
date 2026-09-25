@@ -161,7 +161,8 @@ final class TextHelperTest extends CIUnitTestCase
         $this->assertSame('my-test_1', increment_string('my-test'));
         $this->assertSame('my-test-1', increment_string('my-test', '-'));
         $this->assertSame('file_5', increment_string('file_4'));
-        $this->assertSame('file-5', increment_string('file-4', '-'));
+        $incremented = increment_string('file-4', '-');
+        $this->assertSame('file-5', $incremented);
         $this->assertSame('file-5', increment_string('file-4', '-'));
         $this->assertSame('file-1', increment_string('file', '-', 1));
         $this->assertSame('124', increment_string('123', ''));

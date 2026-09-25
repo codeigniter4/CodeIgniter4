@@ -139,7 +139,8 @@ final class SodiumHandlerTest extends CIUnitTestCase
         $encrypter         = $this->encryption->initialize($this->config);
         $this->assertInstanceOf(SodiumHandler::class, $encrypter);
 
-        $this->assertSame($originalKey, $encrypter->key);
+        $key = $encrypter->key;
+        $this->assertSame($originalKey, $key);
 
         $message      = 'This is a plain-text message.';
         $differentKey = sodium_crypto_secretbox_keygen();
