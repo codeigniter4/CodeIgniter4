@@ -256,6 +256,7 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
         $this->assertSame($expected, $factory->detectRoutePath('QUERY_STRING'));
         $this->assertSame('code=good', $_SERVER['QUERY_STRING']); // @phpstan-ignore codeigniter.superglobalsOffsetAccess (checks the live superglobal, not the snapshot service)
         $this->assertSame(['code' => 'good'], $_GET);
+        $this->assertSame(['code' => 'good'], $_REQUEST); // @phpstan-ignore codeigniter.superglobalsOffsetAccess (checks the live superglobal, not the snapshot service)
     }
 
     public function testQueryStringEmpty(): void
