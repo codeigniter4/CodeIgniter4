@@ -165,10 +165,8 @@ trait FeatureTestTrait
      * Sets uploaded files for the next request.
      *
      * @param array<string, array<array-key, UploadedFile>|UploadedFile> $files
-     *
-     * @return $this
      */
-    public function withFiles(array $files)
+    public function withFiles(array $files): static
     {
         $this->uploadedFiles = $files;
 
