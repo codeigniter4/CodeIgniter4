@@ -26,18 +26,22 @@ interface ResultInterface
      * individual data rows, which can be either an 'array', an
      * 'object', or a custom class name.
      *
-     * @param string $type The row type. Either 'array', 'object', or a class name to use
+     * @template T of object
      *
-     * @return ($type is 'array' ? list<array<string, mixed>> : ($type is 'object' ? list<stdClass> : list<object>))
+     * @param 'array'|'object'|class-string<T> $type The row type. Either 'array', 'object', or a class name to use
+     *
+     * @return ($type is 'array' ? list<array<string, mixed>> : ($type is 'object' ? list<stdClass> : list<T>))
      */
     public function getResult(string $type = 'object'): array;
 
     /**
      * Returns the results as an array of custom objects.
      *
-     * @param string $className The name of the class to use.
+     * @template T of object
      *
-     * @return list<object>
+     * @param class-string<T> $className The name of the class to use.
+     *
+     * @return list<T>
      */
     public function getCustomResultObject(string $className);
 
@@ -102,7 +106,7 @@ interface ResultInterface
      *
      * If row doesn't exist, returns null.
      *
-     * @return object|stdClass|null
+     * @return stdClass|null
      */
     public function getRowObject(int $n = 0);
 
