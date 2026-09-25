@@ -62,7 +62,7 @@ use Throwable;
  * @method $this havingLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
  * @method $this havingNotBetween(?string $key = null, array<array-key, mixed>|null $values = null, ?bool $escape = null)
  * @method $this havingNotIn(?string $key = null, $values = null, ?bool $escape = null)
- * @method $this join(string $table, string $cond, string $type = '', ?bool $escape = null)
+ * @method $this join(RawSql|string $table, RawSql|string $cond, string $type = '', ?bool $escape = null)
  * @method $this like($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
  * @method $this likeAny(list<RawSql|string> $fields, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
  * @method $this limit(?int $value = null, ?int $offset = 0)
