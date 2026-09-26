@@ -413,9 +413,9 @@ final class Superglobals
 
         foreach (str_split($requestOrder) as $type) {
             match ($type) {
-                'G' => $request = array_merge($request, $this->get),
-                'P' => $request = array_merge($request, $this->post),
-                'C' => $request = array_merge($request, $this->cookie),
+                'G'     => $request = array_merge($request, $this->get),
+                'P'     => $request = array_merge($request, $this->post),
+                'C'     => $request = array_merge($request, $this->cookie),
                 default => null,
             };
         }
