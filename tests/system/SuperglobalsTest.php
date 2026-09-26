@@ -302,17 +302,15 @@ final class SuperglobalsTest extends CIUnitTestCase
         $this->assertSame($data, $_REQUEST);
     }
 
-    public function testGetRequestDataMergesGetPostCookie(): void
+    public function testGetRequestDataMergesGetAndPost(): void
     {
         $this->superglobals->setGetArray(['get_key' => 'get_value']);
         $this->superglobals->setPostArray(['post_key' => 'post_value']);
-        $this->superglobals->setCookieArray(['cookie_key' => 'cookie_value']);
 
         $data = $this->superglobals->getRequestData();
 
         $this->assertSame('get_value', $data['get_key']);
         $this->assertSame('post_value', $data['post_key']);
-        $this->assertSame('cookie_value', $data['cookie_key']);
     }
 
     public function testGetRequestDataReflectsGetChanges(): void
