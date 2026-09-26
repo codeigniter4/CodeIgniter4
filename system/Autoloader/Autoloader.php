@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Autoloader;
 
 use Closure;
+use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Exceptions\RuntimeException;
@@ -143,6 +144,8 @@ class Autoloader
         if (is_file($this->composerPath)) {
             $this->loadComposerAutoloader($modules);
         }
+
+        Events::trigger('autoloader_initialized', $this);
 
         return $this;
     }
