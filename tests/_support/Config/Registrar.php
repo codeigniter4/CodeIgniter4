@@ -193,7 +193,8 @@ class Registrar
                         $stmt = $pdo->prepare('SELECT 1 FROM sys.databases WHERE name = ?');
                         $stmt->execute([$dbParams['database']]);
                         if (! $stmt->fetchColumn()) {
-                            $pdo->exec('CREATE DATABASE [' . str_replace(']', ']]', $dbParams['database']) . '] COLLATE Latin1_General_100_CS_AS_SC_UTF8');
+                            $escapedDb = str_replace(']', ']]', $dbParams['database']);
+                            $pdo->exec('CREATE DATABASE [' . $escapedDb . '] COLLATE Latin1_General_100_CS_AS_SC_UTF8; ALTER DATABASE [' . $escapedDb . '] SET RECOVERY SIMPLE, DELAYED_DURABILITY = FORCED');
                         }
                     }
                 } catch (Throwable) {
