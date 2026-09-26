@@ -298,10 +298,10 @@ trait RequestTrait
      * Fetches one or more items from an array, applying the same filtering
      * and index resolution as fetchGlobal().
      *
-     * @param array<string, mixed>              $data
-     * @param int|list<string>|string|null      $index
-     * @param int|null                          $filter Filter constant
-     * @param array<string, mixed>|int|null     $flags  Options
+     * @param array<string, mixed>          $data
+     * @param int|list<string>|string|null  $index
+     * @param int|null                      $filter Filter constant
+     * @param array<string, mixed>|int|null $flags  Options
      *
      * @return mixed
      */
