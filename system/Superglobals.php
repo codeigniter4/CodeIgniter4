@@ -388,16 +388,18 @@ final class Superglobals
     }
 
     /**
-     * Rebuilds $_REQUEST from $_GET, $_POST, and $_COOKIE according to the
-     * `request_order` (or `variables_order`) ini setting.
+     * Returns the merged $_GET, $_POST, and $_COOKIE data according to the
+     * `request_order` (or `variables_order`) ini setting, without mutating
+     * $_REQUEST.
      *
      * PHP populates $_REQUEST only once at the start of the request. When
      * $_GET is modified later (e.g. by SiteURIFactory), $_REQUEST becomes
-     * stale. This method re-synchronizes $_REQUEST with the current values.
+     * stale. This method returns the current merged values so callers can
+     * read up-to-date request data without relying on the stale $_REQUEST.
      *
-     * @return self
+     * @return array<string, request_items>
      */
-    public function syncRequest(): self
+    public function getRequestData(): array
     {
         $requestOrder = ini_get('request_order') ?: ini_get('variables_order') ?: 'GP';
 
@@ -412,7 +414,7 @@ final class Superglobals
             };
         }
 
-        return $this->setRequestArray($request);
+        return $request;
     }
 
     /**
