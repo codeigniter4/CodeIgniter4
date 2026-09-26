@@ -368,9 +368,10 @@ class IncomingRequest extends Request
     }
 
     /**
-     * Fetch an item from JSON input stream with fallback to $_REQUEST object. This is the simplest way
-     * to grab data from the request object and can be used in lieu of the
-     * other get* methods in most cases.
+     * Fetch an item from JSON input stream with fallback to the merged
+     * $_GET, $_POST, and $_COOKIE data. This is the simplest way to grab data
+     * from the request object and can be used in lieu of the other get*
+     * methods in most cases.
      *
      * @param list<string>|string|null      $index
      * @param int|null                      $filter Filter constant
@@ -387,7 +388,12 @@ class IncomingRequest extends Request
             return $this->getJsonVar($index, false, $filter, $flags);
         }
 
-        return $this->fetchGlobal('request', $index, $filter, $flags);
+        // $_REQUEST is populated only once at the start of the request, so it
+        // can become stale when $_GET is modified later (e.g. by SiteURIFactory).
+        // Merge the current superglobals instead of reading the stale $_REQUEST.
+        $data = service('superglobals')->getRequestData();
+
+        return $this->fetchFromArray($data, $index, $filter, $flags);
     }
 
     /**

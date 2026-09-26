@@ -1289,7 +1289,7 @@ class ValidationTest extends CIUnitTestCase
         $config          = new App();
         $config->baseURL = 'http://example.com/';
 
-        service('superglobals')->setRequestArray([
+        service('superglobals')->setPostArray([
             'id_user' => [
                 1,
                 3,
@@ -1316,7 +1316,7 @@ class ValidationTest extends CIUnitTestCase
         $config          = new App();
         $config->baseURL = 'http://example.com/';
 
-        service('superglobals')->setRequestArray([
+        service('superglobals')->setPostArray([
             'id_user' => [
                 '1dfd',
                 3,
@@ -1366,7 +1366,7 @@ class ValidationTest extends CIUnitTestCase
         $config          = new App();
         $config->baseURL = 'http://example.com/';
 
-        service('superglobals')->setRequestArray([
+        service('superglobals')->setPostArray([
             'id_user' => 'gh',
         ]);
 

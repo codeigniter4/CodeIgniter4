@@ -302,6 +302,29 @@ final class SuperglobalsTest extends CIUnitTestCase
         $this->assertSame($data, $_REQUEST);
     }
 
+    public function testGetRequestDataMergesGetAndPost(): void
+    {
+        $this->superglobals->setGetArray(['get_key' => 'get_value']);
+        $this->superglobals->setPostArray(['post_key' => 'post_value']);
+
+        $data = $this->superglobals->getRequestData();
+
+        $this->assertSame('get_value', $data['get_key']);
+        $this->assertSame('post_value', $data['post_key']);
+    }
+
+    public function testGetRequestDataReflectsGetChanges(): void
+    {
+        $this->superglobals->setGetArray(['key' => 'old']);
+
+        $this->assertSame('old', $this->superglobals->getRequestData()['key']);
+
+        // Simulate SiteURIFactory updating $_GET after the request started.
+        $this->superglobals->setGetArray(['key' => 'new']);
+
+        $this->assertSame('new', $this->superglobals->getRequestData()['key']);
+    }
+
     // $_FILES tests
     public function testFilesGetArray(): void
     {

@@ -388,6 +388,42 @@ final class Superglobals
     }
 
     /**
+     * Returns the merged $_GET, $_POST, and $_COOKIE data according to the
+     * `request_order` (or `variables_order`) ini setting, without mutating
+     * $_REQUEST.
+     *
+     * PHP populates $_REQUEST only once at the start of the request. When
+     * $_GET is modified later (e.g. by SiteURIFactory), $_REQUEST becomes
+     * stale. This method returns the current merged values so callers can
+     * read up-to-date request data without relying on the stale $_REQUEST.
+     *
+     * @return array<string, request_items>
+     */
+    public function getRequestData(): array
+    {
+        $requestOrder = ini_get('request_order');
+        if ($requestOrder === false || $requestOrder === '') {
+            $requestOrder = ini_get('variables_order');
+        }
+        if ($requestOrder === false || $requestOrder === '') {
+            $requestOrder = 'GP';
+        }
+
+        $request = [];
+
+        foreach (str_split($requestOrder) as $type) {
+            match ($type) {
+                'G'     => $request = array_merge($request, $this->get),
+                'P'     => $request = array_merge($request, $this->post),
+                'C'     => $request = array_merge($request, $this->cookie),
+                default => null,
+            };
+        }
+
+        return $request;
+    }
+
+    /**
      * Get all $_FILES values.
      *
      * @return array<string, files_items>
