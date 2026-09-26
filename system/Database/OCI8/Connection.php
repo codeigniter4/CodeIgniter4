@@ -20,8 +20,6 @@ use CodeIgniter\Database\TableName;
 use ErrorException;
 use stdClass;
 
-defined('OCI_COMMIT_ON_SUCCESS') || define('OCI_COMMIT_ON_SUCCESS', 32);
-
 /**
  * Connection for OCI8
  *
@@ -157,22 +155,6 @@ class Connection extends BaseConnection
             : $func($this->username, $this->password, $this->DSN, $this->charset);
     }
 
-    public function initialize()
-    {
-        parent::initialize();
-
-        if ($this->connID) {
-            $this->simpleQuery("ALTER SESSION SET NLS_DATE_FORMAT='YYYY-MM-DD HH24:MI:SS'");
-            $this->simpleQuery("ALTER SESSION SET NLS_TIMESTAMP_FORMAT='YYYY-MM-DD HH24:MI:SS'");
-            $this->simpleQuery("ALTER SESSION SET NLS_TIMESTAMP_TZ_FORMAT='YYYY-MM-DD HH24:MI:SS'");
-        }
-    }
-
-    /**
-     * Close the database connection.
-     *
-     * @return void
-     */
     protected function _close()
     {
         if (is_resource($this->cursorId)) {
@@ -282,7 +264,7 @@ class Connection extends BaseConnection
             return '';
         }
 
-        preg_match('/(?is)\b(?:into)\s+(?:\"?\w+\"?\.)?(\"?\w+\"?)/', $commentStrippedSql, $match);
+        preg_match('/(?is)\b(?:into)\s+("?\w+"?)/', $commentStrippedSql, $match);
         $tableName = $match[1] ?? '';
 
         return str_starts_with($tableName, '"') ? trim($tableName, '"') : strtoupper($tableName);
@@ -422,7 +404,7 @@ class Connection extends BaseConnection
             $retVal[$row->INDEX_NAME]         = new stdClass();
             $retVal[$row->INDEX_NAME]->name   = $row->INDEX_NAME;
             $retVal[$row->INDEX_NAME]->fields = [$row->COLUMN_NAME];
-            $retVal[$row->INDEX_NAME]->type   = $constraintTypes[$row->CONSTRAINT_TYPE ?? ''] ?? 'INDEX';
+            $retVal[$row->INDEX_NAME]->type   = $constraintTypes[$row->CONSTRAINT_TYPE] ?? 'INDEX';
         }
 
         return $retVal;
@@ -638,7 +620,7 @@ class Connection extends BaseConnection
             }
 
             $primaryColumnName = $this->protectIdentifiers($index->fields[0], false, false);
-            $primaryColumnType = $columnTypeList[$primaryColumnName] ?? $columnTypeList[strtoupper($primaryColumnName)] ?? null;
+            $primaryColumnType = $columnTypeList[$primaryColumnName];
 
             if ($primaryColumnType !== 'NUMBER') {
                 $primaryColumnName = '';

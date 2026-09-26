@@ -504,18 +504,4 @@ final class BaseConnectionTest extends CIUnitTestCase
 
         $this->assertTrue($db->callFunction('contains', 'CodeIgniter', 'Ignite'));
     }
-
-    public function testTableExistsIsCaseInsensitiveForCachedTables(): void
-    {
-        $db = new class ($this->options) extends MockConnection {
-            public function listTables(bool $constrainByPrefix = false): array
-            {
-                return ['test_USER', 'test_JOB'];
-            }
-        };
-
-        $this->assertTrue($db->tableExists('user', true));
-        $this->assertTrue($db->tableExists('USER', true));
-        $this->assertTrue($db->tableExists('test_user', true));
-    }
 }

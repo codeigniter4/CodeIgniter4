@@ -1720,13 +1720,7 @@ abstract class BaseConnection implements ConnectionInterface
     public function tableExists(string $tableName, bool $cached = true): bool
     {
         if ($cached) {
-            $tableName = $this->protectIdentifiers($tableName, true, false, false);
-
-            return in_array(
-                strtolower($tableName),
-                array_map(strtolower(...), $this->listTables()),
-                true,
-            );
+            return in_array($this->protectIdentifiers($tableName, true, false, false), $this->listTables(), true);
         }
 
         if (false === ($sql = $this->_listTables(false, $tableName))) {
