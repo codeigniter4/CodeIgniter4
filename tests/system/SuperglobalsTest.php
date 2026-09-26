@@ -302,32 +302,29 @@ final class SuperglobalsTest extends CIUnitTestCase
         $this->assertSame($data, $_REQUEST);
     }
 
-    public function testSyncRequestRebuildsRequestFromGetPostCookie(): void
+    public function testGetRequestDataMergesGetPostCookie(): void
     {
         $this->superglobals->setGetArray(['get_key' => 'get_value']);
         $this->superglobals->setPostArray(['post_key' => 'post_value']);
         $this->superglobals->setCookieArray(['cookie_key' => 'cookie_value']);
 
-        $this->superglobals->syncRequest();
+        $data = $this->superglobals->getRequestData();
 
-        $this->assertSame('get_value', $this->superglobals->request('get_key'));
-        $this->assertSame('post_value', $this->superglobals->request('post_key'));
-        $this->assertSame('cookie_value', $this->superglobals->request('cookie_key'));
-        $this->assertSame('get_value', $_REQUEST['get_key']); // @phpstan-ignore codeigniter.superglobalsOffsetAccess (checks the live superglobal, not the snapshot service)
+        $this->assertSame('get_value', $data['get_key']);
+        $this->assertSame('post_value', $data['post_key']);
+        $this->assertSame('cookie_value', $data['cookie_key']);
     }
 
-    public function testSyncRequestReflectsGetChanges(): void
+    public function testGetRequestDataReflectsGetChanges(): void
     {
         $this->superglobals->setGetArray(['key' => 'old']);
-        $this->superglobals->syncRequest();
 
-        $this->assertSame('old', $this->superglobals->request('key'));
+        $this->assertSame('old', $this->superglobals->getRequestData()['key']);
 
         // Simulate SiteURIFactory updating $_GET after the request started.
         $this->superglobals->setGetArray(['key' => 'new']);
-        $this->superglobals->syncRequest();
 
-        $this->assertSame('new', $this->superglobals->request('key'));
+        $this->assertSame('new', $this->superglobals->getRequestData()['key']);
     }
 
     // $_FILES tests
