@@ -305,7 +305,7 @@ trait RequestTrait
      *
      * @return mixed
      */
-    private function fetchFromArray(array $data, $index = null, ?int $filter = null, $flags = null)
+    protected function fetchFromArray(array $data, $index = null, ?int $filter = null, $flags = null)
     {
         // Null filters cause null values to return.
         $filter ??= FILTER_UNSAFE_RAW;

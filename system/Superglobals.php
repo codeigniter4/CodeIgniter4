@@ -401,7 +401,13 @@ final class Superglobals
      */
     public function getRequestData(): array
     {
-        $requestOrder = ini_get('request_order') ?: ini_get('variables_order') ?: 'GP';
+        $requestOrder = ini_get('request_order');
+        if ($requestOrder === false || $requestOrder === '') {
+            $requestOrder = ini_get('variables_order');
+        }
+        if ($requestOrder === false || $requestOrder === '') {
+            $requestOrder = 'GP';
+        }
 
         $request = [];
 
