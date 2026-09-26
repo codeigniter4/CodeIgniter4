@@ -70,7 +70,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testCanGrabRequestVars(): void
     {
-        service('superglobals')->setRequest('TEST', '5');
+        service('superglobals')->setGet('TEST', '5');
 
         $this->assertSame('5', $this->request->getVar('TEST'));
         $this->assertNull($this->request->getVar('TESTY'));
@@ -525,8 +525,8 @@ final class IncomingRequestTest extends CIUnitTestCase
         $config->baseURL = 'http://example.com/';
 
         // GET method
-        service('superglobals')->setRequest('foo', 'bar');
-        service('superglobals')->setRequest('fizz', 'buzz');
+        service('superglobals')->setGet('foo', 'bar');
+        service('superglobals')->setGet('fizz', 'buzz');
 
         $request = $this->createRequest($config);
         $request = $request->withMethod('GET');
