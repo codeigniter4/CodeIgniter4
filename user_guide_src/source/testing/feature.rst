@@ -84,6 +84,23 @@ passed as a header into the call:
 .. literalinclude:: feature/006.php
    :lines: 2-
 
+Testing File Uploads
+--------------------
+
+Use ``withFiles()`` to attach uploaded files to the next feature request. Create each file with
+``CodeIgniter\Test\Mock\MockUploadedFile``, passing an existing local file path and the name that the client would send:
+
+.. code-block:: php
+
+    use CodeIgniter\Test\Mock\MockUploadedFile;
+
+    $file = new MockUploadedFile($path, 'photo.jpg', 'image/jpeg');
+    $result = $this->withFiles(['photo' => $file])->post('photos', ['title' => 'Portrait']);
+
+The route can access the file through ``$request->getFile('photo')`` and use upload validation, ``move()``, or ``store()``.
+``withFiles()`` sets the request's ``Content-Type`` to ``multipart/form-data`` and clears the attached files after the request.
+Moving or storing the file moves the local source file, so create a new file object for each upload request.
+
 Bypassing Events
 ----------------
 
