@@ -649,7 +649,7 @@ final class UpsertTest extends CIUnitTestCase
 
         if ($this->db->DBDriver === 'Postgre') {
             $sql = $this->db->table('user')->setData($userData)->getCompiledUpsert();
-            $this->assertStringContainsString('ON CONFLICT ("id")', $sql);
+            $this->assertStringContainsString('ON CONFLICT("id")', $sql);
         }
 
         $this->db->table('user')->upsertBatch($userData);
