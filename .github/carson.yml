@@ -13,6 +13,8 @@ subscribers:
 settings:
   auto-labeler:
     sync_labels: true
+    sync_exempt:
+      - enhancement
     rules:
       - label: '4.8' # @todo change value whenever the next minor version is changed
         base_branch: ['^4\.8$']
@@ -66,7 +68,7 @@ settings:
   pr-title-linter:
     name: 'Carson / pr-title-linter'
     rules:
-      - pattern: '^(\[\d+\.\d+\]\s{1})?(feat|fix|chore|docs|perf|refactor|style|test|config|revert)(\([\-.@:`a-zA-Z0-9]+\))?!?:\s{1}\S.+\S|Prep for \d\.\d\.\d release|\d\.\d\.\d (Ready|Merge) code$'
+      - pattern: '^(?:(?:\[\d+\.\d+\] )?(?:feat|fix|chore|docs|perf|refactor|style|test|config|revert)(?:\([\-.@:`a-zA-Z0-9]+\))?!?: \S.+\S|Prep for \d+\.\d+\.\d+ release|\d+\.\d+\.\d+ (?:Ready|Merge) code)$'
         description: 'PR title must include the type (feat, fix, chore, docs, perf, refactor, style, test, config, revert) of the commit per Conventional Commits specification. See https://www.conventionalcommits.org/en/v1.0.0/ for the discussion.'
         level: error
   signed-commits:
