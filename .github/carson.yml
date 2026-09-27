@@ -56,6 +56,13 @@ settings:
           Closing this issue: the description still does not follow the bug report template after {{days_until_close}} days.
 
           Please open a new issue using the [bug report form](https://github.com/codeigniter4/CodeIgniter4/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml&title=Bug%3A+). For feature requests or support questions, please use the [forums](https://forum.codeigniter.com/forum-30.html).
+      - label: waiting for info
+        days_until_close: 14
+        unlabel_on_response: true
+        close_message: |-
+          Closing this {{type}}: there has been no response for {{days_until_close}} days after more information was requested.
+
+          If you can provide the requested details, leave a comment and a maintainer can reopen it.
   pr-title-linter:
     name: 'Carson / pr-title-linter'
     rules:
