@@ -63,6 +63,8 @@ final class CommandsTest extends CIUnitTestCase
     {
         $this->resetServices();
 
+        service('superglobals')->setServer('CODEIGNITER_SCREAM_DEPRECATIONS', '1');
+
         CLI::reset();
     }
 
@@ -220,6 +222,8 @@ final class CommandsTest extends CIUnitTestCase
 
     public function testRunOnKnownLegacyCommand(): void
     {
+        service('superglobals')->unsetServer('CODEIGNITER_SCREAM_DEPRECATIONS');
+
         $commands = new Commands();
 
         $this->assertSame(EXIT_SUCCESS, $commands->runLegacy('app:info', []));
@@ -242,12 +246,20 @@ final class CommandsTest extends CIUnitTestCase
         );
     }
 
-    public function testRunOnLegacyCommandReturningNullIsDeprecated(): void
+    public function testRunOnLegacyCommandIsDeprecated(): void
     {
         $this->expectException(ErrorException::class);
-        $this->expectExceptionMessage('Since v4.8.0, commands must return an integer exit code. Last command "null:return" exited with null. Defaulting to EXIT_SUCCESS.');
+        $this->expectExceptionMessage('Since v4.8.0, "CodeIgniter\\CLI\\BaseCommand" is deprecated. Command "app:info" (Tests\\Support\\Commands\\Legacy\\AppInfo) should extend "CodeIgniter\\CLI\\AbstractCommand" instead.');
 
-        (new Commands())->runLegacy('null:return', []);
+        (new Commands())->runLegacy('app:info', []);
+    }
+
+    public function testRunOnLegacyCommandReturningNullIsDeprecated(): void
+    {
+        service('superglobals')->unsetServer('CODEIGNITER_SCREAM_DEPRECATIONS');
+
+        $this->assertSame(EXIT_SUCCESS, (new Commands())->runLegacy('null:return', []));
+        $this->assertLogContains('warning', '[DEPRECATED] Since v4.8.0, commands must return an integer exit code. Last command "null:return" exited with null. Defaulting to EXIT_SUCCESS.');
     }
 
     public function testRunMethodIsDeprecatedInFavorOfRunLegacy(): void
@@ -503,6 +515,8 @@ final class CommandsTest extends CIUnitTestCase
 
     public function testDestructiveCommandIsNotRisky(): void
     {
+        service('superglobals')->unsetServer('CODEIGNITER_SCREAM_DEPRECATIONS');
+
         $this->expectException(RuntimeException::class);
 
         command('app:destructive');
@@ -699,6 +713,8 @@ final class CommandsTest extends CIUnitTestCase
 
     public function testDiscoveredLegacyCommandsCanBeOverridden(): void
     {
+        service('superglobals')->unsetServer('CODEIGNITER_SCREAM_DEPRECATIONS');
+
         $this->injectFixtureLocator([
             AppInfoOverride::class => $this->loadOverrideFixture('AppInfo.php'),
             AppInfo::class         => SUPPORTPATH . 'Commands/Legacy/AppInfo.php',

@@ -384,12 +384,14 @@ and it will be passed to the model generator.
 GeneratorTrait
 **************
 
-All generator commands must use the ``GeneratorTrait`` to fully utilize its methods that are used in code
-generation.
+.. deprecated:: 4.8.0
 
-.. note:: ``GeneratorTrait`` is the legacy way of building generator commands, tied to ``BaseCommand``.
-    New generator commands should extend ``AbstractGeneratorCommand`` instead.
+    ``GeneratorTrait`` is the legacy way of building generator commands, tied to the deprecated
+    ``BaseCommand``. New generator commands should extend ``AbstractGeneratorCommand`` instead.
     See :doc:`cli_modern_generators`.
+
+Legacy generator commands use the ``GeneratorTrait`` to fully utilize its methods that are used in code
+generation.
 
 *************************************************************
 Declaring the Location of a Custom Generator Command Template

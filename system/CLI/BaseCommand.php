@@ -29,6 +29,8 @@ use Throwable;
  * @property string                $name
  * @property array<string, string> $options
  * @property string                $usage
+ *
+ * @deprecated 4.8.0 Extend `AbstractCommand` instead.
  */
 abstract class BaseCommand
 {

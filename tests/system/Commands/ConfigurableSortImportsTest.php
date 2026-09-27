@@ -25,6 +25,20 @@ final class ConfigurableSortImportsTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+
+        service('superglobals')->unsetServer('CODEIGNITER_SCREAM_DEPRECATIONS');
+    }
+
+    public static function tearDownAfterClass(): void
+    {
+        parent::tearDownAfterClass();
+
+        service('superglobals')->setServer('CODEIGNITER_SCREAM_DEPRECATIONS', '1');
+    }
+
     public function testPublishLanguageWithoutOptions(): void
     {
         command('publish:language');
