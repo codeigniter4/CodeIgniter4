@@ -14,9 +14,13 @@ declare(strict_types=1);
 namespace CodeIgniter\Commands\Utilities;
 
 use Closure;
+use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Autoloader\FileLocatorCached;
+use CodeIgniter\Cache\FactoriesCache\FileVarExportHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use CodeIgniter\Test\StreamFilterTrait;
+use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -29,6 +33,15 @@ final class OptimizeTest extends CIUnitTestCase
     use StreamFilterTrait;
 
     private string $file = WRITEPATH . 'cache/OptimizeTest_config';
+    private FileVarExportHandler $handler;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->handler = new FileVarExportHandler();
+        $this->handler->delete('FileLocatorCache');
+    }
 
     protected function tearDown(): void
     {
@@ -37,6 +50,9 @@ final class OptimizeTest extends CIUnitTestCase
         if (is_file($this->file)) {
             unlink($this->file);
         }
+
+        $this->handler->delete('FileLocatorCache');
+        Services::resetSingle('locator');
     }
 
     /**
@@ -45,6 +61,14 @@ final class OptimizeTest extends CIUnitTestCase
     private function getRemoveFile(): Closure
     {
         return self::getPrivateMethodInvoker(new Optimize(service('commands')), 'removeFile');
+    }
+
+    /**
+     * @return Closure(): void
+     */
+    private function getClearCache(): Closure
+    {
+        return self::getPrivateMethodInvoker(new Optimize(service('commands')), 'clearCache');
     }
 
     public function testRemoveFileDeletesTheFile(): void
@@ -64,5 +88,33 @@ final class OptimizeTest extends CIUnitTestCase
         ($this->getRemoveFile())($this->file);
 
         $this->assertSame('', $this->getStreamFilterBuffer());
+    }
+
+    public function testClearCacheDiscardsSharedLocatorCache(): void
+    {
+        $locator = new FileLocatorCached(new FileLocator(service('autoloader')), $this->handler);
+        $locator->search('Config/App');
+        Services::injectMock('locator', $locator);
+
+        ($this->getClearCache())();
+
+        $locator->search('Config/Cache');
+        $locator->__destruct();
+
+        $cached = $this->handler->get('FileLocatorCache');
+
+        $this->assertArrayNotHasKey('Config/App', $cached['search']);
+        $this->assertArrayHasKey('Config/Cache', $cached['search']);
+        $this->assertStringContainsString('Removed FileLocatorCache.', $this->getStreamFilterBuffer());
+    }
+
+    public function testClearCacheDeletesTheFileWithoutSharedLocatorCache(): void
+    {
+        $this->handler->save('FileLocatorCache', ['search' => []]);
+
+        ($this->getClearCache())();
+
+        $this->assertFalse($this->handler->get('FileLocatorCache'));
+        $this->assertStringContainsString('Removed FileLocatorCache.', $this->getStreamFilterBuffer());
     }
 }

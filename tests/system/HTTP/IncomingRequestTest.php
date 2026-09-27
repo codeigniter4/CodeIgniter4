@@ -1048,7 +1048,8 @@ final class IncomingRequestTest extends CIUnitTestCase
         $request = new Request(new App());
         $request->populateHeaders();
 
-        $this->assertSame($expected, $request->getIPAddress());
+        $ipAddress = $request->getIPAddress();
+        $this->assertSame($expected, $ipAddress);
         // call a second time to exercise the initial conditional block in getIPAddress()
         $this->assertSame($expected, $request->getIPAddress());
     }

@@ -112,4 +112,29 @@ final class TestCaseTest extends CIUnitTestCase
 
         $this->assertSameSql($expected, $actual);
     }
+
+    public function testTearDownResetsIsWindowsMock(): void
+    {
+        $testCase = new class ('test') extends CIUnitTestCase {
+            protected $tearDownMethods = ['customTearDown'];
+
+            protected function customTearDown(): void
+            {
+            }
+
+            public function triggerTearDown(): void
+            {
+                $this->tearDown();
+            }
+        };
+
+        $default = DIRECTORY_SEPARATOR === '\\';
+
+        is_windows(! $default);
+        $this->assertSame(! $default, is_windows());
+
+        $testCase->triggerTearDown();
+
+        $this->assertSame($default, is_windows());
+    }
 }

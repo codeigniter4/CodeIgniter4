@@ -41,8 +41,9 @@ readonly BOLD='\033[1m'
 readonly RESET='\033[0m'
 
 # Script paths
-readonly script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-readonly project_root="$( cd "$script_dir/../.." && pwd )"
+script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+project_root="$( cd "$script_dir/../.." && pwd )"
+readonly script_dir project_root
 readonly config_file="$script_dir/random-tests-config.txt"
 readonly results_dir="$project_root/build/random-tests"
 
@@ -166,7 +167,8 @@ inflect() {
 }
 
 generate_phpunit_random_seed() {
-    local seed=$(date +%s)
+    local seed
+    seed=$(date +%s)
 
     if [[ ! "$seed" =~ ^[0-9]+$ ]]; then
         echo 1
@@ -233,7 +235,8 @@ get_failed_test_predecessor() {
 
 print_result() {
     local type=$1 completed=$2 total=$3 component=$4 elapsed_str=$5
-    local padded=$(printf "%${#total}d" "$completed")
+    local padded
+    padded=$(printf "%${#total}d" "$completed")
     local color symbol
 
     case "$type" in
@@ -462,7 +465,8 @@ run_component_tests() {
     fi
 
     local test_dir="tests/system/$component"
-    local start_time=$(date +%s%N)
+    local start_time
+    start_time=$(date +%s%N)
 
     print_debug "Running tests for: $component"
 
@@ -527,7 +531,8 @@ run_component_tests() {
 
                     if kill -0 "$test_pid" 2>/dev/null; then
                         touch "$timeout_marker"
-                        local pids_to_kill=$(pgrep -P "$test_pid" 2>/dev/null)
+                        local pids_to_kill
+                        pids_to_kill=$(pgrep -P "$test_pid" 2>/dev/null)
 
                         kill -TERM "$test_pid" 2>/dev/null || true
                         if [[ -n "$pids_to_kill" ]]; then
@@ -607,7 +612,8 @@ run_component_tests() {
         if [[ $exit_code -eq 124 ]]; then
             predecessor_info+=$'\nFailed test: (timeout before PHPUnit emitted failure event)'
             if [[ -f "$events_file" ]]; then
-                local last_prepared_test=$(extract_test_order "$events_file" | tail -n 1)
+                local last_prepared_test
+                last_prepared_test=$(extract_test_order "$events_file" | tail -n 1)
                 if [[ -n "$last_prepared_test" ]]; then
                     predecessor_info+=$'\nLast prepared test before timeout: '"${last_prepared_test}"
                 else
@@ -619,7 +625,8 @@ run_component_tests() {
             predecessor_info+=$'\nPrevious test: (unavailable due to timeout)'
         else
             if [[ -f "$events_file" ]]; then
-                local predecessor_result=$(get_failed_test_predecessor "$events_file")
+                local predecessor_result
+                predecessor_result=$(get_failed_test_predecessor "$events_file")
                 if [[ -n "$predecessor_result" ]]; then
                     local previous_test=${predecessor_result#*|}
                     predecessor_info+=$'\nFailed test: '"${predecessor_result%%|*}"
@@ -639,7 +646,7 @@ run_component_tests() {
         fi
 
         {
-            echo "> ${phpunit_args[@]:0:7}"
+            echo "> ${phpunit_args[*]:0:7}"
             echo ""
             echo "$output"
             echo "$predecessor_info"
@@ -691,8 +698,9 @@ process_result() {
         first_result=false
     fi
 
-    local status=$(grep "^Exit code:" "$result_file" | sed 's/Exit code: //')
-    local elapsed_str=$(format_elapsed_time "$elapsed")
+    local status elapsed_str
+    status=$(grep "^Exit code:" "$result_file" | sed 's/Exit code: //')
+    elapsed_str=$(format_elapsed_time "$elapsed")
 
     case "$status" in
         0)
@@ -728,7 +736,8 @@ get_completed_components() {
 
     while IFS= read -r file_path; do
         # Remove prefix: random_test_result_
-        local temp=$(basename "$file_path")
+        local temp
+        temp=$(basename "$file_path")
         temp=${temp#random_test_result_}
 
         # Extract elapsed time (everything before first underscore after number)
@@ -749,12 +758,34 @@ get_completed_components() {
     # Sort entries by elapsed time numerically
     printf '%s\n' "${entries[@]}" | sort -t'|' -k1,1n |
     while IFS='|' read -r elapsed listed_component; do
-        if [[ ! " ${displayed_components[*]:-} " =~ " ${listed_component} " ]]; then
+        if [[ " ${displayed_components[*]:-} " != *" ${listed_component} "* ]]; then
             echo "$listed_component|$elapsed"
         fi
     done
 }
 
+
+print_failed_component_details() {
+    local component=$1
+    local result_file=$2
+
+    # GitHub Actions renders ::group:: lines as collapsible log sections.
+    if [[ -z "${GITHUB_ACTIONS:-}" || ! -f "$result_file" ]]; then
+        return
+    fi
+
+    echo "::group::${component}: test result"
+    cat "$result_file"
+    echo "::endgroup::"
+
+    local order_file="${result_file/random_test_result_/random_test_order_}"
+
+    if [[ -f "$order_file" ]]; then
+        echo "::group::${component}: execution order"
+        cat "$order_file"
+        echo "::endgroup::"
+    fi
+}
 
 print_summary() {
     local run_number=$1
@@ -779,13 +810,15 @@ print_summary() {
     if [[ $failed -gt 0 ]]; then
         echo -e "\n${BOLD_RED}Failed $(inflect "$failed" "Component" "Components"):${RESET}"
         while IFS= read -r failed_component; do
-            local result_file=$(find "$results_dir" -name "random_test_result_*_${failed_component}.txt" 2>/dev/null | head -n 1)
+            local result_file
+            result_file=$(find "$results_dir" -name "random_test_result_*_${failed_component}.txt" 2>/dev/null | head -n 1)
 
             if [[ -z "$result_file" ]]; then
                 result_file="$results_dir/random_test_result_*_${failed_component}.txt"
             fi
 
             echo -e "  ${RED}✗${RESET} ${BOLD}$failed_component${RESET} ($result_file)"
+            print_failed_component_details "$failed_component" "$result_file"
         done < <(printf '%s\n' "${failed_components[@]}" | sort)
     fi
 
@@ -830,7 +863,7 @@ main() {
         # Read components from config file
         verify_config
         print_success "Configuration file: $config_file\n"
-        components_array=($(read_components))
+        read -ra components_array <<< "$(read_components)"
     fi
 
     total=${#components_array[@]}

@@ -149,7 +149,8 @@ final class OpenSSLHandlerTest extends CIUnitTestCase
         $encrypter = $this->encryption->initialize($params);
         $this->assertInstanceOf(OpenSSLHandler::class, $encrypter);
 
-        $this->assertSame('original-key-value', $encrypter->key);
+        $key = $encrypter->key;
+        $this->assertSame('original-key-value', $key);
 
         $message      = 'This is a plain-text message.';
         $differentKey = 'temporary-param-key';

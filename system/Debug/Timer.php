@@ -46,7 +46,7 @@ class Timer
     public function start(string $name, ?float $time = null)
     {
         $this->timers[strtolower($name)] = [
-            'start' => $time === null || $time === 0.0 ? microtime(true) : $time,
+            'start' => $time ?? microtime(true),
             'end'   => null,
         ];
 

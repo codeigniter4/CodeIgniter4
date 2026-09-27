@@ -1602,9 +1602,11 @@ abstract class BaseModel
      */
     protected function setDate(?int $userDate = null)
     {
-        $currentDate = $userDate ?? Time::now()->getTimestamp();
+        if ($userDate === null && $this->dateFormat === 'datetime') {
+            return $this->timeToDate(Time::now());
+        }
 
-        return $this->intToDate($currentDate);
+        return $this->intToDate($userDate ?? Time::now()->getTimestamp());
     }
 
     /**

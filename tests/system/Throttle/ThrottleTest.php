@@ -39,7 +39,8 @@ final class ThrottleTest extends CIUnitTestCase
         $throttler = new Throttler($this->cache);
 
         // tokenTime should be 0 to start
-        $this->assertSame(0, $throttler->getTokenTime());
+        $tokenTime = $throttler->getTokenTime();
+        $this->assertSame(0, $tokenTime);
 
         // set $rate
         $rate = 1;    // allow 1 request per minute

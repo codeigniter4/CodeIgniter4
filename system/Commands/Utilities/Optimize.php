@@ -44,7 +44,12 @@ final class Optimize extends AbstractCommand
 
     private function clearCache(): void
     {
-        $locator = new FileLocatorCached(new FileLocator(service('autoloader')));
+        $locator = service('locator');
+
+        if (! $locator instanceof FileLocatorCached) {
+            $locator = new FileLocatorCached(new FileLocator(service('autoloader')));
+        }
+
         $locator->deleteCache();
         CLI::write('Removed FileLocatorCache.', 'green');
 

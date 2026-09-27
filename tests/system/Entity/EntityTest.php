@@ -373,8 +373,9 @@ final class EntityTest extends CIUnitTestCase
 
         $entity->first = 3.1;
 
-        $this->assertIsInt($entity->first);
-        $this->assertSame(3, $entity->first);
+        $first = $entity->first;
+        $this->assertIsInt($first);
+        $this->assertSame(3, $first);
 
         $entity->first = 3.6;
 

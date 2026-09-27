@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Cache;
 
+use CodeIgniter\Autoloader\FileLocatorCached;
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\CLI;
@@ -51,6 +52,12 @@ class ClearCache extends AbstractCommand
             CLI::error(sprintf('Error occurred while clearing the cache using the "%s" driver.', $driver));
 
             return EXIT_ERROR;
+        }
+
+        $locator = service('locator');
+
+        if ($driver === 'file' && $locator instanceof FileLocatorCached) {
+            $locator->deleteCache();
         }
 
         CLI::write(sprintf('Cache cleared using the "%s" driver.', $driver), 'green');
