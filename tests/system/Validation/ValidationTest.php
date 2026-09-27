@@ -1891,13 +1891,27 @@ class ValidationTest extends CIUnitTestCase
                 'label' => 'Password Confirmation',
                 'rules' => 'matches[password]',
             ],
+            'userfile' => [
+                'label' => 'Profile Avatar',
+                'rules' => 'permit_empty',
+            ],
+            'avatar' => [
+                'label' => 'Avatar',
+                'rules' => 'uploaded[userfile]',
+                'errors' => [
+                    'uploaded' => 'Invalid file uploaded for {param}.',
+                ],
+            ],
         ];
 
         $this->validation->setRules($rules);
 
         $this->assertFalse($this->validation->run(['password' => 'abc', 'password_confirmation' => 'def']));
         $this->assertSame(
-            ['password_confirmation' => 'The Password Confirmation field does not match the Password field.'],
+            [
+                'password_confirmation' => 'The Password Confirmation field does not match the Password field.',
+                'avatar' => 'Invalid file uploaded for Profile Avatar.',
+            ],
             $this->validation->getErrors(),
         );
     }

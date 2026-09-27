@@ -42,6 +42,8 @@ class Validation implements ValidationInterface
         'differs',
         'required_with',
         'required_without',
+        'uploaded',
+        'is_image',
     ];
 
     /**
