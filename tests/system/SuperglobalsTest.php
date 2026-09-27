@@ -325,6 +325,40 @@ final class SuperglobalsTest extends CIUnitTestCase
         $this->assertSame('new', $this->superglobals->getRequestData()['key']);
     }
 
+    public function testGetRequestDataMergesCookie(): void
+    {
+        $this->superglobals->setGetArray(['get_key' => 'get_value']);
+        $this->superglobals->setPostArray(['post_key' => 'post_value']);
+        $this->superglobals->setCookieArray(['cookie_key' => 'cookie_value']);
+
+        $data = $this->superglobals->getRequestData('GPC');
+
+        $this->assertSame('get_value', $data['get_key']);
+        $this->assertSame('post_value', $data['post_key']);
+        $this->assertSame('cookie_value', $data['cookie_key']);
+    }
+
+    public function testGetRequestDataRespectsOrder(): void
+    {
+        $this->superglobals->setGetArray(['shared' => 'get']);
+        $this->superglobals->setPostArray(['shared' => 'post']);
+        $this->superglobals->setCookieArray(['shared' => 'cookie']);
+
+        // Later sources overwrite earlier ones, matching PHP's request_order.
+        $this->assertSame('post', $this->superglobals->getRequestData('GP')['shared']);
+        $this->assertSame('cookie', $this->superglobals->getRequestData('GPC')['shared']);
+        $this->assertSame('get', $this->superglobals->getRequestData('PG')['shared']);
+    }
+
+    public function testGetRequestDataIgnoresUnknownOrderTypes(): void
+    {
+        $this->superglobals->setGetArray(['get_key' => 'get_value']);
+
+        $data = $this->superglobals->getRequestData('GX');
+
+        $this->assertSame(['get_key' => 'get_value'], $data);
+    }
+
     // $_FILES tests
     public function testFilesGetArray(): void
     {
