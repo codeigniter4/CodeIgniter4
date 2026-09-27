@@ -53,4 +53,22 @@ final class BadQueryTest extends CIUnitTestCase
 
         $this->enableDBDebug();
     }
+
+    public function testPostgreBadQueryDebugTrueWithWarningsDisabled(): void
+    {
+        if ($this->db->DBDriver !== 'Postgre') {
+            $this->markTestSkipped('This test is only for Postgre.');
+        }
+
+        $this->enableDBDebug();
+        $errorReporting = error_reporting(E_ALL & ~E_WARNING);
+
+        try {
+            $this->expectException(DatabaseException::class);
+            $this->expectExceptionMessage('table_does_not_exist');
+            $this->db->query('SELECT * FROM table_does_not_exist');
+        } finally {
+            error_reporting($errorReporting);
+        }
+    }
 }
