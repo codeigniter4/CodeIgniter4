@@ -173,7 +173,8 @@ class Registrar
                             (int) $dbParams['port'],
                         );
                         if (! $conn->connect_error) {
-                            $conn->query('CREATE DATABASE IF NOT EXISTS ' . $conn->real_escape_string($dbParams['database']));
+                            $dbName = '`' . str_replace('`', '``', $dbParams['database']) . '`';
+                            $conn->query('CREATE DATABASE IF NOT EXISTS ' . $dbName);
                             $conn->close();
                         }
                     } elseif ($group === 'Postgre') {

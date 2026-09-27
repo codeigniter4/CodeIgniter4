@@ -636,6 +636,31 @@ final class UpsertTest extends CIUnitTestCase
         $this->dontSeeInDatabase('team_members', ['team_id' => 1, 'person_id' => 33, 'role' => 'mentor']);
     }
 
+    public function testUpsertBatchPrefersPrimaryKeyOverUniqueIndex(): void
+    {
+        $userData = [
+            [
+                'id'      => 1,
+                'email'   => 'updated_email_for_id1@world.com',
+                'name'    => 'Derek Jones Updated',
+                'country' => 'US',
+            ],
+        ];
+
+        if ($this->db->DBDriver === 'Postgre') {
+            $sql = $this->db->table('user')->setData($userData)->getCompiledUpsert();
+            $this->assertStringContainsString('ON CONFLICT ("id")', $sql);
+        }
+
+        $this->db->table('user')->upsertBatch($userData);
+
+        $this->seeInDatabase('user', [
+            'id'    => 1,
+            'email' => 'updated_email_for_id1@world.com',
+            'name'  => 'Derek Jones Updated',
+        ]);
+    }
+
     public function testSetBatchOneRow(): void
     {
         $data = [
