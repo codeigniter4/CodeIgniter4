@@ -1896,8 +1896,8 @@ class ValidationTest extends CIUnitTestCase
                 'rules' => 'permit_empty',
             ],
             'avatar' => [
-                'label' => 'Avatar',
-                'rules' => 'uploaded[userfile]',
+                'label'  => 'Avatar',
+                'rules'  => 'uploaded[userfile]',
                 'errors' => [
                     'uploaded' => 'Invalid file uploaded for {param}.',
                 ],
@@ -1910,7 +1910,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame(
             [
                 'password_confirmation' => 'The Password Confirmation field does not match the Password field.',
-                'avatar' => 'Invalid file uploaded for Profile Avatar.',
+                'avatar'                => 'Invalid file uploaded for Profile Avatar.',
             ],
             $this->validation->getErrors(),
         );
