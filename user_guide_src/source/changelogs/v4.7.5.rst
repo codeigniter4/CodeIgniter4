@@ -59,6 +59,7 @@ Bugs Fixed
 - **Honeypot:** Fixed a bug where bot detection returned an HTTP 500 response instead of 403 (Forbidden).
 - **I18n:** Fixed a bug where ``Time::today()``, ``Time::yesterday()``, and ``Time::tomorrow()`` ignored the specified ``$timezone`` and ``setTestNow()`` when calculating the day.
 - **Logger:** Fixed a bug where interpolating a log message with array or non-stringable context values could raise PHP warnings or errors.
+- **Validation:** Fixed a bug where ``valid_cc_number`` accepted non-digit characters (e.g., a decimal point) in the card number. Such values could pass the Luhn check and triggered an ``Undefined array key`` warning inside it; the number is now checked with ``ctype_digit()``.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_

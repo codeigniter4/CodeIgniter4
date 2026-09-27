@@ -100,6 +100,16 @@ class CreditCardRulesTest extends CIUnitTestCase
                 'abcd efgh ijkl mnop',
                 false,
             ],
+            'decimal_point_visa' => [
+                'visa',
+                '41.1111111111111',
+                false,
+            ],
+            'decimal_point_mastercard' => [
+                'mastercard',
+                '5351367.37861108',
+                false,
+            ],
             'bad_length' => [
                 'amex',
                 '3782 8224 6310 0051',
