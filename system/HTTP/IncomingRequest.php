@@ -403,7 +403,7 @@ class IncomingRequest extends Request
      *
      * @see http://php.net/manual/en/function.json-decode.php
      *
-     * @return array<array-key, mixed>|bool|float|int|stdClass|null
+     * @return ($assoc is true ? array<array-key, mixed>|bool|float|int|string|null : array<array-key, mixed>|bool|float|int|stdClass|string|null)
      *
      * @throws HTTPException When the body is invalid as JSON.
      */
@@ -430,7 +430,7 @@ class IncomingRequest extends Request
      * @param int|null                      $filter Filter Constant
      * @param array<string, mixed>|int|null $flags  Option
      *
-     * @return array<array-key, mixed>|bool|float|int|stdClass|string|null
+     * @return ($assoc is true ? array<array-key, mixed>|bool|float|int|string|null : array<array-key, mixed>|bool|float|int|stdClass|string|null)
      */
     public function getJsonVar($index = null, bool $assoc = false, ?int $filter = null, $flags = null)
     {
