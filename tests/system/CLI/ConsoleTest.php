@@ -53,6 +53,8 @@ final class ConsoleTest extends CIUnitTestCase
     {
         parent::tearDown();
 
+        service('superglobals')->setServer('CODEIGNITER_SCREAM_DEPRECATIONS', '1');
+
         CLI::reset();
     }
 
@@ -144,6 +146,8 @@ final class ConsoleTest extends CIUnitTestCase
 
     public function testUnknownCommandRunsConfirmedSuggestion(): void
     {
+        service('superglobals')->unsetServer('CODEIGNITER_SCREAM_DEPRECATIONS');
+
         $this->initializeConsole('app:inf', '--no-header');
         $io = $this->useInputs('y');
 
@@ -346,6 +350,8 @@ final class ConsoleTest extends CIUnitTestCase
 
     public function testRunRoutesDiscoveredLegacyCommandThroughRunLegacy(): void
     {
+        service('superglobals')->unsetServer('CODEIGNITER_SCREAM_DEPRECATIONS');
+
         // `app:info` is a legacy BaseCommand fixture. Console must take the
         // legacy branch of run() and delegate to Commands::runLegacy().
         $this->initializeConsole('app:info');

@@ -14,7 +14,8 @@ at all.
 
 .. note::
 
-    ``GeneratorTrait`` continues to work for legacy ``BaseCommand`` generators.
+    ``GeneratorTrait`` is deprecated, but it continues to work for legacy
+    ``BaseCommand`` generators. See `Migrating From GeneratorTrait`_.
 
 .. contents::
     :local:

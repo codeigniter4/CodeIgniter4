@@ -25,6 +25,13 @@ final class GeneratorsTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        service('superglobals')->setServer('CODEIGNITER_SCREAM_DEPRECATIONS', '1');
+    }
+
     public function testGenerateFileCreated(): void
     {
         command('make:seeder categories');
@@ -98,6 +105,8 @@ final class GeneratorsTest extends CIUnitTestCase
 
     public function testSuffixingHasNoEffect(): void
     {
+        service('superglobals')->unsetServer('CODEIGNITER_SCREAM_DEPRECATIONS');
+
         command('make:foo bar --suffix');
         $file1 = APPPATH . 'Commands/Bar.php';
         $file2 = APPPATH . 'Commands/BarCommand.php';

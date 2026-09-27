@@ -8,6 +8,12 @@ need to have routes defined for, making them perfect for building tools that dev
 their jobs simpler, whether by handling migrations or database seeding, checking cronjob status, or even
 building out custom code generators for your company.
 
+.. deprecated:: 4.8.0
+
+    ``BaseCommand`` is deprecated, and running a command that extends it triggers a
+    deprecation notice. Write new commands against ``AbstractCommand`` instead.
+    See :doc:`cli_modern_commands`.
+
 .. contents::
     :local:
     :depth: 2
