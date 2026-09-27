@@ -38,6 +38,6 @@ final class GetVersionTest extends CIUnitTestCase
         $this->db->connID = false;
 
         $version = $this->db->getVersion();
-        $this->assertMatchesRegularExpression('/\A\d+(\.\d+)*/', $version);
+        $this->assertMatchesRegularExpression('/\A\d+(\.\d+)*(?:[-+._][a-zA-Z0-9._+-]+)?\z/', $version);
     }
 }
