@@ -76,6 +76,17 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertNull($this->request->getVar('TESTY'));
     }
 
+    public function testGetVarReflectsGetChangesWhenRequestIsStale(): void
+    {
+        // Simulate the state after SiteURIFactory updates $_GET: $_REQUEST
+        // still holds the original value while $_GET has been refreshed.
+        service('superglobals')
+            ->setGetArray(['code' => 'good'])
+            ->setRequestArray(['code' => 'stale']);
+
+        $this->assertSame('good', $this->request->getVar('code'));
+    }
+
     public function testCanGrabGetVars(): void
     {
         service('superglobals')->setGet('TEST', '5');
