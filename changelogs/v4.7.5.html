@@ -351,6 +351,7 @@ On Windows, where the <code class="docutils literal notranslate"><span class="pr
 <li><p><strong>Honeypot:</strong> Fixed a bug where bot detection returned an HTTP 500 response instead of 403 (Forbidden).</p></li>
 <li><p><strong>I18n:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">Time::today()</span></code>, <code class="docutils literal notranslate"><span class="pre">Time::yesterday()</span></code>, and <code class="docutils literal notranslate"><span class="pre">Time::tomorrow()</span></code> ignored the specified <code class="docutils literal notranslate"><span class="pre">$timezone</span></code> and <code class="docutils literal notranslate"><span class="pre">setTestNow()</span></code> when calculating the day.</p></li>
 <li><p><strong>Logger:</strong> Fixed a bug where interpolating a log message with array or non-stringable context values could raise PHP warnings or errors.</p></li>
+<li><p><strong>Validation:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">valid_cc_number</span></code> accepted non-digit characters (e.g., a decimal point) in the card number. Such values could pass the Luhn check and triggered an <code class="docutils literal notranslate"><span class="pre">Undefined</span> <span class="pre">array</span> <span class="pre">key</span></code> warning inside it; the number is now checked with <code class="docutils literal notranslate"><span class="pre">ctype_digit()</span></code>.</p></li>
 </ul>
 <p>See the repo’s
 <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a>
@@ -370,7 +371,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Sep 20, 2026.
+      <span class="lastupdated">Last updated on Sep 27, 2026.
       </span></p>
   </div>
 
