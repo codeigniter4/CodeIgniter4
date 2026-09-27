@@ -21,6 +21,7 @@ use CodeIgniter\I18n\Time;
 use Config\Cache;
 use Redis;
 use RedisException;
+use RuntimeException;
 
 /**
  * Redis cache handler
@@ -39,6 +40,11 @@ class RedisHandler extends BaseHandler implements LockStoreProviderInterface
      *   timeout: int,
      *   persistent: bool,
      *   database: int,
+     *   sentinel?: array{
+     *     service?: string,
+     *     nodes?: list<array{host: string, port?: int}>,
+     *     timeout?: float
+     *   }
      * }
      */
     protected $config = [
@@ -48,6 +54,7 @@ class RedisHandler extends BaseHandler implements LockStoreProviderInterface
         'timeout'    => 0,
         'persistent' => false,
         'database'   => 0,
+        'sentinel'   => [],
     ];
 
     /**
@@ -79,9 +86,23 @@ class RedisHandler extends BaseHandler implements LockStoreProviderInterface
         try {
             $funcConnection = isset($config['persistent']) && $config['persistent'] ? 'pconnect' : 'connect';
 
+            // When a Sentinel cluster is configured, discover the current master
+            // address before connecting; otherwise fall back to the single host.
+            if (($config['sentinel']['nodes'] ?? []) !== []) {
+                [$host, $port] = RedisSentinel::discoverMaster(
+                    $config['sentinel']['nodes'],
+                    $config['sentinel']['service'],
+                    (float) ($config['sentinel']['timeout'] ?? 0),
+                );
+            } else {
+                $host = $config['host'];
+                // Unix domain sockets are passed as the host with a port of 0.
+                $port = $config['host'][0] === '/' ? 0 : $config['port'];
+            }
+
             // Note:: If Redis is your primary cache choice, and it is "offline", every page load will end up been delayed by the timeout duration.
             // I feel like some sort of temporary flag should be set, to indicate that we think Redis is "offline", allowing us to bypass the timeout for a set period of time.
-            if (! $this->redis->{$funcConnection}($config['host'], ($config['host'][0] === '/' ? 0 : $config['port']), $config['timeout'])) {
+            if (! $this->redis->{$funcConnection}($host, $port, $config['timeout'])) {
                 // Note:: I'm unsure if log_message() is necessary, however I'm not 100% comfortable removing it.
                 log_message('error', 'Cache: Redis connection failed. Check your configuration.');
 
@@ -101,6 +122,8 @@ class RedisHandler extends BaseHandler implements LockStoreProviderInterface
             }
         } catch (RedisException $e) {
             throw new CriticalError('Cache: RedisException occurred with message (' . $e->getMessage() . ').', $e->getCode(), $e);
+        } catch (RuntimeException $e) {
+            throw new CriticalError('Cache: ' . $e->getMessage(), $e->getCode(), $e);
         }
     }
 
