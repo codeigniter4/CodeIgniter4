@@ -46,8 +46,9 @@ class ListCommands extends AbstractCommand
         // Legacy takes precedence on key collision so the listing reflects the
         // command that would actually be invoked.
         $runner   = $this->getCommandRunner();
-        $commands = array_keys(
-            $runner->getCommands() + $runner->getModernCommands() + $runner->getCommandAliases(),
+        $commands = array_filter(
+            array_keys($runner->getCommands() + $runner->getModernCommands() + $runner->getCommandAliases()),
+            static fn (string $command): bool => ! $runner->isHiddenCommand($command),
         );
         sort($commands);
 
@@ -73,6 +74,10 @@ class ListCommands extends AbstractCommand
         $all    = $runner->getCommands() + $modern;
 
         foreach ($all as $command => $details) {
+            if ($runner->isHiddenCommand($command)) {
+                continue;
+            }
+
             $maxPad = max($maxPad, strlen($command) + 4);
 
             $entries[] = [$details['group'], $command, $details['description']];
@@ -80,6 +85,10 @@ class ListCommands extends AbstractCommand
 
         // Aliases are listed as their own rows under the group of the command they resolve to.
         foreach ($runner->getCommandAliases() as $alias => $canonical) {
+            if ($runner->isHiddenCommand($alias)) {
+                continue;
+            }
+
             $maxPad = max($maxPad, strlen($alias) + 4);
 
             $entries[] = [$modern[$canonical]['group'], $alias, lang('CLI.commandAlias', [$canonical])];

@@ -37,6 +37,7 @@ use Tests\Support\Commands\Modern\AliasedCommand;
 use Tests\Support\Commands\Modern\AppAboutCommand;
 use Tests\Support\Duplicates\DuplicateLegacy;
 use Tests\Support\Duplicates\DuplicateModern;
+use Tests\Support\Duplicates\HiddenDuplicateModern;
 use Tests\Support\InvalidCommands\AliasClashCommand;
 use Tests\Support\InvalidCommands\AliasSecondClashCommand;
 use Tests\Support\InvalidCommands\AliasTargetCommand;
@@ -347,6 +348,131 @@ final class CommandsTest extends CIUnitTestCase
 
         $this->assertSame(EXIT_SUCCESS, $commands->runCommand('fa', [], []));
         $this->assertStringContainsString('Ran fixture:aliased.', $this->getStreamFilterBuffer());
+    }
+
+    public function testHiddenCommandIsRegisteredWithItsFlag(): void
+    {
+        $commands = (new Commands())->getModernCommands();
+
+        $this->assertTrue($commands['fixture:hidden']['hidden']);
+        $this->assertFalse($commands['fixture:aliased']['hidden']);
+    }
+
+    public function testIsHiddenCommand(): void
+    {
+        $commands = new Commands();
+
+        $this->assertTrue($commands->isHiddenCommand('fixture:hidden'));
+        $this->assertTrue($commands->isHiddenCommand('fixture:secret'));
+        $this->assertFalse($commands->isHiddenCommand('fixture:aliased'));
+        $this->assertFalse($commands->isHiddenCommand('fixture:alias'));
+        $this->assertFalse($commands->isHiddenCommand('app:info'));
+        $this->assertFalse($commands->isHiddenCommand('app:unknown'));
+    }
+
+    public function testIsHiddenCommandIsFalseWhenLegacyCommandShadowsIt(): void
+    {
+        $this->injectFixtureLocator([
+            DuplicateLegacy::class       => SUPPORTPATH . 'Duplicates/DuplicateLegacy.php',
+            HiddenDuplicateModern::class => SUPPORTPATH . 'Duplicates/HiddenDuplicateModern.php',
+        ]);
+
+        $this->assertFalse((new Commands())->isHiddenCommand('dup:test'));
+    }
+
+    public function testHiddenCommandRunsByName(): void
+    {
+        command('fixture:hidden');
+
+        $this->assertSame(
+            <<<'EOT'
+
+                Ran fixture:hidden.
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
+    }
+
+    public function testHiddenCommandRunsByAlias(): void
+    {
+        command('fixture:secret');
+
+        $this->assertSame(
+            <<<'EOT'
+
+                Ran fixture:hidden.
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
+    }
+
+    public function testHiddenCommandRunsThroughModernCall(): void
+    {
+        $commands = new Commands();
+        $call     = $this->getPrivateMethodInvoker(new AliasedCommand($commands), 'call');
+
+        $this->assertSame(EXIT_SUCCESS, $call('fixture:hidden'));
+        $this->assertSame(EXIT_SUCCESS, $call('fixture:secret'));
+        $this->assertSame(
+            <<<'EOT'
+
+                Ran fixture:hidden.
+                Ran fixture:hidden.
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
+    }
+
+    public function testHiddenCommandRunsThroughLegacyCall(): void
+    {
+        $commands = new Commands();
+        $call     = $this->getPrivateMethodInvoker(new AppInfo(service('logger'), $commands), 'call');
+
+        $this->assertSame(EXIT_SUCCESS, $call('fixture:hidden'));
+        $this->assertSame(EXIT_SUCCESS, $call('fixture:secret'));
+        $this->assertSame(
+            <<<'EOT'
+
+                Ran fixture:hidden.
+                Ran fixture:hidden.
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
+    }
+
+    public function testHiddenCommandAndItsAliasesAreNotSuggested(): void
+    {
+        $this->assertSame(['fixture:alias', 'fixture:aliased'], (new Commands())->getCommandAlternatives('fixture:'));
+    }
+
+    public function testMistypedHiddenCommandIsReportedWithoutSuggestion(): void
+    {
+        $commands = new Commands();
+
+        $this->assertSame([], $commands->getCommandAlternatives('fixture:secre'));
+        $this->assertSame(EXIT_ERROR, $commands->runCommand('fixture:hiddenn', [], []));
+        $this->assertSame(
+            <<<'EOT'
+
+                Command "fixture:hiddenn" not found.
+
+                EOT,
+            $this->getUndecoratedBuffer(),
+        );
+    }
+
+    public function testLegacyCommandShadowingHiddenModernCommandIsStillSuggested(): void
+    {
+        $this->injectFixtureLocator([
+            DuplicateLegacy::class       => SUPPORTPATH . 'Duplicates/DuplicateLegacy.php',
+            HiddenDuplicateModern::class => SUPPORTPATH . 'Duplicates/HiddenDuplicateModern.php',
+        ]);
+
+        $this->assertSame(['dup:test'], (new Commands())->getCommandAlternatives('dup:tes'));
     }
 
     public function testAliasClashingWithCommandNameFailsHard(): void
