@@ -417,9 +417,12 @@ final class Superglobals
 
         foreach (str_split($requestOrder) as $type) {
             match ($type) {
-                'G'     => $request = array_merge($request, $this->get),
-                'P'     => $request = array_merge($request, $this->post),
-                'C'     => $request = array_merge($request, $this->cookie),
+                // array_replace_recursive() matches PHP's own $_REQUEST merge
+                // (php_autoglobal_merge): numeric keys are preserved and
+                // array values are merged recursively.
+                'G'     => $request = array_replace_recursive($request, $this->get),
+                'P'     => $request = array_replace_recursive($request, $this->post),
+                'C'     => $request = array_replace_recursive($request, $this->cookie),
                 default => null,
             };
         }

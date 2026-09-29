@@ -359,6 +359,25 @@ final class SuperglobalsTest extends CIUnitTestCase
         $this->assertSame(['get_key' => 'get_value'], $data);
     }
 
+    public function testGetRequestDataPreservesNumericKeys(): void
+    {
+        $this->superglobals->setGetArray([100 => 'foo']); // @phpstan-ignore argument.type (numeric keys are valid in superglobals, e.g. ?100=foo)
+
+        $data = $this->superglobals->getRequestData('G');
+
+        $this->assertSame([100 => 'foo'], $data);
+    }
+
+    public function testGetRequestDataMergesRecursively(): void
+    {
+        $this->superglobals->setGetArray(['a' => ['x' => 'get']]);
+        $this->superglobals->setPostArray(['a' => ['y' => 'post']]);
+
+        $data = $this->superglobals->getRequestData('GP');
+
+        $this->assertSame(['a' => ['x' => 'get', 'y' => 'post']], $data);
+    }
+
     // $_FILES tests
     public function testFilesGetArray(): void
     {

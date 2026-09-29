@@ -61,6 +61,7 @@ Bugs Fixed
 - **I18n:** Fixed a bug where ``Time::today()``, ``Time::yesterday()``, and ``Time::tomorrow()`` ignored the specified ``$timezone`` and ``setTestNow()`` when calculating the day.
 - **Logger:** Fixed a bug where interpolating a log message with array or non-stringable context values could raise PHP warnings or errors.
 - **Validation:** Fixed a bug where ``valid_cc_number`` accepted non-digit characters (e.g., a decimal point) in the card number. Such values could pass the Luhn check and triggered an ``Undefined array key`` warning inside it; the number is now checked with ``ctype_digit()``.
+- **IncomingRequest:** Fixed a bug where ``getVar()`` returned stale data after ``$_GET`` was updated during URI parsing. It now returns a merged view of ``$_GET``, ``$_POST``, and ``$_COOKIE`` (respecting the ``request_order`` ini setting) instead of reading the stale ``$_REQUEST``.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
