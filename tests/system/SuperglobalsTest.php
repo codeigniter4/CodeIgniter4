@@ -327,13 +327,11 @@ final class SuperglobalsTest extends CIUnitTestCase
 
     public function testGetRequestDataMergesCookie(): void
     {
-        ini_set('request_order', 'GPC');
-
         $this->superglobals->setGetArray(['get_key' => 'get_value']);
         $this->superglobals->setPostArray(['post_key' => 'post_value']);
         $this->superglobals->setCookieArray(['cookie_key' => 'cookie_value']);
 
-        $data = $this->superglobals->getRequestData();
+        $data = $this->superglobals->getRequestData('GPC');
 
         $this->assertSame('get_value', $data['get_key']);
         $this->assertSame('post_value', $data['post_key']);
@@ -347,46 +345,35 @@ final class SuperglobalsTest extends CIUnitTestCase
         $this->superglobals->setCookieArray(['shared' => 'cookie']);
 
         // Later sources overwrite earlier ones, matching PHP's request_order.
-        ini_set('request_order', 'GP');
-        $this->assertSame('post', $this->superglobals->getRequestData()['shared']);
-
-        ini_set('request_order', 'GPC');
-        $this->assertSame('cookie', $this->superglobals->getRequestData()['shared']);
-
-        ini_set('request_order', 'PG');
-        $this->assertSame('get', $this->superglobals->getRequestData()['shared']);
+        $this->assertSame('post', $this->superglobals->getRequestData('GP')['shared']);
+        $this->assertSame('cookie', $this->superglobals->getRequestData('GPC')['shared']);
+        $this->assertSame('get', $this->superglobals->getRequestData('PG')['shared']);
     }
 
     public function testGetRequestDataIgnoresUnknownOrderTypes(): void
     {
-        ini_set('request_order', 'GX');
-
         $this->superglobals->setGetArray(['get_key' => 'get_value']);
 
-        $data = $this->superglobals->getRequestData();
+        $data = $this->superglobals->getRequestData('GX');
 
         $this->assertSame(['get_key' => 'get_value'], $data);
     }
 
     public function testGetRequestDataPreservesNumericKeys(): void
     {
-        ini_set('request_order', 'G');
-
         $this->superglobals->setGetArray([100 => 'foo']); // @phpstan-ignore argument.type (numeric keys are valid in superglobals, e.g. ?100=foo)
 
-        $data = $this->superglobals->getRequestData();
+        $data = $this->superglobals->getRequestData('G');
 
         $this->assertSame([100 => 'foo'], $data);
     }
 
     public function testGetRequestDataMergesRecursively(): void
     {
-        ini_set('request_order', 'GP');
-
         $this->superglobals->setGetArray(['a' => ['x' => 'get']]);
         $this->superglobals->setPostArray(['a' => ['y' => 'post']]);
 
-        $data = $this->superglobals->getRequestData();
+        $data = $this->superglobals->getRequestData('GP');
 
         $this->assertSame(['a' => ['x' => 'get', 'y' => 'post']], $data);
     }
