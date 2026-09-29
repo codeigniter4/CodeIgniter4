@@ -397,19 +397,17 @@ final class Superglobals
      * stale. This method returns the current merged values so callers can
      * read up-to-date request data without relying on the stale $_REQUEST.
      *
-     * @param string|null $requestOrder Overrides the ini setting for testing.
-     *
      * @return array<string, request_items>
      */
-    public function getRequestData(?string $requestOrder = null): array
+    public function getRequestData(): array
     {
-        $requestOrder ??= ini_get('request_order');
+        $requestOrder = (string) ini_get('request_order');
 
-        if ($requestOrder === false || $requestOrder === '') {
-            $requestOrder = ini_get('variables_order');
+        if ($requestOrder === '') {
+            $requestOrder = (string) ini_get('variables_order');
         }
 
-        if ($requestOrder === false || $requestOrder === '') {
+        if ($requestOrder === '') {
             $requestOrder = 'GP';
         }
 
