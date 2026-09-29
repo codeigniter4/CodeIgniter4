@@ -405,9 +405,7 @@ final class Superglobals
      */
     public function getRequestData(?string $requestOrder = null): array
     {
-        if ($requestOrder === null) {
-            $requestOrder = (string) ini_get('request_order');
-        }
+        $requestOrder ??= (string) ini_get('request_order');
 
         if ($requestOrder === '') {
             $requestOrder = (string) ini_get('variables_order');
