@@ -26,6 +26,12 @@ of time that a page should remain cached before being refreshed.
     request is also taken into account. This means that the same URI will be
     cached separately if the HTTP method is different.
 
+.. warning:: Web Page Caching is shared between requests with the same HTTP
+    method and URI. Its cache key does not vary by authenticated user, cookies,
+    authorization headers, ``Cache-Control``, or ``Vary``. Do not use it for
+    protected or personalized responses, as cached responses may be returned
+    before authentication and authorization filters run.
+
 When a page is loaded for the first time, the page will be cached using the
 currently configured cache engine. On subsequent page loads, the cache
 will be retrieved and sent to the requesting user's browser.
