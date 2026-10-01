@@ -253,18 +253,17 @@ final class UpsertTest extends CIUnitTestCase
                 break;
 
             case 'SQLSRV':
-                $expected = <<<'SQL'
-                    MERGE INTO "test"."dbo"."db_user"
-                    USING (
-                    VALUES ('Iran','ahmadinejad@world.com','Ahmadinejad')
-                    ) "_upsert" ("country", "email", "name")
-                    ON ("test"."dbo"."db_user"."email" = "_upsert"."email")
-                    WHEN MATCHED THEN UPDATE SET
-                    "country" = "_upsert"."country",
-                    "name" = "_upsert"."name"
-                    WHEN NOT MATCHED THEN INSERT ("country", "email", "name")
-                    VALUES ("_upsert"."country", "_upsert"."email", "_upsert"."name");
-                    SQL;
+                $qualified = '"' . $this->db->getDatabase() . '"."dbo"."db_user"';
+                $expected  = 'MERGE INTO ' . $qualified . "\n"
+                    . "USING (\n"
+                    . "VALUES ('Iran','ahmadinejad@world.com','Ahmadinejad')\n"
+                    . ') "_upsert" ("country", "email", "name")' . "\n"
+                    . 'ON (' . $qualified . '."email" = "_upsert"."email")' . "\n"
+                    . "WHEN MATCHED THEN UPDATE SET\n"
+                    . "\"country\" = \"_upsert\".\"country\",\n"
+                    . "\"name\" = \"_upsert\".\"name\"\n"
+                    . 'WHEN NOT MATCHED THEN INSERT ("country", "email", "name")' . "\n"
+                    . 'VALUES ("_upsert"."country", "_upsert"."email", "_upsert"."name");';
                 break;
 
             case 'OCI8':
@@ -635,6 +634,31 @@ final class UpsertTest extends CIUnitTestCase
 
         $this->seeInDatabase('team_members', ['team_id' => 1, 'person_id' => 33, 'role' => 'member']);
         $this->dontSeeInDatabase('team_members', ['team_id' => 1, 'person_id' => 33, 'role' => 'mentor']);
+    }
+
+    public function testUpsertBatchPrefersPrimaryKeyOverUniqueIndex(): void
+    {
+        $userData = [
+            [
+                'id'      => 1,
+                'email'   => 'updated_email_for_id1@world.com',
+                'name'    => 'Derek Jones Updated',
+                'country' => 'US',
+            ],
+        ];
+
+        if ($this->db->DBDriver === 'Postgre') {
+            $sql = $this->db->table('user')->setData($userData)->getCompiledUpsert();
+            $this->assertStringContainsString('ON CONFLICT("id")', $sql);
+        }
+
+        $this->db->table('user')->upsertBatch($userData);
+
+        $this->seeInDatabase('user', [
+            'id'    => 1,
+            'email' => 'updated_email_for_id1@world.com',
+            'name'  => 'Derek Jones Updated',
+        ]);
     }
 
     public function testSetBatchOneRow(): void
