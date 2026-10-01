@@ -320,16 +320,25 @@ In this case, you will write code in your template::
 Escaping Data
 =============
 
-By default, all variable substitution is escaped to help prevent XSS attacks on your pages. CodeIgniter's ``esc()`` method
-supports several different contexts, like general ``html``, when it's in an HTML ``attr``, in ``css``, etc. If nothing
-else is specified, the data will be assumed to be in an HTML context. You can specify the context used by using the ``esc()``
-filter::
+Variable substitutions without filters are escaped by default to help prevent XSS attacks on your pages.
+CodeIgniter's ``esc()`` method supports several contexts, such as ``html``, ``attr``, and ``css``.
+If no context is specified, the Parser uses ``html``. You can specify the context with the ``esc`` filter::
 
     { user_styles | esc(css) }
     <a href="{ user_link | esc(attr) }">{ title }</a>
 
-There will be times when you absolutely need something to used and NOT escaped. You can do this by adding exclamation
-marks to the opening and closing braces::
+When a substitution uses one or more filters, the Parser does not add an ``esc`` filter automatically.
+This also applies when a context is specified with ``setData()`` or ``setVar()``.
+Add ``esc`` explicitly when filtering untrusted data. Filters run from left to right, so its position matters::
+
+    { title|capitalize|esc }
+    { body|esc|nl2br }
+
+In the second example, ``esc`` escapes the input before ``nl2br`` adds HTML ``<br>`` tags.
+Escaping after ``nl2br`` would display those tags as text.
+Unknown filter names are ignored, but still prevent automatic escaping; check filter names carefully.
+
+To disable automatic escaping for a substitution without filters, add exclamation marks to its delimiters::
 
     {! unescaped_var !}
 
