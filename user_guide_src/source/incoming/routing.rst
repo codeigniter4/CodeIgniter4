@@ -476,6 +476,15 @@ by passing the "hostname" option along with the desired domain to allow it on as
 This example would only allow the specified hosts to work if the domain exactly matched **accounts.example.com**.
 It would not work under the main site at **example.com**.
 
+.. note::
+
+    The ``hostname`` option is compared against the full ``HTTP_HOST`` value of the
+    request, including the port when one is present. When your application is served
+    on a non-standard port (for example ``localhost:8080``, behind Docker, or when
+    using ``spark server``), you must include the port in the ``hostname`` option for
+    the routes to match. For example, ``['hostname' => 'localhost:8080']`` matches only
+    requests to ``localhost:8080``.
+
 Restrict by Multiple Hostnames
 ------------------------------
 
@@ -501,6 +510,11 @@ that does not have any subdomain present, this will not be matched:
 .. important:: The system is not perfect and should be tested for your specific domain before being used in production.
     Most domains should work fine but some edge case ones, especially with a period in the domain itself (not used
     to separate suffixes or www) can potentially lead to false positives.
+
+.. note::
+
+    The ``subdomain`` option is also compared against the ``HTTP_HOST`` value, so when the application runs on a
+    non-standard port, the port must be included as well (for example ``sub.example.com:8080``).
 
 Offsetting the Matched Parameters
 =================================
