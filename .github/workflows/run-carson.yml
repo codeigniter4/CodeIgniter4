@@ -28,6 +28,7 @@ permissions: {}
 
 jobs:
   carson:
+    if: github.repository == 'codeigniter4/CodeIgniter4'
     runs-on: ubuntu-24.04
     steps:
       - name: Run Carson
