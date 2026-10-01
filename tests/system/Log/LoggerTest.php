@@ -18,8 +18,10 @@ use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Log\Exceptions\LogException;
+use CodeIgniter\Log\Handlers\FileHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
+use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\Attributes\Group;
 use ReflectionMethod;
 use ReflectionNamedType;
@@ -41,6 +43,54 @@ final class LoggerTest extends CIUnitTestCase
         Time::setTestNow();
 
         service('context')->clearAll(); // Clear any context data that may have been set during tests.
+    }
+
+    public function testLogStopsRemainingHandlersWhenFileHandlerFailsByDefault(): void
+    {
+        $logger = new Logger($this->getConfigWithFailingFileHandler());
+
+        $logger->log('error', 'Test message');
+
+        $this->assertSame([], TestHandler::getLogs());
+    }
+
+    public function testLogRunsRemainingHandlersWhenFileHandlerFailsWithoutStoppingChain(): void
+    {
+        $logger = new Logger($this->getConfigWithFailingFileHandler(['stopChainOnFailure' => false]));
+
+        $logger->log('error', 'Test message');
+
+        $logs = TestHandler::getLogs();
+
+        $this->assertCount(1, $logs);
+        $this->assertStringContainsString('Test message', $logs[0]);
+    }
+
+    /**
+     * Returns a config with a FileHandler pointed at a missing directory,
+     * followed by the TestHandler.
+     *
+     * @param array{stopChainOnFailure?: bool} $fileHandlerConfig
+     */
+    private function getConfigWithFailingFileHandler(array $fileHandlerConfig = []): LoggerConfig
+    {
+        $config            = new LoggerConfig();
+        $testHandlerConfig = $config->handlers[TestHandler::class];
+
+        // The TestHandler only clears its stored logs when it is instantiated,
+        // which does not happen when an earlier handler stops the chain.
+        new TestHandler($testHandlerConfig);
+
+        $config->handlers = [
+            FileHandler::class => [
+                'handles' => ['error'],
+                'path'    => vfsStream::setup('root')->url() . '/missing/',
+                ...$fileHandlerConfig,
+            ],
+            TestHandler::class => $testHandlerConfig,
+        ];
+
+        return $config;
     }
 
     public function testThrowsExceptionWithBadHandlerSettings(): void

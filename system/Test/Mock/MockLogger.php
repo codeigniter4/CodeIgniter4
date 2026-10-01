@@ -83,7 +83,7 @@ class MockLogger extends Logger
      * Handlers are executed in the order defined in this array, starting with
      * the handler on top and continuing down.
      *
-     * @var array<class-string<HandlerInterface>, array<string, int|list<string>|string>>
+     * @var array<class-string<HandlerInterface>, array<string, bool|int|list<string>|string>>
      */
     public array $handlers = [
         // File Handler

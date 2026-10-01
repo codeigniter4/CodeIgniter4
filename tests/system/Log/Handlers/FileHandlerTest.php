@@ -114,4 +114,34 @@ final class FileHandlerTest extends CIUnitTestCase
         $expectedResult = 'Test message';
         $this->assertStringContainsString($expectedResult, (string) $line);
     }
+
+    public function testHandleReturnsFalseOnFailedWriteByDefault(): void
+    {
+        $logger = new FileHandler(['path' => $this->start . 'missing/']);
+
+        $this->assertFalse($logger->handle('warning', 'This is a test log'));
+    }
+
+    public function testHandleReturnsFalseOnFailedWriteWhenStopChainOnFailureIsEnabled(): void
+    {
+        $logger = new FileHandler(['path' => $this->start . 'missing/', 'stopChainOnFailure' => true]);
+
+        $this->assertFalse($logger->handle('warning', 'This is a test log'));
+    }
+
+    public function testHandleReturnsTrueOnFailedWriteWhenStopChainOnFailureIsDisabled(): void
+    {
+        $logger = new FileHandler(['path' => $this->start . 'missing/', 'stopChainOnFailure' => false]);
+
+        $this->assertTrue($logger->handle('warning', 'This is a test log'));
+        $this->assertDirectoryDoesNotExist($this->start . 'missing/');
+    }
+
+    public function testHandleReturnsTrueOnSuccessfulWriteWhenStopChainOnFailureIsDisabled(): void
+    {
+        $logger = new FileHandler(['path' => $this->start, 'stopChainOnFailure' => false]);
+
+        $this->assertTrue($logger->handle('warning', 'This is a test log'));
+        $this->assertFileExists($this->start . 'log-' . date('Y-m-d') . '.log');
+    }
 }

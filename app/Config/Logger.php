@@ -125,7 +125,7 @@ class Logger extends BaseConfig
      * Handlers are executed in the order defined in this array, starting with
      * the handler on top and continuing down.
      *
-     * @var array<class-string<HandlerInterface>, array<string, int|list<string>|string>>
+     * @var array<class-string<HandlerInterface>, array<string, bool|int|list<string>|string>>
      */
     public array $handlers = [
         /*
@@ -170,6 +170,14 @@ class Logger extends BaseConfig
              * Specify a different destination here, if desired.
              */
             'path' => '',
+
+            /*
+             * Whether a failed write stops the handlers defined after this one.
+             *
+             * Set this to false to let the remaining handlers log the message
+             * even when this handler could not write it.
+             */
+            'stopChainOnFailure' => true,
         ],
 
         /*
@@ -197,6 +205,11 @@ class Logger extends BaseConfig
         //     * class constants: `ErrorlogHandler::TYPE_OS` (0) or `ErrorlogHandler::TYPE_SAPI` (4)
         //     */
         //     'messageType' => 0,
+        //
+        //     /*
+        //     * Whether a failed write stops the handlers defined after this one.
+        //     */
+        //     'stopChainOnFailure' => true,
         // ],
     ];
 }
