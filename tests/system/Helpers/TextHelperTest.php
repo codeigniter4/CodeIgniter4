@@ -358,6 +358,27 @@ final class TextHelperTest extends CIUnitTestCase
         }
     }
 
+    /**
+     * A character limit below 2 used to make word_wrap() loop forever.
+     */
+    #[DataProvider('provideWordWrapSmallCharLimit')]
+    public function testWordWrapSmallCharLimit(int $charlim): void
+    {
+        $this->assertSame("aaa\na\nbbb\nb", word_wrap('aaaa bbbb', $charlim));
+    }
+
+    /**
+     * @return iterable<string, array{int}>
+     */
+    public static function provideWordWrapSmallCharLimit(): iterable
+    {
+        yield 'one' => [1];
+
+        yield 'zero' => [0];
+
+        yield 'negative' => [-5];
+    }
+
     public function testWordWrap(): void
     {
         $string   = 'Here is a simple string of text that will help us demonstrate this function.';
