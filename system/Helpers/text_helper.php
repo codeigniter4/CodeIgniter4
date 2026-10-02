@@ -345,6 +345,9 @@ if (! function_exists('word_wrap')) {
      */
     function word_wrap(string $str, int $charlim = 76): string
     {
+        // A limit below 1 is meaningless and would make the wrapping loop endless
+        $charlim = max(1, $charlim);
+
         // Reduce multiple spaces
         $str = preg_replace('| +|', ' ', $str);
 
@@ -388,9 +391,11 @@ if (! function_exists('word_wrap')) {
                 if (preg_match('!\[url.+\]|://|www\.!', $line)) {
                     break;
                 }
-                // Trim the word down
-                $temp .= mb_substr($line, 0, $charlim - 1);
-                $line = mb_substr($line, $charlim - 1);
+                // Trim the word down. Always take at least one character,
+                // otherwise a limit of 1 or less would never make progress.
+                $chunkLength = max(1, $charlim - 1);
+                $temp .= mb_substr($line, 0, $chunkLength);
+                $line = mb_substr($line, $chunkLength);
             }
 
             // If $temp contains data it means we had to split up an over-length
