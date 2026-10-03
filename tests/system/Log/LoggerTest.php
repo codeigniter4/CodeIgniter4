@@ -63,7 +63,7 @@ final class LoggerTest extends CIUnitTestCase
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertStringContainsString('Test message', $logs[0]);
+        $this->assertStringContainsString('Test message', (string) $logs[0]);
     }
 
     /**
