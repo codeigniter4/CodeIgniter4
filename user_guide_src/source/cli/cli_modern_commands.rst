@@ -11,9 +11,10 @@ surface inside a ``configure()`` method. The framework then parses the command
 line, applies the declared defaults, validates what was passed, and finally
 calls ``execute()`` with typed, validated values.
 
-Modern and legacy commands can coexist (for now): existing ``BaseCommand`` classes
+Modern and legacy commands can coexist: existing ``BaseCommand`` classes
 continue to work, and the framework routes invocations to whichever command
-matches the requested name, regardless of style.
+matches the requested name, regardless of style. ``BaseCommand`` itself is
+deprecated, though. See `Migrating From BaseCommand`_.
 
 .. contents::
     :local:
@@ -501,12 +502,11 @@ params become positional arguments and string-keyed params become options, and
 the modern command validates them like any other input. Unknown options or extra
 arguments that a legacy target would have ignored are rejected.
 
-.. note::
+.. deprecated:: 4.8.0
 
-    Legacy commands remain supported while the framework's own built-in
-    commands are being migrated to the modern style. Once that migration is
-    complete, ``BaseCommand`` will start emitting deprecation notices. New
-    commands should be written against ``AbstractCommand`` from the start.
+    ``BaseCommand`` is deprecated, and running a legacy command triggers a
+    deprecation notice (see :ref:`logging_deprecation_warnings`). New commands
+    should be written against ``AbstractCommand`` from the start.
 
 ***************
 AbstractCommand

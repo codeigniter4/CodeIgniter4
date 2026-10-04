@@ -41,6 +41,13 @@ final class BaseCommandTest extends CIUnitTestCase
         CLI::reset();
     }
 
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        service('superglobals')->setServer('CODEIGNITER_SCREAM_DEPRECATIONS', '1');
+    }
+
     public function testRunCommand(): void
     {
         $command = new AppInfo(single_service('logger'), single_service('commands'));
@@ -54,6 +61,8 @@ final class BaseCommandTest extends CIUnitTestCase
 
     public function testCallingOtherCommands(): void
     {
+        service('superglobals')->unsetServer('CODEIGNITER_SCREAM_DEPRECATIONS');
+
         $command = new AppInfo(single_service('logger'), single_service('commands'));
 
         $this->assertSame(0, $command->helpMe());

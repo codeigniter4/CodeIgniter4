@@ -102,6 +102,14 @@ class Commands
             return EXIT_ERROR;
         }
 
+        @trigger_error(sprintf(
+            'Since v4.8.0, "%s" is deprecated. Command "%s" (%s) should extend "%s" instead.',
+            BaseCommand::class,
+            $command,
+            $this->commands[$command]['class'],
+            AbstractCommand::class,
+        ), E_USER_DEPRECATED);
+
         Events::trigger('pre_command');
 
         $exitCode = $this->getCommand($command, legacy: true)->run($params);
