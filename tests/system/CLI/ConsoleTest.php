@@ -24,6 +24,7 @@ use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -91,6 +92,70 @@ final class ConsoleTest extends CIUnitTestCase
     public function testHeaderDoesNotShowOnNoHeader(): void
     {
         $this->initializeConsole('--no-header');
+        (new Console())->run();
+
+        $this->assertStringNotContainsString(
+            sprintf('CodeIgniter v%s Command Line Tool', CodeIgniter::CI_VERSION),
+            $this->getStreamFilterBuffer(),
+        );
+    }
+
+    #[DataProvider('provideHeaderlessCommandOmitsHeader')]
+    public function testHeaderlessCommandOmitsHeader(string $command): void
+    {
+        $this->initializeConsole($command);
+        (new Console())->run();
+
+        $this->assertSame(
+            <<<'EOT'
+
+                Ran test:headerless.
+
+                EOT,
+            $this->getStreamFilterBuffer(),
+        );
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideHeaderlessCommandOmitsHeader(): iterable
+    {
+        yield 'name' => ['test:headerless'];
+
+        yield 'alias' => ['test:quiet'];
+    }
+
+    /**
+     * @param list<string> $tokens
+     */
+    #[DataProvider('provideHelpForHeaderlessCommandShowsHeader')]
+    public function testHelpForHeaderlessCommandShowsHeader(array $tokens): void
+    {
+        $this->initializeConsole(...$tokens);
+        (new Console())->run();
+
+        $this->assertStringContainsString(
+            sprintf('CodeIgniter v%s Command Line Tool', CodeIgniter::CI_VERSION),
+            $this->getStreamFilterBuffer(),
+        );
+    }
+
+    /**
+     * @return iterable<string, array{list<string>}>
+     */
+    public static function provideHelpForHeaderlessCommandShowsHeader(): iterable
+    {
+        yield 'help command' => [['help', 'test:headerless']];
+
+        yield 'help option' => [['test:headerless', '--help']];
+
+        yield 'help shortcut on alias' => [['test:quiet', '-h']];
+    }
+
+    public function testNoHeaderOptionAppliesAlongsideHelpOption(): void
+    {
+        $this->initializeConsole('env', '--help', '--no-header');
         (new Console())->run();
 
         $this->assertStringNotContainsString(

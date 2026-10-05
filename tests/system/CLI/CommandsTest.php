@@ -22,6 +22,7 @@ use CodeIgniter\CodeIgniter;
 use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\Test\ReflectionHelper;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Services;
@@ -37,6 +38,7 @@ use Tests\Support\Commands\Modern\AliasedCommand;
 use Tests\Support\Commands\Modern\AppAboutCommand;
 use Tests\Support\Duplicates\DuplicateLegacy;
 use Tests\Support\Duplicates\DuplicateModern;
+use Tests\Support\Duplicates\HeaderlessDuplicateModern;
 use Tests\Support\Duplicates\HiddenDuplicateModern;
 use Tests\Support\InvalidCommands\AliasClashCommand;
 use Tests\Support\InvalidCommands\AliasSecondClashCommand;
@@ -283,6 +285,8 @@ final class CommandsTest extends CIUnitTestCase
             CLI::getWidth(),
         );
 
+        CITestStreamFilter::removeOutputFilter();
+
         $commands = new Commands();
 
         $this->assertSame("\n{$message}\n", $this->getUndecoratedBuffer());
@@ -390,6 +394,36 @@ final class CommandsTest extends CIUnitTestCase
         ]);
 
         $this->assertFalse((new Commands())->isHiddenCommand('dup:test'));
+    }
+
+    public function testHeaderlessCommandIsRegisteredWithItsFlag(): void
+    {
+        $commands = (new Commands())->getModernCommands();
+
+        $this->assertTrue($commands['test:headerless']['headerless']);
+        $this->assertFalse($commands['fixture:aliased']['headerless']);
+    }
+
+    public function testIsHeaderlessCommand(): void
+    {
+        $commands = new Commands();
+
+        $this->assertTrue($commands->isHeaderlessCommand('test:headerless'));
+        $this->assertTrue($commands->isHeaderlessCommand('test:quiet'));
+        $this->assertFalse($commands->isHeaderlessCommand('fixture:aliased'));
+        $this->assertFalse($commands->isHeaderlessCommand('fixture:alias'));
+        $this->assertFalse($commands->isHeaderlessCommand('app:info'));
+        $this->assertFalse($commands->isHeaderlessCommand('app:unknown'));
+    }
+
+    public function testIsHeaderlessCommandIsFalseWhenLegacyCommandShadowsIt(): void
+    {
+        $this->injectFixtureLocator([
+            DuplicateLegacy::class           => SUPPORTPATH . 'Duplicates/DuplicateLegacy.php',
+            HeaderlessDuplicateModern::class => SUPPORTPATH . 'Duplicates/HeaderlessDuplicateModern.php',
+        ]);
+
+        $this->assertFalse((new Commands())->isHeaderlessCommand('dup:test'));
     }
 
     public function testHiddenCommandRunsByName(): void

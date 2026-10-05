@@ -38,6 +38,7 @@ use PHPUnit\Framework\Attributes\Group;
 use ReflectionClass;
 use ReflectionProperty;
 use Tests\Support\Commands\Modern\AppAboutCommand;
+use Tests\Support\Commands\Modern\HeaderlessCommand;
 use Tests\Support\Commands\Modern\HiddenCommand;
 use Tests\Support\Commands\Modern\InteractFixtureCommand;
 use Tests\Support\Commands\Modern\InteractiveStateProbeCommand;
@@ -84,6 +85,7 @@ final class AbstractCommandTest extends CIUnitTestCase
         $this->assertSame($attribute->description, $command->getDescription());
         $this->assertSame($attribute->group, $command->getGroup());
         $this->assertSame($attribute->hidden, $command->isHidden());
+        $this->assertSame($attribute->headerless, $command->isHeaderless());
         $this->assertSame($commands, $command->getCommandRunner());
         $this->assertSame('help [options] [--] [<command_name>]', $command->getUsages()[0]);
     }
@@ -91,6 +93,11 @@ final class AbstractCommandTest extends CIUnitTestCase
     public function testHiddenCommandReportsItself(): void
     {
         $this->assertTrue((new HiddenCommand(new Commands()))->isHidden());
+    }
+
+    public function testHeaderlessCommandReportsItself(): void
+    {
+        $this->assertTrue((new HeaderlessCommand(new Commands()))->isHeaderless());
     }
 
     public function testCommandRequiresCommandAttribute(): void
