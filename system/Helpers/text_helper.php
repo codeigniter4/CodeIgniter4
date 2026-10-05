@@ -386,26 +386,22 @@ if (! function_exists('word_wrap')) {
 
             $temp = '';
 
-            // Chunks are joined directly for wider limits, but with a limit of 1
-            // each chunk is a full line of its own.
-            $separator = $charlim === 1 ? "\n" : '';
-
-            while (mb_strlen($line) > $charlim) {
+            // A limit of 1 can't be used to split a word (each piece needs room for
+            // the continuation), so the word is kept whole, like a long URL.
+            while ($charlim > 1 && mb_strlen($line) > $charlim) {
                 // If the over-length word is a URL we won't wrap it
                 if (preg_match('!\[url.+\]|://|www\.!', $line)) {
                     break;
                 }
-                // Trim the word down. Always take at least one character,
-                // otherwise a limit of 1 or less would never make progress.
-                $chunkLength = max(1, $charlim - 1);
-                $temp .= mb_substr($line, 0, $chunkLength) . $separator;
-                $line = mb_substr($line, $chunkLength);
+                // Trim the word down
+                $temp .= mb_substr($line, 0, $charlim - 1);
+                $line = mb_substr($line, $charlim - 1);
             }
 
             // If $temp contains data it means we had to split up an over-length
             // word into smaller chunks so we'll add it back to our current line
             if ($temp !== '') {
-                $output .= $temp . ($separator === '' ? "\n" : '') . $line . "\n";
+                $output .= $temp . "\n" . $line . "\n";
             } else {
                 $output .= $line . "\n";
             }
