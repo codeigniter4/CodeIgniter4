@@ -364,7 +364,7 @@ final class TextHelperTest extends CIUnitTestCase
     #[DataProvider('provideWordWrapSmallCharLimit')]
     public function testWordWrapSmallCharLimit(int $charlim): void
     {
-        $this->assertSame("aaa\na\nbbb\nb", word_wrap('aaaa bbbb', $charlim));
+        $this->assertSame("a\na\na\na\nb\nb\nb\nb", word_wrap('aaaa bbbb', $charlim));
     }
 
     /**
