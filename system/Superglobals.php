@@ -417,7 +417,7 @@ final class Superglobals
 
         $request = [];
 
-        foreach (str_split($requestOrder) as $type) {
+        foreach (array_unique(str_split(strtoupper($requestOrder))) as $type) {
             match ($type) {
                 // array_replace_recursive() matches PHP's own $_REQUEST merge
                 // (php_autoglobal_merge): numeric keys are preserved and

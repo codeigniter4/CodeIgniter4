@@ -350,6 +350,17 @@ final class SuperglobalsTest extends CIUnitTestCase
         $this->assertSame('get', $this->superglobals->getRequestData('PG')['shared']);
     }
 
+    public function testGetRequestDataNormalizesOrderAndIgnoresDuplicates(): void
+    {
+        $this->superglobals->setGetArray(['shared' => 'get']);
+        $this->superglobals->setPostArray(['shared' => 'post']);
+        $this->superglobals->setCookieArray(['shared' => 'cookie']);
+
+        $this->assertSame('post', $this->superglobals->getRequestData('gp')['shared']);
+        $this->assertSame('post', $this->superglobals->getRequestData('GPG')['shared']);
+        $this->assertSame('cookie', $this->superglobals->getRequestData('gPcGpC')['shared']);
+    }
+
     public function testGetRequestDataIgnoresUnknownOrderTypes(): void
     {
         $this->superglobals->setGetArray(['get_key' => 'get_value']);

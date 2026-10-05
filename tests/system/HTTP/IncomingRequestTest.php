@@ -29,6 +29,7 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use PHPUnit\Framework\Attributes\WithoutErrorHandler;
+use RuntimeException;
 
 /**
  * @internal
@@ -85,6 +86,65 @@ final class IncomingRequestTest extends CIUnitTestCase
             ->setRequestArray(['code' => 'stale']);
 
         $this->assertSame('good', $this->request->getVar('code'));
+    }
+
+    public function testGetVarPreservesExplicitRequestOverride(): void
+    {
+        service('superglobals')->setGetArray(['foo' => 'get', 'extra' => 'value']);
+        $this->request->setGlobal('request', ['foo' => 'bar']);
+
+        $this->assertSame('bar', $this->request->getVar('foo'));
+        $this->assertNull($this->request->getVar('extra'));
+        $this->assertSame(['foo' => 'bar'], $this->request->getVar());
+
+        $this->request->setGlobal('request', []);
+
+        $this->assertNull($this->request->getVar('foo'));
+    }
+
+    public function testGetVarRefreshesMergedDataAfterFirstRead(): void
+    {
+        service('superglobals')->setGetArray(['foo' => 'old']);
+        $this->assertSame('old', $this->request->getVar('foo'));
+
+        service('superglobals')->setGet('foo', 'new');
+
+        $this->assertSame('new', $this->request->getVar('foo'));
+    }
+
+    public function testGetVarClearsMergedDataAfterFilterThrows(): void
+    {
+        service('superglobals')->setGetArray(['foo' => 'old']);
+
+        try {
+            $this->request->getVar('foo', FILTER_CALLBACK, [
+                'options' => static function (): never {
+                    throw new RuntimeException('Filter failed');
+                },
+            ]);
+            $this->fail('The filter should throw an exception.');
+        } catch (RuntimeException $e) {
+            $this->assertSame('Filter failed', $e->getMessage());
+        }
+
+        service('superglobals')->setGet('foo', 'new');
+
+        $this->assertSame('new', $this->request->getVar('foo'));
+    }
+
+    public function testGetVarAllowsSubclassWithFetchFromArrayMethod(): void
+    {
+        $config  = new App();
+        $request = new class ($config, new SiteURI($config), null, new UserAgent()) extends IncomingRequest {
+            protected function fetchFromArray(): string
+            {
+                return 'application helper';
+            }
+        };
+
+        service('superglobals')->setGetArray(['foo' => 'bar']);
+
+        $this->assertSame('bar', $request->getVar('foo'));
     }
 
     public function testCanGrabGetVars(): void

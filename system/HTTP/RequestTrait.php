@@ -291,22 +291,6 @@ trait RequestTrait
             $this->populateGlobals($name);
         }
 
-        return $this->fetchFromArray($this->globals[$name], $index, $filter, $flags);
-    }
-
-    /**
-     * Fetches one or more items from an array, applying the same filtering
-     * and index resolution as fetchGlobal().
-     *
-     * @param array<string, mixed>          $data
-     * @param int|list<string>|string|null  $index
-     * @param int|null                      $filter Filter constant
-     * @param array<string, mixed>|int|null $flags  Options
-     *
-     * @return mixed
-     */
-    protected function fetchFromArray(array $data, $index = null, ?int $filter = null, $flags = null)
-    {
         // Null filters cause null values to return.
         $filter ??= FILTER_UNSAFE_RAW;
         $flags = is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
@@ -315,9 +299,9 @@ trait RequestTrait
         if ($index === null) {
             $values = [];
 
-            foreach ($data as $key => $value) {
+            foreach ($this->globals[$name] as $key => $value) {
                 $values[$key] = is_array($value)
-                    ? $this->fetchFromArray($data, $key, $filter, $flags)
+                    ? $this->fetchGlobal($name, $key, $filter, $flags)
                     : filter_var($value, $filter, $flags);
             }
 
@@ -329,7 +313,7 @@ trait RequestTrait
             $output = [];
 
             foreach ($index as $key) {
-                $output[$key] = $this->fetchFromArray($data, $key, $filter, $flags);
+                $output[$key] = $this->fetchGlobal($name, $key, $filter, $flags);
             }
 
             return $output;
@@ -337,7 +321,7 @@ trait RequestTrait
 
         // Does the index contain array notation?
         if (is_string($index) && ($count = preg_match_all('/(?:^[^\[]+)|\[[^]]*\]/', $index, $matches)) > 1) {
-            $value = $data;
+            $value = $this->globals[$name];
 
             for ($i = 0; $i < $count; $i++) {
                 $key = trim($matches[0][$i], '[]');
@@ -354,7 +338,7 @@ trait RequestTrait
             }
         }
 
-        $value ??= $data[$index] ?? null;
+        $value ??= $this->globals[$name][$index] ?? null;
 
         if (is_array($value)
             && (

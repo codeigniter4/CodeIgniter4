@@ -388,12 +388,21 @@ class IncomingRequest extends Request
             return $this->getJsonVar($index, false, $filter, $flags);
         }
 
-        // $_REQUEST is populated only once at the start of the request, so it
-        // can become stale when $_GET is modified later (e.g. by SiteURIFactory).
-        // Merge the current superglobals instead of reading the stale $_REQUEST.
-        $data = service('superglobals')->getRequestData();
+        // Preserve request data explicitly supplied through setGlobal().
+        if (isset($this->globals['request'])) {
+            return $this->fetchGlobal('request', $index, $filter, $flags);
+        }
 
-        return $this->fetchFromArray($data, $index, $filter, $flags);
+        // $_REQUEST can become stale when SiteURIFactory updates $_GET.
+        // Use the existing filtering path with a fresh merged view, without
+        // caching it between calls or modifying the superglobals.
+        $this->globals['request'] = service('superglobals')->getRequestData();
+
+        try {
+            return $this->fetchGlobal('request', $index, $filter, $flags);
+        } finally {
+            unset($this->globals['request']);
+        }
     }
 
     /**

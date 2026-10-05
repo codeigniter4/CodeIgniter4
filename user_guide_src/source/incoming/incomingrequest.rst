@@ -162,7 +162,7 @@ getVar()
     in new projects. Even if you are already using it, we recommend that you use
     another, more appropriate method.
 
-The ``getVar()`` method returns a merged view of ``$_GET``, ``$_POST``, and ``$_COOKIE`` (depending on php.ini `request-order <https://www.php.net/manual/en/ini.core.php#ini.request-order>`_). It does not read or modify ``$_REQUEST``.
+The ``getVar()`` method returns a merged view of ``$_GET``, ``$_POST``, and ``$_COOKIE`` (depending on php.ini `request-order <https://www.php.net/manual/en/ini.core.php#ini.request-order>`_). It does not read or modify ``$_REQUEST``. Data explicitly supplied through ``setGlobal('request', ...)`` takes precedence over the merged view.
 
 .. warning:: If you want to validate POST data only, don't use ``getVar()``.
     Newer values override older values. POST values may be overridden by the
@@ -170,7 +170,7 @@ The ``getVar()`` method returns a merged view of ``$_GET``, ``$_POST``, and ``$_
     `request-order <https://www.php.net/manual/en/ini.core.php#ini.request-order>`_.
 
 .. note:: If the incoming request has a ``Content-Type`` header set to ``application/json``,
-    the ``getVar()`` method returns the JSON data instead of ``$_REQUEST`` data.
+    the ``getVar()`` method returns the JSON data instead of the merged superglobal data.
 
 .. _incomingrequest-getting-json-data:
 
