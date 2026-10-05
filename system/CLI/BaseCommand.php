@@ -150,7 +150,9 @@ abstract class BaseCommand
         $message   = $e->getMessage();
         $config    = config(Exceptions::class);
 
-        require $config->errorViewPath . '/cli/error_exception.php';
+        CLI::redirectToStderr(static function () use ($exception, $message, $config): void {
+            require $config->errorViewPath . '/cli/error_exception.php';
+        });
     }
 
     /**

@@ -620,8 +620,8 @@ covered in the sections above and are not listed here.
 
         :param Throwable $e: The throwable to render.
 
-        Produces the same formatted output the framework uses for uncaught
-        exceptions. Safe to call from any command.
+        Produces the same formatted output on STDERR that the framework uses
+        for uncaught exceptions. Safe to call from any command.
 
     .. php:method:: hasArgument(string $name): bool
 

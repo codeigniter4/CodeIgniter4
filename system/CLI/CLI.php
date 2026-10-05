@@ -136,6 +136,8 @@ class CLI
      */
     protected static ?InputOutput $io = null;
 
+    protected static bool $stdoutToStderr = false;
+
     /**
      * Static "constructor".
      *
@@ -1138,7 +1140,42 @@ class CLI
      */
     protected static function fwrite($handle, string $string)
     {
+        if (static::$stdoutToStderr && $handle === STDOUT) {
+            $handle = STDERR;
+        }
+
         static::$io->fwrite($handle, $string);
+    }
+
+    /**
+     * Runs the callback with its STDOUT writes sent to STDERR.
+     *
+     * @param callable(): void $callback
+     *
+     * @internal
+     */
+    public static function redirectToStderr(callable $callback): void
+    {
+        if (! is_cli()) {
+            $callback();
+
+            return;
+        }
+
+        $stdoutToStderr = static::$stdoutToStderr;
+        $isColored      = static::$isColored;
+        $lastWrite      = static::$lastWrite;
+
+        static::$stdoutToStderr = true;
+        static::$isColored      = static::hasColorSupport(STDERR);
+
+        try {
+            $callback();
+        } finally {
+            static::$stdoutToStderr = $stdoutToStderr;
+            static::$isColored      = $isColored;
+            static::$lastWrite      = $lastWrite;
+        }
     }
 
     /**
@@ -1148,13 +1185,14 @@ class CLI
      */
     public static function reset(): void
     {
-        static::$initialized = false;
-        static::$segments    = [];
-        static::$options     = [];
-        static::$lastWrite   = null;
-        static::$height      = null;
-        static::$width       = null;
-        static::$isColored   = static::hasColorSupport(STDOUT);
+        static::$initialized    = false;
+        static::$segments       = [];
+        static::$options        = [];
+        static::$lastWrite      = null;
+        static::$height         = null;
+        static::$width          = null;
+        static::$isColored      = static::hasColorSupport(STDOUT);
+        static::$stdoutToStderr = false;
 
         static::resetInputOutput();
     }

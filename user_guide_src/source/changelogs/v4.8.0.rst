@@ -25,6 +25,9 @@ Behavior Changes
 
 - The static ``Boot::initializeConsole()`` method no longer handles the display of the console header. This is now handled within ``Console::run()``.
   If you have overridden ``Boot::initializeConsole()``, you should remove any code related to displaying the console header, as this is now the responsibility of the ``Console`` class.
+- **CLI:** Uncaught exceptions in ``spark``, and errors shown with ``BaseCommand::showError()`` or ``AbstractCommand::renderThrowable()`` (as ``migrate`` and
+  ``db:seed`` do), are now printed to STDERR instead of STDOUT. The exit code is unchanged.
+  See :ref:`upgrade-480-cli-error-output`.
 - **Commands:** The ``-h`` option to ``routes`` command which was mapped previously to the ``--sort-by-handler`` option is now removed.
   Use ``--sort-by-handler`` instead to sort the routes by handler when running the ``routes`` command.
 - **Commands:** The ``filter:check`` command now requires the HTTP method argument to be uppercase (e.g., ``spark filter:check GET /`` instead of ``spark filter:check get /``).

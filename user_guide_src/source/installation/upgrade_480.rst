@@ -33,6 +33,22 @@ Command Alternatives Visibility
 ``CodeIgniter\CLI\Commands::getCommandAlternatives()`` is now ``public``. If you extend ``Commands`` and override this method,
 change the override's visibility from ``protected`` to ``public``.
 
+.. _upgrade-480-cli-error-output:
+
+CLI Error Output
+================
+
+Uncaught exceptions in ``spark``, and errors shown with ``BaseCommand::showError()`` or
+``AbstractCommand::renderThrowable()``, are now printed to STDERR instead of STDOUT, so they no
+longer mix with output read by another program.
+The exit code is unchanged.
+
+If you redirect only STDOUT to a log file (``php spark my:command > my.log``), errors no longer
+reach that file. Redirect STDERR as well to keep them (``php spark my:command > my.log 2>&1``).
+
+A custom CLI error view that writes with ``echo`` instead of the ``CLI`` class still prints to
+STDOUT.
+
 Uploaded File Move Return Type
 ==============================
 

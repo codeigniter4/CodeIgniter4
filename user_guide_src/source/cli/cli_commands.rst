@@ -127,7 +127,7 @@ be familiar with when creating your own commands. It also has a :doc:`Logger </g
 
         :param Throwable $e: The exception to use for error reporting.
 
-        A convenience method to maintain a consistent and clear error output to the CLI:
+        A convenience method to maintain a consistent and clear error output on STDERR:
 
         .. literalinclude:: cli_commands/006.php
 
