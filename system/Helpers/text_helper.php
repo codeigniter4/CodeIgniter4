@@ -345,9 +345,6 @@ if (! function_exists('word_wrap')) {
      */
     function word_wrap(string $str, int $charlim = 76): string
     {
-        // A limit below 1 is meaningless and would make the wrapping loop endless
-        $charlim = max(1, $charlim);
-
         // Reduce multiple spaces
         $str = preg_replace('| +|', ' ', $str);
 
