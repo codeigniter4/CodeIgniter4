@@ -1338,7 +1338,7 @@ abstract class BaseConnection implements ConnectionInterface
 
     private function protectDotItem(string $item, string $alias, bool $protectIdentifiers, bool $fieldExists): string
     {
-        $parts = explode('.', $item);
+        $parts = array_map(fn (string $part): string => trim($part, $this->escapeChar), explode('.', $item));
 
         // Does the first segment of the exploded item match
         // one of the aliases previously identified? If so,

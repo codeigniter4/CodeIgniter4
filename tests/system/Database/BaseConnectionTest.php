@@ -372,6 +372,11 @@ final class BaseConnectionTest extends CIUnitTestCase
             'quoted table alias'        => [false, true, false, '"jobs" "j"', '"jobs" "j"'],
             'quoted table alias prefix' => [true, true, false, '"jobs" "j"', '"test_jobs" "j"'],
 
+            'schema.table'                   => [false, true, false, 'tenant.jobs', '"tenant"."test_jobs"'],
+            'schema.table prefix'            => [true, true, false, 'tenant.jobs', '"tenant"."test_jobs"'],
+            'quoted schema.table prefix'     => [true, true, false, '"tenant"."test_jobs"', '"tenant"."test_jobs"'],
+            'quoted schema.table no-protect' => [true, false, false, '"tenant"."test_jobs"', 'tenant.test_jobs'],
+
             'table.*'             => [false, true, true, 'jobs.*', '"test_jobs".*'], // Prefixed because it has segments
             'table.* prefix'      => [true, true, true, 'jobs.*', '"test_jobs".*'],
             'table.column'        => [false, true, true, 'users.id', '"test_users"."id"'], // Prefixed because it has segments

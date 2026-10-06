@@ -314,11 +314,19 @@ class Connection extends BaseConnection
      */
     protected function _fieldData(string $table): array
     {
+        $parts  = explode('.', $table);
+        $table  = array_pop($parts);
+        $schema = array_pop($parts);
+
         $sql = 'SELECT
                 COLUMN_NAME, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, NUMERIC_PRECISION,
                 COLUMN_DEFAULT, IS_NULLABLE
             FROM INFORMATION_SCHEMA.COLUMNS
             WHERE TABLE_NAME= ' . $this->escape(($table));
+
+        if ($schema !== null) {
+            $sql .= ' AND TABLE_SCHEMA = ' . $this->escape($schema);
+        }
 
         if (($query = $this->query($sql)) === false) {
             throw new DatabaseException(lang('Database.failGetFieldData'));

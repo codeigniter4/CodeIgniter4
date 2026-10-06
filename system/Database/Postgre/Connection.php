@@ -325,11 +325,20 @@ class Connection extends BaseConnection
      */
     protected function _fieldData(string $table): array
     {
+        $parts  = explode('.', $table);
+        $table  = array_pop($parts);
+        $schema = array_pop($parts);
+
         $sql = 'SELECT "column_name", "data_type", "character_maximum_length", "numeric_precision", "column_default",  "is_nullable"
             FROM "information_schema"."columns"
             WHERE LOWER("table_name") = '
-                . $this->escape(strtolower($table))
-                . ' ORDER BY "ordinal_position"';
+                . $this->escape(strtolower($table));
+
+        if ($schema !== null) {
+            $sql .= ' AND LOWER("table_schema") = ' . $this->escape(strtolower($schema));
+        }
+
+        $sql .= ' ORDER BY "ordinal_position"';
 
         if (($query = $this->query($sql)) === false) {
             throw new DatabaseException(lang('Database.failGetFieldData'));
