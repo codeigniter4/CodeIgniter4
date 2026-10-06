@@ -102,6 +102,6 @@ final class CallStoredProcedureTest extends CIUnitTestCase
         oci_execute($result);
         $row = oci_fetch_array($result, OCI_ASSOC + OCI_RETURN_NULLS);
 
-        $this->assertSame($row, ['ONE' => '1']);
+        $this->assertSame(['ONE' => '1'], $row);
     }
 }

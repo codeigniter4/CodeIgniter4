@@ -544,8 +544,8 @@ final class ForgeTest extends CIUnitTestCase
         }
 
         $this->assertSame($foreignKeyData[$foreignKeyName]->constraint_name, $foreignKeyName);
-        $this->assertSame($foreignKeyData[$foreignKeyName]->column_name, ['users_id']);
-        $this->assertSame($foreignKeyData[$foreignKeyName]->foreign_column_name, ['id']);
+        $this->assertSame(['users_id'], $foreignKeyData[$foreignKeyName]->column_name);
+        $this->assertSame(['id'], $foreignKeyData[$foreignKeyName]->foreign_column_name);
         $this->assertSame($foreignKeyData[$foreignKeyName]->table_name, $this->db->DBPrefix . $tableName);
         $this->assertSame($foreignKeyData[$foreignKeyName]->foreign_table_name, $this->db->DBPrefix . 'forge_test_users');
 
@@ -1170,63 +1170,63 @@ final class ForgeTest extends CIUnitTestCase
 
         if ($this->db->DBDriver === 'MySQLi') {
             $this->assertSame('PRIMARY', $keys['PRIMARY']->name);
-            $this->assertSame($keys['PRIMARY']->fields, ['id']);
+            $this->assertSame(['id'], $keys['PRIMARY']->fields);
             $this->assertSame('PRIMARY', $keys['PRIMARY']->type);
 
             $this->assertSame('code_company', $keys['code_company']->name);
-            $this->assertSame($keys['code_company']->fields, ['code', 'company']);
+            $this->assertSame(['code', 'company'], $keys['code_company']->fields);
             $this->assertSame('INDEX', $keys['code_company']->type);
 
             $this->assertSame('code_active', $keys['code_active']->name);
-            $this->assertSame($keys['code_active']->fields, ['code', 'active']);
+            $this->assertSame(['code', 'active'], $keys['code_active']->fields);
             $this->assertSame('UNIQUE', $keys['code_active']->type);
         } elseif ($this->db->DBDriver === 'Postgre') {
             $this->assertSame('pk_db_forge_test_1', $keys['pk_db_forge_test_1']->name);
-            $this->assertSame($keys['pk_db_forge_test_1']->fields, ['id']);
+            $this->assertSame(['id'], $keys['pk_db_forge_test_1']->fields);
             $this->assertSame('PRIMARY', $keys['pk_db_forge_test_1']->type);
 
             $this->assertSame('db_forge_test_1_code_company', $keys['db_forge_test_1_code_company']->name);
-            $this->assertSame($keys['db_forge_test_1_code_company']->fields, ['code', 'company']);
+            $this->assertSame(['code', 'company'], $keys['db_forge_test_1_code_company']->fields);
             $this->assertSame('INDEX', $keys['db_forge_test_1_code_company']->type);
 
             $this->assertSame('db_forge_test_1_code_active', $keys['db_forge_test_1_code_active']->name);
-            $this->assertSame($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
+            $this->assertSame(['code', 'active'], $keys['db_forge_test_1_code_active']->fields);
             $this->assertSame('UNIQUE', $keys['db_forge_test_1_code_active']->type);
         } elseif ($this->db->DBDriver === 'SQLite3') {
             $this->assertSame('PRIMARY', $keys['PRIMARY']->name);
-            $this->assertSame($keys['PRIMARY']->fields, ['id']);
+            $this->assertSame(['id'], $keys['PRIMARY']->fields);
             $this->assertSame('PRIMARY', $keys['PRIMARY']->type);
 
             $this->assertSame('db_forge_test_1_code_company', $keys['db_forge_test_1_code_company']->name);
-            $this->assertSame($keys['db_forge_test_1_code_company']->fields, ['code', 'company']);
+            $this->assertSame(['code', 'company'], $keys['db_forge_test_1_code_company']->fields);
             $this->assertSame('INDEX', $keys['db_forge_test_1_code_company']->type);
 
             $this->assertSame('db_forge_test_1_code_active', $keys['db_forge_test_1_code_active']->name);
-            $this->assertSame($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
+            $this->assertSame(['code', 'active'], $keys['db_forge_test_1_code_active']->fields);
             $this->assertSame('UNIQUE', $keys['db_forge_test_1_code_active']->type);
         } elseif ($this->db->DBDriver === 'SQLSRV') {
             $this->assertSame('pk_db_forge_test_1', $keys['pk_db_forge_test_1']->name);
-            $this->assertSame($keys['pk_db_forge_test_1']->fields, ['id']);
+            $this->assertSame(['id'], $keys['pk_db_forge_test_1']->fields);
             $this->assertSame('PRIMARY', $keys['pk_db_forge_test_1']->type);
 
             $this->assertSame('db_forge_test_1_code_company', $keys['db_forge_test_1_code_company']->name);
-            $this->assertSame($keys['db_forge_test_1_code_company']->fields, ['code', 'company']);
+            $this->assertSame(['code', 'company'], $keys['db_forge_test_1_code_company']->fields);
             $this->assertSame('INDEX', $keys['db_forge_test_1_code_company']->type);
 
             $this->assertSame('db_forge_test_1_code_active', $keys['db_forge_test_1_code_active']->name);
-            $this->assertSame($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
+            $this->assertSame(['code', 'active'], $keys['db_forge_test_1_code_active']->fields);
             $this->assertSame('UNIQUE', $keys['db_forge_test_1_code_active']->type);
         } elseif ($this->db->DBDriver === 'OCI8') {
             $this->assertSame('pk_db_forge_test_1', $keys['pk_db_forge_test_1']->name);
-            $this->assertSame($keys['pk_db_forge_test_1']->fields, ['id']);
+            $this->assertSame(['id'], $keys['pk_db_forge_test_1']->fields);
             $this->assertSame('PRIMARY', $keys['pk_db_forge_test_1']->type);
 
             $this->assertSame('db_forge_test_1_code_company', $keys['db_forge_test_1_code_company']->name);
-            $this->assertSame($keys['db_forge_test_1_code_company']->fields, ['code', 'company']);
+            $this->assertSame(['code', 'company'], $keys['db_forge_test_1_code_company']->fields);
             $this->assertSame('INDEX', $keys['db_forge_test_1_code_company']->type);
 
             $this->assertSame('db_forge_test_1_code_active', $keys['db_forge_test_1_code_active']->name);
-            $this->assertSame($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
+            $this->assertSame(['code', 'active'], $keys['db_forge_test_1_code_active']->fields);
             $this->assertSame('UNIQUE', $keys['db_forge_test_1_code_active']->type);
         }
 
