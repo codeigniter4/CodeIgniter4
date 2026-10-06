@@ -566,7 +566,7 @@ final class CLIRequestTest extends CIUnitTestCase
     {
         $this->assertNull($this->request->getCookie('TESTY'));
 
-        $this->assertSame($this->request->getCookie(), []);
+        $this->assertSame([], $this->request->getCookie());
     }
 
     public function testIs(): void

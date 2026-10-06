@@ -550,7 +550,7 @@ final class RouterTest extends CIUnitTestCase
 
         $router->handle('foo');
 
-        $this->assertSame($router->getMatchedRouteOptions(), ['as' => 'login', 'foo' => 'baz']);
+        $this->assertSame(['as' => 'login', 'foo' => 'baz'], $router->getMatchedRouteOptions());
     }
 
     public function testRouteWorksWithFilters(): void
