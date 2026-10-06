@@ -57,6 +57,7 @@ Bugs Fixed
 - **Debug:** Fixed a bug where ``Timer::start()`` treated ``0.0`` as an empty value and substituted the current time.
 - **Files:** Fixed a bug where ``File::move()`` and ``UploadedFile::move()`` set executable and overly permissive file permissions (``0777 & ~umask()`` instead of ``0666 & ~umask()``), and ``UploadedFile::move()`` targeted the parent directory instead of the destination file for ``chmod()``.
 - **Helpers:** Fixed a bug where ``get_dir_file_info()`` returned incomplete entries for subdirectories and missing files instead of omitting them.
+- **Helpers:** Fixed a bug where ``word_wrap()`` entered an infinite loop when the character limit was below 2. Over-length words are now kept whole in that case.
 - **Honeypot:** Fixed a bug where bot detection returned an HTTP 500 response instead of 403 (Forbidden).
 - **I18n:** Fixed a bug where ``Time::today()``, ``Time::yesterday()``, and ``Time::tomorrow()`` ignored the specified ``$timezone`` and ``setTestNow()`` when calculating the day.
 - **Logger:** Fixed a bug where interpolating a log message with array or non-stringable context values could raise PHP warnings or errors.
