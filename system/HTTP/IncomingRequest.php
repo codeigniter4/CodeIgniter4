@@ -49,6 +49,9 @@ use stdClass;
  */
 class IncomingRequest extends Request
 {
+    /** Distinguishes an explicit request override from fetchGlobal()'s cache. */
+    private bool $requestGlobalWasExplicitlySet = false;
+
     /**
      * The URI for this request.
      *
@@ -389,20 +392,36 @@ class IncomingRequest extends Request
         }
 
         // Preserve request data explicitly supplied through setGlobal().
-        if (isset($this->globals['request'])) {
+        if ($this->requestGlobalWasExplicitlySet) {
             return $this->fetchGlobal('request', $index, $filter, $flags);
         }
 
         // $_REQUEST can become stale when SiteURIFactory updates $_GET.
         // Use the existing filtering path with a fresh merged view, without
         // caching it between calls or modifying the superglobals.
+        $cachedRequest            = $this->globals['request'] ?? null;
         $this->globals['request'] = service('superglobals')->getRequestData();
 
         try {
             return $this->fetchGlobal('request', $index, $filter, $flags);
         } finally {
-            unset($this->globals['request']);
+            if ($cachedRequest === null) {
+                unset($this->globals['request']);
+            } else {
+                $this->globals['request'] = $cachedRequest;
+            }
         }
+    }
+
+    public function setGlobal(string $name, $value)
+    {
+        parent::setGlobal($name, $value);
+
+        if ($name === 'request') {
+            $this->requestGlobalWasExplicitlySet = true;
+        }
+
+        return $this;
     }
 
     /**

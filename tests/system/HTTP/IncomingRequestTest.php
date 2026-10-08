@@ -112,6 +112,21 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame('new', $this->request->getVar('foo'));
     }
 
+    public function testGetVarDoesNotTreatFetchGlobalCacheAsRequestOverride(): void
+    {
+        service('superglobals')
+            ->setGetArray(['foo' => 'fresh'])
+            ->setRequestArray(['foo' => 'stale']);
+
+        $this->assertSame('stale', $this->request->fetchGlobal('request', 'foo'));
+        $this->assertSame('fresh', $this->request->getVar('foo'));
+        $this->assertSame('stale', $this->request->fetchGlobal('request', 'foo'));
+
+        $this->request->setGlobal('request', ['foo' => 'explicit']);
+
+        $this->assertSame('explicit', $this->request->getVar('foo'));
+    }
+
     public function testGetVarClearsMergedDataAfterFilterThrows(): void
     {
         service('superglobals')->setGetArray(['foo' => 'old']);
