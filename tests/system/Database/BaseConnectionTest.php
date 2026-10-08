@@ -439,6 +439,27 @@ final class BaseConnectionTest extends CIUnitTestCase
         ];
     }
 
+    public function testProtectIdentifiersWithBracketEscapeChar(): void
+    {
+        $db             = new MockConnection($this->options);
+        $db->escapeChar = ['[', ']'];
+
+        $this->assertSame('[test_jobs]', $db->protectIdentifiers('jobs', true, true, false));
+        $this->assertSame('[test_jobs]', $db->protectIdentifiers('[test_jobs]', true, true, false));
+        $this->assertSame('test_jobs', $db->protectIdentifiers('[test_jobs]', true, false, false));
+        $this->assertSame('[test_jobs].[id]', $db->protectIdentifiers('jobs.id'));
+        $this->assertSame('[test_jobs].[id]', $db->protectIdentifiers('[test_jobs].[id]'));
+        $this->assertSame('test_jobs.id', $db->protectIdentifiers('[test_jobs].[id]', true, false));
+    }
+
+    public function testProtectIdentifiersStripsQuotesFromDottedItemWithoutPrefix(): void
+    {
+        $db = new MockConnection([...$this->options, 'DBPrefix' => '']);
+
+        $this->assertSame('public.jobs', $db->protectIdentifiers('"public"."jobs"', true, false, false));
+        $this->assertSame('"public"."jobs"', $db->protectIdentifiers('"public"."jobs"', true, true, false));
+    }
+
     /**
      * These tests are intended to confirm the current behavior.
      */
