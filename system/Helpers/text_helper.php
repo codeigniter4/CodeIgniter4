@@ -383,7 +383,9 @@ if (! function_exists('word_wrap')) {
 
             $temp = '';
 
-            while (mb_strlen($line) > $charlim) {
+            // A limit of 1 can't be used to split a word (each piece needs room for
+            // the continuation), so the word is kept whole, like a long URL.
+            while ($charlim > 1 && mb_strlen($line) > $charlim) {
                 // If the over-length word is a URL we won't wrap it
                 if (preg_match('!\[url.+\]|://|www\.!', $line)) {
                     break;
