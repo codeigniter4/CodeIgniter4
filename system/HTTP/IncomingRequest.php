@@ -49,7 +49,9 @@ use stdClass;
  */
 class IncomingRequest extends Request
 {
-    /** Distinguishes an explicit request override from fetchGlobal()'s cache. */
+    /**
+     * Distinguishes an explicit request override from fetchGlobal()'s cache.
+     */
     private bool $requestGlobalWasExplicitlySet = false;
 
     /**
