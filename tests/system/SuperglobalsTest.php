@@ -350,6 +350,18 @@ final class SuperglobalsTest extends CIUnitTestCase
         $this->assertSame('get', $this->superglobals->getRequestData('PG')['shared']);
     }
 
+    public function testGetRequestDataEmptyOrderFallsBackToVariablesOrder(): void
+    {
+        $this->superglobals->setGetArray(['get' => 'value']);
+        $this->superglobals->setPostArray(['post' => 'value']);
+        $this->superglobals->setCookieArray(['cookie' => 'value']);
+
+        $this->assertSame(
+            $this->superglobals->getRequestData((string) ini_get('variables_order')),
+            $this->superglobals->getRequestData(''),
+        );
+    }
+
     public function testGetRequestDataNormalizesOrderAndIgnoresDuplicates(): void
     {
         $this->superglobals->setGetArray(['shared' => 'get']);
