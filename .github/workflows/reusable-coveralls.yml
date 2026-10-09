@@ -46,10 +46,10 @@ jobs:
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ${{ steps.composer-cache.outputs.COMPOSER_CACHE_FILES_DIR }}
-          key: ${{ github.job }}-php-${{ inputs.php-version }}-${{ hashFiles('**/composer.*') }}
+          key: composer-php-${{ inputs.php-version }}-${{ hashFiles('**/composer.json') }}
           restore-keys: |
-            ${{ github.job }}-php-${{ inputs.php-version }}-
-            ${{ github.job }}-
+            composer-php-${{ inputs.php-version }}-
+            composer-
 
       - name: Cache PHPUnit's static analysis cache
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
