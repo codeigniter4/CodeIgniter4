@@ -39,6 +39,18 @@ SECURITY
   including URLs and validation messages. See :ref:`upgrade-475-view-parser-values` for more information.
   See the `Security advisory GHSA-vgrf-mv2j-gp8w <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-vgrf-mv2j-gp8w>`_
   for more information.
+- **View Parser:** Added restricted conditionals as an opt-in mitigation for
+  *Code Injection through Parser Template Source*. Conditions in ``{if ...}`` and
+  ``{elseif ...}`` tags are evaluated as PHP, so anyone who can edit Parser template
+  source can execute PHP code. This remains the default behavior. Applications that
+  let less-trusted users edit Parser templates must enable the new
+  ``Config\View::$restrictParserConditionals`` setting or the ``restrictConditionals``
+  render option. Restricted conditionals only limit this execution path; they do not
+  make every template feature safe for less-trusted authors.
+  The restriction also applies to nested renders on the same Parser instance.
+  See :ref:`parser-restricting-conditionals` and the
+  `Security advisory GHSA-4q58-jw8x-8cm7 <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-4q58-jw8x-8cm7>`_
+  for more information.
 - **Views:** Fixed a code execution vulnerability caused by view data keys
   overriding renderer-local variables. Data named ``template`` in ``Parser`` or
   ``view`` in ``View::renderString()`` could replace the source evaluated as PHP.
@@ -60,6 +72,7 @@ Message Changes
 - Added the ``Cookie.invalidCookieDomain`` language string.
 - Added the ``Cookie.invalidCookiePath`` language string.
 - Added the ``Cookie.invalidCookieValue`` language string.
+- Added the ``View.restrictedConditional`` language string.
 
 *******
 Changes
@@ -104,6 +117,7 @@ Bugs Fixed
 - **I18n:** Fixed a bug where ``Time::today()``, ``Time::yesterday()``, and ``Time::tomorrow()`` ignored the specified ``$timezone`` and ``setTestNow()`` when calculating the day.
 - **Logger:** Fixed a bug where interpolating a log message with array or non-stringable context values could raise PHP warnings or errors.
 - **Validation:** Fixed a bug where ``valid_cc_number`` accepted non-digit characters (e.g., a decimal point) in the card number. Such values could pass the Luhn check and triggered an ``Undefined array key`` warning inside it; the number is now checked with ``ctype_digit()``.
+- **View Parser:** Fixed a bug where removing template comments could assemble PHP tags that were then executed. PHP tags are now escaped after comments are removed.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_

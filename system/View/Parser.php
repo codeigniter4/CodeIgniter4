@@ -15,6 +15,7 @@ use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\View\Exceptions\ViewException;
 use Config\View as ViewConfig;
 use ParseError;
+use PhpToken;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -86,6 +87,12 @@ class Parser extends View
      * @var list<string>
      */
     private array $conditionalSources = [];
+
+    /**
+     * Whether conditionals in the template being parsed are restricted
+     * to variables, literals, arithmetic, comparison and logical operators.
+     */
+    private bool $restrictConditionals = false;
 
     /**
      * Constructor
@@ -255,7 +262,7 @@ class Parser extends View
         $this->replacementTokenPrefix = bin2hex(random_bytes(16));
 
         try {
-            return $this->parseTemplate($template, $data);
+            return $this->parseTemplate($template, $data, $options);
         } finally {
             [
                 $this->replacementTokens,
@@ -265,63 +272,75 @@ class Parser extends View
     }
 
     /**
-     * @param array<string, mixed> $data
+     * @param array<string, mixed>      $data
+     * @param array<string, mixed>|null $options
      */
-    private function parseTemplate(string $template, array $data): string
+    private function parseTemplate(string $template, array $data, ?array $options): string
     {
-        // Remove any possible PHP tags since we don't support it
-        // and parseConditionals needs it clean anyway...
+        $template = $this->parseComments($template);
+
+        // Neutralize PHP tags after stripping comments, which can assemble them.
+        // parseConditionals() evaluates the template as PHP.
         $template = str_replace(['<?', '?>'], ['&lt;?', '?&gt;'], $template);
 
-        $template = $this->parseComments($template);
         $template = $this->extractNoparse($template);
 
-        // Replace any conditional code here so we don't have to parse as much
-        $template = $this->parseConditionals($template);
+        $restrictConditionals = $this->restrictConditionals;
 
-        // Handle any plugins before normal data, so that
-        // it can potentially modify any template between its tags.
-        $template = $this->parsePlugins($template);
+        // Nested renders must not weaken the restriction of the outer render.
+        $this->restrictConditionals = $restrictConditionals
+            || (bool) ($options['restrictConditionals'] ?? $this->config->restrictParserConditionals);
 
-        // Parse stack for each parse type (Single and Pairs)
-        $replaceSingleStack = [];
-        $replacePairsStack  = [];
+        try {
+            // Replace any conditional code here so we don't have to parse as much
+            $template = $this->parseConditionals($template);
 
-        // loop over the data variables, saving regex and data
-        // for later replacement.
-        foreach ($data as $key => $val) {
-            $escape = true;
+            // Handle any plugins before normal data, so that
+            // it can potentially modify any template between its tags.
+            $template = $this->parsePlugins($template);
 
-            if (is_array($val)) {
-                $escape              = false;
-                $replacePairsStack[] = [
-                    'replace' => $this->parsePair($key, $val, $template),
-                    'escape'  => $escape,
-                ];
-            } else {
-                $replaceSingleStack[] = [
-                    'replace' => $this->parseSingle($key, (string) $val),
-                    'escape'  => $escape,
-                ];
+            // Parse stack for each parse type (Single and Pairs)
+            $replaceSingleStack = [];
+            $replacePairsStack  = [];
+
+            // loop over the data variables, saving regex and data
+            // for later replacement.
+            foreach ($data as $key => $val) {
+                $escape = true;
+
+                if (is_array($val)) {
+                    $escape              = false;
+                    $replacePairsStack[] = [
+                        'replace' => $this->parsePair($key, $val, $template),
+                        'escape'  => $escape,
+                    ];
+                } else {
+                    $replaceSingleStack[] = [
+                        'replace' => $this->parseSingle($key, (string) $val),
+                        'escape'  => $escape,
+                    ];
+                }
             }
-        }
 
-        // Merge both stacks, pairs first + single stacks
-        // This allows for nested data with the same key to be replaced properly
-        $replace = array_merge($replacePairsStack, $replaceSingleStack);
+            // Merge both stacks, pairs first + single stacks
+            // This allows for nested data with the same key to be replaced properly
+            $replace = array_merge($replacePairsStack, $replaceSingleStack);
 
-        // Loop over each replace array item which
-        // holds all the data to be replaced
-        foreach ($replace as $replaceItem) {
-            // Loop over the actual data to be replaced
-            foreach ($replaceItem['replace'] as $pattern => $content) {
-                $template = $this->replaceSingle($pattern, $content, $template, $replaceItem['escape']);
+            // Loop over each replace array item which
+            // holds all the data to be replaced
+            foreach ($replace as $replaceItem) {
+                // Loop over the actual data to be replaced
+                foreach ($replaceItem['replace'] as $pattern => $content) {
+                    $template = $this->replaceSingle($pattern, $content, $template, $replaceItem['escape']);
+                }
             }
+
+            $template = $this->insertNoparse($template);
+
+            return strtr($template, $this->replacementTokens);
+        } finally {
+            $this->restrictConditionals = $restrictConditionals;
         }
-
-        $template = $this->insertNoparse($template);
-
-        return strtr($template, $this->replacementTokens);
     }
 
     /**
@@ -510,6 +529,10 @@ class Parser extends View
             // Build the string to replace the `if` statement with.
             $condition = $match[2];
 
+            if ($this->restrictConditionals && ! $this->isRestrictedCondition($condition)) {
+                throw ViewException::forRestrictedConditional($match[0]);
+            }
+
             $statement = $match[1] === 'elseif' ? '<?php elseif (' . $condition . '): ?>' : '<?php if (' . $condition . '): ?>';
             $template  = str_replace($match[0], $statement, $template);
         }
@@ -549,6 +572,67 @@ class Parser extends View
         }
 
         return ob_get_clean();
+    }
+
+    /**
+     * Checks that a conditional expression only contains variables,
+     * literals, arithmetic, comparison and logical operators, and grouping parentheses.
+     */
+    private function isRestrictedCondition(string $condition): bool
+    {
+        $allowedTokens = [
+            T_VARIABLE,
+            T_CONSTANT_ENCAPSED_STRING,
+            T_LNUMBER,
+            T_DNUMBER,
+            T_POW,
+            T_IS_EQUAL,
+            T_IS_NOT_EQUAL,
+            T_IS_IDENTICAL,
+            T_IS_NOT_IDENTICAL,
+            T_IS_SMALLER_OR_EQUAL,
+            T_IS_GREATER_OR_EQUAL,
+            T_BOOLEAN_AND,
+            T_BOOLEAN_OR,
+            T_LOGICAL_AND,
+            T_LOGICAL_OR,
+        ];
+        $valueTokens = [
+            T_VARIABLE,
+            T_CONSTANT_ENCAPSED_STRING,
+            T_LNUMBER,
+            T_DNUMBER,
+            T_STRING,
+        ];
+
+        $afterValue = false;
+
+        foreach (PhpToken::tokenize('<?php ' . $condition) as $index => $token) {
+            if ($index === 0 || $token->is(T_WHITESPACE)) {
+                continue;
+            }
+
+            if ($token->text === '(') {
+                // A parenthesis after a value would be a call.
+                if ($afterValue) {
+                    return false;
+                }
+            } elseif ($token->is(T_STRING)) {
+                if (! in_array(strtolower($token->text), ['true', 'false', 'null'], true)) {
+                    return false;
+                }
+            } elseif ($token->is(T_VARIABLE)) {
+                if ($token->text === '$this') {
+                    return false;
+                }
+            } elseif (! $token->is($allowedTokens) && ! in_array($token->text, [')', '<', '>', '!', '+', '-', '*', '/', '%'], true)) {
+                return false;
+            }
+
+            $afterValue = $token->is($valueTokens) || $token->text === ')';
+        }
+
+        return true;
     }
 
     /**

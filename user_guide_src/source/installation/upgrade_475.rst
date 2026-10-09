@@ -104,7 +104,9 @@ and it is recommended that you merge the updated versions with your application:
 Config
 ------
 
-- @TODO
+- app/Config/View.php
+    - ``Config\View::$restrictParserConditionals`` has been added, with a default
+      value set to ``false``. See :ref:`parser-restricting-conditionals` for details.
 
 All Changes
 ===========
@@ -112,4 +114,4 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- @TODO
+- app/Config/View.php

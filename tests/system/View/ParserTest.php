@@ -966,10 +966,318 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame('HowdyWelcome', $this->parser->renderString($template));
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
+    #[DataProvider('provideRestrictedConditionalsAllowed')]
+    public function testRestrictedConditionalsAllowed(string $template, array $data, string $expected): void
+    {
+        $this->parser->setData($data);
+
+        $this->assertSame($expected, $this->parser->renderString($template, ['restrictConditionals' => true]));
+    }
+
+    /**
+     * @return iterable<string, array{string, array<string, mixed>, string}>
+     */
+    public static function provideRestrictedConditionalsAllowed(): iterable
+    {
+        yield 'variable' => ['{if $vip}Yes{endif}', ['vip' => true], 'Yes'];
+
+        yield 'negation' => ['{if !$guest}Member{endif}', ['guest' => false], 'Member'];
+
+        yield 'single quoted string' => ["{if \$role == 'admin'}Admin{endif}", ['role' => 'admin'], 'Admin'];
+
+        yield 'double quoted string' => ['{if $role === "admin"}Admin{endif}', ['role' => 'admin'], 'Admin'];
+
+        yield 'not identical' => ['{if $role !== "admin"}User{endif}', ['role' => 'user'], 'User'];
+
+        yield 'numbers' => ['{if $total >= 100 && $total < 1.5e3}Free shipping{endif}', ['total' => 150], 'Free shipping'];
+
+        yield 'negative integer' => ['{if $total >= -10}Yes{endif}', ['total' => -5], 'Yes'];
+
+        yield 'negative float' => ['{if $total < -1.5e2}Yes{endif}', ['total' => -200], 'Yes'];
+
+        yield 'unary signs' => ['{if -$total === +5}Yes{endif}', ['total' => -5], 'Yes'];
+
+        yield 'addition and subtraction' => ['{if $total + 5 - 2 === 13}Yes{endif}', ['total' => 10], 'Yes'];
+
+        yield 'multiplication and division' => ['{if $total * 2 / 4 === 5}Yes{endif}', ['total' => 10], 'Yes'];
+
+        yield 'modulo' => ['{if $total % 2 === 0}Even{else}Odd{endif}', ['total' => 3], 'Odd'];
+
+        yield 'exponentiation' => ['{if $total ** 2 === 9}Yes{endif}', ['total' => 3], 'Yes'];
+
+        yield 'arithmetic precedence' => ['{if 2 + 3 * 4 === 14 && (2 + 3) * 4 === 20}Yes{endif}', [], 'Yes'];
+
+        yield 'constants' => ['{if $discount !== null && $vip === TRUE}Discount{endif}', ['discount' => 5, 'vip' => true], 'Discount'];
+
+        yield 'grouping' => ['{if $total > 100 && ($country == "PL" || !$guest)}Yes{endif}', ['total' => 150, 'country' => 'DE', 'guest' => false], 'Yes'];
+
+        yield 'wrapped in parentheses' => ['{if ($vip)}Yes{endif}', ['vip' => true], 'Yes'];
+
+        yield 'word operators' => ['{if $vip and $guest or !$guest}Yes{else}No{endif}', ['vip' => true, 'guest' => false], 'Yes'];
+
+        yield 'elseif and else' => ['{if $role == "admin"}A{elseif $role == "editor"}E{else}U{endif}', ['role' => 'editor'], 'E'];
+    }
+
+    #[DataProvider('provideRestrictedConditionalsRejected')]
+    public function testRestrictedConditionalsRejected(string $template): void
+    {
+        $this->expectException(ViewException::class);
+        $this->expectExceptionMessage('The Parser conditional is not allowed in restricted mode:');
+
+        $this->parser->renderString($template, ['restrictConditionals' => true]);
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideRestrictedConditionalsRejected(): iterable
+    {
+        yield 'function call' => ['{if system("id")}{endif}'];
+
+        yield 'function call in elseif' => ['{if $vip}{elseif print("x")}{endif}'];
+
+        yield 'function call in comparison' => ['{if count($items) > 0}{endif}'];
+
+        yield 'call on parenthesized string' => ["{if ('system')('id')}{endif}"];
+
+        yield 'variable function' => ['{if $f("id")}{endif}'];
+
+        yield 'call on constant' => ['{if true("id")}{endif}'];
+
+        yield 'constant' => ['{if PHP_VERSION}{endif}'];
+
+        yield 'fully qualified name' => ['{if \true}{endif}'];
+
+        yield 'language construct' => ["{if print 'x'}{endif}"];
+
+        yield 'include' => ["{if include 'file.php'}{endif}"];
+
+        yield 'backticks' => ['{if `id`}{endif}'];
+
+        yield 'variable variable' => ['{if $$name}{endif}'];
+
+        yield 'this' => ['{if $this}{endif}'];
+
+        yield 'property access' => ['{if $user->admin}{endif}'];
+
+        yield 'array access' => ['{if $items[0]}{endif}'];
+
+        yield 'static call' => ['{if Foo::bar()}{endif}'];
+
+        yield 'new' => ['{if new ArrayObject}{endif}'];
+
+        yield 'assignment' => ['{if $a = 1}{endif}'];
+
+        yield 'arithmetic assignment' => ['{if $a += 1}{endif}'];
+
+        yield 'exponentiation assignment' => ['{if $a **= 2}{endif}'];
+
+        yield 'increment' => ['{if ++$a}{endif}'];
+
+        yield 'decrement' => ['{if $a--}{endif}'];
+
+        yield 'function call in arithmetic' => ['{if 1 + strlen("x") === 2}{endif}'];
+
+        yield 'call on arithmetic result' => ['{if (1 + 2)("x")}{endif}'];
+
+        yield 'concatenation' => ["{if 'a' . 'b'}{endif}"];
+
+        yield 'interpolated string' => ['{if "$name"}{endif}'];
+
+        yield 'dollar brace string' => ['{if "${name}"}{endif}'];
+
+        yield 'comment' => ['{if $a /* x */}{endif}'];
+    }
+
+    public function testRestrictedConditionalsDoNotExecuteRejectedCode(): void
+    {
+        try {
+            $this->parser->renderString(
+                "{if \$vip}{endif}{if ('define')('CI_PARSER_RESTRICTED_PROBE', 1)}{endif}",
+                ['restrictConditionals' => true],
+            );
+        } catch (ViewException) {
+            // Expected.
+        }
+
+        $this->assertFalse(defined('CI_PARSER_RESTRICTED_PROBE'));
+    }
+
+    public function testRestrictedConditionalsFromConfig(): void
+    {
+        $this->config->restrictParserConditionals = true;
+
+        $parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+        $this->expectException(ViewException::class);
+
+        $parser->renderString('{if count($items) > 0}Yes{endif}');
+    }
+
+    public function testRestrictedConditionalsOptionOverridesConfig(): void
+    {
+        $this->config->restrictParserConditionals = true;
+
+        $parser = new Parser($this->config, $this->viewsDir, $this->loader);
+        $parser->setData(['items' => [1]]);
+
+        $this->assertSame('Yes', $parser->renderString('{if count($items) > 0}Yes{endif}', ['restrictConditionals' => false]));
+    }
+
+    public function testRestrictedConditionalsWithRender(): void
+    {
+        $this->expectException(ViewException::class);
+
+        $this->parser->render('restricted_conditional', ['restrictConditionals' => true]);
+    }
+
+    /**
+     * @param array<string, bool>|null $options
+     */
+    #[DataProvider('provideNestedRenderOptions')]
+    public function testPerRenderRestrictionAppliesToRenderNestedInPlugin(?array $options): void
+    {
+        $this->parser->addPlugin('nest', fn (): string => $this->parser->renderString(
+            '{if strtoupper("x") === "X"}inner-ran{endif}',
+            $options,
+        ));
+
+        $this->expectException(ViewException::class);
+
+        $this->parser->renderString('{+ nest +}', ['restrictConditionals' => true]);
+    }
+
+    /**
+     * @param array<string, bool>|null $options
+     */
+    #[DataProvider('provideNestedRenderOptions')]
+    public function testPerRenderRestrictionAppliesToRenderNestedInFilter(?array $options): void
+    {
+        Services::injectMock('parser', $this->parser);
+        $this->config->filters['nested'] = self::class . '::renderNestedFilter';
+        $this->parser->setData(['snippet' => '{if strtoupper("x") === "X"}inner-ran{endif}']);
+
+        $filter = $options === null ? 'nested' : 'nested(' . ($options['restrictConditionals'] ? 'true' : 'false') . ')';
+
+        $this->expectException(ViewException::class);
+
+        $this->parser->renderString('{snippet|' . $filter . '}', ['restrictConditionals' => true]);
+    }
+
+    /**
+     * @return iterable<string, array{array<string, bool>|null}>
+     */
+    public static function provideNestedRenderOptions(): iterable
+    {
+        yield 'no options' => [null];
+
+        yield 'explicitly unrestricted' => [['restrictConditionals' => false]];
+
+        yield 'explicitly restricted' => [['restrictConditionals' => true]];
+    }
+
+    public static function renderNestedFilter(mixed $value, ?string $restriction = null): string
+    {
+        $options = $restriction === null ? null : ['restrictConditionals' => $restriction === 'true'];
+
+        return service('parser')->renderString((string) $value, $options, saveData: false);
+    }
+
+    public function testPerRenderRestrictionSurvivesSuccessfulNestedRender(): void
+    {
+        $this->parser->addPlugin('safe', fn (): string => $this->parser->renderString('{if true}inner{endif}', saveData: false));
+        $this->parser->addPlugin('nest', fn (): string => $this->parser->renderString('{if strtoupper("x") === "X"}inner-ran{endif}'));
+
+        $this->expectException(ViewException::class);
+
+        $this->parser->renderString('{+ safe +}{+ nest +}', ['restrictConditionals' => true]);
+    }
+
+    public function testPerRenderRestrictionDoesNotPersistAfterSuccessfulNestedRender(): void
+    {
+        $this->parser->addPlugin('nest', fn (): string => $this->parser->renderString('{if true}inner{endif}', saveData: false));
+
+        $this->assertSame('inner', $this->parser->renderString('{+ nest +}', ['restrictConditionals' => true], saveData: false));
+        $this->assertSame('Yes', $this->parser->renderString('{if strtoupper("x") === "X"}Yes{endif}'));
+    }
+
+    public function testPerRenderRestrictionDoesNotPersistAfterFailedNestedRender(): void
+    {
+        $this->parser->addPlugin('nest', fn (): string => $this->parser->renderString('{if strtoupper("x") === "X"}inner-ran{endif}'));
+
+        try {
+            $this->parser->renderString('{+ nest +}', ['restrictConditionals' => true]);
+            $this->fail('The nested conditional should have been rejected.');
+        } catch (ViewException) {
+            // Expected.
+        }
+
+        $this->assertSame('Yes', $this->parser->renderString('{if strtoupper("x") === "X"}Yes{endif}'));
+    }
+
+    public function testUnrestrictedConditionalsAllowFunctionCalls(): void
+    {
+        $this->parser->setData(['items' => [1]]);
+
+        $this->assertSame('Yes', $this->parser->renderString('{if count($items) > 0}Yes{endif}'));
+    }
+
+    public function testRestrictedConditionalsDoNotPersistToNextCall(): void
+    {
+        try {
+            $this->parser->renderString('{if count($items)}{endif}', ['restrictConditionals' => true]);
+        } catch (ViewException) {
+            // Expected.
+        }
+
+        $this->parser->setData(['items' => [1]]);
+
+        $this->assertSame('Yes', $this->parser->renderString('{if count($items) > 0}Yes{endif}'));
+    }
+
     public function testWontParsePHP(): void
     {
         $template = "<?php echo 'Foo' ?> - <?= 'Bar' ?>";
         $this->assertSame('&lt;?php echo \'Foo\' ?&gt; - &lt;?= \'Bar\' ?&gt;', $this->parser->renderString($template));
+    }
+
+    #[DataProvider('provideParserDoesNotExecutePhpTagsAssembledByComments')]
+    public function testParserDoesNotExecutePhpTagsAssembledByComments(string $template, string $expected, bool $restricted): void
+    {
+        $this->config->restrictParserConditionals = $restricted;
+
+        $this->assertSame($expected, $this->parser->renderString($template));
+    }
+
+    /**
+     * @return iterable<string, array{string, string, bool}>
+     */
+    public static function provideParserDoesNotExecutePhpTagsAssembledByComments(): iterable
+    {
+        foreach ([false, true] as $restricted) {
+            $mode = $restricted ? 'restricted: ' : 'unrestricted: ';
+
+            yield $mode . 'open and close tags' => [
+                'a<{# x #}?php echo strtoupper("marker"); ?{# x #}>b',
+                'a&lt;?php echo strtoupper("marker"); ?&gt;b',
+                $restricted,
+            ];
+
+            yield $mode . 'short echo tag' => [
+                'a<{##}?= strtoupper("marker") ?{##}>b',
+                'a&lt;?= strtoupper("marker") ?&gt;b',
+                $restricted,
+            ];
+
+            yield $mode . 'next to a conditional' => [
+                '<{##}?= strtoupper("marker") ?{##}>{if true}c{endif}',
+                '&lt;?= strtoupper("marker") ?&gt;c',
+                $restricted,
+            ];
+        }
     }
 
     public function testParseHandlesSpaces(): void

@@ -44,6 +44,14 @@ class View extends BaseView
     public $plugins = [];
 
     /**
+     * When true, Parser conditionals may only contain variables, literals,
+     * arithmetic, comparison and logical operators, and parentheses. Enable
+     * this when less-trusted users can edit Parser templates. Can be overridden per
+     * call with the `restrictConditionals` render option.
+     */
+    public bool $restrictParserConditionals = false;
+
+    /**
      * View Decorators are class methods that will be run in sequence to
      * have a chance to alter the generated output just prior to caching
      * the results.
