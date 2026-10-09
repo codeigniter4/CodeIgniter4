@@ -100,7 +100,7 @@ class FileRules
             }
 
             if ($file->getError() === UPLOAD_ERR_NO_FILE) {
-                return true;
+                continue;
             }
 
             if ($file->getError() === UPLOAD_ERR_INI_SIZE) {
@@ -135,7 +135,7 @@ class FileRules
             }
 
             if ($file->getError() === UPLOAD_ERR_NO_FILE) {
-                return true;
+                continue;
             }
 
             // We know that our mimes list always has the first mime
@@ -177,7 +177,7 @@ class FileRules
             }
 
             if ($file->getError() === UPLOAD_ERR_NO_FILE) {
-                return true;
+                continue;
             }
 
             if (! in_array($file->getMimeType(), $params, true)) {
@@ -215,7 +215,7 @@ class FileRules
             }
 
             if ($file->getError() === UPLOAD_ERR_NO_FILE) {
-                return true;
+                continue;
             }
 
             // Check the real filename extension, not only the guessed extension.
@@ -257,7 +257,11 @@ class FileRules
             }
 
             if ($file->getError() === UPLOAD_ERR_NO_FILE) {
-                return true;
+                continue;
+            }
+
+            if ($file->getError() !== UPLOAD_ERR_OK) {
+                return false;
             }
 
             // Get Parameter sizes
@@ -303,7 +307,11 @@ class FileRules
             }
 
             if ($file->getError() === UPLOAD_ERR_NO_FILE) {
-                return true;
+                continue;
+            }
+
+            if ($file->getError() !== UPLOAD_ERR_OK) {
+                return false;
             }
 
             // Get Parameter sizes

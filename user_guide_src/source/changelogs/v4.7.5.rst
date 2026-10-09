@@ -23,6 +23,14 @@ SECURITY
   client-provided names in executable public directories may be affected. Use a generated filename or disable script 
   execution in the upload directory. See the `Security advisory GHSA-4hwf-v4mp-hf6c <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-4hwf-v4mp-hf6c>`_
   for more information.
+- **Validation:** File validation rules now check every non-empty file in an
+  optional multiple upload. Previously, an entry with ``UPLOAD_ERR_NO_FILE``
+  could cause ``max_size``, ``is_image``, ``mime_in``, ``ext_in``, ``max_dims``,
+  and ``min_dims`` to accept the upload without checking later files.
+  ``max_dims`` and ``min_dims`` also return ``false`` for upload errors other
+  than ``UPLOAD_ERR_NO_FILE`` before reading image dimensions.
+  See the `Security advisory GHSA-cwxp-v62r-xwx2 <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-cwxp-v62r-xwx2>`_
+  for more information.
 - **View Parser:** Fixed a stored XSS vulnerability where a substituted value containing
   Parser syntax (e.g., ``{text|raw}`` or ``{!text!}``) was interpreted by a later
   substitution pass, allowing user-supplied data to bypass auto-escaping of other

@@ -180,6 +180,79 @@ class FileRulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run([]));
     }
 
+    #[DataProvider('provideOptionalMultipleUploadChecksFilesAfterEmptyEntry')]
+    public function testOptionalMultipleUploadChecksFilesAfterEmptyEntry(string $rule): void
+    {
+        $this->setOptionalMultipleUpload('wrong.txt');
+
+        $this->validation->setRules(['files' => $rule]);
+
+        $this->assertFalse($this->validation->run([]));
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideOptionalMultipleUploadChecksFilesAfterEmptyEntry(): iterable
+    {
+        yield 'max_size' => ['max_size[files,0]'];
+
+        yield 'is_image' => ['is_image[files]'];
+
+        yield 'mime_in' => ['mime_in[files,image/gif]'];
+
+        yield 'ext_in' => ['ext_in[files,png]'];
+
+        yield 'max_dims' => ['max_dims[files,1,1]'];
+
+        yield 'min_dims' => ['min_dims[files,800,600]'];
+    }
+
+    public function testOptionalMultipleUploadAllowsValidFileAfterEmptyEntry(): void
+    {
+        $this->setOptionalMultipleUpload('my-avatar.png');
+
+        $this->validation->setRules([
+            'files' => 'max_size[files,100]|is_image[files]|mime_in[files,image/png]'
+                . '|ext_in[files,png]|max_dims[files,640,480]|min_dims[files,320,240]',
+        ]);
+
+        $this->assertTrue($this->validation->run([]));
+    }
+
+    public function testOptionalMultipleUploadAllowsEmptyEntries(): void
+    {
+        $this->setOptionalMultipleUpload();
+
+        $this->validation->setRules([
+            'files' => 'max_size[files,100]|is_image[files]|mime_in[files,image/png]'
+                . '|ext_in[files,png]|max_dims[files,640,480]|min_dims[files,320,240]',
+        ]);
+
+        $this->assertTrue($this->validation->run([]));
+    }
+
+    private function setOptionalMultipleUpload(?string $filename = null): void
+    {
+        $upload = [
+            'tmp_name' => [''],
+            'name'     => [''],
+            'size'     => [0],
+            'type'     => [''],
+            'error'    => [UPLOAD_ERR_NO_FILE],
+        ];
+
+        if ($filename !== null) {
+            $upload['tmp_name'][] = TESTPATH . '_support/Validation/uploads/phpUxc0ty';
+            $upload['name'][]     = $filename;
+            $upload['size'][]     = 4614;
+            $upload['type'][]     = 'image/png';
+            $upload['error'][]    = UPLOAD_ERR_OK;
+        }
+
+        service('superglobals')->setFilesArray(['files' => $upload]);
+    }
+
     public function testMaxSize(): void
     {
         $this->validation->setRules(['avatar' => 'max_size[avatar,100]']);
@@ -259,6 +332,67 @@ class FileRulesTest extends CIUnitTestCase
     {
         $this->validation->setRules(['avatar' => 'min_dims[unknown,640,480]']);
         $this->assertFalse($this->validation->run([]));
+    }
+
+    #[DataProvider('provideDimensionsFailOnUploadError')]
+    public function testDimensionsFailOnUploadError(string $rule, int $error): void
+    {
+        service('superglobals')->setFilesArray([
+            'files' => [
+                'tmp_name' => '',
+                'name'     => 'my-avatar.png',
+                'size'     => 0,
+                'type'     => '',
+                'error'    => $error,
+            ],
+        ]);
+
+        $this->validation->setRules(['files' => $rule]);
+
+        $this->assertFalse($this->validation->run([]));
+    }
+
+    #[DataProvider('provideDimensionsFailOnUploadError')]
+    public function testDimensionsFailOnUploadErrorAfterEmptyAndValidEntries(string $rule, int $error): void
+    {
+        service('superglobals')->setFilesArray([
+            'files' => [
+                'tmp_name' => [
+                    '',
+                    TESTPATH . '_support/Validation/uploads/phpUxc0ty',
+                    TESTPATH . '_support/Validation/uploads/phpUxc0ty',
+                ],
+                'name'  => ['', 'my-avatar.png', 'my-photo.png'],
+                'size'  => [0, 4614, 4614],
+                'type'  => ['', 'image/png', 'image/png'],
+                'error' => [UPLOAD_ERR_NO_FILE, UPLOAD_ERR_OK, $error],
+            ],
+        ]);
+
+        $this->validation->setRules(['files' => $rule]);
+
+        $this->assertFalse($this->validation->run([]));
+    }
+
+    /**
+     * @return iterable<string, array{string, int}>
+     */
+    public static function provideDimensionsFailOnUploadError(): iterable
+    {
+        $errors = [
+            'ini size'   => UPLOAD_ERR_INI_SIZE,
+            'form size'  => UPLOAD_ERR_FORM_SIZE,
+            'partial'    => UPLOAD_ERR_PARTIAL,
+            'no tmp dir' => UPLOAD_ERR_NO_TMP_DIR,
+            'cant write' => UPLOAD_ERR_CANT_WRITE,
+            'extension'  => UPLOAD_ERR_EXTENSION,
+        ];
+
+        foreach (['max_dims[files,640,480]', 'min_dims[files,320,240]'] as $rule) {
+            foreach ($errors as $name => $error) {
+                yield $rule . ' ' . $name => [$rule, $error];
+            }
+        }
     }
 
     public function testIsImage(): void

@@ -1098,13 +1098,16 @@ max_dims                Yes         Fails if the maximum width and height of an 
                                     parameter is the field name. The second is
                                     the width, and the third is the height. Will
                                     also fail if the file cannot be determined
-                                    to be an image.
+                                    to be an image or the upload failed with an
+                                    error other than ``UPLOAD_ERR_NO_FILE``.
 min_dims                Yes         Fails if the minimum width and height of an  ``min_dims[field_name,300,150]``
                                     uploaded image not meet values. The first
                                     parameter is the field name. The second is
                                     the width, and the third is the height. Will
                                     also fail if the file cannot be determined
-                                    to be an image. (This rule was added in
+                                    to be an image or the upload failed with an
+                                    error other than ``UPLOAD_ERR_NO_FILE``.
+                                    (This rule was added in
                                     v4.6.0.)
 mime_in                 Yes         Fails if the file's mime type is not one     ``mime_in[field_name,image/png,image/jpeg]``
                                     listed in the parameters.
