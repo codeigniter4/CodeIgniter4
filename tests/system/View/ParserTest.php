@@ -795,7 +795,7 @@ final class ParserTest extends CIUnitTestCase
     public function testParserRestoresReplacementStateAfterFilterException(): void
     {
         $exception                     = new RuntimeException('Filter failed.');
-        $this->config->filters['fail'] = static fn (mixed $value): string => throw $exception;
+        $this->config->filters['fail'] = static fn (mixed $value): never => throw $exception;
         $this->parser->setData(['first' => 'before', 'second' => 'failure']);
 
         try {
