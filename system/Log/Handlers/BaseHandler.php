@@ -35,11 +35,17 @@ abstract class BaseHandler implements HandlerInterface
     protected $dateFormat = 'Y-m-d H:i:s';
 
     /**
-     * @param array{handles?: list<string>} $config
+     * Whether a failed write stops the execution of the remaining handlers.
+     */
+    protected bool $stopChainOnFailure = true;
+
+    /**
+     * @param array{handles?: list<string>, stopChainOnFailure?: bool} $config
      */
     public function __construct(array $config)
     {
-        $this->handles = $config['handles'] ?? [];
+        $this->handles            = $config['handles'] ?? [];
+        $this->stopChainOnFailure = $config['stopChainOnFailure'] ?? true;
     }
 
     /**

@@ -47,8 +47,32 @@ final class ErrorlogHandlerTest extends CIUnitTestCase
         $this->assertTrue($logger->handle('error', 'Test message.', [HandlerInterface::GLOBAL_CONTEXT_KEY => ['foo' => 'bar']]));
     }
 
+    public function testHandleReturnsFalseOnFailedWriteByDefault(): void
+    {
+        $logger = $this->getMockedHandler(['handles' => ['error']]);
+        $logger->expects($this->once())->method('errorLog')->willReturn(false);
+
+        $this->assertFalse($logger->handle('error', 'Test message.'));
+    }
+
+    public function testHandleReturnsFalseOnFailedWriteWhenStopChainOnFailureIsEnabled(): void
+    {
+        $logger = $this->getMockedHandler(['handles' => ['error'], 'stopChainOnFailure' => true]);
+        $logger->expects($this->once())->method('errorLog')->willReturn(false);
+
+        $this->assertFalse($logger->handle('error', 'Test message.'));
+    }
+
+    public function testHandleReturnsTrueOnFailedWriteWhenStopChainOnFailureIsDisabled(): void
+    {
+        $logger = $this->getMockedHandler(['handles' => ['error'], 'stopChainOnFailure' => false]);
+        $logger->expects($this->once())->method('errorLog')->willReturn(false);
+
+        $this->assertTrue($logger->handle('error', 'Test message.'));
+    }
+
     /**
-     * @param array{handles?: list<string>, messageType?: int} $config
+     * @param array{handles?: list<string>, stopChainOnFailure?: bool, messageType?: int} $config
      *
      * @return ErrorlogHandler&MockObject
      */

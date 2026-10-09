@@ -45,7 +45,7 @@ class FileHandler extends BaseHandler
     protected $filePermissions;
 
     /**
-     * @param array{handles?: list<string>, path?: string, fileExtension?: string, filePermissions?: int} $config
+     * @param array{handles?: list<string>, stopChainOnFailure?: bool, path?: string, fileExtension?: string, filePermissions?: int} $config
      */
     public function __construct(array $config = [])
     {
@@ -68,6 +68,9 @@ class FileHandler extends BaseHandler
      * If the handler returns false, then execution of handlers
      * will stop. Any handlers that have not run, yet, will not
      * be run.
+     *
+     * A failed write returns false only when `stopChainOnFailure`
+     * is enabled, which is the default.
      *
      * @param string               $level
      * @param string               $message
@@ -92,7 +95,7 @@ class FileHandler extends BaseHandler
         }
 
         if (! $fp = @fopen($filepath, 'ab')) {
-            return false;
+            return ! $this->stopChainOnFailure;
         }
 
         // Instantiating DateTime with microseconds appended to initial date is needed for proper support of this format
@@ -130,6 +133,6 @@ class FileHandler extends BaseHandler
             @chmod($filepath, $this->filePermissions);
         }
 
-        return is_int($result);
+        return is_int($result) || ! $this->stopChainOnFailure;
     }
 }

@@ -28,7 +28,7 @@ class MockFileLogger extends FileHandler
     public $destination;
 
     /**
-     * @param array{handles?: list<string>, path?: string, fileExtension?: string, filePermissions?: int} $config
+     * @param array{handles?: list<string>, stopChainOnFailure?: bool, path?: string, fileExtension?: string, filePermissions?: int} $config
      */
     public function __construct(array $config)
     {
