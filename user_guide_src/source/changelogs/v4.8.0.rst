@@ -422,6 +422,8 @@ Changes
 *******
 
 - **Config:** Added the ``md`` key for ``Config\Mimes::$mimes`` for Markdown files.
+- **Events:** Added the ``autoloader_initialized`` event to allow packages to hook into the Autoloader immediately after its           
+  initialization.
 
 ************
 Deprecations

@@ -16,6 +16,7 @@ namespace CodeIgniter;
 use CodeIgniter\Cache\FactoriesCache;
 use CodeIgniter\CLI\Console;
 use CodeIgniter\Config\DotEnv;
+use CodeIgniter\Events\Events;
 use Config\App;
 use Config\Autoload;
 use Config\Modules;
@@ -319,7 +320,12 @@ class Boot
         require_once APPPATH . 'Config/Services.php';
 
         // Initialize and register the loader with the SPL autoloader stack.
-        Services::autoloader()->initialize(new Autoload(), new Modules())->register();
+        $autoloader = Services::autoloader()->initialize(new Autoload(), new Modules());
+        $autoloader->register();
+
+        if (function_exists('service')) {
+            Events::trigger('autoloader_initialized', $autoloader);
+        }
     }
 
     protected static function autoloadHelpers(): void

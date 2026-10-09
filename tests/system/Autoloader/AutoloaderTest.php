@@ -15,6 +15,8 @@ namespace CodeIgniter\Autoloader;
 
 use App\Controllers\Home;
 use Closure;
+use CodeIgniter\Boot;
+use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
@@ -70,6 +72,7 @@ final class AutoloaderTest extends CIUnitTestCase
         parent::tearDown();
 
         $this->loader->unregister();
+        Events::removeAllListeners('autoloader_initialized');
     }
 
     public function testLoadStoredClass(): void
@@ -401,5 +404,22 @@ final class AutoloaderTest extends CIUnitTestCase
         $this->assertTrue(function_exists('form_open'));
 
         $loader->unregister();
+    }
+
+    public function testAutoloaderInitializedEvent(): void
+    {
+        $triggered    = false;
+        $passedLoader = null;
+
+        Events::on('autoloader_initialized', static function ($loader) use (&$triggered, &$passedLoader): void {
+            $triggered    = true;
+            $passedLoader = $loader;
+        });
+
+        $method = self::getPrivateMethodInvoker(Boot::class, 'loadAutoloader');
+        $method();
+
+        $this->assertTrue($triggered);
+        $this->assertInstanceOf(Autoloader::class, $passedLoader);
     }
 }
