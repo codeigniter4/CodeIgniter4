@@ -75,20 +75,22 @@ jobs:
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ${{ steps.composer-cache.outputs.COMPOSER_CACHE_FILES_DIR }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: ${{ runner.os }}-composer-
-
-      - name: Install dependencies
-        run: composer update --ansi --no-interaction ${{ matrix.composer-option }}
+          key: composer-php-${{ matrix.php-version }}-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            composer-php-${{ matrix.php-version }}-
+            composer-
 
       - name: Rector Cache
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: /tmp/rector
-          key: ${{ runner.os }}-rector-${{ github.run_id }}
-          restore-keys: ${{ runner.os }}-rector-
+          key: rector-${{ hashFiles('**/*.php', 'composer.json') }}
+          restore-keys: rector-
 
       - run: mkdir -p /tmp/rector
+
+      - name: Install dependencies
+        run: composer update --ansi --no-interaction ${{ matrix.composer-option }}
 
       - name: Run static analysis
         run: vendor/bin/rector process --dry-run --no-progress-bar
