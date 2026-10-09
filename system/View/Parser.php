@@ -83,6 +83,11 @@ class Parser extends View
     private ?string $replacementTokenPrefix = null;
 
     /**
+     * @var list<string>
+     */
+    private array $conditionalSources = [];
+
+    /**
      * Constructor
      *
      * @param FileLocatorInterface|null $loader
@@ -525,14 +530,22 @@ class Parser extends View
 
         $this->tempData ??= $this->data;
 
-        extract($this->tempData);
+        $this->conditionalSources[] = $template;
 
         try {
-            eval('?>' . $template . '<?php ');
+            extract($this->tempData);
+            // The source must survive a parser-data variable named $template.
+            eval('?>' . $this->conditionalSources[count($this->conditionalSources) - 1] . '<?php ');
         } catch (ParseError) {
             ob_end_clean();
 
-            throw ViewException::forTagSyntaxError(str_replace(['?>', '<?php '], '', $template));
+            throw ViewException::forTagSyntaxError(str_replace(
+                ['?>', '<?php '],
+                '',
+                $this->conditionalSources[count($this->conditionalSources) - 1],
+            ));
+        } finally {
+            array_pop($this->conditionalSources);
         }
 
         return ob_get_clean();

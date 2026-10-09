@@ -31,6 +31,14 @@ SECURITY
   including URLs and validation messages. See :ref:`upgrade-475-view-parser-values` for more information.
   See the `Security advisory GHSA-vgrf-mv2j-gp8w <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-vgrf-mv2j-gp8w>`_
   for more information.
+- **Views:** Fixed a code execution vulnerability caused by view data keys
+  overriding renderer-local variables. Data named ``template`` in ``Parser`` or
+  ``view`` in ``View::renderString()`` could replace the source evaluated as PHP.
+  Data named ``foundView`` in view cells could replace the selected file path
+  and cause unintended local file inclusion. These issues require applications
+  to pass less-trusted data under the affected keys.
+  See the `Security advisory GHSA-c29x-ffjj-8r7x <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-c29x-ffjj-8r7x>`_
+  for more information.
 
 ********
 BREAKING

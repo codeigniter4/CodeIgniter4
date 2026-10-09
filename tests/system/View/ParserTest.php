@@ -879,6 +879,41 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame('HowdyWelcome', $this->parser->renderString($template));
     }
 
+    public function testTemplateDataCanBeUsedInConditionals(): void
+    {
+        $this->parser->setVar('template', 'allowed');
+
+        $this->assertSame('matched: allowed', $this->parser->renderString('{if $template === "allowed"}matched: {template}{endif}'));
+    }
+
+    public function testConditionalKeepsExistingTemplateVariableWhenNoDataOverridesIt(): void
+    {
+        $this->assertSame('present', $this->parser->renderString('{if isset($template)}present{else}missing{endif}'));
+    }
+
+    public function testTemplateDataCannotReplaceEvaluatedSource(): void
+    {
+        foreach ([false, true] as $saveData) {
+            $config           = clone $this->config;
+            $config->saveData = $saveData;
+            $parser           = new Parser($config, $this->viewsDir, $this->loader);
+            $parser->setVar('template', '<?php echo 6 * 7; ?>');
+
+            $this->assertSame('Trusted: &lt;?php echo 6 * 7; ?&gt;', $parser->renderString('Trusted: {template}'));
+            $this->assertSame($saveData, array_key_exists('template', $parser->getData()));
+        }
+    }
+
+    public function testTemplateDataCannotReplaceFileSource(): void
+    {
+        $this->parser->setData([
+            'template'   => '<?php echo 6 * 7; ?>',
+            'teststring' => 'Trusted',
+        ]);
+
+        $this->assertSame("<h1>Trusted</h1>\n", $this->parser->render('template1'));
+    }
+
     public function testElseConditionalFalse(): void
     {
         $data = [
