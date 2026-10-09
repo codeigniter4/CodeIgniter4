@@ -2101,7 +2101,8 @@ uploaded image exceed values. The first
 parameter is the field name. The second is
 the width, and the third is the height. Will
 also fail if the file cannot be determined
-to be an image.</p></td>
+to be an image or the upload failed with an
+error other than <code class="docutils literal notranslate"><span class="pre">UPLOAD_ERR_NO_FILE</span></code>.</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">max_dims[field_name,300,150]</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>min_dims</p></td>
@@ -2111,7 +2112,9 @@ uploaded image not meet values. The first
 parameter is the field name. The second is
 the width, and the third is the height. Will
 also fail if the file cannot be determined
-to be an image. (This rule was added in
+to be an image or the upload failed with an
+error other than <code class="docutils literal notranslate"><span class="pre">UPLOAD_ERR_NO_FILE</span></code>.
+(This rule was added in
 v4.6.0.)</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">min_dims[field_name,300,150]</span></code></p></td>
 </tr>

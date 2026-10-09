@@ -317,6 +317,14 @@ Previously, a GIF/PHP polyglot with one of these names could pass validation. Ap
 client-provided names in executable public directories may be affected. Use a generated filename or disable script
 execution in the upload directory. See the <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-4hwf-v4mp-hf6c">Security advisory GHSA-4hwf-v4mp-hf6c</a>
 for more information.</p></li>
+<li><p><strong>Validation:</strong> File validation rules now check every non-empty file in an
+optional multiple upload. Previously, an entry with <code class="docutils literal notranslate"><span class="pre">UPLOAD_ERR_NO_FILE</span></code>
+could cause <code class="docutils literal notranslate"><span class="pre">max_size</span></code>, <code class="docutils literal notranslate"><span class="pre">is_image</span></code>, <code class="docutils literal notranslate"><span class="pre">mime_in</span></code>, <code class="docutils literal notranslate"><span class="pre">ext_in</span></code>, <code class="docutils literal notranslate"><span class="pre">max_dims</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">min_dims</span></code> to accept the upload without checking later files.
+<code class="docutils literal notranslate"><span class="pre">max_dims</span></code> and <code class="docutils literal notranslate"><span class="pre">min_dims</span></code> also return <code class="docutils literal notranslate"><span class="pre">false</span></code> for upload errors other
+than <code class="docutils literal notranslate"><span class="pre">UPLOAD_ERR_NO_FILE</span></code> before reading image dimensions.
+See the <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-cwxp-v62r-xwx2">Security advisory GHSA-cwxp-v62r-xwx2</a>
+for more information.</p></li>
 <li><p><strong>View Parser:</strong> Fixed a stored XSS vulnerability where a substituted value containing
 Parser syntax (e.g., <code class="docutils literal notranslate"><span class="pre">{text|raw}</span></code> or <code class="docutils literal notranslate"><span class="pre">{!text!}</span></code>) was interpreted by a later
 substitution pass, allowing user-supplied data to bypass auto-escaping of other
