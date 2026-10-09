@@ -84,6 +84,22 @@ which run against the client filename before the file is saved.
 Breaking Enhancements
 *********************
 
+****************
+Behavior Changes
+****************
+
+CURLRequest Options After a Failed Request
+=========================================
+
+When ``Config\CURLRequest::$shareOptions`` is ``false``, request-specific options
+are now reset even when the request throws an exception. Per-request ``baseURI``
+and ``delay`` values are also reset after both successful and failed requests.
+Constructor defaults remain available for subsequent requests.
+
+If your application retries a failed request, pass its options again and reapply
+any settings made with ``setAuth()``, ``setBody()``, ``setForm()``, or ``setJSON()``.
+Do not rely on credentials or body data from the failed request remaining on the client.
+
 *************
 Project Files
 *************

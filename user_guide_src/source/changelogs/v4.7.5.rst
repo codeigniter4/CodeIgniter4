@@ -14,6 +14,17 @@ Release Date: Unreleased
 SECURITY
 ********
 
+- **CURLRequest:** Request-specific headers, body, and options
+  are now cleared when a request throws an exception and ``shareOptions`` is ``false``.
+  Previously, reusing the client after a failed request could send credentials
+  or private data to a different destination. Options passed to the constructor
+  remain available for subsequent requests.
+  Per-request ``baseURI`` and ``delay`` values are also reset after successful
+  and failed requests, preventing URI components from leaking into later requests.
+  When retrying a failed request, pass its options again, or reapply settings
+  made with ``setAuth()``, ``setBody()``, ``setForm()``, or ``setJSON()``.
+  See the `Security advisory GHSA-9g9v-xgwj-697h <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-9g9v-xgwj-697h>`_
+  for more information.
 - **Validation:** The ``is_image`` and ``mime_in`` file upload rules now reject client filenames ending in dots while
   continuing to accept genuinely extensionless uploads. These rules and ``ext_in`` also reject filenames with a PHP
   handler extension before the final extension, such as ``shell.php.gif``, including extensions revealed by filename
