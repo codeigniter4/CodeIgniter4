@@ -333,6 +333,18 @@ parsed again. The same protection applies to output from built-in Parser plugins
 including URLs and validation messages. See <a class="reference internal" href="../installation/upgrade_475.html#upgrade-475-view-parser-values"><span class="std std-ref">View Parser No Longer Parses Substituted Values</span></a> for more information.
 See the <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-vgrf-mv2j-gp8w">Security advisory GHSA-vgrf-mv2j-gp8w</a>
 for more information.</p></li>
+<li><p><strong>View Parser:</strong> Added restricted conditionals as an opt-in mitigation for
+<em>Code Injection through Parser Template Source</em>. Conditions in <code class="docutils literal notranslate"><span class="pre">{if</span> <span class="pre">...}</span></code> and
+<code class="docutils literal notranslate"><span class="pre">{elseif</span> <span class="pre">...}</span></code> tags are evaluated as PHP, so anyone who can edit Parser template
+source can execute PHP code. This remains the default behavior. Applications that
+let less-trusted users edit Parser templates must enable the new
+<code class="docutils literal notranslate"><span class="pre">Config\View::$restrictParserConditionals</span></code> setting or the <code class="docutils literal notranslate"><span class="pre">restrictConditionals</span></code>
+render option. Restricted conditionals only limit this execution path; they do not
+make every template feature safe for less-trusted authors.
+The restriction also applies to nested renders on the same Parser instance.
+See <a class="reference internal" href="../outgoing/view_parser.html#parser-restricting-conditionals"><span class="std std-ref">Restricting Conditionals</span></a> and the
+<a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-4q58-jw8x-8cm7">Security advisory GHSA-4q58-jw8x-8cm7</a>
+for more information.</p></li>
 <li><p><strong>Views:</strong> Fixed a code execution vulnerability caused by view data keys
 overriding renderer-local variables. Data named <code class="docutils literal notranslate"><span class="pre">template</span></code> in <code class="docutils literal notranslate"><span class="pre">Parser</span></code> or
 <code class="docutils literal notranslate"><span class="pre">view</span></code> in <code class="docutils literal notranslate"><span class="pre">View::renderString()</span></code> could replace the source evaluated as PHP.
@@ -353,6 +365,7 @@ for more information.</p></li>
 <li><p>Added the <code class="docutils literal notranslate"><span class="pre">Cookie.invalidCookieDomain</span></code> language string.</p></li>
 <li><p>Added the <code class="docutils literal notranslate"><span class="pre">Cookie.invalidCookiePath</span></code> language string.</p></li>
 <li><p>Added the <code class="docutils literal notranslate"><span class="pre">Cookie.invalidCookieValue</span></code> language string.</p></li>
+<li><p>Added the <code class="docutils literal notranslate"><span class="pre">View.restrictedConditional</span></code> language string.</p></li>
 </ul>
 </section>
 <section id="changes">
@@ -397,6 +410,7 @@ On Windows, where the <code class="docutils literal notranslate"><span class="pr
 <li><p><strong>I18n:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">Time::today()</span></code>, <code class="docutils literal notranslate"><span class="pre">Time::yesterday()</span></code>, and <code class="docutils literal notranslate"><span class="pre">Time::tomorrow()</span></code> ignored the specified <code class="docutils literal notranslate"><span class="pre">$timezone</span></code> and <code class="docutils literal notranslate"><span class="pre">setTestNow()</span></code> when calculating the day.</p></li>
 <li><p><strong>Logger:</strong> Fixed a bug where interpolating a log message with array or non-stringable context values could raise PHP warnings or errors.</p></li>
 <li><p><strong>Validation:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">valid_cc_number</span></code> accepted non-digit characters (e.g., a decimal point) in the card number. Such values could pass the Luhn check and triggered an <code class="docutils literal notranslate"><span class="pre">Undefined</span> <span class="pre">array</span> <span class="pre">key</span></code> warning inside it; the number is now checked with <code class="docutils literal notranslate"><span class="pre">ctype_digit()</span></code>.</p></li>
+<li><p><strong>View Parser:</strong> Fixed a bug where removing template comments could assemble PHP tags that were then executed. PHP tags are now escaped after comments are removed.</p></li>
 </ul>
 <p>See the repo’s
 <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a>
