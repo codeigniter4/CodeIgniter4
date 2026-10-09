@@ -462,7 +462,7 @@ classes (like <code class="docutils literal notranslate"><span class="pre">View<
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$view</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Contents of the view to render, for instance content retrieved from a database</p></li>
+<li><p><strong>$view</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Contents of the view to render, executed as PHP code</p></li>
 <li><p><strong>$options</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – Array of options, as key/value pairs</p></li>
 <li><p><strong>$saveData</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">boolean|null</span></code></span>) – If true, will save data for use with any other calls. If false, will clean the data after rendering the view. If null, uses the config setting.</p></li>
 </ul>
@@ -482,10 +482,11 @@ classes (like <code class="docutils literal notranslate"><span class="pre">View<
 
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This could be used for displaying content that might have been stored in a database,
-but you need to be aware that this is a potential security vulnerability,
-and that you <strong>must</strong> validate any such data, and probably escape it
-appropriately!</p>
+<p><code class="docutils literal notranslate"><span class="pre">renderString()</span></code> executes the given view contents as PHP code,
+just like a view file. Treat them as trusted code: never pass contents that
+less-trusted users can edit, even if they are stored in your database.
+Escaping or validating such contents does not make them safe to execute.
+Pass user-provided values as view data instead.</p>
 </div>
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\View\View::setData">
