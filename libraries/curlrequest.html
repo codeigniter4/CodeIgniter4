@@ -516,7 +516,12 @@ see the <a class="reference internal" href="#http-errors">http_errors</a> option
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>When <code class="docutils literal notranslate"><span class="pre">$shareOptions</span></code> is false, the options passed to the method will be used for the request. After sending the request, they will be cleared. If you want to use the options to all requests, pass the options in the constructor.</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">$shareOptions</span></code> is false, the options passed to the method will be used for the request.
+After the request succeeds or throws an exception, they will be cleared, including
+per-request <code class="docutils literal notranslate"><span class="pre">baseURI</span></code> and <code class="docutils literal notranslate"><span class="pre">delay</span></code> values. The constructor defaults will be restored.
+To retry a failed request, pass its options again and reapply any settings made with
+<code class="docutils literal notranslate"><span class="pre">setAuth()</span></code>, <code class="docutils literal notranslate"><span class="pre">setBody()</span></code>, <code class="docutils literal notranslate"><span class="pre">setForm()</span></code>, or <code class="docutils literal notranslate"><span class="pre">setJSON()</span></code>. If you want to use the
+options for all requests, pass the options in the constructor.</p>
 </div>
 <p>Since the response is an instance of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Response</span></code> you have all of the normal information
 available to you:</p>

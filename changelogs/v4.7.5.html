@@ -308,6 +308,17 @@
 <section id="security">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">SECURITY</a><a class="headerlink" href="#security" title="Link to this heading"></a></h2>
 <ul class="simple">
+<li><p><strong>CURLRequest:</strong> Request-specific headers, body, and options
+are now cleared when a request throws an exception and <code class="docutils literal notranslate"><span class="pre">shareOptions</span></code> is <code class="docutils literal notranslate"><span class="pre">false</span></code>.
+Previously, reusing the client after a failed request could send credentials
+or private data to a different destination. Options passed to the constructor
+remain available for subsequent requests.
+Per-request <code class="docutils literal notranslate"><span class="pre">baseURI</span></code> and <code class="docutils literal notranslate"><span class="pre">delay</span></code> values are also reset after successful
+and failed requests, preventing URI components from leaking into later requests.
+When retrying a failed request, pass its options again, or reapply settings
+made with <code class="docutils literal notranslate"><span class="pre">setAuth()</span></code>, <code class="docutils literal notranslate"><span class="pre">setBody()</span></code>, <code class="docutils literal notranslate"><span class="pre">setForm()</span></code>, or <code class="docutils literal notranslate"><span class="pre">setJSON()</span></code>.
+See the <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-9g9v-xgwj-697h">Security advisory GHSA-9g9v-xgwj-697h</a>
+for more information.</p></li>
 <li><p><strong>Validation:</strong> The <code class="docutils literal notranslate"><span class="pre">is_image</span></code> and <code class="docutils literal notranslate"><span class="pre">mime_in</span></code> file upload rules now reject client filenames ending in dots while
 continuing to accept genuinely extensionless uploads. These rules and <code class="docutils literal notranslate"><span class="pre">ext_in</span></code> also reject filenames with a PHP
 handler extension before the final extension, such as <code class="docutils literal notranslate"><span class="pre">shell.php.gif</span></code>, including extensions revealed by filename

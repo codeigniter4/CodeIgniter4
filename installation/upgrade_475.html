@@ -310,10 +310,15 @@
 </ul>
 </li>
 <li><p><a class="reference internal" href="#breaking-enhancements" id="id6">Breaking Enhancements</a></p></li>
-<li><p><a class="reference internal" href="#project-files" id="id7">Project Files</a></p>
+<li><p><a class="reference internal" href="#behavior-changes" id="id7">Behavior Changes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#content-changes" id="id8">Content Changes</a></p></li>
-<li><p><a class="reference internal" href="#all-changes" id="id9">All Changes</a></p></li>
+<li><p><a class="reference internal" href="#curlrequest-options-after-a-failed-request" id="id8">CURLRequest Options After a Failed Request</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#project-files" id="id9">Project Files</a></p>
+<ul>
+<li><p><a class="reference internal" href="#content-changes" id="id10">Content Changes</a></p></li>
+<li><p><a class="reference internal" href="#all-changes" id="id11">All Changes</a></p></li>
 </ul>
 </li>
 </ul>
@@ -377,8 +382,21 @@ which run against the client filename before the file is saved.</p>
 <section id="breaking-enhancements">
 <h2><a class="toc-backref" href="#id6" role="doc-backlink">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Link to this heading"></a></h2>
 </section>
+<section id="behavior-changes">
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Behavior Changes</a><a class="headerlink" href="#behavior-changes" title="Link to this heading"></a></h2>
+<section id="curlrequest-options-after-a-failed-request">
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">CURLRequest Options After a Failed Request</a><a class="headerlink" href="#curlrequest-options-after-a-failed-request" title="Link to this heading"></a></h3>
+<p>When <code class="docutils literal notranslate"><span class="pre">Config\CURLRequest::$shareOptions</span></code> is <code class="docutils literal notranslate"><span class="pre">false</span></code>, request-specific options
+are now reset even when the request throws an exception. Per-request <code class="docutils literal notranslate"><span class="pre">baseURI</span></code>
+and <code class="docutils literal notranslate"><span class="pre">delay</span></code> values are also reset after both successful and failed requests.
+Constructor defaults remain available for subsequent requests.</p>
+<p>If your application retries a failed request, pass its options again and reapply
+any settings made with <code class="docutils literal notranslate"><span class="pre">setAuth()</span></code>, <code class="docutils literal notranslate"><span class="pre">setBody()</span></code>, <code class="docutils literal notranslate"><span class="pre">setForm()</span></code>, or <code class="docutils literal notranslate"><span class="pre">setJSON()</span></code>.
+Do not rely on credentials or body data from the failed request remaining on the client.</p>
+</section>
+</section>
 <section id="project-files">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Link to this heading"></a></h2>
 <p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to
 these files being outside of the <strong>system</strong> scope they will not be changed without your intervention.</p>
 <div class="admonition note">
@@ -388,7 +406,7 @@ with merging changes to the project space:
 <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
 </div>
 <section id="content-changes">
-<h3><a class="toc-backref" href="#id8" role="doc-backlink">Content Changes</a><a class="headerlink" href="#content-changes" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Content Changes</a><a class="headerlink" href="#content-changes" title="Link to this heading"></a></h3>
 <p>The following files received significant changes (including deprecations or visual adjustments)
 and it is recommended that you merge the updated versions with your application:</p>
 <section id="config">
@@ -406,7 +424,7 @@ value set to <code class="docutils literal notranslate"><span class="pre">false<
 </section>
 </section>
 <section id="all-changes">
-<h3><a class="toc-backref" href="#id9" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Link to this heading"></a></h3>
 <p>This is a list of all files in the <strong>project space</strong> that received changes;
 many will be simple comments or formatting that have no effect on the runtime:</p>
 <ul class="simple">
