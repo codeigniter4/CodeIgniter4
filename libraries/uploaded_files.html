@@ -753,7 +753,7 @@ In PHP versions below 8.1, this returns <code class="docutils literal notranslat
 </section>
 </section>
 <section id="moving-files">
-<h3><a class="toc-backref" href="#id18" role="doc-backlink">Moving Files</a><a class="headerlink" href="#moving-files" title="Link to this heading"></a></h3>
+<span id="uploaded-files-moving-files"></span><h3><a class="toc-backref" href="#id18" role="doc-backlink">Moving Files</a><a class="headerlink" href="#moving-files" title="Link to this heading"></a></h3>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Do not let user input directly decide the destination directory. The <code class="docutils literal notranslate"><span class="pre">$targetPath</span></code> argument of <code class="docutils literal notranslate"><span class="pre">move()</span></code> and the
@@ -763,6 +763,10 @@ move the uploaded file outside the intended directory. Use directories controlle
 omitted, and <code class="docutils literal notranslate"><span class="pre">store()</span></code> generates a random name when <code class="docutils literal notranslate"><span class="pre">$fileName</span></code> is omitted. A caller-supplied <code class="docutils literal notranslate"><span class="pre">$name</span></code> or
 <code class="docutils literal notranslate"><span class="pre">$fileName</span></code> is NOT sanitized, so if you pass one, generate it yourself or sanitize it with
 <a class="reference internal" href="../helpers/security_helper.html#sanitize_filename" title="sanitize_filename"><code class="xref php php-func docutils literal notranslate"><span class="pre">sanitize_filename</span></code></a>.</p>
+<p>Sanitizing a client-provided filename does not make it safe to keep in a web-accessible directory where scripts can
+execute. Some web servers select a handler from any extension in a filename, including an extension before the final
+one. Keep uploads outside the public directory with <code class="docutils literal notranslate"><span class="pre">store()</span></code> when possible. If they must be public, disable script
+execution in the upload directory and pass <code class="docutils literal notranslate"><span class="pre">$file-&gt;getRandomName()</span></code> as the second argument to <code class="docutils literal notranslate"><span class="pre">move()</span></code>.</p>
 </div>
 <section id="with-original-filename">
 <h4>with Original Filename<a class="headerlink" href="#with-original-filename" title="Link to this heading"></a></h4>

@@ -306,13 +306,14 @@
 <ul>
 <li><p><a class="reference internal" href="#view-parser-no-longer-parses-substituted-values" id="id3">View Parser No Longer Parses Substituted Values</a></p></li>
 <li><p><a class="reference internal" href="#built-in-parser-plugin-output" id="id4">Built-in Parser Plugin Output</a></p></li>
+<li><p><a class="reference internal" href="#file-upload-validation" id="id5">File Upload Validation</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#breaking-enhancements" id="id5">Breaking Enhancements</a></p></li>
-<li><p><a class="reference internal" href="#project-files" id="id6">Project Files</a></p>
+<li><p><a class="reference internal" href="#breaking-enhancements" id="id6">Breaking Enhancements</a></p></li>
+<li><p><a class="reference internal" href="#project-files" id="id7">Project Files</a></p>
 <ul>
-<li><p><a class="reference internal" href="#content-changes" id="id7">Content Changes</a></p></li>
-<li><p><a class="reference internal" href="#all-changes" id="id8">All Changes</a></p></li>
+<li><p><a class="reference internal" href="#content-changes" id="id8">Content Changes</a></p></li>
+<li><p><a class="reference internal" href="#all-changes" id="id9">All Changes</a></p></li>
 </ul>
 </li>
 </ul>
@@ -358,12 +359,26 @@ on placeholders within built-in plugin output must render those fragments explic
 Custom plugins that transform template code retain their existing behavior and are
 responsible for keeping untrusted data separate from Parser syntax.</p>
 </section>
+<section id="file-upload-validation">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">File Upload Validation</a><a class="headerlink" href="#file-upload-validation" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">is_image</span></code>, <code class="docutils literal notranslate"><span class="pre">mime_in</span></code>, and <code class="docutils literal notranslate"><span class="pre">ext_in</span></code> rules now reject client filenames
+with a PHP handler extension before the final extension, including extensions
+revealed by <code class="docutils literal notranslate"><span class="pre">sanitize_filename()</span></code> (for example, <code class="docutils literal notranslate"><span class="pre">shell.p$hp.gif</span></code> becomes
+<code class="docutils literal notranslate"><span class="pre">shell.php.gif</span></code>). Filenames ending in dots, including dots followed by spaces,
+are also rejected.</p>
+<p>These checks apply regardless of the file’s contents or the intended meaning of
+its name. For example, both <code class="docutils literal notranslate"><span class="pre">shell.php.gif</span></code> and an innocent PHP logo named
+<code class="docutils literal notranslate"><span class="pre">logo.php.gif</span></code> fail validation, even if the latter contains only a GIF image.
+Rename such files before uploading, for example to <code class="docutils literal notranslate"><span class="pre">logo-php.gif</span></code>. Choosing a
+generated filename when saving the file does not bypass these validation checks,
+which run against the client filename before the file is saved.</p>
+</section>
 </section>
 <section id="breaking-enhancements">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Link to this heading"></a></h2>
 </section>
 <section id="project-files">
-<h2><a class="toc-backref" href="#id6" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Link to this heading"></a></h2>
 <p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to
 these files being outside of the <strong>system</strong> scope they will not be changed without your intervention.</p>
 <div class="admonition note">
@@ -373,7 +388,7 @@ with merging changes to the project space:
 <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
 </div>
 <section id="content-changes">
-<h3><a class="toc-backref" href="#id7" role="doc-backlink">Content Changes</a><a class="headerlink" href="#content-changes" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Content Changes</a><a class="headerlink" href="#content-changes" title="Link to this heading"></a></h3>
 <p>The following files received significant changes (including deprecations or visual adjustments)
 and it is recommended that you merge the updated versions with your application:</p>
 <section id="config">
@@ -384,7 +399,7 @@ and it is recommended that you merge the updated versions with your application:
 </section>
 </section>
 <section id="all-changes">
-<h3><a class="toc-backref" href="#id8" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Link to this heading"></a></h3>
 <p>This is a list of all files in the <strong>project space</strong> that received changes;
 many will be simple comments or formatting that have no effect on the runtime:</p>
 <ul class="simple">

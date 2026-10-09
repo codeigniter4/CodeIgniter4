@@ -2138,6 +2138,9 @@ an image based on the mime type.</p></td>
 </tbody>
 </table>
 <p>The file validation rules apply for both single and multiple file uploads.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">is_image</span></code>, <code class="docutils literal notranslate"><span class="pre">mime_in</span></code>, and <code class="docutils literal notranslate"><span class="pre">ext_in</span></code> rules check the uploaded file and its client filename, but they cannot
+guarantee that a web server will not execute a file saved under that name. See <a class="reference internal" href="uploaded_files.html#uploaded-files-moving-files"><span class="std std-ref">Moving Files</span></a> for
+safe storage practices.</p>
 </section>
 </section>
 </section>
