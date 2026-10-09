@@ -12,10 +12,6 @@ Please refer to the upgrade instructions corresponding to your installation meth
     :local:
     :depth: 2
 
-**********************
-Mandatory File Changes
-**********************
-
 ****************
 Breaking Changes
 ****************
@@ -80,16 +76,12 @@ Rename such files before uploading, for example to ``logo-php.gif``. Choosing a
 generated filename when saving the file does not bypass these validation checks,
 which run against the client filename before the file is saved.
 
-*********************
-Breaking Enhancements
-*********************
-
 ****************
 Behavior Changes
 ****************
 
 CURLRequest Options After a Failed Request
-=========================================
+==========================================
 
 When ``Config\CURLRequest::$shareOptions`` is ``false``, request-specific options
 are now reset even when the request throws an exception. Per-request ``baseURI``
@@ -131,3 +123,4 @@ This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
 - app/Config/View.php
+- app/Controllers/BaseController.php

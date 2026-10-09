@@ -2,7 +2,7 @@
 Version 4.7.5
 #############
 
-Release Date: Unreleased
+Release Date: October 9, 2026
 
 **4.7.5 release of CodeIgniter4**
 
@@ -30,8 +30,8 @@ SECURITY
   handler extension before the final extension, such as ``shell.php.gif``, including extensions revealed by filename
   sanitization. These checks also reject innocent filenames such as ``logo.php.gif``. See
   :doc:`Upgrading from 4.7.4 to 4.7.5 </installation/upgrade_475>` for migration instructions.
-  Previously, a GIF/PHP polyglot with one of these names could pass validation. Applications that save uploads with 
-  client-provided names in executable public directories may be affected. Use a generated filename or disable script 
+  Previously, a GIF/PHP polyglot with one of these names could pass validation. Applications that save uploads with
+  client-provided names in executable public directories may be affected. Use a generated filename or disable script
   execution in the upload directory. See the `Security advisory GHSA-4hwf-v4mp-hf6c <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-4hwf-v4mp-hf6c>`_
   for more information.
 - **Validation:** File validation rules now check every non-empty file in an
@@ -70,10 +70,6 @@ SECURITY
   to pass less-trusted data under the affected keys.
   See the `Security advisory GHSA-c29x-ffjj-8r7x <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-c29x-ffjj-8r7x>`_
   for more information.
-
-********
-BREAKING
-********
 
 ***************
 Message Changes
