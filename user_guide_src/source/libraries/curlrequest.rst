@@ -104,7 +104,12 @@ a Response instance to you. This takes the HTTP method, the url and an array of 
     code returned is greater than or equal to 400. If you want to get the response,
     see the `http_errors`_ option.
 
-.. note:: When ``$shareOptions`` is false, the options passed to the method will be used for the request. After sending the request, they will be cleared. If you want to use the options to all requests, pass the options in the constructor.
+.. note:: When ``$shareOptions`` is false, the options passed to the method will be used for the request.
+    After the request succeeds or throws an exception, they will be cleared, including
+    per-request ``baseURI`` and ``delay`` values. The constructor defaults will be restored.
+    To retry a failed request, pass its options again and reapply any settings made with
+    ``setAuth()``, ``setBody()``, ``setForm()``, or ``setJSON()``. If you want to use the
+    options for all requests, pass the options in the constructor.
 
 Since the response is an instance of ``CodeIgniter\HTTP\Response`` you have all of the normal information
 available to you:

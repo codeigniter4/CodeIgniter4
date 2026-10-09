@@ -156,6 +156,27 @@ final class ViewTest extends CIUnitTestCase
         $this->assertSame($expected, $view->renderString('<h1><?= $testString ?></h1>'));
     }
 
+    public function testRenderStringViewDataCannotReplaceEvaluatedSource(): void
+    {
+        foreach ([false, true] as $saveData) {
+            $config           = clone $this->config;
+            $config->saveData = $saveData;
+            $view             = new View($config, $this->viewsDir, $this->loader);
+            $view->setVar('view', '<?php echo 6 * 7; ?>');
+
+            $this->assertSame('Trusted: &lt;?php echo 6 * 7; ?&gt;', $view->renderString('Trusted: <?= esc($view) ?>'));
+            $this->assertSame($saveData, array_key_exists('view', $view->getData()));
+        }
+    }
+
+    public function testRenderStringKeepsExistingViewVariableWhenNoDataOverridesIt(): void
+    {
+        $view   = new View($this->config, $this->viewsDir, $this->loader);
+        $source = '<?= $view ?>';
+
+        $this->assertSame($source, $view->renderString($source));
+    }
+
     public function testRenderStringNullTempdata(): void
     {
         $view = new View($this->config, $this->viewsDir, $this->loader);

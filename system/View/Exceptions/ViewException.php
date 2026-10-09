@@ -68,6 +68,14 @@ class ViewException extends FrameworkException
     /**
      * @return static
      */
+    public static function forRestrictedConditional(string $tag)
+    {
+        return new static(lang('View.restrictedConditional', [$tag]));
+    }
+
+    /**
+     * @return static
+     */
     public static function forInvalidDecorator(string $className)
     {
         return new static(lang('View.invalidDecoratorClass', [$className]));

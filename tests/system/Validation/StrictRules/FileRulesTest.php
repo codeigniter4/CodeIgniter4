@@ -16,6 +16,7 @@ namespace CodeIgniter\Validation\StrictRules;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Validation;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Validation\TestRules;
 
@@ -179,6 +180,79 @@ class FileRulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run([]));
     }
 
+    #[DataProvider('provideOptionalMultipleUploadChecksFilesAfterEmptyEntry')]
+    public function testOptionalMultipleUploadChecksFilesAfterEmptyEntry(string $rule): void
+    {
+        $this->setOptionalMultipleUpload('wrong.txt');
+
+        $this->validation->setRules(['files' => $rule]);
+
+        $this->assertFalse($this->validation->run([]));
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideOptionalMultipleUploadChecksFilesAfterEmptyEntry(): iterable
+    {
+        yield 'max_size' => ['max_size[files,0]'];
+
+        yield 'is_image' => ['is_image[files]'];
+
+        yield 'mime_in' => ['mime_in[files,image/gif]'];
+
+        yield 'ext_in' => ['ext_in[files,png]'];
+
+        yield 'max_dims' => ['max_dims[files,1,1]'];
+
+        yield 'min_dims' => ['min_dims[files,800,600]'];
+    }
+
+    public function testOptionalMultipleUploadAllowsValidFileAfterEmptyEntry(): void
+    {
+        $this->setOptionalMultipleUpload('my-avatar.png');
+
+        $this->validation->setRules([
+            'files' => 'max_size[files,100]|is_image[files]|mime_in[files,image/png]'
+                . '|ext_in[files,png]|max_dims[files,640,480]|min_dims[files,320,240]',
+        ]);
+
+        $this->assertTrue($this->validation->run([]));
+    }
+
+    public function testOptionalMultipleUploadAllowsEmptyEntries(): void
+    {
+        $this->setOptionalMultipleUpload();
+
+        $this->validation->setRules([
+            'files' => 'max_size[files,100]|is_image[files]|mime_in[files,image/png]'
+                . '|ext_in[files,png]|max_dims[files,640,480]|min_dims[files,320,240]',
+        ]);
+
+        $this->assertTrue($this->validation->run([]));
+    }
+
+    private function setOptionalMultipleUpload(?string $filename = null): void
+    {
+        $upload = [
+            'tmp_name' => [''],
+            'name'     => [''],
+            'size'     => [0],
+            'type'     => [''],
+            'error'    => [UPLOAD_ERR_NO_FILE],
+        ];
+
+        if ($filename !== null) {
+            $upload['tmp_name'][] = TESTPATH . '_support/Validation/uploads/phpUxc0ty';
+            $upload['name'][]     = $filename;
+            $upload['size'][]     = 4614;
+            $upload['type'][]     = 'image/png';
+            $upload['error'][]    = UPLOAD_ERR_OK;
+        }
+
+        service('superglobals')->setFilesArray(['files' => $upload]);
+    }
+
     public function testMaxSize(): void
     {
         $this->validation->setRules(['avatar' => 'max_size[avatar,100]']);
@@ -258,6 +332,67 @@ class FileRulesTest extends CIUnitTestCase
     {
         $this->validation->setRules(['avatar' => 'min_dims[unknown,640,480]']);
         $this->assertFalse($this->validation->run([]));
+    }
+
+    #[DataProvider('provideDimensionsFailOnUploadError')]
+    public function testDimensionsFailOnUploadError(string $rule, int $error): void
+    {
+        service('superglobals')->setFilesArray([
+            'files' => [
+                'tmp_name' => '',
+                'name'     => 'my-avatar.png',
+                'size'     => 0,
+                'type'     => '',
+                'error'    => $error,
+            ],
+        ]);
+
+        $this->validation->setRules(['files' => $rule]);
+
+        $this->assertFalse($this->validation->run([]));
+    }
+
+    #[DataProvider('provideDimensionsFailOnUploadError')]
+    public function testDimensionsFailOnUploadErrorAfterEmptyAndValidEntries(string $rule, int $error): void
+    {
+        service('superglobals')->setFilesArray([
+            'files' => [
+                'tmp_name' => [
+                    '',
+                    TESTPATH . '_support/Validation/uploads/phpUxc0ty',
+                    TESTPATH . '_support/Validation/uploads/phpUxc0ty',
+                ],
+                'name'  => ['', 'my-avatar.png', 'my-photo.png'],
+                'size'  => [0, 4614, 4614],
+                'type'  => ['', 'image/png', 'image/png'],
+                'error' => [UPLOAD_ERR_NO_FILE, UPLOAD_ERR_OK, $error],
+            ],
+        ]);
+
+        $this->validation->setRules(['files' => $rule]);
+
+        $this->assertFalse($this->validation->run([]));
+    }
+
+    /**
+     * @return iterable<string, array{string, int}>
+     */
+    public static function provideDimensionsFailOnUploadError(): iterable
+    {
+        $errors = [
+            'ini size'   => UPLOAD_ERR_INI_SIZE,
+            'form size'  => UPLOAD_ERR_FORM_SIZE,
+            'partial'    => UPLOAD_ERR_PARTIAL,
+            'no tmp dir' => UPLOAD_ERR_NO_TMP_DIR,
+            'cant write' => UPLOAD_ERR_CANT_WRITE,
+            'extension'  => UPLOAD_ERR_EXTENSION,
+        ];
+
+        foreach (['max_dims[files,640,480]', 'min_dims[files,320,240]'] as $rule) {
+            foreach ($errors as $name => $error) {
+                yield $rule . ' ' . $name => [$rule, $error];
+            }
+        }
     }
 
     public function testIsImage(): void
@@ -525,6 +660,92 @@ class FileRulesTest extends CIUnitTestCase
         }
     }
 
+    #[DataProvider('provideFileRulesRejectUnsafeClientFilename')]
+    public function testFileRulesRejectUnsafeClientFilename(string $name, string $rule): void
+    {
+        $payload = $this->createGifPhpPayload();
+
+        try {
+            $this->setUploadedAvatar($payload, $name);
+
+            $this->validation->setRules(['avatar' => $rule]);
+            $this->assertFalse($this->validation->run([]));
+        } finally {
+            unlink($payload);
+        }
+    }
+
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function provideFileRulesRejectUnsafeClientFilename(): iterable
+    {
+        $names = [
+            'shell.php.',
+            'shell.php..',
+            'shell.php. ',
+            'shell.gif.',
+            'shell.gif. ',
+            'shell.php.gif',
+            'shell.PHP.gif',
+            'shell.p$hp.gif',
+            'shell.php;.gif',
+            'shell.PH#P.gif',
+            'shell.p%20hp.gif',
+            "shell.p\x01hp.gif",
+            'shell.php8.gif',
+            'shell.pht.gif',
+            'shell.phtml.gif',
+            'shell.phar.gif',
+            'shell.phar&.gif',
+            'shell.phps.gif',
+            '.php.gif',
+            '.phar.gif',
+            '.phps.gif',
+        ];
+
+        $rules = [
+            'is_image[avatar]',
+            'mime_in[avatar,image/gif]',
+            'ext_in[avatar,gif]',
+        ];
+
+        foreach ($names as $name) {
+            foreach ($rules as $rule) {
+                yield json_encode($name) . ' ' . $rule => [$name, $rule];
+            }
+        }
+    }
+
+    #[DataProvider('provideFileRulesAllowSafeDottedClientFilename')]
+    public function testFileRulesAllowSafeDottedClientFilename(string $name, string $rule): void
+    {
+        $payload = $this->createGifPayload();
+
+        try {
+            $this->setUploadedAvatar($payload, $name);
+
+            $this->validation->setRules(['avatar' => $rule]);
+            $this->assertTrue($this->validation->run([]));
+        } finally {
+            unlink($payload);
+        }
+    }
+
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function provideFileRulesAllowSafeDottedClientFilename(): iterable
+    {
+        foreach (['family.vacation.gif', 'family.va$ca%20tion.gif', 'php.gif', 'p$hp.gif'] as $name) {
+            yield $name . ' is_image[avatar]' => [$name, 'is_image[avatar]'];
+
+            yield $name . ' mime_in[avatar,image/gif]' => [$name, 'mime_in[avatar,image/gif]'];
+
+            yield $name . ' ext_in[avatar,gif]' => [$name, 'ext_in[avatar,gif]'];
+        }
+    }
+
     private function createGifPayload(): string
     {
         $payload = tempnam(sys_get_temp_dir(), 'ci4-upload-poc-');
@@ -534,6 +755,15 @@ class FileRulesTest extends CIUnitTestCase
         $this->assertIsString($gif);
 
         file_put_contents($payload, $gif);
+
+        return $payload;
+    }
+
+    private function createGifPhpPayload(): string
+    {
+        $payload = $this->createGifPayload();
+
+        file_put_contents($payload, "\n<?php echo 'payload'; ?>\n", FILE_APPEND);
 
         return $payload;
     }
