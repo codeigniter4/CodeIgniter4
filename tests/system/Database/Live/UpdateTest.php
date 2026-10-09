@@ -284,10 +284,6 @@ final class UpdateTest extends CIUnitTestCase
             $this->markTestSkipped('SQL Server cannot compare `text` columns with `=`.');
         }
 
-        if ($this->db->DBDriver === 'OCI8') {
-            $this->markTestSkipped('TODO: the OCI8 builder does not cast mixed `UNION ALL` values yet. Remove this skip once it does.');
-        }
-
         $table = 'type_test';
 
         $builder = $this->db->table($table);
@@ -319,10 +315,6 @@ final class UpdateTest extends CIUnitTestCase
 
     public function testUpdateBatchDoesNotTruncateConstraintValueForCharColumn(): void
     {
-        if ($this->db->DBDriver === 'OCI8') {
-            $this->markTestSkipped('TODO: Oracle resolves a `UNION ALL` of `CHAR` literals with different lengths to `VARCHAR2`, so the OCI8 builder must cast them. Remove this skip once it does.');
-        }
-
         $table = 'type_test';
 
         $builder = $this->db->table($table);
@@ -356,10 +348,6 @@ final class UpdateTest extends CIUnitTestCase
     {
         if ($this->db->DBDriver === 'SQLSRV') {
             $this->markTestSkipped('SQL Server cannot compare `text` columns with `=`.');
-        }
-
-        if ($this->db->DBDriver === 'OCI8') {
-            $this->markTestSkipped('TODO: the OCI8 builder does not cast mixed `UNION ALL` values yet. Remove this skip once it does.');
         }
 
         $table = 'type_test';
