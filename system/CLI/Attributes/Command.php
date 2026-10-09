@@ -45,6 +45,7 @@ final readonly class Command
         public string $group = '',
         array $aliases = [],
         public bool $hidden = false,
+        public bool $headerless = false,
     ) {
         if ($name === '') {
             throw new LogicException(lang('Commands.emptyCommandName'));

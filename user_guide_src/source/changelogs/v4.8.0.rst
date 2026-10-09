@@ -222,6 +222,9 @@ Commands
 - Modern commands can now be hidden with ``hidden: true`` on the ``#[Command]`` attribute. A hidden command and its aliases are left out of
   ``spark list`` and of the suggestions for a mistyped command name, but still run by exact name or alias and still have a ``help`` page.
   ``AbstractCommand::isHidden()`` and ``Commands::isHiddenCommand()`` report the flag. See :ref:`hidden-commands`.
+- Modern commands can now opt out of the spark header with ``headerless: true`` on the ``#[Command]`` attribute, with the same effect as always
+  passing ``--no-header``. ``help <command>`` and ``<command> --help`` still print the header. ``AbstractCommand::isHeaderless()`` and
+  ``Commands::isHeaderlessCommand()`` report the flag. See :ref:`commands-without-the-header`.
 - Every modern command now ships with a ``--no-interaction`` / ``-N`` flag that skips the ``interact()`` hook, plus public
   ``isInteractive()`` / ``setInteractive()`` methods on ``AbstractCommand``. ``isInteractive()`` also auto-detects piped or
   CI environments by probing STDIN for a TTY, and the state cascades to sub-commands invoked via ``$this->call(...)``.

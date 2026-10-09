@@ -46,6 +46,7 @@ abstract class AbstractCommand
     private readonly array $aliases;
 
     private readonly bool $hidden;
+    private readonly bool $headerless;
 
     /**
      * @var list<non-empty-string>
@@ -145,6 +146,7 @@ abstract class AbstractCommand
         $this->group       = $attribute->group;
         $this->aliases     = $attribute->aliases;
         $this->hidden      = $attribute->hidden;
+        $this->headerless  = $attribute->headerless;
 
         $this->configure();
         $this->provideDefaultOptions();
@@ -183,6 +185,11 @@ abstract class AbstractCommand
     public function isHidden(): bool
     {
         return $this->hidden;
+    }
+
+    public function isHeaderless(): bool
+    {
+        return $this->headerless;
     }
 
     /**
