@@ -149,6 +149,10 @@ class FileRules
             if ($this->hasInvalidImageClientExtension($file)) {
                 return false;
             }
+
+            if ($this->hasUnsafeClientFilename($file)) {
+                return false;
+            }
         }
 
         return true;
@@ -181,6 +185,10 @@ class FileRules
             }
 
             if ($this->hasMismatchedClientExtension($file)) {
+                return false;
+            }
+
+            if ($this->hasUnsafeClientFilename($file)) {
                 return false;
             }
         }
@@ -218,6 +226,10 @@ class FileRules
             }
 
             if ($file->guessExtension() !== $clientExtension) {
+                return false;
+            }
+
+            if ($this->hasUnsafeClientFilename($file)) {
                 return false;
             }
         }
@@ -345,5 +357,36 @@ class FileRules
         }
 
         return $file->guessExtension() !== $clientExtension;
+    }
+
+    /**
+     * Reject trailing-dot names and names with a PHP extension before the final extension.
+     */
+    private function hasUnsafeClientFilename(UploadedFile $file): bool
+    {
+        helper('security');
+
+        // Check the name that UploadedFile::move() uses when no name is supplied.
+        $filename = sanitize_filename($file->getClientName());
+        $parts    = explode('.', strtolower(rtrim($filename, ' ')));
+
+        if (count($parts) === 1) {
+            return false;
+        }
+
+        if (array_pop($parts) === '') {
+            return true;
+        }
+
+        // Some server configurations select a PHP handler from an earlier extension.
+        array_shift($parts);
+
+        foreach ($parts as $part) {
+            if (preg_match('/^php[0-9]*$/', $part) === 1 || in_array($part, ['pht', 'phtml', 'phar', 'phps'], true)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

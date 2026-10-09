@@ -64,6 +64,22 @@ on placeholders within built-in plugin output must render those fragments explic
 Custom plugins that transform template code retain their existing behavior and are
 responsible for keeping untrusted data separate from Parser syntax.
 
+File Upload Validation
+======================
+
+The ``is_image``, ``mime_in``, and ``ext_in`` rules now reject client filenames
+with a PHP handler extension before the final extension, including extensions
+revealed by ``sanitize_filename()`` (for example, ``shell.p$hp.gif`` becomes
+``shell.php.gif``). Filenames ending in dots, including dots followed by spaces,
+are also rejected.
+
+These checks apply regardless of the file's contents or the intended meaning of
+its name. For example, both ``shell.php.gif`` and an innocent PHP logo named
+``logo.php.gif`` fail validation, even if the latter contains only a GIF image.
+Rename such files before uploading, for example to ``logo-php.gif``. Choosing a
+generated filename when saving the file does not bypass these validation checks,
+which run against the client filename before the file is saved.
+
 *********************
 Breaking Enhancements
 *********************

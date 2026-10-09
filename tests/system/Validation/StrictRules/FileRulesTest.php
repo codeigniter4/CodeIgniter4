@@ -16,6 +16,7 @@ namespace CodeIgniter\Validation\StrictRules;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Validation;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Validation\TestRules;
 
@@ -525,6 +526,92 @@ class FileRulesTest extends CIUnitTestCase
         }
     }
 
+    #[DataProvider('provideFileRulesRejectUnsafeClientFilename')]
+    public function testFileRulesRejectUnsafeClientFilename(string $name, string $rule): void
+    {
+        $payload = $this->createGifPhpPayload();
+
+        try {
+            $this->setUploadedAvatar($payload, $name);
+
+            $this->validation->setRules(['avatar' => $rule]);
+            $this->assertFalse($this->validation->run([]));
+        } finally {
+            unlink($payload);
+        }
+    }
+
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function provideFileRulesRejectUnsafeClientFilename(): iterable
+    {
+        $names = [
+            'shell.php.',
+            'shell.php..',
+            'shell.php. ',
+            'shell.gif.',
+            'shell.gif. ',
+            'shell.php.gif',
+            'shell.PHP.gif',
+            'shell.p$hp.gif',
+            'shell.php;.gif',
+            'shell.PH#P.gif',
+            'shell.p%20hp.gif',
+            "shell.p\x01hp.gif",
+            'shell.php8.gif',
+            'shell.pht.gif',
+            'shell.phtml.gif',
+            'shell.phar.gif',
+            'shell.phar&.gif',
+            'shell.phps.gif',
+            '.php.gif',
+            '.phar.gif',
+            '.phps.gif',
+        ];
+
+        $rules = [
+            'is_image[avatar]',
+            'mime_in[avatar,image/gif]',
+            'ext_in[avatar,gif]',
+        ];
+
+        foreach ($names as $name) {
+            foreach ($rules as $rule) {
+                yield json_encode($name) . ' ' . $rule => [$name, $rule];
+            }
+        }
+    }
+
+    #[DataProvider('provideFileRulesAllowSafeDottedClientFilename')]
+    public function testFileRulesAllowSafeDottedClientFilename(string $name, string $rule): void
+    {
+        $payload = $this->createGifPayload();
+
+        try {
+            $this->setUploadedAvatar($payload, $name);
+
+            $this->validation->setRules(['avatar' => $rule]);
+            $this->assertTrue($this->validation->run([]));
+        } finally {
+            unlink($payload);
+        }
+    }
+
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function provideFileRulesAllowSafeDottedClientFilename(): iterable
+    {
+        foreach (['family.vacation.gif', 'family.va$ca%20tion.gif', 'php.gif', 'p$hp.gif'] as $name) {
+            yield $name . ' is_image[avatar]' => [$name, 'is_image[avatar]'];
+
+            yield $name . ' mime_in[avatar,image/gif]' => [$name, 'mime_in[avatar,image/gif]'];
+
+            yield $name . ' ext_in[avatar,gif]' => [$name, 'ext_in[avatar,gif]'];
+        }
+    }
+
     private function createGifPayload(): string
     {
         $payload = tempnam(sys_get_temp_dir(), 'ci4-upload-poc-');
@@ -534,6 +621,15 @@ class FileRulesTest extends CIUnitTestCase
         $this->assertIsString($gif);
 
         file_put_contents($payload, $gif);
+
+        return $payload;
+    }
+
+    private function createGifPhpPayload(): string
+    {
+        $payload = $this->createGifPayload();
+
+        file_put_contents($payload, "\n<?php echo 'payload'; ?>\n", FILE_APPEND);
 
         return $payload;
     }

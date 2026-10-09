@@ -1117,3 +1117,7 @@ is_image                Yes         Fails if the file cannot be determined to be
 ======================= ========== ============================================= ===================================================
 
 The file validation rules apply for both single and multiple file uploads.
+
+The ``is_image``, ``mime_in``, and ``ext_in`` rules check the uploaded file and its client filename, but they cannot
+guarantee that a web server will not execute a file saved under that name. See :ref:`uploaded-files-moving-files` for
+safe storage practices.
