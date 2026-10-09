@@ -30,7 +30,7 @@ class View extends BaseView
      *  { title|esc(js) }
      *  { created_on|date(Y-m-d)|esc(attr) }
      *
-     * @var array<string, (callable(mixed): mixed)&string>
+     * @var array<string, callable(mixed): mixed>
      */
     public $filters = [];
 
@@ -42,6 +42,14 @@ class View extends BaseView
      * @var array<string, (callable(mixed...): mixed)|((callable(mixed...): mixed)&string)|list<(callable(mixed...): mixed)&string>>
      */
     public $plugins = [];
+
+    /**
+     * When true, Parser conditionals may only contain variables, literals,
+     * arithmetic, comparison and logical operators, and parentheses. Enable
+     * this when less-trusted users can edit Parser templates. Can be overridden per
+     * call with the `restrictConditionals` render option.
+     */
+    public bool $restrictParserConditionals = false;
 
     /**
      * View Decorators are class methods that will be run in sequence to

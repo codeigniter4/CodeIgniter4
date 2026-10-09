@@ -75,7 +75,7 @@ final class UpdateTest extends CIUnitTestCase
         } catch (DatabaseException) {
             // This DB doesn't support Where and Limit together
             // but we don't want it called a "Risky" test.
-            $this->assertTrue(true);
+            $this->expectNotToPerformAssertions();
         }
     }
 
@@ -110,12 +110,13 @@ final class UpdateTest extends CIUnitTestCase
         } catch (DatabaseException) {
             // This DB doesn't support Where and Limit together
             // but we don't want it called a "Risky" test.
-            $this->assertTrue(true);
+            $this->expectNotToPerformAssertions();
         }
     }
 
     /**
-     * @param array<int, mixed> $expected
+     * @param list<array<string, int|string>> $data
+     * @param list<array<string, int|string>> $expected
      */
     #[DataProvider('provideUpdateBatch')]
     public function testUpdateBatch(string $constraints, array $data, array $expected): void
@@ -155,6 +156,9 @@ final class UpdateTest extends CIUnitTestCase
         $this->seeInDatabase($table, $expected[1]);
     }
 
+    /**
+     * @return iterable<string, array{string, list<array<string, int|string>>, list<array<string, int|string>>}>
+     */
     public static function provideUpdateBatch(): iterable
     {
         yield from [
@@ -272,6 +276,144 @@ final class UpdateTest extends CIUnitTestCase
                 ],
             ],
         ];
+    }
+
+    public function testUpdateBatchWithMixedValueTypesInTextColumn(): void
+    {
+        if ($this->db->DBDriver === 'SQLSRV') {
+            $this->markTestSkipped('SQL Server cannot compare `text` columns with `=`.');
+        }
+
+        $table = 'type_test';
+
+        $builder = $this->db->table($table);
+        $builder->truncate();
+
+        for ($i = 1; $i < 3; $i++) {
+            $builder->insert([
+                'type_varchar'  => 'test' . $i,
+                'type_char'     => 'char' . $i,
+                'type_text'     => 'text',
+                'type_smallint' => 32767,
+                'type_integer'  => 2_147_483_647,
+                'type_bigint'   => 9_223_372_036_854_775_807,
+                'type_float'    => 10.1,
+                'type_numeric'  => 123.23,
+                'type_date'     => '2023-12-0' . $i,
+                'type_datetime' => '2023-12-21 12:00:00',
+            ]);
+        }
+
+        $this->db->table($table)->updateBatch([
+            ['type_varchar' => 'test1', 'type_text' => 'Example'],
+            ['type_varchar' => 'test2', 'type_text' => 587],
+        ], 'type_varchar');
+
+        $this->seeInDatabase($table, ['type_varchar' => 'test1', 'type_text' => 'Example']);
+        $this->seeInDatabase($table, ['type_varchar' => 'test2', 'type_text' => '587']);
+    }
+
+    public function testUpdateBatchDoesNotTruncateConstraintValueForCharColumn(): void
+    {
+        $table = 'type_test';
+
+        $builder = $this->db->table($table);
+        $builder->truncate();
+
+        for ($i = 1; $i < 3; $i++) {
+            $builder->insert([
+                'type_varchar'  => 'test' . $i,
+                'type_char'     => 'char' . $i,
+                'type_text'     => 'text',
+                'type_smallint' => 32767,
+                'type_integer'  => 2_147_483_647,
+                'type_bigint'   => 9_223_372_036_854_775_807,
+                'type_float'    => 10.1,
+                'type_numeric'  => 123.23,
+                'type_date'     => '2023-12-0' . $i,
+                'type_datetime' => '2023-12-21 12:00:00',
+            ]);
+        }
+
+        $this->db->table($table)->updateBatch([
+            ['type_char' => 'char1     X', 'type_text' => 'changed'],
+            ['type_char' => 'char2', 'type_text' => 'changed'],
+        ], 'type_char');
+
+        $this->seeInDatabase($table, ['type_varchar' => 'test1', 'type_text' => 'text']);
+        $this->seeInDatabase($table, ['type_varchar' => 'test2', 'type_text' => 'changed']);
+    }
+
+    public function testUpdateBatchWithMappedUpdateFieldsAndMixedValueTypes(): void
+    {
+        if ($this->db->DBDriver === 'SQLSRV') {
+            $this->markTestSkipped('SQL Server cannot compare `text` columns with `=`.');
+        }
+
+        $table = 'type_test';
+
+        $builder = $this->db->table($table);
+        $builder->truncate();
+
+        for ($i = 1; $i < 3; $i++) {
+            $builder->insert([
+                'type_varchar'  => 'test' . $i,
+                'type_char'     => 'char' . $i,
+                'type_text'     => 'text',
+                'type_smallint' => 32767,
+                'type_integer'  => 2_147_483_647,
+                'type_bigint'   => 9_223_372_036_854_775_807,
+                'type_float'    => 10.1,
+                'type_numeric'  => 123.23,
+                'type_date'     => '2023-12-0' . $i,
+                'type_datetime' => '2023-12-21 12:00:00',
+            ]);
+        }
+
+        $this->db->table($table)
+            ->setData([
+                ['type_varchar' => 'test1', 'text' => 'Example'],
+                ['type_varchar' => 'test2', 'text' => 587],
+            ], null, 'data')
+            ->updateFields(['type_text' => 'text'])
+            ->onConstraint('type_varchar')
+            ->updateBatch();
+
+        $this->seeInDatabase($table, ['type_varchar' => 'test1', 'type_text' => 'Example']);
+        $this->seeInDatabase($table, ['type_varchar' => 'test2', 'type_text' => '587']);
+    }
+
+    public function testUpdateBatchKeepsSourceValueForColumnsOfDifferentTypes(): void
+    {
+        if ($this->db->DBDriver === 'SQLSRV') {
+            $this->markTestSkipped('SQL Server cannot compare `text` columns with `=`.');
+        }
+
+        $table = 'type_test';
+
+        $builder = $this->db->table($table);
+        $builder->truncate();
+
+        $builder->insert([
+            'type_varchar'  => 'test1',
+            'type_char'     => 'char1',
+            'type_text'     => 'text',
+            'type_smallint' => 32767,
+            'type_integer'  => 2_147_483_647,
+            'type_bigint'   => 9_223_372_036_854_775_807,
+            'type_float'    => 10.1,
+            'type_numeric'  => 123.23,
+            'type_date'     => '2023-12-01',
+            'type_datetime' => '2023-12-21 12:00:00',
+        ]);
+
+        $this->db->table($table)
+            ->setData([['type_varchar' => 'test1', 'value' => 1.4]], null, 'data')
+            ->updateFields(['type_integer' => 'value', 'type_text' => 'value'])
+            ->onConstraint('type_varchar')
+            ->updateBatch();
+
+        $this->seeInDatabase($table, ['type_varchar' => 'test1', 'type_text' => '1.4']);
     }
 
     public function testUpdateWithWhereSameColumn(): void

@@ -40,6 +40,11 @@ use stdClass;
  *
  * @property-read BaseConnection $db
  *
+ * @phpstan-type WhenCallback        callable(BaseBuilder, mixed): mixed
+ * @phpstan-type WhenDefaultCallback callable(BaseBuilder): mixed
+ *
+ * @phpstan-import-type row_array from BaseModel
+ *
  * @method $this groupBy($by, ?bool $escape = null)
  * @method $this groupEnd()
  * @method $this groupStart()
@@ -78,15 +83,11 @@ use stdClass;
  * @method $this selectMax(string $select = '', string $alias = '')
  * @method $this selectMin(string $select = '', string $alias = '')
  * @method $this selectSum(string $select = '', string $alias = '')
- * @method $this when($condition, callable $callback, ?callable $defaultCallback = null)
- * @method $this whenNot($condition, callable $callback, ?callable $defaultCallback = null)
+ * @method $this when($condition, WhenCallback $callback, ?WhenDefaultCallback $defaultCallback = null)
+ * @method $this whenNot($condition, WhenCallback $callback, ?WhenDefaultCallback $defaultCallback = null)
  * @method $this where($key, $value = null, ?bool $escape = null)
  * @method $this whereIn(?string $key = null, $values = null, ?bool $escape = null)
  * @method $this whereNotIn(?string $key = null, $values = null, ?bool $escape = null)
- *
- * @phpstan-method $this when($condition, callable(BaseBuilder, mixed): mixed $callback, (callable(BaseBuilder): mixed)|null $defaultCallback = null)
- * @phpstan-method $this whenNot($condition, callable(BaseBuilder, mixed): mixed $callback, (callable(BaseBuilder): mixed)|null $defaultCallback = null)
- * @phpstan-import-type row_array from BaseModel
  */
 class Model extends BaseModel
 {
@@ -123,7 +124,7 @@ class Model extends BaseModel
      * so that we can capture it (not the builder)
      * and ensure it gets validated first.
      *
-     * @var array{escape: array<int|string, bool|null>, data: row_array}|array{}
+     * @var array{escape: array<array-key, bool|null>, data: row_array}|array{}
      */
     protected $tempData = [];
 
@@ -131,7 +132,7 @@ class Model extends BaseModel
      * Escape array that maps usage of escape
      * flag for every parameter.
      *
-     * @var array<int|string, bool|null>
+     * @var array<array-key, bool|null>
      */
     protected $escape = [];
 

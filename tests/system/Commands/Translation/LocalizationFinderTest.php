@@ -166,6 +166,9 @@ final class LocalizationFinderTest extends CIUnitTestCase
         $this->assertArrayNotHasKey('pageNotFound', $generatedKeys);
     }
 
+    /**
+     * @return array<string, string>
+     */
     private function getActualTranslationOneKeys(): array
     {
         return [
@@ -179,6 +182,9 @@ final class LocalizationFinderTest extends CIUnitTestCase
         ];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function getActualTranslationThreeKeys(): array
     {
         return [
@@ -212,6 +218,9 @@ final class LocalizationFinderTest extends CIUnitTestCase
         ];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function getActualTranslationFourKeys(): array
     {
         return [

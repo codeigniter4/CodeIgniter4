@@ -431,7 +431,6 @@ final class CLIRequestTest extends CIUnitTestCase
         $result = $this->request->fetchGlobal('post');
 
         $this->assertSame($post, $result);
-        $this->assertIsArray($result['ANNOUNCEMENTS']);
         $this->assertCount(2, $result['ANNOUNCEMENTS']);
     }
 
@@ -567,11 +566,22 @@ final class CLIRequestTest extends CIUnitTestCase
     {
         $this->assertNull($this->request->getCookie('TESTY'));
 
-        $this->assertSame($this->request->getCookie(), []);
+        $this->assertSame([], $this->request->getCookie());
     }
 
     public function testIs(): void
     {
         $this->assertFalse($this->request->is('get'));
+    }
+
+    public function testParseCommandWithMissingArgv(): void
+    {
+        Services::injectMock('superglobals', new Superglobals([], [], [], [], []));
+
+        $request = new CLIRequest(new App());
+
+        $this->assertSame('', $request->getPath());
+        $this->assertSame([], $request->getSegments());
+        $this->assertSame('', $request->getOptionString());
     }
 }

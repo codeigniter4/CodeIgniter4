@@ -43,7 +43,7 @@ interface TransformerInterface
     /**
      * Transforms a collection of resources using $this->transform() on each item.
      *
-     * @param array<int|string, mixed> $resources
+     * @param array<array-key, mixed> $resources
      *
      * @return array<int, array<string, mixed>>
      */

@@ -67,7 +67,7 @@ final class HeaderTest extends CIUnitTestCase
         $name  = 'foo';
         $value = new stdClass();
 
-        new Header($name, $value);
+        new Header($name, $value); // @phpstan-ignore argument.type
     }
 
     public function testHeaderStoresArrayValues(): void
@@ -275,7 +275,7 @@ final class HeaderTest extends CIUnitTestCase
     }
 
     /**
-     * @param array<int|string, array<string, string>|string>|string|null $value
+     * @param array<array-key, array<string, string>|string>|string|null $value
      */
     #[DataProvider('provideInvalidHeaderValues')]
     public function testInvalidHeaderValues($value): void
@@ -286,7 +286,7 @@ final class HeaderTest extends CIUnitTestCase
     }
 
     /**
-     * @return list<list<array<(int|string), string>|string>>
+     * @return list<list<array<array-key, string>|string>>
      */
     public static function provideInvalidHeaderValues(): iterable
     {

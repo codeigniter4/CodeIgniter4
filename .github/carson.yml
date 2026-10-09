@@ -1,0 +1,125 @@
+# https://github.com/NexusPHP/carson/blob/1.x/SUBSCRIBERS.md
+
+version: 1
+subscribers:
+  - auto-labeler
+  - conflicts-notifier
+  - no-merge-commits
+  - no-response-closer
+  - pr-title-linter
+  - signed-commits
+  - template-enforcer
+  - welcome
+settings:
+  auto-labeler:
+    sync_labels: true
+    sync_exempt:
+      - enhancement
+    rules:
+      - label: '4.8' # @todo change value whenever the next minor version is changed
+        base_branch: ['^4\.8$']
+      - label: github_actions
+        files: ['.github/workflows/*']
+      - label: documentation
+        files:
+          all: ['user_guide_src/source/**']
+      - label: testing
+        files:
+          all: ['tests/**']
+      - label: bug
+        title: ['^fix(\([^)]*\))?: ']
+      - label: enhancement
+        title: ['^perf(\([^)]*\))?: ']
+      - label: refactor
+        title: ['^refactor(\([^)]*\))?: ']
+  conflicts-notifier:
+    label: stale
+    message: |-
+      :wave: Hi, @{{user}}!
+
+      We detected conflicts in your PR against the base branch :speak_no_evil:
+      You may want to sync :arrows_counterclockwise: your branch with upstream!
+
+      Ref: [Syncing Your Branch](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/workflow.md#updating-your-branch)
+  no-merge-commits:
+    name: 'Carson / no-merge-commits'
+    treat_merge_commits_as: failure
+    exempt_branches:
+      - head: '^develop$'
+        base: '^master$'
+      - head: '^4\.\d+$'
+        base: '^develop$'
+  no-response-closer:
+    rules:
+      - label: needs template
+        only: issues
+        days_until_close: 2
+        close_message: |-
+          Closing this issue: the description still does not follow the bug report template after {{days_until_close}} days.
+
+          Please open a new issue using the [bug report form](https://github.com/codeigniter4/CodeIgniter4/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml&title=Bug%3A+). For feature requests or support questions, please use the [forums](https://forum.codeigniter.com/forum-30.html).
+      - label: waiting for info
+        days_until_close: 14
+        unlabel_on_response: true
+        close_message: |-
+          Closing this {{type}}: there has been no response for {{days_until_close}} days after more information was requested.
+
+          If you can provide the requested details, leave a comment and a maintainer can reopen it.
+  pr-title-linter:
+    name: 'Carson / pr-title-linter'
+    rules:
+      - pattern: '^(?:(?:\[\d+\.\d+\] )?(?:feat|fix|chore|docs|perf|refactor|style|test|config|revert)(?:\([\-.@:`a-zA-Z0-9]+\))?!?: \S.+\S|Prep for \d+\.\d+\.\d+ release|\d+\.\d+\.\d+ (?:Ready|Merge) code)$'
+        description: 'PR title must include the type (feat, fix, chore, docs, perf, refactor, style, test, config, revert) of the commit per Conventional Commits specification. See https://www.conventionalcommits.org/en/v1.0.0/ for the discussion.'
+        level: error
+  signed-commits:
+    name: 'Carson / signed-commits'
+    treat_unsigned_as: failure
+  template-enforcer:
+    label: needs template
+    exempt_roles: [admin, maintain, write, triage]
+    message: |-
+      Hi there, @{{user}}! :wave:
+
+      It looks like this {{type}} does not follow our template:
+
+      {{violations}}
+
+      Please update the description to follow the template. The `{{label}}` label will be removed automatically once it does.
+    issues:
+      rules:
+        - pattern: '### PHP Version[\s\S]*### CodeIgniter4 Version'
+          description: 'Use the [bug report form](https://github.com/codeigniter4/CodeIgniter4/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml&title=Bug%3A+), which asks for your PHP and CodeIgniter4 versions. For a feature request or support question, please use the [forums](https://forum.codeigniter.com/forum-30.html).'
+    pull_requests:
+      rules:
+        - pattern: '\*\*Description\*\*'
+          description: 'Keep the **Description** heading from the [pull request template](https://github.com/codeigniter4/CodeIgniter4/blob/develop/.github/PULL_REQUEST_TEMPLATE.md) and explain what you have changed, and why.'
+        - pattern: '\*\*Checklist:?\*\*'
+          description: 'Keep the **Checklist** from the pull request template and tick the items that apply. See [what we expect in a pull request](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md).'
+        - pattern: 'Explain what you have changed, and why\.'
+          description: 'Replace the placeholder text under **Description** with your own explanation.'
+          mode: forbid
+  welcome:
+    first_time:
+      pull_request: |-
+        Hi there, @{{user}}! :wave:
+
+        Thank you for sending this PR!
+
+        We expect the following in all Pull Requests (PRs).
+        - PRs must be sent to the [appropriate branch](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#branching)
+        - All git commits must be [GPG-signed](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#signing)
+        - Must follow our [style guide](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#php-style)
+        - Be [commented](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#comments) in the PHP source file
+        - Be documented in the [user guide](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#user-guide)
+        - Be [unit tested](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#unit-testing)
+        - Pass all checks in GitHub Actions
+
+        > [!IMPORTANT]
+        > We expect all code changes or bug-fixes to be accompanied by one or more tests added to our test suite to prove the code works.
+
+        If pull requests do not comply with the above, they will likely be closed. Since we are a team of volunteers, we don't have any more time to work
+        on the framework than you do. Please make it as painless for your contributions to be included as possible.
+
+        See https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md
+      issue: false
+    returning: false

@@ -37,11 +37,11 @@ abstract class AbstractHandlerTestCase extends CIUnitTestCase
 
     protected function setUp(): void
     {
-        parent::setUp();
-
         if (! in_array(config(DatabaseConfig::class)->tests['DBDriver'], ['MySQLi', 'Postgre'], true)) {
             $this->markTestSkipped('Database Session Handler requires database driver to be MySQLi or Postgre');
         }
+
+        parent::setUp();
     }
 
     /**

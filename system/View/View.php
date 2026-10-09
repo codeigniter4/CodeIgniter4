@@ -239,7 +239,7 @@ class View implements RendererInterface
             ob_start();
             include $this->renderVars['file'];
 
-            return ob_get_clean() ?: '';
+            return (string) ob_get_clean();
         })();
 
         // Get back current vars
@@ -326,12 +326,15 @@ class View implements RendererInterface
         $saveData ??= $this->saveData;
         $this->prepareTemplateData($saveData);
 
-        $output = (function (string $view): string {
+        // The parameter is variadic on purpose: func_get_arg() returns the current
+        // value of a named parameter, which extract() could overwrite with view data.
+        $output = (function (string ...$view): string {
+            $view = $view[0]; // Keep $view available inside the view as before.
             extract($this->tempData);
             ob_start();
-            eval('?>' . $view);
+            eval('?>' . func_get_arg(0));
 
-            return ob_get_clean() ?: '';
+            return (string) ob_get_clean();
         })($view);
 
         $this->logPerformance($start, microtime(true), $this->excerpt($view));

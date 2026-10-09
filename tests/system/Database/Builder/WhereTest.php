@@ -30,11 +30,6 @@ use stdClass;
 #[Group('Others')]
 final class WhereTest extends CIUnitTestCase
 {
-    /**
-     * @var MockConnection
-     */
-    protected $db;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -407,6 +402,9 @@ final class WhereTest extends CIUnitTestCase
         $builder->whereIn($key, ['Politician', 'Accountant']);
     }
 
+    /**
+     * @return iterable<string, array{string|null}>
+     */
     public static function provideWhereInvalidKeyThrowInvalidArgumentException(): iterable
     {
         return [
@@ -427,6 +425,9 @@ final class WhereTest extends CIUnitTestCase
         $builder->whereIn('name', $values);
     }
 
+    /**
+     * @return iterable<string, array{mixed}>
+     */
     public static function provideWhereInEmptyValuesThrowInvalidArgumentException(): iterable
     {
         return [

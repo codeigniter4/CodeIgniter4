@@ -44,14 +44,14 @@ class Header implements Stringable
      *       'baz' => 'buzz',
      *   ]
      *
-     * @var array<int|string, array<string, string>|string>|string
+     * @var array<array-key, array<string, string>|string>|string
      */
     protected $value;
 
     /**
      * Header constructor. name is mandatory, if a value is provided, it will be set.
      *
-     * @param array<int|string, array<string, string>|string>|string|null $value
+     * @param array<array-key, array<string, string>|string>|int|string|null $value
      */
     public function __construct(string $name, $value = null)
     {
@@ -71,7 +71,7 @@ class Header implements Stringable
      * Gets the raw value of the header. This may return either a string
      * or an array, depending on whether the header has multiple values or not.
      *
-     * @return array<int|string, array<string, string>|string>|string
+     * @return array<array-key, array<string, string>|string>|string
      */
     public function getValue()
     {
@@ -96,7 +96,7 @@ class Header implements Stringable
     /**
      * Sets the value of the header, overwriting any previous value(s).
      *
-     * @param array<int|string, array<string, string>|string>|string|null $value
+     * @param array<array-key, array<string, string>|int|string>|int|string|null $value
      *
      * @return $this
      *
@@ -235,7 +235,7 @@ class Header implements Stringable
      *
      * @see https://datatracker.ietf.org/doc/html/rfc7230#section-3.2
      *
-     * @param array<int|string, array<string, string>|string>|int|string $value
+     * @param array<array-key, array<string, string>|int|string>|int|string $value
      *
      * @throws InvalidArgumentException
      */

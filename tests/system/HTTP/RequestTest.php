@@ -195,7 +195,6 @@ final class RequestTest extends CIUnitTestCase
         $result = $this->request->fetchGlobal('post');
 
         $this->assertSame($post, $result);
-        $this->assertIsArray($result['ANNOUNCEMENTS']);
         $this->assertCount(2, $result['ANNOUNCEMENTS']);
     }
 
@@ -563,7 +562,8 @@ final class RequestTest extends CIUnitTestCase
         $expected = '123.123.123.123';
         service('superglobals')->setServer('REMOTE_ADDR', $expected);
         $this->request = new Request(new App());
-        $this->assertSame($expected, $this->request->getIPAddress());
+        $ipAddress     = $this->request->getIPAddress();
+        $this->assertSame($expected, $ipAddress);
         // call a second time to exercise the initial conditional block in getIPAddress()
         $this->assertSame($expected, $this->request->getIPAddress());
     }

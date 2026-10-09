@@ -40,6 +40,9 @@ final class CSRFTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->resetServices();
+
         $this->config = new \Config\Filters();
     }
 
@@ -50,8 +53,11 @@ final class CSRFTest extends CIUnitTestCase
             'after'  => [],
         ];
 
-        $this->request  = Services::clirequest(null, false);
-        $this->response = service('response');
+        $this->request = Services::clirequest(null, false);
+
+        $response = service('response');
+        $this->assertInstanceOf(Response::class, $response);
+        $this->response = $response;
 
         $filters = new Filters($this->config, $this->request, $this->response);
         $uri     = 'admin/foo/bar';
@@ -68,8 +74,11 @@ final class CSRFTest extends CIUnitTestCase
             'after'  => [],
         ];
 
-        $this->request  = service('incomingrequest', null, false);
-        $this->response = service('response');
+        $this->request = service('incomingrequest', null, false);
+
+        $response = service('response');
+        $this->assertInstanceOf(Response::class, $response);
+        $this->response = $response;
 
         $filters = new Filters($this->config, $this->request, $this->response);
         $uri     = 'admin/foo/bar';

@@ -29,11 +29,11 @@ use PHPUnit\Framework\Attributes\AfterClass;
  * Provides functionality for refreshing/seeding
  * the database during testing.
  *
- * @property BaseConnection                 $db
- * @property list<array<int|string, mixed>> $insertCache
- * @property Seeder|null                    $seeder
- * @property MigrationRunner|null           $migrations
- * @property list<string>|string|null       $namespace
+ * @property BaseConnection                $db
+ * @property list<array<array-key, mixed>> $insertCache
+ * @property Seeder|null                   $seeder
+ * @property MigrationRunner|null          $migrations
+ * @property list<string>|string|null      $namespace
  *
  * @mixin CIUnitTestCase
  */

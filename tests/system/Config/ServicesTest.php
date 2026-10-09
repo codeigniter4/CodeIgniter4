@@ -66,6 +66,9 @@ use Tests\Support\Config\Services;
 #[Group('SeparateProcess')]
 final class ServicesTest extends CIUnitTestCase
 {
+    /**
+     * @var array<array-key, mixed>
+     */
     private array $original;
 
     #[WithoutErrorHandler]
@@ -194,7 +197,8 @@ final class ServicesTest extends CIUnitTestCase
     {
         $actual = Services::language(null, false);
         $this->assertInstanceOf(Language::class, $actual);
-        $this->assertSame('en', $actual->getLocale());
+        $locale = $actual->getLocale();
+        $this->assertSame('en', $locale);
 
         Services::language('la', false);
         $this->assertSame('en', $actual->getLocale());
@@ -459,7 +463,7 @@ final class ServicesTest extends CIUnitTestCase
 
     public function testRedirectResponse(): void
     {
-        $result = Services::redirectResponse();
+        $result = Services::redirectresponse();
         $this->assertInstanceOf(RedirectResponse::class, $result);
     }
 

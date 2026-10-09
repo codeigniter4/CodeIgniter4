@@ -145,7 +145,7 @@ final class Superglobals
     /**
      * Set the entire $_SERVER array.
      *
-     * @param array<string, server_items> $array
+     * @param array<string, server_items|null> $array
      */
     public function setServerArray(array $array): self
     {

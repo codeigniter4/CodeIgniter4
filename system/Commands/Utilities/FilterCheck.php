@@ -108,7 +108,7 @@ class FilterCheck extends BaseCommand
     }
 
     /**
-     * @param array<int|string, string|null> $params
+     * @param array<array-key, string|null> $params
      */
     private function checkParams(array $params): bool
     {

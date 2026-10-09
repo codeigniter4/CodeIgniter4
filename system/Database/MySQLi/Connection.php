@@ -15,7 +15,6 @@ namespace CodeIgniter\Database\MySQLi;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use CodeIgniter\Database\TableName;
 use CodeIgniter\Exceptions\LogicException;
 use mysqli;
 use mysqli_result;
@@ -51,7 +50,7 @@ class Connection extends BaseConnection
     /**
      * Identifier escape character
      *
-     * @var string
+     * @var list<string>|string
      */
     public $escapeChar = '`';
 
@@ -108,7 +107,7 @@ class Connection extends BaseConnection
             $socket   = $this->hostname;
         } else {
             $hostname = $persistent ? 'p:' . $this->hostname : $this->hostname;
-            $port     = empty($this->port) ? null : $this->port;
+            $port     = $this->port === '' ? null : $this->port;
             $socket   = '';
         }
 
@@ -147,19 +146,19 @@ class Connection extends BaseConnection
         if (is_array($this->encrypt)) {
             $ssl = [];
 
-            if (! empty($this->encrypt['ssl_key'])) {
+            if (($this->encrypt['ssl_key'] ?? '') !== '') {
                 $ssl['key'] = $this->encrypt['ssl_key'];
             }
-            if (! empty($this->encrypt['ssl_cert'])) {
+            if (($this->encrypt['ssl_cert'] ?? '') !== '') {
                 $ssl['cert'] = $this->encrypt['ssl_cert'];
             }
-            if (! empty($this->encrypt['ssl_ca'])) {
+            if (($this->encrypt['ssl_ca'] ?? '') !== '') {
                 $ssl['ca'] = $this->encrypt['ssl_ca'];
             }
-            if (! empty($this->encrypt['ssl_capath'])) {
+            if (($this->encrypt['ssl_capath'] ?? '') !== '') {
                 $ssl['capath'] = $this->encrypt['ssl_capath'];
             }
-            if (! empty($this->encrypt['ssl_cipher'])) {
+            if (($this->encrypt['ssl_cipher'] ?? '') !== '') {
                 $ssl['cipher'] = $this->encrypt['ssl_cipher'];
             }
 
@@ -234,11 +233,6 @@ class Connection extends BaseConnection
         return false;
     }
 
-    /**
-     * Close the database connection.
-     *
-     * @return void
-     */
     protected function _close()
     {
         $this->connID->close();
@@ -253,7 +247,7 @@ class Connection extends BaseConnection
             $databaseName = $this->database;
         }
 
-        if (empty($this->connID)) {
+        if ($this->connID === false) {
             $this->initialize();
         }
 
@@ -275,7 +269,7 @@ class Connection extends BaseConnection
             return $this->dataCache['version'];
         }
 
-        if (empty($this->mysqli)) {
+        if (! $this->mysqli instanceof mysqli) {
             $this->initialize();
         }
 
@@ -379,10 +373,7 @@ class Connection extends BaseConnection
     }
 
     /**
-     * Generates the SQL for listing tables in a platform-dependent manner.
      * Uses escapeLikeStringDirect().
-     *
-     * @param string|null $tableName If $tableName is provided will return only this table if exists.
      */
     protected function _listTables(bool $prefixLimit = false, ?string $tableName = null): string
     {
@@ -399,11 +390,6 @@ class Connection extends BaseConnection
         return $sql;
     }
 
-    /**
-     * Generates a platform-specific query string so that the column names can be fetched.
-     *
-     * @param string|TableName $table
-     */
     protected function _listColumns($table = ''): string
     {
         $tableName = $this->protectIdentifiers(
@@ -417,10 +403,6 @@ class Connection extends BaseConnection
     }
 
     /**
-     * Returns an array of objects with field data
-     *
-     * @return list<stdClass>
-     *
      * @throws DatabaseException
      */
     protected function _fieldData(string $table): array
@@ -449,10 +431,6 @@ class Connection extends BaseConnection
     }
 
     /**
-     * Returns an array of objects with index data
-     *
-     * @return array<string, stdClass>
-     *
      * @throws DatabaseException
      * @throws LogicException
      */
@@ -473,7 +451,7 @@ class Connection extends BaseConnection
         $keys = [];
 
         foreach ($indexes as $index) {
-            if (empty($keys[$index['Key_name']])) {
+            if (! isset($keys[$index['Key_name']])) {
                 $keys[$index['Key_name']]       = new stdClass();
                 $keys[$index['Key_name']]->name = $index['Key_name'];
 
@@ -481,7 +459,7 @@ class Connection extends BaseConnection
                     $type = 'PRIMARY';
                 } elseif ($index['Index_type'] === 'FULLTEXT') {
                     $type = 'FULLTEXT';
-                } elseif ($index['Non_unique']) {
+                } elseif ((bool) $index['Non_unique']) {
                     $type = $index['Index_type'] === 'SPATIAL' ? 'SPATIAL' : 'INDEX';
                 } else {
                     $type = 'UNIQUE';
@@ -497,10 +475,6 @@ class Connection extends BaseConnection
     }
 
     /**
-     * Returns an array of objects with Foreign key data
-     *
-     * @return array<string, stdClass>
-     *
      * @throws DatabaseException
      */
     protected function _foreignKeyData(string $table): array
@@ -577,7 +551,7 @@ class Connection extends BaseConnection
      */
     public function error(): array
     {
-        if (! empty($this->mysqli->connect_errno)) {
+        if ($this->mysqli instanceof mysqli && $this->mysqli->connect_errno !== 0) {
             return [
                 'code'    => $this->mysqli->connect_errno,
                 'message' => $this->mysqli->connect_error,
@@ -598,25 +572,16 @@ class Connection extends BaseConnection
         return $this->connID->insert_id;
     }
 
-    /**
-     * Begin Transaction
-     */
     protected function _transBegin(): bool
     {
         return $this->connID->begin_transaction();
     }
 
-    /**
-     * Commit Transaction
-     */
     protected function _transCommit(): bool
     {
         return $this->connID->commit();
     }
 
-    /**
-     * Rollback Transaction
-     */
     protected function _transRollback(): bool
     {
         return $this->connID->rollback();

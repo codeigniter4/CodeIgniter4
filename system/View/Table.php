@@ -260,7 +260,7 @@ class Table
      *
      * Ensures a standard associative array format for all cell data
      *
-     * @param array<int, mixed> $args
+     * @param array<array-key, mixed> $args
      *
      * @return array<string, array<string, mixed>>|list<array<string, mixed>>
      */
@@ -503,9 +503,7 @@ class Table
         }
 
         foreach ($this->_defaultTemplate() as $field => $template) {
-            if (! isset($this->template[$field])) {
-                $this->template[$field] = $template;
-            }
+            $this->template[$field] ??= $template;
         }
     }
 

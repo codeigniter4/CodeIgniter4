@@ -53,6 +53,8 @@ class Events extends BaseCollector
     /**
      * Child classes should implement this to return the timeline data
      * formatted for correct usage.
+     *
+     * @return list<array{name: string, component: string, start: float, duration: float}>
      */
     protected function formatTimelineData(): array
     {
@@ -74,6 +76,8 @@ class Events extends BaseCollector
 
     /**
      * Returns the data of this collector to be formatted in the toolbar
+     *
+     * @return array{events: array<string, array{event: string, duration: string, count: int}>}
      */
     public function display(): array
     {

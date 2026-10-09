@@ -188,13 +188,17 @@ final class FilesystemHelperTest extends CIUnitTestCase
         // skips the existing folder
         directory_mirror($root . 'src', $root . 'dest');
 
-        $structure = vfsStream::inspect(new vfsStreamStructureVisitor())->getStructure();
+        $visitor = vfsStream::inspect(new vfsStreamStructureVisitor());
+        $this->assertInstanceOf(vfsStreamStructureVisitor::class, $visitor);
+        $structure = $visitor->getStructure();
         $this->assertSame([], $structure['root']['dest']['AnEmptyFolder']);
 
         // skips the existing folder (the same as overwrite = true)
         directory_mirror($root . 'src', $root . 'dest', false);
 
-        $structure = vfsStream::inspect(new vfsStreamStructureVisitor())->getStructure();
+        $visitor = vfsStream::inspect(new vfsStreamStructureVisitor());
+        $this->assertInstanceOf(vfsStreamStructureVisitor::class, $visitor);
+        $structure = $visitor->getStructure();
         $this->assertSame([], $structure['root']['dest']['AnEmptyFolder']);
     }
 
@@ -475,6 +479,22 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $expected = [];
 
         $this->assertSame($expected, get_dir_file_info(SUPPORTPATH . 'Files#baker'));
+    }
+
+    public function testGetDirFileInfoIgnoresDirectoriesWhenTopLevelOnlyIsTrue(): void
+    {
+        $dir = WRITEPATH . 'test_get_dir_file_info';
+        mkdir($dir . '/subdir', 0777, true);
+        file_put_contents($dir . '/file.txt', 'test');
+
+        $result = get_dir_file_info($dir, true);
+
+        unlink($dir . '/file.txt');
+        rmdir($dir . '/subdir');
+        rmdir($dir);
+
+        $this->assertArrayHasKey('file.txt', $result);
+        $this->assertArrayNotHasKey('subdir', $result);
     }
 
     public function testGetFileInfo(): void

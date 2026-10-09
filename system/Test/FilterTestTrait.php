@@ -44,14 +44,14 @@ trait FilterTestTrait
     /**
      * The active IncomingRequest or CLIRequest
      *
-     * @var RequestInterface
+     * @var RequestInterface|null
      */
     protected $request;
 
     /**
      * The active Response instance
      *
-     * @var ResponseInterface
+     * @var ResponseInterface|null
      */
     protected $response;
 
@@ -102,9 +102,7 @@ trait FilterTestTrait
         $this->filtersConfig ??= config(FiltersConfig::class);
         $this->filters ??= new Filters($this->filtersConfig, $this->request, $this->response);
 
-        if ($this->collection === null) {
-            $this->collection = service('routes')->loadRoutes();
-        }
+        $this->collection ??= service('routes')->loadRoutes();
 
         $this->doneFilterSetUp = true;
     }
@@ -128,6 +126,8 @@ trait FilterTestTrait
             throw new InvalidArgumentException('Invalid filter position passed: ' . $position);
         }
 
+        $filterInstances = [];
+
         if ($filter instanceof FilterInterface) {
             $filterInstances = [$filter];
         }
@@ -144,8 +144,6 @@ trait FilterTestTrait
                 // FQCN
                 $filterClasses = [$filter];
             }
-
-            $filterInstances = [];
 
             foreach ($filterClasses as $class) {
                 // Get an instance
@@ -178,7 +176,7 @@ trait FilterTestTrait
                     if ($result instanceof ResponseInterface) {
                         return $result;
                     }
-                    if (empty($result)) {
+                    if (! is_string($result) || $result === '') {
                         continue;
                     }
                 }

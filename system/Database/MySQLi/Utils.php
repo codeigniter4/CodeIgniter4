@@ -18,26 +18,22 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Utils for MySQLi
+ *
+ * @extends BaseUtils<Connection>
  */
 class Utils extends BaseUtils
 {
     /**
-     * List databases statement
-     *
-     * @var string
+     * @var bool|string
      */
     protected $listDatabases = 'SHOW DATABASES';
 
     /**
-     * OPTIMIZE TABLE statement
-     *
-     * @var string
+     * @var bool|string
      */
     protected $optimizeTable = 'OPTIMIZE TABLE %s';
 
     /**
-     * Platform dependent version of the backup function.
-     *
      * @return never
      */
     public function _backup(?array $prefs = null)

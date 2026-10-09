@@ -130,8 +130,7 @@ final class TextHelperTest extends CIUnitTestCase
         $this->assertSame(16, strlen(random_string('numeric', 16)));
         $this->assertSame(8, strlen(random_string('numeric')));
 
-        $this->assertSame(16, strlen($random = random_string('crypto', 16)));
-        $this->assertIsString($random);
+        $this->assertSame(16, strlen(random_string('crypto', 16)));
     }
 
     /**
@@ -162,7 +161,8 @@ final class TextHelperTest extends CIUnitTestCase
         $this->assertSame('my-test_1', increment_string('my-test'));
         $this->assertSame('my-test-1', increment_string('my-test', '-'));
         $this->assertSame('file_5', increment_string('file_4'));
-        $this->assertSame('file-5', increment_string('file-4', '-'));
+        $incremented = increment_string('file-4', '-');
+        $this->assertSame('file-5', $incremented);
         $this->assertSame('file-5', increment_string('file-4', '-'));
         $this->assertSame('file-1', increment_string('file', '-', 1));
         $this->assertSame('124', increment_string('123', ''));
@@ -356,6 +356,27 @@ final class TextHelperTest extends CIUnitTestCase
                 $this->assertSame($expect, ellipsize($str, 10, $pos));
             }
         }
+    }
+
+    /**
+     * A character limit below 2 used to make word_wrap() loop forever.
+     */
+    #[DataProvider('provideWordWrapSmallCharLimit')]
+    public function testWordWrapSmallCharLimit(int $charlim): void
+    {
+        $this->assertSame("aaaa\nbbbb", word_wrap('aaaa bbbb', $charlim));
+    }
+
+    /**
+     * @return iterable<string, array{int}>
+     */
+    public static function provideWordWrapSmallCharLimit(): iterable
+    {
+        yield 'one' => [1];
+
+        yield 'zero' => [0];
+
+        yield 'negative' => [-5];
     }
 
     public function testWordWrap(): void

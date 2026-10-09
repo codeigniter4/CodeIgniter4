@@ -22,13 +22,13 @@ if (! function_exists('fake')) {
     /**
      * Creates a single item using Fabricator.
      *
-     * @param Model|object|string $model     Instance or name of the model
-     * @param array|null          $overrides Overriding data to pass to Fabricator::setOverrides()
-     * @param bool                $persist
+     * @param Model|object|string       $model     Instance or name of the model
+     * @param array<string, mixed>|null $overrides Overriding data to pass to Fabricator::setOverrides()
+     * @param bool                      $persist
      *
-     * @return array|object
+     * @return array<string, mixed>|object
      */
-    function fake($model, ?array $overrides = null, $persist = true)
+    function fake($model, ?array $overrides = null, $persist = true): array|object
     {
         $fabricator = new Fabricator($model);
 
@@ -49,21 +49,19 @@ if (! function_exists('mock')) {
      * Used within our test suite to mock certain system tools.
      *
      * @param string $className Fully qualified class name
-     *
-     * @return object
      */
-    function mock(string $className)
+    function mock(string $className): object
     {
         $mockClass   = $className::$mockClass;
         $mockService = $className::$mockServiceName ?? '';
 
-        if (empty($mockClass) || ! class_exists($mockClass)) {
+        if ($mockClass === '' || ! class_exists($mockClass)) {
             throw TestException::forInvalidMockClass($mockClass);
         }
 
         $mock = new $mockClass();
 
-        if (! empty($mockService)) {
+        if ($mockService !== '') {
             Services::injectMock($mockService, $mock);
         }
 

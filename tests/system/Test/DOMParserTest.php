@@ -144,6 +144,9 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertTrue($dom->see($text, 'h1'));
     }
 
+    /**
+     * @return iterable<string, array{string}>
+     */
     public static function provideText(): iterable
     {
         return [

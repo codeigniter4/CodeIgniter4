@@ -41,20 +41,17 @@ trait MessageTrait
      * and their normal-case key as it is in $headers.
      * Used for case-insensitive header access.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $headerMap = [];
 
     // --------------------------------------------------------------------
     // Body
     // --------------------------------------------------------------------
-
     /**
      * Sets the body of the current message.
      *
-     * @param string $data
-     *
-     * @return $this
+     * @param array<array-key, mixed>|string|null $data
      */
     public function setBody($data): self
     {
@@ -67,8 +64,6 @@ trait MessageTrait
      * Appends data to the body of the current message.
      *
      * @param string $data
-     *
-     * @return $this
      */
     public function appendBody($data): self
     {
@@ -87,7 +82,7 @@ trait MessageTrait
     public function populateHeaders(): void
     {
         $contentType = service('superglobals')->server('CONTENT_TYPE', (string) getenv('CONTENT_TYPE'));
-        if (! empty($contentType)) {
+        if ($contentType !== '') {
             $this->setHeader('Content-Type', $contentType);
         }
         unset($contentType);
@@ -118,7 +113,7 @@ trait MessageTrait
         // If no headers are defined, but the user is
         // requesting it, then it's likely they want
         // it to be populated so do that...
-        if (empty($this->headers)) {
+        if ($this->headers === []) {
             $this->populateHeaders();
         }
 
@@ -143,9 +138,7 @@ trait MessageTrait
     /**
      * Sets a header and it's value.
      *
-     * @param array|string|null $value
-     *
-     * @return $this
+     * @param array<array-key, string>|string|null $value
      */
     public function setHeader(string $name, $value): self
     {
@@ -191,8 +184,6 @@ trait MessageTrait
 
     /**
      * Removes a header from the list of headers we track.
-     *
-     * @return $this
      */
     public function removeHeader(string $name): self
     {
@@ -205,8 +196,6 @@ trait MessageTrait
     /**
      * Adds an additional header value to any headers that accept
      * multiple values (i.e. are an array or implement ArrayAccess)
-     *
-     * @return $this
      */
     public function appendHeader(string $name, ?string $value): self
     {
@@ -225,8 +214,6 @@ trait MessageTrait
      * Adds a header (not a header value) with the same name.
      * Use this only when you set multiple headers with the same name,
      * typically, for `Set-Cookie`.
-     *
-     * @return $this
      */
     public function addHeader(string $name, string $value): static
     {
@@ -251,8 +238,6 @@ trait MessageTrait
     /**
      * Adds an additional header value to any headers that accept
      * multiple values (i.e. are an array or implement ArrayAccess)
-     *
-     * @return $this
      */
     public function prependHeader(string $name, string $value): self
     {
@@ -276,8 +261,6 @@ trait MessageTrait
 
     /**
      * Sets the HTTP protocol version.
-     *
-     * @return $this
      *
      * @throws HTTPException For invalid protocols
      */

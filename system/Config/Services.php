@@ -198,6 +198,8 @@ class Services extends BaseService
      * The CURL Request class acts as a simple HTTP client for interacting
      * with other servers, typically through APIs.
      *
+     * @param array<string, mixed> $options
+     *
      * @return CURLRequest
      */
     public static function curlrequest(array $options = [], ?ResponseInterface $response = null, ?App $config = null, bool $getShared = true)
@@ -220,7 +222,7 @@ class Services extends BaseService
     /**
      * The Email class allows you to send email via mail, sendmail, SMTP.
      *
-     * @param array|EmailConfig|null $config
+     * @param array<string, mixed>|EmailConfig|null $config
      *
      * @return Email
      */
@@ -230,7 +232,7 @@ class Services extends BaseService
             return static::getSharedInstance('email', $config);
         }
 
-        if (empty($config) || (! is_array($config) && ! $config instanceof EmailConfig)) {
+        if (! $config instanceof EmailConfig && (! is_array($config) || $config === [])) {
             $config = config(EmailConfig::class);
         }
 
@@ -343,7 +345,6 @@ class Services extends BaseService
         }
 
         $config ??= config(Images::class);
-        assert($config instanceof Images);
 
         $handler = in_array($handler, [null, '', '0'], true) ? $config->defaultHandler : $handler;
         $class   = $config->handlers[$handler];
@@ -739,6 +740,13 @@ class Services extends BaseService
 
     /**
      * Superglobals.
+     *
+     * @param array<string, mixed>|null $server
+     * @param array<string, mixed>|null $get
+     * @param array<string, mixed>|null $post
+     * @param array<string, mixed>|null $cookie
+     * @param array<string, mixed>|null $files
+     * @param array<string, mixed>|null $request
      *
      * @return Superglobals
      */

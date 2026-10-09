@@ -106,6 +106,9 @@ final class SiteURIFactoryTest extends CIUnitTestCase
         $this->assertSame($expectedRoutePath, $uri->getRoutePath());
     }
 
+    /**
+     * @return iterable<array{string, string, string, string}>
+     */
     public static function provideCreateFromStringWithIndexPage(): iterable
     {
         return [
@@ -149,6 +152,9 @@ final class SiteURIFactoryTest extends CIUnitTestCase
         $this->assertSame($expectedRoutePath, $uri->getRoutePath());
     }
 
+    /**
+     * @return iterable<array{string, string, string, string}>
+     */
     public static function provideCreateFromStringWithoutIndexPage(): iterable
     {
         return [

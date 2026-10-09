@@ -196,7 +196,7 @@ final class MessageTest extends CIUnitTestCase
     }
 
     /**
-     * @param array $arrayHeaderValue
+     * @param list<string> $arrayHeaderValue
      */
     #[DataProvider('provideArrayHeaderValue')]
     public function testSetHeaderWithExistingArrayValuesAppendStringValue($arrayHeaderValue): void
@@ -208,7 +208,7 @@ final class MessageTest extends CIUnitTestCase
     }
 
     /**
-     * @param array $arrayHeaderValue
+     * @param list<string> $arrayHeaderValue
      */
     #[DataProvider('provideArrayHeaderValue')]
     public function testSetHeaderWithExistingArrayValuesAppendArrayValue($arrayHeaderValue): void
@@ -219,6 +219,9 @@ final class MessageTest extends CIUnitTestCase
         $this->assertSame('json, html, xml', $this->message->getHeaderLine('Accept'));
     }
 
+    /**
+     * @return iterable<string, array{list<string>}>
+     */
     public static function provideArrayHeaderValue(): iterable
     {
         return [
@@ -259,7 +262,11 @@ final class MessageTest extends CIUnitTestCase
 
         $this->assertNull($this->message->header('content-type'));
 
-        putenv("CONTENT_TYPE={$originalEnv}");
+        if ($originalEnv !== false) {
+            putenv("CONTENT_TYPE={$originalEnv}");
+        } else {
+            putenv('CONTENT_TYPE');
+        }
     }
 
     public function testPopulateHeadersWithoutHTTP(): void

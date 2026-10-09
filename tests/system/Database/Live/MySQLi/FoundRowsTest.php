@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live\MySQLi;
 
+use CodeIgniter\Database\MySQLi\Connection as MySQLiConnection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
@@ -56,6 +57,7 @@ final class FoundRowsTest extends CIUnitTestCase
 
         $db1 = Database::connect($this->tests);
 
+        $this->assertInstanceOf(MySQLiConnection::class, $db1);
         $this->assertTrue($db1->foundRows);
     }
 
@@ -65,6 +67,7 @@ final class FoundRowsTest extends CIUnitTestCase
 
         $db1 = Database::connect($this->tests);
 
+        $this->assertInstanceOf(MySQLiConnection::class, $db1);
         $this->assertFalse($db1->foundRows);
     }
 

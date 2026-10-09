@@ -653,8 +653,16 @@ from the cli to generate a migration file for you:
   php spark make:migration --session
   php spark migrate
 
-This command will take the ``$savePath`` and ``$matchIP`` settings into account
-when it generates the code.
+This command reads the ``$matchIP`` setting to decide the primary key. The table
+name and database group are not read from **app/Config/Session.php**, so pass
+``--table`` and ``--dbgroup`` when they differ from ``ci_sessions`` and ``default``:
+
+.. code-block:: console
+
+  php spark make:migration --session --table my_sessions --dbgroup sessions
+
+The ``--table`` value should match ``$savePath``, and the ``--dbgroup`` value
+should match ``$DBGroup``.
 
 .. _sessions-redishandler-driver:
 

@@ -30,7 +30,7 @@ class CreditCardRulesTest extends CIUnitTestCase
     protected Validation $validation;
 
     /**
-     * @var array<string, array<int|string, array<string, string>|string>>
+     * @var array<string, array<array-key, array<string, string>|string>>
      */
     protected array $config = [
         'ruleSets' => [
@@ -69,6 +69,8 @@ class CreditCardRulesTest extends CIUnitTestCase
      * Cards shown are test cards found around the web.
      *
      * @see https://www.paypalobjects.com/en_US/vhelp/paypalmanager_help/credit_card_numbers.htm
+     *
+     * @return iterable<string, array{string, string|null, bool}>
      */
     public static function provideValidCCNumber(): iterable
     {
@@ -96,6 +98,16 @@ class CreditCardRulesTest extends CIUnitTestCase
             'not_numeric' => [
                 'amex',
                 'abcd efgh ijkl mnop',
+                false,
+            ],
+            'decimal_point_visa' => [
+                'visa',
+                '41.1111111111111',
+                false,
+            ],
+            'decimal_point_mastercard' => [
+                'mastercard',
+                '5351367.37861108',
                 false,
             ],
             'bad_length' => [

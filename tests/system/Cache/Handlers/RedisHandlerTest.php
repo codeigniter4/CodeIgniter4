@@ -28,18 +28,6 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
 {
     private Cache $config;
 
-    /**
-     * @return list<string>
-     */
-    private static function getKeyArray(): array
-    {
-        return [
-            self::$key1,
-            self::$key2,
-            self::$key3,
-        ];
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -54,9 +42,11 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
 
     protected function tearDown(): void
     {
-        foreach (self::getKeyArray() as $key) {
-            $this->handler->delete($key);
+        if (isset($this->handler)) {
+            $this->handler->clean();
         }
+
+        parent::tearDown();
     }
 
     public function testNew(): void

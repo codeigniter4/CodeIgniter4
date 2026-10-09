@@ -55,7 +55,16 @@ class History extends BaseCollector
     protected $title = 'History';
 
     /**
-     * @var array History files
+     * @var list<array{
+     *   time: string,
+     *   datetime: string,
+     *   active: bool,
+     *   status: mixed,
+     *   method: mixed,
+     *   url: mixed,
+     *   isAJAX: string,
+     *   contentType: mixed
+     * }>
      */
     protected $files = [];
 
@@ -111,6 +120,17 @@ class History extends BaseCollector
 
     /**
      * Returns the data of this collector to be formatted in the toolbar
+     *
+     * @return array{files: list<array{
+     *   time: string,
+     *   datetime: string,
+     *   active: bool,
+     *   status: mixed,
+     *   method: mixed,
+     *   url: mixed,
+     *   isAJAX: string,
+     *   contentType: mixed
+     * }>}
      */
     public function display(): array
     {

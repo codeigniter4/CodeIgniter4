@@ -20,13 +20,13 @@ use Throwable;
 
 /**
  * Forge for SQLSRV
+ *
+ * @extends BaseForge<Connection>
  */
 class Forge extends BaseForge
 {
     /**
      * DROP CONSTRAINT statement
-     *
-     * @var string
      */
     protected $dropConstraintStr;
 
@@ -50,8 +50,6 @@ class Forge extends BaseForge
      * CREATE DATABASE IF statement
      *
      * @todo missing charset & collat
-     *
-     * @var string
      */
     protected $createDatabaseStr = 'CREATE DATABASE %s ';
 
@@ -70,15 +68,11 @@ class Forge extends BaseForge
      *
      * @see https://docs.microsoft.com/en-us/sql/relational-databases/system-stored-procedures/sp-rename-transact-sql?view=sql-server-2017
      * 'EXEC sp_rename %s , %s ;'
-     *
-     * @var string
      */
     protected $renameTableStr;
 
     /**
      * UNSIGNED support
-     *
-     * @var array
      */
     protected $unsigned = [
         'TINYINT'  => 'SMALLINT',
@@ -89,15 +83,11 @@ class Forge extends BaseForge
 
     /**
      * Foreign Key Allowed Actions
-     *
-     * @var array
      */
     protected $fkAllowActions = ['CASCADE', 'SET NULL', 'NO ACTION', 'RESTRICT', 'SET DEFAULT'];
 
     /**
      * CREATE TABLE IF statement
-     *
-     * @var string
      *
      * @deprecated This is no longer used.
      */
@@ -105,8 +95,6 @@ class Forge extends BaseForge
 
     /**
      * CREATE TABLE statement
-     *
-     * @var string
      */
     protected $createTableStr;
 
@@ -121,13 +109,6 @@ class Forge extends BaseForge
         $this->dropIndexStr      = 'DROP INDEX %s ON ' . $this->db->escapeIdentifiers($this->db->schema) . '.%s';
     }
 
-    /**
-     * Create database
-     *
-     * @param bool $ifNotExists Whether to add IF NOT EXISTS condition
-     *
-     * @throws DatabaseException
-     */
     public function createDatabase(string $dbName, bool $ifNotExists = false): bool
     {
         if ($ifNotExists) {
@@ -187,20 +168,11 @@ class Forge extends BaseForge
         return parent::dropDatabase($dbName);
     }
 
-    /**
-     * CREATE TABLE attributes
-     */
     protected function _createTableAttributes(array $attributes): string
     {
         return '';
     }
 
-    /**
-     * @param array|string $processedFields Processed column definitions
-     *                                      or column names to DROP
-     *
-     * @return ($alterType is 'DROP' ? string : false|list<string>)
-     */
     protected function _alterTable(string $alterType, string $table, $processedFields)
     {
         // Handle DROP here
@@ -271,7 +243,7 @@ class Forge extends BaseForge
                     . " {$field['type']}{$field['length']}";
             }
 
-            if (! empty($field['default'])) {
+            if (($field['default'] ?? '') !== '') {
                 $fullTable = $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table);
                 $colName   = $field['name']; // bare, for sys.columns lookup
 
@@ -302,7 +274,7 @@ class Forge extends BaseForge
             $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($field['name'])
                 . " {$field['type']}{$field['length']} " . ($nullable ? '' : 'NOT') . ' NULL';
 
-            if (! empty($field['comment'])) {
+            if (($field['comment'] ?? '') !== '') {
                 $sqls[] = 'EXEC sys.sp_addextendedproperty '
                     . "@name=N'Caption', @value=N'" . $field['comment'] . "' , "
                     . "@level0type=N'SCHEMA',@level0name=N'" . $this->db->schema . "', "
@@ -310,7 +282,7 @@ class Forge extends BaseForge
                     . "@level2type=N'COLUMN',@level2name=N'" . $this->db->escapeIdentifiers($field['name']) . "'";
             }
 
-            if (! empty($field['new_name'])) {
+            if (($field['new_name'] ?? '') !== '') {
                 $sqls[] = "EXEC sp_rename  '[" . $this->db->schema . '].[' . $table . '].[' . $field['name'] . "]' , '" . $field['new_name'] . "', 'COLUMN';";
             }
         }
@@ -334,11 +306,6 @@ class Forge extends BaseForge
         return $this->db->simpleQuery($sql);
     }
 
-    /**
-     * Generates SQL to add indexes
-     *
-     * @param bool $asQuery When true returns stand alone SQL, else partial SQL used with CREATE TABLE
-     */
     protected function _processIndexes(string $table, bool $asQuery = false): array
     {
         $sqls = [];
@@ -382,7 +349,7 @@ class Forge extends BaseForge
     protected function _processColumn(array $processedField): string
     {
         return $this->db->escapeIdentifiers($processedField['name'])
-            . (empty($processedField['new_name']) ? '' : ' ' . $this->db->escapeIdentifiers($processedField['new_name']))
+            . (($processedField['new_name'] ?? '') === '' ? '' : ' ' . $this->db->escapeIdentifiers($processedField['new_name']))
             . ' ' . $processedField['type'] . ($processedField['type'] === 'text' ? '' : $processedField['length'])
             . $processedField['default']
             . $processedField['null']
@@ -449,7 +416,7 @@ class Forge extends BaseForge
      */
     protected function _attributeAutoIncrement(array &$attributes, array &$field)
     {
-        if (! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true && str_contains(strtolower($field['type']), strtolower('INT'))) {
+        if (($attributes['AUTO_INCREMENT'] ?? false) === true && str_contains(strtolower($field['type']), strtolower('INT'))) {
             $field['auto_increment'] = ' IDENTITY(1,1)';
         }
     }

@@ -26,8 +26,19 @@ use PHPUnit\Framework\TestCase;
 #[Group('AutoReview')]
 final class ComposerJsonTest extends TestCase
 {
+    /**
+     * @var array<string, mixed>
+     */
     private array $devComposer;
+
+    /**
+     * @var array<string, mixed>
+     */
     private array $frameworkComposer;
+
+    /**
+     * @var array<string, mixed>
+     */
     private array $starterComposer;
 
     protected function setUp(): void
@@ -105,6 +116,10 @@ final class ComposerJsonTest extends TestCase
         );
     }
 
+    /**
+     * @param array<string, mixed> $fromMain
+     * @param array<string, mixed> $fromComponent
+     */
     private function checkConfig(array $fromMain, array $fromComponent, string $component): void
     {
         foreach ($fromMain as $key => $expectedValue) {
@@ -124,6 +139,9 @@ final class ComposerJsonTest extends TestCase
         }
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function getComposerJson(string $path): array
     {
         try {

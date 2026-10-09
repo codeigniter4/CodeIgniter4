@@ -72,6 +72,8 @@ class PageNotFoundException extends RuntimeException implements HTTPExceptionInt
      * have the current locale, so even if users call
      * `$this->request->setLocale()` in the controller afterwards,
      * the Language locale will not be changed.
+     *
+     * @param array<array-key, float|int|string> $args
      */
     private static function lang(string $line, array $args = []): string
     {

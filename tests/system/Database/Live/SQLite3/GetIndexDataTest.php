@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live\SQLite3;
 
-use CodeIgniter\Database\SQLite3\Connection;
 use CodeIgniter\Database\SQLite3\Forge;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Database;
@@ -26,11 +25,6 @@ use stdClass;
 #[Group('DatabaseLive')]
 final class GetIndexDataTest extends CIUnitTestCase
 {
-    /**
-     * @var Connection
-     */
-    protected $db;
-
     private Forge $forge;
 
     protected function setUp(): void
@@ -47,8 +41,11 @@ final class GetIndexDataTest extends CIUnitTestCase
             'database' => 'database.db',
             'DBDebug'  => true,
         ];
-        $this->db    = db_connect($config, false);
-        $this->forge = Database::forge($config);
+        $this->db = db_connect($config, false);
+
+        $forge = Database::forge($config);
+        $this->assertInstanceOf(Forge::class, $forge);
+        $this->forge = $forge;
     }
 
     public function testGetIndexData(): void

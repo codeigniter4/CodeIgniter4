@@ -26,16 +26,22 @@ interface ResultInterface
      * individual data rows, which can be either an 'array', an
      * 'object', or a custom class name.
      *
-     * @param string $type The row type. Either 'array', 'object', or a class name to use
+     * @template T of object
+     *
+     * @param 'array'|'object'|class-string<T> $type The row type. Either 'array', 'object', or a class name to use
+     *
+     * @return ($type is 'array' ? list<array<string, mixed>> : ($type is 'object' ? list<stdClass> : list<T>))
      */
     public function getResult(string $type = 'object'): array;
 
     /**
      * Returns the results as an array of custom objects.
      *
-     * @param string $className The name of the class to use.
+     * @template T of object
      *
-     * @return array
+     * @param class-string<T> $className The name of the class to use.
+     *
+     * @return list<T>
      */
     public function getCustomResultObject(string $className);
 
@@ -43,6 +49,8 @@ interface ResultInterface
      * Returns the results as an array of arrays.
      *
      * If no results, an empty array is returned.
+     *
+     * @return list<array<string, mixed>>
      */
     public function getResultArray(): array;
 
@@ -50,6 +58,8 @@ interface ResultInterface
      * Returns the results as an array of objects.
      *
      * If no results, an empty array is returned.
+     *
+     * @return list<stdClass>
      */
     public function getResultObject(): array;
 
@@ -64,7 +74,7 @@ interface ResultInterface
      * @param int|string                       $n    The index of the results to return, or column name.
      * @param 'array'|'object'|class-string<T> $type The type of result object. 'array', 'object' or class name.
      *
-     * @return ($n is string ? float|int|string|null : ($type is 'object' ? stdClass|null : ($type is 'array' ? array|null : T|null)))
+     * @return ($n is string ? float|int|string|null : ($type is 'object' ? stdClass|null : ($type is 'array' ? array<string, mixed>|null : T|null)))
      */
     public function getRow($n = 0, string $type = 'object');
 
@@ -87,7 +97,7 @@ interface ResultInterface
      *
      * If row doesn't exist, returns null.
      *
-     * @return array|null
+     * @return array<string, mixed>|null
      */
     public function getRowArray(int $n = 0);
 
@@ -96,15 +106,15 @@ interface ResultInterface
      *
      * If row doesn't exist, returns null.
      *
-     * @return object|stdClass|null
+     * @return stdClass|null
      */
     public function getRowObject(int $n = 0);
 
     /**
      * Assigns an item into a particular column slot.
      *
-     * @param array|string               $key
-     * @param array|object|stdClass|null $value
+     * @param array<string, mixed>|string      $key
+     * @param array<string, mixed>|object|null $value
      *
      * @return void
      */
@@ -113,28 +123,44 @@ interface ResultInterface
     /**
      * Returns the "first" row of the current results.
      *
-     * @return array|object|null
+     * @template T of object
+     *
+     * @param 'array'|'object'|class-string<T> $type The type of result object. 'array', 'object' or class name.
+     *
+     * @return ($type is 'object' ? stdClass|null : ($type is 'array' ? array<string, mixed>|null : T|null))
      */
     public function getFirstRow(string $type = 'object');
 
     /**
      * Returns the "last" row of the current results.
      *
-     * @return array|object|null
+     * @template T of object
+     *
+     * @param 'array'|'object'|class-string<T> $type The type of result object. 'array', 'object' or class name.
+     *
+     * @return ($type is 'object' ? stdClass|null : ($type is 'array' ? array<string, mixed>|null : T|null))
      */
     public function getLastRow(string $type = 'object');
 
     /**
      * Returns the "next" row of the current results.
      *
-     * @return array|object|null
+     * @template T of object
+     *
+     * @param 'array'|'object'|class-string<T> $type The type of result object. 'array', 'object' or class name.
+     *
+     * @return ($type is 'object' ? stdClass|null : ($type is 'array' ? array<string, mixed>|null : T|null))
      */
     public function getNextRow(string $type = 'object');
 
     /**
      * Returns the "previous" row of the current results.
      *
-     * @return array|object|null
+     * @template T of object
+     *
+     * @param 'array'|'object'|class-string<T> $type The type of result object. 'array', 'object' or class name.
+     *
+     * @return ($type is 'object' ? stdClass|null : ($type is 'array' ? array<string, mixed>|null : T|null))
      */
     public function getPreviousRow(string $type = 'object');
 
@@ -146,7 +172,7 @@ interface ResultInterface
     /**
      * Returns an unbuffered row and move the pointer to the next row.
      *
-     * @return array|object|null
+     * @return array<string, mixed>|object|null
      */
     public function getUnbufferedRow(string $type = 'object');
 
@@ -157,11 +183,15 @@ interface ResultInterface
 
     /**
      * Generates an array of column names in the result set.
+     *
+     * @return list<string>
      */
     public function getFieldNames(): array;
 
     /**
      * Generates an array of objects representing field meta-data.
+     *
+     * @return list<stdClass>
      */
     public function getFieldData(): array;
 

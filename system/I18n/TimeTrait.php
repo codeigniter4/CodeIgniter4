@@ -87,7 +87,7 @@ trait TimeTrait
             }
         }
 
-        $timezone       = $timezone ?: date_default_timezone_get();
+        $timezone       = ($timezone === null || $timezone === '') ? date_default_timezone_get() : $timezone;
         $this->timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
 
         // If the time string was a relative string (i.e. 'next Tuesday')
@@ -144,7 +144,7 @@ trait TimeTrait
      */
     public static function today($timezone = null, ?string $locale = null)
     {
-        return new static(date('Y-m-d 00:00:00'), $timezone, $locale);
+        return (new static(null, $timezone, $locale))->setTime(0, 0, 0, 0);
     }
 
     /**
@@ -158,7 +158,7 @@ trait TimeTrait
      */
     public static function yesterday($timezone = null, ?string $locale = null)
     {
-        return new static(date('Y-m-d 00:00:00', strtotime('-1 day')), $timezone, $locale);
+        return (new static(null, $timezone, $locale))->modify('yesterday');
     }
 
     /**
@@ -172,7 +172,7 @@ trait TimeTrait
      */
     public static function tomorrow($timezone = null, ?string $locale = null)
     {
-        return new static(date('Y-m-d 00:00:00', strtotime('+1 day')), $timezone, $locale);
+        return (new static(null, $timezone, $locale))->modify('tomorrow');
     }
 
     /**
@@ -1157,7 +1157,7 @@ trait TimeTrait
         }
 
         if ($time instanceof DateTime || $time instanceof DateTimeImmutable) {
-            $time = $time->setTimezone(new DateTimeZone('UTC'));
+            return $time->setTimezone(new DateTimeZone('UTC'));
         }
 
         return $time;
@@ -1211,7 +1211,7 @@ trait TimeTrait
      *
      * @param string $name
      *
-     * @return array<int|string, mixed>|bool|DateTimeInterface|DateTimeZone|int|IntlCalendar|self|string|null
+     * @return array<array-key, mixed>|bool|DateTimeInterface|DateTimeZone|int|IntlCalendar|self|string|null
      */
     public function __get($name)
     {
@@ -1239,10 +1239,14 @@ trait TimeTrait
     /**
      * This is called when we unserialize the Time object.
      *
-     * @param array{date: string, timezone: string, timezone_type: int} $data
+     * @param array<mixed, mixed> $data
      */
     public function __unserialize(array $data): void
     {
-        parent::__construct($data['date'], new DateTimeZone($data['timezone']));
+        $date     = $data['date'] ?? null;
+        $timezone = $data['timezone'] ?? null;
+        assert(is_string($date) && is_string($timezone));
+
+        parent::__construct($date, new DateTimeZone($timezone));
     }
 }

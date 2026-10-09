@@ -13,8 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Generators;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
+use Config\Database;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -27,6 +29,8 @@ final class MigrationGeneratorTest extends CIUnitTestCase
 
     protected function tearDown(): void
     {
+        Factories::reset('config');
+
         $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', $this->getStreamFilterBuffer());
         $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
         if (is_file($file)) {
@@ -50,6 +54,29 @@ final class MigrationGeneratorTest extends CIUnitTestCase
     {
         command('make:migration -session -table logger');
         $this->assertStringContainsString('_CreateLoggerTable.php', $this->getStreamFilterBuffer());
+    }
+
+    public function testSessionRejectsUnsupportedDriver(): void
+    {
+        $config                      = new Database();
+        $config->default['DBDriver'] = 'SQLite3';
+        Factories::injectMock('config', 'Database', $config);
+
+        command('make:migration -session');
+
+        $this->assertStringContainsString(
+            'Database sessions are only supported on MySQLi and Postgre. The "default" database group uses the "SQLite3" driver.',
+            $this->getStreamFilterBuffer(),
+        );
+        $this->assertSame([], glob(APPPATH . 'Database/Migrations/*_CreateCiSessionsTable.php'));
+    }
+
+    public function testSessionRejectsUndefinedGroup(): void
+    {
+        command('make:migration -session -dbgroup bogus');
+
+        $this->assertStringContainsString('The "bogus" database group is not defined.', $this->getStreamFilterBuffer());
+        $this->assertSame([], glob(APPPATH . 'Database/Migrations/*_CreateCiSessionsTable.php'));
     }
 
     public function testGenerateMigrationWithOptionSuffix(): void

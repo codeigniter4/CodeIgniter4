@@ -25,11 +25,6 @@ use stdClass;
 #[Group('Others')]
 final class WhenTest extends CIUnitTestCase
 {
-    /**
-     * @var MockConnection
-     */
-    protected $db;
-
     protected function setUp(): void
     {
         parent::setUp();

@@ -24,25 +24,16 @@ use stdClass;
  */
 class Result extends BaseResult
 {
-    /**
-     * Gets the number of fields in the result set.
-     */
     public function getFieldCount(): int
     {
         return oci_num_fields($this->resultID);
     }
 
-    /**
-     * Generates an array of column names in the result set.
-     */
     public function getFieldNames(): array
     {
         return array_map(fn ($fieldIndex): false|string => oci_field_name($this->resultID, $fieldIndex), range(1, $this->getFieldCount()));
     }
 
-    /**
-     * Generates an array of objects representing field meta-data.
-     */
     public function getFieldData(): array
     {
         return array_map(fn ($fieldIndex) => (object) [
@@ -52,11 +43,6 @@ class Result extends BaseResult
         ], range(1, $this->getFieldCount()));
     }
 
-    /**
-     * Frees the current result.
-     *
-     * @return void
-     */
     public function freeResult()
     {
         if (is_resource($this->resultID)) {
@@ -66,10 +52,6 @@ class Result extends BaseResult
     }
 
     /**
-     * Moves the internal pointer to the desired offset. This is called
-     * internally before fetching results to make sure the result set
-     * starts at zero.
-     *
      * @return false
      */
     public function dataSeek(int $n = 0)
@@ -79,25 +61,14 @@ class Result extends BaseResult
     }
 
     /**
-     * Returns the result set as an array.
-     *
-     * Overridden by driver classes.
-     *
-     * @return array|false
+     * @return array<string, mixed>|false
      */
     protected function fetchAssoc()
     {
         return oci_fetch_assoc($this->resultID);
     }
 
-    /**
-     * Returns the result set as an object.
-     *
-     * Overridden by child classes.
-     *
-     * @return Entity|false|object|stdClass
-     */
-    protected function fetchObject(string $className = 'stdClass')
+    protected function fetchObject(string $className = stdClass::class)
     {
         $row = oci_fetch_object($this->resultID);
 

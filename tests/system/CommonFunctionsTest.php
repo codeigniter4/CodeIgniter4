@@ -743,6 +743,9 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertSame($expected, clean_path($input));
     }
 
+    /**
+     * @return iterable<int, array{string, string}>
+     */
     public static function provideCleanPathActuallyCleaningThePaths(): iterable
     {
         $ds = DIRECTORY_SEPARATOR;
@@ -773,7 +776,6 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testIsCli(): void
     {
-        $this->assertIsBool(is_cli());
         $this->assertTrue(is_cli());
     }
 
@@ -861,7 +863,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertFalse(is_windows());
         $this->assertNotTrue(is_windows());
 
-        is_windows();
+        is_windows(null);
         $this->assertSame(str_contains(php_uname(), 'Windows'), is_windows());
         $this->assertSame(defined('PHP_WINDOWS_VERSION_MAJOR'), is_windows());
     }

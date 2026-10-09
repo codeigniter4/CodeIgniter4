@@ -25,11 +25,11 @@ if (! function_exists('site_url')) {
     /**
      * Returns a site URL as defined by the App config.
      *
-     * @param array|string $relativePath URI string or array of URI segments.
-     * @param string|null  $scheme       URI scheme. E.g., http, ftp. If empty
-     *                                   string '' is set, a protocol-relative
-     *                                   link is returned.
-     * @param App|null     $config       Alternate configuration to use.
+     * @param list<string>|string $relativePath URI string or array of URI segments.
+     * @param string|null         $scheme       URI scheme. E.g., http, ftp. If empty
+     *                                          string '' is set, a protocol-relative
+     *                                          link is returned.
+     * @param App|null            $config       Alternate configuration to use.
      */
     function site_url($relativePath = '', ?string $scheme = null, ?App $config = null): string
     {
@@ -46,10 +46,10 @@ if (! function_exists('base_url')) {
      * Returns the base URL as defined by the App config.
      * Base URLs are trimmed site URLs without the index page.
      *
-     * @param array|string $relativePath URI string or array of URI segments.
-     * @param string|null  $scheme       URI scheme. E.g., http, ftp. If empty
-     *                                   string '' is set, a protocol-relative
-     *                                   link is returned.
+     * @param list<string>|string $relativePath URI string or array of URI segments.
+     * @param string|null         $scheme       URI scheme. E.g., http, ftp. If empty
+     *                                          string '' is set, a protocol-relative
+     *                                          link is returned.
      */
     function base_url($relativePath = '', ?string $scheme = null): string
     {
@@ -68,10 +68,10 @@ if (! function_exists('current_url')) {
      * @param bool                 $returnObject True to return an object instead of a string
      * @param IncomingRequest|null $request      A request to use when retrieving the path
      *
-     * @return string|URI When returning string, the query and fragment parts are removed.
-     *                    When returning URI, the query and fragment parts are preserved.
+     * @return ($returnObject is true ? URI : string) When returning string, the query and fragment parts are removed.
+     *                                                When returning URI, the query and fragment parts are preserved.
      */
-    function current_url(bool $returnObject = false, ?IncomingRequest $request = null)
+    function current_url(bool $returnObject = false, ?IncomingRequest $request = null): string|URI
     {
         $request ??= service('request');
         /** @var CLIRequest|IncomingRequest $request */
@@ -88,9 +88,9 @@ if (! function_exists('previous_url')) {
      * If that's not available, however, we'll use a sanitized url from $_SERVER['HTTP_REFERER']
      * which can be set by the user so is untrusted and not set by certain browsers/servers.
      *
-     * @return string|URI
+     * @return ($returnObject is true ? URI : string)
      */
-    function previous_url(bool $returnObject = false)
+    function previous_url(bool $returnObject = false): string|URI
     {
         // Grab from the session first, if we have it,
         // since it's more reliable and safer.
@@ -146,10 +146,10 @@ if (! function_exists('anchor')) {
      *
      * Creates an anchor based on the local URL.
      *
-     * @param array|string        $uri        URI string or array of URI segments
-     * @param string              $title      The link title
-     * @param array|object|string $attributes Any attributes
-     * @param App|null            $altConfig  Alternate configuration to use
+     * @param list<string>|string                      $uri        URI string or array of URI segments
+     * @param string                                   $title      The link title
+     * @param array<string, scalar|null>|object|string $attributes Any attributes
+     * @param App|null                                 $altConfig  Alternate configuration to use
      */
     function anchor($uri = '', string $title = '', $attributes = '', ?App $altConfig = null): string
     {
@@ -179,10 +179,10 @@ if (! function_exists('anchor_popup')) {
      * Creates an anchor based on the local URL. The link
      * opens a new window based on the attributes specified.
      *
-     * @param string                    $uri        the URL
-     * @param string                    $title      the link title
-     * @param array|false|object|string $attributes any attributes
-     * @param App|null                  $altConfig  Alternate configuration to use
+     * @param string                                         $uri        the URL
+     * @param string                                         $title      the link title
+     * @param array<string, scalar|null>|false|object|string $attributes any attributes
+     * @param App|null                                       $altConfig  Alternate configuration to use
      */
     function anchor_popup($uri = '', string $title = '', $attributes = false, ?App $altConfig = null): string
     {
@@ -205,7 +205,7 @@ if (! function_exists('anchor_popup')) {
 
             // Ref: http://www.w3schools.com/jsref/met_win_open.asp
             $windowName = '_blank';
-        } elseif (! empty($attributes['window_name'])) {
+        } elseif (($attributes['window_name'] ?? '') !== '') {
             $windowName = $attributes['window_name'];
             unset($attributes['window_name']);
         } else {
@@ -231,9 +231,9 @@ if (! function_exists('mailto')) {
     /**
      * Mailto Link
      *
-     * @param string              $email      the email address
-     * @param string              $title      the link title
-     * @param array|object|string $attributes any attributes
+     * @param string                                   $email      the email address
+     * @param string                                   $title      the link title
+     * @param array<string, scalar|null>|object|string $attributes any attributes
      */
     function mailto(string $email, string $title = '', $attributes = ''): string
     {
@@ -251,9 +251,9 @@ if (! function_exists('safe_mailto')) {
      *
      * Create a spam-protected mailto link written in Javascript
      *
-     * @param string              $email      the email address
-     * @param string              $title      the link title
-     * @param array|object|string $attributes any attributes
+     * @param string                                   $email      the email address
+     * @param string                                   $title      the link title
+     * @param array<string, scalar|null>|object|string $attributes any attributes
      */
     function safe_mailto(string $email, string $title = '', $attributes = ''): string
     {
@@ -423,7 +423,7 @@ if (! function_exists('prep_url')) {
 
         // force replace http:// with https://
         if ($secure) {
-            $str = preg_replace('/^(?:http):/i', 'https:', $str);
+            return preg_replace('/^(?:http):/i', 'https:', $str);
         }
 
         return $str;
@@ -546,9 +546,7 @@ if (! function_exists('parse_subdomain')) {
      */
     function parse_subdomain(?string $host = null): string
     {
-        if ($host === null) {
-            $host = service('request')->getUri()->getHost();
-        }
+        $host ??= service('request')->getUri()->getHost();
 
         // Handle localhost and IP addresses - they don't have subdomains
         if ($host === 'localhost' || filter_var($host, FILTER_VALIDATE_IP)) {

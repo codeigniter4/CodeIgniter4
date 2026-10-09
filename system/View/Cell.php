@@ -67,10 +67,10 @@ class Cell
     /**
      * Render a cell, returning its body as a string.
      *
-     * @param string                            $library   Cell class and method name.
-     * @param array<string, string>|string|null $params    Parameters to pass to the method.
-     * @param int                               $ttl       Number of seconds to cache the cell.
-     * @param string|null                       $cacheName Cache item name.
+     * @param string                              $library   Cell class and method name.
+     * @param array<array-key, mixed>|string|null $params    Parameters to pass to the method.
+     * @param int                                 $ttl       Number of seconds to cache the cell.
+     * @param string|null                         $cacheName Cache item name.
      *
      * @throws ReflectionException
      */
@@ -78,9 +78,7 @@ class Cell
     {
         [$instance, $method] = $this->determineClass($library);
 
-        $class = is_object($instance)
-            ? $instance::class
-            : null;
+        $class = $instance::class;
 
         $params = $this->prepareParams($params);
 
@@ -118,9 +116,9 @@ class Cell
      * If a string, it should be in the format "key1=value key2=value".
      * It will be split and returned as an array.
      *
-     * @param array<string, string>|float|string|null $params
+     * @param array<array-key, mixed>|float|string|null $params
      *
-     * @return array<string, string>
+     * @return array<array-key, mixed>
      */
     public function prepareParams($params)
     {
@@ -160,6 +158,8 @@ class Cell
     /**
      * Given the library string, attempts to determine the class and method
      * to call.
+     *
+     * @return array{object, string}
      */
     protected function determineClass(string $library): array
     {
@@ -198,6 +198,8 @@ class Cell
 
     /**
      * Renders a cell that extends the BaseCell class.
+     *
+     * @param array<array-key, mixed> $params
      */
     final protected function renderCell(BaseCell $instance, string $method, array $params): string
     {
@@ -234,6 +236,10 @@ class Cell
      * Returns the values from $params that match the parameters
      * for a method, in the order they are defined. This allows
      * them to be passed directly into the method.
+     *
+     * @param array<array-key, mixed> $params
+     *
+     * @return list<mixed>
      */
     private function getMethodParams(BaseCell $instance, string $method, array $params): array
     {
@@ -262,9 +268,9 @@ class Cell
      *
      * @todo Determine if this can be refactored to use $this-getMethodParams().
      *
-     * @param object $instance
+     * @param array<array-key, mixed> $params
      */
-    final protected function renderSimpleClass($instance, string $method, array $params, string $class): string
+    final protected function renderSimpleClass(object $instance, string $method, array $params, string $class): string
     {
         // Try to match up the parameter list we were provided
         // with the parameter name in the callback method.

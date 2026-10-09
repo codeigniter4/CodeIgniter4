@@ -18,10 +18,10 @@ use JsonException;
 use stdClass;
 
 /**
- * Class JsonCast
- *
  * (PHP) [array|stdClass --> string] --> (DB driver) --> (DB column) string
  *       [               <-- string] <-- (DB driver) <-- (DB column) string
+ *
+ * @extends BaseCast<array<array-key, mixed>|stdClass, string>
  */
 class JsonCast extends BaseCast
 {

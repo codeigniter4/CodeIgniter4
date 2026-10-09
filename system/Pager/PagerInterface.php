@@ -115,6 +115,20 @@ interface PagerInterface
      * total, per_page, current_page, last_page, next_url, prev_url, from, to.
      * Does not include the actual data. This data is suitable for adding
      * a 'data' object to with the result set and converting to JSON.
+     *
+     * @return array{
+     *   currentUri: URI,
+     *   uri: URI,
+     *   hasMore: bool,
+     *   total: int|null,
+     *   perPage: int,
+     *   pageCount: int,
+     *   pageSelector: string,
+     *   currentPage: int,
+     *   next: string|null,
+     *   previous: string|null,
+     *   segment: int
+     * }
      */
     public function getDetails(string $group = 'default'): array;
 }

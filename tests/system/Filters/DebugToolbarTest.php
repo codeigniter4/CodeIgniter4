@@ -45,8 +45,11 @@ final class DebugToolbarTest extends CIUnitTestCase
 
         Services::injectMock('superglobals', new Superglobals());
 
-        $this->request  = service('request');
-        $this->response = service('response');
+        $this->request = service('request');
+
+        $response = service('response');
+        $this->assertInstanceOf(Response::class, $response);
+        $this->response = $response;
     }
 
     public function testDebugToolbarFilter(): void

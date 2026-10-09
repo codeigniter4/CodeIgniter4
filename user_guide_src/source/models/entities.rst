@@ -287,6 +287,10 @@ the value whenever the property is set:
 
 .. literalinclude:: entities/014.php
 
+.. warning:: The ``array`` cast uses PHP serialization. Only read values previously
+    written through the same Entity cast. Never store untrusted serialized strings
+    directly in an ``array``-cast field.
+
 CSV Casting
 -----------
 

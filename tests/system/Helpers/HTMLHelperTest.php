@@ -26,6 +26,9 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class HTMLHelperTest extends CIUnitTestCase
 {
+    /**
+     * @var list<string>
+     */
     private array $tracks;
 
     /**

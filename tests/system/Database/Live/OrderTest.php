@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Database\SQLSRV\Connection as SQLSRVConnection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use PHPUnit\Framework\Attributes\Group;
@@ -84,6 +85,8 @@ final class OrderTest extends CIUnitTestCase
         if ($this->db->DBDriver === 'MySQLi') {
             $key = 'RAND()';
         } elseif ($this->db->DBDriver === 'SQLSRV') {
+            $this->assertInstanceOf(SQLSRVConnection::class, $this->db);
+
             $key   = 'NEWID()';
             $table = '"' . $this->db->getDatabase() . '"."' . $this->db->schema . '".' . $table;
         } elseif ($this->db->DBDriver === 'OCI8') {

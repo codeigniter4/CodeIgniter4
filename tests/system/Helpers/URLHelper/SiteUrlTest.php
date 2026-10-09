@@ -55,7 +55,7 @@ final class SiteUrlTest extends CIUnitTestCase
         service('superglobals')->setServerArray([]);
     }
 
-    private function createRequest(?App $config = null, $body = null, ?string $path = null): void
+    private function createRequest(?App $config = null, ?string $body = null, ?string $path = null): void
     {
         $config ??= new App();
 
@@ -105,6 +105,9 @@ final class SiteUrlTest extends CIUnitTestCase
         $this->assertSame($expectedBaseUrl, base_url($path, $scheme));
     }
 
+    /**
+     * @return iterable<array-key, array{string, string, string|null, bool, string, string, string}>
+     */
     public static function provideUrls(): iterable
     {
         // baseURL, indexPage, scheme, secure, path, expectedSiteUrl, expectedBaseUrl

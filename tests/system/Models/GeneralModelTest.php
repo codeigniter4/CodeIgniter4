@@ -15,8 +15,11 @@ namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Exceptions\BadMethodCallException;
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Mock\MockConnection;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\UserModel;
@@ -35,15 +38,11 @@ final class GeneralModelTest extends CIUnitTestCase
      */
     private ?object $model = null;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
     protected function tearDown(): void
     {
         parent::tearDown();
         $this->resetServices();
+        Time::setTestNow();
     }
 
     /**
@@ -88,7 +87,8 @@ final class GeneralModelTest extends CIUnitTestCase
     {
         $this->expectException(BadMethodCallException::class);
         $this->expectExceptionMessage('Call to undefined method Tests\Support\Models\UserModel::undefinedMethodCall');
-        $this->createModel(UserModel::class)->undefinedMethodCall();
+
+        $this->createModel(UserModel::class)->undefinedMethodCall(); // @phpstan-ignore method.notFound (Testing Model::__call() fallback)
     }
 
     public function testSetAllowedFields(): void
@@ -113,6 +113,28 @@ final class GeneralModelTest extends CIUnitTestCase
 
         $model->setAllowedFields($allowed2);
         $this->assertSame($allowed2, $this->getPrivateProperty($model, 'allowedFields'));
+    }
+
+    #[DataProvider('provideCurrentTimestampPreservesSubseconds')]
+    public function testCurrentTimestampPreservesSubseconds(string $format, string $expected): void
+    {
+        Time::setTestNow('2024-07-09 09:13:34.654321');
+
+        $db    = new MockConnection(['dateFormat' => ['datetime' => $format]]);
+        $model = $this->createModel(UserModel::class, $db);
+        $date  = self::getPrivateMethodInvoker($model, 'setDate');
+
+        $this->assertSame($expected, $date());
+    }
+
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function provideCurrentTimestampPreservesSubseconds(): iterable
+    {
+        yield 'milliseconds' => ['Y-m-d H:i:s.v', '2024-07-09 09:13:34.654'];
+
+        yield 'microseconds' => ['Y-m-d H:i:s.u', '2024-07-09 09:13:34.654321'];
     }
 
     public function testBuilderUsesModelTable(): void

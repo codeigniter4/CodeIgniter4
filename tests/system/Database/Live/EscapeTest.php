@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Database\MySQLi\Connection as MySQLiConnection;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -100,6 +101,8 @@ final class EscapeTest extends CIUnitTestCase
     public function testEscapeLikeStringDirect(): void
     {
         if ($this->db->DBDriver === 'MySQLi') {
+            $this->assertInstanceOf(MySQLiConnection::class, $this->db);
+
             $expected = "SHOW COLUMNS FROM brands WHERE column LIKE 'wild\\_chars%'";
             $sql      = "SHOW COLUMNS FROM brands WHERE column LIKE '" . $this->db->escapeLikeStringDirect('wild_chars') . "%'";
 

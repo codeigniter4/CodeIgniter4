@@ -19,16 +19,14 @@ if (! function_exists('number_to_size')) {
     /**
      * Formats a numbers as bytes, based on size, and adds the appropriate suffix
      *
-     * @param int|string            $num    Will be cast as int
+     * @param float|int|string      $num    Will be cast as int
      * @param non-empty-string|null $locale [optional]
-     *
-     * @return bool|string
      */
-    function number_to_size($num, int $precision = 1, ?string $locale = null)
+    function number_to_size($num, int $precision = 1, ?string $locale = null): bool|string
     {
-        // Strip any formatting & ensure numeric input
         try {
-            // @phpstan-ignore-next-line
+            // Strip any formatting & ensure numeric input
+            // @phpstan-ignore binaryOp.invalid
             $num = 0 + str_replace(',', '', (string) $num);
         } catch (ErrorException) {
             // Catch "Warning:  A non-numeric value encountered"
@@ -76,10 +74,8 @@ if (! function_exists('number_to_amount')) {
      * @param int|string            $num       Will be cast as int
      * @param int                   $precision [optional] The optional number of decimal digits to round to.
      * @param non-empty-string|null $locale    [optional]
-     *
-     * @return bool|string
      */
-    function number_to_amount($num, int $precision = 0, ?string $locale = null)
+    function number_to_amount($num, int $precision = 0, ?string $locale = null): bool|string
     {
         // Strip any formatting & ensure numeric input
         try {
@@ -134,6 +130,8 @@ if (! function_exists('format_number')) {
     /**
      * A general purpose, locale-aware, number_format method.
      * Used by all of the functions of the number_helper.
+     *
+     * @param array<string, float|int|string|null> $options
      */
     function format_number(float $num, int $precision = 1, ?string $locale = null, array $options = []): string
     {

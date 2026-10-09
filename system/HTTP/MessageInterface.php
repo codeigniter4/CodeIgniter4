@@ -103,9 +103,9 @@ interface MessageInterface
     public function getHeaderLine(string $name): string;
 
     /**
-     * Sets a header and it's value.
+     * Sets a header and its value.
      *
-     * @param array|string|null $value
+     * @param array<array-key, string>|string|null $value
      *
      * @return $this
      */

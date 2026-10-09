@@ -31,12 +31,14 @@ class Database
      * Helps to keep track of all open connections for performance
      * monitoring, logging, etc.
      *
-     * @var array
+     * @var array<string, BaseConnection>
      */
     protected $connections = [];
 
     /**
      * Parses the connection binds and creates a Database Connection instance.
+     *
+     * @param array<string, mixed> $params
      *
      * @return BaseConnection
      *
@@ -48,15 +50,15 @@ class Database
             throw new InvalidArgumentException('You must supply the parameter: alias.');
         }
 
-        if (! empty($params['DSN']) && str_contains($params['DSN'], '://')) {
+        if (($params['DSN'] ?? '') !== '' && str_contains($params['DSN'], '://')) {
             $params = $this->parseDSN($params);
         }
 
-        if (empty($params['DBDriver'])) {
+        if (($params['DBDriver'] ?? '') === '') {
             throw new InvalidArgumentException('You have not selected a database type to connect to.');
         }
 
-        assert($this->checkDbExtension($params['DBDriver']));
+        $this->checkDbExtension($params['DBDriver']);
 
         $this->connections[$alias] = $this->initDriver($params['DBDriver'], 'Connection', $params);
 
@@ -93,6 +95,10 @@ class Database
 
     /**
      * Parses universal DSN string
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return array<string, mixed>
      *
      * @throws InvalidArgumentException
      */
@@ -132,9 +138,9 @@ class Database
     /**
      * Creates a database object.
      *
-     * @param string                    $driver   Driver name. FQCN can be used.
-     * @param string                    $class    'Connection'|'Forge'|'Utils'
-     * @param array|ConnectionInterface $argument The constructor parameter or DB connection
+     * @param string                                   $driver   Driver name. FQCN can be used.
+     * @param string                                   $class    'Connection'|'Forge'|'Utils'
+     * @param array<string, mixed>|ConnectionInterface $argument The constructor parameter or DB connection
      *
      * @return BaseConnection|BaseUtils|Forge
      */
@@ -148,15 +154,17 @@ class Database
     }
 
     /**
-     * Check the PHP database extension is loaded.
+     * Check if the PHP database extension is loaded.
      *
      * @param string $driver DB driver or FQCN for custom driver
+     *
+     * @throws ConfigException if the driver is invalid
+     * @throws CriticalError   if the required PHP extension is not loaded
      */
-    private function checkDbExtension(string $driver): bool
+    private function checkDbExtension(string $driver): void
     {
         if (str_contains($driver, '\\')) {
-            // Cannot check a fully qualified classname for a custom driver.
-            return true;
+            return; // Cannot check a fully qualified classname for a custom driver.
         }
 
         $extensionMap = [
@@ -168,21 +176,17 @@ class Database
             'OCI8'    => 'oci8',
         ];
 
-        $extension = $extensionMap[$driver] ?? '';
-
-        if ($extension === '') {
-            $message = 'Invalid DBDriver name: "' . $driver . '"';
-
-            throw new ConfigException($message);
-        }
+        $extension = $extensionMap[$driver]
+            ?? throw new ConfigException(sprintf('Invalid DBDriver name: "%s".', $driver));
 
         if (extension_loaded($extension)) {
-            return true;
+            return;
         }
 
-        $message = 'The required PHP extension "' . $extension . '" is not loaded.'
-            . ' Install and enable it to use "' . $driver . '" driver.';
-
-        throw new CriticalError($message);
+        throw new CriticalError(sprintf(
+            'The required PHP extension "%s" is not loaded. Install and enable it to use "%s" driver.',
+            $extension,
+            $driver,
+        ));
     }
 }

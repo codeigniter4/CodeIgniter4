@@ -23,6 +23,9 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class ArrayHelperDotKeyExistsTest extends CIUnitTestCase
 {
+    /**
+     * @var array<string, array<string, list<array<string, int|string>>>>
+     */
     private array $array = [
         'contacts' => [
             'friends' => [

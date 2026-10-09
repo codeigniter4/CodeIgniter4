@@ -34,6 +34,7 @@ use Stringable;
  * @property-read string $quarter
  * @property-read string $second
  * @property-read int    $timestamp
+ * @property-read string $timezoneName
  * @property-read bool   $utc
  * @property-read string $weekOfMonth
  * @property-read string $weekOfYear

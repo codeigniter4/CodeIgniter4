@@ -1,0 +1,39 @@
+name: Carson
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
+      - reopened
+      - labeled
+      - ready_for_review
+  issues:
+    types:
+      - opened
+      - edited
+      - labeled
+  issue_comment:
+    types:
+      - created
+  push:
+    branches:
+      - develop
+      - '4.*'
+  schedule:
+    - cron: '0 0 * * *'
+
+permissions: {}
+
+jobs:
+  carson:
+    if: github.repository == 'codeigniter4/CodeIgniter4'
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Run Carson
+        uses: NexusPHP/carson@cb35604ab330c2e44dba673fcef712c78e75f858 # v1.7.0
+        with:
+          app_id: ${{ secrets.CARSON_APP_ID }}
+          private_key: ${{ secrets.CARSON_PRIVATE_KEY }}
+          log_level: info

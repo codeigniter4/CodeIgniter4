@@ -22,6 +22,7 @@ utils/                       export-ignore
 .php-cs-fixer.no-header.php  export-ignore
 .php-cs-fixer.tests.php      export-ignore
 .php-cs-fixer.user-guide.php export-ignore
+structarmed-baseline.php     export-ignore
 structarmed.php              export-ignore
 phpmetrics.json              export-ignore
 phpstan-baseline.php         export-ignore
@@ -32,6 +33,7 @@ psalm-baseline.xml           export-ignore
 psalm.xml                    export-ignore
 psalm_autoload.php           export-ignore
 rector.php                   export-ignore
+AGENTS.md                    export-ignore
 
 # source user guide
 user_guide_src/ export-ignore

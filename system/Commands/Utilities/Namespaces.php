@@ -91,9 +91,14 @@ class Namespaces extends BaseCommand
         CLI::table($tbody, $thead);
     }
 
+    /**
+     * @param array<array-key, int|string|null> $params
+     *
+     * @return list<array{string, string, string}>
+     */
     private function outputAllNamespaces(array $params): array
     {
-        $maxLength = $params['m'];
+        $maxLength = (int) $params['m'];
 
         $autoloader = service('autoloader');
 
@@ -129,9 +134,14 @@ class Namespaces extends BaseCommand
         return $string;
     }
 
+    /**
+     * @param array<array-key, int|string|null> $params
+     *
+     * @return list<array{string, string, string}>
+     */
     private function outputCINamespaces(array $params): array
     {
-        $maxLength = $params['m'];
+        $maxLength = (int) $params['m'];
 
         $config = new Autoload();
 
@@ -145,7 +155,8 @@ class Namespaces extends BaseCommand
                     $pathOutput = $this->truncate(clean_path($path), $maxLength);
                 }
 
-                $path = realpath($path) ?: $path;
+                $realPath = realpath($path);
+                $path     = $realPath === false ? $path : $realPath;
 
                 $tbody[] = [
                     $ns,

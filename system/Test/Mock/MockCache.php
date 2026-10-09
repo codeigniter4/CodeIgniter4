@@ -144,7 +144,7 @@ class MockCache extends BaseHandler implements CacheInterface
     public function increment(string $key, int $offset = 1): bool
     {
         $key  = static::validateKey($key, $this->prefix);
-        $data = $this->cache[$key] ?: null;
+        $data = $this->cache[$key] ?? null;
 
         if ($data === null) {
             $data = 0;
@@ -162,7 +162,7 @@ class MockCache extends BaseHandler implements CacheInterface
     {
         $key = static::validateKey($key, $this->prefix);
 
-        $data = $this->cache[$key] ?: null;
+        $data = $this->cache[$key] ?? null;
 
         if ($data === null) {
             $data = 0;

@@ -18,7 +18,7 @@ if (! function_exists('dd')) {
         /**
          * Prints a Kint debug report and exits.
          *
-         * @param array $vars
+         * @param mixed ...$vars
          *
          * @return never
          *
@@ -38,11 +38,9 @@ if (! function_exists('dd')) {
         /**
          * dd function
          *
-         * @param array $vars
-         *
-         * @return int
+         * @param mixed ...$vars
          */
-        function dd(...$vars)
+        function dd(...$vars): int
         {
             return 0;
         }
@@ -54,11 +52,9 @@ if (! function_exists('d') && ! class_exists(Kint::class)) {
     /**
      * d function
      *
-     * @param array $vars
-     *
-     * @return int
+     * @param mixed ...$vars
      */
-    function d(...$vars)
+    function d(...$vars): int
     {
         return 0;
     }
@@ -77,10 +73,8 @@ if (! function_exists('trace')) {
     } else {
         /**
          * Generic trace function in case that Kint is not loaded.
-         *
-         * @return int
          */
-        function trace()
+        function trace(): int
         {
             return 0;
         }

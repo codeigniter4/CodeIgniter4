@@ -29,7 +29,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use PHPUnit\Framework\Attributes\WithoutErrorHandler;
-use TypeError;
 
 /**
  * @internal
@@ -38,11 +37,12 @@ use TypeError;
 #[Group('SeparateProcess')]
 final class IncomingRequestTest extends CIUnitTestCase
 {
-    private Request $request;
+    private IncomingRequest $request;
 
     #[WithoutErrorHandler]
     protected function setUp(): void
     {
+        $this->resetServices();
         parent::setUp();
 
         $_ENV = $_SESSION = [];
@@ -58,7 +58,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->request = $this->createRequest($config);
     }
 
-    private function createRequest(?App $config = null, $body = null, ?string $path = null): IncomingRequest
+    private function createRequest(?App $config = null, false|string|null $body = null, ?string $path = null): IncomingRequest
     {
         $config ??= new App();
         $path ??= '';
@@ -280,7 +280,7 @@ final class IncomingRequestTest extends CIUnitTestCase
      */
     public function testNegotiatesLocale(): void
     {
-        service('superglobals')->setServer('HTTP_ACCEPT_LANGUAGE', 'fr-FR); q=1.0, en; q=0.5');
+        service('superglobals')->setServer('HTTP_ACCEPT_LANGUAGE', 'fr-FR; q=1.0, en; q=0.5');
 
         $config                   = new App();
         $config->negotiateLocale  = true;
@@ -295,7 +295,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testNegotiatesLocaleOnlyBroad(): void
     {
-        service('superglobals')->setServer('HTTP_ACCEPT_LANGUAGE', 'fr); q=1.0, en; q=0.5');
+        service('superglobals')->setServer('HTTP_ACCEPT_LANGUAGE', 'fr; q=1.0, en; q=0.5');
 
         $config                   = new App();
         $config->negotiateLocale  = true;
@@ -349,7 +349,7 @@ final class IncomingRequestTest extends CIUnitTestCase
     public function testNegotiatesLanguage(): void
     {
         $this->request->setHeader('Accept-Language', 'da, en-gb;q=0.8, en;q=0.7');
-        $this->assertSame('en', $this->request->negotiate('language', ['en', 'da']));
+        $this->assertSame('da', $this->request->negotiate('language', ['en', 'da']));
     }
 
     public function testCanGrabGetRawJSON(): void
@@ -634,6 +634,9 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame($expected, $request->getRawInputVar($var, $filter, $flag));
     }
 
+    /**
+     * @return iterable<array{string, mixed, mixed, mixed, mixed}>
+     */
     public static function provideCanGrabGetRawInputVar(): iterable
     {
         return [
@@ -728,6 +731,9 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertTrue($request->is(strtolower($value)));
     }
 
+    /**
+     * @return iterable<array{string}>
+     */
     public static function provideIsHTTPMethods(): iterable
     {
         yield from [
@@ -755,7 +761,6 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->expectExceptionMessage('Unknown type: invalid');
 
         $request = $this->request->withMethod('GET');
-
         $request->is('invalid');
     }
 
@@ -763,6 +768,7 @@ final class IncomingRequestTest extends CIUnitTestCase
     {
         $request = $this->request->setHeader('Content-Type', 'application/json');
 
+        $this->assertInstanceOf(IncomingRequest::class, $request);
         $this->assertTrue($request->is('json'));
     }
 
@@ -770,6 +776,7 @@ final class IncomingRequestTest extends CIUnitTestCase
     {
         $request = $this->request->setHeader('X-Requested-With', 'XMLHttpRequest');
 
+        $this->assertInstanceOf(IncomingRequest::class, $request);
         $this->assertTrue($request->is('ajax'));
     }
 
@@ -949,6 +956,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         ]);
 
         $gotit = $this->request->getFile('userfile');
+        $this->assertInstanceOf(UploadedFile::class, $gotit);
         $this->assertSame(124, $gotit->getSize());
     }
 
@@ -1046,12 +1054,13 @@ final class IncomingRequestTest extends CIUnitTestCase
         $expected = '123.123.123.123';
         service('superglobals')->setServer('REMOTE_ADDR', $expected);
 
-        $this->request = new Request(new App());
-        $this->request->populateHeaders();
+        $request = new Request(new App());
+        $request->populateHeaders();
 
-        $this->assertSame($expected, $this->request->getIPAddress());
+        $ipAddress = $request->getIPAddress();
+        $this->assertSame($expected, $ipAddress);
         // call a second time to exercise the initial conditional block in getIPAddress()
-        $this->assertSame($expected, $this->request->getIPAddress());
+        $this->assertSame($expected, $request->getIPAddress());
     }
 
     public function testGetIPAddressThruProxy(): void
@@ -1067,11 +1076,11 @@ final class IncomingRequestTest extends CIUnitTestCase
             '192.168.5.0/24' => 'X-Forwarded-For',
         ];
         Factories::injectMock('config', App::class, $config);
-        $this->request = new Request();
-        $this->request->populateHeaders();
+        $request = new Request();
+        $request->populateHeaders();
 
         // we should see the original forwarded address
-        $this->assertSame($expected, $this->request->getIPAddress());
+        $this->assertSame($expected, $request->getIPAddress());
     }
 
     public function testGetIPAddressThruProxyIPv6(): void
@@ -1086,11 +1095,11 @@ final class IncomingRequestTest extends CIUnitTestCase
             '2001:db8::2:1' => 'X-Forwarded-For',
         ];
         Factories::injectMock('config', App::class, $config);
-        $this->request = new Request();
-        $this->request->populateHeaders();
+        $request = new Request();
+        $request->populateHeaders();
 
         // we should see the original forwarded address
-        $this->assertSame($expected, $this->request->getIPAddress());
+        $this->assertSame($expected, $request->getIPAddress());
     }
 
     public function testGetIPAddressThruProxyInvalidIPAddress(): void
@@ -1104,11 +1113,11 @@ final class IncomingRequestTest extends CIUnitTestCase
             '10.0.1.200'     => 'X-Forwarded-For',
             '192.168.5.0/24' => 'X-Forwarded-For',
         ];
-        $this->request = new Request($config);
-        $this->request->populateHeaders();
+        $request = new Request($config);
+        $request->populateHeaders();
 
         // spoofed address invalid
-        $this->assertSame($expected, $this->request->getIPAddress());
+        $this->assertSame($expected, $request->getIPAddress());
     }
 
     public function testGetIPAddressThruProxyInvalidIPAddressIPv6(): void
@@ -1121,11 +1130,11 @@ final class IncomingRequestTest extends CIUnitTestCase
         $config->proxyIPs = [
             '2001:db8::2:1' => 'X-Forwarded-For',
         ];
-        $this->request = new Request($config);
-        $this->request->populateHeaders();
+        $request = new Request($config);
+        $request->populateHeaders();
 
         // spoofed address invalid
-        $this->assertSame($expected, $this->request->getIPAddress());
+        $this->assertSame($expected, $request->getIPAddress());
     }
 
     public function testGetIPAddressThruProxyNotWhitelisted(): void
@@ -1139,11 +1148,11 @@ final class IncomingRequestTest extends CIUnitTestCase
             '10.0.1.200'     => 'X-Forwarded-For',
             '192.168.5.0/24' => 'X-Forwarded-For',
         ];
-        $this->request = new Request($config);
-        $this->request->populateHeaders();
+        $request = new Request($config);
+        $request->populateHeaders();
 
         // spoofed address invalid
-        $this->assertSame($expected, $this->request->getIPAddress());
+        $this->assertSame($expected, $request->getIPAddress());
     }
 
     public function testGetIPAddressThruProxyNotWhitelistedIPv6(): void
@@ -1156,11 +1165,11 @@ final class IncomingRequestTest extends CIUnitTestCase
         $config->proxyIPs = [
             '2001:db8::2:1' => 'X-Forwarded-For',
         ];
-        $this->request = new Request($config);
-        $this->request->populateHeaders();
+        $request = new Request($config);
+        $request->populateHeaders();
 
         // spoofed address invalid
-        $this->assertSame($expected, $this->request->getIPAddress());
+        $this->assertSame($expected, $request->getIPAddress());
     }
 
     public function testGetIPAddressThruProxySubnet(): void
@@ -1172,11 +1181,11 @@ final class IncomingRequestTest extends CIUnitTestCase
         $config           = new App();
         $config->proxyIPs = ['192.168.5.0/24' => 'X-Forwarded-For'];
         Factories::injectMock('config', App::class, $config);
-        $this->request = new Request();
-        $this->request->populateHeaders();
+        $request = new Request();
+        $request->populateHeaders();
 
         // we should see the original forwarded address
-        $this->assertSame($expected, $this->request->getIPAddress());
+        $this->assertSame($expected, $request->getIPAddress());
     }
 
     public function testGetIPAddressThruProxySubnetIPv6(): void
@@ -1188,11 +1197,11 @@ final class IncomingRequestTest extends CIUnitTestCase
         $config           = new App();
         $config->proxyIPs = ['2001:db8:1234::/48' => 'X-Forwarded-For'];
         Factories::injectMock('config', App::class, $config);
-        $this->request = new Request();
-        $this->request->populateHeaders();
+        $request = new Request();
+        $request->populateHeaders();
 
         // we should see the original forwarded address
-        $this->assertSame($expected, $this->request->getIPAddress());
+        $this->assertSame($expected, $request->getIPAddress());
     }
 
     public function testGetIPAddressThruProxyOutOfSubnet(): void
@@ -1203,11 +1212,11 @@ final class IncomingRequestTest extends CIUnitTestCase
 
         $config           = new App();
         $config->proxyIPs = ['192.168.5.0/28' => 'X-Forwarded-For'];
-        $this->request    = new Request($config);
-        $this->request->populateHeaders();
+        $request          = new Request($config);
+        $request->populateHeaders();
 
         // we should see the original forwarded address
-        $this->assertSame($expected, $this->request->getIPAddress());
+        $this->assertSame($expected, $request->getIPAddress());
     }
 
     public function testGetIPAddressThruProxyOutOfSubnetIPv6(): void
@@ -1218,11 +1227,11 @@ final class IncomingRequestTest extends CIUnitTestCase
 
         $config           = new App();
         $config->proxyIPs = ['2001:db8:1234::/48' => 'X-Forwarded-For'];
-        $this->request    = new Request($config);
-        $this->request->populateHeaders();
+        $request          = new Request($config);
+        $request->populateHeaders();
 
         // we should see the original forwarded address
-        $this->assertSame($expected, $this->request->getIPAddress());
+        $this->assertSame($expected, $request->getIPAddress());
     }
 
     public function testGetIPAddressThruProxyBothIPv4AndIPv6(): void
@@ -1236,23 +1245,11 @@ final class IncomingRequestTest extends CIUnitTestCase
             '192.168.5.0/28'     => 'X-Forwarded-For',
             '2001:db8:1234::/48' => 'X-Forwarded-For',
         ];
-        $this->request = new Request($config);
-        $this->request->populateHeaders();
+        $request = new Request($config);
+        $request->populateHeaders();
 
         // we should see the original forwarded address
-        $this->assertSame($expected, $this->request->getIPAddress());
-    }
-
-    public function testGetIPAddressThruProxyInvalidConfigString(): void
-    {
-        $this->expectException(TypeError::class);
-
-        $config           = new App();
-        $config->proxyIPs = '192.168.5.0/28';
-        $this->request    = new Request($config);
-        $this->request->populateHeaders();
-
-        $this->request->getIPAddress();
+        $this->assertSame($expected, $request->getIPAddress());
     }
 
     public function testGetIPAddressThruProxyInvalidConfigArray(): void
@@ -1263,12 +1260,12 @@ final class IncomingRequestTest extends CIUnitTestCase
         );
 
         $config           = new App();
-        $config->proxyIPs = ['192.168.5.0/28'];
+        $config->proxyIPs = ['192.168.5.0/28']; // @phpstan-ignore assign.propertyType (deliberately keyless, to assert the ConfigException)
         Factories::injectMock('config', App::class, $config);
-        $this->request = new Request();
-        $this->request->populateHeaders();
+        $request = new Request();
+        $request->populateHeaders();
 
-        $this->request->getIPAddress();
+        $request->getIPAddress();
     }
 
     // @TODO getIPAddress should have more testing, to 100% code coverage

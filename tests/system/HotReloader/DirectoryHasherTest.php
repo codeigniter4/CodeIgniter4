@@ -62,7 +62,6 @@ final class DirectoryHasherTest extends CIUnitTestCase
 
         $results = $this->hasher->hashApp();
 
-        $this->assertIsArray($results);
         $this->assertArrayHasKey($this->fixtureDirectory, $results);
     }
 

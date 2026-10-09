@@ -338,10 +338,12 @@ final class LanguageTest extends CIUnitTestCase
         $lang = service('language', 'en', true);
 
         lang('Language.languageGetLineInvalidArgumentException');
-        $this->assertSame('en', $lang->getLocale());
+        $locale = $lang->getLocale();
+        $this->assertSame('en', $locale);
 
         lang('Language.languageGetLineInvalidArgumentException', [], 'ru');
-        $this->assertSame('en', $lang->getLocale());
+        $locale = $lang->getLocale();
+        $this->assertSame('en', $locale);
 
         lang('Language.languageGetLineInvalidArgumentException');
         $this->assertSame('en', $lang->getLocale());

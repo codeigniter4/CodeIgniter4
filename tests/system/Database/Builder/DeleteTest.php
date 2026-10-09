@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Database\Postgre\Builder as PostgreBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 use CodeIgniter\Test\Mock\MockQuery;
@@ -168,5 +169,51 @@ final class DeleteTest extends CIUnitTestCase
 
         $this->assertStringContainsString("IN ('anything'' OR ''1''=''1','Ahmadinejad')", $query->getQuery());
         $this->assertStringNotContainsString("IN anything' OR '1'='1", $query->getQuery());
+    }
+
+    public function testDeleteBatchPostgreCastsPositionalAndMappedConstraints(): void
+    {
+        $db = new class (['DBDriver' => 'Postgre']) extends MockConnection {
+            protected function _fieldData(string $table): array
+            {
+                return [
+                    (object) ['name' => 'id', 'type' => 'integer', 'max_length' => 32],
+                    (object) ['name' => 'name', 'type' => 'text', 'max_length' => null],
+                ];
+            }
+        };
+
+        $positional = (new PostgreBuilder('jobs', $db))->testMode()
+            ->setData([['id' => 1], ['id' => '2'], ['id' => 1.4]], null, 'data')
+            ->onConstraint('id')
+            ->deleteBatch();
+
+        $expected = <<<'EOF'
+            DELETE FROM "jobs"
+            USING (
+            SELECT 1 "id" UNION ALL
+            SELECT CAST('2' AS INTEGER) "id" UNION ALL
+            SELECT 1.4 "id"
+            ) "data"
+            WHERE "jobs"."id" = "data"."id"
+            EOF;
+
+        $this->assertSame($expected, rtrim($positional[0]));
+
+        $mapped = (new PostgreBuilder('jobs', $db))->testMode()
+            ->setData([['value' => 'x'], ['value' => 5]], null, 'data')
+            ->onConstraint(['name' => 'value'])
+            ->deleteBatch();
+
+        $expected = <<<'EOF'
+            DELETE FROM "jobs"
+            USING (
+            SELECT CAST('x' AS TEXT) "value" UNION ALL
+            SELECT CAST(5 AS TEXT) "value"
+            ) "data"
+            WHERE "jobs"."name" = CAST("data"."value" AS TEXT)
+            EOF;
+
+        $this->assertSame($expected, rtrim($mapped[0]));
     }
 }

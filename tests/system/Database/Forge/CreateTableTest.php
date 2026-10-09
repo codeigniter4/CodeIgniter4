@@ -42,7 +42,7 @@ final class CreateTableTest extends CIUnitTestCase
             ->with($sql)
             ->willReturn(true);
 
-        $forge = new class ($dbMock) extends Forge {};
+        $forge = new Forge($dbMock);
 
         $fields = [
             'id' => [

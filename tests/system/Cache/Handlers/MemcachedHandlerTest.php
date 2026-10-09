@@ -26,18 +26,6 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('CacheLive')]
 final class MemcachedHandlerTest extends AbstractHandlerTestCase
 {
-    /**
-     * @return list<string>
-     */
-    private static function getKeyArray(): array
-    {
-        return [
-            self::$key1,
-            self::$key2,
-            self::$key3,
-        ];
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -51,9 +39,11 @@ final class MemcachedHandlerTest extends AbstractHandlerTestCase
 
     protected function tearDown(): void
     {
-        foreach (self::getKeyArray() as $key) {
-            $this->handler->delete($key);
+        if (isset($this->handler)) {
+            $this->handler->clean();
         }
+
+        parent::tearDown();
     }
 
     public function testNew(): void
@@ -161,7 +151,12 @@ final class MemcachedHandlerTest extends AbstractHandlerTestCase
 
         $this->assertSame(9, $memcachedHandler->decrement(self::$key1, 1));
         $this->assertFalse($memcachedHandler->decrement(self::$key2, 1));
-        $this->assertSame(1, $memcachedHandler->decrement(self::$key3, 1));
+        // A key that doesn't exist yet starts at 0, not at the offset
+        // (Memcached counters are unsigned, so it can't start negative).
+        $this->assertSame(0, $memcachedHandler->decrement(self::$key3, 5));
+        // Memcached stores counter values as decimal strings on the wire, so
+        // a plain get() on a counter key returns a string, not an int.
+        $this->assertSame('0', $memcachedHandler->get(self::$key3));
     }
 
     public function testClean(): void

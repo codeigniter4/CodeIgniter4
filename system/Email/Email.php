@@ -30,14 +30,14 @@ class Email
     /**
      * Properties from the last successful send.
      *
-     * @var array|null
+     * @var array<string, mixed>|null
      */
     public $archive;
 
     /**
      * Properties to be added to the next archive.
      *
-     * @var array
+     * @var array<string, list<string>|string>
      */
     protected $tmpArchive = [];
 
@@ -298,7 +298,7 @@ class Email
      *
      * @see Email::printDebugger()
      *
-     * @var array
+     * @var list<string>
      */
     protected $debugMessage = [];
 
@@ -312,35 +312,42 @@ class Email
     /**
      * Recipients
      *
-     * @var array|string
+     * @var list<string>
      */
     protected $recipients = [];
 
     /**
      * CC Recipients
      *
-     * @var array
+     * @var list<string>
      */
     protected $CCArray = [];
 
     /**
      * BCC Recipients
      *
-     * @var array
+     * @var list<string>
      */
     protected $BCCArray = [];
 
     /**
      * Message headers
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $headers = [];
 
     /**
      * Attachment data
      *
-     * @var array
+     * @var list<array{
+     *     name: array{0: string, 1: string|null},
+     *     disposition: string,
+     *     type: string,
+     *     content: string,
+     *     multipart: 'mixed'|'related',
+     *     cid?: string,
+     * }>
      */
     protected $attachments = [];
 
@@ -405,21 +412,19 @@ class Email
     protected static $func_overload;
 
     /**
-     * @param array|\Config\Email|null $config
+     * @param array<string, mixed>|\Config\Email|null $config
      */
     public function __construct($config = null)
     {
         $this->initialize($config);
 
-        if (! isset(static::$func_overload)) {
-            static::$func_overload = extension_loaded('mbstring') && ini_get('mbstring.func_overload');
-        }
+        static::$func_overload ??= extension_loaded('mbstring') && ini_get('mbstring.func_overload');
     }
 
     /**
      * Initialize preferences
      *
-     * @param array|\Config\Email|null $config
+     * @param array<string, mixed>|\Config\Email|null $config
      *
      * @return $this
      */
@@ -554,7 +559,7 @@ class Email
     }
 
     /**
-     * @param array|string $to
+     * @param list<string>|string $to
      *
      * @return $this
      */
@@ -693,7 +698,7 @@ class Email
 
         $this->attachments[] = [
             'name'        => $namesAttached,
-            'disposition' => empty($disposition) ? 'attachment' : $disposition,
+            'disposition' => $disposition === '' ? 'attachment' : $disposition,
             // Can also be 'inline'  Not sure if it matters
             'type'      => $mime,
             'content'   => chunk_split(base64_encode($fileContent)),
@@ -933,7 +938,7 @@ class Email
     }
 
     /**
-     * @param array|string $email
+     * @param list<string>|string $email
      *
      * @return bool
      */
@@ -972,9 +977,9 @@ class Email
     }
 
     /**
-     * @param array|string $email
+     * @param list<string>|string $email
      *
-     * @return array|string
+     * @return ($email is array ? list<string> : string)
      */
     public function cleanEmail($email)
     {
@@ -1454,10 +1459,7 @@ class Email
             }
         }
 
-        // We might already have this set for UTF-8
-        if (! isset($chars)) {
-            $chars = static::strlen($str);
-        }
+        $chars ??= static::strlen($str);
 
         $output = '=?' . $this->charset . '?Q?';
 
@@ -1488,7 +1490,7 @@ class Email
      */
     public function send($autoClear = true)
     {
-        if (! isset($this->headers['From']) && ! empty($this->fromEmail)) {
+        if (! isset($this->headers['From']) && $this->fromEmail !== null && $this->fromEmail !== '') {
             $this->setFrom($this->fromEmail, $this->fromName);
         }
 
@@ -1503,8 +1505,8 @@ class Email
         }
 
         if (
-            empty($this->recipients) && ! isset($this->headers['To'])
-            && empty($this->BCCArray) && ! isset($this->headers['Bcc'])
+            $this->recipients === [] && ! isset($this->headers['To'])
+            && $this->BCCArray === [] && ! isset($this->headers['Bcc'])
             && ! isset($this->headers['Cc'])
         ) {
             $this->setErrorMessage(lang('Email.noRecipients'));
@@ -2121,8 +2123,8 @@ class Email
     }
 
     /**
-     * @param array|string $include List of raw data chunks to include in the output
-     *                              Valid options are: 'headers', 'subject', 'body'
+     * @param list<string>|string $include List of raw data chunks to include in the output
+     *                                     Valid options are: 'headers', 'subject', 'body'
      *
      * @return string
      */
@@ -2180,7 +2182,7 @@ class Email
     {
         $mime = Mimes::guessTypeFromExtension(strtolower($ext));
 
-        return empty($mime) ? 'application/x-unknown-content-type' : $mime;
+        return $mime ?? 'application/x-unknown-content-type';
     }
 
     public function __destruct()
@@ -2229,7 +2231,7 @@ class Email
     /**
      * Determines the values that should be stored in $archive.
      *
-     * @return array The updated archive values
+     * @return array<string, mixed> The updated archive values
      */
     protected function setArchiveValues(): array
     {

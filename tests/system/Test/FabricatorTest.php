@@ -16,6 +16,7 @@ namespace CodeIgniter\Test;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Model;
 use PHPUnit\Framework\Attributes\Group;
+use stdClass;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\EventModel;
 use Tests\Support\Models\FabricatorModel;
@@ -30,6 +31,8 @@ final class FabricatorTest extends CIUnitTestCase
 {
     /**
      * Default formatters to use for UserModel. Should match detected version.
+     *
+     * @var array<string, string>
      */
     private array $formatters = [
         'name'       => 'name',
@@ -128,8 +131,10 @@ final class FabricatorTest extends CIUnitTestCase
         $fabricator = new Fabricator(UserModel::class);
 
         $faker = $fabricator->getFaker();
+        $digit = $faker->randomDigit();
 
-        $this->assertIsNumeric($faker->randomDigit());
+        $this->assertGreaterThanOrEqual(0, $digit);
+        $this->assertLessThanOrEqual(9, $digit);
     }
 
     public function testSetFormattersChangesFormatters(): void
@@ -408,6 +413,7 @@ final class FabricatorTest extends CIUnitTestCase
         $fabricator = new Fabricator(FabricatorModel::class);
 
         $result = $fabricator->create(null, true);
+        $this->assertInstanceOf(stdClass::class, $result);
 
         $this->assertIsInt($result->id);
         $this->assertIsInt($result->created_at);

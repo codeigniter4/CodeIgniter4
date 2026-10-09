@@ -21,7 +21,7 @@ class Mycontroller extends Controller
     {
     }
 
-    public function getSomemethod($first = ''): void
+    public function getSomemethod(string $first = ''): void
     {
     }
 }

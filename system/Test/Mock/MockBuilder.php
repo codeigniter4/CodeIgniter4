@@ -15,6 +15,9 @@ namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\Database\BaseBuilder;
 
+/**
+ * @extends BaseBuilder<MockConnection>
+ */
 class MockBuilder extends BaseBuilder
 {
     /**

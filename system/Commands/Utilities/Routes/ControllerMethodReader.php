@@ -147,6 +147,8 @@ final readonly class ControllerMethodReader
 
     /**
      * Gets a route without default controller.
+     *
+     * @return list<array{route: string, handler: string}>
      */
     private function getRouteWithoutController(
         string $classShortname,

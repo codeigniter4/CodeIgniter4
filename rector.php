@@ -13,35 +13,25 @@ declare(strict_types=1);
 
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\CodeQuality\Rector\BooleanNot\NegatedAndsToPositiveOrsRector;
-use Rector\CodeQuality\Rector\Empty_\SimplifyEmptyCheckOnEmptyArrayRector;
+use Rector\CodeQuality\Rector\ClassMethod\LocallyCalledStaticMethodToNonStaticRector;
 use Rector\CodeQuality\Rector\FuncCall\CompactToVariablesRector;
-use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
 use Rector\CodeQuality\Rector\Isset_\IssetOnPropertyObjectToPropertyExistsRector;
-use Rector\CodeQuality\Rector\Ternary\TernaryEmptyArrayArrayDimFetchToCoalesceRector;
 use Rector\CodingStyle\Rector\ClassMethod\FuncGetArgsToVariadicParamRector;
 use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsParentRector;
-use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\CodingStyle\Rector\FuncCall\VersionCompareFuncCallToConstantRector;
 use Rector\Config\RectorConfig;
-use Rector\DeadCode\Rector\ClassMethod\RemoveDuplicatedReturnSelfDocblockRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
 use Rector\DeadCode\Rector\MethodCall\RemoveNullArgOnNullDefaultParamRector;
-use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
-use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
-use Rector\EarlyReturn\Rector\If_\RemoveAlwaysElseRector;
-use Rector\EarlyReturn\Rector\Return_\PreparedValueToEarlyReturnRector;
+use Rector\DeadCode\Rector\Property\RemoveDefaultValueFromAssignedPropertyRector;
 use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php71\Rector\FuncCall\RemoveExtraParametersRector;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
-use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
-use Rector\PHPUnit\CodeQuality\Rector\FuncCall\AssertFuncCallToPHPUnitAssertRector;
 use Rector\PHPUnit\CodeQuality\Rector\StmtsAwareInterface\DeclareStrictTypesTestsRector;
 use Rector\Privatization\Rector\Class_\FinalizeTestCaseClassRector;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
 use Rector\Renaming\Rector\ConstFetch\RenameConstantRector;
-use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 use Rector\TypeDeclaration\Rector\ArrowFunction\AddArrowFunctionReturnTypeRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddMethodCallBasedStrictParamTypeRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnNeverTypeRector;
@@ -50,13 +40,14 @@ use Rector\TypeDeclaration\Rector\Closure\ClosureReturnTypeRector;
 use Rector\TypeDeclaration\Rector\Function_\AddFunctionVoidReturnTypeWhereNoReturnRector;
 use Rector\TypeDeclaration\Rector\Property\TypedPropertyFromAssignsRector;
 use Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector;
+use Rector\TypeDeclaration\Rector\StmtsAwareInterface\SafeDeclareStrictTypesRector;
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
 use Utils\Rector\RemoveErrorSuppressInTryCatchStmtsRector;
 use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
 
 return RectorConfig::configure()
     ->withPhpSets(php82: true)
-    ->withPreparedSets(deadCode: true, instanceOf: true, phpunitCodeQuality: true)
+    ->withPreparedSets(deadCode: true, codeQuality: true, instanceOf: true, phpunitCodeQuality: true)
     ->withComposerBased(phpunit: true)
     ->withParallel(120, 8, 10)
     ->withCache(
@@ -77,13 +68,14 @@ return RectorConfig::configure()
         __DIR__ . '/phpstan-bootstrap.php',
     ])
     ->withPHPStanConfigs([
-        __DIR__ . '/phpstan.dist.neon',
         __DIR__ . '/vendor/codeigniter/phpstan-codeigniter/extension.neon',
         __DIR__ . '/vendor/phpstan/phpstan-strict-rules/rules.neon',
         __DIR__ . '/vendor/shipmonk/phpstan-baseline-per-identifier/extension.neon',
+        __DIR__ . '/phpstan.dist.neon',
     ])
     // is there a file you need to skip?
     ->withSkip([
+        __DIR__ . '/structarmed-baseline.php',
         __DIR__ . '/system/Debug/Toolbar/Views/toolbar.tpl.php',
         __DIR__ . '/system/ThirdParty',
         __DIR__ . '/tests/system/Config/fixtures',
@@ -103,8 +95,12 @@ return RectorConfig::configure()
             __DIR__ . '/system/HTTP/Response.php',
         ],
 
+        // Keep property defaults for backward compatibility.
+        RemoveDefaultValueFromAssignedPropertyRector::class,
+
         // Exclude test file because `is_cli()` is mocked and Rector might remove needed parameters.
         RemoveExtraParametersRector::class => [
+            __DIR__ . '/tests/system/CLI/CLITest.php',
             __DIR__ . '/tests/system/Debug/ToolbarTest.php',
         ],
 
@@ -149,18 +145,10 @@ return RectorConfig::configure()
             __DIR__ . '/system/HTTP/SiteURI.php',
         ],
 
-        // Unnecessary (string) is inserted
-        NullToStrictStringFuncCallArgRector::class,
-
         CompactToVariablesRector::class,
 
         // possibly isset() on purpose, on updated Config classes property across versions
         IssetOnPropertyObjectToPropertyExistsRector::class,
-
-        AssertFuncCallToPHPUnitAssertRector::class => [
-            // use $this inside static closure
-            __DIR__ . '/tests/system/AutoReview/FrameworkCodeTest.php',
-        ],
 
         // some tests extended by other tests
         FinalizeTestCaseClassRector::class,
@@ -178,26 +166,18 @@ return RectorConfig::configure()
 
         // to be applied in separate PRs to ease review
         NegatedAndsToPositiveOrsRector::class,
-        RemoveDuplicatedReturnSelfDocblockRector::class,
+        SafeDeclareStrictTypesRector::class,
+        LocallyCalledStaticMethodToNonStaticRector::class,
     ])
     // auto import fully qualified class names
     ->withImportNames()
     ->withRules([
         DeclareStrictTypesRector::class,
         UnderscoreToCamelCaseVariableNameRector::class,
-        SimplifyUselessVariableRector::class,
-        RemoveAlwaysElseRector::class,
         PassStrictParameterToFunctionParameterRector::class,
-        CountArrayToEmptyArrayComparisonRector::class,
-        ChangeNestedForeachIfsToEarlyContinueRector::class,
-        ChangeIfElseValueAssignToEarlyReturnRector::class,
-        PreparedValueToEarlyReturnRector::class,
         RemoveErrorSuppressInTryCatchStmtsRector::class,
         FuncGetArgsToVariadicParamRector::class,
         MakeInheritedMethodVisibilitySameAsParentRector::class,
-        SimplifyEmptyCheckOnEmptyArrayRector::class,
-        TernaryEmptyArrayArrayDimFetchToCoalesceRector::class,
-        DisallowedEmptyRuleFixerRector::class,
         PrivatizeFinalClassPropertyRector::class,
         VersionCompareFuncCallToConstantRector::class,
         AddClosureVoidReturnTypeWhereNoReturnRector::class,
@@ -210,5 +190,4 @@ return RectorConfig::configure()
     ->withConfiguredRule(RenameConstantRector::class, [
         'FILTER_DEFAULT' => 'FILTER_UNSAFE_RAW',
     ])
-    ->withCodeQualityLevel(61)
     ->reportUnusedSkips();

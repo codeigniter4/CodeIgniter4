@@ -211,11 +211,10 @@ final class ArrayHelperTest extends CIUnitTestCase
     }
 
     /**
-     * @param int|string        $key
-     * @param array|string|null $expected
+     * @param array<array-key, mixed>|string|null $expected
      */
     #[DataProvider('provideArrayDeepSearch')]
-    public function testArrayDeepSearch($key, $expected): void
+    public function testArrayDeepSearch(int|string $key, array|string|null $expected): void
     {
         $data = [
             'key1' => 'Value 1',
@@ -241,6 +240,9 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $result);
     }
 
+    /**
+     * @return iterable<array{int|string, array<array-key, mixed>|string|null}>
+     */
     public static function provideArrayDeepSearch(): iterable
     {
         return [
@@ -274,6 +276,11 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertNull(array_deep_search('key644', $data));
     }
 
+    /**
+     * @param list<array{name: string, position: int, team: array{order: int}}> $data
+     * @param array<string, int>                                                $sortColumns
+     * @param list<string>                                                      $expected
+     */
     #[DataProvider('provideSortByMultipleKeys')]
     public function testArraySortByMultipleKeysWithArray(array $data, array $sortColumns, array $expected): void
     {
@@ -283,6 +290,11 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertSame($expected, array_column($data, 'name'));
     }
 
+    /**
+     * @param list<array{name: string, position: int, team: array{order: int}}> $data
+     * @param array<string, int>                                                $sortColumns
+     * @param list<string>                                                      $expected
+     */
     #[DataProvider('provideSortByMultipleKeys')]
     public function testArraySortByMultipleKeysWithObjects(array $data, array $sortColumns, array $expected): void
     {
@@ -297,6 +309,11 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertSame($expected, array_column($data, 'name'));
     }
 
+    /**
+     * @param list<array{name: string, position: int, team: array{order: int}}> $data
+     * @param array<string, int>                                                $sortColumns
+     * @param list<string>                                                      $expected
+     */
     #[DataProvider('provideSortByMultipleKeys')]
     public function testArraySortByMultipleKeysFailsEmptyParameter(array $data, array $sortColumns, array $expected): void
     {
@@ -334,6 +351,9 @@ final class ArrayHelperTest extends CIUnitTestCase
         array_sort_by_multiple_keys($data, $sortColumns);
     }
 
+    /**
+     * @return iterable<array{list<array{name: string, position: int, team: array{order: int}}>, array<string, int>, list<string>}>
+     */
     public static function provideSortByMultipleKeys(): iterable
     {
         $seed = [
@@ -387,12 +407,19 @@ final class ArrayHelperTest extends CIUnitTestCase
         ];
     }
 
+    /**
+     * @param array<array-key, mixed> $input
+     * @param array<string, mixed>    $expected
+     */
     #[DataProvider('provideArrayFlattening')]
     public function testArrayFlattening(array $input, array $expected): void
     {
         $this->assertSame($expected, array_flatten_with_dots($input));
     }
 
+    /**
+     * @return iterable<string, array{array<array-key, mixed>, array<string, mixed>}>
+     */
     public static function provideArrayFlattening(): iterable
     {
         yield 'normal' => [
@@ -485,6 +512,11 @@ final class ArrayHelperTest extends CIUnitTestCase
         ];
     }
 
+    /**
+     * @param list<string>            $indexes
+     * @param array<array-key, mixed> $data
+     * @param array<array-key, mixed> $expected
+     */
     #[DataProvider('provideArrayGroupByIncludeEmpty')]
     public function testArrayGroupByIncludeEmpty(array $indexes, array $data, array $expected): void
     {
@@ -493,6 +525,9 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $actual, 'array including empty not the same');
     }
 
+    /**
+     * @return iterable<string, array{list<string>, array<array-key, mixed>, array<array-key, mixed>}>
+     */
     public static function provideArrayGroupByIncludeEmpty(): iterable
     {
         yield 'simple group-by test' => [
@@ -904,6 +939,11 @@ final class ArrayHelperTest extends CIUnitTestCase
         ];
     }
 
+    /**
+     * @param list<string>            $indexes
+     * @param array<array-key, mixed> $data
+     * @param array<array-key, mixed> $expected
+     */
     #[DataProvider('provideArrayGroupByExcludeEmpty')]
     public function testArrayGroupByExcludeEmpty(array $indexes, array $data, array $expected): void
     {
@@ -912,6 +952,9 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $actual, 'array excluding empty not the same');
     }
 
+    /**
+     * @return iterable<string, array{list<string>, array<array-key, mixed>, array<array-key, mixed>}>
+     */
     public static function provideArrayGroupByExcludeEmpty(): iterable
     {
         yield 'simple group-by test' => [

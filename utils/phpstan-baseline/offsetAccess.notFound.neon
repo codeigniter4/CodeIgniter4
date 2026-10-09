@@ -1,8 +1,0 @@
-# total 2 errors
-
-parameters:
-    ignoreErrors:
-        -
-            message: '#^Offset ''_ci_old_input'' does not exist on array\{\}\.$#'
-            count: 2
-            path: ../../tests/system/HTTP/RedirectResponseTest.php

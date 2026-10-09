@@ -35,7 +35,11 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
         $this->resetFactories();
     }
 
-    protected function getCollector(array $config = [], array $files = [], $moduleConfig = null): RouteCollection
+    /**
+     * @param array<non-empty-string, list<non-empty-string>|non-empty-string> $config
+     * @param array<array-key, mixed>                                          $files
+     */
+    protected function getCollector(array $config = [], array $files = [], ?Modules $moduleConfig = null): RouteCollection
     {
         $defaults = [
             'Config' => APPPATH . 'Config',
@@ -47,7 +51,7 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
 
         $loader = service('locator');
 
-        if ($moduleConfig === null) {
+        if (! $moduleConfig instanceof Modules) {
             $moduleConfig          = new Modules();
             $moduleConfig->enabled = false;
         }
@@ -147,6 +151,9 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
         $this->assertSame('/users/15/gallery12', $match);
     }
 
+    /**
+     * @return iterable<string, array{string}>
+     */
     public static function provideReverseRoutingDefaultNamespaceAppController(): iterable
     {
         return yield from [

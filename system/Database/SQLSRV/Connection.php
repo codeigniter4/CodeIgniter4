@@ -47,14 +47,14 @@ class Connection extends BaseConnection
      * FALSE or SQLSRV_CURSOR_FORWARD would increase performance,
      * but would disable num_rows() (and possibly insert_id())
      *
-     * @var false|string
+     * @var false|string|null
      */
     public $scrollable;
 
     /**
      * Identifier escape character
      *
-     * @var string
+     * @var list<string>|string
      */
     public $escapeChar = '"';
 
@@ -84,17 +84,11 @@ class Connection extends BaseConnection
      */
     protected $_reserved_identifiers = ['*'];
 
-    /**
-     * Class constructor
-     */
     public function __construct(array $params)
     {
         parent::__construct($params);
 
-        // This is only supported as of SQLSRV 3.0
-        if ($this->scrollable === null) {
-            $this->scrollable = defined('SQLSRV_CURSOR_CLIENT_BUFFERED') ? SQLSRV_CURSOR_CLIENT_BUFFERED : false;
-        }
+        $this->scrollable ??= defined('SQLSRV_CURSOR_CLIENT_BUFFERED') ? SQLSRV_CURSOR_CLIENT_BUFFERED : false;
     }
 
     /**
@@ -109,8 +103,8 @@ class Connection extends BaseConnection
         $charset = in_array(strtolower($this->charset), ['utf-8', 'utf8'], true) ? 'UTF-8' : SQLSRV_ENC_CHAR;
 
         $connection = [
-            'UID'                  => empty($this->username) ? '' : $this->username,
-            'PWD'                  => empty($this->password) ? '' : $this->password,
+            'UID'                  => is_string($this->username) ? $this->username : '',
+            'PWD'                  => is_string($this->password) ? $this->password : '',
             'Database'             => $this->database,
             'ConnectionPooling'    => $persistent ? 1 : 0,
             'CharacterSet'         => $charset,
@@ -120,7 +114,7 @@ class Connection extends BaseConnection
 
         // If the username and password are both empty, assume this is a
         // 'Windows Authentication Mode' connection.
-        if (empty($connection['UID']) && empty($connection['PWD'])) {
+        if ($connection['UID'] === '' && $connection['PWD'] === '') {
             unset($connection['UID'], $connection['PWD']);
         }
 
@@ -136,7 +130,7 @@ class Connection extends BaseConnection
             $query = $this->query('SELECT CASE WHEN (@@OPTIONS | 256) = @@OPTIONS THEN 1 ELSE 0 END AS qi');
             $query = $query->getResultObject();
 
-            $this->_quoted_identifier = empty($query) ? false : (bool) $query[0]->qi;
+            $this->_quoted_identifier = $query === [] ? false : (bool) $query[0]->qi;
             $this->escapeChar         = ($this->_quoted_identifier) ? '"' : ['[', ']'];
 
             return $this->connID;
@@ -166,11 +160,6 @@ class Connection extends BaseConnection
         return implode("\n", $errors);
     }
 
-    /**
-     * Close the database connection.
-     *
-     * @return void
-     */
     protected function _close()
     {
         sqlsrv_close($this->connID);
@@ -192,11 +181,6 @@ class Connection extends BaseConnection
         return (int) ($this->query('SELECT SCOPE_IDENTITY() AS insert_id')->getRow()->insert_id ?? 0);
     }
 
-    /**
-     * Generates the SQL for listing tables in a platform-dependent manner.
-     *
-     * @param string|null $tableName If $tableName is provided will return only this table if exists.
-     */
     protected function _listTables(bool $prefixLimit = false, ?string $tableName = null): string
     {
         $sql = 'SELECT [TABLE_NAME] AS "name"'
@@ -216,11 +200,6 @@ class Connection extends BaseConnection
         return $sql;
     }
 
-    /**
-     * Generates a platform-specific query string so that the column names can be fetched.
-     *
-     * @param string|TableName $table
-     */
     protected function _listColumns($table = ''): string
     {
         if ($table instanceof TableName) {
@@ -236,10 +215,6 @@ class Connection extends BaseConnection
     }
 
     /**
-     * Returns an array of objects with index data
-     *
-     * @return array<string, stdClass>
-     *
      * @throws DatabaseException
      */
     protected function _indexData(string $table): array
@@ -273,11 +248,6 @@ class Connection extends BaseConnection
     }
 
     /**
-     * Returns an array of objects with Foreign key data
-     * referenced_object_id  parent_object_id
-     *
-     * @return array<string, stdClass>
-     *
      * @throws DatabaseException
      */
     protected function _foreignKeyData(string $table): array
@@ -340,19 +310,23 @@ class Connection extends BaseConnection
     }
 
     /**
-     * Returns an array of objects with field data
-     *
-     * @return list<stdClass>
-     *
      * @throws DatabaseException
      */
     protected function _fieldData(string $table): array
     {
+        $parts  = explode('.', $table);
+        $table  = array_pop($parts);
+        $schema = array_pop($parts);
+
         $sql = 'SELECT
                 COLUMN_NAME, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, NUMERIC_PRECISION,
                 COLUMN_DEFAULT, IS_NULLABLE
             FROM INFORMATION_SCHEMA.COLUMNS
             WHERE TABLE_NAME= ' . $this->escape(($table));
+
+        if ($schema !== null) {
+            $sql .= ' AND TABLE_SCHEMA = ' . $this->escape($schema);
+        }
 
         if (($query = $this->query($sql)) === false) {
             throw new DatabaseException(lang('Database.failGetFieldData'));
@@ -412,25 +386,16 @@ class Connection extends BaseConnection
         return $default;
     }
 
-    /**
-     * Begin Transaction
-     */
     protected function _transBegin(): bool
     {
         return sqlsrv_begin_transaction($this->connID);
     }
 
-    /**
-     * Commit Transaction
-     */
     protected function _transCommit(): bool
     {
         return sqlsrv_commit($this->connID);
     }
 
-    /**
-     * Rollback Transaction
-     */
     protected function _transRollback(): bool
     {
         return sqlsrv_rollback($this->connID);
@@ -493,7 +458,7 @@ class Connection extends BaseConnection
             $databaseName = $this->database;
         }
 
-        if (empty($this->connID)) {
+        if ($this->connID === false) {
             $this->initialize();
         }
 

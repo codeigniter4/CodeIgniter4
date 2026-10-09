@@ -328,8 +328,25 @@ In PHP versions below 8.1, this returns ``null``
 
 .. literalinclude:: uploaded_files/023.php
 
+.. _uploaded-files-moving-files:
+
 Moving Files
 ============
+
+.. warning::
+    Do not let user input directly decide the destination directory. The ``$targetPath`` argument of ``move()`` and the
+    ``$folderName`` argument of ``store()`` are never sanitized, so an attacker-controlled value containing ``../`` can
+    move the uploaded file outside the intended directory. Use directories controlled by your application.
+
+    Filenames are only sanitized by default: ``move()`` sanitizes the client-provided name when the ``$name`` argument is
+    omitted, and ``store()`` generates a random name when ``$fileName`` is omitted. A caller-supplied ``$name`` or
+    ``$fileName`` is NOT sanitized, so if you pass one, generate it yourself or sanitize it with
+    :php:func:`sanitize_filename`.
+
+    Sanitizing a client-provided filename does not make it safe to keep in a web-accessible directory where scripts can
+    execute. Some web servers select a handler from any extension in a filename, including an extension before the final
+    one. Keep uploads outside the public directory with ``store()`` when possible. If they must be public, disable script
+    execution in the upload directory and pass ``$file->getRandomName()`` as the second argument to ``move()``.
 
 with Original Filename
 ----------------------

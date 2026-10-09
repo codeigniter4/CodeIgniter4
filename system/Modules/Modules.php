@@ -60,6 +60,9 @@ class Modules
         return in_array(strtolower($alias), $this->aliases, true);
     }
 
+    /**
+     * @param array<string, mixed> $array
+     */
     public static function __set_state(array $array)
     {
         $obj = new static();

@@ -28,6 +28,18 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class CookieTest extends CIUnitTestCase
 {
+    /**
+     * @var array{
+     *   prefix: string,
+     *   expires: int,
+     *   path: string,
+     *   domain: string,
+     *   secure: bool,
+     *   httponly: bool,
+     *   samesite: string,
+     *   raw: bool
+     * }
+     */
     private array $defaults;
 
     protected function setUp(): void
@@ -99,6 +111,9 @@ final class CookieTest extends CIUnitTestCase
         $this->assertSame($expected, $cookie->getPrefixedName());
     }
 
+    /**
+     * @return iterable<int, array{string, string, string}>
+     */
     public static function provideConfigPrefix(): iterable
     {
         yield from [
@@ -175,6 +190,9 @@ final class CookieTest extends CIUnitTestCase
         new Cookie('test', 'value', ['expires' => $expires]);
     }
 
+    /**
+     * @return iterable<string, array{bool|float|string}>
+     */
     public static function provideInvalidExpires(): iterable
     {
         $cases = [
@@ -188,6 +206,9 @@ final class CookieTest extends CIUnitTestCase
         }
     }
 
+    /**
+     * @param array<string, bool|string> $changed
+     */
     #[DataProvider('provideSetCookieHeaderCreation')]
     public function testSetCookieHeaderCreation(string $header, array $changed): void
     {
@@ -196,6 +217,9 @@ final class CookieTest extends CIUnitTestCase
         $this->assertSame(array_merge($cookie, $changed), $cookie);
     }
 
+    /**
+     * @return iterable<string, array{string, array<string, bool|string>}>
+     */
     public static function provideSetCookieHeaderCreation(): iterable
     {
         yield 'basic' => [
@@ -316,5 +340,342 @@ final class CookieTest extends CIUnitTestCase
         $this->expectException(LogicException::class);
         $cookie = new Cookie('cookie', 'monster');
         unset($cookie['path']);
+    }
+
+    #[DataProvider('provideValidationOfRawCookieValue')]
+    public function testValidationOfRawCookieValue(string $value): void
+    {
+        $this->expectException(CookieException::class);
+        new Cookie('test', $value, ['raw' => true]);
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideValidationOfRawCookieValue(): iterable
+    {
+        yield 'comma' => ['value,comma'];
+
+        yield 'semicolon' => ['value;semicolon'];
+
+        yield 'space' => ['value with space'];
+
+        yield 'tab' => ["value\twith_tab"];
+
+        yield 'carriage return' => ["value\rcarriage"];
+
+        yield 'newline' => ["value\nnewline"];
+
+        yield 'vertical tab' => ["value\vvertical_tab"];
+
+        yield 'form feed' => ["value\fform_feed"];
+
+        yield 'null byte' => ["value\0null_byte"];
+
+        yield 'CRLF' => ["value\r\nwith_crlf"];
+    }
+
+    #[DataProvider('provideFromHeaderStringValidationOfRawCookieValue')]
+    public function testFromHeaderStringValidationOfRawCookieValue(string $value): void
+    {
+        $this->expectException(CookieException::class);
+        Cookie::fromHeaderString("test={$value}; Path=/", true);
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideFromHeaderStringValidationOfRawCookieValue(): iterable
+    {
+        foreach (self::provideValidationOfRawCookieValue() as $name => $case) {
+            if ($name === 'semicolon') {
+                continue;
+            }
+
+            yield $name => $case;
+        }
+    }
+
+    public function testFromHeaderStringWithRawTrue(): void
+    {
+        $cookie = Cookie::fromHeaderString('test=valid_raw_value=123; Path=/', true);
+
+        $this->assertTrue($cookie->isRaw());
+        $this->assertSame('valid_raw_value=123', $cookie->getValue());
+    }
+
+    public function testFromHeaderStringWithRawFalseDecodesValue(): void
+    {
+        $cookie = Cookie::fromHeaderString('test=value%20with%20space; Path=/', false);
+
+        $this->assertFalse($cookie->isRaw());
+        $this->assertSame('value with space', $cookie->getValue());
+    }
+
+    public function testValidationOfRawCookieValueInWithValue(): void
+    {
+        $this->expectException(CookieException::class);
+        $cookie = new Cookie('test', 'valid_value', ['raw' => true]);
+        $cookie->withValue("injected\r\nvalue");
+    }
+
+    public function testValidationOfRawCookieValueInWithRaw(): void
+    {
+        $this->expectException(CookieException::class);
+        $cookie = new Cookie('test', "injected\r\nvalue", ['raw' => false]);
+        $cookie->withRaw(true);
+    }
+
+    public function testValidRawCookieRetainsValueWithoutEncoding(): void
+    {
+        $cookie = new Cookie('test', 'valid_raw_value=123', ['raw' => true]);
+
+        $this->assertSame('valid_raw_value=123', $cookie->getValue());
+        $this->assertStringContainsString('test=valid_raw_value=123', (string) $cookie);
+    }
+
+    public function testNonRawCookieSafelyEncodesCRLF(): void
+    {
+        $cookie = new Cookie('test', "value\r\nwith_crlf", ['raw' => false]);
+        $result = (string) $cookie;
+
+        $this->assertStringContainsString('%0D%0A', $result);
+        $this->assertStringNotContainsString("\r", $result);
+        $this->assertStringNotContainsString("\n", $result);
+    }
+
+    #[DataProvider('provideValidationOfCookiePath')]
+    public function testValidationOfCookiePath(string $path): void
+    {
+        $this->expectException(CookieException::class);
+        $this->expectExceptionMessage(lang('Cookie.invalidCookiePath'));
+        new Cookie('test', 'value', ['path' => $path]);
+    }
+
+    #[DataProvider('provideValidationOfCookiePath')]
+    public function testValidationOfCookiePathInWithPath(string $path): void
+    {
+        $this->expectException(CookieException::class);
+        $this->expectExceptionMessage(lang('Cookie.invalidCookiePath'));
+        $cookie = new Cookie('test', 'value');
+        $cookie->withPath($path);
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideValidationOfCookiePath(): iterable
+    {
+        yield 'comma' => ['/path,comma'];
+
+        yield 'semicolon' => ['/path;semicolon'];
+
+        yield 'space' => ['/path with space'];
+
+        yield 'tab' => ["/path\twith_tab"];
+
+        yield 'carriage return' => ["/path\rcarriage"];
+
+        yield 'newline' => ["/path\nnewline"];
+
+        yield 'vertical tab' => ["/path\vvertical_tab"];
+
+        yield 'form feed' => ["/path\fform_feed"];
+
+        yield 'null byte' => ["/path\0null_byte"];
+
+        yield 'CRLF' => ["/path\r\nwith_crlf"];
+    }
+
+    #[DataProvider('provideFromHeaderStringValidationOfCookiePath')]
+    public function testFromHeaderStringValidationOfCookiePath(string $path): void
+    {
+        $this->expectException(CookieException::class);
+        $this->expectExceptionMessage(lang('Cookie.invalidCookiePath'));
+        Cookie::fromHeaderString("test=value; Path={$path}");
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideFromHeaderStringValidationOfCookiePath(): iterable
+    {
+        foreach (self::provideValidationOfCookiePath() as $name => $case) {
+            if ($name === 'semicolon') {
+                continue;
+            }
+
+            yield $name => $case;
+        }
+    }
+
+    #[DataProvider('provideValidationOfCookieDomain')]
+    public function testValidationOfCookieDomain(string $domain): void
+    {
+        $this->expectException(CookieException::class);
+        $this->expectExceptionMessage(lang('Cookie.invalidCookieDomain'));
+        new Cookie('test', 'value', ['domain' => $domain]);
+    }
+
+    #[DataProvider('provideValidationOfCookieDomain')]
+    public function testValidationOfCookieDomainInWithDomain(string $domain): void
+    {
+        $this->expectException(CookieException::class);
+        $this->expectExceptionMessage(lang('Cookie.invalidCookieDomain'));
+        $cookie = new Cookie('test', 'value');
+        $cookie->withDomain($domain);
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideValidationOfCookieDomain(): iterable
+    {
+        yield 'comma' => ['domain,comma.com'];
+
+        yield 'semicolon' => ['domain;semicolon.com'];
+
+        yield 'space' => ['domain with space.com'];
+
+        yield 'tab' => ["domain\twith_tab.com"];
+
+        yield 'carriage return' => ["domain\rcarriage.com"];
+
+        yield 'newline' => ["domain\nnewline.com"];
+
+        yield 'vertical tab' => ["domain\vvertical_tab.com"];
+
+        yield 'form feed' => ["domain\fform_feed.com"];
+
+        yield 'null byte' => ["domain\0null_byte.com"];
+
+        yield 'CRLF' => ["domain\r\nwith_crlf.com"];
+    }
+
+    #[DataProvider('provideFromHeaderStringValidationOfCookieDomain')]
+    public function testFromHeaderStringValidationOfCookieDomain(string $domain): void
+    {
+        $this->expectException(CookieException::class);
+        $this->expectExceptionMessage(lang('Cookie.invalidCookieDomain'));
+        Cookie::fromHeaderString("test=value; Domain={$domain}");
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideFromHeaderStringValidationOfCookieDomain(): iterable
+    {
+        foreach (self::provideValidationOfCookieDomain() as $name => $case) {
+            if ($name === 'semicolon') {
+                continue;
+            }
+
+            yield $name => $case;
+        }
+    }
+
+    public function testNullPathAndDomainDefaultProperly(): void
+    {
+        $cookie = new Cookie('test', 'val', ['path' => null, 'domain' => null, 'prefix' => null]);
+
+        $this->assertSame('/', $cookie->getPath());
+        $this->assertSame('', $cookie->getDomain());
+        $this->assertSame('', $cookie->getPrefix());
+
+        $cookie2 = $cookie->withPath(null)->withDomain(null)->withPrefix('');
+        $this->assertSame('/', $cookie2->getPath());
+        $this->assertSame('', $cookie2->getDomain());
+        $this->assertSame('', $cookie2->getPrefix());
+    }
+
+    public function testValidCookiePathAndDomain(): void
+    {
+        $cookie = new Cookie('test', 'val', ['path' => '/sub/dir/', 'domain' => 'example.com']);
+        $this->assertSame('/sub/dir/', $cookie->getPath());
+        $this->assertSame('example.com', $cookie->getDomain());
+
+        $cookie2 = $cookie->withPath('/another/path')->withDomain('.example.com');
+        $this->assertSame('/another/path', $cookie2->getPath());
+        $this->assertSame('.example.com', $cookie2->getDomain());
+
+        $cookie3 = new Cookie('test', 'val', ['path' => '/', 'domain' => '']);
+        $this->assertSame('/', $cookie3->getPath());
+        $this->assertSame('', $cookie3->getDomain());
+    }
+
+    #[DataProvider('provideValidationOfCookiePrefix')]
+    public function testValidationOfCookiePrefix(string $prefix): void
+    {
+        $this->expectException(CookieException::class);
+        $this->expectExceptionMessage(lang('Cookie.invalidCookieName', [$prefix]));
+        new Cookie('test', 'val', ['prefix' => $prefix]);
+    }
+
+    #[DataProvider('provideValidationOfCookiePrefix')]
+    public function testValidationOfCookiePrefixInWithPrefix(string $prefix): void
+    {
+        $this->expectException(CookieException::class);
+        $this->expectExceptionMessage(lang('Cookie.invalidCookieName', [$prefix]));
+        $cookie = new Cookie('test', 'val');
+        $cookie->withPrefix($prefix);
+    }
+
+    #[DataProvider('provideValidationOfCookiePrefix')]
+    public function testValidationOfRawCookiePrefix(string $prefix): void
+    {
+        $this->expectException(CookieException::class);
+        $this->expectExceptionMessage(lang('Cookie.invalidCookieName', [$prefix]));
+        new Cookie('test', 'val', ['prefix' => $prefix, 'raw' => true]);
+    }
+
+    #[DataProvider('provideValidationOfCookiePrefix')]
+    public function testValidationOfRawCookiePrefixInWithPrefix(string $prefix): void
+    {
+        $this->expectException(CookieException::class);
+        $this->expectExceptionMessage(lang('Cookie.invalidCookieName', [$prefix]));
+        $cookie = new Cookie('test', 'val', ['raw' => true]);
+        $cookie->withPrefix($prefix);
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideValidationOfCookiePrefix(): iterable
+    {
+        yield 'equals' => ['prefix='];
+
+        yield 'comma' => ['prefix,'];
+
+        yield 'semicolon' => ['prefix;'];
+
+        yield 'space' => ['prefix '];
+
+        yield 'tab' => ["prefix\t"];
+
+        yield 'carriage return' => ["prefix\r"];
+
+        yield 'newline' => ["prefix\n"];
+
+        yield 'vertical tab' => ["prefix\v"];
+
+        yield 'form feed' => ["prefix\f"];
+
+        yield 'null byte' => ["prefix\0"];
+
+        yield 'CRLF' => ["prefix\r\n"];
+    }
+
+    public function testValidCookiePrefixAllowedSeparators(): void
+    {
+        $cookie = new Cookie('test', 'val', ['prefix' => 'ci:session/']);
+        $this->assertSame('ci:session/', $cookie->getPrefix());
+        $this->assertSame('ci:session/test', $cookie->getPrefixedName());
+
+        $cookie2 = $cookie->withPrefix('my-app:v1/');
+        $this->assertSame('my-app:v1/', $cookie2->getPrefix());
+        $this->assertSame('my-app:v1/test', $cookie2->getPrefixedName());
+
+        $cookie3 = new Cookie('test', 'val', ['prefix' => 'ci:session/', 'raw' => false]);
+        $this->assertSame('ci:session/test=val; Path=/; HttpOnly; SameSite=Lax', $cookie3->toHeaderString());
     }
 }

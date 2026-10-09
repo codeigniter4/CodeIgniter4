@@ -146,6 +146,9 @@ final class MiscUrlTest extends CIUnitTestCase
 
     // Test anchor
 
+    /**
+     * @return iterable<string, list<mixed>>
+     */
     public static function provideAnchor(): iterable
     {
         return [
@@ -206,6 +209,9 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($expected, anchor($uri, $title, $attributes, $this->config));
     }
 
+    /**
+     * @return iterable<string, list<mixed>>
+     */
     public static function provideAnchorNoindex(): iterable
     {
         return [
@@ -272,6 +278,9 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($expected, anchor($uri, $title, $attributes, $this->config));
     }
 
+    /**
+     * @return iterable<string, list<mixed>>
+     */
     public static function provideAnchorTargetted(): iterable
     {
         return [
@@ -326,6 +335,9 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($expected, anchor($uri, $title, $attributes, $this->config));
     }
 
+    /**
+     * @return iterable<string, list<mixed>>
+     */
     public static function provideAnchorExamples(): iterable
     {
         return [
@@ -371,6 +383,9 @@ final class MiscUrlTest extends CIUnitTestCase
 
     // Test anchor_popup
 
+    /**
+     * @return iterable<string, list<mixed>>
+     */
     public static function provideAnchorPopup(): iterable
     {
         return [
@@ -428,6 +443,9 @@ final class MiscUrlTest extends CIUnitTestCase
 
     // Test mailto
 
+    /**
+     * @return iterable<string, list<mixed>>
+     */
     public static function provideMailto(): iterable
     {
         return [
@@ -466,6 +484,9 @@ final class MiscUrlTest extends CIUnitTestCase
 
     // Test safe_mailto
 
+    /**
+     * @return iterable<string, list<mixed>>
+     */
     public static function provideSafeMailto(): iterable
     {
         return [
@@ -509,6 +530,9 @@ final class MiscUrlTest extends CIUnitTestCase
 
     // Test auto_link
 
+    /**
+     * @return iterable<string, array{string, string}>
+     */
     public static function provideAutoLinkUrl(): iterable
     {
         return [
@@ -561,6 +585,9 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($out, auto_link($in, 'email'));
     }
 
+    /**
+     * @return iterable<string, array{string, string}>
+     */
     public static function provideAutoLinkEmail(): iterable
     {
         return [
@@ -609,6 +636,9 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($out, auto_link($in));
     }
 
+    /**
+     * @return iterable<string, array{string, string}>
+     */
     public static function provideAutolinkBoth(): iterable
     {
         return [
@@ -661,6 +691,9 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($out, auto_link($in, 'url', true));
     }
 
+    /**
+     * @return iterable<string, array{string, string}>
+     */
     public static function provideAutoLinkPopup(): iterable
     {
         return [
@@ -707,6 +740,9 @@ final class MiscUrlTest extends CIUnitTestCase
 
     // Test prep_url
 
+    /**
+     * @return iterable<array{string, string, bool}>
+     */
     public static function providePrepUrl(): iterable
     {
         // input, expected, secure
@@ -843,7 +879,7 @@ final class MiscUrlTest extends CIUnitTestCase
     }
 
     #[DataProvider('provideUrlTo')]
-    public function testUrlTo(string $expected, string $input, ...$args): void
+    public function testUrlTo(string $expected, string $input, int|string ...$args): void
     {
         service('superglobals')->setServer('HTTP_HOST', 'example.com');
 
@@ -856,6 +892,9 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($expected, url_to($input, ...$args));
     }
 
+    /**
+     * @return iterable<array{string, string, string, int}>
+     */
     public static function provideUrlTo(): iterable
     {
         $page = config('App')->indexPage !== '' ? config('App')->indexPage . '/' : '';
@@ -884,6 +923,9 @@ final class MiscUrlTest extends CIUnitTestCase
         url_to($route);
     }
 
+    /**
+     * @return iterable<array{string}>
+     */
     public static function provideUrlToThrowsOnEmptyOrMissingRoute(): iterable
     {
         return [

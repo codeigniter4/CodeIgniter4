@@ -39,6 +39,8 @@ final class TimestampModelTest extends LiveModelTestCase
     }
 
     /**
+     * @param array<string, string> $data
+     *
      * @return int|string Insert ID
      */
     private function allowDatesPrepareOneRecord(array $data): int|string
@@ -59,6 +61,8 @@ final class TimestampModelTest extends LiveModelTestCase
     }
 
     /**
+     * @param array<string, string> $data
+     *
      * @return int|string Insert ID
      */
     private function doNotAllowDatesPrepareOneRecord(array $data): int|string

@@ -81,9 +81,7 @@ trait SignalTrait
      */
     protected function isPosixAvailable(): bool
     {
-        if (self::$isPosixAvailable === null) {
-            self::$isPosixAvailable = is_windows() ? false : extension_loaded('posix');
-        }
+        self::$isPosixAvailable ??= is_windows() ? false : extension_loaded('posix');
 
         return self::$isPosixAvailable;
     }
@@ -396,7 +394,7 @@ trait SignalTrait
         if ($this->isPosixAvailable()) {
             $state['session_id']               = posix_getsid($pid);
             $state['process_group']            = posix_getpgid($pid);
-            $state['has_controlling_terminal'] = posix_isatty(STDIN);
+            $state['has_controlling_terminal'] = is_cli() && posix_isatty(STDIN);
         }
 
         return $state;

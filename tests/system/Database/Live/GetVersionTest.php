@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Database\MySQLi\Connection as MySQLiConnection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use PHPUnit\Framework\Attributes\Group;
@@ -30,6 +31,7 @@ final class GetVersionTest extends CIUnitTestCase
     public function testGetVersion(): void
     {
         if ($this->db->DBDriver === 'MySQLi') {
+            $this->assertInstanceOf(MySQLiConnection::class, $this->db);
             $this->db->mysqli = false;
         }
 

@@ -115,9 +115,7 @@ class DatabaseHandler extends BaseHandler
             return '';
         }
 
-        if (! isset($this->sessionID)) {
-            $this->sessionID = $id;
-        }
+        $this->sessionID ??= $id;
 
         $builder = $this->db->table($this->table)->where('id', $this->idPrefix . $id);
 

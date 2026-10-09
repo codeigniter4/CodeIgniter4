@@ -17,6 +17,8 @@ use CodeIgniter\Database\Forge as BaseForge;
 
 /**
  * Forge for OCI8
+ *
+ * @extends BaseForge<Connection>
  */
 class Forge extends BaseForge
 {
@@ -29,15 +31,11 @@ class Forge extends BaseForge
 
     /**
      * CREATE DATABASE statement
-     *
-     * @var false
      */
     protected $createDatabaseStr = false;
 
     /**
      * CREATE TABLE IF statement
-     *
-     * @var false
      *
      * @deprecated This is no longer used.
      */
@@ -45,22 +43,16 @@ class Forge extends BaseForge
 
     /**
      * DROP TABLE IF EXISTS statement
-     *
-     * @var false
      */
     protected $dropTableIfStr = false;
 
     /**
      * DROP DATABASE statement
-     *
-     * @var false
      */
     protected $dropDatabaseStr = false;
 
     /**
      * UNSIGNED support
-     *
-     * @var array|bool
      */
     protected $unsigned = false;
 
@@ -73,35 +65,19 @@ class Forge extends BaseForge
 
     /**
      * RENAME TABLE statement
-     *
-     * @var string
      */
     protected $renameTableStr = 'ALTER TABLE %s RENAME TO %s';
 
     /**
      * DROP CONSTRAINT statement
-     *
-     * @var string
      */
     protected $dropConstraintStr = 'ALTER TABLE %s DROP CONSTRAINT %s';
 
     /**
      * Foreign Key Allowed Actions
-     *
-     * @var array
      */
     protected $fkAllowActions = ['CASCADE', 'SET NULL', 'NO ACTION'];
 
-    /**
-     * ALTER TABLE
-     *
-     * @param string       $alterType       ALTER type
-     * @param string       $table           Table name
-     * @param array|string $processedFields Processed column definitions
-     *                                      or column names to DROP
-     *
-     * @return ($alterType is 'DROP' ? string : list<string>)
-     */
     protected function _alterTable(string $alterType, string $table, $processedFields)
     {
         $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
@@ -149,13 +125,13 @@ class Forge extends BaseForge
             } else {
                 $processedFields[$i]['_literal'] = "\n\t" . $this->_processColumn($processedFields[$i]);
 
-                if (! empty($processedFields[$i]['comment'])) {
+                if (($processedFields[$i]['comment'] ?? '') !== '') {
                     $sqls[] = 'COMMENT ON COLUMN '
                         . $this->db->escapeIdentifiers($table) . '.' . $this->db->escapeIdentifiers($processedFields[$i]['name'])
                         . ' IS ' . $processedFields[$i]['comment'];
                 }
 
-                if ($alterType === 'MODIFY' && ! empty($processedFields[$i]['new_name'])) {
+                if ($alterType === 'MODIFY' && ($processedFields[$i]['new_name'] ?? '') !== '') {
                     $sqls[] = $sql . ' RENAME COLUMN ' . $this->db->escapeIdentifiers($processedFields[$i]['name'])
                         . ' TO ' . $this->db->escapeIdentifiers($processedFields[$i]['new_name']);
                 }
@@ -182,7 +158,7 @@ class Forge extends BaseForge
      */
     protected function _attributeAutoIncrement(array &$attributes, array &$field)
     {
-        if (! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true
+        if (($attributes['AUTO_INCREMENT'] ?? false) === true
             && str_contains(strtolower($field['type']), 'number')
             && version_compare($this->db->getVersion(), '12.1', '>=')
         ) {

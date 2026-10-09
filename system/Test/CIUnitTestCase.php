@@ -169,7 +169,7 @@ abstract class CIUnitTestCase extends TestCase
      * Stores information needed to remove any
      * rows inserted via $this->hasInDatabase().
      *
-     * @var list<array<int|string, mixed>>
+     * @var list<array<array-key, mixed>>
      */
     protected $insertCache = [];
 
@@ -189,7 +189,7 @@ abstract class CIUnitTestCase extends TestCase
      * Values to be set in the SESSION global
      * before running the test.
      *
-     * @var array<int|string, mixed>
+     * @var array<array-key, mixed>
      */
     protected $session = [];
 
@@ -273,6 +273,8 @@ abstract class CIUnitTestCase extends TestCase
 
         // Check for other trait methods
         $this->callTraitMethods('tearDown');
+
+        $this->resetIsWindowsMock();
     }
 
     /**
@@ -283,9 +285,7 @@ abstract class CIUnitTestCase extends TestCase
      */
     private function callTraitMethods(string $stage): void
     {
-        if ($this->traits === null) {
-            $this->traits = class_uses_recursive($this);
-        }
+        $this->traits ??= class_uses_recursive($this);
 
         foreach ($this->traits as $trait) {
             $method = $stage . class_basename($trait);
@@ -318,6 +318,14 @@ abstract class CIUnitTestCase extends TestCase
     protected function resetServices(bool $initAutoloader = true)
     {
         Services::reset($initAutoloader);
+    }
+
+    /**
+     * Resets the mocked is_windows() function back to default state.
+     */
+    protected function resetIsWindowsMock(): void
+    {
+        is_windows(null);
     }
 
     /**

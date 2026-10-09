@@ -25,11 +25,6 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class UnionTest extends CIUnitTestCase
 {
-    /**
-     * @var MockConnection
-     */
-    protected $db;
-
     protected function setUp(): void
     {
         parent::setUp();

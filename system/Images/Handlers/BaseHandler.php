@@ -20,7 +20,11 @@ use CodeIgniter\Images\ImageHandlerInterface;
 use Config\Images;
 
 /**
- * Base image handling implementation
+ * Base image handling implementation.
+ *
+ * @template T of object
+ *
+ * @method string getPathname()
  */
 abstract class BaseHandler implements ImageHandlerInterface
 {
@@ -90,7 +94,7 @@ abstract class BaseHandler implements ImageHandlerInterface
     /**
      * Default options for text watermarking.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $textDefaults = [
         'fontPath'     => null,
@@ -110,7 +114,7 @@ abstract class BaseHandler implements ImageHandlerInterface
     /**
      * Image types with support for transparency.
      *
-     * @var array
+     * @var list<int>
      */
     protected $supportTransparency = [
         IMAGETYPE_PNG,
@@ -120,7 +124,7 @@ abstract class BaseHandler implements ImageHandlerInterface
     /**
      * Temporary image used by the different engines.
      *
-     * @var resource|null
+     * @var T|null
      */
     protected $resource;
 
@@ -193,7 +197,6 @@ abstract class BaseHandler implements ImageHandlerInterface
             throw ImageException::forMissingImage();
         }
 
-        // Verify the loaded image is an Image instance
         if (! $this->image instanceof Image) {
             throw ImageException::forInvalidPath();
         }
@@ -203,7 +206,6 @@ abstract class BaseHandler implements ImageHandlerInterface
             throw ImageException::forFileNotSupported();
         }
 
-        // Note that the image has been verified
         $this->verified = true;
 
         return $this->image;
@@ -214,7 +216,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      * Good for extending the system or doing things this library
      * is not intended to do.
      *
-     * @return resource
+     * @return T
      */
     public function getResource()
     {
@@ -246,7 +248,6 @@ abstract class BaseHandler implements ImageHandlerInterface
      */
     public function resize(int $width, int $height, bool $maintainRatio = false, string $masterDim = 'auto')
     {
-        // If the target width/height match the source, then we have nothing to do here.
         if ($this->image()->origWidth === $width && $this->image()->origHeight === $height) {
             return $this;
         }
@@ -316,28 +317,20 @@ abstract class BaseHandler implements ImageHandlerInterface
      */
     public function rotate(float $angle)
     {
-        // Allowed rotation values
-        $degs = [
-            90.0,
-            180.0,
-            270.0,
-        ];
+        $degs = [90.0, 180.0, 270.0];
 
         if (! in_array($angle, $degs, true)) {
             throw ImageException::forMissingAngle();
         }
 
-        // cast angle as an int, for our use
         $angle = (int) $angle;
 
-        // Reassign the width and height
         if ($angle === 90 || $angle === 270) {
             $temp         = $this->height;
             $this->width  = $this->height;
             $this->height = $temp;
         }
 
-        // Call the Handler-specific version.
         $this->_rotate($angle);
 
         return $this;
@@ -545,9 +538,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 
         [$cropWidth, $cropHeight] = $this->calcAspectRatio($width, $height, $origWidth, $origHeight);
 
-        if ($height === null) {
-            $height = (int) ceil(($width / $cropWidth) * $cropHeight);
-        }
+        $height ??= (int) ceil(($width / $cropWidth) * $cropHeight);
 
         [$x, $y] = $this->calcCropCoords($cropWidth, $cropHeight, $origWidth, $origHeight, $position);
 
@@ -561,15 +552,15 @@ abstract class BaseHandler implements ImageHandlerInterface
      * @param float|int|null $height
      * @param float|int      $origWidth
      * @param float|int      $origHeight
+     *
+     * @return array{0: float|int, 1: float|int}
      */
     protected function calcAspectRatio($width, $height = null, $origWidth = 0, $origHeight = 0): array
     {
-        if (empty($origWidth) || empty($origHeight)) {
+        if (in_array($origWidth, [0, 0.0], true) || in_array($origHeight, [0, 0.0], true)) {
             throw new InvalidArgumentException('You must supply the parameters: origWidth, origHeight.');
         }
 
-        // If $height is null, then we have it easy.
-        // Calc based on full image size and be done.
         if ($height === null) {
             $height = ($width / $origWidth) * $origHeight;
 
@@ -604,6 +595,8 @@ abstract class BaseHandler implements ImageHandlerInterface
      * @param float|int $origWidth
      * @param float|int $origHeight
      * @param string    $position
+     *
+     * @return array{0: float|int, 1: float|int}
      */
     protected function calcCropCoords($width, $height, $origWidth, $origHeight, $position): array
     {
@@ -695,6 +688,8 @@ abstract class BaseHandler implements ImageHandlerInterface
      * Provide access to the Image class' methods if they don't exist
      * on the handler itself.
      *
+     * @param list<mixed> $args
+     *
      * @return mixed
      */
     public function __call(string $name, array $args = [])
@@ -724,7 +719,6 @@ abstract class BaseHandler implements ImageHandlerInterface
             return;
         }
 
-        // Sanitize
         $this->width  = (int) $this->width;
         $this->height = (int) $this->height;
 

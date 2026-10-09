@@ -15,6 +15,9 @@ namespace Tests\Support\Entity\Cast;
 
 use CodeIgniter\Entity\Cast\BaseCast;
 
+/**
+ * @extends BaseCast<string, string>
+ */
 class CastBinaryUUID extends BaseCast
 {
     /**

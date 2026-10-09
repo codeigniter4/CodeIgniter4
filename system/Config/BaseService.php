@@ -134,7 +134,7 @@ use Config\WorkerMode;
  * @method static Security                   security(App $config = null, $getShared = true)
  * @method static Session                    session(ConfigSession $config = null, $getShared = true)
  * @method static SiteURIFactory             siteurifactory(App $config = null, Superglobals $superglobals = null, $getShared = true)
- * @method static Superglobals               superglobals(array $server = null, array $get = null, bool $getShared = true)
+ * @method static Superglobals               superglobals(array<string, mixed> $server = null, array<string, mixed> $get = null, bool $getShared = true)
  * @method static Throttler                  throttler($getShared = true)
  * @method static Timer                      timer($getShared = true)
  * @method static Toolbar                    toolbar(ConfigToolbar $config = null, $getShared = true)
@@ -178,7 +178,7 @@ class BaseService
     /**
      * A cache of other service classes we've found.
      *
-     * @var array
+     * @var array{}
      *
      * @deprecated 4.5.0 No longer used.
      */
@@ -276,9 +276,7 @@ class BaseService
     public static function autoloader(bool $getShared = true)
     {
         if ($getShared) {
-            if (empty(static::$instances['autoloader'])) {
-                static::$instances['autoloader'] = new Autoloader();
-            }
+            static::$instances['autoloader'] ??= new Autoloader();
 
             return static::$instances['autoloader'];
         }
@@ -296,7 +294,7 @@ class BaseService
     public static function locator(bool $getShared = true)
     {
         if ($getShared) {
-            if (empty(static::$instances['locator'])) {
+            if (! isset(static::$instances['locator'])) {
                 $cacheEnabled = class_exists(Optimize::class)
                     && (new Optimize())->locatorCacheEnabled;
 
@@ -316,6 +314,8 @@ class BaseService
     /**
      * Provides the ability to perform case-insensitive calling of service
      * names.
+     *
+     * @param array<array-key, mixed> $arguments
      *
      * @return object|null
      */

@@ -36,6 +36,9 @@ final readonly class FilterFinder
         $this->filters = $filters ?? service('filters');
     }
 
+    /**
+     * @return list<string>
+     */
     private function getRouteFilters(string $uri): array
     {
         $this->router->handle($uri);

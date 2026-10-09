@@ -44,7 +44,7 @@ class Query implements QueryInterface, Stringable
     /**
      * The binds and their values used for binding.
      *
-     * @var array
+     * @var array<array-key, array{0: mixed, 1: bool}>
      */
     protected $binds = [];
 
@@ -85,7 +85,7 @@ class Query implements QueryInterface, Stringable
      *
      * @var string
      */
-    protected $errorString;
+    protected $errorString = '';
 
     /**
      * Pointer to database connection.
@@ -129,6 +129,8 @@ class Query implements QueryInterface, Stringable
     /**
      * Will store the variables to bind into the query later.
      *
+     * @param array<array-key, mixed> $binds
+     *
      * @return $this
      */
     public function setBinds(array $binds, bool $setEscape = true)
@@ -148,7 +150,7 @@ class Query implements QueryInterface, Stringable
 
     public function getQuery(): string
     {
-        if (empty($this->finalQueryString)) {
+        if (! isset($this->finalQueryString) || $this->finalQueryString === '') {
             $this->compileBinds();
         }
 
@@ -159,9 +161,7 @@ class Query implements QueryInterface, Stringable
     {
         $this->startTime = $start;
 
-        if ($end === null) {
-            $end = microtime(true);
-        }
+        $end ??= microtime(true);
 
         $this->endTime = $end;
 
@@ -197,7 +197,7 @@ class Query implements QueryInterface, Stringable
 
     public function hasError(): bool
     {
-        return ! empty($this->errorString);
+        return $this->errorString !== '';
     }
 
     public function getErrorCode(): int
@@ -246,7 +246,7 @@ class Query implements QueryInterface, Stringable
         $sql   = $this->swappedQueryString ?? $this->originalQueryString;
         $binds = $this->binds;
 
-        if (empty($binds)) {
+        if ($binds === []) {
             $this->finalQueryString = $sql;
 
             return;
@@ -266,6 +266,9 @@ class Query implements QueryInterface, Stringable
         }
     }
 
+    /**
+     * @param array<array-key, array{0: mixed, 1: bool}> $binds
+     */
     protected function matchNamedBinds(string $sql, array $binds): string
     {
         $replacers = [];
@@ -287,6 +290,9 @@ class Query implements QueryInterface, Stringable
         return strtr($sql, $replacers);
     }
 
+    /**
+     * @param array<array-key, array{0: mixed, 1: bool}> $binds
+     */
     protected function matchSimpleBinds(string $sql, array $binds, int $bindCount, int $ml): string
     {
         if ($c = preg_match_all("/'[^']*'/", $sql, $matches) >= 1) {

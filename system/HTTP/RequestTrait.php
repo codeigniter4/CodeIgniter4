@@ -46,7 +46,7 @@ trait RequestTrait
     /**
      * Stores values we've retrieved from PHP globals.
      *
-     * @var array{get?: array, post?: array, request?: array, cookie?: array, server?: array}
+     * @var array{get?: array<string, mixed>, post?: array<string, mixed>, request?: array<string, mixed>, cookie?: array<string, mixed>, server?: array<string, mixed>}
      *
      * @deprecated 4.7.0 Use the Superglobals service instead
      */
@@ -72,7 +72,7 @@ trait RequestTrait
 
         $proxyIPs = $this->config->proxyIPs;
 
-        if (! empty($proxyIPs) && (! is_array($proxyIPs) || is_int(array_key_first($proxyIPs)))) {
+        if ($proxyIPs !== [] && (! is_array($proxyIPs) || is_int(array_key_first($proxyIPs)))) {
             throw new ConfigException(
                 'You must set an array with Proxy IP address key and HTTP header name value in Config\App::$proxyIPs.',
             );
@@ -221,9 +221,9 @@ trait RequestTrait
     /**
      * Fetch an item from the $_SERVER array.
      *
-     * @param array|string|null $index  Index for item to be fetched from $_SERVER
-     * @param int|null          $filter A filter name to be applied
-     * @param array|int|null    $flags
+     * @param list<string>|string|null      $index  Index for item to be fetched from $_SERVER
+     * @param int|null                      $filter A filter name to be applied
+     * @param array<string, mixed>|int|null $flags
      *
      * @return mixed
      */
@@ -235,9 +235,9 @@ trait RequestTrait
     /**
      * Fetch an item from the $_ENV array.
      *
-     * @param array|string|null $index  Index for item to be fetched from $_ENV
-     * @param int|null          $filter A filter name to be applied
-     * @param array|int|null    $flags
+     * @param list<string>|string|null      $index  Index for item to be fetched from $_ENV
+     * @param int|null                      $filter A filter name to be applied
+     * @param array<string, mixed>|int|null $flags
      *
      * @return mixed
      *
@@ -279,9 +279,9 @@ trait RequestTrait
      * http://php.net/manual/en/filter.filters.sanitize.php
      *
      * @param 'cookie'|'get'|'post'|'request'|'server' $name   Superglobal name (lowercase)
-     * @param array|int|string|null                    $index
+     * @param int|list<string>|string|null             $index
      * @param int|null                                 $filter Filter constant
-     * @param array|int|null                           $flags  Options
+     * @param array<string, mixed>|int|null            $flags  Options
      *
      * @return mixed
      */
@@ -338,9 +338,7 @@ trait RequestTrait
             }
         }
 
-        if (! isset($value)) {
-            $value = $this->globals[$name][$index] ?? null;
-        }
+        $value ??= $this->globals[$name][$index] ?? null;
 
         if (is_array($value)
             && (
@@ -379,9 +377,7 @@ trait RequestTrait
      */
     protected function populateGlobals(string $name)
     {
-        if (! isset($this->globals[$name])) {
-            $this->globals[$name] = [];
-        }
+        $this->globals[$name] ??= [];
 
         // Get data from Superglobals service instead of direct access
         $this->globals[$name] = service('superglobals')->getGlobalArray($name);

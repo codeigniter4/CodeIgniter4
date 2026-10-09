@@ -16,14 +16,12 @@ namespace CodeIgniter\Database;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
- * Class BaseUtils
+ * @template TDb of BaseConnection
  */
 abstract class BaseUtils
 {
     /**
-     * Database object
-     *
-     * @var object
+     * @var TDb
      */
     protected $db;
 
@@ -49,7 +47,7 @@ abstract class BaseUtils
     protected $repairTable = false;
 
     /**
-     * Class constructor
+     * @param TDb $db
      */
     public function __construct(ConnectionInterface $db)
     {
@@ -59,7 +57,7 @@ abstract class BaseUtils
     /**
      * List databases
      *
-     * @return array|bool
+     * @return bool|list<mixed>
      *
      * @throws DatabaseException
      */
@@ -152,7 +150,7 @@ abstract class BaseUtils
             $res = $res->getResultArray();
 
             // Postgre & SQLite3 returns empty array
-            if (empty($res)) {
+            if ($res === []) {
                 $key = $tableName;
             } else {
                 $res  = current($res);
@@ -229,13 +227,13 @@ abstract class BaseUtils
 
     /**
      * Generate XML data from a query result object
+     *
+     * @param array<string, string> $params
      */
     public function getXMLFromResult(ResultInterface $query, array $params = []): string
     {
         foreach (['root' => 'root', 'element' => 'element', 'newline' => "\n", 'tab' => "\t"] as $key => $val) {
-            if (! isset($params[$key])) {
-                $params[$key] = $val;
-            }
+            $params[$key] ??= $val;
         }
 
         $root    = $params['root'];
@@ -264,9 +262,9 @@ abstract class BaseUtils
     /**
      * Database Backup
      *
-     * @param array|string $params
+     * @param array<string, mixed>|string $params
      *
-     * @return false|never|string
+     * @return false|string
      *
      * @throws DatabaseException
      */
@@ -287,7 +285,7 @@ abstract class BaseUtils
             'foreign_key_checks' => true,
         ];
 
-        if (! empty($params)) {
+        if ($params !== []) {
             foreach (array_keys($prefs) as $key) {
                 if (isset($params[$key])) {
                     $prefs[$key] = $params[$key];
@@ -295,7 +293,7 @@ abstract class BaseUtils
             }
         }
 
-        if (empty($prefs['tables'])) {
+        if ($prefs['tables'] === [] || $prefs['tables'] === '') {
             $prefs['tables'] = $this->db->listTables();
         }
 
@@ -320,9 +318,9 @@ abstract class BaseUtils
     }
 
     /**
-     * Platform dependent version of the backup function.
+     * @param array<string, mixed>|null $prefs
      *
-     * @return false|never|string
+     * @return false|string
      */
     abstract public function _backup(?array $prefs = null);
 }

@@ -63,12 +63,11 @@ final class AutoRouterImproved implements AutoRouterInterface
      * Map of URI segments and namespaces.
      *
      * The key is the first URI segment. The value is the controller namespace.
-     * E.g.,
-     *   [
-     *       'blog' => 'Acme\Blog\Controllers',
-     *   ]
+     * ```
+     *   ['blog' => 'Acme\Blog\Controllers']
+     * ```
      *
-     * @var array [ uri_segment => namespace ]
+     * @var array<string, string>
      */
     private array $moduleRoutes;
 
@@ -133,6 +132,9 @@ final class AutoRouterImproved implements AutoRouterInterface
         $this->controller = $this->defaultController;
     }
 
+    /**
+     * @return list<string>
+     */
     private function createSegments(string $uri): array
     {
         $segments = explode('/', $uri);
@@ -250,13 +252,6 @@ final class AutoRouterImproved implements AutoRouterInterface
         return false;
     }
 
-    /**
-     * Finds controller, method and params from the URI.
-     *
-     * @param string $httpVerb HTTP verb like `GET`,`POST`
-     *
-     * @return array [directory_name, controller_name, controller_method, params]
-     */
     public function getRoute(string $uri, string $httpVerb): array
     {
         $this->uri = $uri;

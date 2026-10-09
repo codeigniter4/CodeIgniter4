@@ -22,25 +22,29 @@ use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
 use DateTime;
 use DateTimeZone;
+use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
  */
+#[BackupGlobals(true)]
 #[Group('Others')]
 final class ResponseTest extends CIUnitTestCase
 {
+    /**
+     * @var array<string, string>
+     */
     private array $server;
 
     protected function setUp(): void
     {
-        Services::injectMock('superglobals', new Superglobals());
-        $this->server = service('superglobals')->getServerArray();
-
+        $this->resetServices();
         parent::setUp();
 
-        $this->resetServices();
+        Services::injectMock('superglobals', new Superglobals());
+        $this->server = service('superglobals')->getServerArray();
     }
 
     protected function tearDown(): void
@@ -169,6 +173,7 @@ final class ResponseTest extends CIUnitTestCase
         Factories::injectMock('config', 'App', $config);
 
         $this->resetServices();
+        Services::injectMock('superglobals', new Superglobals([], []));
 
         $response = new Response($config);
         $pager    = service('pager');
@@ -294,6 +299,9 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertSame($expectedCode, $response->getStatusCode());
     }
 
+    /**
+     * @return iterable<array{string, string, string, int|null, int}>
+     */
     public static function provideRedirect(): iterable
     {
         yield from [
@@ -339,6 +347,9 @@ final class ResponseTest extends CIUnitTestCase
         service('superglobals')->unsetServer('SERVER_SOFTWARE');
     }
 
+    /**
+     * @return iterable<array{string, string, int|null, int}>
+     */
     public static function provideRedirectWithIIS(): iterable
     {
         yield from [

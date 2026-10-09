@@ -222,7 +222,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
             ->execute('index');
 
         // won't fail, but doesn't do anything
-        $this->assertNull($result->ohno('Hi'));
+        $this->assertNull($result->ohno('Hi')); // @phpstan-ignore method.notFound (Testing TestResponse::__call() fallback)
     }
 
     /**

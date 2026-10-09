@@ -254,7 +254,7 @@ class Filters
             }
 
             // Ignore an empty result
-            if (empty($result)) {
+            if (! is_string($result) || $result === '') {
                 continue;
             }
 
@@ -369,6 +369,8 @@ class Filters
      *
      * @param 'after'|'before' $position
      *
+     * @return array{list<string>, array<string, class-string|list<class-string>>}
+     *
      * @internal
      */
     public function getRequiredFilters(string $position = 'before'): array
@@ -410,7 +412,9 @@ class Filters
      * Set the toolbar filter to the last position to be executed.
      *
      * @param list<string> $filters `after` filter array
-     * @param bool         $remove  if true, remove `toolbar` filter
+     * @param bool         $remove  If true, remove `toolbar` filter
+     *
+     * @return list<string>
      */
     private function setToolbarToLast(array $filters, bool $remove = false): array
     {
@@ -552,13 +556,9 @@ class Filters
     {
         $alias ??= md5($class);
 
-        if (! isset($this->config->{$section})) {
-            $this->config->{$section} = [];
-        }
+        $this->config->{$section} ??= [];
 
-        if (! isset($this->config->{$section}[$position])) {
-            $this->config->{$section}[$position] = [];
-        }
+        $this->config->{$section}[$position] ??= [];
 
         $this->config->aliases[$alias] = $class;
 
@@ -853,8 +853,8 @@ class Filters
     /**
      * Check paths for match for URI
      *
-     * @param string       $uri   URI to test against
-     * @param array|string $paths The path patterns to test
+     * @param string                          $uri   URI to test against
+     * @param array<array-key, string>|string $paths The path patterns to test
      *
      * @return bool True if any of the paths apply to the URI
      */
@@ -876,8 +876,8 @@ class Filters
     /**
      * Check except paths
      *
-     * @param string       $uri   URI path relative to baseURL (all lowercase)
-     * @param array|string $paths The except path patterns
+     * @param string                          $uri   URI path relative to baseURL (all lowercase)
+     * @param array<array-key, string>|string $paths The except path patterns
      *
      * @return bool True if the URI matches except paths.
      */
@@ -899,8 +899,8 @@ class Filters
     /**
      * Check the URI path as pseudo-regex
      *
-     * @param string $uri   URI path relative to baseURL (all lowercase, URL-decoded)
-     * @param array  $paths The except path patterns
+     * @param string                   $uri   URI path relative to baseURL (all lowercase, URL-decoded)
+     * @param array<array-key, string> $paths The except path patterns
      */
     private function checkPseudoRegex(string $uri, array $paths): bool
     {

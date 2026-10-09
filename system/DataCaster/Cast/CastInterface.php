@@ -13,35 +13,31 @@ declare(strict_types=1);
 
 namespace CodeIgniter\DataCaster\Cast;
 
+/**
+ * @template TPhpNativeValue
+ * @template TDataSourceValue
+ */
 interface CastInterface
 {
     /**
-     * Takes a value from DataSource, returns its value for PHP.
+     * Takes a value from a data source, returns its value for PHP.
      *
-     * @param mixed              $value  Data from database driver
+     * @param TDataSourceValue   $value  Data from database driver
      * @param array<int, string> $params Additional param
      * @param object|null        $helper Helper object. E.g., database connection
      *
-     * @return mixed PHP native value
+     * @return TPhpNativeValue
      */
-    public static function get(
-        mixed $value,
-        array $params = [],
-        ?object $helper = null,
-    ): mixed;
+    public static function get(mixed $value, array $params = [], ?object $helper = null): mixed;
 
     /**
-     * Takes a PHP value, returns its value for DataSource.
+     * Takes a PHP value, returns its value for a data source.
      *
-     * @param mixed              $value  PHP native value
+     * @param TPhpNativeValue    $value  PHP native value
      * @param array<int, string> $params Additional param
      * @param object|null        $helper Helper object. E.g., database connection
      *
-     * @return mixed Data to pass to database driver
+     * @return TDataSourceValue
      */
-    public static function set(
-        mixed $value,
-        array $params = [],
-        ?object $helper = null,
-    ): mixed;
+    public static function set(mixed $value, array $params = [], ?object $helper = null): mixed;
 }

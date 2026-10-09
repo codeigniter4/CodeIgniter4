@@ -213,7 +213,7 @@ class LocalizationFinder extends BaseCommand
     /**
      * @param SplFileInfo|string $file
      *
-     * @return array<string, array>
+     * @return array{foundLanguageKeys: array<string, array<string, string>>, badLanguageKeys: array<int, array<int, string>>}
      */
     private function findTranslationsInFile($file): array
     {
@@ -273,6 +273,9 @@ class LocalizationFinder extends BaseCommand
         return $file->getExtension() !== 'php';
     }
 
+    /**
+     * @param array<array-key, mixed> $language
+     */
     private function templateFile(array $language = []): string
     {
         if ($language !== []) {
@@ -337,6 +340,10 @@ class LocalizationFinder extends BaseCommand
 
     /**
      * Create multidimensional array from another keys
+     *
+     * @param list<string> $fromKeys
+     *
+     * @return array<array-key, mixed>
      */
     private function buildMultiArray(array $fromKeys, string $lastArrayValue = ''): array
     {
@@ -356,6 +363,10 @@ class LocalizationFinder extends BaseCommand
 
     /**
      * Convert multi arrays to specific CLI table rows (flat array)
+     *
+     * @param array<array-key, mixed> $array
+     *
+     * @return list<array{string, string}>
      */
     private function arrayToTableRows(string $langFileName, array $array): array
     {

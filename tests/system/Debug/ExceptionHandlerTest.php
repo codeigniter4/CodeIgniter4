@@ -16,6 +16,7 @@ namespace CodeIgniter\Debug;
 use App\Controllers\Home;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Exceptions\RuntimeException;
+use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\IniTestTrait;
 use CodeIgniter\Test\StreamFilterTrait;
@@ -110,7 +111,8 @@ final class ExceptionHandlerTest extends CIUnitTestCase
     {
         $exception = PageNotFoundException::forControllerNotFound('Foo', 'bar');
 
-        $request  = service('incomingrequest', null, false);
+        $request = service('incomingrequest', null, false);
+        /** @var Response $response */
         $response = service('response', null, false);
         $response->pretend();
 
@@ -131,6 +133,7 @@ final class ExceptionHandlerTest extends CIUnitTestCase
 
         $request = service('incomingrequest', null, false);
         $request->setHeader('accept', 'text/html');
+        /** @var Response $response */
         $response = service('response', null, false);
         $response->pretend();
 
@@ -147,6 +150,7 @@ final class ExceptionHandlerTest extends CIUnitTestCase
 
         $request = Services::clirequest(null, false);
         $request->setHeader('accept', 'text/html');
+        /** @var Response $response */
         $response = service('response', null, false);
         $response->pretend();
 

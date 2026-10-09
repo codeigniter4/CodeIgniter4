@@ -95,7 +95,8 @@ if (! function_exists('clean_path')) {
     {
         // Resolve relative paths
         try {
-            $path = realpath($path) ?: $path;
+            $realPath = realpath($path);
+            $path     = $realPath === false ? $path : $realPath;
         } catch (ErrorException|ValueError) {
             $path = 'error file path: ' . urlencode($path);
         }
@@ -154,7 +155,7 @@ if (! function_exists('command')) {
             $cursor += strlen($match[0]);
         }
 
-        /** @var array<int|string, string|null> */
+        /** @var array<array-key, string|null> */
         $params      = [];
         $command     = array_shift($args);
         $optionValue = false;
@@ -450,13 +451,13 @@ if (! function_exists('esc')) {
      * If $data is an array, then it loops over it, escaping each
      * 'value' of the key/value pairs.
      *
-     * @param array<int|string, array<int|string, mixed>|string>|string $data
-     * @param 'attr'|'css'|'html'|'js'|'raw'|'url'                      $context
-     * @param string|null                                               $encoding Current encoding for escaping.
-     *                                                                            If not UTF-8, we convert strings from this encoding
-     *                                                                            pre-escaping and back to this encoding post-escaping.
+     * @param array<array-key, array<array-key, mixed>|string>|string $data
+     * @param 'attr'|'css'|'html'|'js'|'raw'|'url'                    $context
+     * @param string|null                                             $encoding Current encoding for escaping.
+     *                                                                          If not UTF-8, we convert strings from this encoding
+     *                                                                          pre-escaping and back to this encoding post-escaping.
      *
-     * @return ($data is string ? string : array<int|string, array<int|string, mixed>|string>)
+     * @return ($data is string ? string : array<array-key, array<array-key, mixed>|string>)
      *
      * @throws InvalidArgumentException
      */
@@ -489,9 +490,7 @@ if (! function_exists('esc')) {
             static $escapers = [];
             $cacheKey        = strtolower($encoding ?? 'utf-8');
 
-            if (! isset($escapers[$cacheKey])) {
-                $escapers[$cacheKey] = new Escaper($encoding);
-            }
+            $escapers[$cacheKey] ??= new Escaper($encoding);
 
             $data = $escapers[$cacheKey]->{$method}($data);
         }
@@ -587,9 +586,7 @@ if (! function_exists('function_usable')) {
         static $_suhosin_func_blacklist;
 
         if (function_exists($functionName)) {
-            if (! isset($_suhosin_func_blacklist)) {
-                $_suhosin_func_blacklist = extension_loaded('suhosin') ? explode(',', trim(ini_get('suhosin.executor.func.blacklist'))) : [];
-            }
+            $_suhosin_func_blacklist ??= extension_loaded('suhosin') ? explode(',', trim(ini_get('suhosin.executor.func.blacklist'))) : [];
 
             return ! in_array($functionName, $_suhosin_func_blacklist, true);
         }
@@ -818,6 +815,8 @@ if (! function_exists('log_message')) {
      *  - notice
      *  - info
      *  - debug
+     *
+     * @param array<string, mixed> $context
      */
     function log_message(string $level, string $message, array $context = []): void
     {
@@ -860,7 +859,7 @@ if (! function_exists('old')) {
      * @param string|null                                $default
      * @param 'attr'|'css'|'html'|'js'|'raw'|'url'|false $escape
      *
-     * @return array|string|null
+     * @return array<array-key, mixed>|string|null
      */
     function old(string $key, $default = null, $escape = 'html')
     {
@@ -1184,7 +1183,7 @@ if (! function_exists('stringify_attributes')) {
      * Helper function used to convert a string, array, or object
      * of attributes to a string.
      *
-     * @param array|object|string $attributes string, array, object that can be cast to array
+     * @param array<array-key, mixed>|object|string $attributes
      */
     function stringify_attributes($attributes, bool $js = false): string
     {
@@ -1251,7 +1250,8 @@ if (! function_exists('view')) {
      * NOTE: Does not provide any escaping of the data, so that must
      * all be handled manually by the developer.
      *
-     * @param array $options Options for saveData or third-party extensions.
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $options Options for saveData or third-party extensions.
      */
     function view(string $name, array $data = [], array $options = []): string
     {
@@ -1274,7 +1274,7 @@ if (! function_exists('view_cell')) {
      * View cells are used within views to insert HTML chunks that are managed
      * by other classes.
      *
-     * @param array|string|null $params
+     * @param array<array-key, mixed>|string|null $params
      *
      * @throws ReflectionException
      */
@@ -1347,7 +1347,11 @@ if (! function_exists('trait_uses_recursive')) {
      */
     function trait_uses_recursive($trait)
     {
-        $traits = class_uses($trait) ?: [];
+        $traits = class_uses($trait);
+
+        if ($traits === false) {
+            return [];
+        }
 
         foreach ($traits as $trait) {
             $traits += trait_uses_recursive($trait);

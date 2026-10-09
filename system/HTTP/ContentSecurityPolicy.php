@@ -941,10 +941,6 @@ class ContentSecurityPolicy
             return;
         }
 
-        $response->setHeader('Content-Security-Policy', []);
-        $response->setHeader('Content-Security-Policy-Report-Only', []);
-        $response->setHeader('Reporting-Endpoints', []);
-
         if (in_array($this->baseURI, ['', null, []], true)) {
             $this->baseURI = 'self';
         }
@@ -967,9 +963,7 @@ class ContentSecurityPolicy
             }
         }
 
-        // Compile our own header strings here since if we just
-        // append it to the response, it will be joined with
-        // commas, not semi-colons as we need.
+        // Compile each generated header value before appending it to the response.
         if ($this->reportingEndpoints !== []) {
             $endpoints = [];
 

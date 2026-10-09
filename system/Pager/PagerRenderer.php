@@ -101,7 +101,16 @@ class PagerRenderer
     protected ?int $perPageEnd = null;
 
     /**
-     * Constructor.
+     * @param array{
+     *   uri: URI,
+     *   pageCount: int,
+     *   currentPage: int,
+     *   total: int|null,
+     *   segment?: int,
+     *   pageSelector?: string,
+     *   perPage?: int|null,
+     *   ...<string, mixed>
+     * } $details
      */
     public function __construct(array $details)
     {

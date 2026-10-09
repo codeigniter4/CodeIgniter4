@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live\MySQLi;
 
+use CodeIgniter\Database\MySQLi\Connection as MySQLiConnection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
@@ -27,7 +28,11 @@ final class NumberNativeTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    private $tests;
+    /**
+     * @var array<string, mixed>
+     */
+    private array $tests = [];
+
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
 
@@ -50,6 +55,7 @@ final class NumberNativeTest extends CIUnitTestCase
             $this->markTestSkipped('Only MySQLi can complete this test.');
         }
 
+        $this->assertInstanceOf(MySQLiConnection::class, $db1);
         $this->assertTrue($db1->numberNative);
     }
 
@@ -63,6 +69,7 @@ final class NumberNativeTest extends CIUnitTestCase
             $this->markTestSkipped('Only MySQLi can complete this test.');
         }
 
+        $this->assertInstanceOf(MySQLiConnection::class, $db1);
         $this->assertFalse($db1->numberNative);
     }
 

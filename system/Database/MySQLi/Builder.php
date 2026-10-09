@@ -19,6 +19,8 @@ use CodeIgniter\Database\RawSql;
 
 /**
  * Builder for MySQLi
+ *
+ * @extends BaseBuilder<Connection>
  */
 class Builder extends BaseBuilder
 {

@@ -38,6 +38,9 @@ use CodeIgniter\HTTP\ResponseInterface;
 #[Attribute(Attribute::TARGET_CLASS | Attribute::TARGET_METHOD | Attribute::IS_REPEATABLE)]
 class Filter implements RouteAttributeInterface
 {
+    /**
+     * @param array<array-key, scalar> $having
+     */
     public function __construct(
         public string $by,
         public array $having = [],
@@ -56,6 +59,9 @@ class Filter implements RouteAttributeInterface
         return null;
     }
 
+    /**
+     * @return list<string>
+     */
     public function getFilters(): array
     {
         if ($this->having === []) {

@@ -84,9 +84,9 @@ class InvalidChars implements FilterInterface
     /**
      * Check the character encoding is valid UTF-8.
      *
-     * @param array|string $value
+     * @param array<array-key, mixed>|string $value
      *
-     * @return array|string
+     * @return array<array-key, mixed>|string
      *
      * @throws SecurityException
      */
@@ -113,9 +113,9 @@ class InvalidChars implements FilterInterface
     /**
      * Check for the presence of control characters except line breaks and tabs.
      *
-     * @param array|string $value
+     * @param array<array-key, mixed>|string $value
      *
-     * @return array|string
+     * @return array<array-key, mixed>|string
      */
     protected function checkControl($value)
     {

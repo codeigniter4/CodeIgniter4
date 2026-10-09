@@ -86,6 +86,16 @@ final class TimerTest extends CIUnitTestCase
         $this->assertSame($expected, $timer->getElapsedTime('test1'));
     }
 
+    public function testStartWithZeroTime(): void
+    {
+        $timer = new Timer();
+        $timer->start('test1', 0.0);
+
+        $timers = $timer->getTimers();
+
+        $this->assertEqualsWithDelta(0.0, $timers['test1']['start'], PHP_FLOAT_EPSILON);
+    }
+
     public function testThrowsExceptionStoppingNonTimer(): void
     {
         $this->expectException('RunTimeException');
@@ -176,7 +186,7 @@ final class TimerTest extends CIUnitTestCase
         $this->expectException(ArgumentCountError::class);
 
         $timer = new Timer();
-        $timer->record('error', 'strlen');
+        $timer->record('error', 'strlen'); // @phpstan-ignore argument.type (Needed for testing)
     }
 
     public function testCommonNoNameExpectTimer(): void

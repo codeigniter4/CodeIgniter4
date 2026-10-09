@@ -25,7 +25,7 @@ class ContentReplacer
     /**
      * Replace content
      *
-     * @param array $replaces [search => replace]
+     * @param array<string, string> $replaces [search => replace]
      */
     public function replace(string $content, array $replaces): string
     {

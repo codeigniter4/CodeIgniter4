@@ -26,11 +26,6 @@ final class MigrationTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
     public function testDBGroup(): void
     {
         $migration = new class () extends Migration {

@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\CLI;
 
+use App\Commands\ListCommands as AppListCommands;
 use CodeIgniter\Autoloader\FileLocatorInterface;
+use CodeIgniter\Commands\ListCommands;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Services;
@@ -40,22 +42,6 @@ final class CommandsTest extends CIUnitTestCase
         $this->resetServices();
 
         CLI::reset();
-    }
-
-    private function copyAppListCommands(): void
-    {
-        if (! is_dir(APPPATH . 'Commands')) {
-            mkdir(APPPATH . 'Commands');
-        }
-
-        copy(SUPPORTPATH . '_command/ListCommands.php', APPPATH . 'Commands/ListCommands.php');
-    }
-
-    private function deleteAppListCommands(): void
-    {
-        if (is_file(APPPATH . 'Commands/ListCommands.php')) {
-            unlink(APPPATH . 'Commands/ListCommands.php');
-        }
     }
 
     public function testRunOnUnknownCommand(): void
@@ -166,13 +152,22 @@ final class CommandsTest extends CIUnitTestCase
 
     public function testDiscoveredCommandsCanBeOverridden(): void
     {
-        $this->copyAppListCommands();
+        // The fixture sits outside any PSR-4 root, so the autoloader cannot load it.
+        require_once SUPPORTPATH . '_command/ListCommands.php';
 
-        command('list');
+        $files = [
+            SUPPORTPATH . '_command/ListCommands.php' => AppListCommands::class,
+            SYSTEMPATH . 'Commands/ListCommands.php'  => ListCommands::class,
+        ];
+
+        $locator = $this->createMock(FileLocatorInterface::class);
+        $locator->method('listFiles')->with('Commands/')->willReturn(array_keys($files));
+        $locator->method('findQualifiedNameFromPath')->willReturnCallback(static fn (string $file): string => $files[$file]);
+        Services::injectMock('locator', $locator);
+
+        (new Commands())->run('list', []);
 
         $this->assertStringContainsString('This is App\Commands\ListCommands', $this->getStreamFilterBuffer());
         $this->assertStringNotContainsString('Displays basic usage information.', $this->getStreamFilterBuffer());
-
-        $this->deleteAppListCommands();
     }
 }

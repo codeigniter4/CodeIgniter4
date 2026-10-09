@@ -150,4 +150,13 @@ final class FileWithVfsTest extends CIUnitTestCase
         $this->assertInstanceOf(File::class, $file);
         $this->assertSame($destination . '/apple.php', $file->getPathname());
     }
+
+    public function testMovePermissions(): void
+    {
+        $destination = $this->start . 'baker';
+        $this->file->move($destination);
+
+        $expectedPerms = 0666 & ~umask();
+        $this->assertSame($expectedPerms, $this->root->getChild('baker/apple.php')->getPermissions());
+    }
 }

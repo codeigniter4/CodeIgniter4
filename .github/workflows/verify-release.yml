@@ -1,0 +1,185 @@
+# When a release is published, verify that the release pipeline delivered
+# everything: the distributable repos, the new framework version on
+# Packagist, and the user guide with its ePub.
+#
+# Use "Run workflow" with the release tag to verify an existing release.
+name: Verify Release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: The release tag to verify (e.g., v4.7.5)
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+env:
+  TAG: ${{ github.event.release.tag_name || inputs.version }}
+  PUBLISHED_AT: ${{ github.event.release.published_at }}
+
+jobs:
+  wait-for-deploy:
+    name: Wait for distributables deploy
+    if: github.repository == 'codeigniter4/CodeIgniter4'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      actions: read
+      contents: read
+
+    steps:
+      - name: Wait for "Deploy Distributable Repos" to succeed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # On workflow_dispatch the event carries no publish time.
+          if [ -z "${PUBLISHED_AT}" ]; then
+            PUBLISHED_AT=$(gh api "repos/${{ github.repository }}/releases/tags/${TAG}" --jq '.published_at')
+            echo "Resolved published_at=${PUBLISHED_AT} for ${TAG}."
+          fi
+
+          query="repos/${{ github.repository }}/actions/workflows/deploy-distributables.yml/runs?event=release&per_page=1&created=>=${PUBLISHED_AT}"
+
+          while true; do
+            run=$(gh api "${query}" --jq '.workflow_runs[0] | "\(.status) \(.conclusion)"' || true)
+            status=${run% *}
+            conclusion=${run#* }
+            echo "Deploy Distributable Repos: status=${status:-not found} conclusion=${conclusion:-n/a}"
+
+            if [ "${status}" = "completed" ]; then
+              if [ "${conclusion}" = "success" ]; then
+                exit 0
+              fi
+
+              echo "Deploy Distributable Repos did not succeed."
+              exit 1
+            fi
+
+            sleep 30
+          done
+
+  appstarter:
+    name: Install and test appstarter
+    needs: wait-for-deploy
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
+        with:
+          php-version: '8.2'
+          tools: composer
+          extensions: intl, gd
+          coverage: none
+
+      - name: Wait for Packagist to serve the new framework version
+        run: |
+          version="${TAG#v}"
+
+          for i in $(seq 1 30); do
+            if curl -fsSL https://repo.packagist.org/p2/codeigniter4/framework.json \
+                | jq -e --arg version "v${version}" \
+                    '.packages."codeigniter4/framework" | map(select(.version == $version)) | length > 0' > /dev/null; then
+              echo "Packagist serves codeigniter4/framework v${version}."
+              exit 0
+            fi
+
+            echo "Attempt ${i}: v${version} is not yet on Packagist."
+            sleep 60
+          done
+
+          echo "Timed out waiting for Packagist to serve v${version}."
+          exit 1
+
+      - name: Install appstarter
+        run: composer create-project codeigniter4/appstarter release-test --no-interaction
+
+      - name: Verify the framework version
+        working-directory: release-test
+        run: |
+          version="${TAG#v}"
+          installed=$(composer show codeigniter4/framework --format=json | jq -r '.versions[0]')
+          echo "Installed codeigniter4/framework: ${installed}"
+
+          if [ "${installed}" != "v${version}" ]; then
+            echo "Expected v${version}."
+            exit 1
+          fi
+
+      - name: Test appstarter
+        working-directory: release-test
+        run: composer test
+
+  userguide:
+    name: Verify user guide deployment
+    needs: wait-for-deploy
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+
+    steps:
+      - name: Check that the ePub was added
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version="${TAG#v}"
+
+          for i in $(seq 1 30); do
+            if gh api "repos/codeigniter4/userguide/contents/CodeIgniter${version}.epub" --jq '.name' > /dev/null 2>&1; then
+              echo "CodeIgniter${version}.epub is in the userguide repo."
+              exit 0
+            fi
+
+            echo "Attempt ${i}: CodeIgniter${version}.epub is not yet in the userguide repo."
+            sleep 30
+          done
+
+          echo "Timed out waiting for CodeIgniter${version}.epub."
+          exit 1
+
+      - name: Check that the user guide workflows succeeded
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # On workflow_dispatch the event carries no publish time.
+          if [ -z "${PUBLISHED_AT}" ]; then
+            PUBLISHED_AT=$(gh api "repos/${{ github.repository }}/releases/tags/${TAG}" --jq '.published_at')
+            echo "Resolved published_at=${PUBLISHED_AT} for ${TAG}."
+          fi
+
+          for workflow in "Deploy Production" "pages build and deployment"; do
+            query="repos/codeigniter4/userguide/actions/runs?per_page=30&created=>=${PUBLISHED_AT}"
+
+            success=""
+
+            for _ in $(seq 1 30); do
+              run=$(gh api "${query}" \
+                | jq -r --arg name "${workflow}" \
+                    '[.workflow_runs[] | select(.name == $name)][0] | "\(.status) \(.conclusion)"')
+              status=${run% *}
+              conclusion=${run#* }
+              echo "${workflow}: status=${status:-not found} conclusion=${conclusion:-n/a}"
+
+              if [ "${status}" = "completed" ]; then
+                if [ "${conclusion}" = "success" ]; then
+                  success=1
+                  break
+                fi
+
+                echo "\"${workflow}\" did not succeed."
+                exit 1
+              fi
+
+              sleep 30
+            done
+
+            if [ -z "${success}" ]; then
+              echo "Timed out waiting for \"${workflow}\"."
+              exit 1
+            fi
+          done

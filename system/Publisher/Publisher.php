@@ -413,7 +413,7 @@ class Publisher extends FileCollection
     /**
      * Replace content
      *
-     * @param array $replaces [search => replace]
+     * @param array<string, string> $replaces [search => replace]
      */
     public function replace(string $file, array $replaces): bool
     {

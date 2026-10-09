@@ -63,6 +63,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter = new MockCodeIgniter(new App());
 
         $response = service('response');
+        $this->assertInstanceOf(Response::class, $response);
         $response->pretend();
     }
 
@@ -118,7 +119,7 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // Inject mock router.
         $routes = service('routes');
-        $routes->add('pages/(:segment)', static function ($segment): void {
+        $routes->add('pages/(:segment)', static function (string $segment = ''): void {
             echo 'You want to see "' . esc($segment) . '" page.';
         });
         $router = service('router', $routes, service('incomingrequest'));
@@ -230,7 +231,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $routes = service('routes');
         $routes->add(
             'pages/(:segment)',
-            static fn ($segment): string => 'You want to see "' . esc($segment) . '" page.',
+            static fn (string $segment = ''): string => 'You want to see "' . esc($segment) . '" page.',
         );
         $router = service('router', $routes, service('incomingrequest'));
         Services::injectMock('router', $router);
@@ -252,12 +253,10 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // Inject mock router.
         $routes = service('routes');
-        $routes->add('pages/(:segment)', static function ($segment) {
-            $response = service('response');
-            $string   = "You want to see 'about' page.";
-
-            return $response->setBody($string);
-        });
+        $routes->add(
+            'pages/(:segment)',
+            static fn () => service('response')->setBody("You want to see 'about' page."),
+        );
         $router = service('router', $routes, service('incomingrequest'));
         Services::injectMock('router', $router);
 
@@ -281,11 +280,10 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // Inject mock router.
         $routes = service('routes');
-        $routes->add('pages/(:segment)', static function ($segment) {
-            $response = service('response');
-
-            return $response->download('some.txt', 'some text', true);
-        });
+        $routes->add(
+            'pages/(:segment)',
+            static fn () => service('response')->download('some.txt', 'some text', true),
+        );
         $router = service('router', $routes, service('incomingrequest'));
         Services::injectMock('router', $router);
 
@@ -834,7 +832,8 @@ final class CodeIgniterTest extends CIUnitTestCase
     }
 
     /**
-     * @param array|bool $cacheQueryStringValue
+     * @param bool|list<string> $cacheQueryStringValue
+     * @param list<string>      $testingUrls
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/pull/6410
      */
@@ -905,6 +904,9 @@ final class CodeIgniterTest extends CIUnitTestCase
         CITestStreamFilter::removeErrorFilter();
     }
 
+    /**
+     * @return iterable<string, array{bool|list<string>, int, list<string>}>
+     */
     public static function providePageCacheWithCacheQueryString(): iterable
     {
         $testingUrls = [
@@ -981,10 +983,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $startController = self::getPrivateMethodInvoker($this->codeigniter, 'startController');
 
         $this->setPrivateProperty($this->codeigniter, 'method', '__invoke');
-        $startController();
-
-        // No PageNotFoundException
-        $this->assertTrue(true);
+        $this->assertNull($startController());
     }
 
     public function testRouteAttributeCacheIntegration(): void
@@ -1308,5 +1307,38 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertSame($csp->getScriptNonce(), RichRenderer::$js_nonce);
         $this->assertSame($csp->getStyleNonce(), RichRenderer::$css_nonce);
         $this->assertTrue(RichRenderer::$needs_pre_render);
+    }
+
+    public function testGatherOutputCalledOnceWhenControllerReturnsResponse(): void
+    {
+        $this->resetServices();
+
+        $superglobals = service('superglobals');
+        $superglobals->setServer('argv', ['index.php', 'pages/test']);
+        $superglobals->setServer('argc', 2);
+        $superglobals->setServer('REQUEST_URI', '/pages/test');
+        $superglobals->setServer('SCRIPT_NAME', '/index.php');
+
+        $routes = service('routes');
+        $routes->add('pages/test', static fn () => service('response')->setBody('Test Body'));
+
+        $config      = new App();
+        $codeigniter = new class ($config) extends MockCodeIgniter {
+            public int $gatherOutputCalls = 0;
+
+            protected function gatherOutput(?Cache $cacheConfig = null, $returned = null): void
+            {
+                $this->gatherOutputCalls++;
+                parent::gatherOutput($cacheConfig, $returned);
+            }
+        };
+
+        ob_start();
+        $codeigniter->run($routes);
+        ob_end_clean();
+
+        // When startController() returns a ResponseInterface (e.g. from a closure route),
+        // gatherOutput() must be called exactly once — not twice as in the original bug.
+        $this->assertSame(1, $codeigniter->gatherOutputCalls);
     }
 }

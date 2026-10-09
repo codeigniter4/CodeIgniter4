@@ -25,7 +25,10 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class DefinedRouteCollectorTest extends CIUnitTestCase
 {
-    private function createRouteCollection(array $config = [], $moduleConfig = null): RouteCollection
+    /**
+     * @param array<non-empty-string, list<non-empty-string>|non-empty-string> $config
+     */
+    private function createRouteCollection(array $config = [], ?Modules $moduleConfig = null): RouteCollection
     {
         $defaults = [
             'Config' => APPPATH . 'Config',
@@ -37,7 +40,7 @@ final class DefinedRouteCollectorTest extends CIUnitTestCase
 
         $loader = service('locator');
 
-        if ($moduleConfig === null) {
+        if (! $moduleConfig instanceof Modules) {
             $moduleConfig          = new Modules();
             $moduleConfig->enabled = false;
         }

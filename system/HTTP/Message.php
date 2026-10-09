@@ -27,14 +27,14 @@ class Message implements MessageInterface
     /**
      * Protocol version
      *
-     * @var string
+     * @var string|null
      */
     protected $protocolVersion;
 
     /**
      * List of valid protocol versions
      *
-     * @var array
+     * @var list<string>
      */
     protected $validProtocolVersions = [
         '1.0',
@@ -80,13 +80,13 @@ class Message implements MessageInterface
      * Returns a single header object. If multiple headers with the same
      * name exist, then will return an array of header objects.
      *
-     * @return array|Header|null
-     *
      * @deprecated Use Message::header() to make room for PSR-7
      *
      * @TODO Incompatible return value with PSR-7
      *
      * @codeCoverageIgnore
+     *
+     * @return array<string, Header>|Header|null
      */
     public function getHeader(string $name)
     {

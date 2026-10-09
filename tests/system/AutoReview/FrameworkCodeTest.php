@@ -31,9 +31,14 @@ final class FrameworkCodeTest extends TestCase
 {
     /**
      * Cache of discovered test class names.
+     *
+     * @var list<class-string>
      */
     private static array $testClasses = [];
 
+    /**
+     * @var list<string>
+     */
     private static array $recognizedGroupAttributeNames = [
         'AutoReview',
         'CacheLive',
@@ -62,7 +67,6 @@ final class FrameworkCodeTest extends TestCase
         $unrecognizedGroups = array_diff(
             array_map(static function (ReflectionAttribute $attribute): string {
                 $groupAttribute = $attribute->newInstance();
-                assert($groupAttribute instanceof Group);
 
                 return $groupAttribute->name();
             }, $attributes),
@@ -80,6 +84,9 @@ final class FrameworkCodeTest extends TestCase
         ));
     }
 
+    /**
+     * @return iterable<class-string, array{class-string}>
+     */
     public static function provideEachTestClassHasCorrectGroupAttributeName(): iterable
     {
         foreach (self::getTestClasses() as $class) {
@@ -87,6 +94,9 @@ final class FrameworkCodeTest extends TestCase
         }
     }
 
+    /**
+     * @return list<class-string>
+     */
     private static function getTestClasses(): array
     {
         if (self::$testClasses !== []) {

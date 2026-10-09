@@ -15,6 +15,9 @@ namespace Tests\Support\Entity\Cast;
 
 use CodeIgniter\Entity\Cast\BaseCast;
 
+/**
+ * @extends BaseCast<mixed, string>
+ */
 class CastPassParameters extends BaseCast
 {
     /**

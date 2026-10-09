@@ -16,10 +16,10 @@ namespace CodeIgniter\DataCaster\Cast;
 use CodeIgniter\I18n\Time;
 
 /**
- * Class TimestampCast
- *
  * (PHP) [Time --> int       ] --> (DB driver) --> (DB column) int
  *       [     <-- int|string] <-- (DB driver) <-- (DB column) int
+ *
+ * @extends BaseCast<Time, int|string>
  */
 class TimestampCast extends BaseCast
 {

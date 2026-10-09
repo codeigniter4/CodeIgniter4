@@ -70,7 +70,7 @@ class MockConnection extends BaseConnection
      * Should automatically handle different connections for read/write
      * queries if needed.
      *
-     * @param array<int|string, mixed>|string|null $binds
+     * @param array<array-key, mixed>|string|null $binds
      *
      * @return BaseResult<object|resource, object|resource>|bool|Query
      *
@@ -128,7 +128,7 @@ class MockConnection extends BaseConnection
         if (is_array($return)) {
             // By removing the top item here, we can
             // get a different value for, say, testing failover connections.
-            $return = array_shift($this->returnValues['connect']);
+            return array_shift($this->returnValues['connect']);
         }
 
         return $return;
@@ -196,7 +196,7 @@ class MockConnection extends BaseConnection
 
     public function insertID(): int
     {
-        return $this->connID->insert_id;
+        return 0;
     }
 
     /**

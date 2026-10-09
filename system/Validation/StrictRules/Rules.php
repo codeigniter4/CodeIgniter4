@@ -33,8 +33,8 @@ class Rules
     /**
      * The value does not match another field in $data.
      *
-     * @param mixed $str
-     * @param array $data Other field/value pairs
+     * @param mixed                   $str
+     * @param array<array-key, mixed> $data Other field/value pairs
      */
     public function differs(
         $str,
@@ -137,7 +137,8 @@ class Rules
      *    is_not_unique[table.field,where_field,where_value]
      *    is_not_unique[menu.id,active,1]
      *
-     * @param mixed $str
+     * @param mixed                   $str
+     * @param array<array-key, mixed> $data
      */
     public function is_not_unique($str, string $field, array $data): bool
     {
@@ -176,7 +177,8 @@ class Rules
      *    is_unique[table.field,ignore_field,ignore_value]
      *    is_unique[users.email,id,5]
      *
-     * @param mixed $str
+     * @param mixed                   $str
+     * @param array<array-key, mixed> $data
      */
     public function is_unique($str, string $field, array $data): bool
     {
@@ -226,8 +228,8 @@ class Rules
     /**
      * Matches the value of another field in $data.
      *
-     * @param mixed $str
-     * @param array $data Other field/value pairs
+     * @param mixed                   $str
+     * @param array<array-key, mixed> $data Other field/value pairs
      */
     public function matches(
         $str,
@@ -339,9 +341,9 @@ class Rules
      *
      *     required_with[password]
      *
-     * @param mixed       $str
-     * @param string|null $fields List of fields that we should check if present
-     * @param array       $data   Complete list of fields from the form
+     * @param mixed                   $str
+     * @param string|null             $fields List of fields that we should check if present
+     * @param array<array-key, mixed> $data   Complete list of fields from the form
      */
     public function required_with($str = null, ?string $fields = null, array $data = []): bool
     {
@@ -356,9 +358,10 @@ class Rules
      *
      *     required_without[id,email]
      *
-     * @param mixed       $str
-     * @param string|null $otherFields The param fields of required_without[].
-     * @param string|null $field       This rule param fields aren't present, this field is required.
+     * @param mixed                   $str
+     * @param string|null             $otherFields The param fields of required_without[].
+     * @param string|null             $field       This rule param fields aren't present, this field is required.
+     * @param array<array-key, mixed> $data
      */
     public function required_without(
         $str = null,
@@ -373,10 +376,10 @@ class Rules
     /**
      * The field exists in $data.
      *
-     * @param mixed       $value The field value.
-     * @param string|null $param The rule's parameter.
-     * @param array       $data  The data to be validated.
-     * @param string|null $field The field name.
+     * @param mixed                   $value The field value.
+     * @param string|null             $param The rule's parameter.
+     * @param array<array-key, mixed> $data  The data to be validated.
+     * @param string|null             $field The field name.
      */
     public function field_exists(
         $value = null,

@@ -95,9 +95,9 @@ final readonly class AutoRouteCollector
     /**
      * Adding Filters
      *
-     * @param list<array<string, array|string>> $routes
+     * @param list<array{method: string, route: string, route_params: string, handler: string, params: array<string, bool>, before?: string, after?: string}> $routes
      *
-     * @return list<array<string, array|string>>
+     * @return list<array{method: string, route: string, route_params: string, handler: string, params: array<string, bool>, before: string, after: string}>
      */
     private function addFilters(array $routes): array
     {
@@ -134,6 +134,9 @@ final readonly class AutoRouteCollector
         return $routes;
     }
 
+    /**
+     * @param array{method: string, route: string, route_params: string, handler: string, params: array<string, bool>, before?: string, after?: string} $route
+     */
     private function generateSampleUri(array $route, bool $longest = true): string
     {
         $sampleUri = '';

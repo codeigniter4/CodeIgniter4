@@ -28,9 +28,20 @@ final class ConnectTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    private $group1;
-    private $group2;
-    private $tests;
+    /**
+     * @var array<string, mixed>
+     */
+    private array $group1 = [];
+
+    /**
+     * @var array<string, mixed>
+     */
+    private array $group2 = [];
+
+    /**
+     * @var array<string, mixed>
+     */
+    private array $tests = [];
 
     protected function setUp(): void
     {

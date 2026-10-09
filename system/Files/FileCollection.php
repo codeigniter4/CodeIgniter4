@@ -17,8 +17,8 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Files\Exceptions\FileException;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use Countable;
-use Generator;
 use IteratorAggregate;
+use Traversable;
 
 /**
  * File Collection Class
@@ -393,13 +393,12 @@ class FileCollection implements Countable, IteratorAggregate
 
     /**
      * Yields as an Iterator for the current files.
-     * Fulfills IteratorAggregate.
      *
-     * @return Generator<File>
+     * @return Traversable<int, File>
      *
      * @throws FileNotFoundException
      */
-    public function getIterator(): Generator
+    public function getIterator(): Traversable
     {
         foreach ($this->get() as $file) {
             yield new File($file, true);

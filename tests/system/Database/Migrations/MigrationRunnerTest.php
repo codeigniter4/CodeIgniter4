@@ -14,7 +14,9 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\Migrations;
 
 use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\MigrationRunner;
+use CodeIgniter\Database\SQLSRV\Connection as SQLSRVConnection;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -121,6 +123,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         ];
 
         if ($this->db->DBDriver === 'SQLSRV') {
+            $this->assertInstanceOf(SQLSRVConnection::class, $this->db);
             $this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->prefixTable('migrations') . ' ON');
         }
 
@@ -138,6 +141,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertSame($expected, $history);
 
         if ($this->db->DBDriver === 'SQLSRV') {
+            $this->assertInstanceOf(SQLSRVConnection::class, $this->db);
             $this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->prefixTable('migrations') . ' OFF');
             $db = $this->getPrivateProperty($runner, 'db');
             $db->table('migrations')->delete(['id' => 4]);
@@ -477,6 +481,9 @@ final class MigrationRunnerTest extends CIUnitTestCase
         }
     }
 
+    /**
+     * @param array<string, mixed>|ConnectionInterface|string|null $db
+     */
     protected function resetTables($db = null): void
     {
         $forge = Database::forge($db);

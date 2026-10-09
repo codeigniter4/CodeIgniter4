@@ -24,8 +24,6 @@ class FileHandler extends BaseHandler
 {
     /**
      * Where to save the session files to.
-     *
-     * @var string
      */
     protected $savePath;
 
@@ -68,7 +66,7 @@ class FileHandler extends BaseHandler
     {
         parent::__construct($config, $ipAddress);
 
-        if ($this->savePath !== '') {
+        if (is_string($this->savePath) && $this->savePath !== '') {
             $this->savePath = rtrim($this->savePath, '/\\');
             ini_set('session.save_path', $this->savePath);
         } else {
@@ -136,9 +134,7 @@ class FileHandler extends BaseHandler
                 return false;
             }
 
-            if (! isset($this->sessionID)) {
-                $this->sessionID = $id;
-            }
+            $this->sessionID ??= $id;
 
             if ($this->fileNew) {
                 chmod($this->filePath . $id, 0600);
@@ -302,9 +298,7 @@ class FileHandler extends BaseHandler
     }
 
     /**
-     * Configure Session ID regular expression.
-     *
-     * To make life easier, we force the PHP defaults. Because PHP9 forces them.
+     * Configure Session ID regular expression. To make life easier, we force the PHP defaults because PHP 9 forces them.
      *
      * @see https://wiki.php.net/rfc/deprecations_php_8_4#sessionsid_length_and_sessionsid_bits_per_character
      *
@@ -312,17 +306,12 @@ class FileHandler extends BaseHandler
      */
     protected function configureSessionIDRegex()
     {
-        $bitsPerCharacter = (int) ini_get('session.sid_bits_per_character');
-        $sidLength        = (int) ini_get('session.sid_length');
+        if ((int) ini_get('session.sid_bits_per_character') !== 4) {
+            ini_set('session.sid_bits_per_character', '4');
+        }
 
-        // We force the PHP defaults.
-        if (PHP_VERSION_ID < 90000) {
-            if ($bitsPerCharacter !== 4) {
-                ini_set('session.sid_bits_per_character', '4');
-            }
-            if ($sidLength !== 32) {
-                ini_set('session.sid_length', '32');
-            }
+        if ((int) ini_get('session.sid_length') !== 32) {
+            ini_set('session.sid_length', '32');
         }
 
         $this->sessionIDRegex = '[0-9a-f]{32}';

@@ -17,11 +17,13 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Feature;
+use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
  */
+#[BackupGlobals(true)]
 #[Group('Others')]
 final class NegotiateTest extends CIUnitTestCase
 {
@@ -30,6 +32,7 @@ final class NegotiateTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
+        $this->resetServices();
         parent::setUp();
 
         $config          = new App();

@@ -196,6 +196,8 @@ class CookieStore implements Countable, IteratorAggregate
     /**
      * Validates all cookies passed to be instances of Cookie.
      *
+     * @param array<array-key, Cookie> $cookies
+     *
      * @throws CookieException
      */
     protected function validateCookies(array $cookies): void

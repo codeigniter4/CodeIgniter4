@@ -26,7 +26,7 @@ class Config extends BaseConfig
      * Cache for instance of any connections that
      * have been requested as a "shared" instance.
      *
-     * @var array
+     * @var array<string, BaseConnection>
      */
     protected static $instances = [];
 
@@ -41,9 +41,9 @@ class Config extends BaseConfig
     /**
      * Returns the database connection
      *
-     * @param array|BaseConnection|non-empty-string|null $group     The name of the connection group to use,
-     *                                                              or an array of configuration settings.
-     * @param bool                                       $getShared Whether to return a shared instance of the connection.
+     * @param array<string, mixed>|BaseConnection|non-empty-string|null $group     The name of the connection group to use,
+     *                                                                             or an array of configuration settings.
+     * @param bool                                                      $getShared Whether to return a shared instance of the connection.
      *
      * @return BaseConnection
      */
@@ -60,9 +60,7 @@ class Config extends BaseConfig
         } else {
             $dbConfig = config(DbConfig::class);
 
-            if ($group === null) {
-                $group = (ENVIRONMENT === 'testing') ? 'tests' : $dbConfig->defaultGroup;
-            }
+            $group ??= (ENVIRONMENT === 'testing') ? 'tests' : $dbConfig->defaultGroup;
 
             assert(is_string($group));
 
@@ -90,6 +88,8 @@ class Config extends BaseConfig
 
     /**
      * Returns an array of all db connections currently made.
+     *
+     * @return array<string, BaseConnection>
      */
     public static function getConnections(): array
     {
@@ -100,7 +100,7 @@ class Config extends BaseConfig
      * Loads and returns an instance of the Forge for the specified
      * database group, and loads the group if it hasn't been loaded yet.
      *
-     * @param array|ConnectionInterface|string|null $group
+     * @param array<string, mixed>|ConnectionInterface|string|null $group
      *
      * @return Forge
      */
@@ -114,7 +114,7 @@ class Config extends BaseConfig
     /**
      * Returns a new instance of the Database Utilities class.
      *
-     * @param array|string|null $group
+     * @param array<string, mixed>|string|null $group
      *
      * @return BaseUtils
      */

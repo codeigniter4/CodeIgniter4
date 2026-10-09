@@ -76,7 +76,7 @@ trait ControllerTestTrait
     /**
      * URI of this request.
      *
-     * @var string
+     * @var string|URI
      */
     protected $uri = 'http://example.com';
 
@@ -144,7 +144,7 @@ trait ControllerTestTrait
     /**
      * Runs the specified method on the controller and returns the results.
      *
-     * @param array $params
+     * @param mixed ...$params
      *
      * @return TestResponse
      *

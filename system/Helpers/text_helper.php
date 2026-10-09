@@ -174,9 +174,9 @@ if (! function_exists('word_censor')) {
      * matched words will be converted to #### or to the replacement
      * word you've submitted.
      *
-     * @param string $str         the text string
-     * @param array  $censored    the array of censored words
-     * @param string $replacement the optional replacement value
+     * @param string       $str         The text string
+     * @param list<string> $censored    The array of censored words
+     * @param string       $replacement The optional replacement value
      */
     function word_censor(string $str, array $censored, string $replacement = ''): string
     {
@@ -383,7 +383,9 @@ if (! function_exists('word_wrap')) {
 
             $temp = '';
 
-            while (mb_strlen($line) > $charlim) {
+            // A limit of 1 can't be used to split a word (each piece needs room for
+            // the continuation), so the word is kept whole, like a long URL.
+            while ($charlim > 1 && mb_strlen($line) > $charlim) {
                 // If the over-length word is a URL we won't wrap it
                 if (preg_match('!\[url.+\]|://|www\.!', $line)) {
                     break;
@@ -454,11 +456,11 @@ if (! function_exists('strip_slashes')) {
      *
      * Removes slashes contained in a string or in an array
      *
-     * @param array|string $str string or array
+     * @param array<array-key, mixed>|string $str string or array
      *
-     * @return array|string string or array
+     * @return array<array-key, mixed>|string string or array
      */
-    function strip_slashes($str)
+    function strip_slashes($str): array|string
     {
         if (! is_array($str)) {
             return stripslashes($str);

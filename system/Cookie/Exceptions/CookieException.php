@@ -61,6 +61,36 @@ class CookieException extends FrameworkException
     }
 
     /**
+     * Thrown when the cookie value contains invalid characters.
+     *
+     * @return static
+     */
+    public static function forInvalidCookieValue()
+    {
+        return new static(lang('Cookie.invalidCookieValue'));
+    }
+
+    /**
+     * Thrown when the cookie path contains invalid characters.
+     *
+     * @return static
+     */
+    public static function forInvalidCookiePath()
+    {
+        return new static(lang('Cookie.invalidCookiePath'));
+    }
+
+    /**
+     * Thrown when the cookie domain contains invalid characters.
+     *
+     * @return static
+     */
+    public static function forInvalidCookieDomain()
+    {
+        return new static(lang('Cookie.invalidCookieDomain'));
+    }
+
+    /**
      * Thrown when using the `__Secure-` prefix but the `Secure` attribute
      * is not set to true.
      *

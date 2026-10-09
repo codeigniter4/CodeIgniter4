@@ -69,7 +69,8 @@ final class EventsTest extends CIUnitTestCase
 
         // but we should be able to change it through the backdoor
         MockEvents::setFiles(['/peanuts']);
-        $this->assertSame(['/peanuts'], Events::getFiles());
+        $files = Events::getFiles();
+        $this->assertSame(['/peanuts'], $files);
 
         // re-initializing should have no effect
         MockEvents::initialize();

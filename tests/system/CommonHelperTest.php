@@ -31,6 +31,9 @@ use Tests\Support\Autoloader\FatalLocator;
 #[Group('Others')]
 final class CommonHelperTest extends CIUnitTestCase
 {
+    /**
+     * @var list<string>
+     */
     private array $dummyHelpers = [
         APPPATH . 'Helpers' . DIRECTORY_SEPARATOR . 'foobarbaz_helper.php',
         SYSTEMPATH . 'Helpers' . DIRECTORY_SEPARATOR . 'foobarbaz_helper.php',

@@ -171,9 +171,14 @@ final class TimeTest extends CIUnitTestCase
 
     public function testTodayLocalized(): void
     {
+        // Freeze time to avoid flakiness when server and London are on different calendar days
+        Time::setTestNow('2026-06-15 12:00:00', 'UTC');
+
         $time = Time::today('Europe/London');
 
-        $this->assertSame(date('Y-m-d 00:00:00'), $time->toDateTimeString());
+        $this->assertSame('2026-06-15 00:00:00', $time->toDateTimeString());
+
+        Time::setTestNow();
     }
 
     public function testYesterday(): void
@@ -188,6 +193,65 @@ final class TimeTest extends CIUnitTestCase
         $time = Time::tomorrow();
 
         $this->assertSame(date('Y-m-d 00:00:00', strtotime('+1 day')), $time->toDateTimeString());
+    }
+
+    public function testTodayWithTimezoneAcrossDateBoundary(): void
+    {
+        // When UTC is 2026-09-07 23:30:00, in Asia/Tokyo (+09:00) it is already 2026-09-08 08:30:00
+        Time::setTestNow('2026-09-07 23:30:00', 'UTC');
+
+        $tokyoToday = Time::today('Asia/Tokyo');
+        $this->assertSame('2026-09-08 00:00:00', $tokyoToday->toDateTimeString());
+
+        // When UTC is 2026-09-08 02:00:00, in America/New_York (-04:00 EDT) it is still 2026-09-07 22:00:00
+        Time::setTestNow('2026-09-08 02:00:00', 'UTC');
+
+        $nyToday = Time::today('America/New_York');
+        $this->assertSame('2026-09-07 00:00:00', $nyToday->toDateTimeString());
+
+        Time::setTestNow();
+    }
+
+    public function testYesterdayWithTimezoneAcrossDateBoundary(): void
+    {
+        // When UTC is 2026-09-07 23:30:00, in Tokyo it is 2026-09-08, so Tokyo yesterday is 2026-09-07
+        Time::setTestNow('2026-09-07 23:30:00', 'UTC');
+
+        $tokyoYesterday = Time::yesterday('Asia/Tokyo');
+        $this->assertSame('2026-09-07 00:00:00', $tokyoYesterday->toDateTimeString());
+
+        // When UTC is 2026-09-08 02:00:00, in NY it is 2026-09-07, so NY yesterday is 2026-09-06
+        Time::setTestNow('2026-09-08 02:00:00', 'UTC');
+
+        $nyYesterday = Time::yesterday('America/New_York');
+        $this->assertSame('2026-09-06 00:00:00', $nyYesterday->toDateTimeString());
+        // March 28 at 23:30 does not exist in Nuuk due to the DST transition.
+        Time::setTestNow('2026-03-29 23:30:00', 'America/Nuuk');
+
+        $nuukYesterday = Time::yesterday('America/Nuuk');
+        $this->assertSame('2026-03-28 00:00:00', $nuukYesterday->toDateTimeString());
+        Time::setTestNow();
+    }
+
+    public function testTomorrowWithTimezoneAcrossDateBoundary(): void
+    {
+        // When UTC is 2026-09-07 23:30:00, in Tokyo it is 2026-09-08, so Tokyo tomorrow is 2026-09-09
+        Time::setTestNow('2026-09-07 23:30:00', 'UTC');
+
+        $tokyoTomorrow = Time::tomorrow('Asia/Tokyo');
+        $this->assertSame('2026-09-09 00:00:00', $tokyoTomorrow->toDateTimeString());
+
+        // When UTC is 2026-09-08 02:00:00, in NY it is 2026-09-07, so NY tomorrow is 2026-09-08
+        Time::setTestNow('2026-09-08 02:00:00', 'UTC');
+
+        $nyTomorrow = Time::tomorrow('America/New_York');
+        $this->assertSame('2026-09-08 00:00:00', $nyTomorrow->toDateTimeString());
+        // Moving forward must select March 28 without normalizing into March 29.
+        Time::setTestNow('2026-03-27 23:30:00', 'America/Nuuk');
+
+        $nuukTomorrow = Time::tomorrow('America/Nuuk');
+        $this->assertSame('2026-03-28 00:00:00', $nuukTomorrow->toDateTimeString());
+        Time::setTestNow();
     }
 
     public function testCreateFromDate(): void
@@ -290,7 +354,7 @@ final class TimeTest extends CIUnitTestCase
 
     public function testCreateFromTimestampWithMicroseconds(): void
     {
-        $timestamp = 1489762800.654321;
+        $timestamp = 1_489_762_800.654321;
         $locale    = setlocale(LC_NUMERIC, '0');
 
         setlocale(LC_NUMERIC, 'de_DE.UTF-8', 'de_DE');
@@ -346,7 +410,7 @@ final class TimeTest extends CIUnitTestCase
     {
         $time = Time::parse('January 1, 2016');
 
-        $this->assertFalse(isset($time->foobar));
+        $this->assertFalse(isset($time->foobar)); // @phpstan-ignore property.notFound
     }
 
     public function testGetYear(): void
@@ -1280,7 +1344,7 @@ final class TimeTest extends CIUnitTestCase
     {
         $time = Time::parse('August 12, 2016 4:15:23pm');
 
-        $this->assertNull($time->weekOfWeek);
+        $this->assertNull($time->weekOfWeek); // @phpstan-ignore property.notFound
     }
 
     public function testUnserializeTimeObject(): void
@@ -1324,6 +1388,9 @@ final class TimeTest extends CIUnitTestCase
         $this->assertSame('2017-03-10 12:00:00', (string) $time);
     }
 
+    /**
+     * @return iterable<int, array{0: string}>
+     */
     public static function provideToStringDoesNotDependOnLocale(): iterable
     {
         yield from [

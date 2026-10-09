@@ -30,7 +30,7 @@ class File extends SplFileInfo
     /**
      * The files size in bytes
      *
-     * @var int
+     * @var false|int|null
      */
     protected $size;
 
@@ -65,7 +65,7 @@ class File extends SplFileInfo
      */
     public function getSize(): false|int
     {
-        return $this->size ?? ($this->size = parent::getSize());
+        return $this->size ??= parent::getSize();
     }
 
     /**
@@ -111,7 +111,8 @@ class File extends SplFileInfo
     public function guessExtension(): ?string
     {
         // naively get the path extension using pathinfo
-        $pathinfo = pathinfo($this->getRealPath() ?: $this->__toString()) + ['extension' => ''];
+        $realPath = $this->getRealPath();
+        $pathinfo = pathinfo($realPath === false ? $this->__toString() : $realPath) + ['extension' => ''];
 
         $proposedExtension = $pathinfo['extension'];
 
@@ -131,9 +132,10 @@ class File extends SplFileInfo
             return $this->originalMimeType ?? 'application/octet-stream'; // @codeCoverageIgnore
         }
 
-        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $finfo    = finfo_open(FILEINFO_MIME_TYPE);
+        $realPath = $this->getRealPath();
 
-        return finfo_file($finfo, $this->getRealPath() ?: $this->__toString());
+        return finfo_file($finfo, $realPath === false ? $this->__toString() : $realPath);
     }
 
     /**
@@ -143,7 +145,7 @@ class File extends SplFileInfo
     public function getRandomName(): string
     {
         $extension = $this->getExtension();
-        $extension = empty($extension) ? '' : '.' . $extension;
+        $extension = $extension === '' ? '' : '.' . $extension;
 
         return Time::now()->getTimestamp() . '_' . bin2hex(random_bytes(10)) . $extension;
     }
@@ -159,7 +161,8 @@ class File extends SplFileInfo
         $name ??= $this->getBasename();
         $destination = $overwrite ? $targetPath . $name : $this->getDestination($targetPath . $name);
 
-        $oldName = $this->getRealPath() ?: $this->__toString();
+        $realPath = $this->getRealPath();
+        $oldName  = $realPath === false ? $this->__toString() : $realPath;
 
         if (! @rename($oldName, $destination)) {
             $error = error_get_last();
@@ -167,7 +170,7 @@ class File extends SplFileInfo
             throw FileException::forUnableToMove($this->getBasename(), $targetPath, strip_tags($error['message']));
         }
 
-        @chmod($destination, 0777 & ~umask());
+        @chmod($destination, 0666 & ~umask());
 
         return new self($destination);
     }
@@ -215,7 +218,7 @@ class File extends SplFileInfo
         $size     = $this->getSize() / $divider;
 
         if ($unit !== FileSizeUnit::B) {
-            $size = number_format($size, $precision);
+            return number_format($size, $precision);
         }
 
         return $size;

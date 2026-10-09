@@ -161,6 +161,9 @@ final class InvalidCharsTest extends CIUnitTestCase
         $this->invalidChars->before($this->request);
     }
 
+    /**
+     * @return iterable<array{string}>
+     */
     public static function provideCheckControlStringWithLineBreakAndTabReturnsTheString(): iterable
     {
         yield from [
@@ -183,6 +186,9 @@ final class InvalidCharsTest extends CIUnitTestCase
         $this->invalidChars->before($this->request);
     }
 
+    /**
+     * @return iterable<array{string}>
+     */
     public static function provideCheckControlStringWithControlCharsCausesException(): iterable
     {
         yield from [
