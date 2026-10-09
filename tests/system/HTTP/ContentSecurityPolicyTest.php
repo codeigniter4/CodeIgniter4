@@ -123,7 +123,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
         Services::injectMock('csp', new ContentSecurityPolicy($config));
 
-        $this->response = new Response(config(App::class));
+        $this->response = new Response();
         $this->response->pretend(false);
         $this->csp = $this->response->getCSP();
 
