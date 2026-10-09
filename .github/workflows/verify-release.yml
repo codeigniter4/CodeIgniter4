@@ -76,7 +76,7 @@ jobs:
           php-version: '8.2'
           tools: composer
           extensions: intl, gd
-          coverage: none
+          coverage: xdebug
 
       - name: Wait for Packagist to serve the new framework version
         run: |

@@ -2,7 +2,7 @@
 Version 4.7.5
 #############
 
-Release Date: Unreleased
+Release Date: October 9, 2026
 
 **4.7.5 release of CodeIgniter4**
 
@@ -11,8 +11,65 @@ Release Date: Unreleased
     :depth: 3
 
 ********
-BREAKING
+SECURITY
 ********
+
+- **CURLRequest:** Request-specific headers, body, and options
+  are now cleared when a request throws an exception and ``shareOptions`` is ``false``.
+  Previously, reusing the client after a failed request could send credentials
+  or private data to a different destination. Options passed to the constructor
+  remain available for subsequent requests.
+  Per-request ``baseURI`` and ``delay`` values are also reset after successful
+  and failed requests, preventing URI components from leaking into later requests.
+  When retrying a failed request, pass its options again, or reapply settings
+  made with ``setAuth()``, ``setBody()``, ``setForm()``, or ``setJSON()``.
+  See the `Security advisory GHSA-9g9v-xgwj-697h <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-9g9v-xgwj-697h>`_
+  for more information.
+- **Validation:** The ``is_image`` and ``mime_in`` file upload rules now reject client filenames ending in dots while
+  continuing to accept genuinely extensionless uploads. These rules and ``ext_in`` also reject filenames with a PHP
+  handler extension before the final extension, such as ``shell.php.gif``, including extensions revealed by filename
+  sanitization. These checks also reject innocent filenames such as ``logo.php.gif``. See
+  :doc:`Upgrading from 4.7.4 to 4.7.5 </installation/upgrade_475>` for migration instructions.
+  Previously, a GIF/PHP polyglot with one of these names could pass validation. Applications that save uploads with
+  client-provided names in executable public directories may be affected. Use a generated filename or disable script
+  execution in the upload directory. See the `Security advisory GHSA-4hwf-v4mp-hf6c <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-4hwf-v4mp-hf6c>`_
+  for more information.
+- **Validation:** File validation rules now check every non-empty file in an
+  optional multiple upload. Previously, an entry with ``UPLOAD_ERR_NO_FILE``
+  could cause ``max_size``, ``is_image``, ``mime_in``, ``ext_in``, ``max_dims``,
+  and ``min_dims`` to accept the upload without checking later files.
+  ``max_dims`` and ``min_dims`` also return ``false`` for upload errors other
+  than ``UPLOAD_ERR_NO_FILE`` before reading image dimensions.
+  See the `Security advisory GHSA-cwxp-v62r-xwx2 <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-cwxp-v62r-xwx2>`_
+  for more information.
+- **View Parser:** Fixed a stored XSS vulnerability where a substituted value containing
+  Parser syntax (e.g., ``{text|raw}`` or ``{!text!}``) was interpreted by a later
+  substitution pass, allowing user-supplied data to bypass auto-escaping of other
+  pseudo-variables. Substituted values are now treated strictly as data and are never
+  parsed again. The same protection applies to output from built-in Parser plugins,
+  including URLs and validation messages. See :ref:`upgrade-475-view-parser-values` for more information.
+  See the `Security advisory GHSA-vgrf-mv2j-gp8w <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-vgrf-mv2j-gp8w>`_
+  for more information.
+- **View Parser:** Added restricted conditionals as an opt-in mitigation for
+  *Code Injection through Parser Template Source*. Conditions in ``{if ...}`` and
+  ``{elseif ...}`` tags are evaluated as PHP, so anyone who can edit Parser template
+  source can execute PHP code. This remains the default behavior. Applications that
+  let less-trusted users edit Parser templates must enable the new
+  ``Config\View::$restrictParserConditionals`` setting or the ``restrictConditionals``
+  render option. Restricted conditionals only limit this execution path; they do not
+  make every template feature safe for less-trusted authors.
+  The restriction also applies to nested renders on the same Parser instance.
+  See :ref:`parser-restricting-conditionals` and the
+  `Security advisory GHSA-4q58-jw8x-8cm7 <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-4q58-jw8x-8cm7>`_
+  for more information.
+- **Views:** Fixed a code execution vulnerability caused by view data keys
+  overriding renderer-local variables. Data named ``template`` in ``Parser`` or
+  ``view`` in ``View::renderString()`` could replace the source evaluated as PHP.
+  Data named ``foundView`` in view cells could replace the selected file path
+  and cause unintended local file inclusion. These issues require applications
+  to pass less-trusted data under the affected keys.
+  See the `Security advisory GHSA-c29x-ffjj-8r7x <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-c29x-ffjj-8r7x>`_
+  for more information.
 
 ***************
 Message Changes
@@ -22,6 +79,7 @@ Message Changes
 - Added the ``Cookie.invalidCookieDomain`` language string.
 - Added the ``Cookie.invalidCookiePath`` language string.
 - Added the ``Cookie.invalidCookieValue`` language string.
+- Added the ``View.restrictedConditional`` language string.
 
 *******
 Changes
@@ -46,6 +104,8 @@ Bugs Fixed
   ANSI color codes in the prompt (e.g., option defaults) are wrapped in readline's non-printing markers under GNU readline so cursor positioning stays accurate.
   On Windows, where the ``readline`` extension is built on WinEditLine, the prompt is written to STDOUT first because WinEditLine reports no library version and prints ANSI sequences literally.
 - **CLI:** Fixed a bug where ``CLI::input()`` and ``CLI::prompt()`` threw a ``TypeError`` when STDIN reached end-of-file (e.g., Ctrl+D) with the ``readline`` extension enabled. An empty string is now returned, matching the behavior without ``readline``.
+- **CLI:** Fixed a bug where ``CLI::error()`` threw an ``Error`` for the undefined ``STDERR`` constant when a command ran outside the CLI (e.g., through ``command()`` in a controller). The message is now written like other output.
+  ``CLI::clearScreen()`` on Windows and ``SignalTrait::getProcessState()`` no longer probe the standard streams outside the CLI either.
 - **CLIRequest:** Fixed a bug where ``parseCommand()`` could throw a TypeError when ``argv`` is missing.
 - **CodeIgniter:** Fixed a bug where ``gatherOutput()`` could be called twice when ``startController()`` returned a ``ResponseInterface`` (e.g., from filter attributes or closure routes).
 - **Commands:** Fixed a bug where ``make:migration --session`` silently generated a broken migration when the database group's driver is neither ``MySQLi`` nor ``Postgre``. The command now reports an error and returns ``EXIT_ERROR``.
@@ -53,13 +113,18 @@ Bugs Fixed
 - **Cookie:** Fixed a bug where ``Cookie`` instances created with ``raw: true`` allowed invalid characters in cookie values rejected by ``setrawcookie()``.
 - **Cookie:** Fixed a bug where ``Cookie`` instances allowed invalid characters in path, domain, and prefix attributes rejected by ``setcookie()`` and ``setrawcookie()``.
 - **Database:** Fixed a bug where rebuilding a SQLite3 table (e.g., ``Forge::dropColumn()``, ``Forge::modifyColumn()``, ``Forge::dropForeignKey()`` and ``Forge::dropPrimaryKey()``) corrupted the table names referenced by its foreign keys when ``DBPrefix`` was set.
+- **Database:** Fixed a bug where Postgre query failures were silently ignored when ``DBDebug`` was enabled and PHP warnings were disabled. A ``DatabaseException`` is now thrown.
+- **Database:** Fixed a bug where ``getFieldData()`` failed for a schema-qualified table name on Postgre, SQLSRV and SQLite3, and where ``protectIdentifiers()`` prefixed an already protected segment of a dotted identifier a second time.
+- **Database:** Fixed a bug where ``updateBatch()`` and ``deleteBatch()`` failed on PostgreSQL and Oracle when the rows supplied different PHP types (e.g., a string and an integer) for the same column, because the ``UNION ALL`` subquery values were not cast to the column type.
 - **Debug:** Fixed a bug where ``Timer::start()`` treated ``0.0`` as an empty value and substituted the current time.
 - **Files:** Fixed a bug where ``File::move()`` and ``UploadedFile::move()`` set executable and overly permissive file permissions (``0777 & ~umask()`` instead of ``0666 & ~umask()``), and ``UploadedFile::move()`` targeted the parent directory instead of the destination file for ``chmod()``.
 - **Helpers:** Fixed a bug where ``get_dir_file_info()`` returned incomplete entries for subdirectories and missing files instead of omitting them.
+- **Helpers:** Fixed a bug where ``word_wrap()`` entered an infinite loop when the character limit was below 2. Over-length words are now kept whole in that case.
 - **Honeypot:** Fixed a bug where bot detection returned an HTTP 500 response instead of 403 (Forbidden).
 - **I18n:** Fixed a bug where ``Time::today()``, ``Time::yesterday()``, and ``Time::tomorrow()`` ignored the specified ``$timezone`` and ``setTestNow()`` when calculating the day.
 - **Logger:** Fixed a bug where interpolating a log message with array or non-stringable context values could raise PHP warnings or errors.
 - **Validation:** Fixed a bug where ``valid_cc_number`` accepted non-digit characters (e.g., a decimal point) in the card number. Such values could pass the Luhn check and triggered an ``Undefined array key`` warning inside it; the number is now checked with ``ctype_digit()``.
+- **View Parser:** Fixed a bug where removing template comments could assemble PHP tags that were then executed. PHP tags are now escaped after comments are removed.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_

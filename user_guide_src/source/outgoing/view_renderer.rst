@@ -153,7 +153,7 @@ Class Reference
 
     .. php:method:: renderString($view[, $options[, $saveData = false]])
 
-        :param  string       $view: Contents of the view to render, for instance content retrieved from a database
+        :param  string       $view: Contents of the view to render, executed as PHP code
         :param  array        $options: Array of options, as key/value pairs
         :param  boolean|null $saveData: If true, will save data for use with any other calls. If false, will clean the data after rendering the view. If null, uses the config setting.
         :returns: The rendered text for the chosen view
@@ -164,10 +164,11 @@ Class Reference
         .. literalinclude:: view_renderer/006.php
            :lines: 2-
 
-    .. warning:: This could be used for displaying content that might have been stored in a database,
-        but you need to be aware that this is a potential security vulnerability,
-        and that you **must** validate any such data, and probably escape it
-        appropriately!
+    .. warning:: ``renderString()`` executes the given view contents as PHP code,
+        just like a view file. Treat them as trusted code: never pass contents that
+        less-trusted users can edit, even if they are stored in your database.
+        Escaping or validating such contents does not make them safe to execute.
+        Pass user-provided values as view data instead.
 
     .. php:method:: setData([$data[, $context = null]])
 

@@ -15,6 +15,7 @@ namespace CodeIgniter\View;
 
 use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\View\Cells\Cell;
 use CodeIgniter\View\Exceptions\ViewException;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\View\Cells\AdditionCell;
@@ -67,6 +68,25 @@ final class ControlledCellTest extends CIUnitTestCase
         $result = view_cell(RenderedExtraDataNotice::class);
 
         $this->assertStringContainsString('42, 23, 16, 15, 8, 4', $result);
+    }
+
+    public function testCellDataCannotReplaceIncludedView(): void
+    {
+        $cell = new class () extends Cell {
+            public function render(): string
+            {
+                $directory = __DIR__ . '/../../_support/View/Cells/';
+
+                return $this->view($directory . 'notice.php', [
+                    'message'   => 'Trusted',
+                    'greeting'  => 'Untrusted',
+                    'name'      => 'view',
+                    'foundView' => $directory . 'greeting.php',
+                ]);
+            }
+        };
+
+        $this->assertSame('<div>Trusted</div>', trim($cell->render()));
     }
 
     public function testCellThrowsExceptionWhenCannotFindTheViewFile(): void

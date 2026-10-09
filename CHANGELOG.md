@@ -1,5 +1,159 @@
 # Changelog
 
+## [v4.7.5](https://github.com/codeigniter4/CodeIgniter4/tree/v4.7.5) (2026-10-09)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.7.4...v4.7.5)
+
+### Security
+
+* **CURLRequest:** Request-specific headers, body, and options
+  are now cleared when a request throws an exception and ``shareOptions`` is ``false``.
+  Previously, reusing the client after a failed request could send credentials
+  or private data to a different destination. Options passed to the constructor
+  remain available for subsequent requests.
+  Per-request ``baseURI`` and ``delay`` values are also reset after successful
+  and failed requests, preventing URI components from leaking into later requests.
+  When retrying a failed request, pass its options again, or reapply settings
+  made with ``setAuth()``, ``setBody()``, ``setForm()``, or ``setJSON()``.
+  See the `Security advisory GHSA-9g9v-xgwj-697h <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-9g9v-xgwj-697h>`_
+  for more information.
+* **Validation:** The ``is_image`` and ``mime_in`` file upload rules now reject client filenames ending in dots while
+  continuing to accept genuinely extensionless uploads. These rules and ``ext_in`` also reject filenames with a PHP
+  handler extension before the final extension, such as ``shell.php.gif``, including extensions revealed by filename
+  sanitization. These checks also reject innocent filenames such as ``logo.php.gif``. See
+  :doc:`Upgrading from 4.7.4 to 4.7.5 </installation/upgrade_475>` for migration instructions.
+  Previously, a GIF/PHP polyglot with one of these names could pass validation. Applications that save uploads with 
+  client-provided names in executable public directories may be affected. Use a generated filename or disable script 
+  execution in the upload directory. See the `Security advisory GHSA-4hwf-v4mp-hf6c <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-4hwf-v4mp-hf6c>`_
+  for more information.
+* **Validation:** File validation rules now check every non-empty file in an
+  optional multiple upload. Previously, an entry with ``UPLOAD_ERR_NO_FILE``
+  could cause ``max_size``, ``is_image``, ``mime_in``, ``ext_in``, ``max_dims``,
+  and ``min_dims`` to accept the upload without checking later files.
+  ``max_dims`` and ``min_dims`` also return ``false`` for upload errors other
+  than ``UPLOAD_ERR_NO_FILE`` before reading image dimensions.
+  See the `Security advisory GHSA-cwxp-v62r-xwx2 <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-cwxp-v62r-xwx2>`_
+  for more information.
+* **View Parser:** Fixed a stored XSS vulnerability where a substituted value containing
+  Parser syntax (e.g., ``{text|raw}`` or ``{!text!}``) was interpreted by a later
+  substitution pass, allowing user-supplied data to bypass auto-escaping of other
+  pseudo-variables. Substituted values are now treated strictly as data and are never
+  parsed again. The same protection applies to output from built-in Parser plugins,
+  including URLs and validation messages. See :ref:`upgrade-475-view-parser-values` for more information.
+  See the `Security advisory GHSA-vgrf-mv2j-gp8w <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-vgrf-mv2j-gp8w>`_
+  for more information.
+* **View Parser:** Added restricted conditionals as an opt-in mitigation for
+  *Code Injection through Parser Template Source*. Conditions in ``{if ...}`` and
+  ``{elseif ...}`` tags are evaluated as PHP, so anyone who can edit Parser template
+  source can execute PHP code. This remains the default behavior. Applications that
+  let less-trusted users edit Parser templates must enable the new
+  ``Config\View::$restrictParserConditionals`` setting or the ``restrictConditionals``
+  render option. Restricted conditionals only limit this execution path; they do not
+  make every template feature safe for less-trusted authors.
+  The restriction also applies to nested renders on the same Parser instance.
+  See :ref:`parser-restricting-conditionals` and the
+  `Security advisory GHSA-4q58-jw8x-8cm7 <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-4q58-jw8x-8cm7>`_
+  for more information.
+* **Views:** Fixed a code execution vulnerability caused by view data keys
+  overriding renderer-local variables. Data named ``template`` in ``Parser`` or
+  ``view`` in ``View::renderString()`` could replace the source evaluated as PHP.
+  Data named ``foundView`` in view cells could replace the selected file path
+  and cause unintended local file inclusion. These issues require applications
+  to pass less-trusted data under the affected keys.
+  See the `Security advisory GHSA-c29x-ffjj-8r7x <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-c29x-ffjj-8r7x>`_
+  for more information.
+
+### Fixed Bugs
+
+* fix: safely interpolate logger context values by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/10384
+* fix: resolve global state pollution causing random-order test failures in HTTP suite by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10372
+* fix: omit empty CSP headers by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/10412
+* fix: remove destructive setServerArray([]) in FiltersTest::setUp to prevent random-order test failures by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10425
+* fix: resolve TypeError in CLIRequest::parseCommand when argv is missing by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10415
+* fix: resolve race conditions in Redis TTL and prevent cache test state leakage by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10374
+* fix: handle null results in get_dir_file_info() by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10407
+* fix: skip unreadable `.env` in `Boot::loadDotEnv` for separate-process tests by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10417
+* fix: return 403 for Honeypot bot detection by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/10490
+* fix: pass prompt text to readline in `CLI::prompt()` so backspace does not erase it by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10507
+* fix(Cookie): validate raw cookie values by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10516
+* fix(CodeIgniter): prevent gatherOutput from being called twice when controller returns Response by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10369
+* fix: Memcached decrement() gives the wrong sign on a missing key by @mdalikadar in https://github.com/codeigniter4/CodeIgniter4/pull/10512
+* fix: correct file permissions and chmod target in File and UploadedFile move() by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10519
+* fix: strip the table prefix correctly when rebuilding a SQLite3 table by @karlgray in https://github.com/codeigniter4/CodeIgniter4/pull/10509
+* fix: write the prompt to STDOUT before readline() on Windows by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/10534
+* fix(Cookie): validate cookie path and domain attributes by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10527
+* fix(I18n): compute correct date in Time::today(), yesterday(), and tomorrow() across timezones by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10532
+* fix: return an empty string when readline() reaches end-of-file by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10542
+* fix: reject unsupported database drivers in `make:migration --session` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10546
+* fix(Test): reset `is_windows()` mock state in `CIUnitTestCase::tearDown()` by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10554
+* fix(Cache): set secure 0755 permissions mode when creating directory in `FileVarExportHandler` by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10555
+* fix: stop `FileLocatorCached` from restoring a deleted cache on shutdown by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10559
+* fix: preserve sub-second precision in `BaseModel` datetime timestamps by @wakqasahmed in https://github.com/codeigniter4/CodeIgniter4/pull/10561
+* fix(Debug): treat zero time as valid timer start by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10569
+* fix: reject non-digit characters in `valid_cc_number()` by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10580
+* fix: throw Postgre query errors with warnings disabled by @wakqasahmed in https://github.com/codeigniter4/CodeIgniter4/pull/10573
+* fix: prevent infinite loop in `word_wrap()` with a character limit below 2 by @mdalikadar in https://github.com/codeigniter4/CodeIgniter4/pull/10596
+* fix: resolve schema-qualified table names in `getFieldData()` and `protectIdentifiers()` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10604
+* fix: cast Postgre batch subquery values so `updateBatch()` and `deleteBatch()` accept mixed PHP types by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10601
+* fix: cast OCI8 batch subquery values so `updateBatch()` and `deleteBatch()` accept mixed PHP types by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10602
+* fix: avoid undefined `STDERR` and `STDIN` outside the CLI by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10605
+
+### Refactoring
+
+* refactor(HTTP): split setCURLOptions into category helper methods to reduce complexity by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10339
+* refactor: use `array-key` as the benevolent union of `int|string` in array shapes by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10396
+* refactor: Enable Rector Code Quality set by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/10429
+* refactor: fix uses of `empty()` calls by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10439
+* refactor: fix `method.alreadyNarrowedType` errors by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10440
+* refactor: cleanup the Images library by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10441
+* refactor: add generics to `Entity` and `DataCaster` casts by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10442
+* refactor: fix `ternary.shortNotAllowed` errors by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10445
+* refactor: fix `missingType.property` errors by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10447
+* refactor: fix `return.type` errors by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10448
+* refactor: add generics to `Forge`, `BaseBuilder` and `BasePreparedQuery` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10449
+* refactor: fix `nullCoalesce.property` errors by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10450
+* refactor: add precise return type to `CodeIgniter::getPerformanceStats()` by @soccerlover29 in https://github.com/codeigniter4/CodeIgniter4/pull/10458
+* refactor: fix `property.nonObject` errors by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10451
+* refactor: sidestep PhpStorm warning on `@method` docblock in `Model` by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10444
+* refactor: fix phpstan errors in `IncomingRequestTest` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10452
+* refactor: fix phpstan errors in `Helpers` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10459
+* refactor: fix phpstan errors in `Router` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10460
+* refactor: clear out phpstan errors in `Validation` source and tests by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10461
+* refactor: clear out phpstan errors in `HTTP` source and tests by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10462
+* refactor: fix phpstan errors in `BaseBuilder` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10466
+* refactor: add precise parameter types to Router test fixtures by @soccerlover29 in https://github.com/codeigniter4/CodeIgniter4/pull/10464
+* refactor: fix phpstan errors in `Forge` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10470
+* refactor: fix phpstan errors in `Result` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10473
+* refactor: fix phpstan errors in `Connection` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10475
+* refactor: fix phpstan errors in `PreparedQuery` and `Utils` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10476
+* refactor: fix phpstan errors in `Config`, `Database`, `Query`, `MigrationRunner`, and `SQLite3\Table` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10477
+* refactor: fix phpstan errors in `Debug` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10478
+* refactor: fix phpstan errors in `Test` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10479
+* refactor: widen `Response` body and `Formatter` data typing to `mixed` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10480
+* refactor: fix remaining errors in `Helpers`' tests by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10481
+* refactor: fix phpstan errors in `Config` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10482
+* refactor: fix phpstan errors in `Commands` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10483
+* refactor: fix phpstan errors in `View` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10484
+* refactor: fix phpstan errors in `Filters` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10485
+* refactor: fix phpstan errors in `Encryption` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10486
+* refactor: fix iterable types in `Email` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10487
+* refactor: fix iterable types in `Router` tests by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10488
+* refactor: fix remaining phpstan errors in `Database` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10492
+* refactor: fix phpstan errors in `I18n` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10493
+* refactor: fix phpstan errors in `DataConverter` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10494
+* refactor: fix phpstan errors in `AutoReview` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10495
+* refactor: fix missing parameter types by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10496
+* refactor: fix remaining missing iterable types by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10497
+* refactor: fix remaining not found methods by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10498
+* refactor: fix the remaining fixable `assign.propertyType` and `phpdoc.propertyType` errors by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10499
+* refactor: fix remaining `argument.type` and `method.childParameterType` errors by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10502
+* refactor: replace anonymous class with bound closure in `PropertiesTrait` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10504
+* refactor: bound phpstan's analysed PHP versions by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10505
+* refactor: Enable MustHaveReturnTypeFunctionRule StructArmed rule on system/Helpers by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/10521
+* refactor: fix minor type inaccuracies found via PHPStan bleeding edge by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10522
+* refactor: fix return type covariance of `FileCollection::getIterator()` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10558
+* refactor: tighten docblock return types in Result, CLIRequest, url_helper and IncomingRequest by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10588
+* refactor: pass the session TTL to `Redis::set()` as an options array by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10600
+
 ## [v4.7.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.7.4) (2026-07-07)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.7.3...v4.7.4)
 

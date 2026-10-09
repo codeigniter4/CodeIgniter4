@@ -57,17 +57,17 @@ Then you can use any of the three standard rendering methods that it provides:
 ``setData()``. You will also be able to specify delimiters directly,
 through the ``setDelimiters()`` method.
 
-.. important:: Using the ``Parser``, your view templates are processed only by the Parser
-    itself, and not like a conventional view PHP script. PHP code in such a script
-    is ignored by the parser, and only substitutions are performed.
-
-    This is purposeful: view files with no PHP.
+.. important:: The ``Parser`` escapes literal PHP tags in view templates instead of
+    executing them. However, expressions in ``{if ...}`` and ``{elseif ...}``
+    tags are evaluated as PHP. Treat template source as trusted code, or
+    :ref:`restrict conditionals <parser-restricting-conditionals>` when less-trusted
+    users can edit templates.
 
 What It Does
 ============
 
-The ``Parser`` class processes "PHP/HTML scripts" stored in the application's view path.
-These scripts can not contain any PHP.
+The ``Parser`` class processes templates stored in the application's view path.
+Literal PHP tags are not supported.
 
 Each view parameter (which we refer to as a pseudo-variable) triggers a substitution,
 based on the type of value you provided for it. Pseudo-variables are not
@@ -111,6 +111,9 @@ Several options can be passed to the ``render()`` or ``renderString()`` methods.
     default is **true**
 -   ``cascadeData`` - true if pseudo-variable settings should be passed on to nested
     substitutions; default is **true**
+-   ``restrictConditionals`` - true to allow only simple expressions in conditionals;
+    see :ref:`parser-restricting-conditionals`. Defaults to the
+    ``Config\View::$restrictParserConditionals`` value (**false**)
 
 .. literalinclude:: view_parser/004.php
 
@@ -126,6 +129,11 @@ replacement of pseudo-variables where the corresponding data parameter
 has either a scalar or string value, as in this example:
 
 .. literalinclude:: view_parser/005.php
+
+Substitution values are treated as data, not as template code. Any Parser
+syntax within a value is rendered literally and is not processed by later
+substitutions. This also applies to values used inside variable pairs -
+the pairs themselves must be defined in the template.
 
 The ``Parser`` takes substitution a lot further with "variable pairs",
 used for nested substitutions or looping, and with some advanced
@@ -289,8 +297,68 @@ of the comparison operators you would normally, like ``==``, ``===``, ``!==``, `
         <h1>Welcome, User</h1>
     {endif}
 
-.. warning:: In the background, conditionals are parsed using an ``eval()``, so you must ensure that you take
-    care with the user data that is used within conditionals, or you could open your application up to security risks.
+Values passed through ``setData()`` can control a conditional in a trusted template:
+
+.. literalinclude:: view_parser/028.php
+
+The value of ``$role`` is checked by the condition; it is not parsed as PHP source.
+
+.. warning:: Conditionals are evaluated as PHP expressions using ``eval()``. Anyone
+    who can edit template source can execute PHP code through an ``{if ...}`` or
+    ``{elseif ...}`` tag. Escaping literal PHP tags does not make an untrusted
+    template safe to render. If less-trusted users can edit templates, for example
+    email templates composed in your application, enable
+    :ref:`restricted conditionals <parser-restricting-conditionals>`.
+
+.. _parser-restricting-conditionals:
+
+Restricting Conditionals
+------------------------
+
+.. versionadded:: 4.7.5
+
+Conditionals are not restricted by default. Enable restriction whenever
+less-trusted users can edit template source. When restricted, a condition may
+only contain:
+
+- variables, except ``$this``
+- string and number literals, and ``true``, ``false`` and ``null``
+- the arithmetic operators ``+``, ``-``, ``*``, ``/``, ``%`` and ``**``, including unary ``+`` and ``-``
+- the comparison operators ``==``, ``!=``, ``<>``, ``===``, ``!==``, ``<``, ``>``, ``<=`` and ``>=``
+- the logical operators ``&&``, ``||``, ``and``, ``or`` and ``!``
+- parentheses for grouping
+
+For example, ``{if $vip}``, ``{if $role == 'admin'}`` and
+``{if $total > 100 && ($country == 'GB' || !$guest)}`` are allowed. Negative numbers
+and simple arithmetic, such as ``{if $balance < -10}`` or ``{if $total + 5 >= 100}``,
+are also allowed. Anything else,
+such as function calls, constants, property or array access, assignment,
+concatenation and string interpolation, throws a ``ViewException`` before the
+template is evaluated.
+
+To restrict conditionals for a single call, pass the ``restrictConditionals`` option:
+
+.. literalinclude:: view_parser/030.php
+
+To restrict conditionals by default, set ``$restrictParserConditionals`` to ``true``
+in **app/Config/View.php**:
+
+.. literalinclude:: view_parser/031.php
+
+You can then allow full PHP conditionals for a trusted template:
+
+.. literalinclude:: view_parser/032.php
+
+When a plugin or filter renders another template using the same Parser instance,
+the nested render inherits any active restriction. It cannot disable the outer
+render's restriction, even with ``restrictConditionals`` set to ``false``. The
+restriction is restored to its previous state when the render finishes or throws
+an exception, so it does not affect later independent renders.
+
+.. note:: Restricting conditionals only limits ``{if ...}`` and ``{elseif ...}``
+    tags. Pseudo-variables in less-trusted templates can still reference any view
+    data, and ``{! !}`` tags output data without escaping. Only pass data the template
+    author is allowed to see.
 
 Changing the Conditional Delimiters
 -----------------------------------
@@ -320,16 +388,25 @@ In this case, you will write code in your template::
 Escaping Data
 =============
 
-By default, all variable substitution is escaped to help prevent XSS attacks on your pages. CodeIgniter's ``esc()`` method
-supports several different contexts, like general ``html``, when it's in an HTML ``attr``, in ``css``, etc. If nothing
-else is specified, the data will be assumed to be in an HTML context. You can specify the context used by using the ``esc()``
-filter::
+Variable substitutions without filters are escaped by default to help prevent XSS attacks on your pages.
+CodeIgniter's ``esc()`` method supports several contexts, such as ``html``, ``attr``, and ``css``.
+If no context is specified, the Parser uses ``html``. You can specify the context with the ``esc`` filter::
 
     { user_styles | esc(css) }
     <a href="{ user_link | esc(attr) }">{ title }</a>
 
-There will be times when you absolutely need something to used and NOT escaped. You can do this by adding exclamation
-marks to the opening and closing braces::
+When a substitution uses one or more filters, the Parser does not add an ``esc`` filter automatically.
+This also applies when a context is specified with ``setData()`` or ``setVar()``.
+Add ``esc`` explicitly when filtering untrusted data. Filters run from left to right, so its position matters::
+
+    { title|capitalize|esc }
+    { body|esc|nl2br }
+
+In the second example, ``esc`` escapes the input before ``nl2br`` adds HTML ``<br>`` tags.
+Escaping after ``nl2br`` would display those tags as text.
+Unknown filter names are ignored, but still prevent automatic escaping; check filter names carefully.
+
+To disable automatic escaping for a substitution without filters, add exclamation marks to its delimiters::
 
     {! unescaped_var !}
 
@@ -434,6 +511,9 @@ callable:
 
 .. literalinclude:: view_parser/012.php
 
+Closures are also supported. When configuring a closure in **app/Config/View.php**,
+assign it in the constructor.
+
 Parser Plugins
 ==============
 
@@ -445,6 +525,11 @@ them very simple to implement. Within templates, plugins are specified by ``{+ +
 This example shows a plugin named **foo**. It can manipulate any of the content between its opening and closing tags.
 In this example, it could work with the text " inner content ". Plugins are processed before any pseudo-variable
 replacements happen.
+
+The output of built-in plugins is treated as rendered data. Parser syntax within
+that output is not processed by later plugins or variable substitutions.
+Custom plugins can still return template code for further processing and must not
+introduce untrusted data as Parser syntax.
 
 While plugins will often consist of tag pairs, like shown above, they can also be a single tag, with no closing tag::
 
@@ -599,7 +684,7 @@ Class Reference
 
     .. php:method:: renderString($template[, $options[, $saveData]])
 
-        :param  string  $template: View source provided as a string
+        :param  string  $template: Trusted view source provided as a string
         :param  array   $options: Array of options, as key/value pairs
         :param  boolean $saveData: If true, will save data for use with any other calls, if false, will clean the data after rendering the view.
         :returns: The rendered text for the chosen view
@@ -608,6 +693,13 @@ Class Reference
         Builds the output based upon a provided template source and any data that has already been set:
 
         .. literalinclude:: view_parser/023.php
+
+        Never build the template source from user-provided content. Pass it as
+        data through ``setData()`` instead, or
+        :ref:`restrict conditionals <parser-restricting-conditionals>` if users are
+        meant to edit the template:
+
+        .. literalinclude:: view_parser/029.php
 
         Options supported, and behavior, as above.
 

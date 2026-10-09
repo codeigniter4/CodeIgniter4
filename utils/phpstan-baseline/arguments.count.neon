@@ -1,11 +1,21 @@
-# total 4 errors
+# total 11 errors
 
 parameters:
     ignoreErrors:
         -
             message: '#^Function is_cli invoked with 1 parameter, 0 required\.$#'
             count: 2
+            path: ../../tests/system/CLI/CLITest.php
+
+        -
+            message: '#^Function is_cli invoked with 1 parameter, 0 required\.$#'
+            count: 2
             path: ../../tests/system/Debug/ToolbarTest.php
+
+        -
+            message: '#^Class CodeIgniter\\HTTP\\Response constructor invoked with 1 parameter, 0 required\.$#'
+            count: 5
+            path: ../../tests/system/HTTP/CURLRequestExceptionTest.php
 
         -
             message: '#^Class CodeIgniter\\HTTP\\Response constructor invoked with 1 parameter, 0 required\.$#'
