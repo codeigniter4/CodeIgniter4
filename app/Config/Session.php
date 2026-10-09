@@ -62,6 +62,40 @@ class Session extends BaseConfig
 
     /**
      * --------------------------------------------------------------------------
+     * Redis Sentinel Settings
+     * --------------------------------------------------------------------------
+     *
+     * Used by the RedisHandler session driver to connect through Redis
+     * Sentinel instead of a single fixed host. When `nodes` is non-empty,
+     * the handler queries the Sentinel nodes for the current master of the
+     * named `service` and connects to it, and `$savePath` is ignored.
+     *
+     * Requires the `redis` PHP extension (phpredis >= 5.3 recommended; older
+     * versions work via the SENTINEL command).
+     *
+     * @var array{
+     *     service?: string,
+     *     nodes?: list<array{host: string, port?: int}>,
+     *     timeout?: float,
+     *     persistent?: bool,
+     *     password?: string|null,
+     *     database?: int
+     * }
+     */
+    public array $sentinel = [
+        // 'service'    => 'mymaster',
+        // 'nodes'      => [
+        //     ['host' => '127.0.0.1', 'port' => 26379],
+        //     ['host' => 'sentinel2', 'port' => 26379],
+        // ],
+        // 'timeout'    => 0.5,
+        // 'persistent' => false,
+        // 'password'   => null,
+        // 'database'   => 0,
+    ];
+
+    /**
+     * --------------------------------------------------------------------------
      * Session Match IP
      * --------------------------------------------------------------------------
      *
