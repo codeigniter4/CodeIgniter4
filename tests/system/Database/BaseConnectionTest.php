@@ -372,6 +372,11 @@ final class BaseConnectionTest extends CIUnitTestCase
             'quoted table alias'        => [false, true, false, '"jobs" "j"', '"jobs" "j"'],
             'quoted table alias prefix' => [true, true, false, '"jobs" "j"', '"test_jobs" "j"'],
 
+            'schema.table'                   => [false, true, false, 'tenant.jobs', '"tenant"."test_jobs"'],
+            'schema.table prefix'            => [true, true, false, 'tenant.jobs', '"tenant"."test_jobs"'],
+            'quoted schema.table prefix'     => [true, true, false, '"tenant"."test_jobs"', '"tenant"."test_jobs"'],
+            'quoted schema.table no-protect' => [true, false, false, '"tenant"."test_jobs"', 'tenant.test_jobs'],
+
             'table.*'             => [false, true, true, 'jobs.*', '"test_jobs".*'], // Prefixed because it has segments
             'table.* prefix'      => [true, true, true, 'jobs.*', '"test_jobs".*'],
             'table.column'        => [false, true, true, 'users.id', '"test_users"."id"'], // Prefixed because it has segments
@@ -432,6 +437,27 @@ final class BaseConnectionTest extends CIUnitTestCase
                 '(SELECT MAX(advance_amount) FROM "orders" WHERE "id" > 2',
             ],
         ];
+    }
+
+    public function testProtectIdentifiersWithBracketEscapeChar(): void
+    {
+        $db             = new MockConnection($this->options);
+        $db->escapeChar = ['[', ']'];
+
+        $this->assertSame('[test_jobs]', $db->protectIdentifiers('jobs', true, true, false));
+        $this->assertSame('[test_jobs]', $db->protectIdentifiers('[test_jobs]', true, true, false));
+        $this->assertSame('test_jobs', $db->protectIdentifiers('[test_jobs]', true, false, false));
+        $this->assertSame('[test_jobs].[id]', $db->protectIdentifiers('jobs.id'));
+        $this->assertSame('[test_jobs].[id]', $db->protectIdentifiers('[test_jobs].[id]'));
+        $this->assertSame('test_jobs.id', $db->protectIdentifiers('[test_jobs].[id]', true, false));
+    }
+
+    public function testProtectIdentifiersStripsQuotesFromDottedItemWithoutPrefix(): void
+    {
+        $db = new MockConnection([...$this->options, 'DBPrefix' => '']);
+
+        $this->assertSame('public.jobs', $db->protectIdentifiers('"public"."jobs"', true, false, false));
+        $this->assertSame('"public"."jobs"', $db->protectIdentifiers('"public"."jobs"', true, true, false));
     }
 
     /**
