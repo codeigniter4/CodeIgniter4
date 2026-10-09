@@ -26,6 +26,7 @@ use CodeIgniter\CodeIgniter;
 use CodeIgniter\Commands\Help;
 use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\App;
@@ -233,6 +234,8 @@ final class AbstractCommandTest extends CIUnitTestCase
     public function testRenderThrowable(): void
     {
         $command = new AppAboutCommand(new Commands());
+
+        CITestStreamFilter::removeOutputFilter();
 
         $this->assertSame(EXIT_ERROR, $command->bomb());
         $this->assertStringContainsString('[CodeIgniter\CLI\Exceptions\CLIException]', $this->getStreamFilterBuffer());
