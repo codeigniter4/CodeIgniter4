@@ -481,7 +481,7 @@ class CLI
         // Check color support for STDERR
         $stdout = static::$isColored;
 
-        static::$isColored = static::hasColorSupport(STDERR);
+        static::$isColored = is_cli() && static::hasColorSupport(STDERR);
 
         if ($foreground !== '' || (string) $background !== '') {
             $text = static::color($text, $foreground, $background);
@@ -493,7 +493,7 @@ class CLI
             static::$lastWrite = 'write';
         }
 
-        static::fwrite(STDERR, $text . PHP_EOL);
+        static::fwrite(is_cli() ? STDERR : STDOUT, $text . PHP_EOL);
 
         // return STDOUT color support
         static::$isColored = $stdout;
@@ -572,7 +572,7 @@ class CLI
     {
         // Unix systems, and Windows with VT100 Terminal support (i.e. Win10)
         // can handle CSI sequences. For lower than Win10 we just shove in 40 new lines.
-        is_windows() && ! static::streamSupports('sapi_windows_vt100_support', STDOUT)
+        is_windows() && is_cli() && ! static::streamSupports('sapi_windows_vt100_support', STDOUT)
             ? static::newLine(40)
             : static::fwrite(STDOUT, "\033[H\033[2J");
     }

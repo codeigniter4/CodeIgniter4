@@ -394,7 +394,7 @@ trait SignalTrait
         if ($this->isPosixAvailable()) {
             $state['session_id']               = posix_getsid($pid);
             $state['process_group']            = posix_getpgid($pid);
-            $state['has_controlling_terminal'] = posix_isatty(STDIN);
+            $state['has_controlling_terminal'] = is_cli() && posix_isatty(STDIN);
         }
 
         return $state;
