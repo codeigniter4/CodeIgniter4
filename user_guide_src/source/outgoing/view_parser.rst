@@ -127,6 +127,11 @@ has either a scalar or string value, as in this example:
 
 .. literalinclude:: view_parser/005.php
 
+Substitution values are treated as data, not as template code. Any Parser
+syntax within a value is rendered literally and is not processed by later
+substitutions. This also applies to values used inside variable pairs -
+the pairs themselves must be defined in the template.
+
 The ``Parser`` takes substitution a lot further with "variable pairs",
 used for nested substitutions or looping, and with some advanced
 constructs for conditional substitution.
@@ -443,6 +448,9 @@ callable:
 
 .. literalinclude:: view_parser/012.php
 
+Closures are also supported. When configuring a closure in **app/Config/View.php**,
+assign it in the constructor.
+
 Parser Plugins
 ==============
 
@@ -454,6 +462,11 @@ them very simple to implement. Within templates, plugins are specified by ``{+ +
 This example shows a plugin named **foo**. It can manipulate any of the content between its opening and closing tags.
 In this example, it could work with the text " inner content ". Plugins are processed before any pseudo-variable
 replacements happen.
+
+The output of built-in plugins is treated as rendered data. Parser syntax within
+that output is not processed by later plugins or variable substitutions.
+Custom plugins can still return template code for further processing and must not
+introduce untrusted data as Parser syntax.
 
 While plugins will often consist of tag pairs, like shown above, they can also be a single tag, with no closing tag::
 

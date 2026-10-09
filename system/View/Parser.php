@@ -73,6 +73,16 @@ class Parser extends View
     protected $dataContexts = [];
 
     /**
+     * Substitution values are temporarily replaced with opaque tokens so they
+     * cannot be interpreted as Parser syntax by a later substitution pass.
+     *
+     * @var array<string, string>
+     */
+    private array $replacementTokens = [];
+
+    private ?string $replacementTokenPrefix = null;
+
+    /**
      * Constructor
      *
      * @param FileLocatorInterface|null $loader
@@ -231,6 +241,29 @@ class Parser extends View
             return '';
         }
 
+        $replacementState = [
+            $this->replacementTokens,
+            $this->replacementTokenPrefix,
+        ];
+
+        $this->replacementTokens      = [];
+        $this->replacementTokenPrefix = bin2hex(random_bytes(16));
+
+        try {
+            return $this->parseTemplate($template, $data);
+        } finally {
+            [
+                $this->replacementTokens,
+                $this->replacementTokenPrefix,
+            ] = $replacementState;
+        }
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    private function parseTemplate(string $template, array $data): string
+    {
         // Remove any possible PHP tags since we don't support it
         // and parseConditionals needs it clean anyway...
         $template = str_replace(['<?', '?>'], ['&lt;?', '?&gt;'], $template);
@@ -281,7 +314,9 @@ class Parser extends View
             }
         }
 
-        return $this->insertNoparse($template);
+        $template = $this->insertNoparse($template);
+
+        return strtr($template, $this->replacementTokens);
     }
 
     /**
@@ -355,7 +390,9 @@ class Parser extends View
                         $pair = $this->parsePair($key, $val, $match[1]);
 
                         if ($pair !== []) {
-                            $pairs[array_keys($pair)[0]] = true;
+                            foreach (array_keys($pair) as $pattern) {
+                                $pairs[$pattern] = true;
+                            }
 
                             $temp = array_merge($temp, $pair);
                         }
@@ -541,8 +578,12 @@ class Parser extends View
     {
         $content = (string) $content;
 
+        // Callers enable escaping for scalar data, but not assembled pairs.
+        // Protect scalar data even when {! !} disables escaping below.
+        $protectReplacement = $escape;
+
         // Replace the content in the template
-        return preg_replace_callback($pattern, function ($matches) use ($content, $escape): string {
+        return preg_replace_callback($pattern, function ($matches) use ($content, $escape, $protectReplacement): string {
             // Check for {! !} syntax to not escape this one.
             if (
                 str_starts_with($matches[0], $this->leftDelimiter . '!')
@@ -551,8 +592,29 @@ class Parser extends View
                 $escape = false;
             }
 
-            return $this->prepareReplacement($matches, $content, $escape);
+            $replacement = $this->prepareReplacement($matches, $content, $escape);
+
+            if (! $protectReplacement || $this->replacementTokenPrefix === null) {
+                return $replacement;
+            }
+
+            return $this->protectReplacement($replacement);
         }, (string) $template);
+    }
+
+    /**
+     * Keeps rendered data opaque until all template processing is complete.
+     */
+    private function protectReplacement(string $replacement): string
+    {
+        if ($this->replacementTokenPrefix === null) {
+            return $replacement;
+        }
+
+        $token                           = "\x1A{$this->replacementTokenPrefix}:" . count($this->replacementTokens) . "\x1A";
+        $this->replacementTokens[$token] = $replacement;
+
+        return $token;
     }
 
     /**
@@ -699,9 +761,19 @@ class Parser extends View
                     }
                 }
 
-                $template = $isPair
-                    ? str_replace($match[0], $callable($match[2], $params), $template)
-                    : str_replace($match[0], $callable($params), $template);
+                $replacement = $isPair ? $callable($match[2], $params) : $callable($params);
+
+                // Built-in plugins return rendered data. Custom plugins may
+                // intentionally return template code for subsequent processing.
+                // Identify the implementation, not the alias applications can override.
+                if (
+                    is_string($callable)
+                    && str_starts_with(strtolower(ltrim($callable, '\\')), strtolower(Plugins::class) . '::')
+                ) {
+                    $replacement = $this->protectReplacement((string) $replacement);
+                }
+
+                $template = str_replace($match[0], $replacement, $template);
             }
         }
 

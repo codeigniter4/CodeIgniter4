@@ -20,6 +20,50 @@ Mandatory File Changes
 Breaking Changes
 ****************
 
+.. _upgrade-475-view-parser-values:
+
+View Parser No Longer Parses Substituted Values
+===============================================
+
+For security reasons, the ``Parser`` now treats every substituted value strictly as
+data. A value that contains Parser syntax, such as ``{name}``, ``{!name!}`` or
+``{name|upper}``, is rendered literally and is never parsed again by a later
+substitution pass. See the
+`Security advisory GHSA-vgrf-mv2j-gp8w <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-vgrf-mv2j-gp8w>`_
+for more information.
+
+Previously, such a value could be parsed again, depending on the order of the keys in
+the data array. This behavior was never documented, but code that relied on it will
+now output the placeholders literally. For example, the following used to render
+``<p>Hello, Bob!</p>`` and now renders ``<p>Hello, {name}!</p>``:
+
+.. code-block:: php
+
+    $parser->setData([
+        'greeting' => 'Hello, {name}!',
+        'name'     => 'Bob',
+    ])->renderString('<p>{greeting}</p>');
+
+If you need to insert a rendered template fragment into another template, render the
+fragment first and pass the result as a value, using the ``{! !}`` syntax so it is not
+escaped again:
+
+.. code-block:: php
+
+    $greeting = $parser->setData(['name' => 'Bob'])->renderString('Hello, {name}!');
+
+    $parser->setData(['greeting' => $greeting])->renderString('<p>{! greeting !}</p>');
+
+Built-in Parser Plugin Output
+=============================
+
+The output of built-in Parser plugins is now treated as rendered data and is not
+processed again as Parser syntax. This prevents values such as URLs and validation
+messages from introducing variable or plugin instructions. Applications that relied
+on placeholders within built-in plugin output must render those fragments explicitly.
+Custom plugins that transform template code retain their existing behavior and are
+responsible for keeping untrusted data separate from Parser syntax.
+
 *********************
 Breaking Enhancements
 *********************

@@ -17,9 +17,11 @@ use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\Entity\Entity;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
+use Config\Services;
 use Config\View as ViewConfig;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use RuntimeException;
 use stdClass;
 
 /**
@@ -612,6 +614,207 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame('<script>Heroes</script>', $this->parser->renderString($template));
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
+    #[DataProvider('provideParserDoesNotInterpretSyntaxInSubstitutionValues')]
+    public function testParserDoesNotInterpretSyntaxInSubstitutionValues(
+        string $template,
+        array $data,
+        string $expected,
+    ): void {
+        $this->parser->setData($data, 'html');
+
+        $this->assertSame($expected, $this->parser->renderString($template));
+    }
+
+    /**
+     * @return iterable<string, array{string, array<string, mixed>, string}>
+     */
+    public static function provideParserDoesNotInterpretSyntaxInSubstitutionValues(): iterable
+    {
+        $escapedScript = '&lt;script&gt;alert(document.domain)&lt;/script&gt;';
+
+        yield 'top-level no-escape delimiters' => [
+            '{first}|{second}',
+            [
+                'first'  => '{!second!}',
+                'second' => '<script>alert(document.domain)</script>',
+            ],
+            '{!second!}|' . $escapedScript,
+        ];
+
+        yield 'top-level filter' => [
+            '{first}|{second}',
+            [
+                'first'  => '{second|upper}',
+                'second' => '<script>alert(document.domain)</script>',
+            ],
+            '{second|upper}|' . $escapedScript,
+        ];
+
+        yield 'loop no-escape delimiters' => [
+            '{comments}<b>{author}</b>: {text}{/comments}',
+            [
+                'comments' => [[
+                    'author' => '{!text!}',
+                    'text'   => '<script>alert(document.domain)</script>',
+                ]],
+            ],
+            '<b>{!text!}</b>: ' . $escapedScript,
+        ];
+
+        yield 'loop unknown filter' => [
+            '{comments}<b>{author}</b>: {text}{/comments}',
+            [
+                'comments' => [[
+                    'author' => '{text|raw}',
+                    'text'   => '<script>alert(document.domain)</script>',
+                ]],
+            ],
+            '<b>{text|raw}</b>: ' . $escapedScript,
+        ];
+
+        yield 'loop to top-level no-escape delimiters' => [
+            '{comments}{author}{/comments}|{text}',
+            [
+                'comments' => [['author' => '{!text!}']],
+                'text'     => '<script>alert(document.domain)</script>',
+            ],
+            '{!text!}|' . $escapedScript,
+        ];
+
+        yield 'nested loop to outer row' => [
+            '{comments}{replies}[{reply}]{/replies} by {author}{/comments}',
+            [
+                'comments' => [[
+                    'replies' => [['reply' => '{author|raw}']],
+                    'author'  => '<script>alert(document.domain)</script>',
+                ]],
+            ],
+            '[{author|raw}] by ' . $escapedScript,
+        ];
+
+        yield 'repeated nested pairs with different templates' => [
+            '{comments}{replies}[{reply}] by {author}{/replies} again {replies}<i>{reply}</i> by {author}{/replies}{/comments}',
+            [
+                'comments' => [[
+                    'replies' => [['reply' => '{author|raw}'], ['reply' => 'Second']],
+                    'author'  => '<script>alert(document.domain)</script>',
+                ]],
+            ],
+            '[{author|raw}] by ' . $escapedScript . '[Second] by ' . $escapedScript
+                . ' again <i>{author|raw}</i> by ' . $escapedScript . '<i>Second</i> by ' . $escapedScript,
+        ];
+
+        yield 'value resembling an internal token' => [
+            '{first}|{second}',
+            [
+                'first'  => "\x1A0123456789abcdef0123456789abcdef:0\x1A",
+                'second' => '<script>alert(document.domain)</script>',
+            ],
+            "\x1A0123456789abcdef0123456789abcdef:0\x1A|" . $escapedScript,
+        ];
+
+        yield 'unescaped substitution' => [
+            '{!first!}|{second}',
+            ['first' => '{!second!}', 'second' => '<script>alert(document.domain)</script>'],
+            '{!second!}|' . $escapedScript,
+        ];
+
+        yield 'syntax assembled across a substitution boundary' => [
+            '{first}second!}|{second}',
+            ['first' => '{!', 'second' => '<script>alert(document.domain)</script>'],
+            '{!second!}|' . $escapedScript,
+        ];
+
+        yield 'repeated substitutions with different escaping' => [
+            '{first}|{!first!}|{second}',
+            ['first' => '<b>{!second!}</b>', 'second' => '<script>alert(document.domain)</script>'],
+            '&lt;b&gt;{!second!}&lt;/b&gt;|<b>{!second!}</b>|' . $escapedScript,
+        ];
+
+        yield 'noparse marker in data' => [
+            '{first}|{noparse}<b>literal</b>{/noparse}',
+            ['first' => 'noparse_' . md5('<b>literal</b>')],
+            'noparse_' . md5('<b>literal</b>') . '|<b>literal</b>',
+        ];
+    }
+
+    public function testParserDoesNotInterpretSyntaxInFilteredValues(): void
+    {
+        $this->config->filters['syntax'] = static fn (mixed $value): string => '{!' . $value . '!}';
+        $this->parser->setData(['first' => 'second', 'second' => '<b>unsafe</b>']);
+
+        $this->assertSame(
+            '{!second!}|&lt;b&gt;unsafe&lt;/b&gt;',
+            $this->parser->renderString('{first|syntax}|{second}'),
+        );
+    }
+
+    public function testParserDoesNotInterpretSyntaxWithCustomDelimiters(): void
+    {
+        $this->parser->setDelimiters('{{', '}}');
+        $this->parser->setData(['first' => '{{!second!}}', 'second' => '<b>unsafe</b>']);
+
+        $this->assertSame(
+            '{{!second!}}|&lt;b&gt;unsafe&lt;/b&gt;',
+            $this->parser->renderString('{{first}}|{{second}}'),
+        );
+    }
+
+    public function testParserDoesNotInterpretSyntaxInRawContext(): void
+    {
+        $this->parser->setData(['first' => '<b>{!second!}</b>'], 'raw');
+        $this->parser->setData(['second' => '<b>unsafe</b>'], 'html');
+
+        $this->assertSame(
+            '<b>{!second!}</b>|&lt;b&gt;unsafe&lt;/b&gt;',
+            $this->parser->renderString('{first}|{second}'),
+        );
+    }
+
+    public function testParserRestoresReplacementStateAfterNestedRender(): void
+    {
+        $this->config->filters['nested'] = fn (mixed $value): string => $this->parser->renderString((string) $value, saveData: false);
+        $this->parser->setData([
+            'first'  => 'before',
+            'second' => '{inner}',
+            'inner'  => '{!last!}',
+            'last'   => '<b>unsafe</b>',
+        ]);
+
+        $this->assertSame(
+            'before|{!last!}|&lt;b&gt;unsafe&lt;/b&gt;',
+            $this->parser->renderString('{first}|{second|nested}|{last}', saveData: false),
+        );
+        $this->assertSame([], $this->getPrivateProperty($this->parser, 'replacementTokens'));
+        $this->assertNull($this->getPrivateProperty($this->parser, 'replacementTokenPrefix'));
+    }
+
+    public function testParserRestoresReplacementStateAfterFilterException(): void
+    {
+        $exception                     = new RuntimeException('Filter failed.');
+        $this->config->filters['fail'] = static fn (mixed $value): string => throw $exception;
+        $this->parser->setData(['first' => 'before', 'second' => 'failure']);
+
+        try {
+            $this->parser->renderString('{first}|{second|fail}');
+            $this->fail('The filter exception was not propagated.');
+        } catch (RuntimeException $caught) {
+            $this->assertSame($exception, $caught);
+        }
+
+        $this->assertSame([], $this->getPrivateProperty($this->parser, 'replacementTokens'));
+        $this->assertNull($this->getPrivateProperty($this->parser, 'replacementTokenPrefix'));
+
+        $this->parser->setData(['first' => '{!second!}', 'second' => '<b>unsafe</b>']);
+        $this->assertSame(
+            '{!second!}|&lt;b&gt;unsafe&lt;/b&gt;',
+            $this->parser->renderString('{first}|{second}'),
+        );
+    }
+
     public function testParserNoEscapeAndDelimiterChange(): void
     {
         $this->parser->setDelimiters('{{', '}}');
@@ -777,6 +980,91 @@ final class ParserTest extends CIUnitTestCase
         $setParsers = $this->getPrivateProperty($this->parser, 'plugins');
 
         $this->assertArrayNotHasKey('first', $setParsers);
+    }
+
+    #[DataProvider('providePreviousURLDoesNotInterpretSyntaxFromReferer')]
+    public function testPreviousURLDoesNotInterpretSyntaxFromReferer(string $syntax): void
+    {
+        $server     = service('superglobals')->getServerArray();
+        $hadSession = isset($_SESSION);
+        $session    = $_SESSION ?? [];
+
+        try {
+            unset($_SESSION);
+            service('superglobals')->setServer('HTTP_REFERER', 'https://example.com/page?x=' . $syntax);
+            Services::resetSingle('request');
+
+            $this->parser->addPlugin('probe', static fn (): string => '<script>unexpected</script>');
+            $this->parser->setData(['bio' => '<script>alert(document.domain)</script>']);
+
+            $this->assertSame(
+                '<a href="https://example.com/page?x=' . $syntax . '">back</a>|&lt;script&gt;alert(document.domain)&lt;/script&gt;',
+                $this->parser->renderString('<a href="{+ previous_url +}">back</a>|{bio}'),
+            );
+        } finally {
+            service('superglobals')->setServerArray($server);
+            if ($hadSession) {
+                $_SESSION = $session;
+            } else {
+                unset($_SESSION);
+            }
+
+            Services::resetSingle('request');
+        }
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function providePreviousURLDoesNotInterpretSyntaxFromReferer(): iterable
+    {
+        yield 'variable' => ['{!bio!}'];
+
+        yield 'later plugin' => ['{+probe+}'];
+    }
+
+    public function testValidationErrorsDoesNotInterpretSyntaxInMessage(): void
+    {
+        service('validation')->setError('email', 'Bad value: {!bio!}');
+        $this->parser->setData(['bio' => '<script>alert(document.domain)</script>']);
+
+        $output = $this->parser->renderString('{+ validation_errors field=email +}|{bio}');
+
+        $this->assertStringContainsString('<span class="help-block">Bad value: {!bio!}</span>', $output);
+        $this->assertStringContainsString('|&lt;script&gt;alert(document.domain)&lt;/script&gt;', $output);
+        $this->assertStringNotContainsString('<script>', $output);
+    }
+
+    public function testBuiltInPluginUnderCustomAliasDoesNotInterpretSyntax(): void
+    {
+        $this->config->plugins['errors'] = '\\CodeIgniter\\View\\Plugins::validationErrors';
+        $this->parser                    = new Parser($this->config, $this->viewsDir, $this->loader);
+        service('validation')->setError('email', 'Bad value: {!bio!}');
+        $this->parser->setData(['bio' => '<script>unexpected</script>']);
+
+        $output = $this->parser->renderString('{+ errors field=email +}');
+
+        $this->assertStringContainsString('Bad value: {!bio!}', $output);
+        $this->assertStringNotContainsString('<script>', $output);
+    }
+
+    public function testOverriddenBuiltInPluginCanStillReturnTemplateCode(): void
+    {
+        $this->parser->addPlugin('previous_url', static fn (): string => '{name}');
+        $this->parser->setData(['name' => 'Alice']);
+
+        $this->assertSame('Alice', $this->parser->renderString('{+ previous_url +}'));
+    }
+
+    public function testPairedPluginCanStillTransformTemplateCode(): void
+    {
+        $this->parser->addPlugin('wrap', static fn (string $body): string => '<section>' . $body . '</section>', true);
+        $this->parser->setData(['name' => '<b>Alice</b>']);
+
+        $this->assertSame(
+            '<section>&lt;b&gt;Alice&lt;/b&gt;</section>',
+            $this->parser->renderString('{+ wrap +}{name}{+ /wrap +}'),
+        );
     }
 
     public function testParserPluginNoMatches(): void

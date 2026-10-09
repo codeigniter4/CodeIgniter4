@@ -30,7 +30,7 @@ class View extends BaseView
      *  { title|esc(js) }
      *  { created_on|date(Y-m-d)|esc(attr) }
      *
-     * @var array<string, (callable(mixed): mixed)&string>
+     * @var array<string, callable(mixed): mixed>
      */
     public $filters = [];
 

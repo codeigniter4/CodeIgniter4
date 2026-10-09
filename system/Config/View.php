@@ -37,7 +37,7 @@ class View extends BaseConfig
      *
      * @psalm-suppress UndefinedDocblockClass
      *
-     * @var array<string, (callable(mixed): mixed)&string>
+     * @var array<string, callable(mixed): mixed>
      */
     public $filters = [];
 

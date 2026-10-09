@@ -11,6 +11,19 @@ Release Date: Unreleased
     :depth: 3
 
 ********
+SECURITY
+********
+
+- **View Parser:** Fixed a stored XSS vulnerability where a substituted value containing
+  Parser syntax (e.g., ``{text|raw}`` or ``{!text!}``) was interpreted by a later
+  substitution pass, allowing user-supplied data to bypass auto-escaping of other
+  pseudo-variables. Substituted values are now treated strictly as data and are never
+  parsed again. The same protection applies to output from built-in Parser plugins,
+  including URLs and validation messages. See :ref:`upgrade-475-view-parser-values` for more information.
+  See the `Security advisory GHSA-vgrf-mv2j-gp8w <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-vgrf-mv2j-gp8w>`_
+  for more information.
+
+********
 BREAKING
 ********
 
