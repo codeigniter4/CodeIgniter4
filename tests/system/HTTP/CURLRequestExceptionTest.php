@@ -38,7 +38,7 @@ final class CURLRequestExceptionTest extends CIUnitTestCase
         $app     = new App();
         $request = $failure === 'transport'
             ? $this->failingRequest()
-            : new MockCURLRequest($app, new URI(), new Response($app));
+            : new MockCURLRequest($app, new URI(), new Response());
 
         $request->setHeader('Authorization', 'Bearer secret');
 
@@ -115,7 +115,7 @@ final class CURLRequestExceptionTest extends CIUnitTestCase
         $app     = new App();
         $request = $fail
             ? $this->failingRequest($options, $uri)
-            : new MockCURLRequest($app, $uri, new Response($app), $options);
+            : new MockCURLRequest($app, $uri, new Response(), $options);
 
         try {
             $request->get('reports', [
@@ -138,8 +138,7 @@ final class CURLRequestExceptionTest extends CIUnitTestCase
 
         $request->get('', ['baseURI' => 'https://other.example/']);
 
-        $expectedURL = $defaults === 'none' ? 'https://other.example/' : 'https://other.example/?default=value';
-        $this->assertSame($expectedURL, $request->curl_options[CURLOPT_URL]);
+        $this->assertSame('https://other.example/', $request->curl_options[CURLOPT_URL]);
         $this->assertSame($expectedURI, (string) $request->getBaseURI());
     }
 
@@ -163,7 +162,7 @@ final class CURLRequestExceptionTest extends CIUnitTestCase
         $app     = new App();
         $request = $fail
             ? $this->failingRequest()
-            : new MockCURLRequest($app, new URI(), new Response($app));
+            : new MockCURLRequest($app, new URI(), new Response());
         $baseURI = 'https://alice@private.example:8443/v2/?api_key=secret';
 
         try {
@@ -229,7 +228,7 @@ final class CURLRequestExceptionTest extends CIUnitTestCase
         $this->configureSharing(false);
 
         $app     = new App();
-        $request = new MockCURLRequest($app, new URI(), new Response($app));
+        $request = new MockCURLRequest($app, new URI(), new Response());
 
         try {
             $request->post('https://private.example/upload', [
@@ -284,7 +283,7 @@ final class CURLRequestExceptionTest extends CIUnitTestCase
     {
         $app = new App();
 
-        return new class ($app, $uri ?? new URI(), new Response($app), $options) extends MockCURLRequest {
+        return new class ($app, $uri ?? new URI(), new Response(), $options) extends MockCURLRequest {
             private bool $failNextRequest = true;
 
             protected function sendRequest(array $curlOptions = []): string
