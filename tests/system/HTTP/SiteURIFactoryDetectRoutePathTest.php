@@ -258,6 +258,70 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
         $this->assertSame(['code' => 'good'], $_GET);
     }
 
+    public function testQueryStringRefreshesRequestWithoutOverwritingCustomValues(): void
+    {
+        $superglobals = new Superglobals(
+            [
+                'REQUEST_URI'  => '/index.php?/ci/woot?code=good',
+                'QUERY_STRING' => '/ci/woot?code=good',
+                'SCRIPT_NAME'  => '/index.php',
+            ],
+            ['/ci/woot?code' => 'good', 'override' => 'from get'],
+            ['posted' => 'post'],
+            [],
+            [],
+            [
+                '/ci/woot?code' => 'good',
+                'override'      => 'custom',
+                'posted'        => 'post',
+                'unrelated'     => 'keep',
+            ],
+        );
+        Services::injectMock('superglobals', $superglobals);
+
+        $factory = new SiteURIFactory(new App(), $superglobals);
+
+        $this->assertSame('ci/woot', $factory->detectRoutePath('QUERY_STRING'));
+        $this->assertSame([
+            'override'  => 'custom',
+            'posted'    => 'post',
+            'unrelated' => 'keep',
+            'code'      => 'good',
+        ], $superglobals->getRequestArray());
+        $this->assertSame($superglobals->getRequestArray(), $_REQUEST);
+
+        $superglobals->setGet('code', 'later');
+
+        $this->assertSame('good', $superglobals->request('code'));
+    }
+
+    public function testRequestURIRefreshesRequestForValidation(): void
+    {
+        $superglobals = new Superglobals(
+            [
+                'REQUEST_URI' => '/index.php/woot?code=good',
+                'SCRIPT_NAME' => '/index.php',
+            ],
+            ['code' => 'stale'],
+            [],
+            [],
+            [],
+            ['code' => 'stale', 'unrelated' => 'keep'],
+        );
+        Services::injectMock('superglobals', $superglobals);
+
+        $config  = new App();
+        $factory = new SiteURIFactory($config, $superglobals);
+
+        $this->assertSame('woot', $factory->detectRoutePath('REQUEST_URI'));
+        $this->assertSame(['code' => 'good', 'unrelated' => 'keep'], $superglobals->getRequestArray());
+
+        $request = new IncomingRequest($config, new SiteURI($config), null, new UserAgent());
+
+        $this->assertSame('good', $request->getVar('code'));
+        $this->assertTrue(service('validation')->withRequest($request)->setRules(['code' => 'in_list[good]'])->run());
+    }
+
     public function testQueryStringEmpty(): void
     {
         // /index.php?

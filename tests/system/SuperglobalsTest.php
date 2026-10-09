@@ -302,6 +302,106 @@ final class SuperglobalsTest extends CIUnitTestCase
         $this->assertSame($data, $_REQUEST);
     }
 
+    public function testGetRequestDataMergesGetAndPost(): void
+    {
+        $this->superglobals->setGetArray(['get_key' => 'get_value']);
+        $this->superglobals->setPostArray(['post_key' => 'post_value']);
+
+        $data = $this->superglobals->getRequestData();
+
+        $this->assertSame('get_value', $data['get_key']);
+        $this->assertSame('post_value', $data['post_key']);
+    }
+
+    public function testGetRequestDataReflectsGetChanges(): void
+    {
+        $this->superglobals->setGetArray(['key' => 'old']);
+
+        $this->assertSame('old', $this->superglobals->getRequestData()['key']);
+
+        // Simulate SiteURIFactory updating $_GET after the request started.
+        $this->superglobals->setGetArray(['key' => 'new']);
+
+        $this->assertSame('new', $this->superglobals->getRequestData()['key']);
+    }
+
+    public function testGetRequestDataMergesCookie(): void
+    {
+        $this->superglobals->setGetArray(['get_key' => 'get_value']);
+        $this->superglobals->setPostArray(['post_key' => 'post_value']);
+        $this->superglobals->setCookieArray(['cookie_key' => 'cookie_value']);
+
+        $data = $this->superglobals->getRequestData('GPC');
+
+        $this->assertSame('get_value', $data['get_key']);
+        $this->assertSame('post_value', $data['post_key']);
+        $this->assertSame('cookie_value', $data['cookie_key']);
+    }
+
+    public function testGetRequestDataRespectsOrder(): void
+    {
+        $this->superglobals->setGetArray(['shared' => 'get']);
+        $this->superglobals->setPostArray(['shared' => 'post']);
+        $this->superglobals->setCookieArray(['shared' => 'cookie']);
+
+        // Later sources overwrite earlier ones, matching PHP's request_order.
+        $this->assertSame('post', $this->superglobals->getRequestData('GP')['shared']);
+        $this->assertSame('cookie', $this->superglobals->getRequestData('GPC')['shared']);
+        $this->assertSame('get', $this->superglobals->getRequestData('PG')['shared']);
+    }
+
+    public function testGetRequestDataEmptyOrderFallsBackToVariablesOrder(): void
+    {
+        $this->superglobals->setGetArray(['get' => 'value']);
+        $this->superglobals->setPostArray(['post' => 'value']);
+        $this->superglobals->setCookieArray(['cookie' => 'value']);
+
+        $this->assertSame(
+            $this->superglobals->getRequestData((string) ini_get('variables_order')),
+            $this->superglobals->getRequestData(''),
+        );
+    }
+
+    public function testGetRequestDataNormalizesOrderAndIgnoresDuplicates(): void
+    {
+        $this->superglobals->setGetArray(['shared' => 'get']);
+        $this->superglobals->setPostArray(['shared' => 'post']);
+        $this->superglobals->setCookieArray(['shared' => 'cookie']);
+
+        $this->assertSame('post', $this->superglobals->getRequestData('gp')['shared']);
+        $this->assertSame('post', $this->superglobals->getRequestData('GPG')['shared']);
+        $this->assertSame('cookie', $this->superglobals->getRequestData('gPcGpC')['shared']);
+    }
+
+    public function testGetRequestDataIgnoresUnknownOrderTypes(): void
+    {
+        $this->superglobals->setGetArray(['get_key' => 'get_value']);
+
+        $data = $this->superglobals->getRequestData('GX');
+
+        $this->assertSame(['get_key' => 'get_value'], $data);
+    }
+
+    public function testGetRequestDataPreservesNumericKeys(): void
+    {
+        parse_str('100=foo', $get);
+        $this->superglobals->setGetArray($get);
+
+        $data = $this->superglobals->getRequestData('G');
+
+        $this->assertSame([100 => 'foo'], $data);
+    }
+
+    public function testGetRequestDataMergesRecursively(): void
+    {
+        $this->superglobals->setGetArray(['a' => ['x' => 'get']]);
+        $this->superglobals->setPostArray(['a' => ['y' => 'post']]);
+
+        $data = $this->superglobals->getRequestData('GP');
+
+        $this->assertSame(['a' => ['x' => 'get', 'y' => 'post']], $data);
+    }
+
     // $_FILES tests
     public function testFilesGetArray(): void
     {

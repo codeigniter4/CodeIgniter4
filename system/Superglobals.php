@@ -388,6 +388,51 @@ final class Superglobals
     }
 
     /**
+     * Returns the merged $_GET, $_POST, and $_COOKIE data according to the
+     * `request_order` (or `variables_order`) ini setting, without mutating
+     * $_REQUEST.
+     *
+     * PHP populates $_REQUEST only once at the start of the request. When
+     * $_GET is modified later (e.g. by SiteURIFactory), $_REQUEST becomes
+     * stale. This method returns the current merged values so callers can
+     * read up-to-date request data without relying on the stale $_REQUEST.
+     *
+     * @param string|null $requestOrder Overrides the `request_order` ini
+     *                                  setting. Useful for testing, since the
+     *                                  ini setting cannot be changed at runtime.
+     *
+     * @return array<string, request_items>
+     */
+    public function getRequestData(?string $requestOrder = null): array
+    {
+        $requestOrder ??= (string) ini_get('request_order');
+
+        if ($requestOrder === '') {
+            $requestOrder = (string) ini_get('variables_order');
+        }
+
+        if ($requestOrder === '') {
+            $requestOrder = 'GP';
+        }
+
+        $request = [];
+
+        foreach (array_unique(str_split(strtoupper($requestOrder))) as $type) {
+            match ($type) {
+                // array_replace_recursive() matches PHP's own $_REQUEST merge
+                // (php_autoglobal_merge): numeric keys are preserved and
+                // array values are merged recursively.
+                'G'     => $request = array_replace_recursive($request, $this->get),
+                'P'     => $request = array_replace_recursive($request, $this->post),
+                'C'     => $request = array_replace_recursive($request, $this->cookie),
+                default => null,
+            };
+        }
+
+        return $request;
+    }
+
+    /**
      * Get all $_FILES values.
      *
      * @return array<string, files_items>
