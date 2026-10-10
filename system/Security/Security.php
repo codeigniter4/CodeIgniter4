@@ -300,8 +300,7 @@ class Security implements SecurityInterface
 
         if (is_object($json)) {
             if (property_exists($json, $tokenName)) {
-                unset($json->{$tokenName});
-                $request->setBody(json_encode($json));
+                $request->setBody($this->removeJsonMember($body, $tokenName));
             }
 
             return;
@@ -312,6 +311,199 @@ class Security implements SecurityInterface
 
         unset($result[$tokenName]);
         $request->setBody(http_build_query($result));
+    }
+
+    /**
+     * Removes a top-level member from a JSON object without re-encoding the
+     * document, so the original formatting of the remaining data is preserved.
+     */
+    private function removeJsonMember(string $json, string $member): string
+    {
+        $length = strlen($json);
+        $pos    = $this->skipJsonWhitespace($json, 0);
+
+        if ($pos >= $length || $json[$pos] !== '{') {
+            return $json;
+        }
+
+        $pos++;
+
+        $memberStart = null;
+        $memberEnd   = null;
+        $commaAfter  = null;
+
+        while ($pos < $length) {
+            $pos = $this->skipJsonWhitespace($json, $pos);
+
+            if ($pos >= $length || $json[$pos] === '}') {
+                break;
+            }
+
+            if ($json[$pos] !== '"') {
+                return $json;
+            }
+
+            $keyStart = $pos;
+            $pos      = $this->skipJsonString($json, $pos);
+            $key      = json_decode(substr($json, $keyStart, $pos - $keyStart));
+
+            $pos = $this->skipJsonWhitespace($json, $pos);
+
+            if ($pos >= $length || $json[$pos] !== ':') {
+                return $json;
+            }
+
+            $pos = $this->skipJsonWhitespace($json, $pos + 1);
+            $pos = $this->skipJsonValue($json, $pos);
+
+            if ($key === $member) {
+                $memberStart = $keyStart;
+                $memberEnd   = $pos;
+
+                // Drop the comma and the whitespace that follows it when there
+                // is a next member.
+                $after = $this->skipJsonWhitespace($json, $pos);
+
+                if ($after < $length && $json[$after] === ',') {
+                    $commaAfter = $this->skipJsonWhitespace($json, $after + 1);
+                }
+
+                break;
+            }
+
+            // Skip the separator comma between members.
+            $pos = $this->skipJsonWhitespace($json, $pos);
+
+            if ($pos < $length && $json[$pos] === ',') {
+                $pos++;
+            }
+        }
+
+        if ($memberStart === null) {
+            return $json;
+        }
+
+        if ($commaAfter !== null) {
+            // The member is not the last one.
+            return substr($json, 0, $memberStart) . substr($json, $commaAfter);
+        }
+
+        // The member is the last one: drop the preceding comma if there is one.
+        $before = $memberStart - 1;
+
+        while ($before >= 0 && ctype_space($json[$before])) {
+            $before--;
+        }
+
+        if ($before >= 0 && $json[$before] === ',') {
+            return substr($json, 0, $before) . substr($json, $memberEnd);
+        }
+
+        // The member is the only one: keep the surrounding whitespace clean.
+        $open = $memberStart;
+
+        while ($open > 0 && ctype_space($json[$open - 1])) {
+            $open--;
+        }
+
+        return substr($json, 0, $open) . substr($json, $memberEnd);
+    }
+
+    /**
+     * Returns the position just after the JSON string that starts at the given
+     * position (which must point to the opening quote).
+     */
+    private function skipJsonString(string $json, int $pos): int
+    {
+        $length = strlen($json);
+        $pos++;
+
+        while ($pos < $length) {
+            if ($json[$pos] === '\\') {
+                $pos += 2;
+
+                continue;
+            }
+
+            if ($json[$pos] === '"') {
+                return $pos + 1;
+            }
+
+            $pos++;
+        }
+
+        return $pos;
+    }
+
+    /**
+     * Returns the position after the JSON value that starts at the given
+     * position.
+     */
+    private function skipJsonValue(string $json, int $pos): int
+    {
+        $length = strlen($json);
+
+        if ($pos >= $length) {
+            return $pos;
+        }
+
+        $char = $json[$pos];
+
+        if ($char === '"') {
+            return $this->skipJsonString($json, $pos);
+        }
+
+        if ($char !== '{' && $char !== '[') {
+            // Number, true, false or null.
+            while ($pos < $length && ! ctype_space($json[$pos]) && $json[$pos] !== ',' && $json[$pos] !== '}' && $json[$pos] !== ']') {
+                $pos++;
+            }
+
+            return $pos;
+        }
+
+        $open  = $char;
+        $close = $char === '{' ? '}' : ']';
+        $depth = 0;
+
+        while ($pos < $length) {
+            $current = $json[$pos];
+
+            if ($current === '"') {
+                $pos = $this->skipJsonString($json, $pos);
+
+                continue;
+            }
+
+            if ($current === $open) {
+                $depth++;
+            } elseif ($current === $close) {
+                $depth--;
+
+                if ($depth === 0) {
+                    return $pos + 1;
+                }
+            }
+
+            $pos++;
+        }
+
+        return $pos;
+    }
+
+    /**
+     * Returns the position just after the whitespace starting at the given
+     * position.
+     */
+    private function skipJsonWhitespace(string $json, int $pos): int
+    {
+        $length = strlen($json);
+
+        while ($pos < $length && ctype_space($json[$pos])) {
+            $pos++;
+        }
+
+        return $pos;
     }
 
     private function getPostedToken(IncomingRequest $request): ?string
