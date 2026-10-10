@@ -293,9 +293,11 @@ class Security implements SecurityInterface
 
         // If the token is found in JSON data, we can safely remove it.
         try {
-            $json = json_decode($body, flags: JSON_THROW_ON_ERROR);
+            $json   = json_decode($body, flags: JSON_THROW_ON_ERROR);
+            $isJson = true;
         } catch (JsonException) {
-            $json = null;
+            $json   = null;
+            $isJson = false;
         }
 
         if (is_object($json)) {
@@ -304,6 +306,12 @@ class Security implements SecurityInterface
                 $request->setBody(json_encode($json));
             }
 
+            return;
+        }
+
+        // A valid JSON body that is not an object cannot contain the CSRF token,
+        // so leave it untouched.
+        if ($isJson) {
             return;
         }
 
