@@ -605,6 +605,32 @@ final class CLITest extends CIUnitTestCase
         $this->assertSame($expected, $this->getStreamFilterBuffer());
     }
 
+    public function testErrorOutsideCliWritesToStdoutWithoutColor(): void
+    {
+        $io = new class () extends InputOutput {
+            /**
+             * @var list<array{string, string}>
+             */
+            public array $writes = [];
+
+            public function fwrite($handle, string $string): void
+            {
+                $this->writes[] = [$handle === STDERR ? 'STDERR' : 'STDOUT', $string];
+            }
+        };
+        CLI::setInputOutput($io);
+
+        is_cli(false);
+
+        try {
+            CLI::error('test');
+        } finally {
+            is_cli(true);
+        }
+
+        $this->assertSame([['STDOUT', "\ntest\n"]], $io->writes);
+    }
+
     public function testMixedWriteError(): void
     {
         CLI::write('test 1');
@@ -621,6 +647,96 @@ final class CLITest extends CIUnitTestCase
                 EOT,
             preg_replace('/\e\[[^m]+m/u', '', $this->getStreamFilterBuffer()),
         );
+    }
+
+    public function testRedirectToStderrRoutesStdoutWritesOnlyWhileTheCallbackRuns(): void
+    {
+        $io = new class () extends InputOutput {
+            /**
+             * @var list<array{string, string}>
+             */
+            public array $writes = [];
+
+            public function fwrite($handle, string $string): void
+            {
+                $this->writes[] = [$handle === STDERR ? 'STDERR' : 'STDOUT', $string];
+            }
+        };
+        CLI::setInputOutput($io);
+
+        CLI::print('before');
+
+        CLI::redirectToStderr(static function (): void {
+            CLI::write('inside');
+        });
+
+        try {
+            CLI::redirectToStderr(static function (): void {
+                throw new RuntimeException('Callback failed.');
+            });
+        } catch (RuntimeException) {
+        }
+
+        CLI::write('after');
+
+        $this->assertSame([
+            ['STDOUT', 'before'],
+            ['STDERR', "\ninside\n"],
+            ['STDOUT', "\nafter\n"],
+        ], $io->writes);
+    }
+
+    public function testRedirectToStderrDoesNotRedirectOutsideCli(): void
+    {
+        $io = new class () extends InputOutput {
+            /**
+             * @var list<array{string, string}>
+             */
+            public array $writes = [];
+
+            public function fwrite($handle, string $string): void
+            {
+                $this->writes[] = [$handle === STDERR ? 'STDERR' : 'STDOUT', $string];
+            }
+        };
+        CLI::setInputOutput($io);
+
+        is_cli(false);
+
+        try {
+            CLI::redirectToStderr(static function (): void {
+                CLI::write('inside');
+            });
+        } finally {
+            is_cli(true);
+        }
+
+        $this->assertSame([['STDOUT', "\ninside\n"]], $io->writes);
+    }
+
+    public function testRedirectToStderrUsesTheColorSupportOfStderr(): void
+    {
+        $superglobals = service('superglobals');
+        $noColor      = $superglobals->server('NO_COLOR');
+
+        (new ReflectionProperty(CLI::class, 'isColored'))->setValue(null, true);
+        $superglobals->setServer('NO_COLOR', '1');
+
+        try {
+            CLI::redirectToStderr(static function (): void {
+                CLI::write('inside', 'red');
+            });
+        } finally {
+            if ($noColor === null) {
+                $superglobals->unsetServer('NO_COLOR');
+            } else {
+                $superglobals->setServer('NO_COLOR', $noColor);
+            }
+        }
+
+        CLI::write('after', 'red');
+
+        $this->assertSame("\ninside\n\n\033[0;31mafter\033[0m\n", $this->getStreamFilterBuffer());
     }
 
     public function testErrorForeground(): void

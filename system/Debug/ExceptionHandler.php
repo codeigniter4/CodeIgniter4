@@ -15,6 +15,7 @@ namespace CodeIgniter\Debug;
 
 use Closure;
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\CLI\CLI;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
@@ -121,7 +122,11 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
         }
 
         // Displays the HTML or CLI error code.
-        $this->render($exception, $statusCode, $viewFile);
+        if ($request instanceof IncomingRequest) {
+            $this->render($exception, $statusCode, $viewFile);
+        } else {
+            CLI::redirectToStderr(fn () => $this->render($exception, $statusCode, $viewFile));
+        }
 
         if (! service('environment')->isTesting()) {
             exit($exitCode); // @codeCoverageIgnore

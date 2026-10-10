@@ -49,6 +49,11 @@ class CURLRequest extends OutgoingRequest
     protected $baseURI;
 
     /**
+     * The constructor's base URI, preserved independently of per-request changes.
+     */
+    private readonly URI $defaultBaseURI;
+
+    /**
      * The setting values
      *
      * @var array<string, mixed>
@@ -176,6 +181,7 @@ class CURLRequest extends OutgoingRequest
 
         $this->config = $this->defaultConfig;
         $this->parseOptions($options);
+        $this->defaultBaseURI = clone $this->baseURI;
 
         // Share Connection
         $optShareConnection = config(ConfigCURLRequest::class)->shareConnectionOptions ?? [ // @phpstan-ignore nullCoalesce.property
@@ -203,16 +209,18 @@ class CURLRequest extends OutgoingRequest
     {
         $this->response = clone $this->responseOrig;
 
-        $this->parseOptions($options);
+        try {
+            $this->parseOptions($options);
 
-        $url = $this->prepareURL($url);
+            $url = $this->prepareURL($url);
 
-        $method = esc(strip_tags($method));
+            $method = esc(strip_tags($method));
 
-        $this->send($method, $url);
-
-        if ($this->shareOptions === false) {
-            $this->resetOptions();
+            $this->send($method, $url);
+        } finally {
+            if ($this->shareOptions === false) {
+                $this->resetOptions();
+            }
         }
 
         return $this->response;
@@ -234,6 +242,9 @@ class CURLRequest extends OutgoingRequest
 
         // Reset configs
         $this->config = $this->defaultConfig;
+
+        $this->baseURI = clone $this->defaultBaseURI;
+        $this->delay   = 0.0;
 
         // Set the default options for next request
         $this->parseOptions($this->defaultOptions);

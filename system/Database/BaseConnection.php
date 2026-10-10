@@ -1541,7 +1541,7 @@ abstract class BaseConnection implements ConnectionInterface
         // In some cases, especially 'from', we end up running through
         // protect_identifiers twice. This algorithm won't work when
         // it contains the escapeChar so strip it out.
-        $item = trim($item, $this->escapeChar);
+        $item = $this->trimEscapeChar($item);
 
         // Is there a table prefix? If not, no need to insert it
         if ($this->DBPrefix !== '') {
@@ -1562,9 +1562,15 @@ abstract class BaseConnection implements ConnectionInterface
         return $item . $alias;
     }
 
+    private function trimEscapeChar(string $item): string
+    {
+        return trim($item, is_array($this->escapeChar) ? implode('', $this->escapeChar) : $this->escapeChar);
+    }
+
     private function protectDotItem(string $item, string $alias, bool $protectIdentifiers, bool $fieldExists): string
     {
-        $parts = explode('.', $item);
+        $parts = array_map($this->trimEscapeChar(...), explode('.', $item));
+        $item  = implode('.', $parts);
 
         // Does the first segment of the exploded item match
         // one of the aliases previously identified? If so,

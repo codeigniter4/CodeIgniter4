@@ -15,7 +15,6 @@ use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\CodeQuality\Rector\BooleanNot\NegatedAndsToPositiveOrsRector;
 use Rector\CodeQuality\Rector\ClassMethod\LocallyCalledStaticMethodToNonStaticRector;
 use Rector\CodeQuality\Rector\FuncCall\CompactToVariablesRector;
-use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
 use Rector\CodeQuality\Rector\Isset_\IssetOnPropertyObjectToPropertyExistsRector;
 use Rector\CodingStyle\Rector\ClassMethod\FuncGetArgsToVariadicParamRector;
 use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsParentRector;
@@ -101,6 +100,7 @@ return RectorConfig::configure()
 
         // Exclude test file because `is_cli()` is mocked and Rector might remove needed parameters.
         RemoveExtraParametersRector::class => [
+            __DIR__ . '/tests/system/CLI/CLITest.php',
             __DIR__ . '/tests/system/Debug/ToolbarTest.php',
         ],
 
@@ -177,7 +177,6 @@ return RectorConfig::configure()
     ->withRules([
         DeclareStrictTypesRector::class,
         UnderscoreToCamelCaseVariableNameRector::class,
-        SimplifyUselessVariableRector::class,
         PassStrictParameterToFunctionParameterRector::class,
         RemoveErrorSuppressInTryCatchStmtsRector::class,
         FuncGetArgsToVariadicParamRector::class,

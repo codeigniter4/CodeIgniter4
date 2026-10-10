@@ -26,6 +26,7 @@ use CodeIgniter\CodeIgniter;
 use CodeIgniter\Commands\Help;
 use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\App;
@@ -38,6 +39,7 @@ use PHPUnit\Framework\Attributes\Group;
 use ReflectionClass;
 use ReflectionProperty;
 use Tests\Support\Commands\Modern\AppAboutCommand;
+use Tests\Support\Commands\Modern\HeaderlessCommand;
 use Tests\Support\Commands\Modern\HiddenCommand;
 use Tests\Support\Commands\Modern\InteractFixtureCommand;
 use Tests\Support\Commands\Modern\InteractiveStateProbeCommand;
@@ -84,6 +86,7 @@ final class AbstractCommandTest extends CIUnitTestCase
         $this->assertSame($attribute->description, $command->getDescription());
         $this->assertSame($attribute->group, $command->getGroup());
         $this->assertSame($attribute->hidden, $command->isHidden());
+        $this->assertSame($attribute->headerless, $command->isHeaderless());
         $this->assertSame($commands, $command->getCommandRunner());
         $this->assertSame('help [options] [--] [<command_name>]', $command->getUsages()[0]);
     }
@@ -91,6 +94,11 @@ final class AbstractCommandTest extends CIUnitTestCase
     public function testHiddenCommandReportsItself(): void
     {
         $this->assertTrue((new HiddenCommand(new Commands()))->isHidden());
+    }
+
+    public function testHeaderlessCommandReportsItself(): void
+    {
+        $this->assertTrue((new HeaderlessCommand(new Commands()))->isHeaderless());
     }
 
     public function testCommandRequiresCommandAttribute(): void
@@ -226,6 +234,8 @@ final class AbstractCommandTest extends CIUnitTestCase
     public function testRenderThrowable(): void
     {
         $command = new AppAboutCommand(new Commands());
+
+        CITestStreamFilter::removeOutputFilter();
 
         $this->assertSame(EXIT_ERROR, $command->bomb());
         $this->assertStringContainsString('[CodeIgniter\CLI\Exceptions\CLIException]', $this->getStreamFilterBuffer());

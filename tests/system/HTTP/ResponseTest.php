@@ -490,7 +490,7 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testGetDownloadResponseByExtremeFilePath(): void
     {
-        $response = new Response(new App());
+        $response = new Response();
 
         $tempDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'ci4_test_dir_' . bin2hex(random_bytes(8));
         $this->assertTrue(mkdir($tempDir));

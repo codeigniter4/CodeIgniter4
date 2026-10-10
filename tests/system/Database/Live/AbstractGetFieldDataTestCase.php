@@ -57,6 +57,30 @@ abstract class AbstractGetFieldDataTestCase extends CIUnitTestCase
         $this->forge->dropTable($this->table, true);
     }
 
+    protected function qualifiedTableName(): string
+    {
+        return match ($this->db->DBDriver) {
+            'MySQLi'  => $this->db->getDatabase() . '.' . $this->table,
+            'OCI8'    => $this->db->username . '.' . $this->table,
+            'Postgre' => 'public.' . $this->table,
+            'SQLite3' => 'main.' . $this->table,
+            'SQLSRV'  => 'dbo.' . $this->table,
+            default   => $this->markTestSkipped('No qualified table name is defined for ' . $this->db->DBDriver . '.'),
+        };
+    }
+
+    public function testGetFieldDataWithQualifiedTableName(): void
+    {
+        $this->createTableForDefault();
+
+        $toArray = static fn (stdClass $field): array => (array) $field;
+
+        $this->assertSame(
+            array_map($toArray, $this->db->getFieldData($this->table)),
+            array_map($toArray, $this->db->getFieldData($this->qualifiedTableName())),
+        );
+    }
+
     protected function createTableForDefault(): void
     {
         $this->forge->dropTable($this->table, true);

@@ -48,8 +48,7 @@ class Console
 
         $arguments     = $parser->getArguments();
         $this->options = $parser->getOptions();
-
-        $this->showHeader($this->hasParameterOption(['no-header']));
+        $noHeader      = $this->hasParameterOption(['no-header']);
 
         if ($this->hasParameterOption(['help', 'h'])) {
             if ($arguments === []) {
@@ -68,6 +67,8 @@ class Console
         $commands = service('commands');
 
         $this->command = array_shift($arguments) ?? self::DEFAULT_COMMAND;
+
+        $this->showHeader($noHeader || $commands->isHeaderlessCommand($this->command));
 
         if (
             $this->isInteractive()

@@ -15,6 +15,7 @@ namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Postgre\Builder as PostgreBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 use CodeIgniter\Test\Mock\MockQuery;
@@ -466,5 +467,73 @@ final class UpdateTest extends CIUnitTestCase
 
         $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate());
         $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    public function testUpdateBatchPostgreDoesNotCastEnumAndArrayColumns(): void
+    {
+        $db = new class (['DBDriver' => 'Postgre']) extends MockConnection {
+            protected function _fieldData(string $table): array
+            {
+                return [
+                    (object) ['name' => 'id', 'type' => 'integer', 'max_length' => 32],
+                    (object) ['name' => 'mood', 'type' => 'USER-DEFINED', 'max_length' => null],
+                    (object) ['name' => 'tags', 'type' => 'ARRAY', 'max_length' => null],
+                ];
+            }
+        };
+
+        $builder = new PostgreBuilder('jobs', $db);
+        $sql     = $builder->testMode()->updateBatch([
+            ['id' => 1, 'mood' => 'happy', 'tags' => '{a}'],
+            ['id' => 2, 'mood' => 'sad', 'tags' => '{b}'],
+        ], 'id');
+
+        $expected = <<<'EOF'
+            UPDATE "jobs"
+            SET
+            "mood" = _u."mood",
+            "tags" = _u."tags"
+            FROM (
+            SELECT 1 "id", 'happy' "mood", '{a}' "tags" UNION ALL
+            SELECT 2 "id", 'sad' "mood", '{b}' "tags"
+            ) _u
+            WHERE "jobs"."id" = CAST(_u."id" AS INTEGER)
+            EOF;
+
+        $this->assertSame([$expected], $sql);
+    }
+
+    public function testUpdateBatchPostgreDoesNotCastSourceSharedByColumnsOfDifferentTypes(): void
+    {
+        $db = new class (['DBDriver' => 'Postgre']) extends MockConnection {
+            protected function _fieldData(string $table): array
+            {
+                return [
+                    (object) ['name' => 'id', 'type' => 'integer', 'max_length' => 32],
+                    (object) ['name' => 'number', 'type' => 'integer', 'max_length' => 32],
+                    (object) ['name' => 'label', 'type' => 'text', 'max_length' => null],
+                ];
+            }
+        };
+
+        $builder = new PostgreBuilder('jobs', $db);
+        $sql     = $builder->testMode()
+            ->setData([['id' => 1, 'value' => 1.4]], null, 'data')
+            ->updateFields(['number' => 'value', 'label' => 'value'])
+            ->onConstraint('id')
+            ->updateBatch();
+
+        $expected = <<<'EOF'
+            UPDATE "jobs"
+            SET
+            "number" = CAST("data"."value" AS INTEGER),
+            "label" = CAST("data"."value" AS TEXT)
+            FROM (
+            SELECT 1 "id", 1.4 "value"
+            ) "data"
+            WHERE "jobs"."id" = CAST("data"."id" AS INTEGER)
+            EOF;
+
+        $this->assertSame([$expected], $sql);
     }
 }

@@ -327,7 +327,12 @@ class Connection extends BaseConnection
      */
     protected function _fieldData(string $table): array
     {
-        if (false === $query = $this->query('PRAGMA TABLE_INFO(' . $this->protectIdentifiers($table, true, null, false) . ')')) {
+        $parts  = explode('.', $table);
+        $table  = array_pop($parts);
+        $schema = array_pop($parts);
+        $pragma = ($schema === null ? '' : $this->escapeIdentifiers($schema) . '.') . 'TABLE_INFO(' . $this->protectIdentifiers($table, true, null, false) . ')';
+
+        if (false === $query = $this->query('PRAGMA ' . $pragma)) {
             throw new DatabaseException(lang('Database.failGetFieldData'));
         }
 
