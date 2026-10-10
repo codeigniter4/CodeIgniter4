@@ -20,6 +20,15 @@ Mandatory File Changes
 Breaking Changes
 ****************
 
+Query Builder JOIN Overrides
+============================
+
+``BaseBuilder::join()`` and ``BaseBuilder::compileJoinTable()`` now accept
+``RawSql|string`` for the table argument. If a custom Query Builder subclass
+overrides either method, change its ``$table`` parameter type from ``string``
+to ``RawSql|string``. The method body must also handle ``RawSql`` without
+escaping or prefixing it.
+
 Console Exit Codes
 ==================
 
