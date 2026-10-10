@@ -30,6 +30,10 @@ Deprecations
 Bugs Fixed
 **********
 
+- **Security:** Fixed a bug where removing the CSRF token from a JSON request
+  body re-encoded the whole document, losing the original formatting of the
+  remaining data. The formatting is now preserved.
+
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
 for a complete list of bugs fixed.

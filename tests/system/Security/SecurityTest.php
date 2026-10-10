@@ -237,6 +237,104 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertSame('{"foo":"bar"}', $request->getBody());
     }
 
+    #[DataProvider('provideCsrfVerifyJsonBodyPreservesFormatting')]
+    public function testCsrfVerifyJsonBodyPreservesFormatting(string $body, string $expected): void
+    {
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setCookie('csrf_cookie_name', self::CORRECT_CSRF_HASH);
+
+        $security = $this->createMockSecurity();
+        $request  = $this->createIncomingRequest()->setBody($body);
+
+        $this->assertInstanceOf(Security::class, $security->verify($request));
+        $this->assertSame($expected, $request->getBody());
+    }
+
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function provideCsrfVerifyJsonBodyPreservesFormatting(): iterable
+    {
+        $hash = self::CORRECT_CSRF_HASH;
+
+        yield 'pretty printed preserves indentation' => [
+            "{\n    \"csrf_test_name\": \"{$hash}\",\n    \"foo\": \"bar\"\n}",
+            "{\n    \"foo\": \"bar\"\n}",
+        ];
+
+        yield 'compact token first' => [
+            "{\"csrf_test_name\":\"{$hash}\",\"foo\":\"bar\"}",
+            '{"foo":"bar"}',
+        ];
+
+        yield 'token last keeps preceding member intact' => [
+            "{\"foo\": \"bar\", \"csrf_test_name\": \"{$hash}\"}",
+            '{"foo": "bar"}',
+        ];
+
+        yield 'token only yields empty object' => [
+            "{\"csrf_test_name\":\"{$hash}\"}",
+            '{}',
+        ];
+
+        yield 'spaces around colon and comma preserved' => [
+            "{ \"csrf_test_name\" : \"{$hash}\" , \"foo\" : \"bar\" }",
+            '{ "foo" : "bar" }',
+        ];
+
+        yield 'unicode is not escaped' => [
+            "{\"csrf_test_name\":\"{$hash}\",\"name\":\"café\"}",
+            '{"name":"café"}',
+        ];
+
+        yield 'forward slashes are not escaped' => [
+            "{\"csrf_test_name\":\"{$hash}\",\"url\":\"http://example.com/a/b\"}",
+            '{"url":"http://example.com/a/b"}',
+        ];
+
+        yield 'number representation is preserved' => [
+            "{\"csrf_test_name\":\"{$hash}\",\"price\":1.10,\"big\":12345678901234567890}",
+            '{"price":1.10,"big":12345678901234567890}',
+        ];
+
+        yield 'nested member with same name is untouched' => [
+            "{\"csrf_test_name\":\"{$hash}\",\"nested\":{\"csrf_test_name\":\"keep\"}}",
+            '{"nested":{"csrf_test_name":"keep"}}',
+        ];
+
+        yield 'key name inside a string value is untouched' => [
+            "{\"csrf_test_name\":\"{$hash}\",\"note\":\"csrf_test_name\"}",
+            '{"note":"csrf_test_name"}',
+        ];
+
+        yield 'escaped quote inside a string value' => [
+            "{\"csrf_test_name\":\"{$hash}\",\"note\":\"a\\\"b,c:1\"}",
+            '{"note":"a\"b,c:1"}',
+        ];
+    }
+
+    public function testCsrfVerifyHeaderWithPrettyJsonBodyStripsTokenPreservingFormatting(): void
+    {
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setCookie('csrf_cookie_name', self::CORRECT_CSRF_HASH);
+
+        $security = $this->createMockSecurity();
+        $request  = $this->createIncomingRequest();
+
+        $request->setHeader('X-CSRF-TOKEN', self::CORRECT_CSRF_HASH);
+        $request->setBody(
+            "{\n    \"csrf_test_name\": \"" . self::CORRECT_CSRF_HASH . "\",\n    \"foo\": \"bar\"\n}",
+        );
+
+        $this->assertInstanceOf(Security::class, $security->verify($request));
+        $this->assertSame(
+            "{\n    \"foo\": \"bar\"\n}",
+            $request->getBody(),
+        );
+    }
+
     public function testCsrfVerifyPutBodyThrowsExceptionOnNoMatch(): void
     {
         service('superglobals')
