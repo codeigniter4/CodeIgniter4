@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Tests\Support\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
+use Throwable;
 
 class Migration_Create_test_tables extends Migration
 {
@@ -183,6 +184,7 @@ class Migration_Create_test_tables extends Migration
         $this->forge->dropTable('user', true);
         $this->forge->dropTable('job', true);
         $this->forge->dropTable('misc', true);
+        $this->forge->dropTable('team_members', true);
         $this->forge->dropTable('type_test', true);
         $this->forge->dropTable('empty', true);
         $this->forge->dropTable('secondary', true);
@@ -196,9 +198,25 @@ class Migration_Create_test_tables extends Migration
         }
 
         if ($this->db->DBDriver === 'OCI8') {
-            $this->db->query('DROP PROCEDURE one');
-            $this->db->query('DROP PROCEDURE plus');
-            $this->db->query('DROP PACKAGE BODY calculator');
+            try {
+                $this->db->query('DROP PROCEDURE one');
+            } catch (Throwable) {
+            }
+
+            try {
+                $this->db->query('DROP PROCEDURE plus');
+            } catch (Throwable) {
+            }
+
+            try {
+                $this->db->query('DROP PACKAGE BODY calculator');
+            } catch (Throwable) {
+            }
+
+            try {
+                $this->db->query('DROP PACKAGE calculator');
+            } catch (Throwable) {
+            }
         }
     }
 }

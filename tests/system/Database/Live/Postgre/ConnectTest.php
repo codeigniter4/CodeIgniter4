@@ -47,7 +47,7 @@ Main connection [Postgre]: ERROR:  invalid value for parameter "client_encoding"
         $group  = $config->tests;
         // Sets invalid charset.
         $group['charset'] = 'utf8mb4';
-        $db               = Database::connect($group);
+        $db               = Database::connect($group, false);
 
         // Actually connect to DB.
         $db->initialize();
