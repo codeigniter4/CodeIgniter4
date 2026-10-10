@@ -11,9 +11,10 @@ surface inside a ``configure()`` method. The framework then parses the command
 line, applies the declared defaults, validates what was passed, and finally
 calls ``execute()`` with typed, validated values.
 
-Modern and legacy commands can coexist (for now): existing ``BaseCommand`` classes
+Modern and legacy commands can coexist: existing ``BaseCommand`` classes
 continue to work, and the framework routes invocations to whichever command
-matches the requested name, regardless of style.
+matches the requested name, regardless of style. ``BaseCommand`` itself is
+deprecated, though. See `Migrating From BaseCommand`_.
 
 .. contents::
     :local:
@@ -58,6 +59,8 @@ The attribute holds the command's identity:
   ``list`` output, and are shown in an ``Aliases:`` section of ``help <command>``.
 - ``hidden`` is an optional flag, ``false`` by default, that keeps the command out of listings.
   See `Hidden Commands`_.
+- ``headerless`` is an optional flag, ``false`` by default, that stops spark from printing its header
+  before the command runs. See `Commands Without the Header`_.
 
 The attribute itself validates these constraints at construction time. If you
 misspell ``name``, you will see the error at discovery rather than at run time.
@@ -95,6 +98,24 @@ To check the flag in code, use ``isHidden()`` on a command instance, or
 
 .. note:: Hiding a command is not the same as leaving its ``group`` empty. A command with an
     empty group is never discovered, so it cannot run at all.
+
+.. _commands-without-the-header:
+
+Commands Without the Header
+===========================
+
+Spark prints a header with the framework version and the server time before running a command.
+A command whose output is read by another program, such as JSON piped to ``jq``, can drop the
+header by setting ``headerless: true`` on its ``#[Command]`` attribute:
+
+.. literalinclude:: cli_modern_commands/017.php
+
+This has the same effect as always passing ``--no-header``, and it covers the command's aliases
+too. ``php spark help app:status`` and ``php spark app:status --help`` still print the header,
+since help output is meant for people.
+
+To check the flag in code, use ``isHeaderless()`` on a command instance, or
+``Commands::isHeaderlessCommand()`` with a command name or alias.
 
 *****************
 Command Lifecycle
@@ -480,8 +501,8 @@ Coexistence With Legacy Commands
 
 Legacy ``BaseCommand`` classes are still supported, and they are discovered
 alongside modern commands. If the same name is claimed by both a legacy and a
-modern command, the legacy one is invoked and a warning is printed once at
-discovery time so you can rename or retire one of the two. Any aliases declared
+modern command, the legacy one is invoked and a warning is printed to STDERR once
+at discovery time so you can rename or retire one of the two. Any aliases declared
 by the shadowed modern command are dropped at discovery, so they are neither
 listed nor runnable. Resolve the collision and the modern command, along with
 its aliases, becomes reachable again.
@@ -501,12 +522,11 @@ params become positional arguments and string-keyed params become options, and
 the modern command validates them like any other input. Unknown options or extra
 arguments that a legacy target would have ignored are rejected.
 
-.. note::
+.. deprecated:: 4.8.0
 
-    Legacy commands remain supported while the framework's own built-in
-    commands are being migrated to the modern style. Once that migration is
-    complete, ``BaseCommand`` will start emitting deprecation notices. New
-    commands should be written against ``AbstractCommand`` from the start.
+    ``BaseCommand`` is deprecated, and running a legacy command triggers a
+    deprecation notice (see :ref:`logging_deprecation_warnings`). New commands
+    should be written against ``AbstractCommand`` from the start.
 
 ***************
 AbstractCommand
@@ -544,6 +564,11 @@ covered in the sections above and are not listed here.
 
         Returns whether the ``#[Command]`` attribute marks the command as hidden.
         See `Hidden Commands`_.
+
+    .. php:method:: isHeaderless(): bool
+
+        Returns whether the ``#[Command]`` attribute opts the command out of the header.
+        See `Commands Without the Header`_.
 
     .. php:method:: getUsages(): array
 
@@ -595,8 +620,8 @@ covered in the sections above and are not listed here.
 
         :param Throwable $e: The throwable to render.
 
-        Produces the same formatted output the framework uses for uncaught
-        exceptions. Safe to call from any command.
+        Produces the same formatted output on STDERR that the framework uses
+        for uncaught exceptions. Safe to call from any command.
 
     .. php:method:: hasArgument(string $name): bool
 

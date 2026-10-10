@@ -19,6 +19,8 @@ use Throwable;
 /**
  * GeneratorTrait contains a collection of methods
  * to build the commands that generates a file.
+ *
+ * @deprecated 4.8.0 Extend `AbstractGeneratorCommand` instead.
  */
 trait GeneratorTrait
 {

@@ -136,6 +136,8 @@ class CLI
      */
     protected static ?InputOutput $io = null;
 
+    protected static bool $stdoutToStderr = false;
+
     /**
      * Static "constructor".
      *
@@ -463,7 +465,7 @@ class CLI
         // Check color support for STDERR
         $stdout = static::$isColored;
 
-        static::$isColored = static::hasColorSupport(STDERR);
+        static::$isColored = is_cli() && static::hasColorSupport(STDERR);
 
         if ($foreground !== '' || (string) $background !== '') {
             $text = static::color($text, $foreground, $background);
@@ -475,7 +477,7 @@ class CLI
             static::$lastWrite = 'write';
         }
 
-        static::fwrite(STDERR, $text . PHP_EOL);
+        static::fwrite(is_cli() ? STDERR : STDOUT, $text . PHP_EOL);
 
         // return STDOUT color support
         static::$isColored = $stdout;
@@ -544,7 +546,7 @@ class CLI
     {
         // Unix systems, and Windows with VT100 Terminal support (i.e. Win10)
         // can handle CSI sequences. For lower than Win10 we just shove in 40 new lines.
-        is_windows() && ! static::streamSupports('sapi_windows_vt100_support', STDOUT)
+        is_windows() && is_cli() && ! static::streamSupports('sapi_windows_vt100_support', STDOUT)
             ? static::newLine(40)
             : static::fwrite(STDOUT, "\033[H\033[2J");
     }
@@ -1138,7 +1140,42 @@ class CLI
      */
     protected static function fwrite($handle, string $string)
     {
+        if (static::$stdoutToStderr && $handle === STDOUT) {
+            $handle = STDERR;
+        }
+
         static::$io->fwrite($handle, $string);
+    }
+
+    /**
+     * Runs the callback with its STDOUT writes sent to STDERR.
+     *
+     * @param callable(): void $callback
+     *
+     * @internal
+     */
+    public static function redirectToStderr(callable $callback): void
+    {
+        if (! is_cli()) {
+            $callback();
+
+            return;
+        }
+
+        $stdoutToStderr = static::$stdoutToStderr;
+        $isColored      = static::$isColored;
+        $lastWrite      = static::$lastWrite;
+
+        static::$stdoutToStderr = true;
+        static::$isColored      = static::hasColorSupport(STDERR);
+
+        try {
+            $callback();
+        } finally {
+            static::$stdoutToStderr = $stdoutToStderr;
+            static::$isColored      = $isColored;
+            static::$lastWrite      = $lastWrite;
+        }
     }
 
     /**
@@ -1148,13 +1185,14 @@ class CLI
      */
     public static function reset(): void
     {
-        static::$initialized = false;
-        static::$segments    = [];
-        static::$options     = [];
-        static::$lastWrite   = null;
-        static::$height      = null;
-        static::$width       = null;
-        static::$isColored   = static::hasColorSupport(STDOUT);
+        static::$initialized    = false;
+        static::$segments       = [];
+        static::$options        = [];
+        static::$lastWrite      = null;
+        static::$height         = null;
+        static::$width          = null;
+        static::$isColored      = static::hasColorSupport(STDOUT);
+        static::$stdoutToStderr = false;
 
         static::resetInputOutput();
     }

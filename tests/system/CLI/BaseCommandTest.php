@@ -17,6 +17,7 @@ use CodeIgniter\CLI\Exceptions\CLIException;
 use CodeIgniter\CodeIgniter;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\After;
 use PHPUnit\Framework\Attributes\Before;
@@ -41,6 +42,13 @@ final class BaseCommandTest extends CIUnitTestCase
         CLI::reset();
     }
 
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        service('superglobals')->setServer('CODEIGNITER_SCREAM_DEPRECATIONS', '1');
+    }
+
     public function testRunCommand(): void
     {
         $command = new AppInfo(single_service('logger'), single_service('commands'));
@@ -54,6 +62,8 @@ final class BaseCommandTest extends CIUnitTestCase
 
     public function testCallingOtherCommands(): void
     {
+        service('superglobals')->unsetServer('CODEIGNITER_SCREAM_DEPRECATIONS');
+
         $command = new AppInfo(single_service('logger'), single_service('commands'));
 
         $this->assertSame(0, $command->helpMe());
@@ -79,6 +89,8 @@ final class BaseCommandTest extends CIUnitTestCase
     public function testShowError(): void
     {
         $command = new AppInfo(single_service('logger'), single_service('commands'));
+
+        CITestStreamFilter::removeOutputFilter();
 
         $this->assertSame(1, $command->bomb());
         $this->assertStringContainsString('[CodeIgniter\CLI\Exceptions\CLIException]', $this->getStreamFilterBuffer());

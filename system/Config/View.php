@@ -37,7 +37,7 @@ class View extends BaseConfig
      *
      * @psalm-suppress UndefinedDocblockClass
      *
-     * @var array<string, (callable(mixed): mixed)&string>
+     * @var array<string, callable(mixed): mixed>
      */
     public $filters = [];
 
@@ -51,6 +51,14 @@ class View extends BaseConfig
      * @var array<string, (callable(mixed...): mixed)|((callable(mixed...): mixed)&string)|list<(callable(mixed...): mixed)&string>>
      */
     public $plugins = [];
+
+    /**
+     * When true, Parser conditionals may only contain variables, literals,
+     * arithmetic, comparison and logical operators, and parentheses. Enable
+     * this when less-trusted users can edit Parser templates. Can be overridden per
+     * call with the `restrictConditionals` render option.
+     */
+    public bool $restrictParserConditionals = false;
 
     /**
      * Built-in View filters.

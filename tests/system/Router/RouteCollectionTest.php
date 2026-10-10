@@ -1435,7 +1435,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $options = $routes->getRoutesOptions('administrator');
 
-        $this->assertSame($options, ['as' => 'admin', 'foo' => 'baz']);
+        $this->assertSame(['as' => 'admin', 'foo' => 'baz'], $options);
     }
 
     /**
@@ -1544,15 +1544,15 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $options = $routes->getRoutesOptions('administrator');
 
-        $this->assertSame($options, ['as' => 'admin1', 'foo' => 'baz1', 'bar' => 'baz']);
+        $this->assertSame(['as' => 'admin1', 'foo' => 'baz1', 'bar' => 'baz'], $options);
 
         $options = $routes->setHTTPVerb(Method::POST)->getRoutesOptions('administrator');
 
-        $this->assertSame($options, ['as' => 'admin2', 'foo' => 'baz2', 'bar' => 'baz']);
+        $this->assertSame(['as' => 'admin2', 'foo' => 'baz2', 'bar' => 'baz'], $options);
 
         $options = $routes->setHTTPVerb(Method::GET)->getRoutesOptions('administrator', Method::POST);
 
-        $this->assertSame($options, ['as' => 'admin2', 'foo' => 'baz2', 'bar' => 'baz']);
+        $this->assertSame(['as' => 'admin2', 'foo' => 'baz2', 'bar' => 'baz'], $options);
     }
 
     public function testRouteGroupWithFilterSimple(): void

@@ -455,20 +455,58 @@ class Builder extends BaseBuilder
         if (isset($this->QBOptions['setQueryAsData'])) {
             $data = $this->QBOptions['setQueryAsData'];
         } else {
+            $updateFields = $this->QBOptions['updateFields'] ?? [];
+
             $data = implode(
                 " UNION ALL\n",
                 array_map(
-                    static fn ($value): string => 'SELECT ' . implode(', ', array_map(
-                        static fn ($key, $index): string => $index . ' ' . $key,
+                    fn (array $value): string => sprintf('SELECT %s', implode(', ', array_map(
+                        fn (string $key, float|int|string $index): string => sprintf(
+                            '%s %s',
+                            $this->castValue((string) $index, $this->getSourceType($table, $key, $updateFields)),
+                            $key,
+                        ),
                         $keys,
                         $value,
-                    )),
+                    ))),
                     $values,
                 ),
             ) . "\n";
         }
 
         return str_replace('{:_table_:}', $data, $sql);
+    }
+
+    /**
+     * Returns the type shared by every destination column fed from the source key, or null when they differ.
+     *
+     * @param array<array-key, RawSql|string> $map Destination column to source key.
+     */
+    private function getSourceType(string $table, string $key, array $map): ?string
+    {
+        $columns = array_filter(array_keys($map, $key, true), is_string(...));
+
+        if ($columns === []) {
+            return $this->getFieldType($table, $key);
+        }
+
+        $types = array_unique(array_map(fn (string $column): ?string => $this->getFieldType($table, $column), $columns));
+
+        return count($types) === 1 ? reset($types) : null;
+    }
+
+    /**
+     * Returns the literal cast to the column type, except a numeric literal for a numeric column, which stays as is so a non-integral value never rounds into a match.
+     */
+    private function castValue(string $value, ?string $type): string
+    {
+        $isNumericType = in_array(strtolower((string) $type), ['smallint', 'integer', 'bigint', 'numeric', 'real', 'double precision'], true);
+
+        if ($isNumericType && is_numeric($value)) {
+            return $value;
+        }
+
+        return $this->cast($value, $type);
     }
 
     /**
@@ -497,11 +535,15 @@ class Builder extends BaseBuilder
             foreach ($this->db->getFieldData($table) as $field) {
                 $type = $field->type;
 
-                // If `character` (or `char`) lacks a specifier, it is equivalent
-                // to `character(1)`.
-                // See https://www.postgresql.org/docs/current/datatype-character.html
-                if ($field->type === 'character') {
-                    $type = $field->type . '(' . $field->max_length . ')';
+                // information_schema reports enum, domain and array columns as `USER-DEFINED` or `ARRAY`, which are not castable names.
+                if ($type === 'USER-DEFINED' || $type === 'ARRAY') {
+                    continue;
+                }
+
+                // `character` without a length is `character(1)` and `character(n)` truncates on cast,
+                // while `bpchar` keeps the full value.
+                if ($type === 'character') {
+                    $type = 'bpchar';
                 }
 
                 $this->QBOptions['fieldTypes'][$table][$field->name] = $type;
@@ -673,14 +715,20 @@ class Builder extends BaseBuilder
         if (isset($this->QBOptions['setQueryAsData'])) {
             $data = $this->QBOptions['setQueryAsData'];
         } else {
+            $constraints = $this->QBOptions['constraints'] ?? [];
+
             $data = implode(
                 " UNION ALL\n",
                 array_map(
-                    static fn ($value): string => 'SELECT ' . implode(', ', array_map(
-                        static fn ($key, $index): string => $index . ' ' . $key,
+                    fn (array $value): string => sprintf('SELECT %s', implode(', ', array_map(
+                        fn (string $key, float|int|string $index): string => sprintf(
+                            '%s %s',
+                            $this->castValue((string) $index, $this->getSourceType($table, $key, $constraints)),
+                            $key,
+                        ),
                         $keys,
                         $value,
-                    )),
+                    ))),
                     $values,
                 ),
             ) . "\n";

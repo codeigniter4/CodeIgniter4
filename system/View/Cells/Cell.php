@@ -111,13 +111,16 @@ class Cell implements Stringable
 
         $foundView = current($candidateViews);
 
-        return (function () use ($properties, $foundView): string {
+        // The parameter is variadic on purpose: func_get_arg() returns the current
+        // value of a named parameter, which extract() could overwrite with cell data.
+        return (function (string ...$foundView) use ($properties): string {
+            $foundView = $foundView[0]; // Keep $foundView available to the view as before.
             extract($properties);
             ob_start();
-            include $foundView;
+            include func_get_arg(0);
 
             return ob_get_clean();
-        })();
+        })($foundView);
     }
 
     /**

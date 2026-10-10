@@ -29,6 +29,8 @@ use Throwable;
  * @property string                $name
  * @property array<string, string> $options
  * @property string                $usage
+ *
+ * @deprecated 4.8.0 Extend `AbstractCommand` instead.
  */
 abstract class BaseCommand
 {
@@ -148,7 +150,9 @@ abstract class BaseCommand
         $message   = $e->getMessage();
         $config    = config(Exceptions::class);
 
-        require $config->errorViewPath . '/cli/error_exception.php';
+        CLI::redirectToStderr(static function () use ($exception, $message, $config): void {
+            require $config->errorViewPath . '/cli/error_exception.php';
+        });
     }
 
     /**

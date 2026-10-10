@@ -43,11 +43,17 @@ final class CommandTest extends CIUnitTestCase
         $this->assertSame('', $command->group);
         $this->assertSame([], $command->aliases);
         $this->assertFalse($command->hidden);
+        $this->assertFalse($command->headerless);
     }
 
     public function testAttributeExposesHidden(): void
     {
         $this->assertTrue((new Command(name: 'app:about', hidden: true))->hidden);
+    }
+
+    public function testAttributeExposesHeaderless(): void
+    {
+        $this->assertTrue((new Command(name: 'app:about', headerless: true))->headerless);
     }
 
     public function testAttributeExposesAliases(): void

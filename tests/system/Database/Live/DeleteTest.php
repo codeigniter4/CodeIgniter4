@@ -119,6 +119,73 @@ final class DeleteTest extends CIUnitTestCase
         $this->seeInDatabase('user', ['email' => 'derek@world.com', 'name' => 'Derek Jones']);
     }
 
+    public function testDeleteBatchWithMixedConstraintValueTypesInTextColumn(): void
+    {
+        if ($this->db->DBDriver === 'SQLSRV') {
+            $this->markTestSkipped('SQL Server cannot compare `text` columns with `=`.');
+        }
+
+        $table = 'type_test';
+
+        $builder = $this->db->table($table);
+        $builder->truncate();
+
+        foreach (['Example', '587', 'kept'] as $i => $text) {
+            $builder->insert([
+                'type_varchar'  => 'test' . $i,
+                'type_char'     => 'char',
+                'type_text'     => $text,
+                'type_smallint' => 32767,
+                'type_integer'  => 2_147_483_647,
+                'type_bigint'   => 9_223_372_036_854_775_807,
+                'type_float'    => 10.1,
+                'type_numeric'  => 123.23,
+                'type_date'     => '2023-12-0' . ($i + 1),
+                'type_datetime' => '2023-12-21 12:00:00',
+            ]);
+        }
+
+        $this->db->table($table)
+            ->setData([['text' => 'Example'], ['text' => 587]], null, 'data')
+            ->onConstraint(['type_text' => 'text'])
+            ->deleteBatch();
+
+        $this->dontSeeInDatabase($table, ['type_varchar' => 'test0']);
+        $this->dontSeeInDatabase($table, ['type_varchar' => 'test1']);
+        $this->seeInDatabase($table, ['type_varchar' => 'test2']);
+    }
+
+    public function testDeleteBatchDoesNotTruncateConstraintValueForCharColumn(): void
+    {
+        $table = 'type_test';
+
+        $builder = $this->db->table($table);
+        $builder->truncate();
+
+        for ($i = 0; $i < 2; $i++) {
+            $builder->insert([
+                'type_varchar'  => 'test' . $i,
+                'type_char'     => 'char' . $i,
+                'type_text'     => 'text',
+                'type_smallint' => 32767,
+                'type_integer'  => 2_147_483_647,
+                'type_bigint'   => 9_223_372_036_854_775_807,
+                'type_float'    => 10.1,
+                'type_numeric'  => 123.23,
+                'type_date'     => '2023-12-0' . ($i + 1),
+                'type_datetime' => '2023-12-21 12:00:00',
+            ]);
+        }
+
+        $this->db->table($table)
+            ->setData([['char' => 'char0     X'], ['char' => 'char1']], null, 'data')
+            ->onConstraint(['type_char' => 'char'])
+            ->deleteBatch();
+
+        $this->seeInDatabase($table, ['type_varchar' => 'test0']);
+        $this->dontSeeInDatabase($table, ['type_varchar' => 'test1']);
+    }
+
     public function testDeleteBatchConstraintsDate(): void
     {
         $table = 'type_test';

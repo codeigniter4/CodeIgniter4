@@ -109,6 +109,9 @@ You may always pass ``--no-header`` to suppress the header output, helpful for p
 
     Your environment is currently set as development.
 
+.. note:: A modern command can also opt out of the header for every run.
+    See :ref:`commands-without-the-header`.
+
 .. _correcting-a-mistyped-command:
 
 Correcting a Mistyped Command

@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\OCI8;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\RawSql;
+use stdClass;
 
 /**
  * Builder for OCI8
@@ -314,14 +315,21 @@ class Builder extends BaseBuilder
         if (isset($this->QBOptions['setQueryAsData'])) {
             $data = $this->QBOptions['setQueryAsData'];
         } else {
+            $updateFields = $this->QBOptions['updateFields'] ?? [];
+            $lengths      = $this->longestValues($keys, $values);
+
             $data = implode(
                 " UNION ALL\n",
                 array_map(
-                    static fn ($value): string => 'SELECT ' . implode(', ', array_map(
-                        static fn ($key, $index): string => $index . ' ' . $key,
+                    fn (array $value): string => sprintf('SELECT %s FROM DUAL', implode(', ', array_map(
+                        fn (string $key, float|int|string $index): string => sprintf(
+                            '%s %s',
+                            $this->cast((string) $index, $this->getSourceField($table, $key, $updateFields), $lengths[$key]),
+                            $key,
+                        ),
                         $keys,
                         $value,
-                    )) . ' FROM DUAL',
+                    ))),
                     $values,
                 ),
             ) . "\n";
@@ -498,14 +506,21 @@ class Builder extends BaseBuilder
         if (isset($this->QBOptions['setQueryAsData'])) {
             $data = $this->QBOptions['setQueryAsData'];
         } else {
+            $constraints = $this->QBOptions['constraints'] ?? [];
+            $lengths     = $this->longestValues($keys, $values);
+
             $data = implode(
                 " FROM DUAL UNION ALL\n",
                 array_map(
-                    static fn ($value): string => 'SELECT ' . implode(', ', array_map(
-                        static fn ($key, $index): string => $index . ' ' . $key,
+                    fn (array $value): string => sprintf('SELECT %s', implode(', ', array_map(
+                        fn (string $key, float|int|string $index): string => sprintf(
+                            '%s %s',
+                            $this->cast((string) $index, $this->getSourceField($table, $key, $constraints), $lengths[$key]),
+                            $key,
+                        ),
                         $keys,
                         $value,
-                    )),
+                    ))),
                     $values,
                 ),
             ) . " FROM DUAL\n";
@@ -520,5 +535,83 @@ class Builder extends BaseBuilder
     protected function fieldsFromQuery(string $sql): array
     {
         return $this->db->query('SELECT * FROM (' . $sql . ') "_u_" WHERE ROWNUM = 1')->getFieldNames();
+    }
+
+    /**
+     * Returns the longest escaped value per key across the batch.
+     *
+     * @param list<string>                 $keys
+     * @param list<list<float|int|string>> $values
+     *
+     * @return array<string, int>
+     */
+    private function longestValues(array $keys, array $values): array
+    {
+        $lengths = [];
+
+        foreach ($keys as $i => $key) {
+            $lengths[$key] = max(array_map(static fn (array $row): int => mb_strlen((string) $row[$i]), $values));
+        }
+
+        return $lengths;
+    }
+
+    /**
+     * Returns the field shared by every destination column fed from the source key, or null when their types differ.
+     *
+     * @param array<array-key, RawSql|string> $map Destination column to source key.
+     */
+    private function getSourceField(string $table, string $key, array $map): ?stdClass
+    {
+        $columns = array_filter(array_keys($map, $key, true), is_string(...));
+
+        if ($columns === []) {
+            return $this->getField($table, $key);
+        }
+
+        $fields = array_map(fn (string $column): ?stdClass => $this->getField($table, $column), $columns);
+        $types  = array_unique(array_map(static fn (?stdClass $field): string => $field instanceof stdClass ? $field->type . '(' . $field->max_length . ')' : '', $fields));
+
+        return count($types) === 1 ? reset($fields) : null;
+    }
+
+    /**
+     * Returns the literal converted to the field type, or unchanged when the field is unknown or a LOB.
+     *
+     * @param int $length Longest value for the key in the batch.
+     */
+    private function cast(string $value, ?stdClass $field, int $length): string
+    {
+        if (! $field instanceof stdClass) {
+            return $value;
+        }
+
+        return match ($field->type) {
+            // Every row gets the same fixed width, wide enough for the longest value, so the UNION ALL stays CHAR and nothing is truncated.
+            'CHAR', 'NCHAR'                                             => sprintf('CAST(%s AS %s(%d))', $value, $field->type, max((int) $field->max_length, $length)),
+            'VARCHAR2'                                                  => sprintf('TO_CHAR(%s)', $value),
+            'NVARCHAR2'                                                 => sprintf('TO_NCHAR(%s)', $value),
+            'RAW', 'LONG RAW', 'CLOB', 'NCLOB', 'BLOB', 'BFILE', 'LONG' => $value,
+            default                                                     => sprintf('CAST(%s AS %s)', $value, $field->type),
+        };
+    }
+
+    /**
+     * @param string $table     Protected table name.
+     * @param string $fieldName Field name. May be protected.
+     */
+    private function getField(string $table, string $fieldName): ?stdClass
+    {
+        $fieldName = trim($fieldName, $this->db->escapeChar);
+
+        if (! isset($this->QBOptions['fields'][$table])) {
+            $this->QBOptions['fields'][$table] = [];
+
+            foreach ($this->db->getFieldData($table) as $field) {
+                $this->QBOptions['fields'][$table][$field->name] = $field;
+            }
+        }
+
+        return $this->QBOptions['fields'][$table][$fieldName] ?? null;
     }
 }

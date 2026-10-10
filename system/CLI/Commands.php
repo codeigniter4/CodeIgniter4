@@ -28,7 +28,7 @@ use ReflectionException;
  * Command discovery and execution class.
  *
  * @phpstan-type legacy_commands array<string, array{class: class-string<BaseCommand>, file: string, group: string, description: string}>
- * @phpstan-type modern_commands array<string, array{class: class-string<AbstractCommand>, file: string, group: string, description: string, aliases: list<string>, hidden: bool}>
+ * @phpstan-type modern_commands array<string, array{class: class-string<AbstractCommand>, file: string, group: string, description: string, aliases: list<string>, hidden: bool, headerless: bool}>
  */
 class Commands
 {
@@ -101,6 +101,14 @@ class Commands
         if (! $this->verifyCommand($command)) {
             return EXIT_ERROR;
         }
+
+        @trigger_error(sprintf(
+            'Since v4.8.0, "%s" is deprecated. Command "%s" (%s) should extend "%s" instead.',
+            BaseCommand::class,
+            $command,
+            $this->commands[$command]['class'],
+            AbstractCommand::class,
+        ), E_USER_DEPRECATED);
 
         Events::trigger('pre_command');
 
@@ -207,6 +215,20 @@ class Commands
     }
 
     /**
+     * Checks whether the given command name or alias resolves to a headerless modern command that no legacy command shadows.
+     */
+    public function isHeaderlessCommand(string $name): bool
+    {
+        if (isset($this->commands[$name])) {
+            return false;
+        }
+
+        $resolved = $this->resolveCommand($name);
+
+        return $resolved !== null && $this->modernCommands[$resolved]['headerless'];
+    }
+
+    /**
      * @return ($legacy is true ? BaseCommand : AbstractCommand)
      *
      * @throws CommandNotFoundException
@@ -287,7 +309,7 @@ class Commands
         ksort($this->modernCommands);
 
         foreach (array_keys(array_intersect_key($this->commands, $this->modernCommands)) as $name) {
-            CLI::write(
+            CLI::error(
                 CLI::wrap(
                     lang('Commands.duplicateCommandName', [
                         $name,
@@ -473,6 +495,7 @@ class Commands
             'description' => $attribute->description,
             'aliases'     => $attribute->aliases,
             'hidden'      => $attribute->hidden,
+            'headerless'  => $attribute->headerless,
         ];
     }
 }

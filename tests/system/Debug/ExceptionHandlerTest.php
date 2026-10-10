@@ -21,6 +21,7 @@ use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\Test\IniTestTrait;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\App;
@@ -251,6 +252,21 @@ final class ExceptionHandlerTest extends CIUnitTestCase
         );
 
         $this->resetStreamFilterBuffer();
+    }
+
+    public function testHandleCLIExceptionWritesToStderr(): void
+    {
+        $request = Services::clirequest(null, false);
+        /** @var Response $response */
+        $response = service('response', null, false);
+        $response->pretend();
+
+        CITestStreamFilter::removeOutputFilter();
+
+        $this->handler->handle(new RuntimeException('Something broke.'), $request, $response, 500, EXIT_ERROR);
+
+        $this->assertStringContainsString('[' . RuntimeException::class . ']', $this->getStreamFilterBuffer());
+        $this->assertStringContainsString('Something broke.', $this->getStreamFilterBuffer());
     }
 
     public function testMaskSensitiveData(): void
