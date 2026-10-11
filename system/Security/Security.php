@@ -293,33 +293,26 @@ class Security implements SecurityInterface
 
         // If the token is found in JSON data, we can safely remove it.
         try {
-            $json   = json_decode($body, flags: JSON_THROW_ON_ERROR);
-            $isJson = true;
+            $json = json_decode($body, flags: JSON_THROW_ON_ERROR);
         } catch (JsonException) {
-            $json   = null;
-            $isJson = false;
-        }
+            // The body is not valid JSON - check for form-encoded data.
+            parse_str($body, $result);
 
-        if (is_object($json)) {
-            if (property_exists($json, $tokenName)) {
-                unset($json->{$tokenName});
-                $request->setBody(json_encode($json));
+            if (! array_key_exists($tokenName, $result)) {
+                return;
             }
 
+            unset($result[$tokenName]);
+            $request->setBody(http_build_query($result));
+
             return;
         }
 
-        // A valid JSON body that is not an object cannot contain the CSRF token,
-        // so leave it untouched.
-        if ($isJson) {
-            return;
+        // Valid JSON never falls through to form-encoded processing.
+        if (is_object($json) && property_exists($json, $tokenName)) {
+            unset($json->{$tokenName});
+            $request->setBody(json_encode($json));
         }
-
-        // If the token is found in form-encoded data, we can safely remove it.
-        parse_str($body, $result);
-
-        unset($result[$tokenName]);
-        $request->setBody(http_build_query($result));
     }
 
     private function getPostedToken(IncomingRequest $request): ?string
