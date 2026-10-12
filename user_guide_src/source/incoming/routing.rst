@@ -476,6 +476,15 @@ by passing the "hostname" option along with the desired domain to allow it on as
 This example would only allow the specified hosts to work if the domain exactly matched **accounts.example.com**.
 It would not work under the main site at **example.com**.
 
+.. note::
+
+    The ``hostname`` option is compared against the full ``HTTP_HOST`` value of the
+    request, including the port when one is present. When your application is served
+    on a non-standard port (for example ``localhost:8080``, behind Docker, or when
+    using ``php spark serve``), you must include the port in the ``hostname`` option for
+    the routes to match. For example, ``['hostname' => 'localhost:8080']`` matches only
+    requests to ``localhost:8080``.
+
 Restrict by Multiple Hostnames
 ------------------------------
 
