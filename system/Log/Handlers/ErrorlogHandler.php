@@ -45,7 +45,7 @@ class ErrorlogHandler extends BaseHandler
     /**
      * Constructor.
      *
-     * @param array{handles?: list<string>, messageType?: int} $config
+     * @param array{handles?: list<string>, stopChainOnFailure?: bool, messageType?: int} $config
      */
     public function __construct(array $config = [])
     {
@@ -66,6 +66,9 @@ class ErrorlogHandler extends BaseHandler
      * will stop. Any handlers that have not run, yet, will not
      * be run.
      *
+     * A failed write returns false only when `stopChainOnFailure`
+     * is enabled, which is the default.
+     *
      * @param string               $level
      * @param string               $message
      * @param array<string, mixed> $context
@@ -78,7 +81,7 @@ class ErrorlogHandler extends BaseHandler
 
         $message = strtoupper($level) . ' --> ' . $message . "\n";
 
-        return $this->errorLog($message, $this->messageType);
+        return $this->errorLog($message, $this->messageType) || ! $this->stopChainOnFailure;
     }
 
     /**
