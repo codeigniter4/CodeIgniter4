@@ -23,6 +23,7 @@ use Config\Generators;
 use PHPUnit\Framework\Attributes\After;
 use PHPUnit\Framework\Attributes\Before;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Commands\Modern\GeneratorFixtureCommand;
 use Tests\Support\Commands\Modern\ImportSortingGeneratorCommand;
@@ -498,16 +499,37 @@ final class AbstractGeneratorCommandTest extends CIUnitTestCase
         };
     }
 
-    public function testImportsAreSortedInGeneratedContent(): void
+    #[DataProvider('provideImportsAreSortedInGeneratedContent')]
+    public function testImportsAreSortedInGeneratedContent(string $template, string $expected): void
     {
-        $command = new ImportSortingGeneratorCommand(new Commands());
+        $command                   = new ImportSortingGeneratorCommand(new Commands());
+        $command->renderedTemplate = $template;
         $command->setInteractive(false);
 
         $command->run(['foo'], []);
 
-        $content = file_get_contents(APPPATH . 'Widgets' . DIRECTORY_SEPARATOR . 'Foo.php');
-        $this->assertIsString($content);
-        $this->assertStringContainsString("use App\\Alpha;\nuse App\\Zebra;", $content);
+        $this->assertSame($expected, file_get_contents(APPPATH . 'Widgets' . DIRECTORY_SEPARATOR . 'Foo.php'));
+    }
+
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function provideImportsAreSortedInGeneratedContent(): iterable
+    {
+        yield 'LF' => [
+            "<?php\n\nuse App\\Zebra;\nuse App\\Alpha;\n\nclass Foo {}\n",
+            "<?php\n\nuse App\\Alpha;\nuse App\\Zebra;\n\nclass Foo {}\n",
+        ];
+
+        yield 'CRLF' => [
+            "<?php\r\n\r\nuse App\\Zebra;\r\nuse App\\Alpha;\r\n\r\nclass Foo {}\r\n",
+            "<?php\r\n\r\nuse App\\Alpha;\r\nuse App\\Zebra;\r\n\r\nclass Foo {}\r\n",
+        ];
+
+        yield 'mixed' => [
+            "<?php\r\n\r\nuse App\\Zebra;\r\nuse App\\Beta;\nuse App\\Alpha;\r\n\r\nclass Foo {}\r\n",
+            "<?php\r\n\r\nuse App\\Alpha;\r\nuse App\\Beta;\r\nuse App\\Zebra;\r\n\r\nclass Foo {}\r\n",
+        ];
     }
 
     public function testImportSortingCanBeDisabled(): void
