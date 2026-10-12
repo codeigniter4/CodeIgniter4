@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\CLI;
 
+use CodeIgniter\CLI\Attributes\Command;
+use CodeIgniter\CLI\Attributes\GeneratorCommand;
 use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockInputOutput;
@@ -411,6 +413,89 @@ final class AbstractGeneratorCommandTest extends CIUnitTestCase
 
         $this->assertSame(EXIT_ERROR, $exitCode);
         $this->assertStringContainsString('File exists: ', $io->getOutput());
+    }
+
+    public function testNonInteractiveCodeIgniterNamespaceWarnsOnceAndProceeds(): void
+    {
+        $io = new MockInputOutput();
+        CLI::setInputOutput($io);
+
+        $command = $this->createClassAndViewGenerator();
+        $command->setInteractive(false);
+
+        $this->assertSame(EXIT_ERROR, $command->run([CLI::class], ['namespace' => 'CodeIgniter']));
+        $this->assertSame(
+            <<<'EOT'
+
+                Warning: Using the "CodeIgniter" namespace will generate the file in the system directory.
+                File exists: "SYSTEMPATH/CLI/CLI.php"
+                File exists: "SYSTEMPATH/CLI/Commands.php"
+
+                EOT,
+            preg_replace('/\e\[[^m]+m/', '', $io->getOutput()),
+        );
+    }
+
+    public function testAcceptedCodeIgniterNamespaceIsReusedForTheView(): void
+    {
+        $io = new MockInputOutput();
+        $io->setInputs(['y']);
+        CLI::setInputOutput($io);
+
+        $command = $this->createClassAndViewGenerator();
+        $command->setInteractive(true);
+
+        $this->assertSame(EXIT_ERROR, $command->run([CLI::class], ['namespace' => 'CodeIgniter']));
+        $this->assertSame(
+            <<<'EOT'
+
+                Warning: Using the "CodeIgniter" namespace will generate the file in the system directory.
+                Are you sure you want to continue? [y, n]: y
+                File exists: "SYSTEMPATH/CLI/CLI.php"
+                File exists: "SYSTEMPATH/CLI/Commands.php"
+
+                EOT,
+            preg_replace('/\e\[[^m]+m/', '', $io->getOutput()),
+        );
+    }
+
+    public function testCodeIgniterNamespaceIsConfirmedAgainOnTheNextRun(): void
+    {
+        $io = new MockInputOutput();
+        $io->setInputs(['y', 'n']);
+        CLI::setInputOutput($io);
+
+        $command = $this->createClassAndViewGenerator();
+        $command->setInteractive(true);
+
+        $this->assertSame(EXIT_ERROR, $command->run([CLI::class], ['namespace' => 'CodeIgniter']));
+        $this->assertSame(EXIT_SUCCESS, $command->run([CLI::class], ['namespace' => 'CodeIgniter']));
+        $this->assertSame(
+            <<<'EOT'
+
+                Warning: Using the "CodeIgniter" namespace will generate the file in the system directory.
+                Are you sure you want to continue? [y, n]: y
+                File exists: "SYSTEMPATH/CLI/CLI.php"
+                File exists: "SYSTEMPATH/CLI/Commands.php"
+                Warning: Using the "CodeIgniter" namespace will generate the file in the system directory.
+                Are you sure you want to continue? [y, n]: n
+                Operation has been cancelled.
+
+                EOT,
+            preg_replace('/\e\[[^m]+m/', '', $io->getOutput()),
+        );
+    }
+
+    private function createClassAndViewGenerator(): AbstractGeneratorCommand
+    {
+        return new #[Command(name: 'make:classandview', description: 'Generates a class and a view.', group: 'Fixtures')]
+        #[GeneratorCommand(component: 'Widget', template: 'config.tpl.php')]
+        class (new Commands()) extends AbstractGeneratorCommand {
+            protected function execute(array $arguments, array $options): int
+            {
+                return $this->generateClass() | $this->generateView(Commands::class);
+            }
+        };
     }
 
     public function testImportsAreSortedInGeneratedContent(): void

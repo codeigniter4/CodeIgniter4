@@ -82,7 +82,7 @@ class ModelGenerator extends AbstractGeneratorCommand
 
         $exitCode = $this->generateClass();
 
-        if ($exitCode !== EXIT_SUCCESS || $return !== 'entity') {
+        if ($exitCode !== EXIT_SUCCESS || $return !== 'entity' || $this->isCodeIgniterNamespaceDeclined()) {
             return $exitCode;
         }
 
@@ -92,7 +92,12 @@ class ModelGenerator extends AbstractGeneratorCommand
             $entityOptions['force'] = null;
         }
 
-        return $this->call('make:entity', [$this->getEntityClass($this->qualifyClassName())], $entityOptions);
+        return $this->call(
+            'make:entity',
+            [$this->getEntityClass($this->qualifyClassName())],
+            $entityOptions,
+            noInteractionOverride: true,
+        );
     }
 
     protected function getReplacements(string $class): array
