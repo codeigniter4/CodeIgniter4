@@ -276,8 +276,18 @@ class IncomingRequest extends Request
             return false;
         }
 
-        if ($this->hasHeader('X-Forwarded-Proto') && $this->header('X-Forwarded-Proto')->getValue() === 'https') {
-            return true;
+        if ($this->hasHeader('X-Forwarded-Proto')) {
+            $proto = $this->header('X-Forwarded-Proto')->getValue();
+
+            // A single value may be a string or a one-element array. Multiple
+            // values are ambiguous and cannot be trusted, so they are ignored.
+            if (is_array($proto)) {
+                $proto = count($proto) === 1 ? reset($proto) : null;
+            }
+
+            if (is_string($proto) && strtolower(trim($proto)) === 'https') {
+                return true;
+            }
         }
 
         if (! $this->hasHeader('Front-End-Https')) {
