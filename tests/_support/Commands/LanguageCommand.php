@@ -27,6 +27,7 @@ class LanguageCommand extends BaseCommand
     protected $options     = [
         '--lang' => 'The language folder to save the file.',
         '--sort' => 'Turn on/off the sortImports flag.',
+        '--crlf' => 'Use CRLF line endings in the template.',
     ];
 
     public function run(array $params): void
@@ -46,6 +47,8 @@ class LanguageCommand extends BaseCommand
 
     protected function prepare(string $class): string
     {
-        return file_get_contents(__DIR__ . '/Foobar.php') ?: '';
+        $template = file_get_contents(__DIR__ . '/Foobar.php') ?: '';
+
+        return $this->getOption('crlf') === true ? str_replace("\n", "\r\n", $template) : $template;
     }
 }
