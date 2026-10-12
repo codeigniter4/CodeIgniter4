@@ -639,6 +639,13 @@ meta tag for you:</p>
 <p class="admonition-title">Note</p>
 <p><code class="docutils literal notranslate"><span class="pre">php://input</span></code> (raw body) is checked since v4.4.2.</p>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you include the CSRF token in a JSON object, removing it decodes and
+re-encodes the body. This changes its formatting and may affect number
+precision. To keep the JSON body unchanged, send the token in the
+<code class="docutils literal notranslate"><span class="pre">X-CSRF-TOKEN</span></code> header and leave the CSRF field out of the body.</p>
+</div>
 </section>
 </section>
 <section id="other-helpful-methods">
@@ -673,7 +680,7 @@ the second optional parameter, <code class="docutils literal notranslate"><span 
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Oct 09, 2026.
+      <span class="lastupdated">Last updated on Oct 12, 2026.
       </span></p>
   </div>
 
