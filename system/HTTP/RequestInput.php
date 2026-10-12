@@ -19,8 +19,6 @@ use CodeIgniter\Input\InputDataFactory;
 
 /**
  * Provides typed input access for request data sources.
- *
- * @see \CodeIgniter\HTTP\RequestInputTest
  */
 final readonly class RequestInput
 {
