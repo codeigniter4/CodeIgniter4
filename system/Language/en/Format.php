@@ -16,5 +16,6 @@ return [
     'invalidFormatter' => '"{0}" is not a valid Formatter class.',
     'invalidJSON'      => 'Failed to parse JSON string. Error: {0}',
     'invalidMime'      => 'No Formatter defined for mime type: "{0}".',
+    'invalidXMLValue'  => 'Cannot convert the value of type "{0}" to a string for XML output.',
     'missingExtension' => 'The SimpleXML extension is required to format XML.',
 ];
