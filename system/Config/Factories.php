@@ -29,7 +29,6 @@ use CodeIgniter\Model;
  * @method static object|null     cells(string $alias, array<string, bool|string|null> $options = [])
  * @method static BaseConfig|null config(...$arguments)
  * @method static Model|null      models(string $alias, array<string, bool|string|null> $options = [], ?ConnectionInterface &$conn = null)
- * @see \CodeIgniter\Config\FactoriesTest
  */
 final class Factories
 {

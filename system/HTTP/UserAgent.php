@@ -18,8 +18,6 @@ use Stringable;
 
 /**
  * Abstraction for an HTTP user agent
- *
- * @see \CodeIgniter\HTTP\UserAgentTest
  */
 class UserAgent implements Stringable
 {

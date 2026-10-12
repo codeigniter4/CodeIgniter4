@@ -24,9 +24,6 @@ use CodeIgniter\Validation\ValidationInterface;
 use Config\Validation;
 use Psr\Log\LoggerInterface;
 
-/**
- * @see \CodeIgniter\ControllerTest
- */
 class Controller
 {
     /**

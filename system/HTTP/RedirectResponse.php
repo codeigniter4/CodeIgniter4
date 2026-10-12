@@ -18,8 +18,6 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 
 /**
  * Handle a redirect response
- *
- * @see \CodeIgniter\HTTP\RedirectResponseTest
  */
 class RedirectResponse extends Response
 {

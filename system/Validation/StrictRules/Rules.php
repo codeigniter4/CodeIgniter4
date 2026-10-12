@@ -18,8 +18,6 @@ use CodeIgniter\Validation\Rules as NonStrictRules;
 
 /**
  * Validation Rules.
- *
- * @see \CodeIgniter\Validation\StrictRules\RulesTest
  */
 class Rules
 {

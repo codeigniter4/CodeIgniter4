@@ -18,8 +18,6 @@ use Generator;
 
 /**
  * Collect all defined routes for display.
- *
- * @see \CodeIgniter\Router\DefinedRouteCollectorTest
  */
 final readonly class DefinedRouteCollector
 {

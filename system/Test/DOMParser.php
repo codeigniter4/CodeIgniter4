@@ -21,8 +21,6 @@ use DOMXPath;
 
 /**
  * Load a response into a DOMDocument for testing assertions based on that
- *
- * @see \CodeIgniter\Test\DOMParserTest
  */
 class DOMParser
 {

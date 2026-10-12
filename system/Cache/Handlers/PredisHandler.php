@@ -23,8 +23,6 @@ use Predis\Response\Status;
 
 /**
  * Predis cache handler
- *
- * @see \CodeIgniter\Cache\Handlers\PredisHandlerTest
  */
 class PredisHandler extends BaseHandler
 {

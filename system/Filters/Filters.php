@@ -23,8 +23,6 @@ use Config\Modules;
 
 /**
  * Filters
- *
- * @see \CodeIgniter\Filters\FiltersTest
  */
 class Filters
 {

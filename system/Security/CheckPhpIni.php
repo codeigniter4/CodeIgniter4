@@ -20,7 +20,6 @@ use CodeIgniter\View\Table;
  * Checks php.ini settings in production environment.
  *
  * @used-by \CodeIgniter\Commands\Utilities\PhpIniCheck
- * @see \CodeIgniter\Security\CheckPhpIniTest
  */
 class CheckPhpIni
 {

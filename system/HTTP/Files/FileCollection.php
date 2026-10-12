@@ -20,8 +20,6 @@ use RecursiveIteratorIterator;
  * Class FileCollection
  *
  * Provides easy access to uploaded files for a request.
- *
- * @see \CodeIgniter\HTTP\Files\FileCollectionTest
  */
 class FileCollection
 {
