@@ -318,6 +318,11 @@
 </section>
 <section id="bugs-fixed">
 <h2><a class="toc-backref" href="#id5" role="doc-backlink">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Security:</strong> Fixed a bug where a valid JSON request body that is not an object
+(for example a JSON array) was corrupted after CSRF verification when the
+token was sent via the <code class="docutils literal notranslate"><span class="pre">X-CSRF-TOKEN</span></code> header.</p></li>
+</ul>
 <p>See the repo’s
 <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a>
 for a complete list of bugs fixed.</p>
