@@ -237,6 +237,41 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertSame('{"foo":"bar"}', $request->getBody());
     }
 
+    #[DataProvider('provideCsrfVerifyPreservesNonObjectJsonBody')]
+    public function testCsrfVerifyPreservesNonObjectJsonBody(string $body): void
+    {
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setCookie('csrf_cookie_name', self::CORRECT_CSRF_HASH);
+
+        $security = $this->createMockSecurity();
+        $request  = $this->createIncomingRequest();
+
+        $request->setHeader('X-CSRF-TOKEN', self::CORRECT_CSRF_HASH);
+        $request->setBody($body);
+
+        $this->assertInstanceOf(Security::class, $security->verify($request));
+        $this->assertSame($body, $request->getBody());
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideCsrfVerifyPreservesNonObjectJsonBody(): iterable
+    {
+        yield 'JSON array' => ['[{"foo":"bar"}]'];
+
+        yield 'JSON array of scalars' => ['[1, 2, 3]'];
+
+        yield 'JSON number' => ['123'];
+
+        yield 'JSON boolean' => ['true'];
+
+        yield 'JSON null' => ['null'];
+
+        yield 'JSON string' => ['"foo"'];
+    }
+
     public function testCsrfVerifyPutBodyThrowsExceptionOnNoMatch(): void
     {
         service('superglobals')
