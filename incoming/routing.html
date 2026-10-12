@@ -1025,6 +1025,15 @@ by passing the “hostname” option along with the desired domain to allow it o
 </div>
 <p>This example would only allow the specified hosts to work if the domain exactly matched <strong>accounts.example.com</strong>.
 It would not work under the main site at <strong>example.com</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">hostname</span></code> option is compared against the full <code class="docutils literal notranslate"><span class="pre">HTTP_HOST</span></code> value of the
+request, including the port when one is present. When your application is served
+on a non-standard port (for example <code class="docutils literal notranslate"><span class="pre">localhost:8080</span></code>, behind Docker, or when
+using <code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span> <span class="pre">serve</span></code>), you must include the port in the <code class="docutils literal notranslate"><span class="pre">hostname</span></code> option for
+the routes to match. For example, <code class="docutils literal notranslate"><span class="pre">['hostname'</span> <span class="pre">=&gt;</span> <span class="pre">'localhost:8080']</span></code> matches only
+requests to <code class="docutils literal notranslate"><span class="pre">localhost:8080</span></code>.</p>
+</div>
 <section id="restrict-by-multiple-hostnames">
 <h4><a class="toc-backref" href="#id40" role="doc-backlink">Restrict by Multiple Hostnames</a><a class="headerlink" href="#restrict-by-multiple-hostnames" title="Link to this heading"></a></h4>
 <div class="versionadded">
