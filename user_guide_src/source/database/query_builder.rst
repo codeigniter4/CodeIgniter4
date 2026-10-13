@@ -301,6 +301,11 @@ Since v4.2.0, ``$builder->join()`` accepts a ``CodeIgniter\Database\RawSql`` ins
 
 .. literalinclude:: query_builder/102.php
 
+Since v4.8.0, the table can also be a ``RawSql`` instance. For example, you
+can join a subquery:
+
+.. literalinclude:: query_builder/134.php
+
 .. warning:: When you use ``RawSql``, you MUST escape the values and protect the identifiers manually. Failure to do so could result in SQL injections.
 
 *************************
@@ -1996,7 +2001,7 @@ Class Reference
 
     .. php:method:: join($table, $cond[, $type = ''[, $escape = null]])
 
-        :param string $table: Table name to join
+        :param string|RawSql $table: Table name or raw SQL to join
         :param string|RawSql $cond: The JOIN ON condition
         :param string $type: The JOIN type
         :param bool    $escape: Whether to escape values and identifiers
@@ -2004,7 +2009,8 @@ Class Reference
         :rtype:     ``BaseBuilder``
 
         Adds a ``JOIN`` clause to a query. Since v4.2.0, ``RawSql`` can be used
-        as the JOIN ON condition. See also :ref:`query-builder-join`.
+        as the JOIN ON condition. Since v4.8.0, ``RawSql`` can also be used
+        as the table. See also :ref:`query-builder-join`.
 
     .. php:method:: where($key[, $value = null[, $escape = null]])
 
