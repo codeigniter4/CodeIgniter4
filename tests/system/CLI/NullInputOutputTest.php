@@ -53,11 +53,7 @@ final class NullInputOutputTest extends CIUnitTestCase
             CLI::error('this too');
             $this->assertSame('', $this->getStreamFilterBuffer());
         } finally {
-            if ($prior instanceof InputOutput) {
-                CLI::setInputOutput($prior);
-            } else {
-                CLI::resetInputOutput();
-            }
+            CLI::setInputOutput($prior);
         }
     }
 }

@@ -133,20 +133,31 @@ class Commands
      *
      * @param list<string>                                 $arguments
      * @param array<string, list<string|null>|string|null> $options
+     * @param Output|null                                  $output    The output the command runs against, or `null` for `CLI::getOutput()`.
      */
-    public function runCommand(string $command, array $arguments, array $options): int
+    public function runCommand(string $command, array $arguments, array $options, ?Output $output = null): int
     {
-        if (! $this->verifyCommand($command, legacy: false)) {
+        $output ??= CLI::getOutput();
+
+        if (! $this->verifyCommand($command, legacy: false, output: $output)) {
             return EXIT_ERROR;
         }
 
-        Events::trigger('pre_command');
+        $previous = CLI::getOutput();
 
-        $exitCode = $this->getCommand($command, legacy: false)->run($arguments, $options);
+        CLI::setOutput($output);
 
-        Events::trigger('post_command');
+        try {
+            Events::trigger('pre_command');
 
-        return $exitCode;
+            $exitCode = $this->getCommand($command, legacy: false)->run($arguments, $options, $output);
+
+            Events::trigger('post_command');
+
+            return $exitCode;
+        } finally {
+            CLI::setOutput($previous);
+        }
     }
 
     /**
@@ -358,8 +369,9 @@ class Commands
      * Verifies if the command being sought is found in the commands list.
      *
      * @param legacy_commands $commands (no longer used)
+     * @param Output|null     $output   The output the "not found" error is written to, or `null` for `CLI::getOutput()`.
      */
-    public function verifyCommand(string $command, array $commands = [], bool $legacy = true): bool
+    public function verifyCommand(string $command, array $commands = [], bool $legacy = true, ?Output $output = null): bool
     {
         if ($commands !== []) {
             @trigger_error(sprintf('Since v4.8.0, the $commands parameter of %s() is no longer used.', __METHOD__), E_USER_DEPRECATED);
@@ -386,7 +398,7 @@ class Commands
             );
         }
 
-        CLI::error($message);
+        ($output ?? CLI::getOutput())->error($message);
 
         return false;
     }

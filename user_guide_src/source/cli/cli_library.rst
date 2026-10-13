@@ -17,12 +17,15 @@ CodeIgniter's CLI library makes creating interactive command-line scripts simple
 Initializing the Class
 **********************
 
-You do not need to create an instance of the CLI library, since all of it's methods are static. Instead, you simply
+You do not need to create an instance of the CLI library, since all of its methods are static. Instead, you simply
 need to ensure your controller can locate it via a ``use`` statement above your class:
 
 .. literalinclude:: cli_library/001.php
 
 The class is automatically initialized when the file is loaded the first time.
+
+Since v4.8.0 the static methods delegate to instance classes, which you can also use directly.
+See :ref:`cli-library-classes`.
 
 Getting Input from the User
 ***************************
@@ -147,6 +150,9 @@ print "Done" on the same line:
 
 .. literalinclude:: cli_library/012.php
 
+The next ``write()`` starts on a fresh line. Since v4.8.0, printed text that already ends in a line feed leaves the
+cursor at the start of a line, so that ``write()`` adds no blank line first.
+
 .. _cli-library-color:
 
 color()
@@ -261,3 +267,108 @@ Waits a certain number of seconds, optionally showing a wait message and
 waiting for a key press.
 
 .. literalinclude:: cli_library/022.php
+
+.. _cli-library-classes:
+
+The Classes Behind the Facade
+*****************************
+
+.. versionadded:: 4.8.0
+
+The static output methods delegate to instance classes, each with one job.
+``CLI::getOutput()`` and ``CLI::getTerminal()`` return the shared instances, and
+modern commands reach the output through ``$this->getOutput()``
+(see :ref:`modern-commands-writing-output`):
+
+.. literalinclude:: cli_library/024.php
+
+Mixing the static methods with the instance is safe, because both write to the same
+``Output`` and share its line breaks. The prompt methods remain static on ``CLI``.
+
+.. php:namespace:: CodeIgniter\CLI
+
+.. php:class:: Output
+
+    The writer. It targets STDOUT, sends ``error()`` to STDERR, and remembers whether the
+    cursor sits mid-line so that ``write()`` starts on a fresh line.
+
+    .. php:method:: __construct([InputOutput $io = new InputOutput()[, Terminal $terminal = new Terminal()]])
+
+        :param InputOutput $io:       The transport the text is written through.
+        :param Terminal    $terminal: The terminal consulted for colour support.
+
+    .. php:method:: print(string $text = ''[, string $foreground = ''[, string $background = '']]): void
+    .. php:method:: write(string $text = ''[, string $foreground = ''[, string $background = '']]): void
+    .. php:method:: error(string $text[, string $foreground = 'light_red'[, string $background = '']]): void
+    .. php:method:: newLine(int $num = 1): void
+    .. php:method:: beep(int $num = 1): void
+    .. php:method:: clearScreen(): void
+
+        The same as the static methods of the same names.
+
+    .. php:method:: color(string $text, string $foreground[, string $background = ''[, string $format = '']]): string
+
+        Colours the text when the target stream supports colours, and returns it unchanged otherwise.
+
+    .. php:method:: isDecorated(): bool
+
+        Whether the target stream supports colours.
+
+    .. php:method:: forStderr(): static
+
+        Returns a copy whose STDOUT writes target STDERR, which is what the framework swaps in
+        while rendering an exception.
+
+    .. php:method:: getTerminal(): Terminal
+
+.. php:class:: Terminal
+
+    The dimensions and capabilities of the terminal. The dimensions are read once and cached.
+
+    .. php:method:: getWidth(int $default = 80): int
+    .. php:method:: getHeight(int $default = 32): int
+    .. php:method:: generateDimensions(): void
+    .. php:method:: hasColorSupport($stream): bool
+    .. php:method:: streamSupports(string $function, $stream): bool
+
+        The same as the static methods of the same names.
+
+.. php:class:: ProgressBar
+
+    A ten-cell progress bar redrawn in place.
+
+    .. php:method:: __construct(Output $output)
+
+    .. php:method:: advanceTo(float|int $step[, int $totalSteps = 10]): void
+
+        Draws the bar for the step, capped at 100%, over the previous bar unless the step
+        went backwards. A negative step or a total below one throws ``InvalidArgumentException``,
+        where ``CLI::showProgress()`` keeps tolerating them.
+
+    .. php:method:: clear(): void
+
+        Rings the bell and starts a new bar on the next ``advanceTo()``. This is what
+        ``CLI::showProgress(false)`` does.
+
+.. php:class:: Table
+
+    .. php:method:: __construct(array $tbody[, array $thead = []])
+
+        :param array $tbody: List of rows.
+        :param array $thead: List of column headings.
+
+    .. php:method:: render(): string
+
+        Returns the table as lines ending in ``PHP_EOL``, ready for ``Output::write()``.
+
+.. php:class:: Color
+
+    The ANSI colour codes, independent of any stream.
+
+    .. php:staticmethod:: apply(string $text, string $foreground[, string $background = ''[, string $format = '']]): string
+
+        Wraps the text in the colour codes, always. Throws ``CLIException`` for an unknown colour.
+
+    .. php:staticmethod:: width(string $string): int
+
+        Returns the display width of the text without its colour codes, as ``CLI::strlen()`` does.

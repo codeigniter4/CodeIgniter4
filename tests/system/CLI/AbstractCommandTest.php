@@ -37,14 +37,16 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use ReflectionClass;
-use ReflectionProperty;
 use Tests\Support\Commands\Modern\AppAboutCommand;
+use Tests\Support\Commands\Modern\CallsAboutCommand;
 use Tests\Support\Commands\Modern\HeaderlessCommand;
 use Tests\Support\Commands\Modern\HiddenCommand;
 use Tests\Support\Commands\Modern\InteractFixtureCommand;
 use Tests\Support\Commands\Modern\InteractiveStateProbeCommand;
+use Tests\Support\Commands\Modern\OutputProbeCommand;
 use Tests\Support\Commands\Modern\ParentCallsInteractFixtureCommand;
 use Tests\Support\Commands\Modern\PromptingFixtureCommand;
+use Tests\Support\Commands\Modern\SilentCallCommand;
 use Tests\Support\Commands\Modern\TestFixtureCommand;
 use Tests\Support\Commands\Modern\UnavailableFixtureCommand;
 use Throwable;
@@ -300,17 +302,15 @@ final class AbstractCommandTest extends CIUnitTestCase
         $this->assertSame($custom, CLI::getInputOutput());
     }
 
-    public function testCallSilentlyResetsToFreshInputOutputWhenPriorWasNull(): void
+    public function testCallSilentlyRestoresPriorOutput(): void
     {
-        $property = new ReflectionProperty(CLI::class, 'io');
-        $property->setValue(null, null);
+        $prior = CLI::getOutput();
 
         $command = new AppAboutCommand(new Commands());
         $command->helpMeSilently();
 
-        $current = CLI::getInputOutput();
-        $this->assertInstanceOf(InputOutput::class, $current);
-        $this->assertNotInstanceOf(NullInputOutput::class, $current);
+        $this->assertSame($prior, CLI::getOutput());
+        $this->assertNotInstanceOf(NullInputOutput::class, CLI::getInputOutput());
     }
 
     public function testCallSilentlyPropagatesSubCommandNonZeroExitCode(): void
@@ -321,17 +321,93 @@ final class AbstractCommandTest extends CIUnitTestCase
         $this->assertSame('', $this->getStreamFilterBuffer());
     }
 
-    public function testCallSilentlyRestoresPriorLastWriteState(): void
+    public function testCallSilentlyLeavesTheParentCursorStateAlone(): void
     {
-        CLI::setLastWrite(null);
+        CLI::write('before');
 
         $command = new AppAboutCommand(new Commands());
         $command->helpMeSilently();
 
-        $this->assertNull(
-            CLI::getLastWrite(),
-            'callSilently() must not leak the silenced sub-command\'s $lastWrite mutation back to the parent.',
-        );
+        CLI::write('after');
+
+        $this->assertSame("\nbefore\nafter\n", $this->getUndecoratedBuffer());
+    }
+
+    public function testRunWithOutputWritesToItAndRestoresTheFacade(): void
+    {
+        $io       = new MockInputOutput();
+        $output   = new Output($io);
+        $previous = CLI::getOutput();
+        $command  = new OutputProbeCommand(new Commands());
+
+        $this->assertSame(EXIT_SUCCESS, $command->run([], [], $output));
+        $this->assertSame($output, $command->seen);
+        $this->assertSame($previous, CLI::getOutput());
+        $this->assertSame("\nfrom output\nfrom facade\n", $io->getOutput());
+        $this->assertSame('', $this->getStreamFilterBuffer());
+    }
+
+    public function testRunWithoutOutputUsesTheFacadeOutput(): void
+    {
+        $command = new OutputProbeCommand(new Commands());
+
+        $command->run([], []);
+
+        $this->assertSame(CLI::getOutput(), $command->seen);
+        $this->assertSame("\nfrom output\nfrom facade\n", $this->getUndecoratedBuffer());
+    }
+
+    public function testRunWithOutputRestoresTheFacadeWhenTheCommandIsUnavailable(): void
+    {
+        $previous = CLI::getOutput();
+        $command  = new UnavailableFixtureCommand(new Commands());
+
+        UnavailableFixtureCommand::$available = false;
+
+        try {
+            $command->run([], [], new Output(new MockInputOutput()));
+            $this->fail('CommandNotAvailableException was not thrown.');
+        } catch (CommandNotAvailableException) {
+            $this->assertSame($previous, CLI::getOutput());
+        }
+    }
+
+    public function testNestedCallInheritsThePassedOutput(): void
+    {
+        $io      = new MockInputOutput();
+        $command = new CallsAboutCommand(new Commands());
+
+        $this->assertSame(EXIT_SUCCESS, $command->run([], [], new Output($io)));
+        $this->assertStringContainsString('CodeIgniter Version:', $io->getOutput());
+        $this->assertSame('', $this->getStreamFilterBuffer());
+    }
+
+    public function testCallSilentlyInsideRunRestoresThePassedOutput(): void
+    {
+        $io      = new MockInputOutput();
+        $output  = new Output($io);
+        $command = new SilentCallCommand(new Commands());
+
+        $command->run([], [], $output);
+
+        $this->assertSame($output, $command->afterSilentCall);
+        $this->assertSame("\nafter\n", $io->getOutput());
+        $this->assertSame('', $this->getStreamFilterBuffer());
+    }
+
+    public function testGetOutputFallsBackToTheFacadeBetweenRuns(): void
+    {
+        $output    = new Output(new MockInputOutput());
+        $command   = new OutputProbeCommand(new Commands());
+        $getOutput = $this->getPrivateMethodInvoker($command, 'getOutput');
+
+        $this->assertSame(CLI::getOutput(), $getOutput());
+
+        $command->run([], [], $output);
+
+        $this->assertSame($output, $command->seen);
+        $this->assertSame(CLI::getOutput(), $getOutput());
+        $this->assertNotSame($output, $getOutput());
     }
 
     public function testCallSilentlyForwardsNoInteractionOverrideFalseToChild(): void
@@ -1252,6 +1328,29 @@ final class AbstractCommandTest extends CIUnitTestCase
         $this->expectException(ArgumentCountMismatchException::class);
 
         $command->run([], []);
+    }
+
+    public function testPromptingIsSkippedWithAPassedNullOutput(): void
+    {
+        $command = new PromptingFixtureCommand(new Commands());
+        $command->setInteractive(true);
+
+        $this->expectException(ArgumentCountMismatchException::class);
+
+        $command->run([], [], new Output(new NullInputOutput()));
+    }
+
+    public function testPromptsReadFromThePassedOutput(): void
+    {
+        $io = new MockInputOutput();
+        $io->setInputs(['alpha', 'beta']);
+
+        $command = new PromptingFixtureCommand(new Commands());
+        $command->setInteractive(true);
+
+        $this->assertSame(EXIT_SUCCESS, $command->run([], [], new Output($io)));
+        $this->assertSame(['first' => 'alpha', 'second' => 'beta'], PromptingFixtureCommand::$receivedArguments);
+        $this->assertStringContainsString('What is the second value?', $io->getOutput());
     }
 
     public function testNonImplementingCommandIsNotPrompted(): void
