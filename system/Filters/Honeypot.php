@@ -20,8 +20,6 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 /**
  * Honeypot filter
- *
- * @see \CodeIgniter\Filters\HoneypotTest
  */
 class Honeypot implements FilterInterface
 {

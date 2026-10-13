@@ -18,8 +18,6 @@ use CodeIgniter\Cache\FactoriesCache\FileVarExportHandler;
 
 /**
  * FileLocator with Cache
- *
- * @see \CodeIgniter\Autoloader\FileLocatorCachedTest
  */
 final class FileLocatorCached implements FileLocatorInterface
 {

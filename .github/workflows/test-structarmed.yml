@@ -72,20 +72,22 @@ jobs:
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ${{ steps.composer-cache.outputs.COMPOSER_CACHE_FILES_DIR }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: ${{ runner.os }}-composer-
-
-      - name: Install dependencies
-        run: composer update --ansi --no-interaction
+          key: composer-php-${{ matrix.php-version }}-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            composer-php-${{ matrix.php-version }}-
+            composer-
 
       - name: Structarmed Cache
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: /tmp/structarmed
-          key: ${{ runner.os }}-structarmed-${{ github.run_id }}
-          restore-keys: ${{ runner.os }}-structarmed-
+          key: structarmed-${{ hashFiles('**/*.php', 'composer.json') }}
+          restore-keys: structarmed-
 
       - run: mkdir -p /tmp/structarmed
+
+      - name: Install dependencies
+        run: composer update --ansi --no-interaction
 
       - name: Run static analysis
         run: vendor/bin/structarmed analyze

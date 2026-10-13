@@ -20,8 +20,6 @@ use Config\Cache;
 
 /**
  * APCu cache handler
- *
- * @see \CodeIgniter\Cache\Handlers\ApcuHandlerTest
  */
 class ApcuHandler extends BaseHandler
 {

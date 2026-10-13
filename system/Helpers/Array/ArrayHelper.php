@@ -24,11 +24,6 @@ use Traversable;
  *
  * If there are any methods that should be provided, make them
  * public APIs via helper functions.
- *
- * @see \CodeIgniter\Helpers\Array\ArrayHelperDotHasTest
- * @see \CodeIgniter\Helpers\Array\ArrayHelperDotModifyTest
- * @see \CodeIgniter\Helpers\Array\ArrayHelperRecursiveDiffTest
- * @see \CodeIgniter\Helpers\Array\ArrayHelperSortValuesByNaturalTest
  */
 final class ArrayHelper
 {

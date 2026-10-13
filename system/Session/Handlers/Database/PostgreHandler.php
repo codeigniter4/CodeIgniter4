@@ -18,8 +18,6 @@ use CodeIgniter\Session\Handlers\DatabaseHandler;
 
 /**
  * Session handler for Postgre
- *
- * @see \CodeIgniter\Session\Handlers\Database\PostgreHandlerTest
  */
 class PostgreHandler extends DatabaseHandler
 {

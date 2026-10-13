@@ -24,8 +24,6 @@ use IntlCalendar;
  * @property-read int       $seconds
  * @property-read float|int $weeks
  * @property-read float|int $years
- *
- * @see \CodeIgniter\I18n\TimeDifferenceTest
  */
 class TimeDifference
 {

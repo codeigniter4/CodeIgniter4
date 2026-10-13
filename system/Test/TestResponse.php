@@ -25,8 +25,6 @@ use PHPUnit\Framework\Constraint\IsEqual;
  * for test results.
  *
  * @mixin DOMParser
- *
- * @see \CodeIgniter\Test\TestResponseTest
  */
 class TestResponse
 {

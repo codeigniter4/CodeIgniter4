@@ -18,9 +18,6 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
 use Config\Database as DbConfig;
 use Throwable;
 
-/**
- * @see \CodeIgniter\Database\ConfigTest
- */
 class Config extends BaseConfig
 {
     /**

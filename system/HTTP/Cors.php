@@ -18,8 +18,6 @@ use Config\Cors as CorsConfig;
 
 /**
  * Cross-Origin Resource Sharing (CORS)
- *
- * @see \CodeIgniter\HTTP\CorsTest
  */
 class Cors
 {

@@ -17,8 +17,6 @@ use Config\Modules;
 
 /**
  * Events
- *
- * @see \CodeIgniter\Events\EventsTest
  */
 class Events
 {

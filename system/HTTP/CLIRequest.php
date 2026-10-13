@@ -28,8 +28,6 @@ use Locale;
  * originally made available under.
  *
  * http://fuelphp.com
- *
- * @see \CodeIgniter\HTTP\CLIRequestTest
  */
 class CLIRequest extends Request
 {

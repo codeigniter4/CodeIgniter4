@@ -268,6 +268,13 @@ The order of checking the availability of the CSRF token is as follows:
 
 .. note:: ``php://input`` (raw body) is checked since v4.4.2.
 
+.. note::
+
+    If you include the CSRF token in a JSON object, removing it decodes and
+    re-encodes the body. This changes its formatting and may affect number
+    precision. To keep the JSON body unchanged, send the token in the
+    ``X-CSRF-TOKEN`` header and leave the CSRF field out of the body.
+
 *********************
 Other Helpful Methods
 *********************

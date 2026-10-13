@@ -17,8 +17,6 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
 
 /**
  * An HTTP message
- *
- * @see \CodeIgniter\HTTP\MessageTest
  */
 class Message implements MessageInterface
 {

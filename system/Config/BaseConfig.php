@@ -29,7 +29,6 @@ use ReflectionException;
  * These can be set within the .env file.
  *
  * @phpstan-consistent-constructor
- * @see \CodeIgniter\Config\BaseConfigTest
  */
 class BaseConfig
 {
