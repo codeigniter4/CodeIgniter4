@@ -17,8 +17,6 @@ use JsonException;
 
 /**
  * HTTP response for Server-Sent Events (SSE) streaming.
- *
- * @see \CodeIgniter\HTTP\SSEResponseTest
  */
 class SSEResponse extends StreamResponse
 {
