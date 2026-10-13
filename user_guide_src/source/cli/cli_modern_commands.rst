@@ -365,6 +365,26 @@ flag was actually passed rather than whether it resolved to a default value.
 
 Accessors that take a name throw ``LogicException`` when the name is not declared on the command.
 
+.. _modern-commands-writing-output:
+
+**************
+Writing Output
+**************
+
+``$this->getOutput()`` returns the :php:class:`Output <CodeIgniter\\CLI\\Output>` of the
+current run. It is the same instance written to by the static ``CLI`` methods, so the two
+can be mixed and the line breaks stay consistent. ``Output`` carries the writing
+methods: ``write()``, ``print()``, ``error()``, ``newLine()``, ``beep()``,
+``clearScreen()``, and ``color()``. Tables and progress bars are rendered by
+:php:class:`Table <CodeIgniter\\CLI\\Table>` and :php:class:`ProgressBar <CodeIgniter\\CLI\\ProgressBar>`:
+
+.. literalinclude:: cli_modern_commands/018.php
+
+By default the run writes to the output shared through ``CLI::getOutput()``. Pass an
+``Output`` as the third argument of ``run()`` to write somewhere else, for instance
+to a ``MockInputOutput`` in a test. See :doc:`../cli/cli_library` for the classes and
+:ref:`testing-cli-output` for testing.
+
 ***********************
 Calling Another Command
 ***********************
@@ -399,6 +419,11 @@ use ``$this->callSilently()``:
 The sub-command's output is suppressed and ``$noInteractionOverride`` defaults
 to ``true``, since a silenced sub-command cannot meaningfully prompt. Pass an
 explicit value to override.
+
+While the sub-command runs, ``CLI::getOutput()`` and ``$this->getOutput()`` return an
+output backed by ``NullInputOutput``, so everything written through either, including
+the sub-command's own ``callSilently()`` or ``call()`` sub-commands, is discarded. The
+previous output is restored afterwards.
 
 **************
 Usage Examples
@@ -665,16 +690,28 @@ covered in the sections above and are not listed here.
         detection for this command instance. Typically called from
         ``initialize()`` or by an outer caller.
 
-    .. php:method:: run(array $arguments, array $options): int
+    .. php:method:: run(array $arguments, array $options[, ?Output $output = null]): int
 
-        :param array $arguments: The raw positional arguments parsed from the command line.
-        :param array $options:   The raw option map parsed from the command line.
-        :returns:                The exit code returned by ``execute()``.
+        :param array       $arguments: The raw positional arguments parsed from the command line.
+        :param array       $options:   The raw option map parsed from the command line.
+        :param Output|null $output:    The output to run against, or ``null`` for ``CLI::getOutput()``.
+        :returns:                      The exit code returned by ``execute()``.
 
         **Final.** Walks the command through ``initialize()``, ``interact()``,
         bind, validate, and finally ``execute()``. The framework calls this
         on your behalf — you rarely invoke it directly, but you can when
         driving a command manually (for instance, from a test).
+
+        A passed ``$output`` replaces ``CLI::getOutput()`` for the duration of the
+        run, so sub-commands called with :php:meth:`call` inherit it. The previous
+        output is restored afterwards, also when the run throws, so an uncaught
+        exception is rendered on the previous output.
+
+    .. php:method:: getOutput(): Output
+
+        Returns the :php:class:`Output <CodeIgniter\\CLI\\Output>` of the current run,
+        which is the same instance written to by the static ``CLI`` methods. See
+        :ref:`modern-commands-writing-output`.
 
     .. php:method:: call(string $command[, array $arguments = [], array $options = [], ?bool $noInteractionOverride = null]): int
 

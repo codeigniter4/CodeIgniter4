@@ -1,4 +1,4 @@
-# total 6 errors
+# total 12 errors
 
 parameters:
     ignoreErrors:
@@ -6,6 +6,11 @@ parameters:
             message: '#^Function is_cli invoked with 1 parameter, 0 required\.$#'
             count: 4
             path: ../../tests/system/CLI/CLITest.php
+
+        -
+            message: '#^Function is_cli invoked with 1 parameter, 0 required\.$#'
+            count: 6
+            path: ../../tests/system/CLI/OutputTest.php
 
         -
             message: '#^Function is_cli invoked with 1 parameter, 0 required\.$#'

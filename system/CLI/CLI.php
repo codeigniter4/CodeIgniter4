@@ -13,20 +13,15 @@ declare(strict_types=1);
 
 namespace CodeIgniter\CLI;
 
-use CodeIgniter\CLI\Exceptions\CLIException;
 use CodeIgniter\Exceptions\InvalidArgumentException;
-use Throwable;
+use WeakMap;
 
 /**
- * Set of static methods useful for CLI request handling.
+ * Static facade for console output, prompts and the parsed command line.
  *
  * Portions of this code were initially from the FuelPHP Framework,
  * version 1.7.x, and used here under the MIT license they were
  * originally made available under. Reference: http://fuelphp.com
- *
- * Some of the code in this class is Windows-specific, and not
- * possible to test using travis-ci. It has been phpunit-annotated
- * to prevent messing up code coverage.
  */
 class CLI
 {
@@ -47,7 +42,7 @@ class CLI
      *
      * @var array<string, string>
      *
-     * @TODO Fix to camelCase in the next major version.
+     * @deprecated 4.8.0 Unused. The codes live in `Color`.
      */
     protected static $foreground_colors = [
         'black'        => '0;30',
@@ -74,7 +69,7 @@ class CLI
      *
      * @var array<string, string>
      *
-     * @TODO Fix to camelCase in the next major version.
+     * @deprecated 4.8.0 Unused. The codes live in `Color`.
      */
     protected static $background_colors = [
         'black'      => '40',
@@ -105,6 +100,8 @@ class CLI
      * keep the output clean and as expected.
      *
      * @var string|null
+     *
+     * @deprecated 4.8.0 Unused. The cursor state lives in `Output`.
      */
     protected static $lastWrite;
 
@@ -112,6 +109,8 @@ class CLI
      * Height of the CLI window
      *
      * @var int|null
+     *
+     * @deprecated 4.8.0 Unused. The dimensions live in `Terminal`.
      */
     protected static $height;
 
@@ -119,6 +118,8 @@ class CLI
      * Width of the CLI window
      *
      * @var int|null
+     *
+     * @deprecated 4.8.0 Unused. The dimensions live in `Terminal`.
      */
     protected static $width;
 
@@ -126,15 +127,31 @@ class CLI
      * Whether the current stream supports colored output.
      *
      * @var bool
+     *
+     * @deprecated 4.8.0 Unused. Colour support is detected per stream by `Output`.
      */
     protected static $isColored = false;
 
     /**
      * Input and Output for CLI.
+     *
+     * @deprecated 4.8.0 Unused. The transport is held by `Output`.
      */
     protected static ?InputOutput $io = null;
 
+    /**
+     * @deprecated 4.8.0 Unused. The target stream lives in `Output`.
+     */
     protected static bool $stdoutToStderr = false;
+
+    private static ?Output $output = null;
+
+    /**
+     * The progress bar of each output, so a bar in progress survives a temporary swap of the output.
+     *
+     * @var WeakMap<Output, ProgressBar>|null
+     */
+    private static ?WeakMap $progressBars = null;
 
     /**
      * Static "constructor".
@@ -144,13 +161,6 @@ class CLI
     public static function init()
     {
         if (is_cli()) {
-            // clear segments & options to keep testing clean
-            static::$segments = [];
-            static::$options  = [];
-
-            // Check our stream resource for color support
-            static::$isColored = static::hasColorSupport(STDOUT);
-
             $parser = new CommandLineParser(service('superglobals')->server('argv', []));
 
             static::$segments = $parser->getArguments();
@@ -163,7 +173,33 @@ class CLI
             define('STDOUT', 'php://output'); // @codeCoverageIgnore
         }
 
-        static::resetInputOutput();
+        self::resetOutput();
+    }
+
+    /**
+     * Returns the terminal of the current output.
+     */
+    public static function getTerminal(): Terminal
+    {
+        return static::getOutput()->getTerminal();
+    }
+
+    /**
+     * Returns the writer behind every output method of this facade.
+     */
+    public static function getOutput(): Output
+    {
+        self::$output ??= new Output();
+
+        return self::$output;
+    }
+
+    /**
+     * Replaces the writer behind every output method of this facade.
+     */
+    public static function setOutput(Output $output): void
+    {
+        self::$output = $output;
     }
 
     /**
@@ -176,7 +212,7 @@ class CLI
      */
     public static function input(?string $prefix = null): string
     {
-        return static::$io->input($prefix);
+        return static::getOutput()->getInputOutput()->input($prefix);
     }
 
     /**
@@ -236,11 +272,12 @@ class CLI
             $default = $options[0];
         }
 
-        static::$lastWrite = 'write';
+        $output = static::getOutput();
+        $output->setCursorAtLineStart(true);
 
         // The reader renders the prompt itself, so readline redraws repaint it instead of erasing it.
         $prompt = sprintf('%s%s%s: ', $field, trim($field) !== '' ? ' ' : '', $extraOutput);
-        $input  = trim(static::$io->input($prompt));
+        $input  = trim($output->getInputOutput()->input($prompt));
         $input  = $input === '' ? (string) $default : $input;
 
         if ($validation !== []) {
@@ -270,13 +307,13 @@ class CLI
             throw new InvalidArgumentException('$text can only be of type string|array');
         }
 
-        CLI::isZeroOptions($options);
+        self::isZeroOptions($options);
 
         if (($line = array_shift($text)) !== null) {
-            CLI::write($line);
+            static::write($line);
         }
 
-        CLI::printKeysAndValues($options);
+        self::printKeysAndValues($options);
 
         return static::prompt(PHP_EOL . array_shift($text), array_keys($options), $validation);
     }
@@ -292,7 +329,7 @@ class CLI
      */
     public static function promptByMultipleKeys(string $text, array $options): array
     {
-        CLI::isZeroOptions($options);
+        self::isZeroOptions($options);
 
         $extraOutputDefault = static::color('0', 'green');
         $opts               = $options;
@@ -306,9 +343,9 @@ class CLI
             $extraOutput = 'You can specify multiple values separated by commas.' . PHP_EOL . $extraOutput;
         }
 
-        CLI::write($text);
-        CLI::printKeysAndValues($options);
-        CLI::newLine();
+        static::write($text);
+        self::printKeysAndValues($options);
+        static::newLine();
 
         $input = static::prompt($extraOutput);
         $input = ($input === '') ? '0' : $input; // 0 is default
@@ -329,7 +366,7 @@ class CLI
             // it means user tried to access null value in $options
             if ($pattern < 1 || $maxOptions < $maxInput) {
                 static::error('Please select correctly.');
-                CLI::newLine();
+                static::newLine();
 
                 $input = static::prompt($extraOutput);
                 $input = ($input === '') ? '0' : $input;
@@ -350,10 +387,6 @@ class CLI
 
         return $input;
     }
-
-    // --------------------------------------------------------------------
-    // Utility for promptBy...
-    // --------------------------------------------------------------------
 
     /**
      * Validation for $options in promptByKey() and promptByMultipleKeys(). Return an error if $options is an empty array.
@@ -379,13 +412,9 @@ class CLI
 
         foreach ($options as $key => $description) {
             $name = str_pad('  [' . $key . ']  ', $keyMaxLength + 4, ' ');
-            CLI::write(CLI::color($name, 'green') . CLI::wrap($description, 125, $keyMaxLength + 4));
+            static::write(static::color($name, 'green') . static::wrap($description, 125, $keyMaxLength + 4));
         }
     }
-
-    // --------------------------------------------------------------------
-    // End Utility for promptBy...
-    // --------------------------------------------------------------------
 
     /**
      * Validate one prompt "field" at a time
@@ -424,13 +453,7 @@ class CLI
      */
     public static function print(string $text = '', ?string $foreground = null, ?string $background = null)
     {
-        if ((string) $foreground !== '' || (string) $background !== '') {
-            $text = static::color($text, $foreground, $background);
-        }
-
-        static::$lastWrite = null;
-
-        static::fwrite(STDOUT, $text);
+        static::getOutput()->print($text, $foreground ?? '', $background ?? '');
     }
 
     /**
@@ -440,17 +463,7 @@ class CLI
      */
     public static function write(string $text = '', ?string $foreground = null, ?string $background = null)
     {
-        if ((string) $foreground !== '' || (string) $background !== '') {
-            $text = static::color($text, $foreground, $background);
-        }
-
-        if (static::$lastWrite !== 'write') {
-            $text = PHP_EOL . $text;
-
-            static::$lastWrite = 'write';
-        }
-
-        static::fwrite(STDOUT, $text . PHP_EOL);
+        static::getOutput()->write($text, $foreground ?? '', $background ?? '');
     }
 
     /**
@@ -460,25 +473,7 @@ class CLI
      */
     public static function error(string $text, string $foreground = 'light_red', ?string $background = null)
     {
-        // Check color support for STDERR
-        $stdout = static::$isColored;
-
-        static::$isColored = is_cli() && static::hasColorSupport(STDERR);
-
-        if ($foreground !== '' || (string) $background !== '') {
-            $text = static::color($text, $foreground, $background);
-        }
-
-        if (static::$lastWrite !== 'write') {
-            $text = PHP_EOL . $text;
-
-            static::$lastWrite = 'write';
-        }
-
-        static::fwrite(is_cli() ? STDERR : STDOUT, $text . PHP_EOL);
-
-        // return STDOUT color support
-        static::$isColored = $stdout;
+        static::getOutput()->error($text, $foreground, $background ?? '');
     }
 
     /**
@@ -490,7 +485,7 @@ class CLI
      */
     public static function beep(int $num = 1)
     {
-        echo str_repeat("\x07", $num);
+        static::getOutput()->beep($num);
     }
 
     /**
@@ -518,7 +513,7 @@ class CLI
             sleep($seconds);
         } else {
             static::write(static::$waitMsg);
-            static::$io->input();
+            static::getOutput()->getInputOutput()->input();
         }
     }
 
@@ -529,7 +524,6 @@ class CLI
      */
     public static function newLine(int $num = 1)
     {
-        // Do it once or more, write with empty string gives us a new line
         for ($i = 0; $i < $num; $i++) {
             static::write();
         }
@@ -542,11 +536,13 @@ class CLI
      */
     public static function clearScreen()
     {
-        // Unix systems, and Windows with VT100 Terminal support (i.e. Win10)
-        // can handle CSI sequences. For lower than Win10 we just shove in 40 new lines.
-        is_windows() && is_cli() && ! static::streamSupports('sapi_windows_vt100_support', STDOUT)
-            ? static::newLine(40)
-            : static::fwrite(STDOUT, "\033[H\033[2J");
+        if (is_windows() && is_cli() && ! static::streamSupports('sapi_windows_vt100_support', STDOUT)) {
+            static::newLine(40);
+
+            return;
+        }
+
+        static::fwrite(STDOUT, "\033[H\033[2J");
     }
 
     /**
@@ -562,71 +558,7 @@ class CLI
      */
     public static function color(string $text, string $foreground, ?string $background = null, ?string $format = null): string
     {
-        if (! static::$isColored || $text === '') {
-            return $text;
-        }
-
-        if (! array_key_exists($foreground, static::$foreground_colors)) {
-            throw CLIException::forInvalidColor('foreground', $foreground);
-        }
-
-        if ((string) $background !== '' && ! array_key_exists($background, static::$background_colors)) {
-            throw CLIException::forInvalidColor('background', $background);
-        }
-
-        $newText = '';
-
-        // Detect if color method was already in use with this text
-        if (str_contains($text, "\033[0m")) {
-            $pattern = '/\\033\\[0;.+?\\033\\[0m/u';
-
-            preg_match_all($pattern, $text, $matches);
-            $coloredStrings = $matches[0];
-
-            // No colored string found. Invalid strings with no `\033[0;??`.
-            if ($coloredStrings === []) {
-                return $newText . self::getColoredText($text, $foreground, $background, $format);
-            }
-
-            $nonColoredText = preg_replace(
-                $pattern,
-                '<<__colored_string__>>',
-                $text,
-            );
-            $nonColoredChunks = preg_split(
-                '/<<__colored_string__>>/u',
-                $nonColoredText,
-            );
-
-            foreach ($nonColoredChunks as $i => $chunk) {
-                if ($chunk !== '') {
-                    $newText .= self::getColoredText($chunk, $foreground, $background, $format);
-                }
-
-                if (isset($coloredStrings[$i])) {
-                    $newText .= $coloredStrings[$i];
-                }
-            }
-        } else {
-            $newText .= self::getColoredText($text, $foreground, $background, $format);
-        }
-
-        return $newText;
-    }
-
-    private static function getColoredText(string $text, string $foreground, ?string $background, ?string $format): string
-    {
-        $string = "\033[" . static::$foreground_colors[$foreground] . 'm';
-
-        if ((string) $background !== '') {
-            $string .= "\033[" . static::$background_colors[$background] . 'm';
-        }
-
-        if ($format === 'underline') {
-            $string .= "\033[4m";
-        }
-
-        return $string . $text . "\033[0m";
+        return static::getOutput()->color($text, $foreground, $background ?? '', $format ?? '');
     }
 
     /**
@@ -635,21 +567,7 @@ class CLI
      */
     public static function strlen(?string $string): int
     {
-        if ((string) $string === '') {
-            return 0;
-        }
-
-        foreach (static::$foreground_colors as $color) {
-            $string = strtr($string, ["\033[" . $color . 'm' => '']);
-        }
-
-        foreach (static::$background_colors as $color) {
-            $string = strtr($string, ["\033[" . $color . 'm' => '']);
-        }
-
-        $string = strtr($string, ["\033[4m" => '', "\033[0m" => '']);
-
-        return mb_strwidth($string);
+        return Color::width((string) $string);
     }
 
     /**
@@ -660,48 +578,17 @@ class CLI
      */
     public static function streamSupports(string $function, $resource): bool
     {
-        if (service('environment')->isTesting()) {
-            // In the current setup of the tests we cannot fully check
-            // if the stream supports the function since we are using
-            // filtered streams.
-            return function_exists($function);
-        }
-
-        return function_exists($function) && @$function($resource); // @codeCoverageIgnore
+        return static::getTerminal()->streamSupports($function, $resource);
     }
 
     /**
      * Returns true if the stream resource supports colors.
      *
-     * This is tricky on Windows, because Cygwin, Msys2 etc. emulate pseudo
-     * terminals via named pipes, so we can only check the environment.
-     *
-     * Reference: https://github.com/composer/xdebug-handler/blob/master/src/Process.php
-     *
      * @param resource $resource
      */
     public static function hasColorSupport($resource): bool
     {
-        // Follow https://no-color.org/
-        if (isset($_SERVER['NO_COLOR']) || getenv('NO_COLOR') !== false) { // @phpstan-ignore codeigniter.superglobalsOffsetAccess (reads live $_SERVER, not the snapshot service)
-            return false;
-        }
-
-        if (getenv('TERM_PROGRAM') === 'Hyper') {
-            return true;
-        }
-
-        if (is_windows()) {
-            // @codeCoverageIgnoreStart
-            return static::streamSupports('sapi_windows_vt100_support', $resource)
-                || isset($_SERVER['ANSICON']) // @phpstan-ignore codeigniter.superglobalsOffsetAccess (reads live $_SERVER, not the snapshot service)
-                || getenv('ANSICON') !== false
-                || getenv('ConEmuANSI') === 'ON'
-                || getenv('TERM') === 'xterm';
-            // @codeCoverageIgnoreEnd
-        }
-
-        return static::streamSupports('stream_isatty', $resource);
+        return static::getTerminal()->hasColorSupport($resource);
     }
 
     /**
@@ -709,11 +596,7 @@ class CLI
      */
     public static function getWidth(int $default = 80): int
     {
-        if (static::$width === null) {
-            static::generateDimensions();
-        }
-
-        return (static::$width === null || static::$width === 0) ? $default : static::$width;
+        return static::getTerminal()->getWidth($default);
     }
 
     /**
@@ -721,11 +604,7 @@ class CLI
      */
     public static function getHeight(int $default = 32): int
     {
-        if (static::$height === null) {
-            static::generateDimensions();
-        }
-
-        return (static::$height === null || static::$height === 0) ? $default : static::$height;
+        return static::getTerminal()->getHeight($default);
     }
 
     /**
@@ -735,74 +614,28 @@ class CLI
      */
     public static function generateDimensions()
     {
-        try {
-            if (is_windows()) {
-                // Shells such as `Cygwin` and `Git bash` returns incorrect values
-                // when executing `mode CON`, so we use `tput` instead
-                if (getenv('TERM') || (($shell = getenv('SHELL')) && preg_match('/(?:bash|zsh)(?:\.exe)?$/', $shell))) {
-                    static::$height = (int) exec('tput lines');
-                    static::$width  = (int) exec('tput cols');
-                } else {
-                    $return = -1;
-                    $output = [];
-                    exec('mode CON', $output, $return);
-
-                    // Look for the next lines ending in ": <number>"
-                    // Searching for "Columns:" or "Lines:" will fail on non-English locales
-                    if ($return === 0 && $output !== [] && preg_match('/:\s*(\d+)\n[^:]+:\s*(\d+)\n/', implode("\n", $output), $matches)) {
-                        static::$height = (int) $matches[1];
-                        static::$width  = (int) $matches[2];
-                    }
-                }
-            } elseif (($size = exec('stty size 2>/dev/null')) && preg_match('/(\d+)\s+(\d+)/', $size, $matches)) {
-                static::$height = (int) $matches[1];
-                static::$width  = (int) $matches[2];
-            } else {
-                static::$height = (int) exec('tput lines 2>/dev/null');
-                static::$width  = (int) exec('tput cols 2>/dev/null');
-            }
-        } catch (Throwable $e) {
-            // Reset the dimensions so that the default values will be returned later.
-            // Then let the developer know of the error.
-            static::$height = null;
-            static::$width  = null;
-            log_message('error', (string) $e);
-        }
+        static::getTerminal()->generateDimensions();
     }
 
     /**
      * Displays a progress bar on the CLI. You must call it repeatedly
      * to update it. Set $thisStep = false to erase the progress bar.
      *
-     * @param bool|int $thisStep
+     * @param false|float|int $thisStep
      *
      * @return void
      */
     public static function showProgress($thisStep = 1, int $totalSteps = 10)
     {
-        static $inProgress = false;
+        $progressBar = self::getProgressBar(static::getOutput());
 
-        // restore cursor position when progress is continuing.
-        if ($inProgress !== false && $inProgress <= $thisStep) {
-            static::fwrite(STDOUT, "\033[1A");
+        if ($thisStep === false) {
+            $progressBar->clear();
+
+            return;
         }
-        $inProgress = $thisStep;
 
-        if ($thisStep !== false) {
-            // Don't allow div by zero or negative numbers....
-            $thisStep   = abs($thisStep);
-            $totalSteps = max(1, $totalSteps);
-
-            $percent = (int) (($thisStep / $totalSteps) * 100);
-            $step    = (int) round($percent / 10);
-
-            // Write the progress bar
-            static::fwrite(STDOUT, "[\033[32m" . str_repeat('#', $step) . str_repeat('.', 10 - $step) . "\033[0m]");
-            // Textual representation...
-            static::fwrite(STDOUT, sprintf(' %3d%% Complete', $percent) . PHP_EOL);
-        } else {
-            static::fwrite(STDOUT, "\007");
-        }
+        $progressBar->advanceTo(abs($thisStep), max(1, $totalSteps));
     }
 
     /**
@@ -820,15 +653,8 @@ class CLI
             return '';
         }
 
-        if ($max === 0) {
-            $max = self::getWidth();
-        }
-
-        if (self::getWidth() < $max) {
-            $max = self::getWidth();
-        }
-
-        $max -= $padLeft;
+        $width = static::getWidth();
+        $max   = ($max === 0 ? $width : min($max, $width)) - $padLeft;
 
         $lines = wordwrap($string, $max, PHP_EOL);
 
@@ -1038,115 +864,29 @@ class CLI
      */
     public static function table(array $tbody, array $thead = [])
     {
-        // All the rows in the table will be here until the end
-        $tableRows = [];
-
-        // We need only indexes and not keys
-        if ($thead !== []) {
-            $tableRows[] = array_values($thead);
-        }
-
-        foreach ($tbody as $tr) {
-            $tableRows[] = array_values($tr);
-        }
-
-        // Yes, it really is necessary to know this count
-        $totalRows = count($tableRows);
-
-        // Store all columns lengths
-        // $all_cols_lengths[row][column] = length
-        $allColsLengths = [];
-
-        // Store maximum lengths by column
-        // $max_cols_lengths[column] = length
-        $maxColsLengths = [];
-
-        // Read row by row and define the longest columns
-        for ($row = 0; $row < $totalRows; $row++) {
-            $column = 0; // Current column index
-
-            foreach ($tableRows[$row] as $col) {
-                // Sets the size of this column in the current row
-                $allColsLengths[$row][$column] = static::strlen((string) $col);
-
-                // If the current column does not have a value among the larger ones
-                // or the value of this is greater than the existing one
-                // then, now, this assumes the maximum length
-                if (! isset($maxColsLengths[$column]) || $allColsLengths[$row][$column] > $maxColsLengths[$column]) {
-                    $maxColsLengths[$column] = $allColsLengths[$row][$column];
-                }
-
-                // We can go check the size of the next column...
-                $column++;
-            }
-        }
-
-        // Read row by row and add spaces at the end of the columns
-        // to match the exact column length
-        for ($row = 0; $row < $totalRows; $row++) {
-            $column = 0;
-
-            foreach ($tableRows[$row] as $col) {
-                $diff = $maxColsLengths[$column] - static::strlen((string) $col);
-
-                if ($diff !== 0) {
-                    $tableRows[$row][$column] .= str_repeat(' ', $diff);
-                }
-
-                $column++;
-            }
-        }
-
-        $table = '';
-        $cols  = '';
-
-        // Joins columns and append the well formatted rows to the table
-        for ($row = 0; $row < $totalRows; $row++) {
-            // Set the table border-top
-            if ($row === 0) {
-                $cols = '+';
-
-                foreach ($tableRows[$row] as $col) {
-                    $cols .= str_repeat('-', static::strlen((string) $col) + 2) . '+';
-                }
-                $table .= $cols . PHP_EOL;
-            }
-
-            // Set the columns borders
-            $table .= '| ' . implode(' | ', $tableRows[$row]) . ' |' . PHP_EOL;
-
-            // Set the thead and table borders-bottom
-            if (($row === 0 && $thead !== []) || ($row + 1 === $totalRows)) {
-                $table .= $cols . PHP_EOL;
-            }
-        }
-
-        static::write($table);
+        static::write((new Table($tbody, $thead))->render());
     }
 
     /**
-     * While the library is intended for use on CLI commands,
-     * commands can be called from controllers and elsewhere
-     * so we need a way to allow them to still work.
+     * Writes without touching the cursor state.
      *
-     * For now, just echo the content, but look into a better
-     * solution down the road.
-     *
-     * @param resource $handle
+     * @param resource|string $handle A stream, or the `STDOUT` placeholder string outside the CLI.
      *
      * @return void
      */
     protected static function fwrite($handle, string $string)
     {
-        if (static::$stdoutToStderr && $handle === STDOUT) {
-            $handle = STDERR;
+        if ($handle === STDOUT) {
+            static::getOutput()->writeRaw($string);
+
+            return;
         }
 
-        static::$io->fwrite($handle, $string);
+        static::getOutput()->getInputOutput()->fwrite($handle, $string);
     }
 
     /**
-     * Runs the callback with its STDOUT writes sent to STDERR.
+     * Runs the callback with the output swapped for one targeting STDERR, so the callback must not swap it again.
      *
      * @param callable(): void $callback
      *
@@ -1160,19 +900,14 @@ class CLI
             return;
         }
 
-        $stdoutToStderr = static::$stdoutToStderr;
-        $isColored      = static::$isColored;
-        $lastWrite      = static::$lastWrite;
+        $previous = static::getOutput();
 
-        static::$stdoutToStderr = true;
-        static::$isColored      = static::hasColorSupport(STDERR);
+        static::setOutput($previous->forStderr());
 
         try {
             $callback();
         } finally {
-            static::$stdoutToStderr = $stdoutToStderr;
-            static::$isColored      = $isColored;
-            static::$lastWrite      = $lastWrite;
+            static::setOutput($previous);
         }
     }
 
@@ -1183,16 +918,11 @@ class CLI
      */
     public static function reset(): void
     {
-        static::$initialized    = false;
-        static::$segments       = [];
-        static::$options        = [];
-        static::$lastWrite      = null;
-        static::$height         = null;
-        static::$width          = null;
-        static::$isColored      = static::hasColorSupport(STDOUT);
-        static::$stdoutToStderr = false;
+        static::$initialized = false;
+        static::$segments    = [];
+        static::$options     = [];
 
-        static::resetInputOutput();
+        self::resetOutput();
     }
 
     /**
@@ -1202,31 +932,15 @@ class CLI
      */
     public static function resetLastWrite(): void
     {
-        static::$lastWrite = null;
+        static::getOutput()->setCursorAtLineStart(false);
     }
 
     /**
      * @internal
      */
-    public static function getLastWrite(): ?string
+    public static function getInputOutput(): InputOutput
     {
-        return static::$lastWrite;
-    }
-
-    /**
-     * @internal
-     */
-    public static function setLastWrite(?string $value): void
-    {
-        static::$lastWrite = $value;
-    }
-
-    /**
-     * @internal
-     */
-    public static function getInputOutput(): ?InputOutput
-    {
-        return static::$io;
+        return static::getOutput()->getInputOutput();
     }
 
     /**
@@ -1234,7 +948,7 @@ class CLI
      */
     public static function setInputOutput(InputOutput $io): void
     {
-        static::$io = $io;
+        static::getOutput()->setInputOutput($io);
     }
 
     /**
@@ -1242,7 +956,22 @@ class CLI
      */
     public static function resetInputOutput(): void
     {
-        static::$io = new InputOutput();
+        static::setInputOutput(new InputOutput());
+    }
+
+    private static function resetOutput(): void
+    {
+        self::$output       = new Output();
+        self::$progressBars = new WeakMap();
+    }
+
+    private static function getProgressBar(Output $output): ProgressBar
+    {
+        self::$progressBars ??= new WeakMap();
+
+        self::$progressBars[$output] ??= new ProgressBar($output);
+
+        return self::$progressBars[$output];
     }
 }
 
