@@ -23,8 +23,6 @@ use Memcached;
 
 /**
  * Mamcached cache handler
- *
- * @see \CodeIgniter\Cache\Handlers\MemcachedHandlerTest
  */
 class MemcachedHandler extends BaseHandler
 {

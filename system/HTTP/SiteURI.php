@@ -20,8 +20,6 @@ use Config\App;
 
 /**
  * URI for the application site
- *
- * @see \CodeIgniter\HTTP\SiteURITest
  */
 class SiteURI extends URI
 {

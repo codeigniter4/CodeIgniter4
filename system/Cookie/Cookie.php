@@ -40,7 +40,6 @@ use DateTimeInterface;
  * ```
  *
  * @template-implements ArrayAccess<string, bool|int|string>
- * @see \CodeIgniter\Cookie\CookieTest
  */
 class Cookie implements ArrayAccess, CloneableCookieInterface
 {

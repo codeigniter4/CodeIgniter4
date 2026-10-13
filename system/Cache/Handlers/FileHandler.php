@@ -20,8 +20,6 @@ use Throwable;
 
 /**
  * File system cache handler
- *
- * @see \CodeIgniter\Cache\Handlers\FileHandlerTest
  */
 class FileHandler extends BaseHandler
 {

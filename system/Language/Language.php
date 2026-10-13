@@ -22,8 +22,6 @@ use MessageFormatter;
  * Locale-based, built on top of PHP internationalization.
  *
  * @phpstan-type LoadedStrings array<string, array<string, array<string, string>|string>|string|list<string>>
- *
- * @see \CodeIgniter\Language\LanguageTest
  */
 class Language
 {

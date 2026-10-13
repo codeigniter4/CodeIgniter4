@@ -18,9 +18,6 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
-/**
- * @see \CodeIgniter\Filters\CorsTest
- */
 class Cors implements FilterInterface
 {
     private ?CorsService $cors = null;

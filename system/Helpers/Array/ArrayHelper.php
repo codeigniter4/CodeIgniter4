@@ -20,10 +20,6 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
  *
  * If there are any methods that should be provided, make them
  * public APIs via helper functions.
- *
- * @see \CodeIgniter\Helpers\Array\ArrayHelperDotKeyExistsTest
- * @see \CodeIgniter\Helpers\Array\ArrayHelperRecursiveDiffTest
- * @see \CodeIgniter\Helpers\Array\ArrayHelperSortValuesByNaturalTest
  */
 final class ArrayHelper
 {

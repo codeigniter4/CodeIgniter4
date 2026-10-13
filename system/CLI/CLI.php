@@ -27,8 +27,6 @@ use Throwable;
  * Some of the code in this class is Windows-specific, and not
  * possible to test using travis-ci. It has been phpunit-annotated
  * to prevent messing up code coverage.
- *
- * @see \CodeIgniter\CLI\CLITest
  */
 class CLI
 {

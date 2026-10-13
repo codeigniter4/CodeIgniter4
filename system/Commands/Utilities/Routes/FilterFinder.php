@@ -22,8 +22,6 @@ use Config\Feature;
 
 /**
  * Finds filters.
- *
- * @see \CodeIgniter\Commands\Utilities\Routes\FilterFinderTest
  */
 final readonly class FilterFinder
 {

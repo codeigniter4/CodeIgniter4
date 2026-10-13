@@ -15,9 +15,6 @@ namespace CodeIgniter\Database;
 
 use Stringable;
 
-/**
- * @see \CodeIgniter\Database\RawSqlTest
- */
 class RawSql implements Stringable
 {
     /**

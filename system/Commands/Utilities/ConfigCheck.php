@@ -22,8 +22,6 @@ use Kint\Kint;
 
 /**
  * Check the Config values.
- *
- * @see \CodeIgniter\Commands\Utilities\ConfigCheckTest
  */
 final class ConfigCheck extends BaseCommand
 {

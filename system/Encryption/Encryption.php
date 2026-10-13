@@ -27,8 +27,6 @@ use Config\Encryption as EncryptionConfig;
  * @property-read string       $driver
  * @property-read list<string> $drivers
  * @property-read string       $key
- *
- * @see \CodeIgniter\Encryption\EncryptionTest
  */
 class Encryption
 {

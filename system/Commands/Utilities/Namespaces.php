@@ -21,8 +21,6 @@ use Config\Autoload;
  * Lists namespaces set in Config\Autoload with their
  * full server path. Helps you to verify that you have
  * the namespaces setup correctly.
- *
- * @see \CodeIgniter\Commands\Utilities\NamespacesTest
  */
 class Namespaces extends BaseCommand
 {

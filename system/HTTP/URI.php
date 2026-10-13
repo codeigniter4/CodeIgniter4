@@ -22,8 +22,6 @@ use Stringable;
 
 /**
  * Abstraction for a uniform resource identifier (URI).
- *
- * @see \CodeIgniter\HTTP\URITest
  */
 class URI implements Stringable
 {

@@ -22,9 +22,6 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
 
-/**
- * @see \CodeIgniter\Commands\Translation\LocalizationFinderTest
- */
 class LocalizationFinder extends BaseCommand
 {
     protected $group       = 'Translation';
