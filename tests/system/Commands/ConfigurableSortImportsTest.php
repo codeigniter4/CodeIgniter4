@@ -55,6 +55,25 @@ final class ConfigurableSortImportsTest extends CIUnitTestCase
         }
     }
 
+    public function testSortImportsKeepsCrlfLineEndings(): void
+    {
+        command('publish:language --lang fr --crlf');
+
+        $file = APPPATH . 'Language/fr/Foobar.php';
+        $this->assertFileExists($file);
+        $this->assertStringContainsString(
+            "\r\n\r\nuse CodeIgniter\\CLI\\CLI;\r\nuse Config\\App;\r\n\r\n",
+            (string) file_get_contents($file),
+        );
+        if (is_file($file)) {
+            unlink($file);
+        }
+        $dir = dirname($file);
+        if (is_dir($dir)) {
+            rmdir($dir);
+        }
+    }
+
     public function testDisabledSortImportsWillNotAffectLanguageFilesPublish(): void
     {
         command('publish:language --lang ar --sort off');
