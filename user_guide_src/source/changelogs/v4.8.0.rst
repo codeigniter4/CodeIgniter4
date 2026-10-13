@@ -35,7 +35,7 @@ Behavior Changes
   behaviour may need to re-implement against the modern API (``configure()`` + ``execute()`` and the ``#[Command]`` attribute) once the class it extends is migrated, or, preferably, compose instead of extending. Invocations on the command line are unaffected.
 - **Commands:** Generator commands migrated to ``AbstractGeneratorCommand`` now return ``EXIT_ERROR`` (previously ``EXIT_SUCCESS``) when the target file exists
   without ``--force``, when the namespace is not defined, or when the name does not form a valid class name. The ``CodeIgniter`` namespace confirmation is no
-  longer prompted on non-interactive runs.
+  longer prompted on non-interactive runs, and ``make:cell`` and ``make:model --return entity`` now ask it only once.
 - **Commands:** The ``make:command`` command now generates modern commands: a ``basic`` command extends ``AbstractCommand`` with the ``#[Command]`` attribute,
   and a ``generator`` command extends ``AbstractGeneratorCommand`` with the ``#[GeneratorCommand]`` attribute.
 - **Commands:** The ``make:migration`` command now rejects ``--force`` as an unknown option. It was previously accepted but ignored, since the
