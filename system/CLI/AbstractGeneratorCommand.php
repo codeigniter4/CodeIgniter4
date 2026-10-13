@@ -255,12 +255,13 @@ abstract class AbstractGeneratorCommand extends AbstractCommand implements Promp
 
         if (
             $this->sortImports
-            && preg_match('/(?P<imports>(?:^use [^;]+;$\n?)+)/m', $template, $match) === 1
+            && preg_match('/(?P<imports>(?:^use [^;]+;\r?$\n?)+)/m', $template, $match) === 1
         ) {
-            $imports = explode("\n", trim($match['imports']));
+            $eol     = str_contains($match['imports'], "\r\n") ? "\r\n" : "\n";
+            $imports = explode("\n", str_replace("\r\n", "\n", trim($match['imports'])));
             sort($imports);
 
-            return str_replace(trim($match['imports']), implode("\n", $imports), $template);
+            return str_replace(trim($match['imports']), implode($eol, $imports), $template);
         }
 
         return $template;
