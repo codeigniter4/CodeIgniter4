@@ -524,11 +524,28 @@ class ContentSecurityPolicy
      *
      * @return $this
      */
-    public function setDefaultSrc($uri, ?bool $explicitReporting = null)
+    public function addDefaultSrc($uri, ?bool $explicitReporting = null)
     {
-        $this->defaultSrc = [(string) $uri => $explicitReporting ?? $this->reportOnly];
+        $this->addOption($uri, 'defaultSrc', $explicitReporting ?? $this->reportOnly);
 
         return $this;
+    }
+
+    /**
+     * Adds a new value to the `default-src` directive.
+     *
+     * `default-src` is the URI that is used for many of the settings when
+     * no other source has been set.
+     *
+     * @see http://www.w3.org/TR/CSP/#directive-default-src
+     *
+     * @param list<string>|string $uri
+     *
+     * @return $this
+     */
+    public function setDefaultSrc($uri, ?bool $explicitReporting = null)
+    {
+        return $this->addDefaultSrc($uri, $explicitReporting);
     }
 
     /**

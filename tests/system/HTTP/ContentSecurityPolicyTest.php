@@ -614,7 +614,37 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
         $header = $this->getHeaderEmitted('Content-Security-Policy');
         $this->assertIsString($header);
+        $this->assertContains('default-src maybe.com iffy.com', $this->getCspDirectives($header));
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testDefaultSrcRich(): void
+    {
+        $this->csp->reportOnly(false);
+        $this->csp->setDefaultSrc(['self', 'maybe.com', 'iffy.com']);
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains("default-src 'self' maybe.com iffy.com", $this->getCspDirectives($header));
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testAddDefaultSrc(): void
+    {
+        $this->csp->addDefaultSrc('maybe.com');
+        $this->csp->addDefaultSrc('iffy.com', true);
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
+        $this->assertIsString($header);
         $this->assertContains('default-src iffy.com', $this->getCspDirectives($header));
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains('default-src maybe.com', $this->getCspDirectives($header));
     }
 
     #[PreserveGlobalState(false)]
