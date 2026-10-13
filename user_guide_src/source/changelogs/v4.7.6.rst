@@ -31,6 +31,7 @@ Bugs Fixed
 **********
 
 - **Commands:** Fixed a bug where generator commands did not sort the imports of a template with CRLF line endings.
+- **HTTP:** Fixed a bug in ``ContentSecurityPolicy::addOption()`` where converting string directive values to array keys resulted in invalid entries for empty strings, unquoted values for space-separated lists, and ``TypeError`` for numeric strings.
 - **Security:** Fixed a bug where a valid JSON request body that is not an object
   (for example a JSON array) was corrupted after CSRF verification when the
   token was sent via the ``X-CSRF-TOKEN`` header.

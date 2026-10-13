@@ -878,13 +878,33 @@ class ContentSecurityPolicy
     {
         // Ensure we have an array to work with...
         if (is_string($this->{$target})) {
-            $this->{$target} = [$this->{$target} => $this->reportOnly];
+            $targetValue = trim($this->{$target});
+
+            $this->{$target} = [];
+
+            if ($targetValue !== '') {
+                foreach (preg_split('/\s+/', $targetValue) as $opt) {
+                    $this->{$target}[$opt] = $this->reportOnly;
+                }
+            }
+        } elseif (! is_array($this->{$target})) {
+            $this->{$target} = [];
         }
 
         $options = is_array($options) ? $options : [$options];
 
         foreach ($options as $option) {
+            $option = (string) $option;
+
+            if ($option === '' && $target !== 'sandbox') {
+                continue;
+            }
+
             $this->{$target}[$option] = $explicitReporting ?? $this->reportOnly;
+        }
+
+        if ($target === 'sandbox' && count($this->{$target}) > 1 && isset($this->{$target}[''])) {
+            unset($this->{$target}['']);
         }
     }
 
@@ -1013,13 +1033,25 @@ class ContentSecurityPolicy
     protected function addToHeader(string $name, $values = null)
     {
         if (is_string($values)) {
-            $values = [$values => $this->reportOnly];
+            $valueStr = trim($values);
+
+            if ($valueStr === '') {
+                return;
+            }
+
+            $values = [];
+
+            foreach (preg_split('/\s+/', $valueStr) as $val) {
+                $values[$val] = $this->reportOnly;
+            }
         }
 
         $sources       = [];
         $reportSources = [];
 
         foreach ($values as $value => $reportOnly) {
+            $value = (string) $value;
+
             if (
                 in_array($value, $this->validSources, true)
                 || str_starts_with($value, 'nonce-')
