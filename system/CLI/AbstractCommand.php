@@ -438,6 +438,7 @@ abstract class AbstractCommand
      *
      * @param list<string>                                 $arguments Parsed arguments from command line.
      * @param array<string, list<string|null>|string|null> $options   Parsed options from command line.
+     * @param Output|null                                  $output    The output to run against, or `null` for the current one.
      *
      * @throws ArgumentCountMismatchException
      * @throws CommandNotAvailableException
@@ -445,36 +446,52 @@ abstract class AbstractCommand
      * @throws OptionValueMismatchException
      * @throws UnknownOptionException
      */
-    final public function run(array $arguments, array $options): int
+    final public function run(array $arguments, array $options, ?Output $output = null): int
     {
-        if (! $this->isAvailable()) {
-            throw new CommandNotAvailableException(lang('Commands.notAvailable', [$this->name]));
-        }
+        $previous = CLI::getOutput();
 
-        // Reset per-run interactive state from the current options.
-        $this->runtimeInteractive = $this->hasUnboundOption('no-interaction', $options) ? false : null;
+        CLI::setOutput($output ?? $previous);
 
-        $this->initialize($arguments, $options);
-
-        if ($this->isInteractive()) {
-            if ($this instanceof PromptsForMissingInputInterface) {
-                $this->promptForMissingArguments($arguments, $options);
+        try {
+            if (! $this->isAvailable()) {
+                throw new CommandNotAvailableException(lang('Commands.notAvailable', [$this->name]));
             }
 
-            $this->interact($arguments, $options);
+            // Reset per-run interactive state from the current options.
+            $this->runtimeInteractive = $this->hasUnboundOption('no-interaction', $options) ? false : null;
+
+            $this->initialize($arguments, $options);
+
+            if ($this->isInteractive()) {
+                if ($this instanceof PromptsForMissingInputInterface) {
+                    $this->promptForMissingArguments($arguments, $options);
+                }
+
+                $this->interact($arguments, $options);
+            }
+
+            $this->unboundArguments = $arguments;
+            $this->unboundOptions   = $options;
+
+            [$boundArguments, $boundOptions] = $this->bind($arguments, $options);
+
+            $this->validate($boundArguments, $boundOptions);
+
+            $this->validatedArguments = $boundArguments;
+            $this->validatedOptions   = $boundOptions;
+
+            return $this->execute($boundArguments, $boundOptions);
+        } finally {
+            CLI::setOutput($previous);
         }
+    }
 
-        $this->unboundArguments = $arguments;
-        $this->unboundOptions   = $options;
-
-        [$boundArguments, $boundOptions] = $this->bind($arguments, $options);
-
-        $this->validate($boundArguments, $boundOptions);
-
-        $this->validatedArguments = $boundArguments;
-        $this->validatedOptions   = $boundOptions;
-
-        return $this->execute($boundArguments, $boundOptions);
+    /**
+     * Returns the output of the current run.
+     */
+    final protected function getOutput(): Output
+    {
+        return CLI::getOutput();
     }
 
     /**
@@ -573,7 +590,7 @@ abstract class AbstractCommand
      */
     protected function call(string $command, array $arguments = [], array $options = [], ?bool $noInteractionOverride = null): int
     {
-        return $this->commands->runCommand($command, $arguments, $this->resolveChildInteractiveState($options, $noInteractionOverride));
+        return $this->runChild($command, $arguments, $options, $noInteractionOverride, $this->getOutput());
     }
 
     /**
@@ -585,19 +602,13 @@ abstract class AbstractCommand
      */
     protected function callSilently(string $command, array $arguments = [], array $options = [], ?bool $noInteractionOverride = true): int
     {
-        $priorInputOutput = CLI::getInputOutput();
-        $priorLastWrite   = CLI::getLastWrite();
-
-        CLI::setInputOutput(new NullInputOutput());
-
-        try {
-            return $this->call($command, $arguments, $options, $noInteractionOverride);
-        } finally {
-            $priorInputOutput instanceof InputOutput
-                ? CLI::setInputOutput($priorInputOutput)
-                : CLI::resetInputOutput();
-            CLI::setLastWrite($priorLastWrite);
-        }
+        return $this->runChild(
+            $command,
+            $arguments,
+            $options,
+            $noInteractionOverride,
+            new Output(new NullInputOutput(), $this->getOutput()->getTerminal()),
+        );
     }
 
     /**
@@ -782,7 +793,7 @@ abstract class AbstractCommand
     private function promptForMissingArguments(array &$arguments, array &$options): void
     {
         // A null reader cannot satisfy a required prompt, so leave the missing arguments to validation.
-        if (CLI::getInputOutput() instanceof NullInputOutput) {
+        if ($this->getOutput()->getInputOutput() instanceof NullInputOutput) {
             return;
         }
 
@@ -1181,5 +1192,19 @@ abstract class AbstractCommand
         }
 
         array_unshift($this->usages, implode(' ', $usage));
+    }
+
+    /**
+     * @param list<string>                            $arguments
+     * @param array<string, list<string>|string|null> $options
+     */
+    private function runChild(string $command, array $arguments, array $options, ?bool $noInteractionOverride, Output $output): int
+    {
+        return $this->commands->runCommand(
+            $command,
+            $arguments,
+            $this->resolveChildInteractiveState($options, $noInteractionOverride),
+            $output,
+        );
     }
 }

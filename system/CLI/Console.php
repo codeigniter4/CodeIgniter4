@@ -92,7 +92,7 @@ class Console
             return $commands->runLegacy($this->command, array_merge($arguments, $legacyOptions));
         }
 
-        return $commands->runCommand($this->command, $arguments, $this->options);
+        return $commands->runCommand($this->command, $arguments, $this->options, CLI::getOutput());
     }
 
     public function initialize(): static

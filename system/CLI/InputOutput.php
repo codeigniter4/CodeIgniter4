@@ -77,7 +77,7 @@ class InputOutput
      * For now, just echo the content, but look into a better
      * solution down the road.
      *
-     * @param resource $handle
+     * @param resource|string $handle A stream, or the `STDOUT` placeholder string outside the CLI.
      */
     public function fwrite($handle, string $string): void
     {

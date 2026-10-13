@@ -49,6 +49,31 @@ reach that file. Redirect STDERR as well to keep them (``php spark my:command > 
 A custom CLI error view that writes with ``echo`` instead of the ``CLI`` class still prints to
 STDOUT.
 
+.. _upgrade-480-cli-output-classes:
+
+CLI Output Classes
+==================
+
+The static ``CLI`` class now delegates its output methods to instance classes:
+``Output``, ``Terminal``, ``ProgressBar``, ``Table``, and ``Color``. Calling the static
+methods keeps working, and the output is byte-identical, except that ``CLI::beep()`` now
+goes through the ``InputOutput`` transport and that ``CLI::print()`` of text ending in
+a line feed, or a progress bar drawn with ``CLI::showProgress()``, no longer adds a blank
+line before the next ``CLI::write()``.
+
+If you extend ``CLI`` and override ``color()``, or read the ``$lastWrite``, ``$isColored``,
+``$io``, ``$height``, ``$width``, ``$foreground_colors``, or ``$background_colors``
+properties, those overrides and reads no longer take effect. The properties are still
+declared but unused. An override of ``write()`` is still reached by ``newLine()``,
+``table()``, and ``clearScreen()``, and an override of ``fwrite()`` by ``wait()`` and
+``clearScreen()``, but no longer by ``print()``, ``error()``, ``beep()``, or
+``showProgress()``. Replace a transport override with ``CLI::setInputOutput()``, and a
+colour or terminal override with an ``Output`` or ``Terminal`` subclass passed to
+``CLI::setOutput()``.
+
+Tests that reached those properties through reflection should use the instances
+returned by ``CLI::getOutput()`` and ``CLI::getTerminal()`` instead.
+
 Uploaded File Move Return Type
 ==============================
 
