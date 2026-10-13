@@ -56,4 +56,12 @@ class SessionException extends FrameworkException
     {
         return new static(lang('Session.invalidSavePathFormat', [$path]));
     }
+
+    /**
+     * @return static
+     */
+    public static function forSentinelDiscoveryFailed(string $service)
+    {
+        return new static(lang('Session.sentinelDiscoveryFailed', [$service]));
+    }
 }
