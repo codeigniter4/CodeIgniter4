@@ -17,6 +17,7 @@ use Closure;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
+use CodeIgniter\HTTP\Files\UploadedFile;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\Request;
@@ -24,6 +25,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Router\RouteCollection;
+use CodeIgniter\Test\Mock\MockFileCollection;
 use Config\App;
 use Config\Services;
 use Exception;
@@ -43,6 +45,11 @@ use ReflectionException;
  */
 trait FeatureTestTrait
 {
+    /**
+     * @var array<string, array<array-key, UploadedFile>|UploadedFile>
+     */
+    protected array $uploadedFiles = [];
+
     /**
      * Sets a RouteCollection that will override
      * the application's route collection.
@@ -155,6 +162,18 @@ trait FeatureTestTrait
     }
 
     /**
+     * Sets uploaded files for the next request.
+     *
+     * @param array<string, array<array-key, UploadedFile>|UploadedFile> $files
+     */
+    public function withFiles(array $files): static
+    {
+        $this->uploadedFiles = $files;
+
+        return $this;
+    }
+
+    /**
      * Don't run any events while running this test.
      *
      * @return $this
@@ -183,6 +202,11 @@ trait FeatureTestTrait
 
         $request = $this->setupRequest($method, $path);
         $request = $this->setupHeaders($request);
+        if ($this->uploadedFiles !== []) {
+            $this->setPrivateProperty($request, 'files', new MockFileCollection($this->uploadedFiles));
+            $request->setHeader('Content-Type', 'multipart/form-data');
+            $this->uploadedFiles = [];
+        }
         $name    = strtolower($method);
         $request = $this->populateGlobals($name, $request, $params);
         $request = $this->setRequestBody($request, $params);
@@ -434,7 +458,7 @@ trait FeatureTestTrait
             $request->setBody($this->requestBody);
         }
 
-        if ($this->bodyFormat !== '') {
+        if ($this->bodyFormat !== '' && $request->getFiles() === []) {
             $formatMime = '';
             if ($this->bodyFormat === 'json') {
                 $formatMime = 'application/json';
