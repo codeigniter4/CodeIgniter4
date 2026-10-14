@@ -23,8 +23,15 @@ Prioritize actionable findings involving:
 ## Review behavior
 
 - Determine the PR base branch and apply the compatibility policy from
-  `AGENTS.md`. If the base branch cannot be determined, assume `develop`
-  and state that assumption.
+  `AGENTS.md`. When it is not visible, read it from the title prefix and
+  the labels as `AGENTS.md` describes, and otherwise assume `develop` and
+  state that assumption.
+- Before reporting a compatibility break, confirm the symbol exists in the
+  latest tagged release. A symbol introduced on the base branch since that
+  release is unreleased and may change freely, as `AGENTS.md` describes.
+- Do not report a PHPStan suppression or baseline entry covered by the
+  exceptions in `AGENTS.md`, or a missing reset of state that
+  `CIUnitTestCase::tearDown()` already restores.
 - Do not report formatting-only issues already enforced by PHP-CS-Fixer.
 - Every finding should identify a concrete failure scenario and the
   affected code.

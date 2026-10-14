@@ -19,8 +19,13 @@ existing implementation before introducing a new abstraction or convention.
 ## Target branch and compatibility policy
 
 Compatibility is judged against the pull request's base branch, not the
-contributor's source or feature branch. When the base branch is unknown,
-apply the stricter `develop` policy.
+contributor's source or feature branch. When the base branch is not stated,
+take the cues from the title prefix and the labels. A `feat:` prefix and the
+`enhancement`, `new feature`, `breaking change`, or `4.x` labels point to the
+next minor branch. A `fix:`, `refactor:`, or `docs:` prefix and the `bug` or
+`refactor` labels can go either way, since the next minor branch also takes
+fixes to its own unreleased code, so look at what the change touches. When no
+cue settles it, apply the stricter `develop` policy.
 
 ### Base branch `develop`
 
@@ -49,6 +54,16 @@ complete the documented deprecation lifecycle.
   supported replacement.
 - Every accepted break needs tests for the new behavior, a minor-version
   changelog entry, and migration instructions in the upgrading guide.
+
+### Unreleased API
+
+A symbol first added on the base branch after its latest tagged release is
+unreleased. Nothing outside the repository can depend on it yet, so changing,
+renaming, or removing it is not a compatibility break: it needs no
+deprecation, no upgrading-guide entry, and no changelog line beyond the one
+describing the final shape. Check the version tags or the changelog of the
+unreleased version before reporting a break on such a symbol. The
+compatibility policy applies to what the latest tagged release ships.
 
 ### All base branches
 
@@ -83,7 +98,15 @@ complete the documented deprecation lifecycle.
 - Add PHPDoc only when it contributes information that native types cannot
   express. Do not duplicate a parent or interface docblock.
 - Never suppress a static-analysis error or update a baseline to make a
-  check pass.
+  check pass. The accepted exceptions are:
+  - a false positive, when the usage is judged correct;
+  - a suppression needed to assert a runtime behavior in a test;
+  - a call to a function mocked in `system/Test/Mock/MockCommon.php`, such
+    as `is_cli(false)`, which PHPStan reports as `arguments.count`.
+
+  Regenerate the baseline with `composer phpstan:baseline`, never by editing
+  the `.neon` files, and add a test file that calls `is_cli()` with an
+  argument to the `RemoveExtraParametersRector` skip list in `rector.php`.
 
 ## FrankenPHP Worker Mode
 
