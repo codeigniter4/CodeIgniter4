@@ -368,6 +368,8 @@ final class Superglobals
      * Get all $_REQUEST values.
      *
      * @return array<string, request_items>
+     *
+     * @internal
      */
     public function getRequestArray(): array
     {
