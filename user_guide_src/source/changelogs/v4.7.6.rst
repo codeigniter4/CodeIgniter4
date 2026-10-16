@@ -31,6 +31,7 @@ Bugs Fixed
 **********
 
 - **Commands:** Fixed a bug where generator commands did not sort the imports of a template with CRLF line endings.
+- **HTTP:** Fixed a bug in ``ContentSecurityPolicy::setDefaultSrc()`` where it overwrote existing directives instead of adding them, and failed when passed an array of URIs. Added ``ContentSecurityPolicy::addDefaultSrc()`` for consistency with other directive methods.
 - **Security:** Fixed a bug where a valid JSON request body that is not an object
   (for example a JSON array) was corrupted after CSRF verification when the
   token was sent via the ``X-CSRF-TOKEN`` header.
