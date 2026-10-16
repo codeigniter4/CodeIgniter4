@@ -758,6 +758,70 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
+    public function testSandboxEmptyFlagThenFlags(): void
+    {
+        $this->csp->reportOnly(false);
+        $this->csp->addSandbox('');
+        $this->csp->addSandbox('allow-scripts');
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains('sandbox allow-scripts', $this->getCspDirectives($header));
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testAddOptionWithSpaceSeparatedString(): void
+    {
+        $config          = new CSPConfig();
+        $config->baseURI = 'self example.com';
+
+        $csp = new ContentSecurityPolicy($config);
+
+        $response = new Response(config(App::class));
+        $response->pretend(true);
+
+        $csp->addBaseURI('another.com');
+        $csp->finalize($response);
+
+        $directives = $this->getCspDirectives($response->getHeaderLine('Content-Security-Policy'));
+        $this->assertContains("base-uri 'self' example.com another.com", $directives);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testAddOptionWithEmptyStringTarget(): void
+    {
+        $config          = new CSPConfig();
+        $config->baseURI = '';
+
+        $csp = new ContentSecurityPolicy($config);
+
+        $response = new Response(config(App::class));
+        $response->pretend(true);
+
+        $csp->addBaseURI('example.com');
+        $csp->finalize($response);
+
+        $directives = $this->getCspDirectives($response->getHeaderLine('Content-Security-Policy'));
+        $this->assertContains('base-uri example.com', $directives);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testAddOptionNumericString(): void
+    {
+        $this->csp->addBaseURI('0');
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains('base-uri 0', $this->getCspDirectives($header));
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testUpgradeInsecureRequests(): void
     {
         $this->csp->upgradeInsecureRequests();
