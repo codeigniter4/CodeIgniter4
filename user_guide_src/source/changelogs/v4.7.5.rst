@@ -121,6 +121,7 @@ Bugs Fixed
 - **Helpers:** Fixed a bug where ``get_dir_file_info()`` returned incomplete entries for subdirectories and missing files instead of omitting them.
 - **Helpers:** Fixed a bug where ``word_wrap()`` entered an infinite loop when the character limit was below 2. Over-length words are now kept whole in that case.
 - **Honeypot:** Fixed a bug where bot detection returned an HTTP 500 response instead of 403 (Forbidden).
+- **HTTP:** Fixed stale ``$_REQUEST`` values after ``SiteURIFactory`` normalizes GET parameters, so ``Validation::withRequest()`` reads the normalized values while unrelated REQUEST entries are preserved.
 - **I18n:** Fixed a bug where ``Time::today()``, ``Time::yesterday()``, and ``Time::tomorrow()`` ignored the specified ``$timezone`` and ``setTestNow()`` when calculating the day.
 - **Logger:** Fixed a bug where interpolating a log message with array or non-stringable context values could raise PHP warnings or errors.
 - **Validation:** Fixed a bug where ``valid_cc_number`` accepted non-digit characters (e.g., a decimal point) in the card number. Such values could pass the Luhn check and triggered an ``Undefined array key`` warning inside it; the number is now checked with ``ctype_digit()``.

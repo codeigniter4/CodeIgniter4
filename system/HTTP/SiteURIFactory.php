@@ -20,6 +20,7 @@ use Config\App;
 /**
  * Creates SiteURI using superglobals.
  *
+ * This class also updates superglobal $_REQUEST.
  * This class also updates superglobal $_SERVER and $_GET.
  */
 final readonly class SiteURIFactory
@@ -31,7 +32,7 @@ final readonly class SiteURIFactory
     /**
      * Create the current URI object from superglobals.
      *
-     * This method updates superglobal $_SERVER and $_GET.
+     * This method updates superglobals $_SERVER, $_GET, and $_REQUEST.
      */
     public function createFromGlobals(): SiteURI
     {
@@ -103,7 +104,7 @@ final readonly class SiteURIFactory
      * Will parse the REQUEST_URI and automatically detect the URI from it,
      * fixing the query string if necessary.
      *
-     * This method updates superglobal $_SERVER and $_GET.
+     * This method updates superglobals $_SERVER, $_GET, and $_REQUEST.
      *
      * @return string The route path (before normalization).
      */
@@ -167,9 +168,11 @@ final readonly class SiteURIFactory
             $this->superglobals->setServer('QUERY_STRING', $query);
         }
 
-        // Update our global GET for values likely to have been changed
+        // Refresh only the request values derived from superglobals after GET changes.
+        $previousRequestData = $this->superglobals->getRequestData();
         parse_str($this->superglobals->server('QUERY_STRING'), $get);
         $this->superglobals->setGetArray($get);
+        $this->refreshRequestAfterGetChange($previousRequestData);
 
         return URI::removeDotSegments($path);
     }
@@ -177,7 +180,7 @@ final readonly class SiteURIFactory
     /**
      * Will parse QUERY_STRING and automatically detect the URI from it.
      *
-     * This method updates superglobal $_SERVER and $_GET.
+     * This method updates superglobals $_SERVER, $_GET, and $_REQUEST.
      *
      * @return string The route path (before normalization).
      */
@@ -199,9 +202,11 @@ final readonly class SiteURIFactory
             $path = $query;
         }
 
-        // Update our global GET for values likely to have been changed
+        // Refresh only the request values derived from superglobals after GET changes.
+        $previousRequestData = $this->superglobals->getRequestData();
         parse_str($this->superglobals->server('QUERY_STRING'), $get);
         $this->superglobals->setGetArray($get);
+        $this->refreshRequestAfterGetChange($previousRequestData);
 
         return URI::removeDotSegments($path);
     }
@@ -218,6 +223,38 @@ final readonly class SiteURIFactory
         $relativePath = $query !== '' ? $routePath . '?' . $query : $routePath;
 
         return new SiteURI($this->appConfig, $relativePath, $this->getHost());
+    }
+
+    /**
+     * Update REQUEST once during URI parsing, leaving application-defined values alone.
+     *
+     * @param array<array-key, mixed> $previousRequestData
+     */
+    private function refreshRequestAfterGetChange(array $previousRequestData): void
+    {
+        $request     = $this->superglobals->getRequestArray();
+        $currentData = $this->superglobals->getRequestData();
+
+        foreach ($previousRequestData as $key => $value) {
+            // A different value was supplied directly in REQUEST; preserve it.
+            if (! array_key_exists($key, $request) || $request[$key] !== $value) {
+                continue;
+            }
+
+            if (array_key_exists($key, $currentData)) {
+                $request[$key] = $currentData[$key];
+            } else {
+                unset($request[$key]);
+            }
+        }
+
+        foreach ($currentData as $key => $value) {
+            if (! array_key_exists($key, $previousRequestData) && ! array_key_exists($key, $request)) {
+                $request[$key] = $value;
+            }
+        }
+
+        $this->superglobals->setRequestArray($request);
     }
 
     /**
