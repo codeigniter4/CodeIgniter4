@@ -20,6 +20,7 @@ use Config\App;
 /**
  * Creates SiteURI using superglobals.
  *
+ * This class also updates superglobal $_REQUEST.
  * This class also updates superglobal $_SERVER and $_GET.
  *
  * @see \CodeIgniter\HTTP\SiteURIFactoryTest
@@ -33,7 +34,7 @@ final readonly class SiteURIFactory
     /**
      * Create the current URI object from superglobals.
      *
-     * This method updates superglobal $_SERVER and $_GET.
+     * This method updates superglobals $_SERVER, $_GET, and $_REQUEST.
      */
     public function createFromGlobals(): SiteURI
     {
@@ -105,7 +106,7 @@ final readonly class SiteURIFactory
      * Will parse the REQUEST_URI and automatically detect the URI from it,
      * fixing the query string if necessary.
      *
-     * This method updates superglobal $_SERVER and $_GET.
+     * This method updates superglobals $_SERVER, $_GET, and $_REQUEST.
      *
      * @return string The route path (before normalization).
      */
@@ -181,7 +182,7 @@ final readonly class SiteURIFactory
     /**
      * Will parse QUERY_STRING and automatically detect the URI from it.
      *
-     * This method updates superglobal $_SERVER and $_GET.
+     * This method updates superglobals $_SERVER, $_GET, and $_REQUEST.
      *
      * @return string The route path (before normalization).
      */

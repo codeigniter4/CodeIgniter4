@@ -307,7 +307,7 @@ final class SuperglobalsTest extends CIUnitTestCase
         $this->superglobals->setGetArray(['get_key' => 'get_value']);
         $this->superglobals->setPostArray(['post_key' => 'post_value']);
 
-        $data = $this->superglobals->getRequestData();
+        $data = $this->superglobals->getRequestData('GP');
 
         $this->assertSame('get_value', $data['get_key']);
         $this->assertSame('post_value', $data['post_key']);
@@ -317,12 +317,12 @@ final class SuperglobalsTest extends CIUnitTestCase
     {
         $this->superglobals->setGetArray(['key' => 'old']);
 
-        $this->assertSame('old', $this->superglobals->getRequestData()['key']);
+        $this->assertSame('old', $this->superglobals->getRequestData('G')['key']);
 
         // Simulate SiteURIFactory updating $_GET after the request started.
         $this->superglobals->setGetArray(['key' => 'new']);
 
-        $this->assertSame('new', $this->superglobals->getRequestData()['key']);
+        $this->assertSame('new', $this->superglobals->getRequestData('G')['key']);
     }
 
     public function testGetRequestDataMergesCookie(): void

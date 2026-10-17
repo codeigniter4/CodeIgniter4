@@ -260,6 +260,10 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
 
     public function testQueryStringRefreshesRequestWithoutOverwritingCustomValues(): void
     {
+        if (! $this->effectiveRequestOrderIncludesGet()) {
+            $this->markTestSkipped('The effective request order does not include GET.');
+        }
+
         $superglobals = new Superglobals(
             [
                 'REQUEST_URI'  => '/index.php?/ci/woot?code=good',
@@ -297,6 +301,10 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
 
     public function testRequestURIRefreshesRequestForValidation(): void
     {
+        if (! $this->effectiveRequestOrderIncludesGet()) {
+            $this->markTestSkipped('The effective request order does not include GET.');
+        }
+
         $superglobals = new Superglobals(
             [
                 'REQUEST_URI' => '/index.php/woot?code=good',
@@ -320,6 +328,27 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
 
         $this->assertSame('good', $request->getVar('code'));
         $this->assertTrue(service('validation')->withRequest($request)->setRules(['code' => 'in_list[good]'])->run());
+    }
+
+    /**
+     * Whether GET is part of the effective request order on this host.
+     *
+     * Mirrors Superglobals::getRequestData(): uses `request_order`, falls
+     * back to `variables_order`, then to PHP's default GP.
+     */
+    private function effectiveRequestOrderIncludesGet(): bool
+    {
+        $order = (string) ini_get('request_order');
+
+        if ($order === '') {
+            $order = (string) ini_get('variables_order');
+        }
+
+        if ($order === '') {
+            $order = 'GP';
+        }
+
+        return str_contains(strtoupper($order), 'G');
     }
 
     public function testQueryStringEmpty(): void
