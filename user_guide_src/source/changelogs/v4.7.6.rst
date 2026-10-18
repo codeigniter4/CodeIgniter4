@@ -41,6 +41,10 @@ Bugs Fixed
 - **Security:** Fixed a bug where a valid JSON request body that is not an object
   (for example a JSON array) was corrupted after CSRF verification when the
   token was sent via the ``X-CSRF-TOKEN`` header.
+- **HTTP:** Fixed a bug where ``IncomingRequest::isSecure()`` did not
+  recognize ``https`` in the ``X-Forwarded-Proto`` header from a trusted
+  proxy when the value contained uppercase letters or surrounding
+  whitespace, or was represented as a single-element array.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
