@@ -26,8 +26,6 @@ use Throwable;
 
 /**
  * Exceptions manager
- *
- * @see \CodeIgniter\Debug\ExceptionsTest
  */
 class Exceptions
 {

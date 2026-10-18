@@ -53,6 +53,11 @@ abstract class AbstractGeneratorCommand extends AbstractCommand implements Promp
     protected ?string $templatePath = null;
 
     /**
+     * The answer to the `CodeIgniter` namespace confirmation for the current `generateClass()`, or `null` if not yet asked.
+     */
+    private ?bool $confirmedCodeIgniterNamespace = null;
+
+    /**
      * @throws LogicException
      */
     public function __construct(Commands $commands)
@@ -137,6 +142,8 @@ abstract class AbstractGeneratorCommand extends AbstractCommand implements Promp
      */
     protected function generateClass(): int
     {
+        $this->confirmedCodeIgniterNamespace = null;
+
         return $this->generate($this->qualifyClassName());
     }
 
@@ -148,6 +155,14 @@ abstract class AbstractGeneratorCommand extends AbstractCommand implements Promp
     protected function generateView(string $view): int
     {
         return $this->generate($view);
+    }
+
+    /**
+     * Whether the `CodeIgniter` namespace confirmation was declined since the last `generateClass()`.
+     */
+    protected function isCodeIgniterNamespaceDeclined(): bool
+    {
+        return $this->confirmedCodeIgniterNamespace === false;
     }
 
     /**
@@ -240,12 +255,13 @@ abstract class AbstractGeneratorCommand extends AbstractCommand implements Promp
 
         if (
             $this->sortImports
-            && preg_match('/(?P<imports>(?:^use [^;]+;$\n?)+)/m', $template, $match) === 1
+            && preg_match('/(?P<imports>(?:^use [^;]+;\r?$\n?)+)/m', $template, $match) === 1
         ) {
-            $imports = explode("\n", trim($match['imports']));
+            $eol     = str_contains($match['imports'], "\r\n") ? "\r\n" : "\n";
+            $imports = explode("\n", str_replace("\r\n", "\n", trim($match['imports'])));
             sort($imports);
 
-            return str_replace(trim($match['imports']), implode("\n", $imports), $template);
+            return str_replace(trim($match['imports']), implode($eol, $imports), $template);
         }
 
         return $template;
@@ -327,17 +343,8 @@ abstract class AbstractGeneratorCommand extends AbstractCommand implements Promp
      */
     private function generateFile(string $target, string $content): int
     {
-        if (str_starts_with($target, SYSTEMPATH)) {
-            CLI::write(lang('CLI.generator.usingCINamespace'), 'yellow');
-
-            if (
-                $this->isInteractive()
-                && CLI::prompt(lang('CLI.generator.confirmContinue'), ['y', 'n'], 'required') === 'n'
-            ) {
-                CLI::write(lang('CLI.generator.cancelOperation'), 'yellow');
-
-                return EXIT_SUCCESS;
-            }
+        if (str_starts_with($target, SYSTEMPATH) && ! $this->confirmCodeIgniterNamespaceOnce()) {
+            return EXIT_SUCCESS;
         }
 
         $isFile = is_file($target);
@@ -372,6 +379,23 @@ abstract class AbstractGeneratorCommand extends AbstractCommand implements Promp
         }
 
         return EXIT_SUCCESS;
+    }
+
+    private function confirmCodeIgniterNamespaceOnce(): bool
+    {
+        if ($this->confirmedCodeIgniterNamespace !== null) {
+            return $this->confirmedCodeIgniterNamespace;
+        }
+
+        CLI::write(lang('CLI.generator.usingCINamespace'), 'yellow');
+
+        if ($this->isInteractive() && CLI::prompt(lang('CLI.generator.confirmContinue'), ['y', 'n'], 'required') === 'n') {
+            CLI::write(lang('CLI.generator.cancelOperation'), 'yellow');
+
+            return $this->confirmedCodeIgniterNamespace = false;
+        }
+
+        return $this->confirmedCodeIgniterNamespace = true;
     }
 
     /**

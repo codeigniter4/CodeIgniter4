@@ -35,7 +35,7 @@ Behavior Changes
   behaviour may need to re-implement against the modern API (``configure()`` + ``execute()`` and the ``#[Command]`` attribute) once the class it extends is migrated, or, preferably, compose instead of extending. Invocations on the command line are unaffected.
 - **Commands:** Generator commands migrated to ``AbstractGeneratorCommand`` now return ``EXIT_ERROR`` (previously ``EXIT_SUCCESS``) when the target file exists
   without ``--force``, when the namespace is not defined, or when the name does not form a valid class name. The ``CodeIgniter`` namespace confirmation is no
-  longer prompted on non-interactive runs.
+  longer prompted on non-interactive runs, and ``make:cell`` and ``make:model --return entity`` now ask it only once.
 - **Commands:** The ``make:command`` command now generates modern commands: a ``basic`` command extends ``AbstractCommand`` with the ``#[Command]`` attribute,
   and a ``generator`` command extends ``AbstractGeneratorCommand`` with the ``#[GeneratorCommand]`` attribute.
 - **Commands:** The ``make:migration`` command now rejects ``--force`` as an unknown option. It was previously accepted but ignored, since the
@@ -340,6 +340,7 @@ Libraries
 - **Locks:** Added :doc:`Atomic Locks </libraries/locks>` for owner-aware, cross-process mutual exclusion backed by supported cache handlers: **File**, **Redis**, **Predis**, and **Memcached**. Memcached support has driver-specific release limitations because Memcached has no atomic compare-and-delete command.
 - **Logging:** Log handlers now receive the full context array as a third argument to ``handle()``. When ``$logGlobalContext`` is enabled, the CI global context is available under the ``HandlerInterface::GLOBAL_CONTEXT_KEY`` key. Built-in handlers append it to the log output; custom handlers can use it for structured logging.
 - **Logging:** Added :ref:`per-call context logging <logging-per-call-context>` with three new ``Config\Logger`` options (``$logContext``, ``$logContextTrace``, ``$logContextUsedKeys``). Per PSR-3, a ``Throwable`` in the ``exception`` context key is automatically normalized to a meaningful array. All options default to ``false``.
+- **Logging:** Added the ``stopChainOnFailure`` handler option for ``FileHandler`` and ``ErrorlogHandler``. Set it to ``false`` to let the remaining handlers run when the handler fails to write the log. It defaults to ``true``, which keeps the existing behavior. See :ref:`logging-stop-chain-on-failure`.
 - **Security:** Added :ref:`Fetch Metadata based CSRF protection <csrf-fetch-metadata>` with token fallback.
 
 Helpers and Functions

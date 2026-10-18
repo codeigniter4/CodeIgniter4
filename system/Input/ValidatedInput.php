@@ -25,8 +25,6 @@ use UnitEnum;
  *
  * This class is stricter than InputData: missing values may use defaults and
  * null values remain null, but invalid present values throw.
- *
- * @see \CodeIgniter\Input\ValidatedInputTest
  */
 class ValidatedInput extends InputData
 {

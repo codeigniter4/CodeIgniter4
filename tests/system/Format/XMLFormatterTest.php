@@ -13,10 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Format;
 
+use CodeIgniter\Format\Exceptions\FormatException;
 use CodeIgniter\Test\CIUnitTestCase;
 use DOMDocument;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use stdClass;
+use Stringable;
 
 /**
  * @internal
@@ -150,6 +153,51 @@ final class XMLFormatterTest extends CIUnitTestCase
                 ['Xmltest' => 'bar'],
             ],
         ];
+    }
+
+    public function testEmptyTagNameAfterSanitization(): void
+    {
+        $data = [
+            '!@#' => 'value',
+        ];
+
+        $expected = <<<'EOH'
+            <?xml version="1.0"?>
+            <response><item>value</item></response>
+
+            EOH;
+
+        $this->assertSame($expected, $this->xmlFormatter->format($data));
+    }
+
+    public function testStringableObjectValue(): void
+    {
+        $value = new class () implements Stringable {
+            public function __toString(): string
+            {
+                return 'bar';
+            }
+        };
+
+        $data = [
+            'foo' => $value,
+        ];
+
+        $expected = <<<'EOH'
+            <?xml version="1.0"?>
+            <response><foo>bar</foo></response>
+
+            EOH;
+
+        $this->assertSame($expected, $this->xmlFormatter->format($data));
+    }
+
+    public function testNonStringableObjectValueThrows(): void
+    {
+        $this->expectException(FormatException::class);
+        $this->expectExceptionMessage('Cannot convert the value of type "stdClass" to a string for XML output.');
+
+        $this->xmlFormatter->format(['foo' => new stdClass()]);
     }
 
     public function testDeepNestedArrayToXml(): void

@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\CLI;
 
+use CodeIgniter\CLI\Attributes\Command;
+use CodeIgniter\CLI\Attributes\GeneratorCommand;
 use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockInputOutput;
@@ -21,6 +23,7 @@ use Config\Generators;
 use PHPUnit\Framework\Attributes\After;
 use PHPUnit\Framework\Attributes\Before;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Commands\Modern\GeneratorFixtureCommand;
 use Tests\Support\Commands\Modern\ImportSortingGeneratorCommand;
@@ -413,16 +416,120 @@ final class AbstractGeneratorCommandTest extends CIUnitTestCase
         $this->assertStringContainsString('File exists: ', $io->getOutput());
     }
 
-    public function testImportsAreSortedInGeneratedContent(): void
+    public function testNonInteractiveCodeIgniterNamespaceWarnsOnceAndProceeds(): void
     {
-        $command = new ImportSortingGeneratorCommand(new Commands());
+        $io = new MockInputOutput();
+        CLI::setInputOutput($io);
+
+        $command = $this->createClassAndViewGenerator();
+        $command->setInteractive(false);
+
+        $this->assertSame(EXIT_ERROR, $command->run([CLI::class], ['namespace' => 'CodeIgniter']));
+        $this->assertSame(
+            <<<'EOT'
+
+                Warning: Using the "CodeIgniter" namespace will generate the file in the system directory.
+                File exists: "SYSTEMPATH/CLI/CLI.php"
+                File exists: "SYSTEMPATH/CLI/Commands.php"
+
+                EOT,
+            preg_replace('/\e\[[^m]+m/', '', $io->getOutput()),
+        );
+    }
+
+    public function testAcceptedCodeIgniterNamespaceIsReusedForTheView(): void
+    {
+        $io = new MockInputOutput();
+        $io->setInputs(['y']);
+        CLI::setInputOutput($io);
+
+        $command = $this->createClassAndViewGenerator();
+        $command->setInteractive(true);
+
+        $this->assertSame(EXIT_ERROR, $command->run([CLI::class], ['namespace' => 'CodeIgniter']));
+        $this->assertSame(
+            <<<'EOT'
+
+                Warning: Using the "CodeIgniter" namespace will generate the file in the system directory.
+                Are you sure you want to continue? [y, n]: y
+                File exists: "SYSTEMPATH/CLI/CLI.php"
+                File exists: "SYSTEMPATH/CLI/Commands.php"
+
+                EOT,
+            preg_replace('/\e\[[^m]+m/', '', $io->getOutput()),
+        );
+    }
+
+    public function testCodeIgniterNamespaceIsConfirmedAgainOnTheNextRun(): void
+    {
+        $io = new MockInputOutput();
+        $io->setInputs(['y', 'n']);
+        CLI::setInputOutput($io);
+
+        $command = $this->createClassAndViewGenerator();
+        $command->setInteractive(true);
+
+        $this->assertSame(EXIT_ERROR, $command->run([CLI::class], ['namespace' => 'CodeIgniter']));
+        $this->assertSame(EXIT_SUCCESS, $command->run([CLI::class], ['namespace' => 'CodeIgniter']));
+        $this->assertSame(
+            <<<'EOT'
+
+                Warning: Using the "CodeIgniter" namespace will generate the file in the system directory.
+                Are you sure you want to continue? [y, n]: y
+                File exists: "SYSTEMPATH/CLI/CLI.php"
+                File exists: "SYSTEMPATH/CLI/Commands.php"
+                Warning: Using the "CodeIgniter" namespace will generate the file in the system directory.
+                Are you sure you want to continue? [y, n]: n
+                Operation has been cancelled.
+
+                EOT,
+            preg_replace('/\e\[[^m]+m/', '', $io->getOutput()),
+        );
+    }
+
+    private function createClassAndViewGenerator(): AbstractGeneratorCommand
+    {
+        return new #[Command(name: 'make:classandview', description: 'Generates a class and a view.', group: 'Fixtures')]
+        #[GeneratorCommand(component: 'Widget', template: 'config.tpl.php')]
+        class (new Commands()) extends AbstractGeneratorCommand {
+            protected function execute(array $arguments, array $options): int
+            {
+                return $this->generateClass() | $this->generateView(Commands::class);
+            }
+        };
+    }
+
+    #[DataProvider('provideImportsAreSortedInGeneratedContent')]
+    public function testImportsAreSortedInGeneratedContent(string $template, string $expected): void
+    {
+        $command                   = new ImportSortingGeneratorCommand(new Commands());
+        $command->renderedTemplate = $template;
         $command->setInteractive(false);
 
         $command->run(['foo'], []);
 
-        $content = file_get_contents(APPPATH . 'Widgets' . DIRECTORY_SEPARATOR . 'Foo.php');
-        $this->assertIsString($content);
-        $this->assertStringContainsString("use App\\Alpha;\nuse App\\Zebra;", $content);
+        $this->assertSame($expected, file_get_contents(APPPATH . 'Widgets' . DIRECTORY_SEPARATOR . 'Foo.php'));
+    }
+
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function provideImportsAreSortedInGeneratedContent(): iterable
+    {
+        yield 'LF' => [
+            "<?php\n\nuse App\\Zebra;\nuse App\\Alpha;\n\nclass Foo {}\n",
+            "<?php\n\nuse App\\Alpha;\nuse App\\Zebra;\n\nclass Foo {}\n",
+        ];
+
+        yield 'CRLF' => [
+            "<?php\r\n\r\nuse App\\Zebra;\r\nuse App\\Alpha;\r\n\r\nclass Foo {}\r\n",
+            "<?php\r\n\r\nuse App\\Alpha;\r\nuse App\\Zebra;\r\n\r\nclass Foo {}\r\n",
+        ];
+
+        yield 'mixed' => [
+            "<?php\r\n\r\nuse App\\Zebra;\r\nuse App\\Beta;\nuse App\\Alpha;\r\n\r\nclass Foo {}\r\n",
+            "<?php\r\n\r\nuse App\\Alpha;\r\nuse App\\Beta;\r\nuse App\\Zebra;\r\n\r\nclass Foo {}\r\n",
+        ];
     }
 
     public function testImportSortingCanBeDisabled(): void

@@ -25,9 +25,6 @@ use CodeIgniter\HTTP\ResponseInterface;
 use Config\Paths;
 use Throwable;
 
-/**
- * @see \CodeIgniter\Debug\ExceptionHandlerTest
- */
 final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHandlerInterface
 {
     use ResponseTrait;

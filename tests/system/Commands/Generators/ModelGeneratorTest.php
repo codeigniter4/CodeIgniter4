@@ -49,7 +49,7 @@ final class ModelGeneratorTest extends CIUnitTestCase
 
         helper('filesystem');
 
-        foreach ([APPPATH . 'Models/Admin', APPPATH . 'Entities'] as $dir) {
+        foreach ([APPPATH . 'Models/Admin', APPPATH . 'Entities', SYSTEMPATH . 'Models', SYSTEMPATH . 'Entities'] as $dir) {
             if (is_dir($dir)) {
                 delete_files($dir, true, false, true);
                 rmdir($dir);
@@ -215,5 +215,53 @@ final class ModelGeneratorTest extends CIUnitTestCase
         $this->assertSame(EXIT_SUCCESS, $command->run(['user'], ['return' => 'json']));
         $this->assertStringContainsString('Return type', $io->getOutput());
         $this->assertStringContainsString("protected \$returnType             = 'object';", $this->getContents('Models/User.php'));
+    }
+
+    public function testDecliningCodeIgniterNamespaceSkipsTheEntity(): void
+    {
+        $io = new MockInputOutput();
+        $io->setInputs(['n']);
+        CLI::setInputOutput($io);
+
+        $command = new ModelGenerator(new Commands());
+        $command->setInteractive(true);
+
+        $this->assertSame(EXIT_SUCCESS, $command->run(['user'], ['namespace' => 'CodeIgniter', 'return' => 'entity']));
+        $this->assertSame(
+            <<<'EOT'
+
+                Warning: Using the "CodeIgniter" namespace will generate the file in the system directory.
+                Are you sure you want to continue? [y, n]: n
+                Operation has been cancelled.
+
+                EOT,
+            preg_replace('/\e\[[^m]+m/', '', $io->getOutput()),
+        );
+        $this->assertFileDoesNotExist(SYSTEMPATH . 'Models' . DIRECTORY_SEPARATOR . 'User.php');
+        $this->assertFileDoesNotExist(SYSTEMPATH . 'Entities' . DIRECTORY_SEPARATOR . 'User.php');
+    }
+
+    public function testAcceptingCodeIgniterNamespaceDoesNotAskAgainForTheEntity(): void
+    {
+        $io = new MockInputOutput();
+        $io->setInputs(['y']);
+        CLI::setInputOutput($io);
+
+        $command = new ModelGenerator(new Commands());
+        $command->setInteractive(true);
+
+        $this->assertSame(EXIT_SUCCESS, $command->run(['user'], ['namespace' => 'CodeIgniter', 'return' => 'entity']));
+        $this->assertSame(
+            <<<'EOT'
+
+                Warning: Using the "CodeIgniter" namespace will generate the file in the system directory.
+                Are you sure you want to continue? [y, n]: y
+                File created: SYSTEMPATH/Models/User.php
+                Warning: Using the "CodeIgniter" namespace will generate the file in the system directory.
+                File created: SYSTEMPATH/Entities/User.php
+
+                EOT,
+            preg_replace('/\e\[[^m]+m/', '', $io->getOutput()),
+        );
     }
 }

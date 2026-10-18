@@ -38,7 +38,6 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
  * @phpstan-type request_items array<array-key, mixed>|string
  *
  * @internal
- * @see \CodeIgniter\SuperglobalsTest
  */
 final class Superglobals
 {

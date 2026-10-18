@@ -24,8 +24,6 @@ use Psr\Log\LoggerInterface;
 
 /**
  * Class View
- *
- * @see \CodeIgniter\View\ViewTest
  */
 class View implements RendererInterface
 {

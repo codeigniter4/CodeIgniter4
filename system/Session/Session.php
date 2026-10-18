@@ -27,8 +27,6 @@ use SessionHandlerInterface;
  * variables in `Сonfig\Session`.
  *
  * @property string $session_id
- *
- * @see \CodeIgniter\Session\SessionTest
  */
 class Session implements SessionInterface
 {

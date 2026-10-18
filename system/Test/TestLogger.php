@@ -16,9 +16,6 @@ namespace CodeIgniter\Test;
 use CodeIgniter\Log\Logger;
 use Stringable;
 
-/**
- * @see \CodeIgniter\Test\TestLoggerTest
- */
 class TestLogger extends Logger
 {
     /**

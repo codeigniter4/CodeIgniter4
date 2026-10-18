@@ -21,8 +21,6 @@ use Config\Filters as FiltersConfig;
 
 /**
  * Collects filters for a route.
- *
- * @see \CodeIgniter\Commands\Utilities\Routes\FilterCollectorTest
  */
 final readonly class FilterCollector
 {

@@ -13,9 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Input;
 
-/**
- * @see \CodeIgniter\Input\InputDataTest
- */
 class InputData
 {
     /**

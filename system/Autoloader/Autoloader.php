@@ -60,8 +60,6 @@ use Kint\Renderer\RichRenderer;
  *      // register the autoloader
  *      $loader->register();
  * ```
- *
- * @see \CodeIgniter\Autoloader\AutoloaderTest
  */
 class Autoloader
 {

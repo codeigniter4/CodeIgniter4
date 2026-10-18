@@ -1,0 +1,51 @@
+#############
+Version 4.7.6
+#############
+
+Release Date: Unreleased
+
+**4.7.6 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+********
+BREAKING
+********
+
+***************
+Message Changes
+***************
+
+- Added the ``Format.invalidXMLValue`` language string.
+
+*******
+Changes
+*******
+
+************
+Deprecations
+************
+
+**********
+Bugs Fixed
+**********
+
+- **Commands:** Fixed a bug where generator commands did not sort the imports of a template with CRLF line endings.
+- **Format:** Fixed ``XMLFormatter`` so that an array key that becomes empty after
+  sanitization no longer triggers a ``ValueError``; the fallback tag name ``item``
+  is used instead. Values that cannot be converted to a string, such as objects
+  not implementing ``Stringable``, now throw a ``FormatException`` instead of a
+  fatal ``Error``.
+- **Security:** Fixed a bug where a valid JSON request body that is not an object
+  (for example a JSON array) was corrupted after CSRF verification when the
+  token was sent via the ``X-CSRF-TOKEN`` header.
+- **HTTP:** Fixed a bug where ``IncomingRequest::isSecure()`` did not
+  recognize ``https`` in the ``X-Forwarded-Proto`` header from a trusted
+  proxy when the value contained uppercase letters or surrounding
+  whitespace, or was represented as a single-element array.
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

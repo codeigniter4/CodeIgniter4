@@ -19,8 +19,6 @@ use CodeIgniter\Database\BaseResult;
  * HTML Table Generating Class
  *
  * Lets you create tables manually or from database result objects, or arrays.
- *
- * @see \CodeIgniter\View\TableTest
  */
 class Table
 {
