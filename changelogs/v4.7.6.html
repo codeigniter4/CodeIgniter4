@@ -331,6 +331,10 @@ fatal <code class="docutils literal notranslate"><span class="pre">Error</span><
 <li><p><strong>Security:</strong> Fixed a bug where a valid JSON request body that is not an object
 (for example a JSON array) was corrupted after CSRF verification when the
 token was sent via the <code class="docutils literal notranslate"><span class="pre">X-CSRF-TOKEN</span></code> header.</p></li>
+<li><p><strong>HTTP:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">IncomingRequest::isSecure()</span></code> did not
+recognize <code class="docutils literal notranslate"><span class="pre">https</span></code> in the <code class="docutils literal notranslate"><span class="pre">X-Forwarded-Proto</span></code> header from a trusted
+proxy when the value contained uppercase letters or surrounding
+whitespace, or was represented as a single-element array.</p></li>
 </ul>
 <p>See the repo’s
 <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a>
