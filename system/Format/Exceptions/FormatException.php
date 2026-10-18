@@ -58,6 +58,17 @@ class FormatException extends RuntimeException
     }
 
     /**
+     * Thrown in XMLFormatter when a value cannot be converted
+     * to a string.
+     *
+     * @return static
+     */
+    public static function forInvalidXMLValue(string $type)
+    {
+        return new static(lang('Format.invalidXMLValue', [$type]));
+    }
+
+    /**
      * Thrown on XMLFormatter when the `simplexml` extension
      * is not installed.
      *

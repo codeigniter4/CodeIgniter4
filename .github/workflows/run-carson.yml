@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Run Carson
-        uses: NexusPHP/carson@cb35604ab330c2e44dba673fcef712c78e75f858 # v1.7.0
+        uses: NexusPHP/carson@53c45cf25e2303bc503209f8b5dd9107f27b2e8f # v1.8.0
         with:
           app_id: ${{ secrets.CARSON_APP_ID }}
           private_key: ${{ secrets.CARSON_PRIVATE_KEY }}
