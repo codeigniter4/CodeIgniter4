@@ -26,8 +26,6 @@ use CodeIgniter\View\RendererInterface;
 
 /**
  * Validator
- *
- * @see \CodeIgniter\Validation\ValidationTest
  */
 class Validation implements ValidationInterface
 {

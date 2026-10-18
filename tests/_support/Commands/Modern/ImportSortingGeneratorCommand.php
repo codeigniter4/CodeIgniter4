@@ -21,18 +21,10 @@ use CodeIgniter\CLI\Attributes\GeneratorCommand;
 #[GeneratorCommand(component: 'Widget', template: 'config.tpl.php', directory: 'Widgets')]
 class ImportSortingGeneratorCommand extends AbstractGeneratorCommand
 {
+    public string $renderedTemplate = "<?php\n\nuse App\\Zebra;\nuse App\\Alpha;\n\nclass Foo\n{\n}\n";
+
     protected function renderTemplate(array $data = []): string
     {
-        return <<<'PHP'
-            <?php
-
-            use App\Zebra;
-            use App\Alpha;
-
-            class Foo
-            {
-            }
-
-            PHP;
+        return $this->renderedTemplate;
     }
 }

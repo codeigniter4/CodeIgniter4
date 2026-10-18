@@ -21,9 +21,6 @@ use Config\Feature;
 use Config\Filters as FiltersConfig;
 use Config\Modules;
 
-/**
- * @see \CodeIgniter\Filters\FiltersTest
- */
 class Filters
 {
     /**

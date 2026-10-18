@@ -22,8 +22,6 @@ use ErrorException;
  * CodeIgniter Email Class
  *
  * Permits email to be sent using Mail, Sendmail, or SMTP.
- *
- * @see \CodeIgniter\Email\EmailTest
  */
 class Email
 {

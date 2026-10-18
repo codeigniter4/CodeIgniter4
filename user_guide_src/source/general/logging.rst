@@ -81,6 +81,31 @@ Each handler's section will have one property in common: ``handles``, which is a
 
 .. literalinclude:: logging/004.php
 
+.. _logging-stop-chain-on-failure:
+
+Stopping the Handler Chain on Failure
+-------------------------------------
+
+.. versionadded:: 4.8.0
+
+Handlers are executed in the order they are defined in the ``$handlers`` property. When a handler's
+``handle()`` method returns ``false``, the handlers defined after it are not executed.
+
+By default, the **File Handler** and the **Errorlog Handler** return ``false`` when they fail to write the
+log, for example when the log directory is not writable. This means that a failing handler prevents the
+handlers after it from logging the message.
+
+If you want the remaining handlers to run even when a handler fails to write the log, set its
+``stopChainOnFailure`` option to ``false``:
+
+.. literalinclude:: logging/010.php
+
+In the example above, the **Errorlog Handler** still logs the message when the **File Handler** cannot write
+to the log file.
+
+.. note:: This option only affects failed writes in the **File Handler** and the **Errorlog Handler**.
+    A custom handler can still return ``false`` from ``handle()`` to stop the remaining handlers.
+
 Modifying the Message with Context
 ==================================
 

@@ -18,8 +18,6 @@ use Closure;
 /**
  * HTTP response that streams its body to the client as it is generated,
  * instead of buffering the complete body first.
- *
- * @see \CodeIgniter\HTTP\StreamResponseTest
  */
 class StreamResponse extends Response implements NonBufferedResponseInterface
 {

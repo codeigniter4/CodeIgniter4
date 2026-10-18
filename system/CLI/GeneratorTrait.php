@@ -389,15 +389,16 @@ trait GeneratorTrait
         if (
             $this->sortImports
             && preg_match(
-                '/(?P<imports>(?:^use [^;]+;$\n?)+)/m',
+                '/(?P<imports>(?:^use [^;]+;\r?$\n?)+)/m',
                 $template,
                 $match,
             )
         ) {
-            $imports = explode("\n", trim($match['imports']));
+            $eol     = str_contains($match['imports'], "\r\n") ? "\r\n" : "\n";
+            $imports = explode("\n", str_replace("\r\n", "\n", trim($match['imports'])));
             sort($imports);
 
-            return str_replace(trim($match['imports']), implode("\n", $imports), $template);
+            return str_replace(trim($match['imports']), implode($eol, $imports), $template);
         }
 
         return $template;

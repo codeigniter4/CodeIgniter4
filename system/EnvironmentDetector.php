@@ -27,8 +27,6 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
  *
  * For custom environment names beyond the built-in production/development/testing,
  * use {@see self::is()}.
- *
- * @see \CodeIgniter\EnvironmentDetectorTest
  */
 final readonly class EnvironmentDetector
 {

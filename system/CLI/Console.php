@@ -17,9 +17,6 @@ use CodeIgniter\CodeIgniter;
 use Config\App;
 use Config\Services;
 
-/**
- * @see \CodeIgniter\CLI\ConsoleTest
- */
 class Console
 {
     private const DEFAULT_COMMAND = 'list';

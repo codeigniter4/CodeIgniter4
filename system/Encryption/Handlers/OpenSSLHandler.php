@@ -21,8 +21,6 @@ use SensitiveParameter;
  *
  * @property-read string $cipher
  * @property-read string $key
- *
- * @see \CodeIgniter\Encryption\Handlers\OpenSSLHandlerTest
  */
 class OpenSSLHandler extends BaseHandler
 {

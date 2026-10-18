@@ -18,9 +18,6 @@ use CodeIgniter\Input\ValidatedInput;
 use ReflectionNamedType;
 use ReflectionParameter;
 
-/**
- * @see \CodeIgniter\HTTP\FormRequestTest
- */
 abstract class FormRequest
 {
     /**

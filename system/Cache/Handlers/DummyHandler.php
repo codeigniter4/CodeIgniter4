@@ -17,8 +17,6 @@ use Closure;
 
 /**
  * Dummy cache handler
- *
- * @see \CodeIgniter\Cache\Handlers\DummyHandlerTest
  */
 class DummyHandler extends BaseHandler
 {

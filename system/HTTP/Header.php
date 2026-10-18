@@ -20,8 +20,6 @@ use Stringable;
  * Class Header
  *
  * Represents a single HTTP header.
- *
- * @see \CodeIgniter\HTTP\HeaderTest
  */
 class Header implements Stringable
 {

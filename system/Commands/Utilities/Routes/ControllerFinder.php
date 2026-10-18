@@ -17,8 +17,6 @@ use CodeIgniter\Autoloader\FileLocatorInterface;
 
 /**
  * Finds all controllers in a namespace for auto route listing.
- *
- * @see \CodeIgniter\Commands\Utilities\Routes\ControllerFinderTest
  */
 final readonly class ControllerFinder
 {

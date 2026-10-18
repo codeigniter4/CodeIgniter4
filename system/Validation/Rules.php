@@ -20,8 +20,6 @@ use Config\Database;
 
 /**
  * Validation Rules.
- *
- * @see \CodeIgniter\Validation\RulesTest
  */
 class Rules
 {

@@ -13,9 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Validation;
 
-/**
- * @see \CodeIgniter\Validation\DotArrayFilterTest
- */
 final class DotArrayFilter
 {
     /**

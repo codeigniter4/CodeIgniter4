@@ -262,8 +262,10 @@ Behavioural changes we need to be aware of when migrating:
   generator reported ``EXIT_SUCCESS`` even when the target file already existed. The base class
   returns ``EXIT_ERROR`` for an existing file without ``--force``, a write failure, and an undefined
   namespace. Declining the ``CodeIgniter`` namespace confirmation still exits with ``EXIT_SUCCESS``.
-- **The** ``CodeIgniter`` **namespace confirmation only prompts on interactive runs.** Non-interactive
-  runs print the warning and proceed instead of blocking on input that will never arrive.
+- **The** ``CodeIgniter`` **namespace confirmation is asked once, and only on interactive runs.** The
+  trait asked for every file. The base class asks once per ``generateClass()`` and reuses the answer for
+  the views generated after it. Non-interactive runs print the warning and proceed instead of blocking
+  on input that will never arrive.
 - **The** ``CodeIgniter`` **namespace confirmation keys off the target path.** The trait compared
   the raw ``--namespace`` option, so an attribute-pinned ``CodeIgniter`` namespace or a spelling like
   ``--namespace CodeIgniter/`` did not warn. The base class warns exactly when the file would be written
@@ -293,6 +295,13 @@ AbstractGeneratorCommand
 
         Like :php:meth:`generateClass`, but for non-class artifacts. The name is
         used as-is, without qualification or suffix handling.
+
+    .. php:method:: isCodeIgniterNamespaceDeclined(): bool
+
+        Whether the ``CodeIgniter`` namespace confirmation was declined since the
+        last :php:meth:`generateClass` call. A declined run still returns
+        ``EXIT_SUCCESS``, so check this before generating anything that depends
+        on the declined file.
 
     .. php:method:: getReplacements(string $class): array
 

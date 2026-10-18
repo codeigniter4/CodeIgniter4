@@ -24,8 +24,6 @@ use RedisException;
 
 /**
  * Redis cache handler
- *
- * @see \CodeIgniter\Cache\Handlers\RedisHandlerTest
  */
 class RedisHandler extends BaseHandler implements LockStoreProviderInterface
 {

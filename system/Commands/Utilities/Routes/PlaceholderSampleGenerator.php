@@ -27,8 +27,6 @@ namespace CodeIgniter\Commands\Utilities\Routes;
  * The generated candidate is validated against the original pattern with
  * ``preg_match`` before being returned, so callers never receive a non-matching
  * sample even when the parser is too permissive for a given edge case.
- *
- * @see \CodeIgniter\Commands\Utilities\Routes\PlaceholderSampleGeneratorTest
  */
 final class PlaceholderSampleGenerator
 {

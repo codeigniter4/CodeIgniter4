@@ -14,7 +14,9 @@ declare(strict_types=1);
 namespace CodeIgniter\Commands\Generators;
 
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Commands;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -39,12 +41,12 @@ final class CellGeneratorTest extends CIUnitTestCase
 
         CLI::reset();
 
-        $dir = APPPATH . 'Cells';
-
-        if (is_dir($dir)) {
-            helper('filesystem');
-            delete_files($dir, true, false, true);
-            rmdir($dir);
+        foreach ([APPPATH . 'Cells', SYSTEMPATH . 'Cells'] as $dir) {
+            if (is_dir($dir)) {
+                helper('filesystem');
+                delete_files($dir, true, false, true);
+                rmdir($dir);
+            }
         }
     }
 
@@ -133,5 +135,29 @@ final class CellGeneratorTest extends CIUnitTestCase
                 EOT,
             $this->getUndecoratedBuffer(),
         );
+    }
+
+    public function testDecliningCodeIgniterNamespaceAsksOnceForBothFiles(): void
+    {
+        $io = new MockInputOutput();
+        $io->setInputs(['n']);
+        CLI::setInputOutput($io);
+
+        $command = new CellGenerator(new Commands());
+        $command->setInteractive(true);
+
+        $this->assertSame(EXIT_SUCCESS, $command->run(['foo'], ['namespace' => 'CodeIgniter']));
+        $this->assertSame(
+            <<<'EOT'
+
+                Warning: Using the "CodeIgniter" namespace will generate the file in the system directory.
+                Are you sure you want to continue? [y, n]: n
+                Operation has been cancelled.
+
+                EOT,
+            preg_replace('/\e\[[^m]+m/', '', $io->getOutput()),
+        );
+        $this->assertFileDoesNotExist(SYSTEMPATH . 'Cells' . DIRECTORY_SEPARATOR . 'FooCell.php');
+        $this->assertFileDoesNotExist(SYSTEMPATH . 'Cells' . DIRECTORY_SEPARATOR . 'foo.php');
     }
 }

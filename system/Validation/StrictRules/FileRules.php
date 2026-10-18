@@ -22,8 +22,6 @@ use Config\Mimes;
 
 /**
  * File validation rules
- *
- * @see \CodeIgniter\Validation\StrictRules\FileRulesTest
  */
 class FileRules
 {
