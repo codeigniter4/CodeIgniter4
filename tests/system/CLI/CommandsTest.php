@@ -19,10 +19,12 @@ use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\CLI\Exceptions\CommandNotFoundException;
 use CodeIgniter\CodeIgniter;
+use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\ReflectionHelper;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Services;
@@ -99,6 +101,41 @@ final class CommandsTest extends CIUnitTestCase
         $this->assertSame(EXIT_ERROR, $commands->runCommand('app:unknown', [], []));
         $this->assertArrayNotHasKey('app:unknown', $commands->getModernCommands());
         $this->assertSame("\nCommand \"app:unknown\" not found.\n", $this->getUndecoratedBuffer());
+    }
+
+    public function testRunCommandRoutesTheCommandEventsThroughThePassedOutput(): void
+    {
+        $commands = new Commands();
+        $io       = new MockInputOutput();
+        $listener = static function (): void {
+            CLI::write('hook');
+        };
+
+        Events::on('pre_command', $listener);
+        Events::on('post_command', $listener);
+
+        try {
+            $this->assertSame(EXIT_SUCCESS, $commands->runCommand('app:about', ['a'], [], new Output($io)));
+        } finally {
+            Events::removeListener('pre_command', $listener);
+            Events::removeListener('post_command', $listener);
+        }
+
+        $this->assertSame(2, substr_count($io->getOutput(), 'hook'));
+        $this->assertSame('', $this->getStreamFilterBuffer());
+    }
+
+    public function testRunCommandWritesThroughThePassedOutput(): void
+    {
+        $commands = new Commands();
+        $io       = new MockInputOutput();
+
+        $this->assertSame(EXIT_ERROR, $commands->runCommand('app:unknown', [], [], new Output($io)));
+        $this->assertSame(EXIT_SUCCESS, $commands->runCommand('app:about', ['a'], [], new Output($io)));
+
+        $this->assertStringContainsString('Command "app:unknown" not found.', $io->getOutput());
+        $this->assertStringContainsString('CodeIgniter Version:', $io->getOutput());
+        $this->assertSame('', $this->getStreamFilterBuffer());
     }
 
     public function testRunOnUnknownLegacyCommandButWithOneAlternative(): void

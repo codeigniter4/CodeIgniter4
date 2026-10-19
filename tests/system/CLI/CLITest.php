@@ -23,7 +23,7 @@ use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresOperatingSystem;
-use ReflectionProperty;
+use Tests\Support\CLI\RecordingInputOutput;
 
 /**
  * @internal
@@ -59,16 +59,161 @@ final class CLITest extends CIUnitTestCase
 
     public function testBeep(): void
     {
-        $this->expectOutputString("\x07");
-
         CLI::beep();
+
+        $this->assertSame("\x07", $this->getStreamFilterBuffer());
     }
 
     public function testBeep4(): void
     {
-        $this->expectOutputString("\x07\x07\x07\x07");
-
         CLI::beep(4);
+
+        $this->assertSame("\x07\x07\x07\x07", $this->getStreamFilterBuffer());
+    }
+
+    public function testBeepIsSilencedByANullInputOutput(): void
+    {
+        CLI::setInputOutput(new NullInputOutput());
+
+        CLI::beep();
+
+        $this->assertSame('', $this->getStreamFilterBuffer());
+    }
+
+    public function testGetOutputReturnsTheSameInstanceUntilReset(): void
+    {
+        $output = CLI::getOutput();
+
+        $this->assertSame($output, CLI::getOutput());
+        $this->assertSame(CLI::getTerminal(), $output->getTerminal());
+
+        CLI::reset();
+
+        $this->assertNotSame($output, CLI::getOutput());
+        $this->assertNotSame($output->getTerminal(), CLI::getTerminal());
+    }
+
+    public function testInitRebuildsTheOutput(): void
+    {
+        $output = CLI::getOutput();
+
+        CLI::init();
+
+        $this->assertNotSame($output, CLI::getOutput());
+    }
+
+    public function testSetOutputRebindsTheFacadeAndTheProgressBar(): void
+    {
+        CLI::showProgress(1, 20);
+
+        $io = new MockInputOutput();
+        CLI::setOutput(new Output($io, CLI::getTerminal()));
+
+        CLI::write('after');
+        CLI::showProgress(10, 20);
+
+        $this->assertSame(
+            PHP_EOL . 'after' . PHP_EOL . "[\033[32m#####.....\033[0m]  50% Complete" . PHP_EOL,
+            $io->getOutput(),
+        );
+        $this->assertSame("[\033[32m#.........\033[0m]   5% Complete" . PHP_EOL, $this->getStreamFilterBuffer());
+    }
+
+    public function testProgressBarSurvivesATemporaryOutputSwap(): void
+    {
+        CLI::showProgress(1, 20);
+        CLI::redirectToStderr(static function (): void {
+            CLI::write('aside');
+        });
+        CLI::showProgress(10, 20);
+
+        $this->assertSame(
+            "[\033[32m#.........\033[0m]   5% Complete" . PHP_EOL
+            . 'aside' . PHP_EOL
+            . "\033[1A[\033[32m#####.....\033[0m]  50% Complete" . PHP_EOL,
+            $this->getStreamFilterBuffer(),
+        );
+    }
+
+    public function testRawFacadeWritesToStderrReachTheTransportUnchanged(): void
+    {
+        $io = new RecordingInputOutput();
+        CLI::setInputOutput($io);
+
+        $fwrite = $this->getPrivateMethodInvoker(CLI::class, 'fwrite');
+
+        CLI::write('before');
+        $fwrite(STDERR, 'raw');
+        CLI::write('after');
+
+        $this->assertSame([
+            ['STDOUT', "\nbefore\n"],
+            ['STDERR', 'raw'],
+            ['STDOUT', "after\n"],
+        ], $io->writes);
+    }
+
+    public function testSetOutputWithTheSameInstanceKeepsTheProgressBar(): void
+    {
+        CLI::showProgress(1, 20);
+        CLI::setOutput(CLI::getOutput());
+        CLI::showProgress(10, 20);
+
+        $this->assertSame(
+            "[\033[32m#.........\033[0m]   5% Complete" . PHP_EOL .
+            "\033[1A[\033[32m#####.....\033[0m]  50% Complete" . PHP_EOL,
+            $this->getStreamFilterBuffer(),
+        );
+    }
+
+    public function testSetOutputSwitchesTheTerminalWithIt(): void
+    {
+        $terminal = $this->createStub(Terminal::class);
+        $terminal->method('getWidth')->willReturn(12);
+
+        CLI::setOutput(new Output(new MockInputOutput(), $terminal));
+
+        $this->assertSame($terminal, CLI::getTerminal());
+        $this->assertSame(12, CLI::getWidth());
+        $this->assertSame('1234 5678 90' . PHP_EOL . 'abc', CLI::wrap('1234 5678 90 abc'));
+    }
+
+    public function testRedirectToStderrAppliesToRawFacadeWrites(): void
+    {
+        $io = new RecordingInputOutput();
+        CLI::setInputOutput($io);
+
+        $fwrite = $this->getPrivateMethodInvoker(CLI::class, 'fwrite');
+
+        $fwrite(STDOUT, 'before');
+        CLI::redirectToStderr(static function () use ($fwrite): void {
+            $fwrite(STDOUT, 'inside');
+            CLI::beep();
+        });
+        $fwrite(STDOUT, 'after');
+
+        $this->assertSame([
+            ['STDOUT', 'before'],
+            ['STDERR', 'inside'],
+            ['STDERR', "\x07"],
+            ['STDOUT', 'after'],
+        ], $io->writes);
+    }
+
+    public function testSetInputOutputChangesTheTransportOfTheCurrentOutput(): void
+    {
+        $output = CLI::getOutput();
+        $io     = new MockInputOutput();
+
+        CLI::setInputOutput($io);
+
+        $this->assertSame($output, CLI::getOutput());
+        $this->assertSame($io, CLI::getInputOutput());
+        $this->assertSame($io, $output->getInputOutput());
+
+        CLI::resetInputOutput();
+
+        $this->assertNotSame($io, $output->getInputOutput());
     }
 
     /**
@@ -146,16 +291,7 @@ final class CLITest extends CIUnitTestCase
 
     public function testPromptPassesPromptTextToInputReader(): void
     {
-        $io = new class () extends InputOutput {
-            public ?string $receivedPrefix = null;
-
-            public function input(?string $prefix = null): string
-            {
-                $this->receivedPrefix = $prefix;
-
-                return 'red';
-            }
-        };
+        $io = new RecordingInputOutput('red');
         CLI::setInputOutput($io);
 
         $output = CLI::prompt('What is your favorite color?');
@@ -168,16 +304,7 @@ final class CLITest extends CIUnitTestCase
 
     public function testPromptPassesDefaultOptionInPromptText(): void
     {
-        $io = new class () extends InputOutput {
-            public ?string $receivedPrefix = null;
-
-            public function input(?string $prefix = null): string
-            {
-                $this->receivedPrefix = $prefix;
-
-                return '';
-            }
-        };
+        $io = new RecordingInputOutput();
         CLI::setInputOutput($io);
 
         $output = CLI::prompt('What is your favorite color?', 'red');
@@ -193,16 +320,7 @@ final class CLITest extends CIUnitTestCase
 
     public function testPromptByKeyPassesPromptTextToInputReader(): void
     {
-        $io = new class () extends InputOutput {
-            public ?string $receivedPrefix = null;
-
-            public function input(?string $prefix = null): string
-            {
-                $this->receivedPrefix = $prefix;
-
-                return '1';
-            }
-        };
+        $io = new RecordingInputOutput('1');
         CLI::setInputOutput($io);
 
         $output = CLI::promptByKey('Select your hobbies:', ['Playing game', 'Sleep', 'Badminton']);
@@ -218,16 +336,7 @@ final class CLITest extends CIUnitTestCase
 
     public function testPromptByMultipleKeysPassesPromptTextToInputReader(): void
     {
-        $io = new class () extends InputOutput {
-            public ?string $receivedPrefix = null;
-
-            public function input(?string $prefix = null): string
-            {
-                $this->receivedPrefix = $prefix;
-
-                return '0,1';
-            }
-        };
+        $io = new RecordingInputOutput('0,1');
         CLI::setInputOutput($io);
 
         $output = CLI::promptByMultipleKeys('Select your hobbies:', ['Playing game', 'Sleep', 'Badminton']);
@@ -555,46 +664,31 @@ final class CLITest extends CIUnitTestCase
         $this->assertSame($expected, $this->getStreamFilterBuffer());
     }
 
-    public function testGetLastWriteReturnsNullAfterReset(): void
+    public function testResetLastWriteMakesTheNextWriteStartOnAFreshLine(): void
     {
-        CLI::resetLastWrite();
-
-        $this->assertNull(CLI::getLastWrite());
-    }
-
-    public function testGetLastWriteReflectsPriorWrite(): void
-    {
-        CLI::resetLastWrite();
         CLI::write('hello');
+        CLI::resetLastWrite();
+        CLI::write('world');
 
-        $this->assertSame('write', CLI::getLastWrite());
+        $this->assertSame(PHP_EOL . 'hello' . PHP_EOL . PHP_EOL . 'world' . PHP_EOL, $this->getStreamFilterBuffer());
     }
 
-    public function testGetLastWriteReflectsPriorPrint(): void
+    public function testWriteAfterPrintStartsOnAFreshLine(): void
     {
-        CLI::resetLastWrite();
         CLI::write('hello');
         CLI::print('world');
+        CLI::write('again');
 
-        $this->assertNull(CLI::getLastWrite());
+        $this->assertSame(PHP_EOL . 'hello' . PHP_EOL . 'world' . PHP_EOL . 'again' . PHP_EOL, $this->getStreamFilterBuffer());
     }
 
-    public function testSetLastWriteRoundTrips(): void
+    public function testWriteAfterPrintEndingInANewlineAddsNoBlankLine(): void
     {
-        CLI::setLastWrite('write');
-        $this->assertSame('write', CLI::getLastWrite());
-
-        CLI::setLastWrite(null);
-        $this->assertNull(CLI::getLastWrite());
-    }
-
-    public function testSetLastWriteSuppressesLeadingNewlineOnNextWrite(): void
-    {
-        CLI::setLastWrite('write');
-
         CLI::write('hello');
+        CLI::print('world' . PHP_EOL);
+        CLI::write('again');
 
-        $this->assertSame('hello' . PHP_EOL, $this->getStreamFilterBuffer());
+        $this->assertSame(PHP_EOL . 'hello' . PHP_EOL . 'world' . PHP_EOL . 'again' . PHP_EOL, $this->getStreamFilterBuffer());
     }
 
     public function testError(): void
@@ -607,17 +701,7 @@ final class CLITest extends CIUnitTestCase
 
     public function testErrorOutsideCliWritesToStdoutWithoutColor(): void
     {
-        $io = new class () extends InputOutput {
-            /**
-             * @var list<array{string, string}>
-             */
-            public array $writes = [];
-
-            public function fwrite($handle, string $string): void
-            {
-                $this->writes[] = [$handle === STDERR ? 'STDERR' : 'STDOUT', $string];
-            }
-        };
+        $io = new RecordingInputOutput();
         CLI::setInputOutput($io);
 
         is_cli(false);
@@ -651,17 +735,7 @@ final class CLITest extends CIUnitTestCase
 
     public function testRedirectToStderrRoutesStdoutWritesOnlyWhileTheCallbackRuns(): void
     {
-        $io = new class () extends InputOutput {
-            /**
-             * @var list<array{string, string}>
-             */
-            public array $writes = [];
-
-            public function fwrite($handle, string $string): void
-            {
-                $this->writes[] = [$handle === STDERR ? 'STDERR' : 'STDOUT', $string];
-            }
-        };
+        $io = new RecordingInputOutput();
         CLI::setInputOutput($io);
 
         CLI::print('before');
@@ -688,17 +762,7 @@ final class CLITest extends CIUnitTestCase
 
     public function testRedirectToStderrDoesNotRedirectOutsideCli(): void
     {
-        $io = new class () extends InputOutput {
-            /**
-             * @var list<array{string, string}>
-             */
-            public array $writes = [];
-
-            public function fwrite($handle, string $string): void
-            {
-                $this->writes[] = [$handle === STDERR ? 'STDERR' : 'STDOUT', $string];
-            }
-        };
+        $io = new RecordingInputOutput();
         CLI::setInputOutput($io);
 
         is_cli(false);
@@ -719,7 +783,7 @@ final class CLITest extends CIUnitTestCase
         $superglobals = service('superglobals');
         $noColor      = $superglobals->server('NO_COLOR');
 
-        (new ReflectionProperty(CLI::class, 'isColored'))->setValue(null, true);
+        $this->assertTrue(CLI::getOutput()->isDecorated());
         $superglobals->setServer('NO_COLOR', '1');
 
         try {
@@ -737,6 +801,20 @@ final class CLITest extends CIUnitTestCase
         CLI::write('after', 'red');
 
         $this->assertSame("\ninside\n\n\033[0;31mafter\033[0m\n", $this->getStreamFilterBuffer());
+    }
+
+    public function testRedirectToStderrRestoresThePreviousOutput(): void
+    {
+        $previous = CLI::getOutput();
+        $inside   = null;
+
+        CLI::redirectToStderr(static function () use (&$inside): void {
+            $inside = CLI::getOutput();
+        });
+
+        $this->assertInstanceOf(Output::class, $inside);
+        $this->assertNotSame($previous, $inside);
+        $this->assertSame($previous, CLI::getOutput());
     }
 
     public function testErrorForeground(): void
@@ -778,6 +856,16 @@ final class CLITest extends CIUnitTestCase
                     "\033[1A[\033[32m##########\033[0m] 100% Complete" . PHP_EOL .
                     'third.' . PHP_EOL .
                     "[\033[32m#.........\033[0m]   5% Complete" . PHP_EOL;
+        $this->assertSame($expected, $this->getStreamFilterBuffer());
+    }
+
+    public function testShowProgressToleratesNegativeAndZeroValues(): void
+    {
+        CLI::showProgress(-5, 10);
+        CLI::showProgress(1, 0);
+
+        $expected = "[\033[32m#####.....\033[0m]  50% Complete" . PHP_EOL .
+                    "[\033[32m##########\033[0m] 100% Complete" . PHP_EOL;
         $this->assertSame($expected, $this->getStreamFilterBuffer());
     }
 
@@ -989,15 +1077,9 @@ final class CLITest extends CIUnitTestCase
 
     public function testWindow(): void
     {
-        $height = new ReflectionProperty(CLI::class, 'height');
-        $height->setValue(null, null);
-
         $this->assertGreaterThan(0, CLI::getHeight());
-
-        $width = new ReflectionProperty(CLI::class, 'width');
-        $width->setValue(null, null);
-
         $this->assertGreaterThan(0, CLI::getWidth());
+        $this->assertSame(CLI::getTerminal()->getWidth(), CLI::getWidth());
     }
 
     #[RequiresOperatingSystem('Darwin|Linux')]

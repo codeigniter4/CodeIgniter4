@@ -30,8 +30,7 @@ final class TestCaseTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        // Reset CLI::$lastWrite
-        CLI::print();
+        CLI::resetLastWrite();
     }
 
     public function testGetPrivatePropertyWithObject(): void

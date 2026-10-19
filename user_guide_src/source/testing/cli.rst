@@ -37,14 +37,14 @@ Gets the output.
 
 - If you call it like ``$io->getOutput()``, it returns the whole output string.
 - If you specify ``0`` or a positive number, it returns the output array item.
-  Each item has the output of a ``CLI::fwrite()`` call.
+  Each item has the output of one write, such as a ``CLI::write()`` or ``CLI::beep()`` call.
 - If you specify a negative number ``-n``, it returns the last ``n``-th item of
   the output array.
 
 getOutputs(): array
 ^^^^^^^^^^^^^^^^^^^
 
-Returns the output array. Each item has the output of a ``CLI::fwrite()`` call.
+Returns the output array. Each item has the output of one write.
 
 How to Use
 ==========
@@ -57,6 +57,16 @@ How to Use
 The following test code is to test the command ``spark db:table``:
 
 .. literalinclude:: cli/001.php
+
+Running a Modern Command Against an Output
+------------------------------------------
+
+.. versionadded:: 4.8.0
+
+A modern command can also be run directly against an ``Output`` built on the mock,
+which leaves the ``CLI`` class untouched once ``run()`` returns:
+
+.. literalinclude:: cli/002.php
 
 ***********************
 Without MockInputOutput

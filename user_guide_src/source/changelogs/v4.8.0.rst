@@ -28,6 +28,19 @@ Behavior Changes
 - **CLI:** Uncaught exceptions in ``spark``, and errors shown with ``BaseCommand::showError()`` or ``AbstractCommand::renderThrowable()`` (as ``migrate`` and
   ``db:seed`` do), are now printed to STDERR instead of STDOUT. The exit code is unchanged.
   See :ref:`upgrade-480-cli-error-output`.
+- **CLI:** ``CLI::beep()`` now writes through the ``InputOutput`` transport instead of ``echo``, so it is discarded by ``callSilently()``, captured
+  by ``MockInputOutput``, and no longer seen by PHP output buffering on the command line.
+- **CLI:** ``CLI::print()`` of text ending in a line feed, and a progress bar drawn with ``CLI::showProgress()``, no longer cause a blank line
+  before the next ``CLI::write()``, since the cursor already sits at the start of a line. ``CLI::init()`` now also resets that cursor state,
+  the progress bar, and the cached terminal dimensions.
+- **CLI:** ``CLI::showProgress()`` now draws a full bar at 100% for a step beyond the total, instead of throwing a ``ValueError``.
+- **CLI:** ``CLI::error()`` no longer leaves colour support disabled for STDOUT when it is given an invalid colour name, and
+  ``CLI::write()``, ``CLI::print()``, and ``CLI::color()`` now accept an empty foreground with a background instead of throwing.
+  Colouring text that already contains a coloured segment now keeps that segment whatever its colour, where previously only the
+  dim colours (``\033[0;...m``) were kept and a bright or background-only segment lost the colour of the text after it.
+- **CLI:** The output state moved out of the static ``CLI`` properties. A subclass of ``CLI`` that overrides ``fwrite()`` or ``color()``, or reads
+  ``$lastWrite``, ``$isColored``, ``$io``, ``$height``, ``$width``, or the colour tables, no longer affects or observes the output.
+  See :ref:`upgrade-480-cli-output-classes`.
 - **Commands:** The ``-h`` option to ``routes`` command which was mapped previously to the ``--sort-by-handler`` option is now removed.
   Use ``--sort-by-handler`` instead to sort the routes by handler when running the ``routes`` command.
 - **Commands:** The ``filter:check`` command now requires the HTTP method argument to be uppercase (e.g., ``spark filter:check GET /`` instead of ``spark filter:check get /``).
@@ -245,7 +258,15 @@ Commands
 - Likewise, the ``command()`` function now also supports the above enhancements for command-line option parsing when using the function to run commands from code.
 - Added ``make:request`` generator command to scaffold :ref:`Form Request <form-requests>` classes.
 - Added ``key:rotate`` command to demote the current ``encryption.key`` to ``encryption.previousKeys`` in **.env** and generate a new key. See :ref:`spark-key-rotate`.
-- Added ``AbstractCommand::callSilently()`` to invoke another command with its output discarded, restoring the prior IO afterwards. See :ref:`modern-commands-call-silently`.
+- Added ``AbstractCommand::callSilently()`` to invoke another command with its output discarded, restoring the prior output afterwards. See :ref:`modern-commands-call-silently`.
+- The output side of the ``CLI`` class now lives in instance classes, with ``CLI`` delegating to them: :php:class:`Output <CodeIgniter\\CLI\\Output>`
+  (``print()``, ``write()``, ``error()``, ``newLine()``, ``beep()``, ``clearScreen()``, ``color()``), :php:class:`Terminal <CodeIgniter\\CLI\\Terminal>`
+  (dimensions and colour support), :php:class:`ProgressBar <CodeIgniter\\CLI\\ProgressBar>`, :php:class:`Table <CodeIgniter\\CLI\\Table>`, and
+  :php:class:`Color <CodeIgniter\\CLI\\Color>` (ANSI codes and ``Color::width()``). ``CLI::getOutput()`` and ``CLI::getTerminal()`` return the shared
+  instances. See :ref:`cli-library-classes`.
+- Modern commands can write through ``$this->getOutput()``, the same ``Output`` used by the static ``CLI`` methods. ``AbstractCommand::run()``
+  and ``Commands::runCommand()`` accept an ``Output`` to run against, which ``Console`` passes down and sub-commands inherit.
+  See :ref:`modern-commands-writing-output`.
 - Added :php:class:`AbstractGeneratorCommand <CodeIgniter\\CLI\\AbstractGeneratorCommand>` and the ``#[GeneratorCommand]`` attribute, the modern
   counterpart of ``GeneratorTrait`` for commands that generate files from templates. Generator commands built on it accept the ``-n``, ``-s``,
   and ``-f`` shortcuts for ``--namespace``, ``--suffix``, and ``--force``. See :doc:`../cli/cli_modern_generators`.
@@ -444,6 +465,9 @@ Deprecations
 - **CLI:** ``BaseCommand`` is now deprecated in favor of ``AbstractCommand``. Running a command that extends it triggers a deprecation notice. See :doc:`../cli/cli_modern_commands`.
 - **CLI:** ``GeneratorTrait`` is now deprecated in favor of ``AbstractGeneratorCommand``. See :doc:`../cli/cli_modern_generators`.
 - **CLI:** The ``CLI.generator.viewName.cell`` language string is deprecated. It was never displayed, since ``make:cell`` only prompts for the class name.
+- **CLI:** The ``CLI::$foreground_colors``, ``CLI::$background_colors``, ``CLI::$lastWrite``, ``CLI::$height``, ``CLI::$width``, ``CLI::$isColored``,
+  ``CLI::$io``, and ``CLI::$stdoutToStderr`` properties are deprecated and no longer used. Their state lives in ``Color``, ``Output``, and
+  ``Terminal``. See :ref:`upgrade-480-cli-output-classes`.
 - **HTTP:** The ``CLIRequest::parseCommand()`` method is now deprecated and will be removed in a future release. The ``CLIRequest`` class now uses the new ``CommandLineParser`` class to handle command-line argument parsing.
 - **HTTP:** ``URI::setSilent()`` is now hard deprecated. This method was only previously marked as deprecated. It will now trigger a deprecation notice when used.
 
