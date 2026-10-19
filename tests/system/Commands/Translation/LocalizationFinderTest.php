@@ -133,6 +133,48 @@ final class LocalizationFinderTest extends CIUnitTestCase
         $this->assertStringContainsString($this->getActualTableWithBadKeys(), $this->getStreamFilterBuffer());
     }
 
+    public function testShowBadTranslationWithVerboseShortcut(): void
+    {
+        $this->makeLocaleDirectory();
+
+        command('lang:find --dir Translation -v');
+
+        $this->assertStringContainsString('Files found:', $this->getStreamFilterBuffer());
+        $this->assertStringContainsString($this->getActualTableWithBadKeys(), $this->getStreamFilterBuffer());
+    }
+
+    public function testReportsAFailedWriteWhenVerbose(): void
+    {
+        $this->makeLocaleDirectory();
+        $localeDirectory = self::$languageTestPath . self::$locale;
+        chmod($localeDirectory, 0555);
+
+        if (is_writable($localeDirectory)) {
+            chmod($localeDirectory, 0777);
+            $this->markTestSkipped('The locale directory stays writable for this user.');
+        }
+
+        set_error_handler(static fn (): bool => true, E_WARNING);
+
+        try {
+            command('lang:find --dir Translation -v');
+        } finally {
+            restore_error_handler();
+            chmod($localeDirectory, 0777);
+        }
+
+        $this->assertStringContainsString('(error write).', $this->getStreamFilterBuffer());
+    }
+
+    public function testHidesDetailsWithoutVerbose(): void
+    {
+        $this->makeLocaleDirectory();
+
+        command('lang:find --dir Translation');
+
+        $this->assertStringNotContainsString('Files found:', $this->getStreamFilterBuffer());
+    }
+
     public function testShowNewSkipsKeysAlreadyTranslatedByFramework(): void
     {
         $this->makeLocaleDirectory();

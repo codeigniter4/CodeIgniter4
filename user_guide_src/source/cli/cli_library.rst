@@ -297,14 +297,29 @@ Mixing the static methods with the instance is safe, because both write to the s
         :param InputOutput $io:       The transport the text is written through.
         :param Terminal    $terminal: The terminal consulted for colour support.
 
-    .. php:method:: print(string $text = ''[, string $foreground = ''[, string $background = '']]): void
-    .. php:method:: write(string $text = ''[, string $foreground = ''[, string $background = '']]): void
+    .. php:method:: print(string $text = ''[, string $foreground = ''[, string $background = ''[, Verbosity $verbosity = Verbosity::Normal]]]): void
+    .. php:method:: write(string $text = ''[, string $foreground = ''[, string $background = ''[, Verbosity $verbosity = Verbosity::Normal]]]): void
+    .. php:method:: newLine([int $num = 1[, Verbosity $verbosity = Verbosity::Normal]]): void
+
+        The same as the static methods of the same names, writing nothing when the
+        level of the output is below ``$verbosity``.
+
     .. php:method:: error(string $text[, string $foreground = 'light_red'[, string $background = '']]): void
-    .. php:method:: newLine(int $num = 1): void
     .. php:method:: beep(int $num = 1): void
     .. php:method:: clearScreen(): void
 
-        The same as the static methods of the same names.
+        The same as the static methods of the same names. ``error()`` writes at every
+        level but ``Verbosity::Silent``, and the other two only from ``Verbosity::Normal`` on.
+
+    .. php:method:: getVerbosity(): Verbosity
+    .. php:method:: setVerbosity(Verbosity $verbosity): void
+    .. php:method:: isQuiet(): bool
+    .. php:method:: isVerbose(): bool
+    .. php:method:: isVeryVerbose(): bool
+    .. php:method:: isDebug(): bool
+
+        ``isQuiet()`` is true for the quiet and silent levels, and the others for their
+        level or above. See :ref:`modern-commands-verbosity`.
 
     .. php:method:: color(string $text, string $foreground[, string $background = ''[, string $format = '']]): string
 
@@ -322,6 +337,12 @@ Mixing the static methods with the instance is safe, because both write to the s
         while rendering an exception.
 
     .. php:method:: getTerminal(): Terminal
+
+.. php:class:: Verbosity
+
+    The level of the output, as an ``int``-backed enum valued as ``SHELL_VERBOSITY``:
+    ``Silent`` (-2), ``Quiet`` (-1), ``Normal`` (0), ``Verbose`` (1), ``VeryVerbose`` (2),
+    and ``Debug`` (3).
 
 .. php:class:: Terminal
 

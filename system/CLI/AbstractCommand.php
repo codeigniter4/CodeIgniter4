@@ -389,7 +389,7 @@ abstract class AbstractCommand
      * Resolution order:
      *   1. An explicit `setInteractive()` call wins.
      *   2. Otherwise, the `--no-interaction` / `-N` flag from the current `run()`
-     *      forces non-interactive.
+     *      or a quiet output forces non-interactive.
      *   3. Otherwise, the command is interactive when STDIN is a TTY.
      *
      * Non-CLI contexts (e.g., a controller invoking `command()`) don't expose
@@ -458,7 +458,7 @@ abstract class AbstractCommand
             }
 
             // Reset per-run interactive state from the current options.
-            $this->runtimeInteractive = $this->hasUnboundOption('no-interaction', $options) ? false : null;
+            $this->runtimeInteractive = $this->hasUnboundOption('no-interaction', $options) || $this->getOutput()->isQuiet() ? false : null;
 
             $this->initialize($arguments, $options);
 
@@ -771,6 +771,8 @@ abstract class AbstractCommand
      * - `--no-header`: `Console` strips it before rendering the banner.
      * - `--no-interaction` / `-N`: `run()` folds it into the interactive state
      *   and `resolveChildInteractiveState()` reads it to drive the `call()` cascade.
+     * - `--silent`, `--quiet` / `-q` and `--verbose` / `-v`: `Console` reads them into the
+     *   verbosity of the output.
      *
      * Subclasses that override this hook should re-register these options or
      * accept that the corresponding framework features will be broken for
@@ -781,7 +783,10 @@ abstract class AbstractCommand
         $this
             ->addOption(new Option(name: 'help', shortcut: 'h', description: 'Display help for the given command.'))
             ->addOption(new Option(name: 'no-header', description: 'Do not display the banner when running the command.'))
-            ->addOption(new Option(name: 'no-interaction', shortcut: 'N', description: 'Do not ask any interactive questions.'));
+            ->addOption(new Option(name: 'no-interaction', shortcut: 'N', description: 'Do not ask any interactive questions.'))
+            ->addOption(new Option(name: 'silent', description: 'Do not output any message, not even errors.'))
+            ->addOption(new Option(name: 'quiet', shortcut: 'q', description: 'Do not output any message except errors.'))
+            ->addOption(new Option(name: 'verbose', shortcut: 'v', description: 'Increase the verbosity of messages (-v, -vv, or -vvv).'));
     }
 
     /**

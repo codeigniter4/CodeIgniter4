@@ -17,6 +17,7 @@ use CodeIgniter\CLI\Exceptions\CLIException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockInputOutput;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\CLI\RecordingInputOutput;
 
@@ -391,6 +392,120 @@ final class OutputTest extends CIUnitTestCase
 
         $this->assertNotInstanceOf(MockInputOutput::class, $output->getInputOutput());
         $this->assertNotSame($output->getTerminal(), (new Output())->getTerminal());
+    }
+
+    public function testDefaultsToTheNormalLevel(): void
+    {
+        $this->assertSame(Verbosity::Normal, (new Output(new RecordingInputOutput()))->getVerbosity());
+    }
+
+    public function testDropsWritesAboveTheLevel(): void
+    {
+        $io     = new RecordingInputOutput();
+        $output = new Output($io);
+
+        $output->write('normal');
+        $output->write('verbose', verbosity: Verbosity::Verbose);
+        $output->print('verbose', verbosity: Verbosity::Verbose);
+        $output->newLine(verbosity: Verbosity::Verbose);
+        $output->write('quiet', verbosity: Verbosity::Quiet);
+
+        $output->setVerbosity(Verbosity::VeryVerbose);
+        $output->write('very verbose', verbosity: Verbosity::VeryVerbose);
+        $output->write('debug', verbosity: Verbosity::Debug);
+
+        $this->assertSame([
+            ['STDOUT', "\nnormal\n"],
+            ['STDOUT', "quiet\n"],
+            ['STDOUT', "very verbose\n"],
+        ], $io->writes);
+    }
+
+    public function testQuietDropsNormalWritesButKeepsErrors(): void
+    {
+        $io     = new RecordingInputOutput();
+        $output = new Output($io, $this->createUncoloredTerminal());
+
+        $output->setVerbosity(Verbosity::Quiet);
+        $output->write('write');
+        $output->print('print');
+        $output->newLine();
+        $output->beep();
+        $output->clearScreen();
+        $output->writeRaw('raw');
+        $output->error('error');
+        $output->write('quiet', verbosity: Verbosity::Quiet);
+
+        $this->assertSame([['STDERR', "\nerror\n"], ['STDOUT', "quiet\n"]], $io->writes);
+    }
+
+    public function testSilentDropsEverything(): void
+    {
+        $io     = new RecordingInputOutput();
+        $output = new Output($io, $this->createUncoloredTerminal());
+
+        $output->setVerbosity(Verbosity::Silent);
+        $output->write('silent', verbosity: Verbosity::Silent);
+        $output->error('error');
+        $output->forStderr()->write('stderr');
+
+        $this->assertSame([], $io->writes);
+    }
+
+    public function testDroppedWriteLeavesTheCursorAlone(): void
+    {
+        $io     = new RecordingInputOutput();
+        $output = new Output($io);
+
+        $output->write('first');
+        $output->print('dropped', verbosity: Verbosity::Verbose);
+        $output->write('second');
+
+        $this->assertSame([['STDOUT', "\nfirst\n"], ['STDOUT', "second\n"]], $io->writes);
+    }
+
+    public function testForStderrKeepsTheLevelAndWritesAtQuiet(): void
+    {
+        $io     = new RecordingInputOutput();
+        $output = new Output($io, $this->createUncoloredTerminal());
+
+        $output->setVerbosity(Verbosity::Quiet);
+        $stderrOutput = $output->forStderr();
+        $stderrOutput->write('shown');
+        $stderrOutput->write('dropped', verbosity: Verbosity::Verbose);
+
+        $this->assertSame(Verbosity::Quiet, $stderrOutput->getVerbosity());
+        $this->assertSame([['STDERR', "\nshown\n"]], $io->writes);
+    }
+
+    /**
+     * @param array{bool, bool, bool, bool} $expected
+     */
+    #[DataProvider('provideLevelPredicates')]
+    public function testLevelPredicates(Verbosity $verbosity, array $expected): void
+    {
+        $output = new Output(new RecordingInputOutput());
+        $output->setVerbosity($verbosity);
+
+        $this->assertSame($expected, [$output->isQuiet(), $output->isVerbose(), $output->isVeryVerbose(), $output->isDebug()]);
+    }
+
+    /**
+     * @return iterable<string, array{Verbosity, array{bool, bool, bool, bool}}>
+     */
+    public static function provideLevelPredicates(): iterable
+    {
+        yield 'silent' => [Verbosity::Silent, [true, false, false, false]];
+
+        yield 'quiet' => [Verbosity::Quiet, [true, false, false, false]];
+
+        yield 'normal' => [Verbosity::Normal, [false, false, false, false]];
+
+        yield 'verbose' => [Verbosity::Verbose, [false, true, false, false]];
+
+        yield 'very verbose' => [Verbosity::VeryVerbose, [false, true, true, false]];
+
+        yield 'debug' => [Verbosity::Debug, [false, true, true, true]];
     }
 
     private function createUncoloredTerminal(): Terminal

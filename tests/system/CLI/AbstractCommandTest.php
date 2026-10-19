@@ -121,14 +121,14 @@ final class AbstractCommandTest extends CIUnitTestCase
         $command = new Help(new Commands());
 
         $this->assertCount(1, $command->getArgumentsDefinition());
-        $this->assertCount(3, $command->getOptionsDefinition());
-        $this->assertCount(2, $command->getShortcuts());
+        $this->assertCount(6, $command->getOptionsDefinition());
+        $this->assertCount(4, $command->getShortcuts());
         $this->assertEmpty($command->getNegations());
     }
 
     public function testCommandHasDefaultOptions(): void
     {
-        $defaultOptions = ['help', 'no-header', 'no-interaction'];
+        $defaultOptions = ['help', 'no-header', 'no-interaction', 'silent', 'quiet', 'verbose'];
 
         $this->assertSame($defaultOptions, array_keys((new Help(new Commands()))->getOptionsDefinition()));
     }
@@ -1238,9 +1238,29 @@ final class AbstractCommandTest extends CIUnitTestCase
                 'help'           => false,
                 'no-header'      => false,
                 'no-interaction' => false,
+                'silent'         => false,
+                'quiet'          => false,
+                'verbose'        => false,
             ],
             $command->callGetValidatedOptions(),
         );
+    }
+
+    public function testQuietOutputMakesTheRunNonInteractive(): void
+    {
+        $output = new Output(new MockInputOutput());
+        $output->setVerbosity(Verbosity::Quiet);
+
+        $command = new InteractiveStateProbeCommand(new Commands());
+
+        InteractiveStateProbeCommand::reset();
+        $command->run([], []);
+        $this->assertTrue(InteractiveStateProbeCommand::$interactCalled);
+
+        InteractiveStateProbeCommand::reset();
+        $command->run([], [], $output);
+        $this->assertFalse(InteractiveStateProbeCommand::$interactCalled);
+        $this->assertFalse(InteractiveStateProbeCommand::$observedInteractive);
     }
 
     public function testGetValidatedOptionByName(): void

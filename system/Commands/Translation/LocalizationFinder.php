@@ -17,6 +17,7 @@ use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Option;
+use CodeIgniter\CLI\Verbosity;
 use CodeIgniter\Helpers\Array\ArrayHelper;
 use Config\App;
 use Locale;
@@ -54,10 +55,6 @@ class LocalizationFinder extends AbstractCommand
             ->addOption(new Option(
                 name: 'show-new',
                 description: 'Show only new translations in table. Does not write to files.',
-            ))
-            ->addOption(new Option(
-                name: 'verbose',
-                description: 'Output detailed information.',
             ));
     }
 
@@ -142,7 +139,7 @@ class LocalizationFinder extends AbstractCommand
     private function process(string $currentDir, string $currentLocale): void
     {
         $showNew = $this->getValidatedOption('show-new') === true;
-        $verbose = $this->getValidatedOption('verbose') === true;
+        $output  = $this->getOutput();
 
         $tableRows    = [];
         $countNewKeys = 0;
@@ -182,9 +179,9 @@ class LocalizationFinder extends AbstractCommand
 
                 if ($languageDiff !== []) {
                     if (file_put_contents($languageFilePath, $this->templateFile($newLanguageKeys)) === false) {
-                        $this->writeIsVerbose(sprintf('Lang file %s (error write).', $langFileName), 'red');
+                        $output->write(sprintf('Lang file %s (error write).', $langFileName), 'red', verbosity: Verbosity::Verbose);
                     } else {
-                        $this->writeIsVerbose(sprintf('Lang file "%s" successful updated!', $langFileName), 'green');
+                        $output->write(sprintf('Lang file "%s" successful updated!', $langFileName), 'green', verbosity: Verbosity::Verbose);
                     }
                 }
             }
@@ -199,11 +196,11 @@ class LocalizationFinder extends AbstractCommand
             CLI::write('Note: You need to run your linting tool to fix coding standards issues.', 'white', 'red');
         }
 
-        $this->writeIsVerbose(sprintf('Files found: %d', $countFiles));
-        $this->writeIsVerbose(sprintf('New translates found: %d', $countNewKeys));
-        $this->writeIsVerbose(sprintf('Bad translates found: %d', count($badLanguageKeys)));
+        $output->write(sprintf('Files found: %d', $countFiles), verbosity: Verbosity::Verbose);
+        $output->write(sprintf('New translates found: %d', $countNewKeys), verbosity: Verbosity::Verbose);
+        $output->write(sprintf('Bad translates found: %d', count($badLanguageKeys)), verbosity: Verbosity::Verbose);
 
-        if ($verbose && $badLanguageKeys !== []) {
+        if ($output->isVerbose() && $badLanguageKeys !== []) {
             $tableBadRows = [];
 
             foreach ($badLanguageKeys as $value) {
@@ -416,16 +413,6 @@ class LocalizationFinder extends AbstractCommand
         return $rows;
     }
 
-    /**
-     * Show details in the console if the flag is set
-     */
-    private function writeIsVerbose(string $text = '', ?string $foreground = null, ?string $background = null): void
-    {
-        if ($this->getValidatedOption('verbose') === true) {
-            CLI::write($text, $foreground, $background);
-        }
-    }
-
     private function isSubdirectory(string $directory, string $rootDirectory): bool
     {
         return 0 === strncmp($directory, $rootDirectory, strlen($directory));
@@ -441,13 +428,14 @@ class LocalizationFinder extends AbstractCommand
         $foundLanguageKeys = [];
         $badLanguageKeys   = [];
         $countFiles        = 0;
+        $output            = $this->getOutput();
 
         foreach ($files as $file) {
             if ($this->isIgnoredFile($file)) {
                 continue;
             }
 
-            $this->writeIsVerbose(sprintf('File found: %s', mb_substr($file->getRealPath(), mb_strlen(APPPATH))));
+            $output->write(sprintf('File found: %s', mb_substr($file->getRealPath(), mb_strlen(APPPATH))), verbosity: Verbosity::Verbose);
             $countFiles++;
 
             $findInFile = $this->findTranslationsInFile($file);

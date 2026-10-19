@@ -232,6 +232,8 @@ Config
 Error Views
 -----------
 
+- app/Views/errors/cli/error_exception.php
+    - Shows the backtrace also when the command runs with ``-v``.
 - app/Views/errors/html/debug.css
     - Added styles for the **Copy Details** button.
 - app/Views/errors/html/debug.js
