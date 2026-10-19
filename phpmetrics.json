@@ -1,7 +1,0 @@
-{
-    "includes": ["system"],
-    "excludes": ["ThirdParty"],
-    "report": {
-        "html": "build/phpmetrics/"
-    }
-}

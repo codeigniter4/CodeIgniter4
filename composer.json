@@ -114,7 +114,6 @@
             "utils/vendor/bin/php-cs-fixer fix --ansi --verbose --diff --config=.php-cs-fixer.tests.php",
             "utils/vendor/bin/php-cs-fixer fix --ansi --verbose --diff"
         ],
-        "metrics": "utils/vendor/bin/phpmetrics --config=phpmetrics.json",
         "phpstan:baseline": [
             "phpstan analyse --ansi --generate-baseline=utils/phpstan-baseline/loader.neon",
             "split-phpstan-baseline utils/phpstan-baseline/loader.neon"
@@ -128,7 +127,6 @@
         "analyze": "Run static analysis",
         "cs": "Check the coding style",
         "cs-fix": "Fix the coding style",
-        "metrics": "Run PhpMetrics",
         "phpstan:baseline": "Run PHPStan then dump all errors to baseline",
         "phpstan:check": "Run PHPStan with support for identifiers",
         "test": "Run unit tests"
