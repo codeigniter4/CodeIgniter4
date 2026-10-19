@@ -38,6 +38,10 @@ Bugs Fixed
   is used instead. Values that cannot be converted to a string, such as objects
   not implementing ``Stringable``, now throw a ``FormatException`` instead of a
   fatal ``Error``.
+- **Helpers:** Fixed a regression in v4.7.5 where ``set_value()`` threw a
+  ``TypeError`` when the default value was not a string or an array, such as
+  an integer, a float, ``null``, or a ``Stringable`` object. Such values are
+  now converted to a string.
 - **HTTP:** Fixed stale ``$_REQUEST`` values after ``SiteURIFactory`` normalizes GET parameters, so ``Validation::withRequest()`` reads the normalized values while unrelated REQUEST entries are preserved.
 - **HTTP:** Fixed a bug where ``IncomingRequest::isSecure()`` did not
   recognize ``https`` in the ``X-Forwarded-Proto`` header from a trusted
