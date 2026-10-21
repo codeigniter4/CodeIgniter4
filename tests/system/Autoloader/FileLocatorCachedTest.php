@@ -17,6 +17,7 @@ use CodeIgniter\Cache\FactoriesCache\FileVarExportHandler;
 use Config\Autoload;
 use Config\Modules;
 use PHPUnit\Framework\Attributes\Group;
+use Tests\Support\Cache\IsolatedCacheTrait;
 
 /**
  * @internal
@@ -24,18 +25,29 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class FileLocatorCachedTest extends FileLocatorTest
 {
+    use IsolatedCacheTrait;
+
     private FileVarExportHandler $handler;
+
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+
+        self::setUpBeforeClassIsolatedCache();
+    }
 
     public static function tearDownAfterClass(): void
     {
-        parent::tearDownAfterClass();
-
         // Delete cache file.
         $autoloader  = new Autoloader();
-        $handler     = new FileVarExportHandler();
+        $handler     = new FileVarExportHandler(self::getIsolatedCachePath());
         $fileLocator = new FileLocator($autoloader);
         $locator     = new FileLocatorCached($fileLocator, $handler);
         $locator->deleteCache();
+
+        self::tearDownAfterClassIsolatedCache();
+
+        parent::tearDownAfterClass();
     }
 
     protected function setUp(): void
@@ -61,7 +73,7 @@ final class FileLocatorCachedTest extends FileLocatorTest
             'Acme\Sample'        => TESTPATH . '_support/does/not/exists',
         ]);
 
-        $this->handler = new FileVarExportHandler();
+        $this->handler = $this->getIsolatedCacheHandler();
         $fileLocator   = new FileLocator($autoloader);
         $this->locator = new FileLocatorCached($fileLocator, $this->handler);
     }
@@ -69,6 +81,10 @@ final class FileLocatorCachedTest extends FileLocatorTest
     protected function tearDown(): void
     {
         $this->locator->__destruct();
+
+        // Prevent the destructor from writing the cache file
+        // when the test object is destroyed.
+        $this->locator->deleteCache();
 
         parent::tearDown();
     }

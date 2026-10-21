@@ -24,6 +24,10 @@ Message Changes
 Changes
 *******
 
+- **Cache:** Added an optional ``$path`` parameter to
+  ``FileVarExportHandler::__construct()`` so the cache files can be stored in
+  a custom directory.
+
 ************
 Deprecations
 ************
