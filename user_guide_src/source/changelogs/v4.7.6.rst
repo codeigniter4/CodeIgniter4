@@ -38,6 +38,9 @@ Bugs Fixed
   is used instead. Values that cannot be converted to a string, such as objects
   not implementing ``Stringable``, now throw a ``FormatException`` instead of a
   fatal ``Error``.
+- **Router:** Fixed a bug where a double-encoded URI could bypass the
+  disallowed character check when the URI was decoded again by another
+  component.
 - **Security:** Fixed a bug where a valid JSON request body that is not an object
   (for example a JSON array) was corrupted after CSRF verification when the
   token was sent via the ``X-CSRF-TOKEN`` header.

@@ -86,8 +86,9 @@ data can be passed to your application. URIs may only contain the following:
 
 .. note::
     This check is performed by the ``Router``. The Router takes the URL-encoded
-    value held by the ``SiteURI`` class, decodes it, and then checks that it
-    does not contain not permitted strings.
+    value held by the ``SiteURI`` class, decodes it repeatedly until it no
+    longer changes, and then checks that it does not contain not permitted
+    strings.
 
 Adding Permitted Characters
 ---------------------------

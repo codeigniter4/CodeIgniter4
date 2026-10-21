@@ -120,6 +120,29 @@ final class RouterTest extends CIUnitTestCase
         $router->handle('test/%3Ca%3E');
     }
 
+    public function testDoubleEncodedNotPermittedChars(): void
+    {
+        $router = new Router($this->collection, $this->request);
+
+        $this->expectException(BadRequestException::class);
+        $this->expectExceptionMessage('The URI you submitted has disallowed characters: "<a>"');
+
+        $router->handle('test/%253Ca%253E');
+    }
+
+    public function testPermittedCharsWithPercentSign(): void
+    {
+        $this->collection->get('encoded/(:any)', 'News::view/$1');
+
+        $router = new Router($this->collection, $this->request);
+
+        $router->handle('encoded/100%25');
+
+        $this->assertSame('\News', $router->controllerName());
+        $this->assertSame('view', $router->methodName());
+        $this->assertSame(['100%'], $router->params());
+    }
+
     public function testURIMapsToController(): void
     {
         $router = new Router($this->collection, $this->request);

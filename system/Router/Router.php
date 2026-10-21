@@ -759,6 +759,14 @@ class Router implements RouterInterface
      */
     private function checkDisallowedChars(string $uri): void
     {
+        // Decode the URI until it no longer changes. A URI can be encoded
+        // multiple times, and decoding it only once would allow a
+        // double-encoded URI to bypass this check when it is decoded again
+        // by another component.
+        while (($decoded = urldecode($uri)) !== $uri) {
+            $uri = $decoded;
+        }
+
         foreach (explode('/', $uri) as $segment) {
             if ($segment !== '' && $this->permittedURIChars !== ''
                 && preg_match('/\A[' . $this->permittedURIChars . ']+\z/iu', $segment) !== 1
