@@ -13,9 +13,18 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache\FactoriesCache;
 
-final class FileVarExportHandler
+final readonly class FileVarExportHandler
 {
-    private string $path = WRITEPATH . 'cache';
+    private string $path;
+
+    /**
+     * @param string|null $path The directory where the cache files are stored.
+     *                          Defaults to the "writable/cache" directory.
+     */
+    public function __construct(?string $path = null)
+    {
+        $this->path = rtrim($path ?? WRITEPATH . 'cache', '/');
+    }
 
     public function save(string $key, mixed $val): void
     {
