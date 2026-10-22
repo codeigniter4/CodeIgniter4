@@ -99,7 +99,9 @@ which can gracefully keep the connection alive or re-establish it.
 
 The ``reconnect()`` method pings the server to check if the connection is still
 alive. If the connection has been lost, it will close and re-establish the
-connection.
+connection. An open transaction ends with the old connection. ``reconnect()``
+clears the transaction depth and marks the transaction failed, so
+``transComplete()`` does not report success.
 
 .. literalinclude:: connecting/007.php
     :lines: 2-

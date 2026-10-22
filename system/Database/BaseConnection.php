@@ -625,13 +625,24 @@ abstract class BaseConnection implements ConnectionInterface
      * Keep or establish the connection if no queries have been sent for
      * a length of time exceeding the server's idle timeout.
      *
+     * A replaced socket is not in the transaction that was open on the old
+     * one. The server has already rolled that work back. Clear the depth and
+     * mark the transaction failed so transComplete() cannot report success.
+     *
      * @return void
      */
     public function reconnect()
     {
         if ($this->ping() === false) {
+            $lostTransaction = $this->transDepth > 0;
+
             $this->close();
             $this->initialize();
+
+            if ($lostTransaction) {
+                $this->transDepth  = 0;
+                $this->transStatus = false;
+            }
         }
     }
 
