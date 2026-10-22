@@ -145,6 +145,18 @@ if you would like to run transactions manually you can do so as follows:
 .. note:: Make sure to use ``$this->db->transBegin()`` when running manual
     transactions, **NOT** ``$this->db->transStart()``.
 
+MySQL Deadlocks
+===============
+
+InnoDB error 1213 rolls the victim transaction back. CodeIgniter keeps that
+transaction open. The next statement on the same connection starts a new
+server transaction, so the write does not autocommit, and ``transCommit()``
+returns false. ``transComplete()`` rolls the new server transaction back.
+
+Error 1205 is not handled this way. ``innodb_rollback_on_timeout`` decides
+whether InnoDB rolled that transaction back, and the message is the same
+either way.
+
 Nested Transactions
 ===================
 
