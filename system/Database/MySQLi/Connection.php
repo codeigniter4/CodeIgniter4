@@ -308,7 +308,7 @@ class Connection extends BaseConnection
                 'trace'   => render_backtrace($e->getTrace()),
             ]);
 
-            if ((int) $e->getCode() === 1213 && $this->transDepth > 0) {
+            if ($e->getCode() === 1213 && $this->transDepth > 0) {
                 $this->markServerRolledBackTransaction();
             }
 
