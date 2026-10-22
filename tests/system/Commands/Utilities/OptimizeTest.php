@@ -109,9 +109,9 @@ final class OptimizeTest extends CIUnitTestCase
                 define('WRITEPATH', {$escapedWritePath});
                 require {$escapedBootstrap};
 
-                use CodeIgniter\Cache\FactoriesCache\FileVarExportHandler;
-                use CodeIgniter\Commands\Utilities\Optimize;
-                use CodeIgniter\Test\ReflectionHelper;
+                use CodeIgniter\\Cache\\FactoriesCache\\FileVarExportHandler;
+                use CodeIgniter\\Commands\\Utilities\\Optimize;
+                use CodeIgniter\\Test\\ReflectionHelper;
 
                 \$handler = new FileVarExportHandler();
                 \$handler->save('FileLocatorCache', ['search' => []]);
