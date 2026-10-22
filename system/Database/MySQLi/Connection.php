@@ -283,6 +283,14 @@ class Connection extends BaseConnection
      */
     protected function execute(string $sql)
     {
+        // Errno 1213 ends the server transaction. Begin again before this
+        // statement so it does not autocommit. Errno 1205 is not handled:
+        // innodb_rollback_on_timeout decides whether InnoDB rolled that
+        // transaction back.
+        if ($this->connID instanceof mysqli && $this->consumeServerTransactionRestart()) {
+            $this->connID->begin_transaction();
+        }
+
         while ($this->connID->more_results()) {
             $this->connID->next_result();
             if ($res = $this->connID->store_result()) {
@@ -299,6 +307,10 @@ class Connection extends BaseConnection
                 'exLine'  => $e->getLine(),
                 'trace'   => render_backtrace($e->getTrace()),
             ]);
+
+            if ((int) $e->getCode() === 1213 && $this->transDepth > 0) {
+                $this->markServerRolledBackTransaction();
+            }
 
             if ($this->DBDebug) {
                 throw new DatabaseException($e->getMessage(), $e->getCode(), $e);

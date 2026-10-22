@@ -32,6 +32,10 @@ Deprecations
 Bugs Fixed
 **********
 
+- **Database:** Fixed MySQLi errno 1213 (``ER_LOCK_DEADLOCK``) so a following
+  write on the victim connection does not autocommit, and ``transCommit()``
+  does not return true after InnoDB has rolled the victim transaction back.
+  Errno 1205 is unchanged. See `#10649 <https://github.com/codeigniter4/CodeIgniter4/issues/10649>`_.
 - **Commands:** Fixed a bug where generator commands did not sort the imports of a template with CRLF line endings.
 - **Format:** Fixed ``XMLFormatter`` so that an array key that becomes empty after
   sanitization no longer triggers a ``ValueError``; the fallback tag name ``item``
