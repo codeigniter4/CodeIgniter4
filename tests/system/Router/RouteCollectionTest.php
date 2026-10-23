@@ -27,6 +27,7 @@ use Config\Routing;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Controllers\Hello;
+use Tests\Support\Router\RouteCollectionSubclass;
 
 /**
  * @internal
@@ -312,6 +313,38 @@ final class RouteCollectionTest extends CIUnitTestCase
         ];
 
         $this->assertSame($expected, $routes->getRoutes());
+    }
+
+    public function testGroupingPassesSubclassToNestedCallbacks(): void
+    {
+        $modules                  = new Modules();
+        $modules->enabled         = false;
+        $config                   = new Routing();
+        $config->defaultNamespace = '\\';
+        $routes                   = new RouteCollectionSubclass(service('locator'), $modules, $config);
+        $routes->setHTTPVerb(Method::GET);
+
+        $routes->group('admin', ['namespace' => 'Admin', 'filter' => ['csrf']], function (RouteCollectionSubclass $group) use ($routes): void {
+            $this->assertSame($routes, $group);
+
+            $group->group('profile', ['filter' => ['honeypot']], function (RouteCollectionSubclass $nested) use ($routes): void {
+                $this->assertSame($routes, $nested);
+                $nested->get('show', 'Profile::show');
+            });
+
+            $group->get('dashboard', 'Dashboard::index');
+        });
+
+        $routes->get('home', 'Home::index');
+
+        $this->assertSame([
+            'admin/profile/show' => '\\Admin\\Profile::show',
+            'admin/dashboard'    => '\\Admin\\Dashboard::index',
+            'home'               => '\\Home::index',
+        ], $routes->getRoutes(Method::GET));
+        $this->assertSame(['csrf', 'honeypot'], $routes->getFiltersForRoute('admin/profile/show'));
+        $this->assertSame(['csrf'], $routes->getFiltersForRoute('admin/dashboard'));
+        $this->assertFalse($routes->isFiltered('home'));
     }
 
     public function testGroupGetsSanitized(): void
