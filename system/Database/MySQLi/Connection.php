@@ -283,14 +283,6 @@ class Connection extends BaseConnection
      */
     protected function execute(string $sql)
     {
-        // Errno 1213 ends the server transaction. Begin again before this
-        // statement so it does not autocommit. Errno 1205 is not handled:
-        // innodb_rollback_on_timeout decides whether InnoDB rolled that
-        // transaction back.
-        if ($this->connID instanceof mysqli && $this->consumeServerTransactionRestart()) {
-            $this->connID->begin_transaction();
-        }
-
         while ($this->connID->more_results()) {
             $this->connID->next_result();
             if ($res = $this->connID->store_result()) {
@@ -299,6 +291,16 @@ class Connection extends BaseConnection
         }
 
         try {
+            // Errno 1213 ends the server transaction. Begin again before this
+            // statement so it does not autocommit. A failed BEGIN goes through
+            // the normal error path below, and the restart stays pending.
+            // Errno 1205 is not handled: innodb_rollback_on_timeout decides
+            // whether InnoDB rolled that transaction back.
+            if ($this->connID instanceof mysqli && $this->serverTransactionRestartPending()) {
+                $this->connID->begin_transaction();
+                $this->serverTransactionRestarted();
+            }
+
             return $this->connID->query($this->prepQuery($sql), $this->resultMode);
         } catch (mysqli_sql_exception $e) {
             log_message('error', "{message}\nin {exFile} on line {exLine}.\n{trace}", [
