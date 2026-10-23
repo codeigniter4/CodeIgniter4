@@ -1081,6 +1081,46 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame('foobar', $request->getPath());
     }
 
+    #[DataProvider('provideGetPostMaxSize')]
+    public function testGetPostMaxSize(string $value, int $expected): void
+    {
+        $getPostMaxSize = $this->getPrivateMethodInvoker($this->request, 'getPostMaxSize');
+
+        $this->assertSame($expected, $getPostMaxSize($value));
+    }
+
+    /**
+     * @return iterable<array{string, int}>
+     */
+    public static function provideGetPostMaxSize(): iterable
+    {
+        yield 'zero means unlimited' => ['0', PHP_INT_MAX];
+
+        yield 'zero with suffix means unlimited' => ['0K', PHP_INT_MAX];
+
+        yield 'negative means unlimited' => ['-1', PHP_INT_MAX];
+
+        yield 'gigabytes' => ['1G', 1024 ** 3];
+
+        yield 'lowercased gigabytes' => ['1g', 1024 ** 3];
+
+        yield 'megabytes' => ['8M', 8 * 1024 ** 2];
+
+        yield 'lowercased megabytes' => ['8m', 8 * 1024 ** 2];
+
+        yield 'kilobytes' => ['512K', 512 * 1024];
+
+        yield 'lowercased kilobytes' => ['512k', 512 * 1024];
+
+        yield 'hexadecimal' => ['0x10M', 16 * 1024 ** 2];
+
+        yield 'octal' => ['010M', 8 * 1024 ** 2];
+
+        yield 'binary' => ['0b10M', 2 * 1024 ** 2];
+
+        yield 'bytes' => ['12345', 12345];
+    }
+
     public function testGetIPAddressNormal(): void
     {
         $expected = '123.123.123.123';
