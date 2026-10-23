@@ -625,14 +625,42 @@ abstract class BaseConnection implements ConnectionInterface
      * Keep or establish the connection if no queries have been sent for
      * a length of time exceeding the server's idle timeout.
      *
+     * A replaced socket is not in the transaction that was open on the old
+     * one. The server has already rolled that work back. Clear the depth and
+     * mark the transaction failed before opening the new connection, so a
+     * failed reconnect cannot still report success. OCI8 also returns its
+     * commit mode to autocommit.
+     *
      * @return void
      */
     public function reconnect()
     {
         if ($this->ping() === false) {
+            $lostTransaction = $this->transDepth > 0;
+
             $this->close();
+
+            // initialize() can throw. Clear the lost transaction first so a
+            // failed reconnect cannot still report the old transaction.
+            if ($lostTransaction) {
+                $this->abandonLostTransaction();
+            }
+
             $this->initialize();
         }
+    }
+
+    /**
+     * The socket that owned the transaction is already closed.
+     *
+     * Drivers that keep transaction state in PHP, rather than only on the
+     * server, must override this. OCI8 commit mode is one case: leaving it
+     * at OCI_NO_AUTO_COMMIT makes later writes uncommitted.
+     */
+    protected function abandonLostTransaction(): void
+    {
+        $this->transDepth  = 0;
+        $this->transStatus = false;
     }
 
     /**
