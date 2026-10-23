@@ -92,36 +92,53 @@ class Terminal
     }
 
     /**
-     * Whether the stream supports colours, following https://no-color.org/ and the Windows console emulators.
+     * Whether the stream supports colours, following https://no-color.org/, https://force-color.org/ and the terminal hints.
      *
      * @param resource $stream
      */
     public function hasColorSupport($stream): bool
     {
-        if ($this->hasEnv('NO_COLOR')) {
+        $noColor = env('NO_COLOR');
+
+        if ($noColor !== null && $noColor !== '') {
+            // no-color.org: only an empty value is disregarded.
             return false;
         }
 
-        if (getenv('TERM_PROGRAM') === 'Hyper') {
+        $forceColor = env('FORCE_COLOR');
+
+        if ($forceColor !== null && $forceColor !== '') {
+            // force-color.org: only an empty value is disregarded.
             return true;
         }
 
-        if (is_windows()) {
-            return $this->streamSupports('sapi_windows_vt100_support', $stream)
-                || $this->hasEnv('ANSICON')
-                || getenv('ConEmuANSI') === 'ON'
-                || getenv('TERM') === 'xterm';
+        $msystem = strtoupper((string) env('MSYSTEM', ''));
+
+        if (! $this->streamSupports('stream_isatty', $stream) && $msystem !== 'MINGW32' && $msystem !== 'MINGW64') {
+            return false;
         }
 
-        return $this->streamSupports('stream_isatty', $stream);
-    }
+        if (is_windows() && $this->streamSupports('sapi_windows_vt100_support', $stream)) {
+            return true;
+        }
 
-    /**
-     * Whether the variable is set in the live `$_SERVER` or the process environment.
-     */
-    private function hasEnv(string $name): bool
-    {
-        return isset($_SERVER[$name]) || getenv($name) !== false; // @phpstan-ignore codeigniter.superglobalsOffsetAccess (reads live $_SERVER, not the snapshot service)
+        if (
+            env('TERM_PROGRAM') === 'Hyper'
+            || env('COLORTERM') !== null
+            || env('ANSICON') !== null
+            || env('ConEmuANSI') === 'ON'
+        ) {
+            return true;
+        }
+
+        $term = (string) env('TERM', '');
+
+        if ($term === 'dumb') {
+            return false;
+        }
+
+        return ! is_windows()
+            || preg_match('/^((screen|xterm|vt100|vt220|putty|rxvt|ansi|cygwin|linux).*)|(.*-256(color)?(-bce)?)$/', $term) === 1;
     }
 
     /**
