@@ -405,6 +405,49 @@ final class CLITest extends CIUnitTestCase
         $this->assertSame($expected, $output);
     }
 
+    public function testPromptByMultipleKeysAsksAgainForAMissingKeyBelowTheLast(): void
+    {
+        $io = new MockInputOutput();
+        $io->setInputs(['1', '2']);
+        CLI::setInputOutput($io);
+
+        $output = CLI::promptByMultipleKeys('Select your hobbies:', [0 => 'Playing game', 2 => 'Badminton']);
+
+        CLI::resetInputOutput();
+
+        $this->assertSame([2 => 'Badminton'], $output);
+        $this->assertSame(1, substr_count($io->getOutput(), 'Please select correctly.'));
+    }
+
+    public function testPromptByMultipleKeysAcceptsAKeyAboveTheLast(): void
+    {
+        $io = new MockInputOutput();
+        $io->setInputs(['5']);
+        CLI::setInputOutput($io);
+
+        $output = CLI::promptByMultipleKeys('Select your hobbies:', [0 => 'Playing game', 5 => 'Sleep', 2 => 'Badminton']);
+
+        CLI::resetInputOutput();
+
+        $this->assertSame([5 => 'Sleep'], $output);
+        $this->assertStringNotContainsString('Please select correctly.', $io->getOutput());
+    }
+
+    public function testPromptByMultipleKeysDefaultsToTheFirstKey(): void
+    {
+        $io = new MockInputOutput();
+        $io->setInputs(['']);
+        CLI::setInputOutput($io);
+
+        $output = CLI::promptByMultipleKeys('Select your hobbies:', [2 => 'Badminton', 5 => 'Sleep']);
+
+        CLI::resetInputOutput();
+
+        $this->assertSame([2 => 'Badminton'], $output);
+        $this->assertStringContainsString('[2, 5] : ', preg_replace('/\e\[[^m]+m/', '', $io->getOutput()) ?? '');
+        $this->assertStringNotContainsString('Please select correctly.', $io->getOutput());
+    }
+
     public function testNewLine(): void
     {
         $this->expectOutputString('');
