@@ -13,6 +13,10 @@ declare(strict_types=1);
 
 namespace Tests\Support\Config;
 
+use mysqli;
+use PDO;
+use Throwable;
+
 /**
  * Class Registrar
  *
@@ -137,7 +141,70 @@ class Registrar
         // so that we can test against multiple databases.
         $group = env('DB', 'SQLite3');
 
-        $config['tests'] = self::$dbConfig[$group] ?? [];
+        if ($group === 'Oracle') {
+            $group = 'OCI8';
+        }
+
+        $dbParams = self::$dbConfig[$group] ?? [];
+
+        if (! empty($dbParams) && ! in_array($group, ['SQLite3', 'OCI8'], true)) {
+            $componentName = '';
+
+            foreach ($_SERVER['argv'] ?? [] as $arg) {
+                if (str_contains($arg, 'tests/system/')) {
+                    $parts = explode('tests/system/', $arg);
+                    if (isset($parts[1])) {
+                        $componentName = explode('/', $parts[1])[0];
+                        break;
+                    }
+                }
+            }
+
+            if ($componentName !== '') {
+                $dbParams['database'] = 'test_' . strtolower($componentName);
+
+                try {
+                    if ($group === 'MySQLi') {
+                        $conn = new mysqli(
+                            $dbParams['hostname'],
+                            $dbParams['username'],
+                            $dbParams['password'],
+                            '',
+                            (int) $dbParams['port'],
+                        );
+                        if (! $conn->connect_error) {
+                            $dbName = '`' . str_replace('`', '``', $dbParams['database']) . '`';
+                            $conn->query('CREATE DATABASE IF NOT EXISTS ' . $dbName);
+                            $conn->close();
+                        }
+                    } elseif ($group === 'Postgre') {
+                        $dsn = 'pgsql:host=' . $dbParams['hostname'] . ';port=' . $dbParams['port'] . ';user=' . $dbParams['username'] . ';password=' . $dbParams['password'];
+                        $pdo = new PDO($dsn);
+                        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                        $stmt = $pdo->prepare('SELECT 1 FROM pg_database WHERE datname = ?');
+                        $stmt->execute([$dbParams['database']]);
+                        if (! $stmt->fetchColumn()) {
+                            $dbName = str_replace('"', '""', $dbParams['database']);
+                            $pdo->exec('CREATE DATABASE "' . $dbName . '"');
+                        }
+                    } elseif ($group === 'SQLSRV') {
+                        $dsn = 'sqlsrv:Server=' . $dbParams['hostname'] . ',' . $dbParams['port'] . ';Encrypt=False;TrustServerCertificate=True';
+                        $pdo = new PDO($dsn, $dbParams['username'], $dbParams['password']);
+                        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                        $stmt = $pdo->prepare('SELECT 1 FROM sys.databases WHERE name = ?');
+                        $stmt->execute([$dbParams['database']]);
+                        if (! $stmt->fetchColumn()) {
+                            $escapedDb = str_replace(']', ']]', $dbParams['database']);
+                            $pdo->exec('CREATE DATABASE [' . $escapedDb . '] COLLATE Latin1_General_100_CS_AS_SC_UTF8; ALTER DATABASE [' . $escapedDb . '] SET RECOVERY SIMPLE, DELAYED_DURABILITY = FORCED');
+                        }
+                    }
+                } catch (Throwable) {
+                    // Ignore any error and let the connection fail naturally
+                }
+            }
+        }
+
+        $config['tests'] = $dbParams;
 
         return $config;
     }
