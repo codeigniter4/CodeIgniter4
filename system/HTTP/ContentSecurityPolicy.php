@@ -878,14 +878,38 @@ class ContentSecurityPolicy
     {
         // Ensure we have an array to work with...
         if (is_string($this->{$target})) {
-            $this->{$target} = [$this->{$target} => $this->reportOnly];
+            $this->{$target} = $this->stringToOptions($this->{$target});
+        } elseif (! is_array($this->{$target})) {
+            $this->{$target} = [];
         }
 
         $options = is_array($options) ? $options : [$options];
 
         foreach ($options as $option) {
-            $this->{$target}[$option] = $explicitReporting ?? $this->reportOnly;
+            $this->{$target}[trim((string) $option)] = $explicitReporting ?? $this->reportOnly;
         }
+    }
+
+    /**
+     * Converts a string directive value into an array of options.
+     *
+     * @return array<string, bool>
+     */
+    private function stringToOptions(string $values): array
+    {
+        $valueStr = trim($values);
+
+        if ($valueStr === '') {
+            return ['' => $this->reportOnly];
+        }
+
+        $options = [];
+
+        foreach (preg_split('/\s+/', $valueStr) as $val) {
+            $options[$val] = $this->reportOnly;
+        }
+
+        return $options;
     }
 
     /**
@@ -1012,14 +1036,20 @@ class ContentSecurityPolicy
      */
     protected function addToHeader(string $name, $values = null)
     {
+        if ($values === null) {
+            return;
+        }
+
         if (is_string($values)) {
-            $values = [$values => $this->reportOnly];
+            $values = $this->stringToOptions($values);
         }
 
         $sources       = [];
         $reportSources = [];
 
         foreach ($values as $value => $reportOnly) {
+            $value = (string) $value;
+
             if (
                 in_array($value, $this->validSources, true)
                 || str_starts_with($value, 'nonce-')
@@ -1038,10 +1068,18 @@ class ContentSecurityPolicy
         }
 
         if ($sources !== []) {
+            if (count($sources) > 1) {
+                $sources = array_values(array_filter($sources, static fn ($s): bool => $s !== ''));
+            }
+
             $this->tempHeaders[$name] = implode(' ', $sources);
         }
 
         if ($reportSources !== []) {
+            if (count($reportSources) > 1) {
+                $reportSources = array_values(array_filter($reportSources, static fn ($s): bool => $s !== ''));
+            }
+
             $this->reportOnlyHeaders[$name] = implode(' ', $reportSources);
         }
     }
