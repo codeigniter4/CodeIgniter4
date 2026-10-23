@@ -118,3 +118,5 @@ The following is a list of event points available for each of the libraries:
 * **email** Called after an email sent successfully from ``CodeIgniter\Email\Email``. Receives an array of the ``Email`` class's properties as a parameter.
 * **DBQuery** Called after a database query whether successful or not. Receives the ``Query`` object.
 * **migrate** Called after a successful migration call to ``latest()`` or ``regress()``. Receives the current properties of ``MigrationRunner`` as well as the name of the method.
+* **autoloader_initialized** Called immediately after the Autoloader finishes initialization and Composer discovery.       
+  Receives the ``Autoloader`` instance as a parameter.
