@@ -34,8 +34,12 @@ Bugs Fixed
 
 - **Database:** Fixed ``reconnect()`` so a replaced socket does not keep the
   transaction that died with the old connection. ``transDepth`` is cleared and
-  the transaction status is failed, so ``transComplete()`` does not report
-  success. See `#10648 <https://github.com/codeigniter4/CodeIgniter4/issues/10648>`_.
+  the transaction status is failed before the new connection is opened, so a
+  failed reconnect cannot still report success. OCI8 commit mode returns to
+  autocommit. ``transComplete()`` does not report success. This applies when
+  ``ping()`` reports the connection lost; PostgreSQL's ``pg_ping()`` reconnects
+  a broken connection itself, so it is not covered.
+  See `#10648 <https://github.com/codeigniter4/CodeIgniter4/issues/10648>`_.
 - **Commands:** Fixed a bug where generator commands did not sort the imports of a template with CRLF line endings.
 - **Format:** Fixed ``XMLFormatter`` so that an array key that becomes empty after
   sanitization no longer triggers a ``ValueError``; the fallback tag name ``item``

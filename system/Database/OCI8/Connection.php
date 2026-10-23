@@ -722,6 +722,13 @@ class Connection extends BaseConnection
         return oci_rollback($this->connID);
     }
 
+    protected function abandonLostTransaction(): void
+    {
+        $this->commitMode = OCI_COMMIT_ON_SUCCESS;
+
+        parent::abandonLostTransaction();
+    }
+
     /**
      * Returns the name of the current database being used.
      */

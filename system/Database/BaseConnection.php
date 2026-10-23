@@ -627,7 +627,9 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * A replaced socket is not in the transaction that was open on the old
      * one. The server has already rolled that work back. Clear the depth and
-     * mark the transaction failed so transComplete() cannot report success.
+     * mark the transaction failed before opening the new connection, so a
+     * failed reconnect cannot still report success. OCI8 also returns its
+     * commit mode to autocommit.
      *
      * @return void
      */
@@ -637,13 +639,28 @@ abstract class BaseConnection implements ConnectionInterface
             $lostTransaction = $this->transDepth > 0;
 
             $this->close();
-            $this->initialize();
 
+            // initialize() can throw. Clear the lost transaction first so a
+            // failed reconnect cannot still report the old transaction.
             if ($lostTransaction) {
-                $this->transDepth  = 0;
-                $this->transStatus = false;
+                $this->abandonLostTransaction();
             }
+
+            $this->initialize();
         }
+    }
+
+    /**
+     * The socket that owned the transaction is already closed.
+     *
+     * Drivers that keep transaction state in PHP, rather than only on the
+     * server, must override this. OCI8 commit mode is one case: leaving it
+     * at OCI_NO_AUTO_COMMIT makes later writes uncommitted.
+     */
+    protected function abandonLostTransaction(): void
+    {
+        $this->transDepth  = 0;
+        $this->transStatus = false;
     }
 
     /**
