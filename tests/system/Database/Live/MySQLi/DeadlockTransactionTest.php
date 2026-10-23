@@ -69,6 +69,72 @@ final class DeadlockTransactionTest extends CIUnitTestCase
         $this->assertDeadlockVictimDoesNotPublishTheNextWrite(true);
     }
 
+    public function testFalseTransCommitEndsTheTransactionSoARetryCommits(): void
+    {
+        $table            = $this->db->escapeIdentifier($this->db->prefixTable('deadlock_probe'));
+        $this->probeTable = $table;
+        $this->forceDeadlock($table);
+
+        $this->db->query('INSERT INTO ' . $table . " (id, note) VALUES (102, 'after')");
+
+        $firstCommit = $this->db->transCommit();
+        $depthAfter  = $this->db->transDepth;
+
+        // A caller that retries after the false commit must get a real transaction,
+        // not a nested one inside the restarted server transaction.
+        $this->db->transBegin();
+        $this->db->query('INSERT INTO ' . $table . " (id, note) VALUES (103, 'retry')");
+        $retryCommit = $this->db->transCommit();
+
+        $this->assertSame(
+            ['first_commit' => false, 'depth_after' => 0, 'retry_commit' => true, 'visible' => [103]],
+            [
+                'first_commit' => $firstCommit,
+                'depth_after'  => $depthAfter,
+                'retry_commit' => $retryCommit,
+                'visible'      => $this->committedIds($table),
+            ],
+        );
+    }
+
+    public function testLostConnectionAfterDeadlockDoesNotEscapeAsDriverException(): void
+    {
+        $table            = $this->db->escapeIdentifier($this->db->prefixTable('deadlock_probe'));
+        $this->probeTable = $table;
+        $this->forceDeadlock($table);
+        $this->killConnection($this->db);
+
+        // The restart BEGIN fails on the dead socket. That must surface through the
+        // normal query error path, not as a raw mysqli_sql_exception.
+        $insert = $this->db->query('INSERT INTO ' . $table . " (id, note) VALUES (102, 'after')");
+        $this->db->reconnect();
+
+        $this->assertSame(
+            ['insert' => false, 'complete' => false],
+            ['insert' => $insert, 'complete' => $this->db->transComplete()],
+        );
+    }
+
+    private function killConnection(BaseConnection $db): void
+    {
+        $threadId = $db->getConnection()->thread_id;
+        $observer = Database::connect($this->DBGroup, false);
+        $observer->initialize();
+        $observer->query('KILL ' . $threadId);
+
+        for ($i = 0; $i < 50; $i++) {
+            $alive = $observer->query('SELECT COUNT(*) AS n FROM information_schema.processlist WHERE id = ' . $threadId)->getRow()->n;
+
+            if ((int) $alive === 0) {
+                break;
+            }
+
+            usleep(20000);
+        }
+
+        $observer->close();
+    }
+
     private function assertDeadlockVictimDoesNotPublishTheNextWrite(bool $useComplete): void
     {
         $table            = $this->db->escapeIdentifier($this->db->prefixTable('deadlock_probe'));
@@ -140,6 +206,10 @@ final class DeadlockTransactionTest extends CIUnitTestCase
 
     private function resetProbe(string $table): void
     {
+        // releaseDeadlock() clears this marker after it drops the table.
+        // Record the name again before recreating it, including when setup fails.
+        $this->probeTable = $table;
+
         if ($this->db->transDepth > 0) {
             $this->db->transRollback();
         }
@@ -162,7 +232,7 @@ final class DeadlockTransactionTest extends CIUnitTestCase
     {
         $observer = Database::connect($this->DBGroup, false);
         $observer->initialize();
-        $rows = $observer->query('SELECT id FROM ' . $table . ' WHERE id IN (101, 102) ORDER BY id')->getResultArray();
+        $rows = $observer->query('SELECT id FROM ' . $table . ' WHERE id > 100 ORDER BY id')->getResultArray();
         $observer->close();
 
         $ids = [];

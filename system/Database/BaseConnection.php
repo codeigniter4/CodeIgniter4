@@ -1086,7 +1086,12 @@ abstract class BaseConnection implements ConnectionInterface
 
         // InnoDB already removed the victim transaction. mysqli::commit()
         // returns true anyway, which would publish later writes and report success.
+        // Roll back the restarted server transaction so a false return ends the
+        // transaction, as transComplete() does. Otherwise a caller that retries
+        // without transRollback() nests inside it and nothing commits.
         if ($this->transServerRolledBack) {
+            $this->transRollback();
+
             return false;
         }
 
@@ -1154,17 +1159,19 @@ abstract class BaseConnection implements ConnectionInterface
     }
 
     /**
-     * True once, when the next statement must BEGIN before it runs.
+     * True while the next statement must BEGIN before it runs.
      */
-    protected function consumeServerTransactionRestart(): bool
+    protected function serverTransactionRestartPending(): bool
     {
-        if (! $this->transNeedsServerRestart || $this->transDepth < 1) {
-            return false;
-        }
+        return $this->transNeedsServerRestart && $this->transDepth > 0;
+    }
 
+    /**
+     * BEGIN succeeded. Clear the restart only now, so a failed BEGIN keeps it pending.
+     */
+    protected function serverTransactionRestarted(): void
+    {
         $this->transNeedsServerRestart = false;
-
-        return true;
     }
 
     private function clearServerRolledBackTransaction(): void
