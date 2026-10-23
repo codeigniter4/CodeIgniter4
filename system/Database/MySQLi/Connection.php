@@ -291,6 +291,16 @@ class Connection extends BaseConnection
         }
 
         try {
+            // Errno 1213 ends the server transaction. Begin again before this
+            // statement so it does not autocommit. A failed BEGIN goes through
+            // the normal error path below, and the restart stays pending.
+            // Errno 1205 is not handled: innodb_rollback_on_timeout decides
+            // whether InnoDB rolled that transaction back.
+            if ($this->connID instanceof mysqli && $this->serverTransactionRestartPending()) {
+                $this->connID->begin_transaction();
+                $this->serverTransactionRestarted();
+            }
+
             return $this->connID->query($this->prepQuery($sql), $this->resultMode);
         } catch (mysqli_sql_exception $e) {
             log_message('error', "{message}\nin {exFile} on line {exLine}.\n{trace}", [
@@ -299,6 +309,10 @@ class Connection extends BaseConnection
                 'exLine'  => $e->getLine(),
                 'trace'   => render_backtrace($e->getTrace()),
             ]);
+
+            if ($e->getCode() === 1213 && $this->transDepth > 0) {
+                $this->markServerRolledBackTransaction();
+            }
 
             if ($this->DBDebug) {
                 throw new DatabaseException($e->getMessage(), $e->getCode(), $e);
