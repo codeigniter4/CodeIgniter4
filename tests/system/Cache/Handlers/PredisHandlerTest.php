@@ -196,4 +196,36 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
 
         $this->assertSame('value', $this->handler->get(self::$key1));
     }
+
+    /**
+     * Live test that runs when predis/predis is installed (see the class-level
+     * Group('CacheLive') attribute). It assumes a local Redis Sentinel is
+     * reachable at 127.0.0.1:26379 monitoring the "mymaster" service, mirroring
+     * how the other live Redis tests assume a server on 127.0.0.1:6379. Skipped
+     * when no Sentinel is running (CI only provides a plain Redis server).
+     */
+    public function testInitializeWithSentinel(): void
+    {
+        $socket = @stream_socket_client('tcp://127.0.0.1:26379', $errno, $errstr, 1.0);
+
+        if ($socket === false) {
+            $this->markTestSkipped('Redis Sentinel not reachable at 127.0.0.1:26379.');
+        }
+
+        fclose($socket);
+        $config        = new Cache();
+        $config->redis = [
+            'sentinel' => [
+                'service' => 'mymaster',
+                'nodes'   => [
+                    ['host' => '127.0.0.1', 'port' => 26379],
+                ],
+            ],
+        ];
+
+        $handler = CacheFactory::getHandler($config, 'predis');
+        $handler->save(self::$key1, 'sentinel-value');
+        $this->assertSame('sentinel-value', $handler->get(self::$key1));
+        $handler->clean();
+    }
 }
