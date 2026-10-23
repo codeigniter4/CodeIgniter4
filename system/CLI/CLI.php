@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\CLI;
 
-use CodeIgniter\Exceptions\InvalidArgumentException;
 use WeakMap;
 
 /**
@@ -203,6 +202,14 @@ class CLI
     }
 
     /**
+     * Returns a prompt reading through the current output.
+     */
+    public static function getPrompt(): Prompt
+    {
+        return new Prompt(static::getOutput());
+    }
+
+    /**
      * Get input from the shell, using readline or the standard STDIN
      *
      * Named options must be in the following formats:
@@ -240,53 +247,7 @@ class CLI
      */
     public static function prompt(string $field, $options = null, $validation = null): string
     {
-        $extraOutput = '';
-        $default     = '';
-
-        if (isset($validation) && ! is_array($validation) && ! is_string($validation)) {
-            throw new InvalidArgumentException('$rules can only be of type string|array');
-        }
-
-        if (! is_array($validation)) {
-            $validation = ($validation !== null) ? explode('|', $validation) : [];
-        }
-
-        if (is_string($options)) {
-            $extraOutput = ' [' . static::color($options, 'green') . ']';
-            $default     = $options;
-        }
-
-        if (is_array($options) && $options !== []) {
-            $opts               = $options;
-            $extraOutputDefault = static::color((string) $opts[0], 'green');
-
-            unset($opts[0]);
-
-            if ($opts === []) {
-                $extraOutput = $extraOutputDefault;
-            } else {
-                $extraOutput  = '[' . $extraOutputDefault . ', ' . implode(', ', $opts) . ']';
-                $validation[] = 'in_list[' . implode(', ', $options) . ']';
-            }
-
-            $default = $options[0];
-        }
-
-        $output = static::getOutput();
-        $output->setCursorAtLineStart(true);
-
-        // The reader renders the prompt itself, so readline redraws repaint it instead of erasing it.
-        $prompt = sprintf('%s%s%s: ', $field, trim($field) !== '' ? ' ' : '', $extraOutput);
-        $input  = trim($output->getInputOutput()->input($prompt));
-        $input  = $input === '' ? (string) $default : $input;
-
-        if ($validation !== []) {
-            while (! static::validate('"' . trim($field) . '"', $input, $validation)) {
-                $input = static::prompt($field, $options, $validation);
-            }
-        }
-
-        return $input;
+        return static::getPrompt()->ask($field, $options, $validation);
     }
 
     /**
@@ -301,21 +262,7 @@ class CLI
      */
     public static function promptByKey($text, array $options, $validation = null): string
     {
-        if (is_string($text)) {
-            $text = [$text];
-        } elseif (! is_array($text)) {
-            throw new InvalidArgumentException('$text can only be of type string|array');
-        }
-
-        self::isZeroOptions($options);
-
-        if (($line = array_shift($text)) !== null) {
-            static::write($line);
-        }
-
-        self::printKeysAndValues($options);
-
-        return static::prompt(PHP_EOL . array_shift($text), array_keys($options), $validation);
+        return static::getPrompt()->askByKey($text, $options, $validation);
     }
 
     /**
@@ -329,95 +276,13 @@ class CLI
      */
     public static function promptByMultipleKeys(string $text, array $options): array
     {
-        self::isZeroOptions($options);
-
-        $extraOutputDefault = static::color('0', 'green');
-        $opts               = $options;
-        unset($opts[0]);
-
-        if ($opts === []) {
-            $extraOutput = $extraOutputDefault;
-        } else {
-            $optsKey     = array_keys($opts);
-            $extraOutput = '[' . $extraOutputDefault . ', ' . implode(', ', $optsKey) . ']';
-            $extraOutput = 'You can specify multiple values separated by commas.' . PHP_EOL . $extraOutput;
-        }
-
-        static::write($text);
-        self::printKeysAndValues($options);
-        static::newLine();
-
-        $input = static::prompt($extraOutput);
-        $input = ($input === '') ? '0' : $input; // 0 is default
-
-        // validation
-        while (true) {
-            $pattern = preg_match_all('/^\d+(,\d+)*$/', trim($input));
-
-            // separate input by comma and convert all to an int[]
-            $inputToArray = array_map(static fn ($value): int => (int) $value, explode(',', $input));
-            // find max from key of $options
-            $maxOptions = array_key_last($options);
-            // find max from input
-            $maxInput = max($inputToArray);
-
-            // return the prompt again if $input contain(s) non-numeric character, except a comma.
-            // And if max from $options less than max from input,
-            // it means user tried to access null value in $options
-            if ($pattern < 1 || $maxOptions < $maxInput) {
-                static::error('Please select correctly.');
-                static::newLine();
-
-                $input = static::prompt($extraOutput);
-                $input = ($input === '') ? '0' : $input;
-            } else {
-                break;
-            }
-        }
-
-        $input = [];
-
-        foreach ($options as $key => $description) {
-            foreach ($inputToArray as $inputKey) {
-                if ($key === $inputKey) {
-                    $input[$key] = $description;
-                }
-            }
-        }
-
-        return $input;
-    }
-
-    /**
-     * Validation for $options in promptByKey() and promptByMultipleKeys(). Return an error if $options is an empty array.
-     *
-     * @param array<array-key, string> $options
-     */
-    private static function isZeroOptions(array $options): void
-    {
-        if ($options === []) {
-            throw new InvalidArgumentException('No options to select from were provided');
-        }
-    }
-
-    /**
-     * Print each key and value one by one
-     *
-     * @param array<array-key, string> $options
-     */
-    private static function printKeysAndValues(array $options): void
-    {
-        // +2 for the square brackets around the key
-        $keyMaxLength = max(array_map(mb_strwidth(...), array_keys($options))) + 2;
-
-        foreach ($options as $key => $description) {
-            $name = str_pad('  [' . $key . ']  ', $keyMaxLength + 4, ' ');
-            static::write(static::color($name, 'green') . static::wrap($description, 125, $keyMaxLength + 4));
-        }
+        return static::getPrompt()->askByMultipleKeys($text, $options);
     }
 
     /**
      * Validate one prompt "field" at a time
+     *
+     * @deprecated 4.8.0 Override `Prompt::validate()` instead.
      *
      * @param string              $field Prompt "field" output
      * @param string              $value Input value
@@ -425,6 +290,12 @@ class CLI
      */
     protected static function validate(string $field, string $value, $rules): bool
     {
+        @trigger_error(sprintf(
+            'Since v4.8.0, "%s()" is deprecated. Override "%s::validate()" instead.',
+            __METHOD__,
+            Prompt::class,
+        ), E_USER_DEPRECATED);
+
         $label      = $field;
         $field      = 'temp';
         $validation = service('validation', null, false);

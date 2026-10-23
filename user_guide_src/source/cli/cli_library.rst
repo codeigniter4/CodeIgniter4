@@ -283,7 +283,13 @@ modern commands reach the output through ``$this->getOutput()``
 .. literalinclude:: cli_library/024.php
 
 Mixing the static methods with the instance is safe, because both write to the same
-``Output`` and share its line breaks. The prompt methods remain static on ``CLI``.
+``Output`` and share its line breaks.
+
+The prompt methods delegate to :php:class:`Prompt`, which reads through an ``Output``.
+``CLI::getPrompt()`` returns one on the shared output, and modern commands reach one on the
+output of their run through ``$this->getPrompt()``:
+
+.. literalinclude:: cli_library/025.php
 
 .. php:namespace:: CodeIgniter\CLI
 
@@ -337,6 +343,22 @@ Mixing the static methods with the instance is safe, because both write to the s
         while rendering an exception.
 
     .. php:method:: getTerminal(): Terminal
+
+.. php:class:: Prompt
+
+    Asks questions on the console, reading the answers through an ``Output``.
+
+    .. php:method:: __construct(Output $output[, ?ValidationInterface $validation = null])
+
+        :param Output                   $output:     The output the questions are written and read through.
+        :param ValidationInterface|null $validation: The validation that checks the answers, or ``null`` for an
+                                                     unshared instance of the ``validation`` service.
+
+    .. php:method:: ask(string $field[, array|string|null $options = null[, array|string|null $validation = null]]): string
+    .. php:method:: askByKey(array|string $text, array $options[, array|string|null $validation = null]): string
+    .. php:method:: askByMultipleKeys(string $text, array $options): array
+
+        The same as ``CLI::prompt()``, ``CLI::promptByKey()``, and ``CLI::promptByMultipleKeys()``.
 
 .. php:class:: Verbosity
 

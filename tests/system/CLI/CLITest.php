@@ -20,6 +20,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\PhpStreamWrapper;
 use CodeIgniter\Test\StreamFilterTrait;
+use ErrorException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresOperatingSystem;
@@ -349,6 +350,46 @@ final class CLITest extends CIUnitTestCase
                 . sprintf('[%s, 1, 2] : ', CLI::color('0', 'green')),
             $io->receivedPrefix,
         );
+    }
+
+    public function testGetPromptReadsThroughTheOutput(): void
+    {
+        $io = new MockInputOutput();
+        $io->setInputs(['blue']);
+        CLI::setInputOutput($io);
+
+        $this->assertSame('blue', CLI::getPrompt()->ask('Color?'));
+        $this->assertSame('Color? : blue' . PHP_EOL, $io->getOutput());
+    }
+
+    public function testValidateIsDeprecatedInFavorOfPromptValidate(): void
+    {
+        $this->expectException(ErrorException::class);
+        $this->expectExceptionMessage('Since v4.8.0, "CodeIgniter\\CLI\\CLI::validate()" is deprecated. Override "CodeIgniter\\CLI\\Prompt::validate()" instead.');
+
+        $this->getPrivateMethodInvoker(CLI::class, 'validate')('Color', 'red', 'required');
+    }
+
+    public function testDeprecatedValidateStillReportsTheError(): void
+    {
+        $io = new MockInputOutput();
+        CLI::setInputOutput($io);
+
+        $superglobals = service('superglobals');
+        $scream       = $superglobals->server('CODEIGNITER_SCREAM_DEPRECATIONS');
+        $superglobals->unsetServer('CODEIGNITER_SCREAM_DEPRECATIONS');
+
+        try {
+            $validate = $this->getPrivateMethodInvoker(CLI::class, 'validate');
+
+            $this->assertTrue($validate('Color', 'red', 'required'));
+            $this->assertFalse($validate('Color', '', 'required'));
+            $this->assertStringContainsString('The Color field is required.', $io->getOutput());
+        } finally {
+            if ($scream !== null) {
+                $superglobals->setServer('CODEIGNITER_SCREAM_DEPRECATIONS', $scream);
+            }
+        }
     }
 
     public function testInputWritesPrefixToStdout(): void

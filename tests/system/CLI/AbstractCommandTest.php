@@ -39,6 +39,7 @@ use PHPUnit\Framework\Attributes\Group;
 use ReflectionClass;
 use Tests\Support\Commands\Modern\AppAboutCommand;
 use Tests\Support\Commands\Modern\CallsAboutCommand;
+use Tests\Support\Commands\Modern\CustomPromptCommand;
 use Tests\Support\Commands\Modern\HeaderlessCommand;
 use Tests\Support\Commands\Modern\HiddenCommand;
 use Tests\Support\Commands\Modern\InteractFixtureCommand;
@@ -408,6 +409,29 @@ final class AbstractCommandTest extends CIUnitTestCase
         $this->assertSame($output, $command->seen);
         $this->assertSame(CLI::getOutput(), $getOutput());
         $this->assertNotSame($output, $getOutput());
+    }
+
+    public function testGetPromptReadsThroughTheOutput(): void
+    {
+        $io = new MockInputOutput();
+        $io->setInputs(['blue']);
+        CLI::setInputOutput($io);
+
+        $getPrompt = $this->getPrivateMethodInvoker(new OutputProbeCommand(new Commands()), 'getPrompt');
+
+        $this->assertSame('blue', $getPrompt()->ask('Color?'));
+        $this->assertSame('Color? : blue' . PHP_EOL, $io->getOutput());
+    }
+
+    public function testOverriddenGetPromptAnswersTheMissingArguments(): void
+    {
+        CustomPromptCommand::$receivedArguments = [];
+
+        $command = new CustomPromptCommand(new Commands());
+        $command->setInteractive(true);
+
+        $this->assertSame(EXIT_SUCCESS, $command->run([], []));
+        $this->assertSame(['name' => 'from the custom prompt'], CustomPromptCommand::$receivedArguments);
     }
 
     public function testCallSilentlyForwardsNoInteractionOverrideFalseToChild(): void

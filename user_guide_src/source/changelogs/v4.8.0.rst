@@ -41,6 +41,10 @@ Behavior Changes
 - **CLI:** The output state moved out of the static ``CLI`` properties. A subclass of ``CLI`` that overrides ``fwrite()`` or ``color()``, or reads
   ``$lastWrite``, ``$isColored``, ``$io``, ``$height``, ``$width``, or the colour tables, no longer affects or observes the output.
   See :ref:`upgrade-480-cli-output-classes`.
+- **CLI:** The prompt methods moved to ``Prompt``. A subclass of ``CLI`` that overrides ``validate()`` no longer affects the prompts, and
+  an override of ``prompt()`` no longer affects ``promptByKey()`` or ``promptByMultipleKeys()``. Passing ``prompt()`` options or rules, or a
+  ``promptByKey()`` text, of another type than ``string``, ``array``, or ``null`` now throws a ``TypeError`` instead of an ``InvalidArgumentException``.
+  See :ref:`upgrade-480-cli-prompt`.
 - **Commands:** The ``-h`` option to ``routes`` command which was mapped previously to the ``--sort-by-handler`` option is now removed.
   Use ``--sort-by-handler`` instead to sort the routes by handler when running the ``routes`` command.
 - **Commands:** The ``filter:check`` command now requires the HTTP method argument to be uppercase (e.g., ``spark filter:check GET /`` instead of ``spark filter:check get /``).
@@ -267,6 +271,10 @@ Commands
 - Modern commands can write through ``$this->getOutput()``, the same ``Output`` used by the static ``CLI`` methods. ``AbstractCommand::run()``
   and ``Commands::runCommand()`` accept an ``Output`` to run against, which ``Console`` passes down and sub-commands inherit.
   See :ref:`modern-commands-writing-output`.
+- The prompt methods of ``CLI`` now delegate to :php:class:`Prompt <CodeIgniter\\CLI\\Prompt>` (``ask()``, ``askByKey()``,
+  ``askByMultipleKeys()``), which reads through an ``Output`` and accepts the validation that checks the answers.
+  ``CLI::getPrompt()`` and ``AbstractCommand::getPrompt()`` return one on the shared output and on the output of the run.
+  See :ref:`cli-library-classes`.
 - Added ``--silent``, ``--quiet`` / ``-q``, and ``--verbose`` / ``-v``, ``-vv``, ``-vvv`` to every command, with ``SHELL_VERBOSITY`` as the fallback. Modern
   commands can write at a :php:class:`Verbosity <CodeIgniter\\CLI\\Verbosity>` through ``$this->getOutput()``. ``lang:find`` uses the global ``--verbose`` in place of its own. See :ref:`spark-verbosity` and :ref:`modern-commands-verbosity`.
 - Added :php:class:`AbstractGeneratorCommand <CodeIgniter\\CLI\\AbstractGeneratorCommand>` and the ``#[GeneratorCommand]`` attribute, the modern
@@ -470,6 +478,8 @@ Deprecations
 - **CLI:** The ``CLI::$foreground_colors``, ``CLI::$background_colors``, ``CLI::$lastWrite``, ``CLI::$height``, ``CLI::$width``, ``CLI::$isColored``,
   ``CLI::$io``, and ``CLI::$stdoutToStderr`` properties are deprecated and no longer used. Their state lives in ``Color``, ``Output``, and
   ``Terminal``. See :ref:`upgrade-480-cli-output-classes`.
+- **CLI:** ``CLI::validate()`` is deprecated and no longer used by the prompts. Calling it triggers a deprecation notice. Override ``Prompt::validate()`` instead.
+  See :ref:`upgrade-480-cli-prompt`.
 - **HTTP:** The ``CLIRequest::parseCommand()`` method is now deprecated and will be removed in a future release. The ``CLIRequest`` class now uses the new ``CommandLineParser`` class to handle command-line argument parsing.
 - **HTTP:** ``URI::setSilent()`` is now hard deprecated. This method was only previously marked as deprecated. It will now trigger a deprecation notice when used.
 

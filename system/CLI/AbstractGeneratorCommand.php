@@ -389,7 +389,7 @@ abstract class AbstractGeneratorCommand extends AbstractCommand implements Promp
 
         CLI::write(lang('CLI.generator.usingCINamespace'), 'yellow');
 
-        if ($this->isInteractive() && CLI::prompt(lang('CLI.generator.confirmContinue'), ['y', 'n'], 'required') === 'n') {
+        if ($this->isInteractive() && $this->getPrompt()->ask(lang('CLI.generator.confirmContinue'), ['y', 'n'], 'required') === 'n') {
             CLI::write(lang('CLI.generator.cancelOperation'), 'yellow');
 
             return $this->confirmedCodeIgniterNamespace = false;
