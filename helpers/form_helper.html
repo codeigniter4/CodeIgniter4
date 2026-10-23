@@ -1193,7 +1193,7 @@ the tag. For example:</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$field</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Field name</p></li>
-<li><p><strong>$default</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Default value</p></li>
+<li><p><strong>$default</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Default value. An array is returned as is, any other value is converted to a string.</p></li>
 <li><p><strong>$html_escape</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to turn off HTML escaping of the value</p></li>
 </ul>
 </dd>
@@ -1201,7 +1201,7 @@ the tag. For example:</p>
 <dd class="field-even"><p>Field value</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|string</span></code></span></p>
 </dd>
 </dl>
 <p>Permits you to set the value of an input or textarea element. You must

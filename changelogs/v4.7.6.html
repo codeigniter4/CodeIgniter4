@@ -323,19 +323,11 @@
 <h2><a class="toc-backref" href="#id5" role="doc-backlink">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>Commands:</strong> Fixed a bug where generator commands did not sort the imports of a template with CRLF line endings.</p></li>
-<li><p><strong>Format:</strong> Fixed <code class="docutils literal notranslate"><span class="pre">XMLFormatter</span></code> so that an array key that becomes empty after
-sanitization no longer triggers a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>; the fallback tag name <code class="docutils literal notranslate"><span class="pre">item</span></code>
-is used instead. Values that cannot be converted to a string, such as objects
-not implementing <code class="docutils literal notranslate"><span class="pre">Stringable</span></code>, now throw a <code class="docutils literal notranslate"><span class="pre">FormatException</span></code> instead of a
-fatal <code class="docutils literal notranslate"><span class="pre">Error</span></code>.</p></li>
+<li><p><strong>Format:</strong> Fixed <code class="docutils literal notranslate"><span class="pre">XMLFormatter</span></code> so that an array key that becomes empty after sanitization no longer triggers a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>; the fallback tag name <code class="docutils literal notranslate"><span class="pre">item</span></code> is used instead. Values that cannot be converted to a string, such as objects not implementing <code class="docutils literal notranslate"><span class="pre">Stringable</span></code>, now throw a <code class="docutils literal notranslate"><span class="pre">FormatException</span></code> instead of a fatal <code class="docutils literal notranslate"><span class="pre">Error</span></code>.</p></li>
+<li><p><strong>Helpers:</strong> Fixed a regression in v4.7.5 where <code class="docutils literal notranslate"><span class="pre">set_value()</span></code> threw a <code class="docutils literal notranslate"><span class="pre">TypeError</span></code> when the default value was not a string or an array, such as an integer, a float, <code class="docutils literal notranslate"><span class="pre">null</span></code>, or a <code class="docutils literal notranslate"><span class="pre">Stringable</span></code> object. Such values are now converted to a string.</p></li>
 <li><p><strong>HTTP:</strong> Fixed stale <code class="docutils literal notranslate"><span class="pre">$_REQUEST</span></code> values after <code class="docutils literal notranslate"><span class="pre">SiteURIFactory</span></code> normalizes GET parameters, so <code class="docutils literal notranslate"><span class="pre">Validation::withRequest()</span></code> reads the normalized values while unrelated REQUEST entries are preserved.</p></li>
-<li><p><strong>HTTP:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">IncomingRequest::isSecure()</span></code> did not
-recognize <code class="docutils literal notranslate"><span class="pre">https</span></code> in the <code class="docutils literal notranslate"><span class="pre">X-Forwarded-Proto</span></code> header from a trusted
-proxy when the value contained uppercase letters or surrounding
-whitespace, or was represented as a single-element array.</p></li>
-<li><p><strong>Security:</strong> Fixed a bug where a valid JSON request body that is not an object
-(for example a JSON array) was corrupted after CSRF verification when the
-token was sent via the <code class="docutils literal notranslate"><span class="pre">X-CSRF-TOKEN</span></code> header.</p></li>
+<li><p><strong>HTTP:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">IncomingRequest::isSecure()</span></code> did not recognize <code class="docutils literal notranslate"><span class="pre">https</span></code> in the <code class="docutils literal notranslate"><span class="pre">X-Forwarded-Proto</span></code> header from a trusted proxy when the value contained uppercase letters or surrounding whitespace, or was represented as a single-element array.</p></li>
+<li><p><strong>Security:</strong> Fixed a bug where a valid JSON request body that is not an object (for example a JSON array) was corrupted after CSRF verification when the token was sent via the <code class="docutils literal notranslate"><span class="pre">X-CSRF-TOKEN</span></code> header.</p></li>
 </ul>
 <p>See the repo’s
 <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a>
