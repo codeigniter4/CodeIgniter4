@@ -127,8 +127,8 @@ this order:
 1. **Construction.** The ``#[Command]`` attribute is read, then your
    ``configure(): void`` hook runs so you can register arguments, options, and
    extra usage examples. A default ``--help``/ ``-h`` flag, ``--no-header``
-   flag, and ``--no-interaction``/ ``-N`` flag are added automatically
-   afterwards.
+   flag, ``--no-interaction``/ ``-N`` flag, ``--silent`` flag, ``--quiet``/ ``-q``
+   flag, and ``--verbose``/ ``-v`` flag are added automatically afterwards.
 2. ``isAvailable(): bool`` is called to check whether the command should execute
    (see :ref:`restricting-execution`).
 3. ``initialize(array &$arguments, array &$options): void`` receives the raw
@@ -207,6 +207,9 @@ A few quirks are worth knowing:
   - ``--help`` / ``-h``
   - ``--no-header``
   - ``--no-interaction`` / ``-N``
+  - ``--silent``
+  - ``--quiet`` / ``-q``
+  - ``--verbose`` / ``-v``
 
 Configuration-time violations raise ``InvalidOptionDefinitionException``.
 
@@ -215,7 +218,8 @@ Configuration-time violations raise ``InvalidOptionDefinitionException``.
     The command-line parser does **not** understand bundled shortcuts or
     shortcuts with a glued value:
 
-    - ``-abc`` is read as one option named ``abc``, *not* as ``-a -b -c``.
+    - ``-abc`` is read as one option named ``abc``, *not* as ``-a -b -c``. The only
+      exception is a run of ``v``, such as ``-vvv``, which sets the verbosity.
     - ``-fvalue`` is read as one option named ``fvalue``; it is not split into
       shortcut ``-f`` with value ``value``.
 
@@ -343,7 +347,7 @@ Inside execute()
 
 - ``$arguments`` contains every declared argument, bound to the provided value or the declared default.
 - ``$options`` contains every declared option plus the framework defaults
-  (``help``, ``no-header``, ``no-interaction``), bound to the provided value
+  (``help``, ``no-header``, ``no-interaction``, ``silent``, ``quiet``, ``verbose``), bound to the provided value
   or the declared default.
 
 Within ``execute()`` itself, reaching into ``$arguments`` / ``$options`` directly
@@ -384,6 +388,24 @@ By default the run writes to the output shared through ``CLI::getOutput()``. Pas
 ``Output`` as the third argument of ``run()`` to write somewhere else, for instance
 to a ``MockInputOutput`` in a test. See :doc:`../cli/cli_library` for the classes and
 :ref:`testing-cli-output` for testing.
+
+.. _modern-commands-verbosity:
+
+Writing at a Verbosity
+======================
+
+**spark** sets the :php:class:`Verbosity <CodeIgniter\\CLI\\Verbosity>` of the output
+from ``--silent``, ``--quiet`` / ``-q``, and ``--verbose`` / ``-v``, ``-vv``, ``-vvv`` (see :ref:`spark-verbosity`).
+``print()``, ``write()``, and ``newLine()`` take the lowest level that shows the text as their last
+parameter, and ``isVerbose()``, ``isVeryVerbose()``, ``isDebug()``, and ``isQuiet()`` guard larger blocks:
+
+.. literalinclude:: cli_modern_commands/019.php
+
+``--quiet`` drops every write at the normal level, so only errors and text written at
+``Verbosity::Quiet`` remain, and it makes the run non-interactive.
+
+A command run through ``call()`` writes at the level of the calling command. Use
+``callSilently()`` to hide its output.
 
 ***********************
 Calling Another Command

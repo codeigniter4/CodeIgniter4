@@ -14,9 +14,9 @@ class AppPublish extends AbstractCommand
         $this
             // Flag. Presence → true, absence → false.
             ->addOption(new Option(
-                name: 'verbose',
-                shortcut: 'v',
-                description: 'Enable verbose output.',
+                name: 'dry-run',
+                shortcut: 'r',
+                description: 'Show what would be published without copying.',
             ))
             // Value-required. --destination=path or -d path. A string default is mandatory.
             ->addOption(new Option(

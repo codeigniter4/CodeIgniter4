@@ -62,6 +62,9 @@ final class HelpCommandTest extends CIUnitTestCase
                   -h, --help            Display help for the given command.
                       --no-header       Do not display the banner when running the command.
                   -N, --no-interaction  Do not ask any interactive questions.
+                      --silent          Do not output any message, not even errors.
+                  -q, --quiet           Do not output any message except errors.
+                  -v, --verbose         Increase the verbosity of messages (-v, -vv, or -vvv).
 
                 EOT,
             $this->getUndecoratedBuffer(),
@@ -95,6 +98,9 @@ final class HelpCommandTest extends CIUnitTestCase
                   -h, --help            Display help for the given command.
                       --no-header       Do not display the banner when running the command.
                   -N, --no-interaction  Do not ask any interactive questions.
+                      --silent          Do not output any message, not even errors.
+                  -q, --quiet           Do not output any message except errors.
+                  -v, --verbose         Increase the verbosity of messages (-v, -vv, or -vvv).
 
                 EOT,
             $this->getUndecoratedBuffer(),
@@ -121,6 +127,9 @@ final class HelpCommandTest extends CIUnitTestCase
                   -h, --help            Display help for the given command.
                       --no-header       Do not display the banner when running the command.
                   -N, --no-interaction  Do not ask any interactive questions.
+                      --silent          Do not output any message, not even errors.
+                  -q, --quiet           Do not output any message except errors.
+                  -v, --verbose         Increase the verbosity of messages (-v, -vv, or -vvv).
 
                 EOT,
             $this->getUndecoratedBuffer(),
@@ -147,6 +156,9 @@ final class HelpCommandTest extends CIUnitTestCase
                   -h, --help            Display help for the given command.
                       --no-header       Do not display the banner when running the command.
                   -N, --no-interaction  Do not ask any interactive questions.
+                      --silent          Do not output any message, not even errors.
+                  -q, --quiet           Do not output any message except errors.
+                  -v, --verbose         Increase the verbosity of messages (-v, -vv, or -vvv).
 
                 EOT,
             $this->getUndecoratedBuffer(),
@@ -174,6 +186,9 @@ final class HelpCommandTest extends CIUnitTestCase
                   -h, --help            Display help for the given command.
                       --no-header       Do not display the banner when running the command.
                   -N, --no-interaction  Do not ask any interactive questions.
+                      --silent          Do not output any message, not even errors.
+                  -q, --quiet           Do not output any message except errors.
+                  -v, --verbose         Increase the verbosity of messages (-v, -vv, or -vvv).
 
                 EOT,
             $this->getUndecoratedBuffer(),
@@ -201,6 +216,9 @@ final class HelpCommandTest extends CIUnitTestCase
                   -h, --help            Display help for the given command.
                       --no-header       Do not display the banner when running the command.
                   -N, --no-interaction  Do not ask any interactive questions.
+                      --silent          Do not output any message, not even errors.
+                  -q, --quiet           Do not output any message except errors.
+                  -v, --verbose         Increase the verbosity of messages (-v, -vv, or -vvv).
 
                 EOT,
             $this->getUndecoratedBuffer(),
@@ -242,6 +260,9 @@ final class HelpCommandTest extends CIUnitTestCase
                   -h, --help            Display help for the given command.
                       --no-header       Do not display the banner when running the command.
                   -N, --no-interaction  Do not ask any interactive questions.
+                      --silent          Do not output any message, not even errors.
+                  -q, --quiet           Do not output any message except errors.
+                  -v, --verbose         Increase the verbosity of messages (-v, -vv, or -vvv).
 
                 EOT,
             $this->getUndecoratedBuffer(),
@@ -271,6 +292,9 @@ final class HelpCommandTest extends CIUnitTestCase
                   -h, --help                 Display help for the given command.
                       --no-header            Do not display the banner when running the command.
                   -N, --no-interaction       Do not ask any interactive questions.
+                      --silent               Do not output any message, not even errors.
+                  -q, --quiet                Do not output any message except errors.
+                  -v, --verbose              Increase the verbosity of messages (-v, -vv, or -vvv).
 
                 EOT,
             $this->getUndecoratedBuffer(),
@@ -298,6 +322,9 @@ final class HelpCommandTest extends CIUnitTestCase
                   -h, --help                 Display help for the given command.
                       --no-header            Do not display the banner when running the command.
                   -N, --no-interaction       Do not ask any interactive questions.
+                      --silent               Do not output any message, not even errors.
+                  -q, --quiet                Do not output any message except errors.
+                  -v, --verbose              Increase the verbosity of messages (-v, -vv, or -vvv).
 
                 EOT,
             $this->getUndecoratedBuffer(),
@@ -321,6 +348,9 @@ final class HelpCommandTest extends CIUnitTestCase
                   -h, --help            Display help for the given command.
                       --no-header       Do not display the banner when running the command.
                   -N, --no-interaction  Do not ask any interactive questions.
+                      --silent          Do not output any message, not even errors.
+                  -q, --quiet           Do not output any message except errors.
+                  -v, --verbose         Increase the verbosity of messages (-v, -vv, or -vvv).
 
                 EOT,
             $this->getUndecoratedBuffer(),
@@ -414,6 +444,9 @@ final class HelpCommandTest extends CIUnitTestCase
                   -h, --help            Display help for the given command.
                       --no-header       Do not display the banner when running the command.
                   -N, --no-interaction  Do not ask any interactive questions.
+                      --silent          Do not output any message, not even errors.
+                  -q, --quiet           Do not output any message except errors.
+                  -v, --verbose         Increase the verbosity of messages (-v, -vv, or -vvv).
 
                 EOT,
             $this->getUndecoratedBuffer(),
@@ -440,6 +473,9 @@ final class HelpCommandTest extends CIUnitTestCase
                   -h, --help            Display help for the given command.
                       --no-header       Do not display the banner when running the command.
                   -N, --no-interaction  Do not ask any interactive questions.
+                      --silent          Do not output any message, not even errors.
+                  -q, --quiet           Do not output any message except errors.
+                  -v, --verbose         Increase the verbosity of messages (-v, -vv, or -vvv).
 
                 EOT,
             $this->getUndecoratedBuffer(),

@@ -16,6 +16,7 @@ namespace CodeIgniter\CLI;
 use CodeIgniter\CodeIgniter;
 use Config\App;
 use Config\Services;
+use Throwable;
 
 class Console
 {
@@ -37,7 +38,9 @@ class Console
      */
     public function run(array $tokens = [])
     {
-        if ($tokens === []) {
+        $fromArgv = $tokens === [];
+
+        if ($fromArgv) {
             $tokens = service('superglobals')->server('argv', []);
         }
 
@@ -45,7 +48,75 @@ class Console
 
         $arguments     = $parser->getArguments();
         $this->options = $parser->getOptions();
-        $noHeader      = $this->hasParameterOption(['no-header']);
+
+        $output                       = CLI::getOutput();
+        $previousVerbosity            = $output->getVerbosity();
+        $previousShellVerbosity       = getenv('SHELL_VERBOSITY');
+        $previousEnvShellVerbosity    = $_ENV['SHELL_VERBOSITY'] ?? null;
+        $previousServerShellVerbosity = service('superglobals')->server('SHELL_VERBOSITY');
+
+        $output->setVerbosity($this->resolveVerbosity());
+        $this->setShellVerbosity($output->getVerbosity()->value);
+
+        try {
+            $exitCode = $this->dispatch($arguments);
+        } catch (Throwable $e) {
+            // The spark run keeps the level, so the exception handler renders the uncaught throwable at it.
+            if (! $fromArgv) {
+                $output->setVerbosity($previousVerbosity);
+            }
+
+            throw $e;
+        } finally {
+            $this->restoreShellVerbosity($previousShellVerbosity, $previousEnvShellVerbosity, $previousServerShellVerbosity);
+        }
+
+        $output->setVerbosity($previousVerbosity);
+
+        return $exitCode;
+    }
+
+    public function initialize(): static
+    {
+        Services::createRequest(config(App::class), true);
+        service('routes')->loadRoutes();
+
+        return $this;
+    }
+
+    /**
+     * Returns the command that is being executed.
+     */
+    public function getCommand(): string
+    {
+        return $this->command;
+    }
+
+    /**
+     * Displays basic information about the Console.
+     *
+     * @return void
+     */
+    public function showHeader(bool $suppress = false)
+    {
+        if ($suppress) {
+            return;
+        }
+
+        CLI::write(sprintf(
+            'CodeIgniter v%s Command Line Tool - Server Time: %s',
+            CodeIgniter::CI_VERSION,
+            date('Y-m-d H:i:s \\U\\T\\CP'),
+        ), 'green');
+        CLI::newLine();
+    }
+
+    /**
+     * @param list<string> $arguments
+     */
+    private function dispatch(array $arguments): int
+    {
+        $noHeader = $this->hasParameterOption(['no-header']);
 
         if ($this->hasParameterOption(['help', 'h'])) {
             if ($arguments === []) {
@@ -92,42 +163,116 @@ class Console
             return $commands->runLegacy($this->command, array_merge($arguments, $legacyOptions));
         }
 
-        return $commands->runCommand($this->command, $arguments, $this->options, CLI::getOutput());
-    }
-
-    public function initialize(): static
-    {
-        Services::createRequest(config(App::class), true);
-        service('routes')->loadRoutes();
-
-        return $this;
+        return $commands->runCommand($this->command, $arguments, $this->normalizeVerbosityOptions(), CLI::getOutput());
     }
 
     /**
-     * Returns the command that is being executed.
+     * Resolves the level from `--silent`, `--quiet`, the count of `-v`, or else `SHELL_VERBOSITY`.
      */
-    public function getCommand(): string
+    private function resolveVerbosity(): Verbosity
     {
-        return $this->command;
-    }
+        $quiet = false;
+        $count = 0;
 
-    /**
-     * Displays basic information about the Console.
-     *
-     * @return void
-     */
-    public function showHeader(bool $suppress = false)
-    {
-        if ($suppress) {
-            return;
+        foreach ($this->options as $name => $value) {
+            $option = $this->resolveVerbosityOption($name);
+
+            if ($option === 'silent') {
+                return Verbosity::Silent;
+            }
+
+            if ($option === 'quiet') {
+                $quiet = true;
+            } elseif ($option === 'verbose') {
+                $count += ($name === 'verbose' ? 1 : strlen($name)) * (is_array($value) ? count($value) : 1);
+            }
         }
 
-        CLI::write(sprintf(
-            'CodeIgniter v%s Command Line Tool - Server Time: %s',
-            CodeIgniter::CI_VERSION,
-            date('Y-m-d H:i:s \\U\\T\\CP'),
-        ), 'green');
-        CLI::newLine();
+        if ($quiet) {
+            return Verbosity::Quiet;
+        }
+
+        if ($count > 0) {
+            return Verbosity::from(min($count, Verbosity::Debug->value));
+        }
+
+        return Verbosity::tryFrom((int) env('SHELL_VERBOSITY', 0)) ?? Verbosity::Normal;
+    }
+
+    /**
+     * Collapses repeated `--silent`, `-q` and `-v` tokens into the single `silent`, `quiet` and `verbose` flags of a modern command, keeping the first value so that validation rejects it.
+     *
+     * @return array<string, list<string|null>|string|null>
+     */
+    private function normalizeVerbosityOptions(): array
+    {
+        $options = [];
+        $flags   = [];
+
+        foreach ($this->options as $name => $value) {
+            $option = $this->resolveVerbosityOption($name);
+
+            if ($option === null) {
+                $options[$name] = $value;
+
+                continue;
+            }
+
+            $flags[$option] ??= null;
+
+            foreach (is_array($value) ? $value : [$value] as $occurrence) {
+                $flags[$option] ??= $occurrence;
+            }
+        }
+
+        return $options + $flags;
+    }
+
+    /**
+     * Returns `null` for an option unrelated to verbosity.
+     *
+     * @return 'quiet'|'silent'|'verbose'|null
+     */
+    private function resolveVerbosityOption(int|string $name): ?string
+    {
+        return match (true) {
+            $name === 'silent'                                              => 'silent',
+            $name === 'quiet', $name === 'q'                                => 'quiet',
+            $name === 'verbose', preg_match('/^v+$/', (string) $name) === 1 => 'verbose',
+            default                                                         => null,
+        };
+    }
+
+    /**
+     * Mirrors the level to `SHELL_VERBOSITY` for child processes.
+     */
+    private function setShellVerbosity(int $value): void
+    {
+        putenv(sprintf('SHELL_VERBOSITY=%d', $value));
+        $_ENV['SHELL_VERBOSITY'] = $value;
+        service('superglobals')->setServer('SHELL_VERBOSITY', $value);
+    }
+
+    /**
+     * Puts back each store of `SHELL_VERBOSITY`, removing the variable where it was absent (`false` or `null`).
+     *
+     * @param array<array-key, mixed>|float|int|string|null $server
+     */
+    private function restoreShellVerbosity(false|string $process, mixed $env, array|float|int|string|null $server): void
+    {
+        putenv($process === false ? 'SHELL_VERBOSITY' : sprintf('SHELL_VERBOSITY=%s', $process));
+
+        if ($env === null) {
+            unset($_ENV['SHELL_VERBOSITY']);
+        } else {
+            $_ENV['SHELL_VERBOSITY'] = $env;
+        }
+
+        if ($server === null) {
+            service('superglobals')->unsetServer('SHELL_VERBOSITY');
+        } else {
+            service('superglobals')->setServer('SHELL_VERBOSITY', $server);
+        }
     }
 
     /**
@@ -168,6 +313,7 @@ class Console
     private function isInteractive(): bool
     {
         return ! $this->hasParameterOption(['no-interaction', 'N'])
+            && ! CLI::getOutput()->isQuiet()
             && ! CLI::getInputOutput() instanceof NullInputOutput
             && defined('STDIN')
             && CLI::streamSupports('stream_isatty', STDIN);

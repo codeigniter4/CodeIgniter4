@@ -35,6 +35,8 @@ class Output
      */
     private array $colorSupport = [];
 
+    private Verbosity $verbosity = Verbosity::Normal;
+
     public function __construct(
         private InputOutput $io = new InputOutput(),
         private readonly Terminal $terminal = new Terminal(),
@@ -49,9 +51,15 @@ class Output
 
     /**
      * Writes the text as it is, leaving the cursor where the text ends.
+     *
+     * @param Verbosity $verbosity The lowest level that shows the text.
      */
-    public function print(string $text = '', string $foreground = '', string $background = ''): void
+    public function print(string $text = '', string $foreground = '', string $background = '', Verbosity $verbosity = Verbosity::Normal): void
     {
+        if (! $this->accepts($verbosity, $this->toStderr)) {
+            return;
+        }
+
         $this->io->fwrite($this->stream(), $this->color($text, $foreground, $background));
 
         // A line feed ends both LF and CRLF, so this holds on every OS.
@@ -60,9 +68,15 @@ class Output
 
     /**
      * Writes the text on its own line.
+     *
+     * @param Verbosity $verbosity The lowest level that shows the text.
      */
-    public function write(string $text = '', string $foreground = '', string $background = ''): void
+    public function write(string $text = '', string $foreground = '', string $background = '', Verbosity $verbosity = Verbosity::Normal): void
     {
+        if (! $this->accepts($verbosity, $this->toStderr)) {
+            return;
+        }
+
         $this->io->fwrite($this->stream(), $this->line($this->color($text, $foreground, $background)));
     }
 
@@ -71,6 +85,10 @@ class Output
      */
     public function error(string $text, string $foreground = 'light_red', string $background = ''): void
     {
+        if (! $this->accepts(Verbosity::Normal, true)) {
+            return;
+        }
+
         $this->io->fwrite(
             is_cli() ? STDERR : STDOUT,
             $this->line($this->forStderr()->color($text, $foreground, $background)),
@@ -78,12 +96,13 @@ class Output
     }
 
     /**
-     * @param positive-int $num The number of blank lines.
+     * @param positive-int $num       The number of blank lines.
+     * @param Verbosity    $verbosity The lowest level that shows the lines.
      */
-    public function newLine(int $num = 1): void
+    public function newLine(int $num = 1, Verbosity $verbosity = Verbosity::Normal): void
     {
         for ($i = 0; $i < $num; $i++) {
-            $this->write();
+            $this->write(verbosity: $verbosity);
         }
     }
 
@@ -116,6 +135,10 @@ class Output
      */
     public function writeRaw(string $text): void
     {
+        if (! $this->accepts(Verbosity::Normal, $this->toStderr)) {
+            return;
+        }
+
         $this->io->fwrite($this->stream(), $text);
     }
 
@@ -154,6 +177,45 @@ class Output
         return $this->terminal;
     }
 
+    public function getVerbosity(): Verbosity
+    {
+        return $this->verbosity;
+    }
+
+    public function setVerbosity(Verbosity $verbosity): void
+    {
+        $this->verbosity = $verbosity;
+    }
+
+    /**
+     * Whether the level is quiet or silent.
+     */
+    public function isQuiet(): bool
+    {
+        return $this->verbosity->value <= Verbosity::Quiet->value;
+    }
+
+    /**
+     * Whether the level is verbose or above.
+     */
+    public function isVerbose(): bool
+    {
+        return $this->verbosity->value >= Verbosity::Verbose->value;
+    }
+
+    /**
+     * Whether the level is very verbose or above.
+     */
+    public function isVeryVerbose(): bool
+    {
+        return $this->verbosity->value >= Verbosity::VeryVerbose->value;
+    }
+
+    public function isDebug(): bool
+    {
+        return $this->verbosity === Verbosity::Debug;
+    }
+
     /**
      * @internal
      */
@@ -188,6 +250,20 @@ class Output
         $this->cursorAtLineStart = true;
 
         return $prefix . $text . PHP_EOL;
+    }
+
+    /**
+     * Whether the level shows text written at the given verbosity, where STDERR is never quieter than normal.
+     */
+    private function accepts(Verbosity $verbosity, bool $toStderr): bool
+    {
+        if ($this->verbosity === Verbosity::Silent) {
+            return false;
+        }
+
+        $level = $toStderr ? max($this->verbosity->value, Verbosity::Normal->value) : $this->verbosity->value;
+
+        return $verbosity->value <= $level;
     }
 
     /**

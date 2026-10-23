@@ -21,7 +21,7 @@ while ($prevException = $last->getPrevious()) {
 }
 
 // The backtrace
-if (defined('SHOW_DEBUG_BACKTRACE') && SHOW_DEBUG_BACKTRACE) {
+if ((defined('SHOW_DEBUG_BACKTRACE') && SHOW_DEBUG_BACKTRACE) || CLI::getOutput()->isVerbose()) {
     $backtraces = $last->getTrace();
 
     if ($backtraces) {

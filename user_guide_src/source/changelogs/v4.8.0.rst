@@ -267,6 +267,8 @@ Commands
 - Modern commands can write through ``$this->getOutput()``, the same ``Output`` used by the static ``CLI`` methods. ``AbstractCommand::run()``
   and ``Commands::runCommand()`` accept an ``Output`` to run against, which ``Console`` passes down and sub-commands inherit.
   See :ref:`modern-commands-writing-output`.
+- Added ``--silent``, ``--quiet`` / ``-q``, and ``--verbose`` / ``-v``, ``-vv``, ``-vvv`` to every command, with ``SHELL_VERBOSITY`` as the fallback. Modern
+  commands can write at a :php:class:`Verbosity <CodeIgniter\\CLI\\Verbosity>` through ``$this->getOutput()``. ``lang:find`` uses the global ``--verbose`` in place of its own. See :ref:`spark-verbosity` and :ref:`modern-commands-verbosity`.
 - Added :php:class:`AbstractGeneratorCommand <CodeIgniter\\CLI\\AbstractGeneratorCommand>` and the ``#[GeneratorCommand]`` attribute, the modern
   counterpart of ``GeneratorTrait`` for commands that generate files from templates. Generator commands built on it accept the ``-n``, ``-s``,
   and ``-f`` shortcuts for ``--namespace``, ``--suffix``, and ``--force``. See :doc:`../cli/cli_modern_generators`.

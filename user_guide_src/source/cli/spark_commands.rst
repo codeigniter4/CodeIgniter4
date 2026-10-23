@@ -112,6 +112,38 @@ You may always pass ``--no-header`` to suppress the header output, helpful for p
 .. note:: A modern command can also opt out of the header for every run.
     See :ref:`commands-without-the-header`.
 
+.. _spark-verbosity:
+
+Verbosity
+---------
+
+.. versionadded:: 4.8.0
+
+``--quiet`` / ``-q`` hides everything but errors, including the header, and makes a
+modern command non-interactive. ``--silent`` hides the errors too. ``--verbose`` / ``-v``
+shows more detail, ``-vv`` even more, and ``-vvv`` everything, including debug messages.
+A command shows the extra detail only when it writes some, and an uncaught exception
+shows its backtrace from ``-v`` on.
+
+The flags can be combined, and the quietest one wins: ``--silent`` over ``-q``, and ``-q``
+over any ``-v``.
+
+.. code-block:: console
+
+    php spark lang:find -v
+    php spark migrate -q
+
+Without these flags, the ``SHELL_VERBOSITY`` environment variable sets the level:
+``-2`` for no output at all, ``-1`` for quiet, ``0`` for normal, and ``1`` to ``3``
+for the three verbose levels. It can also be set in the **.env** file. Processes started
+by the command inherit the level.
+
+.. code-block:: console
+
+    SHELL_VERBOSITY=-1 php spark migrate
+
+.. note:: Legacy commands follow the level too, and can still read ``-v`` and ``-q`` as their own options.
+
 .. _correcting-a-mistyped-command:
 
 Correcting a Mistyped Command
