@@ -495,6 +495,14 @@ abstract class AbstractCommand
     }
 
     /**
+     * Returns a prompt reading through the output of the current run.
+     */
+    protected function getPrompt(): Prompt
+    {
+        return new Prompt($this->getOutput());
+    }
+
+    /**
      * Configures the command's arguments and options definitions.
      *
      * This method is called from the constructor of the command.
@@ -811,7 +819,7 @@ abstract class AbstractCommand
         $labels = $this->getArgumentPromptLabels();
 
         foreach ($missing as $name) {
-            $arguments[] = CLI::prompt($labels[$name] ?? lang('CLI.argumentPrompt', [$name]), null, 'required');
+            $arguments[] = $this->getPrompt()->ask($labels[$name] ?? lang('CLI.argumentPrompt', [$name]), null, 'required');
             CLI::newLine();
         }
 
