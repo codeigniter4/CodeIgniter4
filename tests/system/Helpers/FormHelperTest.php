@@ -22,10 +22,12 @@ use Config\DocTypes;
 use Config\Filters;
 use Config\Services;
 use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use PHPUnit\Framework\Attributes\WithoutErrorHandler;
+use Stringable;
 
 /**
  * @internal
@@ -865,6 +867,38 @@ final class FormHelperTest extends CIUnitTestCase
 
         unset($_SESSION['_ci_old_input']['post']['foo']);
         $this->assertSame('baz', set_value('foo', 'baz'));
+    }
+
+    #[DataProvider('provideSetValueCastsNonArrayDefaultToString')]
+    public function testSetValueCastsNonArrayDefaultToString(mixed $default, string $expected): void
+    {
+        $this->assertSame($expected, set_value('foo', $default));
+    }
+
+    /**
+     * @return iterable<string, array{mixed, string}>
+     */
+    public static function provideSetValueCastsNonArrayDefaultToString(): iterable
+    {
+        $stringable = self::createStub(Stringable::class);
+        $stringable->method('__toString')->willReturn('<bar>');
+
+        yield 'int' => [1, '1'];
+
+        yield 'float' => [1.5, '1.5'];
+
+        yield 'true' => [true, '1'];
+
+        yield 'false' => [false, ''];
+
+        yield 'null' => [null, ''];
+
+        yield 'stringable' => [$stringable, '&lt;bar&gt;'];
+    }
+
+    public function testSetValueKeepsArrayDefault(): void
+    {
+        $this->assertSame(['a', 'b'], set_value('foo', ['a', 'b']));
     }
 
     public function testSetSelect(): void
