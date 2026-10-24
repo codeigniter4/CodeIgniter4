@@ -455,6 +455,7 @@ Changes
 *******
 
 - **Config:** Added the ``md`` key for ``Config\Mimes::$mimes`` for Markdown files.
+- **Router:** Reduced route registration overhead in ``RouteCollection::create()`` by skipping placeholder replacement for route keys without ``:`` and calling ``helper('array')`` only once per collection.
 
 ************
 Deprecations

@@ -272,6 +272,11 @@ class RouteCollection implements RouteCollectionInterface
     private ?string $httpHost = null;
 
     /**
+     * Whether create() has already loaded the array helper.
+     */
+    private bool $arrayHelperLoaded = false;
+
+    /**
      * Flag to limit or not the routes with {locale} placeholder to App::$supportedLocales
      */
     protected bool $useSupportedLocalesOnly = false;
@@ -1399,8 +1404,11 @@ class RouteCollection implements RouteCollectionInterface
 
         // Replace our regex pattern placeholders with the actual thing
         // so that the Router doesn't need to know about any of this.
-        foreach ($this->placeholders as $tag => $pattern) {
-            $routeKey = str_ireplace(':' . $tag, $pattern, $routeKey);
+        // Without a ':' no placeholder can match, so skip the loop.
+        if (str_contains($routeKey, ':')) {
+            foreach ($this->placeholders as $tag => $pattern) {
+                $routeKey = str_ireplace(':' . $tag, $pattern, $routeKey);
+            }
         }
 
         // If is redirect, No processing
@@ -1417,7 +1425,11 @@ class RouteCollection implements RouteCollectionInterface
 
         $name = $options['as'] ?? $routeKey;
 
-        helper('array');
+        // Not used here; kept so apps relying on the helper being loaded keep working.
+        if (! $this->arrayHelperLoaded) {
+            helper('array');
+            $this->arrayHelperLoaded = true;
+        }
 
         // Don't overwrite any existing 'froms' so that auto-discovered routes
         // do not overwrite any app/Config/Routes settings. The app
