@@ -248,6 +248,50 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($expects, $routes);
     }
 
+    public function testAddWithoutPlaceholdersKeepsExactKey(): void
+    {
+        $routes = $this->getCollector();
+
+        $routes->add('users/profile-edit', 'controller');
+        $routes->add('products/([a-z]+)/(\d+)', 'controller');
+
+        $expects = [
+            'users/profile-edit'      => '\controller',
+            'products/([a-z]+)/(\d+)' => '\controller',
+        ];
+
+        $this->assertSame($expects, $routes->getRoutes());
+    }
+
+    public function testAddReplacesCustomNonCapturingPlaceholderMixedWithDefaults(): void
+    {
+        $routes = $this->getCollector();
+        $routes->addPlaceholder('slug', '(?:[a-z]+-)*[a-z]+');
+
+        $routes->add('blog/(:num)/(:slug)/(:segment)', 'controller');
+
+        $expects = [
+            'blog/([0-9]+)/((?:[a-z]+-)*[a-z]+)/([^/]+)' => '\controller',
+        ];
+
+        $this->assertSame($expects, $routes->getRoutes());
+    }
+
+    public function testAddReplacesPlaceholdersCaseInsensitivelyWithoutParentheses(): void
+    {
+        $routes = $this->getCollector();
+
+        $routes->add('users/(:NUM)', 'controller');
+        $routes->add('posts/:segment', 'controller');
+
+        $expects = [
+            'users/([0-9]+)' => '\controller',
+            'posts/[^/]+'    => '\controller',
+        ];
+
+        $this->assertSame($expects, $routes->getRoutes());
+    }
+
     public function testAddRecognizesCustomNamespaces(): void
     {
         $routes = $this->getCollector();
