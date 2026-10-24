@@ -160,6 +160,27 @@ RedirectException Default Status Code
         protected int $defaultStatusCode = 307;
     }
 
+.. _upgrade-480-config-env-lookups:
+
+Config Environment Lookups
+==========================
+
+``BaseConfig`` now reads the environment once and reuses the result, instead of
+looking up every property of every config class. The matching rules and their
+order are unchanged. Two edge cases behave differently:
+
+- A ``putenv()`` call that does not also write ``$_ENV`` or ``$_SERVER``, made
+  after the first config class was built, may not be seen by config classes
+  built later until ``BaseConfig::reset()`` runs. Values loaded from the
+  **.env** file are not affected, since they are written to ``$_ENV`` and
+  ``$_SERVER`` as well.
+- On Windows, environment variables in the underscore form (e.g.,
+  ``app_baseURL``) that exist only in the OS environment now match
+  case-sensitively, like the values from the **.env** file already did.
+
+Config classes that override ``getEnvValue()`` or ``initEnvValue()`` keep the
+previous behavior.
+
 RouteCollection Identifier Transformation
 =========================================
 
