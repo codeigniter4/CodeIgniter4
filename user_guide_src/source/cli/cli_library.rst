@@ -88,6 +88,40 @@ This method is the same as ``promptByKey()``, but it supports multiple value.
 
 .. important:: The method ``promptByMultipleKeys()``, unlike ``promptByKey()``, does not support named keys or validation.
 
+.. _cli-library-select:
+
+select() and multiselect()
+==========================
+
+.. versionadded:: 4.8.0
+
+``select()`` and ``multiselect()`` on :php:class:`Prompt` let the user pick with the arrow keys
+(or ``j`` and ``k``), tick with the space bar, tick everything or nothing with ``a``, and confirm
+with enter. ``select()`` returns the chosen key, and ``multiselect()`` returns the ticked options,
+keyed as in ``$options``. Both take any keys, and long lists scroll:
+
+.. literalinclude:: cli_library/026.php
+
+Where keys cannot be read one by one, such as on Windows or when the input is piped, both prompts
+list the options by number and ask for the number, or numbers separated by commas. The filters
+question above then reads:
+
+.. code-block:: console
+
+    Which filters should run on every request?
+      [1]  CSRF
+      [2]  Honeypot
+      [3]  Secure Headers
+    Numbers, separated by commas (0 for none) [1]:
+
+Under WSL, PHP runs as on Linux and reads the keys.
+
+On a quiet output (see :ref:`spark-verbosity`) both prompts return the defaults without asking,
+and a required ``multiselect()`` without a default throws a ``CLIException``. They also throw it
+when piped input ends before a valid answer.
+
+Pressing Ctrl+C restores the terminal and then interrupts the process as usual.
+
 Providing Feedback
 ******************
 
@@ -348,17 +382,30 @@ output of their run through ``$this->getPrompt()``:
 
     Asks questions on the console, reading the answers through an ``Output``.
 
-    .. php:method:: __construct(Output $output[, ?ValidationInterface $validation = null])
+    .. php:method:: __construct(Output $output[, ?ValidationInterface $validation = null[, $keys = null]])
 
         :param Output                   $output:     The output the questions are written and read through.
         :param ValidationInterface|null $validation: The validation that checks the answers, or ``null`` for an
                                                      unshared instance of the ``validation`` service.
+        :param resource|null            $keys:       The stream of keypresses read by ``select()`` and
+                                                     ``multiselect()``, or ``null`` for STDIN.
 
     .. php:method:: ask(string $field[, array|string|null $options = null[, array|string|null $validation = null]]): string
     .. php:method:: askByKey(array|string $text, array $options[, array|string|null $validation = null]): string
     .. php:method:: askByMultipleKeys(string $text, array $options): array
 
         The same as ``CLI::prompt()``, ``CLI::promptByKey()``, and ``CLI::promptByMultipleKeys()``.
+
+    .. php:method:: select(string $question, array $options[, int|string|null $default = null]): int|string
+
+        :param int|string|null $default: The key highlighted at the start, or ``null`` for the first one.
+
+    .. php:method:: multiselect(string $question, array $options[, array $default = [][, bool $required = false]]): array
+
+        :param array $default:  The keys ticked at the start.
+        :param bool  $required: Whether at least one option must be ticked.
+
+        See :ref:`cli-library-select`.
 
 .. php:class:: Verbosity
 

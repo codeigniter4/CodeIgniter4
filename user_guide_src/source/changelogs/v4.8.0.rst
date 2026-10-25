@@ -278,6 +278,8 @@ Commands
   ``askByMultipleKeys()``), which reads through an ``Output`` and accepts the validation that checks the answers.
   ``CLI::getPrompt()`` and ``AbstractCommand::getPrompt()`` return one on the shared output and on the output of the run.
   See :ref:`cli-library-classes`.
+- Added ``Prompt::select()`` and ``Prompt::multiselect()``, which pick options with the arrow keys and the space bar, and ask for
+  numbers where keys cannot be read. See :ref:`cli-library-select`.
 - Added ``--silent``, ``--quiet`` / ``-q``, and ``--verbose`` / ``-v``, ``-vv``, ``-vvv`` to every command, with ``SHELL_VERBOSITY`` as the fallback. Modern
   commands can write at a :php:class:`Verbosity <CodeIgniter\\CLI\\Verbosity>` through ``$this->getOutput()``. ``lang:find`` uses the global ``--verbose`` in place of its own. See :ref:`spark-verbosity` and :ref:`modern-commands-verbosity`.
 - Colour detection now honours ``FORCE_COLOR`` (see https://force-color.org/), which turns colour on even when the output is piped, and ``COLORTERM``.
