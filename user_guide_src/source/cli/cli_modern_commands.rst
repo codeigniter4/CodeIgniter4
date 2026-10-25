@@ -523,7 +523,7 @@ definitions rather than class properties and ad-hoc lookups.
 ``showHelp()`` override
     Gone. The built-in ``help`` command builds the help output itself from the declared arguments, options, and usages.
 
-Prompting the user mid-run stays with ``CLI::prompt()``, but the idiomatic spot moves from ``run()``
+Prompting the user goes through ``$this->getPrompt()``, and the idiomatic spot moves from ``run()``
 to ``interact()`` so validation can see whatever the user provides interactively.
 
 A typical ``BaseCommand`` implementation:
@@ -734,6 +734,13 @@ covered in the sections above and are not listed here.
         Returns the :php:class:`Output <CodeIgniter\\CLI\\Output>` of the current run,
         which is the same instance written to by the static ``CLI`` methods. See
         :ref:`modern-commands-writing-output`.
+
+    .. php:method:: getPrompt(): Prompt
+
+        Returns a :php:class:`Prompt <CodeIgniter\\CLI\\Prompt>` reading through the
+        output of the current run. See :ref:`cli-library-classes`. Override it to return a
+        ``Prompt`` subclass, which then also asks for missing arguments (see
+        :ref:`prompts-for-missing-input`) and the generators' confirmation.
 
     .. php:method:: call(string $command[, array $arguments = [], array $options = [], ?bool $noInteractionOverride = null]): int
 

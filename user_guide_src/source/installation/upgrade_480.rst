@@ -84,6 +84,21 @@ colour or terminal override with an ``Output`` or ``Terminal`` subclass passed t
 Tests that reached those properties through reflection should use the instances
 returned by ``CLI::getOutput()`` and ``CLI::getTerminal()`` instead.
 
+.. _upgrade-480-cli-prompt:
+
+CLI Prompt
+==========
+
+``CLI::prompt()``, ``CLI::promptByKey()``, and ``CLI::promptByMultipleKeys()`` now delegate to
+the ``Prompt`` class, and ask and answer exactly as before.
+
+If you extend ``CLI`` and override ``validate()``, the prompts no longer call it. Extend ``Prompt``
+and override its ``validate()`` instead, then return your subclass from ``getPrompt()``: the static
+``CLI::getPrompt()`` in your ``CLI`` subclass, or ``AbstractCommand::getPrompt()`` in a modern command.
+To change only the validation, pass a validation instance of your own to the ``Prompt`` constructor.
+An override of ``CLI::prompt()`` is still reached by calls to ``CLI::prompt()``, but no longer by
+``promptByKey()`` or ``promptByMultipleKeys()``.
+
 Uploaded File Move Return Type
 ==============================
 
