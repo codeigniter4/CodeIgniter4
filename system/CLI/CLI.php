@@ -261,6 +261,10 @@ class CLI
 
         if ($validation !== []) {
             while (! static::validate('"' . trim($field) . '"', $input, $validation)) {
+                if (static::$io->isAtEnd()) {
+                    throw CLIException::forInputEnded();
+                }
+
                 $input = static::prompt($field, $options, $validation);
             }
         }
@@ -339,6 +343,11 @@ class CLI
             }
 
             static::error('Please select correctly.');
+
+            if (static::$io->isAtEnd()) {
+                throw CLIException::forInputEnded();
+            }
+
             CLI::newLine();
         }
     }
