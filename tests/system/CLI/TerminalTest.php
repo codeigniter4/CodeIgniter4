@@ -25,6 +25,60 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class TerminalTest extends CIUnitTestCase
 {
+    private const COLOR_HINTS = [
+        'NO_COLOR',
+        'FORCE_COLOR',
+        'MSYSTEM',
+        'TERM_PROGRAM',
+        'COLORTERM',
+        'ANSICON',
+        'ConEmuANSI',
+        'TERM',
+    ];
+
+    /**
+     * @var array<string, array{false|string, mixed, array<array-key, mixed>|float|int|string|null}>
+     */
+    private array $savedHints = [];
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $superglobals = service('superglobals');
+
+        foreach (self::COLOR_HINTS as $name) {
+            $this->savedHints[$name] = [getenv($name), $_ENV[$name] ?? null, $superglobals->server($name)];
+
+            putenv($name);
+            unset($_ENV[$name]);
+            $superglobals->unsetServer($name);
+        }
+    }
+
+    protected function tearDown(): void
+    {
+        $superglobals = service('superglobals');
+
+        foreach ($this->savedHints as $name => [$process, $env, $server]) {
+            putenv($process === false ? $name : "{$name}={$process}");
+
+            if ($env === null) {
+                unset($_ENV[$name]);
+            } else {
+                $_ENV[$name] = $env;
+            }
+
+            if ($server === null) {
+                $superglobals->unsetServer($name);
+            } else {
+                $superglobals->setServer($name, $server);
+            }
+        }
+
+        parent::tearDown();
+    }
+
     public function testDimensionsArePositive(): void
     {
         $terminal = new Terminal();
@@ -73,46 +127,25 @@ final class TerminalTest extends CIUnitTestCase
         );
     }
 
-    public function testHasColorSupportFollowsNoColorInTheEnvironment(): void
-    {
-        $noColor = getenv('NO_COLOR');
-        putenv('NO_COLOR=1');
-
-        try {
-            $this->assertFalse((new Terminal())->hasColorSupport(STDOUT));
-        } finally {
-            putenv($noColor === false ? 'NO_COLOR' : "NO_COLOR={$noColor}");
-        }
-    }
-
     public function testHasColorSupportFollowsNoColorInServer(): void
     {
-        $superglobals = service('superglobals');
+        service('superglobals')->setServer('NO_COLOR', '1');
 
-        $noColor = $superglobals->server('NO_COLOR');
-        $superglobals->setServer('NO_COLOR', '1');
-
-        try {
-            $this->assertFalse((new Terminal())->hasColorSupport(STDOUT));
-        } finally {
-            if ($noColor === null) {
-                $superglobals->unsetServer('NO_COLOR');
-            } else {
-                $superglobals->setServer('NO_COLOR', $noColor);
-            }
-        }
+        $this->assertFalse((new Terminal())->hasColorSupport(STDOUT));
     }
 
-    public function testHasColorSupportOnHyperTerminals(): void
+    public function testHasColorSupportFollowsNoColorInDotEnv(): void
     {
-        $termProgram = getenv('TERM_PROGRAM');
-        putenv('TERM_PROGRAM=Hyper');
+        $_ENV['NO_COLOR'] = '1';
 
-        try {
-            $this->assertTrue((new Terminal())->hasColorSupport(STDOUT));
-        } finally {
-            putenv($termProgram === false ? 'TERM_PROGRAM' : "TERM_PROGRAM={$termProgram}");
-        }
+        $this->assertFalse((new Terminal())->hasColorSupport(STDOUT));
+    }
+
+    public function testHasColorSupportFollowsForceColorInServer(): void
+    {
+        service('superglobals')->setServer('FORCE_COLOR', '1');
+
+        $this->assertTrue($this->createTerminal(tty: false)->hasColorSupport(STDOUT));
     }
 
     public function testHasColorSupportFallsBackToTheStreamCheck(): void
@@ -123,49 +156,85 @@ final class TerminalTest extends CIUnitTestCase
     /**
      * @param array<string, string> $env
      */
-    #[DataProvider('provideHasColorSupportOnWindowsFollowsTheConsoleHints')]
-    public function testHasColorSupportOnWindowsFollowsTheConsoleHints(array $env, bool $expected): void
+    #[DataProvider('provideHasColorSupportFollowsTheTerminalHints')]
+    public function testHasColorSupportFollowsTheTerminalHints(array $env, bool $windows, bool $tty, bool $vt100, bool $expected): void
     {
-        $saved = [];
-
-        foreach (['ANSICON', 'ConEmuANSI', 'TERM'] as $name) {
-            $saved[$name] = getenv($name);
-            putenv($name);
-        }
-
         foreach ($env as $name => $value) {
             putenv("{$name}={$value}");
         }
 
-        is_windows(true);
+        is_windows($windows);
 
-        try {
-            $this->assertSame(
-                $expected || function_exists('sapi_windows_vt100_support'),
-                (new Terminal())->hasColorSupport(STDOUT),
-            );
-        } finally {
-            foreach ($saved as $name => $value) {
-                putenv($value === false ? $name : "{$name}={$value}");
-            }
-        }
+        $this->assertSame($expected, $this->createTerminal($tty, $vt100)->hasColorSupport(STDOUT));
     }
 
     /**
-     * @return iterable<string, array{array<string, string>, bool}>
+     * @return iterable<string, array{array<string, string>, bool, bool, bool, bool}>
      */
-    public static function provideHasColorSupportOnWindowsFollowsTheConsoleHints(): iterable
+    public static function provideHasColorSupportFollowsTheTerminalHints(): iterable
     {
-        yield 'no hints' => [[], false];
+        yield 'NO_COLOR over FORCE_COLOR' => [['NO_COLOR' => '1', 'FORCE_COLOR' => '1'], false, true, false, false];
 
-        yield 'ANSICON' => [['ANSICON' => '1'], true];
+        yield 'NO_COLOR of 0' => [['NO_COLOR' => '0'], false, true, false, false];
 
-        yield 'ConEmuANSI on' => [['ConEmuANSI' => 'ON'], true];
+        yield 'NO_COLOR of false' => [['NO_COLOR' => 'false'], false, true, false, false];
 
-        yield 'ConEmuANSI off' => [['ConEmuANSI' => 'OFF'], false];
+        yield 'empty NO_COLOR' => [['NO_COLOR' => ''], false, true, false, true];
 
-        yield 'TERM xterm' => [['TERM' => 'xterm'], true];
+        yield 'FORCE_COLOR without a TTY' => [['FORCE_COLOR' => '1'], false, false, false, true];
 
-        yield 'TERM other' => [['TERM' => 'xterm-256color'], false];
+        yield 'FORCE_COLOR of 0 without a TTY' => [['FORCE_COLOR' => '0'], false, false, false, true];
+
+        yield 'FORCE_COLOR of false without a TTY' => [['FORCE_COLOR' => 'false'], false, false, false, true];
+
+        yield 'empty FORCE_COLOR without a TTY' => [['FORCE_COLOR' => ''], false, false, false, false];
+
+        yield 'no TTY' => [[], false, false, false, false];
+
+        yield 'no TTY under MINGW64' => [['MSYSTEM' => 'MINGW64', 'TERM' => 'xterm'], true, false, false, true];
+
+        yield 'no TTY under lowercase mingw32' => [['MSYSTEM' => 'mingw32', 'TERM' => 'xterm'], true, false, false, true];
+
+        yield 'no TTY under MSYS' => [['MSYSTEM' => 'MSYS', 'TERM' => 'xterm'], true, false, false, false];
+
+        yield 'Windows VT100' => [[], true, true, true, true];
+
+        yield 'VT100 support ignored off Windows' => [['TERM' => 'dumb'], false, true, true, false];
+
+        yield 'Hyper' => [['TERM_PROGRAM' => 'Hyper', 'TERM' => 'dumb'], true, true, false, true];
+
+        yield 'COLORTERM' => [['COLORTERM' => 'truecolor'], true, true, false, true];
+
+        yield 'ANSICON' => [['ANSICON' => '1'], true, true, false, true];
+
+        yield 'ConEmuANSI on' => [['ConEmuANSI' => 'ON'], true, true, false, true];
+
+        yield 'ConEmuANSI off' => [['ConEmuANSI' => 'OFF'], true, true, false, false];
+
+        yield 'TERM dumb' => [['TERM' => 'dumb'], false, true, false, false];
+
+        yield 'TTY without TERM' => [[], false, true, false, true];
+
+        yield 'TTY with an unlisted TERM' => [['TERM' => 'unknown'], false, true, false, true];
+
+        yield 'Windows without hints' => [[], true, true, false, false];
+
+        yield 'Windows TERM xterm' => [['TERM' => 'xterm'], true, true, false, true];
+
+        yield 'Windows TERM cygwin' => [['TERM' => 'cygwin'], true, true, false, true];
+
+        yield 'Windows TERM 256color' => [['TERM' => 'tmux-256color'], true, true, false, true];
+
+        yield 'Windows unlisted TERM' => [['TERM' => 'unknown'], true, true, false, false];
+    }
+
+    private function createTerminal(bool $tty, bool $vt100 = false): Terminal
+    {
+        $terminal = $this->createPartialMock(Terminal::class, ['streamSupports']);
+        $terminal->method('streamSupports')->willReturnCallback(
+            static fn (string $function): bool => $function === 'stream_isatty' ? $tty : $vt100,
+        );
+
+        return $terminal;
     }
 }

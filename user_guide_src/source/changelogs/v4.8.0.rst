@@ -36,6 +36,9 @@ Behavior Changes
 - **CLI:** ``CLI::showProgress()`` now draws a full bar at 100% for a step beyond the total, instead of throwing a ``ValueError``.
 - **CLI:** ``CLI::error()`` no longer leaves colour support disabled for STDOUT when it is given an invalid colour name, and
   ``CLI::write()``, ``CLI::print()``, and ``CLI::color()`` now accept an empty foreground with a background instead of throwing.
+- **CLI:** An empty ``NO_COLOR`` no longer turns colour off, following https://no-color.org/. Colour detection now turns colour off when ``TERM`` is ``dumb``, and on Windows when the stream is not a terminal (outside MSYS2's
+  ``MINGW32`` and ``MINGW64``). On Windows without VT100 support, any ``TERM`` starting with ``xterm``, ``screen``, ``vt100``, ``vt220``, ``putty``,
+  ``rxvt``, ``ansi``, ``cygwin`` or ``linux``, or ending in ``-256color``, now enables colour, where previously only ``xterm`` did.
   Colouring text that already contains a coloured segment now keeps that segment whatever its colour, where previously only the
   dim colours (``\033[0;...m``) were kept and a bright or background-only segment lost the colour of the text after it.
 - **CLI:** The output state moved out of the static ``CLI`` properties. A subclass of ``CLI`` that overrides ``fwrite()`` or ``color()``, or reads
@@ -269,6 +272,8 @@ Commands
   See :ref:`modern-commands-writing-output`.
 - Added ``--silent``, ``--quiet`` / ``-q``, and ``--verbose`` / ``-v``, ``-vv``, ``-vvv`` to every command, with ``SHELL_VERBOSITY`` as the fallback. Modern
   commands can write at a :php:class:`Verbosity <CodeIgniter\\CLI\\Verbosity>` through ``$this->getOutput()``. ``lang:find`` uses the global ``--verbose`` in place of its own. See :ref:`spark-verbosity` and :ref:`modern-commands-verbosity`.
+- Colour detection now honours ``FORCE_COLOR`` (see https://force-color.org/), which turns colour on even when the output is piped, and ``COLORTERM``.
+  ``NO_COLOR`` still wins over both. The colour variables can also be set in the **.env** file.
 - Added :php:class:`AbstractGeneratorCommand <CodeIgniter\\CLI\\AbstractGeneratorCommand>` and the ``#[GeneratorCommand]`` attribute, the modern
   counterpart of ``GeneratorTrait`` for commands that generate files from templates. Generator commands built on it accept the ``-n``, ``-s``,
   and ``-f`` shortcuts for ``--namespace``, ``--suffix``, and ``--force``. See :doc:`../cli/cli_modern_generators`.
