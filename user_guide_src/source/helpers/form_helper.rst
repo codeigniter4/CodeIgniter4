@@ -452,10 +452,10 @@ The following functions are available:
 .. php:function:: set_value($field[, $default = ''[, $html_escape = true]])
 
     :param    string    $field: Field name
-    :param    string    $default: Default value
+    :param    mixed    $default: Default value. An array is returned as is, any other value is converted to a string.
     :param  bool    $html_escape: Whether to turn off HTML escaping of the value
     :returns:    Field value
-    :rtype:    string
+    :rtype:    array|string
 
     Permits you to set the value of an input or textarea element. You must
     supply the field name via the first parameter of the function. The

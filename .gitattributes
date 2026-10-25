@@ -24,7 +24,6 @@ utils/                       export-ignore
 .php-cs-fixer.user-guide.php export-ignore
 structarmed-baseline.php     export-ignore
 structarmed.php              export-ignore
-phpmetrics.json              export-ignore
 phpstan-baseline.php         export-ignore
 phpstan-bootstrap.php        export-ignore
 phpstan.dist.neon            export-ignore
