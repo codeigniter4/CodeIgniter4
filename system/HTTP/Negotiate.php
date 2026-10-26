@@ -409,6 +409,11 @@ class Negotiate
      */
     public function matchTypes(array $acceptable, array $supported): bool
     {
+        // A value without a subtype, such as a malformed "json", is not a media type.
+        if (! str_contains($acceptable['value'], '/') || ! str_contains($supported['value'], '/')) {
+            return false;
+        }
+
         // PHPDocumentor v2 cannot parse yet the shorter list syntax,
         // causing no API generation for the file.
         [$aType, $aSubType] = explode('/', $acceptable['value']);
