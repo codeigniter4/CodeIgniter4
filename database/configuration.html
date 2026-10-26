@@ -645,13 +645,7 @@ values as a JSON string in your <strong>.env</strong> file:</p>
 <td><p>The password used to connect to the database. (<code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> does not use this.)</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>database</strong></p></td>
-<td><p>The name of the database you want to connect to.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>CodeIgniter doesn’t support dots (<code class="docutils literal notranslate"><span class="pre">.</span></code>) in the table and column names.
-Since v4.5.0, database names with dots are supported.</p>
-</div>
-</td>
+<td><p>The name of the database you want to connect to.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>DBDriver</strong></p></td>
 <td><p>The database driver name. The case must match the driver name.
@@ -699,14 +693,7 @@ strict SQL while developing an application.</p></td>
 <td><p>The database port number - Empty string <code class="docutils literal notranslate"><span class="pre">''</span></code> for default port (or dynamic port with <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code>).</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>foreignKeys</strong></p></td>
-<td><p>(<code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> only) true/false (boolean) - Whether to enable Foreign Key constraint.</p>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>SQLite3 Foreign Key constraint is disabled by default.
-See <a class="reference external" href="https://www.sqlite.org/pragma.html#pragma_foreign_keys">SQLite documentation</a>.
-To enforce Foreign Key constraint, set this config item to true.</p>
-</div>
-</td>
+<td><p>(<code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> only) true/false (boolean) - Whether to enable Foreign Key constraint.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>busyTimeout</strong></p></td>
 <td><p>(<code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> only) milliseconds (int) - Sleeps for a specified amount of time when a table is locked.</p></td>
@@ -722,18 +709,32 @@ Use <cite>null</cite> to stay with the default setting. This can be used since v
 <td><p>(<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> only) true/false (boolean) - Whether to enable MYSQLI_CLIENT_FOUND_ROWS.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>dateFormat</strong></p></td>
-<td><p>The default date/time formats as PHP’s <a class="reference external" href="https://www.php.net/manual/en/datetime.format.php">DateTime format</a>.
-* <code class="docutils literal notranslate"><span class="pre">date</span></code>        - date format
-* <code class="docutils literal notranslate"><span class="pre">datetime</span></code>    - date and time format
-* <code class="docutils literal notranslate"><span class="pre">datetime-ms</span></code> - date and time with millisecond format
-* <code class="docutils literal notranslate"><span class="pre">datetime-us</span></code> - date and time with microsecond format
-* <code class="docutils literal notranslate"><span class="pre">time</span></code>        - time format
-This can be used since v4.5.0, and you can get the value, e.g., <code class="docutils literal notranslate"><span class="pre">$db-&gt;dateFormat['datetime']</span></code>.
-Currently, the database drivers do not use these values directly,
-but <a class="reference internal" href="../models/model.html#model-saving-dates"><span class="std std-ref">Model</span></a> uses them.</p></td>
+<td><p>The default date/time formats as PHP’s <a class="reference external" href="https://www.php.net/manual/en/datetime.format.php">DateTime format</a>, with the keys listed below the table.</p></td>
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>CodeIgniter doesn’t support dots (<code class="docutils literal notranslate"><span class="pre">.</span></code>) in the table and column names.
+Since v4.5.0, database names with dots are supported.</p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>SQLite3 Foreign Key constraint is disabled by default.
+See <a class="reference external" href="https://www.sqlite.org/pragma.html#pragma_foreign_keys">SQLite documentation</a>.
+To enforce Foreign Key constraint, set <strong>foreignKeys</strong> to true.</p>
+</div>
+<p>The <strong>dateFormat</strong> array has the following keys:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">date</span></code>        - date format</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code>    - date and time format</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime-ms</span></code> - date and time with millisecond format</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime-us</span></code> - date and time with microsecond format</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">time</span></code>        - time format</p></li>
+</ul>
+<p>This can be used since v4.5.0, and you can get the value, e.g., <code class="docutils literal notranslate"><span class="pre">$db-&gt;dateFormat['datetime']</span></code>.
+Currently, the database drivers do not use these values directly,
+but <a class="reference internal" href="../models/model.html#model-saving-dates"><span class="std std-ref">Model</span></a> uses them.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Depending on what database driver you are using (<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code>, <code class="docutils literal notranslate"><span class="pre">Postgre</span></code>,

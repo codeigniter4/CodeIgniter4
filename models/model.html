@@ -2058,53 +2058,37 @@ passed to each event:</p>
 <strong>result</strong> = the results of the <code class="docutils literal notranslate"><span class="pre">update()</span></code> method used through the Query Builder.</p></td>
 </tr>
 <tr class="row-even"><td><p>beforeFind</p></td>
-<td><p>The name of the calling <strong>method</strong>, whether a <strong>singleton</strong> was requested, and these additional fields:</p></td>
+<td><p>The name of the calling <strong>method</strong>, whether a <strong>singleton</strong> was requested, and these additional fields:
+none for <code class="docutils literal notranslate"><span class="pre">first()</span></code>, <strong>id</strong> = the primary key of the row being searched for, for <code class="docutils literal notranslate"><span class="pre">find()</span></code>,
+and <strong>limit</strong> = the number of rows to find, and <strong>offset</strong> = the number of rows to skip during
+the search, for <code class="docutils literal notranslate"><span class="pre">findAll()</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">first()</span></code></p></li>
-</ul>
-</td>
-<td><p>No additional fields</p></td>
-</tr>
-<tr class="row-even"><td><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">find()</span></code></p></li>
-</ul>
-</td>
-<td><p><strong>id</strong> = the primary key of the row being searched for.</p></td>
-</tr>
-<tr class="row-odd"><td><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">findAll()</span></code></p></li>
-</ul>
-</td>
-<td><p><strong>limit</strong> = the number of rows to find.
-<strong>offset</strong> = the number of rows to skip during the search.</p></td>
-</tr>
-<tr class="row-even"><td><p>afterFind</p></td>
+<tr class="row-odd"><td><p>afterFind</p></td>
 <td><p>Same as <strong>beforeFind</strong> but including the resulting row(s) of data, or null if no result found.</p></td>
 </tr>
-<tr class="row-odd"><td><p>beforeDelete</p></td>
+<tr class="row-even"><td><p>beforeDelete</p></td>
 <td><p><strong>id</strong> = an array of primary key rows being passed to the <code class="docutils literal notranslate"><span class="pre">delete()</span></code> method.
 <strong>purge</strong> = boolean whether soft-delete rows should be hard deleted.</p></td>
 </tr>
-<tr class="row-even"><td><p>afterDelete</p></td>
+<tr class="row-odd"><td><p>afterDelete</p></td>
 <td><p><strong>id</strong> = an array of primary key rows being passed to the <code class="docutils literal notranslate"><span class="pre">delete()</span></code> method.
 <strong>purge</strong> = boolean whether soft-delete rows should be hard deleted.
 <strong>result</strong> = the result of the <code class="docutils literal notranslate"><span class="pre">delete()</span></code> call on the Query Builder.
 <strong>data</strong> = unused.</p></td>
 </tr>
-<tr class="row-odd"><td><p>beforeInsertBatch</p></td>
+<tr class="row-even"><td><p>beforeInsertBatch</p></td>
 <td><p><strong>data</strong> = associative array of values that are being inserted. If an object or Entity class is passed to the
 <code class="docutils literal notranslate"><span class="pre">insertBatch()</span></code> method, it is first converted to an array.</p></td>
 </tr>
-<tr class="row-even"><td><p>afterInsertBatch</p></td>
+<tr class="row-odd"><td><p>afterInsertBatch</p></td>
 <td><p><strong>data</strong> = the associative array of values being inserted.
 <strong>result</strong> = the results of the <code class="docutils literal notranslate"><span class="pre">insertbatch()</span></code> method used through the Query Builder.</p></td>
 </tr>
-<tr class="row-odd"><td><p>beforeUpdateBatch</p></td>
+<tr class="row-even"><td><p>beforeUpdateBatch</p></td>
 <td><p><strong>data</strong> = associative array of values that are being updated. If an object or Entity class is passed to the
 <code class="docutils literal notranslate"><span class="pre">updateBatch()</span></code> method, it is first converted to an array.</p></td>
 </tr>
-<tr class="row-even"><td><p>afterUpdateBatch</p></td>
+<tr class="row-odd"><td><p>afterUpdateBatch</p></td>
 <td><p><strong>data</strong> = the key/value pairs being updated.
 <strong>result</strong> = the results of the <code class="docutils literal notranslate"><span class="pre">updateBatch()</span></code> method used through the Query Builder.</p></td>
 </tr>

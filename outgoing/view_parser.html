@@ -851,63 +851,63 @@ left to right:</p>
 <tr class="row-even"><td><p>abs</p></td>
 <td></td>
 <td><p>Displays the absolute value of a number.</p></td>
-<td><p>{ v|abs }</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">v|abs</span> <span class="pre">}</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>capitalize</p></td>
 <td></td>
 <td><p>Displays the string in sentence case: all lowercase
 with firstletter capitalized.</p></td>
-<td><p>{ v|capitalize}</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">v|capitalize}</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>date</p></td>
 <td><p>format (Y-m-d)</p></td>
 <td><p>A PHP <strong>date</strong>-compatible formatting string.</p></td>
-<td><p>{ v|date(Y-m-d) }</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">v|date(Y-m-d)</span> <span class="pre">}</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>date_modify</p></td>
 <td><p>value to add
 / subtract</p></td>
 <td><p>A <strong>strtotime</strong> compatible string to modify the date,
 like <code class="docutils literal notranslate"><span class="pre">+5</span> <span class="pre">day</span></code> or <code class="docutils literal notranslate"><span class="pre">-1</span> <span class="pre">week</span></code>.</p></td>
-<td><p>{ v|date_modify(+1 day) }</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">v|date_modify(+1</span> <span class="pre">day)</span> <span class="pre">}</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>default</p></td>
 <td><p>default value</p></td>
 <td><p>Displays the default value if the variable is <a class="reference external" href="https://www.php.net/manual/en/function.empty.php">empty()</a>.</p></td>
-<td><p>{ v|default(just in case) }</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">v|default(just</span> <span class="pre">in</span> <span class="pre">case)</span> <span class="pre">}</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>esc</p></td>
 <td><p>html, attr,
 css, js</p></td>
 <td><p>Specifies the context to escape the data.</p></td>
-<td><p>{ v|esc(attr) }</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">v|esc(attr)</span> <span class="pre">}</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>excerpt</p></td>
 <td><p>phrase, radius</p></td>
 <td><p>Returns the text within a radius of words from a given
 phrase. Same as <strong>excerpt</strong> helper function.</p></td>
-<td><p>{ v|excerpt(green giant, 20) }</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">v|excerpt(green</span> <span class="pre">giant,</span> <span class="pre">20)</span> <span class="pre">}</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>highlight</p></td>
 <td><p>phrase</p></td>
 <td><p>Highlights a given phrase within the text using
-‘&lt;mark&gt;&lt;/mark&gt;’ tags.</p></td>
-<td><p>{ v|highlight(view parser) }</p></td>
+<code class="docutils literal notranslate"><span class="pre">&lt;mark&gt;&lt;/mark&gt;</span></code> tags.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">v|highlight(view</span> <span class="pre">parser)</span> <span class="pre">}</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>highlight_code</p></td>
 <td></td>
 <td><p>Highlights code samples with HTML/CSS.</p></td>
-<td><p>{ v|highlight_code }</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">v|highlight_code</span> <span class="pre">}</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>limit_chars</p></td>
 <td><p>limit</p></td>
 <td><p>Limits the number of characters to $limit.</p></td>
-<td><p>{ v|limit_chars(100) }</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">v|limit_chars(100)</span> <span class="pre">}</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>limit_words</p></td>
 <td><p>limit</p></td>
 <td><p>Limits the number of words to $limit.</p></td>
-<td><p>{ v|limit_words(20) }</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">v|limit_words(20)</span> <span class="pre">}</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>local_currency</p></td>
 <td><p>currency,
@@ -915,7 +915,7 @@ locale,
 fraction</p></td>
 <td><p>Displays a localized version of a currency. “currency”
 valueis any 3-letter ISO 4217 currency code.</p></td>
-<td><p>{ v|local_currency(EUR,en_US) }</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">v|local_currency(EUR,en_US)</span> <span class="pre">}</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>local_number</p></td>
 <td><p>type, precision,
@@ -923,52 +923,53 @@ locale</p></td>
 <td><p>Displays a localized version of a number. “type” can be
 one of: decimal, currency, percent, scientific, spellout,
 ordinal, duration.</p></td>
-<td><p>{ v|local_number(decimal,2,en_US) }</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">v|local_number(decimal,2,en_US)</span> <span class="pre">}</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>lower</p></td>
 <td></td>
 <td><p>Converts a string to lowercase.</p></td>
-<td><p>{ v|lower }</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">v|lower</span> <span class="pre">}</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>nl2br</p></td>
 <td></td>
-<td><p>Replaces all newline characters (n) to an HTML &lt;br/&gt; tag.</p></td>
-<td><p>{ v|nl2br }</p></td>
+<td><p>Replaces all newline characters (<code class="docutils literal notranslate"><span class="pre">\n</span></code>) to an HTML
+<code class="docutils literal notranslate"><span class="pre">&lt;br/&gt;</span></code> tag.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">v|nl2br</span> <span class="pre">}</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>number_format</p></td>
 <td><p>places</p></td>
 <td><p>Wraps PHP <strong>number_format</strong> function for use within the
 parser.</p></td>
-<td><p>{ v|number_format(3) }</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">v|number_format(3)</span> <span class="pre">}</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>prose</p></td>
 <td></td>
 <td><p>Takes a body of text and uses the <strong>auto_typography()</strong>
 method to turn it into prettier, easier-to-read, prose.</p></td>
-<td><p>{ v|prose }</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">v|prose</span> <span class="pre">}</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>round</p></td>
 <td><p>places, type</p></td>
 <td><p>Rounds a number to the specified places. Types of <strong>ceil</strong>
 and <strong>floor</strong> can be passed to use those functions instead.</p></td>
-<td><p>{ v|round(3) } { v|round(ceil) }</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">v|round(3)</span> <span class="pre">}</span></code> <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">v|round(ceil)</span> <span class="pre">}</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>strip_tags</p></td>
 <td><p>allowed chars</p></td>
 <td><p>Wraps PHP <strong>strip_tags</strong>. Can accept a string of allowed
 tags.</p></td>
-<td><p>{ v|strip_tags(&lt;br&gt;) }</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">v|strip_tags(&lt;br&gt;)</span> <span class="pre">}</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>title</p></td>
 <td></td>
 <td><p>Displays a “title case” version of the string, with all
 lowercase, and each word capitalized.</p></td>
-<td><p>{ v|title }</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">v|title</span> <span class="pre">}</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>upper</p></td>
 <td></td>
 <td><p>Displays the string in all uppercase.</p></td>
-<td><p>{ v|upper }</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">v|upper</span> <span class="pre">}</span></code></p></td>
 </tr>
 </tbody>
 </table>
