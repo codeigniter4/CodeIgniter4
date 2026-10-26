@@ -18,6 +18,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
 use mysqli;
+use mysqli_driver;
 use PHPUnit\Framework\Attributes\Group;
 use Throwable;
 
@@ -113,6 +114,32 @@ final class DeadlockTransactionTest extends CIUnitTestCase
             ['insert' => false, 'complete' => false],
             ['insert' => $insert, 'complete' => $this->db->transComplete()],
         );
+    }
+
+    public function testRestartThatCannotBeginDoesNotRunTheStatement(): void
+    {
+        $table            = $this->db->escapeIdentifier($this->db->prefixTable('deadlock_probe'));
+        $this->probeTable = $table;
+        $this->forceDeadlock($table);
+
+        // An active XA transaction makes MySQL refuse START TRANSACTION on a live
+        // connection. With mysqli exception reporting off, begin_transaction()
+        // then returns false instead of throwing.
+        $mysqli   = $this->db->getConnection();
+        $previous = (new mysqli_driver())->report_mode;
+        $mysqli->query("XA START 'deadlock_probe'");
+        mysqli_report(MYSQLI_REPORT_OFF);
+
+        try {
+            $insert   = $this->db->query('INSERT INTO ' . $table . " (id, note) VALUES (102, 'after')");
+            $inserted = (int) $mysqli->query('SELECT COUNT(*) FROM ' . $table . ' WHERE id = 102')->fetch_row()[0];
+        } finally {
+            $mysqli->query("XA END 'deadlock_probe'");
+            $mysqli->query("XA ROLLBACK 'deadlock_probe'");
+            mysqli_report($previous);
+        }
+
+        $this->assertSame(['insert' => false, 'inserted' => 0], ['insert' => $insert, 'inserted' => $inserted]);
     }
 
     private function killConnection(BaseConnection $db): void

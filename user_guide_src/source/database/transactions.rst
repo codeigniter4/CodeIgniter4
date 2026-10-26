@@ -151,9 +151,11 @@ MySQL Deadlocks
 InnoDB error 1213 rolls the victim transaction back. CodeIgniter keeps that
 transaction open. The next statement run through ``query()``, ``simpleQuery()``
 or the Query Builder on the same connection starts a new server transaction,
-so the write does not autocommit. ``transCommit()`` rolls that server
-transaction back and returns false, so the transaction has ended when it
-returns. ``transComplete()`` also rolls it back.
+so the write does not autocommit. The rollback happens when the outermost
+transaction finishes: ``transCommit()`` rolls that server transaction back and
+returns false, so the transaction has ended when it returns, and
+``transComplete()`` also rolls it back. At a nested depth, ``transCommit()``
+still returns true and only decrements the depth.
 
 Prepared queries are not covered. A deadlock raised by a prepared query is not
 detected, and a prepared query run after a deadlock does not start a new server

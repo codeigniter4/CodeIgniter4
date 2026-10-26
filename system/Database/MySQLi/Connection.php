@@ -297,7 +297,13 @@ class Connection extends BaseConnection
             // Errno 1205 is not handled: innodb_rollback_on_timeout decides
             // whether InnoDB rolled that transaction back.
             if ($this->connID instanceof mysqli && $this->serverTransactionRestartPending()) {
-                $this->connID->begin_transaction();
+                // With mysqli exception reporting off, a failed BEGIN returns
+                // false instead of throwing. Do not run the statement without
+                // the transaction.
+                if (! $this->connID->begin_transaction()) {
+                    return false;
+                }
+
                 $this->serverTransactionRestarted();
             }
 
