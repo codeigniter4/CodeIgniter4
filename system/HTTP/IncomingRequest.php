@@ -140,7 +140,7 @@ class IncomingRequest extends Request
             // php://input is not available with enctype="multipart/form-data".
             // See https://www.php.net/manual/en/wrappers.php.php#wrappers.php.input
             && ! str_contains($this->getHeaderLine('Content-Type'), 'multipart/form-data')
-            && (int) $this->getHeaderLine('Content-Length') <= $this->getPostMaxSize()
+            && (int) $this->getHeaderLine('Content-Length') <= $this->getPostMaxSize((string) ini_get('post_max_size'))
         ) {
             // Get our body from php://input
             $body = file_get_contents('php://input');
@@ -167,16 +167,16 @@ class IncomingRequest extends Request
         $this->detectLocale($config);
     }
 
-    private function getPostMaxSize(): int
+    /**
+     * Converts the `post_max_size` ini value to bytes.
+     *
+     * A value of 0 or less means unlimited.
+     */
+    private function getPostMaxSize(string $postMaxSize): int
     {
-        $postMaxSize = ini_get('post_max_size');
+        $bytes = ini_parse_quantity($postMaxSize);
 
-        return match (strtoupper(substr($postMaxSize, -1))) {
-            'G'     => (int) str_replace('G', '', $postMaxSize) * 1024 ** 3,
-            'M'     => (int) str_replace('M', '', $postMaxSize) * 1024 ** 2,
-            'K'     => (int) str_replace('K', '', $postMaxSize) * 1024,
-            default => (int) $postMaxSize,
-        };
+        return $bytes <= 0 ? PHP_INT_MAX : $bytes;
     }
 
     /**
