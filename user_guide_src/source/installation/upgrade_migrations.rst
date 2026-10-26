@@ -70,7 +70,7 @@ Search & Replace
 You can use to following table to search & replace your old CI3 files.
 
 +------------------------------+----------------------------+
-|  Search                      | Replace                    |
+| Search                       | Replace                    |
 +==============================+============================+
 | extends CI_Migration         | extends Migration          |
 +------------------------------+----------------------------+

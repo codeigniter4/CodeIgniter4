@@ -148,9 +148,6 @@ Description of Values
 **username**     The username used to connect to the database. (``SQLite3`` does not use this.)
 **password**     The password used to connect to the database. (``SQLite3`` does not use this.)
 **database**     The name of the database you want to connect to.
-
-                 .. note:: CodeIgniter doesn't support dots (``.``) in the table and column names.
-                    Since v4.5.0, database names with dots are supported.
 **DBDriver**     The database driver name. The case must match the driver name.
                  You can set a fully qualified classname to use your custom driver.
                  Supported drivers: ``MySQLi``, ``Postgre``, ``SQLite3``, ``SQLSRV``, and ``OCI8``.
@@ -173,27 +170,34 @@ Description of Values
                  strict SQL while developing an application.
 **port**         The database port number - Empty string ``''`` for default port (or dynamic port with ``SQLSRV``).
 **foreignKeys**  (``SQLite3`` only) true/false (boolean) - Whether to enable Foreign Key constraint.
-
-                 .. important:: SQLite3 Foreign Key constraint is disabled by default.
-                     See `SQLite documentation <https://www.sqlite.org/pragma.html#pragma_foreign_keys>`_.
-                     To enforce Foreign Key constraint, set this config item to true.
 **busyTimeout**  (``SQLite3`` only) milliseconds (int) - Sleeps for a specified amount of time when a table is locked.
 **synchronous**  (``SQLite3`` only) flag (int) - How strict SQLite will be at flushing to disk during transactions.
                  Use `null` to stay with the default setting. This can be used since v4.6.0.
 **numberNative** (``MySQLi`` only) true/false (boolean) - Whether to enable MYSQLI_OPT_INT_AND_FLOAT_NATIVE.
 **foundRows**    (``MySQLi`` only) true/false (boolean) - Whether to enable MYSQLI_CLIENT_FOUND_ROWS.
-**dateFormat**   The default date/time formats as PHP's `DateTime format`_.
-                 * ``date``        - date format
-                 * ``datetime``    - date and time format
-                 * ``datetime-ms`` - date and time with millisecond format
-                 * ``datetime-us`` - date and time with microsecond format
-                 * ``time``        - time format
-                 This can be used since v4.5.0, and you can get the value, e.g., ``$db->dateFormat['datetime']``.
-                 Currently, the database drivers do not use these values directly,
-                 but :ref:`Model <model-saving-dates>` uses them.
+**dateFormat**   The default date/time formats as PHP's `DateTime format`_, with the keys listed below the table.
 ================ ===========================================================================================================
 
 .. _DateTime format: https://www.php.net/manual/en/datetime.format.php
+
+.. note:: CodeIgniter doesn't support dots (``.``) in the table and column names.
+    Since v4.5.0, database names with dots are supported.
+
+.. important:: SQLite3 Foreign Key constraint is disabled by default.
+    See `SQLite documentation <https://www.sqlite.org/pragma.html#pragma_foreign_keys>`_.
+    To enforce Foreign Key constraint, set **foreignKeys** to true.
+
+The **dateFormat** array has the following keys:
+
+* ``date``        - date format
+* ``datetime``    - date and time format
+* ``datetime-ms`` - date and time with millisecond format
+* ``datetime-us`` - date and time with microsecond format
+* ``time``        - time format
+
+This can be used since v4.5.0, and you can get the value, e.g., ``$db->dateFormat['datetime']``.
+Currently, the database drivers do not use these values directly,
+but :ref:`Model <model-saving-dates>` uses them.
 
 .. note:: Depending on what database driver you are using (``MySQLi``, ``Postgre``,
     etc.) not all values will be needed. For example, when using ``SQLite3`` you
