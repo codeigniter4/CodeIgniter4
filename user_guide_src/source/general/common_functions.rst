@@ -135,7 +135,7 @@ Service Accessors
 
     :param string $key: The name of the old form data to check for.
     :param string|null  $default: The default value to return if $key doesn't exist.
-    :param false|string  $escape: An `escape <#esc>`_ context or false to disable it.
+    :param false|string  $escape: An :php:func:`esc()` context or false to disable it.
     :returns: The value of the defined key, or the default value.
     :rtype: array|string|null
 
