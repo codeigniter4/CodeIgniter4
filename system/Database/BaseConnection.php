@@ -338,20 +338,6 @@ abstract class BaseConnection implements ConnectionInterface
     protected $transFailure = false;
 
     /**
-     * The server has already rolled this transaction back (MySQLi errno 1213).
-     * mysqli::commit() still returns true, so transCommit() must not report success.
-     */
-    protected bool $transServerRolledBack = false;
-
-    /**
-     * The next statement must open a server transaction before it runs.
-     * InnoDB ended the previous one and the connection is back in autocommit.
-     * Errno 1205 does not set this: innodb_rollback_on_timeout decides whether
-     * that error rolled the transaction back.
-     */
-    protected bool $transNeedsServerRestart = false;
-
-    /**
      * Whether to throw exceptions during transaction
      */
     protected bool $transException = false;
@@ -1060,7 +1046,6 @@ abstract class BaseConnection implements ConnectionInterface
 
         if ($this->_transBegin()) {
             $this->transDepth++;
-            $this->clearServerRolledBackTransaction();
 
             return true;
         }
@@ -1078,24 +1063,7 @@ abstract class BaseConnection implements ConnectionInterface
         }
 
         // When transactions are nested we only begin/commit/rollback the outermost ones
-        if ($this->transDepth > 1) {
-            $this->transDepth--;
-
-            return true;
-        }
-
-        // InnoDB already removed the victim transaction. mysqli::commit()
-        // returns true anyway, which would publish later writes and report success.
-        // Roll back the restarted server transaction so a false return ends the
-        // transaction, as transComplete() does. Otherwise a caller that retries
-        // without transRollback() nests inside it and nothing commits.
-        if ($this->transServerRolledBack) {
-            $this->transRollback();
-
-            return false;
-        }
-
-        if ($this->_transCommit()) {
+        if ($this->transDepth > 1 || $this->_transCommit()) {
             $this->transDepth--;
 
             return true;
@@ -1116,10 +1084,6 @@ abstract class BaseConnection implements ConnectionInterface
         // When transactions are nested we only begin/commit/rollback the outermost ones
         if ($this->transDepth > 1 || $this->_transRollback()) {
             $this->transDepth--;
-
-            if ($this->transDepth === 0) {
-                $this->clearServerRolledBackTransaction();
-            }
 
             return true;
         }
@@ -1147,37 +1111,6 @@ abstract class BaseConnection implements ConnectionInterface
         if ($this->transDepth !== 0) {
             $this->transStatus = false;
         }
-    }
-
-    /**
-     * Remember that the server has rolled the open transaction back.
-     */
-    protected function markServerRolledBackTransaction(): void
-    {
-        $this->transServerRolledBack   = true;
-        $this->transNeedsServerRestart = true;
-    }
-
-    /**
-     * True while the next statement must BEGIN before it runs.
-     */
-    protected function serverTransactionRestartPending(): bool
-    {
-        return $this->transNeedsServerRestart && $this->transDepth > 0;
-    }
-
-    /**
-     * BEGIN succeeded. Clear the restart only now, so a failed BEGIN keeps it pending.
-     */
-    protected function serverTransactionRestarted(): void
-    {
-        $this->transNeedsServerRestart = false;
-    }
-
-    private function clearServerRolledBackTransaction(): void
-    {
-        $this->transServerRolledBack   = false;
-        $this->transNeedsServerRestart = false;
     }
 
     /**
