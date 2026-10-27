@@ -722,6 +722,10 @@ class Connection extends BaseConnection
         return oci_rollback($this->connID);
     }
 
+    /**
+     * Restore OCI_COMMIT_ON_SUCCESS. close() does not, and
+     * OCI_NO_AUTO_COMMIT would leave later writes uncommitted.
+     */
     protected function abandonLostTransaction(): void
     {
         $this->commitMode = OCI_COMMIT_ON_SUCCESS;
