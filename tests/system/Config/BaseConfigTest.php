@@ -21,6 +21,7 @@ use Config\Modules;
 use CustomEnvHookConfig;
 use Encryption;
 use EnvIndexConfig;
+use GrowingEnvConfig;
 use MergeRegistrarConfig;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -71,7 +72,7 @@ final class BaseConfigTest extends CIUnitTestCase
             require $this->fixturesFolder . '/Encryption.php';
         }
 
-        foreach (['EnvIndexConfig', 'Snake_Config', 'CustomEnvHookConfig'] as $class) {
+        foreach (['EnvIndexConfig', 'Snake_Config', 'CustomEnvHookConfig', 'GrowingEnvConfig'] as $class) {
             if (! class_exists($class, false)) {
                 require $this->fixturesFolder . '/' . $class . '.php';
             }
@@ -87,6 +88,7 @@ final class BaseConfigTest extends CIUnitTestCase
         parent::tearDown();
 
         $this->clearEnvironmentOverrides();
+        GrowingEnvConfig::$grow = false;
         // This test modifies BaseConfig::$modules, so should reset.
         BaseConfig::reset();
         // This test modifies Services locator, so should reset.
@@ -112,6 +114,7 @@ final class BaseConfigTest extends CIUnitTestCase
             'snake_config.name',
             'Snake_Config_name',
             'customenvhookconfig.name',
+            'growingenvconfig.list.added',
         ] as $key) {
             putenv($key);
             unset($_ENV[$key]);
@@ -556,5 +559,29 @@ final class BaseConfigTest extends CIUnitTestCase
         putenv('envindexconfig_list_some key=from-getenv');
 
         $this->assertSame('from-getenv', (new EnvIndexConfig())->list['some key']);
+    }
+
+    public function testRemovedGetenvOnlyNameIsNotReused(): void
+    {
+        putenv('envindexconfig.name=old');
+        $_ENV['envindexconfig.name'] = 'old';
+        service('superglobals')->setServer('envindexconfig.name', 'old');
+        $this->assertSame('old', (new EnvIndexConfig())->name);
+
+        putenv('envindexconfig.name');
+        unset($_ENV['envindexconfig.name']);
+        service('superglobals')->unsetServer('envindexconfig.name');
+
+        $this->assertSame('default', (new EnvIndexConfig())->name);
+    }
+
+    public function testGetenvOnlyNameForLeafAddedOnLaterInstance(): void
+    {
+        putenv('growingenvconfig.list.added=from-getenv');
+        $this->assertSame(['key' => 'default'], (new GrowingEnvConfig())->list);
+
+        GrowingEnvConfig::$grow = true;
+
+        $this->assertSame(['key' => 'default', 'added' => 'from-getenv'], (new GrowingEnvConfig())->list);
     }
 }

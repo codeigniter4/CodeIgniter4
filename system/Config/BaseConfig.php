@@ -86,12 +86,22 @@ class BaseConfig
     private static ?array $envSnapshot = null;
 
     /**
-     * Env vars found with live getenv() calls on each class's first build, keyed
-     * by class name. The getenv() array omits names that contain ".", " " or "[".
+     * Env var names that exist according to live getenv() calls, keyed by class
+     * name, then by leaf name. Each leaf is probed once; its names are re-read on
+     * every build. The getenv() array omits names that contain ".", " " or "[",
+     * and on Windows only live calls match names case-insensitively.
      *
-     * @var array<class-string, array<string, string>>
+     * @var array<class-string, array<string, list<string>>>
      */
-    private static array $unlistedEnvVars = [];
+    private static array $liveEnvNames = [];
+
+    /**
+     * The property values of each class's last build, and the env var names of
+     * all its leaves from $liveEnvNames, keyed by class name.
+     *
+     * @var array<class-string, array{array<string, mixed>, list<string>}>
+     */
+    private static array $liveEnvLeaves = [];
 
     /**
      * Whether a class overrides getEnvValue() or initEnvValue(), keyed by class name.
@@ -138,8 +148,8 @@ class BaseConfig
         static::$didDiscovery = false;
         static::$moduleConfig = null;
 
-        self::$envIndex        = self::$envSnapshot = null;
-        self::$unlistedEnvVars = [];
+        self::$envIndex     = self::$envSnapshot = null;
+        self::$liveEnvNames = self::$liveEnvLeaves = [];
     }
 
     /**
@@ -170,8 +180,21 @@ class BaseConfig
             : self::scopedEnvSources($prefix, $shortPrefix);
 
         if ($sources !== null) {
-            $sources['getenv'] = (self::$unlistedEnvVars[static::class] ??= self::findUnlistedEnvVars($values, $prefix, $shortPrefix))
-                + $sources['getenv'];
+            // Unchanged property values share memory with the stored ones, so the
+            // leaves are only walked again when a build changes them.
+            if (($leaves = self::$liveEnvLeaves[static::class] ?? null) === null || $leaves[0] !== $values) {
+                $leaves = self::$liveEnvLeaves[static::class] = [$values, self::findLiveEnvNames($values, $prefix, $shortPrefix)];
+            }
+
+            $live = [];
+
+            foreach ($leaves[1] as $envKey) {
+                if (($envValue = getenv($envKey)) !== false) {
+                    $live[$envKey] = $envValue;
+                }
+            }
+
+            $sources['getenv'] = $live + $sources['getenv'];
 
             // Every env var that can override this class, for a fast miss check per leaf.
             $candidates = $sources['env'] + $sources['server'] + $sources['getenv'];
@@ -389,14 +412,15 @@ class BaseConfig
     }
 
     /**
-     * Looks up, with getenv(), every leaf's env var names that the getenv()
-     * array omits.
+     * Returns every leaf's env var names that exist according to live getenv()
+     * calls. Only leaves not seen before are probed.
      *
+     * @param class-string            $prefix
      * @param array<array-key, mixed> $values
      *
-     * @return array<string, string>
+     * @return list<string>
      */
-    private static function findUnlistedEnvVars(array $values, string $prefix, string $shortPrefix, string $parent = ''): array
+    private static function findLiveEnvNames(array $values, string $prefix, string $shortPrefix, string $parent = ''): array
     {
         $found = [];
 
@@ -404,22 +428,31 @@ class BaseConfig
             $name = $parent === '' ? (string) $key : "{$parent}.{$key}";
 
             if (is_array($value)) {
-                $found += self::findUnlistedEnvVars($value, $prefix, $shortPrefix, $name);
+                array_push($found, ...self::findLiveEnvNames($value, $prefix, $shortPrefix, $name));
 
                 continue;
             }
 
-            // Dot forms always contain "."; underscore forms only need a live
-            // lookup when the name itself contains " " or "[".
-            $envKeys = strpbrk($name, ' [') === false
-                ? ["{$shortPrefix}.{$name}", "{$prefix}.{$name}"]
-                : self::envKeys($name, $prefix, $shortPrefix);
+            if (! isset(self::$liveEnvNames[$prefix][$name])) {
+                self::$liveEnvNames[$prefix][$name] = [];
 
-            foreach ($envKeys as $envKey) {
-                if (($envValue = getenv($envKey)) !== false) {
-                    $found[$envKey] = $envValue;
+                // Dot forms are never in the getenv() array, and underscore forms
+                // only miss it when the name has " " or "[". On Windows, env var
+                // names are case-insensitive, but only live getenv() calls match
+                // them that way, so every form is probed there. Elsewhere that
+                // would double the getenv() calls on a cold build for no gain.
+                $envKeys = PHP_OS_FAMILY === 'Windows' || strpbrk($name, ' [') !== false
+                    ? self::envKeys($name, $prefix, $shortPrefix)
+                    : ["{$shortPrefix}.{$name}", "{$prefix}.{$name}"];
+
+                foreach ($envKeys as $envKey) {
+                    if (getenv($envKey) !== false) {
+                        self::$liveEnvNames[$prefix][$name][] = $envKey;
+                    }
                 }
             }
+
+            array_push($found, ...self::$liveEnvNames[$prefix][$name]);
         }
 
         return $found;
