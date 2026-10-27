@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\CLI;
 
+use CodeIgniter\CLI\Exceptions\CLIException;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockInputOutput;
@@ -222,5 +223,21 @@ final class PromptTest extends CIUnitTestCase
         $this->expectExceptionMessage('No options to select from were provided');
 
         $this->createPrompt([])->askByMultipleKeys('Hobbies:', []);
+    }
+
+    public function testAskStopsWhenTheInputEnds(): void
+    {
+        $this->expectException(CLIException::class);
+        $this->expectExceptionMessage('The input ended before a valid answer was given.');
+
+        $this->createPrompt(['c'])->ask('Pick', ['a', 'b']);
+    }
+
+    public function testAskByMultipleKeysStopsWhenTheInputEnds(): void
+    {
+        $this->expectException(CLIException::class);
+        $this->expectExceptionMessage('The input ended before a valid answer was given.');
+
+        $this->createPrompt(['9'])->askByMultipleKeys('Hobbies:', ['Games', 'Sleep']);
     }
 }

@@ -1284,10 +1284,9 @@ afterUpdate       **id** = the array of primary keys of the rows being passed to
                   **data** = the key/value pairs being updated.
                   **result** = the results of the ``update()`` method used through the Query Builder.
 beforeFind        The name of the calling **method**, whether a **singleton** was requested, and these additional fields:
-- ``first()``     No additional fields
-- ``find()``      **id** = the primary key of the row being searched for.
-- ``findAll()``   **limit** = the number of rows to find.
-                  **offset** = the number of rows to skip during the search.
+                  none for ``first()``, **id** = the primary key of the row being searched for, for ``find()``,
+                  and **limit** = the number of rows to find, and **offset** = the number of rows to skip during
+                  the search, for ``findAll()``.
 afterFind         Same as **beforeFind** but including the resulting row(s) of data, or null if no result found.
 beforeDelete      **id** = an array of primary key rows being passed to the ``delete()`` method.
                   **purge** = boolean whether soft-delete rows should be hard deleted.

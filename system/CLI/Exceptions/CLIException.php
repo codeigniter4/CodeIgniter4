@@ -16,9 +16,6 @@ namespace CodeIgniter\CLI\Exceptions;
 use CodeIgniter\Exceptions\DebugTraceableTrait;
 use CodeIgniter\Exceptions\RuntimeException;
 
-/**
- * CLIException
- */
 class CLIException extends RuntimeException
 {
     use DebugTraceableTrait;
@@ -32,5 +29,13 @@ class CLIException extends RuntimeException
     public static function forInvalidColor(string $type, string $color)
     {
         return new static(lang('CLI.invalidColor', [$type, $color]));
+    }
+
+    /**
+     * Thrown when a prompt must ask again but the input has ended.
+     */
+    public static function forInputEnded(): static
+    {
+        return new static(lang('CLI.inputEnded'));
     }
 }

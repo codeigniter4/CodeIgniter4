@@ -1175,41 +1175,41 @@ See also :ref:`file-upload-form-tutorial`.
 ======================= ========== ============================================= ===================================================
 Rule                    Parameter  Description                                   Example
 ======================= ========== ============================================= ===================================================
-uploaded                Yes         Fails if the name of the parameter does not  ``uploaded[field_name]``
-                                    match the name of any uploaded files.
-                                    If you want the file upload to be optional
-                                    (not required), do not define this rule.
+uploaded                Yes        Fails if the name of the parameter does not   ``uploaded[field_name]``
+                                   match the name of any uploaded files.
+                                   If you want the file upload to be optional
+                                   (not required), do not define this rule.
 
-max_size                Yes         Fails if the uploaded file is larger         ``max_size[field_name,2048]``
-                                    than the second parameter
-                                    in kilobytes (kb). Or if the file
-                                    is larger than allowed maximum size declared
-                                    in php.ini config file -
-                                    ``upload_max_filesize`` directive.
-max_dims                Yes         Fails if the maximum width and height of an  ``max_dims[field_name,300,150]``
-                                    uploaded image exceed values. The first
-                                    parameter is the field name. The second is
-                                    the width, and the third is the height. Will
-                                    also fail if the file cannot be determined
-                                    to be an image or the upload failed with an
-                                    error other than ``UPLOAD_ERR_NO_FILE``.
-min_dims                Yes         Fails if the minimum width and height of an  ``min_dims[field_name,300,150]``
-                                    uploaded image not meet values. The first
-                                    parameter is the field name. The second is
-                                    the width, and the third is the height. Will
-                                    also fail if the file cannot be determined
-                                    to be an image or the upload failed with an
-                                    error other than ``UPLOAD_ERR_NO_FILE``.
-                                    (This rule was added in
-                                    v4.6.0.)
-mime_in                 Yes         Fails if the file's mime type is not one     ``mime_in[field_name,image/png,image/jpeg]``
-                                    listed in the parameters.
-ext_in                  Yes         Fails if the client filename's extension is  ``ext_in[field_name,png,jpg,gif]``
-                                    not one listed in the parameters, or if the
-                                    detected MIME type does not match the MIME
-                                    types associated with the extension.
-is_image                Yes         Fails if the file cannot be determined to be ``is_image[field_name]``
-                                    an image based on the mime type.
+max_size                Yes        Fails if the uploaded file is larger          ``max_size[field_name,2048]``
+                                   than the second parameter
+                                   in kilobytes (kb). Or if the file
+                                   is larger than allowed maximum size declared
+                                   in php.ini config file -
+                                   ``upload_max_filesize`` directive.
+max_dims                Yes        Fails if the maximum width and height of an   ``max_dims[field_name,300,150]``
+                                   uploaded image exceed values. The first
+                                   parameter is the field name. The second is
+                                   the width, and the third is the height. Will
+                                   also fail if the file cannot be determined
+                                   to be an image or the upload failed with an
+                                   error other than ``UPLOAD_ERR_NO_FILE``.
+min_dims                Yes        Fails if the minimum width and height of an   ``min_dims[field_name,300,150]``
+                                   uploaded image not meet values. The first
+                                   parameter is the field name. The second is
+                                   the width, and the third is the height. Will
+                                   also fail if the file cannot be determined
+                                   to be an image or the upload failed with an
+                                   error other than ``UPLOAD_ERR_NO_FILE``.
+                                   (This rule was added in
+                                   v4.6.0.)
+mime_in                 Yes        Fails if the file's mime type is not one      ``mime_in[field_name,image/png,image/jpeg]``
+                                   listed in the parameters.
+ext_in                  Yes        Fails if the client filename's extension is   ``ext_in[field_name,png,jpg,gif]``
+                                   not one listed in the parameters, or if the
+                                   detected MIME type does not match the MIME
+                                   types associated with the extension.
+is_image                Yes        Fails if the file cannot be determined to be  ``is_image[field_name]``
+                                   an image based on the mime type.
 ======================= ========== ============================================= ===================================================
 
 The file validation rules apply for both single and multiple file uploads.

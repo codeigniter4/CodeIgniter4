@@ -39,7 +39,6 @@ use Rector\TypeDeclaration\Rector\Closure\AddClosureVoidReturnTypeWhereNoReturnR
 use Rector\TypeDeclaration\Rector\Closure\ClosureReturnTypeRector;
 use Rector\TypeDeclaration\Rector\Function_\AddFunctionVoidReturnTypeWhereNoReturnRector;
 use Rector\TypeDeclaration\Rector\Property\TypedPropertyFromAssignsRector;
-use Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector;
 use Rector\TypeDeclaration\Rector\StmtsAwareInterface\SafeDeclareStrictTypesRector;
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
 use Utils\Rector\RemoveErrorSuppressInTryCatchStmtsRector;
@@ -111,15 +110,6 @@ return RectorConfig::configure()
             __DIR__ . '/tests/_support/Entity/CustomUser.php',
         ],
 
-        DeclareStrictTypesRector::class => [
-            __DIR__ . '/app',
-            __DIR__ . '/system/CodeIgniter.php',
-            __DIR__ . '/system/Config/BaseConfig.php',
-            __DIR__ . '/system/Test/ControllerTestTrait.php',
-            __DIR__ . '/system/View/Parser.php',
-            __DIR__ . '/tests/system/Debug/ExceptionsTest.php',
-        ],
-
         DeclareStrictTypesTestsRector::class => [
             __DIR__ . '/tests/system/Debug/ExceptionsTest.php',
         ],
@@ -176,7 +166,6 @@ return RectorConfig::configure()
     // auto import fully qualified class names
     ->withImportNames()
     ->withRules([
-        DeclareStrictTypesRector::class,
         UnderscoreToCamelCaseVariableNameRector::class,
         PassStrictParameterToFunctionParameterRector::class,
         RemoveErrorSuppressInTryCatchStmtsRector::class,

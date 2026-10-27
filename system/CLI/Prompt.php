@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\CLI;
 
+use CodeIgniter\CLI\Exceptions\CLIException;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Validation\ValidationInterface;
 
@@ -60,14 +61,20 @@ class Prompt
         // The reader renders the prompt itself, so readline redraws repaint it instead of erasing it.
         $prompt = sprintf('%s%s%s: ', $field, trim($field) !== '' ? ' ' : '', $hint);
 
-        do {
+        while (true) {
             $this->output->setCursorAtLineStart(true);
 
             $input = trim($this->output->getInputOutput()->input($prompt));
             $input = $input === '' ? $default : $input;
-        } while ($rules !== [] && ! $this->validate(sprintf('"%s"', trim($field)), $input, $rules));
 
-        return $input;
+            if ($rules === [] || $this->validate(sprintf('"%s"', trim($field)), $input, $rules)) {
+                return $input;
+            }
+
+            if ($this->output->getInputOutput()->isAtEnd()) {
+                throw CLIException::forInputEnded();
+            }
+        }
     }
 
     /**
@@ -140,6 +147,11 @@ class Prompt
             }
 
             $this->output->error('Please select correctly.');
+
+            if ($this->output->getInputOutput()->isAtEnd()) {
+                throw CLIException::forInputEnded();
+            }
+
             $this->output->newLine();
         }
     }

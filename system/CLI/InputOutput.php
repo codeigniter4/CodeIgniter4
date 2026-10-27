@@ -23,6 +23,8 @@ class InputOutput
      */
     private readonly bool $readlineSupport;
 
+    private bool $atEnd = false;
+
     public function __construct()
     {
         // Readline is an extension for PHP that makes interactivity with PHP
@@ -51,7 +53,8 @@ class InputOutput
                 self::fwrite(STDOUT, $prefix ?? '');
             }
 
-            $input = readline($prompt);
+            $input       = readline($prompt);
+            $this->atEnd = $input === false && (! defined('STDIN') || ! stream_isatty(STDIN));
 
             return $input === false ? '' : $input;
             // @codeCoverageIgnoreEnd
@@ -60,13 +63,25 @@ class InputOutput
         // self:: skips MockInputOutput's fwrite override, whose filter bookkeeping must not nest inside input().
         self::fwrite(STDOUT, $prefix ?? '');
 
-        $input = fgets(fopen('php://stdin', 'rb'));
+        $stdin       = fopen('php://stdin', 'rb');
+        $input       = fgets($stdin);
+        $this->atEnd = $input === false && ! stream_isatty($stdin);
 
         if ($input === false) {
             return '';
         }
 
         return $input;
+    }
+
+    /**
+     * Whether the last `input()` found the end of an input other than a terminal,
+     * so that no later read can bring an answer. At a terminal, `Ctrl+D` ends only
+     * the current read, and `input()` returns an empty string as for an empty line.
+     */
+    public function isAtEnd(): bool
+    {
+        return $this->atEnd;
     }
 
     /**

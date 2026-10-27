@@ -438,63 +438,64 @@ Provided Filters
 The following filters are available when using the parser:
 
 ================ ================= =========================================================== ======================================
-Filter           Arguments         Description                                                  Example
+Filter           Arguments         Description                                                 Example
 ================ ================= =========================================================== ======================================
-abs                                Displays the absolute value of a number.                    { v|abs }
+abs                                Displays the absolute value of a number.                    ``{ v|abs }``
 
-capitalize                         Displays the string in sentence case: all lowercase         { v|capitalize}
+capitalize                         Displays the string in sentence case: all lowercase         ``{ v|capitalize}``
                                    with firstletter capitalized.
 
-date              format (Y-m-d)   A PHP **date**-compatible formatting string.                { v|date(Y-m-d) }
+date             format (Y-m-d)    A PHP **date**-compatible formatting string.                ``{ v|date(Y-m-d) }``
 
-date_modify       value to add     A **strtotime** compatible string to modify the date,       { v|date_modify(+1 day) }
-                  / subtract       like ``+5 day`` or ``-1 week``.
+date_modify      value to add      A **strtotime** compatible string to modify the date,       ``{ v|date_modify(+1 day) }``
+                 / subtract        like ``+5 day`` or ``-1 week``.
 
-default           default value    Displays the default value if the variable is `empty()`_.   { v|default(just in case) }
+default          default value     Displays the default value if the variable is `empty()`_.   ``{ v|default(just in case) }``
 
-esc               html, attr,      Specifies the context to escape the data.                   { v|esc(attr) }
-                  css, js
+esc              html, attr,       Specifies the context to escape the data.                   ``{ v|esc(attr) }``
+                 css, js
 
-excerpt           phrase, radius   Returns the text within a radius of words from a given      { v|excerpt(green giant, 20) }
+excerpt          phrase, radius    Returns the text within a radius of words from a given      ``{ v|excerpt(green giant, 20) }``
                                    phrase. Same as **excerpt** helper function.
 
-highlight         phrase           Highlights a given phrase within the text using             { v|highlight(view parser) }
-                                   '<mark></mark>' tags.
+highlight        phrase            Highlights a given phrase within the text using             ``{ v|highlight(view parser) }``
+                                   ``<mark></mark>`` tags.
 
-highlight_code                     Highlights code samples with HTML/CSS.                      { v|highlight_code }
+highlight_code                     Highlights code samples with HTML/CSS.                      ``{ v|highlight_code }``
 
-limit_chars       limit            Limits the number of characters to $limit.                  { v|limit_chars(100) }
+limit_chars      limit             Limits the number of characters to $limit.                  ``{ v|limit_chars(100) }``
 
-limit_words       limit            Limits the number of words to $limit.                       { v|limit_words(20) }
+limit_words      limit             Limits the number of words to $limit.                       ``{ v|limit_words(20) }``
 
-local_currency    currency,        Displays a localized version of a currency. "currency"      { v|local_currency(EUR,en_US) }
-                  locale,          valueis any 3-letter ISO 4217 currency code.
-                  fraction
+local_currency   currency,         Displays a localized version of a currency. "currency"      ``{ v|local_currency(EUR,en_US) }``
+                 locale,           valueis any 3-letter ISO 4217 currency code.
+                 fraction
 
-local_number      type, precision, Displays a localized version of a number. "type" can be     { v|local_number(decimal,2,en_US) }
-                  locale           one of: decimal, currency, percent, scientific, spellout,
+local_number     type, precision,  Displays a localized version of a number. "type" can be     ``{ v|local_number(decimal,2,en_US) }``
+                 locale            one of: decimal, currency, percent, scientific, spellout,
                                    ordinal, duration.
 
-lower                              Converts a string to lowercase.                             { v|lower }
+lower                              Converts a string to lowercase.                             ``{ v|lower }``
 
-nl2br                              Replaces all newline characters (\n) to an HTML <br/> tag.  { v|nl2br }
+nl2br                              Replaces all newline characters (``\n``) to an HTML         ``{ v|nl2br }``
+                                   ``<br/>`` tag.
 
-number_format     places           Wraps PHP **number_format** function for use within the     { v|number_format(3) }
+number_format    places            Wraps PHP **number_format** function for use within the     ``{ v|number_format(3) }``
                                    parser.
 
-prose                              Takes a body of text and uses the **auto_typography()**     { v|prose }
+prose                              Takes a body of text and uses the **auto_typography()**     ``{ v|prose }``
                                    method to turn it into prettier, easier-to-read, prose.
 
-round             places, type     Rounds a number to the specified places. Types of **ceil**  { v|round(3) } { v|round(ceil) }
+round            places, type      Rounds a number to the specified places. Types of **ceil**  ``{ v|round(3) }`` ``{ v|round(ceil) }``
                                    and **floor** can be passed to use those functions instead.
 
-strip_tags        allowed chars    Wraps PHP **strip_tags**. Can accept a string of allowed    { v|strip_tags(<br>) }
+strip_tags       allowed chars     Wraps PHP **strip_tags**. Can accept a string of allowed    ``{ v|strip_tags(<br>) }``
                                    tags.
 
-title                              Displays a "title case" version of the string, with all     { v|title }
+title                              Displays a "title case" version of the string, with all     ``{ v|title }``
                                    lowercase, and each word capitalized.
 
-upper                              Displays the string in all uppercase.                       { v|upper }
+upper                              Displays the string in all uppercase.                       ``{ v|upper }``
 ================ ================= =========================================================== ======================================
 
 .. _empty(): https://www.php.net/manual/en/function.empty.php
