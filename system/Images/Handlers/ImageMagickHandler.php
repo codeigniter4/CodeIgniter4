@@ -318,13 +318,10 @@ class ImageMagickHandler extends BaseHandler
         }
 
         $this->ensureResource();
-
         $this->resource->setImageCompressionQuality($quality);
 
-        if ($target !== null) {
-            $extension = pathinfo($target, PATHINFO_EXTENSION);
-            $this->resource->setImageFormat($extension);
-        }
+        $extension = pathinfo($target, PATHINFO_EXTENSION);
+        $this->resource->setImageFormat($extension);
 
         try {
             $result = $this->resource->writeImage($target);
