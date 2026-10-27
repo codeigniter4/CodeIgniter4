@@ -197,6 +197,15 @@ final class NegotiateTest extends CIUnitTestCase
         $this->assertSame('popcorn/cheddar', $this->negotiate->media(['popcorn/cheddar', 'apple/mac'], false));
     }
 
+    public function testBestMatchIgnoresMediaRangesWithoutSubtype(): void
+    {
+        $this->request->setHeader('Accept', 'json, application/json');
+        $this->assertSame('application/json', $this->negotiate->media(['text/html', 'application/json'], true));
+
+        $this->request->setHeader('Accept', ', text/html');
+        $this->assertSame('text/html', $this->negotiate->media(['application/json', 'text/html'], true));
+    }
+
     public function testParameterMatching(): void
     {
         $this->request->setHeader('Accept', 'popcorn/cheddar;a=0;b=1');

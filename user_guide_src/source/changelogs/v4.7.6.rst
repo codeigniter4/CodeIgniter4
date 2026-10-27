@@ -45,6 +45,7 @@ Bugs Fixed
 - **HTTP:** Fixed a bug in ``ContentSecurityPolicy::setDefaultSrc()`` where passing an array of URIs resulted in an invalid ``'Array'`` directive.
 - **HTTP:** Fixed a bug where ``IncomingRequest`` did not read the request body when PHP's ``post_max_size`` was set to ``0`` or ``-1`` (unlimited).
 - **HTTP:** Fixed a bug where ``IncomingRequest::isSecure()`` did not recognize ``https`` in the ``X-Forwarded-Proto`` header from a trusted proxy when the value contained uppercase letters or surrounding whitespace, or was represented as a single-element array.
+- **HTTP:** Fixed a bug where ``Negotiate::media()`` threw an ``ErrorException`` when the ``Accept`` header contained a value without a subtype, such as ``json`` or an empty list element. Such values are now ignored.
 - **HTTP:** Fixed stale ``$_REQUEST`` values after ``SiteURIFactory`` normalizes GET parameters, so ``Validation::withRequest()`` reads the normalized values while unrelated REQUEST entries are preserved.
 - **Security:** Fixed a bug where a valid JSON request body that is not an object (for example a JSON array) was corrupted after CSRF verification when the token was sent via the ``X-CSRF-TOKEN`` header.
 
