@@ -5,7 +5,7 @@
  * scaffolding above the search box in the left sidebar, containing a <select>
  * so readers can jump between:
  *   - stable:               https://codeigniter.com/user_guide/
- *   - latest (in-progress): https://codeigniter4.github.io/userguide/
+ *   - latest (in-progress): https://codeigniter4.github.io/CodeIgniter4/
  *   - local build:          file:// or localhost, etc. (only shown when not on a deployed host)
  */
 (() => {
@@ -20,7 +20,7 @@
 			slug: 'latest (in-progress)',
 			label: 'Latest (in-progress)',
 			host: 'codeigniter4.github.io',
-			pathPrefix: '/userguide/',
+			pathPrefix: '/CodeIgniter4/',
 		},
 	];
 
