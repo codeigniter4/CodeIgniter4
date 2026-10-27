@@ -420,7 +420,7 @@ final class AbstractCommandTest extends CIUnitTestCase
         $getPrompt = $this->getPrivateMethodInvoker(new OutputProbeCommand(new Commands()), 'getPrompt');
 
         $this->assertSame('blue', $getPrompt()->ask('Color?'));
-        $this->assertSame('Color? : blue' . PHP_EOL, $io->getOutput());
+        $this->assertSame("Color? : blue\n", $io->getOutput());
     }
 
     public function testOverriddenGetPromptAnswersTheMissingArguments(): void

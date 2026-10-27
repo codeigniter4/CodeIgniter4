@@ -69,6 +69,16 @@ final class PromptTest extends CIUnitTestCase
         $this->assertSame("Color? : red\n", $this->getUndecoratedOutput());
     }
 
+    public function testPromptsAreSeparatedByABlankLineOnlyWhenSomethingFollows(): void
+    {
+        $prompt = $this->createPrompt(['red', 'blue']);
+
+        $prompt->ask('Color?');
+        $prompt->ask('Other?');
+
+        $this->assertSame("Color? : red\n\nOther? : blue\n", $this->getUndecoratedOutput());
+    }
+
     public function testAskReturnsTheDefaultForAnEmptyAnswer(): void
     {
         $this->assertSame('red', $this->createPrompt([''])->ask('Color?', 'red'));
@@ -90,7 +100,12 @@ final class PromptTest extends CIUnitTestCase
     {
         $this->assertSame('blue', $this->createPrompt(['green', 'blue'])->ask('Color?', ['red', 'blue']));
         $this->assertSame(
-            "Color? [red, blue]: green\nThe \"Color?\" field must be one of: red, blue.\nColor? [red, blue]: blue\n",
+            <<<'EOT'
+                Color? [red, blue]: green
+                The "Color?" field must be one of: red, blue.
+                Color? [red, blue]: blue
+
+                EOT,
             $this->getUndecoratedOutput(),
         );
     }
@@ -117,7 +132,15 @@ final class PromptTest extends CIUnitTestCase
     {
         $this->assertSame('1', $this->createPrompt(['1'])->askByKey('Hobby:', ['Games', 'Sleep']));
         $this->assertSame(
-            "\nHobby:\n  [0]  Games\n  [1]  Sleep\n\n[0, 1]: 1\n",
+            <<<'EOT'
+
+                Hobby:
+                  [0]  Games
+                  [1]  Sleep
+
+                [0, 1]: 1
+
+                EOT,
             $this->getUndecoratedOutput(),
         );
     }
@@ -131,7 +154,15 @@ final class PromptTest extends CIUnitTestCase
     {
         $this->assertSame('b', $this->createPrompt(['b'])->askByKey(['Pick a hobby.', 'Hobby'], ['a' => 'Games', 'b' => 'Sleep']));
         $this->assertSame(
-            "\nPick a hobby.\n  [a]  Games\n  [b]  Sleep\n\nHobby [a, b]: b\n",
+            <<<'EOT'
+
+                Pick a hobby.
+                  [a]  Games
+                  [b]  Sleep
+
+                Hobby [a, b]: b
+
+                EOT,
             $this->getUndecoratedOutput(),
         );
     }
@@ -151,7 +182,17 @@ final class PromptTest extends CIUnitTestCase
             $this->createPrompt(['0,2'])->askByMultipleKeys('Hobbies:', ['Games', 'Sleep', 'Music']),
         );
         $this->assertSame(
-            "\nHobbies:\n  [0]  Games\n  [1]  Sleep\n  [2]  Music\n\nYou can specify multiple values separated by commas.\n[0, 1, 2] : 0,2\n",
+            <<<'EOT'
+
+                Hobbies:
+                  [0]  Games
+                  [1]  Sleep
+                  [2]  Music
+
+                You can specify multiple values separated by commas.
+                [0, 1, 2] : 0,2
+
+                EOT,
             $this->getUndecoratedOutput(),
         );
     }
@@ -311,7 +352,7 @@ final class PromptTest extends CIUnitTestCase
         $this->createKeyPrompt("\n")->select('Pick one', ['a' => 'Alpha', 'b' => 'Bravo'], 'b');
 
         $this->assertSame(
-            "\nPick one\n\e[?25l\r\e[2K↑↓ navigate • ⏎ submit\n\r\e[2K  Alpha\n\r\e[2K❯ Bravo\n\n\e[?25h",
+            "\nPick one\n\e[?25l\r\e[2K↑↓ navigate • ⏎ submit\n\r\e[2K  Alpha\n\r\e[2K❯ Bravo\n\e[?25h",
             $this->getUndecoratedOutput(),
         );
     }
@@ -513,7 +554,6 @@ final class PromptTest extends CIUnitTestCase
                 Number [2]: x
                 Please select correctly.
                 Number [2]: 3
-
 
                 EOT,
             $this->getUndecoratedOutput(),

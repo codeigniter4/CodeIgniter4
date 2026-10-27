@@ -247,6 +247,7 @@ final class RotateKeyTest extends CIUnitTestCase
         $this->assertSame(
             <<<'EOT'
                 Rotate encryption key? The current key will be moved to `previousKeys`. [n, y]: n
+
                 Key rotation cancelled.
 
                 EOT,
@@ -269,6 +270,7 @@ final class RotateKeyTest extends CIUnitTestCase
         $this->assertSame(
             <<<'EOT'
                 Rotate encryption key? The current key will be moved to `previousKeys`. [n, y]: y
+
                 Encryption key rotated. 1 previous key retained for decryption fallback.
                 Re-encrypt existing data with the new key when ready.
 

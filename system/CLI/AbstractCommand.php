@@ -820,7 +820,6 @@ abstract class AbstractCommand
 
         foreach ($missing as $name) {
             $arguments[] = $this->getPrompt()->ask($labels[$name] ?? lang('CLI.argumentPrompt', [$name]), null, 'required');
-            CLI::newLine();
         }
 
         $this->afterPrompting($arguments, $options);

@@ -370,6 +370,52 @@ final class OutputTest extends CIUnitTestCase
         $this->assertSame([['STDOUT', "first\n"], ['STDOUT', "\nsecond\n"]], $io->writes);
     }
 
+    public function testDeferredNewLineWritesNothingWhenNothingFollows(): void
+    {
+        $io     = new RecordingInputOutput();
+        $output = new Output($io);
+
+        $output->print("first\n");
+        $output->deferNewLine();
+
+        $this->assertSame([['STDOUT', "first\n"]], $io->writes);
+    }
+
+    public function testDeferredNewLineIsWrittenOnceBeforeTheNextWrites(): void
+    {
+        $io     = new RecordingInputOutput();
+        $output = new Output($io, $this->createUncoloredTerminal());
+
+        $output->print("first\n");
+        $output->deferNewLine();
+        $output->write('second');
+        $output->deferNewLine();
+        $output->error('third');
+        $output->deferNewLine();
+        $output->print('fourth');
+
+        $this->assertSame([
+            ['STDOUT', "first\n"],
+            ['STDOUT', "\nsecond\n"],
+            ['STDERR', "\nthird\n"],
+            ['STDOUT', "\n"],
+            ['STDOUT', 'fourth'],
+        ], $io->writes);
+    }
+
+    public function testWriteDeferredNewLineFlushesTheHeldLineOnce(): void
+    {
+        $io     = new RecordingInputOutput();
+        $output = new Output($io);
+
+        $output->deferNewLine();
+        $output->writeDeferredNewLine();
+        $output->writeDeferredNewLine();
+        $output->write('next');
+
+        $this->assertSame([['STDOUT', "\n"], ['STDOUT', "next\n"]], $io->writes);
+    }
+
     public function testSetInputOutputReplacesTheTransport(): void
     {
         $first  = new RecordingInputOutput();
