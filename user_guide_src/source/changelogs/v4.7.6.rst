@@ -18,6 +18,7 @@ BREAKING
 Message Changes
 ***************
 
+- Added the ``CLI.inputEnded`` language string.
 - Added the ``Format.invalidXMLValue`` language string.
 
 *******
@@ -35,6 +36,7 @@ Bugs Fixed
 **********
 
 - **CLI:** Fixed a bug where ``CLI::promptByMultipleKeys()`` accepted a key missing from the options when it was below the last key, returning an empty selection, rejected a key above the last one when the options were not in key order, and offered ``0`` as the default when the first key was not ``0``.
+- **CLI:** Fixed a bug where a prompt asked again forever when its input was piped or redirected and ran out before a valid answer: ``CLI::prompt()`` and ``CLI::promptByKey()`` whose default fails the validation rules, and ``CLI::promptByMultipleKeys()`` whose options have string keys. They now throw a ``CLIException``. The new ``InputOutput::isAtEnd()`` tells that end of the input from an empty line. Pressing Ctrl+D at a terminal still asks again.
 - **Commands:** Fixed a bug where generator commands did not sort the imports of a template with CRLF line endings.
 - **Format:** Fixed ``XMLFormatter`` so that an array key that becomes empty after sanitization no longer triggers a ``ValueError``; the fallback tag name ``item`` is used instead. Values that cannot be converted to a string, such as objects not implementing ``Stringable``, now throw a ``FormatException`` instead of a fatal ``Error``.
 - **Helpers:** Fixed a regression in v4.7.5 where ``set_value()`` threw a ``TypeError`` when the default value was not a string or an array, such as an integer, a float, ``null``, or a ``Stringable`` object. Such values are now converted to a string.

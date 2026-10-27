@@ -61,6 +61,14 @@ final class PhpStreamWrapper
     }
 
     /**
+     * Returns `false`, since the stream has no descriptor.
+     */
+    public function stream_cast(): false
+    {
+        return false;
+    }
+
+    /**
      * @return string
      */
     public function stream_read(int $count)
