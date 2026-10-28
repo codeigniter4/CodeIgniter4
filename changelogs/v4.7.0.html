@@ -639,7 +639,7 @@ service instead of relying on <code class="docutils literal notranslate"><span c
 <li><p><strong>Encryption:</strong> Added <code class="docutils literal notranslate"><span class="pre">Config\Encryption::$previousKeys</span></code> configuration option to support encryption key rotation. When decryption with the current key fails, the system automatically falls back to previous keys, allowing you to rotate encryption keys without losing access to old encrypted data.</p></li>
 <li><p><strong>Image:</strong> The <code class="docutils literal notranslate"><span class="pre">ImageMagickHandler</span></code> has been rewritten to rely solely on the PHP <code class="docutils literal notranslate"><span class="pre">imagick</span></code> extension.</p></li>
 <li><p><strong>Image:</strong> Added <code class="docutils literal notranslate"><span class="pre">ImageMagickHandler::clearMetadata()</span></code> method to remove image metadata for privacy protection.</p></li>
-<li><p><strong>ResponseTrait:</strong> Added <code class="docutils literal notranslate"><span class="pre">paginate`</span></code> method to simplify paginated API responses. See <a class="reference internal" href="../outgoing/api_responses.html#api-response-trait-paginate"><span class="std std-ref">ResponseTrait::paginate()</span></a> for details.</p></li>
+<li><p><strong>ResponseTrait:</strong> Added <code class="docutils literal notranslate"><span class="pre">paginate()</span></code> method to simplify paginated API responses. See <a class="reference internal" href="../outgoing/api_responses.html#api-response-trait-paginate"><span class="std std-ref">ResponseTrait::paginate()</span></a> for details.</p></li>
 <li><p><strong>Session:</strong> Added <code class="docutils literal notranslate"><span class="pre">persistent</span></code> config item to <code class="docutils literal notranslate"><span class="pre">RedisHandler</span></code>.</p></li>
 <li><p><strong>Session:</strong> Added connection persistence for Redis and Memcached session handlers via <code class="docutils literal notranslate"><span class="pre">PersistsConnection</span></code> trait, improving performance in worker mode by reusing connections across requests.</p></li>
 <li><p><strong>Time:</strong> added methods <code class="docutils literal notranslate"><span class="pre">Time::addCalendarMonths()</span></code> and <code class="docutils literal notranslate"><span class="pre">Time::subCalendarMonths()</span></code></p></li>
@@ -791,7 +791,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Oct 27, 2026.
+      <span class="lastupdated">Last updated on Oct 28, 2026.
       </span></p>
   </div>
 
