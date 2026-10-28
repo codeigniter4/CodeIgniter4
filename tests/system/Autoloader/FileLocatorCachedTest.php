@@ -38,13 +38,6 @@ final class FileLocatorCachedTest extends FileLocatorTest
 
     public static function tearDownAfterClass(): void
     {
-        // Delete cache file.
-        $autoloader  = new Autoloader();
-        $handler     = new FileVarExportHandler(self::getIsolatedCachePath());
-        $fileLocator = new FileLocator($autoloader);
-        $locator     = new FileLocatorCached($fileLocator, $handler);
-        $locator->deleteCache();
-
         self::tearDownAfterClassIsolatedCache();
 
         parent::tearDownAfterClass();

@@ -30,8 +30,6 @@ final class FactoriesCacheFileVarExportHandlerTest extends AbstractFactoriesCach
         parent::setUpBeforeClass();
 
         self::setUpBeforeClassIsolatedCache();
-
-        helper('filesystem');
     }
 
     public static function tearDownAfterClass(): void

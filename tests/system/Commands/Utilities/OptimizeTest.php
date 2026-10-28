@@ -127,7 +127,7 @@ final class OptimizeTest extends CIUnitTestCase
                 }
                 PHP;
 
-            $cmd = sprintf('%s -r %s 2>&1', escapeshellcmd(PHP_BINARY), escapeshellarg($code));
+            $cmd = sprintf('%s -r %s 2>&1', escapeshellarg(PHP_BINARY), escapeshellarg($code));
             exec($cmd, $output, $status);
 
             $this->assertSame(0, $status, implode(PHP_EOL, $output));
