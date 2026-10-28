@@ -184,6 +184,7 @@ final class CreateDatabaseTest extends CIUnitTestCase
         $this->assertSame(
             <<<'EOT'
                 Please choose a valid file extension [db, sqlite]: db
+
                 Database "database.db" successfully created.
 
                 EOT,

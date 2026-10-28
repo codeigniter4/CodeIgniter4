@@ -344,6 +344,11 @@ output of their run through ``$this->getPrompt()``:
         The same as the static methods of the same names, writing nothing when the
         level of the output is below ``$verbosity``.
 
+    .. php:method:: deferNewLine(): void
+
+        Writes a blank line before whatever is written next, and none if nothing follows.
+        The prompts end with it, so a prompt that ends the run leaves no blank line behind.
+
     .. php:method:: error(string $text[, string $foreground = 'light_red'[, string $background = '']]): void
     .. php:method:: beep(int $num = 1): void
     .. php:method:: clearScreen(): void

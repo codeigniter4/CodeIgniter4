@@ -452,6 +452,7 @@ final class AbstractGeneratorCommandTest extends CIUnitTestCase
 
                 Warning: Using the "CodeIgniter" namespace will generate the file in the system directory.
                 Are you sure you want to continue? [y, n]: y
+
                 File exists: "SYSTEMPATH/CLI/CLI.php"
                 File exists: "SYSTEMPATH/CLI/Commands.php"
 
@@ -476,10 +477,12 @@ final class AbstractGeneratorCommandTest extends CIUnitTestCase
 
                 Warning: Using the "CodeIgniter" namespace will generate the file in the system directory.
                 Are you sure you want to continue? [y, n]: y
+
                 File exists: "SYSTEMPATH/CLI/CLI.php"
                 File exists: "SYSTEMPATH/CLI/Commands.php"
                 Warning: Using the "CodeIgniter" namespace will generate the file in the system directory.
                 Are you sure you want to continue? [y, n]: n
+
                 Operation has been cancelled.
 
                 EOT,

@@ -28,6 +28,8 @@ class Output
      */
     private bool $toStderr = false;
 
+    private bool $newLineDeferred = false;
+
     /**
      * Colour support per stream id, detected on first use.
      *
@@ -60,6 +62,7 @@ class Output
             return;
         }
 
+        $this->writeDeferredNewLine();
         $this->io->fwrite($this->stream(), $this->color($text, $foreground, $background));
 
         // A line feed ends both LF and CRLF, so this holds on every OS.
@@ -104,6 +107,31 @@ class Output
         for ($i = 0; $i < $num; $i++) {
             $this->write(verbosity: $verbosity);
         }
+    }
+
+    /**
+     * Writes a blank line before whatever is written next, and none if nothing follows.
+     */
+    public function deferNewLine(): void
+    {
+        $this->newLineDeferred = true;
+    }
+
+    /**
+     * Writes the blank line held by `deferNewLine()`, if any.
+     *
+     * @internal
+     */
+    public function writeDeferredNewLine(): void
+    {
+        if (! $this->newLineDeferred) {
+            return;
+        }
+
+        $this->newLineDeferred = false;
+
+        $this->writeRaw(PHP_EOL);
+        $this->cursorAtLineStart = true;
     }
 
     /**
@@ -245,9 +273,10 @@ class Output
      */
     private function line(string $text): string
     {
-        $prefix = $this->cursorAtLineStart ? '' : PHP_EOL;
+        $prefix = $this->cursorAtLineStart && ! $this->newLineDeferred ? '' : PHP_EOL;
 
         $this->cursorAtLineStart = true;
+        $this->newLineDeferred   = false;
 
         return $prefix . $text . PHP_EOL;
     }

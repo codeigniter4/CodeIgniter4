@@ -102,6 +102,7 @@ final class ClearLogsTest extends CIUnitTestCase
             sprintf(
                 <<<'EOT'
                     Delete all log files in %s? [n, y]: n
+
                     Log deletion cancelled.
 
                     EOT,
@@ -128,6 +129,7 @@ final class ClearLogsTest extends CIUnitTestCase
             sprintf(
                 <<<EOT
                     Delete all log files in %s? [n, y]:{$space}
+
                     Log deletion cancelled.
 
                     EOT,
@@ -180,6 +182,7 @@ final class ClearLogsTest extends CIUnitTestCase
             sprintf(
                 <<<'EOT'
                     Delete all log files in %1$s? [n, y]: y
+
                     Log files in %1$s cleared.
 
                     EOT,

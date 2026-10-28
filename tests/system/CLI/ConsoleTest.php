@@ -235,6 +235,7 @@ final class ConsoleTest extends CIUnitTestCase
                     Command "app:inf" not found.
 
                     Run "app:info" instead? [y, n]: y
+
                     CodeIgniter Version: %s
 
                     EOT,
@@ -288,6 +289,7 @@ final class ConsoleTest extends CIUnitTestCase
                   [3]  none of these
 
                 [0, 1, 2, 3]: 0
+
                 Cache cleared using the "file" driver.
 
                 EOT,

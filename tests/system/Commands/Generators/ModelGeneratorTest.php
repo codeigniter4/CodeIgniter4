@@ -232,6 +232,7 @@ final class ModelGeneratorTest extends CIUnitTestCase
 
                 Warning: Using the "CodeIgniter" namespace will generate the file in the system directory.
                 Are you sure you want to continue? [y, n]: n
+
                 Operation has been cancelled.
 
                 EOT,
@@ -256,6 +257,7 @@ final class ModelGeneratorTest extends CIUnitTestCase
 
                 Warning: Using the "CodeIgniter" namespace will generate the file in the system directory.
                 Are you sure you want to continue? [y, n]: y
+
                 File created: SYSTEMPATH/Models/User.php
                 Warning: Using the "CodeIgniter" namespace will generate the file in the system directory.
                 File created: SYSTEMPATH/Entities/User.php

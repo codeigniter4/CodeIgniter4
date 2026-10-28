@@ -71,6 +71,8 @@ class Prompt
             $input = $input === '' ? $default : $input;
 
             if ($rules === [] || $this->validate(sprintf('"%s"', trim($field)), $input, $rules)) {
+                $this->output->deferNewLine();
+
                 return $input;
             }
 
@@ -141,11 +143,13 @@ class Prompt
         $this->output->newLine();
 
         while (true) {
-            $input = $this->ask($field);
+            $input = $this->readLine(sprintf('%s : ', $field));
             $input = $input === '' ? $default : $input;
             $keys  = array_map(intval(...), explode(',', $input));
 
             if (preg_match('/^\d+(,\d+)*$/', $input) === 1 && array_diff($keys, array_keys($options)) === []) {
+                $this->output->deferNewLine();
+
                 return array_intersect_key($options, array_flip($keys));
             }
 
@@ -425,7 +429,7 @@ class Prompt
                 }
             }
 
-            $this->output->newLine();
+            $this->output->deferNewLine();
 
             return [$cursor, $ticked ?? []];
         } finally {
@@ -507,7 +511,7 @@ class Prompt
             $answer = $answer === '' ? $default : $answer;
 
             if (preg_match('/^\d+$/', $answer) === 1 && (int) $answer >= 1 && (int) $answer <= count($keys)) {
-                $this->output->newLine();
+                $this->output->deferNewLine();
 
                 return $keys[(int) $answer - 1];
             }
@@ -545,7 +549,7 @@ class Prompt
             $none    = $answer === '0' && ! $required;
 
             if ($none || (preg_match('/^\d+(\s*,\s*\d+)*$/', $answer) === 1 && min($numbers) >= 1 && max($numbers) <= $count)) {
-                $this->output->newLine();
+                $this->output->deferNewLine();
 
                 return $none ? [] : $this->pickPositions($options, array_map(static fn (int $number): int => $number - 1, $numbers));
             }
@@ -560,6 +564,7 @@ class Prompt
 
     private function readLine(string $prompt): string
     {
+        $this->output->writeDeferredNewLine();
         $this->output->setCursorAtLineStart(true);
 
         return trim($this->output->getInputOutput()->input($prompt));

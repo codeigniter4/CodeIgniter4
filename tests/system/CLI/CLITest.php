@@ -360,7 +360,7 @@ final class CLITest extends CIUnitTestCase
         CLI::setInputOutput($io);
 
         $this->assertSame('blue', CLI::getPrompt()->ask('Color?'));
-        $this->assertSame('Color? : blue' . PHP_EOL, $io->getOutput());
+        $this->assertSame("Color? : blue\n", $io->getOutput());
     }
 
     public function testValidateIsDeprecatedInFavorOfPromptValidate(): void
