@@ -34,6 +34,13 @@ use ReflectionMethod;
 class BaseConfig
 {
     /**
+     * SAPIs whose live getenv() only finds names, with the exact case, that are
+     * also in $_SERVER or the getenv() array: the OS environment, plus FastCGI
+     * params under FPM and FrankenPHP's own env layers.
+     */
+    private const EXACT_ENV_SAPIS = ['cli', 'phpdbg', 'cli-server', 'fpm-fcgi', 'frankenphp'];
+
+    /**
      * An optional array of classes that will act as Registrars
      * for rapidly setting config class properties.
      *
@@ -437,11 +444,15 @@ class BaseConfig
                 self::$liveEnvNames[$prefix][$name] = [];
 
                 // Dot forms are never in the getenv() array, and underscore forms
-                // only miss it when the name has " " or "[". On Windows, env var
-                // names are case-insensitive, but only live getenv() calls match
-                // them that way, so every form is probed there. Elsewhere that
-                // would double the getenv() calls on a cold build for no gain.
-                $envKeys = PHP_OS_FAMILY === 'Windows' || strpbrk($name, ' [') !== false
+                // only miss it when the name has " " or "[". Live getenv() calls
+                // also match names case-insensitively on Windows, and under
+                // Apache mod_php, where they read SetEnv vars (e.g. APP_BASEURL
+                // for app_baseURL). So every form is probed there, and under
+                // any SAPI not known to match exactly. Elsewhere that would
+                // double the getenv() calls on a cold build for no gain.
+                $inexactEnv = PHP_OS_FAMILY === 'Windows' || ! in_array(PHP_SAPI, self::EXACT_ENV_SAPIS, true);
+
+                $envKeys = $inexactEnv || strpbrk($name, ' [') !== false
                     ? self::envKeys($name, $prefix, $shortPrefix)
                     : ["{$shortPrefix}.{$name}", "{$prefix}.{$name}"];
 
