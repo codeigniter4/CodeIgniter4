@@ -82,7 +82,7 @@ data can be passed to your application. URIs may only contain the following:
 -  Colon: ``:``
 -  Underscore: ``_``
 -  Dash: ``-``
--  Space: `` ``
+-  Space character
 
 .. note::
     This check is performed by the ``Router``. The Router takes the URL-encoded

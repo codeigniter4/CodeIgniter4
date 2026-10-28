@@ -99,7 +99,22 @@ which can gracefully keep the connection alive or re-establish it.
 
 The ``reconnect()`` method pings the server to check if the connection is still
 alive. If the connection has been lost, it will close and re-establish the
-connection.
+connection. An open transaction ends with the old connection. ``reconnect()``
+clears the transaction depth and marks the transaction failed before it
+opens the new connection, so ``transComplete()`` does not report success.
+On OCI8, commit mode returns to autocommit.
+
+The transaction-state reset described above only occurs when ``ping()``
+returns false. On PostgreSQL, ``ping()`` uses ``pg_ping()``, which can
+re-establish a broken connection and return true. In that case,
+``reconnect()`` does not clear the transaction state.
+
+The lost transaction is not resumed on the new connection. Subsequent
+writes may be committed automatically and cannot be rolled back by
+calling ``transComplete()``. If the operation must remain atomic, stop
+executing its remaining queries. Handle the failure at the application
+level that owns the entire transaction, including any nested transaction
+groups, before deciding whether to retry the entire operation.
 
 .. literalinclude:: connecting/007.php
     :lines: 2-

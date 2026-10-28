@@ -201,7 +201,7 @@ Class Reference
         :rtype:    CodeIgniter\\Email\\Email
 
         Sets the reply-to address. If the information is not provided the
-        information in the `setFrom <#setFrom>`_ method is used. Example:
+        information in the :php:meth:`setFrom()` method is used. Example:
 
         .. literalinclude:: email/005.php
 
