@@ -314,7 +314,8 @@ transactions.</p>
 <li><p><a class="reference internal" href="#disabling-transactions" id="id7">Disabling Transactions</a></p></li>
 <li><p><a class="reference internal" href="#test-mode" id="id8">Test Mode</a></p></li>
 <li><p><a class="reference internal" href="#running-transactions-manually" id="id9">Running Transactions Manually</a></p></li>
-<li><p><a class="reference internal" href="#nested-transactions" id="id10">Nested Transactions</a></p></li>
+<li><p><a class="reference internal" href="#mysql-deadlocks" id="id10">MySQL Deadlocks</a></p></li>
+<li><p><a class="reference internal" href="#nested-transactions" id="id11">Nested Transactions</a></p></li>
 </ul>
 </nav>
 <section id="codeigniter-s-approach-to-transactions">
@@ -490,8 +491,25 @@ if you would like to run transactions manually you can do so as follows:</p>
 transactions, <strong>NOT</strong> <code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transStart()</span></code>.</p>
 </div>
 </section>
+<section id="mysql-deadlocks">
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">MySQL Deadlocks</a><a class="headerlink" href="#mysql-deadlocks" title="Link to this heading"></a></h2>
+<p>InnoDB error 1213 rolls the victim transaction back. CodeIgniter keeps that
+transaction open. The next statement run through <code class="docutils literal notranslate"><span class="pre">query()</span></code>, <code class="docutils literal notranslate"><span class="pre">simpleQuery()</span></code>
+or the Query Builder on the same connection starts a new server transaction,
+so the write does not autocommit. The rollback happens when the outermost
+transaction finishes: <code class="docutils literal notranslate"><span class="pre">transCommit()</span></code> rolls that server transaction back and
+returns false, so the transaction has ended when it returns, and
+<code class="docutils literal notranslate"><span class="pre">transComplete()</span></code> also rolls it back. At a nested depth, <code class="docutils literal notranslate"><span class="pre">transCommit()</span></code>
+still returns true and only decrements the depth.</p>
+<p>Prepared queries are not covered. A deadlock raised by a prepared query is not
+detected, and a prepared query run after a deadlock does not start a new server
+transaction.</p>
+<p>Error 1205 is not handled this way. <code class="docutils literal notranslate"><span class="pre">innodb_rollback_on_timeout</span></code> decides
+whether InnoDB rolled that transaction back, and the message is the same
+either way.</p>
+</section>
 <section id="nested-transactions">
-<h2><a class="toc-backref" href="#id10" role="doc-backlink">Nested Transactions</a><a class="headerlink" href="#nested-transactions" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id11" role="doc-backlink">Nested Transactions</a><a class="headerlink" href="#nested-transactions" title="Link to this heading"></a></h2>
 <p>In CodeIgniter, transactions can be nested in a way such that only the
 outmost or top-level transaction commands are executed. You can include as
 many pairs of <code class="docutils literal notranslate"><span class="pre">transStart()</span></code>/<code class="docutils literal notranslate"><span class="pre">transComplete()</span></code> or <code class="docutils literal notranslate"><span class="pre">transBegin()</span></code>/<code class="docutils literal notranslate"><span class="pre">transCommit()</span></code>/<code class="docutils literal notranslate"><span class="pre">transRollback()</span></code>
