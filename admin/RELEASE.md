@@ -150,22 +150,15 @@ existing content.
   * Title: `4.x.x Ready code`
   * Description: blank
 * [ ] Merge the PR and wait for all tests.
-* [ ] Create a new Release:
-  * Choose a tag: `v4.x.x` (Create new tag: v4.x.x on publish)
-  * Target: `master`
-  * Title: `CodeIgniter 4.x.x`
-  * Description:
-    ```
-    CodeIgniter 4.x.x release.
-
-    See the changelog: https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md
-
-    ## New Contributors
-    *
-
-    **Full Changelog**: https://github.com/codeigniter4/CodeIgniter4/compare/v4.x.w...v4.x.x
-    ```
-    Click the "Generate release notes" button, and get the "New Contributors".
+* [ ] Create the new Release:
+  * Run `php admin/create-release.php 4.x.x --dry-run` and check the output.
+  * Run `php admin/create-release.php 4.x.x` to publish it.
+  * The above command does the following:
+    * Fetch GitHub's auto-generated release notes for `master` since the latest
+      release (override with `--previous=v4.x.w`)
+    * Credit every PR author except bots, marking first-time contributors
+    * Publish the release `CodeIgniter 4.x.x` with the tag `v4.x.x` on `master`,
+      linking to **CHANGELOG.md** and the full comparison
 * [ ] Watch the "[Verify Release](https://github.com/codeigniter4/CodeIgniter4/actions/workflows/verify-release.yml)"
   workflow and make sure it passes. It does the following:
   * Wait for the "[Deploy Distributable Repos](https://github.com/codeigniter4/CodeIgniter4/actions/workflows/deploy-distributables.yml)"
