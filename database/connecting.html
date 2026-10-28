@@ -411,7 +411,20 @@ consider calling the <code class="docutils literal notranslate"><span class="pre
 which can gracefully keep the connection alive or re-establish it.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">reconnect()</span></code> method pings the server to check if the connection is still
 alive. If the connection has been lost, it will close and re-establish the
-connection.</p>
+connection. An open transaction ends with the old connection. <code class="docutils literal notranslate"><span class="pre">reconnect()</span></code>
+clears the transaction depth and marks the transaction failed before it
+opens the new connection, so <code class="docutils literal notranslate"><span class="pre">transComplete()</span></code> does not report success.
+On OCI8, commit mode returns to autocommit.</p>
+<p>The transaction-state reset described above only occurs when <code class="docutils literal notranslate"><span class="pre">ping()</span></code>
+returns false. On PostgreSQL, <code class="docutils literal notranslate"><span class="pre">ping()</span></code> uses <code class="docutils literal notranslate"><span class="pre">pg_ping()</span></code>, which can
+re-establish a broken connection and return true. In that case,
+<code class="docutils literal notranslate"><span class="pre">reconnect()</span></code> does not clear the transaction state.</p>
+<p>The lost transaction is not resumed on the new connection. Subsequent
+writes may be committed automatically and cannot be rolled back by
+calling <code class="docutils literal notranslate"><span class="pre">transComplete()</span></code>. If the operation must remain atomic, stop
+executing its remaining queries. Handle the failure at the application
+level that owns the entire transaction, including any nested transaction
+groups, before deciding whether to retry the entire operation.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">reconnect</span><span class="p">();</span>
 </pre></div>
 </div>
