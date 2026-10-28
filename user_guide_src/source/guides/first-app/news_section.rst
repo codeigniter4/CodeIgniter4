@@ -184,7 +184,6 @@ Create **app/Views/news/index.php** and add the next piece of code.
 Here, each news item is looped and displayed to the user. You can see we
 wrote our template in PHP mixed with HTML. If you prefer to use a template
 language, you can use CodeIgniter's :doc:`View Parser </outgoing/view_parser>` or a third party parser.
-Parser </outgoing/view_parser>` or a third party parser.
 
 Complete News::show() Method
 ============================
