@@ -723,6 +723,17 @@ class Connection extends BaseConnection
     }
 
     /**
+     * Restore OCI_COMMIT_ON_SUCCESS. close() does not, and
+     * OCI_NO_AUTO_COMMIT would leave later writes uncommitted.
+     */
+    protected function abandonLostTransaction(): void
+    {
+        $this->commitMode = OCI_COMMIT_ON_SUCCESS;
+
+        parent::abandonLostTransaction();
+    }
+
+    /**
      * Returns the name of the current database being used.
      */
     public function getDatabase(): string
