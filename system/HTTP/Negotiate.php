@@ -184,13 +184,24 @@ class Negotiate
             }
 
             // if acceptable value is "anything", return the first available
+            // that the header does not exclude
             if ($accept['value'] === '*' || $accept['value'] === '*/*') {
-                return $supported[0];
+                foreach ($supported as $available) {
+                    if (! $this->isExcluded($acceptable, $available, $enforceTypes, $matchLocales)) {
+                        return $available;
+                    }
+                }
+
+                continue;
             }
 
-            // If an acceptable value is supported, return it
+            // If an acceptable value is supported, return it, unless the header
+            // excludes it with a more specific value, such as "text/html;q=0"
+            // for "text/*"
             foreach ($supported as $available) {
-                if ($this->match($accept, $available, $enforceTypes, $matchLocales)) {
+                if ($this->match($accept, $available, $enforceTypes, $matchLocales)
+                    && ! $this->isExcluded($acceptable, $available, $enforceTypes, $matchLocales)
+                ) {
                     return $available;
                 }
             }
@@ -233,8 +244,15 @@ class Negotiate
             }
 
             // if acceptable value is "anything", return the first available
+            // that the header does not exclude
             if ($accept['value'] === '*') {
-                return $supportedLocales[0];
+                foreach ($supportedLocales as $locale) {
+                    if (! $this->isExcluded($acceptable, $locale, false, true)) {
+                        return $locale;
+                    }
+                }
+
+                continue;
             }
 
             // look for exact match
@@ -248,19 +266,123 @@ class Negotiate
 
         foreach ($fallbackLocales as $fallbackLocale) {
             // look for exact match
-            if (in_array($fallbackLocale, $supportedLocales, true)) {
+            if (in_array($fallbackLocale, $supportedLocales, true)
+                && ! $this->isExcluded($acceptable, $fallbackLocale, false, true)
+            ) {
                 return $fallbackLocale;
             }
 
             // look for regional locale match
             foreach ($supportedLocales as $locale) {
-                if (str_starts_with($locale, $fallbackLocale . '-')) {
+                if (str_starts_with($locale, $fallbackLocale . '-')
+                    && ! $this->isExcluded($acceptable, $locale, false, true)
+                ) {
                     return $locale;
                 }
             }
         }
 
         return $supportedLocales[0];
+    }
+
+    /**
+     * Checks whether the header excludes a supported value, that is, whether
+     * the most specific value in the header that matches it has q=0.
+     *
+     * @param list<array{value: string, q: float, params: array<string, string>}> $acceptable
+     * @param bool                                                                $enforceTypes If TRUE, the values are media types.
+     * @param bool                                                                $matchLocales If TRUE, the values are language tags.
+     */
+    private function isExcluded(array $acceptable, string $supported, bool $enforceTypes, bool $matchLocales): bool
+    {
+        $supported   = $this->parseHeader($supported)[0];
+        $specificity = -1;
+        $excluded    = false;
+
+        // The header is sorted by quality, so of two equally specific values,
+        // the one with the higher quality is used.
+        foreach ($acceptable as $accept) {
+            $acceptSpecificity = $this->getMatchSpecificity($accept, $supported, $enforceTypes, $matchLocales);
+
+            if ($acceptSpecificity > $specificity) {
+                $specificity = $acceptSpecificity;
+                $excluded    = $accept['q'] === 0.0;
+            }
+        }
+
+        return $excluded;
+    }
+
+    /**
+     * Returns how specifically a header value matches a supported value, or -1
+     * if it does not match it. A wildcard is the least specific.
+     *
+     * A media range matches the media types of its type and subtype that have
+     * its parameters. "text/html" is more specific than "text/*", which is more
+     * specific than a full wildcard, and a range is more specific than one of
+     * the same kind with fewer parameters, so "text/html;level=1" is more
+     * specific than "text/html", and "text/*;charset=utf-8" than "text/*"
+     * (RFC 9110, Section 12.5.1). Types, subtypes, parameter names and charset
+     * values are compared ignoring case (RFC 9110, Section 8.3).
+     * A language range matches the tags that equal it or start with it followed
+     * by "-", ignoring case, and is more specific with more subtags
+     * (RFC 4647, Section 3.3.1). Other values must be equal, ignoring case.
+     *
+     * @param array{value: string, q: float, params: array<string, string>} $accept
+     * @param array{value: string, q: float, params: array<string, string>} $supported
+     */
+    private function getMatchSpecificity(array $accept, array $supported, bool $enforceTypes, bool $matchLocales): int
+    {
+        if ($enforceTypes) {
+            $range              = strtolower($accept['value']);
+            [$aType, $aSubType] = explode('/', $range, 2) + ['', ''];
+            [$sType, $sSubType] = explode('/', strtolower($supported['value']), 2) + ['', ''];
+
+            if ($range === '*' || $range === '*/*') {
+                $level = 0;
+            } elseif ($aType === $sType && $aSubType === '*') {
+                $level = 1;
+            } elseif ($aType === $sType && $aSubType === $sSubType) {
+                $level = 2;
+            } else {
+                return -1;
+            }
+
+            $aParams = array_change_key_case($accept['params']);
+            $sParams = array_change_key_case($supported['params']);
+
+            if (isset($aParams['charset'], $sParams['charset'])) {
+                $aParams['charset'] = strtolower($aParams['charset']);
+                $sParams['charset'] = strtolower($sParams['charset']);
+            }
+
+            foreach ($aParams as $label => $value) {
+                if (($sParams[$label] ?? null) !== $value) {
+                    return -1;
+                }
+            }
+
+            // A range has at most as many parameters as the value it matches,
+            // so it is more specific than any range of a lower level.
+            return $level * (count($sParams) + 1) + count($aParams);
+        }
+
+        if ($accept['value'] === '*' || $accept['value'] === '*/*') {
+            return 0;
+        }
+
+        if ($matchLocales) {
+            $aTag = strtolower($accept['value']);
+            $sTag = strtolower($supported['value']);
+
+            if ($aTag !== $sTag && ! str_starts_with($sTag, $aTag . '-')) {
+                return -1;
+            }
+
+            return substr_count($aTag, '-') + 1;
+        }
+
+        return strcasecmp($accept['value'], $supported['value']) === 0 ? 1 : -1;
     }
 
     /**

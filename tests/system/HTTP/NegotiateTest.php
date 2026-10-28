@@ -189,6 +189,125 @@ final class NegotiateTest extends CIUnitTestCase
         $this->assertSame('apple/mac', $this->negotiate->media(['popcorn/cheddar', 'apple/mac'], false));
     }
 
+    public function testWildcardsSkipExcludedValues(): void
+    {
+        $this->request->setHeader('Accept', 'application/json;q=0, */*');
+        $this->assertSame('text/html', $this->negotiate->media(['application/json', 'text/html'], true));
+
+        $this->request->setHeader('Accept', 'text/*, text/html;q=0');
+        $this->assertSame('text/plain', $this->negotiate->media(['text/html', 'text/plain'], true));
+
+        $this->request->setHeader('Accept', '*/*, text/html;q=0');
+        $this->assertSame('', $this->negotiate->media(['text/html'], true));
+
+        $this->request->setHeader('Accept-Charset', 'utf-8;q=0, *');
+        $this->assertSame('iso-8859-1', $this->negotiate->charset(['utf-8', 'iso-8859-1']));
+
+        $this->request->setHeader('Accept-Encoding', 'gzip;q=0, *');
+        $this->assertSame('br', $this->negotiate->encoding(['gzip', 'br']));
+
+        $this->request->setHeader('Accept-Language', 'en;q=0, *');
+        $this->assertSame('fr', $this->negotiate->language(['en', 'fr']));
+
+        config(Feature::class)->strictLocaleNegotiation = true;
+
+        $this->assertSame('de', $this->negotiate->language(['en', 'de']));
+    }
+
+    public function testMediaRangesExcludeMatchingValues(): void
+    {
+        $this->request->setHeader('Accept', 'text/*;q=0, */*');
+        $this->assertSame('application/json', $this->negotiate->media(['text/html', 'application/json'], true));
+
+        $this->request->setHeader('Accept', 'text/html;q=0, */*');
+        $this->assertSame('text/plain', $this->negotiate->media(['text/html;charset=utf-8', 'text/plain'], true));
+
+        $this->request->setHeader('Accept', 'text/html;q=0, text/*');
+        $this->assertSame('text/css', $this->negotiate->media(['text/html;charset=utf-8', 'text/css'], true));
+
+        // a range only excludes the values that have its parameters
+        $this->request->setHeader('Accept', 'text/html;level=1;q=0, */*');
+        $this->assertSame('text/html', $this->negotiate->media(['text/html;level=1', 'text/html'], true));
+    }
+
+    public function testRangesExcludeValuesIgnoringCase(): void
+    {
+        $this->request->setHeader('Accept', 'text/*;q=0, TEXT/HTML;q=0.5, */*;q=0.1');
+        $this->assertSame('text/html', $this->negotiate->media(['text/html'], true));
+
+        $this->request->setHeader('Accept', 'TEXT/*;q=0, */*');
+        $this->assertSame('application/json', $this->negotiate->media(['text/html', 'application/json'], true));
+
+        $this->request->setHeader('Accept', 'text/html;CHARSET="UTF-8";q=0, */*');
+        $this->assertSame('text/plain', $this->negotiate->media(['text/html;charset=utf-8', 'text/plain'], true));
+
+        $this->request->setHeader('Accept-Charset', 'UTF-8;q=0, *');
+        $this->assertSame('iso-8859-1', $this->negotiate->charset(['utf-8', 'iso-8859-1']));
+
+        $this->request->setHeader('Accept-Encoding', 'GZIP;q=0, *');
+        $this->assertSame('br', $this->negotiate->encoding(['gzip', 'br']));
+    }
+
+    public function testMediaRangeParametersAddSpecificity(): void
+    {
+        $this->request->setHeader('Accept', 'text/*;charset=utf-8;q=0, text/*');
+        $this->assertSame(
+            'text/plain;charset=iso-8859-1',
+            $this->negotiate->media(['text/html;charset=utf-8', 'text/plain;charset=iso-8859-1'], true),
+        );
+
+        $this->request->setHeader('Accept', '*/*;charset=utf-8;q=0, */*');
+        $this->assertSame('application/json', $this->negotiate->media(['text/html;charset=utf-8', 'application/json'], true));
+
+        // a type/subtype range is more specific than a type/* range with more parameters
+        $this->request->setHeader('Accept', 'text/html;q=0, text/*;charset=utf-8;level=1');
+        $this->assertSame(
+            'text/plain;charset=utf-8;level=1',
+            $this->negotiate->media(['text/html;charset=utf-8;level=1', 'text/plain;charset=utf-8;level=1'], true),
+        );
+    }
+
+    public function testMoreSpecificRangesTakePrecedence(): void
+    {
+        $this->request->setHeader('Accept', 'text/html, text/*;q=0');
+        $this->assertSame('text/html', $this->negotiate->media(['text/plain', 'text/html'], true));
+        $this->assertSame('', $this->negotiate->media(['text/plain'], true));
+
+        $this->request->setHeader('Accept', 'text/html;q=0, text/html;level=1;q=0.5, */*');
+        $this->assertSame('text/html;level=1', $this->negotiate->media(['text/html', 'text/html;level=1'], true));
+
+        $this->request->setHeader('Accept-Language', 'en;q=0, en-GB;q=0.5, *');
+        $this->assertSame('en-GB', $this->negotiate->language(['en-US', 'en-GB', 'fr']));
+
+        config(Feature::class)->strictLocaleNegotiation = true;
+
+        $this->assertSame('en-GB', $this->negotiate->language(['en-US', 'en-GB']));
+    }
+
+    public function testLanguageRangesExcludeRegionalLocales(): void
+    {
+        $this->request->setHeader('Accept-Language', 'en;q=0, *');
+        $this->assertSame('fr', $this->negotiate->language(['en-US', 'fr']));
+
+        // language ranges are case-insensitive and end on a subtag boundary
+        $this->request->setHeader('Accept-Language', 'zh;q=0, *');
+        $this->assertSame('zha', $this->negotiate->language(['ZH-Hant', 'zha']));
+
+        $this->request->setHeader('Accept-Language', 'en-US, en-GB;q=0');
+        $this->assertSame('en-AU', $this->negotiate->language(['en-GB', 'en-AU']));
+
+        config(Feature::class)->strictLocaleNegotiation = true;
+
+        $this->request->setHeader('Accept-Language', 'en;q=0, *');
+        $this->assertSame('fr', $this->negotiate->language(['en-US', 'fr']));
+
+        $this->request->setHeader('Accept-Language', 'zh;q=0, *');
+        $this->assertSame('zha', $this->negotiate->language(['ZH-Hant', 'zha']));
+
+        $this->request->setHeader('Accept-Language', 'en-US, en-GB;q=0');
+        $this->assertSame('en-AU', $this->negotiate->language(['en-GB', 'en-AU']));
+    }
+
     public function testBestMatchOnlyLowQuality(): void
     {
         $this->request->setHeader('Accept', 'popcorn/cheddar;q=0');
