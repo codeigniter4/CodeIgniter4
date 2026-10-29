@@ -170,7 +170,11 @@ looking up every property of every config class. The matching rules and their
 order are unchanged. One edge case behaves differently: a ``putenv()`` call
 that does not also write ``$_ENV`` or ``$_SERVER``, made after the first config
 class was built, may not be seen by config classes built later until
-``BaseConfig::reset()`` runs. Values loaded from the **.env** file are not
+``BaseConfig::reset()`` runs. This applies whether the variable is added,
+changed, or removed. In Worker Mode, this cache persists across requests, so
+such changes may not be seen in later requests either. To make the change
+visible, also set the value in ``$_ENV`` (or unset it there), or call
+``BaseConfig::reset()``. Values loaded from the **.env** file are not
 affected, since they are written to ``$_ENV`` and ``$_SERVER`` as well.
 
 Config classes that override ``getEnvValue()`` or ``initEnvValue()`` keep the
