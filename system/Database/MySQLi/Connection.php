@@ -97,6 +97,16 @@ class Connection extends BaseConnection
     protected bool $strictOn = false;
 
     /**
+     * InnoDB errno 1213 ended this transaction.
+     */
+    private bool $transServerRolledBack = false;
+
+    /**
+     * The next statement must BEGIN before it runs.
+     */
+    private bool $transNeedsServerRestart = false;
+
+    /**
      * Checks whether the native database error represents a unique constraint violation.
      */
     protected function isUniqueConstraintViolation(int|string $code, string $message): bool
@@ -350,6 +360,18 @@ class Connection extends BaseConnection
         }
 
         try {
+            // 1213 ended the server transaction. BEGIN again so this statement
+            // does not autocommit. A failed BEGIN stays pending. 1205 is unchanged:
+            // innodb_rollback_on_timeout decides that case.
+            if ($this->connID instanceof mysqli && $this->serverTransactionRestartPending()) {
+                // Exception reporting off: a failed BEGIN returns false.
+                if (! $this->connID->begin_transaction()) {
+                    return false;
+                }
+
+                $this->transNeedsServerRestart = false;
+            }
+
             return $this->connID->query($this->prepQuery($sql), $this->resultMode);
         } catch (mysqli_sql_exception $e) {
             log_message('error', "{message}\nin {exFile} on line {exLine}.\n{trace}", [
@@ -358,6 +380,10 @@ class Connection extends BaseConnection
                 'exLine'  => $e->getLine(),
                 'trace'   => render_backtrace($e->getTrace()),
             ]);
+
+            if ($e->getCode() === 1213 && $this->transDepth > 0) {
+                $this->markServerRolledBackTransaction();
+            }
 
             $exception = $this->createDatabaseException($e->getMessage(), $e->getCode(), $e);
 
@@ -637,16 +663,53 @@ class Connection extends BaseConnection
 
     protected function _transBegin(): bool
     {
-        return $this->connID->begin_transaction();
+        if (! $this->connID->begin_transaction()) {
+            return false;
+        }
+
+        $this->clearDeadlockTransactionState();
+
+        return true;
     }
 
     protected function _transCommit(): bool
     {
+        // mysqli::commit() returns true after 1213. End the transaction
+        // and report failure instead.
+        if ($this->transServerRolledBack) {
+            $this->transRollback();
+
+            return false;
+        }
+
         return $this->connID->commit();
     }
 
     protected function _transRollback(): bool
     {
-        return $this->connID->rollback();
+        if (! $this->connID->rollback()) {
+            return false;
+        }
+
+        $this->clearDeadlockTransactionState();
+
+        return true;
+    }
+
+    private function markServerRolledBackTransaction(): void
+    {
+        $this->transServerRolledBack   = true;
+        $this->transNeedsServerRestart = true;
+    }
+
+    private function serverTransactionRestartPending(): bool
+    {
+        return $this->transNeedsServerRestart && $this->transDepth > 0;
+    }
+
+    private function clearDeadlockTransactionState(): void
+    {
+        $this->transServerRolledBack   = false;
+        $this->transNeedsServerRestart = false;
     }
 }
