@@ -18,8 +18,12 @@ use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
+use CustomEnvHookConfig;
 use Encryption;
+use EnvIndexConfig;
+use GrowingEnvConfig;
 use MergeRegistrarConfig;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
@@ -27,6 +31,7 @@ use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 use PHPUnit\Framework\MockObject\MockObject;
 use RegistrarConfig;
 use SimpleConfig;
+use Snake_Config;
 use Tests\Support\Config\BadRegistrar;
 use Tests\Support\Config\MergeOrderRegistrar;
 use Tests\Support\Config\MergePlainRegistrar;
@@ -67,6 +72,12 @@ final class BaseConfigTest extends CIUnitTestCase
             require $this->fixturesFolder . '/Encryption.php';
         }
 
+        foreach (['EnvIndexConfig', 'Snake_Config', 'CustomEnvHookConfig', 'GrowingEnvConfig'] as $class) {
+            if (! class_exists($class, false)) {
+                require $this->fixturesFolder . '/' . $class . '.php';
+            }
+        }
+
         BaseConfig::reset();
 
         Services::injectMock('superglobals', new Superglobals());
@@ -77,6 +88,7 @@ final class BaseConfigTest extends CIUnitTestCase
         parent::tearDown();
 
         $this->clearEnvironmentOverrides();
+        GrowingEnvConfig::$grow = false;
         // This test modifies BaseConfig::$modules, so should reset.
         BaseConfig::reset();
         // This test modifies Services locator, so should reset.
@@ -93,6 +105,16 @@ final class BaseConfigTest extends CIUnitTestCase
             'SimpleConfig.QZEROSTR',
             'SimpleConfig.QEMPTYSTR',
             'SimpleConfig.QFALSE',
+            'envindexconfig.name',
+            'envindexconfig_name',
+            'EnvIndexConfig.name',
+            'envindexconfig.list.key',
+            'envindexconfig.list.missing',
+            'envindexconfig_list_some key',
+            'snake_config.name',
+            'Snake_Config_name',
+            'customenvhookconfig.name',
+            'growingenvconfig.list.added',
         ] as $key) {
             putenv($key);
             unset($_ENV[$key]);
@@ -424,5 +446,142 @@ final class BaseConfigTest extends CIUnitTestCase
         $config = new RegistrarConfig();
 
         $this->assertTrue($this->getPrivateProperty($config, 'didDiscovery'));
+    }
+
+    public function testEnvWritesAfterConstructionArePickedUp(): void
+    {
+        $this->assertSame('default', (new EnvIndexConfig())->name);
+
+        $_ENV['envindexconfig.name'] = 'from-env';
+        $this->assertSame('from-env', (new EnvIndexConfig())->name);
+
+        unset($_ENV['envindexconfig.name']);
+        service('superglobals')->setServer('envindexconfig.name', 'from-server');
+        $this->assertSame('from-server', (new EnvIndexConfig())->name);
+    }
+
+    public function testResetPicksUpBarePutenv(): void
+    {
+        $this->assertSame('default', (new EnvIndexConfig())->name);
+
+        putenv('envindexconfig.name=from-getenv');
+        BaseConfig::reset();
+
+        $this->assertSame('from-getenv', (new EnvIndexConfig())->name);
+    }
+
+    public function testOverriddenEnvHookIsCalledAndReadsLiveGetenv(): void
+    {
+        $config = new CustomEnvHookConfig();
+
+        $this->assertSame('from-hook', $config->hooked);
+        $this->assertSame('default', $config->name);
+
+        putenv('customenvhookconfig.name=live');
+
+        $this->assertSame('live', (new CustomEnvHookConfig())->name);
+    }
+
+    public function testShortPrefixWithUnderscore(): void
+    {
+        $_ENV['snake_config.name'] = 'short';
+        $this->assertSame('short', (new Snake_Config())->name);
+
+        unset($_ENV['snake_config.name']);
+        $_ENV['Snake_Config_name'] = 'full';
+        $this->assertSame('full', (new Snake_Config())->name);
+    }
+
+    /**
+     * @param array<string, string> $env
+     * @param array<string, string> $server
+     * @param array<string, string> $getenv
+     */
+    #[DataProvider('provideEnvPrecedence')]
+    public function testEnvPrecedence(array $env, array $server, array $getenv, string $expected): void
+    {
+        foreach ($env as $key => $value) {
+            $_ENV[$key] = $value;
+        }
+
+        foreach ($server as $key => $value) {
+            service('superglobals')->setServer($key, $value);
+        }
+
+        foreach ($getenv as $key => $value) {
+            putenv("{$key}={$value}");
+        }
+
+        $this->assertSame($expected, (new EnvIndexConfig())->name);
+    }
+
+    /**
+     * @return iterable<string, array{array<string, string>, array<string, string>, array<string, string>, string}>
+     */
+    public static function provideEnvPrecedence(): iterable
+    {
+        yield 'short prefix in $_SERVER beats full prefix in $_ENV' => [
+            ['EnvIndexConfig.name' => 'full'], ['envindexconfig.name' => 'short'], [], 'short',
+        ];
+
+        yield '$_ENV beats $_SERVER' => [
+            ['envindexconfig.name' => 'env'], ['envindexconfig.name' => 'server'], [], 'env',
+        ];
+
+        yield '$_SERVER beats getenv()' => [
+            [], ['envindexconfig.name' => 'server'], ['envindexconfig.name' => 'getenv'], 'server',
+        ];
+
+        yield 'full prefix in $_ENV beats short prefix in getenv()' => [
+            ['EnvIndexConfig.name' => 'full'], [], ['envindexconfig.name' => 'getenv'], 'full',
+        ];
+
+        yield 'dot form beats underscore form' => [
+            ['envindexconfig_name' => 'underscore', 'envindexconfig.name' => 'dot'], [], [], 'dot',
+        ];
+
+        yield 'getenv() only' => [
+            [], [], ['envindexconfig.name' => 'getenv'], 'getenv',
+        ];
+    }
+
+    public function testArrayOverridesOnlyApplyToExistingKeys(): void
+    {
+        $_ENV['envindexconfig.list.key']     = 'overridden';
+        $_ENV['envindexconfig.list.missing'] = 'ignored';
+
+        $this->assertSame(['key' => 'overridden', 'some key' => 'default'], (new EnvIndexConfig())->list);
+    }
+
+    public function testGetenvOnlyNameWithSpace(): void
+    {
+        // The getenv() array omits names with a space, like names with a dot.
+        putenv('envindexconfig_list_some key=from-getenv');
+
+        $this->assertSame('from-getenv', (new EnvIndexConfig())->list['some key']);
+    }
+
+    public function testRemovedGetenvOnlyNameIsNotReused(): void
+    {
+        putenv('envindexconfig.name=old');
+        $_ENV['envindexconfig.name'] = 'old';
+        service('superglobals')->setServer('envindexconfig.name', 'old');
+        $this->assertSame('old', (new EnvIndexConfig())->name);
+
+        putenv('envindexconfig.name');
+        unset($_ENV['envindexconfig.name']);
+        service('superglobals')->unsetServer('envindexconfig.name');
+
+        $this->assertSame('default', (new EnvIndexConfig())->name);
+    }
+
+    public function testGetenvOnlyNameForLeafAddedOnLaterInstance(): void
+    {
+        putenv('growingenvconfig.list.added=from-getenv');
+        $this->assertSame(['key' => 'default'], (new GrowingEnvConfig())->list);
+
+        GrowingEnvConfig::$grow = true;
+
+        $this->assertSame(['key' => 'default', 'added' => 'from-getenv'], (new GrowingEnvConfig())->list);
     }
 }

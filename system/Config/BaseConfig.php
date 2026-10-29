@@ -18,6 +18,7 @@ use Config\Encryption;
 use Config\Modules;
 use ReflectionClass;
 use ReflectionException;
+use ReflectionMethod;
 
 /**
  * Class BaseConfig
@@ -32,6 +33,13 @@ use ReflectionException;
  */
 class BaseConfig
 {
+    /**
+     * SAPIs whose live getenv() only finds names, with the exact case, that are
+     * also in $_SERVER or the getenv() array: the OS environment, plus FastCGI
+     * params under FPM and FrankenPHP's own env layers.
+     */
+    private const EXACT_ENV_SAPIS = ['cli', 'phpdbg', 'cli-server', 'fpm-fcgi', 'frankenphp'];
+
     /**
      * An optional array of classes that will act as Registrars
      * for rapidly setting config class properties.
@@ -70,6 +78,46 @@ class BaseConfig
     protected static $moduleConfig;
 
     /**
+     * Environment variables grouped by the text before their first "." or "_",
+     * then by source ("env", "server", "getenv").
+     *
+     * @var array<string, array<string, array<array-key, mixed>>>|null
+     */
+    private static ?array $envIndex = null;
+
+    /**
+     * The [$_ENV, $_SERVER] arrays the index was built from.
+     *
+     * @var array{array<array-key, mixed>, array<array-key, mixed>}|null
+     */
+    private static ?array $envSnapshot = null;
+
+    /**
+     * Env var names that exist according to live getenv() calls, keyed by class
+     * name, then by leaf name. Each leaf is probed once; its names are re-read on
+     * every build. The getenv() array omits names that contain ".", " " or "[",
+     * and on Windows only live calls match names case-insensitively.
+     *
+     * @var array<class-string, array<string, list<string>>>
+     */
+    private static array $liveEnvNames = [];
+
+    /**
+     * The property values of each class's last build, and the env var names of
+     * all its leaves from $liveEnvNames, keyed by class name.
+     *
+     * @var array<class-string, array{array<string, mixed>, list<string>}>
+     */
+    private static array $liveEnvLeaves = [];
+
+    /**
+     * Whether a class overrides getEnvValue() or initEnvValue(), keyed by class name.
+     *
+     * @var array<class-string, bool>
+     */
+    private static array $overridesEnvHooks = [];
+
+    /**
      * @param array<string, mixed> $array
      */
     public static function __set_state(array $array)
@@ -106,6 +154,9 @@ class BaseConfig
         static::$override     = true;
         static::$didDiscovery = false;
         static::$moduleConfig = null;
+
+        self::$envIndex     = self::$envSnapshot = null;
+        self::$liveEnvNames = self::$liveEnvLeaves = [];
     }
 
     /**
@@ -124,13 +175,44 @@ class BaseConfig
 
         $this->registerProperties();
 
-        $properties  = array_keys(get_object_vars($this));
+        $values      = get_object_vars($this);
+        $properties  = array_keys($values);
         $prefix      = static::class;
         $slashAt     = strrpos($prefix, '\\');
         $shortPrefix = strtolower(substr($prefix, $slashAt === false ? 0 : $slashAt + 1));
 
+        // Classes with custom env hooks keep the full walk with live lookups.
+        $sources = (self::$overridesEnvHooks[static::class] ??= self::overridesEnvHooks(static::class))
+            ? null
+            : self::scopedEnvSources($prefix, $shortPrefix);
+
+        if ($sources !== null) {
+            // Unchanged property values share memory with the stored ones, so the
+            // leaves are only walked again when a build changes them.
+            if (($leaves = self::$liveEnvLeaves[static::class] ?? null) === null || $leaves[0] !== $values) {
+                $leaves = self::$liveEnvLeaves[static::class] = [$values, self::findLiveEnvNames($values, $prefix, $shortPrefix)];
+            }
+
+            $live = [];
+
+            foreach ($leaves[1] as $envKey) {
+                if (($envValue = getenv($envKey)) !== false) {
+                    $live[$envKey] = $envValue;
+                }
+            }
+
+            $sources['getenv'] = $live + $sources['getenv'];
+
+            // Every env var that can override this class, for a fast miss check per leaf.
+            $candidates = $sources['env'] + $sources['server'] + $sources['getenv'];
+        }
+
         foreach ($properties as $property) {
-            $this->initEnvValue($this->{$property}, $property, $prefix, $shortPrefix);
+            if ($sources === null) {
+                $this->initEnvValue($this->{$property}, $property, $prefix, $shortPrefix);
+            } elseif ($candidates !== []) {
+                $this->initScopedEnvValue($sources, $candidates, $this->{$property}, $property, $prefix, $shortPrefix);
+            }
 
             if ($this instanceof Encryption) {
                 if ($property === 'key') {
@@ -179,30 +261,226 @@ class BaseConfig
                 $this->initEnvValue($property[$key], "{$name}.{$key}", $prefix, $shortPrefix);
             }
         } elseif (($value = $this->getEnvValue($name, $prefix, $shortPrefix)) !== false && $value !== null) {
-            if ($value === 'false') {
-                $value = false;
-            } elseif ($value === 'true') {
-                $value = true;
-            }
-            if (is_bool($value)) {
-                $property = $value;
-
-                return;
-            }
-
-            $value = trim($value, '\'"');
-
-            if (is_int($property)) {
-                $value = (int) $value;
-            } elseif (is_float($property)) {
-                $value = (float) $value;
-            }
-
             // If the default value of the property is `null` and the type is not
             // `string`, TypeError will happen.
             // So cannot set `declare(strict_types=1)` in this file.
-            $property = $value;
+            $property = self::castEnvValue($value, $property);
         }
+    }
+
+    /**
+     * Same as initEnvValue(), but looks values up in the pre-filtered sources
+     * from scopedEnvSources() instead of the live environment.
+     *
+     * @param array{env: array<array-key, mixed>, server: array<array-key, mixed>, getenv: array<array-key, mixed>} $sources
+     * @param array<array-key, mixed>                                                                               $candidates All keys of $sources
+     * @param array<array-key, mixed>|bool|float|int|string|null                                                    $property
+     */
+    private function initScopedEnvValue(array $sources, array $candidates, &$property, string $name, string $prefix, string $shortPrefix): void
+    {
+        if (is_array($property)) {
+            foreach (array_keys($property) as $key) {
+                $this->initScopedEnvValue($sources, $candidates, $property[$key], "{$name}.{$key}", $prefix, $shortPrefix);
+            }
+
+            return;
+        }
+
+        $keys = self::envKeys($name, $prefix, $shortPrefix);
+
+        if (! array_key_exists($keys[0], $candidates) && ! array_key_exists($keys[1], $candidates)
+            && ! array_key_exists($keys[2], $candidates) && ! array_key_exists($keys[3], $candidates)) {
+            return;
+        }
+
+        if (($value = self::lookupEnvValue($sources['env'], $sources['server'], $sources['getenv'], $keys)) !== false && $value !== null) {
+            $property = self::castEnvValue($value, $property);
+        }
+    }
+
+    /**
+     * Converts a raw env value to the type of the property's default value.
+     *
+     * @param bool|float|int|string|null $default
+     *
+     * @return bool|float|int|string
+     */
+    private static function castEnvValue(mixed $value, $default)
+    {
+        if ($value === 'false') {
+            return false;
+        }
+
+        if ($value === 'true') {
+            return true;
+        }
+
+        if (is_bool($value)) {
+            return $value;
+        }
+
+        $value = trim($value, '\'"');
+
+        if (is_int($default)) {
+            return (int) $value;
+        }
+
+        if (is_float($default)) {
+            return (float) $value;
+        }
+
+        return $value;
+    }
+
+    /**
+     * The env var names for a property, in lookup order: short prefix dot and
+     * underscore forms, then full prefix dot and underscore forms.
+     *
+     * @return array{string, string, string, string}
+     */
+    private static function envKeys(string $property, string $prefix, string $shortPrefix): array
+    {
+        $underscoreProperty = str_replace('.', '_', $property);
+
+        return [
+            "{$shortPrefix}.{$property}",
+            "{$shortPrefix}_{$underscoreProperty}",
+            "{$prefix}.{$property}",
+            "{$prefix}_{$underscoreProperty}",
+        ];
+    }
+
+    /**
+     * Finds the first of the env var names from envKeys(). For each prefix,
+     * $_ENV wins over $_SERVER. getenv() is checked last, and is read live
+     * when $getenv is null.
+     *
+     * @param array<array-key, mixed>               $env
+     * @param array<array-key, mixed>               $server
+     * @param array<array-key, mixed>|null          $getenv
+     * @param array{string, string, string, string} $keys
+     */
+    private static function lookupEnvValue(array $env, array $server, ?array $getenv, array $keys): mixed
+    {
+        foreach ([[$keys[0], $keys[1]], [$keys[2], $keys[3]]] as $prefixKeys) {
+            foreach ([$env, $server] as $source) {
+                foreach ($prefixKeys as $key) {
+                    if (array_key_exists($key, $source)) {
+                        return $source[$key];
+                    }
+                }
+            }
+        }
+
+        foreach ($keys as $key) {
+            if (($value = $getenv === null ? getenv($key) : ($getenv[$key] ?? false)) !== false) {
+                return $value;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the env vars that can override a class with these prefixes, by source.
+     *
+     * @return array{env: array<array-key, mixed>, server: array<array-key, mixed>, getenv: array<array-key, mixed>}
+     */
+    private static function scopedEnvSources(string $prefix, string $shortPrefix): array
+    {
+        // Unchanged superglobals share memory with the snapshot, so this check is cheap.
+        if ([$_ENV, $_SERVER] !== self::$envSnapshot) {
+            self::$envIndex = [];
+
+            foreach (['env' => $_ENV, 'server' => $_SERVER, 'getenv' => getenv()] as $source => $vars) {
+                foreach ($vars as $key => $value) {
+                    self::$envIndex[self::envGroup((string) $key)][$source][$key] = $value;
+                }
+            }
+        }
+
+        // Re-share memory even when only equal contents were written.
+        self::$envSnapshot = [$_ENV, $_SERVER];
+
+        $sources = ['env' => [], 'server' => [], 'getenv' => []];
+
+        foreach ([$shortPrefix, $prefix] as $p) {
+            // The prefix itself may contain "_", so match within its group.
+            foreach (self::$envIndex[self::envGroup($p)] ?? [] as $source => $vars) {
+                foreach ($vars as $key => $value) {
+                    if (str_starts_with((string) $key, "{$p}.") || str_starts_with((string) $key, "{$p}_")) {
+                        $sources[$source][$key] = $value;
+                    }
+                }
+            }
+        }
+
+        return $sources;
+    }
+
+    /**
+     * Returns every leaf's env var names that exist according to live getenv()
+     * calls. Only leaves not seen before are probed.
+     *
+     * @param class-string            $prefix
+     * @param array<array-key, mixed> $values
+     *
+     * @return list<string>
+     */
+    private static function findLiveEnvNames(array $values, string $prefix, string $shortPrefix, string $parent = ''): array
+    {
+        $found = [];
+
+        foreach ($values as $key => $value) {
+            $name = $parent === '' ? (string) $key : "{$parent}.{$key}";
+
+            if (is_array($value)) {
+                array_push($found, ...self::findLiveEnvNames($value, $prefix, $shortPrefix, $name));
+
+                continue;
+            }
+
+            if (! isset(self::$liveEnvNames[$prefix][$name])) {
+                self::$liveEnvNames[$prefix][$name] = [];
+
+                // Dot forms are never in the getenv() array, and underscore forms
+                // only miss it when the name has " " or "[". Live getenv() calls
+                // also match names case-insensitively on Windows, and under
+                // Apache mod_php, where they read SetEnv vars (e.g. APP_BASEURL
+                // for app_baseURL). So every form is probed there, and under
+                // any SAPI not known to match exactly. Elsewhere that would
+                // double the getenv() calls on a cold build for no gain.
+                $inexactEnv = PHP_OS_FAMILY === 'Windows' || ! in_array(PHP_SAPI, self::EXACT_ENV_SAPIS, true);
+
+                $envKeys = $inexactEnv || strpbrk($name, ' [') !== false
+                    ? self::envKeys($name, $prefix, $shortPrefix)
+                    : ["{$shortPrefix}.{$name}", "{$prefix}.{$name}"];
+
+                foreach ($envKeys as $envKey) {
+                    if (getenv($envKey) !== false) {
+                        self::$liveEnvNames[$prefix][$name][] = $envKey;
+                    }
+                }
+            }
+
+            array_push($found, ...self::$liveEnvNames[$prefix][$name]);
+        }
+
+        return $found;
+    }
+
+    private static function envGroup(string $key): string
+    {
+        return substr($key, 0, strcspn($key, '._'));
+    }
+
+    /**
+     * @param class-string $class
+     */
+    private static function overridesEnvHooks(string $class): bool
+    {
+        return (new ReflectionMethod($class, 'getEnvValue'))->class !== self::class
+            || (new ReflectionMethod($class, 'initEnvValue'))->class !== self::class;
     }
 
     /**
@@ -212,42 +490,9 @@ class BaseConfig
      */
     protected function getEnvValue(string $property, string $prefix, string $shortPrefix)
     {
-        $shortPrefix        = ltrim($shortPrefix, '\\');
-        $underscoreProperty = str_replace('.', '_', $property);
+        $keys = self::envKeys($property, $prefix, ltrim($shortPrefix, '\\'));
 
-        switch (true) {
-            case array_key_exists("{$shortPrefix}.{$property}", $_ENV):
-                return $_ENV["{$shortPrefix}.{$property}"];
-
-            case array_key_exists("{$shortPrefix}_{$underscoreProperty}", $_ENV):
-                return $_ENV["{$shortPrefix}_{$underscoreProperty}"];
-
-            case array_key_exists("{$shortPrefix}.{$property}", $_SERVER):
-                return $_SERVER["{$shortPrefix}.{$property}"]; // @phpstan-ignore codeigniter.superglobalsOffsetAccess (reads live $_SERVER, not the snapshot service)
-
-            case array_key_exists("{$shortPrefix}_{$underscoreProperty}", $_SERVER):
-                return $_SERVER["{$shortPrefix}_{$underscoreProperty}"]; // @phpstan-ignore codeigniter.superglobalsOffsetAccess (reads live $_SERVER, not the snapshot service)
-
-            case array_key_exists("{$prefix}.{$property}", $_ENV):
-                return $_ENV["{$prefix}.{$property}"];
-
-            case array_key_exists("{$prefix}_{$underscoreProperty}", $_ENV):
-                return $_ENV["{$prefix}_{$underscoreProperty}"];
-
-            case array_key_exists("{$prefix}.{$property}", $_SERVER):
-                return $_SERVER["{$prefix}.{$property}"]; // @phpstan-ignore codeigniter.superglobalsOffsetAccess (reads live $_SERVER, not the snapshot service)
-
-            case array_key_exists("{$prefix}_{$underscoreProperty}", $_SERVER):
-                return $_SERVER["{$prefix}_{$underscoreProperty}"]; // @phpstan-ignore codeigniter.superglobalsOffsetAccess (reads live $_SERVER, not the snapshot service)
-
-            default:
-                $value = getenv("{$shortPrefix}.{$property}");
-                $value = $value === false ? getenv("{$shortPrefix}_{$underscoreProperty}") : $value;
-                $value = $value === false ? getenv("{$prefix}.{$property}") : $value;
-                $value = $value === false ? getenv("{$prefix}_{$underscoreProperty}") : $value;
-
-                return $value === false ? null : $value;
-        }
+        return self::lookupEnvValue($_ENV, $_SERVER, null, $keys);
     }
 
     /**
