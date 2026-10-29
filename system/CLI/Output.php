@@ -31,6 +31,11 @@ class Output
     private bool $newLineDeferred = false;
 
     /**
+     * The output that a `forStderr()` copy was made from, which holds the deferred blank line for both.
+     */
+    private ?self $original = null;
+
+    /**
      * Colour support per stream id, detected on first use.
      *
      * @var array<int, bool>
@@ -114,7 +119,7 @@ class Output
      */
     public function deferNewLine(): void
     {
-        $this->newLineDeferred = true;
+        $this->getDeferralHolder()->newLineDeferred = true;
     }
 
     /**
@@ -124,11 +129,11 @@ class Output
      */
     public function writeDeferredNewLine(): void
     {
-        if (! $this->newLineDeferred) {
+        if (! $this->getDeferralHolder()->newLineDeferred) {
             return;
         }
 
-        $this->newLineDeferred = false;
+        $this->getDeferralHolder()->newLineDeferred = false;
 
         $this->writeRaw(PHP_EOL);
         $this->cursorAtLineStart = true;
@@ -189,13 +194,14 @@ class Output
     }
 
     /**
-     * Returns a copy whose STDOUT writes target STDERR.
+     * Returns a copy whose STDOUT writes target STDERR, sharing the blank line held by `deferNewLine()`.
      */
     public function forStderr(): static
     {
         $stderrOutput = clone $this;
 
         $stderrOutput->toStderr = true;
+        $stderrOutput->original = $this->getDeferralHolder();
 
         return $stderrOutput;
     }
@@ -273,12 +279,18 @@ class Output
      */
     private function line(string $text): string
     {
-        $prefix = $this->cursorAtLineStart && ! $this->newLineDeferred ? '' : PHP_EOL;
+        $prefix = $this->cursorAtLineStart && ! $this->getDeferralHolder()->newLineDeferred ? '' : PHP_EOL;
 
         $this->cursorAtLineStart = true;
-        $this->newLineDeferred   = false;
+
+        $this->getDeferralHolder()->newLineDeferred = false;
 
         return $prefix . $text . PHP_EOL;
+    }
+
+    private function getDeferralHolder(): self
+    {
+        return $this->original ?? $this;
     }
 
     /**

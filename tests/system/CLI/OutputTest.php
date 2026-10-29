@@ -36,7 +36,16 @@ final class OutputTest extends CIUnitTestCase
         $output->write('first');
         $output->write('second');
 
-        $this->assertSame([['STDOUT', "\nfirst\n"], ['STDOUT', "second\n"]], $io->writes);
+        $this->assertSame(['STDOUT', 'STDOUT'], array_column($io->writes, 0));
+        $this->assertSame(
+            <<<'EOT'
+
+                first
+                second
+
+                EOT,
+            $this->getWrittenText($io),
+        );
     }
 
     public function testPrintLeavesTheCursorAfterTheText(): void
@@ -78,7 +87,17 @@ final class OutputTest extends CIUnitTestCase
         $output->error('second');
         $output->write('third');
 
-        $this->assertSame([['STDOUT', "\nfirst\n"], ['STDERR', "second\n"], ['STDOUT', "third\n"]], $io->writes);
+        $this->assertSame(['STDOUT', 'STDERR', 'STDOUT'], array_column($io->writes, 0));
+        $this->assertSame(
+            <<<'EOT'
+
+                first
+                second
+                third
+
+                EOT,
+            $this->getWrittenText($io),
+        );
     }
 
     public function testErrorOutsideTheCliWritesToStdoutWithoutColor(): void
@@ -329,6 +348,37 @@ final class OutputTest extends CIUnitTestCase
         ], $io->writes);
     }
 
+    public function testForStderrSharesTheDeferredNewLine(): void
+    {
+        $io     = new RecordingInputOutput();
+        $output = new Output($io, $this->createUncoloredTerminal());
+
+        $output->print("first\n");
+        $output->deferNewLine();
+        $output->forStderr()->write('second');
+        $output->write('third');
+
+        $stderr = $output->forStderr();
+        $output->deferNewLine();
+        $output->write('fourth');
+        $stderr->write('fifth');
+
+        $this->assertSame(['STDOUT', 'STDERR', 'STDOUT', 'STDOUT', 'STDERR'], array_column($io->writes, 0));
+        $this->assertSame(
+            <<<'EOT'
+                first
+
+                second
+                third
+
+                fourth
+                fifth
+
+                EOT,
+            $this->getWrittenText($io),
+        );
+    }
+
     public function testBeepAndClearScreenLeaveTheCursorStateAlone(): void
     {
         $io     = new RecordingInputOutput();
@@ -367,7 +417,16 @@ final class OutputTest extends CIUnitTestCase
         $output->setCursorAtLineStart(false);
         $output->write('second');
 
-        $this->assertSame([['STDOUT', "first\n"], ['STDOUT', "\nsecond\n"]], $io->writes);
+        $this->assertSame(['STDOUT', 'STDOUT'], array_column($io->writes, 0));
+        $this->assertSame(
+            <<<'EOT'
+                first
+
+                second
+
+                EOT,
+            $this->getWrittenText($io),
+        );
     }
 
     public function testDeferredNewLineWritesNothingWhenNothingFollows(): void
@@ -394,13 +453,19 @@ final class OutputTest extends CIUnitTestCase
         $output->deferNewLine();
         $output->print('fourth');
 
-        $this->assertSame([
-            ['STDOUT', "first\n"],
-            ['STDOUT', "\nsecond\n"],
-            ['STDERR', "\nthird\n"],
-            ['STDOUT', "\n"],
-            ['STDOUT', 'fourth'],
-        ], $io->writes);
+        $this->assertSame(['STDOUT', 'STDOUT', 'STDERR', 'STDOUT', 'STDOUT'], array_column($io->writes, 0));
+        $this->assertSame(
+            <<<'EOT'
+                first
+
+                second
+
+                third
+
+                fourth
+                EOT,
+            $this->getWrittenText($io),
+        );
     }
 
     public function testWriteDeferredNewLineFlushesTheHeldLineOnce(): void
@@ -413,7 +478,15 @@ final class OutputTest extends CIUnitTestCase
         $output->writeDeferredNewLine();
         $output->write('next');
 
-        $this->assertSame([['STDOUT', "\n"], ['STDOUT', "next\n"]], $io->writes);
+        $this->assertSame(['STDOUT', 'STDOUT'], array_column($io->writes, 0));
+        $this->assertSame(
+            <<<'EOT'
+
+                next
+
+                EOT,
+            $this->getWrittenText($io),
+        );
     }
 
     public function testSetInputOutputReplacesTheTransport(): void
@@ -460,11 +533,17 @@ final class OutputTest extends CIUnitTestCase
         $output->write('very verbose', verbosity: Verbosity::VeryVerbose);
         $output->write('debug', verbosity: Verbosity::Debug);
 
-        $this->assertSame([
-            ['STDOUT', "\nnormal\n"],
-            ['STDOUT', "quiet\n"],
-            ['STDOUT', "very verbose\n"],
-        ], $io->writes);
+        $this->assertSame(['STDOUT', 'STDOUT', 'STDOUT'], array_column($io->writes, 0));
+        $this->assertSame(
+            <<<'EOT'
+
+                normal
+                quiet
+                very verbose
+
+                EOT,
+            $this->getWrittenText($io),
+        );
     }
 
     public function testQuietDropsNormalWritesButKeepsErrors(): void
@@ -482,7 +561,16 @@ final class OutputTest extends CIUnitTestCase
         $output->error('error');
         $output->write('quiet', verbosity: Verbosity::Quiet);
 
-        $this->assertSame([['STDERR', "\nerror\n"], ['STDOUT', "quiet\n"]], $io->writes);
+        $this->assertSame(['STDERR', 'STDOUT'], array_column($io->writes, 0));
+        $this->assertSame(
+            <<<'EOT'
+
+                error
+                quiet
+
+                EOT,
+            $this->getWrittenText($io),
+        );
     }
 
     public function testSilentDropsEverything(): void
@@ -507,7 +595,16 @@ final class OutputTest extends CIUnitTestCase
         $output->print('dropped', verbosity: Verbosity::Verbose);
         $output->write('second');
 
-        $this->assertSame([['STDOUT', "\nfirst\n"], ['STDOUT', "second\n"]], $io->writes);
+        $this->assertSame(['STDOUT', 'STDOUT'], array_column($io->writes, 0));
+        $this->assertSame(
+            <<<'EOT'
+
+                first
+                second
+
+                EOT,
+            $this->getWrittenText($io),
+        );
     }
 
     public function testForStderrKeepsTheLevelAndWritesAtQuiet(): void
@@ -560,5 +657,10 @@ final class OutputTest extends CIUnitTestCase
         $terminal->method('hasColorSupport')->willReturn(false);
 
         return $terminal;
+    }
+
+    private function getWrittenText(RecordingInputOutput $io): string
+    {
+        return implode('', array_column($io->writes, 1));
     }
 }
