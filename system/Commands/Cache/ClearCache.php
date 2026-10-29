@@ -16,7 +16,6 @@ namespace CodeIgniter\Commands\Cache;
 use CodeIgniter\Autoloader\FileLocatorCached;
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Argument;
 use Config\Cache;
 
@@ -39,9 +38,10 @@ class ClearCache extends AbstractCommand
     {
         $driver = $arguments['driver'];
         $config = config(Cache::class);
+        $output = $this->getOutput();
 
         if (! array_key_exists($driver, $config->validHandlers)) {
-            CLI::error(lang('Cache.invalidHandler', [$driver]));
+            $output->error(lang('Cache.invalidHandler', [$driver]));
 
             return EXIT_ERROR;
         }
@@ -49,7 +49,7 @@ class ClearCache extends AbstractCommand
         $config->handler = $driver;
 
         if (! service('cache', $config)->clean()) {
-            CLI::error(sprintf('Error occurred while clearing the cache using the "%s" driver.', $driver));
+            $output->error(sprintf('Error occurred while clearing the cache using the "%s" driver.', $driver));
 
             return EXIT_ERROR;
         }
@@ -60,7 +60,7 @@ class ClearCache extends AbstractCommand
             $locator->deleteCache();
         }
 
-        CLI::write(sprintf('Cache cleared using the "%s" driver.', $driver), 'green');
+        $output->write(sprintf('Cache cleared using the "%s" driver.', $driver), 'green');
 
         return EXIT_SUCCESS;
     }

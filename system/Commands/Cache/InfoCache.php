@@ -15,7 +15,7 @@ namespace CodeIgniter\Commands\Cache;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Table;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
 
@@ -28,9 +28,10 @@ class InfoCache extends AbstractCommand
     protected function execute(array $arguments, array $options): int
     {
         $config = config(Cache::class);
+        $output = $this->getOutput();
 
         if ($config->handler !== 'file') {
-            CLI::error(sprintf(
+            $output->error(sprintf(
                 'This command only supports the file cache handler. The configured handler is "%s".',
                 $config->handler,
             ));
@@ -52,12 +53,12 @@ class InfoCache extends AbstractCommand
             ];
         }
 
-        CLI::table($tbody, [
-            CLI::color('Name', 'green'),
-            CLI::color('Server Path', 'green'),
-            CLI::color('Size', 'green'),
-            CLI::color('Date', 'green'),
-        ]);
+        $output->write((new Table($tbody, [
+            $output->color('Name', 'green'),
+            $output->color('Server Path', 'green'),
+            $output->color('Size', 'green'),
+            $output->color('Date', 'green'),
+        ]))->render());
 
         return EXIT_SUCCESS;
     }

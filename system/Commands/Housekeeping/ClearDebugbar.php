@@ -15,7 +15,6 @@ namespace CodeIgniter\Commands\Housekeeping;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 
 /**
  * Clears all debugbar JSON files.
@@ -27,15 +26,16 @@ class ClearDebugbar extends AbstractCommand
     {
         helper('filesystem');
 
-        $path = clean_path(WRITEPATH . 'debugbar');
+        $path   = clean_path(WRITEPATH . 'debugbar');
+        $output = $this->getOutput();
 
         if (! delete_files(WRITEPATH . 'debugbar', htdocs: true)) {
-            CLI::error(sprintf('Error deleting the debugbar JSON files in "%s".', $path));
+            $output->error(sprintf('Error deleting the debugbar JSON files in "%s".', $path));
 
             return EXIT_ERROR;
         }
 
-        CLI::write(sprintf('Cleared debugbar JSON files in "%s".', $path), 'green');
+        $output->write(sprintf('Cleared debugbar JSON files in "%s".', $path), 'green');
 
         return EXIT_SUCCESS;
     }

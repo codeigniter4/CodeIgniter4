@@ -15,7 +15,6 @@ namespace CodeIgniter\Commands\Housekeeping;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Option;
 
 /**
@@ -39,7 +38,7 @@ class ClearLogs extends AbstractCommand
             return;
         }
 
-        if (CLI::prompt(sprintf('Delete all log files in %s?', clean_path(WRITEPATH . 'logs')), ['n', 'y']) === 'n') {
+        if ($this->getPrompt()->ask(sprintf('Delete all log files in %s?', clean_path(WRITEPATH . 'logs')), ['n', 'y']) === 'n') {
             return;
         }
 
@@ -48,14 +47,16 @@ class ClearLogs extends AbstractCommand
 
     protected function execute(array $arguments, array $options): int
     {
+        $output = $this->getOutput();
+
         if ($options['force'] === false) {
             if ($this->isInteractive()) {
-                CLI::write('Log deletion cancelled.', 'yellow');
+                $output->write('Log deletion cancelled.', 'yellow');
 
                 return EXIT_SUCCESS;
             }
 
-            CLI::error('Log deletion aborted: pass --force to delete log files in non-interactive mode.');
+            $output->error('Log deletion aborted: pass --force to delete log files in non-interactive mode.');
 
             return EXIT_ERROR;
         }
@@ -63,12 +64,12 @@ class ClearLogs extends AbstractCommand
         helper('filesystem');
 
         if (! delete_files(WRITEPATH . 'logs', htdocs: true)) {
-            CLI::error(sprintf('Failed to delete log files in %s.', clean_path(WRITEPATH . 'logs')));
+            $output->error(sprintf('Failed to delete log files in %s.', clean_path(WRITEPATH . 'logs')));
 
             return EXIT_ERROR;
         }
 
-        CLI::write(sprintf('Log files in %s cleared.', clean_path(WRITEPATH . 'logs')), 'green');
+        $output->write(sprintf('Log files in %s cleared.', clean_path(WRITEPATH . 'logs')), 'green');
 
         return EXIT_SUCCESS;
     }
