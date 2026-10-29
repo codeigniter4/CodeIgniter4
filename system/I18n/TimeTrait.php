@@ -1237,8 +1237,6 @@ trait TimeTrait
     }
 
     /**
-     * This is called when we unserialize the Time object.
-     *
      * @param array<mixed, mixed> $data
      */
     public function __unserialize(array $data): void
@@ -1247,6 +1245,16 @@ trait TimeTrait
         $timezone = $data['timezone'] ?? null;
         assert(is_string($date) && is_string($timezone));
 
-        parent::__construct($date, new DateTimeZone($timezone));
+        $locale         = $data["\0*\0locale"] ?? null;
+        $toStringFormat = $data["\0*\0toStringFormat"] ?? null;
+
+        $this->timezone = new DateTimeZone($timezone);
+        $this->locale   = is_string($locale) ? $locale : Locale::getDefault();
+
+        if (is_string($toStringFormat)) {
+            $this->toStringFormat = $toStringFormat;
+        }
+
+        parent::__construct($date, $this->timezone);
     }
 }
