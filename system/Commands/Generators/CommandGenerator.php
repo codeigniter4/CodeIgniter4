@@ -64,7 +64,10 @@ class CommandGenerator extends AbstractGeneratorCommand
             return;
         }
 
-        $options['type'] = CLI::prompt(lang('CLI.generator.commandType'), ['basic', 'generator'], 'required');
+        $options['type'] = $this->getPrompt()->select(
+            lang('CLI.generator.commandType'),
+            ['basic' => 'basic', 'generator' => 'generator'],
+        );
     }
 
     protected function execute(array $arguments, array $options): int

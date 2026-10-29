@@ -59,7 +59,10 @@ class CreateDatabase extends AbstractCommand
         $ext = $this->getUnboundOption('ext', $options);
 
         if (is_string($ext) && ! in_array($ext, self::VALID_EXTENSIONS, true)) {
-            $options['ext'] = CLI::prompt('Please choose a valid file extension', self::VALID_EXTENSIONS, 'required');
+            $options['ext'] = $this->getPrompt()->select(
+                'Please choose a valid file extension',
+                array_combine(self::VALID_EXTENSIONS, self::VALID_EXTENSIONS),
+            );
         }
     }
 

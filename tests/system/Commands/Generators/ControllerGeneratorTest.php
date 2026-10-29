@@ -122,7 +122,7 @@ final class ControllerGeneratorTest extends CIUnitTestCase
     public function testInvalidRestfulTypePromptsWhenInteractive(): void
     {
         $io = new MockInputOutput();
-        $io->setInputs(['presenter']);
+        $io->setInputs(['2']);
         CLI::setInputOutput($io);
 
         $command = new ControllerGenerator(new Commands());

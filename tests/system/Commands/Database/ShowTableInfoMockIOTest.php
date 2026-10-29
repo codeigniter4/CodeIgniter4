@@ -63,24 +63,15 @@ final class ShowTableInfoMockIOTest extends CIUnitTestCase
         CLI::setInputOutput($io);
 
         // User will input "a" (invalid value) and then select db_migrations.
-        $io->setInputs(['a', (string) $tableIndex]);
+        $io->setInputs(['a', (string) ($tableIndex + 1)]);
 
         command('db:table');
 
         $result = $io->getOutput();
 
-        $this->assertMatchesRegularExpression(
-            '/Which table do you want to see\? \[[\d,\s]+\]\: a/',
-            $result,
-        );
-        $this->assertMatchesRegularExpression(
-            '/The "Which table do you want to see\?" field must be one of: [\d,\s]+./',
-            $result,
-        );
-        $this->assertMatchesRegularExpression(
-            '/Which table do you want to see\? \[[\d,\s]+\]\: ' . $tableIndex . '/',
-            $result,
-        );
+        $this->assertStringContainsString('Which table do you want to see?', $result);
+        $this->assertMatchesRegularExpression('/Number \[\S+\]: a\n.*Please select correctly\./', $result);
+        $this->assertMatchesRegularExpression('/Number \[\S+\]: ' . ($tableIndex + 1) . '\n/', $result);
         $this->assertMatchesRegularExpression(
             '/Data of "db_migrations" table:/',
             $result,

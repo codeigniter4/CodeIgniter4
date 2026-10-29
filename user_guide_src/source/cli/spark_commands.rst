@@ -153,9 +153,10 @@ Correcting a Mistyped Command
 
 When the command name is not found, **spark** lists the closest matches. On an interactive
 run it also offers to run one of them: a single match asks for a ``y``/``n`` confirmation, and
-several matches present a numbered list with a "none of these" entry. Pressing Enter picks the
-highlighted default. Non-interactive runs (``--no-interaction`` / ``-N``, or piped input) only
-print the suggestions and exit with an error, as before.
+several matches present a menu with a "none of these" entry, picked with the arrow keys (see
+:ref:`cli-library-select`). Pressing Enter picks the highlighted entry. Non-interactive runs
+(``--no-interaction`` / ``-N``, or piped input) only print the suggestions and exit with
+an error, as before.
 
 .. code-block:: console
 
@@ -164,6 +165,7 @@ print the suggestions and exit with an error, as before.
     Command "cache:clea" not found.
 
     Run "cache:clear" instead? [y, n]: y
+
     Cache cleared using the "file" driver.
 
 Calling Commands

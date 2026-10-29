@@ -127,7 +127,7 @@ final class CommandGeneratorTest extends CIUnitTestCase
     public function testInvalidTypePromptsWhenInteractive(): void
     {
         $io = new MockInputOutput();
-        $io->setInputs(['generator']);
+        $io->setInputs(['2']);
         CLI::setInputOutput($io);
 
         $command = new CommandGenerator(new Commands());

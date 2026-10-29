@@ -270,7 +270,7 @@ final class ConsoleTest extends CIUnitTestCase
     public function testUnknownCommandRunsSelectedSuggestion(): void
     {
         $this->initializeConsole('clear', '--no-header');
-        $io = $this->useInputs('0');
+        $io = $this->useInputs('1');
 
         $console  = new Console();
         $exitCode = $console->run();
@@ -283,12 +283,11 @@ final class ConsoleTest extends CIUnitTestCase
                 Command "clear" not found.
 
                 Select a command to run instead:
-                  [0]  cache:clear
-                  [1]  debugbar:clear
-                  [2]  logs:clear
-                  [3]  none of these
-
-                [0, 1, 2, 3]: 0
+                  [1]  cache:clear
+                  [2]  debugbar:clear
+                  [3]  logs:clear
+                  [4]  none of these
+                Number [1]: 1
 
                 Cache cleared using the "file" driver.
 
@@ -300,7 +299,7 @@ final class ConsoleTest extends CIUnitTestCase
     public function testUnknownCommandSelectingNoneExitsWithError(): void
     {
         $this->initializeConsole('clear', '--no-header');
-        $io = $this->useInputs('3');
+        $io = $this->useInputs('4');
 
         $console  = new Console();
         $exitCode = $console->run();
@@ -313,12 +312,11 @@ final class ConsoleTest extends CIUnitTestCase
                 Command "clear" not found.
 
                 Select a command to run instead:
-                  [0]  cache:clear
-                  [1]  debugbar:clear
-                  [2]  logs:clear
-                  [3]  none of these
-
-                [0, 1, 2, 3]: 3
+                  [1]  cache:clear
+                  [2]  debugbar:clear
+                  [3]  logs:clear
+                  [4]  none of these
+                Number [1]: 4
 
                 EOT,
             $this->getUndecoratedIoOutput($io),

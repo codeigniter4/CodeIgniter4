@@ -176,14 +176,18 @@ final class CreateDatabaseTest extends CIUnitTestCase
         }
 
         $io = new MockInputOutput();
-        $io->setInputs(['db']);
+        $io->setInputs(['1']);
         CLI::setInputOutput($io);
 
         command('db:create database --ext txt');
 
         $this->assertSame(
             <<<'EOT'
-                Please choose a valid file extension [db, sqlite]: db
+
+                Please choose a valid file extension
+                  [1]  db
+                  [2]  sqlite
+                Number [1]: 1
 
                 Database "database.db" successfully created.
 

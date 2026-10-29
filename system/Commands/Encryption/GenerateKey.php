@@ -63,7 +63,10 @@ class GenerateKey extends AbstractCommand
         $prefix = $this->getUnboundOption('prefix', $options);
 
         if (is_string($prefix) && ! in_array($prefix, self::VALID_PREFIXES, true)) {
-            $options['prefix'] = CLI::prompt('Please provide a valid prefix to use.', self::VALID_PREFIXES, 'required');
+            $options['prefix'] = $this->getPrompt()->select(
+                'Please provide a valid prefix to use.',
+                array_combine(self::VALID_PREFIXES, self::VALID_PREFIXES),
+            );
         }
 
         if ($this->hasUnboundOption('show', $options)) {

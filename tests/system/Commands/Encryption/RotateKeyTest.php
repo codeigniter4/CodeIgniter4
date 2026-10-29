@@ -332,13 +332,21 @@ final class RotateKeyTest extends CIUnitTestCase
 
         $io = new MockInputOutput();
         // First input answers the invalid-prefix recovery prompt; second answers the rotate confirmation.
-        $io->setInputs(['base64', 'y']);
+        $io->setInputs(['2', 'y']);
         CLI::setInputOutput($io);
 
         command('key:rotate --prefix invalid');
 
         $output = self::getUndecoratedIoOutput($io);
-        $this->assertStringContainsString('Please provide a valid prefix to use. [hex2bin, base64]: base64', $output);
+        $this->assertStringContainsString(
+            <<<'EOT'
+                Please provide a valid prefix to use.
+                  [1]  hex2bin
+                  [2]  base64
+                Number [1]: 2
+                EOT,
+            $output,
+        );
         $this->assertStringContainsString('Encryption key rotated. 1 previous key retained for decryption fallback.', $output);
 
         $contents = (string) file_get_contents($this->envPath);

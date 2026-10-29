@@ -67,7 +67,10 @@ class ModelGenerator extends AbstractGeneratorCommand
             return;
         }
 
-        $options['return'] = CLI::prompt(lang('CLI.generator.returnType'), self::RETURN_TYPES, 'required');
+        $options['return'] = $this->getPrompt()->select(
+            lang('CLI.generator.returnType'),
+            array_combine(self::RETURN_TYPES, self::RETURN_TYPES),
+        );
     }
 
     protected function execute(array $arguments, array $options): int
