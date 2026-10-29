@@ -15,6 +15,7 @@ namespace CodeIgniter\Cache;
 
 use CodeIgniter\Cache\FactoriesCache\FileVarExportHandler;
 use PHPUnit\Framework\Attributes\Group;
+use Tests\Support\Cache\IsolatedCacheTrait;
 
 /**
  * @internal
@@ -22,17 +23,33 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class FactoriesCacheFileVarExportHandlerTest extends AbstractFactoriesCacheHandlerTestCase
 {
+    use IsolatedCacheTrait;
+
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
 
-        helper('filesystem');
+        self::setUpBeforeClassIsolatedCache();
+    }
+
+    public static function tearDownAfterClass(): void
+    {
+        self::tearDownAfterClassIsolatedCache();
+
+        parent::tearDownAfterClass();
     }
 
     protected function createFactoriesCache(): void
     {
-        $this->handler = new FileVarExportHandler();
+        $this->handler = $this->getIsolatedCacheHandler();
         $this->cache   = new FactoriesCache($this->handler);
+    }
+
+    public function testUsesTheWritableCacheDirectoryByDefault(): void
+    {
+        $handler = new FileVarExportHandler();
+
+        $this->assertSame(WRITEPATH . 'cache', $this->getPrivateProperty($handler, 'path'));
     }
 
     public function testSaveCreatesDirectoryAndFileWithCorrectPermissions(): void
@@ -41,8 +58,7 @@ final class FactoriesCacheFileVarExportHandlerTest extends AbstractFactoriesCach
         $oldUmask = umask(0000);
 
         try {
-            $handler = new FileVarExportHandler();
-            $this->setPrivateProperty($handler, 'path', $dir);
+            $handler = new FileVarExportHandler($dir);
 
             $handler->save('test_key', ['data']);
 

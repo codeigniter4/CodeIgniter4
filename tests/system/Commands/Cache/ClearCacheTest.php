@@ -16,7 +16,6 @@ namespace CodeIgniter\Commands\Cache;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Autoloader\FileLocatorCached;
 use CodeIgniter\Cache\CacheFactory;
-use CodeIgniter\Cache\FactoriesCache\FileVarExportHandler;
 use CodeIgniter\Cache\Handlers\FileHandler;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Config\Factories;
@@ -25,6 +24,7 @@ use CodeIgniter\Test\StreamFilterTrait;
 use Config\Cache;
 use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
+use Tests\Support\Cache\IsolatedCacheTrait;
 
 /**
  * @internal
@@ -32,9 +32,24 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class ClearCacheTest extends CIUnitTestCase
 {
+    use IsolatedCacheTrait;
     use StreamFilterTrait;
 
     private Cache $config;
+
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+
+        self::setUpBeforeClassIsolatedCache();
+    }
+
+    public static function tearDownAfterClass(): void
+    {
+        self::tearDownAfterClassIsolatedCache();
+
+        parent::tearDownAfterClass();
+    }
 
     protected function setUp(): void
     {
@@ -98,7 +113,7 @@ final class ClearCacheTest extends CIUnitTestCase
 
     public function testClearCacheDiscardsSharedLocatorCache(): void
     {
-        $handler = new FileVarExportHandler();
+        $handler = $this->getIsolatedCacheHandler();
         $handler->delete('FileLocatorCache');
 
         $locator = new FileLocatorCached(new FileLocator(service('autoloader')), $handler);
@@ -117,6 +132,10 @@ final class ClearCacheTest extends CIUnitTestCase
         $this->assertArrayHasKey('Config/Cache', $cached['search']);
 
         $handler->delete('FileLocatorCache');
+
+        // Prevent the destructor from writing the cache file
+        // when the locator is destroyed.
+        $locator->deleteCache();
     }
 
     public function testClearCacheFails(): void

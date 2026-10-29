@@ -25,6 +25,7 @@ Message Changes
 Changes
 *******
 
+- **Cache:** Added an optional ``$path`` parameter to ``FileVarExportHandler::__construct()`` so the cache files can be stored in a custom directory.
 - **HTTP:** Added ``ContentSecurityPolicy::addDefaultSrc()`` to allow appending sources to the ``default-src`` directive.
 
 ************
