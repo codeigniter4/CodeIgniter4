@@ -15,8 +15,9 @@ namespace CodeIgniter\Commands\Utilities;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Option;
+use CodeIgniter\CLI\Output;
+use CodeIgniter\CLI\Table;
 use CodeIgniter\Commands\Utilities\Routes\AutoRouteCollector;
 use CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\AutoRouteCollector as AutoRouteCollectorImproved;
 use CodeIgniter\Commands\Utilities\Routes\FilterCollector;
@@ -83,20 +84,22 @@ class Routes extends AbstractCommand
             usort($tbody, static fn (array $route1, array $route2): int => strcmp($route1[3], $route2[3]));
         }
 
+        $output = $this->getOutput();
+
         if ($host !== '') {
-            CLI::write(sprintf('Host: %s', $host));
+            $output->write(sprintf('Host: %s', $host));
         }
 
-        CLI::table($tbody, [
+        $output->write((new Table($tbody, [
             'Method',
             'Route',
             'Name',
             $sortByHandler ? 'Handler ↓' : 'Handler',
             'Before Filters',
             'After Filters',
-        ]);
+        ]))->render());
 
-        return $this->showRequiredFilters();
+        return $this->showRequiredFilters($output);
     }
 
     /**
@@ -194,12 +197,12 @@ class Routes extends AbstractCommand
         return implode(' ', array_map(class_basename(...), $filters));
     }
 
-    private function showRequiredFilters(): int
+    private function showRequiredFilters(Output $output): int
     {
         $required = (new FilterCollector())->getRequiredFilters();
 
-        CLI::write(sprintf('Required Before Filters: %s', $this->highlight($required['before'])));
-        CLI::write(sprintf(' Required After Filters: %s', $this->highlight($required['after'])));
+        $output->write(sprintf('Required Before Filters: %s', $this->highlight($output, $required['before'])));
+        $output->write(sprintf(' Required After Filters: %s', $this->highlight($output, $required['after'])));
 
         return EXIT_SUCCESS;
     }
@@ -207,10 +210,10 @@ class Routes extends AbstractCommand
     /**
      * @param list<string> $filters
      */
-    private function highlight(array $filters): string
+    private function highlight(Output $output, array $filters): string
     {
         return implode(', ', array_map(
-            static fn (string $filter): string => CLI::color($filter, 'yellow'),
+            static fn (string $filter): string => $output->color($filter, 'yellow'),
             $filters,
         ));
     }

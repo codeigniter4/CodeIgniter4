@@ -15,7 +15,6 @@ namespace CodeIgniter\Commands\Utilities;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Argument;
 use CodeIgniter\Security\CheckPhpIni;
 
@@ -45,7 +44,7 @@ final class PhpIniCheck extends AbstractCommand
         $section = $arguments['section'];
 
         if ($section !== '' && $section !== 'opcache') {
-            CLI::error('You must specify a correct argument.');
+            $this->getOutput()->error('You must specify a correct argument.');
 
             return EXIT_ERROR;
         }

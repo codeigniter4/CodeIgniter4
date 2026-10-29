@@ -17,7 +17,7 @@ use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Autoloader\FileLocatorCached;
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Output;
 use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Publisher\Publisher;
 
@@ -29,20 +29,22 @@ final class Optimize extends AbstractCommand
 {
     protected function execute(array $arguments, array $options): int
     {
+        $output = $this->getOutput();
+
         try {
-            $this->enableCaching();
-            $this->clearCache();
-            $this->removeDevPackages();
+            $this->enableCaching($output);
+            $this->clearCache($output);
+            $this->removeDevPackages($output);
 
             return EXIT_SUCCESS;
         } catch (RuntimeException) {
-            CLI::error('The "spark optimize" failed.');
+            $output->error('The "spark optimize" failed.');
 
             return EXIT_ERROR;
         }
     }
 
-    private function clearCache(): void
+    private function clearCache(Output $output): void
     {
         $locator = service('locator');
 
@@ -51,29 +53,29 @@ final class Optimize extends AbstractCommand
         }
 
         $locator->deleteCache();
-        CLI::write('Removed FileLocatorCache.', 'green');
+        $output->write('Removed FileLocatorCache.', 'green');
 
-        $this->removeFile(WRITEPATH . 'cache/FactoriesCache_config');
+        $this->removeFile($output, WRITEPATH . 'cache/FactoriesCache_config');
     }
 
-    private function removeFile(string $file): void
+    private function removeFile(Output $output, string $file): void
     {
         if (! is_file($file)) {
             return;
         }
 
         if (unlink($file)) {
-            CLI::write(sprintf('Removed "%s".', clean_path($file)), 'green');
+            $output->write(sprintf('Removed "%s".', clean_path($file)), 'green');
 
             return;
         }
 
-        CLI::error(sprintf('Error in removing file: %s', clean_path($file)));
+        $output->error(sprintf('Error in removing file: %s', clean_path($file)));
 
         throw new RuntimeException(__METHOD__);
     }
 
-    private function enableCaching(): void
+    private function enableCaching(Output $output): void
     {
         $publisher = new Publisher(APPPATH, APPPATH);
 
@@ -88,7 +90,7 @@ final class Optimize extends AbstractCommand
         );
 
         if ($result) {
-            CLI::write(
+            $output->write(
                 'Config Caching and FileLocator Caching are enabled in "app/Config/Optimize.php".',
                 'green',
             );
@@ -96,12 +98,12 @@ final class Optimize extends AbstractCommand
             return;
         }
 
-        CLI::error(sprintf('Error in updating file: %s', clean_path($config)));
+        $output->error(sprintf('Error in updating file: %s', clean_path($config)));
 
         throw new RuntimeException(__METHOD__);
     }
 
-    private function removeDevPackages(): void
+    private function removeDevPackages(Output $output): void
     {
         if (! defined('VENDORPATH')) {
             return;
@@ -111,12 +113,12 @@ final class Optimize extends AbstractCommand
         passthru('composer install --no-dev', $status);
 
         if ($status === 0) {
-            CLI::write('Removed Composer dev packages.', 'green');
+            $output->write('Removed Composer dev packages.', 'green');
 
             return;
         }
 
-        CLI::error('Error in removing Composer dev packages.');
+        $output->error('Error in removing Composer dev packages.');
 
         throw new RuntimeException(__METHOD__);
     }
