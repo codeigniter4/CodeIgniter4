@@ -30,7 +30,7 @@ jobs:
         php-version:
           - '8.2'
         include:
-          - php-version: '8.5'
+          - php-version: '8.6'
             composer-option: '--ignore-platform-req=php'
 
     steps:
