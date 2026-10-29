@@ -520,32 +520,7 @@ class CLI
      */
     public static function wrap(?string $string = null, int $max = 0, int $padLeft = 0): string
     {
-        if ((string) $string === '') {
-            return '';
-        }
-
-        $width = static::getWidth();
-        $max   = ($max === 0 ? $width : min($max, $width)) - $padLeft;
-
-        $lines = wordwrap($string, $max, PHP_EOL);
-
-        if ($padLeft > 0) {
-            $lines = explode(PHP_EOL, $lines);
-
-            $first = true;
-
-            array_walk($lines, static function (&$line) use ($padLeft, &$first): void {
-                if (! $first) {
-                    $line = str_repeat(' ', $padLeft) . $line;
-                } else {
-                    $first = false;
-                }
-            });
-
-            $lines = implode(PHP_EOL, $lines);
-        }
-
-        return $lines;
+        return static::getOutput()->wrap((string) $string, $max, $padLeft);
     }
 
     // --------------------------------------------------------------------
