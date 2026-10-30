@@ -15,8 +15,8 @@ namespace CodeIgniter\Commands\Database;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Option;
+use CodeIgniter\CLI\Table;
 use CodeIgniter\Database\MigrationRunner;
 
 /**
@@ -118,22 +118,24 @@ class MigrateStatus extends AbstractCommand
             }
         }
 
+        $output = $this->getOutput();
+
         if ($status === []) {
-            CLI::error(lang('Migrations.noneFound'), 'light_gray', 'red');
+            $output->error(lang('Migrations.noneFound'), 'light_gray', 'red');
 
             return EXIT_ERROR;
         }
 
         $headers = [
-            CLI::color(lang('Migrations.namespace'), 'yellow'),
-            CLI::color(lang('Migrations.version'), 'yellow'),
-            CLI::color(lang('Migrations.filename'), 'yellow'),
-            CLI::color(lang('Migrations.group'), 'yellow'),
-            CLI::color(str_replace(': ', '', lang('Migrations.on')), 'yellow'),
-            CLI::color(lang('Migrations.batch'), 'yellow'),
+            $output->color(lang('Migrations.namespace'), 'yellow'),
+            $output->color(lang('Migrations.version'), 'yellow'),
+            $output->color(lang('Migrations.filename'), 'yellow'),
+            $output->color(lang('Migrations.group'), 'yellow'),
+            $output->color(str_replace(': ', '', lang('Migrations.on')), 'yellow'),
+            $output->color(lang('Migrations.batch'), 'yellow'),
         ];
 
-        CLI::table($status, $headers);
+        $output->write((new Table($status, $headers))->render());
 
         return EXIT_SUCCESS;
     }

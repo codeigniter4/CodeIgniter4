@@ -15,7 +15,6 @@ namespace CodeIgniter\Commands\Database;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Option;
 use CodeIgniter\CLI\SignalTrait;
 use CodeIgniter\Database\MigrationRunner;
@@ -60,7 +59,7 @@ class MigrateRollback extends AbstractCommand
             return;
         }
 
-        if (CLI::prompt(lang('Migrations.rollBackConfirm'), ['y', 'n']) === 'y') {
+        if ($this->getPrompt()->ask(lang('Migrations.rollBackConfirm'), ['y', 'n']) === 'y') {
             $options['force'] = null; // simulate the presence of the --force option
         }
     }
@@ -73,6 +72,7 @@ class MigrateRollback extends AbstractCommand
 
         /** @var MigrationRunner $runner */
         $runner = service('migrations');
+        $output = $this->getOutput();
 
         try {
             $batch = $options['batch'];
@@ -81,18 +81,18 @@ class MigrateRollback extends AbstractCommand
             if ($batch === '') {
                 $batch = $runner->getLastBatch() - 1;
             } elseif (! ctype_digit($batch)) {
-                CLI::error('Invalid batch number: ' . $batch, 'light_gray', 'red');
+                $output->error('Invalid batch number: ' . $batch, 'light_gray', 'red');
 
                 return EXIT_ERROR;
             } else {
                 $batch = (int) $batch;
             }
 
-            CLI::write(lang('Migrations.rollingBack') . ' ' . $batch, 'yellow');
+            $output->write(lang('Migrations.rollingBack') . ' ' . $batch, 'yellow');
 
-            $exit = $this->withSignalsBlocked(static function () use ($runner, $batch): int {
+            $exit = $this->withSignalsBlocked(static function () use ($runner, $batch, $output): int {
                 if (! $runner->regress($batch)) {
-                    CLI::error(lang('Migrations.generalFault'), 'light_gray', 'red');
+                    $output->error(lang('Migrations.generalFault'), 'light_gray', 'red');
 
                     return EXIT_ERROR;
                 }
@@ -107,10 +107,10 @@ class MigrateRollback extends AbstractCommand
             $messages = $runner->getCliMessages();
 
             foreach ($messages as $message) {
-                CLI::write($message);
+                $output->write($message);
             }
 
-            CLI::write('Done rolling back migrations.', 'green');
+            $output->write('Done rolling back migrations.', 'green');
 
             return EXIT_SUCCESS;
         } catch (Throwable $e) {

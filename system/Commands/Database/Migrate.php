@@ -15,7 +15,6 @@ namespace CodeIgniter\Commands\Database;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Option;
 use CodeIgniter\CLI\SignalTrait;
 use CodeIgniter\Database\MigrationRunner;
@@ -62,7 +61,9 @@ class Migrate extends AbstractCommand
         $runner = service('migrations');
         $runner->clearCliMessages();
 
-        CLI::write(lang('Migrations.latest'), 'yellow');
+        $output = $this->getOutput();
+
+        $output->write(lang('Migrations.latest'), 'yellow');
 
         $namespace = $options['namespace'];
         assert(is_string($namespace));
@@ -79,19 +80,19 @@ class Migrate extends AbstractCommand
                 $runner->setNamespace($namespace);
             }
 
-            $this->withSignalsBlocked(static function () use ($runner, $group): void {
+            $this->withSignalsBlocked(static function () use ($runner, $group, $output): void {
                 if (! $runner->latest($group)) {
-                    CLI::error(lang('Migrations.generalFault'), 'light_gray', 'red');
+                    $output->error(lang('Migrations.generalFault'), 'light_gray', 'red');
                 }
             });
 
             $messages = $runner->getCliMessages();
 
             foreach ($messages as $message) {
-                CLI::write($message);
+                $output->write($message);
             }
 
-            CLI::write(lang('Migrations.migrated'), 'green');
+            $output->write(lang('Migrations.migrated'), 'green');
 
             return EXIT_SUCCESS;
         } catch (Throwable $e) {
