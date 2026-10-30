@@ -17,6 +17,7 @@ use Closure;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Autoloader\FileLocatorCached;
 use CodeIgniter\Cache\FactoriesCache\FileVarExportHandler;
+use CodeIgniter\CLI\Output;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use CodeIgniter\Test\StreamFilterTrait;
@@ -72,7 +73,7 @@ final class OptimizeTest extends CIUnitTestCase
     }
 
     /**
-     * @return Closure(string): void
+     * @return Closure(Output, string): void
      */
     private function getRemoveFile(): Closure
     {
@@ -80,7 +81,7 @@ final class OptimizeTest extends CIUnitTestCase
     }
 
     /**
-     * @return Closure(): void
+     * @return Closure(Output): void
      */
     private function getClearCache(): Closure
     {
@@ -91,7 +92,7 @@ final class OptimizeTest extends CIUnitTestCase
     {
         file_put_contents($this->file, '<?php');
 
-        ($this->getRemoveFile())($this->file);
+        ($this->getRemoveFile())(new Output(), $this->file);
 
         $this->assertFileDoesNotExist($this->file);
         $this->assertStringContainsString('Removed', $this->getStreamFilterBuffer());
@@ -101,7 +102,7 @@ final class OptimizeTest extends CIUnitTestCase
     {
         $this->assertFileDoesNotExist($this->file);
 
-        ($this->getRemoveFile())($this->file);
+        ($this->getRemoveFile())(new Output(), $this->file);
 
         $this->assertSame('', $this->getStreamFilterBuffer());
     }
@@ -112,7 +113,7 @@ final class OptimizeTest extends CIUnitTestCase
         $locator->search('Config/App');
         Services::injectMock('locator', $locator);
 
-        ($this->getClearCache())();
+        ($this->getClearCache())(new Output());
 
         $locator->search('Config/Cache');
         $locator->__destruct();
@@ -142,6 +143,7 @@ final class OptimizeTest extends CIUnitTestCase
                 require {$escapedBootstrap};
 
                 use CodeIgniter\\Cache\\FactoriesCache\\FileVarExportHandler;
+                use CodeIgniter\\CLI\\Output;
                 use CodeIgniter\\Commands\\Utilities\\Optimize;
                 use CodeIgniter\\Test\\ReflectionHelper;
 
@@ -152,7 +154,7 @@ final class OptimizeTest extends CIUnitTestCase
                     new Optimize(service('commands')),
                     'clearCache'
                 );
-                \$clearCache();
+                \$clearCache(new Output());
 
                 if (\$handler->get('FileLocatorCache') !== false) {
                     exit(1);

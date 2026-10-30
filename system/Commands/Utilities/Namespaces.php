@@ -15,8 +15,8 @@ namespace CodeIgniter\Commands\Utilities;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Option;
+use CodeIgniter\CLI\Table;
 use Config\Autoload;
 
 /**
@@ -63,7 +63,7 @@ class Namespaces extends AbstractCommand
             (int) $options['max-length'],
         );
 
-        CLI::table($tbody, ['Namespace', 'Path', 'Found?']);
+        $this->getOutput()->write((new Table($tbody, ['Namespace', 'Path', 'Found?']))->render());
 
         return EXIT_SUCCESS;
     }

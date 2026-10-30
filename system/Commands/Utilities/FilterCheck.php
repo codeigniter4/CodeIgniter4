@@ -15,8 +15,9 @@ namespace CodeIgniter\Commands\Utilities;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Argument;
+use CodeIgniter\CLI\Output;
+use CodeIgniter\CLI\Table;
 use CodeIgniter\Commands\Utilities\Routes\FilterCollector;
 
 /**
@@ -53,19 +54,20 @@ class FilterCheck extends AbstractCommand
         $filterCollector = new FilterCollector();
 
         $filters = $filterCollector->get($method, $route);
+        $output  = $this->getOutput();
 
         // PageNotFoundException
         if ($filters['before'] === ['<unknown>']) {
-            CLI::error(sprintf(
+            $output->error(sprintf(
                 "Can't find a route: %s",
-                CLI::color(sprintf('"%s %s"', strtoupper($method), $route), 'black', 'light_gray'),
+                $output->color(sprintf('"%s %s"', strtoupper($method), $route), 'black', 'light_gray'),
             ));
 
             return EXIT_ERROR;
         }
 
-        $this->showTable($filterCollector, $filters, $method, $route);
-        $this->showFilterClasses($filterCollector, $method, $route);
+        $this->showTable($output, $filterCollector, $filters, $method, $route);
+        $this->showFilterClasses($output, $filterCollector, $method, $route);
 
         return EXIT_SUCCESS;
     }
@@ -74,12 +76,13 @@ class FilterCheck extends AbstractCommand
      * @param array{before: list<string>, after: list<string>} $filters
      */
     private function showTable(
+        Output $output,
         FilterCollector $filterCollector,
         array $filters,
         string $method,
         string $route,
     ): void {
-        $merged = $this->mergeFilters($filterCollector->getRequiredFilters(), $filters);
+        $merged = $this->mergeFilters($output, $filterCollector->getRequiredFilters(), $filters);
 
         $thead = ['Method', 'Route', 'Before Filters', 'After Filters'];
         $tbody = [
@@ -91,15 +94,17 @@ class FilterCheck extends AbstractCommand
             ],
         ];
 
-        CLI::table($tbody, $thead);
+        $output->write((new Table($tbody, $thead))->render());
     }
 
     private function showFilterClasses(
+        Output $output,
         FilterCollector $filterCollector,
         string $method,
         string $route,
     ): void {
         $merged = $this->mergeFilters(
+            $output,
             $filterCollector->getRequiredFilterClasses(),
             $filterCollector->getClasses($method, $route),
         );
@@ -107,11 +112,11 @@ class FilterCheck extends AbstractCommand
         $lastPosition = array_key_last($merged);
 
         foreach ($merged as $position => $classes) {
-            CLI::write(sprintf('%s Filter Classes:', ucfirst($position)), 'cyan');
-            CLI::write(implode(' → ', $classes));
+            $output->write(sprintf('%s Filter Classes:', ucfirst($position)), 'cyan');
+            $output->write(implode(' → ', $classes));
 
             if ($position !== $lastPosition) {
-                CLI::newLine();
+                $output->newLine();
             }
         }
     }
@@ -125,11 +130,11 @@ class FilterCheck extends AbstractCommand
      *
      * @return array{before: list<string>, after: list<string>}
      */
-    private function mergeFilters(array $required, array $filters): array
+    private function mergeFilters(Output $output, array $required, array $filters): array
     {
         return [
-            'before' => array_merge($this->highlight($required['before']), $filters['before']),
-            'after'  => array_merge($filters['after'], $this->highlight($required['after'])),
+            'before' => array_merge($this->highlight($output, $required['before']), $filters['before']),
+            'after'  => array_merge($filters['after'], $this->highlight($output, $required['after'])),
         ];
     }
 
@@ -140,8 +145,8 @@ class FilterCheck extends AbstractCommand
      *
      * @return list<string>
      */
-    private function highlight(array $items): array
+    private function highlight(Output $output, array $items): array
     {
-        return array_map(static fn (string $item): string => CLI::color($item, 'yellow'), $items);
+        return array_map(static fn (string $item): string => $output->color($item, 'yellow'), $items);
     }
 }

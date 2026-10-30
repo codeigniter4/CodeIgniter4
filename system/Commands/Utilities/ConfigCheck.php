@@ -16,8 +16,8 @@ namespace CodeIgniter\Commands\Utilities;
 use CodeIgniter\Cache\FactoriesCache;
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Argument;
+use CodeIgniter\CLI\Output;
 use CodeIgniter\Config\BaseConfig;
 use Config\Optimize;
 use Kint\Kint;
@@ -49,18 +49,19 @@ class ConfigCheck extends AbstractCommand
         }
 
         $config = config($class);
+        $output = $this->getOutput();
 
         if ($config === null) {
-            CLI::error(sprintf('Config class "%s" not found.', $class));
+            $output->error(sprintf('Config class "%s" not found.', $class));
 
             return EXIT_ERROR;
         }
 
-        CLI::write($this->getDump($config));
+        $output->write($this->getDump($output, $config));
 
-        CLI::newLine();
-        $state = CLI::color($configCacheEnabled ? 'enabled' : 'disabled', 'green');
-        CLI::write(sprintf('Config caching: %s', $state));
+        $output->newLine();
+        $state = $output->color($configCacheEnabled ? 'enabled' : 'disabled', 'green');
+        $output->write(sprintf('Config caching: %s', $state));
 
         return EXIT_SUCCESS;
     }
@@ -68,13 +69,13 @@ class ConfigCheck extends AbstractCommand
     /**
      * Renders the config object using Kint when available, otherwise var_dump().
      */
-    private function getDump(object $config): string
+    private function getDump(Output $output, object $config): string
     {
         if (defined('KINT_DIR') && Kint::$enabled_mode !== false) {
             return $this->getKintD($config);
         }
 
-        return CLI::color($this->getVarDump($config), 'cyan');
+        return $output->color($this->getVarDump($config), 'cyan');
     }
 
     /**

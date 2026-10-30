@@ -15,8 +15,8 @@ namespace CodeIgniter\Commands\Utilities;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Argument;
+use CodeIgniter\CLI\Output;
 use CodeIgniter\Config\DotEnv;
 use Config\Paths;
 
@@ -52,10 +52,12 @@ class Environment extends AbstractCommand
         $env = $arguments['environment'];
         assert(is_string($env));
 
+        $output = $this->getOutput();
+
         if ($env === '') {
-            CLI::write(sprintf(
+            $output->write(sprintf(
                 'Your environment is currently set as %s.',
-                CLI::color(service('superglobals')->server('CI_ENVIRONMENT', ENVIRONMENT), 'green'),
+                $output->color(service('superglobals')->server('CI_ENVIRONMENT', ENVIRONMENT), 'green'),
             ));
 
             return EXIT_SUCCESS;
@@ -64,14 +66,14 @@ class Environment extends AbstractCommand
         $env = strtolower($env);
 
         if ($env === 'testing') {
-            CLI::error('The "testing" environment is reserved for PHPUnit testing.', 'light_gray', 'red');
-            CLI::error('You will not be able to run spark under a "testing" environment.', 'light_gray', 'red');
+            $output->error('The "testing" environment is reserved for PHPUnit testing.', 'light_gray', 'red');
+            $output->error('You will not be able to run spark under a "testing" environment.', 'light_gray', 'red');
 
             return EXIT_ERROR;
         }
 
         if (! in_array($env, self::$knownTypes, true)) {
-            CLI::error(sprintf(
+            $output->error(sprintf(
                 'Invalid environment type "%s". Expected one of "%s".',
                 $env,
                 implode('" and "', self::$knownTypes),
@@ -80,8 +82,8 @@ class Environment extends AbstractCommand
             return EXIT_ERROR;
         }
 
-        if (! $this->writeNewEnvironmentToEnvFile($env)) {
-            CLI::error('Error in writing new environment to .env file.', 'light_gray', 'red');
+        if (! $this->writeNewEnvironmentToEnvFile($output, $env)) {
+            $output->error('Error in writing new environment to .env file.', 'light_gray', 'red');
 
             return EXIT_ERROR;
         }
@@ -93,8 +95,8 @@ class Environment extends AbstractCommand
         service('superglobals')->unsetServer('CI_ENVIRONMENT');
         (new DotEnv((new Paths())->envDirectory ?? ROOTPATH))->load(); // @phpstan-ignore nullCoalesce.property
 
-        CLI::write(sprintf('Environment is successfully changed to "%s".', $env), 'green');
-        CLI::write('The ENVIRONMENT constant will be changed in the next script execution.');
+        $output->write(sprintf('Environment is successfully changed to "%s".', $env), 'green');
+        $output->write('The ENVIRONMENT constant will be changed in the next script execution.');
 
         return EXIT_SUCCESS;
     }
@@ -102,15 +104,15 @@ class Environment extends AbstractCommand
     /**
      * @see https://regex101.com/r/4sSORp/1 for the regex in action
      */
-    private function writeNewEnvironmentToEnvFile(string $newEnv): bool
+    private function writeNewEnvironmentToEnvFile(Output $output, string $newEnv): bool
     {
         $baseEnv = ROOTPATH . 'env';
         $envFile = ((new Paths())->envDirectory ?? ROOTPATH) . '.env'; // @phpstan-ignore nullCoalesce.property
 
         if (! is_file($envFile)) {
             if (! is_file($baseEnv)) {
-                CLI::write('Both default shipped `env` file and custom `.env` are missing.', 'yellow');
-                CLI::write('It is impossible to write the new environment type.', 'yellow');
+                $output->write('Both default shipped `env` file and custom `.env` are missing.', 'yellow');
+                $output->write('It is impossible to write the new environment type.', 'yellow');
 
                 return false;
             }

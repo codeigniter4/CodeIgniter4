@@ -15,9 +15,9 @@ namespace CodeIgniter\Commands\Utilities;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Argument;
 use CodeIgniter\CLI\Input\Option;
+use CodeIgniter\CLI\Output;
 use CodeIgniter\Publisher\Publisher;
 
 /**
@@ -54,9 +54,10 @@ class Publish extends AbstractCommand
         $namespace = $options['namespace'];
 
         $publishers = Publisher::discover($directory, $namespace);
+        $output     = $this->getOutput();
 
         if ($publishers === []) {
-            CLI::write($namespace === ''
+            $output->write($namespace === ''
                 ? lang('Publisher.publishMissing', [$directory])
                 : lang('Publisher.publishMissingNamespace', [$directory, $namespace]));
 
@@ -65,9 +66,9 @@ class Publish extends AbstractCommand
 
         $failed = array_reduce(
             $publishers,
-            function (bool $carry, Publisher $publisher): bool {
+            function (bool $carry, Publisher $publisher) use ($output): bool {
                 // Kept out of the return expression so `||` cannot skip publishing after a failure.
-                $published = $this->publishOne($publisher);
+                $published = $this->publishOne($output, $publisher);
 
                 return $carry || ! $published;
             },
@@ -77,10 +78,10 @@ class Publish extends AbstractCommand
         return (int) $failed;
     }
 
-    private function publishOne(Publisher $publisher): bool
+    private function publishOne(Output $output, Publisher $publisher): bool
     {
         if ($publisher->publish()) {
-            CLI::write(lang('Publisher.publishSuccess', [
+            $output->write(lang('Publisher.publishSuccess', [
                 $publisher::class,
                 count($publisher->getPublished()),
                 $publisher->getDestination(),
@@ -89,15 +90,15 @@ class Publish extends AbstractCommand
             return true;
         }
 
-        CLI::error(lang('Publisher.publishFailure', [
+        $output->error(lang('Publisher.publishFailure', [
             $publisher::class,
             $publisher->getDestination(),
         ]), 'light_gray', 'red');
 
         foreach ($publisher->getErrors() as $file => $exception) {
-            CLI::write($file);
-            CLI::error($exception->getMessage());
-            CLI::newLine();
+            $output->write($file);
+            $output->error($exception->getMessage());
+            $output->newLine();
         }
 
         return false;
