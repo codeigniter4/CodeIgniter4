@@ -16,7 +16,6 @@ namespace CodeIgniter\Commands\Generators;
 use CodeIgniter\CLI\AbstractGeneratorCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Attributes\GeneratorCommand;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Option;
 
 #[Command(name: 'make:model', description: 'Generates a new model file.', group: 'Generators')]
@@ -78,7 +77,7 @@ class ModelGenerator extends AbstractGeneratorCommand
         $return = $this->getValidatedOption('return');
 
         if (! in_array($return, self::RETURN_TYPES, true)) {
-            CLI::error(lang('CLI.generator.invalidReturnType', [$return]));
+            $this->getOutput()->error(lang('CLI.generator.invalidReturnType', [$return]));
 
             return EXIT_ERROR;
         }

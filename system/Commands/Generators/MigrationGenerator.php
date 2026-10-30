@@ -16,7 +16,6 @@ namespace CodeIgniter\Commands\Generators;
 use CodeIgniter\CLI\AbstractGeneratorCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Attributes\GeneratorCommand;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Option;
 use Config\Database;
 use Config\Migrations;
@@ -78,15 +77,16 @@ class MigrationGenerator extends AbstractGeneratorCommand
         if ($this->getValidatedOption('session') === true) {
             $group  = $this->getDatabaseGroup();
             $driver = $this->getDatabaseDriver($group);
+            $output = $this->getOutput();
 
             if ($driver === null) {
-                CLI::error(lang('CLI.generator.undefinedDatabaseGroup', [$group]));
+                $output->error(lang('CLI.generator.undefinedDatabaseGroup', [$group]));
 
                 return EXIT_ERROR;
             }
 
             if ($driver !== 'MySQLi' && $driver !== 'Postgre') {
-                CLI::error(lang('CLI.generator.unsupportedSessionDriver', [$group, $driver]));
+                $output->error(lang('CLI.generator.unsupportedSessionDriver', [$group, $driver]));
 
                 return EXIT_ERROR;
             }
