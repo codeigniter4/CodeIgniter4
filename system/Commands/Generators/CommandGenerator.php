@@ -16,7 +16,6 @@ namespace CodeIgniter\Commands\Generators;
 use CodeIgniter\CLI\AbstractGeneratorCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Attributes\GeneratorCommand;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Option;
 
 #[Command(name: 'make:command', description: 'Generates a new spark command.', group: 'Generators')]
@@ -75,7 +74,7 @@ class CommandGenerator extends AbstractGeneratorCommand
         $type = $this->getValidatedOption('type');
 
         if ($type !== 'basic' && $type !== 'generator') {
-            CLI::error(lang('CLI.generator.invalidCommandType', [$type]));
+            $this->getOutput()->error(lang('CLI.generator.invalidCommandType', [$type]));
 
             return EXIT_ERROR;
         }

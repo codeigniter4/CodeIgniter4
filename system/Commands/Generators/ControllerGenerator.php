@@ -16,7 +16,6 @@ namespace CodeIgniter\Commands\Generators;
 use CodeIgniter\CLI\AbstractGeneratorCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Attributes\GeneratorCommand;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Option;
 use CodeIgniter\Controller;
 use CodeIgniter\RESTful\ResourceController;
@@ -69,7 +68,7 @@ class ControllerGenerator extends AbstractGeneratorCommand
         $type = $this->getResourceType();
 
         if (! in_array($type, [null, 'controller', 'presenter'], true)) {
-            CLI::error(lang('CLI.generator.invalidParentClass', [$type]));
+            $this->getOutput()->error(lang('CLI.generator.invalidParentClass', [$type]));
 
             return EXIT_ERROR;
         }

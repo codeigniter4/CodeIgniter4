@@ -278,7 +278,7 @@ abstract class AbstractGeneratorCommand extends AbstractCommand implements Promp
         $basePath  = $this->getBasePath($namespace);
 
         if ($basePath === null) {
-            CLI::error(lang('CLI.namespaceNotDefined', [$namespace]));
+            $this->getOutput()->error(lang('CLI.namespaceNotDefined', [$namespace]));
 
             return '';
         }
@@ -323,8 +323,10 @@ abstract class AbstractGeneratorCommand extends AbstractCommand implements Promp
      */
     private function generate(string $class): int
     {
+        $output = $this->getOutput();
+
         if (preg_match(self::CLASS_NAME_PATTERN, $class) !== 1) {
-            CLI::error(lang('CLI.generator.invalidClassName', [$class]));
+            $output->error(lang('CLI.generator.invalidClassName', [$class]));
 
             return EXIT_ERROR;
         }
@@ -335,15 +337,15 @@ abstract class AbstractGeneratorCommand extends AbstractCommand implements Promp
             return EXIT_ERROR;
         }
 
-        return $this->generateFile($target, $this->buildContent($class));
+        return $this->generateFile($output, $target, $this->buildContent($class));
     }
 
     /**
      * Writes the generated file to disk with all the safety checks around that.
      */
-    private function generateFile(string $target, string $content): int
+    private function generateFile(Output $output, string $target, string $content): int
     {
-        if (str_starts_with($target, SYSTEMPATH) && ! $this->confirmCodeIgniterNamespaceOnce()) {
+        if (str_starts_with($target, SYSTEMPATH) && ! $this->confirmCodeIgniterNamespaceOnce($output)) {
             return EXIT_SUCCESS;
         }
 
@@ -351,7 +353,7 @@ abstract class AbstractGeneratorCommand extends AbstractCommand implements Promp
         $force  = $this->hasOption('force') && $this->getValidatedOption('force') === true;
 
         if (! $force && $isFile) {
-            CLI::error(lang('CLI.generator.fileExist', [clean_path($target)]));
+            $output->error(lang('CLI.generator.fileExist', [clean_path($target)]));
 
             return EXIT_ERROR;
         }
@@ -366,31 +368,31 @@ abstract class AbstractGeneratorCommand extends AbstractCommand implements Promp
 
         if (! write_file($target, $content)) {
             // @codeCoverageIgnoreStart
-            CLI::error(lang('CLI.generator.fileError', [clean_path($target)]));
+            $output->error(lang('CLI.generator.fileError', [clean_path($target)]));
 
             return EXIT_ERROR;
             // @codeCoverageIgnoreEnd
         }
 
         if ($isFile) {
-            CLI::write(lang('CLI.generator.fileOverwrite', [clean_path($target)]), 'yellow');
+            $output->write(lang('CLI.generator.fileOverwrite', [clean_path($target)]), 'yellow');
         } else {
-            CLI::write(lang('CLI.generator.fileCreate', [clean_path($target)]), 'green');
+            $output->write(lang('CLI.generator.fileCreate', [clean_path($target)]), 'green');
         }
 
         return EXIT_SUCCESS;
     }
 
-    private function confirmCodeIgniterNamespaceOnce(): bool
+    private function confirmCodeIgniterNamespaceOnce(Output $output): bool
     {
         if ($this->confirmedCodeIgniterNamespace !== null) {
             return $this->confirmedCodeIgniterNamespace;
         }
 
-        CLI::write(lang('CLI.generator.usingCINamespace'), 'yellow');
+        $output->write(lang('CLI.generator.usingCINamespace'), 'yellow');
 
         if ($this->isInteractive() && $this->getPrompt()->ask(lang('CLI.generator.confirmContinue'), ['y', 'n'], 'required') === 'n') {
-            CLI::write(lang('CLI.generator.cancelOperation'), 'yellow');
+            $output->write(lang('CLI.generator.cancelOperation'), 'yellow');
 
             return $this->confirmedCodeIgniterNamespace = false;
         }
