@@ -367,6 +367,41 @@ final class EntityTest extends CIUnitTestCase
         $this->assertCloseEnoughString($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
     }
 
+    public function testToRawArrayConvertsDateTimeToString(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'created_at' => null,
+                'updated_at' => null,
+            ];
+            protected $original = [
+                'created_at' => null,
+                'updated_at' => null,
+            ];
+        };
+
+        $entity->created_at = '2023-12-12 12:12:12';
+        $entity->updated_at = '2023-12-13 13:13:13';
+
+        $raw = $entity->toRawArray();
+
+        // toRawArray() should return primitive types, not objects
+        $this->assertIsString($raw['created_at']);
+        $this->assertSame('2023-12-12 12:12:12', $raw['created_at']);
+        $this->assertIsString($raw['updated_at']);
+        $this->assertSame('2023-12-13 13:13:13', $raw['updated_at']);
+
+        // Attributes themselves should still contain Time objects
+        $attrs = $this->getPrivateProperty($entity, 'attributes');
+        $this->assertInstanceOf(Time::class, $attrs['created_at']);
+        $this->assertInstanceOf(Time::class, $attrs['updated_at']);
+
+        // toArray() should still return Time objects (no regression)
+        $array = $entity->toArray();
+        $this->assertInstanceOf(Time::class, $array['created_at']);
+        $this->assertInstanceOf(Time::class, $array['updated_at']);
+    }
+
     public function testCastInteger(): void
     {
         $entity = $this->getCastEntity();
