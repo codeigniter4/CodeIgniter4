@@ -15,8 +15,8 @@ namespace CodeIgniter\Commands\Worker;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Option;
+use CodeIgniter\CLI\Output;
 
 /**
  * Installs the files needed to run CodeIgniter 4 in FrankenPHP worker mode.
@@ -49,10 +49,11 @@ class WorkerInstall extends AbstractCommand
 
     protected function execute(array $arguments, array $options): int
     {
-        $force = $options['force'] === true;
+        $force  = $options['force'] === true;
+        $output = $this->getOutput();
 
-        CLI::write('Setting up FrankenPHP Worker Mode', 'yellow');
-        CLI::newLine();
+        $output->write('Setting up FrankenPHP Worker Mode', 'yellow');
+        $output->newLine();
 
         helper('filesystem');
 
@@ -71,52 +72,52 @@ class WorkerInstall extends AbstractCommand
             $content = file_get_contents($source);
 
             if ($content === false) {
-                CLI::error(sprintf('Failed to read template: %s', $template), 'light_gray', 'red');
+                $output->error(sprintf('Failed to read template: %s', $template), 'light_gray', 'red');
 
                 return EXIT_ERROR;
             }
 
             if (! write_file($target, $content)) {
-                CLI::error(sprintf('Failed to create file: %s', clean_path($target)), 'light_gray', 'red');
+                $output->error(sprintf('Failed to create file: %s', clean_path($target)), 'light_gray', 'red');
 
                 return EXIT_ERROR;
             }
 
             if ($force && $isFile) {
-                CLI::write(sprintf('  File overwritten: %s', clean_path($target)), 'yellow');
+                $output->write(sprintf('  File overwritten: %s', clean_path($target)), 'yellow');
             } else {
-                CLI::write(sprintf('  File created: %s', clean_path($target)), 'green');
+                $output->write(sprintf('  File created: %s', clean_path($target)), 'green');
             }
 
             $created[] = $destination;
         }
 
         if ($created === []) {
-            CLI::write('Worker mode files already exist.', 'yellow');
-            CLI::write('Use --force to overwrite existing files.', 'yellow');
+            $output->write('Worker mode files already exist.', 'yellow');
+            $output->write('Use --force to overwrite existing files.', 'yellow');
 
             return EXIT_ERROR;
         }
 
-        CLI::newLine();
-        CLI::write('Worker mode files created successfully!', 'green');
-        CLI::newLine();
+        $output->newLine();
+        $output->write('Worker mode files created successfully!', 'green');
+        $output->newLine();
 
-        $this->showNextSteps();
+        $this->showNextSteps($output);
 
         return EXIT_SUCCESS;
     }
 
-    private function showNextSteps(): void
+    private function showNextSteps(Output $output): void
     {
-        CLI::write('Next Steps:', 'yellow');
-        CLI::newLine();
+        $output->write('Next Steps:', 'yellow');
+        $output->newLine();
 
-        CLI::write('1. Start FrankenPHP:', 'white');
-        CLI::write('   frankenphp run', 'green');
-        CLI::newLine();
+        $output->write('1. Start FrankenPHP:', 'white');
+        $output->write('   frankenphp run', 'green');
+        $output->newLine();
 
-        CLI::write('2. Test your application:', 'white');
-        CLI::write('   curl http://localhost:8080/', 'green');
+        $output->write('2. Test your application:', 'white');
+        $output->write('   curl http://localhost:8080/', 'green');
     }
 }

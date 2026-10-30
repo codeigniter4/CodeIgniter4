@@ -15,7 +15,6 @@ namespace CodeIgniter\Commands\Worker;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Option;
 
 /**
@@ -57,7 +56,7 @@ class WorkerUninstall extends AbstractCommand
             return;
         }
 
-        if (CLI::prompt('Remove the FrankenPHP worker mode files?', ['y', 'n']) === 'y') {
+        if ($this->getPrompt()->ask('Remove the FrankenPHP worker mode files?', ['y', 'n']) === 'y') {
             $options['force'] = null; // simulate the presence of the --force option
         }
     }
@@ -65,33 +64,34 @@ class WorkerUninstall extends AbstractCommand
     protected function execute(array $arguments, array $options): int
     {
         $existing = $this->existingFiles();
+        $output   = $this->getOutput();
 
         if ($existing === []) {
-            CLI::write('No worker mode files found to remove.', 'yellow');
+            $output->write('No worker mode files found to remove.', 'yellow');
 
             return EXIT_SUCCESS;
         }
 
         if ($options['force'] === false) {
             if ($this->isInteractive()) {
-                CLI::write('Uninstall cancelled.', 'yellow');
+                $output->write('Uninstall cancelled.', 'yellow');
 
                 return EXIT_SUCCESS;
             }
 
-            CLI::error('Uninstall aborted: pass --force to remove worker mode files in non-interactive mode.', 'light_gray', 'red');
+            $output->error('Uninstall aborted: pass --force to remove worker mode files in non-interactive mode.', 'light_gray', 'red');
 
             return EXIT_ERROR;
         }
 
-        CLI::newLine();
-        CLI::write('The following files will be removed:', 'yellow');
+        $output->newLine();
+        $output->write('The following files will be removed:', 'yellow');
 
         foreach ($existing as $file) {
-            CLI::write(sprintf('  - %s', $file), 'white');
+            $output->write(sprintf('  - %s', $file), 'white');
         }
 
-        CLI::newLine();
+        $output->newLine();
 
         $removed = [];
 
@@ -99,25 +99,25 @@ class WorkerUninstall extends AbstractCommand
             $path = ROOTPATH . $file;
 
             if (! @unlink($path)) {
-                CLI::error(sprintf('Failed to remove file: %s', clean_path($path)), 'light_gray', 'red');
+                $output->error(sprintf('Failed to remove file: %s', clean_path($path)), 'light_gray', 'red');
 
                 continue;
             }
 
-            CLI::write(sprintf('  File removed: %s', clean_path($path)), 'green');
+            $output->write(sprintf('  File removed: %s', clean_path($path)), 'green');
 
             $removed[] = $file;
         }
 
-        CLI::newLine();
+        $output->newLine();
 
         if ($removed === []) {
-            CLI::error('No files were removed.', 'light_gray', 'red');
+            $output->error('No files were removed.', 'light_gray', 'red');
 
             return EXIT_ERROR;
         }
 
-        CLI::write('Worker mode files removed successfully!', 'green');
+        $output->write('Worker mode files removed successfully!', 'green');
 
         return EXIT_SUCCESS;
     }
