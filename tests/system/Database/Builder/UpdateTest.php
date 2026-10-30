@@ -53,7 +53,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -76,7 +76,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -98,7 +98,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -120,7 +120,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -142,7 +142,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -164,7 +164,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -194,7 +194,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -364,7 +364,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -390,7 +390,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -415,7 +415,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -439,7 +439,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -465,7 +465,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledUpdate(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 

@@ -20,6 +20,36 @@ Mandatory File Changes
 Breaking Changes
 ****************
 
+.. _upgrade-480-query-builder-bindings:
+
+Compiled Query Builder Bindings
+===============================
+
+``getCompiledSelect()``, ``getCompiledInsert()``, ``getCompiledUpdate()`` and
+``getCompiledDelete()`` now clear their bindings and binding counters after
+compilation when ``$reset = true`` (the default). Previously, these methods
+reset the query clauses but retained the bindings, which accumulated when the
+same builder was reused and made subsequent query compilation increasingly
+expensive.
+
+The :ref:`getCompiledSelect() documentation <query-builder-get-compiled-select>`
+already states that the default reset should work just like ``get()``.
+Clearing the bindings corrects that inconsistency, but changes the result of
+``getBinds()`` after compilation: it now returns an empty array.
+
+If your application reads the bindings after compilation or reuses the query,
+pass ``false`` to preserve them:
+
+.. code-block:: php
+
+    $sql   = $builder->getCompiledSelect(false);
+    $binds = $builder->getBinds();
+
+Passing ``false`` also retains the query clauses, including WHERE and LIMIT.
+If you only need a snapshot of the bindings while retaining the default reset
+behavior, call ``getBinds()`` before compiling the query instead.
+The same migration applies to the compiled INSERT, UPDATE and DELETE methods.
+
 Query Builder JOIN Overrides
 ============================
 

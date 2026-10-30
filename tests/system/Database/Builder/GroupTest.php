@@ -94,7 +94,7 @@ final class GroupTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -172,7 +172,7 @@ final class GroupTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
