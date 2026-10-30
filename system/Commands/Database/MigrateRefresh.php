@@ -15,7 +15,6 @@ namespace CodeIgniter\Commands\Database;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Option;
 use CodeIgniter\CLI\SignalTrait;
 
@@ -69,7 +68,7 @@ class MigrateRefresh extends AbstractCommand
             return;
         }
 
-        if (CLI::prompt(lang('Migrations.refreshConfirm'), ['y', 'n']) === 'y') {
+        if ($this->getPrompt()->ask(lang('Migrations.refreshConfirm'), ['y', 'n']) === 'y') {
             $options['force'] = null; // simulate the presence of the --force option
         }
     }

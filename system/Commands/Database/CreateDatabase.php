@@ -15,7 +15,6 @@ namespace CodeIgniter\Commands\Database;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Argument;
 use CodeIgniter\CLI\Input\Option;
 use CodeIgniter\Config\Factories;
@@ -53,7 +52,7 @@ class CreateDatabase extends AbstractCommand
     protected function interact(array &$arguments, array &$options): void
     {
         if ($arguments === []) {
-            $arguments[] = CLI::prompt('Database name', null, 'required');
+            $arguments[] = $this->getPrompt()->ask('Database name', null, 'required');
         }
 
         $ext = $this->getUnboundOption('ext', $options);
@@ -71,6 +70,8 @@ class CreateDatabase extends AbstractCommand
         $name = $arguments['db_name'];
         assert(is_string($name));
 
+        $output = $this->getOutput();
+
         try {
             $config = config(Database::class);
 
@@ -86,7 +87,7 @@ class CreateDatabase extends AbstractCommand
                 assert(is_string($ext));
 
                 if (! in_array($ext, self::VALID_EXTENSIONS, true)) {
-                    CLI::error(sprintf('Invalid file extension "%s". Use either `db` or `sqlite`.', $ext), 'light_gray', 'red');
+                    $output->error(sprintf('Invalid file extension "%s". Use either `db` or `sqlite`.', $ext), 'light_gray', 'red');
 
                     return EXIT_ERROR;
                 }
@@ -102,7 +103,7 @@ class CreateDatabase extends AbstractCommand
                     $dbName = str_contains($name, DIRECTORY_SEPARATOR) ? $name : WRITEPATH . $name;
 
                     if (is_file($dbName)) {
-                        CLI::error("Database \"{$dbName}\" already exists.", 'light_gray', 'red');
+                        $output->error("Database \"{$dbName}\" already exists.", 'light_gray', 'red');
 
                         return EXIT_ERROR;
                     }
@@ -116,18 +117,18 @@ class CreateDatabase extends AbstractCommand
 
                 if (! is_file($db->getDatabase()) && $name !== ':memory:') {
                     // @codeCoverageIgnoreStart
-                    CLI::error('Database creation failed.', 'light_gray', 'red');
+                    $output->error('Database creation failed.', 'light_gray', 'red');
 
                     return EXIT_ERROR;
                     // @codeCoverageIgnoreEnd
                 }
             } elseif (! Database::forge()->createDatabase($name)) {
-                CLI::error('Database creation failed.', 'light_gray', 'red');
+                $output->error('Database creation failed.', 'light_gray', 'red');
 
                 return EXIT_ERROR;
             }
 
-            CLI::write("Database \"{$name}\" successfully created.", 'green');
+            $output->write("Database \"{$name}\" successfully created.", 'green');
 
             return EXIT_SUCCESS;
         } catch (Throwable $e) {

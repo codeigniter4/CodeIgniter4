@@ -15,9 +15,10 @@ namespace CodeIgniter\Commands\Database;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Argument;
 use CodeIgniter\CLI\Input\Option;
+use CodeIgniter\CLI\Output;
+use CodeIgniter\CLI\Table;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\TableName;
 use CodeIgniter\Exceptions\InvalidArgumentException;
@@ -115,30 +116,32 @@ class ShowTableInfo extends AbstractCommand
 
     protected function execute(array $arguments, array $options): int
     {
+        $output = $this->getOutput();
+
         try {
             $this->db = Database::connect($this->resolveDbGroup($options['dbgroup']));
         } catch (InvalidArgumentException $e) {
-            CLI::error($e->getMessage());
+            $output->error($e->getMessage());
 
             return EXIT_ERROR;
         }
 
         $this->dbPrefix = $this->db->getPrefix();
 
-        $this->showDbConfig();
+        $this->showDbConfig($output);
 
         $tables = $this->db->listTables();
 
         $this->sortOrder = $options['desc'] === true ? 'DESC' : 'ASC';
 
         if ($tables === false || $tables === []) {
-            CLI::error('Database has no tables!', 'light_gray', 'red');
+            $output->error('Database has no tables!', 'light_gray', 'red');
 
             return EXIT_ERROR;
         }
 
         if ($options['show'] === true) {
-            $this->showAllTables($tables);
+            $this->showAllTables($output, $tables);
 
             return EXIT_SUCCESS;
         }
@@ -147,7 +150,7 @@ class ShowTableInfo extends AbstractCommand
         assert(is_string($tableName));
 
         if (! in_array($tableName, $tables, true)) {
-            CLI::error(
+            $output->error(
                 $tableName === ''
                     ? 'No table name was specified.'
                     : sprintf('Table "%s" was not found in the database.', $tableName),
@@ -159,7 +162,7 @@ class ShowTableInfo extends AbstractCommand
         }
 
         if ($options['metadata'] === true) {
-            $this->showFieldMetaData($tableName);
+            $this->showFieldMetaData($output, $tableName);
 
             return EXIT_SUCCESS;
         }
@@ -168,7 +171,7 @@ class ShowTableInfo extends AbstractCommand
         $limitFieldValue = $options['limit-field-value'];
         assert(is_string($limitRows) && is_string($limitFieldValue));
 
-        $this->showDataOfTable($tableName, (int) $limitRows, (int) $limitFieldValue);
+        $this->showDataOfTable($output, $tableName, (int) $limitRows, (int) $limitFieldValue);
 
         return EXIT_SUCCESS;
     }
@@ -178,16 +181,16 @@ class ShowTableInfo extends AbstractCommand
         return is_string($group) && $group !== '' ? $group : null;
     }
 
-    private function showDbConfig(): void
+    private function showDbConfig(Output $output): void
     {
-        CLI::table([[
+        $output->write((new Table([[
             $this->db->hostname,
             $this->db->getDatabase(),
             $this->db->username,
             $this->db->getPlatform(),
             $this->dbPrefix,
             $this->db->port,
-        ]], ['Hostname', 'Database', 'Username', 'DB Driver', 'DB Prefix', 'Port']);
+        ]], ['Hostname', 'Database', 'Username', 'DB Driver', 'DB Prefix', 'Port']))->render());
     }
 
     private function removeDbPrefix(): void
@@ -200,10 +203,10 @@ class ShowTableInfo extends AbstractCommand
         $this->db->setPrefix($this->dbPrefix);
     }
 
-    private function showDataOfTable(string $tableName, int $limitRows, int $limitFieldValue): void
+    private function showDataOfTable(Output $output, string $tableName, int $limitRows, int $limitFieldValue): void
     {
-        CLI::write(sprintf('Data of "%s" table:', $tableName), 'black', 'yellow');
-        CLI::newLine();
+        $output->write(sprintf('Data of "%s" table:', $tableName), 'black', 'yellow');
+        $output->newLine();
 
         $this->removeDbPrefix();
 
@@ -240,16 +243,16 @@ class ShowTableInfo extends AbstractCommand
             $tbody = array_reverse($tbody);
         }
 
-        CLI::table($tbody, $thead);
+        $output->write((new Table($tbody, $thead))->render());
     }
 
     /**
      * @param list<string> $tables
      */
-    private function showAllTables(array $tables): void
+    private function showAllTables(Output $output, array $tables): void
     {
-        CLI::write('The following is a list of the names of all database tables:', 'black', 'yellow');
-        CLI::newLine();
+        $output->write('The following is a list of the names of all database tables:', 'black', 'yellow');
+        $output->newLine();
 
         $this->removeDbPrefix();
 
@@ -268,13 +271,13 @@ class ShowTableInfo extends AbstractCommand
 
         $thead = ['Id', 'Table Name', 'Num of Rows', 'Num of Fields'];
 
-        CLI::table($this->sortOrder === 'DESC' ? array_reverse($tbody) : $tbody, $thead);
+        $output->write((new Table($this->sortOrder === 'DESC' ? array_reverse($tbody) : $tbody, $thead))->render());
     }
 
-    private function showFieldMetaData(string $tableName): void
+    private function showFieldMetaData(Output $output, string $tableName): void
     {
-        CLI::write(sprintf('List of metadata information in "%s" table:', $tableName), 'black', 'yellow');
-        CLI::newLine();
+        $output->write(sprintf('List of metadata information in "%s" table:', $tableName), 'black', 'yellow');
+        $output->newLine();
 
         $thead = ['Field Name', 'Type', 'Max Length', 'Nullable?', 'Default', 'Primary Key?'];
 
@@ -289,19 +292,19 @@ class ShowTableInfo extends AbstractCommand
                 $row->name,
                 $row->type,
                 $row->max_length,
-                isset($row->nullable) ? $this->setYesOrNo($row->nullable) : 'n/a',
+                isset($row->nullable) ? $this->setYesOrNo($output, $row->nullable) : 'n/a',
                 $row->default,
-                isset($row->primary_key) ? $this->setYesOrNo($row->primary_key) : 'n/a',
+                isset($row->primary_key) ? $this->setYesOrNo($output, $row->primary_key) : 'n/a',
             ];
         }
 
-        CLI::table($this->sortOrder === 'DESC' ? array_reverse($tbody) : $tbody, $thead);
+        $output->write((new Table($this->sortOrder === 'DESC' ? array_reverse($tbody) : $tbody, $thead))->render());
     }
 
-    private function setYesOrNo(mixed $fieldValue): string
+    private function setYesOrNo(Output $output, mixed $fieldValue): string
     {
         return filter_var($fieldValue, FILTER_VALIDATE_BOOL)
-            ? CLI::color('Yes', 'green')
-            : CLI::color('No', 'red');
+            ? $output->color('Yes', 'green')
+            : $output->color('No', 'red');
     }
 }

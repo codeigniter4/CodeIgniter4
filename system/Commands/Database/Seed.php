@@ -15,7 +15,6 @@ namespace CodeIgniter\Commands\Database;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Argument;
 use CodeIgniter\Database\Seeder;
 use Config\Database;
@@ -43,7 +42,7 @@ class Seed extends AbstractCommand
     protected function interact(array &$arguments, array &$options): void
     {
         if ($arguments === []) {
-            $arguments[] = CLI::prompt(lang('Migrations.migSeeder'), null, 'required');
+            $arguments[] = $this->getPrompt()->ask(lang('Migrations.migSeeder'), null, 'required');
         }
     }
 
