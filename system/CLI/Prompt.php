@@ -166,8 +166,12 @@ class Prompt
     /**
      * Lets the user pick one option with the arrow keys and returns its key, asking for its number where keys cannot be read.
      *
-     * @param array<array-key, string> $options
-     * @param int|string|null          $default The key highlighted at the start, or `null` for the first one
+     * @template TKey of array-key
+     *
+     * @param array<TKey, string> $options
+     * @param TKey|null           $default The key highlighted at the start, or `null` for the first one
+     *
+     * @return TKey
      *
      * @throws InvalidArgumentException
      */
@@ -209,10 +213,12 @@ class Prompt
     /**
      * Lets the user tick options with the arrow keys and the space bar, asking for their numbers where keys cannot be read.
      *
-     * @param array<array-key, string> $options
-     * @param list<array-key>          $default The keys ticked at the start
+     * @template TKey of array-key
      *
-     * @return array<array-key, string> The ticked options, in the order of `$options`
+     * @param array<TKey, string> $options
+     * @param list<TKey>          $default The keys ticked at the start
+     *
+     * @return array<TKey, string> The ticked options, in the order of `$options`
      *
      * @throws CLIException             When a required answer has no default on an output that cannot ask
      * @throws InvalidArgumentException

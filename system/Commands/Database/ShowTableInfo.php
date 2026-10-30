@@ -108,15 +108,8 @@ class ShowTableInfo extends AbstractCommand
             return;
         }
 
-        while (! in_array($arguments[0] ?? '', $tables, true)) {
-            $tableKey = CLI::promptByKey(
-                ['Here is the list of your database tables:', 'Which table do you want to see?'],
-                $tables,
-                'required',
-            );
-            CLI::newLine();
-
-            $arguments[0] = $tables[$tableKey] ?? '';
+        if (! in_array($arguments[0] ?? '', $tables, true)) {
+            $arguments[0] = $tables[$this->getPrompt()->select('Which table do you want to see?', $tables)];
         }
     }
 

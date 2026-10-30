@@ -58,7 +58,10 @@ class ControllerGenerator extends AbstractGeneratorCommand
             return;
         }
 
-        $options['restful'] = CLI::prompt(lang('CLI.generator.parentClass'), ['controller', 'presenter'], 'required');
+        $options['restful'] = $this->getPrompt()->select(
+            lang('CLI.generator.parentClass'),
+            ['controller' => 'controller', 'presenter' => 'presenter'],
+        );
     }
 
     protected function execute(array $arguments, array $options): int

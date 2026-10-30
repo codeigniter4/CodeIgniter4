@@ -297,7 +297,7 @@ final class GenerateKeyTest extends CIUnitTestCase
     public function testKeyGeneratePromptsForInvalidPrefix(): void
     {
         $io = new MockInputOutput();
-        $io->setInputs(['hex2bin']);
+        $io->setInputs(['1']);
         CLI::setInputOutput($io);
 
         command('key:generate --prefix invalid --show');

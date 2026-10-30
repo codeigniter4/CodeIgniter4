@@ -285,11 +285,13 @@ class Console
         CLI::error(lang('CLI.commandNotFound', [$this->command]));
         CLI::newLine();
 
+        $prompt = CLI::getPrompt();
+
         if (count($alternatives) === 1) {
-            return CLI::prompt(lang('CLI.altCommandRun', [$alternatives[0]]), ['y', 'n']) === 'y' ? $alternatives[0] : null;
+            return $prompt->ask(lang('CLI.altCommandRun', [$alternatives[0]]), ['y', 'n']) === 'y' ? $alternatives[0] : null;
         }
 
-        $chosen = (int) CLI::promptByKey(lang('CLI.altCommandSelect'), [...$alternatives, lang('CLI.altCommandNone')]);
+        $chosen = $prompt->select(lang('CLI.altCommandSelect'), [...$alternatives, lang('CLI.altCommandNone')]);
 
         return $alternatives[$chosen] ?? null;
     }

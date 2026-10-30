@@ -206,7 +206,7 @@ final class ModelGeneratorTest extends CIUnitTestCase
     public function testInvalidReturnTypePromptsWhenInteractive(): void
     {
         $io = new MockInputOutput();
-        $io->setInputs(['object']);
+        $io->setInputs(['2']);
         CLI::setInputOutput($io);
 
         $command = new ModelGenerator(new Commands());
