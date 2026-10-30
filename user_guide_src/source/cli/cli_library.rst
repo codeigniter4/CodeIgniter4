@@ -372,6 +372,10 @@ output of their run through ``$this->getPrompt()``:
         ``print()``, ``write()``, and ``error()`` colour through this method, so a subclass overriding
         it changes the colouring of every write.
 
+    .. php:method:: wrap(string $text[, int $max = 0[, int $padLeft = 0]]): string
+
+        The same as ``CLI::wrap()``, measuring the terminal of this output.
+
     .. php:method:: isDecorated(): bool
 
         Whether the target stream supports colours.

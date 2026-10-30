@@ -271,10 +271,10 @@ Commands
 - Added ``key:rotate`` command to demote the current ``encryption.key`` to ``encryption.previousKeys`` in **.env** and generate a new key. See :ref:`spark-key-rotate`.
 - Added ``AbstractCommand::callSilently()`` to invoke another command with its output discarded, restoring the prior output afterwards. See :ref:`modern-commands-call-silently`.
 - The output side of the ``CLI`` class now lives in instance classes, with ``CLI`` delegating to them: :php:class:`Output <CodeIgniter\\CLI\\Output>`
-  (``print()``, ``write()``, ``error()``, ``newLine()``, ``deferNewLine()``, ``beep()``, ``clearScreen()``, ``color()``), :php:class:`Terminal <CodeIgniter\\CLI\\Terminal>`
-  (dimensions and colour support), :php:class:`ProgressBar <CodeIgniter\\CLI\\ProgressBar>`, :php:class:`Table <CodeIgniter\\CLI\\Table>`, and
-  :php:class:`Color <CodeIgniter\\CLI\\Color>` (ANSI codes and ``Color::width()``). ``CLI::getOutput()`` and ``CLI::getTerminal()`` return the shared
-  instances. See :ref:`cli-library-classes`.
+  (``print()``, ``write()``, ``error()``, ``newLine()``, ``deferNewLine()``, ``beep()``, ``clearScreen()``, ``color()``, ``wrap()``),
+  :php:class:`Terminal <CodeIgniter\\CLI\\Terminal>` (dimensions and colour support), :php:class:`ProgressBar <CodeIgniter\\CLI\\ProgressBar>`,
+  :php:class:`Table <CodeIgniter\\CLI\\Table>`, and :php:class:`Color <CodeIgniter\\CLI\\Color>` (ANSI codes and ``Color::width()``).
+  ``CLI::getOutput()`` and ``CLI::getTerminal()`` return the shared instances. See :ref:`cli-library-classes`.
 - Modern commands can write through ``$this->getOutput()``, the same ``Output`` used by the static ``CLI`` methods. ``AbstractCommand::run()``
   and ``Commands::runCommand()`` accept an ``Output`` to run against, which ``Console`` passes down and sub-commands inherit.
   See :ref:`modern-commands-writing-output`.

@@ -600,15 +600,12 @@ class Prompt
     private function writeKeysAndValues(array $options): void
     {
         $padLeft = max(array_map(mb_strwidth(...), array_keys($options))) + 6;
-        $width   = min(self::MAX_LINE_WIDTH, $this->output->getTerminal()->getWidth()) - $padLeft;
 
         foreach ($options as $key => $description) {
-            $lines = explode(PHP_EOL, wordwrap($description, $width, PHP_EOL));
-
             $this->output->write(sprintf(
                 '%s%s',
                 $this->output->color(str_pad(sprintf('  [%s]  ', $key), $padLeft), 'green'),
-                implode(sprintf('%s%s', PHP_EOL, str_repeat(' ', $padLeft)), $lines),
+                $this->output->wrap($description, self::MAX_LINE_WIDTH, $padLeft),
             ));
         }
     }

@@ -186,6 +186,18 @@ class Output
     }
 
     /**
+     * Returns the text wrapped at the terminal width, or at `$max` when narrower,
+     * with every line after the first indented by `$padLeft` spaces.
+     */
+    public function wrap(string $text, int $max = 0, int $padLeft = 0): string
+    {
+        $width = $this->terminal->getWidth();
+        $max   = ($max === 0 ? $width : min($max, $width)) - $padLeft;
+
+        return implode(PHP_EOL . str_repeat(' ', $padLeft), explode(PHP_EOL, wordwrap($text, $max, PHP_EOL)));
+    }
+
+    /**
      * Whether the target stream supports colours.
      */
     public function isDecorated(): bool

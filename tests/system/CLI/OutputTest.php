@@ -227,6 +227,51 @@ final class OutputTest extends CIUnitTestCase
         $output->color('test', 'white', 'Background');
     }
 
+    public function testWrapBreaksAtTheTerminalWidth(): void
+    {
+        $output = new Output(new RecordingInputOutput(), $this->createTerminalOfWidth(20));
+
+        $expected = <<<'EOT'
+            the quick brown fox
+            jumps over the lazy
+            dog
+            EOT;
+
+        $this->assertSame($expected, $output->wrap('the quick brown fox jumps over the lazy dog'));
+        $this->assertSame($expected, $output->wrap('the quick brown fox jumps over the lazy dog', 999));
+    }
+
+    public function testWrapBreaksAtANarrowerMax(): void
+    {
+        $output = new Output(new RecordingInputOutput(), $this->createTerminalOfWidth(20));
+
+        $this->assertSame(<<<'EOT'
+            the quick
+            brown fox
+            jumps over
+            the lazy
+            dog
+            EOT, $output->wrap('the quick brown fox jumps over the lazy dog', 10));
+    }
+
+    public function testWrapIndentsTheLinesAfterTheFirst(): void
+    {
+        $output = new Output(new RecordingInputOutput(), $this->createTerminalOfWidth(20));
+
+        $this->assertSame(<<<'EOT'
+            the quick brown
+                fox jumps over
+                the lazy dog
+            EOT, $output->wrap('the quick brown fox jumps over the lazy dog', 0, 4));
+    }
+
+    public function testWrapLeavesAnEmptyTextEmpty(): void
+    {
+        $output = new Output(new RecordingInputOutput(), $this->createTerminalOfWidth(20));
+
+        $this->assertSame('', $output->wrap('', 0, 4));
+    }
+
     public function testBeepRepeats(): void
     {
         $io     = new RecordingInputOutput();
@@ -662,5 +707,13 @@ final class OutputTest extends CIUnitTestCase
     private function getWrittenText(RecordingInputOutput $io): string
     {
         return implode('', array_column($io->writes, 1));
+    }
+
+    private function createTerminalOfWidth(int $width): Terminal
+    {
+        $terminal = $this->createStub(Terminal::class);
+        $terminal->method('getWidth')->willReturn($width);
+
+        return $terminal;
     }
 }
