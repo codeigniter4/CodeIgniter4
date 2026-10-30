@@ -57,7 +57,7 @@ final class InsertTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledInsert());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledInsert(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -111,7 +111,7 @@ final class InsertTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledInsert());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledInsert(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -155,7 +155,7 @@ final class InsertTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledInsert());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledInsert(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 

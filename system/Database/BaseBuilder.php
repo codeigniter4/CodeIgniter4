@@ -2095,13 +2095,15 @@ class BaseBuilder
      */
     public function getCompiledSelect(bool $reset = true): string
     {
-        $select = $this->compileSelect();
+        $select = $this->compileFinalQuery($this->compileSelect());
 
         if ($reset) {
             $this->resetSelect();
+            $this->binds         = [];
+            $this->bindsKeyCount = [];
         }
 
-        return $this->compileFinalQuery($select);
+        return $select;
     }
 
     /**
@@ -2939,11 +2941,15 @@ class BaseBuilder
             array_values($this->QBSet),
         );
 
+        $sql = $this->compileFinalQuery($sql);
+
         if ($reset) {
             $this->resetWrite();
+            $this->binds         = [];
+            $this->bindsKeyCount = [];
         }
 
-        return $this->compileFinalQuery($sql);
+        return $sql;
     }
 
     /**
@@ -3110,11 +3116,15 @@ class BaseBuilder
 
         $sql = $this->_update($this->QBFrom[0], $this->QBSet);
 
+        $sql = $this->compileFinalQuery($sql);
+
         if ($reset) {
             $this->resetWrite();
+            $this->binds         = [];
+            $this->bindsKeyCount = [];
         }
 
-        return $this->compileFinalQuery($sql);
+        return $sql;
     }
 
     /**
@@ -3417,8 +3427,14 @@ class BaseBuilder
     {
         $sql = $this->testMode()->delete('', null, $reset);
         $this->testMode(false);
+        $sql = $this->compileFinalQuery($sql);
 
-        return $this->compileFinalQuery($sql);
+        if ($reset) {
+            $this->binds         = [];
+            $this->bindsKeyCount = [];
+        }
+
+        return $sql;
     }
 
     /**
