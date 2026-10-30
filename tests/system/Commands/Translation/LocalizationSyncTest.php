@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Translation;
 
+use CodeIgniter\CLI\Output;
 use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
@@ -225,14 +226,15 @@ final class LocalizationSyncTest extends CIUnitTestCase
         $command  = new LocalizationSync(service('commands'));
         $this->setPrivateProperty($command, 'languagePath', $langPath);
         $runner = self::getPrivateMethodInvoker($command, 'process');
+        $output = new Output();
 
-        $status = $runner('de', 'jp');
+        $status = $runner($output, 'de', 'jp');
 
         $this->assertSame(EXIT_ERROR, $status);
         $this->assertStringContainsString('Error: The "ROOTPATH/tests/_support/Language/de" directory was not found.', $this->getStreamFilterBuffer());
 
         chmod($langPath, 0544);
-        $status = $runner('en', 'jp');
+        $status = $runner($output, 'en', 'jp');
         chmod($langPath, 0775);
 
         $this->assertSame(EXIT_ERROR, $status);

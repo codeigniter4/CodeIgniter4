@@ -15,7 +15,6 @@ namespace CodeIgniter\Commands\Server;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Option;
 
 /**
@@ -43,13 +42,14 @@ class Serve extends AbstractCommand
     {
         $basePort = (int) $options['port'];
         $status   = EXIT_SUCCESS;
+        $output   = $this->getOutput();
 
         for ($offset = 0; $offset <= self::RETRIES; $offset++) {
             $port = $basePort + $offset;
 
-            CLI::write(sprintf('CodeIgniter development server started on http://%s:%s', $options['host'], $port), 'green');
-            CLI::write('Press Control-C to stop.');
-            CLI::newLine();
+            $output->write(sprintf('CodeIgniter development server started on http://%s:%s', $options['host'], $port), 'green');
+            $output->write('Press Control-C to stop.');
+            $output->newLine();
 
             passthru(
                 $this->buildServeCommand($options['php'], $options['host'], $port, FCPATH, SYSTEMPATH . 'rewrite.php'),
@@ -60,7 +60,7 @@ class Serve extends AbstractCommand
                 return $status;
             }
 
-            CLI::newLine();
+            $output->newLine();
         }
 
         return $status;

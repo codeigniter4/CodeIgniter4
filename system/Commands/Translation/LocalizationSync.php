@@ -15,8 +15,8 @@ namespace CodeIgniter\Commands\Translation;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Option;
+use CodeIgniter\CLI\Output;
 use CodeIgniter\Exceptions\LogicException;
 use Config\App;
 use ErrorException;
@@ -65,17 +65,18 @@ class LocalizationSync extends AbstractCommand
 
         $this->languagePath = APPPATH . 'Language';
         $supportedLocales   = config(App::class)->supportedLocales;
+        $output             = $this->getOutput();
 
         if ($locale === '') {
             $locale = Locale::getDefault();
         }
 
         if (! in_array($locale, $supportedLocales, true)) {
-            return $this->errorUnsupportedLocale($locale);
+            return $this->errorUnsupportedLocale($output, $locale);
         }
 
         if ($target === '') {
-            CLI::error(
+            $output->error(
                 sprintf(
                     'Error: "--target" is not configured. Supported locales: %s',
                     implode(', ', $supportedLocales),
@@ -88,11 +89,11 @@ class LocalizationSync extends AbstractCommand
         }
 
         if (! in_array($target, $supportedLocales, true)) {
-            return $this->errorUnsupportedLocale($target);
+            return $this->errorUnsupportedLocale($output, $target);
         }
 
         if ($target === $locale) {
-            CLI::error('Error: You cannot have the same values for "--target" and "--locale".', 'light_gray', 'red');
+            $output->error('Error: You cannot have the same values for "--target" and "--locale".', 'light_gray', 'red');
 
             return EXIT_USER_INPUT;
         }
@@ -101,11 +102,11 @@ class LocalizationSync extends AbstractCommand
             $this->languagePath = SUPPORTPATH . 'Language';
         }
 
-        if ($this->process($locale, $target) === EXIT_ERROR) {
+        if ($this->process($output, $locale, $target) === EXIT_ERROR) {
             return EXIT_ERROR;
         }
 
-        CLI::write('All operations done!', 'green');
+        $output->write('All operations done!', 'green');
 
         return EXIT_SUCCESS;
     }
@@ -113,9 +114,9 @@ class LocalizationSync extends AbstractCommand
     /**
      * Writes the unsupported-locale error and returns the user-input exit code.
      */
-    private function errorUnsupportedLocale(string $locale): int
+    private function errorUnsupportedLocale(Output $output, string $locale): int
     {
-        CLI::error(
+        $output->error(
             sprintf(
                 'Error: "%s" is not supported. Supported locales: %s',
                 $locale,
@@ -128,13 +129,13 @@ class LocalizationSync extends AbstractCommand
         return EXIT_USER_INPUT;
     }
 
-    private function process(string $originalLocale, string $targetLocale): int
+    private function process(Output $output, string $originalLocale, string $targetLocale): int
     {
         $originalLocaleDir = $this->languagePath . DIRECTORY_SEPARATOR . $originalLocale;
         $targetLocaleDir   = $this->languagePath . DIRECTORY_SEPARATOR . $targetLocale;
 
         if (! is_dir($originalLocaleDir)) {
-            CLI::error(
+            $output->error(
                 sprintf('Error: The "%s" directory was not found.', clean_path($originalLocaleDir)),
                 'light_gray',
                 'red',
@@ -149,7 +150,7 @@ class LocalizationSync extends AbstractCommand
                 throw new ErrorException();
             }
         } catch (ErrorException $e) {
-            CLI::error(
+            $output->error(
                 sprintf('Error: The target directory "%s" cannot be accessed.', clean_path($targetLocaleDir)),
                 'light_gray',
                 'red',

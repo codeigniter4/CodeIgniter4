@@ -15,8 +15,9 @@ namespace CodeIgniter\Commands\Translation;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Option;
+use CodeIgniter\CLI\Output;
+use CodeIgniter\CLI\Table;
 use CodeIgniter\CLI\Verbosity;
 use CodeIgniter\Helpers\Array\ArrayHelper;
 use Config\App;
@@ -67,6 +68,7 @@ class LocalizationFinder extends AbstractCommand
         assert(is_string($dir));
 
         $currentLocale = Locale::getDefault();
+        $output        = $this->getOutput();
 
         ['currentDir' => $currentDir, 'languagePath' => $this->languagePath] = $this->resolvePaths();
 
@@ -74,7 +76,7 @@ class LocalizationFinder extends AbstractCommand
             $supportedLocales = config(App::class)->supportedLocales;
 
             if (! in_array($locale, $supportedLocales, true)) {
-                CLI::error(
+                $output->error(
                     sprintf(
                         'Error: "%s" is not supported. Supported locales: %s',
                         $locale,
@@ -94,13 +96,13 @@ class LocalizationFinder extends AbstractCommand
             $tempCurrentDir = realpath($currentDir . $dir);
 
             if ($tempCurrentDir === false) {
-                CLI::error(sprintf('Error: Directory must be located in "%s"', $currentDir), 'light_gray', 'red');
+                $output->error(sprintf('Error: Directory must be located in "%s"', $currentDir), 'light_gray', 'red');
 
                 return EXIT_USER_INPUT;
             }
 
             if ($this->isSubdirectory($tempCurrentDir, $this->languagePath)) {
-                CLI::error(sprintf('Error: Directory "%s" restricted to scan.', $this->languagePath), 'light_gray', 'red');
+                $output->error(sprintf('Error: Directory "%s" restricted to scan.', $this->languagePath), 'light_gray', 'red');
 
                 return EXIT_USER_INPUT;
             }
@@ -108,9 +110,9 @@ class LocalizationFinder extends AbstractCommand
             $currentDir = $tempCurrentDir;
         }
 
-        $this->process($currentDir, $currentLocale);
+        $this->process($output, $currentDir, $currentLocale);
 
-        CLI::write('All operations done!', 'green');
+        $output->write('All operations done!', 'green');
 
         return EXIT_SUCCESS;
     }
@@ -136,10 +138,9 @@ class LocalizationFinder extends AbstractCommand
         ];
     }
 
-    private function process(string $currentDir, string $currentLocale): void
+    private function process(Output $output, string $currentDir, string $currentLocale): void
     {
         $showNew = $this->getValidatedOption('show-new') === true;
-        $output  = $this->getOutput();
 
         $tableRows    = [];
         $countNewKeys = 0;
@@ -152,7 +153,7 @@ class LocalizationFinder extends AbstractCommand
             'foundLanguageKeys' => $foundLanguageKeys,
             'badLanguageKeys'   => $badLanguageKeys,
             'countFiles'        => $countFiles,
-        ] = $this->findLanguageKeysInFiles($files);
+        ] = $this->findLanguageKeysInFiles($output, $files);
 
         ksort($foundLanguageKeys);
 
@@ -189,11 +190,11 @@ class LocalizationFinder extends AbstractCommand
 
         if ($showNew && $tableRows !== []) {
             sort($tableRows);
-            CLI::table($tableRows, ['File', 'Key']);
+            $output->write((new Table($tableRows, ['File', 'Key']))->render());
         }
 
         if (! $showNew && $countNewKeys > 0) {
-            CLI::write('Note: You need to run your linting tool to fix coding standards issues.', 'white', 'red');
+            $output->write('Note: You need to run your linting tool to fix coding standards issues.', 'white', 'red');
         }
 
         $output->write(sprintf('Files found: %d', $countFiles), verbosity: Verbosity::Verbose);
@@ -209,7 +210,7 @@ class LocalizationFinder extends AbstractCommand
 
             ArrayHelper::sortValuesByNatural($tableBadRows, 0);
 
-            CLI::table($tableBadRows, ['Bad Key', 'Filepath']);
+            $output->write((new Table($tableBadRows, ['Bad Key', 'Filepath']))->render());
         }
     }
 
@@ -423,12 +424,11 @@ class LocalizationFinder extends AbstractCommand
      *
      * @return array{'foundLanguageKeys': array<string, array<string, string>>, 'badLanguageKeys': array<int, array<int, string>>, 'countFiles': int}
      */
-    private function findLanguageKeysInFiles(array $files): array
+    private function findLanguageKeysInFiles(Output $output, array $files): array
     {
         $foundLanguageKeys = [];
         $badLanguageKeys   = [];
         $countFiles        = 0;
-        $output            = $this->getOutput();
 
         foreach ($files as $file) {
             if ($this->isIgnoredFile($file)) {
