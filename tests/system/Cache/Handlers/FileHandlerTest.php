@@ -294,13 +294,12 @@ final class FileHandlerTest extends AbstractHandlerTestCase
     public function testSaveMode(int $int, string $string): void
     {
         // Initialize mode
-        $config               = new Cache();
-        $config->file['mode'] = $int;
+        $this->config->file['mode'] = $int;
 
-        $this->handler = CacheFactory::getHandler($config, 'file');
+        $this->handler = CacheFactory::getHandler($this->config, 'file');
         $this->handler->save(self::$key1, 'value');
 
-        $file = $config->file['storePath'] . DIRECTORY_SEPARATOR . self::$key1;
+        $file = $this->config->file['storePath'] . DIRECTORY_SEPARATOR . self::$key1;
         $mode = octal_permissions(fileperms($file));
 
         $this->assertSame($string, $mode);
