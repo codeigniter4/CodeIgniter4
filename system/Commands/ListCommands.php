@@ -15,8 +15,8 @@ namespace CodeIgniter\Commands;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Option;
+use CodeIgniter\CLI\Output;
 
 /**
  * Lists the available commands.
@@ -34,14 +34,16 @@ class ListCommands extends AbstractCommand
 
     protected function execute(array $arguments, array $options): int
     {
+        $output = $this->getOutput();
+
         if ($options['simple'] === true) {
-            return $this->describeCommandsSimple();
+            return $this->describeCommandsSimple($output);
         }
 
-        return $this->describeCommandsDetailed();
+        return $this->describeCommandsDetailed($output);
     }
 
-    private function describeCommandsSimple(): int
+    private function describeCommandsSimple(Output $output): int
     {
         // Legacy takes precedence on key collision so the listing reflects the
         // command that would actually be invoked.
@@ -53,16 +55,16 @@ class ListCommands extends AbstractCommand
         sort($commands);
 
         foreach ($commands as $command) {
-            CLI::write($command);
+            $output->write($command);
         }
 
         return EXIT_SUCCESS;
     }
 
-    private function describeCommandsDetailed(): int
+    private function describeCommandsDetailed(Output $output): int
     {
-        CLI::write(lang('CLI.helpUsage'), 'yellow');
-        CLI::write($this->addPadding('command [options] [--] [arguments]'));
+        $output->write(lang('CLI.helpUsage'), 'yellow');
+        $output->write($this->addPadding('command [options] [--] [arguments]'));
 
         $entries = [];
         $maxPad  = 0;
@@ -110,23 +112,23 @@ class ListCommands extends AbstractCommand
             $groups[$group][] = [$command, $description];
         }
 
-        CLI::newLine();
-        CLI::write(lang('CLI.helpAvailableCommands'), 'yellow');
+        $output->newLine();
+        $output->write(lang('CLI.helpAvailableCommands'), 'yellow');
 
         $firstGroup = array_key_first($groups);
 
         foreach ($groups as $group => $commands) {
             if ($group !== $firstGroup) {
-                CLI::newLine();
+                $output->newLine();
             }
 
-            CLI::write($group, 'yellow');
+            $output->write($group, 'yellow');
 
             foreach ($commands as $command) {
-                CLI::write(sprintf(
+                $output->write(sprintf(
                     '%s%s',
-                    CLI::color($this->addPadding($command[0], 2, $maxPad), 'green'),
-                    CLI::wrap($command[1], 0, $maxPad),
+                    $output->color($this->addPadding($command[0], 2, $maxPad), 'green'),
+                    $output->wrap($command[1], 0, $maxPad),
                 ));
             }
         }

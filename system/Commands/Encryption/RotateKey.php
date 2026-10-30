@@ -15,7 +15,6 @@ namespace CodeIgniter\Commands\Encryption;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Option;
 use Config\Paths;
 
@@ -81,7 +80,7 @@ class RotateKey extends AbstractCommand
             return;
         }
 
-        if (CLI::prompt('Rotate encryption key? The current key will be moved to `previousKeys`.', ['n', 'y']) === 'y') {
+        if ($this->getPrompt()->ask('Rotate encryption key? The current key will be moved to `previousKeys`.', ['n', 'y']) === 'y') {
             $options['force'] = null; // simulate the presence of the --force option
         }
     }
@@ -89,9 +88,10 @@ class RotateKey extends AbstractCommand
     protected function execute(array $arguments, array $options): int
     {
         $prefix = $options['prefix'];
+        $output = $this->getOutput();
 
         if (! in_array($prefix, self::VALID_PREFIXES, true)) {
-            CLI::error(sprintf('Invalid prefix "%s". Use either "hex2bin" or "base64".', $prefix));
+            $output->error(sprintf('Invalid prefix "%s". Use either "hex2bin" or "base64".', $prefix));
 
             return EXIT_ERROR;
         }
@@ -99,19 +99,19 @@ class RotateKey extends AbstractCommand
         $currentKey = env('encryption.key', '');
 
         if ($currentKey === '') {
-            CLI::error('No existing `encryption.key` to rotate. Run `spark key:generate` first.');
+            $output->error('No existing `encryption.key` to rotate. Run `spark key:generate` first.');
 
             return EXIT_ERROR;
         }
 
         if ($options['force'] === false) {
             if ($this->isInteractive()) {
-                CLI::write('Key rotation cancelled.', 'yellow');
+                $output->write('Key rotation cancelled.', 'yellow');
 
                 return EXIT_SUCCESS;
             }
 
-            CLI::error('Key rotation aborted: pass --force to rotate the encryption key in non-interactive mode.');
+            $output->error('Key rotation aborted: pass --force to rotate the encryption key in non-interactive mode.');
 
             return EXIT_ERROR;
         }
@@ -119,7 +119,7 @@ class RotateKey extends AbstractCommand
         $keep = $options['keep'];
 
         if (! is_string($keep) || ! ctype_digit($keep)) {
-            CLI::error('The --keep option must be a non-negative integer.');
+            $output->error('The --keep option must be a non-negative integer.');
 
             return EXIT_ERROR;
         }
@@ -127,7 +127,7 @@ class RotateKey extends AbstractCommand
         $length = $options['length'];
 
         if (! is_string($length) || ! ctype_digit($length) || (int) $length < 1) {
-            CLI::error('The --length option must be a positive integer.');
+            $output->error('The --length option must be a positive integer.');
 
             return EXIT_ERROR;
         }
@@ -140,20 +140,20 @@ class RotateKey extends AbstractCommand
         $envFile = ((new Paths())->envDirectory ?? ROOTPATH) . '.env'; // @phpstan-ignore nullCoalesce.property
 
         if (! is_file($envFile)) {
-            CLI::error(sprintf('Cannot rotate: `.env` file not found at %s.', clean_path($envFile)));
+            $output->error(sprintf('Cannot rotate: `.env` file not found at %s.', clean_path($envFile)));
 
             return EXIT_ERROR;
         }
 
         if (! is_writable($envFile)) {
-            CLI::error(sprintf('Cannot rotate: `.env` file at %s is not writable.', clean_path($envFile)));
+            $output->error(sprintf('Cannot rotate: `.env` file at %s is not writable.', clean_path($envFile)));
 
             return EXIT_ERROR;
         }
 
         if (! $this->writePreviousKeys($previousKeys, $envFile)) {
             // @codeCoverageIgnoreStart
-            CLI::error(sprintf('Failed to write `encryption.previousKeys` to %s.', clean_path($envFile)));
+            $output->error(sprintf('Failed to write `encryption.previousKeys` to %s.', clean_path($envFile)));
 
             return EXIT_ERROR;
             // @codeCoverageIgnoreEnd
@@ -178,12 +178,12 @@ class RotateKey extends AbstractCommand
 
         $count = count($previousKeys);
 
-        CLI::write(sprintf(
+        $output->write(sprintf(
             'Encryption key rotated. %d %s retained for decryption fallback.',
             $count,
             $count === 1 ? 'previous key' : 'previous keys',
         ), 'green');
-        CLI::write('Re-encrypt existing data with the new key when ready.', 'yellow');
+        $output->write('Re-encrypt existing data with the new key when ready.', 'yellow');
 
         return EXIT_SUCCESS;
     }
