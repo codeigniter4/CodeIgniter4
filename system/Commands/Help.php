@@ -15,9 +15,9 @@ namespace CodeIgniter\Commands;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Argument;
 use CodeIgniter\CLI\Input\Option;
+use CodeIgniter\CLI\Output;
 
 /**
  * Displays the basic usage information for a given command.
@@ -51,57 +51,57 @@ class Help extends AbstractCommand
             return EXIT_ERROR;
         }
 
-        $this->describeHelp($commands->getCommand($command, legacy: false));
+        $this->describeHelp($commands->getCommand($command, legacy: false), $this->getOutput());
 
         return EXIT_SUCCESS;
     }
 
-    private function describeHelp(AbstractCommand $command): void
+    private function describeHelp(AbstractCommand $command, Output $output): void
     {
-        CLI::write(lang('CLI.helpUsage'), 'yellow');
+        $output->write(lang('CLI.helpUsage'), 'yellow');
 
         foreach ($command->getUsages() as $usage) {
-            CLI::write($this->addPadding($usage));
+            $output->write($this->addPadding($usage));
         }
 
         if ($command->getDescription() !== '') {
-            CLI::newLine();
-            CLI::write(lang('CLI.helpDescription'), 'yellow');
-            CLI::write($this->addPadding($command->getDescription()));
+            $output->newLine();
+            $output->write(lang('CLI.helpDescription'), 'yellow');
+            $output->write($this->addPadding($command->getDescription()));
         }
 
         if ($command->getAliases() !== []) {
-            CLI::newLine();
-            CLI::write(lang('CLI.helpAliases'), 'yellow');
+            $output->newLine();
+            $output->write(lang('CLI.helpAliases'), 'yellow');
 
             foreach ($command->getAliases() as $alias) {
-                CLI::write($this->addPadding($alias));
+                $output->write($this->addPadding($alias));
             }
         }
 
         $maxPadding = $this->getMaxPadding($command);
 
         if ($command->getArgumentsDefinition() !== []) {
-            CLI::newLine();
-            CLI::write(lang('CLI.helpArguments'), 'yellow');
+            $output->newLine();
+            $output->write(lang('CLI.helpArguments'), 'yellow');
 
             foreach ($command->getArgumentsDefinition() as $argument => $definition) {
                 $default = ! $definition->required && $this->shouldShowDefault($definition->default)
                     ? sprintf(' [default: %s]', $this->formatDefaultValue($definition->default))
                     : '';
 
-                CLI::write(sprintf(
+                $output->write(sprintf(
                     '%s%s%s',
-                    CLI::color($this->addPadding($argument, 2, $maxPadding), 'green'),
+                    $output->color($this->addPadding($argument, 2, $maxPadding), 'green'),
                     $definition->description,
-                    CLI::color($default, 'yellow'),
+                    $output->color($default, 'yellow'),
                 ));
             }
         }
 
         if ($command->getOptionsDefinition() !== []) {
-            CLI::newLine();
-            CLI::write(lang('CLI.helpOptions'), 'yellow');
+            $output->newLine();
+            $output->write(lang('CLI.helpOptions'), 'yellow');
 
             $hasShortcuts = $command->getShortcuts() !== [];
 
@@ -130,12 +130,12 @@ class Help extends AbstractCommand
                     ? sprintf(' [default: %s]', $this->formatDefaultValue($definition->default))
                     : '';
 
-                CLI::write(sprintf(
+                $output->write(sprintf(
                     '%s%s%s%s',
-                    CLI::color($this->addPadding($optionString, 2, $maxPadding), 'green'),
+                    $output->color($this->addPadding($optionString, 2, $maxPadding), 'green'),
                     $definition->description,
-                    CLI::color($default, 'yellow'),
-                    $definition->isArray ? CLI::color(' (multiple values allowed)', 'yellow') : '',
+                    $output->color($default, 'yellow'),
+                    $definition->isArray ? $output->color(' (multiple values allowed)', 'yellow') : '',
                 ));
             }
         }

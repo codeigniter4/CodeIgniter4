@@ -15,7 +15,6 @@ namespace CodeIgniter\Commands\Encryption;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Option;
 use CodeIgniter\Config\DotEnv;
 use CodeIgniter\Encryption\Encryption;
@@ -81,7 +80,7 @@ class GenerateKey extends AbstractCommand
             return;
         }
 
-        if (CLI::prompt('Overwrite existing key?', ['n', 'y']) === 'y') {
+        if ($this->getPrompt()->ask('Overwrite existing key?', ['n', 'y']) === 'y') {
             $options['force'] = null; // simulate the presence of the --force option
         }
     }
@@ -89,9 +88,10 @@ class GenerateKey extends AbstractCommand
     protected function execute(array $arguments, array $options): int
     {
         $prefix = $options['prefix'];
+        $output = $this->getOutput();
 
         if (! in_array($prefix, self::VALID_PREFIXES, true)) {
-            CLI::error(sprintf('Invalid prefix "%s". Use either "hex2bin" or "base64".', $prefix));
+            $output->error(sprintf('Invalid prefix "%s". Use either "hex2bin" or "base64".', $prefix));
 
             return EXIT_ERROR;
         }
@@ -99,7 +99,7 @@ class GenerateKey extends AbstractCommand
         $encodedKey = $this->generateRandomKey($prefix, (int) $options['length']);
 
         if ($options['show'] === true) {
-            CLI::write($encodedKey, 'yellow');
+            $output->write($encodedKey, 'yellow');
 
             return EXIT_SUCCESS;
         }
@@ -108,12 +108,12 @@ class GenerateKey extends AbstractCommand
 
         if ($currentKey !== '' && $options['force'] === false) {
             if ($this->isInteractive()) {
-                CLI::write('Setting new encryption key cancelled.', 'yellow');
+                $output->write('Setting new encryption key cancelled.', 'yellow');
 
                 return EXIT_SUCCESS;
             }
 
-            CLI::error('Setting new encryption key aborted: pass --force to overwrite the existing key in non-interactive mode.');
+            $output->error('Setting new encryption key aborted: pass --force to overwrite the existing key in non-interactive mode.');
 
             return EXIT_ERROR;
         }
@@ -122,14 +122,14 @@ class GenerateKey extends AbstractCommand
         $baseEnv = ROOTPATH . 'env';
 
         if (! is_file($envFile) && ! is_file($baseEnv)) {
-            CLI::write('Both default shipped `env` file and custom `.env` are missing.', 'yellow');
-            CLI::write(sprintf('Here\'s your new key instead: %s', CLI::color($encodedKey, 'yellow')));
+            $output->write('Both default shipped `env` file and custom `.env` are missing.', 'yellow');
+            $output->write(sprintf('Here\'s your new key instead: %s', $output->color($encodedKey, 'yellow')));
 
             return EXIT_ERROR;
         }
 
         if (! $this->writeNewEncryptionKeyToFile($encodedKey, $envFile, $baseEnv)) {
-            CLI::error(sprintf('Failed to write new encryption key to %s.', clean_path($envFile)));
+            $output->error(sprintf('Failed to write new encryption key to %s.', clean_path($envFile)));
 
             return EXIT_ERROR;
         }
@@ -141,8 +141,7 @@ class GenerateKey extends AbstractCommand
         $dotenv = new DotEnv((new Paths())->envDirectory ?? ROOTPATH); // @phpstan-ignore nullCoalesce.property
         $dotenv->load();
 
-        CLI::write(sprintf('New encryption key written to %s.', clean_path($envFile)), 'green');
-        CLI::newLine();
+        $output->write(sprintf('New encryption key written to %s.', clean_path($envFile)), 'green');
 
         return EXIT_SUCCESS;
     }
