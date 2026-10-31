@@ -22,33 +22,33 @@ Breaking Changes
 
 .. _upgrade-480-query-builder-bindings:
 
-Compiled Query Builder Bindings
-===============================
+Query Builder Bindings
+======================
 
-``getCompiledSelect()``, ``getCompiledInsert()``, ``getCompiledUpdate()`` and
-``getCompiledDelete()`` now clear their bindings and binding counters after
-compilation when ``$reset = true`` (the default). Previously, these methods
-reset the query clauses but retained the bindings, which accumulated when the
-same builder was reused and made subsequent query compilation increasingly
-expensive.
+``getCompiledSelect()``, ``getCompiledInsert()``, ``getCompiledUpdate()``,
+``getCompiledDelete()``, ``delete()`` and ``countAllResults()`` now clear their
+bindings and binding counters after compilation or execution when their reset
+parameter is enabled (the default). This prevents accumulation when a builder
+is reused, but ``getBinds()`` now returns an empty array after these calls.
+Bindings are also cleared when the database query returns ``false``.
 
 The :ref:`getCompiledSelect() documentation <query-builder-get-compiled-select>`
 already states that the default reset should work just like ``get()``.
-Clearing the bindings corrects that inconsistency, but changes the result of
-``getBinds()`` after compilation: it now returns an empty array.
+Clearing the bindings corrects that inconsistency while changing the observable
+result of ``getBinds()``.
 
-If your application reads the bindings after compilation or reuses the query,
-pass ``false`` to preserve them:
+To retain the query and its bindings, pass ``false`` as the first argument to
+any of the compiled methods or ``countAllResults()``, or as the third argument
+to ``delete()``: ``$builder->delete('', null, false)``. This also retains query
+clauses such as WHERE and LIMIT.
 
-.. code-block:: php
+If you only need a snapshot of the bindings, read them before compilation or
+execution instead. When passing conditions directly to ``delete()``, move them
+into ``where()`` first so their bindings are available before execution.
 
-    $sql   = $builder->getCompiledSelect(false);
-    $binds = $builder->getBinds();
-
-Passing ``false`` also retains the query clauses, including WHERE and LIMIT.
-If you only need a snapshot of the bindings while retaining the default reset
-behavior, call ``getBinds()`` before compiling the query instead.
-The same migration applies to the compiled INSERT, UPDATE and DELETE methods.
+Test mode retains bindings needed by the placeholders in its returned raw SQL.
+In particular, ``getCompiledDelete()`` needs these bindings to finish compilation
+and clears them afterwards according to its own reset parameter.
 
 Query Builder JOIN Overrides
 ============================

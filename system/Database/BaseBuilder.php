@@ -2385,6 +2385,8 @@ class BaseBuilder
 
         if ($reset) {
             $this->resetSelect();
+            $this->binds         = [];
+            $this->bindsKeyCount = [];
         } elseif (! isset($this->QBOrderBy)) {
             $this->QBOrderBy = $orderBy;
         }
@@ -3485,7 +3487,18 @@ class BaseBuilder
             $this->resetWrite();
         }
 
-        return $this->testMode ? $sql : $this->db->query($sql, $this->binds, false);
+        if ($this->testMode) {
+            return $sql;
+        }
+
+        $result = $this->db->query($sql, $this->binds, false);
+
+        if ($resetData) {
+            $this->binds         = [];
+            $this->bindsKeyCount = [];
+        }
+
+        return $result;
     }
 
     /**
