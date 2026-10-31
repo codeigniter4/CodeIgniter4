@@ -21,6 +21,7 @@ use CodeIgniter\Test\Mock\MockConnection;
 use CodeIgniter\Test\Mock\MockResult;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @internal
@@ -171,7 +172,7 @@ final class ExecutionBindingsTest extends CIUnitTestCase
             ->onlyMethods(['query'])
             ->getMock();
 
-        $db->method('query')->willReturnCallback(static function (string $sql, array $binds, bool $setEscapeFlags) use ($db, $result, $success) {
+        $db->method('query')->willReturnCallback(static function (string $sql, array $binds, bool $setEscapeFlags) use ($db, $result, $success): bool|MockObject {
             $query = new Query($db);
             $query->setQuery($sql, $binds, $setEscapeFlags);
             $query->getQuery();
