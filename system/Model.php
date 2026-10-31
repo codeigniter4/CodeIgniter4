@@ -695,6 +695,42 @@ class Model extends BaseModel
         return $row;
     }
 
+    /**
+     * Ensures that only the fields that are allowed to be replaced are in
+     * the data array.
+     *
+     * Used by replace() to protect against mass assignment vulnerabilities.
+     *
+     * @param row_array $row
+     *
+     * @return row_array
+     *
+     * @throws DataException
+     */
+    protected function doProtectFieldsForReplace(array $row): array
+    {
+        if (! $this->protectFields) {
+            return $row;
+        }
+
+        if ($this->allowedFields === []) {
+            throw DataException::forInvalidAllowedFields(static::class);
+        }
+
+        foreach (array_keys($row) as $key) {
+            // Do not remove the primary key data.
+            if ($this->primaryKey !== '' && $key === $this->primaryKey) {
+                continue;
+            }
+
+            if (! in_array($key, $this->allowedFields, true)) {
+                unset($row[$key]);
+            }
+        }
+
+        return $row;
+    }
+
     public function update($id = null, $row = null): bool
     {
         if (isset($this->tempData['data'])) {

@@ -1265,6 +1265,8 @@ abstract class BaseModel
      * @param bool           $returnSQL `true` means SQL is returned, `false` will execute the query.
      *
      * @return BaseResult|false|Query|string
+     *
+     * @throws DataException
      */
     public function replace(?array $row = null, bool $returnSQL = false)
     {
@@ -1274,8 +1276,20 @@ abstract class BaseModel
         }
 
         $row = (array) $row;
-        $row = $this->setCreatedField($row, $this->setDate());
-        $row = $this->setUpdatedField($row, $this->setDate());
+
+        // Must be called first, so we don't
+        // strip out created_at values.
+        $row = $this->doProtectFieldsForReplace($row);
+
+        // doProtectFields() can further remove elements from
+        // $row, so we need to check for empty dataset again
+        if ($row === []) {
+            throw DataException::forEmptyDataset('replace');
+        }
+
+        $date = $this->setDate();
+        $row  = $this->setCreatedField($row, $date);
+        $row  = $this->setUpdatedField($row, $date);
 
         return $this->doReplace($row, $returnSQL);
     }
@@ -1410,6 +1424,23 @@ abstract class BaseModel
      * @throws DataException
      */
     protected function doProtectFieldsForInsert(array $row): array
+    {
+        return $this->doProtectFields($row);
+    }
+
+    /**
+     * Ensures that only the fields that are allowed to be replaced are in
+     * the data array.
+     *
+     * @used-by replace() to protect against mass assignment vulnerabilities.
+     *
+     * @param row_array $row
+     *
+     * @return row_array
+     *
+     * @throws DataException
+     */
+    protected function doProtectFieldsForReplace(array $row): array
     {
         return $this->doProtectFields($row);
     }

@@ -20,6 +20,19 @@ Mandatory File Changes
 Breaking Changes
 ****************
 
+.. _upgrade-476-model-replace-allowed-fields:
+
+Model::replace() Enforces Allowed Fields
+========================================
+
+For security and consistency with ``insert()`` and ``update()``, ``BaseModel::replace()`` now enforces mass assignment protection via ``$allowedFields``.
+
+Previously, unlisted fields were passed directly to the database query without filtering. If your application intentionally passes fields not defined in ``$allowedFields`` to ``replace()``, either add those fields to ``$allowedFields`` or temporarily disable protection before calling ``replace()``:
+
+.. code-block:: php
+
+    $model->protect(false)->replace($data);
+
 *********************
 Breaking Enhancements
 *********************

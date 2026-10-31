@@ -14,6 +14,11 @@ Release Date: Unreleased
 BREAKING
 ********
 
+Behavior Changes
+================
+
+- **Model:** ``BaseModel::replace()`` now enforces ``$allowedFields`` protection identically to ``insert()`` and ``update()``. Applications passing fields not listed in ``$allowedFields`` will have those fields rejected or throw a ``DataException`` if no valid fields remain. See :ref:`upgrade-476-model-replace-allowed-fields` for details.
+
 ***************
 Message Changes
 ***************
@@ -52,6 +57,7 @@ Bugs Fixed
 - **HTTP:** Fixed a bug where ``Negotiate`` could select a value that the request header excluded with ``q=0`` through a wildcard or a broader range. A ``q=0`` range now excludes every value it matches, such as ``text/html`` and ``text/html;charset=utf-8`` for ``text/*;q=0``, or ``en-US`` for ``en;q=0``, unless a more specific range in the header accepts the value. For example, ``Accept-Encoding: gzip;q=0, *`` no longer selects ``gzip``.
 - **HTTP:** Fixed stale ``$_REQUEST`` values after ``SiteURIFactory`` normalizes GET parameters, so ``Validation::withRequest()`` reads the normalized values while unrelated REQUEST entries are preserved.
 - **I18n:** Fixed a regression in v4.7.1 where ``Time`` and ``TimeLegacy`` lost their timezone, locale and ``__toString()`` format after ``unserialize()``, so methods such as ``difference()`` and ``getTimezoneName()`` threw an ``Error``.
+- **Model:** Fixed a bug where ``BaseModel::replace()`` did not protect fields against mass assignment or check for empty datasets, passing raw input data to the builder.
 - **Routing:** Corrected the PHPDoc callback type of ``RouteCollection::group()`` to preserve the concrete collection type, allowing callbacks typed to a ``RouteCollection`` subclass to pass static analysis.
 - **Security:** Fixed a bug where a valid JSON request body that is not an object (for example a JSON array) was corrupted after CSRF verification when the token was sent via the ``X-CSRF-TOKEN`` header.
 
