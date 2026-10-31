@@ -91,6 +91,8 @@ $query, which can be used to show the results:
 Please visit the :ref:`getResult() <getresult>` method for a full
 discussion regarding result generation.
 
+.. _query-builder-get-compiled-select:
+
 $builder->getCompiledSelect()
 -----------------------------
 
@@ -109,6 +111,11 @@ will be reset (because the default value of the parameter is true, ``getCompiled
 The key thing to notice in the above example is that the second query did not
 utilize ``limit(10, 20)`` but the generated SQL query has ``LIMIT 20, 10``.
 The reason for this outcome is because the parameter in the first query is set to ``false``, ``limit(10, 20)`` remained in the second query.
+
+.. note::
+    **Changed in version 4.8.0.** With ``$reset = true`` (the default), ``getCompiledSelect()``, ``getCompiledInsert()``, ``getCompiledUpdate()`` and ``getCompiledDelete()``
+    also clear their bindings and binding counters after compilation. ``getBinds()`` therefore returns an empty array after these calls.
+    Pass ``false`` to retain the query clauses and bindings for reuse.
 
 .. _query-builder-explain:
 

@@ -86,7 +86,7 @@ final class PrefixTest extends CIUnitTestCase
 
         $builder->whereBetween('users.created_at', [1, 10]);
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 

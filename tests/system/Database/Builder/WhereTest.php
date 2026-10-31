@@ -54,7 +54,7 @@ final class WhereTest extends CIUnitTestCase
         ];
 
         $builder->where('id', 3);
-        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -71,7 +71,7 @@ final class WhereTest extends CIUnitTestCase
         ];
 
         $builder->where('id', 3, false);
-        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -88,7 +88,7 @@ final class WhereTest extends CIUnitTestCase
         ];
 
         $builder->where('id !=', 3);
-        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -114,7 +114,7 @@ final class WhereTest extends CIUnitTestCase
         ];
 
         $builder->where($where);
-        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -159,7 +159,7 @@ final class WhereTest extends CIUnitTestCase
 
         $builder->where($key, $value);
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -231,7 +231,7 @@ final class WhereTest extends CIUnitTestCase
         $builder->where($where, "''", false);
 
         $expectedSQL = "SELECT * FROM \"jobs\" WHERE REPLACE(column, 'somestring', '') = ''";
-        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect(false));
 
         $expectedBinds = [
             "REPLACE(column, 'somestring', '')" => [
@@ -371,7 +371,7 @@ final class WhereTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -393,7 +393,7 @@ final class WhereTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -478,7 +478,7 @@ final class WhereTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -653,7 +653,7 @@ final class WhereTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -710,7 +710,7 @@ final class WhereTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -782,7 +782,7 @@ final class WhereTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -854,7 +854,7 @@ final class WhereTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -956,7 +956,7 @@ final class WhereTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -1004,7 +1004,7 @@ final class WhereTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
@@ -1052,7 +1052,7 @@ final class WhereTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect());
+        $this->assertSameSql($expectedSQL, $builder->getCompiledSelect(false));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
