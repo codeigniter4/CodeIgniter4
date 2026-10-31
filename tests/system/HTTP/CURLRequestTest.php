@@ -673,7 +673,6 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 
     public function testDecodeContentWithoutAccept(): void
     {
-        //      $this->request->setHeader('Accept-Encoding', 'cobol');
         $this->request->request('get', 'http://example.com', [
             'decode_content' => true,
         ]);
@@ -682,8 +681,11 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 
         $this->assertArrayHasKey(CURLOPT_ENCODING, $options);
         $this->assertSame('', $options[CURLOPT_ENCODING]);
-        $this->assertArrayHasKey(CURLOPT_HTTPHEADER, $options);
-        $this->assertSame('Accept-Encoding', $options[CURLOPT_HTTPHEADER]);
+        $this->assertArrayNotHasKey(CURLOPT_HTTPHEADER, $options);
+
+        // Verify that curl_setopt_array accepts the options without TypeError
+        $handle = curl_init();
+        $this->assertTrue(curl_setopt_array($handle, $options));
     }
 
     public function testAllowRedirectsOptionFalse(): void
@@ -1629,7 +1631,7 @@ Connection: keep-alive\r\n\r\n" . $testBody;
         // Test Response Options (decode_content / http_errors)
         $options12 = $invoker([], ['decode_content' => true]);
         $this->assertSame('', $options12[CURLOPT_ENCODING]);
-        $this->assertSame('Accept-Encoding', $options12[CURLOPT_HTTPHEADER]);
+        $this->assertArrayNotHasKey(CURLOPT_HTTPHEADER, $options12);
 
         // Test Protocol/Misc/Client Options
         $options13 = $invoker([], [
