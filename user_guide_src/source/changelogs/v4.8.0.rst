@@ -270,6 +270,7 @@ Commands
 - Likewise, the ``command()`` function now also supports the above enhancements for command-line option parsing when using the function to run commands from code.
 - Added ``make:request`` generator command to scaffold :ref:`Form Request <form-requests>` classes.
 - Added ``key:rotate`` command to demote the current ``encryption.key`` to ``encryption.previousKeys`` in **.env** and generate a new key. See :ref:`spark-key-rotate`.
+- ``SignalTrait`` now handles Ctrl+C and Ctrl+Break on Windows, through ``sapi_windows_set_ctrl_handler()``, so a command can stop gracefully there too. The events are reported as ``SIGINT`` (``2``). See :ref:`cli-signals-windows`.
 - Added ``AbstractCommand::callSilently()`` to invoke another command with its output discarded, restoring the prior output afterwards. See :ref:`modern-commands-call-silently`.
 - The output side of the ``CLI`` class now lives in instance classes, with ``CLI`` delegating to them: :php:class:`Output <CodeIgniter\\CLI\\Output>`
   (``print()``, ``write()``, ``error()``, ``newLine()``, ``deferNewLine()``, ``beep()``, ``clearScreen()``, ``color()``, ``wrap()``),

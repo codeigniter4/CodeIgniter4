@@ -51,11 +51,31 @@ System Requirements
 
 Signal handling requires:
 
-* **Unix-based system** (Linux, macOS, BSD) - Windows is not supported
+* **Unix-based system** (Linux, macOS, BSD) - see :ref:`cli-signals-windows` for Windows
 * **PCNTL extension** - for signal registration and handling
 * **POSIX extension** - required for pause/resume functionality (SIGTSTP/SIGCONT)
 
 .. note:: On systems without these extensions, the SignalTrait will gracefully degrade and disable signal handling.
+
+.. _cli-signals-windows:
+
+Windows
+-------
+
+Windows has no PCNTL extension and no Unix signals. Since v4.8.0, ``SignalTrait`` handles the one thing Windows can
+deliver to a PHP script: the console control events produced by **Ctrl+C** and **Ctrl+Break**. They are handled through
+PHP's ``sapi_windows_set_ctrl_handler()`` and reported to your command as ``SIGINT`` (``2``), so ``isRunning()``,
+``shouldTerminate()``, custom handlers, and ``onInterruption()`` work as they do on Unix.
+
+* Call ``registerSignals()`` without arguments. The ``SIG*`` constants come from the PCNTL extension, which is not available on Windows.
+  If you pass a list, it must contain ``2``. Every other signal is ignored.
+* To map the event to your own method, use ``2`` as the key: ``$this->registerSignals([], [2 => 'handleInterrupt']);``.
+* ``withSignalsBlocked()`` runs the operation, but cannot block anything. The event does not stop the process by itself once a handler is
+  registered, so a critical section is still completed. Your handler runs when the event arrives.
+* Pause and resume (``SIGTSTP`` / ``SIGCONT``), and every other signal, do not exist on Windows.
+
+.. important:: Once a handler is registered, Ctrl+C and Ctrl+Break no longer end the process. Your command must check
+    ``shouldTerminate()`` and return, as on Unix.
 
 *********************
 Using the SignalTrait
@@ -235,7 +255,7 @@ Class Reference
 
         .. literalinclude:: cli_signals/007.php
 
-        .. note:: Requires the PCNTL extension. On Windows, signal handling is automatically disabled.
+        .. note:: Requires the PCNTL extension. On Windows, only Ctrl+C and Ctrl+Break are handled, as ``SIGINT`` (``2``). See :ref:`cli-signals-windows`.
 
     .. php:method:: isRunning()
 
