@@ -11,6 +11,19 @@ Release Date: Unreleased
     :depth: 3
 
 ********
+SECURITY
+********
+
+- **Cache:** ``FileHandler::deleteMatching()`` now matches the pattern against cache
+  file names only. Previously, a pattern such as ``../*`` could delete files outside
+  the cache directory. Patterns can no longer match files in subdirectories of the
+  cache directory, so those files are no longer deleted. Special characters in the 
+  cache path, such as ``[``, are no longer interpreted as part of the pattern.
+  See the `Security advisory GHSA-9hf2-g3w9-pfmp <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-9hf2-g3w9-pfmp>`_
+  for more information. See :ref:`upgrade-476-cache-delete-matching` for migration
+  instructions.
+
+********
 BREAKING
 ********
 

@@ -16,7 +16,9 @@ namespace CodeIgniter\Cache\Handlers;
 use CodeIgniter\Cache\Exceptions\CacheException;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
+use FilesystemIterator;
 use Throwable;
+use UnexpectedValueException;
 
 /**
  * File system cache handler
@@ -117,10 +119,25 @@ class FileHandler extends BaseHandler
 
     public function deleteMatching(string $pattern): int
     {
+        // The pattern is matched against file names only and never becomes part
+        // of a path, so it cannot reach files outside the cache directory.
+        // Passing the cache path to glob() would also interpret special
+        // characters in the path (e.g. "[") as part of the pattern.
+        try {
+            $iterator = new FilesystemIterator($this->path, FilesystemIterator::SKIP_DOTS);
+        } catch (UnexpectedValueException) {
+            return 0;
+        }
+
         $deleted = 0;
 
-        foreach (glob($this->path . $pattern, GLOB_NOSORT) as $filename) {
-            if (is_file($filename) && @unlink($filename)) {
+        foreach ($iterator as $file) {
+            // FNM_PERIOD keeps glob() semantics: wildcards don't match a leading dot.
+            if (! fnmatch($pattern, $file->getFilename(), FNM_PERIOD)) {
+                continue;
+            }
+
+            if ($file->isFile() && @unlink($file->getPathname())) {
                 $deleted++;
             }
         }
