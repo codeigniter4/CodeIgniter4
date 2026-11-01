@@ -450,113 +450,127 @@ class Router implements RouterInterface
 
             $matchedKey = $routeKey;
 
-            // Are we dealing with a locale?
-            if (str_contains($routeKey, '{locale}')) {
-                $routeKey = str_replace('{locale}', '[^/]+', $routeKey);
+            // `#` is the pattern delimiter used below, so it must be treated as a metacharacter.
+            $isRegex = strpbrk($routeKey, '()[]?*+{}^$\\.|#') !== false;
+
+            if (! $isRegex) {
+                if ($routeKey !== $uri) {
+                    continue;
+                }
+
+                $matches = [$uri];
+            } else {
+                // Are we dealing with a locale?
+                if (str_contains($routeKey, '{locale}')) {
+                    $routeKey = str_replace('{locale}', '[^/]+', $routeKey);
+                }
+
+                // Does the RegEx match?
+                if (! preg_match('#^' . $routeKey . '$#u', $uri, $matches)) {
+                    continue;
+                }
             }
 
-            // Does the RegEx match?
-            if (preg_match('#^' . $routeKey . '$#u', $uri, $matches)) {
-                // Store our locale so CodeIgniter object can
-                // assign it to the Request.
+            // Store our locale so CodeIgniter object can
+            // assign it to the Request.
+            if (str_contains($matchedKey, '{locale}')) {
+                preg_match(
+                    '#^' . str_replace('{locale}', '(?<locale>[^/]+)', $matchedKey) . '$#u',
+                    $uri,
+                    $matched,
+                );
+
+                if ($this->collection->shouldUseSupportedLocalesOnly()
+                    && ! in_array($matched['locale'], config(App::class)->supportedLocales, true)) {
+                    // Throw exception to prevent the autorouter, if enabled,
+                    // from trying to find a route
+                    throw PageNotFoundException::forLocaleNotSupported($matched['locale']);
+                }
+
+                $this->detectedLocale = $matched['locale'];
+                unset($matched);
+            }
+
+            // Is this route supposed to redirect to another?
+            if ($this->collection->isRedirect($matchedKey)) {
+                // replacing matched route groups with references: post/([0-9]+) -> post/$1
+                $redirectTo = preg_replace_callback('/(\([^\(]+\))/', static function (): string {
+                    static $i = 1;
+
+                    return '$' . $i++;
+                }, is_array($handler) ? key($handler) : $handler);
+
                 if (str_contains($matchedKey, '{locale}')) {
-                    preg_match(
-                        '#^' . str_replace('{locale}', '(?<locale>[^/]+)', $matchedKey) . '$#u',
-                        $uri,
-                        $matched,
-                    );
-
-                    if ($this->collection->shouldUseSupportedLocalesOnly()
-                        && ! in_array($matched['locale'], config(App::class)->supportedLocales, true)) {
-                        // Throw exception to prevent the autorouter, if enabled,
-                        // from trying to find a route
-                        throw PageNotFoundException::forLocaleNotSupported($matched['locale']);
-                    }
-
-                    $this->detectedLocale = $matched['locale'];
-                    unset($matched);
+                    $redirectTo = str_replace('{locale}', $this->detectedLocale, $redirectTo);
                 }
 
-                if ($this->collection->isRedirect($matchedKey)) {
-                    // replacing matched route groups with references: post/([0-9]+) -> post/$1
-                    $redirectTo = preg_replace_callback('/(\([^\(]+\))/', static function (): string {
-                        static $i = 1;
+                throw new RedirectException(
+                    preg_replace('#\A' . $routeKey . '\z#u', $redirectTo, $uri),
+                    $this->collection->getRedirectCode($matchedKey),
+                );
+            }
 
-                        return '$' . $i++;
-                    }, is_array($handler) ? key($handler) : $handler);
+            // Are we using Closures? If so, then we need
+            // to collect the params into an array
+            // so it can be passed to the controller method later.
+            if (! is_string($handler) && is_callable($handler)) {
+                $this->controller = $handler;
 
-                    if (str_contains($matchedKey, '{locale}')) {
-                        $redirectTo = str_replace('{locale}', $this->detectedLocale, $redirectTo);
-                    }
+                // Remove the original string from the matches array
+                array_shift($matches);
 
-                    throw new RedirectException(
-                        preg_replace('#\A' . $routeKey . '\z#u', $redirectTo, $uri),
-                        $this->collection->getRedirectCode($matchedKey),
-                    );
-                }
-
-                // Are we using Closures? If so, then we need
-                // to collect the params into an array
-                // so it can be passed to the controller method later.
-                if (! is_string($handler) && is_callable($handler)) {
-                    $this->controller = $handler;
-
-                    // Remove the original string from the matches array
-                    array_shift($matches);
-
-                    $this->params = $matches;
-
-                    $this->setMatchedRoute($matchedKey, $handler);
-
-                    return true;
-                }
-
-                if (str_contains($handler, '::')) {
-                    [$controller, $methodAndParams] = explode('::', $handler);
-                } else {
-                    $controller      = $handler;
-                    $methodAndParams = '';
-                }
-
-                // Checks `/` in controller name
-                if (str_contains($controller, '/')) {
-                    throw RouterException::forInvalidControllerName($handler);
-                }
-
-                if (str_contains($handler, '$') && str_contains($routeKey, '(')) {
-                    // Checks dynamic controller
-                    if (str_contains($controller, '$')) {
-                        throw RouterException::forDynamicController($handler);
-                    }
-
-                    if (config(Routing::class)->multipleSegmentsOneParam === false) {
-                        // Using back-references
-                        $segments = explode('/', preg_replace('#\A' . $routeKey . '\z#u', $handler, $uri));
-                    } else {
-                        if (str_contains($methodAndParams, '/')) {
-                            [$method, $handlerParams] = explode('/', $methodAndParams, 2);
-                            $params                   = explode('/', $handlerParams);
-                            $handlerSegments          = array_merge([$controller . '::' . $method], $params);
-                        } else {
-                            $handlerSegments = [$handler];
-                        }
-
-                        $segments = [];
-
-                        foreach ($handlerSegments as $segment) {
-                            $segments[] = $this->replaceBackReferences($segment, $matches);
-                        }
-                    }
-                } else {
-                    $segments = explode('/', $handler);
-                }
-
-                $this->setRequest($segments);
+                $this->params = $matches;
 
                 $this->setMatchedRoute($matchedKey, $handler);
 
                 return true;
             }
+
+            if (str_contains($handler, '::')) {
+                [$controller, $methodAndParams] = explode('::', $handler);
+            } else {
+                $controller      = $handler;
+                $methodAndParams = '';
+            }
+
+            // Checks `/` in controller name
+            if (str_contains($controller, '/')) {
+                throw RouterException::forInvalidControllerName($handler);
+            }
+
+            if (str_contains($handler, '$') && str_contains($routeKey, '(')) {
+                // Checks dynamic controller
+                if (str_contains($controller, '$')) {
+                    throw RouterException::forDynamicController($handler);
+                }
+
+                if (config(Routing::class)->multipleSegmentsOneParam === false) {
+                    // Using back-references
+                    $segments = explode('/', preg_replace('#\A' . $routeKey . '\z#u', $handler, $uri));
+                } else {
+                    if (str_contains($methodAndParams, '/')) {
+                        [$method, $handlerParams] = explode('/', $methodAndParams, 2);
+                        $params                   = explode('/', $handlerParams);
+                        $handlerSegments          = array_merge([$controller . '::' . $method], $params);
+                    } else {
+                        $handlerSegments = [$handler];
+                    }
+
+                    $segments = [];
+
+                    foreach ($handlerSegments as $segment) {
+                        $segments[] = $this->replaceBackReferences($segment, $matches);
+                    }
+                }
+            } else {
+                $segments = explode('/', $handler);
+            }
+
+            $this->setRequest($segments);
+
+            $this->setMatchedRoute($matchedKey, $handler);
+
+            return true;
         }
 
         return false;
