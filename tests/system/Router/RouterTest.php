@@ -1031,4 +1031,105 @@ final class RouterTest extends CIUnitTestCase
         $this->assertLogContains('error', 'Failed to instantiate route attribute "' . Filter::class . '" on "\Tests\Support\Router\Controllers\InvalidAttributeController::invalidMultipleFilters()":');
         $this->assertLogContains('error', 'must be of type string');
     }
+
+    public function testStaticRoutesMatchControllerClosureAndNumericKey(): void
+    {
+        $collection = clone $this->collection;
+        $collection->resetRoutes();
+        $collection->get('about-us', 'Home::about');
+        $collection->get('contact_page', static fn (): string => 'contact-page-content');
+        $collection->get('123', 'Home::numericRoute');
+
+        $router = new Router($collection, $this->request);
+
+        $router->handle('about-us');
+        $this->assertSame('\Home', $router->controllerName());
+        $this->assertSame('about', $router->methodName());
+        $this->assertSame([], $router->params());
+
+        $router->handle('contact_page');
+        $controller = $router->controllerName();
+        $this->assertInstanceOf(Closure::class, $controller);
+        $this->assertSame('contact-page-content', $controller());
+        $this->assertSame([], $router->params());
+
+        $router->handle('123');
+        $this->assertSame('\Home', $router->controllerName());
+        $this->assertSame('numericRoute', $router->methodName());
+        $this->assertSame([], $router->params());
+    }
+
+    public function testStaticRouteDoesNotMatchAdditionalSegments(): void
+    {
+        $collection = clone $this->collection;
+        $collection->resetRoutes();
+        $collection->get('about-us', 'Home::about');
+
+        $router = new Router($collection, $this->request);
+
+        $this->expectException(PageNotFoundException::class);
+
+        $router->handle('about-us/team');
+    }
+
+    public function testEarlierDynamicRouteTakesPrecedenceOverLaterStaticRoute(): void
+    {
+        $collection = clone $this->collection;
+        $collection->resetRoutes();
+        $collection->get('items/(:segment)', 'Items::detail/$1');
+        $collection->get('items/new', 'Items::new');
+
+        $router = new Router($collection, $this->request);
+        $router->handle('items/new');
+
+        $this->assertSame('\Items', $router->controllerName());
+        $this->assertSame('detail', $router->methodName());
+        $this->assertSame(['new'], $router->params());
+    }
+
+    public function testRouteWithUnescapedHashIsNotMatchedAsStaticRoute(): void
+    {
+        config(App::class)->permittedURIChars = 'a-z 0-9~%.:_\-#';
+
+        $collection = clone $this->collection;
+        $collection->resetRoutes();
+        $collection->get('docs#anchor', 'Docs::anchor');
+
+        $router = new Router($collection, $this->request);
+
+        // `#` is the PCRE delimiter, so the key must go through the regex branch
+        // instead of a plain string comparison. The unescaped delimiter makes
+        // the pattern invalid, so the route can't match.
+        $warnings = [];
+        set_error_handler(static function (int $errno, string $errstr) use (&$warnings): bool {
+            $warnings[] = $errstr;
+
+            return true;
+        }, E_WARNING);
+
+        try {
+            $router->handle('docs#anchor');
+            $this->fail('PageNotFoundException was expected.');
+        } catch (PageNotFoundException) {
+            $this->assertCount(1, $warnings);
+            $this->assertStringContainsString('preg_match()', $warnings[0]);
+        } finally {
+            restore_error_handler();
+        }
+    }
+
+    public function testRouteWithEscapedHashMatchesViaRegexBranch(): void
+    {
+        config(App::class)->permittedURIChars = 'a-z 0-9~%.:_\-#';
+
+        $collection = clone $this->collection;
+        $collection->resetRoutes();
+        $collection->get('docs\#anchor', 'Docs::anchor');
+
+        $router = new Router($collection, $this->request);
+        $router->handle('docs#anchor');
+
+        $this->assertSame('\Docs', $router->controllerName());
+        $this->assertSame('anchor', $router->methodName());
+    }
 }
