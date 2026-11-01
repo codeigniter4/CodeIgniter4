@@ -93,7 +93,10 @@ final class ReplaceModelTest extends LiveModelTestCase
 
         $this->assertIsString($sql);
         $this->assertStringNotContainsString('description', $sql);
-        $this->seeInDatabase('job', ['id' => 1, 'name' => 'Developer']);
+
+        if ($this->db->DBDriver !== 'SQLSRV') {
+            $this->seeInDatabase('job', ['id' => 1, 'name' => 'Developer']);
+        }
     }
 
     public function testReplaceWithProtectionDisabled(): void
@@ -125,6 +128,10 @@ final class ReplaceModelTest extends LiveModelTestCase
 
     public function testReplacePreservesCustomPrimaryKey(): void
     {
+        if ($this->db->DBDriver === 'SQLSRV') {
+            $this->markTestSkipped('SQLSRV replace() requires an identity column.');
+        }
+
         $model = $this->createModel(WithoutAutoIncrementModel::class);
 
         $this->assertNotFalse($model->replace([
@@ -246,6 +253,10 @@ final class ReplaceModelTest extends LiveModelTestCase
 
     public function testReplaceWithEmptyDataCanGenerateTimestamps(): void
     {
+        if ($this->db->DBDriver === 'SQLSRV') {
+            $this->markTestSkipped('SQLSRV replace() deletes by key fields and rejects data without them.');
+        }
+
         $model = $this->createModel(JobModel::class);
         $this->setPrivateProperty($model, 'useTimestamps', true);
 
