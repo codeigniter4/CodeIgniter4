@@ -569,6 +569,14 @@ placeholders in the query:</p>
 <p class="admonition-title">Note</p>
 <p>Each name in the query MUST be surrounded by colons.</p>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Placeholders are only recognized where the SQL parser would see them as
+part of the query. A placeholder inside a quoted string, a quoted identifier,
+or a SQL comment is left untouched. If you need a value inside a quoted
+string, for example in a <code class="docutils literal notranslate"><span class="pre">LIKE</span></code> pattern, put the whole string into the
+bound value (<code class="docutils literal notranslate"><span class="pre">'name'</span> <span class="pre">=&gt;</span> <span class="pre">'%Rick%'</span></code>) and use the placeholder without quotes.</p>
+</div>
 </section>
 </section>
 <section id="handling-errors">

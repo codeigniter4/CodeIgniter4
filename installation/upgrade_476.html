@@ -306,18 +306,19 @@
 <ul>
 <li><p><a class="reference internal" href="#file-cache-deletematching-no-longer-matches-subdirectories" id="id3">File Cache deleteMatching() No Longer Matches Subdirectories</a></p></li>
 <li><p><a class="reference internal" href="#model-field-protection-for-replace" id="id4">Model Field Protection for replace()</a></p></li>
+<li><p><a class="reference internal" href="#named-binds-are-no-longer-replaced-inside-quoted-values" id="id5">Named Binds Are No Longer Replaced Inside Quoted Values</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#breaking-enhancements" id="id5">Breaking Enhancements</a></p></li>
-<li><p><a class="reference internal" href="#behavior-changes" id="id6">Behavior Changes</a></p>
+<li><p><a class="reference internal" href="#breaking-enhancements" id="id6">Breaking Enhancements</a></p></li>
+<li><p><a class="reference internal" href="#behavior-changes" id="id7">Behavior Changes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#filename-sanitization" id="id7">Filename Sanitization</a></p></li>
+<li><p><a class="reference internal" href="#filename-sanitization" id="id8">Filename Sanitization</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#project-files" id="id8">Project Files</a></p>
+<li><p><a class="reference internal" href="#project-files" id="id9">Project Files</a></p>
 <ul>
-<li><p><a class="reference internal" href="#content-changes" id="id9">Content Changes</a></p></li>
-<li><p><a class="reference internal" href="#all-changes" id="id10">All Changes</a></p></li>
+<li><p><a class="reference internal" href="#content-changes" id="id10">Content Changes</a></p></li>
+<li><p><a class="reference internal" href="#all-changes" id="id11">All Changes</a></p></li>
 </ul>
 </li>
 </ul>
@@ -357,14 +358,50 @@ with <code class="docutils literal notranslate"><span class="pre">protect(false)
 </ul>
 <p>See <a class="reference internal" href="../models/model.html#model-replace"><span class="std std-ref">replace()</span></a> for details and replacement-specific precautions.</p>
 </section>
+<section id="named-binds-are-no-longer-replaced-inside-quoted-values">
+<span id="upgrade-476-named-binds"></span><h3><a class="toc-backref" href="#id5" role="doc-backlink">Named Binds Are No Longer Replaced Inside Quoted Values</a><a class="headerlink" href="#named-binds-are-no-longer-replaced-inside-quoted-values" title="Link to this heading"></a></h3>
+<p>For security reasons, named bind placeholders (<code class="docutils literal notranslate"><span class="pre">:name:</span></code>) are now replaced only
+where the SQL parser would see them as part of the query. A placeholder that
+appears inside a quoted string (<code class="docutils literal notranslate"><span class="pre">'...'</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;...&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">$$...$$</span></code> on PostgreSQL,
+<code class="docutils literal notranslate"><span class="pre">q'[...]'</span></code> on Oracle), inside a quoted identifier (backticks, <code class="docutils literal notranslate"><span class="pre">&quot;...&quot;</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">[...]</span></code> on SQL Server and SQLite), or inside a SQL comment (<code class="docutils literal notranslate"><span class="pre">--</span></code>, <code class="docutils literal notranslate"><span class="pre">/*</span> <span class="pre">*/</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">#</span></code> on MySQL) is now left untouched. This makes named binds behave the same
+way as question mark binds, which have always ignored markers inside quoted
+strings. See the
+<a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-25rf-99hr-7pmr">Security advisory GHSA-25rf-99hr-7pmr</a>
+for more information.</p>
+<p>Previously, such placeholders were replaced as well, so a value that was already
+escaped and rendered into the query (for example a subquery, a custom <code class="docutils literal notranslate"><span class="pre">where()</span></code>
+string built with <code class="docutils literal notranslate"><span class="pre">$db-&gt;escape()</span></code>, or the <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> binds of <code class="docutils literal notranslate"><span class="pre">deleteBatch()</span></code>)
+could be mixed with the value of another bind.</p>
+<p>This change only concerns queries that place a placeholder inside a quoted string,
+a quoted identifier, or a comment. With the default escaping, such a placeholder
+never produced the intended SQL, because the quotes of the escaped value ended up
+inside the literal or identifier (for example <code class="docutils literal notranslate"><span class="pre">LIKE</span> <span class="pre">'%:name:%'</span></code> compiled to
+<code class="docutils literal notranslate"><span class="pre">LIKE</span> <span class="pre">'%'Rick'%'</span></code>). In practice, the only working queries that change their
+behavior are those that disable escaping for a bind, either with the third
+parameter of <code class="docutils literal notranslate"><span class="pre">$db-&gt;query()</span></code> or by passing a <code class="docutils literal notranslate"><span class="pre">RawSql</span></code> value, and rely on the
+placeholder being replaced inside a quoted string, a quoted identifier, or a
+comment: the placeholder is now left in the query literally. For example, the
+following used to search for <code class="docutils literal notranslate"><span class="pre">%Rick%</span></code> and now searches for the literal string
+<code class="docutils literal notranslate"><span class="pre">%:name:%</span></code>:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">$db-&gt;query("SELECT * FROM users WHERE name LIKE '%:name:%'", ['name' =&gt; ['Rick', false]], false);</span>
+</pre></div>
+</div>
+<p>Move the quotes into the bound value instead, so that the value is escaped as a
+whole:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">$db-&gt;query('SELECT * FROM users WHERE name LIKE :name:', ['name' =&gt; '%Rick%']);</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="breaking-enhancements">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Link to this heading"></a></h2>
 </section>
 <section id="behavior-changes">
-<h2><a class="toc-backref" href="#id6" role="doc-backlink">Behavior Changes</a><a class="headerlink" href="#behavior-changes" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Behavior Changes</a><a class="headerlink" href="#behavior-changes" title="Link to this heading"></a></h2>
 <section id="filename-sanitization">
-<h3><a class="toc-backref" href="#id7" role="doc-backlink">Filename Sanitization</a><a class="headerlink" href="#filename-sanitization" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Filename Sanitization</a><a class="headerlink" href="#filename-sanitization" title="Link to this heading"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">sanitize_filename()</span></code> and <code class="docutils literal notranslate"><span class="pre">Security::sanitizeFilename()</span></code> now remove all backslashes.
 Single backslashes between ordinary characters were already removed in previous versions,
 so paths such as <code class="docutils literal notranslate"><span class="pre">folder\file.txt</span></code> produce the same result. Ordinary filenames and
@@ -377,7 +414,7 @@ from these inputs, check for changed results and possible filename collisions.</
 </section>
 </section>
 <section id="project-files">
-<h2><a class="toc-backref" href="#id8" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Link to this heading"></a></h2>
 <p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to
 these files being outside of the <strong>system</strong> scope they will not be changed without your intervention.</p>
 <div class="admonition note">
@@ -387,7 +424,7 @@ with merging changes to the project space:
 <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
 </div>
 <section id="content-changes">
-<h3><a class="toc-backref" href="#id9" role="doc-backlink">Content Changes</a><a class="headerlink" href="#content-changes" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Content Changes</a><a class="headerlink" href="#content-changes" title="Link to this heading"></a></h3>
 <p>The following files received significant changes (including deprecations or visual adjustments)
 and it is recommended that you merge the updated versions with your application:</p>
 <section id="config">
@@ -398,7 +435,7 @@ and it is recommended that you merge the updated versions with your application:
 </section>
 </section>
 <section id="all-changes">
-<h3><a class="toc-backref" href="#id10" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Link to this heading"></a></h3>
 <p>This is a list of all files in the <strong>project space</strong> that received changes;
 many will be simple comments or formatting that have no effect on the runtime:</p>
 <ul class="simple">

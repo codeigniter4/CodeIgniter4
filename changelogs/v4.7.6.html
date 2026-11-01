@@ -336,6 +336,19 @@ The same applies to <code class="docutils literal notranslate"><span class="pre"
 See <a class="reference internal" href="../installation/upgrade_476.html"><span class="doc">Upgrading from 4.7.5 to 4.7.6</span></a> and the
 <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-9j59-qcxw-q7qm">Security advisory GHSA-9j59-qcxw-q7qm</a>
 for more information.</p></li>
+<li><p><strong>Database:</strong> Fixed a SQL injection vulnerability in named query bindings.
+When a query combined named binds (<code class="docutils literal notranslate"><span class="pre">:name:</span></code>) with a value that was already
+escaped and rendered into the SQL (for example a subquery passed to <code class="docutils literal notranslate"><span class="pre">where()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">union()</span></code>, <code class="docutils literal notranslate"><span class="pre">fromSubquery()</span></code> or <code class="docutils literal notranslate"><span class="pre">selectSubquery()</span></code>, a custom <code class="docutils literal notranslate"><span class="pre">where()</span></code>
+string built with <code class="docutils literal notranslate"><span class="pre">$db-&gt;escape()</span></code>, the <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> binds of <code class="docutils literal notranslate"><span class="pre">deleteBatch()</span></code>,
+or a manually escaped fragment in <code class="docutils literal notranslate"><span class="pre">$db-&gt;query()</span></code>), a placeholder inside that
+value was replaced with the bind of the same name, which could break out of the
+string literal. Placeholders are now ignored inside quoted strings, quoted
+identifiers and SQL comments, and the <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> binds of <code class="docutils literal notranslate"><span class="pre">deleteBatch()</span></code> are
+substituted only after the batch data has been rendered into the query.
+Plain <code class="docutils literal notranslate"><span class="pre">where()</span></code>, <code class="docutils literal notranslate"><span class="pre">like()</span></code>, <code class="docutils literal notranslate"><span class="pre">insert()</span></code> and <code class="docutils literal notranslate"><span class="pre">update()</span></code> calls were not affected.
+See the <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-25rf-99hr-7pmr">Security advisory GHSA-25rf-99hr-7pmr</a>
+and <a class="reference internal" href="../installation/upgrade_476.html#upgrade-476-named-binds"><span class="std std-ref">Named Binds Are No Longer Replaced Inside Quoted Values</span></a> for more information.</p></li>
 </ul>
 </section>
 <section id="breaking">
@@ -361,6 +374,11 @@ filtering. See <a class="reference internal" href="../installation/upgrade_476.h
 </section>
 <section id="deprecations">
 <h2><a class="toc-backref" href="#id5" role="doc-backlink">Deprecations</a><a class="headerlink" href="#deprecations" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Database:</strong> <code class="docutils literal notranslate"><span class="pre">BaseBuilder::convertWhereBindsForBatch()</span></code> is deprecated and
+no longer used. The binds of a batch query are now substituted by
+<code class="docutils literal notranslate"><span class="pre">BaseBuilder::compileBatchBinds()</span></code> after the batch data has been rendered.</p></li>
+</ul>
 </section>
 <section id="bugs-fixed">
 <h2><a class="toc-backref" href="#id6" role="doc-backlink">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Link to this heading"></a></h2>
