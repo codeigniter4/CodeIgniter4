@@ -470,6 +470,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $runner->clearHistory();
         $runner->setNamespace('Tests\Support\MigrationTestMigrations');
         $runner->latest();
+        $database->close();
 
         $tables = $database->listTables();
         $this->assertCount(2, $tables);
