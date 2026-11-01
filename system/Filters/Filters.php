@@ -154,7 +154,18 @@ class Filters
 
         $files = $locator->search('Config/Filters.php');
 
+        // Our main Filter configs are never included again, see below. Skip them
+        // by path, as reading and tokenizing them to find that out is wasted work.
+        $mainFiles = [
+            APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'Filters.php',
+            SYSTEMPATH . 'Config' . DIRECTORY_SEPARATOR . 'Filters.php',
+        ];
+
         foreach ($files as $file) {
+            if (in_array($file, $mainFiles, true)) {
+                continue;
+            }
+
             // The $file may not be a class file.
             $className = $locator->getClassname($file);
 

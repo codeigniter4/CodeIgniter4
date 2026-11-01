@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Filters;
 
+use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\Filters\fixtures\GoogleCurious;
@@ -483,6 +484,52 @@ final class FiltersTest extends CIUnitTestCase
         ];
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
         $filters       = $this->createFilters($filtersConfig);
+
+        $configFilters = $this->getPrivateProperty($filters, 'config');
+        $this->assertContains('test-customfilter', array_keys($configFilters->aliases));
+    }
+
+    public function testDiscoveryDoesNotTokenizeTheDefaultFiltersConfigs(): void
+    {
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
+
+        $locator = new class (service('autoloader')) extends FileLocator {
+            /**
+             * @var list<string>
+             */
+            public array $tokenized = [];
+
+            public function getClassname(string $file): string
+            {
+                $this->tokenized[] = $file;
+
+                return parent::getClassname($file);
+            }
+        };
+        Services::injectMock('locator', $locator);
+
+        $appConfig    = APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'Filters.php';
+        $systemConfig = SYSTEMPATH . 'Config' . DIRECTORY_SEPARATOR . 'Filters.php';
+        $testConfig   = realpath(TESTPATH . '_support/Config/Filters.php');
+
+        // Discovery does find them all, so the checks below are not vacuous.
+        $found = $locator->search('Config/Filters.php');
+        $this->assertContains($appConfig, $found);
+        $this->assertContains($systemConfig, $found);
+        $this->assertContains($testConfig, $found);
+
+        $config = [
+            'aliases' => [],
+            'globals' => [],
+        ];
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
+
+        $this->assertNotContains($appConfig, $locator->tokenized);
+        $this->assertNotContains($systemConfig, $locator->tokenized);
+
+        // Any other file is still checked and included.
+        $this->assertContains($testConfig, $locator->tokenized);
 
         $configFilters = $this->getPrivateProperty($filters, 'config');
         $this->assertContains('test-customfilter', array_keys($configFilters->aliases));
