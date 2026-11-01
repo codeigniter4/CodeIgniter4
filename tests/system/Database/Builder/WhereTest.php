@@ -54,6 +54,16 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
+    public function testWhereCustomStringDoesNotReplaceNamedBindsInsideEscapedValue(): void
+    {
+        $builder = $this->db->table('users');
+
+        $expectedSQL = 'SELECT * FROM "users" WHERE "name" = \':status:\' AND "status" = \' OR 1=1 OR \'';
+
+        $builder->where('name = ' . $this->db->escape(':status:'))->where('status', ' OR 1=1 OR ');
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
     public function testWhereNoEscape(): void
     {
         $builder = $this->db->table('users');

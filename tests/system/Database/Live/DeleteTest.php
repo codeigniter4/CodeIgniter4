@@ -119,6 +119,25 @@ final class DeleteTest extends CIUnitTestCase
         $this->seeInDatabase('user', ['email' => 'derek@world.com', 'name' => 'Derek Jones']);
     }
 
+    public function testDeleteBatchDoesNotReplaceTablePlaceholderInsideWhereBind(): void
+    {
+        if ($this->db->DBDriver === 'SQLite3') {
+            $this->markTestSkipped('SQLite3 driver does not support WHERE for batch deletes.');
+        }
+
+        $data = [
+            ['userid' => 1, 'username' => ' OR 1=1 -- '],
+        ];
+
+        $this->db->table('user')
+            ->setData($data, null, 'data')
+            ->onConstraint(['id' => 'userid'])
+            ->where('user.name', 'x{:_table_:}y')
+            ->deleteBatch();
+
+        $this->seeInDatabase('user', ['email' => 'derek@world.com', 'name' => 'Derek Jones']);
+    }
+
     public function testDeleteBatchWithMixedConstraintValueTypesInTextColumn(): void
     {
         if ($this->db->DBDriver === 'SQLSRV') {

@@ -199,6 +199,12 @@ placeholders in the query:
 
 .. note:: Each name in the query MUST be surrounded by colons.
 
+.. note:: Placeholders are only recognized where the SQL parser would see them as
+    part of the query. A placeholder inside a quoted string, a quoted identifier,
+    or a SQL comment is left untouched. If you need a value inside a quoted
+    string, for example in a ``LIKE`` pattern, put the whole string into the
+    bound value (``'name' => '%Rick%'``) and use the placeholder without quotes.
+
 ***************
 Handling Errors
 ***************

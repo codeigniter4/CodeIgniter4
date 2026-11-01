@@ -58,6 +58,50 @@ For security reasons, ``Model::replace()`` now applies field protection:
 
 See :ref:`model-replace` for details and replacement-specific precautions.
 
+.. _upgrade-476-named-binds:
+
+Named Binds Are No Longer Replaced Inside Quoted Values
+=======================================================
+
+For security reasons, named bind placeholders (``:name:``) are now replaced only
+where the SQL parser would see them as part of the query. A placeholder that
+appears inside a quoted string (``'...'``, ``"..."``, ``$$...$$`` on PostgreSQL,
+``q'[...]'`` on Oracle), inside a quoted identifier (backticks, ``"..."``, and
+``[...]`` on SQL Server and SQLite), or inside a SQL comment (``--``, ``/* */``,
+and ``#`` on MySQL) is now left untouched. This makes named binds behave the same
+way as question mark binds, which have always ignored markers inside quoted
+strings. See the
+`Security advisory GHSA-25rf-99hr-7pmr <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-25rf-99hr-7pmr>`_
+for more information.
+
+Previously, such placeholders were replaced as well, so a value that was already
+escaped and rendered into the query (for example a subquery, a custom ``where()``
+string built with ``$db->escape()``, or the ``WHERE`` binds of ``deleteBatch()``)
+could be mixed with the value of another bind.
+
+This change only concerns queries that place a placeholder inside a quoted string,
+a quoted identifier, or a comment. With the default escaping, such a placeholder
+never produced the intended SQL, because the quotes of the escaped value ended up
+inside the literal or identifier (for example ``LIKE '%:name:%'`` compiled to
+``LIKE '%'Rick'%'``). In practice, the only working queries that change their
+behavior are those that disable escaping for a bind, either with the third
+parameter of ``$db->query()`` or by passing a ``RawSql`` value, and rely on the
+placeholder being replaced inside a quoted string, a quoted identifier, or a
+comment: the placeholder is now left in the query literally. For example, the
+following used to search for ``%Rick%`` and now searches for the literal string
+``%:name:%``:
+
+.. code-block:: php
+
+    $db->query("SELECT * FROM users WHERE name LIKE '%:name:%'", ['name' => ['Rick', false]], false);
+
+Move the quotes into the bound value instead, so that the value is escaped as a
+whole:
+
+.. code-block:: php
+
+    $db->query('SELECT * FROM users WHERE name LIKE :name:', ['name' => '%Rick%']);
+
 *********************
 Breaking Enhancements
 *********************
