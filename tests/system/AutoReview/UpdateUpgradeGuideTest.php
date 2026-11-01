@@ -75,7 +75,7 @@ final class UpdateUpgradeGuideTest extends TestCase
 
     public function testDryRunPrintsSectionsWithoutWriting(): void
     {
-        $this->assertFileExists($this->upgradePath);
+        $this->skipIfUpgradeGuideIsMissing();
 
         exec(sprintf('php ./admin/update-upgrade-guide.php %s --dry-run 2>&1', $this->nextVersion), $output, $exitCode);
         $outputString = implode("\n", $output);
@@ -88,7 +88,7 @@ final class UpdateUpgradeGuideTest extends TestCase
 
     public function testUpdatesUpgradeGuide(): void
     {
-        $this->assertFileExists($this->upgradePath);
+        $this->skipIfUpgradeGuideIsMissing();
 
         if (trim((string) exec("git status --porcelain -- {$this->upgradePath}")) !== '') {
             $this->markTestSkipped('You have uncommitted changes to the upgrade guide that will be erased by this test.');
@@ -108,6 +108,16 @@ final class UpdateUpgradeGuideTest extends TestCase
             $this->assertMatchesRegularExpression('/^- \S/m', $allChanges);
         } finally {
             exec("git restore -- {$this->upgradePath}");
+        }
+    }
+
+    private function skipIfUpgradeGuideIsMissing(): void
+    {
+        if (! is_file($this->upgradePath)) {
+            $this->markTestSkipped(sprintf(
+                '%s does not exist yet. It is created by "php admin/create-new-changelog.php" after a release.',
+                $this->upgradePath,
+            ));
         }
     }
 }

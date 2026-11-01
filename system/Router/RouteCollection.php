@@ -25,7 +25,6 @@ use Config\Routing;
 
 /**
  * @todo Implement nested resource routing (See CakePHP)
- * @see \CodeIgniter\Router\RouteCollectionTest
  */
 class RouteCollection implements RouteCollectionInterface
 {
@@ -657,8 +656,8 @@ class RouteCollection implements RouteCollectionInterface
      *            $route->resource('users');
      *     });
      *
-     * @param string                                      $name      The name to group/prefix the routes with.
-     * @param array<string, mixed>|(callable(self): void) ...$params
+     * @param string                                        $name      The name to group/prefix the routes with.
+     * @param array<string, mixed>|(callable(static): void) ...$params
      *
      * @return void
      */

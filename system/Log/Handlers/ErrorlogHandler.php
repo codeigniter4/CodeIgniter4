@@ -17,8 +17,6 @@ use CodeIgniter\Log\Exceptions\LogException;
 
 /**
  * Log handler that writes to PHP's `error_log()`
- *
- * @see \CodeIgniter\Log\Handlers\ErrorlogHandlerTest
  */
 class ErrorlogHandler extends BaseHandler
 {

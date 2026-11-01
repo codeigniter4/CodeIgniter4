@@ -294,7 +294,7 @@ Libraries
 - **Encryption:** Added ``Config\Encryption::$previousKeys`` configuration option to support encryption key rotation. When decryption with the current key fails, the system automatically falls back to previous keys, allowing you to rotate encryption keys without losing access to old encrypted data.
 - **Image:** The ``ImageMagickHandler`` has been rewritten to rely solely on the PHP ``imagick`` extension.
 - **Image:** Added ``ImageMagickHandler::clearMetadata()`` method to remove image metadata for privacy protection.
-- **ResponseTrait:** Added ``paginate``` method to simplify paginated API responses. See :ref:`ResponseTrait::paginate() <api_response_trait_paginate>` for details.
+- **ResponseTrait:** Added ``paginate()`` method to simplify paginated API responses. See :ref:`ResponseTrait::paginate() <api_response_trait_paginate>` for details.
 - **Session:** Added ``persistent`` config item to ``RedisHandler``.
 - **Session:** Added connection persistence for Redis and Memcached session handlers via ``PersistsConnection`` trait, improving performance in worker mode by reusing connections across requests.
 - **Time:** added methods ``Time::addCalendarMonths()`` and ``Time::subCalendarMonths()``

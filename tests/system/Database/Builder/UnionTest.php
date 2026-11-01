@@ -84,6 +84,15 @@ final class UnionTest extends CIUnitTestCase
         $this->assertSame($expected, $this->buildSelect($builder));
     }
 
+    public function testUnionDoesNotReplaceNamedBindsInsideSubqueryValues(): void
+    {
+        $expected = 'SELECT * FROM (SELECT * FROM "test" WHERE "status" = \' OR 1=1 OR \') "uwrp0" UNION SELECT * FROM (SELECT * FROM "test" WHERE "name" = \':status:\') "uwrp1"';
+        $builder  = $this->db->table('test')->where('status', ' OR 1=1 OR ');
+
+        $builder->union($this->db->table('test')->where('name', ':status:'));
+        $this->assertSame($expected, $this->buildSelect($builder));
+    }
+
     protected function buildSelect(BaseBuilder $builder): string
     {
         return str_replace("\n", ' ', $builder->getCompiledSelect());

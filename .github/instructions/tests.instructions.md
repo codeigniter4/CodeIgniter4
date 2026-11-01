@@ -14,6 +14,8 @@ applyTo: "tests/**/*.php"
   Avoid testing private implementation details.
 - Restore services, factories, environment variables, superglobals, handlers,
   locale, time-related state, and other global state modified by a test.
+  Check `CIUnitTestCase::tearDown()` first: a test need not repeat the
+  resets it already performs.
 - Tests must not depend on execution order or state left by another test.
 - Do not replace a meaningful assertion with a weaker assertion to make a test
   pass.

@@ -261,7 +261,7 @@ PRs merged
 - #1540 Update validation class User Guide
 - #1530 database performance improvement : use foreach() when possible
 - 2047b5a Don't run filters when using spark.
-- #1539 remove mb_* (mb string usage) in CreditCardRules
+- #1539 remove mb\_* (mb string usage) in CreditCardRules
 - #1536 ext-json in composer.json
 - #1525 remove unneeded try {} catch {}
 - #1524 Test routes resource with 'websafe' option

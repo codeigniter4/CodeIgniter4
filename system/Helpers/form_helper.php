@@ -11,6 +11,7 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
 use Config\Validation;
@@ -547,27 +548,25 @@ if (! function_exists('form_close')) {
 
 if (! function_exists('set_value')) {
     /**
-     * Form Value
-     *
      * Grabs a value from the POST array for the specified field so you can
      * re-populate an input field or textarea
      *
-     * @param string              $field      Field name
-     * @param list<string>|string $default    Default value
-     * @param bool                $htmlEscape Whether to escape HTML special characters or not
+     * @param string                              $field      Field name
+     * @param list<string>|scalar|Stringable|null $default    Default value
+     * @param bool                                $htmlEscape Whether to escape HTML special characters or not
      *
      * @return list<string>|string
      */
     function set_value(string $field, $default = '', bool $htmlEscape = true): array|string
     {
+        /** @var IncomingRequest $request */
         $request = service('request');
 
-        // Try any old input data we may have first
-        $value = $request->getOldInput($field);
+        $value = $request->getOldInput($field)
+            ?? $request->getPost($field)
+            ?? (is_array($default) ? $default : (string) $default);
 
-        $value ??= $request->getPost($field) ?? $default;
-
-        return ($htmlEscape) ? esc($value) : $value;
+        return $htmlEscape ? esc($value) : $value;
     }
 }
 

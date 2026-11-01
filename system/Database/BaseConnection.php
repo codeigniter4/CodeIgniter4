@@ -59,7 +59,6 @@ use Throwable;
  * @template TResult
  *
  * @implements ConnectionInterface<TConnection, TResult>
- * @see \CodeIgniter\Database\BaseConnectionTest
  */
 abstract class BaseConnection implements ConnectionInterface
 {
@@ -626,14 +625,38 @@ abstract class BaseConnection implements ConnectionInterface
      * Keep or establish the connection if no queries have been sent for
      * a length of time exceeding the server's idle timeout.
      *
+     * A replaced socket is not in the transaction that was open on the old
+     * one. The server has already rolled that work back. Clear the depth and
+     * mark the transaction failed before opening the new connection, so a
+     * failed reconnect cannot still report success.
+     *
      * @return void
      */
     public function reconnect()
     {
         if ($this->ping() === false) {
+            $lostTransaction = $this->transDepth > 0;
+
             $this->close();
+
+            if ($lostTransaction) {
+                $this->abandonLostTransaction();
+            }
+
             $this->initialize();
         }
+    }
+
+    /**
+     * The socket that owned the transaction is already closed.
+     *
+     * Drivers that keep transaction state in PHP, rather than only on the
+     * server, must override this.
+     */
+    protected function abandonLostTransaction(): void
+    {
+        $this->transDepth  = 0;
+        $this->transStatus = false;
     }
 
     /**

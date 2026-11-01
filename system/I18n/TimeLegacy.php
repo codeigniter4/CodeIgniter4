@@ -44,7 +44,6 @@ use Exception;
  * @phpstan-consistent-constructor
  *
  * @deprecated Use Time instead.
- * @see \CodeIgniter\I18n\TimeLegacyTest
  */
 class TimeLegacy extends DateTime
 {

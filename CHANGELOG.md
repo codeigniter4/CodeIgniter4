@@ -1,5 +1,80 @@
 # Changelog
 
+## [v4.7.6](https://github.com/codeigniter4/CodeIgniter4/tree/v4.7.6) (2026-11-01)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.7.5...v4.7.6)
+
+### Security
+
+* **Cache:** ``FileHandler::deleteMatching()`` now matches the pattern against cache
+  file names only. Previously, a pattern such as ``../*`` could delete files outside
+  the cache directory. Patterns can no longer match files in subdirectories of the
+  cache directory, so those files are no longer deleted. Special characters in the 
+  cache path, such as ``[``, are no longer interpreted as part of the pattern.
+  See the `Security advisory GHSA-9hf2-g3w9-pfmp <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-9hf2-g3w9-pfmp>`_
+  for more information. See :ref:`upgrade-476-cache-delete-matching` for migration
+  instructions.
+* **Model:** Fixed a mass assignment vulnerability in ``replace()``.
+  The method now discards fields not listed in ``$allowedFields`` when field
+  protection is enabled, while retaining a supplied primary key. Input emptied
+  by filtering, or reduced to only its primary key, now throws a ``DataException``.
+  Previously, applications passing untrusted input to ``replace()`` could write
+  protected columns. See :doc:`Upgrading from 4.7.5 to 4.7.6 </installation/upgrade_476>`
+  for migration instructions.
+  See the `Security advisory GHSA-jv74-fx4h-m63x <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-jv74-fx4h-m63x>`_
+  for more information.
+* **Security Helper:** Fixed a path traversal vulnerability in ``sanitize_filename()``.
+  Backslashes were only removed by a final ``stripslashes()`` call after filtering.
+  When ``$relativePath`` was ``true``, input such as ``.\./`` became ``../`` on all
+  platforms. In both modes, repeated backslashes could survive as Windows path
+  separators, and ``\0`` could become a NUL byte.
+  Backslashes are now removed during filtering, and ``stripslashes()`` is no longer
+  called. Forward slashes are still preserved when ``$relativePath`` is ``true``.
+  The same applies to ``Security::sanitizeFilename()``.
+  See :doc:`Upgrading from 4.7.5 to 4.7.6 </installation/upgrade_476>` and the
+  `Security advisory GHSA-9j59-qcxw-q7qm <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-9j59-qcxw-q7qm>`_
+  for more information.
+* **Database:** Fixed a SQL injection vulnerability in named query bindings.
+  When a query combined named binds (``:name:``) with a value that was already
+  escaped and rendered into the SQL (for example a subquery passed to ``where()``,
+  ``union()``, ``fromSubquery()`` or ``selectSubquery()``, a custom ``where()``
+  string built with ``$db->escape()``, the ``WHERE`` binds of ``deleteBatch()``,
+  or a manually escaped fragment in ``$db->query()``), a placeholder inside that
+  value was replaced with the bind of the same name, which could break out of the
+  string literal. Placeholders are now ignored inside quoted strings, quoted
+  identifiers and SQL comments, and the ``WHERE`` binds of ``deleteBatch()`` are
+  substituted only after the batch data has been rendered into the query.
+  Plain ``where()``, ``like()``, ``insert()`` and ``update()`` calls were not affected.
+  See the `Security advisory GHSA-25rf-99hr-7pmr <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-25rf-99hr-7pmr>`_
+  and :ref:`upgrade-476-named-binds` for more information.
+
+### Fixed Bugs
+
+* fix: preserve JSON request body when CSRF token is not in it by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10620
+* fix: sort generator imports in templates with CRLF line endings by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10622
+* fix: handle invalid values and empty tag names in XMLFormatter by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10626
+* fix: detect X-Forwarded-Proto case-insensitively in isSecure() by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10627
+* fix: refresh REQUEST after URI GET normalization by @rahul05ranjan in https://github.com/codeigniter4/CodeIgniter4/pull/10606
+* fix: widen accepted values in `set_value()`'s `$default` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10641
+* fix: fix array handling in ContentSecurityPolicy::setDefaultSrc() and add addDefaultSrc() by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10635
+* fix: reject missing keys in `CLI::promptByMultipleKeys()` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10654
+* fix: normalize string values and keys in `ContentSecurityPolicy::addOption()` by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10636
+* fix(HTTP): read request body when `post_max_size` is unlimited by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10646
+* fix: apply `ContentSecurityPolicy::reportOnly()` to config sources after construction by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10663
+* fix: stop prompts from asking forever when the input ends by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10658
+* fix: ignore media ranges without a subtype in `Negotiate::media()` by @wleeaf in https://github.com/codeigniter4/CodeIgniter4/pull/10660
+* fix: clear transaction state when reconnect() replaces the socket by @KevinBlakeLopez in https://github.com/codeigniter4/CodeIgniter4/pull/10650
+* fix: do not let wildcards select values excluded with q=0 in `Negotiate` by @wleeaf in https://github.com/codeigniter4/CodeIgniter4/pull/10661
+* fix: keep writes transactional after MySQL deadlock 1213 by @KevinBlakeLopez in https://github.com/codeigniter4/CodeIgniter4/pull/10651
+* fix(Cache): isolate the factories cache files used by the tests by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10647
+* fix: restore the timezone, locale and string format when unserializing `Time` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10682
+* fix: preserve subclass types in route group callbacks by @maniaba in https://github.com/codeigniter4/CodeIgniter4/pull/10644
+* fix(HTTP): remove invalid `CURLOPT_HTTPHEADER` string assignment in `CURLRequest` by @gr8man in https://github.com/codeigniter4/CodeIgniter4/pull/10695
+
+### Refactoring
+
+* refactor: remove `@see` test annotations in source by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10624
+* refactor: fix `null` checks that are always `false` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/10670
+
 ## [v4.7.5](https://github.com/codeigniter4/CodeIgniter4/tree/v4.7.5) (2026-10-09)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.7.4...v4.7.5)
 

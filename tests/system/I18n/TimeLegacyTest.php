@@ -1147,6 +1147,15 @@ final class TimeLegacyTest extends CIUnitTestCase
         $this->assertNotSame($time1, $time2);
     }
 
+    public function testUnserializeRestoresTimezoneAndLocale(): void
+    {
+        $time = unserialize(serialize(TimeLegacy::parse('2024-03-01 10:00:00', 'Europe/Paris', 'fr_FR')));
+
+        $this->assertSame('Europe/Paris', $time->getTimezoneName());
+        $this->assertSame('mars', $time->toLocalizedString('MMMM'));
+        $this->assertSame(1, $time->difference(TimeLegacy::parse('2024-03-02 10:00:00', 'Europe/Paris'))->getDays());
+    }
+
     public function testSetTestNowWithFaLocale(): void
     {
         Locale::setDefault('fa');

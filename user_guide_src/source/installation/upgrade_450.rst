@@ -143,7 +143,7 @@ If you wish to maintain the same execution order as in previous versions, set
              Now: route → filters → globals
 
 2. The After Filters in *Route* filters and *Filters* filters execution order is now
-reversed.
+   reversed.
 
     When you have the following configuration:
 

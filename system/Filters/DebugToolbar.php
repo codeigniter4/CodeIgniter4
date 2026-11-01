@@ -18,8 +18,6 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 /**
  * Debug toolbar filter
- *
- * @see \CodeIgniter\Filters\DebugToolbarTest
  */
 class DebugToolbar implements FilterInterface
 {

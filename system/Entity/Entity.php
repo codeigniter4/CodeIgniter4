@@ -38,8 +38,6 @@ use UnitEnum;
 
 /**
  * Entity encapsulation, for use with CodeIgniter\Model
- *
- * @see \CodeIgniter\Entity\EntityTest
  */
 class Entity implements JsonSerializable
 {

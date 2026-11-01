@@ -21,8 +21,6 @@ use CodeIgniter\Entity\Entity;
  * PHP data <==> DataSource data converter
  *
  * @template TEntity of object
- *
- * @see \CodeIgniter\DataConverter\DataConverterTest
  */
 final readonly class DataConverter
 {

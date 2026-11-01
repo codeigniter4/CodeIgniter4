@@ -41,8 +41,6 @@ use Stringable;
  * @property-read string $year
  *
  * @phpstan-consistent-constructor
- *
- * @see \CodeIgniter\I18n\TimeTest
  */
 class Time extends DateTimeImmutable implements Stringable
 {

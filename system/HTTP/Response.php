@@ -29,8 +29,6 @@ use Config\Cookie as CookieConfig;
  * - Status code and reason phrase
  * - Headers
  * - Message body
- *
- * @see \CodeIgniter\HTTP\ResponseTest
  */
 class Response extends Message implements ResponseInterface
 {

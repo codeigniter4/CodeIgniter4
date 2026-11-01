@@ -25,7 +25,6 @@ use Config\ContentSecurityPolicy as ContentSecurityPolicyConfig;
  * @see http://www.html5rocks.com/en/tutorials/security/content-security-policy/
  * @see http://content-security-policy.com/
  * @see https://www.owasp.org/index.php/Content_Security_Policy
- * @see \CodeIgniter\HTTP\ContentSecurityPolicyTest
  */
 class ContentSecurityPolicy
 {
@@ -67,7 +66,7 @@ class ContentSecurityPolicy
     /**
      * The `base-uri` directive restricts the URLs that can be used to specify the document base URL.
      *
-     * @var array<string, bool>|string|null
+     * @var array<string, bool|null>|string|null
      */
     protected $baseURI = [];
 
@@ -75,35 +74,35 @@ class ContentSecurityPolicy
      * The `child-src` directive governs the creation of nested browsing contexts as well
      * as Worker execution contexts.
      *
-     * @var array<string, bool>|string
+     * @var array<string, bool|null>|string
      */
     protected $childSrc = [];
 
     /**
      * The `connect-src` directive restricts which URLs the protected resource can load using script interfaces.
      *
-     * @var array<string, bool>|string
+     * @var array<string, bool|null>|string
      */
     protected $connectSrc = [];
 
     /**
      * The `default-src` directive sets a default source list for a number of directives.
      *
-     * @var array<string, bool>|string|null
+     * @var array<string, bool|null>|string|null
      */
     protected $defaultSrc = [];
 
     /**
      * The `font-src` directive restricts from where the protected resource can load fonts.
      *
-     * @var array<string, bool>|string
+     * @var array<string, bool|null>|string
      */
     protected $fontSrc = [];
 
     /**
      * The `form-action` directive restricts which URLs can be used as the action of HTML form elements.
      *
-     * @var array<string, bool>|string
+     * @var array<string, bool|null>|string
      */
     protected $formAction = [];
 
@@ -112,21 +111,21 @@ class ContentSecurityPolicy
      * the resource using a `frame`, `iframe`, `object`, `embed` or `applet` element,
      * or equivalent functionality in non-HTML resources.
      *
-     * @var array<string, bool>|string
+     * @var array<string, bool|null>|string
      */
     protected $frameAncestors = [];
 
     /**
      * The `frame-src` directive restricts the URLs which may be loaded into child navigables.
      *
-     * @var array<string, bool>|string
+     * @var array<string, bool|null>|string
      */
     protected $frameSrc = [];
 
     /**
      * The `img-src` directive restricts from where the protected resource can load images.
      *
-     * @var array<string, bool>|string
+     * @var array<string, bool|null>|string
      */
     protected $imageSrc = [];
 
@@ -134,14 +133,14 @@ class ContentSecurityPolicy
      * The `media-src` directive restricts from where the protected resource can load video,
      * audio, and associated text tracks.
      *
-     * @var array<string, bool>|string
+     * @var array<string, bool|null>|string
      */
     protected $mediaSrc = [];
 
     /**
      * The `object-src` directive restricts from where the protected resource can load plugins.
      *
-     * @var array<string, bool>|string
+     * @var array<string, bool|null>|string
      */
     protected $objectSrc = [];
 
@@ -149,28 +148,28 @@ class ContentSecurityPolicy
      * The `plugin-types` directive restricts the set of plugins that can be invoked by the
      * protected resource by limiting the types of resources that can be embedded.
      *
-     * @var array<string, bool>|string
+     * @var array<string, bool|null>|string
      */
     protected $pluginTypes = [];
 
     /**
      * The `script-src` directive restricts which scripts the protected resource can execute.
      *
-     * @var array<string, bool>|string
+     * @var array<string, bool|null>|string
      */
     protected $scriptSrc = [];
 
     /**
      * The `style-src` directive restricts which styles the user may applies to the protected resource.
      *
-     * @var array<string, bool>|string
+     * @var array<string, bool|null>|string
      */
     protected $styleSrc = [];
 
     /**
      * The `sandbox` directive specifies an HTML sandbox policy that the user agent applies to the protected resource.
      *
-     * @var array<string, bool>|string
+     * @var array<string, bool|null>|string
      */
     protected $sandbox = [];
 
@@ -194,14 +193,14 @@ class ContentSecurityPolicy
     /**
      * The `manifest-src` directive restricts the URLs from which application manifests may be loaded.
      *
-     * @var array<string, bool>|string
+     * @var array<string, bool|null>|string
      */
     protected $manifestSrc = [];
 
     /**
      * The `script-src-elem` directive applies to all script requests and script blocks.
      *
-     * @var array<string, bool>|string
+     * @var array<string, bool|null>|string
      */
     protected array|string $scriptSrcElem = [];
 
@@ -209,7 +208,7 @@ class ContentSecurityPolicy
      * The `script-src-attr` directive applies to event handlers and, if present,
      * it will override the `script-src` directive for relevant checks.
      *
-     * @var array<string, bool>|string
+     * @var array<string, bool|null>|string
      */
     protected array|string $scriptSrcAttr = [];
 
@@ -217,14 +216,14 @@ class ContentSecurityPolicy
      * The `style-src-elem` directive governs the behaviour of styles except
      * for styles defined in inline attributes.
      *
-     * @var array<string, bool>|string
+     * @var array<string, bool|null>|string
      */
     protected array|string $styleSrcElem = [];
 
     /**
      * The `style-src-attr` directive governs the behaviour of style attributes.
      *
-     * @var array<string, bool>|string
+     * @var array<string, bool|null>|string
      */
     protected array|string $styleSrcAttr = [];
 
@@ -232,7 +231,7 @@ class ContentSecurityPolicy
      * The `worker-src` directive restricts the URLs which may be loaded as a `Worker`,
      * `SharedWorker`, or `ServiceWorker`.
      *
-     * @var array<string, bool>|string
+     * @var array<string, bool|null>|string
      */
     protected array|string $workerSrc = [];
 
@@ -366,8 +365,8 @@ class ContentSecurityPolicy
                 && array_is_list($value)
             ) {
                 // Config sets these directives as `list<string>|string`
-                // but we need them as `array<string, bool>` internally.
-                $this->{$setting} = array_combine($value, array_fill(0, count($value), $this->reportOnly));
+                // but we need them as `array<string, bool|null>` internally.
+                $this->{$setting} = array_fill_keys($value, null);
 
                 continue;
             }
@@ -376,11 +375,11 @@ class ContentSecurityPolicy
         }
 
         if (! is_array($this->styleSrc)) {
-            $this->styleSrc = [$this->styleSrc => $this->reportOnly];
+            $this->styleSrc = [$this->styleSrc => null];
         }
 
         if (! is_array($this->scriptSrc)) {
-            $this->scriptSrc = [$this->scriptSrc => $this->reportOnly];
+            $this->scriptSrc = [$this->scriptSrc => null];
         }
     }
 
@@ -522,12 +521,30 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-default-src
      *
      * @param list<string>|string $uri
+     */
+    public function addDefaultSrc(array|string $uri, ?bool $explicitReporting = null): static
+    {
+        $this->addOption($uri, 'defaultSrc', $explicitReporting ?? $this->reportOnly);
+
+        return $this;
+    }
+
+    /**
+     * Sets the `default-src` directive, replacing any existing sources.
+     *
+     * `default-src` is the URI that is used for many of the settings when
+     * no other source has been set.
+     *
+     * @see http://www.w3.org/TR/CSP/#directive-default-src
+     *
+     * @param list<string>|string $uri
      *
      * @return $this
      */
     public function setDefaultSrc($uri, ?bool $explicitReporting = null)
     {
-        $this->defaultSrc = [(string) $uri => $explicitReporting ?? $this->reportOnly];
+        $this->defaultSrc = [];
+        $this->addDefaultSrc($uri, $explicitReporting);
 
         return $this;
     }
@@ -868,6 +885,28 @@ class ContentSecurityPolicy
         return $this;
     }
 
+    public function clearDirective(string $directive): void
+    {
+        if (! array_key_exists($directive, $this->directives)) {
+            return;
+        }
+
+        if ($directive === 'report-uri') {
+            $this->reportURI = null;
+
+            return;
+        }
+
+        if ($directive === 'report-to') {
+            $this->reportURI = null;
+            $this->reportTo  = null;
+
+            return;
+        }
+
+        $this->{$this->directives[$directive]} = [];
+    }
+
     /**
      * DRY method to add an string or array to a class property.
      *
@@ -879,13 +918,15 @@ class ContentSecurityPolicy
     {
         // Ensure we have an array to work with...
         if (is_string($this->{$target})) {
-            $this->{$target} = [$this->{$target} => $this->reportOnly];
+            $this->{$target} = $this->parseSourceList($this->{$target});
+        } elseif (! is_array($this->{$target})) {
+            $this->{$target} = [];
         }
 
         $options = is_array($options) ? $options : [$options];
 
         foreach ($options as $option) {
-            $this->{$target}[$option] = $explicitReporting ?? $this->reportOnly;
+            $this->{$target}[trim((string) $option)] = $explicitReporting ?? $this->reportOnly;
         }
     }
 
@@ -1006,21 +1047,28 @@ class ContentSecurityPolicy
      * Adds a directive and its options to the appropriate header. The $values
      * array might have options that are geared toward either the regular or the
      * reportOnly header, since it's viable to have both simultaneously.
+     * An option flagged `null` follows the current `reportOnly()` setting.
      *
-     * @param array<string, bool>|string $values
+     * @param array<string, bool|null>|string $values
      *
      * @return void
      */
     protected function addToHeader(string $name, $values = null)
     {
+        if ($values === null) {
+            return;
+        }
+
         if (is_string($values)) {
-            $values = [$values => $this->reportOnly];
+            $values = $this->parseSourceList($values);
         }
 
         $sources       = [];
         $reportSources = [];
 
         foreach ($values as $value => $reportOnly) {
+            $value = (string) $value;
+
             if (
                 in_array($value, $this->validSources, true)
                 || str_starts_with($value, 'nonce-')
@@ -1031,7 +1079,7 @@ class ContentSecurityPolicy
                 $value = "'{$value}'";
             }
 
-            if ($reportOnly) {
+            if ($reportOnly ?? $this->reportOnly) {
                 $reportSources[] = $value;
             } else {
                 $sources[] = $value;
@@ -1039,33 +1087,35 @@ class ContentSecurityPolicy
         }
 
         if ($sources !== []) {
+            if (count($sources) > 1) {
+                $sources = array_values(array_filter($sources, static fn ($s): bool => $s !== ''));
+            }
+
             $this->tempHeaders[$name] = implode(' ', $sources);
         }
 
         if ($reportSources !== []) {
+            if (count($reportSources) > 1) {
+                $reportSources = array_values(array_filter($reportSources, static fn ($s): bool => $s !== ''));
+            }
+
             $this->reportOnlyHeaders[$name] = implode(' ', $reportSources);
         }
     }
 
-    public function clearDirective(string $directive): void
+    /**
+     * Converts a string directive value into an array of options.
+     *
+     * @return array<string, bool|null>
+     */
+    private function parseSourceList(string $values): array
     {
-        if (! array_key_exists($directive, $this->directives)) {
-            return;
+        $valueStr = trim($values);
+
+        if ($valueStr === '') {
+            return ['' => null];
         }
 
-        if ($directive === 'report-uri') {
-            $this->reportURI = null;
-
-            return;
-        }
-
-        if ($directive === 'report-to') {
-            $this->reportURI = null;
-            $this->reportTo  = null;
-
-            return;
-        }
-
-        $this->{$this->directives[$directive]} = [];
+        return array_fill_keys(preg_split('/\s+/', $valueStr), null);
     }
 }

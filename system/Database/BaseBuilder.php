@@ -2959,9 +2959,6 @@ class BaseBuilder
                 ),
             );
 
-            // convert binds in where
-            $this->convertWhereBindsForBatch();
-
             $sql .= ' ' . $this->compileWhereHaving('QBWhere');
 
             $this->QBOptions['sql'] = trim($sql);
@@ -2983,35 +2980,50 @@ class BaseBuilder
             ) . "\n";
         }
 
-        return str_replace('{:_table_:}', $data, $sql);
+        return $this->compileBatchBinds(str_replace('{:_table_:}', $data, $sql));
+    }
+
+    /**
+     * Escapes and substitutes the binds into a compiled batch query.
+     *
+     * This must run after the batch data has been rendered into the SQL, so
+     * that a bound value containing `{:_table_:}` is never mixed with the
+     * batch data. The bound values are substituted by Query, the same way as
+     * in a regular query (see Query::matchNamedBinds()), so they respect their
+     * escape flag and placeholders inside the already escaped batch data are
+     * left untouched.
+     *
+     * @used-by _deleteBatch()
+     */
+    protected function compileBatchBinds(string $sql): string
+    {
+        if ($this->binds === []) {
+            return $sql;
+        }
+
+        return (new Query($this->db))
+            ->setQuery($sql, $this->binds, false)
+            ->getQuery();
     }
 
     /**
      * Escapes and substitutes the WHERE binds into the QBWhere conditions
      * for batch delete queries.
      *
-     * The bound values respect their escape flag and are escaped the same way
-     * as a regular query (see Query::matchNamedBinds()), instead of being
-     * injected into the SQL as raw, unescaped values.
-     *
-     * @used-by _deleteBatch()
+     * @deprecated 4.7.6 No longer used. The binds are substituted into the
+     *             compiled batch query by compileBatchBinds() instead.
      */
     protected function convertWhereBindsForBatch(): void
     {
-        $replacers = [];
-
-        foreach ($this->binds as $field => $bind) {
-            $escapedValue = $bind[1] ? $this->db->escape($bind[0]) : $bind[0];
-
-            if (is_array($bind[0])) {
-                $escapedValue = '(' . implode(',', $escapedValue) . ')';
-            }
-
-            $replacers[':' . $field . ':'] = (string) $escapedValue;
-        }
-
         foreach ($this->QBWhere as $key => $where) {
-            $this->QBWhere[$key]['condition'] = strtr($where['condition'], $replacers);
+            $condition = $where['condition'];
+
+            $sql = (new Query($this->db))
+                ->setQuery((string) $condition, $this->binds, false)
+                ->getQuery();
+
+            // Keep RawSql conditions as RawSql, as they are compiled differently.
+            $this->QBWhere[$key]['condition'] = $condition instanceof RawSql ? $condition->with($sql) : $sql;
         }
     }
 

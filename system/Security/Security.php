@@ -33,8 +33,6 @@ use SensitiveParameter;
  *
  * Provides methods that help protect your site against
  * Cross-Site Request Forgery attacks.
- *
- * @see \CodeIgniter\Security\SecurityTest
  */
 class Security implements SecurityInterface
 {
@@ -295,23 +293,24 @@ class Security implements SecurityInterface
         try {
             $json = json_decode($body, flags: JSON_THROW_ON_ERROR);
         } catch (JsonException) {
-            $json = null;
-        }
+            // The body is not valid JSON - check for form-encoded data.
+            parse_str($body, $result);
 
-        if (is_object($json)) {
-            if (property_exists($json, $tokenName)) {
-                unset($json->{$tokenName});
-                $request->setBody(json_encode($json));
+            if (! array_key_exists($tokenName, $result)) {
+                return;
             }
+
+            unset($result[$tokenName]);
+            $request->setBody(http_build_query($result));
 
             return;
         }
 
-        // If the token is found in form-encoded data, we can safely remove it.
-        parse_str($body, $result);
-
-        unset($result[$tokenName]);
-        $request->setBody(http_build_query($result));
+        // Valid JSON never falls through to form-encoded processing.
+        if (is_object($json) && property_exists($json, $tokenName)) {
+            unset($json->{$tokenName});
+            $request->setBody(json_encode($json));
+        }
     }
 
     private function getPostedToken(IncomingRequest $request): ?string

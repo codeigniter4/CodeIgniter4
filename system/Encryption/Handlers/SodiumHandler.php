@@ -24,7 +24,6 @@ use SodiumException;
  * @property-read string|null $key
  *
  * @see https://github.com/jedisct1/libsodium/issues/392
- * @see \CodeIgniter\Encryption\Handlers\SodiumHandlerTest
  */
 class SodiumHandler extends BaseHandler
 {

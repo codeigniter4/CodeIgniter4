@@ -79,10 +79,23 @@ echo sprintf("Checking the project space files changed since %s.\n", $baseTag);
 // Paths that are not part of the project space. Keep in sync with the
 // distribution repos: `tests/` is not used there, see "admin/starter/tests".
 $excludes = [
-    ':!.github/', ':!admin/', ':!changelogs/', ':!contributing/',
-    ':!system/', ':!tests/', ':!user_guide_src/', ':!utils/',
-    ':!*.json', ':!*.xml', ':!*.dist', ':!rector.php', ':!structarmed.php',
-    ':!phpstan*', ':!psalm*', ':!.php-cs-fixer.*', ':!LICENSE', ':!CHANGELOG.md',
+    ':!.github/',
+    ':!admin/',
+    ':!changelogs/',
+    ':!contributing/',
+    ':!system/',
+    ':!tests/',
+    ':!user_guide_src/',
+    ':!utils/',
+    ':!.*',
+    ':!*.md',
+    ':!*.json',
+    ':!*.xml',
+    ':!phpstan*',
+    ':!psalm*',
+    ':!rector.php',
+    ':!structarmed*',
+    ':!LICENSE',
 ];
 
 $command = sprintf(

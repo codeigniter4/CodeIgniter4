@@ -1358,6 +1358,29 @@ final class TimeTest extends CIUnitTestCase
         $this->assertNotSame($time1, $time2);
     }
 
+    public function testUnserializeRestoresTimezoneAndLocale(): void
+    {
+        $time = unserialize(serialize(Time::parse('2024-03-01 10:00:00', 'Europe/Paris', 'fr_FR')));
+
+        $this->assertSame('Europe/Paris', $time->getTimezoneName());
+        $this->assertSame('mars', $time->toLocalizedString('MMMM'));
+        $this->assertSame(1, $time->difference(Time::parse('2024-03-02 10:00:00', 'Europe/Paris'))->getDays());
+    }
+
+    public function testUnserializeFallsBackWithoutTraitProperties(): void
+    {
+        $payload = sprintf(
+            'O:%d:"%s":3:{s:4:"date";s:26:"2024-03-01 10:00:00.000000";s:13:"timezone_type";i:3;s:8:"timezone";s:12:"Europe/Paris";}',
+            strlen(Time::class),
+            Time::class,
+        );
+        $time = unserialize($payload);
+
+        $this->assertSame('Europe/Paris', $time->getTimezoneName());
+        $this->assertSame('March', $time->toLocalizedString('MMMM'));
+        $this->assertSame('2024-03-01 10:00:00', (string) $time);
+    }
+
     public function testSetTestNowWithTimeZone(): void
     {
         Time::setTestNow('2017/03/10 12:00', 'Asia/Tokyo');

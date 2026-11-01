@@ -163,7 +163,7 @@ Helpers
   in CI3 are included in :doc:`../helpers/text_helper` in CI4.
 - In CI4, ``redirect()`` is completely changed from CI3's.
     - `redirect() Documentation CodeIgniter 3.x <https://codeigniter.com/userguide3/helpers/url_helper.html#redirect>`_
-    - `redirect() Documentation CodeIgniter 4.x <../general/common_functions.html#redirect>`_
+    - :php:func:`redirect() Documentation CodeIgniter 4.x <redirect>`
     - In CI4, :php:func:`redirect()` returns a ``RedirectResponse`` instance instead of
       redirecting and terminating script execution. You must return it from Controllers
       or Controller Filters.

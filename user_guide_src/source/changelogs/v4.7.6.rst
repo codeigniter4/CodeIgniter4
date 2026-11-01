@@ -1,0 +1,114 @@
+#############
+Version 4.7.6
+#############
+
+Release Date: November 1, 2026
+
+**4.7.6 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+********
+SECURITY
+********
+
+- **Cache:** ``FileHandler::deleteMatching()`` now matches the pattern against cache
+  file names only. Previously, a pattern such as ``../*`` could delete files outside
+  the cache directory. Patterns can no longer match files in subdirectories of the
+  cache directory, so those files are no longer deleted. Special characters in the 
+  cache path, such as ``[``, are no longer interpreted as part of the pattern.
+  See the `Security advisory GHSA-9hf2-g3w9-pfmp <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-9hf2-g3w9-pfmp>`_
+  for more information. See :ref:`upgrade-476-cache-delete-matching` for migration
+  instructions.
+- **Model:** Fixed a mass assignment vulnerability in ``replace()``.
+  The method now discards fields not listed in ``$allowedFields`` when field
+  protection is enabled, while retaining a supplied primary key. Input emptied
+  by filtering, or reduced to only its primary key, now throws a ``DataException``.
+  Previously, applications passing untrusted input to ``replace()`` could write
+  protected columns. See :doc:`Upgrading from 4.7.5 to 4.7.6 </installation/upgrade_476>`
+  for migration instructions.
+  See the `Security advisory GHSA-jv74-fx4h-m63x <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-jv74-fx4h-m63x>`_
+  for more information.
+- **Security Helper:** Fixed a path traversal vulnerability in ``sanitize_filename()``.
+  Backslashes were only removed by a final ``stripslashes()`` call after filtering.
+  When ``$relativePath`` was ``true``, input such as ``.\./`` became ``../`` on all
+  platforms. In both modes, repeated backslashes could survive as Windows path
+  separators, and ``\0`` could become a NUL byte.
+  Backslashes are now removed during filtering, and ``stripslashes()`` is no longer
+  called. Forward slashes are still preserved when ``$relativePath`` is ``true``.
+  The same applies to ``Security::sanitizeFilename()``.
+  See :doc:`Upgrading from 4.7.5 to 4.7.6 </installation/upgrade_476>` and the
+  `Security advisory GHSA-9j59-qcxw-q7qm <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-9j59-qcxw-q7qm>`_
+  for more information.
+- **Database:** Fixed a SQL injection vulnerability in named query bindings.
+  When a query combined named binds (``:name:``) with a value that was already
+  escaped and rendered into the SQL (for example a subquery passed to ``where()``,
+  ``union()``, ``fromSubquery()`` or ``selectSubquery()``, a custom ``where()``
+  string built with ``$db->escape()``, the ``WHERE`` binds of ``deleteBatch()``,
+  or a manually escaped fragment in ``$db->query()``), a placeholder inside that
+  value was replaced with the bind of the same name, which could break out of the
+  string literal. Placeholders are now ignored inside quoted strings, quoted
+  identifiers and SQL comments, and the ``WHERE`` binds of ``deleteBatch()`` are
+  substituted only after the batch data has been rendered into the query.
+  Plain ``where()``, ``like()``, ``insert()`` and ``update()`` calls were not affected.
+  See the `Security advisory GHSA-25rf-99hr-7pmr <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-25rf-99hr-7pmr>`_
+  and :ref:`upgrade-476-named-binds` for more information.
+
+********
+BREAKING
+********
+
+- **Model:** ``replace()`` now applies field protection and rejects input emptied by
+  filtering. See :ref:`upgrade-476-model-replace` for migration instructions.
+
+***************
+Message Changes
+***************
+
+- Added the ``CLI.inputEnded`` language string.
+- Added the ``Format.invalidXMLValue`` language string.
+
+*******
+Changes
+*******
+
+- **Cache:** Added an optional ``$path`` parameter to ``FileVarExportHandler::__construct()`` so the cache files can be stored in a custom directory.
+- **HTTP:** Added ``ContentSecurityPolicy::addDefaultSrc()`` to allow appending sources to the ``default-src`` directive.
+
+************
+Deprecations
+************
+
+- **Database:** ``BaseBuilder::convertWhereBindsForBatch()`` is deprecated and
+  no longer used. The binds of a batch query are now substituted by
+  ``BaseBuilder::compileBatchBinds()`` after the batch data has been rendered.
+
+**********
+Bugs Fixed
+**********
+
+- **CLI:** Fixed a bug where ``CLI::promptByMultipleKeys()`` accepted a key missing from the options when it was below the last key, returning an empty selection, rejected a key above the last one when the options were not in key order, and offered ``0`` as the default when the first key was not ``0``.
+- **CLI:** Fixed a bug where a prompt asked again forever when its input was piped or redirected and ran out before a valid answer: ``CLI::prompt()`` and ``CLI::promptByKey()`` whose default fails the validation rules, and ``CLI::promptByMultipleKeys()`` whose options have string keys. They now throw a ``CLIException``. The new ``InputOutput::isAtEnd()`` tells that end of the input from an empty line. Pressing Ctrl+D at a terminal still asks again.
+- **Commands:** Fixed a bug where generator commands did not sort the imports of a template with CRLF line endings.
+- **Database:** Fixed ``reconnect()`` so a replaced socket does not keep the transaction that died with the old connection. ``transDepth`` is cleared and the transaction status is failed before the new connection is opened, so a failed reconnect cannot still report success. OCI8 commit mode returns to autocommit. ``transComplete()`` does not report success. This applies when ``ping()`` reports the connection lost; PostgreSQL's ``pg_ping()`` reconnects a broken connection itself, so it is not covered.
+- **Database:** Fixed MySQLi errno 1213 (``ER_LOCK_DEADLOCK``) so a following write through ``query()``, ``simpleQuery()`` or the Query Builder on the victim connection does not autocommit, and ``transCommit()`` rolls back and returns false after InnoDB has rolled the victim transaction back. Prepared queries and errno 1205 are unchanged.
+- **Format:** Fixed ``XMLFormatter`` so that an array key that becomes empty after sanitization no longer triggers a ``ValueError``; the fallback tag name ``item`` is used instead. Values that cannot be converted to a string, such as objects not implementing ``Stringable``, now throw a ``FormatException`` instead of a fatal ``Error``.
+- **Helpers:** Fixed a regression in v4.7.5 where ``set_value()`` threw a ``TypeError`` when the default value was not a string or an array, such as an integer, a float, ``null``, or a ``Stringable`` object. Such values are now converted to a string.
+- **HTTP:** Fixed a bug in ``ContentSecurityPolicy`` where a numeric source such as ``'0'`` threw a ``TypeError``, and a space-separated directive string in ``Config\\ContentSecurityPolicy`` was emitted as one unquoted source.
+- **HTTP:** Fixed a regression in v4.7.0 where calling ``ContentSecurityPolicy::reportOnly()`` after the policy was created did not apply to array sources from ``Config\\ContentSecurityPolicy``, so they stayed in the enforced ``Content-Security-Policy`` header alongside the ``Content-Security-Policy-Report-Only`` header.
+- **HTTP:** Fixed a bug in ``ContentSecurityPolicy::setDefaultSrc()`` where passing an array of URIs resulted in an invalid ``'Array'`` directive.
+- **HTTP:** Fixed a bug where ``CURLRequest`` threw a ``TypeError`` when ``decode_content`` was enabled without custom request headers because ``CURLOPT_HTTPHEADER`` was set to a string instead of an array.
+- **HTTP:** Fixed a bug where ``IncomingRequest`` did not read the request body when PHP's ``post_max_size`` was set to ``0`` or ``-1`` (unlimited).
+- **HTTP:** Fixed a bug where ``IncomingRequest::isSecure()`` did not recognize ``https`` in the ``X-Forwarded-Proto`` header from a trusted proxy when the value contained uppercase letters or surrounding whitespace, or was represented as a single-element array.
+- **HTTP:** Fixed a bug where ``Negotiate::media()`` threw an ``ErrorException`` when the ``Accept`` header contained a value without a subtype, such as ``json`` or an empty list element. Such values are now ignored.
+- **HTTP:** Fixed a bug where ``Negotiate`` could select a value that the request header excluded with ``q=0`` through a wildcard or a broader range. A ``q=0`` range now excludes every value it matches, such as ``text/html`` and ``text/html;charset=utf-8`` for ``text/*;q=0``, or ``en-US`` for ``en;q=0``, unless a more specific range in the header accepts the value. For example, ``Accept-Encoding: gzip;q=0, *`` no longer selects ``gzip``.
+- **HTTP:** Fixed stale ``$_REQUEST`` values after ``SiteURIFactory`` normalizes GET parameters, so ``Validation::withRequest()`` reads the normalized values while unrelated REQUEST entries are preserved.
+- **I18n:** Fixed a regression in v4.7.1 where ``Time`` and ``TimeLegacy`` lost their timezone, locale and ``__toString()`` format after ``unserialize()``, so methods such as ``difference()`` and ``getTimezoneName()`` threw an ``Error``.
+- **Routing:** Corrected the PHPDoc callback type of ``RouteCollection::group()`` to preserve the concrete collection type, allowing callbacks typed to a ``RouteCollection`` subclass to pass static analysis.
+- **Security:** Fixed a bug where a valid JSON request body that is not an object (for example a JSON array) was corrupted after CSRF verification when the token was sent via the ``X-CSRF-TOKEN`` header.
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

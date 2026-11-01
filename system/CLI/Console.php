@@ -20,8 +20,6 @@ use Exception;
 
 /**
  * Console
- *
- * @see \CodeIgniter\CLI\ConsoleTest
  */
 class Console
 {

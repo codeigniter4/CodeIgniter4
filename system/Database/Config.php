@@ -17,9 +17,6 @@ use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use Config\Database as DbConfig;
 
-/**
- * @see \CodeIgniter\Database\ConfigTest
- */
 class Config extends BaseConfig
 {
     /**

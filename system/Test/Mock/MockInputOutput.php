@@ -160,6 +160,14 @@ final class MockInputOutput extends InputOutput
         return $input;
     }
 
+    /**
+     * Whether the scripted answers have run out, so that a scripted empty answer before the last stays an empty line.
+     */
+    public function isAtEnd(): bool
+    {
+        return $this->inputs === [];
+    }
+
     public function fwrite($handle, string $string): void
     {
         $this->addStreamFilters();

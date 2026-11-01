@@ -44,8 +44,6 @@ use stdClass;
  * - Query string arguments (generally via $_GET, or as parsed via parse_str())
  * - Upload files, if any (as represented by $_FILES)
  * - Deserialized body binds (generally from $_POST)
- *
- * @see \CodeIgniter\HTTP\IncomingRequestTest
  */
 class IncomingRequest extends Request
 {
@@ -142,7 +140,7 @@ class IncomingRequest extends Request
             // php://input is not available with enctype="multipart/form-data".
             // See https://www.php.net/manual/en/wrappers.php.php#wrappers.php.input
             && ! str_contains($this->getHeaderLine('Content-Type'), 'multipart/form-data')
-            && (int) $this->getHeaderLine('Content-Length') <= $this->getPostMaxSize()
+            && (int) $this->getHeaderLine('Content-Length') <= $this->getPostMaxSize((string) ini_get('post_max_size'))
         ) {
             // Get our body from php://input
             $body = file_get_contents('php://input');
@@ -169,16 +167,16 @@ class IncomingRequest extends Request
         $this->detectLocale($config);
     }
 
-    private function getPostMaxSize(): int
+    /**
+     * Converts the `post_max_size` ini value to bytes.
+     *
+     * A value of 0 or less means unlimited.
+     */
+    private function getPostMaxSize(string $postMaxSize): int
     {
-        $postMaxSize = ini_get('post_max_size');
+        $bytes = ini_parse_quantity($postMaxSize);
 
-        return match (strtoupper(substr($postMaxSize, -1))) {
-            'G'     => (int) str_replace('G', '', $postMaxSize) * 1024 ** 3,
-            'M'     => (int) str_replace('M', '', $postMaxSize) * 1024 ** 2,
-            'K'     => (int) str_replace('K', '', $postMaxSize) * 1024,
-            default => (int) $postMaxSize,
-        };
+        return $bytes <= 0 ? PHP_INT_MAX : $bytes;
     }
 
     /**
@@ -276,8 +274,18 @@ class IncomingRequest extends Request
             return false;
         }
 
-        if ($this->hasHeader('X-Forwarded-Proto') && $this->header('X-Forwarded-Proto')->getValue() === 'https') {
-            return true;
+        if ($this->hasHeader('X-Forwarded-Proto')) {
+            $proto = $this->header('X-Forwarded-Proto')->getValue();
+
+            // A single value may be a string or a one-element array. Multiple
+            // values are ambiguous and cannot be trusted, so they are ignored.
+            if (is_array($proto)) {
+                $proto = count($proto) === 1 ? reset($proto) : null;
+            }
+
+            if (is_string($proto) && strtolower(trim($proto)) === 'https') {
+                return true;
+            }
         }
 
         if (! $this->hasHeader('Front-End-Https')) {

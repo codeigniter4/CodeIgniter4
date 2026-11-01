@@ -156,8 +156,8 @@ configured to any name of your choice by using `$deletedField`_ property.
 $allowedFields
 --------------
 
-This array should be updated with the field names that can be set during ``save()``, ``insert()``, or
-``update()`` methods. Any field names other than these will be discarded. This helps to protect
+This array should be updated with the field names that can be set during ``save()``, ``insert()``,
+``update()``, or ``replace()`` methods. Any field names other than these will be discarded. This helps to protect
 against just taking input from a form and throwing it all at the model, resulting in
 potential mass assignment vulnerabilities.
 
@@ -600,6 +600,42 @@ update command, with the added benefit of validation, events, etc:
 
 .. literalinclude:: model/018.php
 
+.. _model-replace:
+
+replace()
+---------
+
+Pass an associative array to ``replace($data)`` to perform the Query Builder's
+:php:meth:`CodeIgniter\\Database\\BaseBuilder::replace()` operation. The model validates the supplied
+data and handles timestamps, but does not trigger model callbacks.
+
+Since v4.7.6, fields outside `$allowedFields`_ are discarded when field protection
+is enabled, except for a supplied `$primaryKey`_. Supplied timestamp values not
+listed in `$allowedFields`_ are discarded and, when timestamps are enabled,
+replaced by generated ones. Pass ``true`` as the second argument to return the SQL
+instead of executing it.
+
+If field protection removes all data from a non-empty input, or leaves only its
+primary key after removing other fields, ``replace()`` throws a ``DataException``
+before generating timestamps. Explicitly passing ``null`` or an empty array still
+allows the method to use data previously set on the Query Builder.
+
+.. warning:: Field protection does not authorize access to a record. A supplied
+    primary key is retained even for auto-incrementing keys, so untrusted input can
+    select the record to replace. Use a trusted identifier and verify that the caller
+    is authorized to modify the target record; do not rely on ``$allowedFields``
+    alone when passing request data to ``replace()``.
+
+.. important:: Field protection filters input; it does not guarantee that existing
+    values of omitted columns are preserved. Depending on the database driver,
+    replacement may delete the existing row and insert a new one, using defaults
+    for omitted columns. Use ``update()`` to change selected fields of an existing row.
+
+Fields used to match existing rows must be in ``$allowedFields`` or be the primary
+key. Filtering a unique column can change whether a replacement matches an existing
+row. With PostgreSQL, the first remaining field is used for matching; ensure that
+it is a primary or unique key to avoid matching multiple rows.
+
 .. _model-save:
 
 save()
@@ -861,9 +897,11 @@ Protecting Fields
 =================
 
 To help protect against Mass Assignment Attacks, the Model class **requires** that you list all of the field names
-that can be changed during inserts and updates in the `$allowedFields`_ class property. Any data provided
-in addition to these will be removed prior to hitting the database. This is great for ensuring that timestamps,
-or primary keys do not get changed.
+that can be changed during inserts, updates, and replacements in the `$allowedFields`_ class property.
+Any data provided in addition to these will be removed prior to hitting the database.
+This limits which fields can be assigned through model methods.
+
+For ``replace()``, a supplied `$primaryKey`_ is retained to identify the record to replace.
 
 .. literalinclude:: model/041.php
 
@@ -1039,10 +1077,9 @@ afterUpdate       **id** = the array of primary keys of the rows being passed to
                   **data** = the key/value pairs being updated.
                   **result** = the results of the ``update()`` method used through the Query Builder.
 beforeFind        The name of the calling **method**, whether a **singleton** was requested, and these additional fields:
-- ``first()``     No additional fields
-- ``find()``      **id** = the primary key of the row being searched for.
-- ``findAll()``   **limit** = the number of rows to find.
-                  **offset** = the number of rows to skip during the search.
+                  none for ``first()``, **id** = the primary key of the row being searched for, for ``find()``,
+                  and **limit** = the number of rows to find, and **offset** = the number of rows to skip during
+                  the search, for ``findAll()``.
 afterFind         Same as **beforeFind** but including the resulting row(s) of data, or null if no result found.
 beforeDelete      **id** = an array of primary key rows being passed to the ``delete()`` method.
                   **purge** = boolean whether soft-delete rows should be hard deleted.

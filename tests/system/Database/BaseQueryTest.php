@@ -13,6 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database;
 
+use CodeIgniter\Database\MySQLi\Connection as MySQLiConnection;
+use CodeIgniter\Database\Postgre\Connection as PostgreConnection;
+use CodeIgniter\Database\SQLite3\Connection as SQLite3Connection;
+use CodeIgniter\Database\SQLSRV\Connection as SQLSRVConnection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -333,6 +337,373 @@ final class BaseQueryTest extends CIUnitTestCase
         $this->assertSame($expected, $query->getQuery());
     }
 
+    public function testNamedBindsAreNotReplacedInsideEscapedValues(): void
+    {
+        $query = new Query($this->db);
+
+        $query->setQuery(
+            'SELECT * FROM users WHERE name = ' . $this->db->escape(':status:') . ' AND status = :status:',
+            ['status' => ' OR is_admin = 1 OR '],
+        );
+
+        $expected = "SELECT * FROM users WHERE name = ':status:' AND status = ' OR is_admin = 1 OR '";
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    public function testNamedBindsAreNotReplacedAfterEscapedValueEndingWithBackslash(): void
+    {
+        $query = new Query($this->db);
+
+        $query->setQuery(
+            'SELECT * FROM users WHERE a = ' . $this->db->escape('x\\') . ' AND name = ' . $this->db->escape(':status:') . ' AND status = :status:',
+            ['status' => ' OR is_admin = 1 OR '],
+        );
+
+        $expected = "SELECT * FROM users WHERE a = 'x\\' AND name = ':status:' AND status = ' OR is_admin = 1 OR '";
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    public function testNamedBindsAreNotReplacedInsideBackslashEscapedValues(): void
+    {
+        $db = new class ([]) extends MockConnection {
+            protected function _escapeString(string $str): string
+            {
+                return addslashes($str);
+            }
+        };
+
+        $query = new Query($db);
+
+        $query->setQuery(
+            'SELECT * FROM users WHERE name = ' . $db->escape("it's :status:") . ' AND status = :status:',
+            ['status' => ' OR is_admin = 1 OR '],
+        );
+
+        $expected = "SELECT * FROM users WHERE name = 'it\\'s :status:' AND status = ' OR is_admin = 1 OR '";
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    public function testNamedBindsAreNotReplacedInsidePostgreEscapeStrings(): void
+    {
+        // Emulates standard_conforming_strings = on, where only E'...'
+        // strings use backslash escapes.
+        $db = new class ([]) extends PostgreConnection {
+            protected function _escapeString(string $str): string
+            {
+                return $str;
+            }
+        };
+
+        $query = new Query($db);
+
+        $query->setQuery(
+            "SELECT * FROM users WHERE name = E'it\\'s :status:' AND status = :status:",
+            ['status' => [5, false]],
+            false,
+        );
+
+        $expected = "SELECT * FROM users WHERE name = E'it\\'s :status:' AND status = 5";
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    public function testNamedBindsEscapeStringsAreOnlyRecognizedOnPostgre(): void
+    {
+        $query = new Query($this->db);
+
+        // Outside PostgreSQL, E'...' is a regular string, so the backslash
+        // does not escape the quote and the string ends after "it\".
+        $query->setQuery(
+            "SELECT * FROM users WHERE name = E'it\\' AND status = :status:",
+            ['status' => 5],
+        );
+
+        $expected = "SELECT * FROM users WHERE name = E'it\\' AND status = 5";
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    public function testNamedBindsAreNotReplacedInsideMySQLBackslashEscapedDoubleQuotedStrings(): void
+    {
+        $db = $this->createBackslashEscapingMySQLiConnection('utf8mb4');
+
+        $query = new Query($db);
+
+        $query->setQuery(
+            'SELECT * FROM users WHERE name = "it\\"s :status:" AND status = :status:',
+            ['status' => ' OR 1=1 OR '],
+        );
+
+        $expected = "SELECT * FROM users WHERE name = \"it\\\"s :status:\" AND status = ' OR 1=1 OR '";
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    public function testNamedBindsWithPostgreQuotedIdentifierEndingWithBackslash(): void
+    {
+        // Emulates standard_conforming_strings = off, where a backslash
+        // escapes inside '...' strings but never inside "..." identifiers.
+        $db = new class ([]) extends PostgreConnection {
+            protected function _escapeString(string $str): string
+            {
+                return addcslashes($str, "\\'");
+            }
+        };
+
+        $query = new Query($db);
+
+        $query->setQuery(
+            'SELECT "a\\" FROM users WHERE name = \':id:\' AND id = :id:',
+            ['id' => [1, false]],
+            false,
+        );
+
+        $this->assertSame('SELECT "a\\" FROM users WHERE name = \':id:\' AND id = 1', $query->getQuery());
+    }
+
+    public function testNamedBindsAreNotReplacedInsideStringLiterals(): void
+    {
+        $query = new Query($this->db);
+
+        $query->setQuery("SELECT * FROM users WHERE name LIKE '%:name:%' OR name = :name:", ['name' => 'Geoffrey']);
+
+        $expected = "SELECT * FROM users WHERE name LIKE '%:name:%' OR name = 'Geoffrey'";
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    public function testNamedBindsWithQuotesInPlaceholder(): void
+    {
+        $query = new Query($this->db);
+
+        $query->setQuery(
+            "SELECT * FROM users WHERE CONCAT(first, ' ', last) = :CONCAT(first, ' ', last):",
+            ["CONCAT(first, ' ', last)" => 'John Doe'],
+        );
+
+        $expected = "SELECT * FROM users WHERE CONCAT(first, ' ', last) = 'John Doe'";
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    public function testNamedBindsWithQuotesInIdentifiersAndComments(): void
+    {
+        $query = new Query($this->db);
+
+        $query->setQuery(
+            "SELECT \"it's\", `it's` /* it's :id: */ FROM users -- it's :id:\nWHERE id = :id:",
+            ['id' => 1],
+        );
+
+        $expected = "SELECT \"it's\", `it's` /* it's :id: */ FROM users -- it's :id:\nWHERE id = 1";
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    public function testNamedBindsWithDoubleColonAndStringLiteral(): void
+    {
+        $query = new Query($this->db);
+
+        $query->setQuery(
+            "SELECT id::text, 'a:b:c' FROM users WHERE created_at::date = :date: AND x::int = :x::int:",
+            ['date' => '2026-01-01', 'x::int' => 5],
+        );
+
+        $expected = "SELECT id::text, 'a:b:c' FROM users WHERE created_at::date = '2026-01-01' AND x::int = 5";
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    public function testNamedBindsWithQuotesInSQLSRVBracketIdentifiers(): void
+    {
+        $query = new Query(new SQLSRVConnection([]));
+
+        $query->setQuery("SELECT [it's] FROM users WHERE id = :id: AND name = ':id:'", ['id' => 1]);
+
+        $expected = "SELECT [it's] FROM users WHERE id = 1 AND name = ':id:'";
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    public function testNamedBindsAreNotReplacedInsideSQLSRVBracketIdentifiers(): void
+    {
+        $query = new Query(new SQLSRVConnection([]));
+
+        $query->setQuery('SELECT [:id:] FROM users WHERE id = :id:', ['id' => 1]);
+
+        $this->assertSame('SELECT [:id:] FROM users WHERE id = 1', $query->getQuery());
+    }
+
+    public function testNamedBindsWithSQLiteBracketIdentifiers(): void
+    {
+        $query = new Query(new SQLite3Connection([]));
+
+        $query->setQuery("SELECT [it's], [:id:] FROM users WHERE id = :id: AND name = ':id:'", ['id' => 1]);
+
+        $expected = "SELECT [it's], [:id:] FROM users WHERE id = 1 AND name = ':id:'";
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    public function testNamedBindsWithPostgreDollarQuotedStrings(): void
+    {
+        $query = new Query(new PostgreConnection([]));
+
+        $query->setQuery(
+            "SELECT \$\$it's :id:\$\$ AS a, \$tag\$it's :id:\$tag\$ AS b, :id: AS id",
+            ['id' => [1, false]],
+            false,
+        );
+
+        $expected = "SELECT \$\$it's :id:\$\$ AS a, \$tag\$it's :id:\$tag\$ AS b, 1 AS id";
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    public function testNamedBindsAreNotReplacedInsideNestedComments(): void
+    {
+        foreach ([new PostgreConnection([]), new SQLSRVConnection([])] as $db) {
+            $query = new Query($db);
+
+            $query->setQuery(
+                "SELECT 1 /* outer /* it's */ :id: */ FROM users WHERE id = :id: /*!50000 :id: */",
+                ['id' => [1, false]],
+                false,
+            );
+
+            $expected = "SELECT 1 /* outer /* it's */ :id: */ FROM users WHERE id = 1 /*!50000 :id: */";
+
+            $this->assertSame($expected, $query->getQuery(), $db::class);
+        }
+    }
+
+    #[DataProvider('provideNamedBindsWithMySQLMultibyteCharsets')]
+    public function testNamedBindsWithMySQLMultibyteCharsets(string $charset, string $char): void
+    {
+        $db = $this->createBackslashEscapingMySQLiConnection($charset);
+
+        $query = new Query($db);
+
+        // mysqli::real_escape_string() is charset-aware and does not escape
+        // the trailing 0x5C byte of a multibyte character.
+        $query->setQuery(
+            "SELECT * FROM users WHERE a = 'x{$char}' AND name = ':status:' AND status = :status:",
+            ['status' => ' OR 1=1 OR '],
+        );
+
+        $expected = "SELECT * FROM users WHERE a = 'x{$char}' AND name = ':status:' AND status = ' OR 1=1 OR '";
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function provideNamedBindsWithMySQLMultibyteCharsets(): iterable
+    {
+        yield 'big5' => ['big5', "\xb3\x5c"];
+
+        yield 'cp932' => ['cp932', "\x95\x5c"];
+
+        yield 'gb18030' => ['gb18030', "\x81\x5c"];
+
+        yield 'gbk' => ['gbk', "\xbf\x5c"];
+
+        yield 'sjis' => ['SJIS', "\x95\x5c"];
+    }
+
+    public function testNamedBindsWithMySQLInvalidMultibyteSequence(): void
+    {
+        $db = $this->createBackslashEscapingMySQLiConnection('gbk');
+
+        $query = new Query($db);
+
+        // 0xBF is a GBK lead byte, but a quote is not a valid trailing byte,
+        // so MySQL ends the string literal at that quote.
+        $query->setQuery(
+            "SELECT * FROM users WHERE a = 'x\xbf' AND name = ':status:' AND status = :status:",
+            ['status' => ' OR 1=1 OR '],
+        );
+
+        $expected = "SELECT * FROM users WHERE a = 'x\xbf' AND name = ':status:' AND status = ' OR 1=1 OR '";
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    public function testNamedBindsWithMySQLUtf8DoesNotSkipMultibyteSequences(): void
+    {
+        $db = $this->createBackslashEscapingMySQLiConnection('utf8mb4');
+
+        $query = new Query($db);
+
+        $query->setQuery("SELECT * FROM users WHERE a = 'x\xbf\\' AND b = ':id:' AND id = :id:", ['id' => 1]);
+
+        $expected = "SELECT * FROM users WHERE a = 'x\xbf\\' AND b = '1' AND id = :id:";
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    #[DataProvider('provideNamedBindsWithPostgreMultibyteCharsets')]
+    public function testNamedBindsWithPostgreMultibyteCharsets(string $charset, string $char, string $suffix): void
+    {
+        $db = new class (['charset' => $charset]) extends PostgreConnection {
+            protected function _escapeString(string $str): string
+            {
+                return $str;
+            }
+        };
+
+        $query = new Query($db);
+
+        // pg_escape_literal() creates E'...' strings for values with a backslash.
+        $query->setQuery(
+            "SELECT * FROM users WHERE a = E'\\\\x{$char}{$suffix}' AND name = ':status:' AND status = :status:",
+            ['status' => [5, false]],
+            false,
+        );
+
+        $expected = "SELECT * FROM users WHERE a = E'\\\\x{$char}{$suffix}' AND name = ':status:' AND status = 5";
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    /**
+     * @return iterable<string, array{string, string, string}>
+     */
+    public static function provideNamedBindsWithPostgreMultibyteCharsets(): iterable
+    {
+        yield 'BIG5' => ['BIG5', "\xb3\x5c", ''];
+
+        yield 'GB18030' => ['GB18030', "\x81\x5c", ''];
+
+        yield 'GBK' => ['GBK', "\xbf\x5c", ''];
+
+        yield 'Windows936' => ['Windows936', "\xbf\x5c", ''];
+
+        yield 'SJIS' => ['SJIS', "\x95\x5c", ''];
+
+        yield 'Shift_JIS_2004' => ['Shift_JIS_2004', "\x95\x5c", ''];
+
+        yield 'SJIS half-width katakana' => ['SJIS', "\xb1", '\\\\'];
+    }
+
+    public function testNamedBindsWithMySQLComments(): void
+    {
+        $query = new Query(new MySQLiConnection([]));
+
+        $query->setQuery(
+            "SELECT 10--2, ':id:' FROM users # it's\nWHERE id = :id: -- it's\nAND x = :x: /* /* it's */ /*!50000 AND y = :x: */",
+            ['id' => 1, 'x' => 2],
+        );
+
+        $expected = "SELECT 10--2, ':id:' FROM users # it's\nWHERE id = 1 -- it's\nAND x = 2 /* /* it's */ /*!50000 AND y = 2 */";
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1705
      */
@@ -606,5 +977,15 @@ final class BaseQueryTest extends CIUnitTestCase
                 'SELECT \'<s>\' FROM dual',
             ],
         ];
+    }
+
+    private function createBackslashEscapingMySQLiConnection(string $charset): MySQLiConnection
+    {
+        return new class (['charset' => $charset]) extends MySQLiConnection {
+            protected function _escapeString(string $str): string
+            {
+                return addcslashes($str, "\\'");
+            }
+        };
     }
 }

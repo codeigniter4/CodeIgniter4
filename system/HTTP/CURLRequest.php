@@ -22,8 +22,6 @@ use SensitiveParameter;
 
 /**
  * A lightweight HTTP client for sending synchronous HTTP requests via cURL.
- *
- * @see \CodeIgniter\HTTP\CURLRequestTest
  */
 class CURLRequest extends OutgoingRequest
 {
@@ -815,8 +813,7 @@ class CURLRequest extends OutgoingRequest
             if ($accept !== '') {
                 $curlOptions[CURLOPT_ENCODING] = $accept;
             } else {
-                $curlOptions[CURLOPT_ENCODING]   = '';
-                $curlOptions[CURLOPT_HTTPHEADER] = 'Accept-Encoding';
+                $curlOptions[CURLOPT_ENCODING] = '';
             }
         }
 

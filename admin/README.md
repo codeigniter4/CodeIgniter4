@@ -54,6 +54,9 @@ are used as part of that process:
     version references in the framework source, the user guide, and the
     distribution build script.
     Usage: `php admin/prepare-release.php 4.x.x`
+-   **create-release.php** publishes the GitHub release for a new version,
+    crediting every PR author since the previous release except bots.
+    Usage: `php admin/create-release.php 4.x.x [--previous=v4.x.w] [--dry-run]`
 -   **create-new-changelog.php** creates the changelog and upgrade guide
     stubs for the next version and adds them to their index files.
     Usage: `php admin/create-new-changelog.php <current_version> <new_version>`

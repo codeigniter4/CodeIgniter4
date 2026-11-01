@@ -1,0 +1,54 @@
+name: Composer Normalize
+
+on:
+  pull_request:
+    paths:
+      - '**/composer.json'
+      - '.github/workflows/test-composer-normalize.yml'
+  push:
+    paths:
+      - '**/composer.json'
+      - '.github/workflows/test-composer-normalize.yml'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  composer-normalize:
+    name: Check normalized composer.json
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        with:
+          php-version: '8.2'
+          coverage: none
+
+      - name: Install dependencies
+        run: composer update --ansi --no-interaction --working-dir=utils
+
+      - name: Run on root composer.json
+        if: ${{ !cancelled() }}
+        run: composer normalize --ansi --dry-run --working-dir=utils "$GITHUB_WORKSPACE/composer.json"
+
+      - name: Run on framework composer.json
+        if: ${{ !cancelled() }}
+        run: composer normalize --ansi --dry-run --working-dir=utils "$GITHUB_WORKSPACE/admin/framework/composer.json"
+
+      - name: Run on starter composer.json
+        if: ${{ !cancelled() }}
+        run: composer normalize --ansi --dry-run --working-dir=utils "$GITHUB_WORKSPACE/admin/starter/composer.json"
+
+      - name: Run on utils composer.json
+        if: ${{ !cancelled() }}
+        run: composer normalize --ansi --dry-run --working-dir=utils

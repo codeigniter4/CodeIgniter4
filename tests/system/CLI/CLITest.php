@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\CLI;
 
+use CodeIgniter\CLI\Exceptions\CLIException;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Superglobals;
@@ -403,6 +404,104 @@ final class CLITest extends CIUnitTestCase
             0 => 'Playing game',
         ];
         $this->assertSame($expected, $output);
+    }
+
+    public function testPromptByMultipleKeysAsksAgainForAMissingKeyBelowTheLast(): void
+    {
+        $io = new MockInputOutput();
+        $io->setInputs(['1', '2']);
+        CLI::setInputOutput($io);
+
+        $output = CLI::promptByMultipleKeys('Select your hobbies:', [0 => 'Playing game', 2 => 'Badminton']);
+
+        CLI::resetInputOutput();
+
+        $this->assertSame([2 => 'Badminton'], $output);
+        $this->assertSame(1, substr_count($io->getOutput(), 'Please select correctly.'));
+    }
+
+    public function testPromptByMultipleKeysAcceptsAKeyAboveTheLast(): void
+    {
+        $io = new MockInputOutput();
+        $io->setInputs(['5']);
+        CLI::setInputOutput($io);
+
+        $output = CLI::promptByMultipleKeys('Select your hobbies:', [0 => 'Playing game', 5 => 'Sleep', 2 => 'Badminton']);
+
+        CLI::resetInputOutput();
+
+        $this->assertSame([5 => 'Sleep'], $output);
+        $this->assertStringNotContainsString('Please select correctly.', $io->getOutput());
+    }
+
+    public function testPromptByMultipleKeysDefaultsToTheFirstKey(): void
+    {
+        $io = new MockInputOutput();
+        $io->setInputs(['']);
+        CLI::setInputOutput($io);
+
+        $output = CLI::promptByMultipleKeys('Select your hobbies:', [2 => 'Badminton', 5 => 'Sleep']);
+
+        CLI::resetInputOutput();
+
+        $this->assertSame([2 => 'Badminton'], $output);
+        $this->assertStringContainsString('[2, 5] : ', preg_replace('/\e\[[^m]+m/', '', $io->getOutput()) ?? '');
+        $this->assertStringNotContainsString('Please select correctly.', $io->getOutput());
+    }
+
+    public function testInputReportsTheEndOfTheInput(): void
+    {
+        $io = new InputOutput();
+
+        PhpStreamWrapper::register();
+        PhpStreamWrapper::setContent('red');
+        $io->input();
+        $this->assertFalse($io->isAtEnd());
+
+        PhpStreamWrapper::setContent('');
+        $io->input();
+        $this->assertTrue($io->isAtEnd());
+
+        PhpStreamWrapper::restore();
+    }
+
+    /**
+     * @param list<string>      $inputs
+     * @param callable(): mixed $prompt
+     */
+    #[DataProvider('providePromptsStopAskingWhenTheInputEnds')]
+    public function testPromptsStopAskingWhenTheInputEnds(array $inputs, callable $prompt): void
+    {
+        $io = new MockInputOutput();
+        $io->setInputs($inputs);
+        CLI::setInputOutput($io);
+
+        $this->expectException(CLIException::class);
+        $this->expectExceptionMessage('The input ended before a valid answer was given.');
+
+        $prompt();
+    }
+
+    /**
+     * @return iterable<string, array{list<string>, callable(): mixed}>
+     */
+    public static function providePromptsStopAskingWhenTheInputEnds(): iterable
+    {
+        yield 'prompt' => [[''], static fn (): string => CLI::prompt('Name', null, 'required')];
+
+        yield 'promptByKey' => [['c'], static fn (): string => CLI::promptByKey('Pick:', ['a' => 'Apple', 'b' => 'Banana'], 'in_list[b]')];
+
+        yield 'promptByMultipleKeys' => [['9'], static fn (): array => CLI::promptByMultipleKeys('Pick:', ['a' => 'Apple', 'b' => 'Banana'])];
+    }
+
+    public function testMockInputOutputKeepsAnEmptyAnswerBeforeTheLastAsAnEmptyLine(): void
+    {
+        $io = new MockInputOutput();
+        $io->setInputs(['', 'red']);
+        CLI::setInputOutput($io);
+
+        $this->assertSame('red', CLI::prompt('Color', null, 'required'));
+        $this->assertTrue($io->isAtEnd());
     }
 
     public function testNewLine(): void

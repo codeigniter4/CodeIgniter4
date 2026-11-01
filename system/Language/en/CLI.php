@@ -53,6 +53,7 @@ return [
     'helpDescription'     => 'Description:',
     'helpOptions'         => 'Options:',
     'helpUsage'           => 'Usage:',
+    'inputEnded'          => 'The input ended before a valid answer was given.',
     'invalidColor'        => 'Invalid "{0}" color: "{1}".',
     'namespaceNotDefined' => 'Namespace "{0}" is not defined.',
     'signals'             => [

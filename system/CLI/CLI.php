@@ -27,8 +27,6 @@ use Throwable;
  * Some of the code in this class is Windows-specific, and not
  * possible to test using travis-ci. It has been phpunit-annotated
  * to prevent messing up code coverage.
- *
- * @see \CodeIgniter\CLI\CLITest
  */
 class CLI
 {
@@ -263,6 +261,10 @@ class CLI
 
         if ($validation !== []) {
             while (! static::validate('"' . trim($field) . '"', $input, $validation)) {
+                if (static::$io->isAtEnd()) {
+                    throw CLIException::forInputEnded();
+                }
+
                 $input = static::prompt($field, $options, $validation);
             }
         }
@@ -312,61 +314,42 @@ class CLI
     {
         CLI::isZeroOptions($options);
 
-        $extraOutputDefault = static::color('0', 'green');
-        $opts               = $options;
-        unset($opts[0]);
+        $default = (string) array_key_first($options);
+        $others  = $options;
+        unset($others[$default]);
 
-        if ($opts === []) {
-            $extraOutput = $extraOutputDefault;
-        } else {
-            $optsKey     = array_keys($opts);
-            $extraOutput = '[' . $extraOutputDefault . ', ' . implode(', ', $optsKey) . ']';
-            $extraOutput = 'You can specify multiple values separated by commas.' . PHP_EOL . $extraOutput;
+        $field = static::color($default, 'green');
+
+        if ($others !== []) {
+            $field = sprintf(
+                'You can specify multiple values separated by commas.%s[%s, %s]',
+                PHP_EOL,
+                $field,
+                implode(', ', array_keys($others)),
+            );
         }
 
         CLI::write($text);
         CLI::printKeysAndValues($options);
         CLI::newLine();
 
-        $input = static::prompt($extraOutput);
-        $input = ($input === '') ? '0' : $input; // 0 is default
-
-        // validation
         while (true) {
-            $pattern = preg_match_all('/^\d+(,\d+)*$/', trim($input));
+            $input = static::prompt($field);
+            $input = $input === '' ? $default : $input;
+            $keys  = array_map(intval(...), explode(',', $input));
 
-            // separate input by comma and convert all to an int[]
-            $inputToArray = array_map(static fn ($value): int => (int) $value, explode(',', $input));
-            // find max from key of $options
-            $maxOptions = array_key_last($options);
-            // find max from input
-            $maxInput = max($inputToArray);
-
-            // return the prompt again if $input contain(s) non-numeric character, except a comma.
-            // And if max from $options less than max from input,
-            // it means user tried to access null value in $options
-            if ($pattern < 1 || $maxOptions < $maxInput) {
-                static::error('Please select correctly.');
-                CLI::newLine();
-
-                $input = static::prompt($extraOutput);
-                $input = ($input === '') ? '0' : $input;
-            } else {
-                break;
+            if (preg_match('/^\d+(,\d+)*$/', $input) === 1 && array_diff($keys, array_keys($options)) === []) {
+                return array_intersect_key($options, array_flip($keys));
             }
-        }
 
-        $input = [];
+            static::error('Please select correctly.');
 
-        foreach ($options as $key => $description) {
-            foreach ($inputToArray as $inputKey) {
-                if ($key === $inputKey) {
-                    $input[$key] = $description;
-                }
+            if (static::$io->isAtEnd()) {
+                throw CLIException::forInputEnded();
             }
-        }
 
-        return $input;
+            CLI::newLine();
+        }
     }
 
     // --------------------------------------------------------------------

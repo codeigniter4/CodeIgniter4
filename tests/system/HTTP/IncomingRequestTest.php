@@ -828,6 +828,12 @@ final class IncomingRequestTest extends CIUnitTestCase
             'X-Forwarded-Proto trusted proxy IP' => [
                 'X-Forwarded-Proto', 'https', '10.0.1.200', ['10.0.1.200' => 'X-Forwarded-For'], true,
             ],
+            'X-Forwarded-Proto trusted proxy IP uppercase' => [
+                'X-Forwarded-Proto', 'HTTPS', '10.0.1.200', ['10.0.1.200' => 'X-Forwarded-For'], true,
+            ],
+            'X-Forwarded-Proto trusted proxy IP with surrounding whitespace' => [
+                'X-Forwarded-Proto', ' https ', '10.0.1.200', ['10.0.1.200' => 'X-Forwarded-For'], true,
+            ],
             'X-Forwarded-Proto no trusted proxies' => [
                 'X-Forwarded-Proto', 'https', '10.0.1.200', [], false,
             ],
@@ -877,6 +883,32 @@ final class IncomingRequestTest extends CIUnitTestCase
                 'X-Forwarded-Proto', 'https', '2001:db8::5', ['2001:db8::/129' => 'X-Forwarded-For'], false,
             ],
         ];
+    }
+
+    public function testIsSecureWithForwardedProtoSingleElementArray(): void
+    {
+        service('superglobals')->setServer('REMOTE_ADDR', '10.0.1.200');
+
+        $config           = new App();
+        $config->proxyIPs = ['10.0.1.200' => 'X-Forwarded-For'];
+
+        $request = $this->createRequest($config);
+        $request->setHeader('X-Forwarded-Proto', ['https']);
+
+        $this->assertTrue($request->isSecure());
+    }
+
+    public function testIsSecureWithForwardedProtoMultipleValuesIsNotSecure(): void
+    {
+        service('superglobals')->setServer('REMOTE_ADDR', '10.0.1.200');
+
+        $config           = new App();
+        $config->proxyIPs = ['10.0.1.200' => 'X-Forwarded-For'];
+
+        $request = $this->createRequest($config);
+        $request->setHeader('X-Forwarded-Proto', ['https', 'http']);
+
+        $this->assertFalse($request->isSecure());
     }
 
     public function testUserAgent(): void
@@ -1047,6 +1079,46 @@ final class IncomingRequestTest extends CIUnitTestCase
         $setPath = $this->getPrivateMethodInvoker($request, 'setPath');
         $setPath('foobar');
         $this->assertSame('foobar', $request->getPath());
+    }
+
+    #[DataProvider('provideGetPostMaxSize')]
+    public function testGetPostMaxSize(string $value, int $expected): void
+    {
+        $getPostMaxSize = $this->getPrivateMethodInvoker($this->request, 'getPostMaxSize');
+
+        $this->assertSame($expected, $getPostMaxSize($value));
+    }
+
+    /**
+     * @return iterable<array{string, int}>
+     */
+    public static function provideGetPostMaxSize(): iterable
+    {
+        yield 'zero means unlimited' => ['0', PHP_INT_MAX];
+
+        yield 'zero with suffix means unlimited' => ['0K', PHP_INT_MAX];
+
+        yield 'negative means unlimited' => ['-1', PHP_INT_MAX];
+
+        yield 'gigabytes' => ['1G', 1024 ** 3];
+
+        yield 'lowercased gigabytes' => ['1g', 1024 ** 3];
+
+        yield 'megabytes' => ['8M', 8 * 1024 ** 2];
+
+        yield 'lowercased megabytes' => ['8m', 8 * 1024 ** 2];
+
+        yield 'kilobytes' => ['512K', 512 * 1024];
+
+        yield 'lowercased kilobytes' => ['512k', 512 * 1024];
+
+        yield 'hexadecimal' => ['0x10M', 16 * 1024 ** 2];
+
+        yield 'octal' => ['010M', 8 * 1024 ** 2];
+
+        yield 'binary' => ['0b10M', 2 * 1024 ** 2];
+
+        yield 'bytes' => ['12345', 12345];
     }
 
     public function testGetIPAddressNormal(): void
