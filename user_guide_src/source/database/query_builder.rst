@@ -913,6 +913,12 @@ first parameter.
 
 .. literalinclude:: query_builder/073.php
 
+.. note::
+    **Changed in version 4.8.0.** With ``$reset = true`` (the default), bindings and
+    binding counters are cleared after execution, so ``getBinds()`` returns an empty
+    array. Pass ``false`` to retain the query conditions and bindings. Test mode
+    retains bindings for the placeholders in its returned SQL.
+
 .. _query-builder-exists:
 
 $builder->exists()
@@ -1653,6 +1659,12 @@ the data to the first parameter of the method:
 
 If you want to delete all data from a table, you can use the ``truncate()``
 method, or ``emptyTable()``.
+
+.. note::
+    **Changed in version 4.8.0.** With ``$resetData = true`` (the default), bindings
+    and binding counters are cleared after execution, so ``getBinds()`` returns an
+    empty array. Pass ``false`` as the third argument to retain the query conditions
+    and bindings. Test mode retains bindings for the placeholders in its returned SQL.
 
 $builder->getCompiledDelete()
 -----------------------------
