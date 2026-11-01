@@ -31,6 +31,17 @@ SECURITY
   for migration instructions.
   See the `Security advisory GHSA-jv74-fx4h-m63x <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-jv74-fx4h-m63x>`_
   for more information.
+- **Security Helper:** Fixed a path traversal vulnerability in ``sanitize_filename()``.
+  Backslashes were only removed by a final ``stripslashes()`` call after filtering.
+  When ``$relativePath`` was ``true``, input such as ``.\./`` became ``../`` on all
+  platforms. In both modes, repeated backslashes could survive as Windows path
+  separators, and ``\0`` could become a NUL byte.
+  Backslashes are now removed during filtering, and ``stripslashes()`` is no longer
+  called. Forward slashes are still preserved when ``$relativePath`` is ``true``.
+  The same applies to ``Security::sanitizeFilename()``.
+  See :doc:`Upgrading from 4.7.5 to 4.7.6 </installation/upgrade_476>` and the
+  `Security advisory GHSA-9j59-qcxw-q7qm <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-9j59-qcxw-q7qm>`_
+  for more information.
 
 ********
 BREAKING

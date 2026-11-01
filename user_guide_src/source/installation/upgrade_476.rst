@@ -62,6 +62,24 @@ See :ref:`model-replace` for details and replacement-specific precautions.
 Breaking Enhancements
 *********************
 
+****************
+Behavior Changes
+****************
+
+Filename Sanitization
+=====================
+
+``sanitize_filename()`` and ``Security::sanitizeFilename()`` now remove all backslashes.
+Single backslashes between ordinary characters were already removed in previous versions,
+so paths such as ``folder\file.txt`` produce the same result. Ordinary filenames and
+relative paths with forward slashes are also unchanged. Results can differ for repeated
+backslashes, literal ``\0`` sequences, and inputs where removing backslashes exposes
+sequences stripped by the sanitizer.
+
+Use forward slashes (``/``) for relative paths passed with ``$relativePath = true``,
+including on Windows. If your application stores or compares sanitized filenames created
+from these inputs, check for changed results and possible filename collisions.
+
 *************
 Project Files
 *************

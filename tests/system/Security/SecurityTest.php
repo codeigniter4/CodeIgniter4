@@ -317,6 +317,16 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertSame('foo', $security->sanitizeFilename($filename));
     }
 
+    public function testSanitizeFilenameBackslashTraversal(): void
+    {
+        $security  = $this->createMockSecurity();
+        $separator = str_repeat(chr(92), 2);
+        $filename  = '..' . $separator . '..' . $separator . 'public' . $separator . 'file.txt';
+
+        $this->assertSame('....publicfile.txt', $security->sanitizeFilename($filename));
+        $this->assertSame('file.txt', $security->sanitizeFilename('.' . chr(92) . './file.txt', true));
+    }
+
     public function testRegenerateWithFalseSecurityRegenerateProperty(): void
     {
         service('superglobals')
