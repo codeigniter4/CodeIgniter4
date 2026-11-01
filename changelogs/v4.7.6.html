@@ -316,10 +316,23 @@ cache path, such as <code class="docutils literal notranslate"><span class="pre"
 See the <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-9hf2-g3w9-pfmp">Security advisory GHSA-9hf2-g3w9-pfmp</a>
 for more information. See <a class="reference internal" href="../installation/upgrade_476.html#upgrade-476-cache-delete-matching"><span class="std std-ref">File Cache deleteMatching() No Longer Matches Subdirectories</span></a> for migration
 instructions.</p></li>
+<li><p><strong>Model:</strong> Fixed a mass assignment vulnerability in <code class="docutils literal notranslate"><span class="pre">replace()</span></code>.
+The method now discards fields not listed in <code class="docutils literal notranslate"><span class="pre">$allowedFields</span></code> when field
+protection is enabled, while retaining a supplied primary key. Input emptied
+by filtering, or reduced to only its primary key, now throws a <code class="docutils literal notranslate"><span class="pre">DataException</span></code>.
+Previously, applications passing untrusted input to <code class="docutils literal notranslate"><span class="pre">replace()</span></code> could write
+protected columns. See <a class="reference internal" href="../installation/upgrade_476.html"><span class="doc">Upgrading from 4.7.5 to 4.7.6</span></a>
+for migration instructions.
+See the <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-jv74-fx4h-m63x">Security advisory GHSA-jv74-fx4h-m63x</a>
+for more information.</p></li>
 </ul>
 </section>
 <section id="breaking">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">BREAKING</a><a class="headerlink" href="#breaking" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Model:</strong> <code class="docutils literal notranslate"><span class="pre">replace()</span></code> now applies field protection and rejects input emptied by
+filtering. See <a class="reference internal" href="../installation/upgrade_476.html#upgrade-476-model-replace"><span class="std std-ref">Model Field Protection for replace()</span></a> for migration instructions.</p></li>
+</ul>
 </section>
 <section id="message-changes">
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Message Changes</a><a class="headerlink" href="#message-changes" title="Link to this heading"></a></h2>
