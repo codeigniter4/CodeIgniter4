@@ -309,10 +309,15 @@
 </ul>
 </li>
 <li><p><a class="reference internal" href="#breaking-enhancements" id="id5">Breaking Enhancements</a></p></li>
-<li><p><a class="reference internal" href="#project-files" id="id6">Project Files</a></p>
+<li><p><a class="reference internal" href="#behavior-changes" id="id6">Behavior Changes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#content-changes" id="id7">Content Changes</a></p></li>
-<li><p><a class="reference internal" href="#all-changes" id="id8">All Changes</a></p></li>
+<li><p><a class="reference internal" href="#filename-sanitization" id="id7">Filename Sanitization</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#project-files" id="id8">Project Files</a></p>
+<ul>
+<li><p><a class="reference internal" href="#content-changes" id="id9">Content Changes</a></p></li>
+<li><p><a class="reference internal" href="#all-changes" id="id10">All Changes</a></p></li>
 </ul>
 </li>
 </ul>
@@ -356,8 +361,23 @@ with <code class="docutils literal notranslate"><span class="pre">protect(false)
 <section id="breaking-enhancements">
 <h2><a class="toc-backref" href="#id5" role="doc-backlink">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Link to this heading"></a></h2>
 </section>
+<section id="behavior-changes">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Behavior Changes</a><a class="headerlink" href="#behavior-changes" title="Link to this heading"></a></h2>
+<section id="filename-sanitization">
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Filename Sanitization</a><a class="headerlink" href="#filename-sanitization" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">sanitize_filename()</span></code> and <code class="docutils literal notranslate"><span class="pre">Security::sanitizeFilename()</span></code> now remove all backslashes.
+Single backslashes between ordinary characters were already removed in previous versions,
+so paths such as <code class="docutils literal notranslate"><span class="pre">folder\file.txt</span></code> produce the same result. Ordinary filenames and
+relative paths with forward slashes are also unchanged. Results can differ for repeated
+backslashes, literal <code class="docutils literal notranslate"><span class="pre">\0</span></code> sequences, and inputs where removing backslashes exposes
+sequences stripped by the sanitizer.</p>
+<p>Use forward slashes (<code class="docutils literal notranslate"><span class="pre">/</span></code>) for relative paths passed with <code class="docutils literal notranslate"><span class="pre">$relativePath</span> <span class="pre">=</span> <span class="pre">true</span></code>,
+including on Windows. If your application stores or compares sanitized filenames created
+from these inputs, check for changed results and possible filename collisions.</p>
+</section>
+</section>
 <section id="project-files">
-<h2><a class="toc-backref" href="#id6" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Link to this heading"></a></h2>
 <p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to
 these files being outside of the <strong>system</strong> scope they will not be changed without your intervention.</p>
 <div class="admonition note">
@@ -367,7 +387,7 @@ with merging changes to the project space:
 <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
 </div>
 <section id="content-changes">
-<h3><a class="toc-backref" href="#id7" role="doc-backlink">Content Changes</a><a class="headerlink" href="#content-changes" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Content Changes</a><a class="headerlink" href="#content-changes" title="Link to this heading"></a></h3>
 <p>The following files received significant changes (including deprecations or visual adjustments)
 and it is recommended that you merge the updated versions with your application:</p>
 <section id="config">
@@ -378,7 +398,7 @@ and it is recommended that you merge the updated versions with your application:
 </section>
 </section>
 <section id="all-changes">
-<h3><a class="toc-backref" href="#id8" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Link to this heading"></a></h3>
 <p>This is a list of all files in the <strong>project space</strong> that received changes;
 many will be simple comments or formatting that have no effect on the runtime:</p>
 <ul class="simple">

@@ -325,6 +325,17 @@ protected columns. See <a class="reference internal" href="../installation/upgra
 for migration instructions.
 See the <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-jv74-fx4h-m63x">Security advisory GHSA-jv74-fx4h-m63x</a>
 for more information.</p></li>
+<li><p><strong>Security Helper:</strong> Fixed a path traversal vulnerability in <code class="docutils literal notranslate"><span class="pre">sanitize_filename()</span></code>.
+Backslashes were only removed by a final <code class="docutils literal notranslate"><span class="pre">stripslashes()</span></code> call after filtering.
+When <code class="docutils literal notranslate"><span class="pre">$relativePath</span></code> was <code class="docutils literal notranslate"><span class="pre">true</span></code>, input such as <code class="docutils literal notranslate"><span class="pre">.\./</span></code> became <code class="docutils literal notranslate"><span class="pre">../</span></code> on all
+platforms. In both modes, repeated backslashes could survive as Windows path
+separators, and <code class="docutils literal notranslate"><span class="pre">\0</span></code> could become a NUL byte.
+Backslashes are now removed during filtering, and <code class="docutils literal notranslate"><span class="pre">stripslashes()</span></code> is no longer
+called. Forward slashes are still preserved when <code class="docutils literal notranslate"><span class="pre">$relativePath</span></code> is <code class="docutils literal notranslate"><span class="pre">true</span></code>.
+The same applies to <code class="docutils literal notranslate"><span class="pre">Security::sanitizeFilename()</span></code>.
+See <a class="reference internal" href="../installation/upgrade_476.html"><span class="doc">Upgrading from 4.7.5 to 4.7.6</span></a> and the
+<a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-9j59-qcxw-q7qm">Security advisory GHSA-9j59-qcxw-q7qm</a>
+for more information.</p></li>
 </ul>
 </section>
 <section id="breaking">

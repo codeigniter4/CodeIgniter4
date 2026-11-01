@@ -329,6 +329,14 @@
 </dd>
 </dl>
 <p>Provides protection against directory traversal.</p>
+<p>Backslashes are always removed. If <code class="docutils literal notranslate"><span class="pre">$relativePath</span></code> is <code class="docutils literal notranslate"><span class="pre">true</span></code>, forward slashes are
+preserved to allow relative paths such as <code class="docutils literal notranslate"><span class="pre">path/to/file.txt</span></code>, while parent-directory
+sequences (<code class="docutils literal notranslate"><span class="pre">../</span></code>) are removed.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When passing relative paths to this helper, use forward slashes (<code class="docutils literal notranslate"><span class="pre">/</span></code>) as
+directory separators, including on Windows.</p>
+</div>
 <p>For more info, please see the <a class="reference internal" href="../libraries/security.html"><span class="doc">Security Library</span></a>
 documentation.</p>
 </dd></dl>
