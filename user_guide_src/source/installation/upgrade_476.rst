@@ -12,18 +12,14 @@ Please refer to the upgrade instructions corresponding to your installation meth
     :local:
     :depth: 2
 
-**********************
-Mandatory File Changes
-**********************
-
 ****************
 Breaking Changes
 ****************
 
 .. _upgrade-476-cache-delete-matching:
 
-File Cache deleteMatching() No Longer Matches Subdirectories
-============================================================
+File Cache ``deleteMatching()`` No Longer Matches Subdirectories
+================================================================
 
 For security reasons, ``FileHandler::deleteMatching()`` now matches the pattern against
 the names of files in the cache directory only. See the
@@ -44,8 +40,8 @@ the :php:func:`delete_files()` helper function.
 
 .. _upgrade-476-model-replace:
 
-Model Field Protection for replace()
-====================================
+Model Field Protection for ``replace()``
+========================================
 
 For security reasons, ``Model::replace()`` now applies field protection:
 
@@ -144,7 +140,7 @@ and it is recommended that you merge the updated versions with your application:
 Config
 ------
 
-- @TODO
+- No config files were changed in this release.
 
 All Changes
 ===========
@@ -152,4 +148,4 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- @TODO
+- No project files were changed in this release.
