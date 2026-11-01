@@ -202,6 +202,10 @@ Class Reference
         .. important:: This method is only implemented for File, Redis and Predis handlers.
             Due to limitations, it couldn't be implemented for Memcached and Wincache handlers.
 
+        .. note:: With the File handler, the pattern is matched against cache
+            file names only and cannot match files in subdirectories. A pattern
+            containing a forward slash (``/``) therefore never matches.
+
         Example:
 
         .. literalinclude:: caching/006.php

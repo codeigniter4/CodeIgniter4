@@ -29,6 +29,13 @@ The following functions are available:
 
     Provides protection against directory traversal.
 
+    Backslashes are always removed. If ``$relativePath`` is ``true``, forward slashes are
+    preserved to allow relative paths such as ``path/to/file.txt``, while parent-directory
+    sequences (``../``) are removed.
+
+    .. note:: When passing relative paths to this helper, use forward slashes (``/``) as
+        directory separators, including on Windows.
+
     For more info, please see the :doc:`Security Library <../libraries/security>`
     documentation.
 

@@ -253,6 +253,132 @@ final class FileHandlerTest extends AbstractHandlerTestCase
         $this->handler->clean();
     }
 
+    /**
+     * @param string $pattern "{victim}" is replaced with the name of a file in the parent of the cache directory
+     */
+    #[DataProvider('provideDeleteMatchingDoesNotDeleteFilesOutsideCacheDirectory')]
+    public function testDeleteMatchingDoesNotDeleteFilesOutsideCacheDirectory(string $pattern): void
+    {
+        $parent = realpath(dirname($this->config->file['storePath']));
+        $this->assertNotFalse($parent);
+
+        $victim = tempnam($parent, 'deleteMatchingVictim');
+        $this->assertNotFalse($victim);
+
+        try {
+            // tempnam() falls back to the system temp directory on failure.
+            $this->assertSame($parent, realpath(dirname($victim)));
+
+            $this->assertTrue($this->handler->save(self::$key1, 'value'));
+
+            $pattern = str_replace('{victim}', basename($victim), $pattern);
+
+            $this->assertSame(0, $this->handler->deleteMatching($pattern));
+            $this->assertFileExists($victim);
+            $this->assertSame('value', $this->handler->get(self::$key1));
+        } finally {
+            if (is_file($victim)) {
+                unlink($victim);
+            }
+        }
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideDeleteMatchingDoesNotDeleteFilesOutsideCacheDirectory(): iterable
+    {
+        yield 'parent directory' => ['../{victim}'];
+
+        yield 'parent directory with wildcard' => ['../{victim}*'];
+
+        yield 'parent directory with backslash' => ['..\\{victim}'];
+
+        yield 'parent directory only' => ['..'];
+    }
+
+    public function testDeleteMatchingDoesNotDeleteFilesInSubdirectories(): void
+    {
+        $directoryName = 'dir_' . bin2hex(random_bytes(8));
+        $subdirectory  = $this->config->file['storePath'] . '/' . $directoryName . '/';
+
+        $this->assertTrue(mkdir($subdirectory));
+
+        try {
+            $this->assertNotFalse(file_put_contents($subdirectory . 'key_1', 'data'));
+
+            $this->assertSame(0, $this->handler->deleteMatching($directoryName . '/key_*'));
+            $this->assertFileExists($subdirectory . 'key_1');
+        } finally {
+            if (is_file($subdirectory . 'key_1')) {
+                unlink($subdirectory . 'key_1');
+            }
+
+            rmdir($subdirectory);
+        }
+    }
+
+    #[RequiresOperatingSystem('Linux|Darwin')]
+    public function testDeleteMatchingSupportsEscapedWildcards(): void
+    {
+        $this->assertTrue($this->handler->save('key*1', 'value'));
+        $this->assertTrue($this->handler->save('key_1', 'value'));
+
+        $this->assertSame(1, $this->handler->deleteMatching('key\*1'));
+        $this->assertNull($this->handler->get('key*1'));
+        $this->assertSame('value', $this->handler->get('key_1'));
+    }
+
+    public function testDeleteMatchingTreatsCachePathLiterally(): void
+    {
+        // As a glob pattern, "cache[1]" would match the sibling "cache1" instead of itself.
+        $cachePath   = $this->config->file['storePath'] . '/cache[1]/';
+        $siblingPath = $this->config->file['storePath'] . '/cache1/';
+
+        $this->assertTrue(mkdir($cachePath));
+        $this->assertTrue(mkdir($siblingPath));
+
+        try {
+            $this->assertNotFalse(file_put_contents($siblingPath . 'key_1', 'data'));
+
+            $config                    = new Cache();
+            $config->file['storePath'] = $cachePath;
+            $handler                   = CacheFactory::getHandler($config, 'file');
+
+            $this->assertTrue($handler->save('key_1', 'value'));
+
+            $this->assertSame(1, $handler->deleteMatching('*'));
+            $this->assertNull($handler->get('key_1'));
+            $this->assertFileExists($siblingPath . 'key_1');
+        } finally {
+            foreach ([$cachePath, $siblingPath] as $path) {
+                if (is_file($path . 'key_1')) {
+                    unlink($path . 'key_1');
+                }
+
+                rmdir($path);
+            }
+        }
+    }
+
+    public function testDeleteMatchingWildcardDoesNotMatchHiddenFiles(): void
+    {
+        $hidden = $this->config->file['storePath'] . '/.hidden';
+
+        $this->assertNotFalse(file_put_contents($hidden, 'data'));
+
+        try {
+            $this->assertTrue($this->handler->save(self::$key1, 'value'));
+
+            $this->assertSame(1, $this->handler->deleteMatching('*'));
+            $this->assertFileExists($hidden);
+        } finally {
+            if (is_file($hidden)) {
+                unlink($hidden);
+            }
+        }
+    }
+
     public function testIncrement(): void
     {
         $this->handler->save(self::$key1, 1);
@@ -337,13 +463,12 @@ final class FileHandlerTest extends AbstractHandlerTestCase
     public function testSaveMode(int $int, string $string): void
     {
         // Initialize mode
-        $config               = new Cache();
-        $config->file['mode'] = $int;
+        $this->config->file['mode'] = $int;
 
-        $this->handler = CacheFactory::getHandler($config, 'file');
+        $this->handler = CacheFactory::getHandler($this->config, 'file');
         $this->handler->save(self::$key1, 'value');
 
-        $file = $config->file['storePath'] . DIRECTORY_SEPARATOR . self::$key1;
+        $file = $this->config->file['storePath'] . DIRECTORY_SEPARATOR . self::$key1;
         $mode = octal_permissions(fileperms($file));
 
         $this->assertSame($string, $mode);

@@ -662,8 +662,8 @@ class RouteCollection implements RouteCollectionInterface
      *            $route->resource('users');
      *     });
      *
-     * @param string                                      $name      The name to group/prefix the routes with.
-     * @param array<string, mixed>|(callable(self): void) ...$params
+     * @param string                                        $name      The name to group/prefix the routes with.
+     * @param array<string, mixed>|(callable(static): void) ...$params
      *
      * @return void
      */

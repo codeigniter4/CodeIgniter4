@@ -700,9 +700,6 @@ class Builder extends BaseBuilder
                 ),
             );
 
-            // convert binds in where
-            $this->convertWhereBindsForBatch();
-
             $sql .= ' ' . str_replace(
                 'WHERE ',
                 'AND ',
@@ -734,6 +731,6 @@ class Builder extends BaseBuilder
             ) . "\n";
         }
 
-        return str_replace('{:_table_:}', $data, $sql);
+        return $this->compileBatchBinds(str_replace('{:_table_:}', $data, $sql));
     }
 }

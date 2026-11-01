@@ -15,6 +15,7 @@ namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Postgre\Builder as PostgreBuilder;
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 use CodeIgniter\Test\Mock\MockQuery;
@@ -124,6 +125,107 @@ final class DeleteTest extends CIUnitTestCase
         $this->assertStringNotContainsString("= anything' OR '1'='1", $query->getQuery());
     }
 
+    public function testDeleteBatchDoesNotReplaceNamedBindsInsideEscapedValue(): void
+    {
+        $db      = new MockConnection([]);
+        $builder = new BaseBuilder('jobs', $db);
+
+        $data = [
+            ['id' => 1, 'name' => 'Derek J'],
+            ['id' => 2, 'name' => 'Ahmadinejad'],
+        ];
+
+        $db->shouldReturn('execute', new class () {});
+        $builder->setData($data, null, 'data')
+            ->onConstraint(['id' => 'id'])
+            ->where('jobs.name = ' . $db->escape(':jobs.status:'))
+            ->where('jobs.status', ' OR is_admin OR ')
+            ->deleteBatch();
+
+        $query = $db->getLastQuery();
+        $this->assertInstanceOf(MockQuery::class, $query);
+
+        $this->assertStringContainsString('"jobs"."name" = \':jobs.status:\'', $query->getQuery());
+        $this->assertStringContainsString('"jobs"."status" = \' OR is_admin OR \'', $query->getQuery());
+    }
+
+    public function testDeleteBatchWithRawSqlWhere(): void
+    {
+        $db      = new MockConnection([]);
+        $builder = new BaseBuilder('jobs', $db);
+
+        $db->shouldReturn('execute', new class () {});
+        $builder->setData([['id' => 1, 'name' => 'Derek J']], null, 'data')
+            ->onConstraint(['id' => 'id'])
+            ->where(new RawSql('jobs.name IS NOT NULL AND jobs.id <> :jobs.id:'))
+            ->where('jobs.id', 1)
+            ->deleteBatch();
+
+        $query = $db->getLastQuery();
+        $this->assertInstanceOf(MockQuery::class, $query);
+
+        $this->assertStringContainsString("WHERE jobs.name IS NOT NULL AND jobs.id <> 1\nAND \"jobs\".\"id\" = 1", $query->getQuery());
+    }
+
+    public function testDeleteBatchDoesNotReplaceTablePlaceholderInsideWhereBind(): void
+    {
+        $db      = new MockConnection([]);
+        $builder = new BaseBuilder('jobs', $db);
+
+        $db->shouldReturn('execute', new class () {});
+        $builder->setData([['id' => 1, 'name' => ' OR 1=1 -- ']], null, 'data')
+            ->onConstraint(['id' => 'id'])
+            ->where('jobs.status', 'x{:_table_:}y')
+            ->deleteBatch();
+
+        $query = $db->getLastQuery();
+        $this->assertInstanceOf(MockQuery::class, $query);
+
+        $this->assertStringContainsString('"jobs"."status" = \'x{:_table_:}y\'', $query->getQuery());
+        $this->assertStringNotContainsString("'xSELECT 1", $query->getQuery());
+    }
+
+    public function testDeleteBatchDoesNotReplaceNamedBindsInsideBatchData(): void
+    {
+        $db      = new MockConnection([]);
+        $builder = new BaseBuilder('jobs', $db);
+
+        $db->shouldReturn('execute', new class () {});
+        $builder->setData([['id' => 1, 'name' => ':jobs.status:']], null, 'data')
+            ->onConstraint(['id' => 'id'])
+            ->where('jobs.status', ' OR 1=1 -- ')
+            ->deleteBatch();
+
+        $query = $db->getLastQuery();
+        $this->assertInstanceOf(MockQuery::class, $query);
+
+        $this->assertStringContainsString("SELECT 1 \"id\", ':jobs.status:' \"name\"", $query->getQuery());
+        $this->assertStringContainsString('"jobs"."status" = \' OR 1=1 -- \'', $query->getQuery());
+    }
+
+    public function testDeleteBatchPostgreDoesNotReplaceTablePlaceholderInsideWhereBind(): void
+    {
+        $db = new class (['DBDriver' => 'Postgre']) extends MockConnection {
+            protected function _fieldData(string $table): array
+            {
+                return [
+                    (object) ['name' => 'id', 'type' => 'integer', 'max_length' => 32],
+                    (object) ['name' => 'name', 'type' => 'text', 'max_length' => null],
+                ];
+            }
+        };
+
+        $sql = (new PostgreBuilder('jobs', $db))->testMode()
+            ->setData([['id' => 1, 'name' => ' OR 1=1 -- ']], null, 'data')
+            ->onConstraint(['id' => 'id'])
+            ->where('jobs.status', 'x{:_table_:}y')
+            ->deleteBatch();
+
+        $this->assertStringContainsString("SELECT 1 \"id\", CAST(' OR 1=1 -- ' AS TEXT) \"name\"", $sql[0]);
+        $this->assertStringContainsString('AND "jobs"."status" = \'x{:_table_:}y\'', $sql[0]);
+        $this->assertStringNotContainsString("'xSELECT 1", $sql[0]);
+    }
+
     public function testDeleteBatchEscapesMultipleWhereBinds(): void
     {
         $db      = new MockConnection([]);
@@ -144,7 +246,9 @@ final class DeleteTest extends CIUnitTestCase
         $query = $db->getLastQuery();
         $this->assertInstanceOf(MockQuery::class, $query);
 
-        $this->assertStringContainsString('"jobs"."name" = \'anything\'\' OR \'\'1\'\' = \'\'1\'', $query->getQuery());
+        // The bound value is substituted after the operators are formatted,
+        // so the value itself is never rewritten (`'1'='1` keeps no spaces).
+        $this->assertStringContainsString('"jobs"."name" = \'anything\'\' OR \'\'1\'\'=\'\'1\'', $query->getQuery());
         $this->assertStringContainsString('"jobs"."id" = 1', $query->getQuery());
     }
 

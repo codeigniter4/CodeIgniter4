@@ -130,7 +130,7 @@ abstract class BaseModel
 
     /**
      * Determines whether the model should protect field names during
-     * mass assignment operations such as $this->insert(), $this->update().
+     * mass assignment operations such as $this->insert(), $this->update(), $this->replace().
      *
      * When set to `true`, only the fields explicitly defined in the `$allowedFields`
      * property will be allowed for mass assignment. This helps prevent
@@ -149,7 +149,7 @@ abstract class BaseModel
 
     /**
      * An array of field names that are allowed
-     * to be set by the user in inserts/updates.
+     * to be set by the user in inserts/updates/replaces.
      *
      * @var list<string>
      */
@@ -1328,6 +1328,8 @@ abstract class BaseModel
      * @param bool           $returnSQL `true` means SQL is returned, `false` will execute the query.
      *
      * @return BaseResult|false|Query|string
+     *
+     * @throws DataException
      */
     public function replace(?array $row = null, bool $returnSQL = false)
     {
@@ -1336,7 +1338,14 @@ abstract class BaseModel
             return false;
         }
 
-        $row = (array) $row;
+        $row     = (array) $row;
+        $hasData = $row !== [];
+        $row     = $this->doProtectFieldsForReplace($row);
+
+        if ($hasData && $row === []) {
+            throw DataException::forEmptyDataset('replace');
+        }
+
         $row = $this->setCreatedField($row, $this->setDate());
         $row = $this->setUpdatedField($row, $this->setDate());
 
@@ -1588,6 +1597,20 @@ abstract class BaseModel
         $row = $this->doProtectInsertOnlyFieldsForUpdate($row);
         $this->ensureNoDisallowedFields($row);
 
+        return $this->doProtectFields($row);
+    }
+
+    /**
+     * Protects replacement data before generated timestamps are added.
+     *
+     * @param row_array $row
+     *
+     * @return row_array
+     *
+     * @throws DataException
+     */
+    protected function doProtectFieldsForReplace(array $row): array
+    {
         return $this->doProtectFields($row);
     }
 
