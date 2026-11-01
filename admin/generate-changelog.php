@@ -140,7 +140,13 @@ if ($dryRun) {
     exit(0);
 }
 
-$updated = preg_replace('/\A# Changelog\n\n/', "# Changelog\n\n{$entry}\n", $changelog, 1, $count);
+$updated = preg_replace_callback(
+    '/\A# Changelog\n\n/',
+    static fn (): string => "# Changelog\n\n{$entry}\n",
+    $changelog,
+    1,
+    $count,
+);
 
 if ($count !== 1) {
     echo 'Could not find the "# Changelog" header in CHANGELOG.md.' . "\n";

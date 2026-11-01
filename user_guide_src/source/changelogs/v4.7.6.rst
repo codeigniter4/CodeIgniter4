@@ -2,7 +2,7 @@
 Version 4.7.6
 #############
 
-Release Date: Unreleased
+Release Date: November 1, 2026
 
 **4.7.6 release of CodeIgniter4**
 
