@@ -42,6 +42,22 @@ If your application places its own files in subdirectories of the cache director
 removed them with ``deleteMatching()``, delete them directly instead, for example with
 the :php:func:`delete_files()` helper function.
 
+.. _upgrade-476-model-replace:
+
+Model Field Protection for replace()
+====================================
+
+For security reasons, ``Model::replace()`` now applies field protection:
+
+- With protection enabled, fields outside ``$allowedFields`` are discarded except
+  for a supplied primary key. Define a non-empty list of fields callers may assign.
+- Non-empty input reduced by filtering to no data or only its primary key now
+  raises a ``DataException``. Review calls to ensure they supply allowed data.
+- For trusted operations requiring other columns, explicitly disable protection
+  with ``protect(false)`` and restore it with ``protect(true)`` afterward.
+
+See :ref:`model-replace` for details and replacement-specific precautions.
+
 *********************
 Breaking Enhancements
 *********************

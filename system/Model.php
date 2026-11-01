@@ -695,6 +695,22 @@ class Model extends BaseModel
         return $row;
     }
 
+    protected function doProtectFieldsForReplace(array $row): array
+    {
+        $primaryKey   = array_intersect_key($row, [$this->primaryKey => true]);
+        $protectedRow = $this->doProtectFields($row);
+
+        // Reject data reduced to an identifier, but preserve explicit identifier-only calls.
+        if ($row !== $primaryKey && array_diff_key($protectedRow, $primaryKey) === []) {
+            throw DataException::forEmptyDataset('replace');
+        }
+
+        $protectedRow += $primaryKey;
+
+        // PostgreSQL's replace() uses the first field to match an existing row.
+        return array_replace(array_intersect_key($row, $protectedRow), $protectedRow);
+    }
+
     public function update($id = null, $row = null): bool
     {
         if (isset($this->tempData['data'])) {

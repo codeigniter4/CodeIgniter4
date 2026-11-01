@@ -22,10 +22,22 @@ SECURITY
   See the `Security advisory GHSA-9hf2-g3w9-pfmp <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-9hf2-g3w9-pfmp>`_
   for more information. See :ref:`upgrade-476-cache-delete-matching` for migration
   instructions.
+- **Model:** Fixed a mass assignment vulnerability in ``replace()``.
+  The method now discards fields not listed in ``$allowedFields`` when field
+  protection is enabled, while retaining a supplied primary key. Input emptied
+  by filtering, or reduced to only its primary key, now throws a ``DataException``.
+  Previously, applications passing untrusted input to ``replace()`` could write
+  protected columns. See :doc:`Upgrading from 4.7.5 to 4.7.6 </installation/upgrade_476>`
+  for migration instructions.
+  See the `Security advisory GHSA-jv74-fx4h-m63x <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-jv74-fx4h-m63x>`_
+  for more information.
 
 ********
 BREAKING
 ********
+
+- **Model:** ``replace()`` now applies field protection and rejects input emptied by
+  filtering. See :ref:`upgrade-476-model-replace` for migration instructions.
 
 ***************
 Message Changes
