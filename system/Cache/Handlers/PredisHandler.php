@@ -118,15 +118,20 @@ class PredisHandler extends BaseHandler
                 return false;
         }
 
-        if (! $this->redis->hmset($key, ['__ci_type' => $dataType, '__ci_value' => $value]) instanceof Status) {
-            return false;
-        }
+        $fields = ['__ci_type' => $dataType, '__ci_value' => $value];
 
         if ($ttl !== 0) {
-            $this->redis->expireat($key, Time::now()->getTimestamp() + $ttl);
+            // Send HMSET and EXPIREAT in a single round trip.
+            $expiresAt = Time::now()->getTimestamp() + $ttl;
+            $results   = $this->redis->pipeline(static function ($pipe) use ($key, $fields, $expiresAt): void {
+                $pipe->hmset($key, $fields);
+                $pipe->expireat($key, $expiresAt);
+            });
+
+            return is_array($results) && ($results[0] ?? null) instanceof Status;
         }
 
-        return true;
+        return $this->redis->hmset($key, $fields) instanceof Status;
     }
 
     public function delete(string $key): bool
