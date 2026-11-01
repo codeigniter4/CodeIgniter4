@@ -99,6 +99,7 @@ Bugs Fixed
 - **HTTP:** Fixed a bug in ``ContentSecurityPolicy`` where a numeric source such as ``'0'`` threw a ``TypeError``, and a space-separated directive string in ``Config\\ContentSecurityPolicy`` was emitted as one unquoted source.
 - **HTTP:** Fixed a regression in v4.7.0 where calling ``ContentSecurityPolicy::reportOnly()`` after the policy was created did not apply to array sources from ``Config\\ContentSecurityPolicy``, so they stayed in the enforced ``Content-Security-Policy`` header alongside the ``Content-Security-Policy-Report-Only`` header.
 - **HTTP:** Fixed a bug in ``ContentSecurityPolicy::setDefaultSrc()`` where passing an array of URIs resulted in an invalid ``'Array'`` directive.
+- **HTTP:** Fixed a bug where ``CURLRequest`` threw a ``TypeError`` when ``decode_content`` was enabled without custom request headers because ``CURLOPT_HTTPHEADER`` was set to a string instead of an array.
 - **HTTP:** Fixed a bug where ``IncomingRequest`` did not read the request body when PHP's ``post_max_size`` was set to ``0`` or ``-1`` (unlimited).
 - **HTTP:** Fixed a bug where ``IncomingRequest::isSecure()`` did not recognize ``https`` in the ``X-Forwarded-Proto`` header from a trusted proxy when the value contained uppercase letters or surrounding whitespace, or was represented as a single-element array.
 - **HTTP:** Fixed a bug where ``Negotiate::media()`` threw an ``ErrorException`` when the ``Accept`` header contained a value without a subtype, such as ``json`` or an empty list element. Such values are now ignored.
