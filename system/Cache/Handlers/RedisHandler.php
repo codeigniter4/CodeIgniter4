@@ -134,15 +134,24 @@ class RedisHandler extends BaseHandler
                 return false;
         }
 
-        if (! $this->redis->hMset($key, ['__ci_type' => $dataType, '__ci_value' => $value])) {
-            return false;
-        }
+        $fields = ['__ci_type' => $dataType, '__ci_value' => $value];
 
         if ($ttl !== 0) {
-            $this->redis->expireAt($key, Time::now()->getTimestamp() + $ttl);
+            // Send HMSET and EXPIREAT in a single round trip.
+            $pipeline = $this->redis->multi(Redis::PIPELINE);
+
+            if ($pipeline === false) {
+                return false;
+            }
+
+            $pipeline->hMset($key, $fields);
+            $pipeline->expireAt($key, Time::now()->getTimestamp() + $ttl);
+            $results = $pipeline->exec();
+
+            return is_array($results) && (bool) ($results[0] ?? false);
         }
 
-        return true;
+        return (bool) $this->redis->hMset($key, $fields);
     }
 
     public function delete(string $key): bool
