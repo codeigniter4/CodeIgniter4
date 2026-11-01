@@ -472,6 +472,8 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $runner->latest();
 
         $tables = $database->listTables();
+        $database->close();
+
         $this->assertCount(2, $tables);
         $this->assertSame('migrations', $tables[0]);
         $this->assertSame('foo', $tables[1]);
