@@ -22,6 +22,7 @@ Alternatively, replace it with a new file and add your previous lines.
 
     backward_compatibility_notes
 
+    upgrade_477
     upgrade_476
     upgrade_475
     upgrade_474
