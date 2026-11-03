@@ -29,6 +29,9 @@ done
 # Copy repo-specific files
 cp -Rf ${SOURCE}/admin/starter/. ./
 
+# Reuse the framework AGENTS.md at the project root
+cp -Rf ${SOURCE}/admin/framework/AGENTS.md ./AGENTS.md
+
 # Commit the changes
 git add .
 git commit -m "Release ${RELEASE}"

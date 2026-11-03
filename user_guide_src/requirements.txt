@@ -1,4 +1,5 @@
 sphinx>=8.0.0,<9.0.0
+sphinx-markdown-builder>=0.6.0
 sphinxcontrib-phpdomain>=0.11.0
 docutils>=0.19
 sphinx-rtd-theme>=3.0.0
