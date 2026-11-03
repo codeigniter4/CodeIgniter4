@@ -59,7 +59,7 @@ class Console
         $this->setShellVerbosity($output->getVerbosity()->value);
 
         try {
-            $exitCode = $this->dispatch($arguments);
+            $exitCode = $this->dispatch($output, $arguments);
         } catch (Throwable $e) {
             // The spark run keeps the level, so the exception handler renders the uncaught throwable at it.
             if (! $fromArgv) {
@@ -68,7 +68,11 @@ class Console
 
             throw $e;
         } finally {
-            $this->restoreShellVerbosity($previousShellVerbosity, $previousEnvShellVerbosity, $previousServerShellVerbosity);
+            $this->restoreShellVerbosity(
+                $previousShellVerbosity,
+                $previousEnvShellVerbosity,
+                $previousServerShellVerbosity,
+            );
         }
 
         $output->setVerbosity($previousVerbosity);
@@ -103,18 +107,20 @@ class Console
             return;
         }
 
-        CLI::write(sprintf(
+        $output = CLI::getOutput();
+
+        $output->write(sprintf(
             'CodeIgniter v%s Command Line Tool - Server Time: %s',
             CodeIgniter::CI_VERSION,
             date('Y-m-d H:i:s \\U\\T\\CP'),
         ), 'green');
-        CLI::newLine();
+        $output->newLine();
     }
 
     /**
      * @param list<string> $arguments
      */
-    private function dispatch(array $arguments): int
+    private function dispatch(Output $output, array $arguments): int
     {
         $noHeader = $this->hasParameterOption(['no-header']);
 
@@ -139,14 +145,14 @@ class Console
         $this->showHeader($noHeader || $commands->isHeaderlessCommand($this->command));
 
         if (
-            $this->isInteractive()
+            $this->isInteractive($output)
             && ! $commands->hasLegacyCommand($this->command)
             && ! $commands->hasModernCommand($this->command)
         ) {
             $alternatives = $commands->getCommandAlternatives($this->command);
 
             if ($alternatives !== []) {
-                $alternative = $this->chooseAlternative($alternatives);
+                $alternative = $this->chooseAlternative($output, $alternatives);
 
                 if ($alternative === null) {
                     return EXIT_ERROR;
@@ -163,7 +169,7 @@ class Console
             return $commands->runLegacy($this->command, array_merge($arguments, $legacyOptions));
         }
 
-        return $commands->runCommand($this->command, $arguments, $this->normalizeVerbosityOptions(), CLI::getOutput());
+        return $commands->runCommand($this->command, $arguments, $this->normalizeVerbosityOptions(), $output);
     }
 
     /**
@@ -280,15 +286,18 @@ class Console
      *
      * @param list<string> $alternatives
      */
-    private function chooseAlternative(array $alternatives): ?string
+    private function chooseAlternative(Output $output, array $alternatives): ?string
     {
-        CLI::error(lang('CLI.commandNotFound', [$this->command]));
-        CLI::newLine();
+        $output->error(lang('CLI.commandNotFound', [$this->command]));
+        $output->newLine();
 
-        $prompt = CLI::getPrompt();
+        $prompt = new Prompt($output);
 
         if (count($alternatives) === 1) {
-            return $prompt->ask(lang('CLI.altCommandRun', [$alternatives[0]]), ['y', 'n']) === 'y' ? $alternatives[0] : null;
+            return $prompt->ask(
+                lang('CLI.altCommandRun', [$alternatives[0]]),
+                ['y', 'n'],
+            ) === 'y' ? $alternatives[0] : null;
         }
 
         $chosen = $prompt->select(lang('CLI.altCommandSelect'), [...$alternatives, lang('CLI.altCommandNone')]);
@@ -312,11 +321,11 @@ class Console
         return false;
     }
 
-    private function isInteractive(): bool
+    private function isInteractive(Output $output): bool
     {
         return ! $this->hasParameterOption(['no-interaction', 'N'])
-            && ! CLI::getOutput()->isQuiet()
-            && ! CLI::getInputOutput() instanceof NullInputOutput
+            && ! $output->isQuiet()
+            && ! $output->getInputOutput() instanceof NullInputOutput
             && defined('STDIN')
             && CLI::streamSupports('stream_isatty', STDIN);
     }
