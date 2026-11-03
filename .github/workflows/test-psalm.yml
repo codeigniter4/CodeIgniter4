@@ -6,8 +6,12 @@ on:
       - develop
       - '4.*'
     paths:
-      - '**.php'
-      - 'composer.*'
+      - 'app/**'
+      - 'public/**'
+      - 'system/**'
+      - 'tests/**'
+      - 'spark'
+      - 'composer.json'
       - 'psalm*'
       - '.github/workflows/test-psalm.yml'
   push:
@@ -15,8 +19,12 @@ on:
       - develop
       - '4.*'
     paths:
-      - '**.php'
-      - 'composer.*'
+      - 'app/**'
+      - 'public/**'
+      - 'system/**'
+      - 'tests/**'
+      - 'spark'
+      - 'composer.json'
       - 'psalm*'
       - '.github/workflows/test-psalm.yml'
 
