@@ -175,7 +175,7 @@ Description of Values
 **foreignKeys**             (``SQLite3`` only) true/false (boolean) - Whether to enable Foreign Key constraint.
 **busyTimeout**             (``SQLite3`` only) milliseconds (int) - Sleeps for a specified amount of time when a table is locked.
 **synchronous**             (``SQLite3`` only) flag (int) - How strict SQLite will be at flushing to disk during transactions.
-                            Use `null` to stay with the default setting. This can be used since v4.6.0.
+                            Use ``null`` to stay with the default setting. This can be used since v4.6.0.
 **numberNative**            (``MySQLi`` only) true/false (boolean) - Whether to enable MYSQLI_OPT_INT_AND_FLOAT_NATIVE.
 **foundRows**               (``MySQLi`` only) true/false (boolean) - Whether to enable MYSQLI_CLIENT_FOUND_ROWS.
 **dateFormat**              The default date/time formats as PHP's `DateTime format`_, with the keys listed below the table.
@@ -206,12 +206,12 @@ but :ref:`Model <model-saving-dates>` uses them.
 
 The **timezone** setting accepts the following values:
 
-* ``false``       - Don't set session timezone (default, backward compatible)
-* ``true``        - Automatically sync with ``App::$appTimezone``
-* ``string``      - Specific timezone offset (e.g., ``'+05:30'``) or named timezone (e.g., ``'America/New_York'``)
+* ``false`` - Don't set session timezone (default, backward compatible)
+* ``true`` - Automatically sync with ``App::$appTimezone``
+* ``string`` - Specific timezone offset (e.g., ``'+05:30'``) or named timezone (e.g., ``'America/New_York'``)
 
-Named timezones are automatically converted to offsets for database compatibility.
-See :ref:`database-config-timezone` for details.
+Named timezones are automatically converted to offsets for database compatibility. See :ref:`database-config-timezone`
+for details.
 
 .. note:: Depending on what database driver you are using (``MySQLi``, ``Postgre``,
     etc.) not all values will be needed. For example, when using ``SQLite3`` you
@@ -255,13 +255,12 @@ timezone
 
 .. versionadded:: 4.8.0
 
-Synchronizes the database session timezone with your application timezone to ensure consistent
-timestamps between model operations and database functions like ``NOW()``.
+Synchronizes the database session timezone with your application timezone to ensure consistent timestamps between model
+operations and database functions like ``NOW()``.
 
-.. note:: Modern database environments usually have UTC set by default, so this option may not be needed
-    in most cases.
+.. note:: Modern database environments usually have UTC set by default, so this option may not be needed in most cases.
 
-Accepts ``false`` (default, don't set), ``true`` (auto-sync with ``App::$appTimezone``),
-or a timezone string (e.g., ``'+05:30'`` or ``'America/New_York'``).
+Accepts ``false`` (default, don't set), ``true`` (auto-sync with ``App::$appTimezone``), or a timezone string (e.g.,
+``'+05:30'`` or ``'America/New_York'``).
 
 Named timezones are automatically converted to offsets for compatibility.

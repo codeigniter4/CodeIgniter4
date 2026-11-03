@@ -24,8 +24,8 @@ need to ensure your controller can locate it via a ``use`` statement above your 
 
 The class is automatically initialized when the file is loaded the first time.
 
-Since v4.8.0 the static methods delegate to instance classes, which you can also use directly.
-See :ref:`cli-library-classes`.
+Since v4.8.0 the static methods delegate to instance classes, which you can also use directly. See
+:ref:`cli-library-classes`.
 
 Getting Input from the User
 ***************************
@@ -95,16 +95,15 @@ select() and multiselect()
 
 .. versionadded:: 4.8.0
 
-``select()`` and ``multiselect()`` on :php:class:`Prompt` let the user pick with the arrow keys
-(or ``j`` and ``k``), tick with the space bar, tick everything or nothing with ``a``, and confirm
-with enter. ``select()`` returns the chosen key, and ``multiselect()`` returns the ticked options,
-keyed as in ``$options``. Both take any keys, and long lists scroll:
+``select()`` and ``multiselect()`` on :php:class:`Prompt` let the user pick with the arrow keys (or ``j`` and ``k``),
+tick with the space bar, tick everything or nothing with ``a``, and confirm with enter. ``select()`` returns the chosen
+key, and ``multiselect()`` returns the ticked options, keyed as in ``$options``. Both take any keys, and long lists
+scroll:
 
 .. literalinclude:: cli_library/026.php
 
-Where keys cannot be read one by one, such as on Windows or when the input is piped, both prompts
-list the options by number and ask for the number, or numbers separated by commas. The filters
-question above then reads:
+Where keys cannot be read one by one, such as on Windows or when the input is piped, both prompts list the options by
+number and ask for the number, or numbers separated by commas. The filters question above then reads:
 
 .. code-block:: console
 
@@ -116,9 +115,9 @@ question above then reads:
 
 Under WSL, PHP runs as on Linux and reads the keys.
 
-On a quiet output (see :ref:`spark-verbosity`) both prompts return the defaults without asking,
-and a required ``multiselect()`` without a default throws a ``CLIException``. They also throw it
-when piped input ends before a valid answer.
+On a quiet output (see :ref:`spark-verbosity`) both prompts return the defaults without asking, and a required
+``multiselect()`` without a default throws a ``CLIException``. They also throw it when piped input ends before a valid
+answer.
 
 Pressing Ctrl+C restores the terminal and then interrupts the process as usual.
 
@@ -309,19 +308,17 @@ The Classes Behind the Facade
 
 .. versionadded:: 4.8.0
 
-The static output methods delegate to instance classes, each with one job.
-``CLI::getOutput()`` and ``CLI::getTerminal()`` return the shared instances, and
-modern commands reach the output through ``$this->getOutput()``
+The static output methods delegate to instance classes, each with one job. ``CLI::getOutput()`` and
+``CLI::getTerminal()`` return the shared instances, and modern commands reach the output through ``$this->getOutput()``
 (see :ref:`modern-commands-writing-output`):
 
 .. literalinclude:: cli_library/024.php
 
-Mixing the static methods with the instance is safe, because both write to the same
-``Output`` and share its line breaks.
+Mixing the static methods with the instance is safe, because both write to the same ``Output`` and share its line
+breaks.
 
-The prompt methods delegate to :php:class:`Prompt`, which reads through an ``Output``.
-``CLI::getPrompt()`` returns one on the shared output, and modern commands reach one on the
-output of their run through ``$this->getPrompt()``:
+The prompt methods delegate to :php:class:`Prompt`, which reads through an ``Output``. ``CLI::getPrompt()`` returns one
+on the shared output, and modern commands reach one on the output of their run through ``$this->getPrompt()``:
 
 .. literalinclude:: cli_library/025.php
 
@@ -329,32 +326,32 @@ output of their run through ``$this->getPrompt()``:
 
 .. php:class:: Output
 
-    The writer. It targets STDOUT, sends ``error()`` to STDERR, and remembers whether the
-    cursor sits mid-line so that ``write()`` starts on a fresh line.
+    The writer. It targets STDOUT, sends ``error()`` to STDERR, and remembers whether the cursor sits mid-line so that
+    ``write()`` starts on a fresh line.
 
     .. php:method:: __construct([InputOutput $io = new InputOutput()[, Terminal $terminal = new Terminal()]])
 
         :param InputOutput $io:       The transport the text is written through.
-        :param Terminal    $terminal: The terminal consulted for colour support.
+        :param Terminal    $terminal: The terminal consulted for color support.
 
     .. php:method:: print(string $text = ''[, string $foreground = ''[, string $background = ''[, Verbosity $verbosity = Verbosity::Normal]]]): void
     .. php:method:: write(string $text = ''[, string $foreground = ''[, string $background = ''[, Verbosity $verbosity = Verbosity::Normal]]]): void
     .. php:method:: newLine([int $num = 1[, Verbosity $verbosity = Verbosity::Normal]]): void
 
-        The same as the static methods of the same names, writing nothing when the
-        level of the output is below ``$verbosity``.
+        The same as the static methods of the same names, writing nothing when the level of the output is below
+        ``$verbosity``.
 
     .. php:method:: deferNewLine(): void
 
-        Writes a blank line before whatever is written next, and none if nothing follows.
-        The prompts end with it, so a prompt that ends the run leaves no blank line behind.
+        Writes a blank line before whatever is written next, and none if nothing follows. The prompts end with it, so a
+        prompt that ends the run leaves no blank line behind.
 
     .. php:method:: error(string $text[, string $foreground = 'light_red'[, string $background = '']]): void
     .. php:method:: beep(int $num = 1): void
     .. php:method:: clearScreen(): void
 
-        The same as the static methods of the same names. ``error()`` writes at every
-        level but ``Verbosity::Silent``, and the other two only from ``Verbosity::Normal`` on.
+        The same as the static methods of the same names. ``error()`` writes at every level but ``Verbosity::Silent``,
+        and the other two only from ``Verbosity::Normal`` on.
 
     .. php:method:: getVerbosity(): Verbosity
     .. php:method:: setVerbosity(Verbosity $verbosity): void
@@ -363,14 +360,14 @@ output of their run through ``$this->getPrompt()``:
     .. php:method:: isVeryVerbose(): bool
     .. php:method:: isDebug(): bool
 
-        ``isQuiet()`` is true for the quiet and silent levels, and the others for their
-        level or above. See :ref:`modern-commands-verbosity`.
+        ``isQuiet()`` is true for the quiet and silent levels, and the others for their level or above. See
+        :ref:`modern-commands-verbosity`.
 
     .. php:method:: color(string $text, string $foreground[, string $background = ''[, string $format = '']]): string
 
-        Colours the text when the target stream supports colours, and returns it unchanged otherwise.
-        ``print()``, ``write()``, and ``error()`` colour through this method, so a subclass overriding
-        it changes the colouring of every write.
+        Colors the text when the target stream supports colors, and returns it unchanged otherwise. ``print()``,
+        ``write()``, and ``error()`` color through this method, so a subclass overriding it changes the coloring of
+        every write.
 
     .. php:method:: wrap(string $text[, int $max = 0[, int $padLeft = 0]]): string
 
@@ -378,12 +375,12 @@ output of their run through ``$this->getPrompt()``:
 
     .. php:method:: isDecorated(): bool
 
-        Whether the target stream supports colours.
+        Whether the target stream supports colors.
 
     .. php:method:: forStderr(): static
 
-        Returns a copy whose STDOUT writes target STDERR, which is what the framework swaps in
-        while rendering an exception.
+        Returns a copy whose STDOUT writes target STDERR, which is what the framework swaps in while rendering an
+        exception.
 
     .. php:method:: getTerminal(): Terminal
 
@@ -418,9 +415,8 @@ output of their run through ``$this->getPrompt()``:
 
 .. php:class:: Verbosity
 
-    The level of the output, as an ``int``-backed enum valued as ``SHELL_VERBOSITY``:
-    ``Silent`` (-2), ``Quiet`` (-1), ``Normal`` (0), ``Verbose`` (1), ``VeryVerbose`` (2),
-    and ``Debug`` (3).
+    The level of the output, as an ``int``-backed enum valued as ``SHELL_VERBOSITY``: ``Silent`` (-2), ``Quiet`` (-1),
+    ``Normal`` (0), ``Verbose`` (1), ``VeryVerbose`` (2), and ``Debug`` (3).
 
 .. php:class:: Terminal
 
@@ -442,14 +438,13 @@ output of their run through ``$this->getPrompt()``:
 
     .. php:method:: advanceTo(float|int $step[, int $totalSteps = 10]): void
 
-        Draws the bar for the step, capped at 100%, over the previous bar unless the step
-        went backwards. A negative step or a total below one throws ``InvalidArgumentException``,
-        where ``CLI::showProgress()`` keeps tolerating them.
+        Draws the bar for the step, capped at 100%, over the previous bar unless the step went backwards. A negative
+        step or a total below one throws ``InvalidArgumentException``, where ``CLI::showProgress()`` keeps tolerating
+        them.
 
     .. php:method:: clear(): void
 
-        Rings the bell and starts a new bar on the next ``advanceTo()``. This is what
-        ``CLI::showProgress(false)`` does.
+        Rings the bell and starts a new bar on the next ``advanceTo()``. This is what ``CLI::showProgress(false)`` does.
 
 .. php:class:: Table
 
@@ -464,12 +459,12 @@ output of their run through ``$this->getPrompt()``:
 
 .. php:class:: Color
 
-    The ANSI colour codes, independent of any stream.
+    The ANSI color codes, independent of any stream.
 
     .. php:staticmethod:: apply(string $text, string $foreground[, string $background = ''[, string $format = '']]): string
 
-        Wraps the text in the colour codes, always. Throws ``CLIException`` for an unknown colour.
+        Wraps the text in the color codes, always. Throws ``CLIException`` for an unknown color.
 
     .. php:staticmethod:: width(string $string): int
 
-        Returns the display width of the text without its colour codes, as ``CLI::strlen()`` does.
+        Returns the display width of the text without its color codes, as ``CLI::strlen()`` does.

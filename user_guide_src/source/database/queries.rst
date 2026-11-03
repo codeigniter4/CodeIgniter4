@@ -139,8 +139,7 @@ don't have to:
 .. literalinclude:: queries/009.php
 
 .. versionadded:: 4.8.0
-    ``$db->escape()`` accepts PHP ``BackedEnum`` values and escapes their backing
-    values.
+    ``$db->escape()`` accepts PHP ``BackedEnum`` values and escapes their backing values.
 
 2. $db->escapeString()
 ======================
@@ -193,9 +192,8 @@ automatically escaped producing safer queries.
 You don't have to remember to manually escape data - the engine does it automatically for you.
 
 .. versionadded:: 4.8.0
-    Query bindings, prepared query values, and Query Builder bound values accept
-    PHP ``BackedEnum`` values. CodeIgniter uses the enum backing value before
-    escaping or passing the value to the database driver.
+    Query bindings, prepared query values, and Query Builder bound values accept PHP ``BackedEnum`` values. CodeIgniter
+    uses the enum backing value before escaping or passing the value to the database driver.
 
 .. literalinclude:: queries/032.php
 
@@ -220,17 +218,15 @@ placeholders in the query:
 Handling Errors
 ***************
 
-.. note:: It is strongly recommended to keep ``DBDebug`` set to ``true``
-    (the default). This ensures all query failures surface immediately as
-    exceptions, preventing silent data corruption. Setting it to ``false``
-    is considered legacy behaviour and may be deprecated in a future version.
+.. note:: It is strongly recommended to keep ``DBDebug`` set to ``true`` (the default). This ensures all query failures
+    surface immediately as exceptions, preventing silent data corruption. Setting it to ``false`` is considered legacy
+    behavior and may be deprecated in a future version.
 
 DBDebug Enabled (Recommended)
 =============================
 
-When :ref:`DBDebug <database-config-explanation-of-values>` is ``true``
-(the default), any query failure throws a ``DatabaseException`` or one of
-its subclasses, which you can catch and handle:
+When :ref:`DBDebug <database-config-explanation-of-values>` is ``true`` (the default), any query failure throws a
+``DatabaseException`` or one of its subclasses, which you can catch and handle:
 
 .. literalinclude:: queries/030.php
 
@@ -242,36 +238,32 @@ Constraint Violation Exceptions
 
 .. versionadded:: 4.8.0
 
-Database constraint violations are reported as ``ConstraintViolationException``
-or one of its subclasses when CodeIgniter can identify the native driver error:
+Database constraint violations are reported as ``ConstraintViolationException`` or one of its subclasses when
+CodeIgniter can identify the native driver error:
 
 - ``UniqueConstraintViolationException``
 - ``ForeignKeyConstraintViolationException``
 - ``NotNullConstraintViolationException``
 - ``CheckConstraintViolationException``
 
-These exceptions allow you to handle common integrity errors without inspecting
-raw driver-specific error codes. If a driver reports a constraint violation that
-CodeIgniter cannot safely classify more precisely, it throws the parent
+These exceptions allow you to handle common integrity errors without inspecting raw driver-specific error codes. If a
+driver reports a constraint violation that CodeIgniter cannot safely classify more precisely, it throws the parent
 ``ConstraintViolationException``.
 
-Some database engines report certain constraint failures with a generic
-integrity-constraint code. In those cases CodeIgniter uses the parent
-``ConstraintViolationException`` rather than guessing the more specific subtype.
+Some database engines report certain constraint failures with a generic integrity-constraint code. In those cases
+CodeIgniter uses the parent ``ConstraintViolationException`` rather than guessing the more specific subtype.
 
 DBDebug Disabled
 ================
 
-When ``DBDebug`` is ``false``, query and prepared query execution failures
-return ``false`` instead of throwing. Two methods are available to inspect what
-went wrong.
+When ``DBDebug`` is ``false``, query and prepared query execution failures return ``false`` instead of throwing. Two
+methods are available to inspect what went wrong.
 
 $db->error()
 ------------
 
-The ``error()`` method returns an array with ``code`` and ``message`` keys
-describing the last error. Error codes are driver-specific (an **int** for
-MySQLi, SQLite3, and OCI8; a SQLSTATE **string** for Postgre and SQLSRV):
+The ``error()`` method returns an array with ``code`` and ``message`` keys describing the last error. Error codes are
+driver-specific (an **int** for MySQLi, SQLite3, and OCI8; a SQLSTATE **string** for Postgre and SQLSRV):
 
 .. literalinclude:: queries/015.php
 
@@ -282,16 +274,14 @@ $db->getLastException()
 
 .. versionadded:: 4.8.0
 
-``getLastException()`` returns the typed exception that would have been thrown
-had ``DBDebug`` been ``true``. This is the recommended way to distinguish
-between failure types (e.g., a constraint violation vs. another database error)
+``getLastException()`` returns the typed exception that would have been thrown had ``DBDebug`` been ``true``. This is
+the recommended way to distinguish between failure types (e.g., a constraint violation vs. another database error)
 without enabling ``DBDebug``:
 
 .. literalinclude:: queries/031.php
 
-.. note:: ``getLastException()`` is reset to ``null`` at the start of every
-    query or prepared query execution. Inspect it immediately after the failed
-    operation.
+.. note:: ``getLastException()`` is reset to ``null`` at the start of every query or prepared query execution. Inspect
+    it immediately after the failed operation.
 
 ****************
 Prepared Queries
@@ -339,8 +329,7 @@ query:
 .. literalinclude:: queries/019.php
 
 .. versionadded:: 4.8.0
-    Prepared query values accept PHP ``BackedEnum`` values and pass their
-    backing values to the database driver.
+    Prepared query values accept PHP ``BackedEnum`` values and pass their backing values to the database driver.
 
 For queries of type "write" it returns true or false, indicating the success or failure of the query.
 For queries of type "read" it returns a standard :doc:`result set </database/results>`.

@@ -4,18 +4,16 @@ Modern Generator Commands
 
 .. versionadded:: 4.8.0
 
-Generator commands are spark commands that create files from templates. The
-built-in ``make:*`` commands documented in :doc:`cli_generators` are the
-canonical examples. The modern counterpart of the legacy ``GeneratorTrait`` is
-the ``AbstractGeneratorCommand`` base class paired with a ``#[GeneratorCommand]``
-attribute: the attribute describes *what* to generate, and the base class carries
-the whole generation pipeline so that a trivial generator needs no method body
+Generator commands are spark commands that create files from templates. The built-in ``make:*`` commands documented in
+:doc:`cli_generators` are the canonical examples. The modern counterpart of the legacy ``GeneratorTrait`` is the
+``AbstractGeneratorCommand`` base class paired with a ``#[GeneratorCommand]`` attribute: the attribute describes *what*
+to generate, and the base class carries the whole generation pipeline so that a trivial generator needs no method body
 at all.
 
 .. note::
 
-    ``GeneratorTrait`` is deprecated, but it continues to work for legacy
-    ``BaseCommand`` generators. See `Migrating From GeneratorTrait`_.
+    ``GeneratorTrait`` is deprecated, but it continues to work for legacy ``BaseCommand`` generators. See
+    `Migrating From GeneratorTrait`_.
 
 .. contents::
     :local:
@@ -36,36 +34,33 @@ A minimal generator needs nothing else:
 
 Out of the box this command:
 
-- declares a required ``name`` argument, and prompts for it when omitted on an
-  interactive run (see :ref:`prompts-for-missing-input`);
-- declares the ``--namespace`` / ``-n``, ``--suffix`` / ``-s``, and
-  ``--force`` / ``-f`` options on top of the framework defaults;
-- ships a default ``execute()`` that renders the template and writes the class
-  file, returning ``EXIT_SUCCESS`` or ``EXIT_ERROR``.
+- declares a required ``name`` argument, and prompts for it when omitted on an interactive run (see
+  :ref:`prompts-for-missing-input`);
+- declares the ``--namespace`` / ``-n``, ``--suffix`` / ``-s``, and ``--force`` / ``-f`` options on top of the framework
+  defaults;
+- ships a default ``execute()`` that renders the template and writes the class file, returning ``EXIT_SUCCESS`` or
+  ``EXIT_ERROR``.
 
 The ``#[GeneratorCommand]`` Attribute
 =====================================
 
 The attribute holds the generation configuration:
 
-- ``component`` is the component noun (``Controller``, ``Model``, ...). It drives suffix handling:
-  an input whose trailing component is spelled with the wrong case is normalized
-  (``make:widget foowidget`` generates ``FooWidget``), and passing ``--suffix`` appends the
-  component to inputs that do not already end with it.
-- ``template`` is the basename of the fallback view under ``CodeIgniter\Commands\Generators\Views``
-  (see :ref:`generator-command-templates` for the lookup order).
-- ``directory`` is the optional sub-namespace (and thus subdirectory) the class is generated into,
-  e.g. ``Widgets`` places classes under ``App\Widgets``.
-- ``classNameLang`` is the language string key used as the prompt label when the ``name``
-  argument must be asked for interactively. Defaults to the generic
-  ``CLI.generator.className.default`` label.
+- ``component`` is the component noun (``Controller``, ``Model``, ...). It drives suffix handling: an input whose
+  trailing component is spelled with the wrong case is normalized (``make:widget foowidget`` generates ``FooWidget``),
+  and passing ``--suffix`` appends the component to inputs that do not already end with it.
+- ``template`` is the basename of the fallback view under ``CodeIgniter\Commands\Generators\Views`` (see
+  :ref:`generator-command-templates` for the lookup order).
+- ``directory`` is the optional sub-namespace (and thus subdirectory) the class is generated into, e.g. ``Widgets``
+  places classes under ``App\Widgets``.
+- ``classNameLang`` is the language string key used as the prompt label when the ``name`` argument must be asked for
+  interactively. Defaults to the generic ``CLI.generator.className.default`` label.
 - ``namespace`` optionally pins the root namespace, ignoring the ``--namespace`` option.
-- ``sortImports`` (default ``true``) controls whether the first contiguous ``use`` block of the
-  generated content is sorted alphabetically.
+- ``sortImports`` (default ``true``) controls whether the first contiguous ``use`` block of the generated content is
+  sorted alphabetically.
 
-Like ``#[Command]``, the attribute validates its inputs at construction time:
-``component`` must be a class-name fragment (a letter followed by letters, digits,
-or underscores), ``template`` must not be empty, and ``directory`` and
+Like ``#[Command]``, the attribute validates its inputs at construction time: ``component`` must be a class-name
+fragment (a letter followed by letters, digits, or underscores), ``template`` must not be empty, and ``directory`` and
 ``namespace``, when given, must be valid backslash-separated namespace fragments.
 
 .. _generator-command-templates:
@@ -74,9 +69,8 @@ or underscores), ``template`` must not be empty, and ``directory`` and
 Templates
 *********
 
-Templates are regular view files. Because they are rendered through ``view()``,
-a template cannot open with a literal PHP tag, so the pipeline recognizes a few
-pseudo-placeholders that are substituted after rendering:
+Templates are regular view files. Because they are rendered through ``view()``, a template cannot open with a literal
+PHP tag, so the pipeline recognizes a few pseudo-placeholders that are substituted after rendering:
 
 - ``<@php`` becomes ``<?php``
 - ``{namespace}`` becomes the namespace of the generated class
@@ -108,27 +102,22 @@ To let users customize your template, register it in the config file:
 Generation Pipeline
 *******************
 
-The default ``execute()`` simply returns ``$this->generateClass()``, which walks
-through these steps:
+The default ``execute()`` simply returns ``$this->generateClass()``, which walks through these steps:
 
-1. The ``name`` argument is normalized: segments are converted to PascalCase, a
-   miscased trailing component is fixed, and the component suffix is appended
-   when applicable. The result is qualified against the root namespace and the
-   attribute's ``directory``. A result that is not a valid class name (for example,
-   one containing ``..`` segments) aborts with ``EXIT_ERROR``.
-2. The target path is derived from the autoloader's mapping for the root
-   namespace. An unknown namespace aborts with ``EXIT_ERROR`` and an error
-   message.
-3. The template is rendered with the view data, placeholders are replaced, and
-   the imports are sorted when ``sortImports`` is enabled.
-4. Safety checks run before writing: generating into the ``CodeIgniter``
-   namespace asks for confirmation on interactive runs (and proceeds with a
-   warning on non-interactive ones), and an existing target file aborts with
-   ``EXIT_ERROR`` unless ``--force`` is passed.
+1. The ``name`` argument is normalized: segments are converted to PascalCase, a miscased trailing component is fixed,
+   and the component suffix is appended when applicable. The result is qualified against the root namespace and the
+   attribute's ``directory``. A result that is not a valid class name (for example, one containing ``..`` segments)
+   aborts with ``EXIT_ERROR``.
+2. The target path is derived from the autoloader's mapping for the root namespace. An unknown namespace aborts with
+   ``EXIT_ERROR`` and an error message.
+3. The template is rendered with the view data, placeholders are replaced, and the imports are sorted when
+   ``sortImports`` is enabled.
+4. Safety checks run before writing: generating into the ``CodeIgniter`` namespace asks for confirmation on interactive
+   runs (and proceeds with a warning on non-interactive ones), and an existing target file aborts with ``EXIT_ERROR``
+   unless ``--force`` is passed.
 
-Generators that produce more than one artifact can call ``generateView()`` for
-non-class files, and may reassign the mutable ``$template`` / ``$templatePath``
-properties between generation calls.
+Generators that produce more than one artifact can call ``generateView()`` for non-class files, and may reassign the
+mutable ``$template`` / ``$templatePath`` properties between generation calls.
 
 *******************
 Customization Hooks
@@ -137,61 +126,56 @@ Customization Hooks
 Placeholders and View Data
 ==========================
 
-Most real generators need more than ``{namespace}`` and ``{class}``. Override
-``getReplacements()`` to add placeholder substitutions and ``getTemplateData()``
-to pass variables into the view:
+Most real generators need more than ``{namespace}`` and ``{class}``. Override ``getReplacements()`` to add placeholder
+substitutions and ``getTemplateData()`` to pass variables into the view:
 
 .. literalinclude:: cli_modern_generators/003.php
 
-Entries returned by ``getReplacements()`` take precedence over the core pairs,
-so a generator can even override how ``{namespace}`` or ``{class}`` is derived.
+Entries returned by ``getReplacements()`` take precedence over the core pairs, so a generator can even override how
+``{namespace}`` or ``{class}`` is derived.
 
 Trimming Options and Forcing the Suffix
 =======================================
 
-The common generator options are registered through ``provideGeneratorOptions()``.
-Override it to drop options that make no sense for your generator, and override
-``shouldAppendSuffix()`` when suffixing is not driven by the ``--suffix`` flag:
+The common generator options are registered through ``provideGeneratorOptions()``. Override it to drop options that make
+no sense for your generator, and override ``shouldAppendSuffix()`` when suffixing is not driven by the ``--suffix``
+flag:
 
 .. literalinclude:: cli_modern_generators/004.php
 
-The base class guards every read of ``--suffix`` and ``--force``, so omitting
-them is safe.
+The base class guards every read of ``--suffix`` and ``--force``, so omitting them is safe.
 
 Other Hooks
 ===========
 
-- ``basename(string $filename): string`` changes the file basename before saving.
-  Useful for components whose file name carries a date, like migrations.
-- ``getNamespace(): string`` resolves the root namespace. The default returns the attribute's
-  ``namespace`` or the ``--namespace`` option.
-- ``buildPath(string $class): string`` maps the qualified class to a file path through the
-  autoloader. Override for components with special file locations, like tests.
-- ``getBasePath(string $namespace): ?string`` picks the directory registered for the namespace.
-  The default takes the first autoloader entry. Override when the namespace maps to several
-  directories and a specific one is wanted, like the ``tests/`` copy of ``CodeIgniter``.
+- ``basename(string $filename): string`` changes the file basename before saving. Useful for components whose file name
+  carries a date, like migrations.
+- ``getNamespace(): string`` resolves the root namespace. The default returns the attribute's ``namespace`` or the
+  ``--namespace`` option.
+- ``buildPath(string $class): string`` maps the qualified class to a file path through the autoloader. Override for
+  components with special file locations, like tests.
+- ``getBasePath(string $namespace): ?string`` picks the directory registered for the namespace. The default takes the
+  first autoloader entry. Override when the namespace maps to several directories and a specific one is wanted, like the
+  ``tests/`` copy of ``CodeIgniter``.
 - ``renderTemplate(array $data = []): string`` renders the resolved view.
 
 ****************************
 Prompting for the Class Name
 ****************************
 
-``AbstractGeneratorCommand`` implements ``PromptsForMissingInputInterface``, so
-running a generator interactively without a class name prompts for it instead of
-failing validation. The prompt label comes from the attribute's ``classNameLang``
-language key. Non-interactive runs (piped input, ``--no-interaction``) fail fast
-with the usual missing-arguments error.
+``AbstractGeneratorCommand`` implements ``PromptsForMissingInputInterface``, so running a generator interactively
+without a class name prompts for it instead of failing validation. The prompt label comes from the attribute's
+``classNameLang`` language key. Non-interactive runs (piped input, ``--no-interaction``) fail fast with the usual
+missing-arguments error.
 
-The mechanism is available to every modern command, not just generators. See
-:ref:`prompts-for-missing-input`.
+The mechanism is available to every modern command, not just generators. See :ref:`prompts-for-missing-input`.
 
 *********************************
 Migrating From ``GeneratorTrait``
 *********************************
 
-The base class covers everything the trait did, but the configuration moves
-from mutable properties and the ``$params`` array to the attribute and the
-validated input accessors.
+The base class covers everything the trait did, but the configuration moves from mutable properties and the ``$params``
+array to the attribute and the validated input accessors.
 
 **Configuration properties**
 
@@ -256,22 +240,21 @@ A typical ``GeneratorTrait`` generator:
 
 .. literalinclude:: cli_modern_generators/001.php
 
-Behavioural changes we need to be aware of when migrating:
+Behavioral changes to be aware of when migrating:
 
-- **Failures produce failing exit codes.** The trait's ``generateClass()`` returned ``void``, so a
-  generator reported ``EXIT_SUCCESS`` even when the target file already existed. The base class
-  returns ``EXIT_ERROR`` for an existing file without ``--force``, a write failure, and an undefined
-  namespace. Declining the ``CodeIgniter`` namespace confirmation still exits with ``EXIT_SUCCESS``.
-- **The** ``CodeIgniter`` **namespace confirmation is asked once, and only on interactive runs.** The
-  trait asked for every file. The base class asks once per ``generateClass()`` and reuses the answer for
-  the views generated after it. Non-interactive runs print the warning and proceed instead of blocking
-  on input that will never arrive.
-- **The** ``CodeIgniter`` **namespace confirmation keys off the target path.** The trait compared
-  the raw ``--namespace`` option, so an attribute-pinned ``CodeIgniter`` namespace or a spelling like
-  ``--namespace CodeIgniter/`` did not warn. The base class warns exactly when the file would be written
-  under ``SYSTEMPATH``, so a ``CodeIgniter\Foo`` test class headed for ``tests/system`` is left alone.
-- **Placeholder replacement is single-pass.** Replacements are applied with ``strtr()``, so a
-  replacement value that happens to contain another placeholder is no longer substituted again.
+- **Failures produce failing exit codes.** The trait's ``generateClass()`` returned ``void``, so a generator reported
+  ``EXIT_SUCCESS`` even when the target file already existed. The base class returns ``EXIT_ERROR`` for an existing file
+  without ``--force``, a write failure, and an undefined namespace. Declining the ``CodeIgniter`` namespace confirmation
+  still exits with ``EXIT_SUCCESS``.
+- **The** ``CodeIgniter`` **namespace confirmation is asked once, and only on interactive runs.** The trait asked for
+  every file. The base class asks once per ``generateClass()`` and reuses the answer for the views generated after it.
+  Non-interactive runs print the warning and proceed instead of blocking on input that will never arrive.
+- **The** ``CodeIgniter`` **namespace confirmation keys off the target path.** The trait compared the raw
+  ``--namespace`` option, so an attribute-pinned ``CodeIgniter`` namespace or a spelling like
+  ``--namespace CodeIgniter/`` did not warn. The base class warns exactly when the file would be written under
+  ``SYSTEMPATH``, so a ``CodeIgniter\Foo`` test class headed for ``tests/system`` is left alone.
+- **Placeholder replacement is single-pass.** Replacements are applied with ``strtr()``, so a replacement value that
+  happens to contain another placeholder is no longer substituted again.
 
 ************************
 AbstractGeneratorCommand
@@ -281,34 +264,33 @@ AbstractGeneratorCommand
 
 .. php:class:: AbstractGeneratorCommand
 
-    All hooks below are ``protected``: they are called or overridden from within
-    your own generator, never from the outside.
+    All hooks below are ``protected``: they are called or overridden from within your own generator, never from the
+    outside.
 
     .. php:method:: generateClass(): int
 
-        Runs the full pipeline for the qualified class name and returns an
-        ``EXIT_*`` status. This is what the default ``execute()`` calls.
+        Runs the full pipeline for the qualified class name and returns an ``EXIT_*`` status. This is what the default
+        ``execute()`` calls.
 
     .. php:method:: generateView(string $view): int
 
         :param string $view: Namespaced view name to generate.
 
-        Like :php:meth:`generateClass`, but for non-class artifacts. The name is
-        used as-is, without qualification or suffix handling.
+        Like :php:meth:`generateClass`, but for non-class artifacts. The name is used as-is, without qualification or
+        suffix handling.
 
     .. php:method:: isCodeIgniterNamespaceDeclined(): bool
 
-        Whether the ``CodeIgniter`` namespace confirmation was declined since the
-        last :php:meth:`generateClass` call. A declined run still returns
-        ``EXIT_SUCCESS``, so check this before generating anything that depends
-        on the declined file.
+        Whether the ``CodeIgniter`` namespace confirmation was declined since the last :php:meth:`generateClass` call. A
+        declined run still returns ``EXIT_SUCCESS``, so check this before generating anything that depends on the
+        declined file.
 
     .. php:method:: getReplacements(string $class): array
 
         :param string $class: The namespaced class (or view) being generated.
 
-        Returns extra placeholder replacements. Entries take precedence over the
-        core ``{namespace}`` / ``{class}`` pairs. Defaults to ``[]``.
+        Returns extra placeholder replacements. Entries take precedence over the core ``{namespace}`` / ``{class}``
+        pairs. Defaults to ``[]``.
 
     .. php:method:: getTemplateData(string $class): array
 
@@ -318,48 +300,43 @@ AbstractGeneratorCommand
 
     .. php:method:: shouldAppendSuffix(): bool
 
-        Whether the component suffix should be appended to the class name. The
-        default reads the ``--suffix`` flag when it is declared.
+        Whether the component suffix should be appended to the class name. The default reads the ``--suffix`` flag when
+        it is declared.
 
     .. php:method:: basename(string $filename): string
 
         :param string $filename: The computed target file path.
 
-        Returns the file basename to save under. Override to decorate it, for
-        example with a timestamp.
+        Returns the file basename to save under. Override to decorate it, for example with a timestamp.
 
     .. php:method:: getNamespace(): string
 
-        Resolves the root namespace from the attribute override or the
-        ``--namespace`` option.
+        Resolves the root namespace from the attribute override or the ``--namespace`` option.
 
     .. php:method:: buildPath(string $class): string
 
         :param string $class: The namespaced class (or view) being generated.
 
-        Maps the class to its target file path through the autoloader. Returns
-        an empty string (after printing an error) when the namespace is not
-        registered.
+        Maps the class to its target file path through the autoloader. Returns an empty string (after printing an error)
+        when the namespace is not registered.
 
     .. php:method:: getBasePath(string $namespace): ?string
 
         :param string $namespace: The resolved root namespace.
 
-        Returns the directory registered for the namespace, or ``null`` when it
-        is not registered. The default takes the first autoloader entry.
+        Returns the directory registered for the namespace, or ``null`` when it is not registered. The default takes the
+        first autoloader entry.
 
     .. php:method:: renderTemplate(array $data = []): string
 
         :param array $data: View data for the template.
 
-        Renders the resolved generator view (see
-        :ref:`generator-command-templates` for the resolution order).
+        Renders the resolved generator view (see :ref:`generator-command-templates` for the resolution order).
 
     .. php:method:: provideGeneratorOptions(): void
 
-        Registers the common generator options. The default registers all three
-        of ``--namespace``, ``--suffix``, and ``--force`` through the ``final``
-        helpers :php:meth:`addNamespaceOption`, :php:meth:`addSuffixOption`, and
+        Registers the common generator options. The default registers all three of ``--namespace``, ``--suffix``, and
+        ``--force`` through the ``final`` helpers :php:meth:`addNamespaceOption`, :php:meth:`addSuffixOption`, and
         :php:meth:`addForceOption`. Override to register a subset.
 
     .. php:method:: addNamespaceOption(string $default = APP_NAMESPACE): static

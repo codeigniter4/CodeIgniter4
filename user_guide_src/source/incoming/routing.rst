@@ -78,18 +78,15 @@ You can use any standard HTTP verb (GET, POST, PUT, DELETE, OPTIONS, etc):
 
 .. literalinclude:: routing/003.php
 
-``QUERY`` routes are for the HTTP QUERY method defined by RFC 10008.
-``QUERY`` requests are safe and idempotent like GET, but send query content in the
-request body. Read that body explicitly with request input methods such as
-``$this->request->input()->json()`` or ``$this->request->input()->raw()``. Your
-controller should reject missing or unsupported ``Content-Type`` values for the
-query content it expects. Do not use ``QUERY`` for operations that create,
+``QUERY`` routes are for the HTTP QUERY method defined by RFC 10008. ``QUERY`` requests are safe and idempotent like
+GET, but send query content in the request body. Read that body explicitly with request input methods such as
+``$this->request->input()->json()`` or ``$this->request->input()->raw()``. Your controller should reject missing or
+unsupported ``Content-Type`` values for the query content it expects. Do not use ``QUERY`` for operations that create,
 update, delete, or otherwise change server state.
 
-.. note:: Your web server, proxy, or CORS configuration may need to allow the
-    ``QUERY`` method before these requests can reach CodeIgniter. For
-    browser-based cross-origin requests, ensure ``QUERY`` is included in your
-    allowed CORS methods so preflight requests can succeed.
+.. note:: Your web server, proxy, or CORS configuration may need to allow the ``QUERY`` method before these requests can
+    reach CodeIgniter. For browser-based cross-origin requests, ensure ``QUERY`` is included in your allowed CORS
+    methods so preflight requests can succeed.
 
 You can supply multiple verbs that a route should match by passing them in as an array to the ``match()`` method:
 
@@ -257,27 +254,25 @@ Sample Values for ``spark routes``
 
 .. versionadded:: 4.8.0
 
-The :doc:`spark routes </cli/spark_commands>` command needs a concrete URI that matches each route in order
-to resolve the filters that would run for it. For the built-in placeholders (``num``, ``segment``,
-``alpha``, and so on) it uses a hardcoded sample value. For custom placeholders it now attempts to generate
-a value from the placeholder's regular expression, so common patterns like ``[A-Z]{3}[0-9]+`` or the UUID
-example above work without any extra configuration.
+The :doc:`spark routes </cli/spark_commands>` command needs a concrete URI that matches each route in order to resolve
+the filters that would run for it. For the built-in placeholders (``num``, ``segment``, ``alpha``, and so on) it uses a
+hardcoded sample value. For custom placeholders it now attempts to generate a value from the placeholder's regular
+expression, so common patterns like ``[A-Z]{3}[0-9]+`` or the UUID example above work without any extra configuration.
 
-If the regex uses features the generator cannot reverse (lookarounds, backreferences, complex alternations,
-etc.), the Before/After Filters columns fall back to showing ``<unknown>``. You can fix that by providing an
-explicit sample in ``app/Config/Routing.php``:
+If the regex uses features the generator cannot reverse (lookarounds, backreferences, complex alternations, etc.), the
+Before/After Filters columns fall back to showing ``<unknown>``. You can fix that by providing an explicit sample in
+``app/Config/Routing.php``:
 
 .. literalinclude:: routing/075.php
 
-Each value must match its placeholder's regular expression. A value that does not match is ignored. Entries
-override the samples for the built-in placeholders too, not only custom ones.
+Each value must match its placeholder's regular expression. A value that does not match is ignored. Entries override the
+samples for the built-in placeholders too, not only custom ones.
 
-The resolution order is: a matching value declared in ``$placeholderSamples``, then the built-in sample for
-standard placeholders, then an auto-generated value, then ``<unknown>`` as a last resort.
+The resolution order is: a matching value declared in ``$placeholderSamples``, then the built-in sample for standard
+placeholders, then an auto-generated value, then ``<unknown>`` as a last resort.
 
-.. note:: This configuration only affects the ``spark routes`` display.
-    Filter execution at request time already honors custom placeholders
-    without any setup.
+.. note:: This configuration only affects the ``spark routes`` display. Filter execution at request time already honors
+    custom placeholders without any setup.
 
 Regular Expressions
 -------------------

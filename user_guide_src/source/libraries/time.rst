@@ -400,8 +400,8 @@ between()
 
 .. versionadded:: 4.8.0
 
-Determines if the current instance is between two other times. By default, the start and end bounds are included.
-Pass ``false`` as the third ``$inclusive`` argument to exclude both bounds:
+Determines if the current instance is between two other times. By default, the start and end bounds are included. Pass
+``false`` as the third ``$inclusive`` argument to exclude both bounds:
 
 .. literalinclude:: time/045.php
 
@@ -420,9 +420,9 @@ Returns the earlier of the current instance and the provided time:
 
 .. literalinclude:: time/046.php
 
-If ``null`` is provided, it compares against ``Time::now()`` in the current instance's timezone. String values may use
-a timezone string as the second parameter. Otherwise, they are parsed using the current instance's timezone. If both
-times are equal, the current instance is returned.
+If ``null`` is provided, it compares against ``Time::now()`` in the current instance's timezone. String values may use a
+timezone string as the second parameter. Otherwise, they are parsed using the current instance's timezone. If both times
+are equal, the current instance is returned.
 
 .. _time-comparing-two-times-max:
 
@@ -435,9 +435,9 @@ Returns the later of the current instance and the provided time:
 
 .. literalinclude:: time/047.php
 
-If ``null`` is provided, it compares against ``Time::now()`` in the current instance's timezone. String values may use
-a timezone string as the second parameter. Otherwise, they are parsed using the current instance's timezone. If both
-times are equal, the current instance is returned.
+If ``null`` is provided, it compares against ``Time::now()`` in the current instance's timezone. String values may use a
+timezone string as the second parameter. Otherwise, they are parsed using the current instance's timezone. If both times
+are equal, the current instance is returned.
 
 .. _time-comparing-two-times-isPast:
 

@@ -132,7 +132,8 @@ Migrates a database group with all available migrations:
 
 You can use ``migrate`` with the following options:
 
-- ``--group`` (``-g``) - to specify database group. If specified, only migrations for the specified database group will be run. If not specified, all migrations will be run.
+- ``--group`` (``-g``) - to specify database group. If specified, only migrations for the specified database group will
+  be run. If not specified, all migrations will be run.
 - ``--namespace`` (``-n``) - to choose namespace, otherwise ``App`` namespace will be used.
 - ``--all`` - to migrate all namespaces to the latest migration.
 
@@ -166,7 +167,7 @@ Rolls back all migrations to a blank slate, effectively migration 0:
 You can use ``migrate:rollback`` with the following options:
 
 - ``--batch`` (``-b``) - to choose a batch: natural numbers specify the batch.
-- ``--force`` (``-f``) - to force a bypass confirmation question, it is only asked in a production environment.
+- ``--force`` (``-f``) - to bypass the confirmation question, which is only asked in a production environment.
 
 migrate:refresh
 ===============
@@ -179,10 +180,11 @@ Refreshes the database state by first rolling back all migrations, and then migr
 
 You can use ``migrate:refresh`` with the following options:
 
-- ``--group`` (``-g``) - to specify database group. If specified, only migrations for the specified database group will be run. If not specified, all migrations will be run.
+- ``--group`` (``-g``) - to specify database group. If specified, only migrations for the specified database group will
+  be run. If not specified, all migrations will be run.
 - ``--namespace`` (``-n``) - to choose namespace, otherwise ``App`` namespace will be used.
 - ``--all`` - to refresh all namespaces.
-- ``--force`` (``-f``) - to force a bypass confirmation question, it is only asked in a production environment.
+- ``--force`` (``-f``) - to bypass the confirmation question, which is only asked in a production environment.
 
 migrate:status
 ==============
@@ -205,7 +207,8 @@ Displays a list of all migrations and the date and time they ran, or '--' if the
 
 You can use ``migrate:status`` with the following options:
 
-- ``--group`` (``-g``) - to specify database group. If specified, only migrations for the specified database group will be checked. If not specified, all migrations will be checked.
+- ``--group`` (``-g``) - to specify database group. If specified, only migrations for the specified database group will
+  be checked. If not specified, all migrations will be checked.
 
 make:migration
 ==============
@@ -221,13 +224,13 @@ creates is the Pascal case version of the filename.
 You can use ``make:migration`` with the following options:
 
 - ``--namespace`` (``-n``) - Set root namespace. Default: ``APP_NAMESPACE``.
-- ``--suffix`` (``-s``)    - Append the component title to the class name.
+- ``--suffix`` (``-s``) - Append the component title to the class name.
 
 The following options are also available to generate the migration file for
 database sessions:
 
-- ``--session``          - Generates the migration file for database sessions.
-- ``--table`` (``-t``)   - Table name to use for database sessions. Default: ``ci_sessions``.
+- ``--session`` - Generates the migration file for database sessions.
+- ``--table`` (``-t``) - Table name to use for database sessions. Default: ``ci_sessions``.
 - ``--dbgroup`` (``-g``) - Database group to use for database sessions. Default: ``default``.
 
 *********************

@@ -85,14 +85,17 @@ Argument:
 Options:
 ========
 * ``--command`` (``-c``): The command name to run in spark. Defaults to ``command:name``.
-* ``--type`` (``-t``): The type of command, whether a ``basic`` command or a ``generator`` command. Defaults to ``basic``.
-* ``--group`` (``-g``): The group of the command. Defaults to ``App`` for basic commands, and ``Generators`` for generator commands.
+* ``--type`` (``-t``): The type of command, whether a ``basic`` command or a ``generator`` command. Defaults to
+  ``basic``.
+* ``--group`` (``-g``): The group of the command. Defaults to ``App`` for basic commands, and ``Generators`` for
+  generator commands.
 * ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
 * ``--suffix`` (``-s``): Append the component suffix to the generated class name.
 * ``--force`` (``-f``): Set this flag to overwrite existing files on destination.
 
-.. note:: Since v4.8.0, the generated class is a :doc:`modern command <cli_modern_commands>`: a ``basic`` command extends
-    ``AbstractCommand``, and a ``generator`` command extends :doc:`AbstractGeneratorCommand <cli_modern_generators>`.
+.. note:: Since v4.8.0, the generated class is a :doc:`modern command <cli_modern_commands>`: a ``basic`` command
+    extends ``AbstractCommand``, and a ``generator`` command extends
+    :doc:`AbstractGeneratorCommand <cli_modern_generators>`.
 
 make:config
 -----------
@@ -133,7 +136,8 @@ Argument:
 Options:
 ========
 * ``--bare`` (``-b``): Extends from ``CodeIgniter\Controller`` instead of ``BaseController``.
-* ``--restful`` (``-r``): Extends from a RESTful resource. Choices are ``controller`` and ``presenter``. Defaults to ``controller``.
+* ``--restful`` (``-r``): Extends from a RESTful resource. Choices are ``controller`` and ``presenter``. Defaults to
+  ``controller``.
 * ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
 * ``--suffix`` (``-s``): Append the component suffix to the generated class name.
 * ``--force`` (``-f``): Set this flag to overwrite existing files on destination.
@@ -377,8 +381,8 @@ To include an ``Entity`` class in the scaffolded files, just include the ``--ret
 and it will be passed to the model generator.
 
 .. note:: Since v4.8.0, ``make:scaffold`` accepts the ``-b``, ``-t``, ``-g``, ``-n``, ``-s``, and ``-f`` shortcuts.
-    ``--restful`` and ``--return`` have no shortcut here, since both use ``-r`` in their own commands.
-    When the class name is omitted on an interactive run, it is asked for once and reused for every generated file.
+    ``--restful`` and ``--return`` have no shortcut here, since both use ``-r`` in their own commands. When the class
+    name is omitted on an interactive run, it is asked for once and reused for every generated file.
 
 **************
 GeneratorTrait
@@ -386,9 +390,8 @@ GeneratorTrait
 
 .. deprecated:: 4.8.0
 
-    ``GeneratorTrait`` is the legacy way of building generator commands, tied to the deprecated
-    ``BaseCommand``. New generator commands should extend ``AbstractGeneratorCommand`` instead.
-    See :doc:`cli_modern_generators`.
+    ``GeneratorTrait`` is the legacy way of building generator commands, tied to the deprecated ``BaseCommand``. New
+    generator commands should extend ``AbstractGeneratorCommand`` instead. See :doc:`cli_modern_generators`.
 
 Legacy generator commands use the ``GeneratorTrait`` to fully utilize its methods that are used in code
 generation.

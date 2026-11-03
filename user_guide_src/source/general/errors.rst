@@ -209,8 +209,8 @@ UniqueConstraintViolationException
 
 .. versionadded:: 4.8.0
 
-``UniqueConstraintViolationException`` extends ``DatabaseException`` and is thrown when a query
-fails due to a duplicate key or unique constraint violation. It is supported by all database drivers.
+``UniqueConstraintViolationException`` extends ``DatabaseException`` and is thrown when a query fails due to a duplicate
+key or unique constraint violation. It is supported by all database drivers.
 
 .. literalinclude:: errors/019.php
 

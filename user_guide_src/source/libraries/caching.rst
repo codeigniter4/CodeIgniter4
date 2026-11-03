@@ -139,25 +139,22 @@ Class Reference
         Gets an item from the cache. If ``null`` was returned, this will invoke the callback
         and save the result. Either way, this will return the value.
 
-        The ``$ttl`` parameter may also be a callable, allowing the TTL to be
-        determined dynamically at runtime. This is especially useful when the
-        expiration time depends on the computed value or requires an expensive
-        calculation.
+        The ``$ttl`` parameter may also be a callable, allowing the TTL to be determined dynamically at runtime. This is
+        especially useful when the expiration time depends on the computed value or requires an expensive calculation.
 
-        When a callable is provided, it will only be executed on a cache miss,
-        after the callback has been invoked. The callable always receives the
-        computed value as its first argument:
+        When a callable is provided, it is executed only on a cache miss, after the callback has been invoked. The
+        callable always receives the computed value as its first argument:
 
         .. literalinclude:: caching/015.php
 
-        This ensures that TTL computation is deferred until necessary and avoids
-        unnecessary overhead when the cache item already exists.
+        This ensures that TTL computation is deferred until necessary and avoids unnecessary overhead when the cache
+        item already exists.
 
-        .. note:: Prior to v4.8.0, the second parameter only accepted an integer TTL value. The ability to pass a callable was added in v4.8.0.
+        .. note:: Prior to v4.8.0, the second parameter only accepted an integer TTL value. The ability to pass a
+            callable was added in v4.8.0.
 
-        .. note:: When using the APCu cache handler, providing a callable TTL disables
-            the use of ``apcu_entry()`` and falls back to a manual cache retrieval
-            and storage process. As a result, the operation is no longer atomic
+        .. note:: When using the APCu cache handler, providing a callable TTL disables the use of ``apcu_entry()`` and
+            falls back to a manual cache retrieval and storage process. As a result, the operation is no longer atomic
             and may be subject to race conditions under high concurrency.
 
             If atomic behavior is required, use an integer TTL value.

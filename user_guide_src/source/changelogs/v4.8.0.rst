@@ -23,43 +23,21 @@ BREAKING
 Behavior Changes
 ================
 
-- The static ``Boot::initializeConsole()`` method no longer handles the display of the console header. This is now handled within ``Console::run()``.
-  If you have overridden ``Boot::initializeConsole()``, you should remove any code related to displaying the console header, as this is now the responsibility of the ``Console`` class.
-- **CLI:** Uncaught exceptions in ``spark``, and errors shown with ``BaseCommand::showError()`` or ``AbstractCommand::renderThrowable()`` (as ``migrate`` and
-  ``db:seed`` do), are now printed to STDERR instead of STDOUT. The exit code is unchanged.
-  See :ref:`upgrade-480-cli-error-output`.
-- **CLI:** ``CLI::beep()`` now writes through the ``InputOutput`` transport instead of ``echo``, so it is discarded by ``callSilently()``, captured
-  by ``MockInputOutput``, and no longer seen by PHP output buffering on the command line.
-- **CLI:** ``CLI::print()`` of text ending in a line feed, and a progress bar drawn with ``CLI::showProgress()``, no longer cause a blank line
-  before the next ``CLI::write()``, since the cursor already sits at the start of a line. ``CLI::init()`` now also resets that cursor state,
-  the progress bar, and the cached terminal dimensions.
+- The static ``Boot::initializeConsole()`` method no longer handles the display of the console header. This is now handled within ``Console::run()``. If you have overridden ``Boot::initializeConsole()``, you should remove any code related to displaying the console header, as this is now the responsibility of the ``Console`` class.
+- **CLI:** Uncaught exceptions in ``spark``, and errors shown with ``BaseCommand::showError()`` or ``AbstractCommand::renderThrowable()`` (as ``migrate`` and ``db:seed`` do), are now printed to STDERR instead of STDOUT. The exit code is unchanged. See :ref:`upgrade-480-cli-error-output`.
+- **CLI:** ``CLI::beep()`` now writes through the ``InputOutput`` transport instead of ``echo``, so it is discarded by ``callSilently()``, captured by ``MockInputOutput``, and no longer seen by PHP output buffering on the command line.
+- **CLI:** ``CLI::print()`` of text ending in a line feed, and a progress bar drawn with ``CLI::showProgress()``, no longer cause a blank line before the next ``CLI::write()``, since the cursor already sits at the start of a line. ``CLI::init()`` now also resets that cursor state, the progress bar, and the cached terminal dimensions.
 - **CLI:** ``CLI::showProgress()`` now draws a full bar at 100% for a step beyond the total, instead of throwing a ``ValueError``.
-- **CLI:** ``CLI::error()`` no longer leaves colour support disabled for STDOUT when it is given an invalid colour name, and
-  ``CLI::write()``, ``CLI::print()``, and ``CLI::color()`` now accept an empty foreground with a background instead of throwing.
-- **CLI:** An empty ``NO_COLOR`` no longer turns colour off, following https://no-color.org/. Colour detection now turns colour off when ``TERM`` is ``dumb``, and on Windows when the stream is not a terminal (outside MSYS2's
-  ``MINGW32`` and ``MINGW64``). On Windows without VT100 support, any ``TERM`` starting with ``xterm``, ``screen``, ``vt100``, ``vt220``, ``putty``,
-  ``rxvt``, ``ansi``, ``cygwin`` or ``linux``, or ending in ``-256color``, now enables colour, where previously only ``xterm`` did.
-  Colouring text that already contains a coloured segment now keeps that segment whatever its colour, where previously only the
-  dim colours (``\033[0;...m``) were kept and a bright or background-only segment lost the colour of the text after it.
-- **CLI:** The output state moved out of the static ``CLI`` properties. A subclass of ``CLI`` that overrides ``fwrite()`` or ``color()``, or reads
-  ``$lastWrite``, ``$isColored``, ``$io``, ``$height``, ``$width``, or the colour tables, no longer affects or observes the output.
-  See :ref:`upgrade-480-cli-output-classes`.
-- **CLI:** The prompt methods moved to ``Prompt``. A subclass of ``CLI`` that overrides ``validate()`` no longer affects the prompts, and
-  an override of ``prompt()`` no longer affects ``promptByKey()`` or ``promptByMultipleKeys()``. Passing ``prompt()`` options or rules, or a
-  ``promptByKey()`` text, of another type than ``string``, ``array``, or ``null`` now throws a ``TypeError`` instead of an ``InvalidArgumentException``.
-  See :ref:`upgrade-480-cli-prompt`.
-- **Commands:** The ``-h`` option to ``routes`` command which was mapped previously to the ``--sort-by-handler`` option is now removed.
-  Use ``--sort-by-handler`` instead to sort the routes by handler when running the ``routes`` command.
+- **CLI:** ``CLI::error()`` no longer leaves color support disabled for STDOUT when it is given an invalid color name, and ``CLI::write()``, ``CLI::print()``, and ``CLI::color()`` now accept an empty foreground with a background instead of throwing.
+- **CLI:** An empty ``NO_COLOR`` no longer turns color off, following https://no-color.org/. Color detection now turns color off when ``TERM`` is ``dumb``, and on Windows when the stream is not a terminal (outside MSYS2's ``MINGW32`` and ``MINGW64``). On Windows without VT100 support, any ``TERM`` starting with ``xterm``, ``screen``, ``vt100``, ``vt220``, ``putty``, ``rxvt``, ``ansi``, ``cygwin`` or ``linux``, or ending in ``-256color``, now enables color, where previously only ``xterm`` did. Coloring text that already contains a colored segment now keeps that segment whatever its color, where previously only the dim colors (``\033[0;...m``) were kept and a bright or background-only segment lost the color of the text after it.
+- **CLI:** The output state moved out of the static ``CLI`` properties. A subclass of ``CLI`` that overrides ``fwrite()`` or ``color()``, or reads ``$lastWrite``, ``$isColored``, ``$io``, ``$height``, ``$width``, or the color tables, no longer affects or observes the output. See :ref:`upgrade-480-cli-output-classes`.
+- **CLI:** The prompt methods moved to ``Prompt``. A subclass of ``CLI`` that overrides ``validate()`` no longer affects the prompts, and an override of ``prompt()`` no longer affects ``promptByKey()`` or ``promptByMultipleKeys()``. Passing ``prompt()`` options or rules, or a ``promptByKey()`` text, of another type than ``string``, ``array``, or ``null`` now throws a ``TypeError`` instead of an ``InvalidArgumentException``. See :ref:`upgrade-480-cli-prompt`.
+- **Commands:** The ``-h`` option of the ``routes`` command, which was previously mapped to ``--sort-by-handler``, is now removed. Use ``--sort-by-handler`` instead to sort the routes by handler when running the ``routes`` command.
 - **Commands:** The ``filter:check`` command now requires the HTTP method argument to be uppercase (e.g., ``spark filter:check GET /`` instead of ``spark filter:check get /``).
-- **Commands:** Several built-in commands have been migrated from ``BaseCommand`` to the modern ``AbstractCommand`` style. Applications that extend a built-in command to override
-  behaviour may need to re-implement against the modern API (``configure()`` + ``execute()`` and the ``#[Command]`` attribute) once the class it extends is migrated, or, preferably, compose instead of extending. Invocations on the command line are unaffected.
-- **Commands:** Generator commands migrated to ``AbstractGeneratorCommand`` now return ``EXIT_ERROR`` (previously ``EXIT_SUCCESS``) when the target file exists
-  without ``--force``, when the namespace is not defined, or when the name does not form a valid class name. The ``CodeIgniter`` namespace confirmation is no
-  longer prompted on non-interactive runs, and ``make:cell`` and ``make:model --return entity`` now ask it only once.
-- **Commands:** The ``make:command`` command now generates modern commands: a ``basic`` command extends ``AbstractCommand`` with the ``#[Command]`` attribute,
-  and a ``generator`` command extends ``AbstractGeneratorCommand`` with the ``#[GeneratorCommand]`` attribute.
-- **Commands:** The ``make:migration`` command now rejects ``--force`` as an unknown option. It was previously accepted but ignored, since the
-  timestamped file name only collides with an existing file when the same name is generated twice within one second.
+- **Commands:** Several built-in commands have been migrated from ``BaseCommand`` to the modern ``AbstractCommand`` style. Applications that extend a built-in command to override behavior may need to re-implement against the modern API (``configure()`` + ``execute()`` and the ``#[Command]`` attribute) once the class it extends is migrated, or, preferably, compose instead of extending. Invocations on the command line are unaffected.
+- **Commands:** Generator commands migrated to ``AbstractGeneratorCommand`` now return ``EXIT_ERROR`` (previously ``EXIT_SUCCESS``) when the target file exists without ``--force``, when the namespace is not defined, or when the name does not form a valid class name. The ``CodeIgniter`` namespace confirmation is no longer prompted on non-interactive runs, and ``make:cell`` and ``make:model --return entity`` now ask it only once.
+- **Commands:** The ``make:command`` command now generates modern commands: a ``basic`` command extends ``AbstractCommand`` with the ``#[Command]`` attribute, and a ``generator`` command extends ``AbstractGeneratorCommand`` with the ``#[GeneratorCommand]`` attribute.
+- **Commands:** The ``make:migration`` command now rejects ``--force`` as an unknown option. It was previously accepted but ignored, since the timestamped file name only collides with an existing file when the same name is generated twice within one second.
 - **Commands:** The success and error messages from ``debugbar:clear``, ``cache:clear``, and ``cache:info`` now include the affected path or cache driver/handler so the user can see which resource was acted on (or rejected). Scripts asserting on the prior literal text will need to be updated.
 - **Commands:** Declining the ``key:generate`` overwrite prompt interactively now returns ``EXIT_SUCCESS`` instead of ``EXIT_ERROR``. Output messages were also reworded; CI/automation that branches on the exit code or greps the previous wording will need updating.
 - **Commands:** The ``migrate:rollback`` command no longer accepts the undocumented ``-g`` (database group) option. It never had any effect, since ``MigrationRunner::regress()`` ignores the group, and the modern command pipeline now rejects unknown options. Remove ``-g`` from any ``migrate:rollback`` invocation.
@@ -70,20 +48,15 @@ Behavior Changes
 - **Commands:** The ``phpini:check`` command's invalid-argument error now prints only ``You must specify a correct argument.``. The usage example and the argument listing moved to ``phpini:check --help``, where the argument is now named ``section``. Scripts that grep the previous output will need updating.
 - **Commands:** The prompts that pick from fixed options (``db:table``, ``db:create``, ``key:generate``, ``key:rotate``, ``make:command``, ``make:controller``, and ``make:model``) now use ``Prompt::select()``, so where the arrow-key menu is unavailable, as on Windows, the answer is the option's number instead of its value. Option values such as ``--prefix`` still take the value.
 - **Config:** ``CodeIgniter\Config\BaseService`` is now ``abstract``. It is intended to be extended (as ``Config\Services`` does) and accessed statically; code that instantiated it directly with ``new BaseService()`` will now throw an ``Error``.
-- **Config:** ``BaseConfig`` now scans the environment once instead of checking every property against it, which makes building config classes
-  several times faster without config caching and in Worker Mode. As a result, a bare ``putenv()`` call (adding, changing, or removing a variable) made
-  after the first config class was built may not be seen until ``BaseConfig::reset()`` runs, including in later requests in Worker Mode. See :ref:`upgrade-480-config-env-lookups`.
+- **Config:** ``BaseConfig`` now scans the environment once instead of checking every property against it, which makes building config classes several times faster without config caching and in Worker Mode. As a result, a bare ``putenv()`` call (adding, changing, or removing a variable) made after the first config class was built may not be seen until ``BaseConfig::reset()`` runs, including in later requests in Worker Mode. See :ref:`upgrade-480-config-env-lookups`.
 - **Database:** ``BaseBuilder::getCompiledSelect()``, ``getCompiledInsert()``, ``getCompiledUpdate()``, ``getCompiledDelete()``, ``delete()`` and ``countAllResults()`` now clear bindings and binding counters after compilation or execution when their reset parameter is enabled (the default). This prevents accumulation when a builder is reused, but ``getBinds()`` now returns an empty array after these calls. This also aligns ``getCompiledSelect()`` with its documented reset behavior, which should match ``get()``. Pass ``false`` for the reset parameter to retain the query and its bindings. Test mode retains bindings needed by its returned raw SQL. See :ref:`upgrade-480-query-builder-bindings`.
 - **Database:** The Postgre driver's ``$db->error()['code']`` previously always returned ``''``. It now returns the 5-character SQLSTATE string for query and transaction failures (e.g., ``'42P01'``), or ``'08006'`` for connection-level failures. Code that relied on ``$db->error()['code'] === ''`` will need updating.
 - **Debug:** ``CodeIgniter\Debug\Toolbar\Collectors\BaseCollector`` is now ``abstract``. Custom toolbar collectors must extend it; code that instantiated it directly with ``new BaseCollector()`` will now throw an ``Error``.
-- **Filters:** HTTP method matching for method-based filters is now case-sensitive. The keys in ``Config\Filters::$methods`` must exactly match the request method
-  (e.g., ``GET``, ``POST``). Lowercase method names (e.g., ``post``) will no longer match.
+- **Filters:** HTTP method matching for method-based filters is now case-sensitive. The keys in ``Config\Filters::$methods`` must exactly match the request method (e.g., ``GET``, ``POST``). Lowercase method names (e.g., ``post``) will no longer match.
 - **HTTP:** Routes defined with ``$routes->add()`` now also match HTTP ``QUERY`` requests. If the route has CSRF protection, remember that CSRF verification does not protect safe methods such as ``GET`` and ``QUERY``.
 - **HTTP:** ``CodeIgniter\HTTP\Exceptions\RedirectException`` no longer redeclares the inherited ``$code`` property. The status applied to a ``Response`` passed to the constructor whose status is outside the 301-308 range now comes from the new ``protected int $defaultStatusCode = 302`` property. Subclasses that overrode ``$code`` to change that status must override ``$defaultStatusCode`` instead.
 - **Router:** ``RouteCollection`` no longer applies ``esc(strip_tags())`` to namespace, controller, or method values, including controller options passed to ``resource()`` and ``presenter()``. Applications relying on this implicit transformation must preprocess these values before passing them to the router.
-- **Testing:** Tests using the ``FeatureTestTrait`` must now use uppercase HTTP method names when performing a request when using the ``call()`` method directly
-  (e.g., ``$this->call('GET', '/path')`` instead of ``$this->call('get', '/path')``). Additionally, setting method-based routes using ``withRoutes()`` must
-  also use uppercase method names (e.g., ``$this->withRoutes([['GET', 'home', 'Home::index']])``).
+- **Testing:** Tests using the ``FeatureTestTrait`` must now use uppercase HTTP method names when they call the ``call()`` method directly (e.g., ``$this->call('GET', '/path')`` instead of ``$this->call('get', '/path')``). Additionally, method-based routes set with ``withRoutes()`` must also use uppercase method names (e.g., ``$this->withRoutes([['GET', 'home', 'Home::index']])``).
 
 Interface Changes
 =================
@@ -107,10 +80,9 @@ Method Signature Changes
 - **CodeIgniter:** The deprecated parameters in methods have been removed:
     - ``CodeIgniter\CodeIgniter::handleRequest()`` no longer accepts the deprecated ``$cacheConfig`` and ``$returnResponse`` parameters.
         - ``$cacheConfig`` is no longer used and is now hard deprecated. A deprecation notice will be triggered if this is passed to the method.
-        - ``$returnResponse`` is now removed since already deprecated and unused.
+        - ``$returnResponse`` has been removed, since it was already deprecated and unused.
         - The updated method signature is now ``handleRequest(?RouteCollectionInterface $routes, ?Cache $cacheConfig = null)``.
-    - ``CodeIgniter\CodeIgniter::gatherOutput()`` no longer accepts the deprecated ``$cacheConfig`` parameter.
-      As this is the first parameter, custom uses of this method will need to be updated to remove the parameter.
+    - ``CodeIgniter\CodeIgniter::gatherOutput()`` no longer accepts the deprecated ``$cacheConfig`` parameter. As this is the first parameter, custom uses of this method will need to be updated to remove the parameter.
 - **Config:** ``CodeIgniter\Config\Services::request()`` no longer accepts any parameter.
 - **Database:** The following methods have had their signatures updated to remove deprecated parameters:
     - ``CodeIgniter\Database\Forge::_createTable()`` no longer accepts the deprecated ``$ifNotExists`` parameter. The method signature is now ``_createTable(string $table, array $attributes)``.
@@ -146,13 +118,13 @@ Removed Deprecated Items
     - ``CodeIgniter\Cache\Handlers\FileHandler::deleteFile()`` (deprecated since v4.6.0)
     - ``CodeIgniter\Cache\Handlers\FileHandler::getDirFileInfo()`` (deprecated since v4.6.0)
     - ``CodeIgniter\Cache\Handlers\FileHandler::getFileInfo()`` (deprecated since v4.6.0)
-- **CLI:** Removed the following properties and methods deprecated:
+- **CLI:** Removed the following deprecated properties and methods:
     - ``CodeIgniter\CLI\BaseCommand::getPad()``
     - ``CodeIgniter\CLI\CLI::$readline_support``
     - ``CodeIgniter\CLI\CLI::$wait_msg``
     - ``CodeIgniter\CLI\CLI::isWindows()``
     - ``CodeIgniter\CLI\GeneratorTrait::execute()``
-- **CodeIgniter:** Removed the following properties and methods deprecated:
+- **CodeIgniter:** Removed the following deprecated properties and methods:
     - ``CodeIgniter\CodeIgniter::$cacheTTL``
     - ``CodeIgniter\CodeIgniter::$returnResponse``
     - ``CodeIgniter\CodeIgniter::initializeKint()``
@@ -167,9 +139,9 @@ Removed Deprecated Items
     - ``CodeIgniter\CodeIgniter::determinePath()``
     - ``CodeIgniter\CodeIgniter::callExit()``
     - ``CodeIgniter\Test\MockCodeIgniter::callExit()``
-- **Config:** Removed the following property deprecated:
+- **Config:** Removed the following deprecated property:
     - ``CodeIgniter\Config\BaseService::$services`` (deprecated since v4.5.0)
-- **Database:** Removed the following properties and methods deprecated:
+- **Database:** Removed the following deprecated properties and methods:
     - ``CodeIgniter\Database\BaseBuilder::setInsertBatch()``
     - ``CodeIgniter\Database\BaseBuilder::setUpdateBatch()``
     - ``CodeIgniter\Database\BaseBuilder::cleanClone()``
@@ -199,11 +171,11 @@ Removed Deprecated Items
     - ``CodeIgniter\HTTP\Exceptions\HTTPException::forInvalidSameSiteSetting()``
     - ``CodeIgniter\Security\Exceptions\SecurityException::forInvalidSameSite()``
     - ``CodeIgniter\Session\Exceptions\SessionException::forInvalidSameSiteSetting()``
-- **Filters:** Removed the following properties and methods deprecated:
+- **Filters:** Removed the following deprecated properties and methods:
     - ``CodeIgniter\Filters\Filters::$arguments`` (deprecated since v4.6.0)
     - ``CodeIgniter\Filters\Filters::$argumentsClass`` (deprecated since v4.6.0)
     - ``CodeIgniter\Filters\Filters::getArguments()`` (deprecated since v4.6.0)
-- **HTTP:** Removed the following properties and methods deprecated:
+- **HTTP:** Removed the following deprecated properties and methods:
     - ``CodeIgniter\HTTP\Message::getHeaders()`` (deprecated since v4.0.5)
     - ``CodeIgniter\HTTP\Message::getHeader()`` (deprecated since v4.0.5)
     - ``CodeIgniter\HTTP\RequestTrait::getEnv()`` (deprecated since v4.4.4)
@@ -215,7 +187,7 @@ Removed Deprecated Items
     - ``CodeIgniter\HTTP\SiteURI::$segments`` (deprecated since v4.4.0)
     - ``CodeIgniter\HTTP\SiteURI::setBaseURL()`` (deprecated since v4.4.0)
     - ``CodeIgniter\HTTP\SiteURI::setURI()`` (deprecated since v4.4.0)
-- **Security:** Removed the following properties and methods deprecated:
+- **Security:** Removed the following deprecated properties and methods:
     - ``CodeIgniter\Security\SecurityInterface::sanitizeFilename()`` (deprecated since v4.6.2)
     - ``CodeIgniter\Security\Security::sanitizeFilename()`` (deprecated since v4.6.2)
     - ``CodeIgniter\Security\Security::$csrfProtection`` (deprecated since v4.4.0)
@@ -234,87 +206,45 @@ Enhancements
 API
 ===
 
-- Added per-type sparse fieldsets to API transformers. A transformer may declare a ``$type`` so clients
-  can request ``?fields[<type>]=...`` to filter the fields of that resource type independently, including
-  for nested/related resources, while the flat ``?fields=...`` continues to apply to the root resource only.
-  See :ref:`api_transformers`.
+- Added per-type sparse fieldsets to API transformers. A transformer may declare a ``$type`` so clients can request ``?fields[<type>]=...`` to filter the fields of that resource type independently, including for nested/related resources, while the flat ``?fields=...`` continues to apply to the root resource only. See :ref:`api_transformers`.
 
 Commands
 ========
 
-- Added a new attribute-based command style built on :php:class:`AbstractCommand <CodeIgniter\\CLI\\AbstractCommand>` and the ``#[Command]`` attribute,
-  with ``configure()`` / ``isAvailable()`` / ``initialize()`` / ``interact()`` / ``execute()`` hooks and typed ``Argument`` / ``Option`` definitions.
-  The legacy ``BaseCommand`` style continues to work. See :doc:`../cli/cli_modern_commands`.
-- Modern commands can now declare command aliases through an ``aliases`` list on the ``#[Command]`` attribute. Aliases resolve to the command
-  at dispatch (``php spark <alias>`` and ``help <alias>``), are listed as their own rows in ``spark list``, and appear in an ``Aliases:`` section
-  of ``help <command>``. An alias that collides with an existing command name or another alias is rejected at discovery. See :doc:`../cli/cli_modern_commands`.
-- Modern commands can now be hidden with ``hidden: true`` on the ``#[Command]`` attribute. A hidden command and its aliases are left out of
-  ``spark list`` and of the suggestions for a mistyped command name, but still run by exact name or alias and still have a ``help`` page.
-  ``AbstractCommand::isHidden()`` and ``Commands::isHiddenCommand()`` report the flag. See :ref:`hidden-commands`.
-- Modern commands can now opt out of the spark header with ``headerless: true`` on the ``#[Command]`` attribute, with the same effect as always
-  passing ``--no-header``. ``help <command>`` and ``<command> --help`` still print the header. ``AbstractCommand::isHeaderless()`` and
-  ``Commands::isHeaderlessCommand()`` report the flag. See :ref:`commands-without-the-header`.
-- Every modern command now ships with a ``--no-interaction`` / ``-N`` flag that skips the ``interact()`` hook, plus public
-  ``isInteractive()`` / ``setInteractive()`` methods on ``AbstractCommand``. ``isInteractive()`` also auto-detects piped or
-  CI environments by probing STDIN for a TTY, and the state cascades to sub-commands invoked via ``$this->call(...)``.
-  See :ref:`non-interactive-mode`.
-- ``spark help <command>`` now shows the default value of each option that accepts a value (e.g., ``[default: "file"]``),
-  the same way argument defaults are already displayed. Boolean flags and negatable toggles, which have no meaningful default to show, are unaffected.
+- Added a new attribute-based command style built on :php:class:`AbstractCommand <CodeIgniter\\CLI\\AbstractCommand>` and the ``#[Command]`` attribute, with ``configure()`` / ``isAvailable()`` / ``initialize()`` / ``interact()`` / ``execute()`` hooks and typed ``Argument`` / ``Option`` definitions. The legacy ``BaseCommand`` style continues to work. See :doc:`../cli/cli_modern_commands`.
+- Modern commands can now declare command aliases through an ``aliases`` list on the ``#[Command]`` attribute. Aliases resolve to the command at dispatch (``php spark <alias>`` and ``help <alias>``), are listed as their own rows in ``spark list``, and appear in an ``Aliases:`` section of ``help <command>``. An alias that collides with an existing command name or another alias is rejected at discovery. See :doc:`../cli/cli_modern_commands`.
+- Modern commands can now be hidden with ``hidden: true`` on the ``#[Command]`` attribute. A hidden command and its aliases are left out of ``spark list`` and of the suggestions for a mistyped command name, but still run by exact name or alias and still have a ``help`` page. ``AbstractCommand::isHidden()`` and ``Commands::isHiddenCommand()`` report the flag. See :ref:`hidden-commands`.
+- Modern commands can now opt out of the spark header with ``headerless: true`` on the ``#[Command]`` attribute, with the same effect as always passing ``--no-header``. ``help <command>`` and ``<command> --help`` still print the header. ``AbstractCommand::isHeaderless()`` and ``Commands::isHeaderlessCommand()`` report the flag. See :ref:`commands-without-the-header`.
+- Every modern command now ships with a ``--no-interaction`` / ``-N`` flag that skips the ``interact()`` hook, plus public ``isInteractive()`` / ``setInteractive()`` methods on ``AbstractCommand``. ``isInteractive()`` also auto-detects piped or CI environments by probing STDIN for a TTY, and the state cascades to sub-commands invoked via ``$this->call(...)``. See :ref:`non-interactive-mode`.
+- ``spark help <command>`` now shows the default value of each option that accepts a value (e.g., ``[default: "file"]``), the same way argument defaults are already displayed. Boolean flags and negatable toggles, which have no meaningful default to show, are unaffected.
 - You can now retrieve the last executed command in the console using the new ``Console::getCommand()`` method. This is useful for logging, debugging, or any situation where you need to know which command was run.
-- ``CLI`` now supports the ``--`` separator to mean that what follows are arguments, not options. This allows you to have arguments that start with ``-`` without them being treated as options.
-  For example: ``spark my:command -- --myarg`` will pass ``--myarg`` as an argument instead of an option.
-- ``CLI`` now supports options with values specified using an equals sign (e.g., ``--option=value``) in addition to the existing space-separated syntax (e.g., ``--option value``).
-  This provides more flexibility in how you can pass options to commands.
-- ``CLI`` now supports parsing array options written multiple times (e.g., ``--option=value1 --option=value2``) into an array of values. This allows you to easily pass multiple values for the same option without needing to use a comma-separated string.
-  When used with ``CLI::getOption()``, an array option will return its last value (for example, in this case, ``value2``). To retrieve all values for an array option, use ``CLI::getRawOption()``.
+- ``CLI`` now supports the ``--`` separator to mean that what follows are arguments, not options. This allows you to have arguments that start with ``-`` without them being treated as options. For example: ``spark my:command -- --myarg`` will pass ``--myarg`` as an argument instead of an option.
+- ``CLI`` now supports options with values specified using an equals sign (e.g., ``--option=value``) in addition to the existing space-separated syntax (e.g., ``--option value``). This provides more flexibility in how you can pass options to commands.
+- ``CLI`` now supports parsing array options written multiple times (e.g., ``--option=value1 --option=value2``) into an array of values. This allows you to easily pass multiple values for the same option without needing to use a comma-separated string. When used with ``CLI::getOption()``, an array option will return its last value (for example, in this case, ``value2``). To retrieve all values for an array option, use ``CLI::getRawOption()``.
 - Likewise, the ``command()`` function now also supports the above enhancements for command-line option parsing when using the function to run commands from code.
 - Added ``make:request`` generator command to scaffold :ref:`Form Request <form-requests>` classes.
 - Added ``key:rotate`` command to demote the current ``encryption.key`` to ``encryption.previousKeys`` in **.env** and generate a new key. See :ref:`spark-key-rotate`.
 - Added ``AbstractCommand::callSilently()`` to invoke another command with its output discarded, restoring the prior output afterwards. See :ref:`modern-commands-call-silently`.
-- The output side of the ``CLI`` class now lives in instance classes, with ``CLI`` delegating to them: :php:class:`Output <CodeIgniter\\CLI\\Output>`
-  (``print()``, ``write()``, ``error()``, ``newLine()``, ``deferNewLine()``, ``beep()``, ``clearScreen()``, ``color()``, ``wrap()``),
-  :php:class:`Terminal <CodeIgniter\\CLI\\Terminal>` (dimensions and colour support), :php:class:`ProgressBar <CodeIgniter\\CLI\\ProgressBar>`,
-  :php:class:`Table <CodeIgniter\\CLI\\Table>`, and :php:class:`Color <CodeIgniter\\CLI\\Color>` (ANSI codes and ``Color::width()``).
-  ``CLI::getOutput()`` and ``CLI::getTerminal()`` return the shared instances. See :ref:`cli-library-classes`.
-- Modern commands can write through ``$this->getOutput()``, the same ``Output`` used by the static ``CLI`` methods. ``AbstractCommand::run()``
-  and ``Commands::runCommand()`` accept an ``Output`` to run against, which ``Console`` passes down and sub-commands inherit.
-  See :ref:`modern-commands-writing-output`.
-- The prompt methods of ``CLI`` now delegate to :php:class:`Prompt <CodeIgniter\\CLI\\Prompt>` (``ask()``, ``askByKey()``,
-  ``askByMultipleKeys()``), which reads through an ``Output`` and accepts the validation that checks the answers.
-  ``CLI::getPrompt()`` and ``AbstractCommand::getPrompt()`` return one on the shared output and on the output of the run.
-  See :ref:`cli-library-classes`.
-- Added ``Prompt::select()`` and ``Prompt::multiselect()``, which pick options with the arrow keys and the space bar, and ask for
-  numbers where keys cannot be read. See :ref:`cli-library-select`.
-- Added ``--silent``, ``--quiet`` / ``-q``, and ``--verbose`` / ``-v``, ``-vv``, ``-vvv`` to every command, with ``SHELL_VERBOSITY`` as the fallback. Modern
-  commands can write at a :php:class:`Verbosity <CodeIgniter\\CLI\\Verbosity>` through ``$this->getOutput()``. ``lang:find`` uses the global ``--verbose`` in place of its own. See :ref:`spark-verbosity` and :ref:`modern-commands-verbosity`.
-- Colour detection now honours ``FORCE_COLOR`` (see https://force-color.org/), which turns colour on even when the output is piped, and ``COLORTERM``.
-  ``NO_COLOR`` still wins over both. The colour variables can also be set in the **.env** file.
-- Added :php:class:`AbstractGeneratorCommand <CodeIgniter\\CLI\\AbstractGeneratorCommand>` and the ``#[GeneratorCommand]`` attribute, the modern
-  counterpart of ``GeneratorTrait`` for commands that generate files from templates. Generator commands built on it accept the ``-n``, ``-s``,
-  and ``-f`` shortcuts for ``--namespace``, ``--suffix``, and ``--force``. See :doc:`../cli/cli_modern_generators`.
-- Legacy ``BaseCommand::call()`` can now invoke modern commands: integer-keyed params are passed as arguments and string-keyed params as
-  options, which the target command validates like any other input.
-- The ``make:controller`` command now accepts ``-b`` and ``-r`` as shortcuts for ``--bare`` and ``--restful``, and rejects an invalid
-  ``--restful`` value on non-interactive runs instead of prompting.
-- The ``make:model`` command now accepts ``-t``, ``-g``, and ``-r`` as shortcuts for ``--table``, ``--dbgroup``, and ``--return``, and rejects an
-  invalid ``--return`` value on non-interactive runs instead of prompting.
-- The ``make:command`` command now accepts ``-c``, ``-t``, and ``-g`` as shortcuts for ``--command``, ``--type``, and ``--group``, and rejects an
-  invalid ``--type`` value on non-interactive runs instead of prompting.
+- The output side of the ``CLI`` class now lives in instance classes, with ``CLI`` delegating to them: :php:class:`Output <CodeIgniter\\CLI\\Output>` (``print()``, ``write()``, ``error()``, ``newLine()``, ``deferNewLine()``, ``beep()``, ``clearScreen()``, ``color()``, ``wrap()``), :php:class:`Terminal <CodeIgniter\\CLI\\Terminal>` (dimensions and color support), :php:class:`ProgressBar <CodeIgniter\\CLI\\ProgressBar>`, :php:class:`Table <CodeIgniter\\CLI\\Table>`, and :php:class:`Color <CodeIgniter\\CLI\\Color>` (ANSI codes and ``Color::width()``). ``CLI::getOutput()`` and ``CLI::getTerminal()`` return the shared instances. See :ref:`cli-library-classes`.
+- Modern commands can write through ``$this->getOutput()``, the same ``Output`` used by the static ``CLI`` methods. ``AbstractCommand::run()`` and ``Commands::runCommand()`` accept an ``Output`` to run against, which ``Console`` passes down and sub-commands inherit. See :ref:`modern-commands-writing-output`.
+- The prompt methods of ``CLI`` now delegate to :php:class:`Prompt <CodeIgniter\\CLI\\Prompt>` (``ask()``, ``askByKey()``, ``askByMultipleKeys()``), which reads through an ``Output`` and accepts the validation that checks the answers. ``CLI::getPrompt()`` and ``AbstractCommand::getPrompt()`` return one on the shared output and on the output of the run. See :ref:`cli-library-classes`.
+- Added ``Prompt::select()`` and ``Prompt::multiselect()``, which pick options with the arrow keys and the space bar, and ask for numbers where keys cannot be read. See :ref:`cli-library-select`.
+- Added ``--silent``, ``--quiet`` / ``-q``, and ``--verbose`` / ``-v``, ``-vv``, ``-vvv`` to every command, with ``SHELL_VERBOSITY`` as the fallback. Modern commands can write at a :php:class:`Verbosity <CodeIgniter\\CLI\\Verbosity>` through ``$this->getOutput()``. ``lang:find`` uses the global ``--verbose`` in place of its own. See :ref:`spark-verbosity` and :ref:`modern-commands-verbosity`.
+- Color detection now honors ``FORCE_COLOR`` (see https://force-color.org/), which turns color on even when the output is piped, and ``COLORTERM``. ``NO_COLOR`` still wins over both. The color variables can also be set in the **.env** file.
+- Added :php:class:`AbstractGeneratorCommand <CodeIgniter\\CLI\\AbstractGeneratorCommand>` and the ``#[GeneratorCommand]`` attribute, the modern counterpart of ``GeneratorTrait`` for commands that generate files from templates. Generator commands built on it accept the ``-n``, ``-s``, and ``-f`` shortcuts for ``--namespace``, ``--suffix``, and ``--force``. See :doc:`../cli/cli_modern_generators`.
+- Legacy ``BaseCommand::call()`` can now invoke modern commands: integer-keyed params are passed as arguments and string-keyed params as options, which the target command validates like any other input.
+- The ``make:controller`` command now accepts ``-b`` and ``-r`` as shortcuts for ``--bare`` and ``--restful``, and rejects an invalid ``--restful`` value on non-interactive runs instead of prompting.
+- The ``make:model`` command now accepts ``-t``, ``-g``, and ``-r`` as shortcuts for ``--table``, ``--dbgroup``, and ``--return``, and rejects an invalid ``--return`` value on non-interactive runs instead of prompting.
+- The ``make:command`` command now accepts ``-c``, ``-t``, and ``-g`` as shortcuts for ``--command``, ``--type``, and ``--group``, and rejects an invalid ``--type`` value on non-interactive runs instead of prompting.
 - The ``make:migration`` command now accepts ``-t`` and ``-g`` as shortcuts for ``--table`` and ``--dbgroup``.
-- The ``make:scaffold`` command now accepts ``-b``, ``-t``, and ``-g`` as shortcuts for ``--bare``, ``--table``, and ``--dbgroup``, and asks for a
-  missing class name once instead of once per generated file.
-- **spark** now offers to run the closest matching command when a command name is mistyped on an interactive run.
-  See :ref:`correcting-a-mistyped-command`.
-- Modern commands can now opt in to prompting for missing required arguments on interactive runs by implementing the new
-  ``PromptsForMissingInputInterface`` marker interface. Prompt labels can be customized via ``getArgumentPromptLabels()``, and an
-  ``afterPrompting()`` hook runs when prompting occurred. Non-interactive runs keep failing fast with the missing-arguments error.
-  See :ref:`prompts-for-missing-input`.
+- The ``make:scaffold`` command now accepts ``-b``, ``-t``, and ``-g`` as shortcuts for ``--bare``, ``--table``, and ``--dbgroup``, and asks for a missing class name once instead of once per generated file.
+- **spark** now offers to run the closest matching command when a command name is mistyped on an interactive run. See :ref:`correcting-a-mistyped-command`.
+- Modern commands can now opt in to prompting for missing required arguments on interactive runs by implementing the new ``PromptsForMissingInputInterface`` marker interface. Prompt labels can be customized via ``getArgumentPromptLabels()``, and an ``afterPrompting()`` hook runs when prompting occurred. Non-interactive runs keep failing fast with the missing-arguments error. See :ref:`prompts-for-missing-input`.
 - The ``migrate``, ``migrate:rollback``, ``migrate:refresh``, and ``migrate:status`` commands now accept long option names (``--namespace``, ``--group``, ``--batch``, ``--force``) alongside their existing short forms (``-n``, ``-g``, ``-b``, ``-f``).
 - The ``namespaces`` command now accepts long option names (``--config-only``, ``--raw``, ``--max-length``) alongside its existing short forms (``-c``, ``-r``, ``-m``).
 - The ``worker:install`` and ``worker:uninstall`` commands now accept the ``-f`` short option alongside ``--force``.
 - Added :php:class:`NullInputOutput <CodeIgniter\\CLI\\NullInputOutput>`, an :php:class:`InputOutput <CodeIgniter\\CLI\\InputOutput>` sink that discards all writes and returns an empty string from ``input()``.
-- The ``spark routes`` command now resolves the Before/After Filters columns for routes that use custom placeholders registered via ``$routes->addPlaceholder()``.
-  Sample URIs for custom placeholders are derived from the placeholder regex when possible, and can be overridden through the new ``$placeholderSamples`` property in ``Config\Routing``. See :ref:`placeholder-samples-for-spark-routes`.
+- The ``spark routes`` command now resolves the Before/After Filters columns for routes that use custom placeholders registered via ``$routes->addPlaceholder()``. Sample URIs for custom placeholders are derived from the placeholder regex when possible, and can be overridden through the new ``$placeholderSamples`` property in ``Config\Routing``. See :ref:`placeholder-samples-for-spark-routes`.
 
 Testing
 =======
@@ -379,8 +309,8 @@ Libraries
 =========
 
 - **Cache:** Added support for TTL callables in the ``remember()`` method of cache handlers. This allows you to specify a callable that returns a TTL value, which can be useful for dynamic TTL.
-- **Context**: This new feature allows you to easily set and retrieve normal or hidden contextual data for the current request. See :ref:`Context <context>` for details.
-- **Images:**: Added support for the AVIF file format.
+- **Context:** This new feature allows you to easily set and retrieve normal or hidden contextual data for the current request. See :ref:`Context <context>` for details.
+- **Images:** Added support for the AVIF file format.
 - **Locks:** Added :doc:`Atomic Locks </libraries/locks>` for owner-aware, cross-process mutual exclusion backed by supported cache handlers: **File**, **Redis**, **Predis**, and **Memcached**. Memcached support has driver-specific release limitations because Memcached has no atomic compare-and-delete command.
 - **Logging:** Log handlers now receive the full context array as a third argument to ``handle()``. When ``$logGlobalContext`` is enabled, the CI global context is available under the ``HandlerInterface::GLOBAL_CONTEXT_KEY`` key. Built-in handlers append it to the log output; custom handlers can use it for structured logging.
 - **Logging:** Added :ref:`per-call context logging <logging-per-call-context>` with three new ``Config\Logger`` options (``$logContext``, ``$logContextTrace``, ``$logContextUsedKeys``). Per PSR-3, a ``Throwable`` in the ``exception`` context key is automatically normalized to a meaningful array. All options default to ``false``.
@@ -390,16 +320,8 @@ Libraries
 Helpers and Functions
 =====================
 
-- :doc:`Array Helper </helpers/array_helper>` gained five new dot-path functions:
-  :php:func:`dot_array_has()`, :php:func:`dot_array_set()`, :php:func:`dot_array_unset()`,
-  :php:func:`dot_array_only()`, and :php:func:`dot_array_except()`.
-- :doc:`Array Helper </helpers/array_helper>` dot-path read operations now support
-  object rows (including ``Entity``) in :php:func:`dot_array_search()`,
-  :php:func:`dot_array_has()`, :php:func:`dot_array_only()`,
-  :php:func:`dot_array_except()`, and :php:func:`array_group_by()`.
-  :php:func:`dot_array_only()` and :php:func:`dot_array_except()` still return arrays. If the source itself is an object,
-  it is read as an array-like value. Object values inside the source are kept unchanged when selected as a whole or left untouched.
-  Partial object paths are returned as arrays.
+- :doc:`Array Helper </helpers/array_helper>` gained five new dot-path functions: :php:func:`dot_array_has()`, :php:func:`dot_array_set()`, :php:func:`dot_array_unset()`, :php:func:`dot_array_only()`, and :php:func:`dot_array_except()`.
+- :doc:`Array Helper </helpers/array_helper>` dot-path read operations now support object rows (including ``Entity``) in :php:func:`dot_array_search()`, :php:func:`dot_array_has()`, :php:func:`dot_array_only()`, :php:func:`dot_array_except()`, and :php:func:`array_group_by()`. :php:func:`dot_array_only()` and :php:func:`dot_array_except()` still return arrays. If the source itself is an object, it is read as an array-like value. Object values inside the source are kept unchanged when selected as a whole or left untouched. Partial object paths are returned as arrays.
 
 HTTP
 ====
@@ -408,29 +330,17 @@ HTTP
 - Added the ``retry`` option to ``CURLRequest`` for retrying failed responses with configurable delays, retryable status codes, optional transient cURL error retries, and ``Retry-After`` support. See :ref:`curlrequest-request-options-retry`.
 - Added :ref:`Form Requests <form-requests>` - a new ``FormRequest`` base class that encapsulates validation rules, custom error messages, and authorization logic for a single HTTP request.
 - Added ``IncomingRequest::input()`` to read GET, POST, JSON, and raw request data through ``InputData``.
-- Added support for streaming responses. The ``StreamResponse`` class streams a body that is generated
-  while it is being sent, such as large dataset exports or AI/LLM token streams, and the ``SSEResponse``
-  class extends it to stream Server-Sent Events (SSE) over HTTP. Both can be created via the new
-  ``$this->response->stream()`` and ``$this->response->eventStream()`` factory methods.
-  See :ref:`streaming-responses` and :ref:`server-sent-events`.
-- ``Response`` and its child classes no longer require ``Config\App`` passed to their constructors.
-  Consequently, ``CURLRequest``'s ``$config`` parameter is unused and will be removed in a future release.
-- ``Response`` now lazily loads the ``ContentSecurityPolicy``, ``Cookie``, and ``CookieStore`` classes only when used,
-  instead of instantiating them on every request in the constructor. Requests that do not touch CSP or cookies no longer
-  incur the cost of loading these classes.
-- ``CLIRequest`` now supports the ``--`` separator to mean that what follows are arguments, not options. This allows you to have arguments that start with ``-`` without them being treated as options.
-  For example: ``php index.php command -- --myarg`` will pass ``--myarg`` as an argument instead of an option.
-- ``CLIRequest`` now supports options with values specified using an equals sign (e.g., ``--option=value``) in addition to the existing space-separated syntax (e.g., ``--option value``).
-  This provides more flexibility in how you can pass options to CLI requests.
+- Added support for streaming responses. The ``StreamResponse`` class streams a body that is generated while it is being sent, such as large dataset exports or AI/LLM token streams, and the ``SSEResponse`` class extends it to stream Server-Sent Events (SSE) over HTTP. Both can be created via the new ``$this->response->stream()`` and ``$this->response->eventStream()`` factory methods. See :ref:`streaming-responses` and :ref:`server-sent-events`.
+- ``Response`` and its child classes no longer require ``Config\App`` to be passed to their constructors. Consequently, ``CURLRequest``'s ``$config`` parameter is unused and will be removed in a future release.
+- ``Response`` now lazily loads the ``ContentSecurityPolicy``, ``Cookie``, and ``CookieStore`` classes only when used, instead of instantiating them on every request in the constructor. Requests that do not touch CSP or cookies no longer incur the cost of loading these classes.
+- ``CLIRequest`` now supports the ``--`` separator to mean that what follows are arguments, not options. This allows you to have arguments that start with ``-`` without them being treated as options. For example: ``php index.php command -- --myarg`` will pass ``--myarg`` as an argument instead of an option.
+- ``CLIRequest`` now supports options with values specified using an equals sign (e.g., ``--option=value``) in addition to the existing space-separated syntax (e.g., ``--option value``). This provides more flexibility in how you can pass options to CLI requests.
 - Added ``enable()`` and ``disable()`` methods to ``ContentSecurityPolicy`` to enable or disable the CSP header for the current request. See :ref:`csp-enable-disable`.
-- Added ``$enableStyleNonce`` and ``$enableScriptNonce`` options to ``Config\App`` to automatically add nonces to control whether to add nonces to style-* and script-* directives in the Content Security Policy (CSP) header when CSP is enabled. See :ref:`csp-control-nonce-generation` for details.
+- Added ``$enableStyleNonce`` and ``$enableScriptNonce`` options to ``Config\App`` to control whether nonces are automatically added to the ``style-*`` and ``script-*`` directives in the Content Security Policy (CSP) header when CSP is enabled. See :ref:`csp-control-nonce-generation` for details.
 - Added ``URI::withQuery()``, ``URI::withQueryArray()``, ``URI::withoutQueryVars()``, and ``URI::withOnlyQueryVars()`` to return cloned URIs with replaced or filtered query variables.
 - Added ``URI::withQueryVar()`` and ``URI::withQueryVars()`` to return a cloned URI with query variables added or replaced.
-- ``URI`` now accepts an optional boolean second parameter in the constructor, defaulting to ``false``, to control how the query string is parsed in instantiation.
-  This is the behavior of ``->useRawQueryString()`` brought into the constructor for convenience. Previously, you need to call ``$uri->useRawQueryString(true)->setURI($uri)`` to get this behavior.
-  Now you can simply do ``new URI($uri, true)``.
-- ``CLIRequest`` now supports parsing array options written multiple times (e.g., ``--option=value1 --option=value2``) into an array of values. This allows you to easily pass multiple values for the same option without needing to use a comma-separated string.
-  When used with ``CLIRequest::getOption()``, an array option will return its last value (for example, in this case, ``value2``). To retrieve all values for an array option, use ``CLIRequest::getRawOption()``.
+- ``URI`` now accepts an optional boolean second parameter in the constructor, defaulting to ``false``, to control how the query string is parsed on instantiation. This is the behavior of ``->useRawQueryString()`` brought into the constructor for convenience. Previously, you had to call ``$uri->useRawQueryString(true)->setURI($uri)`` to get this behavior. Now you can simply do ``new URI($uri, true)``.
+- ``CLIRequest`` now supports parsing array options written multiple times (e.g., ``--option=value1 --option=value2``) into an array of values. This allows you to easily pass multiple values for the same option without needing to use a comma-separated string. When used with ``CLIRequest::getOption()``, an array option will return its last value (for example, in this case, ``value2``). To retrieve all values for an array option, use ``CLIRequest::getRawOption()``.
 
 Validation
 ==========
@@ -444,10 +354,9 @@ Others
 - **Config:** Added optional ``CodeIgniter\Config\Merge`` directives for :ref:`Registrars <registrars>` to control replacing, deep merging, and ordered list additions. Existing registrar merge behavior is unchanged. See :ref:`registrar-merge-directives`.
 - **Float and Double Casting:** Added support for precision and rounding mode when casting to float or double in entities.
 - Added ``CodeIgniter\Input\InputData``, ``ValidatedInput``, and ``InputDataFactory`` for reusable typed input data objects.
-- Float and Double casting now throws ``CastException::forInvalidFloatRoundingMode()`` if an rounding mode other than up, down, even or odd is provided.
+- Float and Double casting now throws ``CastException::forInvalidFloatRoundingMode()`` if a rounding mode other than up, down, even, or odd is provided.
 - **Filters:** Added ``RequestId`` filter for request tracing and correlation logging. The filter stores the request ID in the request context and automatically adds the ``X-Request-ID`` response header. Incoming ``X-Request-ID`` headers are used when valid. See :ref:`requestid` for details.
-- **Environment:** Added ``CodeIgniter\EnvironmentDetector`` class and corresponding ``environment`` service as a mockable wrapper around the ``ENVIRONMENT`` constant.
-  Framework internals that previously compared ``ENVIRONMENT`` directly now go through this service, making environment-specific branches reachable in tests via ``Services::injectMock()``. See :ref:`environment-detector-service`.
+- **Environment:** Added ``CodeIgniter\EnvironmentDetector`` class and corresponding ``environment`` service as a mockable wrapper around the ``ENVIRONMENT`` constant. Framework internals that previously compared ``ENVIRONMENT`` directly now go through this service, making environment-specific branches reachable in tests via ``Services::injectMock()``. See :ref:`environment-detector-service`.
 - **Time:** Added ``Time::between()``, ``Time::min()``, and ``Time::max()`` comparison helpers. See :ref:`between <time-comparing-two-times-between>`, :ref:`min <time-comparing-two-times-min>`, and :ref:`max <time-comparing-two-times-max>`.
 
 ***************
@@ -488,13 +397,10 @@ Deprecations
 - **CLI:** ``BaseCommand`` is now deprecated in favor of ``AbstractCommand``. Running a command that extends it triggers a deprecation notice. See :doc:`../cli/cli_modern_commands`.
 - **CLI:** ``GeneratorTrait`` is now deprecated in favor of ``AbstractGeneratorCommand``. See :doc:`../cli/cli_modern_generators`.
 - **CLI:** The ``CLI.generator.viewName.cell`` language string is deprecated. It was never displayed, since ``make:cell`` only prompts for the class name.
-- **CLI:** The ``CLI::$foreground_colors``, ``CLI::$background_colors``, ``CLI::$lastWrite``, ``CLI::$height``, ``CLI::$width``, ``CLI::$isColored``,
-  ``CLI::$io``, and ``CLI::$stdoutToStderr`` properties are deprecated and no longer used. Their state lives in ``Color``, ``Output``, and
-  ``Terminal``. See :ref:`upgrade-480-cli-output-classes`.
-- **CLI:** ``CLI::validate()`` is deprecated and no longer used by the prompts. Calling it triggers a deprecation notice. Override ``Prompt::validate()`` instead.
-  See :ref:`upgrade-480-cli-prompt`.
+- **CLI:** The ``CLI::$foreground_colors``, ``CLI::$background_colors``, ``CLI::$lastWrite``, ``CLI::$height``, ``CLI::$width``, ``CLI::$isColored``, ``CLI::$io``, and ``CLI::$stdoutToStderr`` properties are deprecated and no longer used. Their state lives in ``Color``, ``Output``, and ``Terminal``. See :ref:`upgrade-480-cli-output-classes`.
+- **CLI:** ``CLI::validate()`` is deprecated and no longer used by the prompts. Calling it triggers a deprecation notice. Override ``Prompt::validate()`` instead. See :ref:`upgrade-480-cli-prompt`.
 - **HTTP:** The ``CLIRequest::parseCommand()`` method is now deprecated and will be removed in a future release. The ``CLIRequest`` class now uses the new ``CommandLineParser`` class to handle command-line argument parsing.
-- **HTTP:** ``URI::setSilent()`` is now hard deprecated. This method was only previously marked as deprecated. It will now trigger a deprecation notice when used.
+- **HTTP:** ``URI::setSilent()`` is now hard deprecated. This method was previously only marked as deprecated. It will now trigger a deprecation notice when used.
 
 **********
 Bugs Fixed

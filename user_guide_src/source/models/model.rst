@@ -170,26 +170,21 @@ $insertOnlyFields
 
 .. versionadded:: 4.8.0
 
-This array may contain fields that can be set during ``insert()`` and
-``insertBatch()`` calls, but should be removed from ``update()``,
-``updateBatch()``, and update-side ``save()`` calls.
+This array may contain fields that can be set during ``insert()`` and ``insertBatch()`` calls, but should be removed
+from ``update()``, ``updateBatch()``, and update-side ``save()`` calls.
 
-This is useful for values that should be created once and then left unchanged
-through normal Model writes, such as public IDs, external references, or
-generated slugs.
+This is useful for values that should be created once and then left unchanged through normal Model writes, such as
+public IDs, external references, or generated slugs.
 
 .. literalinclude:: model/069.php
 
-Fields listed here must also be listed in `$allowedFields`_ when field
-protection is enabled. This is Model-level protection only. It does not create a
-database constraint, does not inspect previous database values, and does not
-intercept ``replace()`` or direct Query Builder writes. Calling
-``protect(false)`` disables this protection.
+Fields listed here must also be listed in `$allowedFields`_ when field protection is enabled. This is Model-level
+protection only. It does not create a database constraint, does not inspect previous database values, and does not
+intercept ``replace()`` or direct Query Builder writes. Calling ``protect(false)`` disables this protection.
 
-By default, insert-only fields are discarded from update data, the same way
-fields outside `$allowedFields`_ are discarded. When `$throwOnDisallowedFields`_
-is enabled, submitting an insert-only field during an update operation throws a
-``DataException``.
+By default, insert-only fields are discarded from update data, the same way fields outside `$allowedFields`_ are
+discarded. When `$throwOnDisallowedFields`_ is enabled, submitting an insert-only field during an update operation
+throws a ``DataException``.
 
 You may also change this setting with the ``setInsertOnlyFields()`` method.
 
@@ -200,13 +195,11 @@ $throwOnDisallowedFields
 
 .. versionadded:: 4.8.0
 
-When ``true``, the model throws a ``DataException`` instead of discarding fields
-that are not listed in `$allowedFields`_ during ``insert()``, ``insertBatch()``,
-``update()``, ``updateBatch()``, and ``save()`` calls.
+When ``true``, the model throws a ``DataException`` instead of discarding fields that are not listed in
+`$allowedFields`_ during ``insert()``, ``insertBatch()``, ``update()``, ``updateBatch()``, and ``save()`` calls.
 
-This is useful when you want to catch typos, stale form fields, or unexpected
-write payloads during development or in strict application code. It does not
-replace validation and does not inspect the database schema.
+This is useful when you want to catch typos, stale form fields, or unexpected write payloads during development or in
+strict application code. It does not replace validation and does not inspect the database schema.
 
 You may also change this setting with the ``throwOnDisallowedFields()`` method.
 
@@ -436,16 +429,16 @@ of type to mark the field as nullable, i.e., ``?int``, ``?datetime``.
 float
 -----
 
-Casting as ``float`` will convert the value to a float type in PHP.
-This is best used with database columns that are of a float or numeric type.
+Casting as ``float`` will convert the value to a float type in PHP. This is best used with database columns that are of
+a float or numeric type.
 
-You can also pass arguments to the ``float`` type to specify the number
-of decimal places to round to as well as the rounding mode (up, down, even or odd).
+You can also pass arguments to the ``float`` type to specify the number of decimal places to round to as well as the
+rounding mode (up, down, even, or odd).
 
 .. literalinclude:: model/067.php
 
-.. note:: Prior to v4.8.0 the ``float`` type did not support any parameters.
-    It simply converted the value to a float type in PHP without rounding.
+.. note:: Prior to v4.8.0 the ``float`` type did not support any parameters. It simply converted the value to a float
+    type in PHP without rounding.
 
 csv
 ---
@@ -502,44 +495,37 @@ encrypted
 
 .. versionadded:: 4.8.0
 
-Casting as ``encrypted`` encrypts string values before they are stored and
-decrypts them when they are retrieved. It uses the
-:doc:`Encryption </libraries/encryption>` service, so you must configure an
-encryption key before using it. The configured key is required for both writing
-new values and reading stored values back. The ``encrypted`` type accepts string
-values. Use ``?encrypted`` for nullable values.
+Casting as ``encrypted`` encrypts string values before they are stored and decrypts them when they are retrieved. It
+uses the :doc:`Encryption </libraries/encryption>` service, so you must configure an encryption key before using it. The
+configured key is required for both writing new values and reading stored values back. The ``encrypted`` type accepts
+string values. Use ``?encrypted`` for nullable values.
 
 .. literalinclude:: model/070.php
 
-The ``encrypted-json`` and ``encrypted-json-array`` types JSON encode values
-before encryption and JSON decode them after decryption. The ``encrypted-json``
-type returns ``stdClass`` values, while ``encrypted-json-array`` returns arrays.
-Use ``?encrypted-json`` and ``?encrypted-json-array`` for nullable values. These
-values are still stored as encrypted text, not as queryable database JSON.
+The ``encrypted-json`` and ``encrypted-json-array`` types encode values as JSON before encryption and decode them after
+decryption. The ``encrypted-json`` type returns ``stdClass`` values, while ``encrypted-json-array`` returns arrays. Use
+``?encrypted-json`` and ``?encrypted-json-array`` for nullable values. These values are still stored as encrypted text,
+not as queryable database JSON.
 
-Encrypted values are stored as Base64-encoded ciphertext. Use a ``TEXT`` column
-or a sufficiently large string column because the stored value is longer than
-the plain text value. Avoid narrow columns like ``VARCHAR(255)`` unless you have
+Encrypted values are stored as Base64-encoded ciphertext. Use a ``TEXT`` column or a sufficiently large string column
+because the stored value is longer than the plain text value. Avoid narrow columns like ``VARCHAR(255)`` unless you have
 verified the maximum encrypted length for the values you will store.
 
-.. warning:: Encrypted values cannot be searched, sorted, filtered, or checked
-    for uniqueness by their plain text value in the database.
+.. warning:: Encrypted values cannot be searched, sorted, filtered, or checked for uniqueness by their plain text value
+    in the database.
 
-.. warning:: Do not use encrypted casting for passwords. Passwords should be
-    hashed with PHP's password hashing functions.
+.. warning:: Do not use encrypted casting for passwords. Passwords should be hashed with PHP's password hashing
+    functions.
 
-.. note:: Model validation and write callbacks receive the encrypted value
-    because Model Field Casting converts values before they are stored. Validate
-    the plain text value before passing it to the Model when validation must
-    inspect the plain text.
+.. note:: Model validation and write callbacks receive the encrypted value because Model Field Casting converts values
+    before they are stored. Validate the plain text value before passing it to the Model when validation must inspect
+    the plain text.
 
-.. note:: If the stored value cannot be decrypted, an ``EncryptionException`` is
-    thrown.
+.. note:: If the stored value cannot be decrypted, an ``EncryptionException`` is thrown.
 
-.. note:: If you rotate encryption keys, values encrypted with a previous key can
-    be decrypted when that key is configured in ``previousKeys``. Save the value
-    again to re-encrypt it with the current key. See :ref:`spark-key-rotate` for
-    rotating keys.
+.. note:: If you rotate encryption keys, values encrypted with a previous key can be decrypted when that key is
+    configured in ``previousKeys``. Save the value again to re-encrypt it with the current key. See
+    :ref:`spark-key-rotate` for rotating keys.
 
 Custom Casting
 ==============
@@ -789,29 +775,24 @@ firstOrInsert()
 
 .. versionadded:: 4.8.0
 
-Finds the first row matching the given ``$attributes``, or inserts a new row
-combining ``$attributes`` and ``$values`` when no match is found.
+Finds the first row matching the given ``$attributes``, or inserts a new row combining ``$attributes`` and ``$values``
+when no match is found.
 
-Both parameters accept an array, a ``stdClass`` object, or an
-:doc:`Entity </models/entities>`:
+Both parameters accept an array, a ``stdClass`` object, or an :doc:`Entity </models/entities>`:
 
 .. literalinclude:: model/065.php
 
-``$attributes`` is used as the WHERE condition for the lookup. If no record is
-found, a new row is inserted using the merged result of ``$attributes`` and
-``$values``. The ``$values`` data is only applied during insertion and is
-ignored when a matching record already exists.
+``$attributes`` is used as the WHERE condition for the lookup. If no record is found, a new row is inserted using the
+merged result of ``$attributes`` and ``$values``. The ``$values`` data is only applied during insertion and is ignored
+when a matching record already exists.
 
 .. literalinclude:: model/066.php
 
-The method returns the found or newly inserted row in the format defined by
-`$returnType`_, or ``false`` on failure (e.g., validation error or database
-error when ``DBDebug`` is ``false``).
+The method returns the found or newly inserted row in the format defined by `$returnType`_, or ``false`` on failure
+(e.g., validation error or database error when ``DBDebug`` is ``false``).
 
-.. note:: A database **unique constraint** on the lookup column(s) is required
-    for the method to be race-safe. Without it, two concurrent requests could
-    both pass the initial lookup and attempt to insert, resulting in duplicate
-    rows.
+.. note:: A database **unique constraint** on the lookup column(s) is required for the method to be race-safe. Without
+    it, two concurrent requests could both pass the initial lookup and attempt to insert, resulting in duplicate rows.
 
     When a unique constraint is present, a concurrent insert is detected via
     :php:class:`UniqueConstraintViolationException <CodeIgniter\\Database\\Exceptions\\UniqueConstraintViolationException>`
@@ -824,34 +805,28 @@ withLockedRow()
 
 .. versionadded:: 4.8.0
 
-Reloads one row by primary key inside a transaction using
-:ref:`query-builder-lock-for-update`, then runs the callback with the locked row
-and the current Model instance:
+Reloads one row by primary key inside a transaction using :ref:`query-builder-lock-for-update`, then runs the callback
+with the locked row and the current Model instance:
 
 .. literalinclude:: model/073.php
 
-The method returns the callback return value. If the row is not found, the
-callback is not run and ``null`` is returned. If the transaction cannot begin or
-the transaction status fails without an exception, ``false`` is returned.
+The method returns the callback return value. If the row is not found, the callback is not run and ``null`` is returned.
+If the transaction cannot begin or the transaction status fails without an exception, ``false`` is returned.
 
-Existing Model query constraints are applied to the locked lookup, so methods
-like ``where()`` and ``withDeleted()`` can be called before ``withLockedRow()``.
+Existing Model query constraints are applied to the locked lookup, so methods like ``where()`` and ``withDeleted()`` can
+be called before ``withLockedRow()``.
 
-Returning ``false`` from the callback does not trigger a rollback. To explicitly
-roll back from the callback, throw an exception. Any exception thrown by the
-callback rolls back the transaction and is rethrown. Unsupported lock
+Returning ``false`` from the callback does not trigger a rollback. To explicitly roll back from the callback, throw an
+exception. Any exception thrown by the callback rolls back the transaction and is rethrown. Unsupported lock
 combinations throw the same database exceptions as ``lockForUpdate()``.
 
-.. important:: The locked row is reloaded directly from the database, so Model
-    find callbacks are not run for that lookup. Model methods called inside the
-    callback, such as ``save()`` or ``update()``, still follow the Model's
+.. important:: The locked row is reloaded directly from the database, so Model find callbacks are not run for that
+    lookup. Model methods called inside the callback, such as ``save()`` or ``update()``, still follow the Model's
     callback setting.
 
-.. note:: Row locks are only useful when the database supports transactions and
-    pessimistic locks. See :ref:`query-builder-lock-for-update` for driver
-    support and limitations. If database transactions are disabled, this method
-    follows the behavior of ``transaction()`` and runs the callback without
-    starting a transaction.
+.. note:: Row locks are only useful when the database supports transactions and pessimistic locks. See
+    :ref:`query-builder-lock-for-update` for driver support and limitations. If database transactions are disabled, this
+    method follows the behavior of ``transaction()`` and runs the callback without starting a transaction.
 
 .. _model-saving-dates:
 
@@ -1091,17 +1066,15 @@ For ``replace()``, a supplied `$primaryKey`_ is retained to identify the record 
 
 .. literalinclude:: model/041.php
 
-If you prefer disallowed fields to raise an exception instead of being silently
-removed, enable throwing on disallowed fields:
+If you prefer disallowed fields to raise an exception instead of being silently removed, enable throwing on disallowed
+fields:
 
 .. literalinclude:: model/068.php
 
-When throwing on disallowed fields is enabled, operation fields such as the
-primary key passed to ``update()`` or the index passed to ``updateBatch()`` may
-still be used to locate rows.
+When throwing on disallowed fields is enabled, operation fields such as the primary key passed to ``update()`` or the
+index passed to ``updateBatch()`` may still be used to locate rows.
 
-If some allowed fields should only be set during insert operations, list them
-in `$insertOnlyFields`_:
+If some allowed fields should only be set during insert operations, list them in `$insertOnlyFields`_:
 
 .. literalinclude:: model/069.php
 
@@ -1141,7 +1114,8 @@ Sometimes, you need to process large amounts of data and would run the risk of r
 This is best used during cronjobs, data exports, or other large tasks. To make this simpler, you can
 process the data in smaller, manageable pieces using the methods below.
 
-.. note:: The ``chunk()``, ``chunkRows()``, ``chunkById()``, and ``chunkRowsById()`` methods do not trigger Model callbacks.
+.. note:: The ``chunk()``, ``chunkRows()``, ``chunkById()``, and ``chunkRowsById()`` methods do not trigger Model
+    callbacks.
 
 chunk()
 -------
@@ -1157,7 +1131,8 @@ chunkRows()
 
 .. versionadded:: 4.8.0
 
-On the other hand, if you want the entire chunk to be passed to the Closure at once, you can use the ``chunkRows()`` method.
+On the other hand, if you want the entire chunk to be passed to the Closure at once, you can use the ``chunkRows()``
+method.
 
 .. literalinclude:: model/064.php
 
@@ -1166,9 +1141,9 @@ chunkById()
 
 .. versionadded:: 4.8.0
 
-If you need to update or delete rows while processing them, use ``chunkById()``.
-This method retrieves each chunk ordered by the model's primary key instead of using an offset,
-so deleting or updating rows already processed will not cause later rows to be skipped.
+If you need to update or delete rows while processing them, use ``chunkById()``. This method retrieves each chunk
+ordered by the model's primary key instead of using an offset, so deleting or updating rows already processed will not
+cause later rows to be skipped.
 
 .. literalinclude:: model/071.php
 
@@ -1181,15 +1156,13 @@ If you want the entire ID-based chunk to be passed to the Closure at once, use `
 
 .. literalinclude:: model/072.php
 
-.. warning:: ID-based chunking needs the model to define a primary key, and that primary key must be selected.
-    If you customize the selected columns, make sure the primary key is included.
-    When using joins, the model primary key must remain available under its normal field name,
-    and each primary key value must appear only once in the result set. Otherwise, rows may be skipped.
-    These methods manage their own primary key ordering and cannot be used with
-    ``orderBy()``, ``groupBy()``, ``limit()``, ``offset()`` or ``union()``.
-    You should also avoid changing primary key values while processing chunks.
-    Since these methods add their own ``WHERE`` condition to each chunk query,
-    group any ``orWhere()`` conditions that should be evaluated together.
+.. warning:: ID-based chunking needs the model to define a primary key, and that primary key must be selected. If you
+    customize the selected columns, make sure the primary key is included. When using joins, the model primary key must
+    remain available under its normal field name, and each primary key value must appear only once in the result set.
+    Otherwise, rows may be skipped. These methods manage their own primary key ordering and cannot be used with
+    ``orderBy()``, ``groupBy()``, ``limit()``, ``offset()`` or ``union()``. You should also avoid changing primary key
+    values while processing chunks. Since these methods add their own ``WHERE`` condition to each chunk query, group any
+    ``orWhere()`` conditions that should be evaluated together.
 
 .. _model-events-callbacks:
 

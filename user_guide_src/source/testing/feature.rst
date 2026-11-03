@@ -60,7 +60,7 @@ override any existing routes in the system:
 .. literalinclude:: feature/004.php
    :lines: 2-
 
-Each of the "routes" is a 3 element array containing the uppercase HTTP verb (or "add" for all),
+Each of the "routes" is a 3-element array containing the uppercase HTTP verb (or "add" for all),
 the URI to match, and the routing destination.
 
 .. _feature-setting-session-values:
@@ -97,9 +97,10 @@ Use ``withFiles()`` to attach uploaded files to the next feature request. Create
     $file = new MockUploadedFile($path, 'photo.jpg', 'image/jpeg');
     $result = $this->withFiles(['photo' => $file])->post('photos', ['title' => 'Portrait']);
 
-The route can access the file through ``$request->getFile('photo')`` and use upload validation, ``move()``, or ``store()``.
-``withFiles()`` sets the request's ``Content-Type`` to ``multipart/form-data`` and clears the attached files after the request.
-Moving or storing the file moves the local source file, so create a new file object for each upload request.
+The route can access the file through ``$request->getFile('photo')`` and use upload validation, ``move()``, or
+``store()``. ``withFiles()`` sets the request's ``Content-Type`` to ``multipart/form-data`` and clears the attached
+files after the request. Moving or storing the file moves the local source file, so create a new file object for each
+upload request.
 
 Bypassing Events
 ----------------
@@ -122,8 +123,7 @@ This is useful when testing JSON or XML APIs so that you can set the request in 
 This will take the parameters passed into ``call()``, ``post()``, ``get()``... and assign them to the
 body of the request in the given format.
 
-For example, use ``withBodyFormat('json')->query()`` to test a QUERY request
-with a JSON body.
+For example, use ``withBodyFormat('json')->query()`` to test a QUERY request with a JSON body.
 
 This will also set the `Content-Type` header for your request accordingly.
 

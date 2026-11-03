@@ -121,9 +121,8 @@ each take the URL as the first parameter and an array of options as the second:
 
 .. literalinclude:: curlrequest/007.php
 
-The ``query()`` shortcut sends an HTTP QUERY request. QUERY requests usually
-include query content, so use options such as ``json``, ``form_params``, or
-``body`` to send the expected body. This is different from the ``query`` request
+The ``query()`` shortcut sends an HTTP QUERY request. QUERY requests usually include query content, so use options such
+as ``json``, ``form_params``, or ``body`` to send the expected body. This is different from the ``query`` request
 option, which adds URL query variables to the request URI.
 
 Base URI
@@ -391,8 +390,8 @@ retry
 
 .. versionadded:: 4.8.0
 
-The ``retry`` option retries failed requests before returning the final response or throwing an exception.
-For simple cases, set ``retry`` to the number of retry attempts:
+The ``retry`` option retries failed requests before returning the final response or throwing an exception. For simple
+cases, set ``retry`` to the number of retry attempts:
 
 .. code-block:: php
 
@@ -407,36 +406,34 @@ For more control, pass an array:
 The available retry settings are:
 
 - ``max_retries``: Number of retries after the initial request. The default is ``3``.
-- ``delay``: Delay in milliseconds before retrying. This may be an integer or a list of integers
-  for simple backoff. If the list is shorter than the retry count, the last value is reused.
-  The default is ``1000``.
-- ``max_delay``: Maximum delay in milliseconds. This caps both the configured ``delay`` and a
-  valid ``Retry-After`` header. Set to ``0`` for no maximum delay. The default is ``30000``.
+- ``delay``: Delay in milliseconds before retrying. This may be an integer or a list of integers for simple backoff. If
+  the list is shorter than the retry count, the last value is reused. The default is ``1000``.
+- ``max_delay``: Maximum delay in milliseconds. This caps both the configured ``delay`` and a valid ``Retry-After``
+  header. Set to ``0`` for no maximum delay. The default is ``30000``.
 - ``status_codes``: HTTP status codes that should be retried. The default is ``[429, 503, 504]``.
 - ``curl_errors``: Whether to retry transient cURL errors. The default is ``false``.
-- ``respect_retry_after``: Whether to use a valid ``Retry-After`` header instead of the configured
-  ``delay``. The default is ``true``.
+- ``respect_retry_after``: Whether to use a valid ``Retry-After`` header instead of the configured ``delay``. The
+  default is ``true``.
 
-When ``respect_retry_after`` is enabled, a valid ``Retry-After`` header takes priority over the
-configured ``delay``. The header may be either a number of seconds or an HTTP date. If the header
-is invalid, the configured ``delay`` is used instead.
+When ``respect_retry_after`` is enabled, a valid ``Retry-After`` header takes priority over the configured ``delay``.
+The header may be either a number of seconds or an HTTP date. If the header is invalid, the configured ``delay`` is used
+instead.
 
-Because ``Retry-After`` is supplied by the remote server, it is capped by ``max_delay`` by default
-to avoid unexpectedly long waits in the current PHP process.
+Because ``Retry-After`` is supplied by the remote server, it is capped by ``max_delay`` by default to avoid unexpectedly
+long waits in the current PHP process.
 
-When ``curl_errors`` is enabled, only DNS resolution failures, connection failures, timeouts,
-and send or receive failures are retried.
+When ``curl_errors`` is enabled, only DNS resolution failures, connection failures, timeouts, and send or receive
+failures are retried.
 
-When `http_errors`_ is enabled, an HTTP error response is retried first if its status code is
-configured in ``status_codes``. If all retry attempts are exhausted, the final HTTP error response
-throws the same as a request without retries.
+When `http_errors`_ is enabled, an HTTP error response is retried first if its status code is configured in
+``status_codes``. If all retry attempts are exhausted, the final HTTP error response throws the same exception as a
+request without retries.
 
-.. note:: Retry delays block the current PHP process. The total request time may exceed the
-    configured `timeout`_ because each retry attempt has its own cURL timeout and retry delays
-    are added between attempts.
+.. note:: Retry delays block the current PHP process. The total request time may exceed the configured `timeout`_
+    because each retry attempt has its own cURL timeout and retry delays are added between attempts.
 
-.. warning:: Be careful when retrying non-idempotent requests such as ``POST`` or ``PATCH``.
-    The remote server may receive the request more than once.
+.. warning:: Be careful when retrying non-idempotent requests such as ``POST`` or ``PATCH``. The remote server may
+    receive the request more than once.
 
 timeout
 =======

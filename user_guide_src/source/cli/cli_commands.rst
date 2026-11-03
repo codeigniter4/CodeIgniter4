@@ -10,9 +10,8 @@ building out custom code generators for your company.
 
 .. deprecated:: 4.8.0
 
-    ``BaseCommand`` is deprecated, and running a command that extends it triggers a
-    deprecation notice. Write new commands against ``AbstractCommand`` instead.
-    See :doc:`cli_modern_commands`.
+    ``BaseCommand`` is deprecated, and running a command that extends it triggers a deprecation notice. Write new
+    commands against ``AbstractCommand`` instead. See :doc:`cli_modern_commands`.
 
 .. contents::
     :local:
