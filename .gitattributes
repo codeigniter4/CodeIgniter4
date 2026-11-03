@@ -36,5 +36,7 @@ AGENTS.md                    export-ignore
 
 # source user guide
 user_guide_src/ export-ignore
+docs/           export-ignore
+mkdocs.yml      export-ignore
 .nojekyll       export-ignore
 phpdoc.dist.xml export-ignore
