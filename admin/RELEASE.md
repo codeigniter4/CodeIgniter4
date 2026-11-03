@@ -1,247 +1,579 @@
 # Release Process
 
-> Documentation guide based on the releases of `4.0.5` and `4.1.0` on January 31, 2021 (MGatner)
+This guide walks a release manager through publishing a CodeIgniter4 release, from the first merge to the announcement.
+It covers both **patch releases** (e.g., `4.7.6`) and **minor releases** (e.g., `4.8.0`).
+
+Follow the steps in order. Every command is in its own code block, so you can copy it as it is.
+
+## Edit History
+
+| Update | Date (UTC) | By |
+| --- | --- | --- |
+| Guide based on the releases of `4.0.5` and `4.1.0` | February 1, 2021 | MGatner |
+| Updated for `4.5.0` | April 7, 2024 | kenjis |
+| Updated for `4.6.0` | January 19, 2025 | paulbalandan |
+| Updated for `4.7.5` | July 7, 2026 | paulbalandan |
+| Rewritten as numbered steps with named variables, for `4.7.6` | November 1, 2026 | paulbalandan |
+
+## Contents
+
+- [Before You Start](#before-you-start)
+- [Phase A: Prepare the Branches](#phase-a-prepare-the-branches) (steps 1 to 3)
+- [Phase B: Prepare the Content](#phase-b-prepare-the-content) (steps 4 to 9)
+- [Phase C: Prep Pull Request](#phase-c-prep-pull-request) (steps 10 to 12)
+- [Phase D: Release](#phase-d-release) (steps 13 to 16)
+- [Phase E: After the Release](#phase-e-after-the-release) (steps 17 to 21)
+- [Troubleshooting](#troubleshooting)
+- [Appendix](#appendix)
+
+## Before You Start
+
+### What you need
+
+- Push access to `codeigniter4/CodeIgniter4`, including permission to merge into `master` and to publish releases.
+- A clone of your fork with two remotes. The scripts depend on these names:
+  - `origin` is your fork. You push release branches here.
+  - `upstream` is `codeigniter4/CodeIgniter4`. The scripts push to it directly.
+- PHP, Git and the authenticated [GitHub CLI](https://cli.github.com/) (`gh`).
+- Administrator rights for the last steps: publishing security advisories and posting on the forum.
+
+Check the remotes and the GitHub CLI:
+
+```bash
+git remote -v
+```
+
+```bash
+gh auth status
+```
+
+The working tree must be clean before you start:
+
+```bash
+git status --short
+```
+
+### Release types
+
+| Type | When | Example |
+| --- | --- | --- |
+| Patch | Bug fixes and security fixes from `develop` | `4.7.6` |
+| Minor | New features from the next minor branch | `4.8.0` |
+
+A version ending in `.0` is a minor release. Steps that apply to only one type are marked **Minor releases only** or **Patch releases only**.
+
+### The variables
+
+The old notation (`4.x.x`, `4.y`, `4.z`) is replaced by four named variables.
+Use the same names everywhere in this guide.
+
+| Variable | Meaning | Patch example | Minor example | Old notation |
+| --- | --- | --- | --- | --- |
+| `VERSION` | The version you are releasing | `4.7.6` | `4.8.0` | `4.x.x` |
+| `FEATURE_BRANCH` | The branch that holds the next minor's features. It exists before the release. | `4.8` | `4.8` | `4.y` |
+| `NEW_FEATURE_BRANCH` | The branch created after a minor release for the following minor (minor releases only) | not used | `4.9` | `4.z` |
+| `NEXT_VERSION` | The next patch version, for which you prepare the changelog at the end | `4.7.7` | `4.8.1` | not named |
+
+To find `FEATURE_BRANCH`, list the minor branches. There is exactly one, and it is the highest version:
+
+```bash
+git ls-remote --heads upstream '4.*'
+```
+
+To find the latest published release:
+
+```bash
+gh release view --repo codeigniter4/CodeIgniter4 --json tagName --jq .tagName
+```
+
+Set the variables once. Use the same terminal for the whole release.
+If you open a new terminal, run this block again.
+
+```bash
+export VERSION=4.7.6
+export FEATURE_BRANCH=4.8
+export NEW_FEATURE_BRANCH=4.9
+export NEXT_VERSION=4.7.7
+```
+
+> [!NOTE]
+> Edit the values above before you paste them. For a patch release you can leave `NEW_FEATURE_BRANCH` set, since no step reads it.
+
+### How to merge each pull request
+
+This release creates four kinds of pull requests. The merge method matters for one of them.
+
+| Pull request | Merge method |
+| --- | --- |
+| `$FEATURE_BRANCH.0 Merge code` (minor releases only) | **Create a merge commit** |
+| `Prep for $VERSION release` | Squash and merge |
+| `$VERSION Ready code` (`develop` into `master`) | **Create a merge commit. Never squash.** |
+| Changelog for the next version | Squash and merge |
+
+> [!IMPORTANT]
+> The `Ready code` pull request must be merged with **Create a merge commit**, not the usual squash.
+> A squash writes a new commit to `master` that `develop` does not contain.
+> Then `develop` and `master` diverge, and the post-release sync in step 17 can no longer be a fast-forward.
 >
-> Updated for `4.5.0` on April 7, 2024 (kenjis)
-> Updated for `4.6.0` on January 19, 2025 (paulbalandan)
-> Updated for `4.7.5` on July 8, 2026 (paulbalandan)
+> In the GitHub merge button, open the drop-down arrow and choose **Create a merge commit**.
+> The CLI equivalent is `gh pr merge <number> --merge`.
 
-## Notation
+## Phase A: Prepare the Branches
 
-- `4.x.x`: The new release version. (e.g., `4.5.3`)
-- `4.y`: The next minor version. (e.g., `4.6`)
-- `4.z`: The next next minor version. (e.g., `4.7`)
+### 1. Merge `develop` into the feature branch
+
+Do this first. If conflicts occur, they are easier to resolve before the release work starts.
+
+```bash
+php admin/sync-release-branches.php $FEATURE_BRANCH develop --push
+```
+
+The script switches to `$FEATURE_BRANCH` (creating it from `upstream` if needed), merges `upstream/$FEATURE_BRANCH` and then `upstream/develop`, and pushes to `upstream`.
+
+If the merge conflicts, the script stops. Resolve the conflicts, then run:
+
+```bash
+git merge --continue
+```
+
+```bash
+git push upstream HEAD
+```
+
+### 2. Merge the feature branch into `develop` (minor releases only)
+
+Skip this step for a patch release.
+
+1. Create a pull request from `$FEATURE_BRANCH` to `develop`:
+   - Title: `<FEATURE_BRANCH>.0 Merge code`, for example `4.8.0 Merge code`
+   - Description: blank
+2. Merge it with **Create a merge commit**.
+3. In **Settings > Branches > Branch protection rules**, rename the rule for `$FEATURE_BRANCH` to `$NEW_FEATURE_BRANCH` (for example `4.8` to `4.9`).
+4. Delete the merged `$FEATURE_BRANCH` branch.
+
+> [!WARNING]
+> Deleting the branch closes every open pull request that targets it.
+> Retarget or merge those pull requests first.
+
+### 3. Update your local `develop`
+
+The `prepare-release.php` script in step 10 starts from your local `develop`, so it must match `upstream/develop`.
+Step 1 leaves you on `$FEATURE_BRANCH`, so switch back.
+
+```bash
+git fetch upstream
+```
+
+```bash
+git switch develop
+```
+
+```bash
+git merge --ff-only upstream/develop
+```
+
+Check: `git status` reports a clean tree on `develop`.
+
+## Phase B: Prepare the Content
+
+> [!IMPORTANT]
+> From step 7 to step 10, **leave your edits uncommitted**.
+> The `prepare-release.php` script in step 10 commits them for you, but only changes to files that Git already tracks.
+> Do not create new files during these steps.
+
+### 4. Check the pull request labels
+
+The changelog is built from pull request labels. Every pull request to include needs one of these [labels](https://github.com/codeigniter4/CodeIgniter4/labels):
+
+| Label | Use for |
+| --- | --- |
+| `bug` | Pull requests that fix bugs |
+| `enhancement` | Pull requests that improve existing functionality |
+| `new feature` | Pull requests for new features |
+| `refactor` | Pull requests that refactor |
+
+Pull requests with breaking changes also need the `breaking change` label.
+
+Find merged pull requests without a changelog label:
+
+```bash
+php admin/check-pr-labels.php
+```
+
+The script prints the `gh pr edit` commands that add the missing labels. Review them, label the pull requests, then run the check again until it reports nothing.
+
+### 5. Check the `admin/` folder for removed files
+
+The deploy scripts do not delete files. Look for hidden or other files that were removed from `admin/` since the last release.
+
+```bash
+git diff --name-status upstream/master upstream/develop -- admin/
+```
+
+Lines that start with `D` are removed files. Make sure none of them is needed by the deploy.
+
+### 6. Merge the security advisory pull requests
+
+Skip this step if the release has no security fixes.
+
+Merge any security advisory pull requests from the private forks. Each fix must also be documented in the `SECURITY` section of **user_guide_src/source/changelogs/v$VERSION.rst**, because step 7 copies that section into **CHANGELOG.md**.
+
+### 7. Generate `CHANGELOG.md`
+
+The script builds the entry from GitHub's auto-generated release notes plus the `SECURITY` section from step 6.
+
+Preview first:
+
+```bash
+php admin/generate-changelog.php $VERSION --dry-run
+```
+
+The script lists pull requests that have none of the changelog labels. If any of them belong in the changelog, add a label and run the preview again.
+
+When the preview is right, prepend the entry to **CHANGELOG.md**:
+
+```bash
+php admin/generate-changelog.php $VERSION
+```
+
+Check: **CHANGELOG.md** starts with the new `v$VERSION` entry.
+
+If the script cannot be used, open the [Releases](https://github.com/codeigniter4/CodeIgniter4/releases) page and click **Draft a new release**.
+Choose the tag `v$VERSION` (create it on publish) with the target `develop`, and click **Generate release notes**.
+Copy the result into **CHANGELOG.md** and match the format of the existing entries.
+
+### 8. Update the detailed changelog
+
+Edit **user_guide_src/source/changelogs/v$VERSION.rst**.
+Remove every section title that has no items under it.
+
+### 9. Update the upgrade guide
+
+Edit the upgrade guide page for the version in **user_guide_src/source/installation/**. The file name is `upgrade_` followed by the version without dots, so `4.7.6` is **upgrade_476.rst**.
+
+Preview the generated content:
+
+```bash
+php admin/update-upgrade-guide.php $VERSION --dry-run
+```
+
+Fill in the "Config" and "All Changes" sections with the project space files changed since the last release:
+
+```bash
+php admin/update-upgrade-guide.php $VERSION
+```
+
+Then finish the page by hand:
+
+- The script does not modify a "Config" section that already has content. It prints any missing entries for you to merge manually.
+- Add notes to the "Config" entries where users need them.
+- Remove every section title that has no items under it.
+- **Minor releases only:** change the "from" version in the title to the last patch of the previous minor, for example `from 4.7.x` to `from 4.7.6`.
+
+## Phase C: Prep Pull Request
+
+### 10. Create the release branch
+
+Run the script. It starts from your local `develop`, so step 3 matters.
+
+```bash
+php admin/prepare-release.php $VERSION
+```
+
+The script does the following:
+
+- Creates the branch `release-$VERSION` from `develop`, replacing any local branch of the same name.
+- Sets `CI_VERSION` in **system/CodeIgniter.php** to `$VERSION`.
+- Sets `version` (for example `4.7`) and `release` (for example `4.7.6`) in **user_guide_src/source/conf.py**.
+- Sets the release date in **user_guide_src/source/changelogs/v$VERSION.rst** (format `Release Date: January 31, 2021`).
+- Updates the title and version in **phpdoc.dist.xml**.
+- Updates **admin/starter/builds**: `LATEST_RELEASE` becomes `^<minor>` and `NEXT_MINOR` becomes `^<next minor>-dev`.
+- Commits everything, including your uncommitted edits to tracked files, as `Prep for $VERSION release`.
 
 > [!NOTE]
-> Copy this file, and replace the versions above with the actual versions.
+> If the major version changes, set `NEXT_MINOR` in **admin/starter/builds** by hand, for example to `^5.0-dev`.
 
-## Merge `develop` branch into next minor version branch `4.y`
+Check what was committed:
 
-Before starting the release process, if there are commits in `develop` branch that
-are not merged into `4.y` branch, merge them. This is because if conflicts occur,
-merging will take time.
+```bash
+git show --stat HEAD
+```
 
-* [ ] Merge `develop` into `4.y`:
-    ```console
-    php admin/sync-release-branches.php 4.y develop --push
-    ```
+Check: the commit contains **CHANGELOG.md**, the changelog and upgrade guide pages, and the version files above.
 
-## [Minor version only] Merge minor version branch into `develop`
+### 11. Open the Prep pull request
 
-If you release a new minor version.
+Push the branch to your fork:
 
-* [ ] Create PR to merge `4.y` into `develop`:
-  * Title: `4.y.0 Merge code`
-  * Description: blank
-* [ ] Rename the current minor version (e.g., `4.5`) in Setting > Branches >
-  "Branch protection rules" to the next minor version (e.g. `4.5` → `4.6`).
-* [ ] Delete the merged `4.y` branch (this closes all PRs to the branch).
+```bash
+git push origin HEAD
+```
 
-## Preparation
+Find the number of the previous release's Prep pull request. You need it for the description below.
 
-Work off direct clones of the repos so the release branches persist for a time.
+```bash
+gh pr list --repo codeigniter4/CodeIgniter4 --state merged --search "Prep for release in:title" --limit 3
+```
 
-* [ ] Clone both **codeigniter4/CodeIgniter4** and **codeigniter4/userguide** and
-  resolve any necessary PRs
-    ```console
-    rm -rf CodeIgniter4.bk userguide.bk
-    mv CodeIgniter4 CodeIgniter4.bk
-    mv userguide userguide.bk
-    git clone git@github.com:codeigniter4/CodeIgniter4.git
-    git clone git@github.com:codeigniter4/userguide.git
-    ```
-* [ ] Vet the **admin/** folders for any removed hidden files (Action deploy scripts
-  *do not remove these*)
-  ```console
-  cd CodeIgniter4
-  git diff --name-status origin/master admin/
-  ```
+Open a pull request from `release-$VERSION` to `develop`. The description keeps the repository's pull request template, with the extra lines filled in later:
 
-## Changelog
+```bash
+gh pr create --repo codeigniter4/CodeIgniter4 --base develop --head "$(gh api user --jq .login):release-$VERSION" --title "Prep for $VERSION release" --body-file - <<EOF
+**Description**
+Updates changelog and version references for $VERSION.
 
-When generating the changelog, each pull request to be included must have one of
-the following [labels](https://github.com/codeigniter4/CodeIgniter4/labels):
-- **bug** ... PRs that fix bugs
-- **enhancement** ... PRs to improve existing functionalities
-- **new feature** ... PRs for new features
-- **refactor** ... PRs to refactor
+Previous version: #xxxx
+Release Code: TODO
+New Changelog: TODO
 
-PRs with breaking changes must have the following additional label:
-- **breaking change** ... PRs that may break existing functionalities
+**Checklist:**
+- [ ] Securely signed commits
+- [ ] Component(s) with PHPDoc blocks, only if necessary or adds value (without duplication)
+- [ ] Unit testing, with >80% coverage
+- [ ] User guide updated
+- [ ] Conforms to style guide
+EOF
+```
 
-At any time, missing labels can be checked for with
-`php admin/check-pr-labels.php`, which flags PRs merged since the last release
-that appear to lack a changelog label. It requires the authenticated
-[GitHub CLI](https://cli.github.com/).
+Then edit the description on GitHub:
 
-### Generate Changelog
+- Replace `#xxxx` with the number of the previous Prep pull request.
+- Replace the two `TODO` values with links when they exist: the `Ready code` pull request from step 13 and the changelog pull request from step 21.
 
-The changelog is generated from GitHub's auto-generated release notes with a
-script. It requires the authenticated [GitHub CLI](https://cli.github.com/).
+### 12. Merge the Prep pull request
 
-The script also copies the security fixes from the SECURITY section of
-**user_guide_src/source/changelogs/v4.x.x.rst**, so any security advisory PRs
-must be merged and documented there before generating the changelog.
+Wait for all tests to pass, review the diff, and merge it with **Squash and merge**.
 
-* [ ] Run `php admin/generate-changelog.php 4.x.x --dry-run` and check the output.
-  * The script lists the PRs that have none of the changelog labels. If any of
-    them should be included in the changelog, add a label to the PR and run
-    the script again.
-* [ ] Run `php admin/generate-changelog.php 4.x.x` to prepend the new entry to
-  **CHANGELOG.md**.
+## Phase D: Release
 
-If the script cannot be used, the same notes can be generated from the
-[Releases](https://github.com/codeigniter4/CodeIgniter4/releases) page:
-click "Draft a new release", choose the tag `v4.x.x` (create new tag on
-publish) with target `develop`, and click "Generate release notes". Copy the
-resulting contents into **CHANGELOG.md** and adjust the format to match the
-existing content.
+### 13. Open the `Ready code` pull request
 
-## Process
+This pull request moves the release commit from `develop` to `master`.
+
+```bash
+gh pr create --repo codeigniter4/CodeIgniter4 --base master --head develop --title "$VERSION Ready code" --body ""
+```
+
+If your `gh` cannot create a pull request from `develop`, open it on GitHub with the title `$VERSION Ready code`, base `master`, compare `develop`, and a blank description.
+
+### 14. Merge it with a merge commit
+
+> [!IMPORTANT]
+> Choose **Create a merge commit**. Do not use **Squash and merge**.
+> See [How to merge each pull request](#how-to-merge-each-pull-request) for the reason.
+
+In the GitHub merge button, open the drop-down arrow, pick **Create a merge commit**, and merge.
+Alternatively, use the CLI, where `--merge` means a merge commit:
+
+```bash
+gh pr merge <number> --merge
+```
+
+Then wait for all the tests on `master` to pass.
+
+### 15. Publish the release
+
+Preview the release notes and the contributor list:
+
+```bash
+php admin/create-release.php $VERSION --dry-run
+```
+
+Publish the release:
+
+```bash
+php admin/create-release.php $VERSION
+```
+
+The script does the following:
+
+- Fetches GitHub's auto-generated release notes for `master` since the latest release. Override the starting point with `--previous=v<tag>`.
+- Credits every pull request author and every commit author or co-author (including those of security advisory fixes), except bots and AI assistants, and marks first-time contributors.
+- Publishes the release `CodeIgniter $VERSION` with the tag `v$VERSION` on `master`, linking to **CHANGELOG.md** and the full comparison.
+
+### 16. Verify the release
+
+Publishing starts the "[Verify Release](https://github.com/codeigniter4/CodeIgniter4/actions/workflows/verify-release.yml)" workflow. Follow it:
+
+```bash
+gh run list --repo codeigniter4/CodeIgniter4 --workflow verify-release.yml --limit 3
+```
+
+The workflow does the following:
+
+- Waits for the "[Deploy Distributable Repos](https://github.com/codeigniter4/CodeIgniter4/actions/workflows/deploy-distributables.yml)" workflow to update **framework**, **appstarter** and **userguide**.
+- Installs `appstarter` from Packagist, checks that it pulls framework `v$VERSION`, and runs its tests.
+- Checks that the user guide deployments succeeded ("Deploy Production" and "pages build and deployment" in the **userguide** repository) and that **CodeIgniter$VERSION.epub** was added.
+
+Check: the workflow passes.
+
+If it fails, fix the cause and run it again with the tag:
+
+```bash
+gh workflow run verify-release.yml --repo codeigniter4/CodeIgniter4 -f version=v$VERSION
+```
+
+## Phase E: After the Release
+
+### 17. Fast-forward `develop` to `master`
+
+This brings the merge commit from step 14 into `develop`. It should be a fast-forward.
+
+```bash
+php admin/sync-release-branches.php develop master --push
+```
+
+### 18. Update or create the feature branch
+
+**Patch releases only:** bring the fixes released from `develop` into the feature branch.
+
+```bash
+php admin/sync-release-branches.php $FEATURE_BRANCH develop --push
+```
+
+**Minor releases only:** `$FEATURE_BRANCH` was deleted in step 2, so skip the command above.
+Create the branch for the following minor from `develop`:
+
+```bash
+git fetch upstream
+```
+
+```bash
+git switch develop
+```
+
+```bash
+git switch -c $NEW_FEATURE_BRANCH
+```
+
+```bash
+git push upstream HEAD
+```
+
+### 19. Publish the security advisories
+
+Skip this step if the release has no security fixes.
+
+Request the CVEs and publish the advisories that were resolved from private forks.
 
 > [!NOTE]
-> Most changes that need noting in the User Guide and docs should have
-> been included with their PR, so this process assumes you will not be
-> generating much new content.
+> Publishing is restricted to administrators.
 
-* [ ] Merge any security advisory PRs in private forks.
-* [ ] Check that **CHANGELOG.md** contains the entry for the new version, generated above.
-* [ ] Update **user_guide_src/source/changelogs/v4.x.x.rst**
-  * Remove the section titles that have no items
-* [ ] Update **user_guide_src/source/installation/upgrade_4xx.rst**
-  * [ ] Run `php admin/update-upgrade-guide.php 4.x.x` to fill in the "Config" and
-    "All Changes" sections with the project space files changed since the last release.
-    * The "Config" section is not modified if it already has content. The script
-      prints any missing entries to merge manually.
-    * Add notes to the "Config" entries as needed.
-  * [ ] Remove the section titles that have no items
-  * [ ] [Minor version only] Update the "from" version in the title, (e.g., `from 4.3.x` → `from 4.3.8`).
-* [ ] Run `php admin/prepare-release.php 4.x.x` and push to origin.
-  * The above command does the following:
-    * Create a new branch `release-4.x.x`
-    * Update **system/CodeIgniter.php** with the new version number:
-      `const CI_VERSION = '4.x.x';`
-    * Update **user_guide_src/source/conf.py** with the new `version = '4.x'`
-      and `release = '4.x.x'`.
-    * Update **user_guide_src/source/changelogs/{version}.rst**
-      * Set the date to format `Release Date: January 31, 2021`
-    * Update **phpdoc.dist.xml** with the new `<title>CodeIgniter v4.x API</title>`
-      and `<version number="4.x.x">`
-    * Update **admin/starter/builds**:
-      * Set `define('LATEST_RELEASE', '^4.x')`
-      * Set `define('NEXT_MINOR', '^4.y-dev')`.
-      * If the major version changes, you need to manually change to `define('NEXT_MINOR', '^5.0-dev')`.
-    * Commit the changes with `Prep for 4.x.x release`
-* [ ] Create a new PR from `release-4.x.x` to `develop`:
-  * Title: `Prep for 4.x.x release`
-  * Description:
-    ```
-    Updates changelog and version references for 4.x.x.
+### 20. Announce the release
 
-    Previous version: #xxxx
-    Release Code: TODO
-    New Changelog: TODO
+Post the announcement on the forum and in the Slack channel.
 
-    (plus checklist)
-    ```
+> [!NOTE]
+> The forum is restricted to administrators.
 
-* [ ] Let all tests run, then review and merge the PR.
-* [ ] Create a new PR from `develop` to `master`:
-  * Title: `4.x.x Ready code`
-  * Description: blank
-* [ ] Merge the PR and wait for all tests.
-* [ ] Create the new Release:
-  * Run `php admin/create-release.php 4.x.x --dry-run` and check the output.
-  * Run `php admin/create-release.php 4.x.x` to publish it.
-  * The above command does the following:
-    * Fetch GitHub's auto-generated release notes for `master` since the latest
-      release (override with `--previous=v4.x.w`)
-    * Credit every PR author except bots, marking first-time contributors
-    * Publish the release `CodeIgniter 4.x.x` with the tag `v4.x.x` on `master`,
-      linking to **CHANGELOG.md** and the full comparison
-* [ ] Watch the "[Verify Release](https://github.com/codeigniter4/CodeIgniter4/actions/workflows/verify-release.yml)"
-  workflow and make sure it passes. It does the following:
-  * Wait for the "[Deploy Distributable Repos](https://github.com/codeigniter4/CodeIgniter4/actions/workflows/deploy-distributables.yml)"
-    action to update **framework**, **appstarter**, and **userguide**
-  * Install `appstarter` from Packagist, verify it pulls framework `v4.x.x`,
-    and run its tests
-  * Verify that the user guide deployments succeeded ("Deploy Production" and
-    "pages build and deployment" in the UG repo) and that **CodeIgniter4.x.x.epub**
-    was added
-  * If it fails, fix the cause and re-run it via "Run workflow" with the tag `v4.x.x`.
-* [ ] Fast-forward `develop` branch to catch the merge commit from `master`
-    ```console
-    php admin/sync-release-branches.php develop master --push
-    ```
-* [ ] Update the next minor version branch `4.y`:
-    ```console
-    php admin/sync-release-branches.php 4.y develop --push
-    ```
-* [ ] [Minor version only] Create the new next minor version branch `4.z`:
-    ```console
-    git fetch upstream
-    git switch develop
-    git switch -c 4.z
-    git push upstream HEAD
-    ```
-* [ ] Request CVEs and publish any security advisories that were resolved from private forks
-  (note: publishing is restricted to administrators).
-* [ ] Announce the release on the forums and Slack channel
-  (note: this forum is restricted to administrators).
-  * Make a new topic in the "News & Discussion" forums:
-    https://forum.codeigniter.com/forum-2.html
-  * The content is somewhat organic, but should include any major features and
-    changes as well as a link to the User Guide's changelog
-* [ ] Run `php admin/create-new-changelog.php <current_version> <new_version>`
-  * The above command does the following:
-    * Create **user_guide_src/source/changelogs/{next_version}.rst** and add it to
-      **index.rst** (See **next-changelog-*.rst**)
-    * Create **user_guide_src/source/installation/upgrade_{next_version}.rst** and add it to
-      **upgrading.rst** (See **next-upgrading-guide.rst**)
-* [ ] Create a PR for new changelog and upgrade for the next version
+1. Create a new topic in the ["News & Discussion" forum](https://forum.codeigniter.com/forum-2.html).
+2. The content is up to you, but include the major features and changes and a link to the User Guide's changelog.
+
+The repository includes the `forum-announcement` skill, which drafts the forum post in myBB format from **CHANGELOG.md** and the detailed changelog.
+It lives in **.github/skills/forum-announcement**, which GitHub Copilot Chat reads directly.
+For another agent, copy the folder to that agent's skills location. For Claude Code that is **.claude/skills/**:
+
+```bash
+mkdir -p .claude/skills && cp -R .github/skills/forum-announcement .claude/skills/
+```
+
+Then ask the agent to run the skill with the version, for example `/forum-announcement $VERSION`. It writes **v$VERSION-announcement.txt** in the repository root.
+Review the text before you post it, and do not commit the file.
+
+### 21. Prepare the next version's changelog
+
+This creates the changelog and upgrade guide stubs for the next patch version, so the next release starts with them in place.
+
+```bash
+php admin/create-new-changelog.php $VERSION $NEXT_VERSION
+```
+
+The script does the following:
+
+- Creates **user_guide_src/source/changelogs/v$NEXT_VERSION.rst** from **admin/next-changelog-patch.rst** and adds it to **index.rst**.
+- Creates the upgrade guide stub from **admin/next-upgrading-guide.rst** and adds it to **upgrading.rst**.
+- Sets `CI_VERSION` to `$NEXT_VERSION-dev`.
+- Creates the branch `docs-changelog-$NEXT_VERSION` from `develop` and commits.
+
+When the old and new versions are in different minor series, the script uses the minor templates and branches from the branch you are on, not from `develop`.
+
+Push the branch and open the pull request:
+
+```bash
+git push origin HEAD
+```
+
+```bash
+gh pr create --repo codeigniter4/CodeIgniter4 --base develop --head "$(gh api user --jq .login):docs-changelog-$NEXT_VERSION" --title "docs: add changelog and upgrade for v$NEXT_VERSION" --body ""
+```
+
+Merge it with **Squash and merge**. The release is complete.
+
+## Troubleshooting
+
+| Problem | What to do |
+| --- | --- |
+| A sync script stops with a merge conflict | Resolve the conflicts, run `git merge --continue`, then `git push upstream HEAD`. |
+| `prepare-release.php` fails to switch branches | Your tree has uncommitted changes that conflict with `develop`. Run step 3 first and redo the edits. |
+| The Prep commit is missing a file | `git add -u` only stages tracked files. Add the file, then run `git commit --amend --no-edit`. |
+| The "Verify Release" workflow fails | Fix the cause, then run the workflow again with the command in step 16. |
+| You squashed the `Ready code` pull request by mistake | Stop before you publish the release, and ask another maintainer. `master` and `develop` no longer share history. |
+| `create-release.php` says the release already exists | The tag is already published. Check the [Releases](https://github.com/codeigniter4/CodeIgniter4/releases) page. |
 
 ## Appendix
 
 ### Sphinx Installation
 
-You may need to install Sphinx and its dependencies prior to building the User
-Guide.
+You may need to install Sphinx and its dependencies before you build the User Guide.
 
-This worked seamlessly on Ubuntu 20.04:
-```console
+This worked on Ubuntu 20.04:
+
+```bash
 sudo apt install python3-sphinx
+```
+
+```bash
 sudo pip3 install sphinxcontrib-phpdomain
+```
+
+```bash
 sudo pip3 install sphinx_rtd_theme
 ```
 
 ### Manual User Guide Process
 
 > [!NOTE]
-> This process is normally not needed. The "Deploy Distributable Repos" action
-> builds and deploys the User Guide automatically when a release is published.
+> This process is normally not needed. The "Deploy Distributable Repos" action builds and deploys the User Guide when a release is published.
 > Follow these steps only if the automatic deployment fails.
 
-* [ ] Still in the **CodeIgniter4** repo enter the **user_guide_src** directory
-* [ ] Clear out any old build files: `rm -rf build/`
-* [ ] Build the HTML version of the User Guide: `make html`
-* [ ] Build the ePub version of the User Guide: `make epub`
-* [ ] Switch to the **userguide** repo and create a new branch `release-4.x.x`
-* [ ] Replace **docs/** with **CodeIgniter4/user_guide_src/build/html**
-* [ ] Ensure the file **docs/.nojekyll** exists or GitHub Pages will ignore folders
-  with an underscore prefix
-* [ ] Copy **CodeIgniter4/user_guide_src/build/epub/CodeIgniter.epub** to
-  **./CodeIgniter4.x.x.epub**
-* [ ] Commit the changes with "Update for 4.x.x" and push to origin
-* [ ] Create a new PR from `release-4.x.x` to `develop`:
-  * Title: "Update for 4.x.x"
-  * Description: blank
-* [ ] Merge the PR
-* [ ] Create a new Release:
-  * Version: "v4.x.x"
-  * Title: "CodeIgniter 4.x.x User Guide"
-  * Description: "CodeIgniter 4.x.x User Guide"
-* [ ] Watch for the "github pages" Environment to make sure the deployment succeeds
+1. In the **CodeIgniter4** repository, enter the **user_guide_src** directory and clear out any old build files:
 
-The User Guide website should update itself via the deploy GitHub Action. Should
-this fail the server must be updated manually. See repo and hosting details in
-the deploy script at the User Guide repo.
+   ```bash
+   cd user_guide_src
+   rm -rf build/
+   ```
+
+2. Build the HTML version, then the ePub version:
+
+   ```bash
+   make html
+   ```
+
+   ```bash
+   make epub
+   ```
+
+3. Switch to the **userguide** repository and create the branch `release-$VERSION`.
+4. Replace **docs/** with **CodeIgniter4/user_guide_src/build/html**.
+5. Make sure the file **docs/.nojekyll** exists. Without it, GitHub Pages ignores folders that start with an underscore.
+6. Copy **CodeIgniter4/user_guide_src/build/epub/CodeIgniter.epub** to **./CodeIgniter$VERSION.epub**.
+7. Commit the changes with the message `Update for $VERSION` and push to `origin`.
+8. Create a pull request from `release-$VERSION` to `develop`, with the title `Update for $VERSION` and a blank description, and merge it.
+9. Create a release in the **userguide** repository:
+   - Version: `v$VERSION`
+   - Title: `CodeIgniter $VERSION User Guide`
+   - Description: `CodeIgniter $VERSION User Guide`
+10. Watch the "github pages" environment to make sure the deployment succeeds.
+
+The User Guide website should update itself through the deploy GitHub Action.
+If that fails, the server must be updated manually. See the repository and hosting details in the deploy script of the User Guide repository.
