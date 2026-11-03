@@ -1,0 +1,4174 @@
+{
+    "changelogs/v4.0.0-alpha.1.md": {
+        "version-400-alpha1": [
+            "version-4-0-0-alpha-1"
+        ]
+    },
+    "changelogs/v4.0.0-alpha.2.md": {
+        "version-400-alpha2": [
+            "version-4-0-0-alpha-2"
+        ]
+    },
+    "changelogs/v4.0.0-alpha.3.md": {
+        "version-400-alpha3": [
+            "version-4-0-0-alpha-3"
+        ]
+    },
+    "changelogs/v4.0.0-alpha.4.md": {
+        "version-400-alpha4": [
+            "version-4-0-0-alpha-4"
+        ]
+    },
+    "changelogs/v4.0.0-alpha.5.md": {
+        "version-400-alpha5": [
+            "version-4-0-0-alpha-5"
+        ]
+    },
+    "changelogs/v4.0.0-beta.1.md": {
+        "version-400-beta1": [
+            "version-4-0-0-beta-1"
+        ]
+    },
+    "changelogs/v4.0.0-beta.2.md": {
+        "version-400-beta2": [
+            "version-4-0-0-beta-2"
+        ]
+    },
+    "changelogs/v4.0.0-beta.3.md": {
+        "version-400-beta3": [
+            "version-4-0-0-beta-3"
+        ]
+    },
+    "changelogs/v4.0.0-beta.4.md": {
+        "version-400-beta4": [
+            "version-4-0-0-beta-4"
+        ]
+    },
+    "changelogs/v4.0.0-rc.1.md": {
+        "version-400-rc1": [
+            "version-4-0-0-rc-1"
+        ]
+    },
+    "changelogs/v4.0.0-rc.2.md": {
+        "version-400-rc2": [
+            "version-4-0-0-rc-2"
+        ]
+    },
+    "changelogs/v4.0.0-rc.3.md": {
+        "version-400-rc3": [
+            "version-4-0-0-rc-3"
+        ]
+    },
+    "changelogs/v4.0.0-rc.4.md": {
+        "version-400-rc4": [
+            "version-4-0-0-rc-4"
+        ]
+    },
+    "changelogs/v4.0.0.md": {
+        "version-400": [
+            "version-4-0-0"
+        ]
+    },
+    "changelogs/v4.0.3.md": {
+        "version-403": [
+            "version-4-0-3"
+        ]
+    },
+    "changelogs/v4.0.4.md": {
+        "version-404": [
+            "version-4-0-4"
+        ]
+    },
+    "changelogs/v4.0.5.md": {
+        "version-405": [
+            "version-4-0-5"
+        ]
+    },
+    "changelogs/v4.1.0.md": {
+        "version-410": [
+            "version-4-1-0"
+        ]
+    },
+    "changelogs/v4.1.1.md": {
+        "version-411": [
+            "version-4-1-1"
+        ]
+    },
+    "changelogs/v4.1.2.md": {
+        "version-412": [
+            "version-4-1-2"
+        ]
+    },
+    "changelogs/v4.1.3.md": {
+        "version-413": [
+            "version-4-1-3"
+        ]
+    },
+    "changelogs/v4.1.4.md": {
+        "version-414": [
+            "version-4-1-4"
+        ]
+    },
+    "changelogs/v4.1.5.md": {
+        "version-415": [
+            "version-4-1-5"
+        ]
+    },
+    "changelogs/v4.1.6.md": {
+        "version-416": [
+            "version-4-1-6"
+        ],
+        "validation-changes": [
+            "changelog-v416-validation-changes"
+        ]
+    },
+    "changelogs/v4.1.7.md": {
+        "version-417": [
+            "version-4-1-7"
+        ]
+    },
+    "changelogs/v4.1.8.md": {
+        "version-418": [
+            "version-4-1-8"
+        ]
+    },
+    "changelogs/v4.1.9.md": {
+        "version-419": [
+            "version-4-1-9"
+        ]
+    },
+    "changelogs/v4.2.0.md": {
+        "version-420": [
+            "version-4-2-0"
+        ],
+        "new-improved-auto-routing": [
+            "v420-new-improved-auto-routing"
+        ]
+    },
+    "changelogs/v4.2.1.md": {
+        "version-421": [
+            "version-4-2-1"
+        ]
+    },
+    "changelogs/v4.2.10.md": {
+        "version-4210": [
+            "version-4-2-10"
+        ]
+    },
+    "changelogs/v4.2.11.md": {
+        "version-4211": [
+            "version-4-2-11"
+        ]
+    },
+    "changelogs/v4.2.12.md": {
+        "version-4212": [
+            "version-4-2-12"
+        ]
+    },
+    "changelogs/v4.2.2.md": {
+        "version-422": [
+            "version-4-2-2"
+        ]
+    },
+    "changelogs/v4.2.3.md": {
+        "version-423": [
+            "version-4-2-3"
+        ]
+    },
+    "changelogs/v4.2.4.md": {
+        "version-424": [
+            "version-4-2-4"
+        ]
+    },
+    "changelogs/v4.2.5.md": {
+        "version-425": [
+            "version-4-2-5"
+        ]
+    },
+    "changelogs/v4.2.6.md": {
+        "version-426": [
+            "version-4-2-6"
+        ]
+    },
+    "changelogs/v4.2.7.md": {
+        "version-427": [
+            "version-4-2-7"
+        ]
+    },
+    "changelogs/v4.2.8.md": {
+        "version-428": [
+            "version-4-2-8"
+        ]
+    },
+    "changelogs/v4.2.9.md": {
+        "version-429": [
+            "version-4-2-9"
+        ]
+    },
+    "changelogs/v4.3.0.md": {
+        "version-430": [
+            "version-4-3-0"
+        ],
+        "time": [
+            "v430-time-fix"
+        ],
+        "interface-changes": [
+            "v430-interface-changes"
+        ],
+        "validation-changes": [
+            "v430-validation-changes"
+        ],
+        "multiple-domain-support": [
+            "v430-multiple-domain-support"
+        ]
+    },
+    "changelogs/v4.3.1.md": {
+        "version-431": [
+            "version-4-3-1"
+        ]
+    },
+    "changelogs/v4.3.2.md": {
+        "version-432": [
+            "version-4-3-2"
+        ],
+        "base_url": [
+            "base-url"
+        ],
+        "uri_string": [
+            "v432-uri-string",
+            "uri-string"
+        ]
+    },
+    "changelogs/v4.3.3.md": {
+        "version-433": [
+            "version-4-3-3"
+        ]
+    },
+    "changelogs/v4.3.4.md": {
+        "version-434": [
+            "version-4-3-4"
+        ],
+        "redirect-status-code": [
+            "v434-redirect-status-code"
+        ],
+        "forgemodifycolumn": [
+            "v434-forge-modifycolumn",
+            "forge-modifycolumn"
+        ]
+    },
+    "changelogs/v4.3.5.md": {
+        "version-435": [
+            "version-4-3-5"
+        ]
+    },
+    "changelogs/v4.3.6.md": {
+        "version-436": [
+            "version-4-3-6"
+        ],
+        "validationinterfacecheck": [
+            "validationinterface-check"
+        ],
+        "validationcheck": [
+            "validation-check"
+        ]
+    },
+    "changelogs/v4.3.7.md": {
+        "version-437": [
+            "version-4-3-7"
+        ]
+    },
+    "changelogs/v4.3.8.md": {
+        "version-438": [
+            "version-4-3-8"
+        ]
+    },
+    "changelogs/v4.4.0.md": {
+        "version-440": [
+            "version-4-4-0"
+        ],
+        "urisetsegment-and-non-existent-segment": [
+            "uri-setsegment-and-non-existent-segment"
+        ],
+        "factories": [
+            "v440-factories"
+        ],
+        "codeigniter-and-exit": [
+            "v440-codeigniter-and-exit"
+        ],
+        "site-uri-changes": [
+            "v440-site-uri-changes"
+        ],
+        "interface-changes": [
+            "v440-interface-changes"
+        ],
+        "method-signature-changes": [
+            "v440-method-signature-changes"
+        ],
+        "parameter-type-changes": [
+            "v440-parameter-type-changes"
+        ]
+    },
+    "changelogs/v4.4.1.md": {
+        "version-441": [
+            "version-4-4-1"
+        ]
+    },
+    "changelogs/v4.4.2.md": {
+        "version-442": [
+            "version-4-4-2"
+        ]
+    },
+    "changelogs/v4.4.3.md": {
+        "version-443": [
+            "version-4-4-3"
+        ]
+    },
+    "changelogs/v4.4.4.md": {
+        "version-444": [
+            "version-4-4-4"
+        ],
+        "the-use-of-the-ssl_key-option-in-curlrequest-was-removed": [
+            "the-use-of-the-ssl-key-option-in-curlrequest-was-removed"
+        ]
+    },
+    "changelogs/v4.4.5.md": {
+        "version-445": [
+            "version-4-4-5"
+        ]
+    },
+    "changelogs/v4.4.6.md": {
+        "version-446": [
+            "version-4-4-6"
+        ],
+        "timecreatefromtimestamp": [
+            "time-createfromtimestamp"
+        ]
+    },
+    "changelogs/v4.4.7.md": {
+        "version-447": [
+            "version-4-4-7"
+        ]
+    },
+    "changelogs/v4.4.8.md": {
+        "version-448": [
+            "version-4-4-8"
+        ]
+    },
+    "changelogs/v4.5.0.md": {
+        "version-450": [
+            "version-4-5-0"
+        ],
+        "required-filters": [
+            "v450-required-filters"
+        ],
+        "limit0-behavior": [
+            "v450-query-builder-limit-0-behavior",
+            "limit-0-behavior"
+        ],
+        "findall0-behavior": [
+            "v450-model-findall-limit-0-behavior",
+            "findall-0-behavior"
+        ],
+        "apiresponsetrait": [
+            "api-responsetrait"
+        ],
+        "method-signature-changes": [
+            "v450-method-signature-changes"
+        ],
+        "removed-deprecated-items": [
+            "v450-removed-deprecated-items"
+        ]
+    },
+    "changelogs/v4.5.1.md": {
+        "version-451": [
+            "version-4-5-1"
+        ]
+    },
+    "changelogs/v4.5.2.md": {
+        "version-452": [
+            "version-4-5-2"
+        ]
+    },
+    "changelogs/v4.5.3.md": {
+        "version-453": [
+            "version-4-5-3"
+        ]
+    },
+    "changelogs/v4.5.4.md": {
+        "version-454": [
+            "version-4-5-4"
+        ]
+    },
+    "changelogs/v4.5.5.md": {
+        "version-455": [
+            "version-4-5-5"
+        ]
+    },
+    "changelogs/v4.5.6.md": {
+        "version-456": [
+            "version-4-5-6"
+        ]
+    },
+    "changelogs/v4.5.7.md": {
+        "version-457": [
+            "version-4-5-7"
+        ]
+    },
+    "changelogs/v4.5.8.md": {
+        "version-458": [
+            "version-4-5-8"
+        ]
+    },
+    "changelogs/v4.6.0.md": {
+        "version-460": [
+            "version-4-6-0"
+        ],
+        "exceptions": [
+            "v460-behavior-changes-exceptions"
+        ],
+        "timecreatefromtimestamp": [
+            "time-createfromtimestamp"
+        ],
+        "timesettimestamp": [
+            "time-settimestamp"
+        ],
+        "headers": [
+            "v460-interface-changes"
+        ],
+        "method-signature-changes": [
+            "v460-method-signature-changes"
+        ],
+        "removed-deprecated-items": [
+            "v460-removed-deprecated-items"
+        ]
+    },
+    "changelogs/v4.6.1.md": {
+        "version-461": [
+            "version-4-6-1"
+        ]
+    },
+    "changelogs/v4.6.2.md": {
+        "version-462": [
+            "version-4-6-2"
+        ]
+    },
+    "changelogs/v4.6.3.md": {
+        "version-463": [
+            "version-4-6-3"
+        ]
+    },
+    "changelogs/v4.6.4.md": {
+        "version-464": [
+            "version-4-6-4"
+        ]
+    },
+    "changelogs/v4.6.5.md": {
+        "version-465": [
+            "version-4-6-5"
+        ]
+    },
+    "changelogs/v4.7.0.md": {
+        "version-470": [
+            "version-4-7-0"
+        ],
+        "interface-changes": [
+            "v470-interface-changes"
+        ],
+        "method-signature-changes": [
+            "v470-method-signature-changes"
+        ],
+        "property-signature-changes": [
+            "v470-property-signature-changes"
+        ],
+        "removed-deprecated-items": [
+            "v470-removed-deprecated-items"
+        ]
+    },
+    "changelogs/v4.7.1.md": {
+        "version-471": [
+            "version-4-7-1"
+        ]
+    },
+    "changelogs/v4.7.2.md": {
+        "version-472": [
+            "version-4-7-2"
+        ]
+    },
+    "changelogs/v4.7.3.md": {
+        "version-473": [
+            "version-4-7-3"
+        ]
+    },
+    "changelogs/v4.7.4.md": {
+        "version-474": [
+            "version-4-7-4"
+        ]
+    },
+    "changelogs/v4.7.5.md": {
+        "version-475": [
+            "version-4-7-5"
+        ]
+    },
+    "changelogs/v4.7.6.md": {
+        "version-476": [
+            "version-4-7-6"
+        ]
+    },
+    "changelogs/v4.7.7.md": {
+        "version-477": [
+            "version-4-7-7"
+        ]
+    },
+    "cli/cli_commands.md": {
+        "codeignitercli": [
+            "namespace-CodeIgniter\\CLI"
+        ],
+        "basecommand_1": [
+            "CodeIgniter\\CLI\\BaseCommand"
+        ],
+        "callstring-command-array-params": [
+            "CodeIgniter\\CLI\\BaseCommand::call"
+        ],
+        "showerrorthrowable-e": [
+            "CodeIgniter\\CLI\\BaseCommand::showError"
+        ],
+        "showhelp": [
+            "CodeIgniter\\CLI\\BaseCommand::showHelp"
+        ],
+        "setpadstring-item-int-max-int-extra-2-int-indent-0-string": [
+            "CodeIgniter\\CLI\\BaseCommand::setPad"
+        ],
+        "getpadarray-pad": [
+            "CodeIgniter\\CLI\\BaseCommand::getPad"
+        ]
+    },
+    "cli/cli_controllers.md": {
+        "lets-try-it-hello-world": [
+            "let-s-try-it-hello-world"
+        ],
+        "thats-the-basics": [
+            "that-s-the-basics"
+        ]
+    },
+    "cli/cli_generators.md": {
+        "makecell": [
+            "make-cell"
+        ],
+        "makecommand": [
+            "make-command"
+        ],
+        "makeconfig": [
+            "make-config"
+        ],
+        "makecontroller": [
+            "make-controller"
+        ],
+        "makeentity": [
+            "make-entity"
+        ],
+        "makefilter": [
+            "make-filter"
+        ],
+        "makemodel": [
+            "make-model"
+        ],
+        "makeseeder": [
+            "make-seeder"
+        ],
+        "maketest": [
+            "cli-generators-make-test",
+            "make-test"
+        ],
+        "maketransformer": [
+            "make-transformer"
+        ],
+        "makemigration": [
+            "make-migration"
+        ],
+        "makevalidation": [
+            "make-validation"
+        ]
+    },
+    "cli/cli_library.md": {
+        "promptbymultiplekeys": [
+            "prompt-by-multiple-keys"
+        ],
+        "color": [
+            "cli-library-color"
+        ]
+    },
+    "cli/cli_request.md": {
+        "getoptionkey": [
+            "getoption-key"
+        ]
+    },
+    "cli/cli_signals.md": {
+        "how-pauseresume-works": [
+            "how-pause-resume-works"
+        ],
+        "codeignitercli": [
+            "namespace-CodeIgniter\\CLI"
+        ],
+        "signaltrait": [
+            "CodeIgniter\\CLI\\SignalTrait"
+        ],
+        "registersignalssignals-sigterm-sigint-sighup-sigquit-methodmap": [
+            "CodeIgniter\\CLI\\SignalTrait::registerSignals"
+        ],
+        "isrunning": [
+            "CodeIgniter\\CLI\\SignalTrait::isRunning"
+        ],
+        "shouldterminate": [
+            "CodeIgniter\\CLI\\SignalTrait::shouldTerminate"
+        ],
+        "requesttermination": [
+            "CodeIgniter\\CLI\\SignalTrait::requestTermination"
+        ],
+        "resetstate": [
+            "CodeIgniter\\CLI\\SignalTrait::resetState"
+        ],
+        "withsignalsblockedoperation": [
+            "CodeIgniter\\CLI\\SignalTrait::withSignalsBlocked"
+        ],
+        "aresignalsblocked": [
+            "CodeIgniter\\CLI\\SignalTrait::areSignalsBlocked"
+        ],
+        "mapsignalsignal-method": [
+            "CodeIgniter\\CLI\\SignalTrait::mapSignal"
+        ],
+        "getsignalnamesignal": [
+            "CodeIgniter\\CLI\\SignalTrait::getSignalName"
+        ],
+        "hassignals": [
+            "CodeIgniter\\CLI\\SignalTrait::hasSignals"
+        ],
+        "getsignals": [
+            "CodeIgniter\\CLI\\SignalTrait::getSignals"
+        ],
+        "getprocessstate": [
+            "CodeIgniter\\CLI\\SignalTrait::getProcessState"
+        ],
+        "unregistersignals": [
+            "CodeIgniter\\CLI\\SignalTrait::unregisterSignals"
+        ]
+    },
+    "concepts/autoloader.md": {
+        "namespaces": [
+            "autoloader-namespaces"
+        ],
+        "application-namespace": [
+            "autoloader-application-namespace"
+        ],
+        "filelocator-caching": [
+            "file-locator-caching"
+        ]
+    },
+    "concepts/factories.md": {
+        "loading-classes": [
+            "factories-loading-class"
+        ],
+        "passing-classname-without-namespace": [
+            "factories-passing-classname-without-namespace"
+        ],
+        "passing-fully-qualified-classname": [
+            "factories-passing-fully-qualified-classname"
+        ],
+        "config": [
+            "factories-config"
+        ],
+        "defining-classname-to-be-loaded": [
+            "factories-defining-classname-to-be-loaded"
+        ],
+        "config-caching": [
+            "factories-config-caching"
+        ]
+    },
+    "concepts/security.md": {
+        "a012021-broken-access-control": [
+            "a01-2021-broken-access-control"
+        ],
+        "a022021-cryptographic-failures": [
+            "a02-2021-cryptographic-failures"
+        ],
+        "a032021-injection": [
+            "a03-2021-injection"
+        ],
+        "a042021-insecure-design": [
+            "a04-2021-insecure-design"
+        ],
+        "a052021-security-misconfiguration": [
+            "a05-2021-security-misconfiguration"
+        ],
+        "a062021-vulnerable-and-outdated-components": [
+            "a06-2021-vulnerable-and-outdated-components"
+        ],
+        "a072021-identification-and-authentication-failures": [
+            "a07-2021-identification-and-authentication-failures"
+        ],
+        "a082021-software-and-data-integrity-failures": [
+            "a08-2021-software-and-data-integrity-failures"
+        ],
+        "a092021-security-logging-and-monitoring-failures": [
+            "a09-2021-security-logging-and-monitoring-failures"
+        ],
+        "a102021-server-side-request-forgery-ssrf": [
+            "a10-2021-server-side-request-forgery-ssrf"
+        ],
+        "api12023-broken-object-level-authorization": [
+            "api1-2023-broken-object-level-authorization"
+        ],
+        "api22023-broken-authentication": [
+            "api2-2023-broken-authentication"
+        ],
+        "api32023-broken-object-property-level-authorization": [
+            "api3-2023-broken-object-property-level-authorization"
+        ],
+        "api42023-unrestricted-resource-consumption": [
+            "api4-2023-unrestricted-resource-consumption"
+        ],
+        "api52023-broken-function-level-authorization": [
+            "api5-2023-broken-function-level-authorization"
+        ],
+        "api62023-unrestricted-access-to-sensitive-business-flows": [
+            "api6-2023-unrestricted-access-to-sensitive-business-flows"
+        ],
+        "api72023-server-side-request-forgery": [
+            "api7-2023-server-side-request-forgery"
+        ],
+        "api82023-security-misconfiguration": [
+            "api8-2023-security-misconfiguration"
+        ],
+        "api92023-improper-inventory-management": [
+            "api9-2023-improper-inventory-management"
+        ],
+        "api102023-unsafe-consumption-of-apis": [
+            "api10-2023-unsafe-consumption-of-apis"
+        ]
+    },
+    "concepts/services.md": {
+        "single_service": [
+            "single-service"
+        ]
+    },
+    "concepts/structure.md": {
+        "public": [
+            "application-structure-public"
+        ]
+    },
+    "database/configuration.md": {
+        "configuring-with-env-file": [
+            "database-config-with-env-file"
+        ],
+        "description-of-values": [
+            "database-config-explanation-of-values"
+        ],
+        "encrypt": [
+            "mysqli-encrypt"
+        ]
+    },
+    "database/events.md": {
+        "dbquery": [
+            "database-events-dbquery"
+        ]
+    },
+    "database/metadata.md": {
+        "db-getfielddata": [
+            "db-metadata-getfielddata"
+        ],
+        "db-getindexdata": [
+            "db-metadata-getindexdata"
+        ],
+        "db-getforeignkeydata": [
+            "metadata-getforeignkeydata"
+        ]
+    },
+    "database/queries.md": {
+        "escaping-values": [
+            "database-queries-escaping"
+        ],
+        "1-db-escape": [
+            "database-queries-db-escape",
+            "db-escape"
+        ],
+        "2-db-escapestring": [
+            "db-escapestring"
+        ],
+        "3-db-escapelikestring": [
+            "db-escapelikestring"
+        ],
+        "query-bindings": [
+            "database-queries-query-bindings"
+        ],
+        "close": [
+            "database-queries-stmt-close"
+        ]
+    },
+    "database/query_builder.md": {
+        "select": [
+            "query-builder-select"
+        ],
+        "rawsql": [
+            "query-builder-select-rawsql"
+        ],
+        "subqueries": [
+            "query-builder-from-subquery"
+        ],
+        "builder-join": [
+            "query-builder-join"
+        ],
+        "rawsql_1": [
+            "query-builder-join-rawsql"
+        ],
+        "1-simple-keyvalue-method": [
+            "simple-key-value-method"
+        ],
+        "2-custom-keyvalue-method": [
+            "custom-key-value-method"
+        ],
+        "3-associative-array-method": [
+            "associative-array-method"
+        ],
+        "4-custom-string": [
+            "custom-string"
+        ],
+        "5-rawsql": [
+            "query-builder-where-rawsql",
+            "rawsql"
+        ],
+        "6-subqueries": [
+            "query-builder-where-subquery",
+            "subqueries"
+        ],
+        "1-simple-keyvalue-method_1": [
+            "simple-key-value-method"
+        ],
+        "2-associative-array-method": [
+            "associative-array-method"
+        ],
+        "3-rawsql": [
+            "query-builder-like-rawsql",
+            "rawsql"
+        ],
+        "1-simple-keyvalue-method_2": [
+            "simple-key-value-method"
+        ],
+        "2-associative-array-method_1": [
+            "associative-array-method"
+        ],
+        "union-queries": [
+            "query-builder-union"
+        ],
+        "insertbatch": [
+            "insert-batch-data"
+        ],
+        "upserting-data": [
+            "upsert-data"
+        ],
+        "updatebatch": [
+            "update-batch"
+        ],
+        "deletebatch": [
+            "delete-batch"
+        ],
+        "when": [
+            "db-builder-when"
+        ],
+        "resetting-query-builder": [
+            "ar-caching"
+        ],
+        "codeigniterdatabase": [
+            "namespace-CodeIgniter\\Database"
+        ],
+        "basebuilder": [
+            "CodeIgniter\\Database\\BaseBuilder"
+        ],
+        "db": [
+            "CodeIgniter\\Database\\BaseBuilder::db"
+        ],
+        "resetquery_1": [
+            "CodeIgniter\\Database\\BaseBuilder::resetQuery"
+        ],
+        "countallresultsreset-true": [
+            "CodeIgniter\\Database\\BaseBuilder::countAllResults"
+        ],
+        "countallreset-true": [
+            "CodeIgniter\\Database\\BaseBuilder::countAll"
+        ],
+        "getlimit-null-offset-null-reset-true": [
+            "CodeIgniter\\Database\\BaseBuilder::get"
+        ],
+        "getwherewhere-null-limit-null-offset-null-reset-true": [
+            "CodeIgniter\\Database\\BaseBuilder::getWhere"
+        ],
+        "selectselect-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::select"
+        ],
+        "selectavgselect-alias": [
+            "CodeIgniter\\Database\\BaseBuilder::selectAvg"
+        ],
+        "selectmaxselect-alias": [
+            "CodeIgniter\\Database\\BaseBuilder::selectMax"
+        ],
+        "selectminselect-alias": [
+            "CodeIgniter\\Database\\BaseBuilder::selectMin"
+        ],
+        "selectsumselect-alias": [
+            "CodeIgniter\\Database\\BaseBuilder::selectSum"
+        ],
+        "selectcountselect-alias": [
+            "CodeIgniter\\Database\\BaseBuilder::selectCount"
+        ],
+        "selectsubquerybasebuilder-subquery-string-as": [
+            "CodeIgniter\\Database\\BaseBuilder::selectSubquery"
+        ],
+        "distinctval-true": [
+            "CodeIgniter\\Database\\BaseBuilder::distinct"
+        ],
+        "fromfrom-overwrite-false": [
+            "CodeIgniter\\Database\\BaseBuilder::from"
+        ],
+        "fromsubqueryfrom-alias": [
+            "CodeIgniter\\Database\\BaseBuilder::fromSubquery"
+        ],
+        "setqueryasdataquery-alias-columns-null": [
+            "CodeIgniter\\Database\\BaseBuilder::setQueryAsData"
+        ],
+        "jointable-cond-type-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::join"
+        ],
+        "wherekey-value-null-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::where"
+        ],
+        "orwherekey-value-null-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::orWhere"
+        ],
+        "orwhereinkey-null-values-null-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::orWhereIn"
+        ],
+        "orwherenotinkey-null-values-null-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::orWhereNotIn"
+        ],
+        "whereinkey-null-values-null-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::whereIn"
+        ],
+        "wherenotinkey-null-values-null-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::whereNotIn"
+        ],
+        "groupstart": [
+            "CodeIgniter\\Database\\BaseBuilder::groupStart"
+        ],
+        "orgroupstart": [
+            "CodeIgniter\\Database\\BaseBuilder::orGroupStart"
+        ],
+        "notgroupstart": [
+            "CodeIgniter\\Database\\BaseBuilder::notGroupStart"
+        ],
+        "ornotgroupstart": [
+            "CodeIgniter\\Database\\BaseBuilder::orNotGroupStart"
+        ],
+        "groupend": [
+            "CodeIgniter\\Database\\BaseBuilder::groupEnd"
+        ],
+        "likefield-match-side-both-escape-null-insensitivesearch-false": [
+            "CodeIgniter\\Database\\BaseBuilder::like"
+        ],
+        "orlikefield-match-side-both-escape-null-insensitivesearch-false": [
+            "CodeIgniter\\Database\\BaseBuilder::orLike"
+        ],
+        "notlikefield-match-side-both-escape-null-insensitivesearch-false": [
+            "CodeIgniter\\Database\\BaseBuilder::notLike"
+        ],
+        "ornotlikefield-match-side-both-escape-null-insensitivesearch-false": [
+            "CodeIgniter\\Database\\BaseBuilder::orNotLike"
+        ],
+        "havingkey-value-null-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::having"
+        ],
+        "orhavingkey-value-null-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::orHaving"
+        ],
+        "orhavinginkey-null-values-null-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::orHavingIn"
+        ],
+        "orhavingnotinkey-null-values-null-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::orHavingNotIn"
+        ],
+        "havinginkey-null-values-null-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::havingIn"
+        ],
+        "havingnotinkey-null-values-null-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::havingNotIn"
+        ],
+        "havinglikefield-match-side-both-escape-null-insensitivesearch-false": [
+            "CodeIgniter\\Database\\BaseBuilder::havingLike"
+        ],
+        "orhavinglikefield-match-side-both-escape-null-insensitivesearch-false": [
+            "CodeIgniter\\Database\\BaseBuilder::orHavingLike"
+        ],
+        "nothavinglikefield-match-side-both-escape-null-insensitivesearch-false": [
+            "CodeIgniter\\Database\\BaseBuilder::notHavingLike"
+        ],
+        "ornothavinglikefield-match-side-both-escape-null-insensitivesearch-false": [
+            "CodeIgniter\\Database\\BaseBuilder::orNotHavingLike"
+        ],
+        "havinggroupstart": [
+            "CodeIgniter\\Database\\BaseBuilder::havingGroupStart"
+        ],
+        "orhavinggroupstart": [
+            "CodeIgniter\\Database\\BaseBuilder::orHavingGroupStart"
+        ],
+        "nothavinggroupstart": [
+            "CodeIgniter\\Database\\BaseBuilder::notHavingGroupStart"
+        ],
+        "ornothavinggroupstart": [
+            "CodeIgniter\\Database\\BaseBuilder::orNotHavingGroupStart"
+        ],
+        "havinggroupend": [
+            "CodeIgniter\\Database\\BaseBuilder::havingGroupEnd"
+        ],
+        "groupbyby-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::groupBy"
+        ],
+        "orderbyorderby-direction-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::orderBy"
+        ],
+        "limitvalue-offset-0": [
+            "CodeIgniter\\Database\\BaseBuilder::limit"
+        ],
+        "offsetoffset": [
+            "CodeIgniter\\Database\\BaseBuilder::offset"
+        ],
+        "unionunion": [
+            "CodeIgniter\\Database\\BaseBuilder::union"
+        ],
+        "unionallunion": [
+            "CodeIgniter\\Database\\BaseBuilder::unionAll"
+        ],
+        "setkey-value-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::set"
+        ],
+        "insertset-null-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::insert"
+        ],
+        "insertbatchset-null-escape-null-batch_size-100": [
+            "CodeIgniter\\Database\\BaseBuilder::insertBatch"
+        ],
+        "setinsertbatchkey-value-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::setInsertBatch"
+        ],
+        "upsertset-null-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::upsert"
+        ],
+        "upsertbatchset-null-escape-null-batch_size-100": [
+            "CodeIgniter\\Database\\BaseBuilder::upsertBatch"
+        ],
+        "updateset-null-where-null-limit-null": [
+            "CodeIgniter\\Database\\BaseBuilder::update"
+        ],
+        "updatebatchset-null-constraints-null-batchsize-100": [
+            "CodeIgniter\\Database\\BaseBuilder::updateBatch"
+        ],
+        "updatefieldsset-addtodefault-false-ignore-null": [
+            "CodeIgniter\\Database\\BaseBuilder::updateFields"
+        ],
+        "onconstraintset": [
+            "CodeIgniter\\Database\\BaseBuilder::onConstraint"
+        ],
+        "setdataset-escape-null-alias": [
+            "CodeIgniter\\Database\\BaseBuilder::setData"
+        ],
+        "setupdatebatchkey-value-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::setUpdateBatch"
+        ],
+        "replaceset-null": [
+            "CodeIgniter\\Database\\BaseBuilder::replace"
+        ],
+        "deletewhere-limit-null-reset_data-true": [
+            "CodeIgniter\\Database\\BaseBuilder::delete"
+        ],
+        "deletebatchset-null-constraints-null-batchsize-100": [
+            "CodeIgniter\\Database\\BaseBuilder::deleteBatch"
+        ],
+        "incrementcolumn-value-1": [
+            "CodeIgniter\\Database\\BaseBuilder::increment"
+        ],
+        "decrementcolumn-value-1": [
+            "CodeIgniter\\Database\\BaseBuilder::decrement"
+        ],
+        "truncate": [
+            "CodeIgniter\\Database\\BaseBuilder::truncate"
+        ],
+        "emptytable": [
+            "CodeIgniter\\Database\\BaseBuilder::emptyTable"
+        ],
+        "getcompiledselectreset-true": [
+            "CodeIgniter\\Database\\BaseBuilder::getCompiledSelect"
+        ],
+        "getcompiledinsertreset-true": [
+            "CodeIgniter\\Database\\BaseBuilder::getCompiledInsert"
+        ],
+        "getcompiledupdatereset-true": [
+            "CodeIgniter\\Database\\BaseBuilder::getCompiledUpdate"
+        ],
+        "getcompileddeletereset-true": [
+            "CodeIgniter\\Database\\BaseBuilder::getCompiledDelete"
+        ]
+    },
+    "database/results.md": {
+        "codeigniterdatabase": [
+            "namespace-CodeIgniter\\Database"
+        ],
+        "baseresult": [
+            "CodeIgniter\\Database\\BaseResult"
+        ],
+        "getresulttype-object": [
+            "CodeIgniter\\Database\\BaseResult::getResult"
+        ],
+        "getresultarray_1": [
+            "CodeIgniter\\Database\\BaseResult::getResultArray"
+        ],
+        "getresultobject": [
+            "CodeIgniter\\Database\\BaseResult::getResultObject"
+        ],
+        "getcustomresultobjectclassname": [
+            "CodeIgniter\\Database\\BaseResult::getCustomResultObject"
+        ],
+        "getrown-0-type-object": [
+            "CodeIgniter\\Database\\BaseResult::getRow"
+        ],
+        "getunbufferedrowtype-object": [
+            "CodeIgniter\\Database\\BaseResult::getUnbufferedRow"
+        ],
+        "getrowarrayn-0": [
+            "CodeIgniter\\Database\\BaseResult::getRowArray"
+        ],
+        "getrowobjectn-0": [
+            "CodeIgniter\\Database\\BaseResult::getRowObject"
+        ],
+        "getcustomrowobjectn-classname": [
+            "CodeIgniter\\Database\\BaseResult::getCustomRowObject"
+        ],
+        "dataseekn-0": [
+            "CodeIgniter\\Database\\BaseResult::dataSeek"
+        ],
+        "setrowkey-value-null": [
+            "CodeIgniter\\Database\\BaseResult::setRow"
+        ],
+        "getnextrowtype-object": [
+            "CodeIgniter\\Database\\BaseResult::getNextRow"
+        ],
+        "getpreviousrowtype-object": [
+            "CodeIgniter\\Database\\BaseResult::getPreviousRow"
+        ],
+        "getfirstrowtype-object": [
+            "CodeIgniter\\Database\\BaseResult::getFirstRow"
+        ],
+        "getlastrowtype-object": [
+            "CodeIgniter\\Database\\BaseResult::getLastRow"
+        ],
+        "getfieldcount_1": [
+            "CodeIgniter\\Database\\BaseResult::getFieldCount"
+        ],
+        "getfieldnames_1": [
+            "CodeIgniter\\Database\\BaseResult::getFieldNames"
+        ],
+        "getfielddata": [
+            "CodeIgniter\\Database\\BaseResult::getFieldData"
+        ],
+        "getnumrows_1": [
+            "CodeIgniter\\Database\\BaseResult::getNumRows"
+        ],
+        "freeresult_1": [
+            "CodeIgniter\\Database\\BaseResult::freeResult"
+        ]
+    },
+    "database/transactions.md": {
+        "codeigniters-approach-to-transactions": [
+            "codeigniter-s-approach-to-transactions"
+        ],
+        "resetting-transaction-status": [
+            "transactions-resetting-transaction-status"
+        ],
+        "managing-errors": [
+            "transactions-managing-errors"
+        ],
+        "throwing-exceptions": [
+            "transactions-throwing-exceptions"
+        ],
+        "running-transactions-manually": [
+            "transactions-manual-transactions"
+        ]
+    },
+    "dbmgmt/db_commands.md": {
+        "dbtable-show": [
+            "db-table-show"
+        ],
+        "specify-the-database-group": [
+            "db-command-specify-the-dbgroup"
+        ],
+        "dbtable-dbgroup": [
+            "db-table-dbgroup"
+        ],
+        "dbtable": [
+            "db-table"
+        ],
+        "dbtable-metadata": [
+            "db-table-metadata"
+        ]
+    },
+    "dbmgmt/forge.md": {
+        "forge-createdatabasedb_name": [
+            "forge-createdatabase-db-name"
+        ],
+        "forge-dropdatabasedb_name": [
+            "forge-dropdatabase-db-name"
+        ],
+        "raw-sql-strings-as-default-values": [
+            "forge-addfield-default-value-rawsql"
+        ],
+        "forge-dropcolumn": [
+            "db-forge-dropcolumn"
+        ],
+        "forge-modifycolumn": [
+            "db-forge-modifycolumn"
+        ],
+        "adding-keys-to-a-table": [
+            "db-forge-adding-keys-to-a-table"
+        ],
+        "codeigniterdatabase": [
+            "namespace-CodeIgniter\\Database"
+        ],
+        "forge": [
+            "CodeIgniter\\Database\\Forge"
+        ],
+        "addcolumntable-field": [
+            "CodeIgniter\\Database\\Forge::addColumn"
+        ],
+        "addfieldfield": [
+            "CodeIgniter\\Database\\Forge::addField"
+        ],
+        "addforeignkeyfieldname-tablename-tablefield-onupdate-ondelete-fkname": [
+            "CodeIgniter\\Database\\Forge::addForeignKey"
+        ],
+        "addkeykey-primary-false-unique-false-keyname": [
+            "CodeIgniter\\Database\\Forge::addKey"
+        ],
+        "addprimarykeykey-keyname": [
+            "CodeIgniter\\Database\\Forge::addPrimaryKey"
+        ],
+        "adduniquekeykey-keyname": [
+            "CodeIgniter\\Database\\Forge::addUniqueKey"
+        ],
+        "createdatabasedbname-ifnotexists-false": [
+            "CodeIgniter\\Database\\Forge::createDatabase"
+        ],
+        "createtabletable-ifnotexists-false-array-attributes": [
+            "CodeIgniter\\Database\\Forge::createTable"
+        ],
+        "dropcolumntable-columnnames": [
+            "CodeIgniter\\Database\\Forge::dropColumn"
+        ],
+        "dropdatabasedbname": [
+            "CodeIgniter\\Database\\Forge::dropDatabase"
+        ],
+        "dropkeytable-keyname-prefixkeyname-true": [
+            "CodeIgniter\\Database\\Forge::dropKey"
+        ],
+        "dropprimarykeytable-keyname": [
+            "CodeIgniter\\Database\\Forge::dropPrimaryKey"
+        ],
+        "droptabletablename-ifexists-false-cascade-false": [
+            "CodeIgniter\\Database\\Forge::dropTable"
+        ],
+        "processindexestable": [
+            "CodeIgniter\\Database\\Forge::processIndexes"
+        ],
+        "modifycolumntable-field": [
+            "CodeIgniter\\Database\\Forge::modifyColumn"
+        ],
+        "renametabletablename-newtablename": [
+            "CodeIgniter\\Database\\Forge::renameTable"
+        ]
+    },
+    "dbmgmt/migration.md": {
+        "migraterollback": [
+            "migrate-rollback"
+        ],
+        "migraterefresh": [
+            "migrate-refresh"
+        ],
+        "migratestatus": [
+            "migrate-status"
+        ],
+        "makemigration": [
+            "make-migration"
+        ],
+        "codeigniterdatabase": [
+            "namespace-CodeIgniter\\Database"
+        ],
+        "migrationrunner": [
+            "CodeIgniter\\Database\\MigrationRunner"
+        ],
+        "findmigrations": [
+            "CodeIgniter\\Database\\MigrationRunner::findMigrations"
+        ],
+        "latestgroup": [
+            "CodeIgniter\\Database\\MigrationRunner::latest"
+        ],
+        "regresstargetbatch-group": [
+            "CodeIgniter\\Database\\MigrationRunner::regress"
+        ],
+        "forcepath-namespace-group": [
+            "CodeIgniter\\Database\\MigrationRunner::force"
+        ],
+        "setnamespacenamespace": [
+            "CodeIgniter\\Database\\MigrationRunner::setNamespace"
+        ],
+        "setgroupgroup": [
+            "CodeIgniter\\Database\\MigrationRunner::setGroup"
+        ]
+    },
+    "extending/composer_packages.md": {
+        "creating-composerjson": [
+            "creating-composer-json"
+        ],
+        "overriding-settings-in-appconfig": [
+            "overriding-settings-in-app-config"
+        ]
+    },
+    "extending/events.md": {
+        "for-cli-apps": [
+            "event-points-for-cli-apps"
+        ]
+    },
+    "general/ajax.md": {
+        "vuejs": [
+            "vue-js"
+        ]
+    },
+    "general/caching.md": {
+        "setting-cachestatuscodes": [
+            "web-page-caching-cache-status-codes"
+        ]
+    },
+    "general/common_functions.md": {
+        "cachekey": [
+            "cache"
+        ],
+        "configstring-name-bool-getshared-true": [
+            "config"
+        ],
+        "cookiestring-name-string-value-array-options": [
+            "cookie"
+        ],
+        "cookiesarray-cookies-bool-getglobal-true": [
+            "cookies"
+        ],
+        "envkey-default-null": [
+            "env"
+        ],
+        "escdata-context-html-encoding": [
+            "esc"
+        ],
+        "helperfilename": [
+            "helper"
+        ],
+        "langline-args-locale": [
+            "lang"
+        ],
+        "modelname-getshared-true-conn-null": [
+            "model"
+        ],
+        "oldkey-default-null-escape-html": [
+            "old"
+        ],
+        "sessionkey": [
+            "session"
+        ],
+        "timername": [
+            "timer"
+        ],
+        "viewname-data-options": [
+            "view"
+        ],
+        "view_celllibrary-params-null-ttl-0-cachename-null": [
+            "view_cell"
+        ],
+        "force_httpsduration-31536000-request-null-response-null": [
+            "force_https"
+        ],
+        "function_usablefunctionname": [
+            "function_usable"
+        ],
+        "is_really_writablefile": [
+            "is_really_writable"
+        ],
+        "is_windowsmock-null": [
+            "is_windows"
+        ],
+        "log_messagelevel-message-context": [
+            "log_message"
+        ],
+        "redirectstring-route": [
+            "redirect"
+        ],
+        "remove_invisible_charactersstr-urlencoded-true": [
+            "remove_invisible_characters"
+        ],
+        "route_tomethod-params": [
+            "route_to"
+        ],
+        "servicename-params": [
+            "service"
+        ],
+        "single_servicename-params": [
+            "single_service"
+        ],
+        "slash_item-item": [
+            "slash_item"
+        ],
+        "stringify_attributesattributes-js": [
+            "stringify_attributes"
+        ],
+        "apppath": [
+            "APPPATH"
+        ],
+        "rootpath": [
+            "ROOTPATH"
+        ],
+        "systempath": [
+            "SYSTEMPATH"
+        ],
+        "fcpath": [
+            "FCPATH"
+        ],
+        "writepath": [
+            "WRITEPATH"
+        ],
+        "second": [
+            "SECOND"
+        ],
+        "minute": [
+            "MINUTE"
+        ],
+        "hour": [
+            "HOUR"
+        ],
+        "day": [
+            "DAY"
+        ],
+        "week": [
+            "WEEK"
+        ],
+        "month": [
+            "MONTH"
+        ],
+        "year": [
+            "YEAR"
+        ],
+        "decade": [
+            "DECADE"
+        ]
+    },
+    "general/configuration.md": {
+        "config": [
+            "configuration-config"
+        ],
+        "namespace-separator": [
+            "env-var-namespace-separator"
+        ],
+        "environment-variables-as-replacements-for-data": [
+            "env-var-replacements-for-data"
+        ],
+        "configcheck": [
+            "spark-config-check",
+            "config-check"
+        ]
+    },
+    "general/environments.md": {
+        "the-environment-constant": [
+            "environment-constant"
+        ],
+        "apache": [
+            "environment-apache"
+        ],
+        "nginx": [
+            "environment-nginx"
+        ]
+    },
+    "general/errors.md": {
+        "specify-http-status-code-in-your-exception": [
+            "error-specify-http-status-code"
+        ],
+        "specify-exit-code-in-your-exception": [
+            "error-specify-exit-code"
+        ]
+    },
+    "general/helpers.md": {
+        "loading-from-specified-namespace": [
+            "helpers-loading-from-specified-namespace"
+        ]
+    },
+    "general/logging.md": {
+        "configuration": [
+            "logging-configuration"
+        ]
+    },
+    "general/managing_apps.md": {
+        "renaming-or-relocating-the-application-directory": [
+            "renaming-app-directory"
+        ],
+        "running-multiple-applications-with-one-codeigniter-installation": [
+            "running-multiple-app"
+        ]
+    },
+    "general/modules.md": {
+        "enabledisable-discovery": [
+            "enable-disable-discovery"
+        ],
+        "specify-composer-packages": [
+            "modules-specify-composer-packages"
+        ],
+        "filters": [
+            "modules-filters"
+        ]
+    },
+    "general/urls.md": {
+        "url-structure": [
+            "urls-url-structure"
+        ],
+        "uri-security": [
+            "urls-uri-security"
+        ],
+        "removing-the-indexphp-file": [
+            "urls-remove-index-php",
+            "removing-the-index-php-file"
+        ],
+        "apache-web-server": [
+            "urls-remove-index-php-apache"
+        ],
+        "nginx": [
+            "urls-remove-index-php-nginx"
+        ]
+    },
+    "guides/api/controller.md": {
+        "building-a-restful-controller": [
+            "ci47-rest-part4"
+        ]
+    },
+    "guides/api/database-setup.md": {
+        "creating-the-database-and-model": [
+            "ci47-rest-part3"
+        ]
+    },
+    "guides/api/first-endpoint.md": {
+        "auto-routing-your-first-endpoint": [
+            "ci47-rest-part2"
+        ]
+    },
+    "guides/api/index.md": {
+        "getting-started-with-rest-apis": [
+            "ci47-rest-part1"
+        ],
+        "whats-next": [
+            "what-s-next"
+        ]
+    },
+    "guides/first-app/create_news_items.md": {
+        "create-newscreate-view-file": [
+            "create-news-create-view-file"
+        ],
+        "add-newsnew-to-display-the-form": [
+            "add-news-new-to-display-the-form"
+        ],
+        "add-newscreate-to-create-a-news-item": [
+            "add-news-create-to-create-a-news-item"
+        ]
+    },
+    "guides/first-app/news_section.md": {
+        "add-newsmodelgetnews-method": [
+            "add-newsmodel-getnews-method"
+        ],
+        "complete-newsindex-method": [
+            "complete-news-index-method"
+        ],
+        "create-newsindex-view-file": [
+            "create-news-index-view-file"
+        ],
+        "complete-newsshow-method": [
+            "complete-news-show-method"
+        ],
+        "create-newsview-view-file": [
+            "create-news-view-view-file"
+        ]
+    },
+    "guides/first-app/static_pages.md": {
+        "lets-make-our-first-controller": [
+            "let-s-make-our-first-controller"
+        ],
+        "create-homephp-and-aboutphp": [
+            "create-home-php-and-about-php"
+        ],
+        "complete-pagesview-method": [
+            "complete-pages-view-method"
+        ]
+    },
+    "helpers/array_helper.md": {
+        "dot_array_searchstring-search-array-values": [
+            "dot_array_search"
+        ],
+        "array_deep_searchkey-array-array": [
+            "array_deep_search"
+        ],
+        "array_sort_by_multiple_keysarray-array-array-sortcolumns": [
+            "array_sort_by_multiple_keys"
+        ],
+        "array_flatten_with_dotsiterable-array-string-id-array": [
+            "array_flatten_with_dots"
+        ],
+        "array_group_byarray-array-array-indexes-bool-includeempty-false-array": [
+            "array_group_by"
+        ]
+    },
+    "helpers/cookie_helper.md": {
+        "set_cookiename-value-expire-0-domain-path-prefix-secure-false-httponly-false-samesite": [
+            "set_cookie"
+        ],
+        "get_cookieindex-xssclean-false-prefix": [
+            "get_cookie"
+        ],
+        "delete_cookiename-domain-path-prefix": [
+            "delete_cookie"
+        ],
+        "has_cookiestring-name-string-value-null-string-prefix": [
+            "has_cookie"
+        ]
+    },
+    "helpers/date_helper.md": {
+        "nowtimezone-null": [
+            "now"
+        ],
+        "timezone_selectclass-default-what-datetimezoneall-country-null": [
+            "timezone_select"
+        ]
+    },
+    "helpers/filesystem_helper.md": {
+        "directory_mapsourcedir-directorydepth-0-hidden-false": [
+            "directory_map"
+        ],
+        "directory_mirrororiginal-target-overwrite-true": [
+            "directory_mirror"
+        ],
+        "write_filepath-data-mode-wb": [
+            "write_file"
+        ],
+        "delete_filespath-deldir-false-htdocs-false-hidden-false": [
+            "delete_files"
+        ],
+        "get_filenamessourcedir-includepath-false-hidden-false-includedir-true": [
+            "get_filenames"
+        ],
+        "get_dir_file_infosourcedir-toplevelonly-true": [
+            "get_dir_file_info"
+        ],
+        "get_file_infofile-returnedvalues-name-server_path-size-date": [
+            "get_file_info"
+        ],
+        "symbolic_permissionsperms": [
+            "symbolic_permissions"
+        ],
+        "octal_permissionsperms": [
+            "octal_permissions"
+        ],
+        "same_filefile1-file2": [
+            "same_file"
+        ],
+        "set_realpathpath-checkexistence-false": [
+            "set_realpath"
+        ]
+    },
+    "helpers/form_helper.md": {
+        "form_openaction-attributes-hidden": [
+            "form_open"
+        ],
+        "form_open_multipartaction-attributes-hidden": [
+            "form_open_multipart"
+        ],
+        "form_hiddenname-value": [
+            "form_hidden"
+        ],
+        "form_inputdata-value-extra-type-text": [
+            "form_input"
+        ],
+        "form_passworddata-value-extra": [
+            "form_password"
+        ],
+        "form_uploaddata-value-extra": [
+            "form_upload"
+        ],
+        "form_textareadata-value-extra": [
+            "form_textarea"
+        ],
+        "form_dropdownname-options-selected-extra": [
+            "form_dropdown"
+        ],
+        "form_multiselectname-options-selected-extra": [
+            "form_multiselect"
+        ],
+        "form_fieldsetlegend_text-attributes": [
+            "form_fieldset"
+        ],
+        "form_fieldset_closeextra": [
+            "form_fieldset_close"
+        ],
+        "form_checkboxdata-value-checked-false-extra": [
+            "form_checkbox"
+        ],
+        "form_radiodata-value-checked-false-extra": [
+            "form_radio"
+        ],
+        "form_labellabel_text-id-attributes": [
+            "form_label"
+        ],
+        "form_submitdata-value-extra": [
+            "form_submit"
+        ],
+        "form_resetdata-value-extra": [
+            "form_reset"
+        ],
+        "form_buttondata-content-extra": [
+            "form_button"
+        ],
+        "form_closeextra": [
+            "form_close"
+        ],
+        "set_valuefield-default-html_escape-true": [
+            "set_value"
+        ],
+        "set_selectfield-value-default-false": [
+            "set_select"
+        ],
+        "set_checkboxfield-value-default-false": [
+            "set_checkbox"
+        ],
+        "set_radiofield-value-default-false": [
+            "set_radio"
+        ],
+        "validation_list_errorstemplate-list": [
+            "validation_list_errors"
+        ],
+        "validation_show_errorfield-template-single": [
+            "validation_show_error"
+        ]
+    },
+    "helpers/html_helper.md": {
+        "imgsrc-indexpage-false-attributes": [
+            "img"
+        ],
+        "img_datapath-mime-null": [
+            "img_data"
+        ],
+        "link_taghref-rel-stylesheet-type-textcss-title-media-indexpage-false-hreflang": [
+            "link_tag"
+        ],
+        "script_tagsrc-indexpage-false": [
+            "script_tag"
+        ],
+        "ullist-attributes": [
+            "ul"
+        ],
+        "ollist-attributes": [
+            "ol"
+        ],
+        "videosrc-unsupportedmessage-attributes-tracks-indexpage-false": [
+            "video"
+        ],
+        "audiosrc-unsupportedmessage-attributes-tracks-indexpage-false": [
+            "audio"
+        ],
+        "sourcesrc-type-unknown-attributes-indexpage-false": [
+            "source"
+        ],
+        "embedsrc-type-unknown-attributes-indexpage-false": [
+            "embed"
+        ],
+        "objectdata-type-unknown-attributes-params-indexpage-false": [
+            "object"
+        ],
+        "paramname-value-type-ref-attributes": [
+            "param"
+        ],
+        "tracksrc-kind-srclanguage-label": [
+            "track"
+        ],
+        "doctypetype-html5": [
+            "doctype"
+        ]
+    },
+    "helpers/inflector_helper.md": {
+        "singularstring": [
+            "singular"
+        ],
+        "pluralstring": [
+            "plural"
+        ],
+        "countedcount-string": [
+            "counted"
+        ],
+        "camelizestring": [
+            "camelize"
+        ],
+        "pascalizestring": [
+            "pascalize"
+        ],
+        "underscorestring": [
+            "underscore"
+        ],
+        "decamelizestring": [
+            "decamelize"
+        ],
+        "humanizestring-separator-_": [
+            "humanize"
+        ],
+        "is_pluralizableword": [
+            "is_pluralizable"
+        ],
+        "dasherizestring": [
+            "dasherize"
+        ],
+        "ordinalinteger": [
+            "ordinal"
+        ],
+        "ordinalizeinteger": [
+            "ordinalize"
+        ]
+    },
+    "helpers/number_helper.md": {
+        "number_to_sizenum-precision-1-locale-null": [
+            "number_to_size"
+        ],
+        "number_to_amountnum-precision-0-locale-null": [
+            "number_to_amount"
+        ],
+        "number_to_currencynum-currency-locale-null-fraction-0": [
+            "number_to_currency"
+        ],
+        "number_to_romannum": [
+            "number_to_roman"
+        ]
+    },
+    "helpers/security_helper.md": {
+        "sanitize_filenamefilename-relativepath-false": [
+            "sanitize_filename"
+        ],
+        "strip_image_tagsstr": [
+            "strip_image_tags"
+        ],
+        "encode_php_tagsstr": [
+            "encode_php_tags"
+        ]
+    },
+    "helpers/test_helper.md": {
+        "fakemodel-array-overrides-null-persist-true": [
+            "fake"
+        ]
+    },
+    "helpers/text_helper.md": {
+        "random_stringtype-alnum-len-8": [
+            "random_string"
+        ],
+        "increment_stringstr-separator-_-first-1": [
+            "increment_string"
+        ],
+        "alternatorargs": [
+            "alternator"
+        ],
+        "reduce_double_slashesstr": [
+            "reduce_double_slashes"
+        ],
+        "strip_slashesdata": [
+            "strip_slashes"
+        ],
+        "reduce_multiplesstr-character-trim-false": [
+            "reduce_multiples"
+        ],
+        "quotes_to_entitiesstr": [
+            "quotes_to_entities"
+        ],
+        "strip_quotesstr": [
+            "strip_quotes"
+        ],
+        "word_limiterstr-limit-100-endchar-8230": [
+            "word_limiter"
+        ],
+        "character_limiterstring-limit-500-endchar-8230": [
+            "character_limiter"
+        ],
+        "ascii_to_entitiesstr": [
+            "ascii_to_entities"
+        ],
+        "entities_to_asciistr-all-true": [
+            "entities_to_ascii"
+        ],
+        "convert_accented_charactersstr": [
+            "convert_accented_characters"
+        ],
+        "word_censorstr-censored-replacement": [
+            "word_censor"
+        ],
+        "highlight_codestr": [
+            "highlight_code"
+        ],
+        "highlight_phrasestr-phrase-tag_open-mark-tag_close-mark": [
+            "highlight_phrase"
+        ],
+        "word_wrapstr-charlim-76": [
+            "word_wrap"
+        ],
+        "ellipsizestr-max_length-position-1-ellipsis-hellip": [
+            "ellipsize"
+        ],
+        "excerpttext-phrase-false-radius-100-ellipsis": [
+            "excerpt"
+        ]
+    },
+    "helpers/url_helper.md": {
+        "site_urluri-protocol-null-altconfig-null": [
+            "site_url"
+        ],
+        "base_urluri-protocol-null": [
+            "base_url"
+        ],
+        "current_urlreturnobject-false-request-null": [
+            "current_url"
+        ],
+        "previous_urlreturnobject-false": [
+            "previous_url"
+        ],
+        "index_pagealtconfig-null": [
+            "index_page"
+        ],
+        "anchoruri-title-attributes-altconfig-null": [
+            "anchor"
+        ],
+        "anchor_popupuri-title-attributes-false-altconfig-null": [
+            "anchor_popup"
+        ],
+        "mailtoemail-title-attributes": [
+            "mailto"
+        ],
+        "safe_mailtoemail-title-attributes": [
+            "safe_mailto"
+        ],
+        "auto_linkstr-type-both-popup-false": [
+            "auto_link"
+        ],
+        "url_titlestr-separator-lowercase-false": [
+            "url_title"
+        ],
+        "mb_url_titlestr-separator-lowercase-false": [
+            "mb_url_title"
+        ],
+        "parse_subdomainhost-null": [
+            "parse_subdomain"
+        ],
+        "prep_urlstr-secure-false": [
+            "prep_url"
+        ],
+        "url_tocontroller-args": [
+            "url_to"
+        ],
+        "url_ispath": [
+            "url_is"
+        ]
+    },
+    "helpers/xml_helper.md": {
+        "xml_convertstr-protect_all-false": [
+            "xml_convert"
+        ]
+    },
+    "incoming/auto_routing_improved.md": {
+        "enable-auto-routing-improved": [
+            "enabled-auto-routing-improved"
+        ],
+        "lets-try-it-hello-world": [
+            "let-s-try-it-hello-world"
+        ],
+        "default-method-fallback": [
+            "auto-routing-improved-default-method-fallback"
+        ],
+        "examples-of-controllermethods-and-uris": [
+            "examples-of-controller-methods-and-uris"
+        ],
+        "configuration-options": [
+            "routing-auto-routing-improved-configuration-options"
+        ],
+        "default-method_1": [
+            "routing-auto-routing-improved-default-method"
+        ],
+        "module-routing": [
+            "auto-routing-improved-module-routing"
+        ]
+    },
+    "incoming/controller_attributes.md": {
+        "controller-attributes": [
+            "incoming-controller-attributes"
+        ]
+    },
+    "incoming/controllers.md": {
+        "constructor": [
+            "controller-constructor"
+        ],
+        "helpers": [
+            "controllers-helpers"
+        ],
+        "validating-data": [
+            "controllers-validating-data"
+        ],
+        "this-validatedata": [
+            "controller-validatedata"
+        ],
+        "this-validate": [
+            "controller-validate"
+        ],
+        "auto-routing-improved": [
+            "controller-auto-routing-improved"
+        ],
+        "auto-routing-legacy": [
+            "controller-auto-routing-legacy"
+        ],
+        "lets-try-it-hello-world-legacy": [
+            "let-s-try-it-hello-world-legacy"
+        ],
+        "thats-it": [
+            "that-s-it"
+        ]
+    },
+    "incoming/filters.md": {
+        "appconfigfiltersphp": [
+            "app-config-filters-php"
+        ],
+        "aliases": [
+            "filters-aliases"
+        ],
+        "required": [
+            "filters-required"
+        ],
+        "globals": [
+            "filters-globals"
+        ],
+        "filter-arguments": [
+            "filters-filters-filter-arguments"
+        ],
+        "filtercheck": [
+            "spark-filter-check",
+            "filter-check"
+        ]
+    },
+    "incoming/incomingrequest.md": {
+        "is": [
+            "incomingrequest-is"
+        ],
+        "getting-data": [
+            "incomingrequest-getting-data"
+        ],
+        "getting-json-data": [
+            "incomingrequest-getting-json-data"
+        ],
+        "retrieving-raw-data-put-patch-delete": [
+            "incomingrequest-retrieving-raw-data"
+        ],
+        "filtering-input-data": [
+            "incomingrequest-filtering-input-data"
+        ],
+        "codeigniterhttp": [
+            "namespace-CodeIgniter\\HTTP"
+        ],
+        "incomingrequest": [
+            "CodeIgniter\\HTTP\\IncomingRequest"
+        ],
+        "iscli": [
+            "CodeIgniter\\HTTP\\IncomingRequest::isCLI"
+        ],
+        "isajax": [
+            "CodeIgniter\\HTTP\\IncomingRequest::isAJAX"
+        ],
+        "issecure": [
+            "CodeIgniter\\HTTP\\IncomingRequest::isSecure"
+        ],
+        "getvarindex-null-filter-null-flags-null": [
+            "CodeIgniter\\HTTP\\IncomingRequest::getVar"
+        ],
+        "getgetindex-null-filter-null-flags-null": [
+            "CodeIgniter\\HTTP\\IncomingRequest::getGet"
+        ],
+        "getpostindex-null-filter-null-flags-null": [
+            "CodeIgniter\\HTTP\\IncomingRequest::getPost"
+        ],
+        "getpostgetindex-null-filter-null-flags-null": [
+            "CodeIgniter\\HTTP\\IncomingRequest::getPostGet"
+        ],
+        "getgetpostindex-null-filter-null-flags-null": [
+            "CodeIgniter\\HTTP\\IncomingRequest::getGetPost"
+        ],
+        "getcookieindex-null-filter-null-flags-null": [
+            "CodeIgniter\\HTTP\\IncomingRequest::getCookie"
+        ],
+        "getserverindex-null-filter-null-flags-null": [
+            "CodeIgniter\\HTTP\\IncomingRequest::getServer"
+        ],
+        "getuseragent": [
+            "CodeIgniter\\HTTP\\IncomingRequest::getUserAgent"
+        ],
+        "getpath": [
+            "CodeIgniter\\HTTP\\IncomingRequest::getPath"
+        ]
+    },
+    "incoming/message.md": {
+        "codeigniterhttp": [
+            "namespace-CodeIgniter\\HTTP"
+        ],
+        "message": [
+            "CodeIgniter\\HTTP\\Message"
+        ],
+        "getbody": [
+            "CodeIgniter\\HTTP\\Message::getBody"
+        ],
+        "setbodydata": [
+            "CodeIgniter\\HTTP\\Message::setBody"
+        ],
+        "appendbodydata": [
+            "CodeIgniter\\HTTP\\Message::appendBody"
+        ],
+        "populateheaders": [
+            "CodeIgniter\\HTTP\\Message::populateHeaders"
+        ],
+        "headers": [
+            "CodeIgniter\\HTTP\\Message::headers"
+        ],
+        "headername": [
+            "CodeIgniter\\HTTP\\Message::header"
+        ],
+        "hasheadername": [
+            "CodeIgniter\\HTTP\\Message::hasHeader"
+        ],
+        "getheaderlinename": [
+            "CodeIgniter\\HTTP\\Message::getHeaderLine"
+        ],
+        "setheadername-value": [
+            "CodeIgniter\\HTTP\\Message::setHeader"
+        ],
+        "removeheadername": [
+            "CodeIgniter\\HTTP\\Message::removeHeader"
+        ],
+        "appendheadername-value": [
+            "CodeIgniter\\HTTP\\Message::appendHeader"
+        ],
+        "prependheadername-value": [
+            "CodeIgniter\\HTTP\\Message::prependHeader"
+        ],
+        "addheadername-value": [
+            "CodeIgniter\\HTTP\\Message::addHeader"
+        ],
+        "getprotocolversion": [
+            "CodeIgniter\\HTTP\\Message::getProtocolVersion"
+        ],
+        "setprotocolversionversion": [
+            "CodeIgniter\\HTTP\\Message::setProtocolVersion"
+        ]
+    },
+    "incoming/request.md": {
+        "codeigniterhttp": [
+            "namespace-CodeIgniter\\HTTP"
+        ],
+        "request": [
+            "CodeIgniter\\HTTP\\Request"
+        ],
+        "getipaddress": [
+            "CodeIgniter\\HTTP\\Request::getIPAddress"
+        ],
+        "isvalidipip-which": [
+            "CodeIgniter\\HTTP\\Request::isValidIP"
+        ],
+        "getmethod": [
+            "CodeIgniter\\HTTP\\Request::getMethod"
+        ],
+        "setmethodmethod": [
+            "CodeIgniter\\HTTP\\Request::setMethod"
+        ],
+        "withmethodmethod": [
+            "CodeIgniter\\HTTP\\Request::withMethod"
+        ],
+        "getserverindex-null-filter-null-flags-null": [
+            "CodeIgniter\\HTTP\\Request::getServer"
+        ],
+        "getenvindex-null-filter-null-flags-null": [
+            "CodeIgniter\\HTTP\\Request::getEnv"
+        ],
+        "setglobalmethod-value": [
+            "CodeIgniter\\HTTP\\Request::setGlobal"
+        ],
+        "fetchglobalmethod-index-null-filter-null-flags-null": [
+            "CodeIgniter\\HTTP\\Request::fetchGlobal"
+        ]
+    },
+    "incoming/restful.md": {
+        "presentercontroller-comparison": [
+            "presenter-controller-comparison"
+        ]
+    },
+    "incoming/routing.md": {
+        "setting-routing-rules": [
+            "defined-route-routing"
+        ],
+        "http-verb-routes": [
+            "routing-http-verb-routes"
+        ],
+        "controllers-namespace": [
+            "controller-s-namespace"
+        ],
+        "the-behavior-of-any": [
+            "routing-placeholder-any"
+        ],
+        "named-routes": [
+            "using-named-routes"
+        ],
+        "nesting-groups": [
+            "routing-nesting-groups"
+        ],
+        "route-priority": [
+            "routing-priority"
+        ],
+        "default-namespace": [
+            "routing-default-namespace"
+        ],
+        "default-method": [
+            "routing-default-method"
+        ],
+        "404-override": [
+            "override"
+        ],
+        "configuration-options-legacy": [
+            "routing-auto-routing-legacy-configuration-options"
+        ],
+        "default-method-legacy": [
+            "routing-auto-routing-legacy-default-method"
+        ],
+        "spark-routes": [
+            "routing-spark-routes"
+        ],
+        "sort-by-handler": [
+            "routing-spark-routes-sort-by-handler"
+        ],
+        "specify-host": [
+            "routing-spark-routes-specify-host"
+        ],
+        "retrieving-the-current-controllermethod-names": [
+            "retrieving-the-current-controller-method-names"
+        ]
+    },
+    "installation/installing_composer.md": {
+        "upgrading": [
+            "app-starter-upgrading"
+        ],
+        "latest-dev": [
+            "switch-to-dev-version"
+        ],
+        "upgrading_1": [
+            "adding-codeigniter4-upgrading"
+        ]
+    },
+    "installation/installing_manual.md": {
+        "upgrading": [
+            "installing-manual-upgrading"
+        ]
+    },
+    "installation/running.md": {
+        "checking-php-ini-settings": [
+            "spark-phpini-check"
+        ],
+        "enabling-mod_rewrite": [
+            "enabling-mod-rewrite"
+        ],
+        "enabling-vhost_alias_module": [
+            "enabling-vhost-alias-module"
+        ],
+        "hosting-with-mod_userdir-shared-hosts": [
+            "hosting-with-mod-userdir-shared-hosts"
+        ],
+        "removing-the-indexphp": [
+            "removing-the-index-php"
+        ],
+        "defaultconf": [
+            "default-conf"
+        ]
+    },
+    "installation/troubleshooting.md": {
+        "i-have-to-include-indexphp-in-my-url": [
+            "i-have-to-include-index-php-in-my-url"
+        ],
+        "whats-with-an-unhelpful-whoops-page": [
+            "what-s-with-an-unhelpful-whoops-page"
+        ]
+    },
+    "installation/upgrade_404.md": {
+        "upgrading-from-40x-to-404": [
+            "upgrading-from-4-0-x-to-4-0-4"
+        ]
+    },
+    "installation/upgrade_405.md": {
+        "upgrading-from-404-to-405": [
+            "upgrading-from-4-0-4-to-4-0-5"
+        ],
+        "messagegetheaders": [
+            "message-getheader-s"
+        ],
+        "configservices": [
+            "config-services"
+        ]
+    },
+    "installation/upgrade_410.md": {
+        "upgrading-from-405-to-410-or-411": [
+            "upgrading-from-4-0-5-to-4-1-0-or-4-1-1"
+        ]
+    },
+    "installation/upgrade_412.md": {
+        "upgrading-from-411-to-412": [
+            "upgrading-from-4-1-1-to-4-1-2"
+        ],
+        "current_url-and-indexpage": [
+            "current-url-and-indexpage"
+        ],
+        "baseconnectionquery-return-values": [
+            "baseconnection-query-return-values"
+        ],
+        "connectioninterfaceiswritetype-declaration-added": [
+            "connectioninterface-iswritetype-declaration-added"
+        ]
+    },
+    "installation/upgrade_413.md": {
+        "upgrading-from-412-to-413": [
+            "upgrading-from-4-1-2-to-4-1-3"
+        ]
+    },
+    "installation/upgrade_414.md": {
+        "upgrading-from-413-to-414": [
+            "upgrading-from-4-1-3-to-4-1-4"
+        ]
+    },
+    "installation/upgrade_415.md": {
+        "upgrading-from-414-to-415": [
+            "upgrading-from-4-1-4-to-4-1-5"
+        ],
+        "session-databasehandlers-database-table-change": [
+            "session-databasehandler-s-database-table-change"
+        ],
+        "multiple-filters-for-a-route": [
+            "upgrade-415-multiple-filters-for-a-route"
+        ]
+    },
+    "installation/upgrade_416.md": {
+        "upgrading-from-415-to-416": [
+            "upgrading-from-4-1-5-to-4-1-6"
+        ]
+    },
+    "installation/upgrade_417.md": {
+        "upgrading-from-416-to-417": [
+            "upgrading-from-4-1-6-to-4-1-7"
+        ]
+    },
+    "installation/upgrade_418.md": {
+        "upgrading-from-417-to-418": [
+            "upgrading-from-4-1-7-to-4-1-8"
+        ]
+    },
+    "installation/upgrade_420.md": {
+        "upgrading-from-419-to-420": [
+            "upgrading-from-4-1-9-to-4-2-0"
+        ],
+        "indexphp-and-spark": [
+            "index-php-and-spark"
+        ],
+        "configconstantsphp": [
+            "config-constants-php"
+        ],
+        "composerjson": [
+            "composer-json"
+        ]
+    },
+    "installation/upgrade_421.md": {
+        "upgrading-from-420-to-421": [
+            "upgrading-from-4-2-0-to-4-2-1"
+        ],
+        "appconfigmimesphp": [
+            "app-config-mimes-php"
+        ],
+        "get_cookie": [
+            "upgrade-421-get-cookie",
+            "get-cookie"
+        ]
+    },
+    "installation/upgrade_4210.md": {
+        "upgrading-from-429-to-4210": [
+            "upgrading-from-4-2-9-to-4-2-10"
+        ]
+    },
+    "installation/upgrade_4211.md": {
+        "upgrading-from-4210-to-4211": [
+            "upgrading-from-4-2-10-to-4-2-11"
+        ],
+        "configappproxyips": [
+            "upgrade-4211-proxyips",
+            "config-app-proxyips"
+        ],
+        "session-handler-key-changes": [
+            "upgrade-4211-session-key"
+        ]
+    },
+    "installation/upgrade_4212.md": {
+        "upgrading-from-4211-to-4212": [
+            "upgrading-from-4-2-11-to-4-2-12"
+        ]
+    },
+    "installation/upgrade_422.md": {
+        "upgrading-from-421-to-422": [
+            "upgrading-from-4-2-1-to-4-2-2"
+        ]
+    },
+    "installation/upgrade_423.md": {
+        "upgrading-from-422-to-423": [
+            "upgrading-from-4-2-2-to-4-2-3"
+        ]
+    },
+    "installation/upgrade_425.md": {
+        "upgrading-from-423-to-425": [
+            "upgrading-from-4-2-3-to-4-2-5"
+        ]
+    },
+    "installation/upgrade_426.md": {
+        "upgrading-from-425-to-426": [
+            "upgrading-from-4-2-5-to-4-2-6"
+        ]
+    },
+    "installation/upgrade_427.md": {
+        "upgrading-from-426-to-427": [
+            "upgrading-from-4-2-6-to-4-2-7"
+        ],
+        "set_cookie": [
+            "set-cookie"
+        ]
+    },
+    "installation/upgrade_428.md": {
+        "upgrading-from-427-to-428": [
+            "upgrading-from-4-2-7-to-4-2-8"
+        ]
+    },
+    "installation/upgrade_430.md": {
+        "upgrading-from-4212-to-430": [
+            "upgrading-from-4-2-12-to-4-3-0"
+        ],
+        "appconfigkintphp": [
+            "app-config-kint-php"
+        ],
+        "appconfigexceptionsphp": [
+            "app-config-exceptions-php"
+        ],
+        "composerjson": [
+            "composer-json"
+        ],
+        "capturing-stderr-and-stdout-streams-in-tests": [
+            "upgrade-430-stream-filter"
+        ],
+        "honeypot-and-csp": [
+            "upgrade-430-honeypot-and-csp"
+        ],
+        "config": [
+            "upgrade-430-config"
+        ]
+    },
+    "installation/upgrade_431.md": {
+        "upgrading-from-430-to-431": [
+            "upgrading-from-4-3-0-to-4-3-1"
+        ],
+        "appconfigemailphp": [
+            "app-config-email-php"
+        ],
+        "appconfigexceptionsphp": [
+            "app-config-exceptions-php"
+        ]
+    },
+    "installation/upgrade_432.md": {
+        "upgrading-from-431-to-432": [
+            "upgrading-from-4-3-1-to-4-3-2"
+        ],
+        "base_url": [
+            "base-url"
+        ],
+        "uri_string": [
+            "upgrade-432-uri-string",
+            "uri-string"
+        ],
+        "composerjson": [
+            "composer-json"
+        ]
+    },
+    "installation/upgrade_433.md": {
+        "upgrading-from-432-to-433": [
+            "upgrading-from-4-3-2-to-4-3-3"
+        ]
+    },
+    "installation/upgrade_434.md": {
+        "upgrading-from-433-to-434": [
+            "upgrading-from-4-3-3-to-4-3-4"
+        ],
+        "forgemodifycolumn-and-null": [
+            "forge-modifycolumn-and-null"
+        ]
+    },
+    "installation/upgrade_435.md": {
+        "upgrading-from-434-to-435": [
+            "upgrading-from-4-3-4-to-4-3-5"
+        ],
+        "sessionstop": [
+            "session-stop"
+        ]
+    },
+    "installation/upgrade_436.md": {
+        "upgrading-from-435-to-436": [
+            "upgrading-from-4-3-5-to-4-3-6"
+        ]
+    },
+    "installation/upgrade_437.md": {
+        "upgrading-from-436-to-437": [
+            "upgrading-from-4-3-6-to-4-3-7"
+        ],
+        "feature-testing-request-body": [
+            "upgrade-437-feature-testing"
+        ],
+        "return-value-of-validationloadrulegroup": [
+            "return-value-of-validation-loadrulegroup"
+        ]
+    },
+    "installation/upgrade_438.md": {
+        "upgrading-from-437-to-438": [
+            "upgrading-from-4-3-7-to-4-3-8"
+        ]
+    },
+    "installation/upgrade_440.md": {
+        "upgrading-from-438-to-440": [
+            "upgrading-from-4-3-8-to-4-4-0"
+        ],
+        "urisetsegment-change": [
+            "upgrade-440-uri-setsegment",
+            "uri-setsegment-change"
+        ],
+        "routecollectionroutes": [
+            "routecollection-routes"
+        ],
+        "indexphp-and-spark": [
+            "index-php-and-spark"
+        ],
+        "appconfigappphp": [
+            "app-config-app-php"
+        ],
+        "appconfigroutingphp": [
+            "upgrade-440-config-routing",
+            "app-config-routing-php"
+        ],
+        "appconfigtoolbarphp": [
+            "app-config-toolbar-php"
+        ],
+        "appconfigeventsphp": [
+            "app-config-events-php"
+        ],
+        "appconfigcookiephp": [
+            "app-config-cookie-php"
+        ],
+        "appconfigsecurityphp": [
+            "app-config-security-php"
+        ],
+        "appconfigsessionphp": [
+            "app-config-session-php"
+        ]
+    },
+    "installation/upgrade_441.md": {
+        "upgrading-from-440-to-441": [
+            "upgrading-from-4-4-0-to-4-4-1"
+        ]
+    },
+    "installation/upgrade_442.md": {
+        "upgrading-from-441-to-442": [
+            "upgrading-from-4-4-1-to-4-4-2"
+        ]
+    },
+    "installation/upgrade_443.md": {
+        "upgrading-from-442-to-443": [
+            "upgrading-from-4-4-2-to-4-4-3"
+        ],
+        "error_exceptionphp": [
+            "error-exception-php"
+        ]
+    },
+    "installation/upgrade_444.md": {
+        "upgrading-from-443-to-444": [
+            "upgrading-from-4-4-3-to-4-4-4"
+        ],
+        "validation-with-dot-array-syntax": [
+            "upgrade-444-validation-with-dot-array-syntax"
+        ],
+        "the-use-of-the-ssl_key-option-in-curlrequest-was-removed": [
+            "the-use-of-the-ssl-key-option-in-curlrequest-was-removed"
+        ]
+    },
+    "installation/upgrade_445.md": {
+        "upgrading-from-444-to-445": [
+            "upgrading-from-4-4-4-to-4-4-5"
+        ]
+    },
+    "installation/upgrade_446.md": {
+        "upgrading-from-445-to-446": [
+            "upgrading-from-4-4-5-to-4-4-6"
+        ],
+        "timecreatefromtimestamp-timezone-change": [
+            "time-createfromtimestamp-timezone-change"
+        ]
+    },
+    "installation/upgrade_447.md": {
+        "upgrading-from-446-to-447": [
+            "upgrading-from-4-4-6-to-4-4-7"
+        ],
+        "paths-in-controller-filters": [
+            "upgrade-447-filter-paths"
+        ],
+        "timedifference-and-dst": [
+            "time-difference-and-dst"
+        ]
+    },
+    "installation/upgrade_448.md": {
+        "upgrading-from-447-to-448": [
+            "upgrading-from-4-4-7-to-4-4-8"
+        ]
+    },
+    "installation/upgrade_450.md": {
+        "upgrading-from-448-to-450": [
+            "upgrading-from-4-4-8-to-4-5-0"
+        ],
+        "indexphp-and-spark": [
+            "index-php-and-spark"
+        ],
+        "lowercase-http-method-name": [
+            "upgrade-450-lowercase-http-method-name"
+        ],
+        "requestgetmethod": [
+            "request-getmethod"
+        ],
+        "appconfigfiltersphp": [
+            "app-config-filters-php"
+        ],
+        "curlrequestrequest": [
+            "curlrequest-request"
+        ],
+        "nested-route-groups-and-options": [
+            "upgrade-450-nested-route-groups-and-options"
+        ],
+        "filter-execution-order": [
+            "upgrade-450-filter-execution-order"
+        ],
+        "apiresponsetrait-and-string-data": [
+            "upgrade-450-api-response-trait",
+            "api-responsetrait-and-string-data"
+        ],
+        "filelocatorfindqualifiednamefrompath": [
+            "filelocator-findqualifiednamefrompath"
+        ],
+        "basemodelgetidvalue": [
+            "basemodel-getidvalue"
+        ],
+        "404-override-status-code": [
+            "upgrade-450-404-override",
+            "override-status-code"
+        ],
+        "validationrun-signature": [
+            "validation-run-signature"
+        ],
+        "appconfigfiltersphp_1": [
+            "app-config-filters-php"
+        ]
+    },
+    "installation/upgrade_451.md": {
+        "upgrading-from-450-to-451": [
+            "upgrading-from-4-5-0-to-4-5-1"
+        ]
+    },
+    "installation/upgrade_452.md": {
+        "upgrading-from-451-to-452": [
+            "upgrading-from-4-5-1-to-4-5-2"
+        ]
+    },
+    "installation/upgrade_453.md": {
+        "upgrading-from-452-to-453": [
+            "upgrading-from-4-5-2-to-4-5-3"
+        ]
+    },
+    "installation/upgrade_454.md": {
+        "upgrading-from-453-to-454": [
+            "upgrading-from-4-5-3-to-4-5-4"
+        ]
+    },
+    "installation/upgrade_455.md": {
+        "upgrading-from-454-to-455": [
+            "upgrading-from-4-5-4-to-4-5-5"
+        ]
+    },
+    "installation/upgrade_456.md": {
+        "upgrading-from-455-to-456": [
+            "upgrading-from-4-5-5-to-4-5-6"
+        ]
+    },
+    "installation/upgrade_457.md": {
+        "upgrading-from-456-to-457": [
+            "upgrading-from-4-5-6-to-4-5-7"
+        ]
+    },
+    "installation/upgrade_458.md": {
+        "upgrading-from-457-to-458": [
+            "upgrading-from-4-5-7-to-4-5-8"
+        ]
+    },
+    "installation/upgrade_460.md": {
+        "upgrading-from-458-to-460": [
+            "upgrading-from-4-5-8-to-4-6-0"
+        ],
+        "timecreatefromtimestamp-timezone-change": [
+            "upgrade-460-time-create-from-timestamp",
+            "time-createfromtimestamp-timezone-change"
+        ],
+        "time-keeps-microseconds": [
+            "upgrade-460-time-keeps-microseconds"
+        ],
+        "timesettimestamp-behavior-fix": [
+            "upgrade-460-time-set-timestamp",
+            "time-settimestamp-behavior-fix"
+        ],
+        "registrars-with-dirty-hack": [
+            "upgrade-460-registrars-with-dirty-hack"
+        ],
+        "session-id-sid-change": [
+            "upgrade-460-sid-change"
+        ],
+        "filters-changes": [
+            "upgrade-460-filters-changes"
+        ]
+    },
+    "installation/upgrade_461.md": {
+        "upgrading-from-460-to-461": [
+            "upgrading-from-4-6-0-to-4-6-1"
+        ]
+    },
+    "installation/upgrade_462.md": {
+        "upgrading-from-461-to-462": [
+            "upgrading-from-4-6-1-to-4-6-2"
+        ]
+    },
+    "installation/upgrade_463.md": {
+        "upgrading-from-462-to-463": [
+            "upgrading-from-4-6-2-to-4-6-3"
+        ]
+    },
+    "installation/upgrade_464.md": {
+        "upgrading-from-463-to-464": [
+            "upgrading-from-4-6-3-to-4-6-4"
+        ]
+    },
+    "installation/upgrade_465.md": {
+        "upgrading-from-464-to-465": [
+            "upgrading-from-4-6-4-to-4-6-5"
+        ]
+    },
+    "installation/upgrade_470.md": {
+        "upgrading-from-46x-to-470": [
+            "upgrading-from-4-6-x-to-4-7-0"
+        ],
+        "php-82-required": [
+            "php-8-2-required"
+        ],
+        "validation-regex_match-placeholders": [
+            "validation-regex-match-placeholders"
+        ]
+    },
+    "installation/upgrade_471.md": {
+        "upgrading-from-470-to-471": [
+            "upgrading-from-4-7-0-to-4-7-1"
+        ]
+    },
+    "installation/upgrade_472.md": {
+        "upgrading-from-471-to-472": [
+            "upgrading-from-4-7-1-to-4-7-2"
+        ]
+    },
+    "installation/upgrade_473.md": {
+        "upgrading-from-472-to-473": [
+            "upgrading-from-4-7-2-to-4-7-3"
+        ]
+    },
+    "installation/upgrade_474.md": {
+        "upgrading-from-473-to-474": [
+            "upgrading-from-4-7-3-to-4-7-4"
+        ]
+    },
+    "installation/upgrade_475.md": {
+        "upgrading-from-474-to-475": [
+            "upgrading-from-4-7-4-to-4-7-5"
+        ],
+        "view-parser-no-longer-parses-substituted-values": [
+            "upgrade-475-view-parser-values"
+        ]
+    },
+    "installation/upgrade_476.md": {
+        "upgrading-from-475-to-476": [
+            "upgrading-from-4-7-5-to-4-7-6"
+        ],
+        "file-cache-deletematching-no-longer-matches-subdirectories": [
+            "upgrade-476-cache-delete-matching"
+        ],
+        "model-field-protection-for-replace": [
+            "upgrade-476-model-replace"
+        ],
+        "named-binds-are-no-longer-replaced-inside-quoted-values": [
+            "upgrade-476-named-binds"
+        ]
+    },
+    "installation/upgrade_477.md": {
+        "upgrading-from-476-to-477": [
+            "upgrading-from-4-7-6-to-4-7-7"
+        ]
+    },
+    "installation/upgrade_4xx.md": {
+        "upgrading-from-3x-to-4x": [
+            "upgrading-from-3-x-to-4-x"
+        ]
+    },
+    "installation/upgrade_configuration.md": {
+        "codeigniter-version-3x": [
+            "codeigniter-version-3-x"
+        ],
+        "codeigniter-version-4x": [
+            "codeigniter-version-4-x"
+        ]
+    },
+    "installation/upgrade_controllers.md": {
+        "codeigniter-version-3x": [
+            "codeigniter-version-3-x"
+        ],
+        "codeigniter-version-4x": [
+            "codeigniter-version-4-x"
+        ]
+    },
+    "installation/upgrade_database.md": {
+        "codeigniter-version-3x": [
+            "codeigniter-version-3-x"
+        ],
+        "codeigniter-version-4x": [
+            "codeigniter-version-4-x"
+        ]
+    },
+    "installation/upgrade_emails.md": {
+        "codeigniter-version-3x": [
+            "codeigniter-version-3-x"
+        ],
+        "codeigniter-version-4x": [
+            "codeigniter-version-4-x"
+        ]
+    },
+    "installation/upgrade_encryption.md": {
+        "codeigniter-version-3x": [
+            "codeigniter-version-3-x"
+        ],
+        "codeigniter-version-4x": [
+            "codeigniter-version-4-x"
+        ]
+    },
+    "installation/upgrade_file_upload.md": {
+        "codeigniter-version-3x": [
+            "codeigniter-version-3-x"
+        ],
+        "codeigniter-version-4x": [
+            "codeigniter-version-4-x"
+        ]
+    },
+    "installation/upgrade_html_tables.md": {
+        "codeigniter-version-3x": [
+            "codeigniter-version-3-x"
+        ],
+        "codeigniter-version-4x": [
+            "codeigniter-version-4-x"
+        ]
+    },
+    "installation/upgrade_images.md": {
+        "codeigniter-version-3x": [
+            "codeigniter-version-3-x"
+        ],
+        "codeigniter-version-4x": [
+            "codeigniter-version-4-x"
+        ]
+    },
+    "installation/upgrade_localization.md": {
+        "codeigniter-version-3x": [
+            "codeigniter-version-3-x"
+        ],
+        "codeigniter-version-4x": [
+            "codeigniter-version-4-x"
+        ]
+    },
+    "installation/upgrade_migrations.md": {
+        "codeigniter-version-3x": [
+            "codeigniter-version-3-x"
+        ],
+        "codeigniter-version-4x": [
+            "codeigniter-version-4-x"
+        ]
+    },
+    "installation/upgrade_models.md": {
+        "codeigniter-version-3x": [
+            "codeigniter-version-3-x"
+        ],
+        "codeigniter-version-4x": [
+            "codeigniter-version-4-x"
+        ]
+    },
+    "installation/upgrade_pagination.md": {
+        "codeigniter-version-3x": [
+            "codeigniter-version-3-x"
+        ],
+        "codeigniter-version-4x": [
+            "codeigniter-version-4-x"
+        ]
+    },
+    "installation/upgrade_responses.md": {
+        "codeigniter-version-3x": [
+            "codeigniter-version-3-x"
+        ],
+        "codeigniter-version-4x": [
+            "codeigniter-version-4-x"
+        ]
+    },
+    "installation/upgrade_routing.md": {
+        "codeigniter-version-3x": [
+            "codeigniter-version-3-x"
+        ],
+        "codeigniter-version-4x": [
+            "codeigniter-version-4-x"
+        ]
+    },
+    "installation/upgrade_security.md": {
+        "codeigniter-version-3x": [
+            "codeigniter-version-3-x"
+        ],
+        "codeigniter-version-4x": [
+            "codeigniter-version-4-x"
+        ]
+    },
+    "installation/upgrade_sessions.md": {
+        "codeigniter-version-3x": [
+            "codeigniter-version-3-x"
+        ],
+        "codeigniter-version-4x": [
+            "codeigniter-version-4-x"
+        ]
+    },
+    "installation/upgrade_validations.md": {
+        "codeigniter-version-3x": [
+            "codeigniter-version-3-x"
+        ],
+        "codeigniter-version-4x": [
+            "codeigniter-version-4-x"
+        ]
+    },
+    "installation/upgrade_view_parser.md": {
+        "codeigniter-version-3x": [
+            "codeigniter-version-3-x"
+        ],
+        "codeigniter-version-4x": [
+            "codeigniter-version-4-x"
+        ]
+    },
+    "installation/upgrade_views.md": {
+        "codeigniter-version-3x": [
+            "codeigniter-version-3-x"
+        ],
+        "codeigniter-version-4x": [
+            "codeigniter-version-4-x"
+        ]
+    },
+    "installation/worker_mode.md": {
+        "reset-event-listeners": [
+            "worker-mode-reset-event-listeners"
+        ]
+    },
+    "intro/requirements.md": {
+        "supported-databases": [
+            "requirements-supported-databases"
+        ]
+    },
+    "libraries/caching.md": {
+        "configuring-the-cache": [
+            "libraries-caching-configuring-the-cache"
+        ],
+        "cacheclear": [
+            "cache-clear"
+        ],
+        "cacheinfo": [
+            "cache-info"
+        ],
+        "codeignitercache": [
+            "namespace-CodeIgniter\\Cache"
+        ],
+        "cacheinterface": [
+            "CodeIgniter\\Cache\\CacheInterface"
+        ],
+        "issupported": [
+            "CodeIgniter\\Cache\\CacheInterface::isSupported"
+        ],
+        "getkey-mixed": [
+            "CodeIgniter\\Cache\\CacheInterface::get"
+        ],
+        "rememberstring-key-int-ttl-closure-callback": [
+            "CodeIgniter\\Cache\\CacheInterface::remember"
+        ],
+        "savestring-key-data-int-ttl-60": [
+            "CodeIgniter\\Cache\\CacheInterface::save"
+        ],
+        "deletekey-bool": [
+            "CodeIgniter\\Cache\\CacheInterface::delete"
+        ],
+        "deletematchingpattern-integer": [
+            "CodeIgniter\\Cache\\CacheInterface::deleteMatching"
+        ],
+        "incrementkey-offset-1-mixed": [
+            "CodeIgniter\\Cache\\CacheInterface::increment"
+        ],
+        "decrementkey-offset-1-mixed": [
+            "CodeIgniter\\Cache\\CacheInterface::decrement"
+        ],
+        "clean": [
+            "CodeIgniter\\Cache\\CacheInterface::clean"
+        ],
+        "getcacheinfo": [
+            "CodeIgniter\\Cache\\CacheInterface::getCacheInfo"
+        ],
+        "getmetadatastring-key": [
+            "CodeIgniter\\Cache\\CacheInterface::getMetadata"
+        ],
+        "validatekeystring-key-string-prefix": [
+            "CodeIgniter\\Cache\\CacheInterface::validateKey"
+        ]
+    },
+    "libraries/cookies.md": {
+        "accessing-cookies-attributes": [
+            "accessing-cookie-s-attributes"
+        ],
+        "validating-a-cookies-attributes": [
+            "validating-a-cookie-s-attributes"
+        ],
+        "addingremoving-cookies-in-store": [
+            "adding-removing-cookies-in-store"
+        ],
+        "codeignitercookie": [
+            "namespace-CodeIgniter\\Cookie"
+        ],
+        "cookie": [
+            "CodeIgniter\\Cookie\\Cookie"
+        ],
+        "setdefaultsconfig": [
+            "CodeIgniter\\Cookie\\Cookie::setDefaults"
+        ],
+        "fromheaderstringstring-header-bool-raw-false": [
+            "CodeIgniter\\Cookie\\Cookie::fromHeaderString"
+        ],
+        "__constructstring-name-string-value-array-options": [
+            "CodeIgniter\\Cookie\\Cookie::__construct"
+        ],
+        "getid": [
+            "CodeIgniter\\Cookie\\Cookie::getId"
+        ],
+        "getprefix-string": [
+            "CodeIgniter\\Cookie\\Cookie::getPrefix"
+        ],
+        "getname-string": [
+            "CodeIgniter\\Cookie\\Cookie::getName"
+        ],
+        "getprefixedname-string": [
+            "CodeIgniter\\Cookie\\Cookie::getPrefixedName"
+        ],
+        "getvalue-string": [
+            "CodeIgniter\\Cookie\\Cookie::getValue"
+        ],
+        "getexpirestimestamp-int": [
+            "CodeIgniter\\Cookie\\Cookie::getExpiresTimestamp"
+        ],
+        "getexpiresstring-string": [
+            "CodeIgniter\\Cookie\\Cookie::getExpiresString"
+        ],
+        "isexpired-bool": [
+            "CodeIgniter\\Cookie\\Cookie::isExpired"
+        ],
+        "getmaxage-int": [
+            "CodeIgniter\\Cookie\\Cookie::getMaxAge"
+        ],
+        "getdomain-string": [
+            "CodeIgniter\\Cookie\\Cookie::getDomain"
+        ],
+        "getpath-string": [
+            "CodeIgniter\\Cookie\\Cookie::getPath"
+        ],
+        "issecure-bool": [
+            "CodeIgniter\\Cookie\\Cookie::isSecure"
+        ],
+        "ishttponly-bool": [
+            "CodeIgniter\\Cookie\\Cookie::isHTTPOnly"
+        ],
+        "getsamesite-string": [
+            "CodeIgniter\\Cookie\\Cookie::getSameSite"
+        ],
+        "israw-bool": [
+            "CodeIgniter\\Cookie\\Cookie::isRaw"
+        ],
+        "getoptions-array": [
+            "CodeIgniter\\Cookie\\Cookie::getOptions"
+        ],
+        "withrawbool-raw-true": [
+            "CodeIgniter\\Cookie\\Cookie::withRaw"
+        ],
+        "withprefixstring-prefix": [
+            "CodeIgniter\\Cookie\\Cookie::withPrefix"
+        ],
+        "withnamestring-name": [
+            "CodeIgniter\\Cookie\\Cookie::withName"
+        ],
+        "withvaluestring-value": [
+            "CodeIgniter\\Cookie\\Cookie::withValue"
+        ],
+        "withexpiresexpires": [
+            "CodeIgniter\\Cookie\\Cookie::withExpires"
+        ],
+        "withexpired": [
+            "CodeIgniter\\Cookie\\Cookie::withExpired"
+        ],
+        "withneverexpiring": [
+            "CodeIgniter\\Cookie\\Cookie::withNeverExpiring"
+        ],
+        "withdomainstring-domain": [
+            "CodeIgniter\\Cookie\\Cookie::withDomain"
+        ],
+        "withpathstring-path": [
+            "CodeIgniter\\Cookie\\Cookie::withPath"
+        ],
+        "withsecurebool-secure-true": [
+            "CodeIgniter\\Cookie\\Cookie::withSecure"
+        ],
+        "withhttponlybool-httponly-true": [
+            "CodeIgniter\\Cookie\\Cookie::withHTTPOnly"
+        ],
+        "withsamesitestring-samesite": [
+            "CodeIgniter\\Cookie\\Cookie::withSameSite"
+        ],
+        "toheaderstring": [
+            "CodeIgniter\\Cookie\\Cookie::toHeaderString"
+        ],
+        "toarray": [
+            "CodeIgniter\\Cookie\\Cookie::toArray"
+        ],
+        "cookiestore": [
+            "CodeIgniter\\Cookie\\CookieStore"
+        ],
+        "fromcookieheadersarray-headers-bool-raw-false": [
+            "CodeIgniter\\Cookie\\CookieStore::fromCookieHeaders"
+        ],
+        "__constructarray-cookies": [
+            "CodeIgniter\\Cookie\\CookieStore::__construct"
+        ],
+        "hasstring-name-string-prefix-string-value-null-bool": [
+            "CodeIgniter\\Cookie\\CookieStore::has"
+        ],
+        "getstring-name-string-prefix-cookie": [
+            "CodeIgniter\\Cookie\\CookieStore::get"
+        ],
+        "putcookie-cookie-cookiestore": [
+            "CodeIgniter\\Cookie\\CookieStore::put"
+        ],
+        "removestring-name-string-prefix-cookiestore": [
+            "CodeIgniter\\Cookie\\CookieStore::remove"
+        ],
+        "dispatch-void": [
+            "CodeIgniter\\Cookie\\CookieStore::dispatch"
+        ],
+        "display-array": [
+            "CodeIgniter\\Cookie\\CookieStore::display"
+        ],
+        "clear-void": [
+            "CodeIgniter\\Cookie\\CookieStore::clear"
+        ]
+    },
+    "libraries/cors.md": {
+        "set-in-configfilters": [
+            "set-in-config-filters"
+        ],
+        "codeigniterhttp": [
+            "namespace-CodeIgniter\\HTTP"
+        ],
+        "cors": [
+            "CodeIgniter\\HTTP\\Cors"
+        ],
+        "addresponseheadersrequestinterface-request-responseinterface-response-responseinterface": [
+            "CodeIgniter\\HTTP\\Cors::addResponseHeaders"
+        ],
+        "handlepreflightrequestrequestinterface-request-responseinterface-response-responseinterface": [
+            "CodeIgniter\\HTTP\\Cors::handlePreflightRequest"
+        ],
+        "ispreflightrequestincomingrequest-request-bool": [
+            "CodeIgniter\\HTTP\\Cors::isPreflightRequest"
+        ]
+    },
+    "libraries/curlrequest.md": {
+        "sharing-connection": [
+            "curlrequest-sharing-connection"
+        ],
+        "sharing-options": [
+            "curlrequest-sharing-options"
+        ],
+        "allow_redirects": [
+            "allow-redirects"
+        ],
+        "connect_timeout": [
+            "connect-timeout"
+        ],
+        "dns_cache_timeout": [
+            "dns-cache-timeout"
+        ],
+        "form_params": [
+            "form-params"
+        ],
+        "fresh_connect": [
+            "fresh-connect"
+        ],
+        "headers": [
+            "curlrequest-request-options-headers"
+        ],
+        "http_errors": [
+            "http-errors"
+        ],
+        "proxy": [
+            "curlrequest-request-options-proxy"
+        ],
+        "user_agent": [
+            "user-agent"
+        ],
+        "force_ip_resolve": [
+            "force-ip-resolve"
+        ],
+        "version": [
+            "curlrequest-version"
+        ]
+    },
+    "libraries/email.md": {
+        "ssl-versus-tls-for-smtp-protocol": [
+            "email-ssl-tls-for-smtp"
+        ],
+        "codeigniteremail": [
+            "namespace-CodeIgniter\\Email"
+        ],
+        "email": [
+            "CodeIgniter\\Email\\Email"
+        ],
+        "setfromfrom-name-returnpath-null": [
+            "CodeIgniter\\Email\\Email::setFrom"
+        ],
+        "setreplytoreplyto-name": [
+            "CodeIgniter\\Email\\Email::setReplyTo"
+        ],
+        "settoto": [
+            "CodeIgniter\\Email\\Email::setTo"
+        ],
+        "setcccc": [
+            "CodeIgniter\\Email\\Email::setCC"
+        ],
+        "setbccbcc-limit": [
+            "CodeIgniter\\Email\\Email::setBCC"
+        ],
+        "setsubjectsubject": [
+            "CodeIgniter\\Email\\Email::setSubject"
+        ],
+        "setmessagebody": [
+            "CodeIgniter\\Email\\Email::setMessage"
+        ],
+        "setaltmessagestr": [
+            "CodeIgniter\\Email\\Email::setAltMessage"
+        ],
+        "setheaderheader-value": [
+            "CodeIgniter\\Email\\Email::setHeader"
+        ],
+        "clearclearattachments-false": [
+            "CodeIgniter\\Email\\Email::clear"
+        ],
+        "sendautoclear-true": [
+            "CodeIgniter\\Email\\Email::send"
+        ],
+        "attachfilename-disposition-newname-null-mime": [
+            "CodeIgniter\\Email\\Email::attach"
+        ],
+        "setattachmentcidfilename": [
+            "CodeIgniter\\Email\\Email::setAttachmentCID"
+        ],
+        "printdebuggerinclude-headers-subject-body": [
+            "CodeIgniter\\Email\\Email::printDebugger"
+        ]
+    },
+    "libraries/encryption.md": {
+        "using-the-encryption-library": [
+            "usage"
+        ],
+        "configuring-the-library": [
+            "configuration"
+        ],
+        "configuration-to-maintain-compatibility-with-ci3": [
+            "encryption-compatible-with-ci3"
+        ],
+        "codeigniterencryption": [
+            "namespace-CodeIgniter\\Encryption"
+        ],
+        "encryption": [
+            "CodeIgniter\\Encryption\\Encryption"
+        ],
+        "createkeylength-32": [
+            "CodeIgniter\\Encryption\\Encryption::createKey"
+        ],
+        "initializeencryption-config-null": [
+            "CodeIgniter\\Encryption\\Encryption::initialize"
+        ],
+        "codeigniterencryptionencrypterinterface": [
+            "CodeIgniter\\Encryption\\CodeIgniter\\Encryption\\EncrypterInterface"
+        ],
+        "encryptdata-params-null": [
+            "CodeIgniter\\Encryption\\CodeIgniter\\Encryption\\EncrypterInterface::encrypt"
+        ],
+        "decryptdata-params-null": [
+            "CodeIgniter\\Encryption\\CodeIgniter\\Encryption\\EncrypterInterface::decrypt"
+        ]
+    },
+    "libraries/file_collections.md": {
+        "__constructstring-files": [
+            "construct-string-files"
+        ],
+        "setarray-files": [
+            "set-array-files"
+        ],
+        "addstringstring-paths-bool-recursive-true": [
+            "add-string-string-paths-bool-recursive-true"
+        ],
+        "addfilestring-file-addfilesarray-files": [
+            "addfile-string-file-addfiles-array-files"
+        ],
+        "removefilestring-file-removefilesarray-files": [
+            "removefile-string-file-removefiles-array-files"
+        ],
+        "adddirectorystring-directory-bool-recursive-false": [
+            "adddirectory-string-directory-bool-recursive-false"
+        ],
+        "removepatternstring-pattern-string-scope-null": [
+            "removepattern-string-pattern-string-scope-null"
+        ],
+        "retainpatternstring-pattern-string-scope-null": [
+            "retainpattern-string-pattern-string-scope-null"
+        ],
+        "retainmultiplepatternsarray-patterns-string-scope-null": [
+            "file-collections-retain-multiple-patterns",
+            "retainmultiplepatterns-array-patterns-string-scope-null"
+        ]
+    },
+    "libraries/files.md": {
+        "getsizebybinaryunit": [
+            "file-get-size-by-binary-unit"
+        ],
+        "getsizebymetricunit": [
+            "file-get-size-by-metric-unit"
+        ]
+    },
+    "libraries/publisher.md": {
+        "library-reference": [
+            "reference"
+        ],
+        "static-discoverstring-directory-publishers-string-namespace-publisher": [
+            "static-discover-string-directory-publishers-string-namespace-publisher"
+        ],
+        "geterrors-arraystring-throwable": [
+            "geterrors-array-string-throwable"
+        ],
+        "addpathstring-path-bool-recursive-true": [
+            "addpath-string-path-bool-recursive-true"
+        ],
+        "addpathsarray-paths-bool-recursive-true": [
+            "addpaths-array-paths-bool-recursive-true"
+        ],
+        "adduristring-uri": [
+            "adduri-string-uri"
+        ],
+        "addurisarray-uris": [
+            "adduris-array-uris"
+        ],
+        "copybool-replace-true-bool": [
+            "copy-bool-replace-true-bool"
+        ],
+        "mergebool-replace-true-bool": [
+            "merge-bool-replace-true-bool"
+        ],
+        "modifying-files": [
+            "publisher-modifying-files"
+        ],
+        "replacestring-file-array-replaces-bool": [
+            "replace-string-file-array-replaces-bool"
+        ],
+        "addlineafterstring-file-string-line-string-after-bool": [
+            "addlineafter-string-file-string-line-string-after-bool"
+        ],
+        "addlinebeforestring-file-string-line-string-before-bool": [
+            "addlinebefore-string-file-string-line-string-before-bool"
+        ]
+    },
+    "libraries/security.md": {
+        "cross-site-request-forgery-csrf": [
+            "cross-site-request-forgery"
+        ],
+        "redirection-on-failure": [
+            "csrf-redirection-on-failure"
+        ]
+    },
+    "libraries/sessions.md": {
+        "flashdata": [
+            "sessions-flashdata"
+        ],
+        "close": [
+            "session-close"
+        ],
+        "destroy": [
+            "session-destroy"
+        ],
+        "databasehandler-driver": [
+            "sessions-databasehandler-driver"
+        ],
+        "redishandler-driver": [
+            "sessions-redishandler-driver"
+        ],
+        "memcachedhandler-driver": [
+            "sessions-memcachedhandler-driver"
+        ]
+    },
+    "libraries/throttler.md": {
+        "checkstring-key-int-capacity-int-seconds-int-cost-1": [
+            "check"
+        ],
+        "gettokentime": [
+            "getTokenTime"
+        ],
+        "removestring-key-self": [
+            "remove"
+        ]
+    },
+    "libraries/time.md": {
+        "createfromtimestamp": [
+            "time-createfromtimestamp"
+        ],
+        "todatetimestring": [
+            "time-todatetimestring"
+        ],
+        "ispast": [
+            "time-comparing-two-times-ispast"
+        ],
+        "isfuture": [
+            "time-comparing-two-times-isfuture"
+        ],
+        "viewing-differences": [
+            "time-viewing-differences"
+        ]
+    },
+    "libraries/typography.md": {
+        "autotypographystr-reducelinebreaks-false": [
+            "autoTypography"
+        ],
+        "formatcharactersstr": [
+            "formatCharacters"
+        ],
+        "nl2brexceptprestr": [
+            "nl2brExceptPre"
+        ]
+    },
+    "libraries/uploaded_files.md": {
+        "accessing-files": [
+            "uploaded-files-accessing-files"
+        ],
+        "moving-files": [
+            "uploaded-files-moving-files"
+        ]
+    },
+    "libraries/uri.md": {
+        "gettingsetting-query": [
+            "getting-setting-query"
+        ]
+    },
+    "libraries/user_agent.md": {
+        "codeigniterhttp": [
+            "namespace-CodeIgniter\\HTTP"
+        ],
+        "useragent": [
+            "CodeIgniter\\HTTP\\UserAgent"
+        ],
+        "isbrowserkey-null": [
+            "CodeIgniter\\HTTP\\UserAgent::isBrowser"
+        ],
+        "ismobilekey-null": [
+            "CodeIgniter\\HTTP\\UserAgent::isMobile"
+        ],
+        "isrobotkey-null": [
+            "CodeIgniter\\HTTP\\UserAgent::isRobot"
+        ],
+        "isreferral": [
+            "CodeIgniter\\HTTP\\UserAgent::isReferral"
+        ],
+        "getbrowser": [
+            "CodeIgniter\\HTTP\\UserAgent::getBrowser"
+        ],
+        "getversion": [
+            "CodeIgniter\\HTTP\\UserAgent::getVersion"
+        ],
+        "getmobile": [
+            "CodeIgniter\\HTTP\\UserAgent::getMobile"
+        ],
+        "getrobot": [
+            "CodeIgniter\\HTTP\\UserAgent::getRobot"
+        ],
+        "getplatform": [
+            "CodeIgniter\\HTTP\\UserAgent::getPlatform"
+        ],
+        "getreferrer": [
+            "CodeIgniter\\HTTP\\UserAgent::getReferrer"
+        ],
+        "getagentstring": [
+            "CodeIgniter\\HTTP\\UserAgent::getAgentString"
+        ],
+        "parsestring": [
+            "CodeIgniter\\HTTP\\UserAgent::parse"
+        ]
+    },
+    "libraries/validation.md": {
+        "signupphp": [
+            "signup-php"
+        ],
+        "formphp": [
+            "form-php"
+        ],
+        "traditional-and-strict-rules": [
+            "validation-traditional-and-strict-rules"
+        ],
+        "setting-rules-for-array-data": [
+            "validation-dot-array-syntax"
+        ],
+        "withrequest": [
+            "validation-withrequest"
+        ],
+        "getting-validated-data": [
+            "validation-getting-validated-data"
+        ],
+        "saving-sets-of-validation-rules-to-the-config-file": [
+            "saving-validation-rules-to-config-file"
+        ],
+        "how-to-save-your-rules": [
+            "validation-array"
+        ],
+        "setting-custom-error-messages": [
+            "validation-custom-errors"
+        ],
+        "getting-all-errors": [
+            "validation-getting-all-errors"
+        ],
+        "redirect-and-validation-errors": [
+            "validation-redirect-and-validation-errors"
+        ],
+        "customizing-error-display": [
+            "validation-customizing-error-display"
+        ],
+        "using-rule-classes": [
+            "validation-using-rule-classes"
+        ],
+        "using-closure-rule": [
+            "validation-using-closure-rule"
+        ],
+        "using-callable-rule": [
+            "validation-using-callable-rule"
+        ],
+        "available-rules": [
+            "validation-available-rules"
+        ]
+    },
+    "models/entities.md": {
+        "special-gettersetter": [
+            "entities-special-getter-setter",
+            "special-getter-setter"
+        ],
+        "property-casting": [
+            "entities-property-casting"
+        ],
+        "arrayjson-casting": [
+            "array-json-casting"
+        ]
+    },
+    "models/model.md": {
+        "using-codeigniters-model": [
+            "using-codeigniter-s-model"
+        ],
+        "codeigniters-model": [
+            "codeigniter-s-model"
+        ],
+        "usesoftdeletes": [
+            "model-use-soft-deletes"
+        ],
+        "allowedfields": [
+            "model-allowed-fields"
+        ],
+        "updateonlychanged": [
+            "model-update-only-changed"
+        ],
+        "cleanvalidationrules": [
+            "clean-validation-rules"
+        ],
+        "allowemptyinserts_1": [
+            "model-allow-empty-inserts"
+        ],
+        "replace": [
+            "model-replace"
+        ],
+        "save": [
+            "model-save"
+        ],
+        "saving-dates": [
+            "model-saving-dates"
+        ],
+        "setting-validation-rules": [
+            "model-setting-validation-rules"
+        ],
+        "codeigniter": [
+            "namespace-CodeIgniter"
+        ],
+        "model": [
+            "CodeIgniter\\Model"
+        ],
+        "setvalidationrulefield-fieldrules": [
+            "CodeIgniter\\Model::setValidationRule"
+        ],
+        "setvalidationrulesvalidationrules": [
+            "CodeIgniter\\Model::setValidationRules"
+        ],
+        "setvalidationmessagefield-fieldmessages": [
+            "CodeIgniter\\Model::setValidationMessage"
+        ],
+        "setvalidationmessagesvalidationmessages": [
+            "CodeIgniter\\Model::setValidationMessages"
+        ],
+        "getting-validation-errors": [
+            "model-getting-validation-errors"
+        ],
+        "getting-query-builder-for-the-models-table": [
+            "getting-query-builder-for-the-model-s-table"
+        ],
+        "model-events": [
+            "model-events-callbacks"
+        ]
+    },
+    "outgoing/api_responses.md": {
+        "handling-response-types": [
+            "api-response-trait-handling-response-types"
+        ],
+        "setresponseformatformat": [
+            "setResponseFormat"
+        ],
+        "responddata-statuscode-200-message": [
+            "respond"
+        ],
+        "failmessages-int-status-400-string-code-null-string-message": [
+            "fail"
+        ],
+        "respondcreateddata-null-string-message": [
+            "respondCreated"
+        ],
+        "responddeleteddata-null-string-message": [
+            "respondDeleted"
+        ],
+        "respondnocontentstring-message-no-content": [
+            "respondNoContent"
+        ],
+        "failunauthorizedstring-description-unauthorized-string-code-null-string-message": [
+            "failUnauthorized"
+        ],
+        "failforbiddenstring-description-forbidden-string-codenull-string-message": [
+            "failForbidden"
+        ],
+        "failnotfoundstring-description-not-found-string-codenull-string-message": [
+            "failNotFound"
+        ],
+        "failvalidationerrorserrors-string-codenull-string-message": [
+            "failValidationErrors"
+        ],
+        "failresourceexistsstring-description-conflict-string-codenull-string-message": [
+            "failResourceExists"
+        ],
+        "failresourcegonestring-description-gone-string-codenull-string-message": [
+            "failResourceGone"
+        ],
+        "failtoomanyrequestsstring-description-too-many-requests-string-codenull-string-message": [
+            "failTooManyRequests"
+        ],
+        "failservererrorstring-description-internal-server-error-string-code-null-string-message": [
+            "failServerError"
+        ],
+        "pagination-responses": [
+            "api-response-trait-paginate"
+        ],
+        "paginatemodelbasebuilder-resource-int-perpage-20-string-transformwith-null": [
+            "paginate"
+        ]
+    },
+    "outgoing/api_transformers.md": {
+        "api-resources": [
+            "api-transformers"
+        ],
+        "codeigniterapi": [
+            "namespace-CodeIgniter\\API"
+        ],
+        "basetransformer": [
+            "CodeIgniter\\API\\BaseTransformer"
+        ],
+        "__constructincomingrequest-request-null": [
+            "CodeIgniter\\API\\BaseTransformer::__construct"
+        ],
+        "toarraymixed-resource": [
+            "CodeIgniter\\API\\BaseTransformer::toArray"
+        ],
+        "transformresource-null": [
+            "CodeIgniter\\API\\BaseTransformer::transform"
+        ],
+        "transformmanyarray-resources": [
+            "CodeIgniter\\API\\BaseTransformer::transformMany"
+        ],
+        "getallowedfields": [
+            "CodeIgniter\\API\\BaseTransformer::getAllowedFields"
+        ],
+        "getallowedincludes": [
+            "CodeIgniter\\API\\BaseTransformer::getAllowedIncludes"
+        ],
+        "apiexception": [
+            "CodeIgniter\\API\\ApiException"
+        ],
+        "forinvalidfieldsstring-field": [
+            "CodeIgniter\\API\\ApiException::forInvalidFields"
+        ],
+        "forinvalidincludesstring-include": [
+            "CodeIgniter\\API\\ApiException::forInvalidIncludes"
+        ],
+        "formissingincludestring-include": [
+            "CodeIgniter\\API\\ApiException::forMissingInclude"
+        ]
+    },
+    "outgoing/csp.md": {
+        "clear-directives": [
+            "csp-clear-directives"
+        ],
+        "using-functions": [
+            "csp-using-functions"
+        ]
+    },
+    "outgoing/localization.md": {
+        "in-routes": [
+            "localization-in-routes"
+        ],
+        "synchronizing-translation-files-via-command": [
+            "sync-translations-command"
+        ]
+    },
+    "outgoing/response.md": {
+        "redirect": [
+            "response-redirect"
+        ],
+        "redirect-status-code": [
+            "response-redirect-status-code"
+        ],
+        "codeigniterhttp": [
+            "namespace-CodeIgniter\\HTTP"
+        ],
+        "response": [
+            "CodeIgniter\\HTTP\\Response"
+        ],
+        "getstatuscode": [
+            "CodeIgniter\\HTTP\\Response::getStatusCode"
+        ],
+        "setstatuscodecode-reason": [
+            "CodeIgniter\\HTTP\\Response::setStatusCode"
+        ],
+        "getreasonphrase": [
+            "CodeIgniter\\HTTP\\Response::getReasonPhrase"
+        ],
+        "setdatedate": [
+            "CodeIgniter\\HTTP\\Response::setDate"
+        ],
+        "setcontenttypemime-charsetutf-8": [
+            "CodeIgniter\\HTTP\\Response::setContentType"
+        ],
+        "nocache": [
+            "CodeIgniter\\HTTP\\Response::noCache"
+        ],
+        "setcacheoptions": [
+            "CodeIgniter\\HTTP\\Response::setCache"
+        ],
+        "setlastmodifieddate": [
+            "CodeIgniter\\HTTP\\Response::setLastModified"
+        ],
+        "send-response": [
+            "CodeIgniter\\HTTP\\Response::send"
+        ],
+        "setcookiename-value-expire-0-domain-path-prefix-secure-null-httponly-null-samesite-null": [
+            "CodeIgniter\\HTTP\\Response::setCookie"
+        ],
+        "deletecookiename-domain-path-prefix": [
+            "CodeIgniter\\HTTP\\Response::deleteCookie"
+        ],
+        "hascookiename-value-null-prefix": [
+            "CodeIgniter\\HTTP\\Response::hasCookie"
+        ],
+        "getcookiename-prefix": [
+            "CodeIgniter\\HTTP\\Response::getCookie"
+        ],
+        "getcookies": [
+            "CodeIgniter\\HTTP\\Response::getCookies"
+        ]
+    },
+    "outgoing/table.md": {
+        "synchronizing-rows-with-headings": [
+            "table-sync-rows-with-headings"
+        ],
+        "codeigniterview": [
+            "namespace-CodeIgniter\\View"
+        ],
+        "table": [
+            "CodeIgniter\\View\\Table"
+        ],
+        "generatetabledata-null": [
+            "CodeIgniter\\View\\Table::generate"
+        ],
+        "setcaptioncaption": [
+            "CodeIgniter\\View\\Table::setCaption"
+        ],
+        "setheadingargs": [
+            "CodeIgniter\\View\\Table::setHeading"
+        ],
+        "setfootingargs": [
+            "CodeIgniter\\View\\Table::setFooting"
+        ],
+        "addrowargs": [
+            "CodeIgniter\\View\\Table::addRow"
+        ],
+        "makecolumnsarray-columnlimit-0": [
+            "CodeIgniter\\View\\Table::makeColumns"
+        ],
+        "settemplatetemplate": [
+            "CodeIgniter\\View\\Table::setTemplate"
+        ],
+        "setemptyvalue": [
+            "CodeIgniter\\View\\Table::setEmpty"
+        ],
+        "clear": [
+            "CodeIgniter\\View\\Table::clear"
+        ],
+        "setsyncrowswithheadingbool-orderbykey": [
+            "CodeIgniter\\View\\Table::setSyncRowsWithHeading"
+        ]
+    },
+    "outgoing/view_cells.md": {
+        "calling-a-view-cell": [
+            "app-cells"
+        ],
+        "passing-parameters-as-keyvalue-string": [
+            "passing-parameters-as-key-value-string"
+        ]
+    },
+    "outgoing/view_parser.md": {
+        "restricting-conditionals": [
+            "parser-restricting-conditionals"
+        ],
+        "codeigniterview": [
+            "namespace-CodeIgniter\\View"
+        ],
+        "parser": [
+            "CodeIgniter\\View\\Parser"
+        ],
+        "renderview-options-savedata": [
+            "CodeIgniter\\View\\Parser::render"
+        ],
+        "renderstringtemplate-options-savedata": [
+            "CodeIgniter\\View\\Parser::renderString"
+        ],
+        "setdatadata-context-null": [
+            "CodeIgniter\\View\\Parser::setData"
+        ],
+        "setvarname-value-null-context-null": [
+            "CodeIgniter\\View\\Parser::setVar"
+        ],
+        "setdelimitersleftdelimiter-rightdelimiter": [
+            "CodeIgniter\\View\\Parser::setDelimiters"
+        ],
+        "setconditionaldelimitersleftdelimiter-rightdelimiter": [
+            "CodeIgniter\\View\\Parser::setConditionalDelimiters"
+        ]
+    },
+    "outgoing/view_renderer.md": {
+        "codeigniterview": [
+            "namespace-CodeIgniter\\View"
+        ],
+        "view": [
+            "CodeIgniter\\View\\View"
+        ],
+        "renderview-options-savedata-false": [
+            "CodeIgniter\\View\\View::render"
+        ],
+        "renderstringview-options-savedata-false": [
+            "CodeIgniter\\View\\View::renderString"
+        ],
+        "setdatadata-context-null": [
+            "CodeIgniter\\View\\View::setData"
+        ],
+        "setvarname-value-null-context-null": [
+            "CodeIgniter\\View\\View::setVar"
+        ]
+    },
+    "outgoing/views.md": {
+        "overriding-namespaced-views": [
+            "views-overriding-namespaced-views"
+        ]
+    },
+    "testing/benchmark.md": {
+        "timerstart": [
+            "timer-start"
+        ],
+        "timerstop": [
+            "timer-stop"
+        ],
+        "timerrecord": [
+            "benchmark-timer-record",
+            "timer-record"
+        ]
+    },
+    "testing/cli.md": {
+        "using-mockinputoutput": [
+            "using-mock-input-output"
+        ],
+        "getoutputint-index-null-string": [
+            "getoutput-int-index-null-string"
+        ],
+        "streamfiltertrait": [
+            "stream-filter-trait"
+        ],
+        "citeststreamfilter": [
+            "ci-test-stream-filter"
+        ],
+        "phpstreamwrapper": [
+            "php-stream-wrapper"
+        ]
+    },
+    "testing/controllers.md": {
+        "controllerclass": [
+            "controller-class"
+        ],
+        "executestring-method-params": [
+            "execute-string-method-params"
+        ],
+        "withconfigconfig": [
+            "withconfig-config"
+        ],
+        "withrequestrequest": [
+            "withrequest-request"
+        ],
+        "withresponseresponse": [
+            "withresponse-response"
+        ],
+        "withloggerlogger": [
+            "withlogger-logger"
+        ],
+        "withuristring-uri": [
+            "withuri-string-uri"
+        ],
+        "withbodybody": [
+            "withbody-body"
+        ],
+        "getfiltersforrouteroute-position": [
+            "getFiltersForRoute"
+        ],
+        "getfiltercallerfilter-position": [
+            "getFilterCaller"
+        ]
+    },
+    "testing/database.md": {
+        "seedname": [
+            "seed-name"
+        ],
+        "hasindatabasetable-data": [
+            "hasindatabase-table-data"
+        ],
+        "grabfromdatabasetable-column-criteria": [
+            "grabfromdatabase-table-column-criteria"
+        ],
+        "dontseeindatabasetable-criteria": [
+            "dontseeindatabase-table-criteria"
+        ],
+        "seeindatabasetable-criteria": [
+            "seeindatabase-table-criteria"
+        ],
+        "seenumrecordsexpected-table-criteria": [
+            "seenumrecords-expected-table-criteria"
+        ]
+    },
+    "testing/debugging.md": {
+        "replacing-var_dump": [
+            "replacing-var-dump"
+        ],
+        "hot-reloading": [
+            "debug-toolbar-hot-reload"
+        ]
+    },
+    "testing/fabricator.md": {
+        "getcountstring-table-int": [
+            "getcount-string-table-int"
+        ],
+        "setcountstring-table-int-count-int": [
+            "setcount-string-table-int-count-int"
+        ],
+        "upcountstring-table-int": [
+            "upcount-string-table-int"
+        ],
+        "downcountstring-table-int": [
+            "downcount-string-table-int"
+        ]
+    },
+    "testing/feature.md": {
+        "requesting-a-page": [
+            "feature-requesting-a-page"
+        ],
+        "setting-session-values": [
+            "feature-setting-session-values"
+        ],
+        "formatting-the-request": [
+            "feature-formatting-the-request"
+        ],
+        "setting-the-body": [
+            "feature-setting-the-body"
+        ]
+    },
+    "testing/overview.md": {
+        "traits": [
+            "testing-overview-traits"
+        ],
+        "assertloggedlevel-expectedmessage": [
+            "assertlogged-level-expectedmessage"
+        ],
+        "assertlogcontainslevel-logmessage": [
+            "assertlogcontains-level-logmessage"
+        ],
+        "asserteventtriggeredeventname": [
+            "asserteventtriggered-eventname"
+        ],
+        "assertheaderemittedheader-ignorecase-false": [
+            "assertheaderemitted-header-ignorecase-false"
+        ],
+        "assertheadernotemittedheader-ignorecase-false": [
+            "assertheadernotemitted-header-ignorecase-false"
+        ],
+        "assertcloseenoughexpected-actual-message-tolerance-1": [
+            "assertcloseenough-expected-actual-message-tolerance-1"
+        ],
+        "assertcloseenoughstringexpected-actual-message-tolerance-1": [
+            "assertcloseenoughstring-expected-actual-message-tolerance-1"
+        ],
+        "accessing-protectedprivate-properties": [
+            "accessing-protected-private-properties"
+        ],
+        "getprivatemethodinvokerinstance-method": [
+            "getprivatemethodinvoker-instance-method"
+        ],
+        "getprivatepropertyinstance-property": [
+            "getprivateproperty-instance-property"
+        ],
+        "setprivatepropertyinstance-property-value": [
+            "setprivateproperty-instance-property-value"
+        ],
+        "servicesinjectmock": [
+            "services-injectmock"
+        ],
+        "servicesreset": [
+            "services-reset"
+        ],
+        "servicesresetsinglestring-name": [
+            "services-resetsingle-string-name"
+        ]
+    },
+    "testing/response.md": {
+        "accessing-requestresponse": [
+            "accessing-request-response"
+        ],
+        "assertstatusint-code": [
+            "assertstatus-int-code"
+        ],
+        "session-assertions": [
+            "response-session-assertions"
+        ],
+        "assertsessionhasstring-key-value-null": [
+            "assertsessionhas-string-key-value-null"
+        ],
+        "assertsessionmissingstring-key": [
+            "assertsessionmissing-string-key"
+        ],
+        "assertheaderstring-key-value-null": [
+            "assertheader-string-key-value-null"
+        ],
+        "assertheadermissingstring-key": [
+            "assertheadermissing-string-key"
+        ],
+        "assertcookiestring-key-value-null-string-prefix": [
+            "assertcookie-string-key-value-null-string-prefix"
+        ],
+        "assertcookiemissingstring-key": [
+            "assertcookiemissing-string-key"
+        ],
+        "assertcookieexpiredstring-key-string-prefix": [
+            "assertcookieexpired-string-key-string-prefix"
+        ],
+        "assertseestring-search-null-string-element-null": [
+            "assertsee-string-search-null-string-element-null"
+        ],
+        "assertdontseestring-search-null-string-element-null": [
+            "assertdontsee-string-search-null-string-element-null"
+        ],
+        "assertseeelementstring-search": [
+            "assertseeelement-string-search"
+        ],
+        "assertdontseeelementstring-search": [
+            "assertdontseeelement-string-search"
+        ],
+        "assertseelinkstring-text-string-details-null": [
+            "assertseelink-string-text-string-details-null"
+        ],
+        "assertseeinfieldstring-field-string-value-null": [
+            "assertseeinfield-string-field-string-value-null"
+        ],
+        "assertjsonfragmentarray-fragment": [
+            "assertjsonfragment-array-fragment"
+        ],
+        "assertjsonexacttest": [
+            "assertjsonexact-test"
+        ]
+    }
+}

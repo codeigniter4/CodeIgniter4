@@ -1,0 +1,346 @@
+nav:
+  - Home: index.md
+  - "Welcome to CodeIgniter4":
+      - intro/index.md
+      - intro/requirements.md
+      - intro/credits.md
+      - intro/psr.md
+      - "License Agreement": license.md
+  - "Installation":
+      - installation/index.md
+      - installation/installing_composer.md
+      - installation/installing_manual.md
+      - installation/running.md
+      - installation/worker_mode.md
+      - installation/troubleshooting.md
+      - installation/deployment.md
+      - "Change Logs":
+          - changelogs/index.md
+          - changelogs/v4.7.7.md
+          - changelogs/v4.7.6.md
+          - changelogs/v4.7.5.md
+          - changelogs/v4.7.4.md
+          - changelogs/v4.7.3.md
+          - changelogs/v4.7.2.md
+          - changelogs/v4.7.1.md
+          - changelogs/v4.7.0.md
+          - changelogs/v4.6.5.md
+          - changelogs/v4.6.4.md
+          - changelogs/v4.6.3.md
+          - changelogs/v4.6.2.md
+          - changelogs/v4.6.1.md
+          - changelogs/v4.6.0.md
+          - changelogs/v4.5.8.md
+          - changelogs/v4.5.7.md
+          - changelogs/v4.5.6.md
+          - changelogs/v4.5.5.md
+          - changelogs/v4.5.4.md
+          - changelogs/v4.5.3.md
+          - changelogs/v4.5.2.md
+          - changelogs/v4.5.1.md
+          - changelogs/v4.5.0.md
+          - changelogs/v4.4.8.md
+          - changelogs/v4.4.7.md
+          - changelogs/v4.4.6.md
+          - changelogs/v4.4.5.md
+          - changelogs/v4.4.4.md
+          - changelogs/v4.4.3.md
+          - changelogs/v4.4.2.md
+          - changelogs/v4.4.1.md
+          - changelogs/v4.4.0.md
+          - changelogs/v4.3.8.md
+          - changelogs/v4.3.7.md
+          - changelogs/v4.3.6.md
+          - changelogs/v4.3.5.md
+          - changelogs/v4.3.4.md
+          - changelogs/v4.3.3.md
+          - changelogs/v4.3.2.md
+          - changelogs/v4.3.1.md
+          - changelogs/v4.3.0.md
+          - changelogs/v4.2.12.md
+          - changelogs/v4.2.11.md
+          - changelogs/v4.2.10.md
+          - changelogs/v4.2.9.md
+          - changelogs/v4.2.8.md
+          - changelogs/v4.2.7.md
+          - changelogs/v4.2.6.md
+          - changelogs/v4.2.5.md
+          - changelogs/v4.2.4.md
+          - changelogs/v4.2.3.md
+          - changelogs/v4.2.2.md
+          - changelogs/v4.2.1.md
+          - changelogs/v4.2.0.md
+          - changelogs/v4.1.9.md
+          - changelogs/v4.1.8.md
+          - changelogs/v4.1.7.md
+          - changelogs/v4.1.6.md
+          - changelogs/v4.1.5.md
+          - changelogs/v4.1.4.md
+          - changelogs/v4.1.3.md
+          - changelogs/v4.1.2.md
+          - changelogs/v4.1.1.md
+          - changelogs/v4.1.0.md
+          - changelogs/v4.0.5.md
+          - changelogs/v4.0.4.md
+          - changelogs/v4.0.3.md
+          - changelogs/v4.0.0.md
+          - changelogs/v4.0.0-rc.4.md
+          - changelogs/v4.0.0-rc.3.md
+          - changelogs/v4.0.0-rc.2.md
+          - changelogs/v4.0.0-rc.1.md
+          - changelogs/v4.0.0-beta.4.md
+          - changelogs/v4.0.0-beta.3.md
+          - changelogs/v4.0.0-beta.2.md
+          - changelogs/v4.0.0-beta.1.md
+          - changelogs/v4.0.0-alpha.5.md
+          - changelogs/v4.0.0-alpha.4.md
+          - changelogs/v4.0.0-alpha.3.md
+          - changelogs/v4.0.0-alpha.2.md
+          - changelogs/v4.0.0-alpha.1.md
+      - "Upgrading From a Previous Version":
+          - installation/upgrading.md
+          - installation/backward_compatibility_notes.md
+          - installation/upgrade_477.md
+          - installation/upgrade_476.md
+          - installation/upgrade_475.md
+          - installation/upgrade_474.md
+          - installation/upgrade_473.md
+          - installation/upgrade_472.md
+          - installation/upgrade_471.md
+          - installation/upgrade_470.md
+          - installation/upgrade_465.md
+          - installation/upgrade_464.md
+          - installation/upgrade_463.md
+          - installation/upgrade_462.md
+          - installation/upgrade_461.md
+          - installation/upgrade_460.md
+          - installation/upgrade_458.md
+          - installation/upgrade_457.md
+          - installation/upgrade_456.md
+          - installation/upgrade_455.md
+          - installation/upgrade_454.md
+          - installation/upgrade_453.md
+          - installation/upgrade_452.md
+          - installation/upgrade_451.md
+          - installation/upgrade_450.md
+          - installation/upgrade_448.md
+          - installation/upgrade_447.md
+          - installation/upgrade_446.md
+          - installation/upgrade_445.md
+          - installation/upgrade_444.md
+          - installation/upgrade_443.md
+          - installation/upgrade_442.md
+          - installation/upgrade_441.md
+          - installation/upgrade_440.md
+          - installation/upgrade_438.md
+          - installation/upgrade_437.md
+          - installation/upgrade_436.md
+          - installation/upgrade_435.md
+          - installation/upgrade_434.md
+          - installation/upgrade_433.md
+          - installation/upgrade_432.md
+          - installation/upgrade_431.md
+          - installation/upgrade_430.md
+          - installation/upgrade_4212.md
+          - installation/upgrade_4211.md
+          - installation/upgrade_4210.md
+          - installation/upgrade_428.md
+          - installation/upgrade_427.md
+          - installation/upgrade_426.md
+          - installation/upgrade_425.md
+          - installation/upgrade_423.md
+          - installation/upgrade_422.md
+          - installation/upgrade_421.md
+          - installation/upgrade_420.md
+          - installation/upgrade_418.md
+          - installation/upgrade_417.md
+          - installation/upgrade_416.md
+          - installation/upgrade_415.md
+          - installation/upgrade_414.md
+          - installation/upgrade_413.md
+          - installation/upgrade_412.md
+          - installation/upgrade_410.md
+          - installation/upgrade_405.md
+          - installation/upgrade_404.md
+          - "Upgrading from 3.x to 4.x":
+              - installation/upgrade_4xx.md
+              - installation/upgrade_models.md
+              - installation/upgrade_views.md
+              - installation/upgrade_controllers.md
+              - installation/upgrade_configuration.md
+              - installation/upgrade_database.md
+              - installation/upgrade_emails.md
+              - installation/upgrade_encryption.md
+              - installation/upgrade_file_upload.md
+              - installation/upgrade_html_tables.md
+              - installation/upgrade_images.md
+              - installation/upgrade_localization.md
+              - installation/upgrade_migrations.md
+              - installation/upgrade_responses.md
+              - installation/upgrade_pagination.md
+              - installation/upgrade_routing.md
+              - installation/upgrade_security.md
+              - installation/upgrade_sessions.md
+              - installation/upgrade_validations.md
+              - installation/upgrade_view_parser.md
+      - installation/repositories.md
+  - "Guides":
+      - guides/index.md
+      - "Build Your First Application":
+          - guides/first-app/index.md
+          - guides/first-app/static_pages.md
+          - guides/first-app/news_section.md
+          - guides/first-app/create_news_items.md
+          - guides/first-app/conclusion.md
+      - "Getting Started with REST APIs":
+          - guides/api/index.md
+          - guides/api/first-endpoint.md
+          - guides/api/database-setup.md
+          - guides/api/controller.md
+          - guides/api/conclusion.md
+  - "CodeIgniter4 Overview":
+      - concepts/index.md
+      - concepts/structure.md
+      - concepts/mvc.md
+      - concepts/autoloader.md
+      - concepts/services.md
+      - concepts/factories.md
+      - concepts/http.md
+      - concepts/security.md
+      - concepts/goals.md
+  - "General Topics":
+      - general/index.md
+      - general/configuration.md
+      - general/urls.md
+      - general/helpers.md
+      - general/common_functions.md
+      - general/logging.md
+      - general/errors.md
+      - general/caching.md
+      - general/ajax.md
+      - general/modules.md
+      - general/managing_apps.md
+      - general/environments.md
+  - "Controllers and Routing":
+      - incoming/index.md
+      - incoming/routing.md
+      - incoming/controllers.md
+      - incoming/filters.md
+      - incoming/controller_attributes.md
+      - incoming/auto_routing_improved.md
+      - incoming/message.md
+      - incoming/request.md
+      - incoming/incomingrequest.md
+      - incoming/content_negotiation.md
+      - incoming/methodspoofing.md
+      - incoming/restful.md
+  - "Building Responses":
+      - outgoing/index.md
+      - outgoing/views.md
+      - outgoing/view_renderer.md
+      - outgoing/view_layouts.md
+      - outgoing/view_cells.md
+      - outgoing/view_parser.md
+      - outgoing/view_decorators.md
+      - outgoing/table.md
+      - outgoing/response.md
+      - outgoing/api_responses.md
+      - outgoing/api_transformers.md
+      - outgoing/csp.md
+      - outgoing/localization.md
+      - outgoing/alternative_php.md
+  - "Working with Databases":
+      - database/index.md
+      - "Quick Start: Usage Examples": database/examples.md
+      - "Database Configuration": database/configuration.md
+      - "Connecting to a Database": database/connecting.md
+      - "Running Queries": database/queries.md
+      - "Generating Query Results": database/results.md
+      - "Query Helper Methods": database/helpers.md
+      - "Query Builder Class": database/query_builder.md
+      - "Transactions": database/transactions.md
+      - "Getting Metadata": database/metadata.md
+      - "Custom Function Calls": database/call_function.md
+      - "Database Events": database/events.md
+      - "Database Utilities": database/utilities.md
+  - "Modeling Data":
+      - models/index.md
+      - "Using CodeIgniter's Model": models/model.md
+      - "Using Entity Classes": models/entities.md
+  - "Managing Databases":
+      - dbmgmt/index.md
+      - "Database Forge": dbmgmt/forge.md
+      - "Database Migrations": dbmgmt/migration.md
+      - "Database Seeding": dbmgmt/seeds.md
+      - dbmgmt/db_commands.md
+  - "Library Reference":
+      - libraries/index.md
+      - libraries/caching.md
+      - libraries/cookies.md
+      - libraries/cors.md
+      - libraries/curlrequest.md
+      - libraries/email.md
+      - libraries/encryption.md
+      - libraries/files.md
+      - libraries/file_collections.md
+      - libraries/honeypot.md
+      - libraries/images.md
+      - libraries/pagination.md
+      - libraries/publisher.md
+      - libraries/security.md
+      - libraries/sessions.md
+      - libraries/throttler.md
+      - libraries/time.md
+      - libraries/typography.md
+      - libraries/uploaded_files.md
+      - libraries/uri.md
+      - libraries/user_agent.md
+      - libraries/validation.md
+  - "Helpers":
+      - helpers/index.md
+      - helpers/array_helper.md
+      - helpers/cookie_helper.md
+      - helpers/date_helper.md
+      - helpers/filesystem_helper.md
+      - helpers/form_helper.md
+      - helpers/html_helper.md
+      - helpers/inflector_helper.md
+      - helpers/number_helper.md
+      - helpers/security_helper.md
+      - helpers/test_helper.md
+      - helpers/text_helper.md
+      - helpers/url_helper.md
+      - helpers/xml_helper.md
+  - "Testing":
+      - testing/index.md
+      - "Getting Started": testing/overview.md
+      - "Database": testing/database.md
+      - "Generating Data": testing/fabricator.md
+      - "Controller Testing": testing/controllers.md
+      - "HTTP Testing": testing/feature.md
+      - testing/response.md
+      - testing/cli.md
+      - "Mocking": testing/mocking.md
+      - testing/benchmark.md
+      - testing/debugging.md
+      - "Session Testing": testing/session_testing.md
+  - "Command Line Usage":
+      - cli/index.md
+      - cli/cli_overview.md
+      - cli/cli_controllers.md
+      - cli/spark_commands.md
+      - cli/cli_commands.md
+      - cli/cli_generators.md
+      - cli/cli_library.md
+      - cli/cli_signals.md
+      - cli/cli_request.md
+  - "Extending CodeIgniter":
+      - extending/index.md
+      - extending/core_classes.md
+      - extending/common.md
+      - extending/events.md
+      - extending/basecontroller.md
+      - extending/authentication.md
+      - extending/composer_packages.md
+      - extending/contributing.md
+  - libraries/official_packages.md
