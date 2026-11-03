@@ -25,7 +25,7 @@ Create a forum-ready CodeIgniter4 release announcement using myBB markup.
 
 ## Procedure
 1. Read `CHANGELOG.md` for release summary and PR references.
-2. Read `user_guide_src/source/changelogs/v{VERSION}.rst` for each target version.
+2. Read `docs/changelogs/v{VERSION}.md` for each target version.
 3. Determine release mode:
     - Single release: one `4.x.y` version.
     - Dual release: maintenance + major; maintenance is presented first in the post.

@@ -1,5 +1,5 @@
 ---
-applyTo: "system/Boot.php,system/CodeIgniter.php,system/Commands/Worker/**,system/Config/BaseService.php,system/Config/Factories.php,system/Config/Factory.php,system/Config/Services.php,system/Database/Config.php,system/Database/BaseConnection.php,system/Database/ConnectionInterface.php,system/Database/*/Connection.php,system/Events/Events.php,system/Session/**,system/Cache/**,system/HTTP/**,system/Filters/**,system/Router/**,system/Security/**,system/Debug/Toolbar.php,system/Debug/Toolbar/**,app/Config/WorkerMode.php,tests/system/Commands/Worker/**,user_guide_src/source/installation/worker_mode.rst"
+applyTo: "system/Boot.php,system/CodeIgniter.php,system/Commands/Worker/**,system/Config/BaseService.php,system/Config/Factories.php,system/Config/Factory.php,system/Config/Services.php,system/Database/Config.php,system/Database/BaseConnection.php,system/Database/ConnectionInterface.php,system/Database/*/Connection.php,system/Events/Events.php,system/Session/**,system/Cache/**,system/HTTP/**,system/Filters/**,system/Router/**,system/Security/**,system/Debug/Toolbar.php,system/Debug/Toolbar/**,app/Config/WorkerMode.php,tests/system/Commands/Worker/**,docs/installation/worker_mode.md"
 ---
 
 # FrankenPHP Worker Mode

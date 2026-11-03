@@ -22,7 +22,7 @@ settings:
         files: ['.github/workflows/*']
       - label: documentation
         files:
-          all: ['user_guide_src/source/**']
+          all: ['docs/**']
       - label: testing
         files:
           all: ['tests/**']
