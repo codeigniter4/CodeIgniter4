@@ -154,8 +154,9 @@ class Filters
 
         $files = $locator->search('Config/Filters.php');
 
-        // Our main Filter configs are never included again, see below. Skip them
-        // by path, as reading and tokenizing them to find that out is wasted work.
+        // Don't include our main Filter configs again. They are skipped by path,
+        // as reading and tokenizing them to find their class is wasted work.
+        // APPPATH, SYSTEMPATH and the paths from search() are all real paths.
         $mainFiles = [
             APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'Filters.php',
             SYSTEMPATH . 'Config' . DIRECTORY_SEPARATOR . 'Filters.php',
@@ -163,14 +164,6 @@ class Filters
 
         foreach ($files as $file) {
             if (in_array($file, $mainFiles, true)) {
-                continue;
-            }
-
-            // The $file may not be a class file.
-            $className = $locator->getClassname($file);
-
-            // Don't include our main Filter config again...
-            if ($className === FiltersConfig::class || $className === BaseFiltersConfig::class) {
                 continue;
             }
 
