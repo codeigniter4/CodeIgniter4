@@ -1,3 +1,0 @@
-<?php
-
-$result->assertCookieExpired('foo');

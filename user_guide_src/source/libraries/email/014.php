@@ -1,3 +1,0 @@
-<?php
-
-$email->clear(true);

@@ -1,3 +1,0 @@
-<?php
-
-$DBPrefix = $db->getPrefix();

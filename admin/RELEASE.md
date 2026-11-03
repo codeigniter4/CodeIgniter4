@@ -403,7 +403,7 @@ The workflow does the following:
 
 - Waits for the "[Deploy Distributable Repos](https://github.com/codeigniter4/CodeIgniter4/actions/workflows/deploy-distributables.yml)" workflow to update **framework**, **appstarter** and **userguide**.
 - Installs `appstarter` from Packagist, checks that it pulls framework `v$VERSION`, and runs its tests.
-- Checks that the user guide deployments succeeded ("Deploy Production" and "pages build and deployment" in the **userguide** repository) and that **CodeIgniter$VERSION.epub** was added.
+- Checks that the user guide deployments succeeded ("Deploy Production" and "pages build and deployment" in the **userguide** repository) and that **docs/llms.txt** was added.
 
 Check: the workflow passes.
 
@@ -523,22 +523,16 @@ Merge it with **Squash and merge**. The release is complete.
 
 ## Appendix
 
-### Sphinx Installation
+### MkDocs Installation
 
-You may need to install Sphinx and its dependencies before you build the User Guide.
-
-This worked on Ubuntu 20.04:
+You may need to install MkDocs and its dependencies before you build the User Guide. It needs Python 3.11 or newer.
 
 ```bash
-sudo apt install python3-sphinx
+python3 -m venv venv
 ```
 
 ```bash
-sudo pip3 install sphinxcontrib-phpdomain
-```
-
-```bash
-sudo pip3 install sphinx_rtd_theme
+venv/bin/pip install -r docs/requirements.txt
 ```
 
 ### Manual User Guide Process
@@ -547,34 +541,35 @@ sudo pip3 install sphinx_rtd_theme
 > This process is normally not needed. The "Deploy Distributable Repos" action builds and deploys the User Guide when a release is published.
 > Follow these steps only if the automatic deployment fails.
 
-1. In the **CodeIgniter4** repository, enter the **user_guide_src** directory and clear out any old build files:
+1. In the **CodeIgniter4** repository, clear out any old build files:
 
    ```bash
-   cd user_guide_src
-   rm -rf build/
+   rm -rf site/
    ```
 
-2. Build the HTML version, then the ePub version:
+2. Build the site, the llms files and the anchor aliases:
 
    ```bash
-   make html
+   SITE_URL=https://codeigniter.com/user_guide/ venv/bin/mkdocs build --strict
    ```
 
    ```bash
-   make epub
+   venv/bin/python admin/llms.py
+   ```
+
+   ```bash
+   venv/bin/python admin/anchors.py
    ```
 
 3. Switch to the **userguide** repository and create the branch `release-$VERSION`.
-4. Replace **docs/** with **CodeIgniter4/user_guide_src/build/html**.
-5. Make sure the file **docs/.nojekyll** exists. Without it, GitHub Pages ignores folders that start with an underscore.
-6. Copy **CodeIgniter4/user_guide_src/build/epub/CodeIgniter.epub** to **./CodeIgniter$VERSION.epub**.
-7. Commit the changes with the message `Update for $VERSION` and push to `origin`.
-8. Create a pull request from `release-$VERSION` to `develop`, with the title `Update for $VERSION` and a blank description, and merge it.
-9. Create a release in the **userguide** repository:
+4. Replace **docs/** with **CodeIgniter4/site**.
+5. Commit the changes with the message `Update for $VERSION` and push to `origin`.
+6. Create a pull request from `release-$VERSION` to `develop`, with the title `Update for $VERSION` and a blank description, and merge it.
+7. Create a release in the **userguide** repository:
    - Version: `v$VERSION`
    - Title: `CodeIgniter $VERSION User Guide`
    - Description: `CodeIgniter $VERSION User Guide`
-10. Watch the "github pages" environment to make sure the deployment succeeds.
+8. Watch the "github pages" environment to make sure the deployment succeeds.
 
 The User Guide website should update itself through the deploy GitHub Action.
 If that fails, the server must be updated manually. See the repository and hosting details in the deploy script of the User Guide repository.

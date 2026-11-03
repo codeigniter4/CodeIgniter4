@@ -1,3 +1,0 @@
-<?php
-
-$microtime = $query->getStartTime();

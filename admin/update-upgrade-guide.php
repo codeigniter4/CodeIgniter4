@@ -86,7 +86,7 @@ $excludes = [
     ':!docs/',
     ':!system/',
     ':!tests/',
-    ':!user_guide_src/',
+    ':!user_guide_src/', // Remove after 4.7.7: tags up to v4.7.6 still contain this folder.
     ':!utils/',
     ':!.*',
     ':!mkdocs.yml',

@@ -21,7 +21,6 @@ utils/                       export-ignore
 .php-cs-fixer.dist.php       export-ignore
 .php-cs-fixer.no-header.php  export-ignore
 .php-cs-fixer.tests.php      export-ignore
-.php-cs-fixer.user-guide.php export-ignore
 structarmed-baseline.php     export-ignore
 structarmed.php              export-ignore
 phpstan-baseline.php         export-ignore
@@ -35,8 +34,6 @@ rector.php                   export-ignore
 AGENTS.md                    export-ignore
 
 # source user guide
-user_guide_src/ export-ignore
 docs/           export-ignore
 mkdocs.yml      export-ignore
-.nojekyll       export-ignore
 phpdoc.dist.xml export-ignore

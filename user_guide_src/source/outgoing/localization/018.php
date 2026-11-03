@@ -1,3 +1,0 @@
-<?php
-
-$routes->useSupportedLocalesOnly(true);

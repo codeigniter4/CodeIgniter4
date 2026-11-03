@@ -33,9 +33,11 @@ echo "Merging files from $1 to $2"
 # Prepare the source
 cd $SOURCE
 git checkout master
-cd user_guide_src
-make html
-make epub
+export NO_MKDOCS_2_WARNING=1
+export SITE_URL=https://codeigniter.com/user_guide/
+mkdocs build --strict
+python admin/llms.py
+python admin/anchors.py
 
 # Prepare the target
 cd $TARGET
@@ -49,11 +51,7 @@ cp -Rf ${SOURCE}/LICENSE ./
 cp -Rf ${SOURCE}/admin/userguide/. ./
 
 # Copy files
-cp -Rf ${SOURCE}/user_guide_src/build/html ./docs
-cp -Rf ${SOURCE}/user_guide_src/build/epub/CodeIgniter.epub ./CodeIgniter${VERSION}.epub
-
-# Ensure underscore prefixed files are published
-touch ${TARGET}/docs/.nojekyll
+cp -Rf ${SOURCE}/site ./docs
 
 # Commit the changes
 git add .

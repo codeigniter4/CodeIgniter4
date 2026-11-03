@@ -1,0 +1,9 @@
+# The Composer package ships the Markdown pages and the llms files only.
+.github/             export-ignore
+.gitattributes       export-ignore
+.gitignore           export-ignore
+docs/**/*.html       export-ignore
+docs/assets/         export-ignore
+docs/search/         export-ignore
+docs/sitemap.xml     export-ignore
+docs/sitemap.xml.gz  export-ignore

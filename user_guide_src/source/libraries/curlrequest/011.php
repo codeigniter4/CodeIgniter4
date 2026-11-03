@@ -1,3 +1,0 @@
-<?php
-
-$body = $response->getBody();
