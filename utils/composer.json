@@ -1,8 +1,8 @@
 {
     "require": {
         "php": "^8.3",
-        "codeigniter/coding-standard": "^1.7",
-        "ergebnis/composer-normalize": "^2.28",
+        "codeigniter/coding-standard": "^1.9",
+        "ergebnis/composer-normalize": "^2.56",
         "friendsofphp/php-cs-fixer": "^3.76",
         "nexusphp/cs-config": "^3.26",
         "vimeo/psalm": "^7.11"
