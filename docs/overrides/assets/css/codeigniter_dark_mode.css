@@ -1,0 +1,150 @@
+[data-md-color-scheme="slate"] {
+    --md-primary-fg-color: #b13a10;
+    --md-primary-fg-color--light: #8d7474;
+    --md-primary-fg-color--dark: #6d554d;
+
+    --md-default-bg-color: #1e2129;
+
+    --md-typeset-a-color: #ed6436;
+    --md-accent-fg-color: #f18a67;
+
+    --md-accent-fg-color--transparent: #625151;
+
+    /* Enhanced heading styles for better visibility in dark mode */
+    .md-typeset h1 {
+        font-weight: 700;
+        color: #f8f9fa;
+        border-bottom: 2px solid #ed6436;
+        padding-bottom: 0.3em;
+    }
+
+    .md-typeset h2 {
+        font-weight: 600;
+        color: #e9ecef;
+        border-bottom: 1px solid #495057;
+        padding-bottom: 0.2em;
+    }
+
+    .md-typeset h3 {
+        font-weight: 600;
+        color: #f8f9fa;
+    }
+
+    .md-typeset h4 {
+        font-weight: 600;
+        color: #e9ecef;
+    }
+
+    .md-typeset h5 {
+        text-transform: none;
+        font-weight: 600;
+        color: #f8f9fa;
+    }
+
+    .md-typeset h6 {
+        font-weight: 600;
+        color: #e9ecef;
+    }
+
+    /* Inline code styling - orange color like links */
+    .md-typeset p code,
+    .md-typeset li code,
+    .md-typeset td code,
+    .md-typeset th code {
+        border: 1px solid #3f4547;
+        color: #ed6436; /* Same orange color as links */
+    }
+
+    /* Code blocks should keep default styling */
+    .md-typeset pre code {
+        border: none;
+    }
+
+    .md-typeset .admonition.note,
+    .md-typeset details.note {
+        border-color: #2c5293;
+    }
+
+    .md-typeset .note > .admonition-title:before,
+    .md-typeset .note > summary:before {
+        background-color: #2c5293;
+        -webkit-mask-image: var(--md-admonition-icon--note);
+        mask-image: var(--md-admonition-icon--note);
+    }
+
+    .md-typeset .admonition.warning,
+    .md-typeset details.warning {
+        border-color: #97631e;
+    }
+
+    .md-typeset .warning > .admonition-title:before,
+    .md-typeset .warning > summary:before {
+        background-color: #97631e;
+        -webkit-mask-image: var(--md-admonition-icon--warning);
+        mask-image: var(--md-admonition-icon--warning);
+    }
+
+    .md-typeset .admonition.important,
+    .md-typeset details.important {
+        border-color: #8a3111;
+    }
+
+    .md-typeset .important > .admonition-title:before,
+    .md-typeset .important > summary:before {
+        background-color: #8a3111;
+        -webkit-mask-image: var(--md-admonition-icon--warning);
+        mask-image: var(--md-admonition-icon--warning);
+    }
+
+    .md-typeset .admonition.success,
+    .md-typeset details.success {
+        border-color: #026f2f;
+    }
+
+    .md-typeset .success > .admonition-title:before,
+    .md-typeset .success > summary:before {
+        background-color: #026f2f;
+        -webkit-mask-image: var(--md-admonition-icon--success);
+        mask-image: var(--md-admonition-icon--success);
+    }
+
+    /* Table of Contents list styling for dark mode */
+    .md-typeset ul li {
+        margin-bottom: 0; /* Reduce vertical spacing between list items */
+        margin-top: 0;
+    }
+
+    /* Nested list bullet styles */
+    .md-typeset ul {
+        list-style-type: disc; /* Top level uses solid disc */
+    }
+
+    .md-typeset ul ul {
+        list-style-type: circle; /* Second level uses outline circle */
+    }
+
+    .md-typeset ul ul ul {
+        list-style-type: square; /* Third level uses square */
+    }
+
+    /* Additional spacing adjustments for nested lists */
+    .md-typeset ul ul {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    /* Navigation adjustments for better spacing in dark mode */
+
+    .md-nav[aria-expanded="true"] {
+        margin-bottom: 0.5rem !important;
+    }
+
+    .md-nav .md-nav .md-nav__list {
+        padding-left: 1.2rem !important;
+        /* background-color: rgba(245,245,255,0.01) !important; */
+    }
+
+    .md-nav__item {
+        line-height: 1.4 !important;
+    }
+}

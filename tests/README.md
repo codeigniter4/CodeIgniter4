@@ -54,7 +54,7 @@ database.default.port   = 3306
 Make sure that you provide a database engine that is currently running on your machine.
 
 More details on a test database setup are in the
-[Testing Your Database](https://codeigniter4.github.io/CodeIgniter4/testing/database.html) section of the documentation.
+[Testing Your Database](https://codeigniter4.github.io/CodeIgniter4/develop/testing/database.html) section of the documentation.
 
 If you want to run the tests without using live database you can
 exclude `@DatabaseLive` group. This will make the tests run quite a bit faster.

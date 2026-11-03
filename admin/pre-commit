@@ -2,7 +2,6 @@
 
 PROJECT=`php -r "echo dirname(dirname(dirname(realpath('$0'))));"`
 STAGED_PHP_FILES=`git diff --cached --name-only --diff-filter=ACMR HEAD | grep \\\\.php$`
-STAGED_RST_FILES=`git diff --cached --name-only --diff-filter=ACMR HEAD | grep \\\\.rst$`
 
 echo "Starting CodeIgniter precommit..."
 
@@ -30,11 +29,6 @@ if [ "$FILES" != "" ]; then
         echo "There are PHP files which are not following the coding standards. Please fix them before commit."
         exit 1
     fi
-fi
-
-if [ "$STAGED_RST_FILES" != "" ]; then
-    echo "Checking for tabs in RST files"
-    php ./utils/check_tabs_in_rst.php
 fi
 
 exit $?

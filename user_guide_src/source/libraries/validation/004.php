@@ -1,3 +1,0 @@
-<?php
-
-$validation = service('validation');

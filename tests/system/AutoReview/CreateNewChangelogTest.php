@@ -51,12 +51,13 @@ final class CreateNewChangelogTest extends TestCase
         $currentVersion     = $this->currentVersion;
         $newVersion         = $this->incrementVersion($currentVersion, $mode);
         $versionWithoutDots = str_replace('.', '', $newVersion);
-        $changelogPath      = "./user_guide_src/source/changelogs/v{$newVersion}.rst";
-        $upgradePath        = "./user_guide_src/source/installation/upgrade_{$versionWithoutDots}.rst";
+        $changelogPath      = "./docs/changelogs/v{$newVersion}.md";
+        $upgradePath        = "./docs/installation/upgrade_{$versionWithoutDots}.md";
         $trackedPathArgs    = implode(' ', array_map(escapeshellarg(...), [
             './system/CodeIgniter.php',
-            './user_guide_src/source/changelogs/index.rst',
-            './user_guide_src/source/installation/upgrading.rst',
+            './docs/.nav.yml',
+            './docs/changelogs/index.md',
+            './docs/installation/upgrading.md',
         ]));
         $generatedPathArgs = implode(' ', array_map(escapeshellarg(...), [
             $changelogPath,
@@ -88,7 +89,7 @@ final class CreateNewChangelogTest extends TestCase
 
             $this->assertFileExists($changelogPath);
             $this->assertStringContainsString(
-                "Version {$newVersion}",
+                "# Version {$newVersion}\n",
                 $this->getContents($changelogPath),
             );
             $this->assertStringContainsString(
@@ -96,18 +97,26 @@ final class CreateNewChangelogTest extends TestCase
                 $this->getContents($changelogPath),
             );
             $this->assertStringContainsString(
-                $newVersion,
-                $this->getContents('./user_guide_src/source/changelogs/index.rst'),
+                "- [Version {$newVersion}](v{$newVersion}.md)",
+                $this->getContents('./docs/changelogs/index.md'),
+            );
+            $this->assertStringContainsString(
+                "changelogs/v{$newVersion}.md",
+                $this->getContents('./docs/.nav.yml'),
             );
 
             $this->assertFileExists($upgradePath);
             $this->assertStringContainsString(
-                "Upgrading from {$currentVersion} to {$newVersion}",
+                "# Upgrading from {$currentVersion} to {$newVersion}\n",
                 $this->getContents($upgradePath),
             );
             $this->assertStringContainsString(
-                "upgrade_{$versionWithoutDots}",
-                $this->getContents('./user_guide_src/source/installation/upgrading.rst'),
+                "(upgrade_{$versionWithoutDots}.md)",
+                $this->getContents('./docs/installation/upgrading.md'),
+            );
+            $this->assertStringContainsString(
+                "installation/upgrade_{$versionWithoutDots}.md",
+                $this->getContents('./docs/.nav.yml'),
             );
         } finally {
             exec("git restore -- {$trackedPathArgs}");

@@ -1,0 +1,172 @@
+[data-md-color-scheme="codeigniter"] {
+    --md-primary-fg-color:        #dd4814;
+    --md-primary-fg-color--light: #ECB7B7;
+    --md-primary-fg-color--dark:  #90030C;
+
+    --md-default-bg-color: #fcfcfc;
+
+    --md-typeset-a-color: #e74c3c;
+    --md-accent-fg-color: #97310e;
+
+    --md-accent-fg-color--transparent: #ECB7B7;
+
+    /* Enhanced heading styles for better visibility */
+    .md-typeset h1 {
+        font-weight: 700;
+        color: #1a202c;
+        border-bottom: 2px solid #dd4814;
+        padding-bottom: 0.3em;
+    }
+
+    .md-typeset h2 {
+        font-weight: 600;
+        color: #2d3748;
+        border-bottom: 1px solid #cbd5e0;
+        padding-bottom: 0.2em;
+    }
+
+    .md-typeset h3 {
+        font-weight: 600;
+        color: #1a202c;
+    }
+
+    .md-typeset h4 {
+        font-weight: 600;
+        color: #2d3748;
+    }
+
+    .md-typeset h5 {
+        text-transform: none;
+        font-weight: 600;
+        color: #1a202c;
+    }
+
+    .md-typeset h6 {
+        font-weight: 600;
+        color: #2d3748;
+    }
+
+    /* Inline code styling - orange color like links */
+    .md-typeset p code,
+    .md-typeset li code,
+    .md-typeset td code,
+    .md-typeset th code {
+        border: 1px solid #e1e4e5;
+        color: #e74c3c; /* Same orange color as links */
+    }
+
+    /* Code blocks should keep default styling */
+    .md-typeset pre code {
+        border: none;
+    }
+
+    .md-typeset .admonition.important,
+    .md-typeset details.important {
+        border-color: #dd4814;
+    }
+
+    .md-typeset .important > .admonition-title,
+    .md-typeset .important > summary {
+        background-color: #dd4814;
+        color: white;
+    }
+
+    .md-typeset .important > .admonition-title:before,
+    .md-typeset .important > summary:before {
+        background-color: white;
+        -webkit-mask-image: var(--md-admonition-icon--warning);
+        mask-image: var(--md-admonition-icon--warning);
+    }
+
+    /* Note admonition styling */
+    .md-typeset .admonition.note,
+    .md-typeset details.note {
+        border-color: #448aff;
+    }
+
+    .md-typeset .note > .admonition-title,
+    .md-typeset .note > summary {
+        background-color: #448aff;
+        color: white;
+    }
+
+    .md-typeset .note > .admonition-title:before,
+    .md-typeset .note > summary:before {
+        background-color: white;
+        -webkit-mask-image: var(--md-admonition-icon--note);
+        mask-image: var(--md-admonition-icon--note);
+    }
+
+    /* Warning admonition styling */
+    .md-typeset .admonition.warning,
+    .md-typeset details.warning {
+        border-color: #ff9800;
+    }
+
+    .md-typeset .warning > .admonition-title,
+    .md-typeset .warning > summary {
+        background-color: #ff9800;
+        color: white;
+    }
+
+    .md-typeset .warning > .admonition-title:before,
+    .md-typeset .warning > summary:before {
+        background-color: white;
+        -webkit-mask-image: var(--md-admonition-icon--warning);
+        mask-image: var(--md-admonition-icon--warning);
+    }
+
+    /* Image styling for better visibility in light mode */
+    .md-typeset img {
+        border-color: #d1d4d8;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Remove the shadow from inline images or icons */
+    .md-typeset p img[src*="icon"],
+    .md-typeset p img[width="16"],
+    .md-typeset p img[width="24"],
+    .md-typeset p img[height="16"],
+    .md-typeset p img[height="24"] {
+        box-shadow: none;
+    }
+
+    /* Table of Contents list styling */
+    .md-typeset ul li {
+        margin-bottom: 0; /* Reduce vertical spacing between list items */
+        margin-top: 0;
+    }
+
+    /* Nested list bullet styles */
+    .md-typeset ul {
+        list-style-type: disc; /* Top level uses solid disc */
+    }
+
+    .md-typeset ul ul {
+        list-style-type: circle; /* Second level uses outline circle */
+    }
+
+    .md-typeset ul ul ul {
+        list-style-type: square; /* Third level uses square */
+    }
+
+    /* Additional spacing adjustments for nested lists */
+    .md-typeset ul ul {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    /* Navigation adjustments for better spacing in dark mode */
+
+    .md-nav[aria-expanded="true"] {
+        margin-bottom: 0.5rem !important;
+    }
+
+    .md-nav .md-nav .md-nav__list {
+        padding-left: 1.2rem !important;
+    }
+
+    .md-nav__item {
+        line-height: 1.4 !important;
+    }
+}

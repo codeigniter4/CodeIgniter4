@@ -1,0 +1,105 @@
+# The nav is docs/.nav.yml, kept up to date by admin/update-docs-nav.php.
+INHERIT: docs/.nav.yml
+
+site_name: CodeIgniter
+site_description: Main user guide for the CodeIgniter 4 framework
+# Set per deployment, since instant navigation and the sitemap need the site's own URL.
+site_url: !ENV SITE_URL
+use_directory_urls: false
+
+# Files in docs/ that are not pages.
+exclude_docs: |
+  overrides/
+  requirements.txt
+
+theme:
+  name: material
+  custom_dir: docs/overrides
+  logo: assets/flame.svg
+  favicon: assets/favicon.ico
+  font: false
+  icon:
+    repo: fontawesome/brands/github
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: codeigniter
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant.progress
+    - content.code.copy
+    - navigation.footer
+    - content.action.edit
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - search.share
+    - navigation.path
+    - toc.follow
+
+extra:
+  homepage: https://codeigniter.com
+  generator: false
+
+  social:
+    - icon: material/github
+      link: https://github.com/codeigniter4/CodeIgniter4
+      name: GitHub
+    - icon: material/twitter
+      link: https://twitter.com/CodeIgniterPhp
+      name: X
+    - icon: material/forum
+      link: https://forum.codeigniter.com
+      name: Forum Codeigniter
+    - icon: material/slack
+      link: https://join.slack.com/t/codeigniterchat/shared_invite/zt-244xrrslc-l_I69AJSi5y2a2RVN~xIdQ
+      name: Slack
+
+repo_name: codeigniter4/CodeIgniter4
+repo_url: https://github.com/codeigniter4/CodeIgniter4
+edit_uri: edit/develop/docs/
+copyright: Copyright &copy; 2019-<span data-current-year>2026</span> CodeIgniter Foundation.
+
+validation:
+  anchors: warn
+
+markdown_extensions:
+  - admonition
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      extend_pygments_lang:
+        # PHP samples have no opening tag.
+        - name: php
+          lang: php
+          options:
+            startinline: true
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - tables
+
+extra_css:
+  - assets/css/fonts.css
+  - assets/css/codeigniter.css
+  - assets/css/codeigniter_dark_mode.css
+  - assets/css/layout.css
+  - assets/css/code.css
+
+extra_javascript:
+  - assets/js/shortcuts.js
+  - assets/js/code.js
+  - assets/js/versions.js
+  - assets/js/sidebar.js
+  - assets/js/year.js

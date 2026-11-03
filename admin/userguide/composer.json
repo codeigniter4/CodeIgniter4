@@ -1,0 +1,12 @@
+{
+    "name": "codeigniter4/userguide",
+    "description": "The CodeIgniter 4 user guide as Markdown",
+    "license": "MIT",
+    "type": "library",
+    "homepage": "https://codeigniter.com/user_guide/",
+    "support": {
+        "forum": "https://forum.codeigniter.com/",
+        "source": "https://github.com/codeigniter4/CodeIgniter4",
+        "docs": "https://codeigniter.com/user_guide/"
+    }
+}

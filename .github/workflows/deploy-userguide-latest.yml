@@ -1,8 +1,6 @@
 # When changes are pushed to the develop branch,
-# build the current version of the User Guide
-# with Sphinx and deploy it to the gh-pages branch.
-#
-# @todo Consolidate checkouts
+# build the develop and the next minor versions of the User Guide
+# with MkDocs and deploy them to GitHub Pages.
 name: Deploy User Guide (latest)
 
 on:
@@ -10,74 +8,94 @@ on:
     branches:
       - 'develop'
     paths:
-      - 'user_guide_src/**'
+      - 'docs/**'
+      - 'mkdocs.yml'
+      - 'admin/anchors.py'
+      - 'admin/llms.py'
+      - '.github/workflows/deploy-userguide-latest.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 permissions:
   contents: read
 
 jobs:
   build:
-    name: Deploy to gh-pages
-    permissions:
-      # Allow push to branch gh-pages
-      contents: write
+    name: Build User Guide
     if: (github.repository == 'codeigniter4/CodeIgniter4')
     runs-on: ubuntu-24.04
     steps:
-      - name: Checkout
+      - name: Checkout develop
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          path: develop
           persist-credentials: false
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+      - name: Checkout next minor
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          php-version: '8.2'
-          coverage: none
+          ref: '4.8'
+          path: next
+          persist-credentials: false
 
       - name: Setup Python
         uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: '3.12'
 
-      - name: Install Sphinx
+      - name: Install MkDocs
         run: |
           python -m pip install --upgrade pip
-          pip install -r user_guide_src/requirements.txt
+          pip install -r develop/docs/requirements.txt
 
-      # Build the latest User Guide
-      - name: Build Docs with Sphinx
-        run: make html
-        working-directory: user_guide_src
+      - name: Setup Pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
 
-      - name: Add "Edit this page" links
-        run: |
-          cd user_guide_src
-          # Fix permissions
-          sudo chown -R runner:docker build/html/
-          php add-edit-this-page build/html/
-
-      # Create an artifact of the html output
-      - name: Upload artifact
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        with:
-          name: HTML Documentation
-          path: user_guide_src/build/html/
-
-      # Commit changes to the gh-pages branch
-      - name: Commit changes
-        run: |
-          git clone https://github.com/codeigniter4/CodeIgniter4.git --branch gh-pages --single-branch gh-pages
-          cp -r user_guide_src/build/html/* gh-pages/
-          cd gh-pages
-          git config --local user.email "action@github.com"
-          git config --local user.name "${GITHUB_ACTOR}"
-          git add .
-          # Ignore failures due to lack of changes
-          git commit -m "Update User Guide" -a || true
-
-      - name: Push changes
-        working-directory: gh-pages
+      - name: Build the sites
         env:
-          PUSH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        run: bash ${GITHUB_WORKSPACE}/.github/scripts/secure-git-push https://github.com/codeigniter4/CodeIgniter4.git HEAD:gh-pages
+          NO_MKDOCS_2_WARNING: '1'
+          BASE_URL: https://codeigniter4.github.io/CodeIgniter4
+        run: |
+          mkdir pages
+
+          for name in develop next; do
+            if [ ! -f "${name}/mkdocs.yml" ]; then
+              echo "::notice::The ${name} branch has no mkdocs.yml, so it is not deployed."
+              continue
+            fi
+
+            (
+              cd "${name}"
+              SITE_URL="${BASE_URL}/${name}/" mkdocs build --strict
+              python admin/llms.py
+              python admin/anchors.py
+            )
+
+            mv "${name}/site" "pages/${name}"
+          done
+
+          cp develop/docs/overrides/assets/versions.json pages/versions.json
+          echo '<!doctype html><meta http-equiv="refresh" content="0; url=develop/">' > pages/index.html
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: pages
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

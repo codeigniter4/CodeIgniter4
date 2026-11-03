@@ -1,3 +1,0 @@
-<?php
-
-$userModel->allowEmptyInserts()->insert([]);

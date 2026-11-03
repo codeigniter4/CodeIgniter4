@@ -1,3 +1,0 @@
-<?php
-
-$params = ['bar', 'baz'];

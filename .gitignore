@@ -42,11 +42,18 @@ $RECYCLE.BIN/
 # These should never be under version control,
 # as it poses a security risk.
 .env
-.vagrant
-Vagrantfile
-/user_guide_src/venv/
+
+#-------------------------
+# Local Configuration
+#-------------------------
+# phpenv local config
+.php-version
+
+# pyenv local config
 .python-version
-/user_guide_src/.python-version
+
+/phpunit.xml
+/.php-cs-fixer.php
 
 #-------------------------
 # Temporary Files
@@ -72,17 +79,18 @@ Vagrantfile
 php_errors.log
 
 #-------------------------
-# User Guide Temp Files
+# Build Output
 #-------------------------
-/user_guide_src/build/*
+# Test coverage
+/build/
 
-#-------------------------
-# Test Files
-#-------------------------
-/tests/coverage*
+# phpDocumentor
+/api/
 
-# Don't save phpunit under version control.
-/phpunit
+# User guide
+/site/
+/venv/
+__pycache__/
 
 #-------------------------
 # Composer
@@ -94,21 +102,13 @@ composer.lock
 # IDE / Development Files
 #-------------------------
 
-# Modules Testing
-_modules/*
-
-# phpenv local config
-.php-version
-
 # Jetbrains editors (PHPStorm, etc)
 .idea/
 *.iml
 
 # Netbeans
 /nbproject/
-/build/
 /nbbuild/
-/dist/
 /nbdist/
 /nbactions.xml
 /nb-configuration.xml
@@ -121,12 +121,6 @@ _modules/*
 *.sublime-workspace
 *.sublime-project
 .phpintel
-/api/
 
 # Visual Studio Code
 .vscode/
-
-/results/
-/phpunit.xml
-
-/.php-cs-fixer.php

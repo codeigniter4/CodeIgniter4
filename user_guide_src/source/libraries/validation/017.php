@@ -1,3 +1,0 @@
-<?php
-
-$validation->getRuleGroup('signup');

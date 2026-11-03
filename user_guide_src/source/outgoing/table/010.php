@@ -1,3 +1,0 @@
-<?php
-
-$table->setCaption('Colors');

@@ -1,3 +1,0 @@
-<?php
-
-$cache->clean();

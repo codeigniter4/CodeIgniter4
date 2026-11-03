@@ -1,0 +1,98 @@
+/* The theme turns ligatures off in code. */
+.md-typeset code,
+.md-typeset pre {
+    font-variant-ligatures: normal;
+}
+
+/* Pygments marks most PHP identifiers Name.Other, which the theme leaves at body color. */
+.highlight .nx {
+    color: var(--md-code-hl-function-color);
+}
+
+/* Light-scheme code colors matched to VS Code's Light Modern token palette, on the theme's own background. */
+[data-md-color-scheme="codeigniter"] {
+    --md-code-fg-color: #3b3b3b;
+    --md-code-hl-keyword-color: #0000ff;
+    --md-code-hl-function-color: #795e26;
+    --md-code-hl-string-color: #a31515;
+    --md-code-hl-number-color: #098658;
+    --md-code-hl-comment-color: #008000;
+    --md-code-hl-variable-color: #001080;
+    --md-code-hl-operator-color: #3b3b3b;
+    --md-code-hl-punctuation-color: #3b3b3b;
+    --md-code-hl-constant-color: #0070c1;
+    --md-code-hl-name-color: #3b3b3b;
+    --md-code-hl-special-color: #811f3f;
+}
+
+[data-md-color-scheme="codeigniter"] .highlight .nc,
+[data-md-color-scheme="codeigniter"] .highlight .nn,
+[data-md-color-scheme="codeigniter"] .highlight .nx.nx-class {
+    color: #267f99;
+}
+
+[data-md-color-scheme="codeigniter"] .highlight .si {
+    color: #001080;
+}
+
+[data-md-color-scheme="codeigniter"] .highlight .k.k-control {
+    color: #af00db;
+}
+
+[data-md-color-scheme="codeigniter"] .highlight .nv.nv-this {
+    color: #0000ff;
+}
+
+[data-md-color-scheme="codeigniter"] .highlight .nx.nx-constant {
+    color: #0070c1;
+}
+
+[data-md-color-scheme="codeigniter"] .highlight .na.na-call {
+    color: #795e26;
+}
+
+/* Dark-scheme code colors matched to VS Code's Dark Modern token palette. */
+[data-md-color-scheme="slate"] {
+    --md-code-bg-color: #1f1f1f;
+    --md-code-fg-color: #cccccc;
+    --md-code-hl-keyword-color: #569cd6;
+    --md-code-hl-function-color: #dcdcaa;
+    --md-code-hl-string-color: #ce9178;
+    --md-code-hl-number-color: #b5cea8;
+    --md-code-hl-comment-color: #6a9955;
+    --md-code-hl-variable-color: #9cdcfe;
+    --md-code-hl-operator-color: #d4d4d4;
+    --md-code-hl-punctuation-color: #d4d4d4;
+    --md-code-hl-constant-color: #569cd6;
+    --md-code-hl-name-color: #cccccc;
+    --md-code-hl-special-color: #d16969;
+}
+
+[data-md-color-scheme="slate"] .highlight .nc,
+[data-md-color-scheme="slate"] .highlight .nn {
+    color: #4ec9b0;
+}
+
+[data-md-color-scheme="slate"] .highlight .si {
+    color: #9cdcfe;
+}
+
+[data-md-color-scheme="slate"] .highlight .k.k-control {
+    color: #c586c0;
+}
+
+[data-md-color-scheme="slate"] .highlight .nv.nv-this {
+    color: #569cd6;
+}
+
+[data-md-color-scheme="slate"] .highlight .nx.nx-class {
+    color: #4ec9b0;
+}
+
+[data-md-color-scheme="slate"] .highlight .nx.nx-constant {
+    color: #9cdcfe;
+}
+
+[data-md-color-scheme="slate"] .highlight .na.na-call {
+    color: #dcdcaa;
+}
