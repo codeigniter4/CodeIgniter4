@@ -94,6 +94,34 @@ You can also check the current environment with the `spark env` command:
 php spark env
 ```
 
+### The `environment` service
+
+!!! success "Available from version 4.8.0"
+
+As an alternative to reading the `ENVIRONMENT` constant directly, CodeIgniter provides the `environment` service, backed by the `CodeIgniter\EnvironmentDetector` class. Because it is a shared service, it can be mocked in tests (via `Services::injectMock()`) to exercise environment-specific branches without having to redefine the `ENVIRONMENT` constant.
+
+```php
+<?php
+
+$environment = service('environment');
+
+// Get the current environment name.
+echo $environment->get();
+
+// Check against the three built-in environments.
+$environment->isProduction();
+$environment->isDevelopment();
+$environment->isTesting();
+
+// Match any one of several environments (useful for custom names).
+$environment->is('production', 'staging');
+```
+
+!!! note "Note"
+    The `environment` service is primarily intended for testing environment-specific code paths. Mocking it only affects code that resolves and uses the service itself. It does not modify the `ENVIRONMENT` constant. Code that still reads `ENVIRONMENT` directly keeps its current behavior.
+
+Passing a value to the constructor overrides the detected environment; passing `null` (the default) falls back to the `ENVIRONMENT` constant. An empty or whitespace-only string throws `CodeIgniter\Exceptions\InvalidArgumentException`.
+
 ## Effects on Default Framework Behavior
 
 There are some places in the CodeIgniter system where the `ENVIRONMENT` constant is used. This section describes how default framework behavior is affected.

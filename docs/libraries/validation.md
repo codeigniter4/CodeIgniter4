@@ -430,7 +430,7 @@ if ($validation->withRequest($request)->run()) {
 ```
 
 !!! warning "Warning"
-    When you use this method, you should use the [getValidated()](#getting-validated-data) method to get the validated data. Because this method gets JSON data from [$request->getJSON()](../incoming/incomingrequest.md#getting-json-data) when the request is a JSON request (`Content-Type: application/json`), or gets raw data from [$request->getRawInput()](../incoming/incomingrequest.md#retrieving-raw-data-put-patch-delete) when the request is a PUT, PATCH, or DELETE request and is not an HTML form post (`Content-Type: multipart/form-data`), or gets data from [$request->getVar()](../incoming/incomingrequest.md#getting-data), and an attacker could change what data is validated.
+    When you use this method, you should use the [getValidated()](#getting-validated-data) method to get the validated data. Because this method gets JSON data from [$request->getJSON()](../incoming/incomingrequest.md#getting-json-data) when the request is a JSON request (`Content-Type: application/json`), or gets raw data from [$request->getRawInput()](../incoming/incomingrequest.md#retrieving-raw-data-put-patch-delete-query) when the request is a PUT, PATCH, DELETE, or QUERY request and is not an HTML form post (`Content-Type: multipart/form-data`), or gets data from [$request->getVar()](../incoming/incomingrequest.md#getting-data), and an attacker could change what data is validated.
 
 !!! note "Note"
     The [getValidated()](#getting-validated-data) method can be used since v4.4.0.
@@ -539,6 +539,78 @@ if (! $this->validateData($data, [
 // Get the validated data.
 $validData = $this->validator->getValidated();
 ```
+
+#### Typed Validated Input
+
+`getValidatedInput()` returns the same validated data as a `CodeIgniter\Input\ValidatedInput` object. Use it after validation succeeds when you want to read common controller values as strings, integers, floats, booleans, arrays, dates, or enums:
+
+!!! success "Available from version 4.8.0"
+
+```php
+use App\Enums\PostStatus;
+
+$validation = service('validation');
+$validation->setRules([
+    'title'        => 'required|string',
+    'page'         => 'permit_empty|integer',
+    'rating'       => 'permit_empty|decimal',
+    'active'       => 'permit_empty|in_list[0,1,true,false,yes,no,on,off]',
+    'tags'         => 'permit_empty|is_array',
+    'published_at' => 'permit_empty|valid_date[Y-m-d]',
+    'status'       => 'permit_empty|in_list[draft,published]',
+]);
+
+$data = [
+    'title'        => 'Hello World',
+    'page'         => '2',
+    'rating'       => '4.5',
+    'active'       => 'true',
+    'tags'         => ['php', 'codeigniter'],
+    'published_at' => '2026-05-04',
+    'status'       => 'published',
+];
+
+if (! $validation->run($data)) {
+    // The validation failed.
+    return;
+}
+
+$input = $validation->getValidatedInput();
+
+$title       = $input->string('title');
+$page        = $input->integer('page', 1);
+$rating      = $input->float('rating', 0.0);
+$active      = $input->boolean('active', false);
+$tags        = $input->array('tags', []);
+$publishedAt = $input->date('published_at', 'Y-m-d');
+$status      = $input->enum('status', PostStatus::class, PostStatus::DRAFT);
+```
+
+Validation decides whether input is acceptable. The typed input object only helps you consume values that already passed validation. If a present value cannot be read as the requested type, an `InvalidArgumentException` is thrown. This usually means the validation rules and the expected type do not match.
+
+`ValidatedInput` extends `CodeIgniter\Input\InputData`. This keeps generic typed input access reusable while adding validation-specific readers for dates and enums. `InputData` is fallback-friendly for raw input; `ValidatedInput` is strict because it represents data that has already passed validation.
+
+The typed input object has the following methods:
+
+All methods support dot-array syntax for nested validated data.
+
+- `get($key, $default = null)` returns the raw validated value. If the field is missing, it returns the default value.
+- `has($key)` returns whether the field exists in the validated data, even if its value is `null`.
+- `string($key, $default = null)` returns `string|null`. If the field is missing, it returns the default value or `null`.
+- `integer($key, $default = null)` returns `int|null`. If the field is missing, it returns the default value or `null`.
+- `float($key, $default = null)` returns `float|null`. If the field is missing, it returns the default value or `null`.
+- `boolean($key, $default = null)` returns `bool|null`. If the field is missing, it returns the default value or `null`.
+- `array($key, $default = null)` returns `array|null`. If the field is missing, it returns the default value or `null`.
+- `date($key, $format = null, $timezone = null, $default = null)` returns `CodeIgniter\I18n\Time` or `null`. If the field is missing, it returns the default value or `null`. Pass a format when the value should be parsed with a specific date format. The default value must be `null` or a `CodeIgniter\I18n\Time` instance.
+- `enum($key, $enumClass, $default = null)` returns an enum instance or `null`. The default value must be `null` or an instance of the requested enum class.
+
+Fields that are present with a `null` value return `null`. This lets you distinguish a missing optional field from a field that was validated as `null`.
+
+Use validation rules such as `integer`, `decimal`, `valid_date`, `in_list`, or a custom rule to ensure the value matches the type you plan to read. The `date()` method only parses the value; validation rules should enforce acceptable date formats and ranges. For strict calendar validation, add a rule such as `valid_date[Y-m-d]`.
+
+The `enum()` method accepts PHP enum class names. Backed enums are matched by their backing value, while unit enums are matched by case name.
+
+The `boolean()` method uses PHP's boolean validation behavior, so common form values like `"1"`, `"0"`, `"true"`, `"false"`, `"yes"`, `"no"`, `"on"`, and `"off"` are accepted.
 
 ### Saving Sets of Validation Rules to the Config File
 
@@ -961,6 +1033,12 @@ When showing field-specific errors, you can pass the alias as the second paramet
 <?= $validation->showError('username', 'my_single') ?>
 ```
 
+## Form Requests
+
+!!! success "Available from version 4.8.0"
+
+For a higher-level approach that encapsulates validation rules, custom error messages, and authorization logic in a dedicated class, see [Form Requests](../incoming/form_requests.md).
+
 ## Creating Custom Rules
 
 ### Using Rule Classes
@@ -1026,6 +1104,8 @@ class MyRules
     {
         if ((int) $value % 2 !== 0) {
             $error = lang('myerrors.evenError');
+            // You can also use {field}, {param}, and {value} placeholders:
+            // $error = 'The value of {field} is not even.';
 
             return false;
         }
@@ -1034,6 +1114,9 @@ class MyRules
     }
 }
 ```
+
+!!! note "Note"
+    Since v4.8.0, the `{field}`, `{param}`, and `{value}` placeholders are supported in `$error` messages and will be replaced with the field's human-readable label (or field name if no label is set), the rule parameter, and the submitted value respectively.
 
 #### Using a Custom Rule
 
@@ -1140,13 +1223,16 @@ $validation->setRules([
                 return true;
             }
 
-            $error = 'The value is not even.';
+            $error = 'The value of {field} is not even.';
 
             return false;
         },
     ],
 ]);
 ```
+
+!!! note "Note"
+    Since v4.8.0, the `{field}`, `{param}`, and `{value}` placeholders are supported in `$error` messages and will be replaced with the field's human-readable label (or field name if no label is set), the rule parameter, and the submitted value respectively.
 
 ### Using Callable Rule
 
@@ -1216,7 +1302,7 @@ class Form extends BaseController
             return true;
         }
 
-        $error = 'The value is not even.';
+        $error = 'The value of {field} is not even.';
 
         return false;
     }
@@ -1224,6 +1310,9 @@ class Form extends BaseController
     // ...
 }
 ```
+
+!!! note "Note"
+    Since v4.8.0, the `{field}`, `{param}`, and `{value}` placeholders are supported in `$error` messages and will be replaced with the field's human-readable label (or field name if no label is set), the rule parameter, and the submitted value respectively.
 
 ## Available Rules
 

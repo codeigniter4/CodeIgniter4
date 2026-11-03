@@ -82,7 +82,13 @@ You can use any standard HTTP verb (GET, POST, PUT, DELETE, OPTIONS, etc.):
 $routes->post('products', 'Product::feature');
 $routes->put('products/1', 'Product::feature');
 $routes->delete('products/1', 'Product::feature');
+$routes->query('products/search', 'Product::search');
 ```
+
+`QUERY` routes are for the HTTP QUERY method defined by RFC 10008. `QUERY` requests are safe and idempotent like GET, but send query content in the request body. Read that body explicitly with request input methods such as `$this->request->input()->json()` or `$this->request->input()->raw()`. Your controller should reject missing or unsupported `Content-Type` values for the query content it expects. Do not use `QUERY` for operations that create, update, delete, or otherwise change server state.
+
+!!! note "Note"
+    Your web server, proxy, or CORS configuration may need to allow the `QUERY` method before these requests can reach CodeIgniter. For browser-based cross-origin requests, ensure `QUERY` is included in your allowed CORS methods so preflight requests can succeed.
 
 You can supply multiple verbs that a route should match by passing them in as an array to the `match()` method:
 
@@ -299,6 +305,37 @@ $routes->addPlaceholder('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}
 $routes->get('users/(:uuid)', 'Users::show/$1');
 ```
 
+##### Sample Values for `spark routes`
+
+!!! success "Available from version 4.8.0"
+
+The [spark routes](../cli/spark_commands.md) command needs a concrete URI that matches each route in order to resolve the filters that would run for it. For the built-in placeholders (`num`, `segment`, `alpha`, and so on) it uses a hardcoded sample value. For custom placeholders it now attempts to generate a value from the placeholder's regular expression, so common patterns like `[A-Z]{3}[0-9]+` or the UUID example above work without any extra configuration.
+
+If the regex uses features the generator cannot reverse (lookarounds, backreferences, complex alternations, etc.), the Before/After Filters columns fall back to showing `<unknown>`. You can fix that by providing an explicit sample in `app/Config/Routing.php`:
+
+```php
+<?php
+
+namespace Config;
+
+use CodeIgniter\Config\Routing as BaseRouting;
+
+class Routing extends BaseRouting
+{
+    public array $placeholderSamples = [
+        'code' => 'ABC123',
+        'uuid' => '550e8400-e29b-41d4-a716-446655440000',
+    ];
+}
+```
+
+Each value must match its placeholder's regular expression. A value that does not match is ignored. Entries override the samples for the built-in placeholders too, not only custom ones.
+
+The resolution order is: a matching value declared in `$placeholderSamples`, then the built-in sample for standard placeholders, then an auto-generated value, then `<unknown>` as a last resort.
+
+!!! note "Note"
+    This configuration only affects the `spark routes` display. Filter execution at request time already honors custom placeholders without any setup.
+
 #### Regular Expressions
 
 If you prefer, you can use regular expressions to define your routing rules. Any valid regular expression is allowed, as are back-references.
@@ -405,7 +442,7 @@ $routes->environment('development', static function ($routes) {
     This method exists only for backward compatibility. Do not use it in new projects. Even if you are already using it, we recommend that you use another, more appropriate method.
 
 !!! warning "Warning"
-    While the `add()` method seems to be convenient, it is recommended to always use the HTTP-verb-based routes, described above, as it is more secure. If you use the [CSRF protection](../libraries/security.md), it does not protect **GET** requests. If the URI specified in the `add()` method is accessible by the GET method, the CSRF protection will not work.
+    While the `add()` method seems to be convenient, it is recommended to always use the HTTP-verb-based routes, described above, as it is more secure. If you use the [CSRF protection](../libraries/security.md), it does not protect **GET** or **QUERY** requests. If the URI specified in the `add()` method is accessible by the GET or QUERY method, the CSRF protection will not work.
 
 It is possible to define a route with any HTTP verb. You can use the `add()` method:
 

@@ -117,11 +117,11 @@ Example:
 $foo = $cache->get('my_cached_item');
 ```
 
-#### remember(string $key, int $ttl, Closure $callback)
+#### remember(string $key, callable|int $ttl, Closure $callback)
 
 - **Parameters**  
     - **$key** `string` Cache item name
-    - **$ttl** `int` Time to live in seconds
+    - **$ttl** `callable|int` Time to live in seconds
     - **$callback** `Closure` Callback to invoke when the cache item returns null
 
 - **Returns**: The value of the cache item
@@ -129,6 +129,34 @@ $foo = $cache->get('my_cached_item');
 - **Return type**: `mixed`
 
 Gets an item from the cache. If `null` was returned, this will invoke the callback and save the result. Either way, this will return the value.
+
+The `$ttl` parameter may also be a callable, allowing the TTL to be determined dynamically at runtime. This is especially useful when the expiration time depends on the computed value or requires an expensive calculation.
+
+When a callable is provided, it is executed only on a cache miss, after the callback has been invoked. The callable always receives the computed value as its first argument:
+
+```php
+<?php
+
+// Simple dynamic TTL
+$cache->remember('key', static fn ($value) => 60, static fn () => fetchData());
+
+// Value-aware TTL
+$cache->remember(
+    'key',
+    static fn ($value) => $value->expires_at - time(),
+    static fn () => fetchData(),
+);
+```
+
+This ensures that TTL computation is deferred until necessary and avoids unnecessary overhead when the cache item already exists.
+
+!!! note "Note"
+    Prior to v4.8.0, the second parameter only accepted an integer TTL value. The ability to pass a callable was added in v4.8.0.
+
+!!! note "Note"
+    When using the APCu cache handler, providing a callable TTL disables the use of `apcu_entry()` and falls back to a manual cache retrieval and storage process. As a result, the operation is no longer atomic and may be subject to race conditions under high concurrency.
+
+    If atomic behavior is required, use an integer TTL value.
 
 #### save(string $key, $data[, int $ttl = 60])
 

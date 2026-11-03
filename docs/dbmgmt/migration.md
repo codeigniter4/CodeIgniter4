@@ -160,8 +160,8 @@ php spark migrate
 
 You can use `migrate` with the following options:
 
-- `-g` - to specify a database group. If specified, only migrations for the specified database group will be run. If not specified, all migrations will be run.
-- `-n` - to choose a namespace, otherwise the `App` namespace will be used.
+- `--group` (`-g`) - to specify a database group. If specified, only migrations for the specified database group will be run. If not specified, all migrations will be run.
+- `--namespace` (`-n`) - to choose a namespace, otherwise the `App` namespace will be used.
 - `--all` - to migrate all namespaces to the latest migration.
 
 This example will migrate the `Acme\Blog` namespace with any new migrations on the test database group:
@@ -190,8 +190,8 @@ php spark migrate:rollback
 
 You can use `migrate:rollback` with the following options:
 
-- `-b` - to choose a batch: natural numbers specify the batch.
-- `-f` - to bypass the confirmation question, which is only asked in a production environment.
+- `--batch` (`-b`) - to choose a batch: natural numbers specify the batch.
+- `--force` (`-f`) - to bypass the confirmation question, which is only asked in a production environment.
 
 ### migrate:refresh
 
@@ -203,10 +203,10 @@ php spark migrate:refresh
 
 You can use `migrate:refresh` with the following options:
 
-- `-g` - to specify a database group. If specified, only migrations for the specified database group will be run. If not specified, all migrations will be run.
-- `-n` - to choose a namespace, otherwise the `App` namespace will be used.
+- `--group` (`-g`) - to specify a database group. If specified, only migrations for the specified database group will be run. If not specified, all migrations will be run.
+- `--namespace` (`-n`) - to choose a namespace, otherwise the `App` namespace will be used.
 - `--all` - to refresh all namespaces.
-- `-f` - to bypass the confirmation question, which is only asked in a production environment.
+- `--force` (`-f`) - to bypass the confirmation question, which is only asked in a production environment.
 
 ### migrate:status
 
@@ -228,7 +228,7 @@ php spark migrate:status
 
 You can use `migrate:status` with the following options:
 
-- `-g` - to specify a database group. If specified, only migrations for the specified database group will be checked. If not specified, all migrations will be checked.
+- `--group` (`-g`) - to specify a database group. If specified, only migrations for the specified database group will be checked. If not specified, all migrations will be checked.
 
 ### make:migration
 
@@ -240,14 +240,14 @@ php spark make:migration <class> [options]
 
 You can use `make:migration` with the following options:
 
-- `--namespace` - Set root namespace. Default: `APP_NAMESPACE`.
-- `--suffix` - Append the component title to the class name.
+- `--namespace` (`-n`) - Set root namespace. Default: `APP_NAMESPACE`.
+- `--suffix` (`-s`) - Append the component title to the class name.
 
 The following options are also available to generate the migration file for database sessions:
 
 - `--session` - Generates the migration file for database sessions.
-- `--table` - Table name to use for database sessions. Default: `ci_sessions`.
-- `--dbgroup` - Database group to use for database sessions. Default: `default`.
+- `--table` (`-t`) - Table name to use for database sessions. Default: `ci_sessions`.
+- `--dbgroup` (`-g`) - Database group to use for database sessions. Default: `default`.
 
 ## Migration Preferences
 

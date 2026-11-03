@@ -16,6 +16,7 @@ nav:
       - installation/deployment.md
       - "Change Logs":
           - changelogs/index.md
+          - changelogs/v4.8.0.md
           - changelogs/v4.7.7.md
           - changelogs/v4.7.6.md
           - changelogs/v4.7.5.md
@@ -100,6 +101,7 @@ nav:
       - "Upgrading From a Previous Version":
           - installation/upgrading.md
           - installation/backward_compatibility_notes.md
+          - installation/upgrade_480.md
           - installation/upgrade_477.md
           - installation/upgrade_476.md
           - installation/upgrade_475.md
@@ -217,6 +219,7 @@ nav:
       - general/logging.md
       - general/errors.md
       - general/caching.md
+      - general/context.md
       - general/ajax.md
       - general/modules.md
       - general/managing_apps.md
@@ -231,6 +234,7 @@ nav:
       - incoming/message.md
       - incoming/request.md
       - incoming/incomingrequest.md
+      - incoming/form_requests.md
       - incoming/content_negotiation.md
       - incoming/methodspoofing.md
       - incoming/restful.md
@@ -285,6 +289,7 @@ nav:
       - libraries/file_collections.md
       - libraries/honeypot.md
       - libraries/images.md
+      - libraries/locks.md
       - libraries/pagination.md
       - libraries/publisher.md
       - libraries/security.md
@@ -330,7 +335,9 @@ nav:
       - cli/cli_controllers.md
       - cli/spark_commands.md
       - cli/cli_commands.md
+      - cli/cli_modern_commands.md
       - cli/cli_generators.md
+      - cli/cli_modern_generators.md
       - cli/cli_library.md
       - cli/cli_signals.md
       - cli/cli_request.md

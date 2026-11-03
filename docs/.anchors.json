@@ -519,6 +519,11 @@
             "version-4-7-7"
         ]
     },
+    "changelogs/v4.8.0.md": {
+        "version-480": [
+            "version-4-8-0"
+        ]
+    },
     "cli/cli_commands.md": {
         "codeignitercli": [
             "namespace-CodeIgniter\\CLI"
@@ -537,9 +542,6 @@
         ],
         "setpadstring-item-int-max-int-extra-2-int-indent-0-string": [
             "CodeIgniter\\CLI\\BaseCommand::setPad"
-        ],
-        "getpadarray-pad": [
-            "CodeIgniter\\CLI\\BaseCommand::getPad"
         ]
     },
     "cli/cli_controllers.md": {
@@ -572,6 +574,9 @@
         "makemodel": [
             "make-model"
         ],
+        "makerequest": [
+            "make-request"
+        ],
         "makeseeder": [
             "make-seeder"
         ],
@@ -593,13 +598,341 @@
         "promptbymultiplekeys": [
             "prompt-by-multiple-keys"
         ],
+        "select-and-multiselect": [
+            "cli-library-select"
+        ],
         "color": [
             "cli-library-color"
+        ],
+        "the-classes-behind-the-facade": [
+            "cli-library-classes"
+        ],
+        "codeignitercli": [
+            "namespace-CodeIgniter\\CLI"
+        ],
+        "output": [
+            "CodeIgniter\\CLI\\Output"
+        ],
+        "__constructinputoutput-io-new-inputoutput-terminal-terminal-new-terminal": [
+            "CodeIgniter\\CLI\\Output::__construct"
+        ],
+        "printstring-text-string-foreground-string-background-verbosity-verbosity-verbositynormal-void": [
+            "CodeIgniter\\CLI\\Output::print"
+        ],
+        "writestring-text-string-foreground-string-background-verbosity-verbosity-verbositynormal-void": [
+            "CodeIgniter\\CLI\\Output::write"
+        ],
+        "newlineint-num-1-verbosity-verbosity-verbositynormal-void": [
+            "CodeIgniter\\CLI\\Output::newLine"
+        ],
+        "defernewline-void": [
+            "CodeIgniter\\CLI\\Output::deferNewLine"
+        ],
+        "errorstring-text-string-foreground-light_red-string-background-void": [
+            "CodeIgniter\\CLI\\Output::error"
+        ],
+        "beepint-num-1-void": [
+            "CodeIgniter\\CLI\\Output::beep"
+        ],
+        "clearscreen-void": [
+            "CodeIgniter\\CLI\\Output::clearScreen"
+        ],
+        "getverbosity-verbosity": [
+            "CodeIgniter\\CLI\\Output::getVerbosity"
+        ],
+        "setverbosityverbosity-verbosity-void": [
+            "CodeIgniter\\CLI\\Output::setVerbosity"
+        ],
+        "isquiet-bool": [
+            "CodeIgniter\\CLI\\Output::isQuiet"
+        ],
+        "isverbose-bool": [
+            "CodeIgniter\\CLI\\Output::isVerbose"
+        ],
+        "isveryverbose-bool": [
+            "CodeIgniter\\CLI\\Output::isVeryVerbose"
+        ],
+        "isdebug-bool": [
+            "CodeIgniter\\CLI\\Output::isDebug"
+        ],
+        "colorstring-text-string-foreground-string-background-string-format-string": [
+            "CodeIgniter\\CLI\\Output::color"
+        ],
+        "wrapstring-text-int-max-0-int-padleft-0-string": [
+            "CodeIgniter\\CLI\\Output::wrap"
+        ],
+        "isdecorated-bool": [
+            "CodeIgniter\\CLI\\Output::isDecorated"
+        ],
+        "forstderr-static": [
+            "CodeIgniter\\CLI\\Output::forStderr"
+        ],
+        "getterminal-terminal": [
+            "CodeIgniter\\CLI\\Output::getTerminal"
+        ],
+        "prompt_1": [
+            "CodeIgniter\\CLI\\Prompt"
+        ],
+        "__constructoutput-output-validationinterface-validation-null-keys-null": [
+            "CodeIgniter\\CLI\\Prompt::__construct"
+        ],
+        "askstring-field-arraystringnull-options-null-arraystringnull-validation-null-string": [
+            "CodeIgniter\\CLI\\Prompt::ask"
+        ],
+        "askbykeyarraystring-text-array-options-arraystringnull-validation-null-string": [
+            "CodeIgniter\\CLI\\Prompt::askByKey"
+        ],
+        "askbymultiplekeysstring-text-array-options-array": [
+            "CodeIgniter\\CLI\\Prompt::askByMultipleKeys"
+        ],
+        "selectstring-question-array-options-intstringnull-default-null-intstring": [
+            "CodeIgniter\\CLI\\Prompt::select"
+        ],
+        "multiselectstring-question-array-options-array-default-bool-required-false-array": [
+            "CodeIgniter\\CLI\\Prompt::multiselect"
+        ],
+        "verbosity": [
+            "CodeIgniter\\CLI\\Verbosity"
+        ],
+        "terminal": [
+            "CodeIgniter\\CLI\\Terminal"
+        ],
+        "getwidthint-default-80-int": [
+            "CodeIgniter\\CLI\\Terminal::getWidth"
+        ],
+        "getheightint-default-32-int": [
+            "CodeIgniter\\CLI\\Terminal::getHeight"
+        ],
+        "generatedimensions-void": [
+            "CodeIgniter\\CLI\\Terminal::generateDimensions"
+        ],
+        "hascolorsupportstream-bool": [
+            "CodeIgniter\\CLI\\Terminal::hasColorSupport"
+        ],
+        "streamsupportsstring-function-stream-bool": [
+            "CodeIgniter\\CLI\\Terminal::streamSupports"
+        ],
+        "progressbar": [
+            "CodeIgniter\\CLI\\ProgressBar"
+        ],
+        "__constructoutput-output": [
+            "CodeIgniter\\CLI\\ProgressBar::__construct"
+        ],
+        "advancetofloatint-step-int-totalsteps-10-void": [
+            "CodeIgniter\\CLI\\ProgressBar::advanceTo"
+        ],
+        "clear-void": [
+            "CodeIgniter\\CLI\\ProgressBar::clear"
+        ],
+        "table_1": [
+            "CodeIgniter\\CLI\\Table"
+        ],
+        "__constructarray-tbody-array-thead": [
+            "CodeIgniter\\CLI\\Table::__construct"
+        ],
+        "render-string": [
+            "CodeIgniter\\CLI\\Table::render"
+        ],
+        "color_1": [
+            "CodeIgniter\\CLI\\Color"
+        ],
+        "applystring-text-string-foreground-string-background-string-format-string": [
+            "CodeIgniter\\CLI\\Color::apply"
+        ],
+        "widthstring-string-int": [
+            "CodeIgniter\\CLI\\Color::width"
+        ]
+    },
+    "cli/cli_modern_commands.md": {
+        "prompting-for-missing-arguments": [
+            "prompts-for-missing-input"
+        ],
+        "restricting-command-execution": [
+            "restricting-execution"
+        ],
+        "writing-output": [
+            "modern-commands-writing-output"
+        ],
+        "writing-at-a-verbosity": [
+            "modern-commands-verbosity"
+        ],
+        "calling-silently": [
+            "modern-commands-call-silently"
+        ],
+        "codeignitercli": [
+            "namespace-CodeIgniter\\CLI"
+        ],
+        "abstractcommand_1": [
+            "CodeIgniter\\CLI\\AbstractCommand"
+        ],
+        "getcommandrunner-commands": [
+            "CodeIgniter\\CLI\\AbstractCommand::getCommandRunner"
+        ],
+        "getname-string": [
+            "CodeIgniter\\CLI\\AbstractCommand::getName"
+        ],
+        "getdescription-string": [
+            "CodeIgniter\\CLI\\AbstractCommand::getDescription"
+        ],
+        "getgroup-string": [
+            "CodeIgniter\\CLI\\AbstractCommand::getGroup"
+        ],
+        "ishidden-bool": [
+            "CodeIgniter\\CLI\\AbstractCommand::isHidden"
+        ],
+        "isheaderless-bool": [
+            "CodeIgniter\\CLI\\AbstractCommand::isHeaderless"
+        ],
+        "getusages-array": [
+            "CodeIgniter\\CLI\\AbstractCommand::getUsages"
+        ],
+        "getargumentsdefinition-array": [
+            "CodeIgniter\\CLI\\AbstractCommand::getArgumentsDefinition"
+        ],
+        "getoptionsdefinition-array": [
+            "CodeIgniter\\CLI\\AbstractCommand::getOptionsDefinition"
+        ],
+        "getshortcuts-array": [
+            "CodeIgniter\\CLI\\AbstractCommand::getShortcuts"
+        ],
+        "getnegations-array": [
+            "CodeIgniter\\CLI\\AbstractCommand::getNegations"
+        ],
+        "addusagestring-usage-static": [
+            "CodeIgniter\\CLI\\AbstractCommand::addUsage"
+        ],
+        "addargumentargument-argument-static": [
+            "CodeIgniter\\CLI\\AbstractCommand::addArgument"
+        ],
+        "addoptionoption-option-static": [
+            "CodeIgniter\\CLI\\AbstractCommand::addOption"
+        ],
+        "renderthrowablethrowable-e-void": [
+            "CodeIgniter\\CLI\\AbstractCommand::renderThrowable"
+        ],
+        "hasargumentstring-name-bool": [
+            "CodeIgniter\\CLI\\AbstractCommand::hasArgument"
+        ],
+        "hasoptionstring-name-bool": [
+            "CodeIgniter\\CLI\\AbstractCommand::hasOption"
+        ],
+        "hasshortcutstring-shortcut-bool": [
+            "CodeIgniter\\CLI\\AbstractCommand::hasShortcut"
+        ],
+        "hasnegationstring-name-bool": [
+            "CodeIgniter\\CLI\\AbstractCommand::hasNegation"
+        ],
+        "isinteractive-bool": [
+            "CodeIgniter\\CLI\\AbstractCommand::isInteractive"
+        ],
+        "setinteractivebool-interactive-static": [
+            "CodeIgniter\\CLI\\AbstractCommand::setInteractive"
+        ],
+        "runarray-arguments-array-options-output-output-null-int": [
+            "CodeIgniter\\CLI\\AbstractCommand::run"
+        ],
+        "getoutput-output": [
+            "CodeIgniter\\CLI\\AbstractCommand::getOutput"
+        ],
+        "getprompt-prompt": [
+            "CodeIgniter\\CLI\\AbstractCommand::getPrompt"
+        ],
+        "callstring-command-array-arguments-array-options-bool-nointeractionoverride-null-int": [
+            "CodeIgniter\\CLI\\AbstractCommand::call"
+        ],
+        "callsilentlystring-command-array-arguments-array-options-bool-nointeractionoverride-true-int": [
+            "CodeIgniter\\CLI\\AbstractCommand::callSilently"
+        ],
+        "getunboundarguments-array": [
+            "CodeIgniter\\CLI\\AbstractCommand::getUnboundArguments"
+        ],
+        "getunboundargumentint-index-string": [
+            "CodeIgniter\\CLI\\AbstractCommand::getUnboundArgument"
+        ],
+        "getunboundoptions-array": [
+            "CodeIgniter\\CLI\\AbstractCommand::getUnboundOptions"
+        ],
+        "getunboundoptionstring-name-arraynull-options-null-arraystringnull": [
+            "CodeIgniter\\CLI\\AbstractCommand::getUnboundOption"
+        ],
+        "hasunboundoptionstring-name-arraynull-options-null-bool": [
+            "CodeIgniter\\CLI\\AbstractCommand::hasUnboundOption"
+        ],
+        "getvalidatedarguments-array": [
+            "CodeIgniter\\CLI\\AbstractCommand::getValidatedArguments"
+        ],
+        "getvalidatedargumentstring-name-arraystring": [
+            "CodeIgniter\\CLI\\AbstractCommand::getValidatedArgument"
+        ],
+        "getvalidatedoptions-array": [
+            "CodeIgniter\\CLI\\AbstractCommand::getValidatedOptions"
+        ],
+        "getvalidatedoptionstring-name-boolarraystringnull": [
+            "CodeIgniter\\CLI\\AbstractCommand::getValidatedOption"
+        ]
+    },
+    "cli/cli_modern_generators.md": {
+        "templates": [
+            "generator-command-templates"
+        ],
+        "codeignitercli": [
+            "namespace-CodeIgniter\\CLI"
+        ],
+        "abstractgeneratorcommand_1": [
+            "CodeIgniter\\CLI\\AbstractGeneratorCommand"
+        ],
+        "generateclass-int": [
+            "CodeIgniter\\CLI\\AbstractGeneratorCommand::generateClass"
+        ],
+        "generateviewstring-view-int": [
+            "CodeIgniter\\CLI\\AbstractGeneratorCommand::generateView"
+        ],
+        "iscodeigniternamespacedeclined-bool": [
+            "CodeIgniter\\CLI\\AbstractGeneratorCommand::isCodeIgniterNamespaceDeclined"
+        ],
+        "getreplacementsstring-class-array": [
+            "CodeIgniter\\CLI\\AbstractGeneratorCommand::getReplacements"
+        ],
+        "gettemplatedatastring-class-array": [
+            "CodeIgniter\\CLI\\AbstractGeneratorCommand::getTemplateData"
+        ],
+        "shouldappendsuffix-bool": [
+            "CodeIgniter\\CLI\\AbstractGeneratorCommand::shouldAppendSuffix"
+        ],
+        "basenamestring-filename-string": [
+            "CodeIgniter\\CLI\\AbstractGeneratorCommand::basename"
+        ],
+        "getnamespace-string": [
+            "CodeIgniter\\CLI\\AbstractGeneratorCommand::getNamespace"
+        ],
+        "buildpathstring-class-string": [
+            "CodeIgniter\\CLI\\AbstractGeneratorCommand::buildPath"
+        ],
+        "getbasepathstring-namespace-string": [
+            "CodeIgniter\\CLI\\AbstractGeneratorCommand::getBasePath"
+        ],
+        "rendertemplatearray-data-string": [
+            "CodeIgniter\\CLI\\AbstractGeneratorCommand::renderTemplate"
+        ],
+        "providegeneratoroptions-void": [
+            "CodeIgniter\\CLI\\AbstractGeneratorCommand::provideGeneratorOptions"
+        ],
+        "addnamespaceoptionstring-default-app_namespace-static": [
+            "CodeIgniter\\CLI\\AbstractGeneratorCommand::addNamespaceOption"
+        ],
+        "addsuffixoption-static": [
+            "CodeIgniter\\CLI\\AbstractGeneratorCommand::addSuffixOption"
+        ],
+        "addforceoption-static": [
+            "CodeIgniter\\CLI\\AbstractGeneratorCommand::addForceOption"
         ]
     },
     "cli/cli_request.md": {
         "getoptionkey": [
             "getoption-key"
+        ],
+        "getrawoptionkey": [
+            "getrawoption-key"
         ]
     },
     "cli/cli_signals.md": {
@@ -650,6 +983,11 @@
         ],
         "unregistersignals": [
             "CodeIgniter\\CLI\\SignalTrait::unregisterSignals"
+        ]
+    },
+    "cli/spark_commands.md": {
+        "verbosity": [
+            "spark-verbosity"
         ]
     },
     "concepts/autoloader.md": {
@@ -764,6 +1102,9 @@
         ],
         "encrypt": [
             "mysqli-encrypt"
+        ],
+        "timezone": [
+            "database-config-timezone"
         ]
     },
     "database/events.md": {
@@ -799,11 +1140,24 @@
         "query-bindings": [
             "database-queries-query-bindings"
         ],
+        "constraint-violation-exceptions": [
+            "database-constraint-violation-exceptions",
+            "database-unique-constraint-violation"
+        ],
+        "db-getlastexception": [
+            "database-get-last-exception"
+        ],
         "close": [
             "database-queries-stmt-close"
         ]
     },
     "database/query_builder.md": {
+        "builder-getcompiledselect": [
+            "query-builder-get-compiled-select"
+        ],
+        "builder-explain": [
+            "query-builder-explain"
+        ],
         "select": [
             "query-builder-select"
         ],
@@ -839,6 +1193,15 @@
             "query-builder-where-subquery",
             "subqueries"
         ],
+        "builder-wherecolumn": [
+            "query-builder-where-column"
+        ],
+        "builder-wherebetween": [
+            "query-builder-where-between"
+        ],
+        "builder-whereexists": [
+            "query-builder-where-exists"
+        ],
         "1-simple-keyvalue-method_1": [
             "simple-key-value-method"
         ],
@@ -849,11 +1212,35 @@
             "query-builder-like-rawsql",
             "rawsql"
         ],
+        "builder-likeany": [
+            "query-builder-like-any"
+        ],
+        "builder-havingbetween": [
+            "query-builder-having-between"
+        ],
         "1-simple-keyvalue-method_2": [
             "simple-key-value-method"
         ],
         "2-associative-array-method_1": [
             "associative-array-method"
+        ],
+        "builder-exists": [
+            "query-builder-exists"
+        ],
+        "driver-support": [
+            "query-builder-pessimistic-locking-driver-support"
+        ],
+        "shared-lock": [
+            "query-builder-shared-lock"
+        ],
+        "lock-for-update": [
+            "query-builder-lock-for-update"
+        ],
+        "skip-locked": [
+            "query-builder-skip-locked"
+        ],
+        "no-wait": [
+            "query-builder-nowait"
         ],
         "union-queries": [
             "query-builder-union"
@@ -894,11 +1281,32 @@
         "countallreset-true": [
             "CodeIgniter\\Database\\BaseBuilder::countAll"
         ],
+        "explainreset-true": [
+            "CodeIgniter\\Database\\BaseBuilder::explain"
+        ],
+        "existsreset-true": [
+            "CodeIgniter\\Database\\BaseBuilder::exists"
+        ],
+        "doesntexistreset-true": [
+            "CodeIgniter\\Database\\BaseBuilder::doesntExist"
+        ],
         "getlimit-null-offset-null-reset-true": [
             "CodeIgniter\\Database\\BaseBuilder::get"
         ],
         "getwherewhere-null-limit-null-offset-null-reset-true": [
             "CodeIgniter\\Database\\BaseBuilder::getWhere"
+        ],
+        "lockforupdate": [
+            "CodeIgniter\\Database\\BaseBuilder::lockForUpdate"
+        ],
+        "nowait": [
+            "CodeIgniter\\Database\\BaseBuilder::nowait"
+        ],
+        "sharedlock": [
+            "CodeIgniter\\Database\\BaseBuilder::sharedLock"
+        ],
+        "skiplocked": [
+            "CodeIgniter\\Database\\BaseBuilder::skipLocked"
         ],
         "selectselect-escape-null": [
             "CodeIgniter\\Database\\BaseBuilder::select"
@@ -942,6 +1350,36 @@
         "orwherekey-value-null-escape-null": [
             "CodeIgniter\\Database\\BaseBuilder::orWhere"
         ],
+        "wherecolumnfirst-second-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::whereColumn"
+        ],
+        "orwherecolumnfirst-second-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::orWhereColumn"
+        ],
+        "wherebetweenstring-key-null-array-values-null-bool-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::whereBetween"
+        ],
+        "orwherebetweenstring-key-null-array-values-null-bool-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::orWhereBetween"
+        ],
+        "wherenotbetweenstring-key-null-array-values-null-bool-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::whereNotBetween"
+        ],
+        "orwherenotbetweenstring-key-null-array-values-null-bool-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::orWhereNotBetween"
+        ],
+        "whereexistssubquery": [
+            "CodeIgniter\\Database\\BaseBuilder::whereExists"
+        ],
+        "orwhereexistssubquery": [
+            "CodeIgniter\\Database\\BaseBuilder::orWhereExists"
+        ],
+        "wherenotexistssubquery": [
+            "CodeIgniter\\Database\\BaseBuilder::whereNotExists"
+        ],
+        "orwherenotexistssubquery": [
+            "CodeIgniter\\Database\\BaseBuilder::orWhereNotExists"
+        ],
         "orwhereinkey-null-values-null-escape-null": [
             "CodeIgniter\\Database\\BaseBuilder::orWhereIn"
         ],
@@ -972,8 +1410,14 @@
         "likefield-match-side-both-escape-null-insensitivesearch-false": [
             "CodeIgniter\\Database\\BaseBuilder::like"
         ],
+        "likeanyfields-match-side-both-escape-null-insensitivesearch-false": [
+            "CodeIgniter\\Database\\BaseBuilder::likeAny"
+        ],
         "orlikefield-match-side-both-escape-null-insensitivesearch-false": [
             "CodeIgniter\\Database\\BaseBuilder::orLike"
+        ],
+        "orlikeanyfields-match-side-both-escape-null-insensitivesearch-false": [
+            "CodeIgniter\\Database\\BaseBuilder::orLikeAny"
         ],
         "notlikefield-match-side-both-escape-null-insensitivesearch-false": [
             "CodeIgniter\\Database\\BaseBuilder::notLike"
@@ -986,6 +1430,18 @@
         ],
         "orhavingkey-value-null-escape-null": [
             "CodeIgniter\\Database\\BaseBuilder::orHaving"
+        ],
+        "havingbetweenstring-key-null-array-values-null-bool-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::havingBetween"
+        ],
+        "orhavingbetweenstring-key-null-array-values-null-bool-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::orHavingBetween"
+        ],
+        "havingnotbetweenstring-key-null-array-values-null-bool-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::havingNotBetween"
+        ],
+        "orhavingnotbetweenstring-key-null-array-values-null-bool-escape-null": [
+            "CodeIgniter\\Database\\BaseBuilder::orHavingNotBetween"
         ],
         "orhavinginkey-null-values-null-escape-null": [
             "CodeIgniter\\Database\\BaseBuilder::orHavingIn"
@@ -1092,8 +1548,14 @@
         "incrementcolumn-value-1": [
             "CodeIgniter\\Database\\BaseBuilder::increment"
         ],
+        "incrementmanycolumns-value-1": [
+            "CodeIgniter\\Database\\BaseBuilder::incrementMany"
+        ],
         "decrementcolumn-value-1": [
             "CodeIgniter\\Database\\BaseBuilder::decrement"
+        ],
+        "decrementmanycolumns-value-1": [
+            "CodeIgniter\\Database\\BaseBuilder::decrementMany"
         ],
         "truncate": [
             "CodeIgniter\\Database\\BaseBuilder::truncate"
@@ -1186,6 +1648,12 @@
         "codeigniters-approach-to-transactions": [
             "codeigniter-s-approach-to-transactions"
         ],
+        "running-transactions-with-a-closure": [
+            "transactions-closure"
+        ],
+        "classifying-retryable-transaction-failures": [
+            "transactions-retryable-exceptions"
+        ],
         "resetting-transaction-status": [
             "transactions-resetting-transaction-status"
         ],
@@ -1194,6 +1662,12 @@
         ],
         "throwing-exceptions": [
             "transactions-throwing-exceptions"
+        ],
+        "running-code-after-commit-or-rollback": [
+            "transactions-transaction-callbacks"
+        ],
+        "checking-transaction-state": [
+            "transactions-checking-transaction-state"
         ],
         "running-transactions-manually": [
             "transactions-manual-transactions"
@@ -1480,9 +1954,77 @@
         "environment-variables-as-replacements-for-data": [
             "env-var-replacements-for-data"
         ],
+        "controlling-how-values-are-merged": [
+            "registrar-merge-directives"
+        ],
         "configcheck": [
             "spark-config-check",
             "config-check"
+        ]
+    },
+    "general/context.md": {
+        "codeignitercontext": [
+            "namespace-CodeIgniter\\Context"
+        ],
+        "context_1": [
+            "CodeIgniter\\Context\\Context"
+        ],
+        "setkey-value-null": [
+            "CodeIgniter\\Context\\Context::set"
+        ],
+        "sethiddenkey-value-null": [
+            "CodeIgniter\\Context\\Context::setHidden"
+        ],
+        "getkey-default-null": [
+            "CodeIgniter\\Context\\Context::get"
+        ],
+        "gethiddenkey-default-null": [
+            "CodeIgniter\\Context\\Context::getHidden"
+        ],
+        "getonlykeys": [
+            "CodeIgniter\\Context\\Context::getOnly"
+        ],
+        "getonlyhiddenkeys": [
+            "CodeIgniter\\Context\\Context::getOnlyHidden"
+        ],
+        "getexceptkeys": [
+            "CodeIgniter\\Context\\Context::getExcept"
+        ],
+        "getexcepthiddenkeys": [
+            "CodeIgniter\\Context\\Context::getExceptHidden"
+        ],
+        "getall": [
+            "CodeIgniter\\Context\\Context::getAll"
+        ],
+        "getallhidden": [
+            "CodeIgniter\\Context\\Context::getAllHidden"
+        ],
+        "haskey": [
+            "CodeIgniter\\Context\\Context::has"
+        ],
+        "hashiddenkey": [
+            "CodeIgniter\\Context\\Context::hasHidden"
+        ],
+        "missingkey": [
+            "CodeIgniter\\Context\\Context::missing"
+        ],
+        "missinghiddenkey": [
+            "CodeIgniter\\Context\\Context::missingHidden"
+        ],
+        "removekey": [
+            "CodeIgniter\\Context\\Context::remove"
+        ],
+        "removehiddenkey": [
+            "CodeIgniter\\Context\\Context::removeHidden"
+        ],
+        "clear": [
+            "CodeIgniter\\Context\\Context::clear"
+        ],
+        "clearhidden": [
+            "CodeIgniter\\Context\\Context::clearHidden"
+        ],
+        "clearall": [
+            "CodeIgniter\\Context\\Context::clearAll"
         ]
     },
     "general/environments.md": {
@@ -1494,6 +2036,9 @@
         ],
         "nginx": [
             "environment-nginx"
+        ],
+        "the-environment-service": [
+            "environment-detector-service"
         ]
     },
     "general/errors.md": {
@@ -1512,6 +2057,15 @@
     "general/logging.md": {
         "configuration": [
             "logging-configuration"
+        ],
+        "stopping-the-handler-chain-on-failure": [
+            "logging-stop-chain-on-failure"
+        ],
+        "global-context-logging": [
+            "logging-global-context"
+        ],
+        "per-call-context-logging": [
+            "logging-per-call-context"
         ]
     },
     "general/managing_apps.md": {
@@ -1614,8 +2168,23 @@
         ]
     },
     "helpers/array_helper.md": {
-        "dot_array_searchstring-search-array-values": [
+        "dot_array_searchstring-search-arrayobject-values": [
             "dot_array_search"
+        ],
+        "dot_array_hasstring-search-arrayobject-values-bool": [
+            "dot_array_has"
+        ],
+        "dot_array_setarray-array-string-search-mixed-value-void": [
+            "dot_array_set"
+        ],
+        "dot_array_unsetarray-array-string-search-bool": [
+            "dot_array_unset"
+        ],
+        "dot_array_onlyarrayobject-array-arraystring-indexes-array": [
+            "dot_array_only"
+        ],
+        "dot_array_exceptarrayobject-array-arraystring-indexes-array": [
+            "dot_array_except"
         ],
         "array_deep_searchkey-array-array": [
             "array_deep_search"
@@ -2063,6 +2632,20 @@
         "filtercheck": [
             "spark-filter-check",
             "filter-check"
+        ],
+        "request-id": [
+            "requestid"
+        ]
+    },
+    "incoming/form_requests.md": {
+        "_remap-methods": [
+            "remap-methods"
+        ],
+        "customizing-the-data-source": [
+            "form-request-validation-data"
+        ],
+        "flashing-normalized-input": [
+            "form-request-flash-normalized"
         ]
     },
     "incoming/incomingrequest.md": {
@@ -2072,10 +2655,13 @@
         "getting-data": [
             "incomingrequest-getting-data"
         ],
+        "typed-request-input": [
+            "incomingrequest-typed-request-input"
+        ],
         "getting-json-data": [
             "incomingrequest-getting-json-data"
         ],
-        "retrieving-raw-data-put-patch-delete": [
+        "retrieving-raw-data-put-patch-delete-query": [
             "incomingrequest-retrieving-raw-data"
         ],
         "filtering-input-data": [
@@ -2101,6 +2687,9 @@
         ],
         "getgetindex-null-filter-null-flags-null": [
             "CodeIgniter\\HTTP\\IncomingRequest::getGet"
+        ],
+        "input": [
+            "CodeIgniter\\HTTP\\IncomingRequest::input"
         ],
         "getpostindex-null-filter-null-flags-null": [
             "CodeIgniter\\HTTP\\IncomingRequest::getPost"
@@ -2187,9 +2776,6 @@
         "getipaddress": [
             "CodeIgniter\\HTTP\\Request::getIPAddress"
         ],
-        "isvalidipip-which": [
-            "CodeIgniter\\HTTP\\Request::isValidIP"
-        ],
         "getmethod": [
             "CodeIgniter\\HTTP\\Request::getMethod"
         ],
@@ -2201,9 +2787,6 @@
         ],
         "getserverindex-null-filter-null-flags-null": [
             "CodeIgniter\\HTTP\\Request::getServer"
-        ],
-        "getenvindex-null-filter-null-flags-null": [
-            "CodeIgniter\\HTTP\\Request::getEnv"
         ],
         "setglobalmethod-value": [
             "CodeIgniter\\HTTP\\Request::setGlobal"
@@ -2229,6 +2812,9 @@
         ],
         "the-behavior-of-any": [
             "routing-placeholder-any"
+        ],
+        "sample-values-for-spark-routes": [
+            "placeholder-samples-for-spark-routes"
         ],
         "named-routes": [
             "using-named-routes"
@@ -2843,6 +3429,26 @@
             "upgrading-from-4-7-6-to-4-7-7"
         ]
     },
+    "installation/upgrade_480.md": {
+        "upgrading-from-47x-to-480": [
+            "upgrading-from-4-7-x-to-4-8-0"
+        ],
+        "query-builder-bindings": [
+            "upgrade-480-query-builder-bindings"
+        ],
+        "cli-error-output": [
+            "upgrade-480-cli-error-output"
+        ],
+        "cli-output-classes": [
+            "upgrade-480-cli-output-classes"
+        ],
+        "cli-prompt": [
+            "upgrade-480-cli-prompt"
+        ],
+        "config-environment-lookups": [
+            "upgrade-480-config-env-lookups"
+        ]
+    },
     "installation/upgrade_4xx.md": {
         "upgrading-from-3x-to-4x": [
             "upgrading-from-3-x-to-4-x"
@@ -3032,7 +3638,7 @@
         "getkey-mixed": [
             "CodeIgniter\\Cache\\CacheInterface::get"
         ],
-        "rememberstring-key-int-ttl-closure-callback": [
+        "rememberstring-key-callableint-ttl-closure-callback": [
             "CodeIgniter\\Cache\\CacheInterface::remember"
         ],
         "savestring-key-data-int-ttl-60": [
@@ -3260,6 +3866,9 @@
         "proxy": [
             "curlrequest-request-options-proxy"
         ],
+        "retry": [
+            "curlrequest-request-options-retry"
+        ],
         "user_agent": [
             "user-agent"
         ],
@@ -3333,6 +3942,10 @@
         "configuration-to-maintain-compatibility-with-ci3": [
             "encryption-compatible-with-ci3"
         ],
+        "rotating-with-the-keyrotate-command": [
+            "spark-key-rotate",
+            "rotating-with-the-key-rotate-command"
+        ],
         "codeigniterencryption": [
             "namespace-CodeIgniter\\Encryption"
         ],
@@ -3393,6 +4006,47 @@
             "file-get-size-by-metric-unit"
         ]
     },
+    "libraries/locks.md": {
+        "codeigniterlock": [
+            "namespace-CodeIgniter\\Lock"
+        ],
+        "lockmanager": [
+            "CodeIgniter\\Lock\\LockManager"
+        ],
+        "createstring-name-int-ttl-300-string-owner-null": [
+            "CodeIgniter\\Lock\\LockManager::create"
+        ],
+        "restorestring-name-string-owner-int-ttl-300": [
+            "CodeIgniter\\Lock\\LockManager::restore"
+        ],
+        "lockinterface": [
+            "CodeIgniter\\Lock\\LockInterface"
+        ],
+        "acquire": [
+            "CodeIgniter\\Lock\\LockInterface::acquire"
+        ],
+        "blockint-seconds": [
+            "CodeIgniter\\Lock\\LockInterface::block"
+        ],
+        "runclosure-callback-int-waitseconds-0": [
+            "CodeIgniter\\Lock\\LockInterface::run"
+        ],
+        "release": [
+            "CodeIgniter\\Lock\\LockInterface::release"
+        ],
+        "forcerelease": [
+            "CodeIgniter\\Lock\\LockInterface::forceRelease"
+        ],
+        "refreshint-ttl-null": [
+            "CodeIgniter\\Lock\\LockInterface::refresh"
+        ],
+        "isacquired": [
+            "CodeIgniter\\Lock\\LockInterface::isAcquired"
+        ],
+        "owner": [
+            "CodeIgniter\\Lock\\LockInterface::owner"
+        ]
+    },
     "libraries/publisher.md": {
         "library-reference": [
             "reference"
@@ -3438,8 +4092,14 @@
         "cross-site-request-forgery-csrf": [
             "cross-site-request-forgery"
         ],
+        "fetch-metadata-csrf-protection": [
+            "csrf-fetch-metadata"
+        ],
         "redirection-on-failure": [
             "csrf-redirection-on-failure"
+        ],
+        "html-forms": [
+            "csrf-exclude-uris"
         ]
     },
     "libraries/sessions.md": {
@@ -3479,6 +4139,15 @@
         ],
         "todatetimestring": [
             "time-todatetimestring"
+        ],
+        "between": [
+            "time-comparing-two-times-between"
+        ],
+        "min": [
+            "time-comparing-two-times-min"
+        ],
+        "max": [
+            "time-comparing-two-times-max"
         ],
         "ispast": [
             "time-comparing-two-times-ispast"
@@ -3574,8 +4243,14 @@
         "withrequest": [
             "validation-withrequest"
         ],
+        "running-validation": [
+            "validation-running"
+        ],
         "getting-validated-data": [
             "validation-getting-validated-data"
+        ],
+        "typed-validated-input": [
+            "validation-validated-input"
         ],
         "saving-sets-of-validation-rules-to-the-config-file": [
             "saving-validation-rules-to-config-file"
@@ -3618,6 +4293,9 @@
         ],
         "arrayjson-casting": [
             "array-json-casting"
+        ],
+        "encrypted-casting": [
+            "entities-encrypted-casting"
         ]
     },
     "models/model.md": {
@@ -3633,11 +4311,20 @@
         "allowedfields": [
             "model-allowed-fields"
         ],
+        "insertonlyfields": [
+            "model-insert-only-fields"
+        ],
+        "throwondisallowedfields": [
+            "model-throw-on-disallowed-fields"
+        ],
         "updateonlychanged": [
             "model-update-only-changed"
         ],
         "cleanvalidationrules": [
             "clean-validation-rules"
+        ],
+        "encrypted": [
+            "model-field-casting-encrypted"
         ],
         "allowemptyinserts_1": [
             "model-allow-empty-inserts"
@@ -3647,6 +4334,12 @@
         ],
         "save": [
             "model-save"
+        ],
+        "firstorinsert": [
+            "model-first-or-insert"
+        ],
+        "withlockedrow": [
+            "model-with-locked-row"
         ],
         "saving-dates": [
             "model-saving-dates"
@@ -3674,6 +4367,9 @@
         ],
         "getting-validation-errors": [
             "model-getting-validation-errors"
+        ],
+        "protecting-fields": [
+            "model-protecting-fields"
         ],
         "getting-query-builder-for-the-models-table": [
             "getting-query-builder-for-the-model-s-table"
@@ -3739,11 +4435,17 @@
         "api-resources": [
             "api-transformers"
         ],
+        "including-related-resources": [
+            "api-transformers-includes"
+        ],
         "codeigniterapi": [
             "namespace-CodeIgniter\\API"
         ],
         "basetransformer": [
             "CodeIgniter\\API\\BaseTransformer"
+        ],
+        "resourcetype": [
+            "CodeIgniter\\API\\BaseTransformer::$$resourceType"
         ],
         "__constructincomingrequest-request-null": [
             "CodeIgniter\\API\\BaseTransformer::__construct"
@@ -3777,11 +4479,17 @@
         ]
     },
     "outgoing/csp.md": {
+        "enable-or-disable-csp-at-runtime": [
+            "csp-enable-disable"
+        ],
         "clear-directives": [
             "csp-clear-directives"
         ],
         "using-functions": [
             "csp-using-functions"
+        ],
+        "control-nonce-generation": [
+            "csp-control-nonce-generation"
         ]
     },
     "outgoing/localization.md": {
@@ -3798,6 +4506,15 @@
         ],
         "redirect-status-code": [
             "response-redirect-status-code"
+        ],
+        "server-sent-events-sse": [
+            "server-sent-events"
+        ],
+        "development-server-limitations": [
+            "sse-development-server"
+        ],
+        "production-considerations": [
+            "sse-production"
         ],
         "codeigniterhttp": [
             "namespace-CodeIgniter\\HTTP"
@@ -4092,6 +4809,9 @@
         ],
         "assertcloseenoughstringexpected-actual-message-tolerance-1": [
             "assertcloseenoughstring-expected-actual-message-tolerance-1"
+        ],
+        "assertsamesqlexpected-actual-message": [
+            "assertsamesql-expected-actual-message"
         ],
         "accessing-protectedprivate-properties": [
             "accessing-protected-private-properties"

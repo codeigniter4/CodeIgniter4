@@ -12,6 +12,7 @@ For example, the original **app/Config/App.php** will be located in **vendor/cod
     If you don't know what version of CodeIgniter you are currently running, you can get it from [the Debug Toolbar](../testing/debugging.md#the-debug-toolbar), or simply echo the constant `\CodeIgniter\CodeIgniter::CI_VERSION`.
 
 - [Backward Compatibility Notes](backward_compatibility_notes.md)
+- [Upgrading from 4.7.x to 4.8.0](upgrade_480.md)
 - [Upgrading from 4.7.6 to 4.7.7](upgrade_477.md)
 - [Upgrading from 4.7.5 to 4.7.6](upgrade_476.md)
 - [Upgrading from 4.7.4 to 4.7.5](upgrade_475.md)

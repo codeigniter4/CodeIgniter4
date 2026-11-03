@@ -29,6 +29,120 @@ $this->db->transComplete();
 
 You can run as many queries as you want between the `transStart()`/`transComplete()` methods, and they will all be committed or rolled back based on the success or failure of any given query.
 
+## Running Transactions with a Closure
+
+!!! success "Available from version 4.8.0"
+
+You may also run a transaction with the `transaction()` method. It starts a transaction, runs the callback, commits when the callback completes successfully, and rolls back if the callback throws an exception:
+
+```php
+<?php
+
+$result = $this->db->transaction(static function ($db) use ($order, $id) {
+    $db->table('orders')->insert($order);
+    $orderId = $db->insertID();
+
+    $db->table('stock')->where('id', $id)->decrement('qty');
+
+    $db->afterCommit(static function (): void {
+        // Dispatch a job or send a notification after commit.
+    });
+
+    return $orderId;
+});
+```
+
+The callback receives the current database connection as its only argument. If the transaction commits successfully, `transaction()` returns the callback return value. If the transaction cannot begin, or if a query failure marks the transaction as failed without throwing an exception, `transaction()` rolls back and returns `false`.
+
+If transactions are disabled, `transaction()` does not start a transaction. It runs the callback and returns the callback result.
+
+If the callback throws an exception, `transaction()` rolls back and rethrows the original exception unless retry attempts remain, as described below.
+
+If an `afterRollback()` callback throws while `transaction()` is rolling back, that callback exception bubbles to the caller instead of the normal `false` return value or the original callback exception.
+
+Callbacks registered with `afterCommit()` or `afterRollback()` inside the transaction callback follow the same rules as other transaction callbacks: they run only after the outermost transaction commits or rolls back.
+
+### Scoped Transaction Options
+
+The `transaction()` method can temporarily override existing transaction options for the duration of the helper call:
+
+```php
+<?php
+
+$result = $this->db->transaction(
+    static function ($db) use ($order) {
+        $db->table('orders')->insert($order);
+
+        return $db->insertID();
+    },
+    transException: true,
+    resetTransStatus: true,
+);
+```
+
+Set `transException` to temporarily enable or disable the same transaction exception mode configured by `transException()`. The previous mode is restored after `transaction()` finishes, even if the callback throws an exception. If `transaction()` is called inside an active transaction, the temporary mode applies while the nested callback runs, then the previous mode is restored for the outer transaction. When `transException` is set to `true` in a nested transaction and a query fails, CodeIgniter's existing transaction exception handling rolls back the outer transaction as well.
+
+Set `resetTransStatus` to reset the transaction status before the helper starts an outermost transaction. This is equivalent to calling `resetTransStatus()` before the transaction, and is useful when strict mode has marked the connection as failed from an earlier transaction.
+
+`resetTransStatus` only applies when `transaction()` starts the outermost transaction. If `transaction()` is called inside an active transaction, it does not reset the outer transaction status.
+
+The `transException` option follows CodeIgniter's existing transaction exception behavior, including the current `DBDebug` setting.
+
+### Retrying Transactions
+
+You may pass `attempts` when you want CodeIgniter to retry the whole transaction after retryable database concurrency failures, such as deadlocks or serialization failures. Retries happen when a `RetryableTransactionException` occurs while the callback is running, including from query or prepared query execution:
+
+```php
+<?php
+
+$result = $this->db->transaction(static function ($db) use ($order) {
+    $db->table('orders')->insert($order);
+
+    return $db->insertID();
+}, attempts: 3);
+```
+
+`attempts` is the total number of times to try the transaction, including the first run, and must be greater than or equal to `1`.
+
+Keep these rules in mind when using retry attempts:
+
+- The callback may run more than once, and retries run immediately without delay or backoff.
+- Retries only apply when `transaction()` starts the outermost transaction. If `transaction()` is called inside an active transaction, the callback runs once using the existing nested transaction behavior.
+- Only `RetryableTransactionException` failures are retried. Other exceptions are rolled back and rethrown without another attempt.
+- Retry attempts do not retry failures that are reported only while the transaction is committing.
+- If an `afterRollback()` callback throws while a failed attempt is rolling back, that callback exception bubbles to the caller and no further attempts are made.
+
+Avoid non-transactional side effects inside callbacks that may be retried. For side effects such as queued jobs, emails, cache invalidation, events, or external API calls, register them with `afterCommit()` so they run only after the final successful commit.
+
+`afterRollback()` callbacks may run for failed retry attempts even when a later attempt commits successfully, so use them only for cleanup that is safe to run per rolled-back attempt.
+
+## Classifying Retryable Transaction Failures
+
+!!! success "Available from version 4.8.0"
+
+Some database engines report transaction failures that may succeed when the entire transaction is attempted again, such as deadlocks or serialization failures. When a driver classifies a query or prepared query execution failure as one of these retryable transaction failures, CodeIgniter throws `RetryableTransactionException` so you can decide how your application should respond:
+
+```php
+<?php
+
+use CodeIgniter\Database\Exceptions\RetryableTransactionException;
+
+try {
+    $result = $db->transException(true)->transaction(static function ($db) {
+        $db->table('orders')->insert($order);
+
+        return $db->insertID();
+    });
+} catch (RetryableTransactionException $e) {
+    // Retry the whole transaction according to your application's policy.
+    throw $e;
+}
+```
+
+`RetryableTransactionException` is the classifier used by `transaction()` retry attempts. If you are not using `transaction()` attempts, catch this exception and retry the whole transaction according to your application's policy. Avoid non-transactional side effects inside transaction bodies that may be retried. For side effects such as queued jobs, emails, cache invalidation, or external API calls, register them with `afterCommit()` so they run only after the transaction commits.
+
+When `DBDebug` is `false` and a failed query or prepared query returns `false` instead of throwing, inspect `getLastException()` immediately after the failed operation. It will contain the `RetryableTransactionException` instance when the driver classifies the failure as retryable.
+
 ## Strict Mode
 
 By default, CodeIgniter runs all transactions in Strict Mode.
@@ -107,6 +221,121 @@ try {
 ```
 
 If a query error occurs, all the queries will be rolled back, and a `DatabaseException` will be thrown.
+
+## Running Code after Commit or Rollback
+
+!!! success "Available from version 4.8.0"
+
+You may register callbacks to run only after the outermost transaction has successfully committed by using the `afterCommit()` method, or after the outermost transaction has rolled back by using the `afterRollback()` method:
+
+```php
+<?php
+
+$this->db->transStart();
+$this->db->query('AN SQL QUERY...');
+
+$this->db->afterCommit(static function (): void {
+    // Dispatch a queued job or run another side effect after commit.
+});
+
+$this->db->afterRollback(static function (): void {
+    // Run cleanup that should only happen after rollback.
+});
+
+$this->db->transComplete();
+```
+
+Callbacks registered during an active transaction are delayed until the outermost transaction commits or rolls back.
+
+If the transaction commits, `afterCommit()` callbacks run and `afterRollback()` callbacks are discarded. If the transaction rolls back, `afterRollback()` callbacks run and `afterCommit()` callbacks are discarded. If no transaction is active, `afterCommit()` callbacks run immediately, while `afterRollback()` callbacks are not run.
+
+For example:
+
+```php
+<?php
+
+$this->db->afterCommit(static function (): void {
+    // Runs immediately because no transaction has started yet.
+});
+
+$this->db->transStart();
+$this->db->query('AN SQL QUERY...');
+$this->db->transComplete();
+```
+
+!!! note "Note"
+    When `afterCommit()` is called outside an active transaction, it runs immediately. This includes calls from Model `beforeInsert` or `beforeUpdate` events when the calling code has not already started a transaction, so the callback may run before the Model's insert or update query is executed.
+
+This is useful for side effects that should only happen after committed data is visible, such as dispatching a queued job or sending a notification, and for cleanup that should only happen after a real rollback.
+
+### Deferring Side Effects
+
+Code that changes external state should usually not run in the middle of a transaction. If the transaction rolls back after the side effect has already run, the application may send a notification for data that was never saved, invalidate a cache for a write that did not persist, or start background work that cannot find the committed row it expects.
+
+Register those side effects with `afterCommit()` instead:
+
+```php
+<?php
+
+use CodeIgniter\Events\Events;
+
+$orderId = $this->db->transaction(static function ($db) use ($order): int {
+    $db->table('orders')->insert($order);
+    $insertedOrderId = $db->insertID();
+
+    $db->afterCommit(static function () use ($insertedOrderId): void {
+        service('cache')->delete('orders_list');
+        Events::trigger('order_created', $insertedOrderId);
+
+        // Dispatch a queued job or send a notification here.
+        // The new order is committed and visible to other database connections.
+    });
+
+    return $insertedOrderId;
+});
+
+if ($orderId === false) {
+    // Handle the transaction failure.
+}
+```
+
+Use `afterRollback()` for cleanup that should happen only when the transaction does not commit, such as removing a temporary file created before the database write:
+
+```php
+<?php
+
+$this->db->transaction(static function ($db) use ($temporaryPath, $record): void {
+    $db->afterRollback(static function () use ($temporaryPath): void {
+        if (is_file($temporaryPath)) {
+            unlink($temporaryPath);
+        }
+    });
+
+    $db->table('documents')->insert($record);
+});
+```
+
+Model callbacks such as `afterInsert` and `afterUpdate` run after the Model query has executed, but not necessarily after the surrounding transaction has committed. If a Model callback needs to run a side effect only after commit, it should register that work with the database connection's `afterCommit()` method while an active transaction is already open.
+
+Callbacks run after the database transaction has already committed or rolled back. If a callback throws an exception, that exception bubbles to the caller, but the transaction outcome is not changed.
+
+!!! warning "Warning"
+    When multiple callbacks are registered for the same transaction outcome, they run in registration order. If one callback throws an exception, the subsequent callbacks are not run.
+
+Rollback callbacks also run when CodeIgniter automatically rolls back an active transaction while handling a transaction failure or cleaning up an unfinished transaction.
+
+## Checking Transaction State
+
+!!! success "Available from version 4.8.0"
+
+You may use `inTransaction()` to check whether the connection is currently inside an active CodeIgniter-managed transaction.
+
+It returns `false` when no CodeIgniter-managed transaction is active, including when transactions are disabled.
+
+This is useful for services or libraries that need to adapt their behavior when they are called from inside an existing transaction.
+
+!!! note "Note"
+    `inTransaction()` reflects transactions started through CodeIgniter's transaction methods. If you start or end transactions through raw SQL or driver-specific APIs, CodeIgniter will not be aware of those transactions.
 
 ## Disabling Transactions
 

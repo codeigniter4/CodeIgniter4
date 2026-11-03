@@ -10,6 +10,7 @@ Controllers handle incoming requests.
 - [HTTP Messages](message.md)
 - [Request Class](request.md)
 - [IncomingRequest Class](incomingrequest.md)
+- [Form Requests](form_requests.md)
 - [Content Negotiation](content_negotiation.md)
 - [HTTP Method Spoofing](methodspoofing.md)
 - [RESTful Resource Handling](restful.md)

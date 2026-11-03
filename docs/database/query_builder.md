@@ -110,6 +110,29 @@ echo $builder->select('title, content, date')->getCompiledSelect();
 
 The key thing to notice in the above example is that the second query did not utilize `limit(10, 20)` but the generated SQL query has `LIMIT 20, 10`. Because the parameter in the first query is set to `false`, `limit(10, 20)` remained in the second query.
 
+!!! note "Note"
+    **Changed in version 4.8.0.** With `$reset = true` (the default), `getCompiledSelect()`, `getCompiledInsert()`, `getCompiledUpdate()` and `getCompiledDelete()` also clear their bindings and binding counters after compilation. `getBinds()` therefore returns an empty array after these calls. Pass `false` to retain the query clauses and bindings for reuse.
+
+#### $builder->explain()
+
+!!! success "Available from version 4.8.0"
+
+Runs an execution-plan query for the current Query Builder `SELECT` query:
+
+```php
+<?php
+
+$result = $builder->where('status', 'pending')->explain();
+$plan   = $result->getResultArray();
+```
+
+This method returns a database result object. The result columns are driver-specific because each database reports execution plans in its own format. You can read the result with `getResultArray()` or `getResultObject()`, the same as any other query result. If test mode is enabled, it returns the compiled execution-plan SQL string. If the query fails and `DBDebug` is `false`, it returns `false`.
+
+The method resets the current Query Builder state by default. If you need to keep the current Query Builder state, you can pass `false` as the first parameter.
+
+!!! note "Note"
+    This method is currently supported by MySQLi, Postgre, and SQLite3. SQLite3 uses `EXPLAIN QUERY PLAN`. SQLSRV and OCI8 are not supported by this method.
+
 #### $builder->getWhere()
 
 Identical to the `get()` method except that it permits you to add a "where" clause in the first parameter, instead of using the `$builder->where()` method:
@@ -338,6 +361,20 @@ $builder->join('user', new RawSql($sql), 'LEFT');
 // Produces: LEFT JOIN "user" ON user.id = device.user_id AND ((1=1 OR 1=1) OR (1=1 OR 1=1))
 ```
 
+Since v4.8.0, the table can also be a `RawSql` instance. For example, you can join a subquery:
+
+```php
+<?php
+
+use CodeIgniter\Database\RawSql;
+
+$builder->join(
+    new RawSql('(SELECT user_id, MAX(created_at) AS latest FROM posts GROUP BY user_id) recent'),
+    'recent.user_id = users.id',
+    'LEFT',
+);
+```
+
 !!! warning "Warning"
     When you use `RawSql`, you MUST escape the values and protect the identifiers manually. Failure to do so could result in SQL injections.
 
@@ -354,6 +391,9 @@ This method enables you to set **WHERE** clauses using one of six methods:
 
 !!! note "Note"
     `$builder->where()` accepts an optional third parameter. If you set it to `false`, CodeIgniter will not try to protect your field or table names.
+
+!!! success "Available from version 4.8.0"
+    Query Builder methods that bind and escape field values or value lists, such as `where()`, `whereIn()`, `having()`, `set()`, `insert()`, and `update()`, accept PHP `BackedEnum` instances and use their backing values. Raw SQL values, such as values passed with escaping disabled, are not converted.
 
 ##### 1. Simple key/value method
 
@@ -477,6 +517,107 @@ $builder->where('name !=', $name);
 $builder->orWhere('id >', $id);
 // Produces: WHERE name != 'Joe' OR id > 50
 ```
+
+#### $builder->whereColumn()
+
+!!! success "Available from version 4.8.0"
+
+Compares one column to another column. If the first parameter does not end with a supported operator, `=` is used:
+
+```php
+<?php
+
+$builder->whereColumn('created_at', 'updated_at');
+// Produces: WHERE created_at = updated_at
+
+$builder->whereColumn('updated_at >', 'created_at');
+// Produces: WHERE updated_at > created_at
+
+$builder->whereColumn('updated_at !=', 'created_at');
+// Produces: WHERE updated_at != created_at
+```
+
+You can include a supported operator at the end of the first parameter to control the comparison. Supported operators are `=`, `!=`, `<>`, `<`, `>`, `<=`, and `>=`. Empty column names throw an `InvalidArgumentException`.
+
+Column names are protected by default, unless the `$escape` parameter is `false`.
+
+!!! warning "Warning"
+    Do not pass user-supplied data as column names. Values should use `where()` or another value-binding method instead.
+
+#### $builder->orWhereColumn()
+
+This method is identical to `whereColumn()`, except that multiple instances are joined by **OR**.
+
+#### $builder->whereBetween()
+
+!!! success "Available from version 4.8.0"
+
+Generates a **WHERE** field `BETWEEN` minimum and maximum value SQL query. `BETWEEN` includes both values:
+
+```php
+<?php
+
+$builder->whereBetween('created_at', ['2026-01-01', '2026-01-31']);
+
+// Produces:
+// WHERE created_at BETWEEN '2026-01-01' AND '2026-01-31'
+```
+
+The range array must contain exactly two values: the lower and upper bounds. These values are bound and escaped automatically. The `$escape` parameter controls value escaping and identifier protection.
+
+!!! warning "Warning"
+    Do not pass user-supplied data as field names. If you need a more complex SQL expression, use `where()` with [RawSql](#5-rawsql) and escape values manually.
+
+#### $builder->orWhereBetween()
+
+This method is identical to `whereBetween()`, except that multiple instances are joined by **OR**.
+
+#### $builder->whereNotBetween()
+
+This method is identical to `whereBetween()`, except that it generates `NOT BETWEEN`.
+
+#### $builder->orWhereNotBetween()
+
+This method is identical to `whereNotBetween()`, except that multiple instances are joined by **OR**.
+
+#### $builder->whereExists()
+
+!!! success "Available from version 4.8.0"
+
+Generates a `WHERE EXISTS` subquery. This method accepts either a Closure or a `BaseBuilder` instance:
+
+```php
+<?php
+
+use CodeIgniter\Database\BaseBuilder;
+
+// With closure
+$builder->whereExists(static function (BaseBuilder $builder) {
+    $builder->select('1', false)
+        ->from('orders')
+        ->whereColumn('orders.user_id', 'users.id');
+});
+// Produces: WHERE EXISTS (SELECT 1 FROM "orders" WHERE "orders"."user_id" = "users"."id")
+
+// With builder directly
+$subQuery = $db->table('orders')->select('1', false)->whereColumn('orders.user_id', 'users.id');
+$builder->whereNotExists($subQuery);
+```
+
+!!! warning "Warning"
+    Raw SQL strings are not accepted. If you need to write the `EXISTS` clause yourself, use `where()` with a manually escaped condition. See [5. RawSql](#5-rawsql).
+
+#### $builder->orWhereExists()
+
+This method is identical to `whereExists()`, except that multiple instances are joined by **OR**.
+
+#### $builder->whereNotExists()
+
+This method is identical to `whereExists()`, except that it generates a `WHERE NOT EXISTS` subquery.
+
+#### $builder->orWhereNotExists()
+
+This method is identical to `whereNotExists()`, except that multiple instances are joined by **OR**.
 
 #### $builder->whereIn()
 
@@ -675,9 +816,31 @@ $builder->like($rawSql, 'value', 'both');
 !!! warning "Warning"
     When you use `RawSql`, you MUST escape the values and protect the identifiers manually. Failure to do so could result in SQL injections.
 
+#### $builder->likeAny()
+
+!!! success "Available from version 4.8.0"
+
+This method generates a grouped set of **LIKE** clauses joined by **OR**. Use it when you want to search for one value across multiple fields:
+
+```php
+<?php
+
+$builder->likeAny(['title', 'body', 'summary'], $match);
+
+/*
+ * WHERE (
+ *     `title` LIKE '%match%' ESCAPE '!'
+ *     OR `body` LIKE '%match%' ESCAPE '!'
+ *     OR `summary` LIKE '%match%' ESCAPE '!'
+ * )
+ */
+```
+
+Unlike the associative array form of `like()`, the field list must be a non-empty list of field names. The same match value is used for every field. The field list may also contain `RawSql` instances; see [3. RawSql](#3-rawsql). Use `orLikeAny()` when the grouped search should be separated from previous conditions with **OR**.
+
 #### $builder->orLike()
 
-This method is identical to the one above, except that multiple instances are joined by **OR**:
+This method is identical to `like()`, except that multiple instances are joined by **OR**:
 
 ```php
 <?php
@@ -773,6 +936,38 @@ $builder->having('user_id', 45, false); // Produces: HAVING user_id = 45
 #### $builder->orHaving()
 
 Identical to `having()`, except that it separates multiple clauses with **OR**.
+
+#### $builder->havingBetween()
+
+!!! success "Available from version 4.8.0"
+
+Generates a **HAVING** field `BETWEEN` minimum and maximum value SQL query. `BETWEEN` includes both values:
+
+```php
+<?php
+
+$builder->select('category')
+    ->selectCount('id', 'total')
+    ->groupBy('category')
+    ->havingBetween('COUNT(id)', [10, 20], false);
+```
+
+The range array must contain exactly two values: the lower and upper bounds. These values are bound and escaped automatically. The `$escape` parameter controls value escaping and identifier protection.
+
+!!! warning "Warning"
+    Do not pass user-supplied data as field names. If you need a more complex SQL expression, use `having()` with [RawSql](#5-rawsql) and escape values manually.
+
+#### $builder->orHavingBetween()
+
+This method is identical to `havingBetween()`, except that multiple instances are joined by **OR**.
+
+#### $builder->havingNotBetween()
+
+This method is identical to `havingBetween()`, except that it generates `NOT BETWEEN`.
+
+#### $builder->orHavingNotBetween()
+
+This method is identical to `havingNotBetween()`, except that multiple instances are joined by **OR**.
 
 #### $builder->havingIn()
 
@@ -1080,6 +1275,36 @@ However, this method also resets any field values that you may have passed to `s
 echo $builder->countAllResults(false); // Produces an integer, like 17
 ```
 
+!!! note "Note"
+    **Changed in version 4.8.0.** With `$reset = true` (the default), bindings and binding counters are cleared after execution, so `getBinds()` returns an empty array. Pass `false` to retain the query conditions and bindings. Test mode retains bindings for the placeholders in its returned SQL.
+
+#### $builder->exists()
+
+!!! success "Available from version 4.8.0"
+
+Permits you to determine whether the current Query Builder query would return at least one row:
+
+```php
+<?php
+
+$builder->where('status', 'pending');
+
+if ($builder->exists()) {
+    // At least one pending row exists.
+}
+```
+
+This method returns `true` when the query would return at least one row and `false` when it would not. It respects any existing `limit()` and `offset()` clauses, and resets the current Query Builder state by default. If you need to keep the current Query Builder state, you can pass `false` as the first parameter. If the existence query fails and `DBDebug` is `false`, both methods return `false`.
+
+#### $builder->doesntExist()
+
+!!! success "Available from version 4.8.0"
+
+This method is identical to `exists()`, except that it returns `true` when the query would not return any rows.
+
+!!! note "Note"
+    These methods execute the current Query Builder query to check for rows. To add an SQL `EXISTS` predicate to a query, use [$builder->whereExists()](#builder-whereexists).
+
 #### $builder->countAll()
 
 Permits you to determine the number of rows in a particular table. Example:
@@ -1091,6 +1316,157 @@ echo $builder->countAll(); // Produces an integer, like 25
 ```
 
 As with the `countAllResults()` method, this method resets any field values that you may have passed to `select()` as well. If you need to keep them, you can pass `false` as the first parameter.
+
+## Pessimistic Locking
+
+### Driver Support
+
+The following table summarizes Query Builder support for pessimistic locks and lock-wait modifiers:
+
+| Query Builder methods           | MySQLi | Postgre | OCI8 | SQLSRV         | SQLite3 |
+|---------------------------------|--------|---------|------|----------------|---------|
+| `lockForUpdate()`               | Yes    | Yes     | Yes  | Yes            | No      |
+| `sharedLock()`                  | Yes    | Yes     | No   | Yes            | No      |
+| `lockForUpdate()->nowait()`     | Yes[1] | Yes     | Yes  | Yes            | No      |
+| `lockForUpdate()->skipLocked()` | Yes[2] | Yes     | Yes  | Approximate[3] | No      |
+| `sharedLock()->nowait()`        | No     | Yes     | No   | Yes            | No      |
+| `sharedLock()->skipLocked()`    | No     | Yes     | No   | No             | No      |
+
+!!! note "Note"
+    `countAllResults()`, `exists()`, and `doesntExist()` do not apply pessimistic locks or lock-wait modifiers. Consequently, they report matching rows rather than rows currently available for locking.
+
+### Shared Lock
+
+#### $builder->sharedLock()
+
+!!! success "Available from version 4.8.0"
+
+Adds a pessimistic read lock to a `SELECT` query. This is useful when rows must be read consistently while other transactions are prevented from modifying them until the current transaction ends.
+
+```php
+<?php
+
+$db->transaction(static function ($db) use ($accountId): void {
+    $account = $db->table('accounts')
+        ->where('id', $accountId)
+        ->sharedLock()
+        ->get()
+        ->getRow();
+
+    // Use $account while preventing concurrent transactions from modifying it...
+});
+```
+
+Use this method inside a database transaction. Without an explicit transaction, the lock is typically released when the `SELECT` statement finishes. If the same transaction will update the selected rows, use `lockForUpdate()` instead.
+
+See [Driver Support](#driver-support) for supported drivers and lock combinations. Unsupported drivers throw a `DatabaseException`. `sharedLock()` is not supported with `union()` or `unionAll()`. Some databases restrict which query shapes can be used with row locking. When CodeIgniter can detect an unsupported combination, it throws a `DatabaseException`. See the following warnings for driver-specific behavior.
+
+!!! warning "Warning"
+    MySQLi does not support `sharedLock()` with `fromSubquery()` because an outer locking read on a derived table does not lock the underlying rows as users may expect.
+
+!!! warning "Warning"
+    Postgre does not support `sharedLock()` with `distinct()`, `groupBy()`, `having()`, or aggregate helper selections such as `selectCount()`.
+
+!!! warning "Warning"
+    SQLSRV uses SQL Server table hints instead of a trailing `FOR SHARE` clause. The hint is applied to table references in the `FROM` clause; joined tables are not hinted. Its exact lock granularity depends on SQL Server's execution plan and transaction isolation level. SQLSRV does not support `sharedLock()` without a `FROM` table or on subqueries.
+
+### Lock for Update
+
+#### $builder->lockForUpdate()
+
+!!! success "Available from version 4.8.0"
+
+Adds a pessimistic write lock to a `SELECT` query. This is useful when a row must be read and then updated safely while other transactions are prevented from modifying it first.
+
+```php
+<?php
+
+$db->transaction(static function ($db) use ($accountId): void {
+    $account = $db->table('accounts')
+        ->where('id', $accountId)
+        ->lockForUpdate()
+        ->get()
+        ->getRow();
+
+    // Use $account to update the locked row safely...
+});
+```
+
+Use this method inside a database transaction. Without an explicit transaction, the lock is typically released when the `SELECT` statement finishes. The exact locking behavior is determined by the database server and transaction isolation level.
+
+See [Driver Support](#driver-support) for supported drivers and lock combinations. Unsupported drivers throw a `DatabaseException`. `lockForUpdate()` is not supported with `union()` or `unionAll()`. Some databases restrict which query shapes can be used with row locking. When CodeIgniter can detect an unsupported combination, it throws a `DatabaseException`. See the following warnings for driver-specific behavior.
+
+!!! warning "Warning"
+    MySQLi does not support `lockForUpdate()` with `fromSubquery()` because an outer locking read on a derived table does not lock the underlying rows as users may expect.
+
+!!! warning "Warning"
+    Postgre does not support `lockForUpdate()` with `distinct()`, `groupBy()`, `having()`, or aggregate helper selections such as `selectCount()`.
+
+!!! warning "Warning"
+    SQLSRV uses SQL Server table hints instead of a trailing `FOR UPDATE` clause. The hint is applied to table references in the `FROM` clause; joined tables are not hinted. Its exact lock granularity depends on SQL Server's execution plan and transaction isolation level. SQLSRV does not support `lockForUpdate()` without a `FROM` table or on subqueries.
+
+!!! warning "Warning"
+    OCI8 does not support `lockForUpdate()` together with `limit()`, `offset()`, `distinct()`, `groupBy()`, `having()`, or aggregate helper selections such as `selectCount()`.
+
+### Skip Locked
+
+#### $builder->skipLocked()
+
+!!! success "Available from version 4.8.0"
+
+Adds a `SKIP LOCKED` style modifier to a pessimistic `SELECT` lock. This is useful when multiple workers claim rows from the same queue-like table and each worker should skip rows already locked by another transaction.
+
+```php
+<?php
+
+$db->transaction(static function ($db): void {
+    $jobs = $db->table('jobs')
+        ->where('status', 'pending')
+        ->orderBy('id', 'ASC')
+        ->limit(10)
+        ->lockForUpdate()
+        ->skipLocked()
+        ->get()
+        ->getResultArray();
+
+    // Mark or update the claimed jobs before committing the transaction...
+});
+```
+
+Use this method with `lockForUpdate()` or `sharedLock()`. Calling `skipLocked()` without a pessimistic lock throws a `DatabaseException`.
+
+`skipLocked()` can return an incomplete view of matching rows because locked rows are skipped instead of waited on. This is usually what queue workers want, but it is not suitable for general-purpose reads that must see every matching row.
+
+See [Driver Support](#driver-support) for supported drivers and lock combinations. Unsupported combinations throw a `DatabaseException`.
+
+### No Wait
+
+#### $builder->nowait()
+
+!!! success "Available from version 4.8.0"
+
+Adds a `NOWAIT` style modifier to a pessimistic `SELECT` lock. This is useful when the query should fail immediately instead of waiting for locked rows to become available.
+
+```php
+<?php
+
+$db->transaction(static function ($db) use ($accountId): void {
+    $account = $db->table('accounts')
+        ->where('id', $accountId)
+        ->lockForUpdate()
+        ->nowait()
+        ->get()
+        ->getRow();
+
+    // Use $account while preventing concurrent transactions from modifying it...
+});
+```
+
+Use this method with `lockForUpdate()` or `sharedLock()`. Calling `nowait()` without a pessimistic lock throws a `DatabaseException`.
+
+When a row cannot be locked immediately, the database server returns an error and CodeIgniter throws a database exception according to the current database debug and transaction settings.
+
+See [Driver Support](#driver-support) for supported drivers and lock combinations. Unsupported combinations throw a `DatabaseException`.
 
 ## Union queries
 
@@ -2042,6 +2418,9 @@ $builder->delete();
 
 If you want to delete all data from a table, you can use the `truncate()` method, or `emptyTable()`.
 
+!!! note "Note"
+    **Changed in version 4.8.0.** With `$resetData = true` (the default), bindings and binding counters are cleared after execution, so `getBinds()` returns an empty array. Pass `false` as the third argument to retain the query conditions and bindings. Test mode retains bindings for the placeholders in its returned SQL.
+
 #### $builder->getCompiledDelete()
 
 This works exactly the same way as `$builder->getCompiledInsert()` except that it produces a **DELETE** SQL string instead of an **INSERT** SQL string.
@@ -2308,6 +2687,39 @@ Generates a platform-specific query string that counts all records returned by a
 
 Generates a platform-specific query string that counts all records in the particular table.
 
+#### explain([$reset = true])
+
+- **Parameters**  
+    - **$reset** `bool` Whether to reset values for SELECTs
+
+- **Returns**: The execution-plan result, SQL string when test mode is enabled, or `false` on failure
+
+- **Return type**: `ResultInterface|false|string`
+
+Runs an execution-plan query for the current Query Builder `SELECT` query.
+
+#### exists([$reset = true])
+
+- **Parameters**  
+    - **$reset** `bool` Whether to reset values for SELECTs
+
+- **Returns**: Whether the query would return at least one row
+
+- **Return type**: `bool`
+
+Determines whether the current Query Builder query would return at least one row.
+
+#### doesntExist([$reset = true])
+
+- **Parameters**  
+    - **$reset** `bool` Whether to reset values for SELECTs
+
+- **Returns**: Whether the query would not return any rows
+
+- **Return type**: `bool`
+
+Determines whether the current Query Builder query would not return any rows.
+
 #### get([$limit = null[, $offset = null[, $reset = true]]])
 
 - **Parameters**  
@@ -2334,6 +2746,34 @@ Compiles and runs a `SELECT` statement based on the already called Query Builder
 - **Return type**: `\CodeIgniter\Database\ResultInterface`
 
 Same as `get()`, but also allows the WHERE to be added directly.
+
+#### lockForUpdate()
+
+- **Returns**: `BaseBuilder` instance (method chaining)
+- **Return type**: `BaseBuilder`
+
+Adds a pessimistic write lock to a `SELECT` query. See [Lock for Update](#lock-for-update).
+
+#### nowait()
+
+- **Returns**: `BaseBuilder` instance (method chaining)
+- **Return type**: `BaseBuilder`
+
+Fails immediately when selected rows cannot be locked. See [No Wait](#no-wait).
+
+#### sharedLock()
+
+- **Returns**: `BaseBuilder` instance (method chaining)
+- **Return type**: `BaseBuilder`
+
+Adds a pessimistic read lock to a `SELECT` query. See [Shared Lock](#shared-lock).
+
+#### skipLocked()
+
+- **Returns**: `BaseBuilder` instance (method chaining)
+- **Return type**: `BaseBuilder`
+
+Skips selected rows that cannot be locked immediately. See [Skip Locked](#skip-locked).
 
 #### select([$select = '\*'[, $escape = null]])
 
@@ -2472,7 +2912,7 @@ Sets a query as a datasource for `insertBatch()`, `updateBatch()`, `upsertBatch(
 #### join($table, $cond[, $type = ''[, $escape = null]])
 
 - **Parameters**  
-    - **$table** `string` Table name to join
+    - **$table** `string|RawSql` Table name or raw SQL to join
     - **$cond** `string|RawSql` The JOIN ON condition
     - **$type** `string` The JOIN type
     - **$escape** `bool` Whether to escape values and identifiers
@@ -2481,7 +2921,7 @@ Sets a query as a datasource for `insertBatch()`, `updateBatch()`, `upsertBatch(
 
 - **Return type**: `BaseBuilder`
 
-Adds a `JOIN` clause to a query. Since v4.2.0, `RawSql` can be used as the JOIN ON condition. See also [$builder->join()](#builder-join).
+Adds a `JOIN` clause to a query. Since v4.2.0, `RawSql` can be used as the JOIN ON condition. Since v4.8.0, `RawSql` can also be used as the table. See also [$builder->join()](#builder-join).
 
 #### where($key[, $value = null[, $escape = null]])
 
@@ -2508,6 +2948,128 @@ Generates the `WHERE` portion of the query. Separates multiple calls with `AND`.
 - **Return type**: `BaseBuilder`
 
 Generates the `WHERE` portion of the query. Separates multiple calls with `OR`.
+
+#### whereColumn($first, $second[, $escape = null])
+
+- **Parameters**  
+    - **$first** `string` First column name, optionally ending with a supported comparison operator
+    - **$second** `string` Second column name
+    - **$escape** `bool` Whether to protect identifiers
+
+- **Returns**: `BaseBuilder` instance (method chaining)
+
+- **Return type**: `BaseBuilder`
+
+Generates a `WHERE` clause that compares two columns. Separates multiple calls with `AND`. If `$first` does not end with a supported operator, `=` is used as the comparison operator. Supported operators are `=`, `!=`, `<>`, `<`, `>`, `<=`, and `>=`.
+
+#### orWhereColumn($first, $second[, $escape = null])
+
+- **Parameters**  
+    - **$first** `string` First column name, optionally ending with a supported comparison operator
+    - **$second** `string` Second column name
+    - **$escape** `bool` Whether to protect identifiers
+
+- **Returns**: `BaseBuilder` instance (method chaining)
+
+- **Return type**: `BaseBuilder`
+
+Generates a `WHERE` clause that compares two columns. Separates multiple calls with `OR`. If `$first` does not end with a supported operator, `=` is used as the comparison operator. Supported operators are `=`, `!=`, `<>`, `<`, `>`, `<=`, and `>=`.
+
+#### whereBetween(?string $key = null, ?array $values = null, ?bool $escape = null)
+
+- **Parameters**  
+    - **$key** `string` Name of field to examine
+    - **$values** `array` Two values defining the inclusive range
+    - **$escape** `bool` Whether to escape values and protect identifiers
+
+- **Returns**: `BaseBuilder` instance (method chaining)
+
+- **Return type**: `BaseBuilder`
+
+Generates a `WHERE` field `BETWEEN` minimum and maximum value SQL query, joined with `AND` if appropriate.
+
+#### orWhereBetween(?string $key = null, ?array $values = null, ?bool $escape = null)
+
+- **Parameters**  
+    - **$key** `string` The field to search
+    - **$values** `array` Two values defining the inclusive range
+    - **$escape** `bool` Whether to escape values and protect identifiers
+
+- **Returns**: `BaseBuilder` instance (method chaining)
+
+- **Return type**: `BaseBuilder`
+
+Generates a `WHERE` field `BETWEEN` minimum and maximum value SQL query, joined with `OR` if appropriate.
+
+#### whereNotBetween(?string $key = null, ?array $values = null, ?bool $escape = null)
+
+- **Parameters**  
+    - **$key** `string` Name of field to examine
+    - **$values** `array` Two values defining the inclusive range
+    - **$escape** `bool` Whether to escape values and protect identifiers
+
+- **Returns**: `BaseBuilder` instance (method chaining)
+
+- **Return type**: `BaseBuilder`
+
+Generates a `WHERE` field `NOT BETWEEN` minimum and maximum value SQL query, joined with `AND` if appropriate.
+
+#### orWhereNotBetween(?string $key = null, ?array $values = null, ?bool $escape = null)
+
+- **Parameters**  
+    - **$key** `string` The field to search
+    - **$values** `array` Two values defining the inclusive range
+    - **$escape** `bool` Whether to escape values and protect identifiers
+
+- **Returns**: `BaseBuilder` instance (method chaining)
+
+- **Return type**: `BaseBuilder`
+
+Generates a `WHERE` field `NOT BETWEEN` minimum and maximum value SQL query, joined with `OR` if appropriate.
+
+#### whereExists($subquery)
+
+- **Parameters**  
+    - **$subquery** `BaseBuilder|Closure` The subquery to check for matching rows
+
+- **Returns**: `BaseBuilder` instance (method chaining)
+
+- **Return type**: `BaseBuilder`
+
+Generates a `WHERE EXISTS` subquery, joined with `AND` if appropriate.
+
+#### orWhereExists($subquery)
+
+- **Parameters**  
+    - **$subquery** `BaseBuilder|Closure` The subquery to check for matching rows
+
+- **Returns**: `BaseBuilder` instance (method chaining)
+
+- **Return type**: `BaseBuilder`
+
+Generates a `WHERE EXISTS` subquery, joined with `OR` if appropriate.
+
+#### whereNotExists($subquery)
+
+- **Parameters**  
+    - **$subquery** `BaseBuilder|Closure` The subquery to check for matching rows
+
+- **Returns**: `BaseBuilder` instance (method chaining)
+
+- **Return type**: `BaseBuilder`
+
+Generates a `WHERE NOT EXISTS` subquery, joined with `AND` if appropriate.
+
+#### orWhereNotExists($subquery)
+
+- **Parameters**  
+    - **$subquery** `BaseBuilder|Closure` The subquery to check for matching rows
+
+- **Returns**: `BaseBuilder` instance (method chaining)
+
+- **Return type**: `BaseBuilder`
+
+Generates a `WHERE NOT EXISTS` subquery, joined with `OR` if appropriate.
 
 #### orWhereIn([$key = null[, $values = null[, $escape = null]]])
 
@@ -2611,6 +3173,21 @@ Ends a group expression.
 
 Adds a `LIKE` clause to a query, separating multiple calls with `AND`.
 
+#### likeAny($fields[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
+
+- **Parameters**  
+    - **$fields** `array` List of field names or RawSql instances
+    - **$match** `string` Text portion to match
+    - **$side** `string` Which side of the expression to put the '%' wildcard on
+    - **$escape** `bool` Whether to escape values and identifiers
+    - **$insensitiveSearch** `bool` Whether to force a case-insensitive search
+
+- **Returns**: `BaseBuilder` instance (method chaining)
+
+- **Return type**: `BaseBuilder`
+
+Adds grouped `LIKE` clauses joined with `OR`.
+
 #### orLike($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
 
 - **Parameters**  
@@ -2625,6 +3202,21 @@ Adds a `LIKE` clause to a query, separating multiple calls with `AND`.
 - **Return type**: `BaseBuilder`
 
 Adds a `LIKE` clause to a query, separating multiple calls with `OR`.
+
+#### orLikeAny($fields[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
+
+- **Parameters**  
+    - **$fields** `array` List of field names or RawSql instances
+    - **$match** `string` Text portion to match
+    - **$side** `string` Which side of the expression to put the '%' wildcard on
+    - **$escape** `bool` Whether to escape values and identifiers
+    - **$insensitiveSearch** `bool` Whether to force a case-insensitive search
+
+- **Returns**: `BaseBuilder` instance (method chaining)
+
+- **Return type**: `BaseBuilder`
+
+Adds grouped `LIKE` clauses joined with `OR`, separating the group from previous conditions with `OR`.
 
 #### notLike($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
 
@@ -2681,6 +3273,58 @@ Adds a `HAVING` clause to a query, separating multiple calls with `AND`.
 - **Return type**: `BaseBuilder`
 
 Adds a `HAVING` clause to a query, separating multiple calls with `OR`.
+
+#### havingBetween(?string $key = null, ?array $values = null, ?bool $escape = null)
+
+- **Parameters**  
+    - **$key** `string` Name of field to examine
+    - **$values** `array` Two values defining the inclusive range
+    - **$escape** `bool` Whether to escape values and protect identifiers
+
+- **Returns**: `BaseBuilder` instance (method chaining)
+
+- **Return type**: `BaseBuilder`
+
+Generates a `HAVING` field `BETWEEN` minimum and maximum value SQL query, joined with `AND` if appropriate.
+
+#### orHavingBetween(?string $key = null, ?array $values = null, ?bool $escape = null)
+
+- **Parameters**  
+    - **$key** `string` The field to search
+    - **$values** `array` Two values defining the inclusive range
+    - **$escape** `bool` Whether to escape values and protect identifiers
+
+- **Returns**: `BaseBuilder` instance (method chaining)
+
+- **Return type**: `BaseBuilder`
+
+Generates a `HAVING` field `BETWEEN` minimum and maximum value SQL query, joined with `OR` if appropriate.
+
+#### havingNotBetween(?string $key = null, ?array $values = null, ?bool $escape = null)
+
+- **Parameters**  
+    - **$key** `string` Name of field to examine
+    - **$values** `array` Two values defining the inclusive range
+    - **$escape** `bool` Whether to escape values and protect identifiers
+
+- **Returns**: `BaseBuilder` instance (method chaining)
+
+- **Return type**: `BaseBuilder`
+
+Generates a `HAVING` field `NOT BETWEEN` minimum and maximum value SQL query, joined with `AND` if appropriate.
+
+#### orHavingNotBetween(?string $key = null, ?array $values = null, ?bool $escape = null)
+
+- **Parameters**  
+    - **$key** `string` The field to search
+    - **$values** `array` Two values defining the inclusive range
+    - **$escape** `bool` Whether to escape values and protect identifiers
+
+- **Returns**: `BaseBuilder` instance (method chaining)
+
+- **Return type**: `BaseBuilder`
+
+Generates a `HAVING` field `NOT BETWEEN` minimum and maximum value SQL query, joined with `OR` if appropriate.
 
 #### orHavingIn([$key = null[, $values = null[, $escape = null]]])
 
@@ -3127,6 +3771,20 @@ Compiles and executes a batch `DELETE` query.
 
 Increments the value of a field by the specified amount. If the field is not a numeric field, like a `VARCHAR`, it will likely be replaced with `$value`.
 
+#### incrementMany($columns[, $value = 1])
+
+!!! success "Available from version 4.8.0"
+
+- **Parameters**  
+    - **$columns** `array` A list of columns or array of column => value pairs to increment.
+    - **$value** `int` The amount to increment in the columns, if `$columns` is a list of columns.
+
+- **Returns**: `true` on success, `false` on failure
+
+- **Return type**: `bool`
+
+Increments the value of multiple fields by the specified amounts. If a field is not a numeric field, like a `VARCHAR`, it will likely be replaced with the amount specified for that field.
+
 #### decrement($column[, $value = 1])
 
 - **Parameters**  
@@ -3134,6 +3792,20 @@ Increments the value of a field by the specified amount. If the field is not a n
     - **$value** `int` The amount to decrement in the column
 
 Decrements the value of a field by the specified amount. If the field is not a numeric field, like a `VARCHAR`, it will likely be replaced with `$value`.
+
+#### decrementMany($columns[, $value = 1])
+
+!!! success "Available from version 4.8.0"
+
+- **Parameters**  
+    - **$columns** `array` A list of columns or array of column => value pairs to decrement.
+    - **$value** `int` The amount to decrement in the columns, if `$columns` is a list of columns.
+
+- **Returns**: `true` on success, `false` on failure
+
+- **Return type**: `bool`
+
+Decrements the value of multiple fields by the specified amounts. If a field is not a numeric field, like a `VARCHAR`, it will likely be replaced with the amount specified for that field.
 
 #### truncate()
 
@@ -3195,3 +3867,9 @@ Compiles an `UPDATE` statement and returns it as a string.
 - **Return type**: `string`
 
 Compiles a `DELETE` statement and returns it as a string.
+
+[1] `NOWAIT` requires MySQL 8.0.1+ or MariaDB 10.3.0+ with InnoDB tables. CodeIgniter does not check the server version or storage engine before compiling the clause.
+
+[2] `SKIP LOCKED` requires MySQL 8.0.1+ or MariaDB 10.6.0+ with InnoDB tables. CodeIgniter does not check the server version or storage engine before compiling the clause.
+
+[3] SQLSRV approximates `skipLocked()` using SQL Server's `READCOMMITTEDLOCK` and `READPAST` table hints. It can still wait on locks that `READPAST` does not skip, such as page-level locks.

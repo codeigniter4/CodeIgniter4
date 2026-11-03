@@ -2,6 +2,9 @@
 
 While the ability to use Controllers via CLI like any other route is convenient, you might find times where you need a little something different. That's where Spark commands come in. They are simple classes that do not need to have routes defined, making them perfect for building tools that developers can use to make their jobs simpler, whether by handling migrations or database seeding, checking cronjob status, or even building out custom code generators for your company.
 
+!!! danger "Deprecated since version 4.8.0"
+    `BaseCommand` is deprecated, and running a command that extends it triggers a deprecation notice. Write new commands against `AbstractCommand` instead. See [Modern Spark Commands](cli_modern_commands.md).
+
 ## Creating New Commands
 
 You can very easily create new commands to use in your own development. Each class must be in its own file, must extend `CodeIgniter\CLI\BaseCommand`, and must implement the `run()` method.
@@ -139,7 +142,7 @@ $this->call('command_two', $params);
 - **Parameters**  
     - **$e** `Throwable` The exception to use for error reporting.
 
-A convenience method to maintain a consistent and clear error output to the CLI:
+A convenience method to maintain a consistent and clear error output on STDERR:
 
 ```php
 <?php
@@ -180,14 +183,3 @@ foreach ($this->options as $option => $description) {
  *  --all  Set for all namespaces, will ignore (-n) option
  */
 ```
-
-#### getPad($array, $pad)
-
-!!! danger "Deprecated since version 4.0.5"
-    Use `CodeIgniter\CLI\BaseCommand::setPad()` instead.
-
-- **Parameters**  
-    - **$array** `array` The `$key` => `$value` array.
-    - **$pad** `integer` The pad spaces.
-
-A method to calculate padding for `$key => $value` array output. The padding can be used to output a well-formatted table in CLI.

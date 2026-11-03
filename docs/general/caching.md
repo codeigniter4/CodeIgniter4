@@ -56,7 +56,7 @@ Valid options are:
     Using an empty array `[]` may cache temporary error pages (404, 500, etc.). For production applications, consider restricting this to `[200]` to avoid caching errors that should be temporary. For example, a cached 404 page would remain cached even after the resource is created, until the cache expires.
 
 !!! note "Note"
-    Regardless of this setting, `DownloadResponse` and `RedirectResponse` instances are never cached by the `PageCache` filter.
+    Regardless of this setting, `DownloadResponse`, `RedirectResponse`, and HTTP `QUERY` responses are never cached by the `PageCache` filter.
 
 ## Enabling Caching
 

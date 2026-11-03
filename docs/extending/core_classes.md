@@ -41,6 +41,7 @@ The following core system classes may be initialized during execution, depending
 - `CodeIgniter\HTTP\SiteURIFactory`
 - `CodeIgniter\HTTP\URI`
 - `CodeIgniter\HTTP\UserAgent` (if launched over HTTP)
+- `CodeIgniter\Lock\LockManager`
 - `CodeIgniter\Log\Logger`
 - `CodeIgniter\Log\Handlers\BaseHandler`
 - `CodeIgniter\Log\Handlers\FileHandler`

@@ -33,6 +33,8 @@ class MyCommand extends BaseCommand
 
 The class is automatically initialized when the file is loaded the first time.
 
+Since v4.8.0 the static methods delegate to instance classes, which you can also use directly. See [The Classes Behind the Facade](#the-classes-behind-the-facade).
+
 ## Getting Input from the User
 
 Sometimes you need to ask the user for more information. They might not have provided optional command-line arguments, or the script may have encountered an existing file and needs confirmation before overwriting. This is handled with the `prompt()` or `promptByKey()` method.
@@ -168,6 +170,57 @@ $hobbies = CLI::promptByMultipleKeys('Select your hobbies:', ['Playing game', 'S
 !!! important "Important"
     The method `promptByMultipleKeys()`, unlike `promptByKey()`, does not support named keys or validation.
 
+### select() and multiselect()
+
+!!! success "Available from version 4.8.0"
+
+`select()` and `multiselect()` on `Prompt` let the user pick with the arrow keys (or `j` and `k`), tick with the space bar, tick everything or nothing with `a`, and confirm with enter. `select()` returns the chosen key, and `multiselect()` returns the ticked options, keyed as in `$options`. Both take any keys, and long lists scroll:
+
+```php
+<?php
+
+use CodeIgniter\CLI\CLI;
+
+$prompt = CLI::getPrompt();
+
+// Returns one key, here 'MySQLi' when the user just presses enter.
+$driver = $prompt->select('Which database driver?', [
+    'MySQLi'  => 'MySQL / MariaDB',
+    'Postgre' => 'PostgreSQL',
+    'SQLite3' => 'SQLite',
+], 'MySQLi');
+
+// Returns key => label for each ticked option, possibly none.
+$filters = $prompt->multiselect('Which filters should run on every request?', [
+    'csrf'          => 'CSRF',
+    'honeypot'      => 'Honeypot',
+    'secureheaders' => 'Secure Headers',
+], ['csrf']);
+
+// Refuses to confirm until at least one option is ticked.
+$environments = $prompt->multiselect('Which environments get the new key?', [
+    'development' => 'Development',
+    'testing'     => 'Testing',
+    'production'  => 'Production',
+], required: true);
+```
+
+Where keys cannot be read one by one, such as on Windows or when the input is piped, both prompts list the options by number and ask for the number, or numbers separated by commas. The filters question above then reads:
+
+```console
+Which filters should run on every request?
+  [1]  CSRF
+  [2]  Honeypot
+  [3]  Secure Headers
+Numbers, separated by commas (0 for none) [1]:
+```
+
+Under WSL, PHP runs as on Linux and reads the keys.
+
+On a quiet output (see [Verbosity](spark_commands.md#verbosity)) both prompts return the defaults without asking, and a required `multiselect()` without a default throws a `CLIException`. They also throw it when piped input ends before a valid answer.
+
+Pressing Ctrl+C restores the terminal and then interrupts the process as usual.
+
 ## Providing Feedback
 
 ### write()
@@ -246,6 +299,8 @@ for ($i = 0; $i <= 10; $i++) {
     CLI::print($i);
 }
 ```
+
+The next `write()` starts on a fresh line. Since v4.8.0, printed text that already ends in a line feed leaves the cursor at the start of a line, so that `write()` adds no blank line first.
 
 ### color()
 
@@ -440,3 +495,214 @@ CLI::wait(0, false);
 // wait for specified interval
 CLI::wait($seconds, false);
 ```
+
+## The Classes Behind the Facade
+
+!!! success "Available from version 4.8.0"
+
+The static output methods delegate to instance classes, each with one job. `CLI::getOutput()` and `CLI::getTerminal()` return the shared instances, and modern commands reach the output through `$this->getOutput()` (see [Writing Output](cli_modern_commands.md#writing-output)):
+
+```php
+<?php
+
+use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Output;
+use CodeIgniter\CLI\ProgressBar;
+use CodeIgniter\CLI\Table;
+use CodeIgniter\Test\Mock\MockInputOutput;
+
+// The output every CLI::write() goes to.
+$output = CLI::getOutput();
+
+$output->write('Hello', 'green');
+$output->error('Something went wrong.');
+
+// Tables and progress bars are built on the output.
+$output->write((new Table([[1, 'bar']], ['ID', 'Title']))->render());
+
+$bar = new ProgressBar($output);
+$bar->advanceTo(5, 10);
+$bar->advanceTo(10, 10);
+
+// An output of your own, here capturing everything written to it.
+$captured = new Output($io = new MockInputOutput());
+$captured->write('captured');
+
+echo $io->getOutput();
+```
+
+Mixing the static methods with the instance is safe, because both write to the same `Output` and share its line breaks.
+
+The prompt methods delegate to `Prompt`, which reads through an `Output`. `CLI::getPrompt()` returns one on the shared output, and modern commands reach one on the output of their run through `$this->getPrompt()`:
+
+```php
+<?php
+
+use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Prompt;
+
+// The prompt every CLI::prompt() goes through.
+$prompt = CLI::getPrompt();
+
+$color   = $prompt->ask('What is your favorite color?', ['red', 'blue']);
+$hobby   = $prompt->askByKey('Pick a hobby:', ['Games', 'Sleep']);
+$hobbies = $prompt->askByMultipleKeys('Pick your hobbies:', ['Games', 'Sleep', 'Music']);
+
+// A prompt of your own, here with a validation instance of your choice.
+$prompt = new Prompt(CLI::getOutput(), single_service('validation'));
+$email  = $prompt->ask('What is your email?', null, 'required|valid_email');
+```
+
+## CodeIgniter\CLI
+
+### Output
+
+The writer. It targets STDOUT, sends `error()` to STDERR, and remembers whether the cursor sits mid-line so that `write()` starts on a fresh line.
+
+#### \__construct([InputOutput $io = new InputOutput()[, Terminal $terminal = new Terminal()]])
+
+- **Parameters**  
+    - **$io** `InputOutput` The transport the text is written through.
+    - **$terminal** `Terminal` The terminal consulted for color support.
+
+#### print(string $text = ''[, string $foreground = ''[, string $background = ''[, Verbosity $verbosity = Verbosity::Normal]]]): void
+
+#### write(string $text = ''[, string $foreground = ''[, string $background = ''[, Verbosity $verbosity = Verbosity::Normal]]]): void
+
+#### newLine([int $num = 1[, Verbosity $verbosity = Verbosity::Normal]]): void
+
+The same as the static methods of the same names, writing nothing when the level of the output is below `$verbosity`.
+
+#### deferNewLine(): void
+
+Writes a blank line before whatever is written next, and none if nothing follows. The prompts end with it, so a prompt that ends the run leaves no blank line behind.
+
+#### error(string $text[, string $foreground = 'light_red'[, string $background = '']]): void
+
+#### beep(int $num = 1): void
+
+#### clearScreen(): void
+
+The same as the static methods of the same names. `error()` writes at every level but `Verbosity::Silent`, and the other two only from `Verbosity::Normal` on.
+
+#### getVerbosity(): Verbosity
+
+#### setVerbosity(Verbosity $verbosity): void
+
+#### isQuiet(): bool
+
+#### isVerbose(): bool
+
+#### isVeryVerbose(): bool
+
+#### isDebug(): bool
+
+`isQuiet()` is true for the quiet and silent levels, and the others for their level or above. See [Writing at a Verbosity](cli_modern_commands.md#writing-at-a-verbosity).
+
+#### color(string $text, string $foreground[, string $background = ''[, string $format = '']]): string
+
+Colors the text when the target stream supports colors, and returns it unchanged otherwise. `print()`, `write()`, and `error()` color through this method, so a subclass overriding it changes the coloring of every write.
+
+#### wrap(string $text[, int $max = 0[, int $padLeft = 0]]): string
+
+The same as `CLI::wrap()`, measuring the terminal of this output.
+
+#### isDecorated(): bool
+
+Whether the target stream supports colors.
+
+#### forStderr(): static
+
+Returns a copy whose STDOUT writes target STDERR, which is what the framework swaps in while rendering an exception.
+
+#### getTerminal(): Terminal
+
+### Prompt
+
+Asks questions on the console, reading the answers through an `Output`.
+
+#### \__construct(Output $output[, ?ValidationInterface $validation = null[, $keys = null]])
+
+- **Parameters**  
+    - **$output** `Output` The output the questions are written and read through.
+    - **$validation** `ValidationInterface|null` The validation that checks the answers, or `null` for an unshared instance of the `validation` service.
+    - **$keys** `resource|null` The stream of keypresses read by `select()` and `multiselect()`, or `null` for STDIN.
+
+#### ask(string $field[, array|string|null $options = null[, array|string|null $validation = null]]): string
+
+#### askByKey(array|string $text, array $options[, array|string|null $validation = null]): string
+
+#### askByMultipleKeys(string $text, array $options): array
+
+The same as `CLI::prompt()`, `CLI::promptByKey()`, and `CLI::promptByMultipleKeys()`.
+
+#### select(string $question, array $options[, int|string|null $default = null]): int|string
+
+- **Parameters**  
+    - **$default** `int|string|null` The key highlighted at the start, or `null` for the first one.
+
+#### multiselect(string $question, array $options[, array $default = [][, bool $required = false]]): array
+
+- **Parameters**  
+    - **$default** `array` The keys ticked at the start.
+    - **$required** `bool` Whether at least one option must be ticked.
+
+See [select() and multiselect()](#select-and-multiselect).
+
+### Verbosity
+
+The level of the output, as an `int`-backed enum valued as `SHELL_VERBOSITY`: `Silent` (-2), `Quiet` (-1), `Normal` (0), `Verbose` (1), `VeryVerbose` (2), and `Debug` (3).
+
+### Terminal
+
+The dimensions and capabilities of the terminal. The dimensions are read once and cached.
+
+#### getWidth(int $default = 80): int
+
+#### getHeight(int $default = 32): int
+
+#### generateDimensions(): void
+
+#### hasColorSupport($stream): bool
+
+#### streamSupports(string $function, $stream): bool
+
+The same as the static methods of the same names.
+
+### ProgressBar
+
+A ten-cell progress bar redrawn in place.
+
+#### \__construct(Output $output)
+
+#### advanceTo(float|int $step[, int $totalSteps = 10]): void
+
+Draws the bar for the step, capped at 100%, over the previous bar unless the step went backwards. A negative step or a total below one throws `InvalidArgumentException`, where `CLI::showProgress()` keeps tolerating them.
+
+#### clear(): void
+
+Rings the bell and starts a new bar on the next `advanceTo()`. This is what `CLI::showProgress(false)` does.
+
+### Table
+
+#### \__construct(array $tbody[, array $thead = []])
+
+- **Parameters**  
+    - **$tbody** `array` List of rows.
+    - **$thead** `array` List of column headings.
+
+#### render(): string
+
+Returns the table as lines ending in `PHP_EOL`, ready for `Output::write()`.
+
+### Color
+
+The ANSI color codes, independent of any stream.
+
+#### apply(string $text, string $foreground[, string $background = ''[, string $format = '']]): string
+
+Wraps the text in the color codes, always. Throws `CLIException` for an unknown color.
+
+#### width(string $string): int
+
+Returns the display width of the text without its color codes, as `CLI::strlen()` does.

@@ -242,6 +242,246 @@ $name = 'mytext.txt';
 return $this->response->download($name, $data)->inline();
 ```
 
+## Streaming Responses
+
+!!! success "Available from version 4.8.0"
+
+CodeIgniter provides a `StreamResponse` class that streams its body to the client as it is generated, instead of buffering the complete body first. This is useful for large dataset exports, AI/LLM token streaming, proxying upstream streams, or any content that is produced while it is being sent. Streaming keeps memory usage low and improves time-to-first-byte for large responses.
+
+Use the `$this->response->stream()` method with a callback:
+
+```php
+<?php
+
+use CodeIgniter\HTTP\StreamResponse;
+
+return $this->response
+    ->stream(static function (StreamResponse $stream) {
+        $userModel = model('UserModel');
+        $offset    = 0;
+
+        // Fetch rows in batches to keep memory usage low
+        while ($users = $userModel->findAll(500, $offset)) {
+            foreach ($users as $user) {
+                // write() returns false once the client has disconnected
+                if (! $stream->write(json_encode($user) . "\n", false)) {
+                    return;
+                }
+            }
+
+            // Push the whole batch to the client at once
+            $stream->flush();
+
+            $offset += 500;
+        }
+    })
+    ->setContentType('application/x-ndjson');
+```
+
+The callback receives the `StreamResponse` instance. `StreamResponse::write()` returns `false` once the client has disconnected, so you can stop producing output early. By default, every `write()` flushes output to the client immediately. When writing many small chunks, pass `false` as the second argument and call `StreamResponse::flush()` at intervals instead - the example above flushes once per batch.
+
+The callback is not limited to `write()`: you may also write directly to `php://output` (for example, with `fputcsv()` for CSV exports), calling `flush()` and `StreamResponse::isClientConnected()` yourself.
+
+Alternatively, you may pass an iterable of string chunks (such as a generator), and each chunk is written and flushed in order:
+
+```php
+<?php
+
+// Any iterable of string chunks works, including generators.
+$chunks = static function (): \Generator {
+    yield json_encode(['event' => 'started']) . "\n";
+
+    yield json_encode(['event' => 'finished']) . "\n";
+};
+
+return $this->response->stream($chunks());
+```
+
+### Headers and Status Code
+
+Set the content type, status code, and any custom headers **before** returning the response - anything set inside the callback will be too late. Unless you have already set it, `StreamResponse` applies `X-Accel-Buffering: no` to discourage intermediaries from buffering the stream. PHP's zlib output compression is turned off automatically, but if your web server or CDN compresses responses (e.g., nginx `gzip` or Apache `mod_deflate`), configure it to skip your streaming endpoints - compression can delay chunk delivery.
+
+!!! note "Note"
+    `stream()` and `eventStream()` create a new response instance. Headers, cookies, and status codes already set on the main response are not copied. Set them on the returned `StreamResponse` or `SSEResponse` instance before returning it.
+
+The response is streamed: output buffering is disabled, the PHP time limit is removed, and the session is closed to avoid blocking other requests. After filters still run and may set headers, but they must not rely on the response body. View rendering and decorators are not applied - stream your output in the callback.
+
+If [Content Security Policy](csp.md) is enabled, the `Content-Security-Policy` header is sent as usual. However, nonce placeholders cannot be replaced in a streamed body. When streaming HTML that needs a nonce, call `$this->response->getCSP()->getScriptNonce()` (or `getStyleNonce()`) **before** returning the response and embed the returned value in your output yourself.
+
+`StreamResponse` does not set a `Content-Length` header by default, since the body length is typically unknown in advance. Without it, clients cannot display download progress or resume interrupted transfers. If you do know the total size (for example, when proxying a stream of known length), you may set `Content-Length` yourself before returning the response.
+
+!!! note "Note"
+    To serve an existing file, prefer [DownloadResponse](#force-file-download), which sends proper `Content-Length` and `Content-Disposition` headers. Use `StreamResponse` when the content is generated while it is being sent.
+
+### Example: Proxying an Upstream Stream
+
+`StreamResponse` can forward a stream from another source - such as object storage or an internal API - to the client without buffering it in memory or writing it to disk:
+
+```php
+<?php
+
+use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\HTTP\StreamResponse;
+
+// Open and validate the upstream source before creating the response,
+// so a failure can still produce a proper error page
+$source = @fopen('https://storage.internal/reports/annual.pdf', 'rb');
+
+if ($source === false) {
+    throw PageNotFoundException::forPageNotFound();
+}
+
+$stream = $this->response->stream(static function (StreamResponse $stream) use ($source) {
+    // Forward the upstream file chunk by chunk, without buffering it in memory
+    try {
+        while (! feof($source)) {
+            $chunk = fread($source, 1_048_576);
+
+            if ($chunk === false || ! $stream->write($chunk)) {
+                break;
+            }
+        }
+    } finally {
+        fclose($source);
+    }
+});
+
+$stream->setContentType('application/pdf');
+
+return $stream;
+```
+
+The [development server](#development-server-limitations) and [production](#production-considerations) considerations described for SSE below apply to all streaming responses.
+
+## Server-Sent Events (SSE)
+
+!!! success "Available from version 4.8.0"
+
+CodeIgniter provides an `SSEResponse` for streaming [Server-Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events) over HTTP. This is useful for long-lived connections where the server pushes events to the client. `SSEResponse` is a specialized [StreamResponse](#streaming-responses) that formats output according to the SSE protocol and forces the appropriate headers. Create it via the `$this->response->eventStream()` factory method, or instantiate `new SSEResponse(...)` directly.
+
+```php
+<?php
+
+use CodeIgniter\HTTP\SSEResponse;
+
+return $this->response->eventStream(static function (SSEResponse $sse) {
+    foreach (['Hello', 'World'] as $text) {
+        if (! $sse->event(['text' => $text])) {
+            break;
+        }
+
+        sleep(1);
+    }
+
+    $sse->event('[DONE]');
+});
+```
+
+The callback receives the `SSEResponse` instance. Use `event()`, `comment()`, or `retry()` to send SSE fields. If you pass an array to `event()`, it will be JSON-encoded. If encoding fails or the client disconnects, `event()` returns `false`.
+
+The response is streamed: output buffering is disabled, and the session is closed to avoid blocking other requests. Headers must be set **before** returning the response because anything set inside the callback will be too late.
+
+After filters still run. Any headers or cookies they set will be sent, but they must not rely on the response body. View rendering and decorators are not applied because the response body is not built - stream your output in the callback.
+
+### Custom Headers and Keep-Alive
+
+If you need custom headers, set them before returning the response. You can also use comments for keep-alive and configure the client retry interval:
+
+```php
+<?php
+
+use CodeIgniter\HTTP\SSEResponse;
+
+$sse = $this->response->eventStream(static function (SSEResponse $sse) {
+    $sse->comment('keep-alive');
+
+    foreach (['one', 'two', 'three', 'four'] as $text) {
+        if (! $sse->event(['text' => $text])) {
+            break;
+        }
+    }
+
+    sleep(1);
+
+    $sse->retry(5000);
+});
+
+$sse->setHeader('X-Stream-Name', 'demo');
+
+return $sse;
+```
+
+### Development Server Limitations
+
+When testing SSE locally, keep in mind that PHP's built-in development server (used by `php spark serve`) is not designed to handle long-lived streaming connections effectively.
+
+Because an SSE connection remains open for an extended period, the built-in server may spend most of its capacity serving the stream. As a result, other requests may appear slow, blocked, or delayed while the SSE connection is active.
+
+Possible symptoms include:
+
+- normal HTTP requests appearing to hang or time out
+- API requests responding slowly
+- frontend requests remaining in a pending state
+
+For more realistic testing, prefer a server stack that handles concurrent requests better, such as Apache, nginx with PHP-FPM, or FrankenPHP.
+
+This behavior is a limitation of the development server environment, not of `SSEResponse` itself.
+
+### Production Considerations
+
+Some server stacks and CDNs buffer or compress responses (e.g., Apache with `mod_deflate`), which can break real-time SSE delivery. `SSEResponse` disables PHP output buffering, turns off zlib output compression, and sets `X-Accel-Buffering: no`. However, intermediaries may still buffer or compress, so configure your web server or CDN to disable buffering/compression for SSE endpoints.
+
+### Example: Product-Oriented Use Case
+
+The following example simulates a small notification stream to illustrate a more product-focused use case:
+
+```php
+<?php
+
+use App\Models\NotificationModel;
+use CodeIgniter\HTTP\SSEResponse;
+
+$user_id = session()->get('user_id');
+
+return $this->response->eventStream(static function (SSEResponse $sse) use ($user_id) {
+    // Stream live notifications for the current user
+    $notificationModel = model(NotificationModel::class);
+
+    $lastId = 0;
+
+    // In a real app, you would typically keep the connection open indefinitely
+    for ($i = 0; $i < 6; $i++) {
+        $order = $lastId === 0 ? 'desc' : 'asc';
+
+        // On the first pass, pick the newest notification
+        // After that, stream any newer ones in order
+        $notification = $notificationModel->where('user_id', $user_id)
+            ->where('id >', $lastId)
+            ->orderBy('id', $order)
+            ->first();
+
+        if ($notification !== null) {
+            $lastId = (int) $notification['id'];
+
+            if (! $sse->event($notification, 'notification', (string) $lastId)) {
+                break;
+            }
+        } else {
+            // No new notifications yet: send a keep-alive comment
+            if (! $sse->comment('keep-alive')) {
+                break;
+            }
+        }
+
+        // Poll every 10 seconds
+        sleep(10);
+    }
+
+    // Ask the browser to retry in 60 seconds if the connection closes
+    $sse->retry(60000);
+});
+```
+
 ## HTTP Caching
 
 Built into the HTTP specification are tools that help the client (often the web browser) cache the results. Used correctly, this can lead to a huge performance boost to your application because it will tell the client that they don't need to contact the server at all since nothing has changed. And you can't get faster than that.

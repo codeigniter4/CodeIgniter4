@@ -282,6 +282,19 @@ $this->assertCloseEnoughString(11 * 60, $timer->getElapsedTime('longjohn'));
 
 The above test will allow the actual time to be either 660 or 661 seconds.
 
+##### assertSameSql($expected, $actual, $message = '')
+
+Asserts that two SQL strings are the same, ignoring newlines in the actual SQL:
+
+```php
+<?php
+
+$expected = 'SELECT * FROM "jobs" WHERE "id" = 1';
+$actual   = $builder->where('id', 1)->getCompiledSelect();
+
+$this->assertSameSql($expected, $actual);
+```
+
 #### Accessing Protected/Private Properties
 
 When testing, you can use the following setter and getter methods to access protected and private methods and properties in the classes that you are testing.
