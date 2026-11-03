@@ -1,6 +1,6 @@
 # When a release is published, verify that the release pipeline delivered
 # everything: the distributable repos, the new framework version on
-# Packagist, and the user guide with its ePub.
+# Packagist, and the user guide.
 #
 # Use "Run workflow" with the release tag to verify an existing release.
 name: Verify Release
@@ -123,23 +123,21 @@ jobs:
     timeout-minutes: 30
 
     steps:
-      - name: Check that the ePub was added
+      - name: Check that the user guide was added
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          version="${TAG#v}"
-
           for i in $(seq 1 30); do
-            if gh api "repos/codeigniter4/userguide/contents/CodeIgniter${version}.epub" --jq '.name' > /dev/null 2>&1; then
-              echo "CodeIgniter${version}.epub is in the userguide repo."
+            if gh api "repos/codeigniter4/userguide/contents/docs/llms.txt" --jq '.name' > /dev/null 2>&1; then
+              echo "docs/llms.txt is in the userguide repo."
               exit 0
             fi
 
-            echo "Attempt ${i}: CodeIgniter${version}.epub is not yet in the userguide repo."
+            echo "Attempt ${i}: docs/llms.txt is not yet in the userguide repo."
             sleep 30
           done
 
-          echo "Timed out waiting for CodeIgniter${version}.epub."
+          echo "Timed out waiting for docs/llms.txt."
           exit 1
 
       - name: Check that the user guide workflows succeeded
