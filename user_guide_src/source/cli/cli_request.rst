@@ -38,8 +38,8 @@ Returns the value of a specific command line argument deemed to be an option:
 
 .. literalinclude:: cli_request/004.php
 
-.. note:: Starting in v4.8.0, if the option you are trying to access is an array, this method will return
-    the last value in the array. Use ``getRawOption()`` to get the full array of values for that option.
+.. note:: Starting in v4.8.0, if the option you are trying to access is an array, this method will return the last value
+    in the array. Use ``getRawOption()`` to get the full array of values for that option.
 
 getRawOption($key)
 ------------------

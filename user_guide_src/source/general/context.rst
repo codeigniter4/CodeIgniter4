@@ -1,8 +1,8 @@
 .. _context:
 
-###################
+#######
 Context
-###################
+#######
 
 .. versionadded:: 4.8.0
 
@@ -14,7 +14,9 @@ Context
 What is it?
 ***********
 
-The Context class provides a simple, convenient way to store and retrieve user-defined data throughout a single request. It functions as a key-value store that can hold any data you need to access across different parts of your application during the request lifecycle.
+The Context class provides a simple, convenient way to store and retrieve user-defined data throughout a single request.
+It functions as a key-value store that can hold any data you need to access across different parts of your application
+during the request lifecycle.
 
 The Context class is particularly useful for:
 
@@ -27,13 +29,14 @@ The Context class is particularly useful for:
 Accessing Context Class
 ***********************
 
-You can access the Context service anywhere in your application using the ``service()`` function or ``context()`` helper:
+You can access the Context service anywhere in your application using the ``service()`` function or the ``context()``
+helper:
 
 .. literalinclude:: context/001.php
 
-*********************
+********************
 Setting Context Data
-*********************
+********************
 
 Setting a Single Value
 ======================
@@ -53,12 +56,12 @@ The ``set()`` method returns the Context instance, allowing you to chain multipl
 
 .. literalinclude:: context/004.php
 
-*********************
+********************
 Getting Context Data
-*********************
+********************
 
 Retrieving a Single Value
-==========================
+=========================
 
 Use the ``get()`` method to retrieve a value by its key:
 
@@ -76,7 +79,7 @@ To get all stored context data:
 .. literalinclude:: context/007.php
 
 Retrieving Specific Keys
-=========================
+========================
 
 You can retrieve only specific keys using ``getOnly()``:
 
@@ -86,9 +89,9 @@ If you need all data except specific keys, use ``getExcept()``:
 
 .. literalinclude:: context/009.php
 
-**********************
+*****************
 Checking for Data
-**********************
+*****************
 
 You can check if a key exists in the context:
 
@@ -99,14 +102,14 @@ Removing Context Data
 *********************
 
 Removing a Single Value
-========================
+=======================
 
 You can remove data from the context using the ``remove()`` method:
 
 .. literalinclude:: context/011.php
 
 Removing Multiple Values
-=========================
+========================
 
 To remove multiple keys at once, pass an array:
 
@@ -119,13 +122,13 @@ To remove all context data:
 
 .. literalinclude:: context/013.php
 
-*********************
+*******************
 Hidden Context Data
-*********************
+*******************
 
-The Context class provides a separate storage area for sensitive data that should not be included in logs.
-This is useful for storing API keys, passwords, tokens, or other sensitive information that you need to access
-during the request but don't want to expose in log files.
+The Context class provides a separate storage area for sensitive data that should not be included in logs. This is
+useful for storing API keys, passwords, tokens, or other sensitive information that you need to access during the
+request but don't want to expose in log files.
 
 Setting Hidden Data
 ===================
@@ -174,17 +177,18 @@ To clear both regular and hidden data:
 
 .. literalinclude:: context/021.php
 
-.. important:: Regular data and hidden data are stored separately. A key can exist in both regular and hidden storage with different values. Use ``get()`` for regular data and ``getHidden()`` for hidden data.
+.. important:: Regular data and hidden data are stored separately. A key can exist in both regular and hidden storage
+    with different values. Use ``get()`` for regular data and ``getHidden()`` for hidden data.
 
-***********************************
+************************
 Integration with Logging
-***********************************
+************************
 
 The Context class integrates seamlessly with CodeIgniter's logging system. When enabled, context data is automatically
 appended to log messages, providing additional information for debugging and monitoring.
 
 Enabling Global Context Logging
-================================
+===============================
 
 To enable automatic logging of context data, set the ``$logGlobalContext`` property to ``true`` in your
 **app/Config/Logger.php** file:
@@ -201,7 +205,8 @@ This would produce a log entry like:
 
     ERROR - 2026-02-18 --> Payment processing failed {"user_id":123,"transaction_id":"txn_12345"}
 
-.. note:: Hidden data set with ``setHidden()`` is **never** included in logs, even when ``$logGlobalContext`` is enabled. This ensures sensitive information like API keys or tokens remain secure.
+.. note:: Hidden data set with ``setHidden()`` is **never** included in logs, even when ``$logGlobalContext`` is
+    enabled. This ensures sensitive information like API keys or tokens remain secure.
 
 ***************
 Important Notes
@@ -225,7 +230,7 @@ Class Reference
     .. php:method:: set($key[, $value = null])
 
         :param array|string $key: The key or an array of key-value pairs
-        :param mixed $value: The value to store (ignored if $key is an array)
+        :param mixed $value: The value to store (ignored if ``$key`` is an array)
         :returns: Context instance for method chaining
         :rtype: Context
 
@@ -234,7 +239,7 @@ Class Reference
     .. php:method:: setHidden($key[, $value = null])
 
         :param array|string $key: The key or an array of key-value pairs
-        :param mixed $value: The value to store (ignored if $key is an array)
+        :param mixed $value: The value to store (ignored if ``$key`` is an array)
         :returns: Context instance for method chaining
         :rtype: Context
 

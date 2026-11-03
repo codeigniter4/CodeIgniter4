@@ -209,22 +209,21 @@ The immutable query methods provide alternatives to the older mutable methods:
 | ``keepQuery()``       | ``withOnlyQueryVars()``                    |
 +-----------------------+--------------------------------------------+
 
-The ``with*()`` methods return a cloned URI instance and do not modify the original URI.
-The older mutable methods change the current URI instance.
+The ``with*()`` methods return a cloned URI instance and do not modify the original URI. The older mutable methods
+change the current URI instance.
 
-You can return a new URI instance with its query variables replaced by using the
-``withQuery()`` and ``withQueryArray()`` methods:
+You can return a new URI instance with its query variables replaced by using the ``withQuery()`` and
+``withQueryArray()`` methods:
 
 .. literalinclude:: uri/029.php
 
-You can return a new URI instance with one or more query variables added or replaced by using the
-``withQueryVar()`` and ``withQueryVars()`` methods. Existing query variables are preserved unless they
-are replaced:
+You can return a new URI instance with one or more query variables added or replaced by using the ``withQueryVar()`` and
+``withQueryVars()`` methods. Existing query variables are preserved unless they are replaced:
 
 .. literalinclude:: uri/028.php
 
-You can return a new URI instance with query variables removed or filtered by using the
-``withoutQueryVars()`` and ``withOnlyQueryVars()`` methods:
+You can return a new URI instance with query variables removed or filtered by using the ``withoutQueryVars()`` and
+``withOnlyQueryVars()`` methods:
 
 .. literalinclude:: uri/030.php
 
@@ -296,7 +295,7 @@ By default, some methods of this class may throw an exception. If you want to di
 that will prevent throwing exceptions.
 
 .. deprecated:: 4.4.0
-    This method is deprecated and will be removed in a future version.
-    It is recommended to handle exceptions properly instead of disabling them.
+    This method is deprecated and will be removed in a future version. It is recommended to handle exceptions properly
+    instead of disabling them.
 
 .. literalinclude:: uri/027.php

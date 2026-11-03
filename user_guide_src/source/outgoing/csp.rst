@@ -85,22 +85,20 @@ Enable or Disable CSP at Runtime
 
 .. versionadded:: 4.8.0
 
-You can enable or disable CSP for the current request by using the
-``enable()`` and ``disable()`` methods on the CSP instance.
+You can enable or disable CSP for the current request by using the ``enable()`` and ``disable()`` methods on the CSP
+instance.
 
 For example, to enable/disable CSP for a specific response:
 
 .. literalinclude:: csp/017.php
 
-The runtime value takes precedence over the ``CSPEnabled`` configuration value
-for the current request.
+The runtime value takes precedence over the ``CSPEnabled`` configuration value for the current request.
 
-These methods only affect the current request. They do not modify the
-application configuration. On subsequent requests, the ``CSPEnabled`` value in
-**app/Config/App.php** is used again.
+These methods only affect the current request. They do not modify the application configuration. On subsequent requests,
+the ``CSPEnabled`` value in **app/Config/App.php** is used again.
 
-This allows applications to keep CSP enabled globally while temporarily
-disabling it for specific requests, or enable it only where required.
+This allows applications to keep CSP enabled globally while temporarily disabling it for specific requests, or enable it
+only where required.
 
 Report Only
 ===========
@@ -203,10 +201,11 @@ Control Nonce Generation
 
 .. versionadded:: 4.8.0
 
-By default, both the script and style nonces are generated automatically. If you want to only generate one of them,
-you can set ``$enableStyleNonce`` or ``$enableScriptNonce`` to false in **app/Config/ContentSecurityPolicy.php**:
+By default, both the script and style nonces are generated automatically. If you want to only generate one of them, you
+can set ``$enableStyleNonce`` or ``$enableScriptNonce`` to false in **app/Config/ContentSecurityPolicy.php**:
 
 .. literalinclude:: csp/016.php
 
-By setting one of these to false, the corresponding nonce will not be generated, and the placeholder will be replaced with an empty string.
-This gives you the flexibility to use nonces for only one type of content if you choose, without affecting the other.
+By setting one of these to false, the corresponding nonce will not be generated, and the placeholder will be replaced
+with an empty string. This gives you the flexibility to use nonces for only one type of content if you choose, without
+affecting the other.

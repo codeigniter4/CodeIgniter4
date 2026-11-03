@@ -238,83 +238,69 @@ Streaming Responses
 
 .. versionadded:: 4.8.0
 
-CodeIgniter provides a ``StreamResponse`` class that streams its body to the
-client as it is generated, instead of buffering the complete body first. This
-is useful for large dataset exports, AI/LLM token streaming, proxying upstream
-streams, or any content that is produced while it is being sent. Streaming
-keeps memory usage low and improves time-to-first-byte for large responses.
+CodeIgniter provides a ``StreamResponse`` class that streams its body to the client as it is generated, instead of
+buffering the complete body first. This is useful for large dataset exports, AI/LLM token streaming, proxying upstream
+streams, or any content that is produced while it is being sent. Streaming keeps memory usage low and improves
+time-to-first-byte for large responses.
 
 Use the ``$this->response->stream()`` method with a callback:
 
 .. literalinclude:: response/039.php
 
-The callback receives the ``StreamResponse`` instance. ``StreamResponse::write()``
-returns ``false`` once the client has disconnected, so you can stop producing
-output early. By default, every ``write()`` flushes output to the client
-immediately. When writing many small chunks, pass ``false`` as the second
-argument and call ``StreamResponse::flush()`` at intervals instead - the
-example above flushes once per batch.
+The callback receives the ``StreamResponse`` instance. ``StreamResponse::write()`` returns ``false`` once the client has
+disconnected, so you can stop producing output early. By default, every ``write()`` flushes output to the client
+immediately. When writing many small chunks, pass ``false`` as the second argument and call ``StreamResponse::flush()``
+at intervals instead - the example above flushes once per batch.
 
-The callback is not limited to ``write()``: you may also write directly to
-``php://output`` (for example, with ``fputcsv()`` for CSV exports), calling
-``flush()`` and ``StreamResponse::isClientConnected()`` yourself.
+The callback is not limited to ``write()``: you may also write directly to ``php://output`` (for example, with
+``fputcsv()`` for CSV exports), calling ``flush()`` and ``StreamResponse::isClientConnected()`` yourself.
 
-Alternatively, you may pass an iterable of string chunks (such as a generator),
-and each chunk is written and flushed in order:
+Alternatively, you may pass an iterable of string chunks (such as a generator), and each chunk is written and flushed in
+order:
 
 .. literalinclude:: response/040.php
 
 Headers and Status Code
 -----------------------
 
-Set the content type, status code, and any custom headers **before** returning
-the response - anything set inside the callback will be too late. Unless you
-have already set it, ``StreamResponse`` applies ``X-Accel-Buffering: no`` to
-discourage intermediaries from buffering the stream. PHP's zlib output
-compression is turned off automatically, but if your web server or CDN
-compresses responses (e.g., nginx ``gzip`` or Apache ``mod_deflate``), configure
-it to skip your streaming endpoints - compression can delay chunk delivery.
+Set the content type, status code, and any custom headers **before** returning the response - anything set inside the
+callback will be too late. Unless you have already set it, ``StreamResponse`` applies ``X-Accel-Buffering: no`` to
+discourage intermediaries from buffering the stream. PHP's zlib output compression is turned off automatically, but if
+your web server or CDN compresses responses (e.g., nginx ``gzip`` or Apache ``mod_deflate``), configure it to skip your
+streaming endpoints - compression can delay chunk delivery.
 
-.. note:: ``stream()`` and ``eventStream()`` create a new response instance.
-    Headers, cookies, and status codes already set on the main response are not
-    copied. Set them on the returned ``StreamResponse`` or ``SSEResponse``
-    instance before returning it.
+.. note:: ``stream()`` and ``eventStream()`` create a new response instance. Headers, cookies, and status codes already
+    set on the main response are not copied. Set them on the returned ``StreamResponse`` or ``SSEResponse`` instance
+    before returning it.
 
-The response is streamed: output buffering is disabled, the PHP time limit is
-removed, and the session is closed to avoid blocking other requests. After
-filters still run and may set headers, but they must not rely on the response
-body. View rendering and decorators are not applied - stream your output in
-the callback.
+The response is streamed: output buffering is disabled, the PHP time limit is removed, and the session is closed to
+avoid blocking other requests. After filters still run and may set headers, but they must not rely on the response body.
+View rendering and decorators are not applied - stream your output in the callback.
 
-If :doc:`Content Security Policy </outgoing/csp>` is enabled, the
-``Content-Security-Policy`` header is sent as usual. However, nonce
-placeholders cannot be replaced in a streamed body. When streaming HTML that
-needs a nonce, call ``$this->response->getCSP()->getScriptNonce()`` (or
-``getStyleNonce()``) **before** returning the response and embed the returned
-value in your output yourself.
+If :doc:`Content Security Policy </outgoing/csp>` is enabled, the ``Content-Security-Policy`` header is sent as usual.
+However, nonce placeholders cannot be replaced in a streamed body. When streaming HTML that needs a nonce, call
+``$this->response->getCSP()->getScriptNonce()`` (or ``getStyleNonce()``) **before** returning the response and embed the
+returned value in your output yourself.
 
-``StreamResponse`` does not set a ``Content-Length`` header by default, since
-the body length is typically unknown in advance. Without it, clients cannot
-display download progress or resume interrupted transfers. If you do know the
-total size (for example, when proxying a stream of known length), you may set
-``Content-Length`` yourself before returning the response.
+``StreamResponse`` does not set a ``Content-Length`` header by default, since the body length is typically unknown in
+advance. Without it, clients cannot display download progress or resume interrupted transfers. If you do know the total
+size (for example, when proxying a stream of known length), you may set ``Content-Length`` yourself before returning the
+response.
 
-.. note:: To serve an existing file, prefer :ref:`DownloadResponse <force-file-download>`,
-    which sends proper ``Content-Length`` and ``Content-Disposition`` headers.
-    Use ``StreamResponse`` when the content is generated while it is being sent.
+.. note:: To serve an existing file, prefer :ref:`DownloadResponse <force-file-download>`, which sends proper
+    ``Content-Length`` and ``Content-Disposition`` headers. Use ``StreamResponse`` when the content is generated while
+    it is being sent.
 
 Example: Proxying an Upstream Stream
 ------------------------------------
 
-``StreamResponse`` can forward a stream from another source - such as object
-storage or an internal API - to the client without buffering it in memory or
-writing it to disk:
+``StreamResponse`` can forward a stream from another source - such as object storage or an internal API - to the client
+without buffering it in memory or writing it to disk:
 
 .. literalinclude:: response/041.php
 
-The :ref:`development server <sse-development-server>` and
-:ref:`production <sse-production>` considerations described for SSE below apply
-to all streaming responses.
+The :ref:`development server <sse-development-server>` and :ref:`production <sse-production>` considerations described
+for SSE below apply to all streaming responses.
 
 .. _server-sent-events:
 
@@ -325,33 +311,28 @@ Server-Sent Events (SSE)
 
 CodeIgniter provides an ``SSEResponse`` for streaming
 `Server-Sent Events <https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events>`_
-over HTTP. This is useful for long-lived connections where the server pushes
-events to the client. ``SSEResponse`` is a specialized
-:ref:`StreamResponse <streaming-responses>` that formats output according to
-the SSE protocol and forces the appropriate headers. Create it via the
-``$this->response->eventStream()`` factory method, or instantiate
+over HTTP. This is useful for long-lived connections where the server pushes events to the client. ``SSEResponse`` is a
+specialized :ref:`StreamResponse <streaming-responses>` that formats output according to the SSE protocol and forces the
+appropriate headers. Create it via the ``$this->response->eventStream()`` factory method, or instantiate
 ``new SSEResponse(...)`` directly.
 
 .. literalinclude:: response/036.php
 
-The callback receives the ``SSEResponse`` instance. Use ``event()``,
-``comment()``, or ``retry()`` to send SSE fields. If you pass an array to
-``event()``, it will be JSON-encoded. If encoding fails or the client
-disconnects, ``event()`` returns ``false``.
+The callback receives the ``SSEResponse`` instance. Use ``event()``, ``comment()``, or ``retry()`` to send SSE fields.
+If you pass an array to ``event()``, it will be JSON-encoded. If encoding fails or the client disconnects, ``event()``
+returns ``false``.
 
-The response is streamed: output buffering is disabled, and the session is closed
-to avoid blocking other requests. Headers must be set **before** returning the
-response because anything set inside the callback will be too late.
+The response is streamed: output buffering is disabled, and the session is closed to avoid blocking other requests.
+Headers must be set **before** returning the response because anything set inside the callback will be too late.
 
-After filters still run. Any headers or cookies they set will be sent, but they
-must not rely on the response body. View rendering, and decorators are not applied
-because the response body is not built - stream your output in the callback.
+After filters still run. Any headers or cookies they set will be sent, but they must not rely on the response body. View
+rendering and decorators are not applied because the response body is not built - stream your output in the callback.
 
 Custom Headers and Keep-Alive
 -----------------------------
 
-If you need custom headers, set them before returning the response. You can also
-use comments for keep-alive and configure the client retry interval:
+If you need custom headers, set them before returning the response. You can also use comments for keep-alive and
+configure the client retry interval:
 
 .. literalinclude:: response/037.php
 
@@ -360,13 +341,11 @@ use comments for keep-alive and configure the client retry interval:
 Development Server Limitations
 ------------------------------
 
-When testing SSE locally, keep in mind that PHP's built-in development server
-(used by ``php spark serve``) is not designed to handle long-lived streaming
-connections effectively.
+When testing SSE locally, keep in mind that PHP's built-in development server (used by ``php spark serve``) is not
+designed to handle long-lived streaming connections effectively.
 
-Because an SSE connection remains open for an extended period, the built-in
-server may spend most of its capacity serving the stream. As a result, other
-requests may appear slow, blocked, or delayed while the SSE connection is active.
+Because an SSE connection remains open for an extended period, the built-in server may spend most of its capacity
+serving the stream. As a result, other requests may appear slow, blocked, or delayed while the SSE connection is active.
 
 Possible symptoms include:
 
@@ -374,29 +353,25 @@ Possible symptoms include:
 - API requests responding slowly
 - frontend requests remaining in a pending state
 
-For more realistic testing, prefer a server stack that handles concurrent
-requests better, such as Apache, nginx with PHP-FPM, or FrankenPHP.
+For more realistic testing, prefer a server stack that handles concurrent requests better, such as Apache, nginx with
+PHP-FPM, or FrankenPHP.
 
-This behavior is a limitation of the development server environment, not of
-``SSEResponse`` itself.
+This behavior is a limitation of the development server environment, not of ``SSEResponse`` itself.
 
 .. _sse-production:
 
 Production Considerations
 -------------------------
 
-Some server stacks and CDNs buffer or compress responses (e.g., Apache with
-``mod_deflate``), which can break real-time SSE delivery.
-``SSEResponse`` disables PHP output buffering, turns off zlib output
-compression, and sets ``X-Accel-Buffering: no``. However, intermediaries may
-still buffer or compress, so configure your web server or CDN to disable
-buffering/compression for SSE endpoints.
+Some server stacks and CDNs buffer or compress responses (e.g., Apache with ``mod_deflate``), which can break real-time
+SSE delivery. ``SSEResponse`` disables PHP output buffering, turns off zlib output compression, and sets
+``X-Accel-Buffering: no``. However, intermediaries may still buffer or compress, so configure your web server or CDN to
+disable buffering/compression for SSE endpoints.
 
 Example: Product-Oriented Use Case
 ----------------------------------
 
-The following example simulates a small notification stream to illustrate a more
-product-focused use case:
+The following example simulates a small notification stream to illustrate a more product-focused use case:
 
 .. literalinclude:: response/038.php
 

@@ -88,23 +88,23 @@ Stopping the Handler Chain on Failure
 
 .. versionadded:: 4.8.0
 
-Handlers are executed in the order they are defined in the ``$handlers`` property. When a handler's
-``handle()`` method returns ``false``, the handlers defined after it are not executed.
+Handlers are executed in the order they are defined in the ``$handlers`` property. When a handler's ``handle()`` method
+returns ``false``, the handlers defined after it are not executed.
 
-By default, the **File Handler** and the **Errorlog Handler** return ``false`` when they fail to write the
-log, for example when the log directory is not writable. This means that a failing handler prevents the
-handlers after it from logging the message.
+By default, the **File Handler** and the **Errorlog Handler** return ``false`` when they fail to write the log, for
+example when the log directory is not writable. This means that a failing handler prevents the handlers after it from
+logging the message.
 
-If you want the remaining handlers to run even when a handler fails to write the log, set its
-``stopChainOnFailure`` option to ``false``:
+If you want the remaining handlers to run even when a handler fails to write the log, set its ``stopChainOnFailure``
+option to ``false``:
 
 .. literalinclude:: logging/010.php
 
-In the example above, the **Errorlog Handler** still logs the message when the **File Handler** cannot write
-to the log file.
+In the example above, the **Errorlog Handler** still logs the message when the **File Handler** cannot write to the log
+file.
 
-.. note:: This option only affects failed writes in the **File Handler** and the **Errorlog Handler**.
-    A custom handler can still return ``false`` from ``handle()`` to stop the remaining handlers.
+.. note:: This option only affects failed writes in the **File Handler** and the **Errorlog Handler**. A custom handler
+    can still return ``false`` from ``handle()`` to stop the remaining handlers.
 
 Modifying the Message with Context
 ==================================
@@ -150,13 +150,13 @@ Global Context Logging
 
 .. versionadded:: 4.8.0
 
-You can automatically append context data to all log messages by enabling the ``$logGlobalContext``
-property in **app/Config/Logger.php**:
+You can automatically append context data to all log messages by enabling the ``$logGlobalContext`` property in
+**app/Config/Logger.php**:
 
 .. literalinclude:: context/023.php
 
-When enabled, all regular context data (set via the :ref:`Context class <context>`) is automatically
-appended to every log message as a JSON string:
+When enabled, all regular context data (set via the :ref:`Context class <context>`) is automatically appended to every
+log message as a JSON string:
 
 .. literalinclude:: context/023.php
 
@@ -166,9 +166,8 @@ This would produce a log entry like:
 
     ERROR - 2026-02-18 --> Payment processing failed {"user_id":123,"transaction_id":"txn_12345"}
 
-.. note:: Hidden data set with ``setHidden()`` are **never** included in log output, even when
-    ``$logGlobalContext`` is enabled. This protects sensitive information such as API keys
-    and tokens from appearing in log files.
+.. note:: Hidden data set with ``setHidden()`` is **never** included in log output, even when ``$logGlobalContext`` is
+    enabled. This protects sensitive information such as API keys and tokens from appearing in log files.
 
 See :ref:`context` for full documentation on storing and managing context data.
 
@@ -179,33 +178,29 @@ Per-Call Context Logging
 
 .. versionadded:: 4.8.0
 
-By default, context values passed to ``log_message()`` are only used for placeholder
-interpolation and are not stored anywhere. You can enable structured context logging
-by setting ``$logContext = true`` in **app/Config/Logger.php**:
+By default, context values passed to ``log_message()`` are only used for placeholder interpolation and are not stored
+anywhere. You can enable structured context logging by setting ``$logContext = true`` in **app/Config/Logger.php**:
 
 .. literalinclude:: logging/009.php
 
-When enabled, any context key that is **not** referenced as a ``{placeholder}`` in the
-message is passed to handlers as structured data. Keys that were interpolated into the
-message are stripped by default (since their values are already present in the message
-text), but you can keep them by setting ``$logContextUsedKeys = true``.
+When enabled, any context key that is **not** referenced as a ``{placeholder}`` in the message is passed to handlers as
+structured data. Keys that were interpolated into the message are stripped by default (since their values are already
+present in the message text), but you can keep them by setting ``$logContextUsedKeys = true``.
 
 .. literalinclude:: logging/007.php
 
 **Throwable normalization**
 
-Per PSR-3, a ``Throwable`` instance must be passed under the ``exception`` key to be
-handled specially. When found there, it is automatically normalized into a meaningful
-array instead of being serialized as an empty object:
+Per PSR-3, a ``Throwable`` instance must be passed under the ``exception`` key to be handled specially. When found
+there, it is automatically normalized into a meaningful array instead of being serialized as an empty object:
 
 .. literalinclude:: logging/008.php
 
-The normalized array contains ``class``, ``message``, ``code``, ``file``, and ``line``.
-To also include the full stack trace, set ``$logContextTrace = true``.
+The normalized array contains ``class``, ``message``, ``code``, ``file``, and ``line``. To also include the full stack
+trace, set ``$logContextTrace = true``.
 
-.. note:: ``$logContext`` and ``$logGlobalContext`` are independent. You can enable either
-    or both. When both are enabled, per-call context and global context are merged before
-    being passed to handlers.
+.. note:: ``$logContext`` and ``$logGlobalContext`` are independent. You can enable either or both. When both are
+    enabled, per-call context and global context are merged before being passed to handlers.
 
 Using Third-Party Loggers
 =========================

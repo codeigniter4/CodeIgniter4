@@ -22,16 +22,12 @@ Available Functions
 
 The following functions are available:
 
-.. note:: Since v4.8.0, the dot-path helpers can read values from arrays or
-    objects, including ``Entity`` objects. This applies to
-    :php:func:`dot_array_search()`, :php:func:`dot_array_has()`,
-    :php:func:`dot_array_only()`, :php:func:`dot_array_except()`, and
-    :php:func:`array_group_by()`.
+.. note:: Since v4.8.0, the dot-path helpers can read values from arrays or objects, including ``Entity`` objects. This
+    applies to :php:func:`dot_array_search()`, :php:func:`dot_array_has()`, :php:func:`dot_array_only()`,
+    :php:func:`dot_array_except()`, and :php:func:`array_group_by()`.
 
-    :php:func:`dot_array_set()` and :php:func:`dot_array_unset()` still modify
-    arrays only. :php:func:`dot_array_only()` and
-    :php:func:`dot_array_except()` always return arrays. See their descriptions
-    for how object values are handled.
+    :php:func:`dot_array_set()` and :php:func:`dot_array_unset()` still modify arrays only. :php:func:`dot_array_only()`
+    and :php:func:`dot_array_except()` always return arrays. See their descriptions for how object values are handled.
 
 ..  php:function:: dot_array_search(string $search, array|object $values)
 

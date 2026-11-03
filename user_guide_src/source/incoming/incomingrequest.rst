@@ -179,22 +179,19 @@ Typed Request Input
 
 .. versionadded:: 4.8.0
 
-``input()`` returns a ``CodeIgniter\HTTP\RequestInput`` object. Use it to read
-values from a specific part of the request with typed fallback helpers:
+``input()`` returns a ``CodeIgniter\HTTP\RequestInput`` object. Use it to read values from a specific part of the
+request with typed fallback helpers:
 
 .. literalinclude:: incomingrequest/046.php
    :lines: 2-
 
-``input()->get()`` reads query-string parameters. ``input()->post()`` reads
-POST body parameters. ``input()->json()`` reads JSON request body parameters.
-``input()->raw()`` reads raw input parameters, like ``getRawInput()``.
+``input()->get()`` reads query-string parameters. ``input()->post()`` reads POST body parameters. ``input()->json()``
+reads JSON request body parameters. ``input()->raw()`` reads raw input parameters, like ``getRawInput()``.
 
-These methods keep GET, POST, JSON, and raw data separate. They do not combine
-multiple request sources for you.
+These methods keep GET, POST, JSON, and raw data separate. They do not combine multiple request sources for you.
 
-These methods do not validate input. They are fallback-friendly helpers for
-reading raw request data. Use Validation or :ref:`form-requests` when input
-must satisfy application rules before it is consumed.
+These methods do not validate input. They are fallback-friendly helpers for reading raw request data. Use Validation or
+:ref:`form-requests` when input must satisfy application rules before it is consumed.
 
 .. _incomingrequest-getting-json-data:
 

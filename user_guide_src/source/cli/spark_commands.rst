@@ -45,8 +45,7 @@ sorted alphabetically:
 
     php spark list --simple
 
-.. note:: :ref:`Hidden commands <hidden-commands>` are left out of both lists, but still run
-    when called by name.
+.. note:: :ref:`Hidden commands <hidden-commands>` are left out of both lists, but still run when called by name.
 
 Showing Help
 ------------
@@ -109,8 +108,7 @@ You may always pass ``--no-header`` to suppress the header output, helpful for p
 
     Your environment is currently set as development.
 
-.. note:: A modern command can also opt out of the header for every run.
-    See :ref:`commands-without-the-header`.
+.. note:: A modern command can also opt out of the header for every run. See :ref:`commands-without-the-header`.
 
 .. _spark-verbosity:
 
@@ -119,24 +117,21 @@ Verbosity
 
 .. versionadded:: 4.8.0
 
-``--quiet`` / ``-q`` hides everything but errors, including the header, and makes a
-modern command non-interactive. ``--silent`` hides the errors too. ``--verbose`` / ``-v``
-shows more detail, ``-vv`` even more, and ``-vvv`` everything, including debug messages.
-A command shows the extra detail only when it writes some, and an uncaught exception
-shows its backtrace from ``-v`` on.
+``--quiet`` / ``-q`` hides everything but errors, including the header, and makes a modern command non-interactive.
+``--silent`` hides the errors too. ``--verbose`` / ``-v`` shows more detail, ``-vv`` even more, and ``-vvv`` everything,
+including debug messages. A command shows the extra detail only when it writes some, and an uncaught exception shows its
+backtrace from ``-v`` on.
 
-The flags can be combined, and the quietest one wins: ``--silent`` over ``-q``, and ``-q``
-over any ``-v``.
+The flags can be combined, and the quietest one wins: ``--silent`` over ``-q``, and ``-q`` over any ``-v``.
 
 .. code-block:: console
 
     php spark lang:find -v
     php spark migrate -q
 
-Without these flags, the ``SHELL_VERBOSITY`` environment variable sets the level:
-``-2`` for no output at all, ``-1`` for quiet, ``0`` for normal, and ``1`` to ``3``
-for the three verbose levels. It can also be set in the **.env** file. Processes started
-by the command inherit the level.
+Without these flags, the ``SHELL_VERBOSITY`` environment variable sets the level: ``-2`` for no output at all, ``-1``
+for quiet, ``0`` for normal, and ``1`` to ``3`` for the three verbose levels. It can also be set in the **.env** file.
+Processes started by the command inherit the level.
 
 .. code-block:: console
 
@@ -151,12 +146,11 @@ Correcting a Mistyped Command
 
 .. versionadded:: 4.8.0
 
-When the command name is not found, **spark** lists the closest matches. On an interactive
-run it also offers to run one of them: a single match asks for a ``y``/``n`` confirmation, and
-several matches present a menu with a "none of these" entry, picked with the arrow keys (see
-:ref:`cli-library-select`). Pressing Enter picks the highlighted entry. Non-interactive runs
-(``--no-interaction`` / ``-N``, or piped input) only print the suggestions and exit with
-an error, as before.
+When the command name is not found, **spark** lists the closest matches. On an interactive run it also offers to run one
+of them: a single match asks for a ``y``/``n`` confirmation, and several matches present a menu with a "none of these"
+entry, picked with the arrow keys (see :ref:`cli-library-select`). Pressing Enter picks the highlighted entry.
+Non-interactive runs (``--no-interaction`` / ``-N``, or piped input) only print the suggestions and exit with an error,
+as before.
 
 .. code-block:: console
 
@@ -183,6 +177,6 @@ All output from the command that is ran is captured when not run from the comman
 so that you can choose to display it or not.
 
 .. note:: The ``command()`` function does not catch exceptions thrown while the command runs.
-    :doc:`Modern commands <cli_modern_commands>` in particular throw when their input fails
-    validation, such as a missing required argument or an unknown option. Wrap the call in a
-    ``try``/``catch`` block if you need to handle these cases.
+    :doc:`Modern commands <cli_modern_commands>` in particular throw when their input fails validation, such as a
+    missing required argument or an unknown option. Wrap the call in a ``try``/``catch`` block if you need to handle
+    these cases.

@@ -113,9 +113,10 @@ utilize ``limit(10, 20)`` but the generated SQL query has ``LIMIT 20, 10``.
 The reason for this outcome is because the parameter in the first query is set to ``false``, ``limit(10, 20)`` remained in the second query.
 
 .. note::
-    **Changed in version 4.8.0.** With ``$reset = true`` (the default), ``getCompiledSelect()``, ``getCompiledInsert()``, ``getCompiledUpdate()`` and ``getCompiledDelete()``
-    also clear their bindings and binding counters after compilation. ``getBinds()`` therefore returns an empty array after these calls.
-    Pass ``false`` to retain the query clauses and bindings for reuse.
+    **Changed in version 4.8.0.** With ``$reset = true`` (the default), ``getCompiledSelect()``,
+    ``getCompiledInsert()``, ``getCompiledUpdate()`` and ``getCompiledDelete()`` also clear their bindings and binding
+    counters after compilation. ``getBinds()`` therefore returns an empty array after these calls. Pass ``false`` to
+    retain the query clauses and bindings for reuse.
 
 .. _query-builder-explain:
 
@@ -128,19 +129,16 @@ Runs an execution-plan query for the current Query Builder ``SELECT`` query:
 
 .. literalinclude:: query_builder/129.php
 
-This method returns a database result object. The result columns are driver-specific
-because each database reports execution plans in its own format.
-You can read the result with ``getResultArray()`` or ``getResultObject()``, the
-same as any other query result.
-If test mode is enabled, it returns the compiled execution-plan SQL string.
-If the query fails and ``DBDebug`` is ``false``, it returns ``false``.
+This method returns a database result object. The result columns are driver-specific because each database reports
+execution plans in its own format. You can read the result with ``getResultArray()`` or ``getResultObject()``, the same
+as any other query result. If test mode is enabled, it returns the compiled execution-plan SQL string. If the query
+fails and ``DBDebug`` is ``false``, it returns ``false``.
 
-The method resets the current Query Builder state by default. If you need to keep
-the current Query Builder state, you can pass ``false`` as the first parameter.
+The method resets the current Query Builder state by default. If you need to keep the current Query Builder state, you
+can pass ``false`` as the first parameter.
 
-.. note:: This method is currently supported by MySQLi, Postgre, and SQLite3.
-    SQLite3 uses ``EXPLAIN QUERY PLAN``. SQLSRV and OCI8 are not supported by
-    this method.
+.. note:: This method is currently supported by MySQLi, Postgre, and SQLite3. SQLite3 uses ``EXPLAIN QUERY PLAN``.
+    SQLSRV and OCI8 are not supported by this method.
 
 $builder->getWhere()
 --------------------
@@ -308,8 +306,7 @@ Since v4.2.0, ``$builder->join()`` accepts a ``CodeIgniter\Database\RawSql`` ins
 
 .. literalinclude:: query_builder/102.php
 
-Since v4.8.0, the table can also be a ``RawSql`` instance. For example, you
-can join a subquery:
+Since v4.8.0, the table can also be a ``RawSql`` instance. For example, you can join a subquery:
 
 .. literalinclude:: query_builder/134.php
 
@@ -335,11 +332,9 @@ methods:
     ``false``, CodeIgniter will not try to protect your field or table names.
 
 .. versionadded:: 4.8.0
-    Query Builder methods that bind and escape field values or value lists,
-    such as ``where()``, ``whereIn()``, ``having()``, ``set()``, ``insert()``,
-    and ``update()``, accept PHP ``BackedEnum`` instances and use their backing
-    values. Raw SQL values, such as values passed with escaping disabled, are
-    not converted.
+    Query Builder methods that bind and escape field values or value lists, such as ``where()``, ``whereIn()``,
+    ``having()``, ``set()``, ``insert()``, and ``update()``, accept PHP ``BackedEnum`` instances and use their backing
+    values. Raw SQL values, such as values passed with escaping disabled, are not converted.
 
 1. Simple key/value method
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -416,28 +411,22 @@ $builder->whereColumn()
 
 .. versionadded:: 4.8.0
 
-Compares one column to another column. If the first parameter does not end with
-a supported operator, ``=`` is used:
+Compares one column to another column. If the first parameter does not end with a supported operator, ``=`` is used:
 
 .. literalinclude:: query_builder/123.php
 
-You can include a supported operator at the end of the first parameter in order
-to control the comparison. Supported operators are ``=``, ``!=``, ``<>``, ``<``,
-``>``, ``<=``, and ``>=``. If none of these operators is detected at the end of the first
-parameter, ``=`` is used. Empty
-column names throw an ``InvalidArgumentException``.
+You can include a supported operator at the end of the first parameter to control the comparison. Supported operators
+are ``=``, ``!=``, ``<>``, ``<``, ``>``, ``<=``, and ``>=``. Empty column names throw an ``InvalidArgumentException``.
 
-Column names are protected by default, unless the ``$escape`` parameter is
-``false``.
+Column names are protected by default, unless the ``$escape`` parameter is ``false``.
 
-.. warning:: Do not pass user-supplied data as column names. Values should use
-    ``where()`` or another value-binding method instead.
+.. warning:: Do not pass user-supplied data as column names. Values should use ``where()`` or another value-binding
+    method instead.
 
 $builder->orWhereColumn()
 -------------------------
 
-This method is identical to ``whereColumn()``, except that multiple instances
-are joined by **OR**.
+This method is identical to ``whereColumn()``, except that multiple instances are joined by **OR**.
 
 .. _query-builder-where-between:
 
@@ -446,36 +435,30 @@ $builder->whereBetween()
 
 .. versionadded:: 4.8.0
 
-Generates a **WHERE** field ``BETWEEN`` minimum and maximum value SQL query.
-``BETWEEN`` includes both values:
+Generates a **WHERE** field ``BETWEEN`` minimum and maximum value SQL query. ``BETWEEN`` includes both values:
 
 .. literalinclude:: query_builder/126.php
 
-The range array must contain exactly two values: the lower and upper bounds.
-These values are bound and escaped automatically. The ``$escape`` parameter
-controls value escaping and identifier protection.
+The range array must contain exactly two values: the lower and upper bounds. These values are bound and escaped
+automatically. The ``$escape`` parameter controls value escaping and identifier protection.
 
-.. warning:: Do not pass user-supplied data as field names. If you need a more
-    complex SQL expression, use ``where()`` with :ref:`RawSql <query-builder-where-rawsql>`
-    and escape values manually.
+.. warning:: Do not pass user-supplied data as field names. If you need a more complex SQL expression, use ``where()``
+    with :ref:`RawSql <query-builder-where-rawsql>` and escape values manually.
 
 $builder->orWhereBetween()
 --------------------------
 
-This method is identical to ``whereBetween()``, except that multiple instances
-are joined by **OR**.
+This method is identical to ``whereBetween()``, except that multiple instances are joined by **OR**.
 
 $builder->whereNotBetween()
 ---------------------------
 
-This method is identical to ``whereBetween()``, except that it generates
-``NOT BETWEEN``.
+This method is identical to ``whereBetween()``, except that it generates ``NOT BETWEEN``.
 
 $builder->orWhereNotBetween()
 -----------------------------
 
-This method is identical to ``whereNotBetween()``, except that multiple
-instances are joined by **OR**.
+This method is identical to ``whereNotBetween()``, except that multiple instances are joined by **OR**.
 
 .. _query-builder-where-exists:
 
@@ -484,32 +467,27 @@ $builder->whereExists()
 
 .. versionadded:: 4.8.0
 
-Generates a ``WHERE EXISTS`` subquery. This method accepts either a Closure or
-a ``BaseBuilder`` instance:
+Generates a ``WHERE EXISTS`` subquery. This method accepts either a Closure or a ``BaseBuilder`` instance:
 
 .. literalinclude:: query_builder/125.php
 
-.. warning:: Raw SQL strings are not accepted. If you need to write the
-    ``EXISTS`` clause yourself, use ``where()`` with a manually escaped
-    condition. See :ref:`query-builder-where-rawsql`.
+.. warning:: Raw SQL strings are not accepted. If you need to write the ``EXISTS`` clause yourself, use ``where()`` with
+    a manually escaped condition. See :ref:`query-builder-where-rawsql`.
 
 $builder->orWhereExists()
 -------------------------
 
-This method is identical to ``whereExists()``, except that multiple instances
-are joined by **OR**.
+This method is identical to ``whereExists()``, except that multiple instances are joined by **OR**.
 
 $builder->whereNotExists()
 --------------------------
 
-This method is identical to ``whereExists()``, except that it generates a
-``WHERE NOT EXISTS`` subquery.
+This method is identical to ``whereExists()``, except that it generates a ``WHERE NOT EXISTS`` subquery.
 
 $builder->orWhereNotExists()
 ----------------------------
 
-This method is identical to ``whereNotExists()``, except that multiple
-instances are joined by **OR**.
+This method is identical to ``whereNotExists()``, except that multiple instances are joined by **OR**.
 
 $builder->whereIn()
 -------------------
@@ -620,15 +598,14 @@ $builder->likeAny()
 
 .. versionadded:: 4.8.0
 
-This method generates a grouped set of **LIKE** clauses joined by **OR**.
-Use it when you want to search for one value across multiple fields:
+This method generates a grouped set of **LIKE** clauses joined by **OR**. Use it when you want to search for one value
+across multiple fields:
 
 .. literalinclude:: query_builder/130.php
 
-Unlike the associative array form of ``like()``, the field list must be a
-non-empty list of field names. The same match value is used for every field.
-The field list may also contain ``RawSql`` instances; see :ref:`query-builder-like-rawsql`.
-Use ``orLikeAny()`` when the grouped search should be separated from previous
+Unlike the associative array form of ``like()``, the field list must be a non-empty list of field names. The same match
+value is used for every field. The field list may also contain ``RawSql`` instances; see
+:ref:`query-builder-like-rawsql`. Use ``orLikeAny()`` when the grouped search should be separated from previous
 conditions with **OR**.
 
 $builder->orLike()
@@ -703,36 +680,30 @@ $builder->havingBetween()
 
 .. versionadded:: 4.8.0
 
-Generates a **HAVING** field ``BETWEEN`` minimum and maximum value SQL query.
-``BETWEEN`` includes both values:
+Generates a **HAVING** field ``BETWEEN`` minimum and maximum value SQL query. ``BETWEEN`` includes both values:
 
 .. literalinclude:: query_builder/127.php
 
-The range array must contain exactly two values: the lower and upper bounds.
-These values are bound and escaped automatically. The ``$escape`` parameter
-controls value escaping and identifier protection.
+The range array must contain exactly two values: the lower and upper bounds. These values are bound and escaped
+automatically. The ``$escape`` parameter controls value escaping and identifier protection.
 
-.. warning:: Do not pass user-supplied data as field names. If you need a more
-    complex SQL expression, use ``having()`` with :ref:`RawSql <query-builder-where-rawsql>`
-    and escape values manually.
+.. warning:: Do not pass user-supplied data as field names. If you need a more complex SQL expression, use ``having()``
+    with :ref:`RawSql <query-builder-where-rawsql>` and escape values manually.
 
 $builder->orHavingBetween()
 ---------------------------
 
-This method is identical to ``havingBetween()``, except that multiple instances
-are joined by **OR**.
+This method is identical to ``havingBetween()``, except that multiple instances are joined by **OR**.
 
 $builder->havingNotBetween()
 ----------------------------
 
-This method is identical to ``havingBetween()``, except that it generates
-``NOT BETWEEN``.
+This method is identical to ``havingBetween()``, except that it generates ``NOT BETWEEN``.
 
 $builder->orHavingNotBetween()
 ------------------------------
 
-This method is identical to ``havingNotBetween()``, except that multiple
-instances are joined by **OR**.
+This method is identical to ``havingNotBetween()``, except that multiple instances are joined by **OR**.
 
 $builder->havingIn()
 --------------------
@@ -914,10 +885,9 @@ first parameter.
 .. literalinclude:: query_builder/073.php
 
 .. note::
-    **Changed in version 4.8.0.** With ``$reset = true`` (the default), bindings and
-    binding counters are cleared after execution, so ``getBinds()`` returns an empty
-    array. Pass ``false`` to retain the query conditions and bindings. Test mode
-    retains bindings for the placeholders in its returned SQL.
+    **Changed in version 4.8.0.** With ``$reset = true`` (the default), bindings and binding counters are cleared after
+    execution, so ``getBinds()`` returns an empty array. Pass ``false`` to retain the query conditions and bindings.
+    Test mode retains bindings for the placeholders in its returned SQL.
 
 .. _query-builder-exists:
 
@@ -926,30 +896,24 @@ $builder->exists()
 
 .. versionadded:: 4.8.0
 
-Permits you to determine whether the current Query Builder query would return
-at least one row:
+Permits you to determine whether the current Query Builder query would return at least one row:
 
 .. literalinclude:: query_builder/128.php
 
-This method returns ``true`` when the query would return at least one row and
-``false`` when it would not. It respects any existing ``limit()`` and
-``offset()`` clauses, and resets the current Query Builder state by default. If
-you need to keep the current Query Builder state, you can pass ``false`` as the
-first parameter.
-If the existence query fails and ``DBDebug`` is ``false``, both methods return
-``false``.
+This method returns ``true`` when the query would return at least one row and ``false`` when it would not. It respects
+any existing ``limit()`` and ``offset()`` clauses, and resets the current Query Builder state by default. If you need to
+keep the current Query Builder state, you can pass ``false`` as the first parameter. If the existence query fails and
+``DBDebug`` is ``false``, both methods return ``false``.
 
 $builder->doesntExist()
 -----------------------
 
 .. versionadded:: 4.8.0
 
-This method is identical to ``exists()``, except that it returns ``true`` when
-the query would not return any rows.
+This method is identical to ``exists()``, except that it returns ``true`` when the query would not return any rows.
 
-.. note:: These methods execute the current Query Builder query to check for
-    rows. To add an SQL ``EXISTS`` predicate to a query, use
-    :ref:`query-builder-where-exists`.
+.. note:: These methods execute the current Query Builder query to check for rows. To add an SQL ``EXISTS`` predicate to
+    a query, use :ref:`query-builder-where-exists`.
 
 $builder->countAll()
 --------------------
@@ -963,17 +927,16 @@ As is in ``countAllResult()`` method, this method resets any field values that y
 to ``select()`` as well. If you need to keep them, you can pass ``false`` as the
 first parameter.
 
-********************
+*******************
 Pessimistic Locking
-********************
+*******************
 
 .. _query-builder-pessimistic-locking-driver-support:
 
 Driver Support
 ==============
 
-The following table summarizes Query Builder support for pessimistic locks and
-lock-wait modifiers:
+The following table summarizes Query Builder support for pessimistic locks and lock-wait modifiers:
 
 .. list-table::
     :header-rows: 1
@@ -1034,9 +997,8 @@ lock-wait modifiers:
     ``READCOMMITTEDLOCK`` and ``READPAST`` table hints. It can still wait on
     locks that ``READPAST`` does not skip, such as page-level locks.
 
-.. note:: ``countAllResults()``, ``exists()``, and ``doesntExist()`` do not apply
-    pessimistic locks or lock-wait modifiers. Consequently, they report matching
-    rows rather than rows currently available for locking.
+.. note:: ``countAllResults()``, ``exists()``, and ``doesntExist()`` do not apply pessimistic locks or lock-wait
+    modifiers. Consequently, they report matching rows rather than rows currently available for locking.
 
 .. _query-builder-shared-lock:
 
@@ -1048,36 +1010,29 @@ $builder->sharedLock()
 
 .. versionadded:: 4.8.0
 
-Adds a pessimistic read lock to a ``SELECT`` query. This is useful when rows
-must be read consistently while other transactions are prevented from modifying
-them until the current transaction ends.
+Adds a pessimistic read lock to a ``SELECT`` query. This is useful when rows must be read consistently while other
+transactions are prevented from modifying them until the current transaction ends.
 
 .. literalinclude:: query_builder/131.php
 
-Use this method inside a database transaction. Without an explicit transaction,
-the lock is typically released when the ``SELECT`` statement finishes. If the
-same transaction will update the selected rows, use ``lockForUpdate()`` instead.
+Use this method inside a database transaction. Without an explicit transaction, the lock is typically released when the
+``SELECT`` statement finishes. If the same transaction will update the selected rows, use ``lockForUpdate()`` instead.
 
-See :ref:`query-builder-pessimistic-locking-driver-support` for supported
-drivers and lock combinations. Unsupported drivers throw a ``DatabaseException``.
-``sharedLock()`` is not supported with ``union()`` or ``unionAll()``. Some
-databases restrict which query shapes can be used with row locking. When
-CodeIgniter can detect an unsupported combination, it throws a
-``DatabaseException``. See the following warnings for driver-specific behavior.
+See :ref:`query-builder-pessimistic-locking-driver-support` for supported drivers and lock combinations. Unsupported
+drivers throw a ``DatabaseException``. ``sharedLock()`` is not supported with ``union()`` or ``unionAll()``. Some
+databases restrict which query shapes can be used with row locking. When CodeIgniter can detect an unsupported
+combination, it throws a ``DatabaseException``. See the following warnings for driver-specific behavior.
 
-.. warning:: MySQLi does not support ``sharedLock()`` with ``fromSubquery()``
-    because an outer locking read on a derived table does not lock the underlying
-    rows as users may expect.
+.. warning:: MySQLi does not support ``sharedLock()`` with ``fromSubquery()`` because an outer locking read on a derived
+    table does not lock the underlying rows as users may expect.
 
-.. warning:: Postgre does not support ``sharedLock()`` with ``distinct()``,
-    ``groupBy()``, ``having()``, or aggregate helper selections such as
-    ``selectCount()``.
+.. warning:: Postgre does not support ``sharedLock()`` with ``distinct()``, ``groupBy()``, ``having()``, or aggregate
+    helper selections such as ``selectCount()``.
 
-.. warning:: SQLSRV uses SQL Server table hints instead of a trailing ``FOR SHARE``
-    clause. The hint is applied to table references in the ``FROM`` clause;
-    joined tables are not hinted. Its exact lock granularity depends on SQL
-    Server's execution plan and transaction isolation level. SQLSRV does not
-    support ``sharedLock()`` without a ``FROM`` table or on subqueries.
+.. warning:: SQLSRV uses SQL Server table hints instead of a trailing ``FOR SHARE`` clause. The hint is applied to table
+    references in the ``FROM`` clause; joined tables are not hinted. Its exact lock granularity depends on SQL Server's
+    execution plan and transaction isolation level. SQLSRV does not support ``sharedLock()`` without a ``FROM`` table or
+    on subqueries.
 
 .. _query-builder-lock-for-update:
 
@@ -1089,41 +1044,33 @@ $builder->lockForUpdate()
 
 .. versionadded:: 4.8.0
 
-Adds a pessimistic write lock to a ``SELECT`` query. This is useful when a row
-must be read and then updated safely while other transactions are prevented
-from modifying it first.
+Adds a pessimistic write lock to a ``SELECT`` query. This is useful when a row must be read and then updated safely
+while other transactions are prevented from modifying it first.
 
 .. literalinclude:: query_builder/124.php
 
-Use this method inside a database transaction. Without an explicit transaction,
-the lock is typically released when the ``SELECT`` statement finishes. The exact
-locking behavior is determined by the database server and transaction isolation
+Use this method inside a database transaction. Without an explicit transaction, the lock is typically released when the
+``SELECT`` statement finishes. The exact locking behavior is determined by the database server and transaction isolation
 level.
 
-See :ref:`query-builder-pessimistic-locking-driver-support` for supported
-drivers and lock combinations. Unsupported drivers throw a ``DatabaseException``.
-``lockForUpdate()`` is not supported with ``union()`` or ``unionAll()``. Some
-databases restrict which query shapes can be used with row locking. When
-CodeIgniter can detect an unsupported combination, it throws a
-``DatabaseException``. See the following warnings for driver-specific behavior.
+See :ref:`query-builder-pessimistic-locking-driver-support` for supported drivers and lock combinations. Unsupported
+drivers throw a ``DatabaseException``. ``lockForUpdate()`` is not supported with ``union()`` or ``unionAll()``. Some
+databases restrict which query shapes can be used with row locking. When CodeIgniter can detect an unsupported
+combination, it throws a ``DatabaseException``. See the following warnings for driver-specific behavior.
 
-.. warning:: MySQLi does not support ``lockForUpdate()`` with ``fromSubquery()``
-    because an outer locking read on a derived table does not lock the underlying
-    rows as users may expect.
+.. warning:: MySQLi does not support ``lockForUpdate()`` with ``fromSubquery()`` because an outer locking read on a
+    derived table does not lock the underlying rows as users may expect.
 
-.. warning:: Postgre does not support ``lockForUpdate()`` with ``distinct()``,
-    ``groupBy()``, ``having()``, or aggregate helper selections such as
-    ``selectCount()``.
+.. warning:: Postgre does not support ``lockForUpdate()`` with ``distinct()``, ``groupBy()``, ``having()``, or aggregate
+    helper selections such as ``selectCount()``.
 
-.. warning:: SQLSRV uses SQL Server table hints instead of a trailing ``FOR UPDATE``
-    clause. The hint is applied to table references in the ``FROM`` clause;
-    joined tables are not hinted. Its exact lock granularity depends on SQL
-    Server's execution plan and transaction isolation level. SQLSRV does not
-    support ``lockForUpdate()`` without a ``FROM`` table or on subqueries.
+.. warning:: SQLSRV uses SQL Server table hints instead of a trailing ``FOR UPDATE`` clause. The hint is applied to
+    table references in the ``FROM`` clause; joined tables are not hinted. Its exact lock granularity depends on SQL
+    Server's execution plan and transaction isolation level. SQLSRV does not support ``lockForUpdate()`` without a
+    ``FROM`` table or on subqueries.
 
-.. warning:: OCI8 does not support ``lockForUpdate()`` together with
-    ``limit()``, ``offset()``, ``distinct()``, ``groupBy()``, ``having()``, or
-    aggregate helper selections such as ``selectCount()``.
+.. warning:: OCI8 does not support ``lockForUpdate()`` together with ``limit()``, ``offset()``, ``distinct()``,
+    ``groupBy()``, ``having()``, or aggregate helper selections such as ``selectCount()``.
 
 .. _query-builder-skip-locked:
 
@@ -1135,50 +1082,44 @@ $builder->skipLocked()
 
 .. versionadded:: 4.8.0
 
-Adds a ``SKIP LOCKED`` style modifier to a pessimistic ``SELECT`` lock. This is
-useful when multiple workers claim rows from the same queue-like table and each
-worker should skip rows already locked by another transaction.
+Adds a ``SKIP LOCKED`` style modifier to a pessimistic ``SELECT`` lock. This is useful when multiple workers claim rows
+from the same queue-like table and each worker should skip rows already locked by another transaction.
 
 .. literalinclude:: query_builder/132.php
 
-Use this method with ``lockForUpdate()`` or ``sharedLock()``. Calling
-``skipLocked()`` without a pessimistic lock throws a ``DatabaseException``.
+Use this method with ``lockForUpdate()`` or ``sharedLock()``. Calling ``skipLocked()`` without a pessimistic lock throws
+a ``DatabaseException``.
 
-``skipLocked()`` can return an incomplete view of matching rows because locked
-rows are skipped instead of waited on. This is usually what queue workers want,
-but it is not suitable for general-purpose reads that must see every matching
+``skipLocked()`` can return an incomplete view of matching rows because locked rows are skipped instead of waited on.
+This is usually what queue workers want, but it is not suitable for general-purpose reads that must see every matching
 row.
 
-See :ref:`query-builder-pessimistic-locking-driver-support` for supported
-drivers and lock combinations. Unsupported combinations throw a
-``DatabaseException``.
+See :ref:`query-builder-pessimistic-locking-driver-support` for supported drivers and lock combinations. Unsupported
+combinations throw a ``DatabaseException``.
 
 .. _query-builder-nowait:
 
 No Wait
-========
+=======
 
 $builder->nowait()
 ------------------
 
 .. versionadded:: 4.8.0
 
-Adds a ``NOWAIT`` style modifier to a pessimistic ``SELECT`` lock. This is
-useful when the query should fail immediately instead of waiting for locked rows
-to become available.
+Adds a ``NOWAIT`` style modifier to a pessimistic ``SELECT`` lock. This is useful when the query should fail immediately
+instead of waiting for locked rows to become available.
 
 .. literalinclude:: query_builder/133.php
 
-Use this method with ``lockForUpdate()`` or ``sharedLock()``. Calling
-``nowait()`` without a pessimistic lock throws a ``DatabaseException``.
-
-When a row cannot be locked immediately, the database server returns an error
-and CodeIgniter throws a database exception according to the current database
-debug and transaction settings.
-
-See :ref:`query-builder-pessimistic-locking-driver-support` for supported
-drivers and lock combinations. Unsupported combinations throw a
+Use this method with ``lockForUpdate()`` or ``sharedLock()``. Calling ``nowait()`` without a pessimistic lock throws a
 ``DatabaseException``.
+
+When a row cannot be locked immediately, the database server returns an error and CodeIgniter throws a database
+exception according to the current database debug and transaction settings.
+
+See :ref:`query-builder-pessimistic-locking-driver-support` for supported drivers and lock combinations. Unsupported
+combinations throw a ``DatabaseException``.
 
 .. _query-builder-union:
 
@@ -1661,10 +1602,9 @@ If you want to delete all data from a table, you can use the ``truncate()``
 method, or ``emptyTable()``.
 
 .. note::
-    **Changed in version 4.8.0.** With ``$resetData = true`` (the default), bindings
-    and binding counters are cleared after execution, so ``getBinds()`` returns an
-    empty array. Pass ``false`` as the third argument to retain the query conditions
-    and bindings. Test mode retains bindings for the placeholders in its returned SQL.
+    **Changed in version 4.8.0.** With ``$resetData = true`` (the default), bindings and binding counters are cleared
+    after execution, so ``getBinds()`` returns an empty array. Pass ``false`` as the third argument to retain the query
+    conditions and bindings. Test mode retains bindings for the placeholders in its returned SQL.
 
 $builder->getCompiledDelete()
 -----------------------------
@@ -2059,9 +1999,9 @@ Class Reference
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
 
-        Generates a ``WHERE`` clause that compares two columns. Separates multiple calls with ``AND``.
-        If ``$first`` does not end with a supported operator, ``=`` is used as the comparison operator.
-        Supported operators are ``=``, ``!=``, ``<>``, ``<``, ``>``, ``<=``, and ``>=``.
+        Generates a ``WHERE`` clause that compares two columns. Separates multiple calls with ``AND``. If ``$first``
+        does not end with a supported operator, ``=`` is used as the comparison operator. Supported operators are ``=``,
+        ``!=``, ``<>``, ``<``, ``>``, ``<=``, and ``>=``.
 
     .. php:method:: orWhereColumn($first, $second[, $escape = null])
 
@@ -2071,9 +2011,9 @@ Class Reference
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
 
-        Generates a ``WHERE`` clause that compares two columns. Separates multiple calls with ``OR``.
-        If ``$first`` does not end with a supported operator, ``=`` is used as the comparison operator.
-        Supported operators are ``=``, ``!=``, ``<>``, ``<``, ``>``, ``<=``, and ``>=``.
+        Generates a ``WHERE`` clause that compares two columns. Separates multiple calls with ``OR``. If ``$first`` does
+        not end with a supported operator, ``=`` is used as the comparison operator. Supported operators are ``=``,
+        ``!=``, ``<>``, ``<``, ``>``, ``<=``, and ``>=``.
 
     .. php:method:: whereBetween(?string $key = null, ?array $values = null, ?bool $escape = null)
 
@@ -2103,7 +2043,8 @@ Class Reference
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
 
-        Generates a ``WHERE`` field ``NOT BETWEEN`` minimum and maximum value SQL query, joined with ``AND`` if appropriate.
+        Generates a ``WHERE`` field ``NOT BETWEEN`` minimum and maximum value SQL query, joined with ``AND`` if
+        appropriate.
 
     .. php:method:: orWhereNotBetween(?string $key = null, ?array $values = null, ?bool $escape = null)
 
@@ -2113,7 +2054,8 @@ Class Reference
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
 
-        Generates a ``WHERE`` field ``NOT BETWEEN`` minimum and maximum value SQL query, joined with ``OR`` if appropriate.
+        Generates a ``WHERE`` field ``NOT BETWEEN`` minimum and maximum value SQL query, joined with ``OR`` if
+        appropriate.
 
     .. php:method:: whereExists($subquery)
 
@@ -2322,7 +2264,8 @@ Class Reference
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
 
-        Generates a ``HAVING`` field ``BETWEEN`` minimum and maximum value SQL query, joined with ``AND`` if appropriate.
+        Generates a ``HAVING`` field ``BETWEEN`` minimum and maximum value SQL query, joined with ``AND`` if
+        appropriate.
 
     .. php:method:: orHavingBetween(?string $key = null, ?array $values = null, ?bool $escape = null)
 
@@ -2342,7 +2285,8 @@ Class Reference
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
 
-        Generates a ``HAVING`` field ``NOT BETWEEN`` minimum and maximum value SQL query, joined with ``AND`` if appropriate.
+        Generates a ``HAVING`` field ``NOT BETWEEN`` minimum and maximum value SQL query, joined with ``AND`` if
+        appropriate.
 
     .. php:method:: orHavingNotBetween(?string $key = null, ?array $values = null, ?bool $escape = null)
 
@@ -2352,7 +2296,8 @@ Class Reference
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
 
-        Generates a ``HAVING`` field ``NOT BETWEEN`` minimum and maximum value SQL query, joined with ``OR`` if appropriate.
+        Generates a ``HAVING`` field ``NOT BETWEEN`` minimum and maximum value SQL query, joined with ``OR`` if
+        appropriate.
 
     .. php:method:: orHavingIn([$key = null[, $values = null[, $escape = null]]])
 
@@ -2722,13 +2667,12 @@ Class Reference
         .. versionadded:: 4.8.0
 
         :param array $columns: A list of columns or array of column => value pairs to increment.
-        :param int $value: The amount to increment in the columns, if $columns is a list of columns.
+        :param int $value: The amount to increment in the columns, if ``$columns`` is a list of columns.
         :returns: ``true`` on success, ``false`` on failure
         :rtype:   bool
 
-        Increments the value of multiple fields by the specified amounts. If a field
-        is not a numeric field, like a ``VARCHAR``, it will likely be replaced
-        with the amount specified for that field.
+        Increments the value of multiple fields by the specified amounts. If a field is not a numeric field, like a
+        ``VARCHAR``, it will likely be replaced with the amount specified for that field.
 
     .. php:method:: decrement($column[, $value = 1])
 
@@ -2744,13 +2688,12 @@ Class Reference
         .. versionadded:: 4.8.0
 
         :param array $columns: A list of columns or array of column => value pairs to decrement.
-        :param int $value: The amount to decrement in the columns, if $columns is a list of columns.
+        :param int $value: The amount to decrement in the columns, if ``$columns`` is a list of columns.
         :returns: ``true`` on success, ``false`` on failure
         :rtype:   bool
 
-        Decrements the value of multiple fields by the specified amounts. If a field
-        is not a numeric field, like a ``VARCHAR``, it will likely be replaced
-        with the amount specified for that field.
+        Decrements the value of multiple fields by the specified amounts. If a field is not a numeric field, like a
+        ``VARCHAR``, it will likely be replaced with the amount specified for that field.
 
     .. php:method:: truncate()
 

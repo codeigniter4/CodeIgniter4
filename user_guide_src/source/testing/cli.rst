@@ -63,8 +63,8 @@ Running a Modern Command Against an Output
 
 .. versionadded:: 4.8.0
 
-A modern command can also be run directly against an ``Output`` built on the mock,
-which leaves the ``CLI`` class untouched once ``run()`` returns:
+A modern command can also be run directly against an ``Output`` built on the mock, which leaves the ``CLI`` class
+untouched once ``run()`` returns:
 
 .. literalinclude:: cli/002.php
 

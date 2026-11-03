@@ -262,7 +262,8 @@ Add a question mark at the beginning of type to mark property as nullable, i.e.,
 .. note:: **int-bool** can be used since v4.3.0.
 .. note:: **enum** can be used since v4.7.0.
 .. note:: **encrypted**, **encrypted-json** and **encrypted-json-array** can be used since v4.8.0.
-.. note:: Since v4.8.0, you can also pass parameters to **float** and **double** types to specify the number of decimal places and rounding mode, i.e., **float[2,even]**.
+.. note:: Since v4.8.0, you can also pass parameters to **float** and **double** types to specify the number of decimal
+    places and rounding mode, e.g., **float[2,even]**.
 
 For example, if you had a User entity with an ``is_banned`` property, you can cast it as a boolean:
 
@@ -344,45 +345,39 @@ Encrypted Casting
 
 .. versionadded:: 4.8.0
 
-Encrypted casting encrypts string values when they are set and decrypts them
-when they are read. It uses the :doc:`Encryption </libraries/encryption>`
-service, so you must configure an encryption key before using it. The
-configured key is required for both writing new values and reading stored
-values back. The ``encrypted`` type accepts string values. Use ``?encrypted``
-for nullable values.
+Encrypted casting encrypts string values when they are set and decrypts them when they are read. It uses the
+:doc:`Encryption </libraries/encryption>` service, so you must configure an encryption key before using it. The
+configured key is required for both writing new values and reading stored values back. The ``encrypted`` type accepts
+string values. Use ``?encrypted`` for nullable values.
 
 .. literalinclude:: entities/029.php
 
-The ``encrypted-json`` and ``encrypted-json-array`` types JSON encode values
-before encryption and JSON decode them after decryption. The ``encrypted-json``
-type returns ``stdClass`` values, while ``encrypted-json-array`` returns arrays.
-Use ``?encrypted-json`` and ``?encrypted-json-array`` for nullable values. These
-values are still stored as encrypted text, not as queryable database JSON.
+The ``encrypted-json`` and ``encrypted-json-array`` types encode values as JSON before encryption and decode them after
+decryption. The ``encrypted-json`` type returns ``stdClass`` values, while ``encrypted-json-array`` returns arrays. Use
+``?encrypted-json`` and ``?encrypted-json-array`` for nullable values. These values are still stored as encrypted text,
+not as queryable database JSON.
 
-Encrypted values are stored as Base64-encoded ciphertext. Use a ``TEXT`` column
-or a sufficiently large string column because the stored value is longer than
-the plain text value. Avoid narrow columns like ``VARCHAR(255)`` unless you have
+Encrypted values are stored as Base64-encoded ciphertext. Use a ``TEXT`` column or a sufficiently large string column
+because the stored value is longer than the plain text value. Avoid narrow columns like ``VARCHAR(255)`` unless you have
 verified the maximum encrypted length for the values you will store.
 
-.. warning:: Encrypted values cannot be searched, sorted, filtered, or checked
-    for uniqueness by their plain text value in the database.
+.. warning:: Encrypted values cannot be searched, sorted, filtered, or checked for uniqueness by their plain text value
+    in the database.
 
-.. warning:: Do not use encrypted casting for passwords. Passwords should be
-    hashed with PHP's password hashing functions.
+.. warning:: Do not use encrypted casting for passwords. Passwords should be hashed with PHP's password hashing
+    functions.
 
-.. note:: ``toArray()`` and JSON serialization return decrypted values. Use
-    ``toRawArray()`` when you need the encrypted value that will be stored.
+.. note:: ``toArray()`` and JSON serialization return decrypted values. Use ``toRawArray()`` when you need the encrypted
+    value that will be stored.
 
-.. note:: If the stored value cannot be decrypted, an ``EncryptionException`` is
-    thrown.
+.. note:: If the stored value cannot be decrypted, an ``EncryptionException`` is thrown.
 
-.. note:: Encrypted casts follow the Encryption service's key rotation behavior.
-    Values encrypted with a previous key can be decrypted when that key is
-    configured in ``previousKeys``. Save the value again to re-encrypt it with
-    the current key. See :ref:`spark-key-rotate` for rotating keys.
+.. note:: Encrypted casts follow the Encryption service's key rotation behavior. Values encrypted with a previous key
+    can be decrypted when that key is configured in ``previousKeys``. Save the value again to re-encrypt it with the
+    current key. See :ref:`spark-key-rotate` for rotating keys.
 
-.. note:: Encryption is non-deterministic. Setting the same plain text value can
-    produce a different encrypted value and mark the Entity attribute as changed.
+.. note:: Encryption is non-deterministic. Setting the same plain text value can produce a different encrypted value and
+    mark the Entity attribute as changed.
 
 Custom Casting
 --------------

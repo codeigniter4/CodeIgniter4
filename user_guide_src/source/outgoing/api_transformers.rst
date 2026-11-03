@@ -135,18 +135,18 @@ Sparse Fieldsets (Per-Type Filtering)
 .. versionadded:: 4.8.0
 
 The flat ``fields`` parameter filters the root resource. When a response also embeds
-:ref:`related resources <api_transformers_includes>`, you can filter each related type
-independently using the bracketed *sparse fieldset* form ``fields[<type>]=...``.
+:ref:`related resources <api_transformers_includes>`, you can filter each related type independently using the bracketed
+*sparse fieldset* form ``fields[<type>]=...``.
 
 To opt a transformer into this, declare its resource type via the ``$resourceType`` property:
 
 .. literalinclude:: api_transformers/024.php
 
-A matching ``fields[<type>]`` fieldset applies whether the transformer is used as the root resource or
-as an included resource. The flat ``fields=...`` form still applies to the root transformer only.
+A matching ``fields[<type>]`` fieldset applies whether the transformer is used as the root resource or as an included
+resource. The flat ``fields=...`` form still applies to the root transformer only.
 
-Each transformer reads the fieldset that matches its own ``$resourceType``. Given the ``UserTransformer``
-from :ref:`Including Related Resources <api_transformers_includes>` (which includes posts), a request:
+Each transformer reads the fieldset that matches its own ``$resourceType``. Given the ``UserTransformer`` from
+:ref:`Including Related Resources <api_transformers_includes>` (which includes posts), a request:
 
 .. code-block:: text
 
@@ -315,10 +315,10 @@ Class Reference
 
         .. versionadded:: 4.8.0
 
-        The resource type this transformer represents. Used to resolve per-type sparse fieldsets from
-        the request (e.g. a type of ``'posts'`` reads ``?fields[posts]=...``). Defaults to ``null``,
-        in which case only the flat ``?fields=...`` parameter applies, and only to the root transformer.
-        See `Sparse Fieldsets (Per-Type Filtering)`_.
+        The resource type this transformer represents. Used to resolve per-type sparse fieldsets from the request (e.g.
+        a type of ``'posts'`` reads ``?fields[posts]=...``). Defaults to ``null``, in which case only the flat
+        ``?fields=...`` parameter applies, and only to the root transformer. See
+        `Sparse Fieldsets (Per-Type Filtering)`_.
 
     .. php:method:: __construct(?IncomingRequest $request = null)
 

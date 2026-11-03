@@ -483,69 +483,58 @@ the validation rules.
 Typed Validated Input
 ---------------------
 
-``getValidatedInput()`` returns the same validated data as a
-``CodeIgniter\Input\ValidatedInput`` object. Use it after validation
-succeeds when you want to read common controller values as strings, integers,
-floats, booleans, arrays, dates, or enums:
+``getValidatedInput()`` returns the same validated data as a ``CodeIgniter\Input\ValidatedInput`` object. Use it after
+validation succeeds when you want to read common controller values as strings, integers, floats, booleans, arrays,
+dates, or enums:
 
 .. versionadded:: 4.8.0
 
 .. literalinclude:: validation/048.php
    :lines: 2-
 
-Validation decides whether input is acceptable. The typed input object only
-helps you consume values that already passed validation. If a present value
-cannot be read as the requested type, an ``InvalidArgumentException`` is thrown.
-This usually means the validation rules and the expected type do not match.
+Validation decides whether input is acceptable. The typed input object only helps you consume values that already passed
+validation. If a present value cannot be read as the requested type, an ``InvalidArgumentException`` is thrown. This
+usually means the validation rules and the expected type do not match.
 
-``ValidatedInput`` extends ``CodeIgniter\Input\InputData``. This keeps generic
-typed input access reusable while adding validation-specific readers for dates
-and enums. ``InputData`` is fallback-friendly for raw input; ``ValidatedInput``
-is strict because it represents data that has already passed validation.
+``ValidatedInput`` extends ``CodeIgniter\Input\InputData``. This keeps generic typed input access reusable while adding
+validation-specific readers for dates and enums. ``InputData`` is fallback-friendly for raw input; ``ValidatedInput`` is
+strict because it represents data that has already passed validation.
 
 The typed input object has the following methods:
 
 All methods support dot-array syntax for nested validated data.
 
-* ``get($key, $default = null)`` returns the raw validated value. If the field
-  is missing, it returns the default value.
-* ``has($key)`` returns whether the field exists in the validated data, even if
-  its value is ``null``.
-* ``string($key, $default = null)`` returns ``string|null``. If the field is
-  missing, it returns the default value or ``null``.
-* ``integer($key, $default = null)`` returns ``int|null``. If the field is
-  missing, it returns the default value or ``null``.
-* ``float($key, $default = null)`` returns ``float|null``. If the field is
-  missing, it returns the default value or ``null``.
-* ``boolean($key, $default = null)`` returns ``bool|null``. If the field is
-  missing, it returns the default value or ``null``.
-* ``array($key, $default = null)`` returns ``array|null``. If the field is
-  missing, it returns the default value or ``null``.
-* ``date($key, $format = null, $timezone = null, $default = null)`` returns
-  :php:class:`CodeIgniter\\I18n\\Time` or ``null``. If the field is missing, it
-  returns the default value or ``null``. Pass a format when the value should be
-  parsed with a specific date format. The default value must be ``null`` or a
-  :php:class:`CodeIgniter\\I18n\\Time` instance.
-* ``enum($key, $enumClass, $default = null)`` returns an enum instance or
-  ``null``. The default value must be ``null`` or an instance of the requested
-  enum class.
+* ``get($key, $default = null)`` returns the raw validated value. If the field is missing, it returns the default value.
+* ``has($key)`` returns whether the field exists in the validated data, even if its value is ``null``.
+* ``string($key, $default = null)`` returns ``string|null``. If the field is missing, it returns the default value or
+  ``null``.
+* ``integer($key, $default = null)`` returns ``int|null``. If the field is missing, it returns the default value or
+  ``null``.
+* ``float($key, $default = null)`` returns ``float|null``. If the field is missing, it returns the default value or
+  ``null``.
+* ``boolean($key, $default = null)`` returns ``bool|null``. If the field is missing, it returns the default value or
+  ``null``.
+* ``array($key, $default = null)`` returns ``array|null``. If the field is missing, it returns the default value or
+  ``null``.
+* ``date($key, $format = null, $timezone = null, $default = null)`` returns :php:class:`CodeIgniter\\I18n\\Time` or
+  ``null``. If the field is missing, it returns the default value or ``null``. Pass a format when the value should be
+  parsed with a specific date format. The default value must be ``null`` or a :php:class:`CodeIgniter\\I18n\\Time`
+  instance.
+* ``enum($key, $enumClass, $default = null)`` returns an enum instance or ``null``. The default value must be ``null``
+  or an instance of the requested enum class.
 
-Fields that are present with a ``null`` value return ``null``. This lets you
-distinguish a missing optional field from a field that was validated as
-``null``.
+Fields that are present with a ``null`` value return ``null``. This lets you distinguish a missing optional field from a
+field that was validated as ``null``.
 
-Use validation rules such as ``integer``, ``decimal``, ``valid_date``,
-``in_list``, or a custom rule to ensure the value matches the type you plan to read. The
-``date()`` method only parses the value; validation rules should enforce
-acceptable date formats and ranges. For strict calendar validation, add a rule
-such as ``valid_date[Y-m-d]``.
+Use validation rules such as ``integer``, ``decimal``, ``valid_date``, ``in_list``, or a custom rule to ensure the value
+matches the type you plan to read. The ``date()`` method only parses the value; validation rules should enforce
+acceptable date formats and ranges. For strict calendar validation, add a rule such as ``valid_date[Y-m-d]``.
 
-The ``enum()`` method accepts PHP enum class names. Backed enums are matched by
-their backing value, while unit enums are matched by case name.
+The ``enum()`` method accepts PHP enum class names. Backed enums are matched by their backing value, while unit enums
+are matched by case name.
 
-The ``boolean()`` method uses PHP's boolean validation behavior, so common form
-values like ``"1"``, ``"0"``, ``"true"``, ``"false"``, ``"yes"``, ``"no"``,
-``"on"``, and ``"off"`` are accepted.
+The ``boolean()`` method uses PHP's boolean validation behavior, so common form values like ``"1"``, ``"0"``,
+``"true"``, ``"false"``, ``"yes"``, ``"no"``, ``"on"``, and ``"off"`` are accepted.
 
 .. _saving-validation-rules-to-config-file:
 
@@ -839,9 +828,8 @@ Form Requests
 
 .. versionadded:: 4.8.0
 
-For a higher-level approach that encapsulates validation rules, custom error
-messages, and authorization logic in a dedicated class, see
-:doc:`Form Requests </incoming/form_requests>`.
+For a higher-level approach that encapsulates validation rules, custom error messages, and authorization logic in a
+dedicated class, see :doc:`Form Requests </incoming/form_requests>`.
 
 *********************
 Creating Custom Rules
@@ -883,9 +871,9 @@ fourth) parameter:
 
 .. literalinclude:: validation/035.php
 
-.. note:: Since v4.8.0, the ``{field}``, ``{param}``, and ``{value}`` placeholders are supported in ``$error``
-    messages and will be replaced with the field's human-readable label (or field name if no label is set),
-    the rule parameter, and the submitted value respectively.
+.. note:: Since v4.8.0, the ``{field}``, ``{param}``, and ``{value}`` placeholders are supported in ``$error`` messages
+    and will be replaced with the field's human-readable label (or field name if no label is set), the rule parameter,
+    and the submitted value respectively.
 
 Using a Custom Rule
 -------------------
@@ -939,9 +927,9 @@ Or you can use the following parameters:
 .. literalinclude:: validation/041.php
    :lines: 2-
 
-.. note:: Since v4.8.0, the ``{field}``, ``{param}``, and ``{value}`` placeholders are supported in ``$error``
-    messages and will be replaced with the field's human-readable label (or field name if no label is set),
-    the rule parameter, and the submitted value respectively.
+.. note:: Since v4.8.0, the ``{field}``, ``{param}``, and ``{value}`` placeholders are supported in ``$error`` messages
+    and will be replaced with the field's human-readable label (or field name if no label is set), the rule parameter,
+    and the submitted value respectively.
 
 .. _validation-using-callable-rule:
 
@@ -966,9 +954,9 @@ Or you can use the following parameters:
 .. literalinclude:: validation/047.php
    :lines: 2-
 
-.. note:: Since v4.8.0, the ``{field}``, ``{param}``, and ``{value}`` placeholders are supported in ``$error``
-    messages and will be replaced with the field's human-readable label (or field name if no label is set),
-    the rule parameter, and the submitted value respectively.
+.. note:: Since v4.8.0, the ``{field}``, ``{param}``, and ``{value}`` placeholders are supported in ``$error`` messages
+    and will be replaced with the field's human-readable label (or field name if no label is set), the rule parameter,
+    and the submitted value respectively.
 
 .. _validation-available-rules:
 
