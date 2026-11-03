@@ -1,4 +1,4 @@
-# When changes are pushed to the develop branch,
+# When changes are pushed to the develop branch or the next minor branch,
 # build the develop and the next minor versions of the User Guide
 # with MkDocs and deploy them to GitHub Pages.
 name: Deploy User Guide (latest)
@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - 'develop'
+      - '4.8'
     paths:
       - 'docs/**'
       - 'mkdocs.yml'
@@ -31,6 +32,7 @@ jobs:
       - name: Checkout develop
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: 'develop'
           path: develop
           persist-credentials: false
 
