@@ -1,3 +1,0 @@
-<?php
-
-$negotiate = service('negotiator');

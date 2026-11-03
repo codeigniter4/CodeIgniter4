@@ -1,3 +1,0 @@
-<?php
-
-echo $request->getIPAddress();

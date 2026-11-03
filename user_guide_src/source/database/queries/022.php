@@ -1,3 +1,0 @@
-<?php
-
-$sql = $query->getQuery();

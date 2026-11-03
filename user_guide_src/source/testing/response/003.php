@@ -1,3 +1,0 @@
-<?php
-
-$response = $results->response();

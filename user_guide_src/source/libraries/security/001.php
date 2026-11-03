@@ -1,3 +1,0 @@
-<?php
-
-$security = service('security');

@@ -33,7 +33,6 @@ function findExecutableFiles(string $dir, array $excludeDirs = []): array
         '.github/scripts/deploy-userguide',
         '.github/scripts/secure-git-push',
         'admin/starter/builds',
-        'user_guide_src/add-edit-this-page',
     ];
 
     $executableFiles = [];
@@ -78,7 +77,7 @@ function findExecutableFiles(string $dir, array $excludeDirs = []): array
 // Main
 chdir(__DIR__ . '/../');
 
-$includeDirs = ['.github', 'admin', 'app', 'public', 'system', 'tests', 'user_guide_src', 'utils', 'writable'];
+$includeDirs = ['.github', 'admin', 'app', 'public', 'system', 'tests', 'utils', 'writable'];
 $excludeDirs = ['utils/vendor'];
 
 $executableFiles = [];

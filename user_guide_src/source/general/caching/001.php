@@ -1,3 +1,0 @@
-<?php
-
-$this->cachePage($n);

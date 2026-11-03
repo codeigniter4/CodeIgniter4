@@ -1,3 +1,0 @@
-<?php
-
-$data = $request->getRawInput();

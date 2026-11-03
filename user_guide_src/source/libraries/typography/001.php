@@ -1,3 +1,0 @@
-<?php
-
-$typography = service('typography');

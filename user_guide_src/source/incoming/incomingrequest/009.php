@@ -1,3 +1,0 @@
-<?php
-
-$json = $request->getJSON();

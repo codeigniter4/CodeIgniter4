@@ -1,3 +1,0 @@
-<?php
-
-$name = $session->name;
