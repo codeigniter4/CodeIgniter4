@@ -1,0 +1,153 @@
+/* Search field and its shortcut hint */
+.md-search__form {
+    border-radius: .4rem;
+}
+
+[data-md-toggle="search"]:checked ~ .md-header .md-search__form {
+    border-radius: .4rem .4rem 0 0;
+}
+
+.md-search__output {
+    border-radius: 0 0 .4rem .4rem;
+}
+
+@media screen and (min-width: 60em) {
+    .md-search__form {
+        background-color: #ffffff1f;
+    }
+
+    .md-search__form:hover {
+        background-color: #00000042;
+    }
+}
+
+.md-search__form[data-shortcut]::after {
+    content: attr(data-shortcut);
+    position: absolute;
+    top: 50%;
+    right: .6rem;
+    z-index: 2;
+    padding: 0 .3rem;
+    border: .05rem solid currentColor;
+    border-radius: .2rem;
+    color: var(--md-primary-bg-color--light);
+    font-size: .6rem;
+    line-height: 1.4;
+    pointer-events: none;
+    transform: translateY(-50%);
+}
+
+[data-md-toggle="search"]:checked ~ .md-header .md-search__form::after {
+    display: none;
+}
+
+/* Wider content column */
+.md-grid {
+    max-width: 71.4rem;
+}
+
+.md-sidebar--secondary {
+    width: 13rem;
+}
+
+/* Translucent header */
+.md-header {
+    background-color: color-mix(in srgb, var(--md-primary-fg-color) 85%, transparent);
+    -webkit-backdrop-filter: blur(.4rem);
+    backdrop-filter: blur(.4rem);
+}
+
+/* Labelled edit button */
+.md-typeset .md-content__button--labelled {
+    display: inline-flex;
+    gap: .3rem;
+    align-items: center;
+    padding: .2rem .6rem;
+    border-radius: .4rem;
+    background-color: var(--md-default-fg-color--lightest);
+    color: var(--md-default-fg-color--light);
+    font-size: .7rem;
+}
+
+.md-typeset .md-content__button--labelled:hover {
+    background-color: var(--md-accent-fg-color--transparent);
+    color: var(--md-accent-fg-color);
+}
+
+/* Smaller previous and next links */
+.md-footer__title {
+    font-size: .8rem;
+}
+
+.md-footer__direction {
+    font-size: .6rem;
+}
+
+.md-sidebar--secondary .md-nav .md-nav .md-nav__list {
+    padding-left: .6rem !important;
+}
+
+/* The version list opens on click, not on the theme's hover or focus. */
+.md-version:hover .md-version__list,
+.md-version:focus-within .md-version__list {
+    animation: none;
+    max-height: 0;
+    opacity: 0;
+}
+
+.md-version {
+    font-size: .7rem;
+    position: relative;
+}
+
+.md-version__item {
+    line-height: 1.5rem;
+}
+
+/* Lets the title shrink on narrow screens instead of pushing the header's buttons off screen. */
+.md-header__title {
+    min-width: 0;
+}
+
+.md-version__current {
+    line-height: 2.4rem;
+    margin: 0 .4rem;
+    white-space: nowrap;
+}
+
+.md-version__list {
+    margin: 0;
+    right: 0;
+    top: 2.2rem;
+    visibility: hidden;
+}
+
+.md-version.md-version--open .md-version__list {
+    max-height: 10rem;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* A transparent border keeps images the same size in the scheme without a visible one. */
+.md-typeset img {
+    border: 1px solid transparent;
+    border-radius: 6px;
+    height: auto;
+    margin: .5rem 0;
+    max-width: 100%;
+}
+
+.md-typeset p img[src*="icon"],
+.md-typeset p img[width="16"],
+.md-typeset p img[width="24"],
+.md-typeset p img[height="16"],
+.md-typeset p img[height="24"] {
+    border: none;
+    border-radius: 0;
+    margin: 0;
+}
+
+/* Keeps the footer below the first screen, so short and long pages scroll alike. */
+.md-main {
+    min-height: 100vh;
+}

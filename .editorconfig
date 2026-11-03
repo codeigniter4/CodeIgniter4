@@ -13,3 +13,7 @@ trim_trailing_whitespace = true
 
 [*.{yml,yaml}]
 indent_size = 2
+
+# Two trailing spaces are a hard line break in the converted pages.
+[docs/**.md]
+trim_trailing_whitespace = false

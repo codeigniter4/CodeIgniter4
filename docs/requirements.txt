@@ -1,0 +1,2 @@
+mkdocs-material==9.8.0
+pygments==2.21.0
