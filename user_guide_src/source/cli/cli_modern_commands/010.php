@@ -4,7 +4,6 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Argument;
 use CodeIgniter\CLI\Input\Option;
 use Throwable;
@@ -23,7 +22,7 @@ class Publish extends AbstractCommand
     protected function interact(array &$arguments, array &$options): void
     {
         if ($arguments === []) {
-            $arguments[] = CLI::prompt('What should I publish?', null, 'required');
+            $arguments[] = $this->getPrompt()->ask('What should I publish?', null, 'required');
         }
     }
 
@@ -50,6 +49,6 @@ class Publish extends AbstractCommand
         // ...
         unset($force, $dryRun);
 
-        CLI::write(sprintf('publishing %s', $target), 'green');
+        $this->getOutput()->write(sprintf('publishing %s', $target), 'green');
     }
 }

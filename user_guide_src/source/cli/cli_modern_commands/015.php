@@ -4,7 +4,6 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Argument;
 use CodeIgniter\CLI\PromptsForMissingInputInterface;
 
@@ -27,7 +26,7 @@ class AppGreet extends AbstractCommand implements PromptsForMissingInputInterfac
 
     protected function execute(array $arguments, array $options): int
     {
-        CLI::write(sprintf('Hello, %s!', $arguments['name']), 'green');
+        $this->getOutput()->write(sprintf('Hello, %s!', $arguments['name']), 'green');
 
         return EXIT_SUCCESS;
     }

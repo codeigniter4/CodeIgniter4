@@ -4,7 +4,6 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Input\Option;
 
 #[Command(name: 'logs:clear', description: 'Clears logs.', group: 'Housekeeping')]
@@ -27,7 +26,7 @@ class ClearLogs extends AbstractCommand
             return;
         }
 
-        if (CLI::prompt('Delete the logs?', ['n', 'y']) === 'n') {
+        if ($this->getPrompt()->ask('Delete the logs?', ['n', 'y']) === 'n') {
             return;
         }
 
@@ -39,7 +38,7 @@ class ClearLogs extends AbstractCommand
     protected function execute(array $arguments, array $options): int
     {
         if ($this->getValidatedOption('force') === false) {
-            CLI::error('Aborted.');
+            $this->getOutput()->error('Aborted.');
 
             return EXIT_ERROR;
         }
