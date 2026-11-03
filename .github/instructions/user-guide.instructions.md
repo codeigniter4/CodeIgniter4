@@ -1,11 +1,15 @@
 ---
-applyTo: "user_guide_src/**/*.rst"
+applyTo: "docs/**/*.md"
 ---
 
 # User guide
 
-- Preserve the existing reStructuredText structure, terminology, directives,
+- Preserve the existing Markdown structure, terminology, admonitions,
   anchors, and surrounding writing style.
+- Indent nested lists and admonition bodies by four spaces, and keep the two
+  trailing spaces that end a line as a hard line break.
+- Add a new page to the page's folder `index.md` and run
+  `php admin/update-docs-nav.php` to add it to `docs/.nav.yml`.
 - Keep PHP examples compatible with PHP 8.2 and verify signatures and behavior
   against the current framework code.
 - Distinguish new behavior from existing behavior and document defaults
@@ -22,6 +26,6 @@ applyTo: "user_guide_src/**/*.rst"
   smallest migration in both the minor changelog and upgrading guide.
 - Keep code examples minimal but complete enough to run in a normal
   CodeIgniter application.
-- Leave the complete Sphinx build and documentation validation to GitHub
+- Leave the complete MkDocs build and documentation validation to GitHub
   Actions unless the task specifically requires local documentation
   validation.

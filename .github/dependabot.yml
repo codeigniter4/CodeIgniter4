@@ -24,3 +24,12 @@ updates:
         patterns:
           - '*'
         group-by: dependency-name
+
+  - package-ecosystem: 'pip'
+    directory: '/docs'
+    schedule:
+      interval: 'weekly'
+    groups:
+      user-guide-dependencies:
+        patterns:
+          - '*'

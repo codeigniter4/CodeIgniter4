@@ -121,15 +121,15 @@ then you will need to add to the documentation.
 New classes, methods, parameters, changing default values, changing behavior etc.
 are all changes that require a change to documentation.
 
-Also, the [Changelog](https://codeigniter4.github.io/CodeIgniter4/changelogs/index.html)
+Also, the [Changelog](https://codeigniter4.github.io/CodeIgniter4/develop/changelogs/index.html)
 must be updated for every change, and PHPDoc blocks must be maintained.
 
-See [Writing CodeIgniter Documentation](./documentation.rst).
+See [Writing CodeIgniter Documentation](./documentation.md).
 
 #### Changelog
 
-The [Changelog](https://codeigniter4.github.io/CodeIgniter4/changelogs/index.html)
-in the [user guide](https://github.com/codeigniter4/CodeIgniter4/tree/develop/user_guide_src/source/changelogs)
+The [Changelog](https://codeigniter4.github.io/CodeIgniter4/develop/changelogs/index.html)
+in the [user guide](https://github.com/codeigniter4/CodeIgniter4/tree/develop/docs/changelogs)
 needs to be kept up-to-date. Not all changes will need an entry in it, but the
 following items should.
 
@@ -144,8 +144,8 @@ following items should.
 
 If your PR requires users to do something when they upgrade CodeIgniter, or
 changes the Config values,
-the [Upgrading Guide](https://codeigniter4.github.io/CodeIgniter4/installation/upgrading.html)
-in the [installation](https://github.com/codeigniter4/CodeIgniter4/tree/develop/user_guide_src/source/installation)
+the [Upgrading Guide](https://codeigniter4.github.io/CodeIgniter4/develop/installation/upgrading.html)
+in the [installation](https://github.com/codeigniter4/CodeIgniter4/tree/develop/docs/installation)
 folder is also needed.
 
 - Add an instruction what to do when upgrading.
