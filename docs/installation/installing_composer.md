@@ -148,7 +148,7 @@ If you want to use the next minor version branch:
 php builds next
 ```
 
-And run `composer update` to sync your vendor folder with the latest target build. Then, check the Upgrading Guide (**user_guide_src/source/installation/upgrade_{version}.rst**) and update project files if necessary.
+And run `composer update` to sync your vendor folder with the latest target build. Then, check the Upgrading Guide (**docs/installation/upgrade_{version}.md**) and update project files if necessary.
 
 #### Revert to Stable Release
 
