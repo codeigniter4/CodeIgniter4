@@ -1,0 +1,3 @@
+<?php
+
+$parser = service('parser');

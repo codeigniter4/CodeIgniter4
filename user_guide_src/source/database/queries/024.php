@@ -1,0 +1,3 @@
+<?php
+
+$sql = $query->getOriginalQuery();

@@ -1,0 +1,3 @@
+<?php
+
+$builder = $userModel->builder();

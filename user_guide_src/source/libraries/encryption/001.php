@@ -1,0 +1,3 @@
+<?php
+
+$encrypter = service('encrypter');

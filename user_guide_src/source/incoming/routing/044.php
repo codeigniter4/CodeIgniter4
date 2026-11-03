@@ -1,0 +1,3 @@
+<?php
+
+$routes->setPrioritize(false);

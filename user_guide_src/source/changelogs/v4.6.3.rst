@@ -1,0 +1,22 @@
+#############
+Version 4.6.3
+#############
+
+Release Date: August 2, 2025
+
+**4.6.3 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+**********
+Bugs Fixed
+**********
+
+- **Email:** Fixed a bug with CID check when building email attachments.
+- **Email:** Fixed a bug with SMTP connection resource validation in the class destructor.
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

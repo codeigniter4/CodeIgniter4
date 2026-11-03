@@ -1,0 +1,27 @@
+Version 4.4.3
+#############
+
+Release Date: October 26, 2023
+
+**4.4.3 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+SECURITY
+********
+
+- *Detailed Error Report is Displayed in Production Environment* was fixed.
+  See the `Security advisory GHSA-hwxf-qxj7-7rfj <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-hwxf-qxj7-7rfj>`_
+  for more information.
+
+Bugs Fixed
+**********
+
+- **UserGuide:** Fixed the descriptions for ``pre_system`` and ``post_system``
+  in :ref:`event-points`.
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

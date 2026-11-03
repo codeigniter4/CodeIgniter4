@@ -1,0 +1,3 @@
+<?php
+
+$rules = $model->validationRules;
