@@ -1,0 +1,342 @@
+############
+Transactions
+############
+
+CodeIgniter's database abstraction allows you to use transactions with databases that support transaction-safe table
+types. In MySQL, you'll need to be running InnoDB or BDB table types rather than the more common MyISAM. Most other
+database platforms support transactions natively.
+
+If you are not familiar with transactions, we recommend you find a good online resource to learn about them for your
+particular database. The information below assumes you have a basic understanding of transactions.
+
+.. contents::
+    :local:
+    :depth: 3
+
+CodeIgniter's Approach to Transactions
+======================================
+
+CodeIgniter utilizes an approach to transactions that is very similar to the process used by the popular database class
+ADODB. We've chosen that approach because it greatly simplifies the process of running transactions. In most cases, all
+that is required is two lines of code.
+
+Traditionally, transactions have required a fair amount of work to implement since they demand that you keep track of
+your queries and determine whether to commit or roll back based on the success or failure of your queries. This is
+particularly cumbersome with nested queries. In contrast, we've implemented a smart transaction system that does all
+this for you automatically (you can also manage your transactions manually if you choose to, but there's really no
+benefit).
+
+.. note::
+    Since v4.3.0, during transactions, exceptions are not thrown by default even if ``DBDebug`` is true.
+
+Running Transactions
+====================
+
+To run your queries using transactions, you will use the ``$this->db->transStart()`` and ``$this->db->transComplete()``
+methods as follows:
+
+.. literalinclude:: transactions/001.php
+
+You can run as many queries as you want between the ``transStart()``/``transComplete()`` methods, and they will all be
+committed or rolled back based on the success or failure of any given query.
+
+.. _transactions-closure:
+
+Running Transactions with a Closure
+===================================
+
+.. versionadded:: 4.8.0
+
+You may also run a transaction with the ``transaction()`` method. It starts a transaction, runs the callback, commits
+when the callback completes successfully, and rolls back if the callback throws an exception:
+
+.. literalinclude:: transactions/012.php
+
+The callback receives the current database connection as its only argument. If the transaction commits successfully,
+``transaction()`` returns the callback return value. If the transaction cannot begin, or if a query failure marks the
+transaction as failed without throwing an exception, ``transaction()`` rolls back and returns ``false``.
+
+If transactions are disabled, ``transaction()`` does not start a transaction. It runs the callback and returns the
+callback result.
+
+If the callback throws an exception, ``transaction()`` rolls back and rethrows the original exception unless retry
+attempts remain, as described below.
+
+If an ``afterRollback()`` callback throws while ``transaction()`` is rolling back, that callback exception bubbles to
+the caller instead of the normal ``false`` return value or the original callback exception.
+
+Callbacks registered with ``afterCommit()`` or ``afterRollback()`` inside the transaction callback follow the same rules
+as other transaction callbacks: they run only after the outermost transaction commits or rolls back.
+
+Scoped Transaction Options
+--------------------------
+
+The ``transaction()`` method can temporarily override existing transaction options for the duration of the helper call:
+
+.. literalinclude:: transactions/017.php
+
+Set ``transException`` to temporarily enable or disable the same transaction exception mode configured by
+``transException()``. The previous mode is restored after ``transaction()`` finishes, even if the callback throws an
+exception. If ``transaction()`` is called inside an active transaction, the temporary mode applies while the nested
+callback runs, then the previous mode is restored for the outer transaction. When ``transException`` is set to ``true``
+in a nested transaction and a query fails, CodeIgniter's existing transaction exception handling rolls back the outer
+transaction as well.
+
+Set ``resetTransStatus`` to reset the transaction status before the helper starts an outermost transaction. This is
+equivalent to calling ``resetTransStatus()`` before the transaction, and is useful when strict mode has marked the
+connection as failed from an earlier transaction.
+
+``resetTransStatus`` only applies when ``transaction()`` starts the outermost transaction. If ``transaction()`` is
+called inside an active transaction, it does not reset the outer transaction status.
+
+The ``transException`` option follows CodeIgniter's existing transaction exception behavior, including the current
+``DBDebug`` setting.
+
+Retrying Transactions
+---------------------
+
+You may pass ``attempts`` when you want CodeIgniter to retry the whole transaction after retryable database concurrency
+failures, such as deadlocks or serialization failures. Retries happen when a ``RetryableTransactionException`` occurs
+while the callback is running, including from query or prepared query execution:
+
+.. literalinclude:: transactions/016.php
+
+``attempts`` is the total number of times to try the transaction, including the first run, and must be greater than or
+equal to ``1``.
+
+Keep these rules in mind when using retry attempts:
+
+- The callback may run more than once, and retries run immediately without delay or backoff.
+- Retries only apply when ``transaction()`` starts the outermost transaction. If ``transaction()`` is called inside an
+  active transaction, the callback runs once using the existing nested transaction behavior.
+- Only ``RetryableTransactionException`` failures are retried. Other exceptions are rolled back and rethrown without
+  another attempt.
+- Retry attempts do not retry failures that are reported only while the transaction is committing.
+- If an ``afterRollback()`` callback throws while a failed attempt is rolling back, that callback exception bubbles to
+  the caller and no further attempts are made.
+
+Avoid non-transactional side effects inside callbacks that may be retried. For side effects such as queued jobs, emails,
+cache invalidation, events, or external API calls, register them with ``afterCommit()`` so they run only after the final
+successful commit.
+
+``afterRollback()`` callbacks may run for failed retry attempts even when a later attempt commits successfully, so use
+them only for cleanup that is safe to run per rolled-back attempt.
+
+.. _transactions-retryable-exceptions:
+
+Classifying Retryable Transaction Failures
+==========================================
+
+.. versionadded:: 4.8.0
+
+Some database engines report transaction failures that may succeed when the entire transaction is attempted again, such
+as deadlocks or serialization failures. When a driver classifies a query or prepared query execution failure as one of
+these retryable transaction failures, CodeIgniter throws ``RetryableTransactionException`` so you can decide how your
+application should respond:
+
+.. literalinclude:: transactions/015.php
+
+``RetryableTransactionException`` is the classifier used by ``transaction()`` retry attempts. If you are not using
+``transaction()`` attempts, catch this exception and retry the whole transaction according to your application's policy.
+Avoid non-transactional side effects inside transaction bodies that may be retried. For side effects such as queued
+jobs, emails, cache invalidation, or external API calls, register them with ``afterCommit()`` so they run only after the
+transaction commits.
+
+When ``DBDebug`` is ``false`` and a failed query or prepared query returns ``false`` instead of throwing, inspect
+``getLastException()`` immediately after the failed operation. It will contain the ``RetryableTransactionException``
+instance when the driver classifies the failure as retryable.
+
+Strict Mode
+===========
+
+By default, CodeIgniter runs all transactions in Strict Mode.
+
+When strict mode is enabled and you are running multiple groups of transactions, if one group fails, all subsequent
+groups will be rolled back.
+
+If strict mode is disabled, each group is treated independently, meaning a failure of one group will not affect any
+others.
+
+Strict Mode can be disabled as follows:
+
+.. literalinclude:: transactions/002.php
+
+.. _transactions-resetting-transaction-status:
+
+Resetting Transaction Status
+----------------------------
+
+.. versionadded:: 4.6.0
+
+When strict mode is enabled, if one transaction fails, all subsequent transactions will be rolled back.
+
+If you want to restart transactions after a failure, you can reset the transaction status:
+
+.. literalinclude:: transactions/009.php
+
+.. _transactions-managing-errors:
+
+Managing Errors
+===============
+
+.. note::
+    Since v4.3.0, during transactions, exceptions are not thrown by default even if ``DBDebug`` is true.
+
+You can manage your own errors like this:
+
+.. literalinclude:: transactions/003.php
+
+.. _transactions-throwing-exceptions:
+
+Throwing Exceptions
+===================
+
+.. versionadded:: 4.3.0
+
+.. note::
+    Since v4.3.0, during transactions, exceptions are not thrown by default even if ``DBDebug`` is true.
+
+If you want an exception to be thrown when a query error occurs, you can use ``$this->db->transException(true)``:
+
+.. literalinclude:: transactions/008.php
+
+If a query error occurs, all the queries will be rolled back, and a ``DatabaseException`` will be thrown.
+
+.. _transactions-transaction-callbacks:
+
+Running Code after Commit or Rollback
+=====================================
+
+.. versionadded:: 4.8.0
+
+You may register callbacks to run only after the outermost transaction has successfully committed by using the
+``afterCommit()`` method, or after the outermost transaction has rolled back by using the ``afterRollback()`` method:
+
+.. literalinclude:: transactions/010.php
+
+Callbacks registered during an active transaction are delayed until the outermost transaction commits or rolls back.
+
+If the transaction commits, ``afterCommit()`` callbacks run and ``afterRollback()`` callbacks are discarded. If the
+transaction rolls back, ``afterRollback()`` callbacks run and ``afterCommit()`` callbacks are discarded. If no
+transaction is active, ``afterCommit()`` callbacks run immediately, while ``afterRollback()`` callbacks are not run.
+
+For example:
+
+.. literalinclude:: transactions/011.php
+
+.. note:: When ``afterCommit()`` is called outside an active transaction, it runs immediately. This includes calls from
+    Model ``beforeInsert`` or ``beforeUpdate`` events when the calling code has not already started a transaction, so
+    the callback may run before the Model's insert or update query is executed.
+
+This is useful for side effects that should only happen after committed data is visible, such as dispatching a queued
+job or sending a notification, and for cleanup that should only happen after a real rollback.
+
+Deferring Side Effects
+----------------------
+
+Code that changes external state should usually not run in the middle of a transaction. If the transaction rolls back
+after the side effect has already run, the application may send a notification for data that was never saved, invalidate
+a cache for a write that did not persist, or start background work that cannot find the committed row it expects.
+
+Register those side effects with ``afterCommit()`` instead:
+
+.. literalinclude:: transactions/013.php
+
+Use ``afterRollback()`` for cleanup that should happen only when the transaction does not commit, such as removing a
+temporary file created before the database write:
+
+.. literalinclude:: transactions/014.php
+
+Model callbacks such as ``afterInsert`` and ``afterUpdate`` run after the Model query has executed, but not necessarily
+after the surrounding transaction has committed. If a Model callback needs to run a side effect only after commit, it
+should register that work with the database connection's ``afterCommit()`` method while an active transaction is already
+open.
+
+Callbacks run after the database transaction has already committed or rolled back. If a callback throws an exception,
+that exception bubbles to the caller, but the transaction outcome is not changed.
+
+.. warning:: When multiple callbacks are registered for the same transaction outcome, they run in registration order. If
+    one callback throws an exception, the subsequent callbacks are not run.
+
+Rollback callbacks also run when CodeIgniter automatically rolls back an active transaction while handling a transaction
+failure or cleaning up an unfinished transaction.
+
+.. _transactions-checking-transaction-state:
+
+Checking Transaction State
+==========================
+
+.. versionadded:: 4.8.0
+
+You may use ``inTransaction()`` to check whether the connection is currently inside an active CodeIgniter-managed
+transaction.
+
+It returns ``false`` when no CodeIgniter-managed transaction is active, including when transactions are disabled.
+
+This is useful for services or libraries that need to adapt their behavior when they are called from inside an existing
+transaction.
+
+.. note:: ``inTransaction()`` reflects transactions started through CodeIgniter's transaction methods. If you start or
+    end transactions through raw SQL or driver-specific APIs, CodeIgniter will not be aware of those transactions.
+
+Disabling Transactions
+======================
+
+Transactions are enabled by default. If you would like to disable transactions, you can do so using
+``$this->db->transOff()``:
+
+.. literalinclude:: transactions/004.php
+
+When transactions are disabled, your queries will be auto-committed, just as they are when running queries without
+transactions.
+
+Test Mode
+=========
+
+You can optionally put the transaction system into "test mode", which will cause your queries to be rolled back, even if
+the queries produce a valid result. To use test mode, simply set the first parameter in the ``$this->db->transStart()``
+method to true:
+
+.. literalinclude:: transactions/005.php
+
+.. _transactions-manual-transactions:
+
+Running Transactions Manually
+=============================
+
+When ``DBDebug`` is false in your **app/Config/Database.php** file, and you would like to run transactions manually, you
+can do so as follows:
+
+.. literalinclude:: transactions/006.php
+
+.. note:: Make sure to use ``$this->db->transBegin()`` when running manual transactions, **NOT**
+    ``$this->db->transStart()``.
+
+MySQL Deadlocks
+===============
+
+InnoDB error 1213 rolls the victim transaction back. CodeIgniter keeps that transaction open. The next statement run
+through ``query()``, ``simpleQuery()`` or the Query Builder on the same connection starts a new server transaction, so
+the write does not autocommit. The rollback happens when the outermost transaction finishes: ``transCommit()`` rolls
+that server transaction back and returns false, so the transaction has ended when it returns, and ``transComplete()``
+also rolls it back. At a nested depth, ``transCommit()`` still returns true and only decrements the depth.
+
+Prepared queries are not covered. A deadlock raised by a prepared query is not detected, and a prepared query run after
+a deadlock does not start a new server transaction.
+
+Error 1205 is not handled this way. ``innodb_rollback_on_timeout`` decides whether InnoDB rolled that transaction back,
+and the message is the same either way.
+
+Nested Transactions
+===================
+
+In CodeIgniter, transactions can be nested in such a way that only the outermost or top-level transaction commands are
+executed. You can include as many pairs of ``transStart()``/``transComplete()`` or
+``transBegin()``/``transCommit()``/``transRollback()`` as you want inside a transaction block and so on. CodeIgniter
+will keep track of the transaction "depth" and only take action at the outermost layer (zero depth).
+
+.. literalinclude:: transactions/007.php
+
+.. note:: In case the structure is far more complex, it's your responsibility to ensure that the inner transactions can
+    reach the outermost layer again in order to be fully executed by the database, thus preventing unintended
+    commits/rollbacks.

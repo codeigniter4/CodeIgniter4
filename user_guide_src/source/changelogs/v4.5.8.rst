@@ -1,0 +1,30 @@
+#############
+Version 4.5.8
+#############
+
+Release Date: January 19, 2025
+
+**4.5.8 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+********
+SECURITY
+********
+
+- **Header:** *Validation of header name and value* was fixed.
+  See the `Security advisory GHSA-x5mq-jjr3-vmx6 <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-x5mq-jjr3-vmx6>`_
+  for more information.
+
+**********
+Bugs Fixed
+**********
+
+- **Database:** Fixed a bug where ``Builder::affectedRows()`` threw an error when the previous query call failed in ``Postgre`` and ``SQLSRV`` drivers.
+- **Security:** Fixed a bug where the CSRF token validation could fail on malformed input, causing a generic HTTP 500 status code instead of handling the input gracefully.
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

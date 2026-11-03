@@ -1,0 +1,278 @@
+########
+Security
+########
+
+The Security Class contains methods that help protect your site against Cross-Site Request Forgery attacks.
+
+.. contents::
+    :local:
+    :depth: 3
+
+*******************
+Loading the Library
+*******************
+
+If your only interest in loading the library is to handle CSRF protection, then you will never need to load it, as it
+runs as a filter and has no manual interaction.
+
+If you find a case where you do need direct access, though, you may load it through the Services file:
+
+.. literalinclude:: security/001.php
+
+.. _cross-site-request-forgery:
+
+*********************************
+Cross-Site Request Forgery (CSRF)
+*********************************
+
+.. warning:: The CSRF Protection is only available for **POST/PUT/PATCH/DELETE** requests. Requests for other methods
+    are not protected.
+
+Prerequisite
+============
+
+When you use CodeIgniter's CSRF protection, you still need to code as follows. Otherwise, the CSRF protection may be
+bypassed.
+
+When Auto-Routing is Disabled
+-----------------------------
+
+Do one of the following:
+
+1. Do not use ``$routes->add()``, and use HTTP verbs in routes.
+2. Check the request method in the controller method before processing.
+
+E.g.::
+
+    if (! $this->request->is('post')) {
+        return $this->response->setStatusCode(405)->setBody('Method Not Allowed');
+    }
+
+.. note:: The :ref:`$this->request->is() <incomingrequest-is>` method can be used since v4.3.0. In previous versions,
+    you need to use ``if (strtolower($this->request->getMethod()) !== 'post')``.
+
+When Auto-Routing is Enabled
+----------------------------
+
+1. Check the request method in the controller method before processing.
+
+E.g.::
+
+    if (! $this->request->is('post')) {
+        return $this->response->setStatusCode(405)->setBody('Method Not Allowed');
+    }
+
+Config for CSRF
+===============
+
+.. _csrf-protection-methods:
+
+CSRF Protection Methods
+-----------------------
+
+.. warning:: If you use :doc:`Session <./sessions>`, be sure to use Session-based CSRF protection. Cookie-based CSRF
+    protection will not prevent Same-site attacks. See
+    `GHSA-5hm8-vh6r-2cjq <https://github.com/codeigniter4/shield/security/advisories/GHSA-5hm8-vh6r-2cjq>`_ for details.
+
+By default, the Cookie-based CSRF Protection is used. It is the
+`Double Submit Cookie <https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#double-submit-cookie>`_
+pattern on the OWASP Cross-Site Request Forgery Prevention Cheat Sheet.
+
+You can also use Session-based CSRF Protection. It is the
+`Synchronizer Token Pattern <https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#synchronizer-token-pattern>`_.
+
+You can use the Session-based CSRF protection by editing the following config parameter value in
+**app/Config/Security.php**:
+
+.. literalinclude:: security/002.php
+
+.. _csrf-fetch-metadata:
+
+Fetch Metadata CSRF Protection
+------------------------------
+
+.. versionadded:: 4.8.0
+
+CodeIgniter can use Fetch Metadata request headers as a first-line CSRF check for unsafe browser requests. Fetch
+Metadata is a browser-supplied signal that helps the framework allow same-origin requests and reject cross-site requests
+before checking the CSRF token.
+
+When CSRF protection is enabled, new applications use Fetch Metadata first by default. You can configure this behavior
+in **app/Config/Security.php**:
+
+.. literalinclude:: security/011.php
+
+When it is enabled, requests using unsafe HTTP methods with ``Sec-Fetch-Site: same-origin`` are allowed without a token.
+Requests with ``Sec-Fetch-Site: cross-site`` are rejected. Requests with a missing ``Sec-Fetch-Site`` header,
+``Sec-Fetch-Site: none``, or an unknown value fall back to token verification. This keeps protection working for
+browsers or clients that do not send Fetch Metadata headers. Requests with ``Sec-Fetch-Site: same-site`` also fall back
+to token verification by default.
+
+Upgraded applications without this config value continue to use token verification. You may also disable Fetch Metadata
+protection by setting ``$csrfFetchMetadata`` to ``false``.
+
+When an unsafe request passes with Fetch Metadata, the CSRF token is not regenerated. Token regeneration only runs when
+token verification is used.
+
+.. warning:: Fetch Metadata protects browser-based requests. Browsers only send these headers for potentially
+    trustworthy URLs, and non-browser clients can send their own headers. It is not API authentication.
+
+.. warning:: Same-site is not the same as same-origin, because sibling subdomains are considered same-site. Same-site
+    requests fall back to token verification by default. If sibling subdomains are not trusted, you may reject same-site
+    requests before token verification in **app/Config/Security.php**:
+
+    .. literalinclude:: security/012.php
+
+If your application receives legitimate cross-origin POST requests, such as webhooks, callbacks, or OAuth/SAML
+responses, use :ref:`CSRF route exclusions <csrf-exclude-uris>` and verify those routes another way.
+
+Token Randomization
+-------------------
+
+To mitigate compression side-channel attacks like `BREACH`_, and prevent an attacker from guessing the CSRF tokens, you
+can configure token randomization (off by default).
+
+If you enable it, a random mask is added to the token and used to scramble it.
+
+.. _`BREACH`: https://en.wikipedia.org/wiki/BREACH
+
+You can enable it by editing the following config parameter value in **app/Config/Security.php**:
+
+.. literalinclude:: security/003.php
+
+Token Regeneration
+------------------
+
+Tokens may be either regenerated on every submission (default) or kept the same throughout the life of the Session or
+CSRF cookie.
+
+The default regeneration of tokens provides stricter security, but may result in usability concerns as other tokens
+become invalid (back/forward navigation, multiple tabs/windows, asynchronous actions, etc.). You may alter this behavior
+by editing the following config parameter value in **app/Config/Security.php**:
+
+.. literalinclude:: security/004.php
+
+.. warning:: If you use Cookie-based CSRF protection, and :php:func:`redirect()` after the submission, you must call
+    ``withCookie()`` to send the regenerated CSRF cookie. See :ref:`response-redirect` for details.
+
+.. note:: Since v4.2.3, you can regenerate the CSRF token manually with the ``Security::generateHash()`` method.
+
+.. _csrf-redirection-on-failure:
+
+Redirection on Failure
+----------------------
+
+Starting with v4.5.0, when a request fails the CSRF validation check, by default, the user is redirected to the previous
+page in the production environment, or a SecurityException is thrown in other environments.
+
+.. note:: In the production environment, when you use HTML forms, it is recommended to enable this redirection for a
+    better user experience.
+
+    Upgrade users should check their configuration files.
+
+If you want to make it redirect to the previous page, set the following config parameter value to ``true`` in
+**app/Config/Security.php**:
+
+.. literalinclude:: security/005.php
+
+When redirected, an ``error`` flash message is set and can be displayed to the end user with the following code in your
+view::
+
+    <?= session()->getFlashdata('error') ?>
+
+This provides a nicer experience than simply crashing.
+
+Even when the redirect value is ``true``, AJAX calls will not redirect, but will throw a SecurityException.
+
+.. _enable-csrf-protection:
+
+Enable CSRF Protection
+======================
+
+You can enable CSRF protection by altering your **app/Config/Filters.php** and enabling the ``csrf`` filter globally:
+
+.. literalinclude:: security/006.php
+
+.. _csrf-exclude-uris:
+
+Select URIs can be whitelisted from CSRF protection (for example, API endpoints expecting externally POSTed content).
+You can do this by adding them as exceptions in the filter:
+
+.. literalinclude:: security/007.php
+
+Regular expressions are also supported (case-insensitive):
+
+.. literalinclude:: security/008.php
+
+It is also possible to enable the CSRF filter only for specific methods:
+
+.. literalinclude:: security/009.php
+
+.. Warning:: If you use ``$methods`` filters, you should :ref:`disable Auto Routing (Legacy) <use-defined-routes-only>`
+    because :ref:`auto-routing-legacy` permits any HTTP method to access a controller. Accessing the controller with a
+    method you don't expect could bypass the filter.
+
+HTML Forms
+==========
+
+If you use the :doc:`form helper <../helpers/form_helper>`, then :func:`form_open()` will automatically insert a hidden
+CSRF field in your forms.
+
+.. note:: To use auto-generation of the CSRF field, you need to turn the CSRF filter on for the form page. In most
+    cases, it is requested using the ``GET`` method.
+
+If not, then you can use the always available ``csrf_token()`` and ``csrf_hash()`` functions::
+
+    <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
+
+Additionally, you can use the ``csrf_field()`` method to generate this hidden input field for you::
+
+    // Generates: <input type="hidden" name="{csrf_token}" value="{csrf_hash}" />
+    <?= csrf_field() ?>
+
+When sending a JSON request, the CSRF token can also be passed as one of the parameters. The next way to pass the CSRF
+token is a special HTTP header whose name is available from the ``csrf_header()`` function.
+
+Additionally, you can use the ``csrf_meta()`` method to generate this handy meta tag for you::
+
+    // Generates: <meta name="{csrf_header}" content="{csrf_hash}" />
+    <?= csrf_meta() ?>
+
+The Order of Token Sent by Users
+================================
+
+The order of checking the availability of the CSRF token is as follows:
+
+1. ``$_POST`` array
+2. HTTP header
+3. ``php://input`` (JSON request) - bear in mind that this approach is the slowest one since we have to decode JSON and
+   then re-encode it
+4. ``php://input`` (raw body) - for PUT, PATCH, and DELETE type of requests
+
+.. note:: ``php://input`` (raw body) is checked since v4.4.2.
+
+.. note::
+
+    If you include the CSRF token in a JSON object, removing it decodes and re-encodes the body. This changes its
+    formatting and may affect number precision. To keep the JSON body unchanged, send the token in the ``X-CSRF-TOKEN``
+    header and leave the CSRF field out of the body.
+
+*********************
+Other Helpful Methods
+*********************
+
+You will never need to use most of the methods in the Security class directly. The following are methods that you might
+find helpful that are not related to the CSRF protection.
+
+sanitizeFilename()
+==================
+
+Tries to sanitize filenames in order to prevent directory traversal attempts and other security threats, which is
+particularly useful for files that were supplied via user input. The first parameter is the path to sanitize.
+
+If it is acceptable for the user input to include relative paths, e.g., **file/in/some/approved/folder.txt**, you can
+set the second optional parameter, ``$relativePath``, to ``true``.
+
+.. literalinclude:: security/010.php
+
+This method is an alias for the ``sanitize_filename()`` function from the Security helper.

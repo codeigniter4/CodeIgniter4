@@ -1,0 +1,12 @@
+Version 4.2.4
+#############
+
+Release Date: August 13, 2022
+
+**4.2.4 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 2
+
+**Hotfix release to fix download errors; no other content changes.**

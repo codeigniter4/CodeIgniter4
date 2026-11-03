@@ -1,0 +1,25 @@
+#############
+Version 4.5.2
+#############
+
+Release Date: June 10, 2024
+
+**4.5.2 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+***************
+Message Changes
+***************
+
+- Added ``Security.insecureCookie`` message.
+
+**********
+Bugs Fixed
+**********
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

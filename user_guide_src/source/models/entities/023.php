@@ -1,0 +1,3 @@
+<?php
+
+$user->hasChanged(); // true

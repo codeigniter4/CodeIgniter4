@@ -1,0 +1,3 @@
+<?php
+
+$result->assertRedirect();

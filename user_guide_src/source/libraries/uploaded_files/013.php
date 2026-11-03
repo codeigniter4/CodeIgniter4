@@ -1,0 +1,3 @@
+<?php
+
+$tempfile = $file->getTempName();
