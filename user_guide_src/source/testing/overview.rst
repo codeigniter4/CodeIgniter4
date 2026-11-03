@@ -10,9 +10,9 @@ helper methods to make testing every aspect of your application as painless as p
     :local:
     :depth: 3
 
-*************
-System Set Up
-*************
+************
+System Setup
+************
 
 Installing PHPUnit
 ==================
@@ -24,7 +24,7 @@ Composer
 --------
 
 The recommended method is to install it in your project using `Composer <https://getcomposer.org/>`__. While it's possible
-to install it globally we do not recommend it, since it can cause compatibility issues with other projects on your
+to install it globally, we do not recommend it, since it can cause compatibility issues with other projects on your
 system as time goes on.
 
 Ensure that you have Composer installed on your system. From the project root (the directory that contains the
@@ -50,7 +50,7 @@ If you are using Windows, use the following command:
 Phar
 ----
 
-The other option is to download the .phar file from the `PHPUnit <https://phpunit.de/getting-started/phpunit-9.html>`__ site.
+The other option is to download the .phar file as described in the `PHPUnit installation guide <https://docs.phpunit.de/en/10.5/installation.html>`__.
 This is a standalone file that should be placed within your project root.
 
 ************************
@@ -62,7 +62,7 @@ PHPUnit Configuration
 
 In your CodeIgniter project root, there is the ``phpunit.dist.xml`` file. This
 controls unit testing of your application. If you provide your own ``phpunit.xml``,
-it will over-ride this.
+it will override this.
 
 By default, test files are placed under the **tests** directory in the project root.
 
@@ -100,7 +100,7 @@ Staging
 -------
 
 Most tests require some preparation in order to run correctly. PHPUnit's ``TestCase`` provides four methods
-to help with staging and clean up::
+to help with staging and cleanup::
 
     public static function setUpBeforeClass(): void
     public static function tearDownAfterClass(): void
@@ -121,13 +121,13 @@ parent as well so extended test cases do not interfere with staging:
 Traits
 ------
 
-A common way to enhance your tests is using traits to consolidate staging across different
+A common way to enhance your tests is to use traits to consolidate staging across different
 test cases. ``CIUnitTestCase`` will detect any class traits and look for staging methods
-to run named for the trait itself (i.e. `setUp{NameOfTrait}()` and `tearDown{NameOfTrait}()`).
+to run named for the trait itself (i.e., ``setUp{NameOfTrait}()`` and ``tearDown{NameOfTrait}()``).
 
 For example, if you needed to add authentication to some
-of your test cases you could create an authentication trait with a set up method to fake a
-logged in user:
+of your test cases, you could create an authentication trait with a setup method to fake a
+logged-in user:
 
 .. literalinclude:: overview/006.php
 
@@ -143,12 +143,16 @@ assertLogged($level, $expectedMessage)
 
 Ensure that something you expected to be logged was actually logged:
 
+.. literalinclude:: overview/007.php
+    :lines: 3-8
+
 assertLogContains($level, $logMessage)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Ensure that there's a record in the logs which contains a message part.
 
 .. literalinclude:: overview/007.php
+    :lines: 10-13
 
 assertEventTriggered($eventName)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -258,8 +262,8 @@ Removes all mocked classes from the Services class, bringing it back to its orig
 
 You can also use the ``$this->resetServices()`` method that ``CIUnitTestCase`` provides.
 
-.. note:: This method resets the all states of Services, and the ``RouteCollection``
-    will have no routes. If you want to use your routes to be loaded, you need to
+.. note:: This method resets all states of Services, and the ``RouteCollection``
+    will have no routes. If you want your routes to be loaded, you need to
     call the ``loadRoutes()`` method like ``Services::routes()->loadRoutes()``.
 
 Services::resetSingle(string $name)
@@ -267,14 +271,14 @@ Services::resetSingle(string $name)
 
 Removes any mock and shared instances for a single service, by its name.
 
-.. note:: The ``Cache``, ``Email`` and ``Session`` services are mocked by default to prevent intrusive testing behavior. To prevent these from mocking remove their method callback from the class property: ``$setUpMethods = ['mockEmail', 'mockSession'];``
+.. note:: The ``Cache``, ``Email`` and ``Session`` services are mocked by default to prevent intrusive testing behavior. To prevent these from being mocked, remove their method callback from the class property: ``$setUpMethods = ['mockEmail', 'mockSession'];``
 
 Mocking Factory Instances
 =========================
 
 Similar to Services, you may find yourself needing to supply a pre-configured class instance
 during testing that will be used with ``Factories``. Use the same ``Factories::injectMock()`` and ``Factories::reset()``
-static methods like **Services**, but they take an additional preceding parameter for the
+static methods as **Services**, but they take an additional preceding parameter for the
 component name:
 
 .. literalinclude:: overview/017.php
@@ -288,12 +292,12 @@ Testing time-dependent code can be challenging. However, when using the
 :doc:`Time <../libraries/time>` class, the current time can be fixed or changed
 at will during testing.
 
-Below is a sample test code that fixes the current time:
+Below is sample test code that fixes the current time:
 
 .. literalinclude:: overview/021.php
 
 You can fix the current time with the ``Time::setTestNow()`` method.
 Optionally, you can specify a locale as the second parameter.
 
-Don't forget to reset the current time after the test with calling it without
+Don't forget to reset the current time after the test by calling it without
 parameters.

@@ -20,7 +20,7 @@ Open the **app/Config/Filters.php** file and update the ``$methods`` property li
 .. literalinclude:: create_news_items/001.php
 
 It configures the CSRF filter to be enabled for all **POST** requests.
-You can read more about the CSRF protection in :doc:`Security <../../libraries/security>` library.
+You can read more about the CSRF protection in the :doc:`Security <../../libraries/security>` library.
 
 .. Warning:: In general, if you use ``$methods`` filters, you should :ref:`disable Auto Routing (Legacy) <use-defined-routes-only>`
     because :ref:`auto-routing-legacy` permits any HTTP method to access a controller.
@@ -29,15 +29,15 @@ You can read more about the CSRF protection in :doc:`Security <../../libraries/s
 Adding Routing Rules
 ********************
 
-Before you can start adding news items into your CodeIgniter application
-you have to add an extra rule to **app/Config/Routes.php** file. Make sure your
+Before you can start adding news items into your CodeIgniter application,
+you have to add an extra rule to the **app/Config/Routes.php** file. Make sure your
 file contains the following:
 
 .. literalinclude:: create_news_items/004.php
 
 The route directive for ``'news/new'`` is placed before the directive for ``'news/(:segment)'`` to ensure that the form to create a news item is displayed.
 
-The ``$routes->post()`` line defines the router for a POST request. It matches
+The ``$routes->post()`` line defines the route for a POST request. It matches
 only a POST request to the URI path **/news**, and it maps to the ``create()`` method of
 the ``News`` class.
 
@@ -98,9 +98,9 @@ Next, create a method to create a news item from the submitted data.
 
 You're going to do three things here:
 
-1. checks whether the submitted data passed the validation rules.
-2. saves the news item to the database.
-3. returns a success page.
+1. Check whether the submitted data passed the validation rules.
+2. Save the news item to the database.
+3. Return a success page.
 
 .. literalinclude:: create_news_items/005.php
 
@@ -112,7 +112,7 @@ Retrieve the Data
 First, we use the :doc:`IncomingRequest <../../incoming/incomingrequest>`
 object ``$this->request``, which is set in the controller by the framework.
 
-We get the necessary items from the **POST** data by the user and set them in the
+We get the necessary items from the **POST** data sent by the user and set them in the
 ``$data`` variable.
 
 Validate the Data
@@ -120,7 +120,7 @@ Validate the Data
 
 Next, you'll use the Controller-provided helper function
 :ref:`validateData() <controller-validatedata>` to validate the submitted data.
-In this case, the title and body fields are required and in the specific length.
+In this case, the title and body fields are required and have length limits.
 
 CodeIgniter has a powerful validation library as demonstrated
 above. You can read more about the :doc:`Validation library <../../libraries/validation>`.
@@ -142,7 +142,7 @@ key.
 
 This contains a new function :php:func:`url_title()`. This function -
 provided by the :doc:`URL helper <../../helpers/url_helper>` - strips down
-the string you pass it, replacing all spaces by dashes (``-``) and makes
+the string you pass it, replacing all spaces with dashes (``-``) and making
 sure everything is in lowercase characters. This leaves you with a nice
 slug, perfect for creating URIs.
 
@@ -164,7 +164,7 @@ to allow data to be saved properly. The ``save()`` method that was
 used will determine whether the information should be inserted
 or if the row already exists and should be updated, based on the presence
 of a primary key. In this case, there is no ``id`` field passed to it,
-so it will insert a new row into it's table, ``news``.
+so it will insert a new row into its table, ``news``.
 
 However, by default the insert and update methods in the Model will
 not actually save any data because it doesn't know what fields are

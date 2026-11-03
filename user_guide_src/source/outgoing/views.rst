@@ -10,7 +10,7 @@ A view is simply a web page, or a page fragment, like a header, footer, sidebar,
 views can flexibly be embedded within other views (within other views, etc.) if you need
 this type of hierarchy.
 
-Views are never called directly, they must be loaded by a controller or :ref:`view route <view-routes>`.
+Views are never called directly. They must be loaded by a controller or :ref:`view route <view-routes>`.
 
 Remember that in an MVC framework,
 the Controller acts as the traffic cop, so it is responsible for fetching a particular view. If you have
@@ -37,8 +37,8 @@ Then save the file in your **app/Views** directory.
 Displaying a View
 =================
 
-To load and display a particular view file you will use the :php:func:`view()`
-function like following code in your controller:
+To load and display a particular view file, you will use the :php:func:`view()`
+function in your controller, as in the following code:
 
 .. literalinclude:: views/001.php
    :lines: 2-
@@ -60,7 +60,7 @@ Add the following code:
 .. literalinclude:: views/013.php
    :lines: 2-
 
-If you visit your site, you should see your new view. The URL was similar to this::
+If you visit your site, you should see your new view. The URL is similar to this::
 
     example.com/index.php/blog/
 
@@ -68,7 +68,7 @@ Loading Multiple Views
 ======================
 
 CodeIgniter will intelligently handle multiple calls to :php:func:`view()` from
-within a controller. If more than one call happens they will be appended together.
+within a controller. If more than one call happens, they will be appended together.
 
 For example, you may wish to have a header view, a menu view, a
 content view, and a footer view. That might look something like this:
@@ -81,7 +81,7 @@ Storing Views within Sub-directories
 ====================================
 
 Your view files can also be stored within sub-directories if you prefer that type of organization.
-When doing so you will need to include the directory name loading the view. Example:
+When doing so, you will need to include the directory name when loading the view. Example:
 
 .. literalinclude:: views/004.php
    :lines: 2-
@@ -91,11 +91,11 @@ When doing so you will need to include the directory name loading the view. Exam
 Namespaced Views
 ================
 
-You can store views under a **Views** directory that is namespaced, and load that view as if it was namespaced. While
+You can store views under a **Views** directory that is namespaced, and load that view as if it were namespaced. While
 PHP does not support loading non-class files from a namespace, CodeIgniter provides this feature to make it possible
 to package your views together in a module-like fashion for easy re-use or distribution.
 
-If you have **example/blog** directory that has a PSR-4 mapping set up in the :doc:`Autoloader </concepts/autoloader>` living
+If you have an **example/blog** directory that has a PSR-4 mapping set up in the :doc:`Autoloader </concepts/autoloader>` living
 under the namespace ``Example\Blog``, you could retrieve view files as if they were namespaced also.
 
 Following this
@@ -215,21 +215,21 @@ The data passed in is retained for subsequent calls to :php:func:`view()`. If yo
 call the function multiple times in a single request, you will not have to pass
 the desired data to each ``view()``.
 
-But this might not keep any data from "bleeding" into
+However, this might allow data to "bleed" into
 other views, potentially causing issues. If you would prefer to clean the data after one call, you can pass the ``saveData`` option
-into the ``$option`` array in the third parameter.
+into the ``$options`` array in the third parameter.
 
 .. literalinclude:: views/010.php
    :lines: 2-
 
-Additionally, if you would like the default functionality of the ``view()`` function to be that it does clear the data
-between calls, you can set ``$saveData`` to ``false`` in **app/Config/Views.php**.
+Additionally, if you would like the ``view()`` function to clear the data by default
+between calls, you can set ``$saveData`` to ``false`` in **app/Config/View.php**.
 
 Creating Loops
 ==============
 
-The data array you pass to your view files is not limited to simple variables. You can pass multi dimensional
-arrays, which can be looped to generate multiple rows. For example, if you pull data from your database it will
+The data array you pass to your view files is not limited to simple variables. You can pass multi-dimensional
+arrays, which can be looped to generate multiple rows. For example, if you pull data from your database, it will
 typically be in the form of a multi-dimensional array.
 
 Here's a simple example. Add this to your controller:

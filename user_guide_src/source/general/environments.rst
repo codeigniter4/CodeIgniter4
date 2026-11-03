@@ -7,7 +7,7 @@ an application is running in a development or production environment.
 For example, verbose error output is something that would be useful
 while developing an application, but it may also pose a security issue
 when "live". In development environments, you might want additional
-tools loaded that you don't in production environments, etc.
+tools loaded that you don't want in production environments, etc.
 
 .. contents::
     :local:
@@ -42,8 +42,8 @@ The ENVIRONMENT Constant
 ========================
 
 To set your environment, CodeIgniter comes with the ``ENVIRONMENT`` constant.
-If you set ``$_SERVER['CI_ENVIRONMENT']``, the value will be used,
-otherwise defaulting to ``production``.
+If you set ``$_SERVER['CI_ENVIRONMENT']``, the value will be used.
+Otherwise, it defaults to ``production``.
 
 This can be set in several ways depending on your server setup.
 
@@ -56,7 +56,7 @@ The simplest method to set the variable is in your :ref:`.env file <dotenv-file>
 
     CI_ENVIRONMENT = development
 
-.. note:: You can change the ``CI_ENVIRONMENT`` value in **.env** file by ``spark env`` command:
+.. note:: You can change the ``CI_ENVIRONMENT`` value in the **.env** file with the ``spark env`` command:
 
     .. code-block:: console
 
@@ -82,7 +82,7 @@ nginx
 
 Under nginx, you must pass the environment variable through the ``fastcgi_params``
 in order for it to show up under the ``$_SERVER`` variable. This allows it to work on the
-virtual-host level, instead of using `env` to set it for the entire server, though that
+virtual-host level, instead of using ``env`` to set it for the entire server, though that
 would work fine on a dedicated server. You would then modify your server config to something
 like:
 
@@ -123,15 +123,15 @@ settings, loading additional developer tools, or anything else. These are
 automatically loaded by the system. The following files are already created in
 a fresh install:
 
-* development.php
-* production.php
-* testing.php
+* **development.php**
+* **production.php**
+* **testing.php**
 
-For example, if you want to add ``staging`` environment for staging, all you need
+For example, if you want to add a ``staging`` environment for staging, all you need
 to do is:
 
-1. copy **APPPATH/Config/Boot/production.php** to **staging.php**.
-2. customize settings in **staging.php** if you want.
+1. Copy **APPPATH/Config/Boot/production.php** to **staging.php**.
+2. Customize settings in **staging.php** if you want.
 
 **********************************
 Confirming the Current Environment
@@ -139,7 +139,7 @@ Confirming the Current Environment
 
 To confirm the current environment, simply echo the constant ``ENVIRONMENT``.
 
-You can also check the current environment by ``spark env`` command:
+You can also check the current environment with the ``spark env`` command:
 
 .. code-block:: console
 

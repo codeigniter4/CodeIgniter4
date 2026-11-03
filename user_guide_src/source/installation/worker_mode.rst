@@ -19,8 +19,8 @@ What is Worker Mode?
 ====================
 
 Worker Mode is a performance optimization feature that allows CodeIgniter to handle multiple
-HTTP requests within the same PHP process, instead of starting a new process for each request
-like traditional PHP-FPM does.
+HTTP requests within the same bootstrapped application. PHP-FPM also reuses worker processes,
+but normally initializes and tears down the application for each request.
 
 Traditional PHP vs Worker Mode
 ------------------------------
@@ -29,13 +29,13 @@ Traditional PHP vs Worker Mode
 
 In traditional PHP, each HTTP request goes through this cycle:
 
-1. Web server receives request and spawns a new PHP process
-2. PHP loads and parses all required files
+1. Web server receives the request and passes it to an available PHP-FPM worker process
+2. PHP loads the required files, using cached bytecode when OPcache is enabled
 3. Framework bootstraps: autoloader, configuration, services, routes
 4. Database connections are established
 5. Request is processed and response is sent
-6. All connections are closed
-7. PHP process terminates, freeing all memory
+6. Request resources are released, including non-persistent connections
+7. Application state is torn down, and the worker process can handle another request
 
 This "shared nothing" architecture is simple and safe, but inefficient for high-traffic
 applications because steps 2-4 repeat for every single request.
@@ -93,7 +93,7 @@ Installation
 
 1. Install FrankenPHP following the `official documentation <https://frankenphp.dev/>`_
 
-   You can use a static binary or Docker. Here, we will assume we use a static binary,
+   You can use a static binary or Docker. Here, we assume a static binary,
    which can be `downloaded directly <https://github.com/php/frankenphp/releases/>`_.
 
 2. Install the Worker Mode template files using the spark command:

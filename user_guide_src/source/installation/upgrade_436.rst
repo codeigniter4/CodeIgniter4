@@ -15,7 +15,7 @@ Please refer to the upgrade instructions corresponding to your installation meth
 Breaking Changes
 ****************
 
-- ``AutoRouterInterface::getRoute()`` has the new second parameter ``string $httpVerb``.
+- ``AutoRouterInterface::getRoute()`` has a new second parameter ``string $httpVerb``.
   If you implement it, add the parameter.
 
 Breaking Enhancements
@@ -35,4 +35,4 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- composer.json
+- **composer.json**

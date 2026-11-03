@@ -2,7 +2,7 @@
 CLI Overview
 ############
 
-CodeIgniter 4 provides built-in command **spark** and useful commands and library.
+CodeIgniter 4 provides the built-in **spark** command, along with useful commands and a library.
 You can also create spark commands, and run controllers via CLI.
 
 .. contents::
@@ -36,7 +36,7 @@ The Spark Commands
 
 CodeIgniter ships with the official command **spark** and built-in commands.
 
-You can run the spark and see the help:
+You can run **spark** and see the help:
 
 .. code-block:: console
 
@@ -48,7 +48,7 @@ See the :doc:`spark_commands` page for detailed information.
 The CLI Library
 ***************
 
-The CLI library makes working with the CLI interface simple.
+The CLI library makes working with the CLI simple.
 It provides easy ways to output text in multiple colors to the terminal window. It also
 allows you to prompt a user for information, making it easy to build flexible, smart tools.
 

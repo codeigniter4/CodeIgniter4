@@ -48,10 +48,10 @@ and tedious to implement.
 Form Validation Tutorial
 ************************
 
-What follows is a "hands on" tutorial for implementing CodeIgniter's Form
+What follows is a "hands-on" tutorial for implementing CodeIgniter's Form
 Validation.
 
-In order to implement form validation you'll need three things:
+In order to implement form validation, you'll need three things:
 
 #. A :doc:`View </outgoing/views>` file containing a form.
 #. A View file containing a "success" message to be displayed upon
@@ -146,7 +146,7 @@ To try your form, visit your site using a URL similar to this one::
 
     example.com/index.php/form/
 
-If you submit the form you should simply see the form reload. That's
+If you submit the form, you should simply see the form reload. That's
 because you haven't set up any validation rules in :ref:`controller-validatedata` yet.
 
 The ``validateData()`` method is a method in the Controller. It uses
@@ -173,13 +173,13 @@ The form (**signup.php**) is a standard web form with a couple of exceptions:
    However, the benefit of using the helper is that it generates the
    action URL for you, based on the URL in your config file. This makes
    your application more portable in the event your URLs change.
-#. At the top of the form you'll notice the following function call:
+#. At the top of the form, you'll notice the following function call:
    ::
 
     <?= validation_list_errors() ?>
 
    This function will return any error messages sent back by the
-   validator. If there are no messages it returns an empty string.
+   validator. If there are no messages, it returns an empty string.
 
 Form.php
 --------
@@ -190,7 +190,7 @@ It loads the form helper used by your view files.
 The controller has one method: ``index()``. This method returns
 the **signup** view to show the form when a non-POST request comes. Otherwise, it
 uses the Controller-provided :ref:`controller-validatedata` method. It also runs the validation routine.
-Based on whether the validation was successful it either presents the
+Based on whether the validation was successful, it either presents the
 form or the success page.
 
 Add Validation Rules
@@ -201,7 +201,7 @@ Then add validation rules in the controller (**Form.php**):
 .. literalinclude:: validation/002.php
    :lines: 2-
 
-If you submit the form you should see the success page or the form with error messages.
+If you submit the form, you should see the success page or the form with error messages.
 
 *********************
 Config for Validation
@@ -245,8 +245,8 @@ The **Traditional Rules** implicitly assume that string values are validated,
 and the input value may be converted implicitly to a string value.
 It works for most basic cases like validating POST data.
 
-However, for example, if you use JSON input data, it may be a type of bool/null/array.
-When you validate the boolean ``true``, it is converted to string ``'1'`` with the Traditional rule classes.
+However, for example, if you use JSON input data, it may be of type bool/null/array.
+When you validate the boolean ``true``, it is converted to the string ``'1'`` with the Traditional rule classes.
 If you validate it with the ``integer`` rule, ``'1'`` passes the validation.
 
 Using Traditional Rules
@@ -269,7 +269,7 @@ The library is loaded as a service named **validation**:
 .. literalinclude:: validation/004.php
    :lines: 2-
 
-This automatically loads the ``Config\Validation`` file which contains settings
+This automatically loads the ``Config\Validation`` file, which contains settings
 for including multiple Rulesets, and collections of rules that can be easily reused.
 
 .. note:: You may never need to use this method, as both the :doc:`Controller </incoming/controllers>` and
@@ -279,10 +279,10 @@ for including multiple Rulesets, and collections of rules that can be easily reu
 How Validation Works
 ********************
 
-- The validation never changes data to be validated.
+- The validation never changes the data to be validated.
 - The validation checks each field in turn according to the Validation Rules you
   set. If any rule returns false, the check for that field ends there.
-- The Format Rules do not permit empty string. If you want to permit empty string,
+- The Format Rules do not permit an empty string. If you want to permit an empty string,
   add the ``permit_empty`` rule.
 - If a field does not exist in the data to be validated, the value is interpreted
   as ``null``. If you want to check that the field exists, add the ``field_exists``
@@ -295,7 +295,7 @@ Setting Validation Rules
 ************************
 
 CodeIgniter lets you set as many validation rules as you need for a
-given field, cascading them in order. To set validation rules you
+given field, cascading them in order. To set validation rules, you
 will use the ``setRule()``, ``setRules()``, or ``withRequest()``
 methods.
 
@@ -309,7 +309,7 @@ This method sets a single rule. It has the method signature::
 
     setRule(string $field, ?string $label, array|string $rules[, array $errors = []])
 
-The ``$rules`` either takes in a pipe-delimited list of rules or an array collection of rules:
+The ``$rules`` parameter takes in either a pipe-delimited list of rules or an array collection of rules:
 
 .. literalinclude:: validation/005.php
    :lines: 2-
@@ -334,7 +334,7 @@ Like ``setRule()``, but accepts an array of field names and their rules:
 .. literalinclude:: validation/006.php
    :lines: 2-
 
-To give a labeled error message you can set up as:
+To give a labeled error message, you can set it up as follows:
 
 .. literalinclude:: validation/007.php
    :lines: 2-
@@ -362,8 +362,8 @@ You can use the ``*`` wildcard symbol to match any one level of the array:
     dimensions. See :ref:`Upgrading <upgrade-444-validation-with-dot-array-syntax>`
     for details.
 
-"dot array syntax" can also be useful when you have single dimension array data.
-For example, data returned by multi select dropdown:
+The "dot array syntax" can also be useful when you have single-dimension array data.
+For example, data returned by a multi-select dropdown:
 
 .. literalinclude:: validation/011.php
    :lines: 2-
@@ -380,7 +380,7 @@ withRequest()
 .. warning:: If you want to validate POST data only, don't use ``withRequest()``.
     This method uses :ref:`$request->getVar() <incomingrequest-getting-data>`
     which returns ``$_GET``, ``$_POST`` or ``$_COOKIE`` data in that order
-    (depending on php.ini `request-order <https://www.php.net/manual/en/ini.core.php#ini.request-order>`_).
+    (depending on **php.ini** `request-order <https://www.php.net/manual/en/ini.core.php#ini.request-order>`_).
     Newer values override older values. POST values may be overridden by the
     cookies if they have the same name.
 
@@ -397,10 +397,10 @@ data to be validated:
     validated data. Because this method gets JSON data from
     :ref:`$request->getJSON() <incomingrequest-getting-json-data>`
     when the request is a JSON request (``Content-Type: application/json``),
-    or gets Raw data from
+    or gets raw data from
     :ref:`$request->getRawInput() <incomingrequest-retrieving-raw-data>`
-    when the request is a PUT, PATCH, DELETE request and
-    is not HTML form post (``Content-Type: multipart/form-data``),
+    when the request is a PUT, PATCH, or DELETE request and
+    is not an HTML form post (``Content-Type: multipart/form-data``),
     or gets data from :ref:`$request->getVar() <incomingrequest-getting-data>`,
     and an attacker could change what data is validated.
 
@@ -430,13 +430,13 @@ This method returns true if the validation is successful.
 Running Multiple Validations
 ============================
 
-.. note:: ``run()`` method will not reset error state. Should a previous run fail,
-   ``run()`` will always return false and ``getErrors()`` will return
-   all previous errors until explicitly reset.
+.. note:: The ``run()`` method will not reset the error state. Should a previous run fail,
+    ``run()`` will always return false and ``getErrors()`` will return
+    all previous errors until explicitly reset.
 
 If you intend to run multiple validations, for instance on different data sets or with different
 rules after one another, you might need to call ``$validation->reset()`` before each run to get rid of
-errors from previous run. Be aware that ``reset()`` will invalidate any data, rule or custom error
+errors from the previous run. Be aware that ``reset()`` will invalidate any data, rule or custom error
 you previously set, so ``setRules()``, ``setRuleGroup()`` etc. need to be repeated:
 
 .. literalinclude:: validation/019.php
@@ -447,8 +447,8 @@ Validating 1 Value
 
 The ``check()`` method validates one value against the rules.
 The first parameter ``$value`` is the value to validate. The second parameter
-``$rule`` is the validation rules.
-The optional third parameter ``$errors`` is the the custom error message.
+``$rule`` holds the validation rules.
+The optional third parameter ``$errors`` is the custom error message.
 
 .. literalinclude:: validation/012.php
    :lines: 2-
@@ -509,7 +509,7 @@ How to Save Error Messages
 --------------------------
 
 You can also store custom error messages in this configuration file by naming the
-property the same as the group, and appended with ``_errors``. These will automatically
+property the same as the group, with ``_errors`` appended. These will automatically
 be used for any errors when this group is used:
 
 .. literalinclude:: validation/015.php
@@ -548,17 +548,17 @@ The Validation class provides a simple method to replace parts of your rules bas
 sounds fairly obscure but can be especially handy with the ``is_unique`` validation rule.
 
 Placeholders are simply
-the name of the field (or array key) that was passed in as ``$data`` surrounded by curly brackets. It will be
+the name of the field (or array key) that was passed in as ``$data`` surrounded by curly brackets. This will be
 replaced by the **value** of the matched incoming field. An example should clarify this:
 
 .. literalinclude:: validation/020.php
    :lines: 2-
 
 .. warning:: Since v4.3.5, you must set the validation rules for the placeholder
-    field (the ``id`` field in the sample code above) for security reasons. Because
+    field (the ``id`` field in the sample code above) for security reasons, because
     attackers can send any data to your application.
 
-In this set of rules, it states that the email address should be unique in the database, except for the row
+This set of rules states that the email address should be unique in the database, except for the row
 that has an id matching the placeholder's value. Assuming that the form POST data had the following:
 
 .. literalinclude:: validation/021.php
@@ -586,7 +586,7 @@ custom error messages, and retrieve one or more errors to display.
 
 By default, error messages are derived from language strings in **system/Language/en/Validation.php**, where
 each rule has an entry. In case you want to change a message default, create a file
-**app/Language/en/Validation.php** (and/or corresponding folder of locale you use in place of/besides ``en``)
+**app/Language/en/Validation.php** (and/or the corresponding folder of the locale you use in place of/besides ``en``)
 and place in it keys and values of those error messages for which you want different defaults.
 
 .. _validation-custom-errors:
@@ -597,29 +597,29 @@ Setting Custom Error Messages
 Both the ``setRule()`` and ``setRules()`` methods can accept an array of custom messages
 that will be used as errors specific to each field as their last parameter. This allows
 for a very pleasant experience for the user since the errors are tailored to each
-instance. If not custom error message is provided, the default value will be used.
+instance. If no custom error message is provided, the default value will be used.
 
-These are two ways to provide custom error messages.
+There are two ways to provide custom error messages.
 
 As the last parameter:
 
 .. literalinclude:: validation/023.php
    :lines: 2-
 
-Or as a labeled style:
+Or in a labeled style:
 
 .. literalinclude:: validation/024.php
    :lines: 2-
 
 If you'd like to include a field's "human" name, or the optional parameter some rules allow for (such as max_length),
-or the value that was validated you can add the ``{field}``, ``{param}`` and ``{value}`` tags to your message, respectively::
+or the value that was validated, you can add the ``{field}``, ``{param}`` and ``{value}`` tags to your message, respectively::
 
     'min_length' => 'Supplied value ({value}) for {field} must have at least {param} characters.'
 
 On a field with the human name Username and a rule of ``min_length[6]`` with a value of "Pizza", an error would display: "Supplied value (Pizza) for Username must have
 at least 6 characters."
 
-.. warning:: If you get the error messages with ``getErrors()`` or ``getError()``, the messages are not HTML escaped. If you use user input data like ``({value})`` to make the error message, it might contain HTML tags. If you don't escape the messages before displaying them, XSS attacks are possible.
+.. warning:: If you get the error messages with ``getErrors()`` or ``getError()``, the messages are not HTML-escaped. If you use user input data like ``({value})`` to make the error message, it might contain HTML tags. If you don't escape the messages before displaying them, XSS attacks are possible.
 
 .. note:: When using label-style error messages, if you pass the second parameter to ``setRules()``, it will be overwritten with the value of the first parameter.
 
@@ -627,7 +627,7 @@ Translation of Messages and Validation Labels
 =============================================
 
 To use translated strings from language files, we can simply use the dot syntax.
-Let's say we have a file with translations located here: **app/Languages/en/Rules.php**.
+Let's say we have a file with translations located here: **app/Language/en/Rules.php**.
 We can simply use the language lines defined in this file, like this:
 
 .. literalinclude:: validation/025.php
@@ -651,7 +651,7 @@ When using a wildcard (``*``), the error will point to a specific field, replaci
     'contacts' => [
         'friends' => [
             [
-                'name' => 'Fred Flinstone',
+                'name' => 'Fred Flintstone',
             ],
             [
                 'name' => '',
@@ -700,7 +700,7 @@ PHP shares nothing between requests. So when you redirect if a validation fails,
 there will be no validation errors in the redirected request because the validation
 has run in the previous request.
 
-In that case, you need to use Form helper function :php:func:`validation_errors()`,
+In that case, you need to use the Form helper functions :php:func:`validation_errors()`,
 :php:func:`validation_list_errors()` and :php:func:`validation_show_error()`.
 These functions check the validation errors that are stored in the session.
 
@@ -724,7 +724,7 @@ Creating the Views
 ==================
 
 The first step is to create custom views. These can be placed anywhere that the ``view()`` method can locate them,
-which means the standard View directory, or any namespaced View folder will work. For example, you could create
+which means the standard View directory or any namespaced View folder will work. For example, you could create
 a new view at **app/Views/_errors_list.php**:
 
 .. literalinclude:: validation/030.php
@@ -736,7 +736,7 @@ the name of the field that had the error, and the value is the error message, li
    :lines: 2-
 
 There are actually two types of views that you can create. The first has an array of all of the errors, and is what
-we just looked at. The other type is simpler, and only contains a single variable, ``$error`` that contains the
+we just looked at. The other type is simpler, and only contains a single variable, ``$error``, that contains the
 error message. This is used with the ``showError()`` method where a field must be specified::
 
     <span class="help-block"><?= esc($error) ?></span>
@@ -753,7 +753,7 @@ short alias they can be referenced by. If we were to add our example file from a
 Specifying the Template
 =======================
 
-You can specify the template to use by passing it's alias as the first parameter in ``listErrors()``::
+You can specify the template to use by passing its alias as the first parameter in ``listErrors()``::
 
     <?= $validation->listErrors('my_list') ?>
 
@@ -772,7 +772,7 @@ Using Rule Classes
 ==================
 
 Rules are stored within simple, namespaced classes. They can be stored in any location you would like, as long as the
-autoloader can find it. These files are called RuleSets.
+autoloader can find them. These files are called RuleSets.
 
 Adding a RuleSet
 ----------------
@@ -795,7 +795,7 @@ a boolean true or false value signifying true if it passed the test or false if 
 
 By default, the system will look within **system/Language/en/Validation.php** for the language strings used within
 errors. To provide default error messages for your custom rules, you may place them in **app/Language/en/Validation.php**
-(and/or corresponding folder of locale you use in place of ``en``). Also, in case you want to use some other language
+(and/or the corresponding folder of the locale you use in place of ``en``). Also, in case you want to use some other language
 string file in place of the default **Validation.php**, you may provide error messages by accepting an ``&$error``
 variable by reference in the second (or, in case your rule needs to work with parameters, as described below – the
 fourth) parameter:
@@ -817,7 +817,7 @@ If your method needs to work with parameters, the function will need a minimum o
 
 1. the value to validate (``$value``)
 2. the parameter string (``$params``)
-3. an array with all of the data that was submitted the form (``$data``)
+3. an array with all of the data that was submitted with the form (``$data``)
 4. (optional) a custom error string (``&$error``), just as described above.
 
 .. warning:: The field values in ``$data`` are unvalidated (or may be invalid).
@@ -826,7 +826,7 @@ If your method needs to work with parameters, the function will need a minimum o
     data in ``$data``.
 
 The ``$data`` array is especially handy
-for rules like ``required_with`` that needs to check the value of another submitted field to base its result on:
+for rules like ``required_with`` that need to check the value of another submitted field to base its result on:
 
 .. literalinclude:: validation/037.php
 
@@ -861,7 +861,7 @@ Using Callable Rule
 
 .. versionadded:: 4.5.0
 
-If you like to use an array callback as a rule, you may use it instead of a Closure Rule.
+If you would like to use an array callback as a rule, you may use it instead of a Closure Rule.
 
 You need to use an array for validation rules:
 
@@ -883,7 +883,7 @@ Or you can use the following parameters:
 Available Rules
 ***************
 
-.. note:: Rule is a string; there must be **no spaces** between the parameters, especially the ``is_unique`` rule.
+.. note:: A rule is a string, so there must be **no spaces** between the parameters, especially for the ``is_unique`` rule.
     There can be no spaces before and after ``ignore_value``.
 
 .. literalinclude:: validation/038.php
@@ -907,7 +907,7 @@ alpha_dash              No         Fails if field contains anything other than
 alpha_numeric           No         Fails if field contains anything other than
                                    alphanumeric characters in ASCII or is empty.
 alpha_numeric_punct     No         Fails if field contains anything other than
-                                   alphanumeric, space, this limited set of
+                                   alphanumeric, space, or this limited set of
                                    punctuation characters: ``~`` (tilde),
                                    ``!`` (exclamation), ``#`` (number),
                                    ``$`` (dollar), ``%`` (percent),
@@ -946,14 +946,14 @@ in_list                 Yes        Fails if field is not within a predetermined 
 integer                 No         Fails if field contains anything other than
                                    an integer.
 is_natural              No         Fails if field contains anything other than
-                                   a natural number: ``0``, ``1``, ``2``, ``3``
-                                   , etc.
+                                   a natural number: ``0``, ``1``, ``2``,
+                                   ``3``, etc.
 is_natural_no_zero      No         Fails if field contains anything other than
                                    a natural number, except zero: ``1``, ``2``,
                                    ``3``, etc.
 is_not_unique           Yes        Checks the database to see if the given value ``is_not_unique[table.field,where_field,where_value]`` or ``is_not_unique[dbGroup.table.field,where_field,where_value]``
                                    exists. Can ignore records by field/value to
-                                   filter (currently accept only one filter).
+                                   filter (currently accepts only one filter).
                                    (Since v4.6.0, you can optionally pass
                                    the dbGroup as a parameter)
 is_unique               Yes        Checks if this field value exists in the      ``is_unique[table.field,ignore_field,ignore_value]`` or ``is_unique[dbGroup.table.field,ignore_field,ignore_value]``
@@ -998,10 +998,10 @@ valid_base64            No         Fails if field contains anything other than
                                    valid Base64 characters.
 valid_cc_number         Yes        Verifies that the credit card number matches  ``valid_cc_number[amex]``
                                    the format used by the specified provider.
-                                   Current supported providers are:
+                                   Currently supported providers are:
                                    American Express (``amex``),
                                    China Unionpay (``unionpay``),
-                                   Diners Club CarteBlance (``carteblanche``),
+                                   Diners Club Carte Blanche (``carteblanche``),
                                    Diners Club (``dinersclub``),
                                    Discover Card (``discover``),
                                    Interpayment (``interpayment``),
@@ -1024,8 +1024,8 @@ valid_date              Yes        Fails if field does not contain a valid date.
                                    the parameter.**
 valid_email             No         Fails if field does not contain a valid
                                    email address.
-valid_emails            No         Fails if any value provided in a comma
-                                   separated list is not a valid email.
+valid_emails            No         Fails if any value provided in a
+                                   comma-separated list is not a valid email.
 valid_ip                Yes        Fails if the supplied IP is not valid.        ``valid_ip[ipv6]``
                                    Accepts an optional parameter of ``ipv4`` or
                                    ``ipv6`` to specify an IP format.
@@ -1038,7 +1038,7 @@ valid_url               No         Fails if field does not contain (loosely) a
                                    be used.**
 valid_url_strict        Yes        Fails if field does not contain a valid URL.  ``valid_url_strict[https]``
                                    You can optionally specify a list of valid
-                                   schemas. If not specified, ``http,https``
+                                   schemes. If not specified, ``http,https``
                                    are valid. This rule uses PHP's
                                    ``FILTER_VALIDATE_URL``.
 ======================= ========== ============================================= ===================================================
@@ -1061,13 +1061,13 @@ When you validate uploaded files, you must use the rules specifically created fo
 file validation.
 
 .. important:: Only rules that are listed in the table below can be used to validate
-    files. Therefore, adding any general rules, like ``permit_empty``, to file
+    files. Therefore, if you add any general rules, like ``permit_empty``, to a file
     validation rules array or string, the file validation will not work correctly.
 
 Since the value of a file upload HTML field doesn't exist, and is stored in the
-``$_FILES`` global, the name of the input field will need to be used twice. Once
-to specify the field name as you would for any other rule, but again as the first
-parameter of all file upload related rules::
+``$_FILES`` global, the name of the input field will need to be used twice: once
+to specify the field name as you would for any other rule, and again as the first
+parameter of all file-upload-related rules::
 
     // In the HTML
     <input type="file" name="avatar">
@@ -1089,19 +1089,19 @@ uploaded                Yes        Fails if the name of the parameter does not  
 
 max_size                Yes        Fails if the uploaded file is larger          ``max_size[field_name,2048]``
                                    than the second parameter
-                                   in kilobytes (kb). Or if the file
-                                   is larger than allowed maximum size declared
-                                   in php.ini config file -
-                                   ``upload_max_filesize`` directive.
+                                   in kilobytes (kb), or if the file
+                                   is larger than the allowed maximum size
+                                   declared in the php.ini config file
+                                   (``upload_max_filesize`` directive).
 max_dims                Yes        Fails if the maximum width and height of an   ``max_dims[field_name,300,150]``
-                                   uploaded image exceed values. The first
+                                   uploaded image exceed the values. The first
                                    parameter is the field name. The second is
                                    the width, and the third is the height. Will
                                    also fail if the file cannot be determined
                                    to be an image or the upload failed with an
                                    error other than ``UPLOAD_ERR_NO_FILE``.
 min_dims                Yes        Fails if the minimum width and height of an   ``min_dims[field_name,300,150]``
-                                   uploaded image not meet values. The first
+                                   uploaded image do not meet values. The first
                                    parameter is the field name. The second is
                                    the width, and the third is the height. Will
                                    also fail if the file cannot be determined
@@ -1119,7 +1119,7 @@ is_image                Yes        Fails if the file cannot be determined to be 
                                    an image based on the mime type.
 ======================= ========== ============================================= ===================================================
 
-The file validation rules apply for both single and multiple file uploads.
+The file validation rules apply to both single and multiple file uploads.
 
 The ``is_image``, ``mime_in``, and ``ext_in`` rules check the uploaded file and its client filename, but they cannot
 guarantee that a web server will not execute a file saved under that name. See :ref:`uploaded-files-moving-files` for

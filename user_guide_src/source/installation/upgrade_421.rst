@@ -30,7 +30,7 @@ get_cookie()
 
 If there is a cookie with a prefixed name and a cookie with the same name without a prefix, the previous ``get_cookie()`` had the tricky behavior of returning the cookie without the prefix.
 
-For example, when ``Config\Cookie::$prefix`` is ``prefix_``, there are two cookies, ``test`` and ``prefix_test``:
+For example, when ``Config\Cookie::$prefix`` is ``prefix_`` and there are two cookies, ``test`` and ``prefix_test``:
 
 .. code-block:: php
 
@@ -39,14 +39,14 @@ For example, when ``Config\Cookie::$prefix`` is ``prefix_``, there are two cooki
         'prefix_test' => 'CI Cookie',
     ];
 
-Previously, ``get_cookie()`` returns the following:
+Previously, ``get_cookie()`` returned the following:
 
 .. code-block:: php
 
     get_cookie('test');        // returns "Non CI Cookie"
     get_cookie('prefix_test'); // returns "CI Cookie"
 
-Now the behavior has been fixed as a bug, and has been changed like the following.
+Now this bug has been fixed, and the behavior has changed as follows:
 
 .. code-block:: php
 
@@ -57,7 +57,7 @@ Now the behavior has been fixed as a bug, and has been changed like the followin
 If you depend on the previous behavior, you need to change your code.
 
 .. note:: In the example above, if there is only one cookie ``prefix_test``,
-    the previous ``get_cookie('test')`` also returns ``"CI Cookie"``.
+    the previous ``get_cookie('test')`` also returned ``"CI Cookie"``.
 
 Breaking Enhancements
 *********************
@@ -67,7 +67,7 @@ Project Files
 *************
 
 Numerous files in the **project space** (root, app, public, writable) received updates. Due to
-these files being outside of the **system** scope they will not be changed without your intervention.
+these files being outside of the **system** scope, they will not be changed without your intervention.
 There are some third-party CodeIgniter modules available to assist with merging changes to
 the project space: `Explore on Packagist <https://packagist.org/explore/?query=codeigniter4%20updates>`_.
 
@@ -85,4 +85,4 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-* app/Config/Mimes.php
+* **app/Config/Mimes.php**

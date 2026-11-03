@@ -57,17 +57,17 @@ By using the :php:func:`config()` function:
 .. literalinclude:: configuration/002.php
 
 If no namespace is provided, it will look for the file in the **app/Config**
-folder first, and if not found, look for in the **Config** folder in all defined
+folder first, and if not found, look for it in the **Config** folder in all defined
 namespaces.
 
 All of the configuration files that ship with CodeIgniter are namespaced with
 ``Config``. Using this namespace in your application will provide the best
 performance since it knows exactly where to find the files.
 
-.. note:: Prior to v4.4.0, ``config()`` finds the file in **app/Config/** when there
-    is a class with the same shortname,
-    even if you specify a fully qualified class name like ``config(\Acme\Blog\Config\Blog::class)``.
-    This behavior has been fixed in v4.4.0, and returns the specified instance.
+.. note:: Prior to v4.4.0, ``config()`` found the file in **app/Config/** when there
+    was a class with the same shortname,
+    even if you specified a fully qualified class name like ``config(\Acme\Blog\Config\Blog::class)``.
+    This behavior was fixed in v4.4.0, and it now returns the specified instance.
 
 Getting a Config Property
 =========================
@@ -109,7 +109,7 @@ Creating Dotenv File
 --------------------
 
 CodeIgniter expects the **.env** file to be at the root of your project alongside the
-**app** directories. There is a template file distributed with CodeIgniter that's
+**app** directory. There is a template file distributed with CodeIgniter that's
 located at the project root named **env** (Notice there's no dot (``.``) at the start?).
 
 It has a large collection of variables your project might use that have been assigned
@@ -121,7 +121,8 @@ application by either renaming the template to **.env**, or by making a copy of 
 Setting Variables
 -----------------
 
-Settings are stored in **.env** files as a simple a collection of name/value pairs separated by an equal sign.
+Settings are stored in **.env** files as a simple collection of name/value pairs separated by an equal sign.
+
 ::
 
     S3_BUCKET = dotenv
@@ -183,7 +184,7 @@ prefix followed by a dot (.), and then the variable name itself.
 Namespace Separator
 -------------------
 
-Some environments, e.g., Docker, CloudFormation, do not permit variable name with dots (``.``). In such case, since v4.1.5, you could also use underscores (``_``) as a separator.
+Some environments, e.g., Docker, CloudFormation, do not permit variable names with dots (``.``). In such cases, since v4.1.5, you can also use underscores (``_``) as a separator.
 
 ::
 
@@ -204,7 +205,7 @@ are considered for merging into the configuration object's properties.
 
 .. note:: This feature is implemented in the ``CodeIgniter\Config\BaseConfig``
     class. So it will not work with a few files in the **app/Config** folder
-    that do not extends the class.
+    that do not extend the class.
 
 If the prefix of a namespaced variable exactly matches the namespace of the configuration
 class, then the trailing part of the setting (after the dot) is treated as a configuration
@@ -234,7 +235,7 @@ Since v4.1.5, you can also write with underscores::
     app_forceGlobalSecureRequests = true
     app_CSPEnabled = true
 
-.. note:: When using the *short prefix* the property names must still exactly match the class defined name.
+.. note:: When using the *short prefix*, the property names must still exactly match the names defined in the class.
 
 .. _env-var-replacements-for-data:
 
@@ -244,12 +245,12 @@ Environment Variables as Replacements for Data
 It is very important to always remember that environment variables contained in
 your **.env** are **only replacements for existing scalar values**.
 
-Simply put, you can change only the property's scalar value that exists in the
+Simply put, you can change only the scalar value of a property that exists in the
 Config class by setting it in your **.env**.
 
-    1. You cannot add a property that is not defined in the Config class.
-    2. You cannot change a scalar value in a property to an array.
-    3. You cannot add an element to an existing array.
+1. You cannot add a property that is not defined in the Config class.
+2. You cannot change a scalar value in a property to an array.
+3. You cannot add an element to an existing array.
 
 For example, you cannot just put ``app.myNewConfig = foo`` in your **.env** and
 expect your ``Config\App`` to magically have that property and value at run time.
@@ -257,7 +258,7 @@ expect your ``Config\App`` to magically have that property and value at run time
 When you have the property ``$default = ['encrypt' => false]`` in your
 ``Config\Database``, you cannot change the ``encrypt`` value to an array even if
 you put ``database.default.encrypt.ssl_verify = true`` in your **.env**.
-If you want to do like that, see
+If you want to do that, see
 :ref:`Database Configuration <database-config-with-env-file>`.
 
 Treating Environment Variables as Arrays
@@ -284,7 +285,7 @@ If this was referring to a SimpleConfig configuration object, the above example 
 Any other elements of the ``$address`` property would be unchanged.
 
 You can also use the array property name as a prefix. If the environment file
-held the following then the result would be the same as above.
+held the following, then the result would be the same as above.
 
 ::
 
@@ -297,9 +298,9 @@ Handling Different Environments
 
 Configuring multiple environments is easily accomplished by using a separate **.env** file with values modified to meet that environment's needs.
 
-The file should not contain every possible setting for every configuration class used by the application. In truth, it should include only those items that are specific to the environment or are sensitive details like passwords and API keys and other information that should not be exposed. But anything that changes between deployments is fair-game.
+The file should not contain every possible setting for every configuration class used by the application. In truth, it should include only those items that are specific to the environment or are sensitive details like passwords and API keys and other information that should not be exposed. But anything that changes between deployments is fair game.
 
-In each environment, place the **.env** file in the project's root folder. For most setups, this will be the same level as the ``app`` directories.
+In each environment, place the **.env** file in the project's root folder. For most setups, this will be the same level as the ``app`` directory.
 
 Do not track **.env** files with your version control system. If you do, and the repository is made public, you will have put sensitive information where everybody can find it.
 
@@ -312,11 +313,11 @@ Registrars
 Registrars provide a means of altering a configuration at runtime across namespaces and files.
 
 Registrars work if :ref:`auto-discovery` is enabled in :doc:`Modules </general/modules>`.
-It alters configuration properties when the Config object is instantiated.
+They alter configuration properties when the Config object is instantiated.
 
 .. note:: This feature is implemented in the ``CodeIgniter\Config\BaseConfig``
     class. So it will not work with a few files in the **app/Config** folder
-    that do not extends the class.
+    that do not extend the class.
 
 There are two ways to implement a Registrar: **implicit** and **explicit**.
 
@@ -354,12 +355,12 @@ holding an array of the names of candidate registrars:
 
 .. literalinclude:: configuration/008.php
 
-In order to act as a "registrar" the classes so identified must have a
+In order to act as a "registrar", the classes so identified must have a
 static function with the same name as the configuration class, and it should return an associative
 array of property settings.
 
 When your configuration object is instantiated, it will loop over the
-designated classes in ``$registrars``. For each of these classes it will invoke
+designated classes in ``$registrars``. For each of these classes, it will invoke
 the method named for the configuration class and incorporate any returned properties.
 
 A sample configuration class setup for this:
@@ -381,8 +382,8 @@ by treating ``RegionalSales`` as a "registrar". The resulting configuration prop
 Confirming Config Values
 ************************
 
-The actual Config object property values are changed at runtime by the :ref:`registrars`
-and :ref:`Environment Variables <configuration-classes-and-environment-variables>`,
+The actual Config object property values are changed at runtime by the :ref:`registrars`,
+:ref:`Environment Variables <configuration-classes-and-environment-variables>`,
 and :ref:`factories-config-caching`.
 
 CodeIgniter has the following :doc:`command <../cli/spark_commands>` to check

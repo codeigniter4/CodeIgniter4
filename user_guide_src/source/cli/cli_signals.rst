@@ -24,7 +24,8 @@ of critical command operations by ensuring they complete atomically without bein
 Common Unix Signals
 ===================
 
-Here are the most commonly used signals in CLI applications:
+Here are the most commonly used signals in CLI applications. The numbers shown are Linux values.
+Signal numbers differ on macOS and BSD, so use the named PHP signal constants in portable code:
 
 **Handleable Signals:**
 
@@ -278,8 +279,8 @@ Class Reference
         Execute a critical operation with ALL signals blocked to prevent ANY interruption.
 
         .. note:: This blocks ALL interruptible signals including termination signals (SIGTERM, SIGINT),
-                  pause/resume signals (SIGTSTP, SIGCONT), and custom signals (SIGUSR1, SIGUSR2).
-                  Only SIGKILL (unblockable) can still terminate the process.
+            pause/resume signals (SIGTSTP, SIGCONT), and custom signals (SIGUSR1, SIGUSR2).
+            Only SIGKILL (unblockable) can still terminate the process.
 
     .. php:method:: areSignalsBlocked()
 

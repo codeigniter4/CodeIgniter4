@@ -11,7 +11,7 @@ The HTML Helper file contains functions that assist in working with HTML.
 Configuration
 =============
 
-Since ``v4.3.0``, void HTML elements (e.g. ``<img>``) in ``html_helper`` functions have been changed to be HTML5-compatible by default and if you need to be compatible with XHTML, you must set the ``$html5`` property in **app/Config/DocTypes.php** to ``false``.
+Since ``v4.3.0``, void HTML elements (e.g. ``<img>``) in ``html_helper`` functions have been changed to be HTML5-compatible by default. If you need to be compatible with XHTML, you must set the ``$html5`` property in **app/Config/DocTypes.php** to ``false``.
 
 Loading this Helper
 ===================
@@ -46,7 +46,7 @@ The following functions are available:
 
     Additionally, an associative array can be passed as the first parameter,
     for complete control over all attributes and values. If an *alt* attribute
-    is not provided, CodeIgniter will generate one with empty string.
+    is not provided, CodeIgniter will generate one with an empty string.
 
     Example:
 
@@ -56,7 +56,7 @@ The following functions are available:
 
     :param string $path: Path to the image file
     :param string|null $mime: MIME type to use, or null to guess
-    :returns: base64 encoded binary image string
+    :returns: base64-encoded binary image string
     :rtype: string
 
     Generates a src-ready string from an image using the "data:" protocol.
@@ -64,14 +64,14 @@ The following functions are available:
 
     .. literalinclude:: html_helper/005.php
 
-    There is an optional second parameter to specify the MIME type, otherwise the
+    There is an optional second parameter to specify the MIME type. Otherwise, the
     function will use your Mimes config to guess:
 
     .. literalinclude:: html_helper/006.php
 
     Note that ``$path`` must exist and be a readable image format supported by the ``data:`` protocol.
     This function is not recommended for very large files, but it provides a convenient way
-    of serving images from your app that are not web-accessible (e.g., in **public/**).
+    of serving images from your app that are not web-accessible (e.g., in **writable/**).
 
 .. php:function:: link_tag([$href = ''[, $rel = 'stylesheet'[, $type = 'text/css'[, $title = ''[, $media = ''[, $indexPage = false[, $hreflang = '']]]]]]])
 
@@ -90,7 +90,7 @@ The following functions are available:
     *type*, *title*, *media*, *indexPage* and *hreflang*.
 
     *indexPage* is a boolean value that specifies if the *href* should have
-    the page specified by ``$config['indexPage']`` added to the address it creates.
+    the page specified by ``Config\App::$indexPage`` added to the address it creates.
 
     Example:
 
@@ -100,7 +100,7 @@ The following functions are available:
 
     .. literalinclude:: html_helper/008.php
 
-    Alternately, an associative array can be passed to the ``link_tag()`` function
+    Alternatively, an associative array can be passed to the ``link_tag()`` function
     for complete control over all attributes and values:
 
     .. literalinclude:: html_helper/009.php
@@ -115,13 +115,13 @@ The following functions are available:
     Lets you create HTML ``<script>`` elements. The parameters are *src* and optional *indexPage*.
 
     *indexPage* is a boolean value that specifies if the *src* should have
-    the page specified by ``$config['indexPage']`` added to the address it creates.
+    the page specified by ``Config\App::$indexPage`` added to the address it creates.
 
     Example:
 
     .. literalinclude:: html_helper/010.php
 
-    Alternately, an associative array can be passed to the ``script_tag()`` function
+    Alternatively, an associative array can be passed to the ``script_tag()`` function
     for complete control over all attributes and values:
 
     .. literalinclude:: html_helper/011.php
@@ -206,7 +206,7 @@ The following functions are available:
     :returns:   An HTML ordered list element
     :rtype: string
 
-    Identical to :php:func:`ul()`, only it produces ``<ol>`` element for
+    Identical to :php:func:`ul()`, except that it produces an ``<ol>`` element for
     ordered lists instead of ``<ul>``.
 
 .. php:function:: video($src[, $unsupportedMessage = ''[, $attributes = ''[, $tracks = [][, $indexPage = false]]]])
@@ -252,19 +252,20 @@ The following functions are available:
 
     :param  mixed   $src:                Either a source string or an array of sources. See :php:func:`source()` function
     :param  string  $unsupportedMessage: The message to display if the audio element is not supported by the browser
-    :param  string  $attributes:
+    :param  string  $attributes:         HTML attributes
     :param  array   $tracks:             Use the track function inside an array. See :php:func:`track()` function
     :param  bool    $indexPage:          Should indexPage be added to the audio source path
     :returns:                            An HTML audio element
     :rtype: string
 
-    Identical to :php:func:`video()`, only it produces ``<audio>`` element instead of ``<video>``.
+    Identical to :php:func:`video()`, except that it produces an ``<audio>`` element instead of ``<video>``.
 
 .. php:function:: source($src, $type = 'unknown', $attributes = '', $indexPage = false)
 
     :param  string  $src:        The path of the media resource
-    :param  bool    $type:       The MIME-type of the resource with optional codecs parameters
-    :param  array   $attributes: HTML attributes
+    :param  string  $type:       The MIME-type of the resource with optional codecs parameters
+    :param  string  $attributes: HTML attributes
+    :param  bool    $indexPage:  Should indexPage be added to the source path
     :returns:   An HTML source element
     :rtype: string
 
@@ -273,11 +274,11 @@ The following functions are available:
 
     .. literalinclude:: html_helper/015.php
 
-.. php:function:: embed($src = ''[, $type = false[, $attributes = ''[, $indexPage = false]]])
+.. php:function:: embed($src[, $type = 'unknown'[, $attributes = ''[, $indexPage = false]]])
 
     :param  string  $src:        The path of the resource to embed
-    :param  bool    $type:       MIME-type
-    :param  array   $attributes: HTML attributes
+    :param  string  $type:       MIME-type
+    :param  string  $attributes: HTML attributes
     :param  bool    $indexPage:  Should indexPage be added to the source path
     :returns:   An HTML embed element
     :rtype: string
@@ -290,8 +291,8 @@ The following functions are available:
 .. php:function:: object($data[, $type = 'unknown'[, $attributes = ''[, $params = [][, $indexPage = false]]]])
 
     :param  string  $data:       A resource URL
-    :param  bool    $type:       Content-type of the resource
-    :param  array   $attributes: HTML attributes
+    :param  string  $type:       Content-type of the resource
+    :param  string  $attributes: HTML attributes
     :param  bool    $indexPage:  Should indexPage be added to the resource URL
     :param  array   $params:     Use the param function inside an array. See :php:func:`param()` function
     :returns:   An HTML object element
@@ -317,7 +318,8 @@ The following functions are available:
 
     :param  string  $name:       The name of the parameter
     :param  string  $value:      The value of the parameter
-    :param  array   $attributes: HTML attributes
+    :param  string  $type:       The type of the parameter value
+    :param  string  $attributes: HTML attributes
     :returns:   An HTML param element
     :rtype: string
 
@@ -346,7 +348,7 @@ The following functions are available:
     :returns:   An HTML DocType declaration
     :rtype: string
 
-    Helps you generate document type declarations (DTD's). HTML 5
+    Helps you generate document type declarations (DTDs). HTML 5
     is used by default, but many doctypes are available.
 
     Example:

@@ -5,8 +5,8 @@ Upgrade Configuration
     :local:
     :depth: 2
 
-Documentations
-==============
+Documentation
+=============
 
 - `Config Documentation CodeIgniter 3.x <http://codeigniter.com/userguide3/libraries/config.html>`_
 - :doc:`Configuration Documentation CodeIgniter 4.x </general/configuration>`
@@ -38,7 +38,7 @@ Code Example
 ============
 
 CodeIgniter Version 3.x
-------------------------
+-----------------------
 
 Path: **application/config/site.php**:
 

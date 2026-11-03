@@ -12,7 +12,7 @@ In this section, we set up the data layer by creating a SQLite database table fo
 Create the Migrations
 =====================
 
-Migrations let you version-control your database schema by defining what to apply and how to roll it back. Let's make ones for simple ``authors`` and ``books`` tables.
+Migrations let you version-control your database schema by defining what to apply and how to roll it back. Let's create migrations for simple ``authors`` and ``books`` tables.
 
 Run the Spark command:
 
@@ -21,21 +21,21 @@ Run the Spark command:
     php spark make:migration CreateAuthorsTable
     php spark make:migration CreateBooksTable
 
-This creates a new file under **app/Database/Migrations/**.
+This creates two new files under **app/Database/Migrations/**.
 
-Edit **app/Database/Migrations/CreateAuthorsTable.php** to look like this:
+Edit the generated **app/Database/Migrations/<timestamp>_CreateAuthorsTable.php** file to look like this:
 
 .. literalinclude:: code/004.php
 
 Each author only needs a name for our purposes. We've made the name a unique key to prevent duplicates.
 
-Now, edit **app/Database/Migrations/CreateBooksTable.php** to look like this:
+Now, edit the generated **app/Database/Migrations/<timestamp>_CreateBooksTable.php** file to look like this:
 
 .. literalinclude:: code/005.php
 
 This contains a foreign key reference to the ``authors`` table. It lets us associate each book with an author and keep author names in one place.
 
-Now run the migration:
+Now run the migrations:
 
 .. code-block:: console
 
@@ -73,7 +73,7 @@ Create the Book model
 
 Models make database access simple and reusable by providing an object-oriented interface to your tables and a fluent query API. Let's create models for the ``authors`` and ``books`` tables.
 
-Generate one:
+Generate them:
 
 .. code-block:: console
 

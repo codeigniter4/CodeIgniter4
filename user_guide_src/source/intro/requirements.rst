@@ -10,12 +10,13 @@ Server Requirements
 PHP and Required Extensions
 ***************************
 
-`PHP <https://www.php.net/>`_ version 8.2 or newer is required, with the following PHP extensions are enabled:
+`PHP <https://www.php.net/>`_ version 8.2 or newer is required, with the following PHP extensions enabled:
 
   - `intl <https://www.php.net/manual/en/intl.requirements.php>`_
   - `mbstring <https://www.php.net/manual/en/mbstring.installation.php>`_
 
 .. warning::
+
     - The end of life date for PHP 7.4 was November 28, 2022.
     - The end of life date for PHP 8.0 was November 26, 2023.
     - The end of life date for PHP 8.1 was December 31, 2025.
@@ -23,6 +24,7 @@ PHP and Required Extensions
     - The end of life date for PHP 8.2 will be December 31, 2026.
 
 .. note::
+
     - PHP 8.5 requires CodeIgniter 4.7.0 or later.
     - PHP 8.4 requires CodeIgniter 4.6.0 or later.
     - PHP 8.3 requires CodeIgniter 4.4.4 or later.
@@ -38,20 +40,20 @@ The following PHP extensions should be enabled on your server:
 
   - `mysqlnd <https://www.php.net/manual/en/mysqlnd.install.php>`_ (if you use MySQL)
   - `curl <https://www.php.net/manual/en/curl.requirements.php>`_ (if you use :doc:`CURLRequest </libraries/curlrequest>`)
-  - `imagick <https://www.php.net/manual/en/imagick.requirements.php>`_ (if you use :doc:`Image </libraries/images>` class ImageMagickHandler)
-  - `gd <https://www.php.net/manual/en/image.requirements.php>`_ (if you use :doc:`Image </libraries/images>` class GDHandler)
+  - `imagick <https://www.php.net/manual/en/imagick.requirements.php>`_ (if you use the ``ImageMagickHandler`` class)
+  - `gd <https://www.php.net/manual/en/image.requirements.php>`_ (if you use the ``GDHandler`` class)
   - `simplexml <https://www.php.net/manual/en/simplexml.requirements.php>`_ (if you format XML)
 
 The following PHP extensions are required when you use a Cache server:
 
-  - `memcache <https://www.php.net/manual/en/memcache.requirements.php>`_ (if you use :doc:`Cache </libraries/caching>` class MemcachedHandler with Memcache)
-  - `memcached <https://www.php.net/manual/en/memcached.requirements.php>`_ (if you use :doc:`Cache </libraries/caching>` class MemcachedHandler with Memcached)
-  - `redis <https://github.com/phpredis/phpredis>`_ (if you use :doc:`Cache </libraries/caching>` class RedisHandler)
+  - `memcache <https://www.php.net/manual/en/memcache.requirements.php>`_ (if you use the ``MemcachedHandler`` class with Memcache)
+  - `memcached <https://www.php.net/manual/en/memcached.requirements.php>`_ (if you use the ``MemcachedHandler`` class with Memcached)
+  - `redis <https://github.com/phpredis/phpredis>`_ (if you use the ``RedisHandler`` class)
 
 The following PHP extensions are required when you use PHPUnit:
 
-   - `dom <https://www.php.net/manual/en/dom.requirements.php>`_ (if you use :doc:`TestResponse </testing/response>` class)
-   - `libxml <https://www.php.net/manual/en/libxml.requirements.php>`_ (if you use :doc:`TestResponse </testing/response>` class)
+   - `dom <https://www.php.net/manual/en/dom.requirements.php>`_ (if you use the :doc:`TestResponse </testing/response>` class)
+   - `libxml <https://www.php.net/manual/en/libxml.requirements.php>`_ (if you use the :doc:`TestResponse </testing/response>` class)
    - `xdebug <https://xdebug.org/docs/install>`_ (if you use ``CIUnitTestCase::assertHeaderEmitted()``)
 
 .. _requirements-supported-databases:

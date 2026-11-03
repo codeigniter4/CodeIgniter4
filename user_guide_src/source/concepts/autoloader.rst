@@ -10,7 +10,7 @@ Every application consists of a large number of classes in many different locati
 The framework provides classes for core functionality. Your application will have a
 number of libraries, models, and other entities to make it work. You might have third-party
 classes that your project is using. Keeping track of where every single file is, and
-hard-coding that location into your files in a series of ``requires()`` is a massive
+hard-coding that location into your files in a series of ``require`` statements is a massive
 headache and very error-prone. That's where autoloaders come in.
 
 ***********************
@@ -58,8 +58,8 @@ those classes can be found in:
 
 .. literalinclude:: autoloader/001.php
 
-The key of each row is the namespace itself. This does not need a trailing back slash.
-The value is the location to the directory the classes can be found in.
+The key of each row is the namespace itself. This does not need a trailing backslash.
+The value is the location of the directory the classes can be found in.
 
 By default, the namespace ``App`` is located in the **app** directory, and the
 namespace ``Config`` is located in the **app/Config** directory.
@@ -72,7 +72,7 @@ will autoload them.
 Confirming Namespaces
 =====================
 
-You can check the namespace configuration by ``spark namespaces`` command:
+You can check the namespace configuration with the ``spark namespaces`` command:
 
 .. code-block:: console
 
@@ -83,7 +83,7 @@ You can check the namespace configuration by ``spark namespaces`` command:
 Application Namespace
 =====================
 
-By default, the application directory is namespace to the ``App`` namespace. You must namespace the controllers,
+By default, the application directory is namespaced to the ``App`` namespace. You must namespace the controllers,
 libraries, or models in the application directory, and they will be found under the ``App`` namespace.
 
 Config Namespace
@@ -105,7 +105,7 @@ new namespace value under the ``APP_NAMESPACE`` setting:
 .. literalinclude:: autoloader/002.php
    :lines: 2-
 
-And if you use Composer autoloader, you also need to change the ``App`` namespace
+And if you use the Composer autoloader, you also need to change the ``App`` namespace
 in your **composer.json**, and run ``composer dump-autoload``.
 
 .. code-block:: text
@@ -172,7 +172,7 @@ To improve its performance, FileLocator Caching has been implemented.
 How It Works
 ============
 
-- Save the all found data by FileLocator into a cache file when destructing,
+- Save all data found by FileLocator into a cache file when destructing,
   if the cache data is updated.
 - Restore cached data when instantiating if cached data is available.
 

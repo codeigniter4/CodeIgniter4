@@ -30,16 +30,16 @@ Configure for Your Site URIs
 
 Open the **app/Config/App.php** file with a text editor.
 
-#. $baseURL
-    Set your base URL to ``$baseURL``. If you need more flexibility, the baseURL may
+#. ``$baseURL``
+    Set your base URL in ``$baseURL``. If you need more flexibility, the baseURL may
     be set within the :ref:`.env <dotenv-file>` file as ``app.baseURL = 'http://example.com/'``.
     **Always use a trailing slash on your base URL!**
 
-    .. note:: If you don't set the ``baseURL`` correctly, in development mode,
+    .. note:: If you don't set the ``$baseURL`` correctly, in development mode,
         the debug toolbar may not load properly and web pages may take considerably
         longer to display.
 
-#. $indexPage
+#. ``$indexPage``
     If you don't want to include **index.php** in your site URIs, set ``$indexPage`` to ``''``.
     The setting will be used when the framework generates your site URIs.
 
@@ -50,16 +50,16 @@ Configure Database Connection Settings
 ======================================
 
 If you intend to use a database, open the **app/Config/Database.php** file with
-a text editor and set your database settings. Alternately, these could be set in
+a text editor and set your database settings. Alternatively, these could be set in
 your **.env** file. See :ref:`Database Configuration <database-config-explanation-of-values>`
 for details.
 
 Set to Development Mode
 =======================
 
-If it is not on the production server, set ``CI_ENVIRONMENT`` to ``development``
-in **.env** file to take advantage of the debugging tools provided. See
-:ref:`setting-development-mode` for the detail.
+If the site is not on the production server, set ``CI_ENVIRONMENT`` to ``development``
+in the **.env** file to take advantage of the debugging tools provided. See
+:ref:`setting-development-mode` for details.
 
 .. important:: In production environments, you should disable error display and
     any other development-only functionality. In CodeIgniter, this can be done
@@ -81,7 +81,7 @@ Checking PHP ini Settings
 
 .. versionadded:: 4.5.0
 
-`PHP ini settings`_ change the behaviors of PHP. CodeIgniter provides a command to
+`PHP ini settings`_ change the behavior of PHP. CodeIgniter provides a command to
 check important PHP settings.
 
 .. _PHP ini settings: https://www.php.net/manual/en/ini.list.php
@@ -90,7 +90,7 @@ check important PHP settings.
 
     php spark phpini:check
 
-The *Recommended* column shows the recommended values for production environment.
+The *Recommended* column shows the recommended values for production environments.
 They may differ in development environments.
 
 .. note::
@@ -120,7 +120,7 @@ Local Development Server
 ************************
 
 CodeIgniter 4 comes with a local development server, leveraging PHP's built-in web server
-with CodeIgniter routing. You can launch it, with the following command line
+with CodeIgniter routing. You can launch it with the following command
 in the main directory:
 
 .. code-block:: console
@@ -140,23 +140,23 @@ The local development server can be customized with three command line options:
 
 - You can use the ``--host`` CLI option to specify a different host to run the application at:
 
-    .. code-block:: console
+  .. code-block:: console
 
-        php spark serve --host example.dev
+      php spark serve --host example.dev
 
 - By default, the server runs on port 8080 but you might have more than one site running, or already have
   another application using that port. You can use the ``--port`` CLI option to specify a different one:
 
-    .. code-block:: console
+  .. code-block:: console
 
-        php spark serve --port 8081
+      php spark serve --port 8081
 
-- You can also specify a specific version of PHP to use, with the ``--php`` CLI option, with its value
+- You can also choose a specific version of PHP to use, with the ``--php`` CLI option, with its value
   set to the path of the PHP executable you want to use:
 
-    .. code-block:: console
+  .. code-block:: console
 
-        php spark serve --php /usr/bin/php7.6.5.4
+      php spark serve --php /usr/bin/php8.2
 
 ***************************
 Worker Mode with FrankenPHP
@@ -178,15 +178,15 @@ Quick Start
 
 2. Generate worker mode files:
 
-.. code-block:: console
+   .. code-block:: console
 
-    php spark worker:install
+       php spark worker:install
 
 3. Start the server:
 
-.. code-block:: console
+   .. code-block:: console
 
-    frankenphp run
+       frankenphp run
 
 For detailed configuration, performance tuning, and important considerations
 about state management, see :doc:`worker_mode`.
@@ -196,7 +196,7 @@ Hosting with Apache
 *******************
 
 A CodeIgniter4 webapp is normally hosted on a web server.
-Apache HTTP Server is the "standard" platform, and assumed in much of our documentation.
+Apache HTTP Server is the "standard" platform, and is assumed in much of our documentation.
 
 Apache is bundled with many platforms, but can also be downloaded in a bundle
 with a database engine and PHP from `Bitnami <https://bitnami.com/stack/lamp>`_.
@@ -207,7 +207,7 @@ Configure Main Config File
 Enabling mod_rewrite
 --------------------
 
-The "mod_rewrite" module enables URLs without "index.php" in them, and is assumed
+The "mod_rewrite" module enables URLs without "**index.php**" in them, and is assumed
 in our user guide.
 
 Make sure that the rewrite module is enabled (uncommented) in the main
@@ -235,7 +235,7 @@ Hosting with VirtualHost
 ========================
 
 We recommend using "virtual hosting" to run your apps.
-You can set up different aliases for each of the apps you work on,
+You can set up different aliases for each of the apps you work on.
 
 Enabling vhost_alias_module
 ---------------------------
@@ -480,12 +480,12 @@ Hosting with nginx
 ******************
 
 nginx is the second most widely used HTTP server for web hosting.
-Here you can find an example configuration using PHP 8.1 FPM (unix sockets) under Ubuntu Server.
+Here you can find an example configuration using PHP 8.2 FPM (unix sockets) under Ubuntu Server.
 
 default.conf
 ============
 
-This configuration enables URLs without "index.php" in them and using CodeIgniter's "404 - File Not Found" for URLs ending with ".php".
+This configuration enables URLs without "**index.php**" in them and uses CodeIgniter's "404 - File Not Found" for URLs ending with ".php".
 
 .. code-block:: nginx
 
@@ -506,7 +506,7 @@ This configuration enables URLs without "index.php" in them and using CodeIgnite
             include snippets/fastcgi-php.conf;
 
             # With php-fpm:
-            fastcgi_pass unix:/run/php/php8.1-fpm.sock;
+        fastcgi_pass unix:/run/php/php8.2-fpm.sock;
             # With php-cgi:
             # fastcgi_pass 127.0.0.1:9000;
         }
@@ -541,7 +541,7 @@ with two separate bootstrap scripts specifically for these scenarios:
 
 - **system/Test/bootstrap.php**: This script is used primarily for unit testing.
 - **system/util_bootstrap.php**: This script is used for other scripts that need access to the
-  framework. It is recommended for use in scripts that are not part for testing as this will NOT
+  framework. It is recommended for use in scripts that are not part of testing, as this will NOT
   fail gracefully if an exception is thrown.
 
 Most of the paths to your project are defined during the bootstrap process. You may use

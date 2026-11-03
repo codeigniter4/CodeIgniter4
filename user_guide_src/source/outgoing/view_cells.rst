@@ -14,9 +14,9 @@ Simple and Controlled Cells
 
 CodeIgniter supports two types of View Cells: simple and controlled.
 
-**Simple View Cells** can be generated from any class and method of your choice and does not have to follow any rules, except that it must return a string.
+**Simple View Cells** can be generated from any class and method of your choice and do not have to follow any rules, except that they must return a string.
 
-**Controlled View Cells** must be generated from a class that extends ``Codeigniter\View\Cells\Cell`` class which provides additional capability making your View Cells more flexible and faster to use.
+**Controlled View Cells** must be generated from a class that extends the ``CodeIgniter\View\Cells\Cell`` class, which provides additional capabilities that make your View Cells more flexible and faster to use.
 
 .. _app-cells:
 
@@ -39,7 +39,7 @@ Namespace Omission
 
 .. versionadded:: 4.3.0
 
-If you do not include the full namespace for the class, it will assume in can be found in the ``App\Cells`` namespace. So, the following example would attempt to find the ``MyClass`` class in **app/Cells/MyClass.php**. If it is not found there, all namespaces will be scanned until it is found, searching within a **Cells** subdirectory of each namespace:
+If you do not include the full namespace for the class, it will assume it can be found in the ``App\Cells`` namespace. So, the following example would attempt to find the ``MyClass`` class in **app/Cells/MyClass.php**. If it is not found there, all namespaces will be scanned until it is found, searching within a **Cells** subdirectory of each namespace:
 
 .. literalinclude:: view_cells/002.php
 
@@ -58,7 +58,7 @@ Simple Cells are classes that return a string from the chosen method. An example
 
 .. literalinclude:: view_cells/004.php
 
-You would call it from within a view like:
+You would call it from within a view like this:
 
 .. literalinclude:: view_cells/005.php
 
@@ -77,15 +77,15 @@ Controlled Cells
 
 .. versionadded:: 4.3.0
 
-Controlled cells have two primary goals: (1) to make it as fast as possible to build the cell, and (2) provide additional logic and
+Controlled cells have two primary goals: (1) to make it as fast as possible to build the cell, and (2) to provide additional logic and
 flexibility to your views, if they need it.
 
-The class must extend ``CodeIgniter\View\Cells\Cell``. They should have a view file
+The class must extend ``CodeIgniter\View\Cells\Cell``. It should have a view file
 in the same folder. By convention, the class name should be in PascalCase suffixed with ``Cell`` and the view should be
 the snake_cased version of the class name, without the suffix. For example, if you have a ``MyCell`` class, the view file
 should be ``my.php``.
 
-.. note:: Prior to v4.3.5, the generated view file ends with ``_cell.php``. Though v4.3.5 and newer will generate view files
+.. note:: Prior to v4.3.5, the generated view file ended with ``_cell.php``. Though v4.3.5 and newer will generate view files
     without the ``_cell`` suffix, existing view files will still be located and loaded.
 
 Creating a Controlled Cell
@@ -110,7 +110,7 @@ Implementing the AlertMessage from above as a Controlled Cell would look like th
 Generating Cell via Command
 ===========================
 
-You can also create a controlled cell via a built in command from the CLI. The command is ``php spark make:cell``. It takes one argument, the name of the cell to create. The name should be in PascalCase, and the class will be created in the **app/Cells** directory. The view file will also be created in the **app/Cells** directory.
+You can also create a controlled cell via a built-in command from the CLI. The command is ``php spark make:cell``. It takes one argument, the name of the cell to create. The name should be in PascalCase, and the class will be created in the **app/Cells** directory. The view file will also be created in the **app/Cells** directory.
 
 .. code-block:: console
 
@@ -126,7 +126,7 @@ You can specify a custom view filepath by setting the ``view`` property in the c
 Customize the Rendering
 =======================
 
-If you need more control over the rendering of the HTML, you can implement a ``render()`` method. This method allows you to perform additional logic and pass extra data the view, if needed. The ``render()`` method must return a string.
+If you need more control over the rendering of the HTML, you can implement a ``render()`` method. This method allows you to perform additional logic and pass extra data to the view, if needed. The ``render()`` method must return a string.
 
 To take advantage of the full features of controlled Cells, you should use ``$this->view()`` instead of the normal ``view()`` helper function:
 
@@ -135,7 +135,7 @@ To take advantage of the full features of controlled Cells, you should use ``$th
 Computed Properties
 ===================
 
-If you need to perform additional logic for one or more properties you can use computed properties. These require setting the property to either ``protected`` or ``private`` and implementing a public method whose name consists of the property name surrounded by ``get`` and ``Property``:
+If you need to perform additional logic for one or more properties, you can use computed properties. These require setting the property to either ``protected`` or ``private`` and implementing a public method whose name consists of the property name surrounded by ``get`` and ``Property``:
 
 .. literalinclude:: view_cells/013.php
 
@@ -145,13 +145,13 @@ If you need to perform additional logic for one or more properties you can use c
 
 .. important:: You can't set properties that are declared as private during cell
     initialization.
-    Calling ``getDataProperty()`` and ``getViewProperty()`` methods are not available - they are used only for internal processes.
+    The ``getDataProperty()`` and ``getViewProperty()`` methods are not available: they are used only for internal processes.
 
 Presentation Methods
 ====================
 
-Sometimes you need to perform additional logic for the view, but you don't want to pass it as a parameter. You can implement a method that will be called from within the cell's view itself. This can help the readability of your views:
-You may have noticed that not only method calls are allowed in the template: the entire Сell object with public properties is available.
+Sometimes you need to perform additional logic for the view, but you don't want to pass it as a parameter. You can implement a method that will be called from within the cell's view itself. This can help the readability of your views.
+You may have noticed that not only method calls are allowed in the template: the entire Cell object with public properties is available.
 
 .. literalinclude:: view_cells/016.php
 

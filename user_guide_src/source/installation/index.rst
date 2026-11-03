@@ -12,7 +12,7 @@ Which is right for you?
 
 However you choose to install and run CodeIgniter4, the latest
 `user guide <https://codeigniter.com/user_guide/>`_ is accessible online.
-If you want to see previous versions, you can download from the
+If you want to see previous versions, you can download them from the
 `codeigniter4/userguide <https://github.com/codeigniter4/userguide/releases>`_
 repository.
 

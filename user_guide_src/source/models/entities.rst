@@ -1,6 +1,6 @@
-#####################
+####################
 Using Entity Classes
-#####################
+####################
 
 CodeIgniter supports Entity classes as a first-class citizen, while keeping
 them completely optional to use. They are commonly used as part of the Repository pattern, but can
@@ -23,7 +23,7 @@ that row.
     from a database.
 
 The core feature, though, is that it doesn't know anything about how to persist itself. That's the
-responsibility of the model or the repository class. That way, if anything changes on how you need to save the
+responsibility of the model or the repository class. That way, if anything changes in how you need to save the
 object, you don't have to change how that object is used throughout the application.
 
 This makes it possible to
@@ -82,22 +82,22 @@ Now that all of the pieces are in place, you would work with the Entity class as
 
 You may have noticed that the ``User`` class has not set any properties for the columns, but you can still
 access them as if they were public properties. The base class, ``CodeIgniter\Entity\Entity``, takes care of this for you, as
-well as providing the ability to check the properties with ``isset()``, or ``unset()`` the property, and keep track
+well as providing the ability to check the properties with ``isset()``, ``unset()`` them, and keep track
 of what columns have changed since the object was created or pulled from the database.
 
 .. note:: The Entity class stores the data in the class property ``$attributes`` internally.
 
-When the User is passed to the model's ``save()`` method, it automatically takes care of reading the  properties
+When the User is passed to the model's ``save()`` method, it automatically takes care of reading the properties
 and saving any changes to columns listed in the model's ``$allowedFields`` property. It also knows whether to create
 a new row, or update an existing one.
 
-.. note:: When we are making a call to the ``insert()`` all the values from Entity are passed to the method, but when we
-    call the ``update()``, then only values that have changed are passed.
+.. note:: When we call the ``insert()`` method, all the values from the Entity are passed to the method, but when we
+    call the ``update()`` method, only the values that have changed are passed.
 
 Filling Properties Quickly
 ==========================
 
-The Entity class also provides a method, ``fill()`` that allows you to shove an array of key/value pairs into the class
+The Entity class also provides a method, ``fill()``, that allows you to shove an array of key/value pairs into the class
 and populate the class properties. Any property in the array will be set on the Entity. However, when saving through
 the model, only the fields in ``$allowedFields`` will actually be saved to the database, so you can store additional data
 on your entities without worrying much about stray fields getting saved incorrectly.
@@ -125,7 +125,7 @@ are not included when you call ``toArray()``. However, you can still access them
 If you want hidden properties to appear in the ``toArray()`` output, you'll need to use the ``datamap`` feature - it makes
 those properties "visible".
 
-Keep in mind that the smart ``__get()`` and ``__set()`` methods (described in the next section)  ignore leading underscores
+Keep in mind that the smart ``__get()`` and ``__set()`` methods (described in the next section) ignore leading underscores
 in property names. This means that two attributes with the same name (one starting with ``_`` and one without) will both use
 the same getter and setter, so you have to choose which one to handle by default.
 
@@ -155,7 +155,7 @@ class property will be accessed through the ``setCreatedAt()`` and ``getCreatedA
 In the ``setPassword()`` method we ensure that the password is always hashed.
 
 In ``setCreatedAt()`` we convert the string we receive from the model into a DateTime object, ensuring that our timezone
-is UTC so we can easily convert the viewer's current timezone. In ``getCreatedAt()``, it converts the time to
+is UTC so we can easily convert to the viewer's current timezone. In ``getCreatedAt()``, it converts the time to
 a formatted string in the application's current timezone.
 
 While fairly simple, these examples show that using Entity classes can provide a very flexible way to enforce
@@ -188,7 +188,7 @@ Data Mapping
 
 At many points in your career, you will run into situations where the use of an application has changed and the
 original column names in the database no longer make sense. Or you find that your coding style prefers camelCase
-class properties, but your database schema required snake_case names. These situations can be easily handled
+class properties, but your database schema requires snake_case names. These situations can be easily handled
 with the Entity class' data mapping features.
 
 As an example, imagine you have the simplified User Entity that is used throughout your application:
@@ -198,7 +198,7 @@ As an example, imagine you have the simplified User Entity that is used througho
 Your boss comes to you and says that no one uses usernames anymore, so you're switching to just use emails for login.
 But they do want to personalize the application a bit, so they want you to change the ``name`` field to represent a user's
 full name now, not their username like it does currently. To keep things tidy and ensure things continue making sense
-in the database you whip up a migration to rename the ``name`` field to ``full_name`` for clarity.
+in the database, you whip up a migration to rename the ``name`` field to ``full_name`` for clarity.
 
 Ignoring how contrived this example is, we now have two choices on how to fix the User class. We could modify the class
 property from ``$name`` to ``$full_name``, but that would require changes throughout the application. Instead, we can
@@ -207,16 +207,16 @@ simply map the ``full_name`` column in the database to the ``$name`` property, a
 .. literalinclude:: entities/009.php
 
 By adding our new database name to the ``$datamap`` array, we can tell the class what class property the database column
-should be accessible through. The key of the array is class property to map it to, where the value in the array is the
+should be accessible through. The key of the array is the class property to map it to, and the value in the array is the
 name of the column in the database.
 
 In this example, when the model sets the ``full_name`` field on the User class, it actually assigns that value to the
-class' ``$name`` property, so it can be set and retrieved through ``$user->name``. The value will still be accessible
-through the original ``$user->full_name``, also, as this is needed for the model to get the data back out and save it
+class' ``$name`` property, so it can be set and retrieved through ``$user->name``. The value will also still be accessible
+through the original ``$user->full_name``, as this is needed for the model to get the data back out and save it
 to the database. However, ``unset()`` and ``isset()`` only work on the mapped property, ``$user->name``, not on the database column name,
 ``$user->full_name``.
 
-.. note:: When you use Data Mapping, you must define ``set*()`` and ``get*()`` method
+.. note:: When you use Data Mapping, you must define ``set*()`` and ``get*()`` methods
     for the database column name. In this example, you must define ``setFullName()`` and
     ``getFullName()``.
 
@@ -227,7 +227,7 @@ Mutators
 Date Mutators
 =============
 
-By default, the Entity class will convert fields named `created_at`, `updated_at`, or `deleted_at` into
+By default, the Entity class will convert fields named ``created_at``, ``updated_at``, or ``deleted_at`` into
 :doc:`Time </libraries/time>` instances whenever they are set or retrieved. The Time class provides a large number
 of helpful methods in an immutable, localized way.
 
@@ -257,9 +257,10 @@ Scalar Type Casting
 
 Properties can be cast to any of the following data types:
 **integer**, **float**, **double**, **string**, **boolean**, **object**, **array**, **datetime**, **timestamp**, **uri**, **int-bool** and **enum**.
-Add a question mark at the beginning of type to mark property as nullable, i.e., **?string**, **?integer**.
+Add a question mark at the beginning of the type to mark the property as nullable, i.e., **?string**, **?integer**.
 
 .. note:: **int-bool** can be used since v4.3.0.
+
 .. note:: **enum** can be used since v4.7.0.
 
 For example, if you had a User entity with an ``is_banned`` property, you can cast it as a boolean:
@@ -269,19 +270,16 @@ For example, if you had a User entity with an ``is_banned`` property, you can ca
 Array/Json Casting
 ------------------
 
-Array/Json casting is especially useful with fields that store serialized arrays or json in them. When cast as:
+Array/Json casting is especially useful with fields that store serialized arrays or JSON. When you read the property's value:
 
-* an **array**, they will automatically be unserialized,
-* a **json**, they will automatically be set as a value of ``json_decode($value, false)``,
-* a **json-array**, they will automatically be set as a value of ``json_decode($value, true)``,
+* with the **array** cast, the value is automatically unserialized.
+* with the **json** cast, the value is automatically converted with ``json_decode($value, false)``.
+* with the **json-array** cast, the value is automatically converted with ``json_decode($value, true)``.
 
-when you set the property's value.
-Unlike the rest of the data types that you can cast properties into, the:
+Unlike the rest of the data types that you can cast properties into, these cast types also convert the value whenever the property is set:
 
-* **array** cast type will serialize,
-* **json** and **json-array** cast will use json_encode function on
-
-the value whenever the property is set:
+* the **array** cast serializes the value.
+* the **json** and **json-array** casts use ``json_encode()`` on the value.
 
 .. literalinclude:: entities/013.php
 
@@ -296,7 +294,7 @@ CSV Casting
 
 If you know you have a flat array of simple values, encoding them as a serialized or JSON string
 may be more complex than the original structure. Casting as Comma-Separated Values (CSV) is
-a simpler alternative will result in a string that uses less space and is more easily read
+a simpler alternative that will result in a string that uses less space and is more easily read
 by humans:
 
 .. literalinclude:: entities/015.php
@@ -340,7 +338,7 @@ Custom Casting
 
 You can define your own conversion types for getting and setting data.
 
-At first you need to create a handler class for your type.
+First, you need to create a handler class for your type.
 Let's say the class will be located in the **app/Entities/Cast** directory:
 
 .. literalinclude:: entities/017.php
@@ -349,7 +347,7 @@ Now you need to register it:
 
 .. literalinclude:: entities/018.php
 
-If you don't need to change values when getting or setting a value. Then just don't implement the appropriate method:
+If you don't need to change values when getting or setting a value, just don't implement the appropriate method:
 
 .. literalinclude:: entities/019.php
 
@@ -366,7 +364,7 @@ like ``type[param1, param2]``.
 
 .. note:: If the casting type is marked as nullable like ``?bool`` and the passed value is not null, then the parameter with
     the value ``nullable`` will be passed to the casting type handler.
-    If casting type has predefined parameters, then ``nullable`` will be added to the end of the list.
+    If the casting type has predefined parameters, then ``nullable`` will be added to the end of the list.
 
 *******************************
 Checking for Changed Attributes
@@ -377,7 +375,7 @@ attribute to check:
 
 .. literalinclude:: entities/022.php
 
-Or to check the whole entity for changed values omit the parameter:
+Or, to check the whole entity for changed values, omit the parameter:
 
 .. literalinclude:: entities/023.php
 

@@ -32,7 +32,7 @@ Returns an array of the command line arguments deemed to be options:
 .. literalinclude:: cli_request/003.php
 
 getOption($key)
------------------
+---------------
 
 Returns the value of a specific command line argument deemed to be an option:
 

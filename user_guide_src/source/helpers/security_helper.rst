@@ -2,7 +2,7 @@
 Security Helper
 ###############
 
-The Security Helper file contains security related functions.
+The Security Helper file contains security-related functions.
 
 .. contents::
     :local:

@@ -21,8 +21,8 @@ you want the HTML and Text helpers universally available:
 
 .. literalinclude:: basecontroller/002.php
 
-Any other components to load or data to process should be added to the constructor ``initController()``. For
-example, if your project uses the Session Library heavily you may want to initiate it here:
+Any other components to load or data to process should be added to the ``initController()`` method. For
+example, if your project uses the Session Library heavily, you may want to initialize it here:
 
 .. literalinclude:: basecontroller/003.php
 
@@ -30,17 +30,17 @@ Additional Methods
 ==================
 
 The base controller is not routable. As an added security
-measure **all** new methods you create should be declared as ``protected`` or ``private`` and only be accessed through the
+measure, **all** new methods you create should be declared as ``protected`` or ``private`` and only be accessed through the
 controllers you create that extend ``BaseController``.
 
 Other Options
 =============
 
 You may find that you need more than one base controller. You can create new base controllers as long as any other controllers that you make extend the correct base. For example, if your project
-has an involved public interface and a simple administrative portal you may want to extend ``BaseController`` to
+has an involved public interface and a simple administrative portal, you may want to extend ``BaseController`` for
 the public controllers and make ``AdminController`` for any administrative controllers.
 
-If you do not want to use the base controller you may bypass it by having your controllers extend the system
+If you do not want to use the base controller, you may bypass it by having your controllers extend the system
 Controller instead:
 
 .. literalinclude:: basecontroller/004.php

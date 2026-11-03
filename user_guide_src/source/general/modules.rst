@@ -23,7 +23,7 @@ The core element of the modules functionality comes from the :doc:`PSR-4 compati
 that CodeIgniter uses. While any code can use the PSR-4 autoloader and namespaces, the primary way to take full advantage of
 modules is to namespace your code and add it to **app/Config/Autoload.php**, in the ``$psr4`` property.
 
-For example, let's say we want to keep a simple blog module that we can re-use between applications. We might create
+For example, let's say we want to keep a simple blog module that we can re-use between applications. We might create a
 folder with our company name, Acme, to store all of our modules within. We will put it right alongside our **app**
 directory in the main project root::
 
@@ -40,7 +40,7 @@ Open **app/Config/Autoload.php** and add the ``Acme\Blog`` namespace to the ``$p
 
 Now that this is set up, we can access any file within the **acme/Blog** folder through the ``Acme\Blog`` namespace. This alone
 takes care of 80% of what is needed for modules to work, so you should be sure to familiarize yourself with namespaces
-and become comfortable with their use. Several file types will be scanned for automatically through all defined namespaces - a crucial ingredient for working with modules.
+and become comfortable with their use. Several file types will be scanned for automatically through all defined namespaces, a crucial ingredient for working with modules.
 
 A common directory structure within a module will mimic the main application folder::
 
@@ -66,12 +66,12 @@ or Repositories, etc.
 Autoloading Non-class Files
 ***************************
 
-More often than not that your module will not contain only PHP classes but also others like procedural
-functions, bootstrapping files, module constants files, etc. which are not normally loaded the way classes
-are loaded. One approach for this is using ``require``-ing the file(s) at the start of the file where it
+More often than not, your module will not contain only PHP classes but also others like procedural
+functions, bootstrapping files, module constants files, etc., which are not normally loaded the way classes
+are loaded. One approach for this is to ``require`` the file(s) at the start of the file where they
 would be used.
 
-Another approach provided by CodeIgniter is to autoload these *non-class* files like how you would autoload
+Another approach provided by CodeIgniter is to autoload these *non-class* files the way you would autoload
 your classes. All we need to do is provide the list of paths to those files and include them in the
 ``$files`` property of your **app/Config/Autoload.php** file.
 
@@ -95,12 +95,12 @@ file types, including:
 
 This is configured in the file **app/Config/Modules.php**.
 
-The auto-discovery system works by scanning for particular directories and files within psr4 namespaces that have been defined in **Config/Autoload.php** and Composer packages.
+The auto-discovery system works by scanning for particular directories and files within PSR-4 namespaces that have been defined in **Config/Autoload.php** and Composer packages.
 
 The discovery process would look for discoverable items on that path and should, for example, find the routes file at **acme/Blog/Config/Routes.php**.
 
-Enable/Disable Discover
-=======================
+Enable/Disable Discovery
+========================
 
 You can turn on or off all auto-discovery in the system with the ``$enabled`` class variable. False will disable
 all discovery, optimizing performance, but negating the special capabilities of your modules and Composer packages.
@@ -144,14 +144,14 @@ by editing the ``$discoverInComposer`` variable in **app/Config/Modules.php**:
 Working with Files
 ******************
 
-This section will take a look at each of the file types (controllers, views, language files, etc) and how they can
+This section will take a look at each of the file types (controllers, views, language files, etc.) and how they can
 be used within the module. Some of this information is described in more detail in the relevant location of the user
 guide, but is being reproduced here so that it's easier to grasp how all of the pieces fit together.
 
 Routes
 ======
 
-By default, :doc:`routes <../incoming/routing>` are automatically scanned for within modules. It can be turned off in
+By default, :doc:`routes <../incoming/routing>` are automatically scanned for within modules. This can be turned off in
 the **Modules** config file, described above.
 
 .. note:: Since the files are being included into the current scope, the ``$routes`` instance is already defined for you.
@@ -167,13 +167,13 @@ Filters
 
 .. deprecated:: 4.4.2
 
-.. note:: This feature is deprecated. Use :ref:`registrars` instead like the
+.. note:: This feature is deprecated. Use :ref:`registrars` instead, like the
     following:
 
     .. literalinclude:: modules/015.php
 
 By default, :doc:`filters <../incoming/filters>` are automatically scanned for within modules.
-It can be turned off in the **Modules** config file, described above.
+This can be turned off in the **Modules** config file, described above.
 
 .. note:: Since the files are being included into the current scope, the ``$filters`` instance is already defined for you.
     It will cause errors if you attempt to redefine that class.
@@ -198,19 +198,19 @@ Config Files
 ============
 
 No special change is needed when working with configuration files. These are still namespaced classes and loaded
-with the ``new`` command:
+with the ``new`` keyword:
 
 .. literalinclude:: modules/008.php
 
-Config files are automatically discovered whenever using the :php:func:`config()` function that is always available, and you pass a short classname to it.
+Config files are automatically discovered when you use the always-available :php:func:`config()` function and pass a short classname to it.
 
 .. note:: We don't recommend you use the same short classname in modules.
     Modules that need to override or add to known configurations in **app/Config/** should use :ref:`Implicit Registrars <registrars>`.
 
-.. note:: Prior to v4.4.0, ``config()`` finds the file in **app/Config/** when there
-    is a class with the same shortname,
-    even if you specify a fully qualified class name like ``config(\Acme\Blog\Config\Blog::class)``.
-    This behavior has been fixed in v4.4.0, and returns the specified instance.
+.. note:: Prior to v4.4.0, ``config()`` found the file in **app/Config/** when there
+    was a class with the same shortname,
+    even if you specified a fully qualified class name like ``config(\Acme\Blog\Config\Blog::class)``.
+    This behavior was fixed in v4.4.0, and it now returns the specified instance.
 
 Migrations
 ==========
@@ -221,7 +221,7 @@ namespaces will be run every time.
 Seeds
 =====
 
-Seed files can be used from both the CLI and called from within other seed files as long as the full namespace
+Seed files can be both used from the CLI and called from within other seed files as long as the full namespace
 is provided. If calling on the CLI, you will need to provide double backslashes:
 
 
@@ -241,7 +241,7 @@ Helpers
 =======
 
 Helpers will be automatically discovered within defined namespaces when using the
-:php:func:`helper()` function, as long as it is within the namespaces **Helpers**
+:php:func:`helper()` function, as long as it is within the namespace's **Helpers**
 directory:
 
 .. literalinclude:: modules/009.php
@@ -253,7 +253,7 @@ Language Files
 
 Language files are located automatically from defined namespaces when using the
 :php:func:`lang()` function, as long as the
-file follows the same directory structures as the main application directory.
+file follows the same directory structure as the main application directory.
 
 Libraries
 =========
@@ -265,16 +265,16 @@ Libraries are always instantiated by their fully-qualified class name, so no spe
 Models
 ======
 
-If you instantiate models with ``new`` keyword by their fully-qualified class names, no special access is provided:
+If you instantiate models with the ``new`` keyword by their fully-qualified class names, no special access is provided:
 
 .. literalinclude:: modules/011.php
 
-Model files are automatically discovered whenever using the :php:func:`model()` function that is always available.
+Model files are automatically discovered when you use the always-available :php:func:`model()` function.
 
 .. note:: We don't recommend you use the same short classname in modules.
 
-.. note:: Prior to v4.4.0, ``model()`` finds the file in **app/Models/** when
-    there is a class with the same shortname, even if you specify a fully qualified
+.. note:: Prior to v4.4.0, ``model()`` found the file in **app/Models/** when
+    there was a class with the same shortname, even if you specified a fully qualified
     class name like ``model(\Acme\Blog\Model\PostModel::class)``.
     See the Note in :ref:`factories-passing-fully-qualified-classname` for more
     information.

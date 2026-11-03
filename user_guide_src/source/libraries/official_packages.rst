@@ -4,7 +4,7 @@ Official Packages
 
 The CodeIgniter framework cannot solve all of the problems that developers will encounter.
 Many users have said they love how small and fast the framework is, so we don't want to
-bloat the core framework. To bridge the gap we are releasing official packages to provide
+bloat the core framework. To bridge the gap, we are releasing official packages to provide
 additional functionality that not every site will need or want.
 
 .. contents::
@@ -20,14 +20,14 @@ Shield
 `CodeIgniter Shield <https://shield.codeigniter.com/>`_ is an authentication
 and authorization framework for CodeIgniter 4. It is designed to be secure, flexible,
 and easily extendable to meet the needs of many different types of websites.
-Among the many features, it includes:
+Among its many features are:
 
 * Session-based authentication
 * Personal access token authentication
-* framework for after login/register "actions" (like Two Factor Authentication, etc)
-* Role-Based Access Control with simple, flexible permissions.
-* Per-user permission overrides,
-* and more...
+* Framework for after login/register "actions" (like Two Factor Authentication, etc.)
+* Role-Based Access Control with simple, flexible permissions
+* Per-user permission overrides
+* And more...
 
 .. _settings:
 
@@ -36,8 +36,8 @@ Settings
 ********
 
 `CodeIgniter Settings <https://settings.codeigniter.com>`_ is a wrapper around
-the configuration files that allows any configuration setting to saved to the database,
-while defaulting to the config files when not custom value has been stored. This allows
+the configuration files that allows any configuration setting to be saved to the database,
+while defaulting to the config files when no custom value has been stored. This allows
 an application to ship with the default config values, but adapt as the project grows
 or moves servers, without having to touch the code.
 
@@ -62,7 +62,7 @@ Cache
 *****
 
 We provide a library with `PSR-6 and PSR-16 Cache Adapters <https://github.com/codeigniter4/cache>`_
-for CodeIgniter 4. This is not required for use, since CodeIgniter 4 comes with a fully-
+for CodeIgniter 4. This is not required for use, since CodeIgniter 4 comes with a fully
 functional cache component. This module is only for integrating third-party packages
 that rely on the PSR interface provisions.
 
@@ -75,7 +75,7 @@ DevKit
 development tools that CodeIgniter uses to help ensure quality code, including
 our coding standard, static analysis tools and rules, unit testing, data generation,
 file-system mocking, security advisories, and more. This can be used in any of
-your personal projects or libraries to get you rapidly setup with 17 different tools.
+your personal projects or libraries to get you rapidly set up with 17 different tools.
 
 
 ***************

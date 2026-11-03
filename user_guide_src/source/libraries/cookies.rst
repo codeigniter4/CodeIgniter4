@@ -5,7 +5,7 @@ Cookies
 An **HTTP cookie** (web cookie, browser cookie) is a small piece of data that a server
 sends to the user's web browser. The browser may store it and send it back with later
 requests to the same server. Typically, it's used to tell if two requests came from
-the same browser - keeping a user logged-in, for example.
+the same browser - keeping a user logged in, for example.
 It remembers stateful information for the stateless HTTP protocol.
 
 Cookies are mainly used for three purposes:
@@ -30,8 +30,8 @@ There are currently four ways to create a new ``Cookie`` value object.
 
 .. literalinclude:: cookies/001.php
 
-When constructing the ``Cookie`` object, only the ``name`` attribute is required. All other else are optional.
-If the optional attributes are not modified, their values will be filled up by the default values saved in
+When constructing the ``Cookie`` object, only the ``name`` attribute is required. All others are optional.
+If the optional attributes are not modified, their values will be filled with the default values saved in
 the ``Cookie`` class.
 
 Overriding Defaults
@@ -50,7 +50,7 @@ Changing Defaults for a Limited Time
 
 If you do not want this
 behavior but only want to change defaults for a limited time, you can take advantage of
-``Cookie::setDefaults()`` return which returns the old defaults array.
+the return value of ``Cookie::setDefaults()``, which is the old defaults array.
 
 .. literalinclude:: cookies/003.php
 
@@ -66,7 +66,7 @@ Once instantiated, you can easily access a ``Cookie``'s attribute by using one o
 Immutable Cookies
 *****************
 
-A new ``Cookie`` instance is an immutable value object representation of an HTTP cookie. Being immutable,
+A new ``Cookie`` instance is an immutable value object representation of an HTTP cookie. Since it is immutable,
 modifying any of the instance's attributes will not affect the original instance. The modification **always**
 returns a new instance. You need to retain this new instance in order to use it.
 
@@ -78,7 +78,7 @@ Validating a Cookie's Attributes
 
 An HTTP cookie is regulated by several specifications that need to be followed in order to be
 accepted by browsers. Thus, when creating or modifying certain attributes of the ``Cookie``,
-these are validated in order to check if these follow the specifications.
+these are validated in order to check if they follow the specifications.
 
 A ``CookieException`` is thrown if violations were reported.
 
@@ -91,7 +91,7 @@ A cookie name can be any US-ASCII character, except for the following:
 - spaces or tabs;
 - separator characters, such as ``( ) < > @ , ; : \ " / [ ] ? = { }``
 
-If setting the ``$raw`` parameter to ``true`` this validation will be strictly made. This is because
+If the ``$raw`` parameter is set to ``true``, this validation will be strictly enforced. This is because
 PHP's `setcookie() <https://www.php.net/manual/en/function.setcookie.php>`_
 and `setrawcookie() <https://www.php.net/manual/en/function.setrawcookie.php>`_
 will reject cookies with invalid names. Additionally, cookie
@@ -137,22 +137,22 @@ Validating the SameSite Attribute
 
 The SameSite attribute accepts three values:
 
-- **Lax**: Cookies are not sent on normal cross-site subrequests (for example to load images or frames into a third party site), but are sent when a user is navigating to the origin site (*i.e.* when following a link).
-- **Strict**: Cookies will only be sent in a first-party context and not be sent along with requests initiated by third party websites.
+- **Lax**: Cookies are not sent on normal cross-site subrequests (for example, to load images or frames into a third-party site), but are sent when a user is navigating to the origin site (*i.e.* when following a link).
+- **Strict**: Cookies will only be sent in a first-party context and not be sent along with requests initiated by third-party websites.
 - **None**: Cookies will be sent in all contexts, *i.e.* in responses to both first-party and cross-origin requests.
 
 CodeIgniter, however, allows you to set the SameSite attribute to an empty string. When an empty string is
 provided, the default SameSite setting saved in the ``Cookie`` class is used. You can change the default SameSite
-by using the ``Cookie::setDefaults()`` as discussed above.
+by using ``Cookie::setDefaults()`` as discussed above.
 
-Recent cookie specifications have changed such that modern browsers are being required to give a default SameSite
-if nothing was provided. This default is ``Lax``. If you have set the SameSite to be an empty string and your
+Recent cookie specifications have changed such that modern browsers are required to give a default SameSite
+if nothing is provided. This default is ``Lax``. If you have set the SameSite to be an empty string and your
 default SameSite is also an empty string, your cookie will be given the ``Lax`` value.
 
-If the SameSite is set to ``None`` you need to make sure that ``Secure`` is also set to ``true``.
+If the SameSite is set to ``None``, you need to make sure that ``Secure`` is also set to ``true``.
 
 When writing the SameSite attribute, the ``Cookie`` class accepts any of the values case-insensitively. You can
-also take advantage of the class's constants to make it not a hassle.
+also take advantage of the class's constants to make this easier.
 
 .. literalinclude:: cookies/006.php
 
@@ -202,7 +202,7 @@ CodeIgniter provides three other ways to create a new instance of the ``CookieSt
 Checking Cookies in Store
 =========================
 
-To check whether a ``Cookie`` object exists in the ``CookieStore`` instance, you can use several ways:
+There are several ways to check whether a ``Cookie`` object exists in the ``CookieStore`` instance:
 
 .. literalinclude:: cookies/009.php
 
@@ -223,13 +223,13 @@ an invalid name will just return ``null``.
 
 .. literalinclude:: cookies/012.php
 
-If no arguments are supplied in when getting cookies from the ``Response``, all ``Cookie`` objects
+If no arguments are supplied when getting cookies from the ``Response``, all ``Cookie`` objects
 in store will be displayed.
 
 .. literalinclude:: cookies/013.php
 
 .. note:: The helper function :php:func:`get_cookie()` gets the cookie from the current ``Request`` object, not
-    from ``Response``. This function checks the ``$_COOKIE`` array if that cookie is set and fetches it
+    from ``Response``. This function checks the ``$_COOKIE`` array to see if that cookie is set and fetches it
     right away.
 
 Adding/Removing Cookies in Store
@@ -241,11 +241,11 @@ in order to work on it. The original instance is left unchanged.
 .. literalinclude:: cookies/014.php
 
 .. note:: Removing a cookie from the store **DOES NOT** delete it from the browser.
-    If you intend to delete a cookie *from the browser*, you must put an empty value
-    cookie with the same name to the store.
+    If you intend to delete a cookie *from the browser*, you must put an empty-value
+    cookie with the same name into the store.
 
 When interacting with the cookies in store in the current ``Response`` object, you can safely add or delete
-cookies without worrying the immutable nature of the cookie collection. The ``Response`` object will replace
+cookies without worrying about the immutable nature of the cookie collection. The ``Response`` object will replace
 the instance with the modified instance.
 
 .. literalinclude:: cookies/015.php
@@ -255,9 +255,9 @@ Dispatching Cookies in Store
 
 .. important:: This method was deprecated as of version 4.1.6 and was removed in 4.6.0.
 
-More often than not, you do not need to concern yourself in manually sending cookies. CodeIgniter will do this
+More often than not, you do not need to concern yourself with manually sending cookies. CodeIgniter will do this
 for you. However, if you really need to manually send cookies, you can use the ``dispatch`` method. Just like
-in sending other headers, you need to make sure the headers are not yet sent by checking the value
+when sending other headers, you need to make sure the headers are not yet sent by checking the value
 of ``headers_sent()``.
 
 .. literalinclude:: cookies/016.php
@@ -268,7 +268,7 @@ Cookie Personalization
 
 Sane defaults are already in place inside the ``Cookie`` class to ensure the smooth creation of cookie
 objects. However, you may wish to define your own settings by changing the following settings in the
-``Config\Cookie`` class in **app/Config/Cookie.php** file.
+``Config\Cookie`` class in the **app/Config/Cookie.php** file.
 
 ==================== ===================================== ========= =====================================================
 Setting              Options/Types                         Default   Description
@@ -276,14 +276,14 @@ Setting              Options/Types                         Default   Description
 **$prefix**          ``string``                            ``''``    Prefix to prepend to the cookie name.
 **$expires**         ``DateTimeInterface|string|int``      ``0``     The expires timestamp.
 **$path**            ``string``                            ``/``     The path property of the cookie.
-**$domain**          ``string``                            ``''``    The domain property of the cookie.with trailing slash.
-**$secure**          ``true``/``false``                    ``false`` If to be sent over secure HTTPS.
-**$httponly**        ``true``/``false``                    ``true``  If not accessible to JavaScript.
+**$domain**          ``string``                            ``''``    The domain property of the cookie.
+**$secure**          ``true``/``false``                    ``false`` Whether to send it over secure HTTPS.
+**$httponly**        ``true``/``false``                    ``true``  Whether it is inaccessible to JavaScript.
 **$samesite**        ``Lax``/``None``/``Strict``           ``Lax``   The SameSite attribute.
-**$raw**             ``true``/``false``                    ``false`` If to be dispatched using ``setrawcookie()``.
+**$raw**             ``true``/``false``                    ``false`` Whether to dispatch it using ``setrawcookie()``.
 ==================== ===================================== ========= =====================================================
 
-In runtime, you can manually supply a new default using the ``Cookie::setDefaults()`` method.
+At runtime, you can manually supply a new default using the ``Cookie::setDefaults()`` method.
 
 ***************
 Class Reference
@@ -349,7 +349,7 @@ Class Reference
         :rtype: ``Cookie``
         :returns: new ``Cookie`` instance
 
-        Creates a new Cookie with URL encoding option updated.
+        Creates a new Cookie with the URL encoding option updated.
 
     .. php:method:: withPrefix([string $prefix = ''])
 
@@ -357,7 +357,7 @@ Class Reference
         :rtype: ``Cookie``
         :returns: new ``Cookie`` instance
 
-        Creates a new Cookie with new prefix.
+        Creates a new Cookie with a new prefix.
 
     .. php:method:: withName(string $name)
 
@@ -365,7 +365,7 @@ Class Reference
         :rtype: ``Cookie``
         :returns: new ``Cookie`` instance
 
-        Creates a new Cookie with new name.
+        Creates a new Cookie with a new name.
 
     .. php:method:: withValue(string $value)
 
@@ -373,7 +373,7 @@ Class Reference
         :rtype: ``Cookie``
         :returns: new ``Cookie`` instance
 
-        Creates a new Cookie with new value.
+        Creates a new Cookie with a new value.
 
     .. php:method:: withExpires($expires)
 
@@ -381,7 +381,7 @@ Class Reference
         :rtype: ``Cookie``
         :returns: new ``Cookie`` instance
 
-        Creates a new Cookie with new cookie expires time.
+        Creates a new Cookie with a new cookie expires time.
 
     .. php:method:: withExpired()
 
@@ -394,7 +394,6 @@ Class Reference
 
         .. important:: This method was deprecated as of version 4.2.6 and was removed in 4.6.0.
 
-        :param string $name:
         :rtype: ``Cookie``
         :returns: new ``Cookie`` instance
 
@@ -406,7 +405,7 @@ Class Reference
         :rtype: ``Cookie``
         :returns: new ``Cookie`` instance
 
-        Creates a new Cookie with new domain.
+        Creates a new Cookie with a new domain.
 
     .. php:method:: withPath(?string $path)
 
@@ -414,7 +413,7 @@ Class Reference
         :rtype: ``Cookie``
         :returns: new ``Cookie`` instance
 
-        Creates a new Cookie with new path.
+        Creates a new Cookie with a new path.
 
     .. php:method:: withSecure([bool $secure = true])
 
@@ -422,7 +421,7 @@ Class Reference
         :rtype: ``Cookie``
         :returns: new ``Cookie`` instance
 
-        Creates a new Cookie with new "Secure" attribute.
+        Creates a new Cookie with a new "Secure" attribute.
 
     .. php:method:: withHTTPOnly([bool $httponly = true])
 
@@ -430,7 +429,7 @@ Class Reference
         :rtype: ``Cookie``
         :returns: new ``Cookie`` instance
 
-        Creates a new Cookie with new "HttpOnly" attribute.
+        Creates a new Cookie with a new "HttpOnly" attribute.
 
     .. php:method:: withSameSite(string $samesite)
 
@@ -438,7 +437,7 @@ Class Reference
         :rtype: ``Cookie``
         :returns: new ``Cookie`` instance
 
-        Creates a new Cookie with new "SameSite" attribute.
+        Creates a new Cookie with a new "SameSite" attribute.
 
     .. php:method:: toHeaderString()
 
@@ -454,7 +453,7 @@ Class Reference
 
     .. php:staticmethod:: fromCookieHeaders(array $headers[, bool $raw = false])
 
-        :param array $header: Array of ``Set-Cookie`` headers
+        :param array $headers: Array of ``Set-Cookie`` headers
         :param bool $raw: Whether not to use URL encoding
         :rtype: ``CookieStore``
         :returns: ``CookieStore`` instance

@@ -25,14 +25,14 @@ User Agent class from:
 User Agent Definitions
 ======================
 
-The user agent name definitions are located in a config file located at:
+The user agent name definitions are in a config file located at:
 **app/Config/UserAgents.php**. You may add items to the various
 user agent arrays if needed.
 
 Example
 =======
 
-When the User Agent class is initialized it will attempt to determine
+When the User Agent class is initialized, it will attempt to determine
 whether the user agent browsing your site is a web browser, a mobile
 device, or a robot. It will also gather the platform information if it
 is available:
@@ -58,8 +58,8 @@ Class Reference
         .. literalinclude:: user_agent/003.php
 
         .. note:: The string "Safari" in this example is an array key in the list of browser definitions.
-                  You can find this list in **app/Config/UserAgents.php** if you want to add new
-                  browsers or change the strings.
+            You can find this list in **app/Config/UserAgents.php** if you want to add new
+            browsers or change the strings.
 
     .. php:method:: isMobile([$key = null])
 
@@ -80,9 +80,9 @@ Class Reference
         Returns true/false (boolean) if the user agent is a known robot.
 
         .. note:: The user agent library only contains the most common robot definitions. It is not a complete list of bots.
-                  There are hundreds of them so searching for each one would not be very efficient. If you find that some bots
-                  that commonly visit your site are missing from the list you can add them to your
-                  **app/Config/UserAgents.php** file.
+            There are hundreds of them, so searching for each one would not be very efficient. If you find that some bots
+            that commonly visit your site are missing from the list, you can add them to your
+            **app/Config/UserAgents.php** file.
 
     .. php:method:: isReferral()
 

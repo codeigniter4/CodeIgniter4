@@ -12,10 +12,10 @@ What are Helpers?
 
 Helpers, as the name suggests, help you with tasks. Each helper file is simply a
 collection of functions in a particular category. There are
-:doc:`URL Helpers <../helpers/url_helper>`,
+:doc:`URL Helpers <../helpers/url_helper>`
 that assist in creating links, there are :doc:`Form Helpers <../helpers/form_helper>`
-that help you create form elements, :doc:`Test Helpers <../helpers/text_helper>`
-perform various text formatting routines,  :doc:`Cookie Helpers <../helpers/cookie_helper>`
+that help you create form elements, :doc:`Text Helpers <../helpers/text_helper>`
+perform various text formatting routines, :doc:`Cookie Helpers <../helpers/cookie_helper>`
 set and read cookies, :doc:`Filesystem Helpers <../helpers/filesystem_helper>` help you
 deal with files, etc.
 
@@ -64,7 +64,7 @@ Auto-Discovery and Composer Packages
 
 By default, CodeIgniter will search for the helper files in all defined namespaces
 by :ref:`auto-discovery`.
-You can check your defined namespaces by the spark command. See :ref:`confirming-namespaces`.
+You can check your defined namespaces with the spark command. See :ref:`confirming-namespaces`.
 
 If you use many Composer packages, you will have many defined namespaces.
 CodeIgniter will scan all namespaces by default.
@@ -85,15 +85,15 @@ to be loaded, as well as any helpers you've created specifically for this applic
 
 The load order is as follows:
 
-1. app/Helpers - Files loaded here are always loaded first.
+1. **app/Helpers** - Files loaded here are always loaded first.
 2. {namespace}/Helpers - All namespaces are looped through in the order they are defined.
-3. system/Helpers - The base file is loaded last.
+3. **system/Helpers** - The base file is loaded last.
 
 Loading Multiple Helpers
 ========================
 
 If you need to load more than one helper at a time, you can pass
-an array of file names in and all of them will be loaded:
+an array of file names in, and all of them will be loaded:
 
 .. literalinclude:: helpers/003.php
 
@@ -109,7 +109,7 @@ controller constructor so that they become available automatically in
 any method, or you can load a helper in a specific method that needs
 it.
 
-However if you want to load in your controller constructor, you can use the ``$helpers``
+However, if you want to load one in your controller constructor, you can use the ``$helpers``
 property in Controller instead. See :ref:`Controllers <controllers-helpers>`.
 
 .. _helpers-loading-from-specified-namespace:
@@ -123,13 +123,13 @@ and load all found files.
 If you want to load only a helper in a specific namespace, prefix the name of the
 helper with the namespace that it can be located in. Within that namespaced directory,
 the loader expects it to live within a sub-directory named **Helpers**. An example
-will help understand this.
+will help you understand this.
 
 For this example, assume that we have grouped together all of our Blog-related
 code into its own namespace, ``Example\Blog``. The files exist on our server at
 **Modules/Blog/**. So, we would put our Helper files for the blog module in
 **Modules/Blog/Helpers/**. A **blog_helper** file would be at
-**Modules/Blog/Helpers/blog_helper.php**. Within our controller we could
+**Modules/Blog/Helpers/blog_helper.php**. Within our controller, we could
 use the following command to load the helper for us:
 
 .. literalinclude:: helpers/004.php
@@ -161,7 +161,7 @@ Once you've loaded the Helper File containing the function you intend to
 use, you'll call it the way you would a standard PHP function.
 
 For example, to create a link using the :php:func:`anchor()` function in one of
-your view files you would do this:
+your view files, you would do this:
 
 .. literalinclude:: helpers/005.php
 
@@ -177,7 +177,7 @@ Creating Custom Helpers
 
 The helper filename is the **helper name** and **_helper.php**.
 
-For example, to create info helper, you’ll create a file named
+For example, to create an info helper, you’ll create a file named
 **app/Helpers/info_helper.php**, and add a function to the file:
 
 .. literalinclude:: helpers/008.php
@@ -190,15 +190,15 @@ You can add as many functions as you like to a single helper file.
 To "extend" Helpers, create a file in your **app/Helpers** folder
 with an identical name to the existing Helper.
 
-If all you need to do is add some functionality to an existing helper -
-perhaps add a function or two, or change how a particular helper
-function operates - then it's overkill to replace the entire helper with
+If all you need to do is add some functionality to an existing helper
+(perhaps add a function or two, or change how a particular helper
+function operates), then it's overkill to replace the entire helper with
 your version. In this case, it's better to simply "extend" the Helper.
 
 .. note:: The term "extend" is used loosely since Helper functions are
     procedural and discrete and cannot be extended in the traditional
     programmatic sense. Under the hood, this gives you the ability to
-    add to, or to replace the functions a Helper provides.
+    add to, or replace, the functions a Helper provides.
 
 For example, to extend the native **Array Helper** you'll create a file
 named **app/Helpers/array_helper.php**, and add or override
@@ -215,4 +215,4 @@ Now What?
 *********
 
 In the Table of Contents, you'll find a list of all the available :doc:`Helpers <../helpers/index>`.
-Browse each one to see what they do.
+Browse each one to see what it does.

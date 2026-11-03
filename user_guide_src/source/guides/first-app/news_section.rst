@@ -107,10 +107,10 @@ query; :doc:`Query Builder <../../database/query_builder>` does this for you.
 
 The two methods used here, ``findAll()`` and ``first()``, are provided
 by the ``CodeIgniter\Model`` class. They already know the table to use based on the ``$table``
-property we set in ``NewsModel`` class, earlier. They are helper methods
+property we set earlier in the ``NewsModel`` class. They are helper methods
 that use the Query Builder to run their commands on the current table, and
-returning an array of results in the format of your choice. In this example,
-``findAll()`` returns an array of array.
+return an array of results in the format of your choice. In this example,
+``findAll()`` returns an array of arrays.
 
 Display the News
 ****************
@@ -123,13 +123,13 @@ a new ``News`` controller is defined.
 Adding Routing Rules
 ====================
 
-Modify your **app/Config/Routes.php** file, so it looks as follows:
+Modify your **app/Config/Routes.php** file so it looks as follows:
 
 .. literalinclude:: news_section/008.php
 
 This makes sure the requests reach the ``News`` controller instead of
 going directly to the ``Pages`` controller. The second ``$routes->get()`` line
-routes URI's with a slug to the ``show()`` method in the ``News`` controller.
+routes URIs with a slug to the ``show()`` method in the ``News`` controller.
 
 Create News Controller
 ======================
@@ -149,7 +149,7 @@ news item.
 
 Next, the :php:func:`model()` function is used to create the ``NewsModel`` instance.
 This is a helper function. You can read more about it in :doc:`../../general/common_functions`.
-You could also write ``$model = new NewsModel();``, if you don't use it.
+You could also write ``$model = new NewsModel();`` if you don't use it.
 
 You can see that the ``$slug`` variable is passed to the model's
 method in the second method. The model is using this slug to identify the
@@ -159,12 +159,12 @@ Complete News::index() Method
 =============================
 
 Now the data is retrieved by the controller through our model, but
-nothing is displayed yet. The next thing to do is, passing this data to
+nothing is displayed yet. The next thing to do is to pass this data to
 the views. Modify the ``index()`` method to look like this:
 
 .. literalinclude:: news_section/004.php
 
-The code above gets all news records from the model and assigns it to a
+The code above gets all news records from the model and assigns them to a
 variable. The value for the title is also assigned to the ``$data['title']``
 element and all data is passed to the views. You now need to create a
 view to render the news items.
@@ -183,7 +183,7 @@ Create **app/Views/news/index.php** and add the next piece of code.
 
 Here, each news item is looped and displayed to the user. You can see we
 wrote our template in PHP mixed with HTML. If you prefer to use a template
-language, you can use CodeIgniter's :doc:`View Parser </outgoing/view_parser>` or a third party parser.
+language, you can use CodeIgniter's :doc:`View Parser </outgoing/view_parser>` or a third-party parser.
 
 Complete News::show() Method
 ============================
@@ -210,8 +210,8 @@ The only thing left to do is create the corresponding view at
 
 .. literalinclude:: news_section/007.php
 
-Point your browser to your "news" page, i.e., **localhost:8080/news**,
-you should see a list of the news items, each of which has a link
+Point your browser to your "news" page, i.e., **localhost:8080/news**.
+You should see a list of the news items, each of which has a link
 to display just the one article.
 
 .. image:: ../../images/tutorial2.png

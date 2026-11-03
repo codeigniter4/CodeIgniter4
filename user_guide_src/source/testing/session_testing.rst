@@ -29,8 +29,8 @@ Once initialized, you can set session values and retrieve them as usual:
 
 .. note::
 
-   Session data is stored in memory and lasts as long as the ArrayHandler object exists;
-   after the object is destroyed (typically at the end of a request or test), the data is lost.
+    Session data is stored in memory and lasts as long as the ArrayHandler object exists;
+    after the object is destroyed (typically at the end of a request or test), the data is lost.
 
 Example Test Case
 =================
@@ -45,7 +45,7 @@ Session Assertions
 Using PHPUnit Assertions with ArrayHandler
 ------------------------------------------
 
-When testing sessions directly with Session and ArrayHandler in a unit test, use standard PHPUnit assertions. 
+When testing sessions directly with Session and ArrayHandler in a unit test, use standard PHPUnit assertions.
 ``assertSessionHas()`` and ``assertSessionMissing()`` are not available in this context because you are interacting directly with the session object,
 not a response object.
 
@@ -54,15 +54,15 @@ not a response object.
 Session Assertions via TestResponse
 -----------------------------------
 
-When testing controllers or HTTP responses, you can use CodeIgniter 4’s session 
+When testing controllers or HTTP responses, you can use CodeIgniter 4's session
 assertion helpers, such as ``assertSessionHas()`` and ``assertSessionMissing()``,
 which are available on the ``TestResponse`` object. These helpers allow you to
 assert the state of the session during the HTTP request/response lifecycle.
-See more: :ref:`Session Assertions <response-session-assertions>`
+See :ref:`Session Assertions <response-session-assertions>` for more details.
 
 Custom Session Values
 =====================
 
 In Feature Tests, you can provide custom session data for a single test using the ``withSession()`` method.
 This allows you to simulate session states such as logged-in users or specific roles during the request.
-For full details and examples, see: :ref:`Setting Session Values <feature-setting-session-values>`
+For full details and examples, see :ref:`Setting Session Values <feature-setting-session-values>`.

@@ -6,8 +6,8 @@ Static Pages
     :depth: 2
 
 .. note:: This tutorial assumes you've downloaded CodeIgniter and
-   :doc:`installed the framework <../../installation/index>` in your
-   development environment.
+    :doc:`installed the framework <../../installation/index>` in your
+    development environment.
 
 The first thing you're going to do is set up routing rules to handle static pages.
 
@@ -35,7 +35,7 @@ CodeIgniter reads its routing rules from top to bottom and routes the
 request to the first matching rule. Each rule is a regular expression
 (left-side) mapped to a controller and method name
 (right-side). When a request comes in, CodeIgniter looks for the first
-match, and calls the appropriate controller and method, possibly with
+match and calls the appropriate controller and method, possibly with
 arguments.
 
 More information about routing can be found in the :doc:`../../incoming/routing`.
@@ -117,7 +117,7 @@ includes the following code::
     </body>
     </html>
 
-.. note:: If you look closely in **header.php** template we are using an :php:func:`esc()`
+.. note:: If you look closely at the **header.php** template, we are using an :php:func:`esc()`
     function. It's a global function provided by CodeIgniter to help prevent
     XSS attacks. You can read more about it in :doc:`../../general/common_functions`.
 
@@ -134,7 +134,7 @@ The static page bodies will be located in the **app/Views/pages** directory.
 
 In that directory, create two files named **home.php** and **about.php**.
 Within those files, type some text - anything you'd like - and save them.
-If you like to be particularly un-original, try "Hello World!".
+If you like to be particularly unoriginal, try "Hello World!".
 
 Complete Pages::view() Method
 =============================
@@ -167,14 +167,14 @@ assigning the value to a variable, it is assigned to the title element
 in the ``$data`` array.
 
 The last thing that has to be done is loading the views in the order
-they should be displayed. The :php:func:`view()` function built-in to
+they should be displayed. The :php:func:`view()` function built into
 CodeIgniter will be used to do this. The second parameter in the ``view()``
 function is used to pass values to the view. Each value in the ``$data`` array
 is assigned to a variable with the name of its key. So the value of
 ``$data['title']`` in the controller is equivalent to ``$title`` in the
 view.
 
-.. note:: Any files and directory names passed into the :php:func:`view()` function MUST
+.. note:: Any file and directory names passed into the :php:func:`view()` function MUST
     match the case of the actual directory and file itself or the system will
     throw errors on case-sensitive platforms. You can read more about it in
     :doc:`../../outgoing/views`.
@@ -182,10 +182,9 @@ view.
 Running the App
 ***************
 
-Ready to test? You cannot run the app using PHP's built-in server,
-since it will not properly process the **.htaccess** rules that are provided in
-**public**, and which eliminate the need to specify "**index.php/**"
-as part of a URL. CodeIgniter has its own command that you can use though.
+Ready to test? PHP's built-in server does not process **.htaccess** rules.
+Use CodeIgniter's command to start that server with the framework's router script,
+which lets you omit "**index.php/**" from URLs.
 
 From the command line, at the root of your project:
 
@@ -213,14 +212,14 @@ controller you made above produces...
     +---------------------------------+-----------------------------------------------------------------+
     | URL                             | Will show                                                       |
     +=================================+=================================================================+
-    | localhost:8080/                 | the CodeIgniter "welcome" page. the results from the ``index()``|
+    | localhost:8080/                 | the CodeIgniter "welcome" page. The results from the ``index()``|
     |                                 | method in the ``Home`` controller.                              |
     +---------------------------------+-----------------------------------------------------------------+
     | localhost:8080/pages            | the results from the ``index()`` method inside our ``Pages``    |
     |                                 | controller, which is to display the CodeIgniter "welcome" page. |
     +---------------------------------+-----------------------------------------------------------------+
     | localhost:8080/home             | the "home" page that you made above, because we explicitly      |
-    |                                 | asked for it. the results from the ``view()`` method inside our |
+    |                                 | asked for it. The results from the ``view()`` method inside our |
     |                                 | ``Pages`` controller.                                           |
     +---------------------------------+-----------------------------------------------------------------+
     | localhost:8080/about            | the "about" page that you made above, because we explicitly     |

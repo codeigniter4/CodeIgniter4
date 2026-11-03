@@ -13,9 +13,9 @@ Composer can be used in two ways to install CodeIgniter4 on your system.
     `Basic usage <https://getcomposer.org/doc/01-basic-usage.md>`_ first.
 
 The first technique describes creating a skeleton project (app starter)
-using CodeIgniter4, that you would then use as the base for a new webapp.
+using CodeIgniter4, which you would then use as the base for a new webapp.
 The second technique described below lets you add CodeIgniter4 to an existing
-webapp,
+webapp.
 
 .. note:: If you are using a Git repository to store your code, or for
     collaboration with others, then the **vendor** folder would normally
@@ -31,7 +31,7 @@ repository holds a skeleton application, with a composer dependency on
 the latest released version of the framework.
 
 This installation technique would suit a developer who wishes to start
-a new CodeIgniter4 based project.
+a new CodeIgniter4-based project.
 
 Installation
 ------------
@@ -47,10 +47,10 @@ The command above will create a **project-root** folder.
 If you omit the "project-root" argument, the command will create an
 "appstarter" folder, which can be renamed as appropriate.
 
-.. note:: Before v4.4.0, CodeIgniter autoloader did not allow special
+.. note:: Before v4.4.0, the CodeIgniter autoloader did not allow special
     characters that are illegal in filenames on certain operating systems.
     The symbols that can be used are ``/``, ``_``, ``.``, ``:``, ``\`` and space.
-    So if you installed CodeIgniter under the folder that contains the special
+    So if you installed CodeIgniter under a folder that contains special
     characters like ``(``, ``)``, etc., CodeIgniter didn't work. Since v4.4.0,
     this restriction has been removed.
 
@@ -61,7 +61,7 @@ If you omit the "project-root" argument, the command will create an
 
         composer install --no-dev
 
-    The above command will remove the Composer packages only for development
+    The above command will remove the development-only Composer packages
     that are not needed in the production environment. This will greatly reduce
     the vendor folder size.
 
@@ -89,7 +89,7 @@ the framework version:
 Then, run the ``composer update`` command.
 
 .. note:: When you use a fixed version number like ``"codeigniter4/framework": "4.4.8"``
-    in your **composer.json**, ``composer update`` command will not update the
+    in your **composer.json**, the ``composer update`` command will not update the
     framework to the latest version. See `Writing Version Constraints`_ for how to specify the version.
 
 .. _Writing Version Constraints: https://getcomposer.org/doc/articles/versions.md#writing-version-constraints
@@ -105,7 +105,7 @@ See :ref:`initial-configuration` for the details.
 Upgrading
 ---------
 
-Whenever there is a new release, then from the command line in your project root:
+Whenever there is a new release, run this from the command line in your project root:
 
 .. code-block:: console
 
@@ -132,7 +132,7 @@ the framework version:
 Then, run the ``composer update`` command.
 
 .. note:: When you use a fixed version number like ``"codeigniter4/framework": "4.4.8"``
-    in your **composer.json**, ``composer update`` command will not update the
+    in your **composer.json**, the ``composer update`` command will not update the
     framework to the latest version. See `Writing Version Constraints`_ for how to specify the version.
 
 Pros
@@ -153,7 +153,7 @@ You still need to check for file changes in the **project space**
 Structure
 ---------
 
-Folders in your project after set up:
+Folders in your project after setup:
 
 - app, public, tests, writable
 - vendor/codeigniter4/framework/system
@@ -163,9 +163,9 @@ Folders in your project after set up:
 Latest Dev
 ----------
 
-The App Starter repo comes with a ``builds`` scripts to switch Composer sources between the
-current stable release and the latest development branch of the framework. Use this script
-for a developer who is willing to live with the latest unreleased changes, which may be unstable.
+The App Starter repo comes with a **builds** script to switch Composer sources between the
+current stable release and the latest development branch of the framework. This script is
+for developers who are willing to live with the latest unreleased changes, which may be unstable.
 This way you can help find bugs and improve new features.
 
 The `development user guide <https://codeigniter4.github.io/CodeIgniter4/>`_ is accessible online.
@@ -176,7 +176,7 @@ Before running the script, check ``$files``, which is the list of files to be ch
 This is useful if you have additional places in the code that mention the directory with the framework.
 
 .. note:: You should not rely on the version of the framework in your project
-    - the development code may contain an incorrect number.
+    because the development code may contain an incorrect number.
 
 Update for Latest Dev
 ^^^^^^^^^^^^^^^^^^^^^
@@ -190,7 +190,7 @@ In your project root:
 The command above will update **composer.json** to point to the ``develop`` branch of the
 working repository, and update the corresponding paths in config and XML files.
 
-After using the ``builds`` command be sure to run ``composer update`` to sync your vendor
+After using the ``builds`` command, be sure to run ``composer update`` to sync your vendor
 folder with the latest target build. Then, check the :doc:`upgrading` and update project
 files if necessary.
 
@@ -211,7 +211,7 @@ update project files if necessary.
 Revert to Stable Release
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-To revert the changes run:
+To revert the changes, run:
 
 .. code-block:: console
 
@@ -243,16 +243,16 @@ In your project root:
 
         composer install --no-dev
 
-    The above command will remove the Composer packages only for development
+    The above command will remove the development-only Composer packages
     that are not needed in the production environment. This will greatly reduce
     the vendor folder size.
 
 Setting Up
 ----------
 
-    1. Copy the **app**, **public**, **tests** and **writable** folders from **vendor/codeigniter4/framework** to your project root
-    2. Copy the **env**, **phpunit.dist.xml** and **spark** files, from **vendor/codeigniter4/framework** to your project root
-    3. You will have to adjust the ``$systemDirectory`` property in **app/Config/Paths.php** to refer to the vendor one, e.g., ``__DIR__ . '/../../vendor/codeigniter4/framework/system'``.
+1. Copy the **app**, **public**, **tests** and **writable** folders from **vendor/codeigniter4/framework** to your project root.
+2. Copy the **env**, **phpunit.dist.xml** and **spark** files from **vendor/codeigniter4/framework** to your project root.
+3. You will have to adjust the ``$systemDirectory`` property in **app/Config/Paths.php** to refer to the vendor one, e.g., ``__DIR__ . '/../../vendor/codeigniter4/framework/system'``.
 
 Initial Configuration
 ---------------------
@@ -265,7 +265,7 @@ See :ref:`initial-configuration` for the details.
 Upgrading
 ---------
 
-Whenever there is a new release, then from the command line in your project root:
+Whenever there is a new release, run this from the command line in your project root:
 
 .. code-block:: console
 
@@ -309,7 +309,7 @@ You still need to check for file changes in the **project space**
 Structure
 ---------
 
-Folders in your project after set up:
+Folders in your project after setup:
 
 - app, public, tests, writable
 - vendor/codeigniter4/framework/system
@@ -326,5 +326,5 @@ From the command line inside your project root:
 
     composer require codeigniter4/translations
 
-Copy the **vendor/codeigniter4/translations/Language** folder contents in it to your **app/Language** folder.
+Copy the contents of the **vendor/codeigniter4/translations/Language** folder to your **app/Language** folder.
 These will be updated along with the framework whenever you do a ``composer update``.

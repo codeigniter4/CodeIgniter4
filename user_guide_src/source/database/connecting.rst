@@ -42,14 +42,14 @@ Connecting to Specific Group
 ----------------------------
 
 The first parameter of this function can **optionally** be used to
-specify a particular database group from your config file. Examples:
+specify a particular database group from your config file.
 
-To choose a specific group from your config file you can do this:
+To choose a specific group from your config file, you can do this:
 
 .. literalinclude:: connecting/003.php
     :lines: 2-
 
-Where ``group_name`` is the name of the connection group from your config
+Here, ``group_name`` is the name of the connection group from your config
 file.
 
 Multiple Connections to Same Database
@@ -65,7 +65,7 @@ to the same database, send ``false`` as the second parameter:
 Connecting to Multiple Databases
 ================================
 
-If you need to connect to more than one database simultaneously you can
+If you need to connect to more than one database simultaneously, you can
 do so as follows:
 
 .. literalinclude:: connecting/005.php
@@ -83,8 +83,8 @@ Connecting with Custom Settings
 ===============================
 
 You can pass in an array of database settings instead of a group name to get
-a connection that uses your custom settings. The array passed in must be
-the same format as the groups are defined in the configuration file:
+a connection that uses your custom settings. The array passed in must be in
+the same format as the groups defined in the configuration file:
 
 .. literalinclude:: connecting/006.php
     :lines: 2-

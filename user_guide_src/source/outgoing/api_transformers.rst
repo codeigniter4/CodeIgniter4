@@ -13,9 +13,9 @@ from what you expose through your API, making it easier to maintain and evolve y
     :local:
     :depth: 2
 
-*****************
+*************
 Quick Example
-*****************
+*************
 
 The following example shows a common usage pattern for transformers in your application.
 
@@ -43,7 +43,7 @@ the structure of your API response. You can include any fields you want from the
 also rename or transform values as needed.
 
 Generating Transformer Files
-=============================
+============================
 
 CodeIgniter provides a CLI command to quickly generate transformer skeleton files:
 
@@ -93,19 +93,19 @@ You can organize transformers into subdirectories by including the path in the n
 This creates **app/Transformers/Api/V1/User.php** with the appropriate namespace ``App\Transformers\Api\V1``.
 
 Using Transformers in Controllers
-==================================
+=================================
 
 Once you've created a transformer, you can use it in your controllers to transform data before returning
 it to the client.
 
 .. literalinclude:: api_transformers/003.php
 
-***********************
+***************
 Field Filtering
-***********************
+***************
 
 The transformer automatically supports field filtering through the ``fields`` query parameter of the current URL.
-This allows API clients to request only specific fields they need, reducing bandwidth and improving performance.
+This allows API clients to request only the specific fields they need, reducing bandwidth and improving performance.
 
 .. literalinclude:: api_transformers/007.php
 
@@ -119,7 +119,7 @@ A request to ``/users/1?fields=id,name`` would return only:
     }
 
 Restricting Available Fields
-=============================
+============================
 
 By default, clients can request any field defined in your ``toArray()`` method. You can restrict which
 fields are allowed by overriding the ``getAllowedFields()`` method:
@@ -133,13 +133,13 @@ Now, even if a client requests ``/users/1?fields=email``, an ``ApiException`` wi
 Including Related Resources
 ***************************
 
-Transformers support loading of related resources through the ``include`` query parameter. This
+Transformers support loading related resources through the ``include`` query parameter. This
 follows a common API pattern where clients can specify which relationships they want included.
 While relationships are the most frequent use case, you can include any additional data
 you want by defining custom include methods.
 
 Defining Include Methods
-=========================
+========================
 
 To support including related resources, create methods prefixed with ``include`` followed by the
 resource name. Inside these methods, you can access the current resource being transformed via
@@ -183,7 +183,7 @@ The response would include:
     transformer, that request's scope is honored.
 
 Restricting Available Includes
-===============================
+==============================
 
 Similar to field filtering, you can restrict which relationships can be included by overriding the
 ``getAllowedIncludes()`` method:

@@ -52,7 +52,7 @@ If your code depends on this bug, please change it to explicitly specify the nec
 Others
 ======
 
--  ``Time::__toString()`` is now locale-independent. It returns database-compatible strings like '2022-09-07 12:00:00' in any locale. Most locales are not affected by this change. But in a few locales like `ar`, `fa`, ``Time::__toString()`` (or ``(string) $time`` or implicit casting to a string) no longer returns a localized datetime string. if you want to get a localized datetime string, use :ref:`Time::toDateTimeString() <time-todatetimestring>` instead.
+- ``Time::__toString()`` is now locale-independent. It returns database-compatible strings like '2022-09-07 12:00:00' in any locale. Most locales are not affected by this change. But in a few locales like ``ar``, ``fa``, ``Time::__toString()`` (or ``(string) $time`` or implicit casting to a string) no longer returns a localized datetime string. If you want to get a localized datetime string, use :ref:`Time::toDateTimeString() <time-todatetimestring>` instead.
 - The logic of Validation rule ``required_without`` has been changed to validate each array item separately when validating fields with asterisk (``*``), and the method signature of the rule method has also been changed. Extending classes should likewise update the parameters so as not to break LSP.
 
 Project Files
@@ -66,4 +66,4 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-* app/Common.php
+* **app/Common.php**

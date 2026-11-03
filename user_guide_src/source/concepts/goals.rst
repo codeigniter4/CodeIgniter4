@@ -5,7 +5,7 @@ Design and Architectural Goals
 Our goal for CodeIgniter is maximum performance, capability, and
 flexibility in the smallest, lightest possible package.
 
-To meet this goal we are committed to benchmarking, re-factoring, and
+To meet this goal, we are committed to benchmarking, re-factoring, and
 simplifying at every step of the development process, rejecting anything
 that doesn't further the stated objective.
 
@@ -15,11 +15,11 @@ with the following objectives:
 -  **Dynamic Instantiation.** In CodeIgniter, components are loaded and
    routines executed only when requested, rather than globally. No
    assumptions are made by the system regarding what may be needed
-   beyond the minimal core resources, so the system is very light-weight
+   beyond the minimal core resources, so the system is very lightweight
    by default. The events, as triggered by the HTTP request, and the
    controllers and views you design will determine what is invoked.
 -  **Loose Coupling.** Coupling is the degree to which components of a
-   system rely on each other. The less components depend on each other
+   system rely on each other. The less components depend on each other,
    the more reusable and flexible the system becomes. Our goal was a
    very loosely coupled system.
 -  **Component Singularity.** Singularity is the degree to which

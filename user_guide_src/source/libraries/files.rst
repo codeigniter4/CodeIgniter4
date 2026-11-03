@@ -37,8 +37,8 @@ In addition to all of the methods in the SplFileInfo class, you get some new too
 getRandomName()
 ===============
 
-You can generate a cryptographically secure random filename, with the current timestamp prepended, with the ``getRandomName()``
-method. This is especially useful to rename files when moving it so that the filename is unguessable:
+You can generate a cryptographically secure random filename, with the current timestamp prepended, using the ``getRandomName()``
+method. This is especially useful to rename files when moving them so that the filename is unguessable:
 
 .. literalinclude:: files/003.php
     :lines: 2-
@@ -58,7 +58,7 @@ getSizeByUnit()
 
 .. deprecated:: 4.6.0
 
-Returns the size of the file default in bytes. You can pass in either ``'kb'`` or ``'mb'`` as the first parameter to get
+Returns the size of the file, in bytes by default. You can pass in either ``'kb'`` or ``'mb'`` as the first parameter to get
 the results in kibibytes or mebibytes, respectively:
 
 .. literalinclude:: files/005.php
@@ -74,9 +74,9 @@ getSizeByBinaryUnit()
 
 .. versionadded:: 4.6.0
 
-Returns the size of the file default in bytes. You can pass in different FileSizeUnit values as the first parameter to get
-the results in kibibytes, mebibytes etc. respectively. You can pass in a precision value as the second parameter to define
-the amount of decimal places.
+Returns the size of the file, in bytes by default. You can pass in different FileSizeUnit values as the first parameter to get
+the results in kibibytes, mebibytes, etc., respectively. You can pass in a precision value as the second parameter to define
+the number of decimal places.
 
 .. literalinclude:: files/017.php
     :lines: 4-
@@ -91,9 +91,9 @@ getSizeByMetricUnit()
 
 .. versionadded:: 4.6.0
 
-Returns the size of the file default in bytes. You can pass in different FileSizeUnit values as the first parameter to get
-the results in kilobytes, megabytes etc. respectively. You can pass in a precision value as the second parameter to define
-the amount of decimal places.
+Returns the size of the file, in bytes by default. You can pass in different FileSizeUnit values as the first parameter to get
+the results in kilobytes, megabytes, etc., respectively. You can pass in a precision value as the second parameter to define
+the number of decimal places.
 
 .. literalinclude:: files/018.php
     :lines: 4-
@@ -103,7 +103,7 @@ A ``RuntimeException`` will be thrown if the file does not exist or an error occ
 getMimeType()
 =============
 
-Retrieve the media type (mime type) of the file. Uses methods that are considered as secure as possible when determining
+Retrieves the media type (mime type) of the file. Uses methods that are considered as secure as possible when determining
 the type of file:
 
 .. literalinclude:: files/006.php
@@ -113,8 +113,8 @@ guessExtension()
 ================
 
 Attempts to determine the file extension based on the trusted ``getMimeType()`` method. If the mime type is unknown,
-will return null. This is often a more trusted source than simply using the extension provided by the filename. Uses
-the values in **app/Config/Mimes.php** to determine extension:
+it will return null. This is often a more trusted source than simply using the extension provided by the filename. Uses
+the values in **app/Config/Mimes.php** to determine the extension:
 
 .. literalinclude:: files/007.php
     :lines: 2-
@@ -128,12 +128,12 @@ the file to as the first parameter:
 .. literalinclude:: files/008.php
     :lines: 2-
 
-By default, the original filename was used. You can specify a new filename by passing it as the second parameter:
+By default, the original filename is used. You can specify a new filename by passing it as the second parameter:
 
 .. literalinclude:: files/009.php
     :lines: 2-
 
-The ``move()`` method returns a new File instance that for the relocated file, so you must capture the result if the
+The ``move()`` method returns a new File instance for the relocated file, so you must capture the result if the
 resulting location is needed:
 
 .. literalinclude:: files/010.php

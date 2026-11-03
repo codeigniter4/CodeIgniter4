@@ -136,12 +136,12 @@ The following functions are available:
 
 .. php:function:: ordinal($integer)
 
-    :param    int    $integer: The integer to determine the suffix
+    :param    int    $integer: The integer to determine the suffix for
     :returns:    Ordinal suffix
     :rtype:    string
 
     Returns the suffix that should be added to a
-    number to denote the position such as
+    number to denote the position, such as
     1st, 2nd, 3rd, 4th. Example:
 
     .. literalinclude:: inflector_helper/012.php
@@ -153,7 +153,7 @@ The following functions are available:
     :rtype:    string
 
     Turns a number into an ordinal string used
-    to denote the position such as 1st, 2nd, 3rd, 4th.
+    to denote the position, such as 1st, 2nd, 3rd, 4th.
     Example:
 
     .. literalinclude:: inflector_helper/013.php

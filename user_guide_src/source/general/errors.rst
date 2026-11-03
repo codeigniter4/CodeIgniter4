@@ -2,13 +2,13 @@
 Error Handling
 ##############
 
-CodeIgniter builds error reporting into your system through Exceptions, both the `SPL collection <https://www.php.net/manual/en/spl.exceptions.php>`_, as
-well as a few exceptions that are provided by the framework.
+CodeIgniter builds error reporting into your system through Exceptions, both the `SPL collection <https://www.php.net/manual/en/spl.exceptions.php>`_ and
+a few exceptions provided by the framework.
 
 Depending on your environment's setup,
 the default action when an error or exception is thrown is to display a detailed error report unless the application
 is running under the ``production`` environment. In the ``production`` environment, a more generic message is displayed to
-keep the best user experience for your users.
+give your users the best experience.
 
 .. contents::
     :local:
@@ -35,7 +35,7 @@ If you are calling a method that might throw an exception, you can catch that ex
 .. literalinclude:: errors/002.php
 
 If the ``$userModel`` throws an exception, it is caught and the code within the catch block is executed. In this example,
-the scripts dies, echoing the error message that the ``UserModel`` defined.
+the script dies, echoing the error message that the ``UserModel`` defined.
 
 Catching Specific Exceptions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -57,8 +57,8 @@ Configuration
 Error Reporting
 ---------------
 
-When ``display_errors`` in PHP ini setting is enabled, CodeIgniter will display
-a detailed error report with all errors
+When ``display_errors`` in the PHP ini settings is enabled, CodeIgniter will display
+a detailed error report with all errors.
 
 So by default, CodeIgniter will display a detailed error report in the ``development``
 and ``testing`` environments, and will not display any errors in the ``production``
@@ -98,7 +98,7 @@ Logging Deprecation Warnings
 
 .. versionadded:: 4.3.0
 
-Prior to v4.3.0, all errors reported by ``error_reporting()`` will be thrown as
+Prior to v4.3.0, all errors reported by ``error_reporting()`` were thrown as
 an ``ErrorException`` object.
 
 But with the surge in use of PHP 8.1+, many users may see exceptions thrown for
@@ -108,8 +108,8 @@ To ease the migration to PHP 8.1, starting with v4.3.0, CodeIgniter has the feat
 that only logs the deprecation errors (``E_DEPRECATED`` and ``E_USER_DEPRECATED``)
 without throwing them as exceptions.
 
-By default, CodeIgniter will only log deprecations without throwing exceptions in
-development environment. In production environment, no logging is done and no
+By default, CodeIgniter will only log deprecations without throwing exceptions in the
+development environment. In the production environment, no logging is done and no
 exceptions are thrown.
 
 Configuration
@@ -127,14 +127,14 @@ it accordingly.
 
 .. literalinclude:: errors/013.php
 
-After that, subsequent deprecations will be logged as configured without throwing
+After that, subsequent deprecations will be logged as configured without being thrown
 as exceptions.
 
 This feature also works with user deprecations:
 
 .. literalinclude:: errors/014.php
 
-For testing your application you may want to always throw on deprecations. You may configure this by
+When testing your application, you may want to always throw on deprecations. You may configure this by
 setting the environment variable ``CODEIGNITER_SCREAM_DEPRECATIONS`` to a truthy value.
 
 Framework Exceptions
@@ -145,12 +145,12 @@ Framework Exceptions
 Exception Design
 ----------------
 
-Staring with v4.6.0, all Exception classes that the framework throws:
+Starting with v4.6.0, all Exception classes that the framework throws:
 
 - implement ``CodeIgniter\Exceptions\ExceptionInterface``
 - extend ``CodeIgniter\Exceptions\LogicException`` or ``CodeIgniter\Exceptions\RuntimeException``
 
-.. note:: The framework only throws the above kind of exception classes, but PHP
+.. note:: The framework only throws the above kinds of exception classes, but PHP
     or other libraries that are used may throw other exceptions.
 
 There are two base Exception classes that the framework throws:
@@ -159,14 +159,14 @@ LogicException
 --------------
 
 ``CodeIgniter\Exceptions\LogicException`` extends ``\LogicException``.
-This exception represents error in the program logic. This kind of exception
+This exception represents an error in the program logic. This kind of exception
 should lead directly to a fix in your code.
 
 RuntimeException
 ----------------
 
 ``CodeIgniter\Exceptions\RuntimeException`` extends ``\RuntimeException``.
-This exception is thrown if an error which can only be found on runtime occurs.
+This exception is thrown if an error that can only be found at runtime occurs.
 
 The following framework exceptions are also available:
 
@@ -221,7 +221,7 @@ redirect code to use instead of the default (``302``, "temporary redirect"):
 
 .. literalinclude:: errors/011.php
 
-Also, since v4.4.0 an object of a class that implements ResponseInterface can be used as the first argument.
+Also, since v4.4.0, an object of a class that implements ResponseInterface can be used as the first argument.
 This solution is suitable for cases where you need to add additional headers or cookies in the response.
 
 .. literalinclude:: errors/018.php
@@ -233,7 +233,7 @@ Specify HTTP Status Code in Your Exception
 
 .. versionadded:: 4.3.0
 
-Since v4.3.0, you can specify the HTTP status code for your Exception class to implement
+Since v4.3.0, you can specify the HTTP status code by having your Exception class implement
 ``CodeIgniter\Exceptions\HTTPExceptionInterface``.
 
 When an exception implementing ``HTTPExceptionInterface`` is caught by CodeIgniter's exception handler, the Exception code will become the HTTP status code.
@@ -247,7 +247,7 @@ The exception handler displays the error view corresponding to the HTTP status
 code, if one exists.
 
 For example, ``PageNotFoundException`` implements the ``HTTPExceptionInterface``,
-so its exception code ``404`` will be the HTTP status code. Therefore if it is
+so its exception code ``404`` will be the HTTP status code. Therefore, if it is
 thrown, the system will show the **error_404.php** in the **app/Views/errors/html**
 folder when it is a web request. If it is invoked via CLI, the system will show
 the **error_404.php** in the **app/Views/errors/cli** folder.
@@ -255,19 +255,19 @@ the **error_404.php** in the **app/Views/errors/cli** folder.
 If there is no view file corresponding to the HTTP status code, **production.php**
 or **error_exception.php** will be displayed.
 
-.. note:: If ``display_errors`` is on in the PHP ini setting,
+.. note:: If ``display_errors`` is on in the PHP ini settings,
     **error_exception.php** is selected and a detailed error report is displayed.
 
 You should customize all of the error views in the **app/Views/errors/html** folder
 for your site.
 
-You can also create error views for specific HTTP status code. For example, if
+You can also create error views for specific HTTP status codes. For example, if
 you want to create an error view for "400 Bad Request", add **error_400.php**.
 
 .. warning:: If an error view file with the corresponding HTTP status code exists,
     the exception handler will display that file regardless of the environment.
-    The view file must be implemented in such a way that it does not display
-    detailed error messages in production environment by yourself.
+    You must implement the view file in such a way that it does not display
+    detailed error messages in the production environment.
 
 .. _error-specify-exit-code:
 
@@ -276,7 +276,7 @@ Specify Exit Code in Your Exception
 
 .. versionadded:: 4.3.0
 
-Since v4.3.0, you can specify the exit code for your Exception class to implement
+Since v4.3.0, you can specify the exit code by having your Exception class implement
 ``CodeIgniter\Exceptions\HasExitCodeInterface``.
 
 When an exception implementing ``HasExitCodeInterface`` is caught by CodeIgniter's exception handler, the code returned from the ``getExitCode()`` method will become the exit code.
@@ -288,7 +288,7 @@ Custom Exception Handlers
 
 .. versionadded:: 4.4.0
 
-If you need more control over how exceptions are displayed you can now define your own handlers and
+If you need more control over how exceptions are displayed, you can now define your own handlers and
 specify when they apply.
 
 Defining the New Handler
@@ -301,7 +301,7 @@ The new handler must implement a single method: ``handle()``:
 
 .. literalinclude:: errors/015.php
 
-This example defines the minimum amount of code typically needed - display a view and exit with the proper
+This example defines the minimum amount of code typically needed: display a view and exit with the proper
 exit code. However, the ``BaseExceptionHandler`` provides a number of other helper functions and objects.
 
 Configuring the New Handler
@@ -313,7 +313,7 @@ configuration file's ``handler()`` method:
 .. literalinclude:: errors/016.php
 
 You can use any logic your application needs to determine whether it should handle the exception, but the
-two most common are checking on the HTTP status code or the type of exception. If your class should handle
-it then return a new instance of that class:
+two most common are checking the HTTP status code or the type of exception. If your class should handle
+it, then return a new instance of that class:
 
 .. literalinclude:: errors/017.php

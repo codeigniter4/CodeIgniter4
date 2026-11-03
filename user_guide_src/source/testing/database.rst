@@ -14,8 +14,8 @@ tests must extend ``CIUnitTestCase`` and use the ``DatabaseTestTrait``:
 
 .. literalinclude:: database/001.php
 
-Because special functionality executed during the ``setUp()`` and ``tearDown()`` phases, you must ensure
-that you call the parent's methods if you need to use those methods, otherwise you will lose much
+Because special functionality is executed during the ``setUp()`` and ``tearDown()`` phases, you must ensure
+that you call the parent's methods if you need to use those methods. Otherwise, you will lose much
 of the functionality described here:
 
 .. literalinclude:: database/002.php
@@ -55,28 +55,28 @@ Migrations
 $migrate
 ^^^^^^^^
 
-This boolean value determines whether the database migration runs before test.
+This boolean value determines whether the database migration runs before a test.
 By default, the database is always migrated to the latest available state as defined by ``$namespace``.
-If ``false``, migration never runs. If you want to disable migration, set ``false``.
+If ``false``, migration never runs. If you want to disable migration, set it to ``false``.
 
 $migrateOnce
 ^^^^^^^^^^^^
 
 This boolean value determines whether the database migration runs only once. If you want
-to run migration once before the first test, set ``true``. If not present or ``false``, migration
+to run migration once before the first test, set it to ``true``. If not present or ``false``, migration
 runs before each test.
 
 $refresh
 ^^^^^^^^
 
-This boolean value determines whether the database is completely refreshed before test. If ``true``,
+This boolean value determines whether the database is completely refreshed before a test. If ``true``,
 all migrations are rolled back to version 0.
 
 $namespace
 ^^^^^^^^^^
 
 By default, CodeIgniter will look in **tests/_support/Database/Migrations** to locate the migrations
-that it should run during testing. You can change this location by specifying a new namespace in the ``$namespace`` properties.
+that it should run during testing. You can change this location by specifying a new namespace in the ``$namespace`` property.
 This should not include the **Database\\Migrations** sub-namespace but just the base namespace.
 
 .. important:: If you set this property to ``null``, it runs migrations from all available namespaces like ``php spark migrate --all``.
@@ -88,13 +88,13 @@ $seed
 ^^^^^
 
 If present and not empty, this specifies the name of a Seed file that is used to populate the database with
-test data prior to test running.
+test data before the test runs.
 
 $seedOnce
 ^^^^^^^^^
 
 This boolean value determines whether the database seeding runs only once. If you want
-to run database seeding once before the first test, set ``true``. If not present or ``false``, database seeding
+to run database seeding once before the first test, set it to ``true``. If not present or ``false``, database seeding
 runs before each test.
 
 $basePath
@@ -167,6 +167,6 @@ Asserts that a row with criteria matching the key/value pairs in ``$criteria`` D
 seeNumRecords($expected, $table, $criteria)
 -------------------------------------------
 
-Asserts that a number of matching rows are found in the database that match ``$criteria``.
+Asserts that the number of rows in the database matching ``$criteria`` equals ``$expected``.
 
 .. literalinclude:: database/008.php

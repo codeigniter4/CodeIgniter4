@@ -19,12 +19,12 @@ Mandatory File Changes
 URI Security
 ============
 
-The feature to check if URIs do not contain not permitted strings has been added.
+A feature to check that URIs do not contain disallowed strings has been added.
 This check is equivalent to the URI Security found in CodeIgniter 3.
 
 We recommend you enable this feature. Add the following to **app/Config/App.php**::
 
-        public string $permittedURIChars = 'a-z 0-9~%.:_\-';.
+        public string $permittedURIChars = 'a-z 0-9~%.:_\-';
 
 See :ref:`urls-uri-security` for details.
 
@@ -33,8 +33,8 @@ Error Files
 
 The error page has been updated. Please update the following files:
 
-- app/Views/errors/html/debug.css
-- app/Views/errors/html/error_exception.php
+- **app/Views/errors/html/debug.css**
+- **app/Views/errors/html/error_exception.php**
 
 ****************
 Breaking Changes
@@ -47,12 +47,12 @@ Paths in Controller Filters
 
 A bug where URI paths processed by :doc:`../incoming/filters` were not URL-decoded has been fixed.
 
-.. note:: Note that :doc:`Router <../incoming/routing>` processes URL-decoded URI paths.
+.. note:: :doc:`Router <../incoming/routing>` processes URL-decoded URI paths.
 
 ``Config\Filters`` has some places to specify the URI paths. If the paths have
 different values when URL-decoded, change them to the URL-decoded values.
 
-E.g.,:
+For example:
 
 .. code-block:: php
 
@@ -94,7 +94,7 @@ Project Files
 *************
 
 Some files in the **project space** (root, app, public, writable) received updates. Due to
-these files being outside of the **system** scope they will not be changed without your intervention.
+these files being outside of the **system** scope, they will not be changed without your intervention.
 
 There are some third-party CodeIgniter modules available to assist with merging changes to
 the project space: `Explore on Packagist <https://packagist.org/explore/?query=codeigniter4%20updates>`_.
@@ -108,9 +108,10 @@ and it is recommended that you merge the updated versions with your application:
 Config
 ------
 
-- app/Config/App.php
-    - The property ``$permittedURIChars`` was added. See :ref:`urls-uri-security`
-      for details.
+- **app/Config/App.php**
+
+  - The property ``$permittedURIChars`` was added. See :ref:`urls-uri-security`
+    for details.
 
 All Changes
 ===========
@@ -118,20 +119,20 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- app/Config/App.php
-- app/Config/Cache.php
-- app/Config/ContentSecurityPolicy.php
-- app/Config/Database.php
-- app/Config/Exceptions.php
-- app/Config/Filters.php
-- app/Config/Format.php
-- app/Config/Logger.php
-- app/Config/Mimes.php
-- app/Config/Routing.php
-- app/Config/Toolbar.php
-- app/Config/Validation.php
-- app/Config/View.php
-- app/Controllers/BaseController.php
-- app/Views/errors/html/debug.css
-- app/Views/errors/html/error_exception.php
-- composer.json
+- **app/Config/App.php**
+- **app/Config/Cache.php**
+- **app/Config/ContentSecurityPolicy.php**
+- **app/Config/Database.php**
+- **app/Config/Exceptions.php**
+- **app/Config/Filters.php**
+- **app/Config/Format.php**
+- **app/Config/Logger.php**
+- **app/Config/Mimes.php**
+- **app/Config/Routing.php**
+- **app/Config/Toolbar.php**
+- **app/Config/Validation.php**
+- **app/Config/View.php**
+- **app/Controllers/BaseController.php**
+- **app/Views/errors/html/debug.css**
+- **app/Views/errors/html/error_exception.php**
+- **composer.json**

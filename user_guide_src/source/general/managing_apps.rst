@@ -20,7 +20,7 @@ Renaming or Relocating the Application Directory
 If you would like to rename your application directory or even move
 it to a different location on your server, other than your project root, open
 your main **app/Config/Paths.php** and set a *full server path* in the
-``$appDirectory`` variable (at about line 45):
+``$appDirectory`` property:
 
 .. literalinclude:: managing_apps/001.php
 
@@ -42,7 +42,7 @@ they can find the **Paths** configuration file:
 Running Multiple Applications with one CodeIgniter Installation
 ===============================================================
 
-If you would like to share a common CodeIgniter framework installation, to manage
+If you would like to share a common CodeIgniter framework installation to manage
 several different applications, simply put all of the directories located
 inside your application directory into their own (sub)-directory.
 
@@ -73,7 +73,7 @@ and **shop**. You could structure your application project directories like this
     composer.json
     composer.lock
 
-.. note:: If you install CodeIgniter from the Zip file, the directory structure would be following:
+.. note:: If you install CodeIgniter from the Zip file, the directory structure would be the following:
 
     .. code-block:: text
 
@@ -117,6 +117,6 @@ To avoid this risk in such setups, it is recommended that you ensure the ``.env`
 
 .. warning::
 
-   If you change the location of the ``.env`` file, make absolutely sure it is not publicly accessible.
-   Exposure of this file could lead to compromised credentials and access to critical services, such as your
-   database, mail server, or third-party APIs.
+    If you change the location of the ``.env`` file, make absolutely sure it is not publicly accessible.
+    Exposure of this file could lead to compromised credentials and access to critical services, such as your
+    database, mail server, or third-party APIs.

@@ -11,7 +11,7 @@ codeigniter4 organization
 The CodeIgniter 4 open source project has its own
 `GitHub organization <https://github.com/codeigniter4>`_.
 
-There are several development repositories, of interest to potential contributors:
+There are several development repositories of interest to potential contributors:
 
 +------------------+--------------+-----------------------------------------------------------------+
 | Repository       | Audience     | Description                                                     |
@@ -65,10 +65,9 @@ are not directly contributed to.
 .. _userguide: https://github.com/codeigniter4/userguide
 
 In all the above, the latest version of a repository can be downloaded
-by selecting the "releases" link in the secondary navbar inside
-the "Code" tab of its GitHub repository page. The current (in development) version of each can
-be cloned or downloaded by selecting the "Clone or download" dropdown
-button on the right-hand side if the repository homepage.
+from the **Releases** section of its GitHub repository page. The current
+development version of each can be cloned or downloaded using the **Code**
+dropdown on the repository homepage.
 
 Composer Packages
 =================
@@ -79,7 +78,7 @@ These correspond to the repositories mentioned above:
 - `codeigniter4/framework <https://packagist.org/packages/codeigniter4/framework>`_
 - `codeigniter4/appstarter <https://packagist.org/packages/codeigniter4/appstarter>`_
 - `codeigniter4/translations <https://packagist.org/packages/codeigniter4/translations>`_
-- `codeigniter/coding-standard  <https://packagist.org/packages/codeigniter/coding-standard>`_
+- `codeigniter/coding-standard <https://packagist.org/packages/codeigniter/coding-standard>`_
 - `codeigniter4/devkit <https://packagist.org/packages/codeigniter4/devkit>`_
 - `codeigniter4/settings <https://packagist.org/packages/codeigniter4/settings>`_
 - `codeigniter4/shield <https://packagist.org/packages/codeigniter4/shield>`_

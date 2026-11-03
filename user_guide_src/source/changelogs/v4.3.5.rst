@@ -15,29 +15,29 @@ SECURITY
 - *Remote Code Execution Vulnerability in Validation Placeholders* was fixed.
   See the `Security advisory GHSA-m6m8-6gq8-c9fj <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-m6m8-6gq8-c9fj>`_
   for more information.
-- Fixed that ``Session::stop()`` did not destroy the session.
+- Fixed a bug where ``Session::stop()`` did not destroy the session.
 
 Changes
 *******
 
-- **make:cell command:** When creating a new cell, the controller would always have the ``Cell`` suffixed to the class name.
+- **make:cell command:** When creating a new cell, the controller will always have ``Cell`` suffixed to the class name.
   For the view file, the final ``_cell`` is always removed.
 - **View Cells:** For compatibility with previous versions, view filenames ending with ``_cell`` can still be
-  located by the ``Cell`` as long as auto-detection of view file is enabled (via setting the ``$view`` property
+  located by the ``Cell`` as long as auto-detection of the view file is enabled (by setting the ``$view`` property
   to an empty string).
 
 Deprecations
 ************
 
 - **Session:** The ``Session::stop()`` method is deprecated.
-  Use the :ref:`Session::destroy() <session-destroy>` instead.
+  Use :ref:`Session::destroy() <session-destroy>` instead.
 
 Bugs Fixed
 **********
 
 - **Validation:** Fixed a bug where a closure used in combination with ``permit_empty`` or ``if_exist`` rules was causing an error.
 - **make:cell command:** Fixed generating view files as classes.
-- **make:cell command:** Fixed treatment of single word class input for case-insensitive OS.
+- **make:cell command:** Fixed treatment of single-word class input for case-insensitive OS.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_

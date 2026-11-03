@@ -16,7 +16,7 @@ Database Seeders
 ****************
 
 Database seeders are simple classes that must have a ``run()`` method, and extend ``CodeIgniter\Database\Seeder``.
-Within the ``run()`` the class can create any form of data that it needs to. It has access to the database
+Within the ``run()`` method, the class can create any form of data that it needs to. It has access to the database
 connection and the forge through ``$this->db`` and ``$this->forge``, respectively. Seed files must be
 stored within the **app/Database/Seeds** directory. The name of the file must match the name of the class.
 
@@ -26,7 +26,7 @@ stored within the **app/Database/Seeds** directory. The name of the file must ma
 Nesting Seeders
 ***************
 
-Seeders can call other seeders, with the ``call()`` method. This allows you to easily organize a central seeder,
+Seeders can call other seeders with the ``call()`` method. This allows you to easily use a central seeder,
 but organize the tasks into separate seeder files:
 
 .. literalinclude:: seeds/002.php
@@ -87,7 +87,7 @@ Using the command line, you can easily generate seed files:
 
     php spark make:seeder user --suffix
 
-The above command outputs **UserSeeder.php** file located at **app/Database/Seeds** directory.
+The above command outputs the **UserSeeder.php** file located in the **app/Database/Seeds** directory.
 
 You can supply the ``root`` namespace where the seed file will be stored by supplying the ``--namespace`` option:
 
@@ -103,6 +103,6 @@ For Windows:
 
     php spark make:seeder MySeeder --namespace Acme\Blog
 
-If ``Acme\Blog`` is mapped to **app/Blog** directory, then this command will generate **MySeeder.php** at **app/Blog/Database/Seeds** directory.
+If ``Acme\Blog`` is mapped to the **app/Blog** directory, then this command will generate **MySeeder.php** in the **app/Blog/Database/Seeds** directory.
 
-Supplying the ``--force`` option will overwrite existing files in destination.
+Supplying the ``--force`` option will overwrite existing files in the destination.

@@ -1,5 +1,5 @@
 Events
-#####################################
+######
 
 CodeIgniter's Events feature provides a means to tap into and modify the inner workings of the framework without hacking
 core files. When CodeIgniter runs, it follows a specific execution process. There may be instances, however, when you'd
@@ -39,19 +39,19 @@ Setting Priorities
 ------------------
 
 Since multiple methods can be subscribed to a single event, you will need a way to define in what order those methods
-are called. You can do this by passing a priority value as the third parameter of the ``on()`` method. Lower values
-are executed first, with a value of 1 having the highest priority, and there being no limit on the lower values:
+are called. You can do this by passing a priority value as the third parameter of the ``on()`` method. Listeners with
+lower numeric priority values run first. Zero and negative integer values are also accepted:
 
 .. literalinclude:: events/003.php
 
-Any subscribers with the same priority will be executed in the order they were defined.
+Any subscribers with the same priority will be executed in the order in which they were defined.
 
-Since v4.2.0, three class constants are defined for your use, that set some helpful ranges on the values. You are not required to use these
+Since v4.2.0, three class constants are defined for your use that set some helpful ranges on the values. You are not required to use these
 but you might find they aid readability:
 
 .. literalinclude:: events/004.php
 
-.. important:: The constants ``EVENT_PRIORITY_LOW``, ``EVENT_PRIORITY_NORMAL`` and ``EVENT_PRIORITY_HIGH`` has been removed in v4.6.0.
+.. important:: The constants ``EVENT_PRIORITY_LOW``, ``EVENT_PRIORITY_NORMAL`` and ``EVENT_PRIORITY_HIGH`` have been removed in v4.6.0.
 
 Once sorted, all subscribers are executed in order. If any subscriber returns a boolean false value, then execution of
 the subscribers will stop.
@@ -59,7 +59,7 @@ the subscribers will stop.
 Publishing your own Events
 ==========================
 
-The Events library makes it simple for you to create events in your own code, also. To use this feature, you would simply
+The Events library also makes it simple for you to create events in your own code. To use this feature, you would simply
 need to call the ``trigger()`` method on the **Events** class with the name of the event:
 
 .. literalinclude:: events/005.php
@@ -115,6 +115,6 @@ Others
 
 The following is a list of event points available for each of the libraries:
 
-* **email** Called after an email sent successfully from ``CodeIgniter\Email\Email``. Receives an array of the ``Email`` class's properties as a parameter.
+* **email** Called after an email is sent successfully from ``CodeIgniter\Email\Email``. Receives an array of the ``Email`` class's properties as a parameter.
 * **DBQuery** Called after a database query whether successful or not. Receives the ``Query`` object.
 * **migrate** Called after a successful migration call to ``latest()`` or ``regress()``. Receives the current properties of ``MigrationRunner`` as well as the name of the method.

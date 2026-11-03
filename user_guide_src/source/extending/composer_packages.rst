@@ -3,7 +3,7 @@ Creating Composer Packages
 ##########################
 
 You can make the :doc:`../general/modules` you create into Composer packages,
-or can create a Composer package for CodeIgniter 4.
+or you can create a Composer package for CodeIgniter 4.
 
 .. contents::
     :local:
@@ -53,13 +53,11 @@ For example, **composer.json** might look like this::
                 "email": "yourname@example.com"
             }
         ],
-        "require": {
-            // Any dependencies required by your package go here
-        },
-        "require-dev": {
-            // Any development dependencies (e.g., PHPUnit) go here
-        }
+        "require": {},
+        "require-dev": {}
     }
+
+Add runtime dependencies to ``require`` and development dependencies, such as PHPUnit, to ``require-dev``.
 
 Package Name
 ============
@@ -77,10 +75,11 @@ Uniqueness is especially important when publishing.
 Namespace
 =========
 
-The package name then determines the vendor namespace in ``autoload.psr4``.
+Choose a namespace prefix and map it to your source directory in ``autoload.psr-4``.
+The namespace prefix is independent of the Composer package name.
 
-If your package name is ``your-vendor/your-package``, the vendor namespace must
-be ``YourVendor``. So you would write like the following::
+For a package named ``your-vendor/your-package``, you could use the namespace
+``YourVendor\YourPackage`` with the following mapping::
 
     "autoload": {
         "psr-4": {
@@ -90,8 +89,8 @@ be ``YourVendor``. So you would write like the following::
 
 This setting instructs Composer to autoload the source code for your package.
 
-Choosing License
-================
+Choosing a License
+==================
 
 If you are not familiar with open source licenses, see https://choosealicense.com/.
 Many PHP packages, including CodeIgniter, use the MIT license.
@@ -115,9 +114,9 @@ In the root of your package directory, run the following commands:
     composer config prefer-stable true
     composer require --dev codeigniter4/devkit
 
-The DevKit installs various Composer packages that helps your development, and
+The DevKit installs various Composer packages that help your development, and
 installs templates for them in **vendor/codeigniter4/devkit/src/Template**.
-Copy the files in it to your project root folder, and edit them for your needs.
+Copy the files from that directory to your project root folder, and edit them to suit your needs.
 
 Configuring Coding Standards Fixer
 ==================================
@@ -149,18 +148,16 @@ Open **.php-cs-fixer.dist.php** in your editor, and fix the folder path::
          ])
          ->exclude([
 
-That't it. Now you can run Coding Standards Fixer:
+That's it. Now you can run Coding Standards Fixer:
 
 .. code-block:: console
 
     vendor/bin/php-cs-fixer fix --ansi --verbose --diff
 
 If you add ``scripts.cs-fix`` in your **composer.json**, you can run it with
-``composer cs-fix`` command::
+the ``composer cs-fix`` command::
 
     {
-        // ...
-        },
         "scripts": {
             "cs-fix": "php-cs-fixer fix --ansi --verbose --diff"
         }
@@ -175,7 +172,7 @@ Allowing Users to Override Settings
 
 If your package has a configuration file and you want users to be able to override
 the settings, use :php:func:`config()` with the short classname like ``config('YourConfig')``
-to call the configuration file.
+to retrieve the configuration object.
 
 Users can then override the package configuration by placing a configuration class
 with the same short classname in **app/Config** that extends the package Config

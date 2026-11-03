@@ -21,7 +21,7 @@ current_url() and indexPage
 Due to `a bug <https://github.com/codeigniter4/CodeIgniter4/issues/4116>`_ in ``current_url()``,
 the resulting URIs could be incorrect for a project's configuration, most importantly: ``indexPage``
 would *not* be included. Projects using ``App::$indexPage`` should expect altered values from
-``current_url()`` and all its dependencies (including Response Testing, Pager, Form Helper, Pager,
+``current_url()`` and all its dependencies (including Response Testing, Pager, Form Helper,
 and View Parser). Update your projects accordingly.
 
 Cache Keys
@@ -43,10 +43,10 @@ Update your projects to remove any invalid cache keys.
 BaseConnection::query() Return Values
 =====================================
 
-``BaseConnection::query()`` method in prior versions was incorrectly returning BaseResult objects
+The ``BaseConnection::query()`` method in prior versions was incorrectly returning BaseResult objects
 even if the query failed. This method will now return ``false`` for failed queries (or throw an
 Exception if ``DBDebug`` is ``true``) and will return booleans for write-type queries. Review any use
-of ``query()`` method and assess whether the value might be boolean instead of Result object.
+of the ``query()`` method and assess whether the value might be boolean instead of a Result object.
 For a better idea of what queries are write-type queries, check ``BaseConnection::isWriteType()``
 and any DBMS-specific override ``isWriteType()`` in the relevant Connection class.
 
@@ -64,7 +64,7 @@ Test Traits
 ===========
 
 The ``CodeIgniter\Test`` namespace has had significant improvements to help developers with their
-own test cases. Most notably test extensions have moved to Traits to make them easier to
+own test cases. Most notably, test extensions have moved to Traits to make them easier to
 pick-and-choose across various test case needs. The ``CIDatabaseTestCase`` and ``FeatureTestCase``
 classes have been deprecated and their methods moved to ``DatabaseTestTrait`` and
 ``FeatureTestTrait`` respectively. Update your test cases to extend the main test case
@@ -76,7 +76,7 @@ and use any traits you need. For example:
 
 .. literalinclude:: upgrade_412/002.php
 
-Finally, ``ControllerTester`` has been superseded by ``ControllerTestTrait`` to standardize
+Finally, ``ControllerTester`` has been superseded by ``ControllerTestTrait`` to standardize the
 approach and take advantage of the updated response testing (below).
 
 Test Responses
@@ -84,18 +84,18 @@ Test Responses
 
 The tools for testing responses have been consolidated and improved. A new
 ``TestResponse`` replaces ``ControllerResponse`` and ``FeatureResponse`` with a complete
-set of methods and properties expected from both those classes. In most cases these changes
-will be "behind the scenes" by ``ControllerTestTrait`` and ``FeatureTestCase``, but two
+set of methods and properties expected from both those classes. In most cases, these changes
+will be handled "behind the scenes" by ``ControllerTestTrait`` and ``FeatureTestCase``, but there are two
 changes to be aware of:
 
-* ``TestResponse``'s ``$request`` and ``$response`` properties are protected and should only be access through their getter methods, ``request()`` and ``response()``
+* ``TestResponse``'s ``$request`` and ``$response`` properties are protected and should only be accessed through their getter methods, ``request()`` and ``response()``
 * ``TestResponse`` does not have ``getBody()`` and ``setBody()`` methods, but rather uses the Response methods directly, e.g.: ``$body = $result->response()->getBody();``
 
 Project Files
 *************
 
 Numerous files in the project space (root, app, public, writable) received updates. Due to
-these files being outside of the system scope they will not be changed without your intervention.
+these files being outside of the system scope, they will not be changed without your intervention.
 There are some third-party CodeIgniter modules available to assist with merging changes to
 the project space: `Explore on Packagist <https://packagist.org/explore/?query=codeigniter4%20updates>`_.
 

@@ -11,8 +11,8 @@ and follow their recommendations as much as possible.
 
 The following comes from
 `OWASP Top Ten <https://owasp.org/www-project-top-ten/>`_ and
-`OWASP API Security Top 10 <https://owasp.org/API-Security/editions/2023/en/0x11-t10/>`_
-identifying the top vulnerabilities for web applications and apis.
+`OWASP API Security Top 10 <https://owasp.org/API-Security/editions/2023/en/0x11-t10/>`_,
+identifying the top vulnerabilities for web applications and APIs.
 For each, we provide a brief description, the OWASP recommendations, and then
 the CodeIgniter provisions to address the problem.
 
@@ -41,7 +41,7 @@ Common access control vulnerabilities include:
   force browsing), internal application state, or the HTML page, or by using an
   attack tool modifying API requests.
 - Permitting viewing or editing someone else's account, by providing its unique
-  identifier (insecure direct object references)
+  identifier (insecure direct object references).
 - Accessing API with missing access controls for POST, PUT and DELETE.
 - Elevation of privilege. Acting as a user without being logged in or acting as
   an admin when logged in as a user.
@@ -71,7 +71,7 @@ where the attacker cannot modify the access control check or metadata.
   tooling.
 - Stateful session identifiers should be invalidated on the server after logout.
   Stateless JWT tokens should rather be short-lived so that the window of opportunity
-  for an attacker is minimized. For longer lived JWTs it's highly recommended to
+  for an attacker is minimized. For longer-lived JWTs it's highly recommended to
   follow the OAuth standards to revoke access.
 
 CodeIgniter provisions
@@ -83,7 +83,7 @@ CodeIgniter provisions
 - :doc:`Security </libraries/security>` library provides for
   :ref:`CSRF protection <cross-site-request-forgery>`
 - :doc:`../libraries/sessions` library
-- :doc:`../libraries/throttler` for rate limit
+- :doc:`../libraries/throttler` for rate limiting
 - :doc:`../libraries/cors` filter
 - :php:func:`log_message()` function for logging
 - An official authentication and authorization framework :ref:`CodeIgniter Shield <shield>`
@@ -111,10 +111,10 @@ or regulations, e.g., financial data protection such as PCI Data Security Standa
 - Is encryption not enforced, e.g., are any HTTP headers (browser) security
   directives or headers missing?
 - Is the received server certificate and the trust chain properly validated?
-- Are initialization vectors ignored, reused, or not generated sufficiently secure
+- Are initialization vectors ignored, reused, or not generated sufficiently securely
   for the cryptographic mode of operation? Is an insecure mode of operation such
   as ECB in use? Is encryption used when authenticated encryption is more appropriate?
-- Are passwords being used as cryptographic keys in absence of a password base key
+- Are passwords being used as cryptographic keys in the absence of a password-based key
   derivation function?
 - Is randomness used for cryptographic purposes that was not designed to meet
   cryptographic requirements? Even if the correct function is chosen, does it need
@@ -144,25 +144,25 @@ Do the following, at a minimum, and consult the references:
 - Encrypt all data in transit with secure protocols such as TLS with forward secrecy
   (FS) ciphers, cipher prioritization by the server, and secure parameters. Enforce
   encryption using directives like HTTP Strict Transport Security (HSTS).
-- Disable caching for response that contain sensitive data.
+- Disable caching for responses that contain sensitive data.
 - Apply required security controls as per the data classification.
 - Do not use legacy protocols such as FTP and SMTP for transporting sensitive data.
 - Store passwords using strong adaptive and salted hashing functions with a work
   factor (delay factor), such as Argon2, scrypt, bcrypt or PBKDF2.
-- Initialization vectors must be chosen appropriate for the mode of operation.
+- Initialization vectors must be chosen appropriately for the mode of operation.
   For many modes, this means using a CSPRNG (cryptographically secure pseudo random
-  number generator). For modes that require a nonce, then the initialization vector
+  number generator). For modes that require a nonce, the initialization vector
   (IV) does not need a CSPRNG. In all cases, the IV should never be used twice for
   a fixed key.
 - Always use authenticated encryption instead of just encryption.
 - Keys should be generated cryptographically randomly and stored in memory as byte
   arrays. If a password is used, then it must be converted to a key via an
-  appropriate password base key derivation function.
+  appropriate password-based key derivation function.
 - Ensure that cryptographic randomness is used where appropriate, and that it has
   not been seeded in a predictable way or with low entropy. Most modern APIs do
   not require the developer to seed the CSPRNG to get security.
 - Avoid deprecated cryptographic functions and padding schemes, such as MD5, SHA1,
-  PKCS number 1 v1.5 .
+  PKCS number 1 v1.5.
 - Verify independently the effectiveness of configuration and settings.
 
 CodeIgniter provisions
@@ -206,18 +206,20 @@ Preventing injection requires keeping data separate from commands and queries:
   entirely, provides a parameterized interface, or migrates to Object Relational
   Mapping Tools (ORMs).
 
-    - Note: Even when parameterized, stored procedures can still introduce SQL
-      injection if PL/SQL or T-SQL concatenates queries and data or executes hostile
-      data with EXECUTE IMMEDIATE or exec().
+  - Note: Even when parameterized, stored procedures can still introduce SQL
+    injection if PL/SQL or T-SQL concatenates queries and data or executes hostile
+    data with EXECUTE IMMEDIATE or ``exec()``.
+
 - Use positive server-side input validation. This is not a complete defense as
   many applications require special characters, such as text areas or APIs for
   mobile applications.
 - For any residual dynamic queries, escape special characters using the specific
   escape syntax for that interpreter.
 
-    - Note: SQL structures such as table names, column names, and so on cannot be
-      escaped, and thus user-supplied structure names are dangerous. This is a
-      common issue in report-writing software.
+  - Note: SQL structures such as table names, column names, and so on cannot be
+    escaped, and thus user-supplied structure names are dangerous. This is a
+    common issue in report-writing software.
+
 - Use LIMIT and other SQL controls within queries to prevent mass disclosure of
   records in case of SQL injection.
 
@@ -242,11 +244,11 @@ Insecure design is a broad category representing different weaknesses, expressed
 as “missing or ineffective control design.” Insecure design is not the source for
 all other Top 10 risk categories. There is a difference between insecure design
 and insecure implementation. We differentiate between design flaws and implementation
-defects for a reason, they have different root causes and remediation.
+defects for a reason. They have different root causes and remediation.
 
 A secure design can still have implementation defects leading to vulnerabilities
 that may be exploited. An insecure design cannot be fixed by a perfect implementation
-as by definition, needed security controls were never created to defend against
+as, by definition, needed security controls were never created to defend against
 specific attacks. One of the factors that contribute to insecure design is the
 lack of business risk profiling inherent in the software or system being developed,
 and thus the failure to determine what level of security design is required.
@@ -256,8 +258,8 @@ OWASP recommendations
 
 - Establish and use a secure development lifecycle with AppSec professionals to
   help evaluate and design security and privacy-related controls
-- Establish and use a library of secure design patterns or paved road ready to
-  use components
+- Establish and use a library of secure design patterns or paved-road ready-to-use
+  components
 - Use threat modeling for critical authentication, access control, business logic,
   and key flows
 - Integrate security language and controls into user stories
@@ -275,7 +277,7 @@ CodeIgniter provisions
 ----------------------
 
 - :doc:`PHPUnit testing <../testing/overview>`
-- :doc:`../libraries/throttler` for rate limit
+- :doc:`../libraries/throttler` for rate limiting
 - An official authentication and authorization framework :ref:`CodeIgniter Shield <shield>`
 
 A05:2021 Security Misconfiguration
@@ -402,7 +404,7 @@ authentication weaknesses if the application:
   (see A02:2021-Cryptographic Failures).
 - Has missing or ineffective multi-factor authentication.
 - Exposes session identifier in the URL.
-- Reuse session identifier after successful login.
+- Reuses session identifier after successful login.
 - Does not correctly invalidate Session IDs. User sessions or authentication tokens
   (mainly single sign-on (SSO) tokens) aren't properly invalidated during logout
   or a period of inactivity.
@@ -424,8 +426,8 @@ OWASP recommendations
   a denial of service scenario. Log all failures and alert administrators when
   credential stuffing, brute force, or other attacks are detected.
 - Use a server-side, secure, built-in session manager that generates a new random
-  session ID with high entropy after login. Session identifier should not be in
-  the URL, be securely stored, and invalidated after logout, idle, and absolute
+  session ID with high entropy after login. Session identifiers should not be in
+  the URL, and should be securely stored and invalidated after logout, idle, and absolute
   timeouts.
 
 CodeIgniter provisions
@@ -449,8 +451,8 @@ are downloaded without sufficient integrity verification and applied to the prev
 trusted application. Attackers could potentially upload their own updates to be
 distributed and run on all installations.
 
-Another example is where objects or data are encoded or serialized into a structure
-that an attacker can see and modify is vulnerable to insecure deserialization.
+Another example is where objects or data encoded or serialized into a structure
+that an attacker can see and modify are vulnerable to insecure deserialization.
 
 OWASP recommendations
 ---------------------
@@ -462,7 +464,7 @@ OWASP recommendations
   known-good repository that's vetted.
 - Ensure that a software supply chain security tool, such as OWASP Dependency
   Check or OWASP CycloneDX, is used to verify that components do not contain
-  known vulnerabilities
+  known vulnerabilities.
 - Ensure that there is a review process for code and configuration changes to
   minimize the chance that malicious code or configuration could be introduced
   into your software pipeline.
@@ -471,7 +473,7 @@ OWASP recommendations
   and deploy processes.
 - Ensure that unsigned or unencrypted serialized data is not sent to untrusted
   clients without some form of integrity check or digital signature to detect
-  tampering or replay of the serialized data
+  tampering or replay of the serialized data.
 
 CodeIgniter provisions
 ----------------------
@@ -503,7 +505,7 @@ visible to a user or an attacker (see A01:2021-Broken Access Control).
 OWASP recommendations
 ---------------------
 
-Developers should implement some or all the following controls, depending on the risk of the application:
+Developers should implement some or all of the following controls, depending on the risk of the application:
 
 - Ensure all login, access control, and server-side input validation failures can
   be logged with sufficient user context to identify suspicious or malicious
@@ -547,24 +549,24 @@ complexity of architectures.
 OWASP recommendations
 ---------------------
 
-Developers can prevent SSRF by implementing some or all the following defense in
+Developers can prevent SSRF by implementing some or all of the following defense in
 depth controls:
 
-From Network layer:
+From the network layer:
 
 - Segment remote resource access functionality in separate networks to reduce the
   impact of SSRF
 - Enforce “deny by default” firewall policies or network access control rules to
   block all but essential intranet traffic.
 
-   - Hints:
+  - Hints:
 
-      * Establish an ownership and a lifecycle for firewall rules based on
-        applications.
-      * Log all accepted and blocked network flows on firewalls
-        (see A09:2021-Security Logging and Monitoring Failures).
+    * Establish an ownership and a lifecycle for firewall rules based on
+      applications.
+    * Log all accepted and blocked network flows on firewalls
+      (see A09:2021-Security Logging and Monitoring Failures).
 
-From Application layer:
+From the application layer:
 
 - Sanitize and validate all client-supplied input data
 - Enforce the URL schema, port, and destination with a positive allow list
@@ -619,8 +621,8 @@ API2:2023 Broken Authentication
 
 Authentication mechanisms are often implemented incorrectly, allowing attackers
 to compromise authentication tokens or to exploit implementation flaws to assume
-other user's identities temporarily or permanently. Compromising a system's
-ability to identify the client/user, compromises API security overall.
+other users' identities temporarily or permanently. Compromising a system's
+ability to identify the client/user compromises API security overall.
 
 OWASP recommendations
 ---------------------
@@ -628,7 +630,7 @@ OWASP recommendations
 - Make sure you know all the possible flows to authenticate to the API (mobile/
   web/deep links that implement one-click authentication/etc.). Ask your engineers
   what flows you missed.
-- Read about your authentication mechanisms. Make sure you understand what and
+- Read about your authentication mechanisms. Make sure you understand what they are and
   how they are used. OAuth is not authentication, and neither are API keys.
 - Don't reinvent the wheel in authentication, token generation, or password storage.
   Use the standards.
@@ -644,7 +646,7 @@ OWASP recommendations
 - Implement account lockout/captcha mechanisms to prevent brute force attacks
   against specific users. Implement weak-password checks.
 - API keys should not be used for user authentication. They should only be used
-  for API clients authentication.
+  for API client authentication.
 
 CodeIgniter provisions
 ----------------------
@@ -653,7 +655,7 @@ CodeIgniter provisions
 - :ref:`routing-spark-routes` command
 - An official authentication and authorization framework
   :ref:`CodeIgniter Shield <shield>`
-- :doc:`../libraries/throttler` for rate limit
+- :doc:`../libraries/throttler` for rate limiting
 
 API3:2023 Broken Object Property Level Authorization
 ====================================================
@@ -668,7 +670,7 @@ OWASP recommendations
 
 - When exposing an object using an API endpoint, always make sure that the user
   should have access to the object's properties you expose.
-- Avoid using generic methods such as to_json() and to_string(). Instead,
+- Avoid using generic methods such as ``to_json()`` and ``to_string()``. Instead,
   cherry-pick specific object properties you specifically want to return.
 - If possible, avoid using functions that automatically bind a client's input
   into code variables, internal objects, or object properties ("Mass Assignment").
@@ -707,13 +709,13 @@ OWASP recommendations
   cloud storage).
 - Implement a limit on how often a client can interact with the API within a
   defined timeframe (rate limiting).
-- Rate limiting should be fine tuned based on the business needs. Some API Endpoints
+- Rate limiting should be fine-tuned based on the business needs. Some API Endpoints
   might require stricter policies.
 - Limit/throttle how many times or how often a single API client/user can execute
   a single operation (e.g. validate an OTP, or request password recovery without
   visiting the one-time URL).
 - Add proper server-side validation for query string and request body parameters,
-  specifically the one that controls the number of records to be returned in the
+  specifically those that control the number of records to be returned in the
   response.
 - Configure spending limits for all service providers/API integrations. When setting
   spending limits is not possible, billing alerts should be configured instead.
@@ -722,7 +724,7 @@ CodeIgniter provisions
 ----------------------
 
 - :doc:`../libraries/validation` library
-- :doc:`../libraries/throttler` for rate limit
+- :doc:`../libraries/throttler` for rate limiting
 
 API5:2023 Broken Function Level Authorization
 =============================================
@@ -759,8 +761,8 @@ CodeIgniter provisions
 API6:2023 Unrestricted Access to Sensitive Business Flows
 =========================================================
 
-APIs vulnerable to this risk expose a business flow - such as buying a ticket,
-or posting a comment - without compensating for how the functionality could harm
+APIs vulnerable to this risk expose a business flow, such as buying a ticket
+or posting a comment, without compensating for how the functionality could harm
 the business if used excessively in an automated manner. This doesn't necessarily
 come from implementation bugs.
 
@@ -774,10 +776,10 @@ The mitigation planning should be done in two layers:
 - Engineering - choose the right protection mechanisms to mitigate the business
   risk.
 
-Some of the protection mechanisms are more simple while others are more difficult
+Some of the protection mechanisms are simpler while others are more difficult
 to implement. The following methods are used to slow down automated threats:
 
-- Device fingerprinting: denying service to unexpected client devices (e.g
+- Device fingerprinting: denying service to unexpected client devices (e.g.
   headless browsers) tends to make threat actors use more sophisticated solutions,
   thus more costly for them
 - Human detection: using either captcha or more advanced biometric solutions
@@ -808,13 +810,14 @@ OWASP recommendations
 ---------------------
 
 - Isolate the resource fetching mechanism in your network: usually these features
-  are aimed to retrieve remote resources and not internal ones.
+  are aimed at retrieving remote resources and not internal ones.
 - Whenever possible, use allow lists of:
 
-   - Remote origins users are expected to download resources from (e.g. Google Drive,
-     Gravatar, etc.)
-   - URL schemes and ports
-   - Accepted media types for a given functionality
+  - Remote origins users are expected to download resources from (e.g. Google Drive,
+    Gravatar, etc.)
+  - URL schemes and ports
+  - Accepted media types for a given functionality
+
 - Disable HTTP redirections.
 - Use a well-tested and maintained URL parser to avoid issues caused by URL parsing inconsistencies.
 - Validate and sanitize all client-supplied input data.
@@ -860,8 +863,9 @@ Furthermore:
 - APIs expecting to be accessed from browser-based clients (e.g., WebApp front-end)
   should, at least:
 
-    - implement a proper Cross-Origin Resource Sharing (CORS) policy
-    - include applicable Security Headers
+  - implement a proper Cross-Origin Resource Sharing (CORS) policy
+  - include applicable Security Headers
+
 - Restrict incoming content types/data formats to those that meet the business/
   functional requirements.
 - Ensure all servers in the HTTP server chain (e.g. load balancers, reverse and
@@ -885,7 +889,7 @@ API9:2023 Improper Inventory Management
 
 APIs tend to expose more endpoints than traditional web applications, making
 proper and updated documentation highly important. A proper inventory of hosts
-and deployed API versions also are important to mitigate issues such as deprecated
+and deployed API versions is also important to mitigate issues such as deprecated
 API versions and exposed debug endpoints.
 
 OWASP recommendations
@@ -903,7 +907,7 @@ OWASP recommendations
 - Generate documentation automatically by adopting open standards. Include the
   documentation build in your CI/CD pipeline.
 - Make API documentation available only to those authorized to use the API.
-- Use external protection measures such as API security specific solutions for
+- Use external protection measures such as API-security-specific solutions for
   all exposed versions of your APIs, not just for the current production version.
 - Avoid using production data with non-production API deployments. If this is
   unavoidable, these endpoints should get the same security treatment as the

@@ -4,7 +4,7 @@
 Controller Attributes
 #####################
 
-PHP Attributes can be used to define filters and other metadata on controller classes and methods. This keeps the configuration close to the code it affects, and can make it easier to see at a glance what filters are applied to a given controller or method. This works across all routing methods, including auto-routing, which allows for a near feature-parity between the more robust route declarations and auto-routing.
+PHP Attributes can be used to define filters and other metadata on controller classes and methods. This keeps the configuration close to the code it affects, and can make it easier to see at a glance what filters are applied to a given controller or method. This works across all routing methods, including auto-routing, which allows for near feature parity between the more robust route declarations and auto-routing.
 
 .. contents::
     :local:
@@ -13,13 +13,13 @@ PHP Attributes can be used to define filters and other metadata on controller cl
 Getting Started
 ***************
 
-Controller Attributes can be applied to either the entire class, or to a specific method. The following example shows how to apply the ``Filters`` attribute to a controller class:
+Controller Attributes can be applied to either the entire class or a specific method. The following example shows how to apply the ``Filter`` attribute to a controller class:
 
 .. literalinclude:: controller_attributes/001.php
 
 In this example, the ``Auth`` filter will be applied to all methods in ``AdminController``.
 
-You can also apply the ``Filters`` attribute to a specific method within a controller. This allows you to apply filters only to certain methods, while leaving others unaffected. Here's an example:
+You can also apply the ``Filter`` attribute to a specific method within a controller. This allows you to apply filters only to certain methods, while leaving others unaffected. Here's an example:
 
 .. literalinclude:: controller_attributes/002.php
 
@@ -34,9 +34,9 @@ Provided Attributes
 *******************
 
 Filter
--------
+------
 
-The ``Filters`` attribute allows you to specify one or more filters to be applied to a controller class or method. You can specify filters to run before or after the controller action, and you can also provide parameters to the filters. Here's an example of how to use the ``Filters`` attribute:
+The repeatable ``Filter`` attribute applies a filter to a controller class or method. You can also provide arguments to the filter. Repeat the attribute to apply multiple filters:
 
 .. literalinclude:: controller_attributes/003.php
 

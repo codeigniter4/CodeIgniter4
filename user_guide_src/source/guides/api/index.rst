@@ -7,7 +7,7 @@ Getting Started with REST APIs
     :local:
     :depth: 2
 
-This tutorial walks you through building a simple RESTful API to manage books in CodeIgniter 4. You'll learn to set up a project, configure a database, and create API endpoints, and what makes an API RESTful.
+This tutorial walks you through building a simple RESTful API to manage books in CodeIgniter 4. You'll learn how to set up a project, configure a database, and create API endpoints, as well as what makes an API RESTful.
 
 This tutorial will primarily focus on:
 
@@ -101,4 +101,4 @@ At this point, you have a working CodeIgniter4 project with SQLite configured.
 What's Next
 ===========
 
-In the next section, we'll enable auto-routing and create a simple JSON endpoint (``/api/pings``) to see how HTTP verbs map to controller methods in CodeIgniter.
+In the next section, we'll enable auto-routing and create a simple JSON endpoint (``/api/ping``) to see how HTTP verbs map to controller methods in CodeIgniter.

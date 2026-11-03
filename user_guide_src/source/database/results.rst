@@ -30,8 +30,8 @@ loop, like this:
 
 The above method is an alias of :php:meth:`CodeIgniter\\Database\\BaseResult::getResultObject()`.
 
-Getting an Array of Array
--------------------------
+Getting an Array of Arrays
+--------------------------
 
 You can pass in the string 'array' if you wish to get your results
 as an array of arrays:
@@ -40,11 +40,11 @@ as an array of arrays:
 
 The above usage is an alias of `getResultArray()`_.
 
-Getting an Array of Custom Object
----------------------------------
+Getting an Array of Custom Objects
+----------------------------------
 
-You can also pass a string to ``getResult()`` which represents a class to
-instantiate for each result object
+You can also pass a string to ``getResult()`` that represents a class to
+instantiate for each result object:
 
 .. literalinclude:: results/003.php
 
@@ -72,12 +72,12 @@ one row, it returns only the first row. The result is returned as an
 
 .. literalinclude:: results/005.php
 
-If you want a specific row returned you can submit the row number as a
+If you want a specific row returned, you can submit the row number as a
 digit in the first parameter:
 
 .. literalinclude:: results/006.php
 
-You can also add a second String parameter, which is the name of a class
+You can also add a second string parameter, which is the name of a class
 to instantiate the row with:
 
 .. literalinclude:: results/007.php
@@ -85,12 +85,12 @@ to instantiate the row with:
 getRowArray()
 =============
 
-Identical to the above ``row()`` method, except it returns an array.
+Identical to the above ``getRow()`` method, except it returns an array.
 Example:
 
 .. literalinclude:: results/008.php
 
-If you want a specific row returned you can submit the row number as a
+If you want a specific row returned, you can submit the row number as a
 digit in the first parameter:
 
 .. literalinclude:: results/009.php
@@ -98,18 +98,18 @@ digit in the first parameter:
 In addition, you can walk forward/backward/first/last through your
 results using these variations:
 
-    | ``$row = $query->getFirstRow()``
-    | ``$row = $query->getLastRow()``
-    | ``$row = $query->getNextRow()``
-    | ``$row = $query->getPreviousRow()``
+- ``$row = $query->getFirstRow()``
+- ``$row = $query->getLastRow()``
+- ``$row = $query->getNextRow()``
+- ``$row = $query->getPreviousRow()``
 
-By default they return an object unless you put the word "array" in the
+By default, they return an object unless you put the word "array" in the
 parameter:
 
-    | ``$row = $query->getFirstRow('array')``
-    | ``$row = $query->getLastRow('array')``
-    | ``$row = $query->getNextRow('array')``
-    | ``$row = $query->getPreviousRow('array')``
+- ``$row = $query->getFirstRow('array')``
+- ``$row = $query->getLastRow('array')``
+- ``$row = $query->getNextRow('array')``
+- ``$row = $query->getPreviousRow('array')``
 
 .. note:: All the methods above will load the whole result into memory
     (prefetching). Use ``getUnbufferedRow()`` for processing large
@@ -119,21 +119,21 @@ getUnbufferedRow()
 ==================
 
 This method returns a single result row without prefetching the whole
-result in memory as ``row()`` does. If your query has more than one row,
+result in memory as ``getRow()`` does. If your query has more than one row,
 it returns the current row and moves the internal data pointer ahead.
 
 .. literalinclude:: results/010.php
 
-For use with MySQLi you may set MySQLi's result mode to
+For use with MySQLi, you may set MySQLi's result mode to
 ``MYSQLI_USE_RESULT`` for maximum memory savings. Use of this is not
-generally recommended but it can be beneficial in some circumstances
-such as writing large queries to csv. If you change the result mode
+generally recommended, but it can be beneficial in some circumstances,
+such as writing large queries to CSV. If you change the result mode,
 be aware of the tradeoffs associated with it.
 
 .. literalinclude:: results/011.php
 
-.. note:: When using ``MYSQLI_USE_RESULT`` all subsequent calls on the same
-    connection will result in error until all records have been fetched or
+.. note:: When using ``MYSQLI_USE_RESULT``, all subsequent calls on the same
+    connection will result in an error until all records have been fetched or
     a ``freeResult()`` call has been made. The ``getNumRows()`` method will only
     return the number of rows based on the current position of the data pointer.
     MyISAM tables will remain locked until all the records have been fetched
@@ -152,14 +152,14 @@ You can have the results returned as an instance of a custom class instead
 of a ``stdClass`` or array, as the ``getResult()`` and ``getResultArray()``
 methods allow. If the class is not already loaded into memory, the Autoloader
 will attempt to load it. The object will have all values returned from the
-database set as properties. If these have been declared and are non-public
+database set as properties. If these have been declared and are non-public,
 then you should provide a ``__set()`` method to allow them to be set.
 
 Example:
 
 .. literalinclude:: results/013.php
 
-In addition to the two methods listed below, the following methods also can
+In addition to the two methods listed below, the following methods can also
 take a class name to return the results as: ``getFirstRow()``, ``getLastRow()``,
 ``getNextRow()``, and ``getPreviousRow()``.
 
@@ -227,7 +227,7 @@ freeResult()
 It frees the memory associated with the result and deletes the result
 resource ID. Normally PHP frees its memory automatically at the end of
 script execution. However, if you are running a lot of queries in a
-particular script you might want to free the result after each query
+particular script, you might want to free the result after each query
 result has been generated in order to cut down on memory consumption.
 
 Example:
@@ -240,13 +240,12 @@ dataSeek()
 This method sets the internal pointer for the next result row to be
 fetched. It is only useful in combination with ``getUnbufferedRow()``.
 
-It accepts a positive integer value, which defaults to 0 and returns
+It accepts a positive integer value, which defaults to 0, and returns
 true on success or false on failure.
 
 .. literalinclude:: results/021.php
 
-.. note:: Not all database drivers support this feature and will return false.
-    Most notably - you won't be able to use it with PDO.
+.. note:: Not all database drivers support this feature, and those that do not will return false.
 
 ***************
 Class Reference
@@ -332,7 +331,7 @@ Class Reference
     .. php:method:: getRowObject([$n = 0])
 
         :param    int    $n: Index of the query results row to be returned
-                :returns:    The requested row or null if it doesn't exist
+        :returns:    The requested row or null if it doesn't exist
         :rtype:    stdClass
 
         Returns the requested result row as an object of type
@@ -340,12 +339,12 @@ Class Reference
 
         Usage: see `Result Rows`_.
 
-    .. php:method:: getCustomRowObject($n, $type)
+    .. php:method:: getCustomRowObject($n, $className)
 
         :param    int    $n: Index of the results row to return
-        :param    string    $class_name: Class name for the resulting row
+        :param    string    $className: Class name for the resulting row
         :returns:    The requested row or null if it doesn't exist
-        :rtype:    $type
+        :rtype:    object|null
 
         Returns the requested result row as an instance of the
         requested class.
@@ -363,7 +362,7 @@ Class Reference
     .. php:method:: setRow($key[, $value = null])
 
         :param    mixed    $key: Column name or array of key/value pairs
-        :param    mixed    $value: Value to assign to the column, $key is a single field name
+        :param    mixed    $value: Value to assign to the column, if ``$key`` is a single field name
         :rtype:    void
 
         Assigns a value to a particular column.
@@ -430,7 +429,7 @@ Class Reference
         :returns:    Number of rows in result set
         :rtype:    int
 
-        Returns number of rows returned by the query
+        Returns the number of rows returned by the query.
 
     .. php:method:: freeResult()
 

@@ -4,7 +4,7 @@ Benchmarking
 
 CodeIgniter provides two separate tools to help you benchmark your code and test different options:
 the **Timer** and the **Iterator**. The Timer allows you to easily calculate the time between two points in the
-execution of your script. The Iterator allows you to set up several variations and runs those tests, recording
+execution of your script. The Iterator allows you to set up several variations and run those tests, recording
 performance and memory statistics to help you decide which version is the best.
 
 The Timer class is always active, being started from the moment the framework is invoked until right before
@@ -26,14 +26,14 @@ Timer::start()
 ==============
 
 The ``start()`` method takes a single parameter: the name of this timer. You can use any string as the name
-of the timer. It is only used for you to reference later to know which measurement is which:
+of the timer. It is only used as a later reference, to know which measurement is which:
 
 .. literalinclude:: benchmark/001.php
 
 Timer::stop()
 =============
 
-The ``stop()`` method takes the name of the timer that you want to stop as the only parameter, also:
+The ``stop()`` method also takes the name of the timer that you want to stop as its only parameter:
 
 .. literalinclude:: benchmark/002.php
 
@@ -55,7 +55,7 @@ Timer::record()
 .. versionadded:: 4.3.0
 
 Since v4.3.0, if you use very small code blocks to benchmark, you can also use the ``record()`` method. It accepts
-a no-parameter callable and measures its execution time. Methods ``start()`` and ``stop()`` will be called
+a no-parameter callable and measures its execution time. The ``start()`` and ``stop()`` methods will be called
 automatically around the function call.
 
 .. literalinclude:: benchmark/010.php
@@ -64,7 +64,7 @@ You can also return the callable's return value for further processing.
 
 .. literalinclude:: benchmark/011.php
 
-The same functionality is also available when passing callable to ``timer()`` as second parameter.
+The same functionality is also available when passing a callable to ``timer()`` as the second parameter.
 
 .. literalinclude:: benchmark/012.php
 
@@ -78,7 +78,7 @@ This returns an array of benchmark information, including start, end, and durati
 .. literalinclude:: benchmark/004.php
 
 You can change the precision of the calculated duration by passing in the number of decimal places you want to be shown as
-the only parameter. The default value is 4 numbers behind the decimal point:
+the only parameter. The default value is 4 digits after the decimal point:
 
 .. literalinclude:: benchmark/005.php
 
@@ -107,7 +107,7 @@ Creating Tasks To Run
 
 Tasks are defined within Closures. Any output the task creates will be discarded automatically. They are
 added to the Iterator class through the ``add()`` method. The first parameter is a name you want to refer to
-this test by. The second parameter is the Closure, itself:
+this test by. The second parameter is the Closure itself:
 
 .. literalinclude:: benchmark/007.php
 

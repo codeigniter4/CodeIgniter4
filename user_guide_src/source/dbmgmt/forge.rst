@@ -40,7 +40,7 @@ Returns true/false based on success or failure:
 
 .. literalinclude:: forge/003.php
 
-An optional second parameter set to true will add ``IF EXISTS`` statement
+An optional second parameter set to true will add an ``IF NOT EXISTS`` statement
 or will check if a database exists before creating it (depending on DBMS).
 
 .. literalinclude:: forge/004.php
@@ -57,7 +57,7 @@ Creating Databases in the Command Line
 ======================================
 
 CodeIgniter supports creating databases straight from your favorite terminal using the dedicated ``db:create``
-command. By using this command it is assumed that the database is not yet existing. Otherwise, CodeIgniter
+command. When using this command, it is assumed that the database does not yet exist. Otherwise, CodeIgniter
 will complain that the database creation has failed.
 
 To start, just type the command and the name of the database (e.g., ``foo``):
@@ -66,12 +66,11 @@ To start, just type the command and the name of the database (e.g., ``foo``):
 
     php spark db:create foo
 
-If everything went fine, you should expect the ``Database "foo" successfully created.`` message displayed.
+If everything went fine, you should expect the ``Database "foo" successfully created.`` message to be displayed.
 
-If you are on a testing environment or you are using the SQLite3 driver, you may pass in the file extension
+If you are in a testing environment or you are using the SQLite3 driver, you may pass in the file extension
 for the file where the database will be created using the ``--ext`` option. Valid values are ``db`` and
-``sqlite`` and defaults to ``db``. Remember that these should not be preceded by a period.
-:
+``sqlite``, and the default is ``db``. Remember that these should not be preceded by a period:
 
 .. code-block:: console
 
@@ -87,8 +86,8 @@ The above command will create the db file in **WRITEPATH/foo.sqlite**.
 Creating Tables
 ***************
 
-There are several things you may wish to do when creating tables. Add
-fields, add keys to the table, alter columns. CodeIgniter provides a
+There are several things you may wish to do when creating tables: add
+fields, add keys to the table, and alter columns. CodeIgniter provides a
 mechanism for this.
 
 .. _adding-fields:
@@ -110,10 +109,10 @@ Many datatypes (for example ``VARCHAR``) also require a ``constraint`` key.
 Additionally, the following key/values can be used:
 
 -  ``unsigned``/true : to generate ``UNSIGNED`` in the field definition.
--  ``default``/value : to generate ``DEFAULT`` constraint in the field definition.
+-  ``default``/value : to generate a ``DEFAULT`` constraint in the field definition.
 -  ``null``/true : to generate ``NULL`` in the field definition. Without this,
    the field will default to ``NOT NULL``.
--  ``auto_increment``/true : generates an auto_increment flag on the
+-  ``auto_increment``/true : to generate an auto_increment flag on the
    field. Note that the field type must be a type that supports this,
    such as ``INTEGER``.
 -  ``unique``/true : to generate a unique key for the field definition.
@@ -122,7 +121,7 @@ Additionally, the following key/values can be used:
 
 After the fields have been defined, they can be added using
 ``$forge->addField($fields)`` followed by a call to the
-:ref:`createTable() <creating-a-table>`  method.
+:ref:`createTable() <creating-a-table>` method.
 
 Notes on Data Types
 -------------------
@@ -130,7 +129,7 @@ Notes on Data Types
 Floating-Point Types
 ^^^^^^^^^^^^^^^^^^^^
 
-Floating-Point types such as ``FLOAT`` and ``DOUBLE`` represent approximate values.
+Floating-point types such as ``FLOAT`` and ``DOUBLE`` represent approximate values.
 Therefore, they should not be used when exact values are needed.
 
 ::
@@ -216,7 +215,7 @@ with the fourth parameter. Note that ``addKey()`` must be followed by a
 call to ``createTable()`` or ``processIndexes()`` when the table already
 exists.
 
-Multiple column non-primary keys must be sent as an array. Sample output
+Multi-column non-primary keys must be sent as an array. Sample output
 below is for MySQL.
 
 .. literalinclude:: forge/010.php
@@ -224,10 +223,12 @@ below is for MySQL.
 $forge->addPrimaryKey()
 -----------------------
 
+Adds a primary key. See `Adding Keys`_ for usage.
+
 $forge->addUniqueKey()
 ----------------------
 
-To make code reading more objective it is also possible to add primary
+To make the code easier to read, it is also possible to add primary
 and unique keys with specific methods:
 
 .. literalinclude:: forge/011.php
@@ -256,7 +257,7 @@ Creating a Table
 ================
 
 After fields and keys have been declared, you can create a new table
-with
+with:
 
 .. literalinclude:: forge/014.php
 
@@ -307,7 +308,7 @@ be used to add additional fields.
 
 .. literalinclude:: forge/022.php
 
-If you are using MySQL or CUBIRD, then you can take advantage of their
+If you are using MySQL or CUBRID, then you can take advantage of their
 ``AFTER`` and ``FIRST`` clauses to position the new column.
 
 Examples:
@@ -344,15 +345,15 @@ change the name, you can add a "name" key into the field defining array.
 
 .. literalinclude:: forge/026.php
 
-.. note:: The ``modifyColumn()`` may unexpectedly change ``NULL``/``NOT NULL``.
-    So it is recommended to always specify the value for ``null`` key. Unlike when creating
+.. note:: The ``modifyColumn()`` method may unexpectedly change ``NULL``/``NOT NULL``.
+    So it is recommended to always specify the value for the ``null`` key. Unlike when creating
     a table, if ``null`` is not specified, the column will be ``NULL``, not
     ``NOT NULL``.
 
-.. note:: Due to a bug, prior v4.3.4, SQLite3 may not set ``NOT NULL`` even if you
+.. note:: Due to a bug, prior to v4.3.4, SQLite3 may not set ``NOT NULL`` even if you
     specify ``'null' => false``.
 
-.. note:: Due to a bug, prior v4.3.4, Postgres and SQLSRV set ``NOT NULL`` even
+.. note:: Due to a bug, prior to v4.3.4, Postgres and SQLSRV set ``NOT NULL`` even
     if you specify ``'null' => true``.
 
 .. _db-forge-adding-keys-to-a-table:
@@ -379,7 +380,7 @@ Execute a DROP PRIMARY KEY.
 .. literalinclude:: forge/028.php
 
 Dropping a Key
-===============
+==============
 
 Execute a DROP KEY.
 
@@ -395,7 +396,7 @@ Execute a DROP FOREIGN KEY.
 Renaming a Table
 ================
 
-Executes a TABLE rename
+Executes a TABLE rename.
 
 .. literalinclude:: forge/021.php
 
@@ -476,18 +477,18 @@ Class Reference
 
     .. php:method:: createDatabase($dbName[, $ifNotExists = false])
 
-        :param    string    $db_name: Name of the database to create
-        :param    string    $ifNotExists: Set to true to add an ``IF NOT EXISTS`` clause or check if database exists
+        :param    string    $dbName: Name of the database to create
+        :param    bool      $ifNotExists: Set to true to add an ``IF NOT EXISTS`` clause or check if database exists
         :returns:    true on success, false on failure
         :rtype:    bool
 
         Creates a new database. Usage: See `Creating and Dropping Databases`_.
 
-    .. php:method:: createTable($table[, $if_not_exists = false[, array $attributes = []]])
+    .. php:method:: createTable($table[, $ifNotExists = false[, array $attributes = []]])
 
         :param    string    $table: Name of the table to create
-        :param    string    $if_not_exists: Set to true to add an ``IF NOT EXISTS`` clause
-        :param    string    $attributes: An associative array of table attributes
+        :param    bool      $ifNotExists: Set to true to add an ``IF NOT EXISTS`` clause
+        :param    array     $attributes: An associative array of table attributes
         :returns:  Query object on success, false on failure
         :rtype:    mixed
 
@@ -514,7 +515,7 @@ Class Reference
 
         :param    string    $table: Name of table that has key
         :param    string    $keyName: Name of key to be dropped
-        :param    string    $prefixKeyName: If database prefix should be added to ``$keyName``
+        :param    bool      $prefixKeyName: If database prefix should be added to ``$keyName``
         :returns:    true on success, false on failure
         :rtype:    bool
 
@@ -533,10 +534,11 @@ Class Reference
 
         .. note:: ``$keyName`` can be used since v4.3.0.
 
-    .. php:method:: dropTable($table_name[, $if_exists = false])
+    .. php:method:: dropTable($tableName[, $ifExists = false[, $cascade = false]])
 
-        :param    string    $table: Name of the table to drop
-        :param    string    $if_exists: Set to true to add an ``IF EXISTS`` clause
+        :param    string    $tableName: Name of the table to drop
+        :param    bool      $ifExists: Set to true to add an ``IF EXISTS`` clause
+        :param    bool      $cascade: Whether to cascade the drop to dependent objects where supported
         :returns:    true on success, false on failure
         :rtype:    bool
 
@@ -565,7 +567,7 @@ Class Reference
 
     .. php:method:: renameTable($tableName, $newTableName)
 
-        :param    string    $tableName: Current of the table
+        :param    string    $tableName: Current name of the table
         :param    string    $newTableName: New name of the table
         :returns:  Query object on success, false on failure
         :rtype:    mixed

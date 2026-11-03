@@ -5,10 +5,10 @@ CLI Library
 CodeIgniter's CLI library makes creating interactive command-line scripts simple, including:
 
 * Prompting the user for more information
-* Writing multi-colored text the terminal
+* Writing multi-colored text to the terminal
 * Beeping (be nice!)
 * Showing progress bars during long tasks
-* Wrapping long text lines to fit the window.
+* Wrapping long text lines to fit the window
 
 .. contents::
     :local:
@@ -17,7 +17,7 @@ CodeIgniter's CLI library makes creating interactive command-line scripts simple
 Initializing the Class
 **********************
 
-You do not need to create an instance of the CLI library, since all of it's methods are static. Instead, you simply
+You do not need to create an instance of the CLI library, since all of its methods are static. Instead, you simply
 need to ensure your controller can locate it via a ``use`` statement above your class:
 
 .. literalinclude:: cli_library/001.php
@@ -70,7 +70,7 @@ Named keys are also possible:
 
 .. literalinclude:: cli_library/008.php
 
-Finally, you can pass :ref:`validation <validation>` rules to the answer input as the third parameter, the acceptable answers are automatically restricted to the passed options.
+Finally, you can pass :ref:`validation <validation>` rules to the answer input as the third parameter. The acceptable answers are automatically restricted to the passed options.
 
 .. _prompt-by-multiple-keys:
 
@@ -79,7 +79,7 @@ promptByMultipleKeys()
 
 .. versionadded:: 4.3.0
 
-This method is the same as ``promptByKey()``, but it supports multiple value.
+This method is the same as ``promptByKey()``, but it supports multiple values.
 
 .. literalinclude:: cli_library/023.php
 
@@ -91,9 +91,9 @@ Providing Feedback
 write()
 =======
 
-Several methods are provided for you to provide feedback to your users. This can be as simple as a single status update
+Several methods are available for providing feedback to your users. This can be as simple as a single status update
 or a complex table of information that wraps to the user's terminal window. At the core of this is the ``write()``
-method which takes the string to output as the first parameter:
+method, which takes the string to output as the first parameter:
 
 .. literalinclude:: cli_library/009.php
 
@@ -141,7 +141,7 @@ print()
 =======
 
 Print functions identically to the ``write()`` method, except that it does not force a newline either before or after.
-Instead it prints it to the screen wherever the cursor is currently. This allows you to print multiple items all on
+Instead, it prints to the screen wherever the cursor currently is. This allows you to print multiple items all on
 the same line, from different calls. This is especially helpful when you want to show a status, do something, then
 print "Done" on the same line:
 
@@ -152,7 +152,7 @@ print "Done" on the same line:
 color()
 =======
 
-While the ``write()`` command will write a single line to the terminal, ending it with a EOL character, you can
+While the ``write()`` command will write a single line to the terminal, ending it with an EOL character, you can
 use the ``color()`` method to make a string fragment that can be used in the same way, except that it will not force
 an EOL after printing. This allows you to create multiple outputs on the same row. Or, more commonly, you can use
 it inside of a ``write()`` method to create a string of a different color inside:
@@ -183,7 +183,7 @@ window and not go off screen:
 
 By default, the string will wrap at the terminal width. Windows currently doesn't provide a way to determine
 the window size, so we default to 80 characters. If you want to restrict the width to something shorter that
-you can be pretty sure fits within the window, pass the maximum line-length as the second parameter. This
+you can be pretty sure fits within the window, pass the maximum line length as the second parameter. This
 will break the string at the nearest word barrier so that words are not broken.
 
 .. literalinclude:: cli_library/016.php
@@ -195,7 +195,7 @@ every line after the first line, so that you will have a crisp column edge on th
 
 .. literalinclude:: cli_library/017.php
 
-Would create something like this:
+This would create something like this:
 
 .. code-block:: none
 
@@ -216,17 +216,16 @@ The ``newLine()`` method displays a blank line to the user. It does not take any
 clearScreen()
 =============
 
-You can clear the current terminal window with the ``clearScreen()`` method. In most versions of Windows, this will
-simply insert 40 blank lines since Windows doesn't support this feature. Windows 10 bash integration should change
-this:
+You can clear the current terminal window with the ``clearScreen()`` method. On Windows terminals without
+virtual terminal support, this inserts 40 blank lines instead:
 
 .. literalinclude:: cli_library/019.php
 
 showProgress()
 ==============
 
-If you have a long-running task that you would like to keep the user updated with the progress, you can use the
-``showProgress()`` method which displays something like the following:
+If you have a long-running task and would like to keep the user updated on its progress, you can use the
+``showProgress()`` method, which displays something like the following:
 
 .. code-block:: none
 
@@ -235,7 +234,7 @@ If you have a long-running task that you would like to keep the user updated wit
 This block is animated in place for a very nice effect.
 
 To use it, pass in the current step as the first parameter, and the total number of steps as the second parameter.
-The percent complete and the length of the display will be determined based on that number. When you are done,
+The percent complete and the length of the display will be determined based on those numbers. When you are done,
 pass ``false`` as the first parameter and the progress bar will be removed.
 
 .. literalinclude:: cli_library/020.php

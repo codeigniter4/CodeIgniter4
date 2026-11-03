@@ -39,7 +39,7 @@ Here is a basic example demonstrating how you might send email:
 Setting Email Preferences
 =========================
 
-There are 22 different preferences available to tailor how your email
+There are several preferences available to tailor how your email
 messages are sent. You can either set them manually as described here,
 or automatically via preferences stored in your config file, described
 in `Email Preferences`_.
@@ -77,30 +77,30 @@ it is important to understand the differences when trying to troubleshoot email 
 issues.
 
 Most SMTP servers allow connections on ports 465 or 587 when submitting emails. (The
-original port 25 is seldom used because of many ISPs have blocking rules in place and
-since the communication is entirely in clear-text).
+original port 25 is seldom used because many ISPs have blocking rules in place and
+because the communication is entirely in clear text.)
 
 The key difference is that port 465 expects the communication channel to be secured using TLS
 from the start as per `RFC 8314 <https://tools.ietf.org/html/rfc8314>`_.
-A connection to port 587 allows clear-text connection and later
+A connection to port 587 allows a clear-text connection and later
 will upgrade the channel to use encryption using the ``STARTTLS`` SMTP command.
 
 Upgrading a connection on port 465 may or may not be supported by the server, so the
 ``STARTTLS`` SMTP command may fail if the server does not allow it. If you set the port to 465,
-you should try to set the ``SMTPCrypto`` to an empty string (``''``) since the communication is
-secured using TLS from the start and the ``STARTTLS`` is not needed.
+you should try to set ``SMTPCrypto`` to an empty string (``''``) since the communication is
+secured using TLS from the start and ``STARTTLS`` is not needed.
 
 If your configuration requires you to connect to port 587, you should most likely set
 ``SMTPCrypto`` to ``tls`` as this will implement the ``STARTTLS`` command while communicating
-with the SMTP server to switch from clear-text to an encrypted channel. The initial communication
-will be made in clear-text and the channel will be upgraded to TLS with the ``STARTTLS`` command.
+with the SMTP server to switch from clear text to an encrypted channel. The initial communication
+will be made in clear text and the channel will be upgraded to TLS with the ``STARTTLS`` command.
 
 Reviewing Preferences
 ---------------------
 
 The settings used for the last successful send are available from the
 instance property ``$archive``. This is helpful for testing and debugging
-to determine that actual values at the time of the ``send()`` call.
+to determine the actual values at the time of the ``send()`` call.
 
 .. _email-preferences:
 
@@ -114,7 +114,7 @@ sending email.
 Preference          Default Value       Options                      Description
 =================== =================== ============================ =======================================================================
 **fromEmail**                                                        The email address to be set in the "from" header.
-**fromName**                                                         The name to be set in the "from" header. 
+**fromName**                                                         The name to be set in the "from" header.
 **userAgent**       CodeIgniter                                      The "user agent".
 **protocol**        mail                ``mail``, ``sendmail``,      The mail sending protocol.
                                         or ``smtp``
@@ -124,35 +124,39 @@ Preference          Default Value       Options                      Description
 **SMTPUser**                                                         SMTP Username.
 **SMTPPass**                                                         SMTP Password.
 **SMTPPort**        25                                               SMTP Port. (If set to ``465``, TLS will be used for the connection
-                                                                     regardless of ``SMTPCrypto`` setting.)
+                                                                     regardless of the ``SMTPCrypto`` setting.)
 **SMTPTimeout**     5                                                SMTP Timeout (in seconds).
 **SMTPKeepAlive**   false               ``true``/``false``           Enable persistent SMTP connections.
 **SMTPCrypto**      tls                 ``tls``, ``ssl``, or         SMTP Encryption. Setting this to ``ssl`` will create a secure
                                         empty string (``''``)        channel to the server using SSL, and ``tls`` will issue a
-                                                                     ``STARTTLS`` command to the server. Connection on port ``465`` should
+                                                                     ``STARTTLS`` command to the server. Connections on port ``465`` should
                                                                      set this to an empty string (``''``). See also
                                                                      :ref:`email-ssl-tls-for-smtp`.
 **wordWrap**        true                ``true``/``false``           Enable word-wrap.
 **wrapChars**       76                                               Character count to wrap at.
 **mailType**        text                ``text`` or ``html``         Type of mail. If you send HTML email you must send it as a complete web
                                                                      page. Make sure you don't have any relative links or relative image
-                                                                     paths otherwise they will not work.
+                                                                     paths, otherwise they will not work.
 **charset**         UTF-8                                            Character set (``utf-8``, ``iso-8859-1``, etc.).
-**validate**        true                ``true``/``false``           Whether to validate the email address.
+**validate**        false               ``true``/``false``           Whether to validate the email address.
 **priority**        3                   1, 2, 3, 4, 5                Email Priority. ``1`` = highest. ``5`` = lowest. ``3`` = normal.
 **CRLF**            \\r\\n              ``\r\n``, ``\n`` or ``\r``   Newline character. (Use ``\r\n`` to comply with RFC 822).
 **newline**         \\r\\n              ``\r\n``, ``\n`` or ``\r``   Newline character. (Use ``\r\n`` to comply with RFC 822).
 **BCCBatchMode**    false               ``true``/``false``           Enable BCC Batch Mode.
 **BCCBatchSize**    200                                              Number of emails in each BCC batch.
-**DSN**             false               ``true``/``false``           Enable notify message from server.
+**DSN**             false               ``true``/``false``           Enable notification messages from the server.
 =================== =================== ============================ =======================================================================
+
+The defaults above reflect **app/Config/Email.php**, which is used by the Email service.
+If you instantiate ``CodeIgniter\Email\Email`` directly without a configuration object,
+its ``$validate`` property defaults to ``true``.
 
 Overriding Word Wrapping
 ========================
 
 If you have word wrapping enabled (recommended to comply with RFC 822)
-and you have a very long link in your email it can get wrapped too,
-causing it to become un-clickable by the person receiving it.
+and you have a very long link in your email, it can get wrapped too,
+causing it to become unclickable by the person receiving it.
 CodeIgniter lets you manually override word wrapping within part of your
 message like this::
 
@@ -200,19 +204,19 @@ Class Reference
         :returns:    CodeIgniter\\Email\\Email instance (method chaining)
         :rtype:    CodeIgniter\\Email\\Email
 
-        Sets the reply-to address. If the information is not provided the
+        Sets the reply-to address. If the information is not provided, the
         information in the :php:meth:`setFrom()` method is used. Example:
 
         .. literalinclude:: email/005.php
 
     .. php:method:: setTo($to)
 
-        :param    mixed    $to: Comma separated string or an array of email addresses
+        :param    mixed    $to: Comma-separated string or an array of email addresses
         :returns:    CodeIgniter\\Email\\Email instance (method chaining)
         :rtype:    CodeIgniter\\Email\\Email
 
         Sets the email address(es) of the recipient(s). Can be a single email,
-        a comma separated list or an array:
+        a comma-separated list, or an array:
 
         .. literalinclude:: email/006.php
 
@@ -222,25 +226,25 @@ Class Reference
 
     .. php:method:: setCC($cc)
 
-        :param    mixed    $cc: Comma separated string or an array of email addresses
+        :param    mixed    $cc: Comma-separated string or an array of email addresses
         :returns:    CodeIgniter\\Email\\Email instance (method chaining)
         :rtype:    CodeIgniter\\Email\\Email
 
-        Sets the CC email address(es). Just like the "to", can be a single email,
-        a comma separated list or an array.
+        Sets the CC email address(es). Just like the "to" address, it can be a single email,
+        a comma-separated list, or an array.
 
     .. php:method:: setBCC($bcc[, $limit = ''])
 
-        :param    mixed    $bcc: Comma separated string or an array of email addresses
+        :param    mixed    $bcc: Comma-separated string or an array of email addresses
         :param    int    $limit: Maximum number of emails to send per batch
         :returns:    CodeIgniter\\Email\\Email instance (method chaining)
         :rtype:    CodeIgniter\\Email\\Email
 
-        Sets the BCC email address(es). Just like the ``setTo()`` method, can be a single
-        email, a comma separated list or an array.
+        Sets the BCC email address(es). Just like the ``setTo()`` method, it can be a single
+        email, a comma-separated list, or an array.
 
         If ``$limit`` is set, "batch mode" will be enabled, which will send
-        the emails to batches, with each batch not exceeding the specified
+        the emails in batches, with each batch not exceeding the specified
         ``$limit``.
 
     .. php:method:: setSubject($subject)
@@ -274,10 +278,10 @@ Class Reference
         .. literalinclude:: email/011.php
 
         This is an optional message string which can be used if you send
-        HTML formatted email. It lets you specify an alternative message
+        HTML-formatted email. It lets you specify an alternative message
         with no HTML formatting which is added to the header string for
         people who do not accept HTML email. If you do not set your own
-        message CodeIgniter will extract the message from your HTML email
+        message, CodeIgniter will extract the message from your HTML email
         and strip the tags.
 
     .. php:method:: setHeader($header, $value)
@@ -303,7 +307,7 @@ Class Reference
 
         .. literalinclude:: email/013.php
 
-        If you set the parameter to true any attachments will be cleared as
+        If you set the parameter to true, any attachments will be cleared as
         well:
 
         .. literalinclude:: email/014.php
@@ -320,7 +324,7 @@ Class Reference
         .. literalinclude:: email/015.php
 
         This method will automatically clear all parameters if the request was
-        successful. To stop this behaviour pass false:
+        successful. To stop this behaviour, pass false:
 
         .. literalinclude:: email/016.php
 
@@ -343,13 +347,13 @@ Class Reference
         :rtype:    CodeIgniter\\Email\\Email
 
         Enables you to send an attachment. Put the file path/name in the first
-        parameter. For multiple attachments use the method multiple times.
+        parameter. For multiple attachments, use the method multiple times.
         For example:
 
         .. literalinclude:: email/017.php
 
-        To use the default disposition (attachment), leave the second parameter blank,
-        otherwise use a custom disposition:
+        To use the default disposition (attachment), leave the second parameter blank.
+        Otherwise, use a custom disposition:
 
         .. literalinclude:: email/018.php
 
@@ -361,9 +365,9 @@ Class Reference
 
         .. literalinclude:: email/020.php
 
-        If you need to use a buffer string instead of a real - physical - file you can
-        use the first parameter as buffer, the third parameter as file name and the fourth
-        parameter as mime-type:
+        If you need to use a buffer string instead of a real (physical) file, you can
+        use the first parameter as the buffer, the third parameter as the file name, and the fourth
+        parameter as the MIME type:
 
         .. literalinclude:: email/021.php
 
@@ -374,7 +378,7 @@ Class Reference
         :rtype:    string
 
         Sets and returns an attachment's Content-ID, which enables you to embed an inline
-        (picture) attachment into HTML. First parameter must be the already attached file name.
+        (picture) attachment into HTML. The first parameter must be the already attached file name.
 
         .. literalinclude:: email/022.php
 

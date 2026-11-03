@@ -48,17 +48,17 @@ List the Fields in a Table
 $db->getFieldNames()
 --------------------
 
-Returns an array containing the field names. This query can be called
-two ways:
+Returns an array containing the field names. This method can be called
+in two ways:
 
 1. You can supply the table name and call it from the ``$db`` object:
 
-    .. literalinclude:: metadata/003.php
+   .. literalinclude:: metadata/003.php
 
 2. You can gather the field names associated with any query you run by
    calling the function from your query result object:
 
-    .. literalinclude:: metadata/004.php
+   .. literalinclude:: metadata/004.php
 
 Determine If a Field is Present in a Table
 ==========================================
@@ -102,12 +102,12 @@ database:
 - ``default`` - the default value
 - ``primary_key`` - integer ``1`` if the column is a primary key (all integer ``1``, even if there are multiple primary keys), otherwise integer ``0`` (This field is currently only available for ``MySQLi`` and ``SQLite3``)
 
-.. note:: Since v4.4.0, SQLSRV supported ``nullable``.
+.. note:: Since v4.4.0, SQLSRV supports ``nullable``.
 
 $query->getFieldData()
 ----------------------
 
-If you have run a query already you can use the result object instead of
+If you have already run a query, you can use the result object instead of
 supplying the table name:
 
 .. literalinclude:: metadata/007.php

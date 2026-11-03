@@ -31,7 +31,7 @@ Using the Database Utilities
 ****************************
 
 Retrieve List of Database Names
-================================
+===============================
 
 Returns an array of database names:
 
@@ -73,7 +73,7 @@ connected to. Returns an array containing the DB status messages or
     :lines: 2-
 
 .. note:: Not all database platforms support database optimization. It
-    it is mostly for use with MySQL.
+    is mostly for use with MySQL.
 
 Export a Query Result as a CSV File
 ===================================
@@ -85,8 +85,8 @@ query. Example:
 .. literalinclude:: utilities/009.php
     :lines: 2-
 
-The second, third, and fourth parameters allow you to set the delimiter
-newline, and enclosure characters respectively. By default commas are
+The second, third, and fourth parameters allow you to set the delimiter,
+newline, and enclosure characters respectively. By default, commas are
 used as the delimiter, ``"\n"`` is used as a new line, and a double-quote
 is used as the enclosure. Example:
 
@@ -94,19 +94,19 @@ is used as the enclosure. Example:
     :lines: 2-
 
 .. important:: This method will NOT write the CSV file for you. It
-    simply creates the CSV layout. If you need to write the file
+    simply creates the CSV layout. If you need to write the file,
     use the :php:func:`write_file()` helper.
 
 Export a Query Result as an XML Document
 ========================================
 
 Permits you to generate an XML file from a query result. The first
-parameter expects a query result object, the second may contain an
+parameter expects a query result object, and the second may contain an
 optional array of config parameters. Example:
 
 .. literalinclude:: utilities/001.php
 
-and it will get the following xml result when the ``mytable`` has columns ``id`` and ``name``::
+It will produce the following XML result when the ``mytable`` table has columns ``id`` and ``name``::
 
     <root>
         <element>
@@ -116,5 +116,5 @@ and it will get the following xml result when the ``mytable`` has columns ``id``
     </root>
 
 .. important:: This method will NOT write the XML file for you. It
-    simply creates the XML layout. If you need to write the file
+    simply creates the XML layout. If you need to write the file,
     use the :php:func:`write_file()` helper.

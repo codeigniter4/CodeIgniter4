@@ -17,7 +17,7 @@ Deprecations
 Bugs Fixed
 **********
 
-Many bugs fixed, but notably:
+Many bugs were fixed, but notably:
 
 - AssertionError occurs when using Validation in CLI `#6452 <https://github.com/codeigniter4/CodeIgniter4/pull/6452>`_
 

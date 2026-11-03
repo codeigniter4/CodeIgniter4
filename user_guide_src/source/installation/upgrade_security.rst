@@ -5,8 +5,8 @@ Upgrade Security
     :local:
     :depth: 2
 
-Documentations
-==============
+Documentation
+=============
 
 - `Security Class Documentation CodeIgniter 3.x <http://codeigniter.com/userguide3/libraries/security.html>`_
 - :doc:`Security Documentation CodeIgniter 4.x </libraries/security>`
@@ -20,7 +20,7 @@ What has been changed
 
 Upgrade Guide
 =============
-1. To enable CSRF protection in CI4 you have to enable it in **app/Config/Filters.php**:
+1. To enable CSRF protection in CI4, you have to enable it in **app/Config/Filters.php**:
 
    .. literalinclude:: upgrade_security/001.php
 
@@ -31,7 +31,7 @@ Code Example
 ============
 
 CodeIgniter Version 3.x
-------------------------
+-----------------------
 
 .. literalinclude:: upgrade_security/ci3sample/002.php
 

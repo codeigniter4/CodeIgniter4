@@ -22,14 +22,14 @@ Class Reference
         :returns: The current message body
         :rtype: mixed
 
-        Returns the current message body, if any has been set. If not body exists, returns null:
+        Returns the current message body, if any has been set. If no body exists, returns null:
 
         .. literalinclude:: message/001.php
 
     .. php:method:: setBody($data)
 
         :param  mixed  $data: The body of the message.
-        :returns: the Message|Response instance to allow methods to be chained together.
+        :returns: The Message|Response instance to allow methods to be chained together.
         :rtype: CodeIgniter\\HTTP\\Message|CodeIgniter\\HTTP\\Response
 
         Sets the body of the current request.
@@ -37,7 +37,7 @@ Class Reference
     .. php:method:: appendBody($data)
 
         :param  mixed  $data: The body of the message.
-        :returns: the Message|Response instance to allow methods to be chained together.
+        :returns: The Message|Response instance to allow methods to be chained together.
         :rtype: CodeIgniter\\HTTP\\Message|CodeIgniter\\HTTP\\Response
 
         Appends data to the body of the current request.
@@ -46,12 +46,12 @@ Class Reference
 
         :returns: void
 
-        Scans and parses the headers found in the SERVER data and stores it for later access.
+        Scans and parses the headers found in the SERVER data and stores them for later access.
         This is used by the :doc:`IncomingRequest Class <../incoming/incomingrequest>` to make
         the current request's headers available.
 
         The headers are any SERVER data that starts with ``HTTP_``, like ``HTTP_HOST``. Each message
-        is converted from it's standard uppercase and underscore format to a ucwords and dash format.
+        is converted from its standard uppercase and underscore format to a ucwords and dash format.
         The preceding ``HTTP_`` is removed from the string. So ``HTTP_ACCEPT_LANGUAGE`` becomes
         ``Accept-Language``.
 
@@ -65,7 +65,7 @@ Class Reference
     .. php:method:: header($name)
 
         :param  string  $name: The name of the header you want to retrieve the value of.
-        :returns: Returns a single header object. If multiple headers with the same name exist, then will return an array of header objects.
+        :returns: Returns a single header object. If multiple headers with the same name exist, it will return an array of header objects.
         :rtype: \CodeIgniter\\HTTP\\Header|array
 
         Allows you to retrieve the current value of a single message header. ``$name`` is the case-insensitive header name.
@@ -73,7 +73,7 @@ Class Reference
 
         .. literalinclude:: message/002.php
 
-        If the header has multiple values, ``getValue()`` will return as an array of values. You can use the ``getValueLine()``
+        If the header has multiple values, ``getValue()`` will return an array of values. You can use the ``getValueLine()``
         method to retrieve the values as a string:
 
         .. literalinclude:: message/003.php
@@ -84,7 +84,7 @@ Class Reference
 
     .. php:method:: hasHeader($name)
 
-        :param  string  $name: The name of the header you want to see if it exists.
+        :param  string  $name: The name of the header to check.
         :returns: Returns true if it exists, false otherwise.
         :rtype: bool
 
@@ -156,7 +156,7 @@ Class Reference
         :rtype: CodeIgniter\\HTTP\\Message
 
         Adds a header (not a header value) with the same name.
-        Use this only when you set multiple headers with the same name,
+        Use this only when you set multiple headers with the same name:
 
         .. literalinclude:: message/011.php
 
@@ -165,7 +165,7 @@ Class Reference
         :returns: The current HTTP protocol version
         :rtype: string
 
-        Returns the message's current HTTP protocol. If none has been set, will
+        Returns the message's current HTTP protocol. If none has been set, it will
         return ``1.1``.
 
     .. php:method:: setProtocolVersion($version)

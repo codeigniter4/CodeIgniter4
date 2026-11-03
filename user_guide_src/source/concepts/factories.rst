@@ -37,7 +37,7 @@ Factories require a concrete class name to instantiate and do not have code to c
 So, Factories are not good for creating a complex instance that needs many dependencies,
 and you cannot change the class of the instance to be returned.
 
-On the other hand, Services have code to create instances, so it can create a complex instance
+On the other hand, Services have code to create instances, so they can create a complex instance
 that needs other services or class instances. When you get a service, Services require a service name,
 not a class name, so the returned instance can be changed without changing the client code.
 
@@ -73,14 +73,14 @@ In the following code, if you have ``App\Models\UserModel``, the instance will b
 If you don't have ``App\Models\UserModel``, it searches for ``Models\UserModel`` in all namespaces.
 
 Next time you ask for the same class anywhere in your code, Factories will be sure
-you get back the instance as before:
+you get back the same instance as before:
 
 .. literalinclude:: factories/003.php
 
 Passing Short Classname with Sub-directories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If you want to load a class in sub directories, you use the ``/`` as a separator.
+If you want to load a class in sub-directories, use ``/`` as a separator.
 The following code loads **app/Libraries/Sub/SubLib.php** if it exists:
 
 .. literalinclude:: factories/013.php
@@ -119,14 +119,14 @@ Two shortcut functions for Factories have been provided. These functions are alw
 config()
 ========
 
-The first is :php:func:`config()` which returns a new instance of a Config class. The only required parameter is the class name:
+The first is :php:func:`config()`, which returns an instance of a Config class. The only required parameter is the class name:
 
 .. literalinclude:: factories/008.php
 
 model()
 =======
 
-The second function, :php:func:`model()` returns a new instance of a Model class. The only required parameter is the class name:
+The second function, :php:func:`model()`, returns an instance of a Model class. The only required parameter is the class name:
 
 .. literalinclude:: factories/009.php
 
@@ -144,7 +144,7 @@ the ``Factories::define()`` method:
    :lines: 2-
 
 The first parameter is a component. The second parameter is a class alias
-(the first parameter to Factories magic static method), and the third parameter
+(the first parameter to the Factories magic static method), and the third parameter
 is the true fully qualified classname to be loaded.
 
 After that, if you load ``Myth\Auth\Models\UserModel`` with Factories, the
@@ -159,14 +159,14 @@ Factory Parameters
 ``Factories`` takes as a second parameter an array of option values (described below).
 These directives will override the default options configured for each component.
 
-Any more parameters passed at the same time will be forwarded on to the class
+Any further parameters passed at the same time will be forwarded on to the class
 constructor, making it easy to configure your class instance on-the-fly. For example, say
 your app uses a separate database for authentication and you want to be sure that any attempts
 to access user records always go through that connection:
 
 .. literalinclude:: factories/004.php
 
-Now any time the ``UserModel`` is loaded from ``Factories`` it will in fact be returning a
+Now any time the ``UserModel`` is loaded from ``Factories`` it will in fact return a
 class instance that uses the alternate database connection.
 
 .. _factories-options:
@@ -181,7 +181,7 @@ Each component takes a set of options to direct discovery and instantiation.
 ========== ============== ============================================================ ===================================================
 Key        Type           Description                                                  Default
 ========== ============== ============================================================ ===================================================
-component  string or null The name of the component (if different than the static      ``null`` (defaults to the component name)
+component  string or null The name of the component (if different from the static      ``null`` (defaults to the component name)
                           method). This can be used to alias one component to another.
 path       string or null The relative path within the namespace/folder to look for    ``null`` (defaults to the component name,
                           classes.                                                     but makes the first character uppercase)
@@ -207,30 +207,30 @@ Options can be applied in one of three ways (listed in ascending priority):
 Configurations
 ==============
 
-To set default component options, create a new Config files at **app/Config/Factory.php**
+To set default component options, create a new Config file at **app/Config/Factory.php**
 that supplies options as an array property that matches the name of the component.
 
 Example: Filters Factories
 --------------------------
 
-For example, if you want to create **Filters** by Factories, the component name wll be ``filters``.
+For example, if you want to create **Filters** by Factories, the component name will be ``filters``.
 And if you want to ensure that each filter is an instance of a class which implements CodeIgniter's ``FilterInterface``,
 your **app/Config/Factory.php** file might look like this:
 
 .. literalinclude:: factories/005.php
 
 Now you can create a filter with code like ``Factories::filters('SomeFilter')``,
-and the returned instance will surely be a CodeIgniter's filter.
+and the returned instance will surely be a CodeIgniter filter.
 
-This would prevent conflict of an third-party module which happened to have an
+This would prevent conflicts with a third-party module which happened to have an
 unrelated ``Filters`` path in its namespace.
 
 Example: Library Factories
 --------------------------
 
 If you want to load your library classes in the **app/Libraries** directory with
-``Factories::library('SomeLib')``, the path `Libraries` is different from the
-default path `Library`.
+``Factories::library('SomeLib')``, the path ``Libraries`` is different from the
+default path ``Library``.
 
 In this case, your **app/Config/Factory.php** file will look like this:
 
@@ -286,8 +286,8 @@ Prerequisite
 
 - To use this feature, the properties of all Config objects instantiated in
   Factories must not be modified after instantiation. Put another way, the Config
-  classes must be an immutable or readonly classes.
-- By default, every Config class that is cached must implement ``__set_state()``
+  classes must be immutable or readonly classes.
+- By default, every Config class that is cached must implement the ``__set_state()``
   method.
 
 How It Works
@@ -296,7 +296,7 @@ How It Works
 .. important:: Once cached, configuration values are never changed until the cache
     is deleted, even if the configuration file or **.env** is changed.
 
-- Save the all Config instances in Factories into a cache file before shutdown,
+- Save all Config instances in Factories into a cache file before shutdown,
   if the state of the Config instances in Factories changes.
 - Restore cached Config instances before CodeIgniter initialization if a cache
   is available.
@@ -307,7 +307,7 @@ to shutdown, and the cached instances are used permanently.
 How to Update Config Values
 ===========================
 
-Once stored, the cached versions never expire. Changing a existing Config file
+Once stored, the cached versions never expire. Changing an existing Config file
 (or changing Environment Variables for it) will not update the cache nor the Config
 values.
 

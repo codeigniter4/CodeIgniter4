@@ -24,7 +24,7 @@ The following functions are available:
 .. php:function:: directory_map($sourceDir[, $directoryDepth = 0[, $hidden = false]])
 
     :param    string  $sourceDir: Path to the source directory
-    :param    int   $directoryDepth: Depth of directories to traverse (``0`` = fully recursive, ``1`` = current dir, etc)
+    :param    int   $directoryDepth: Depth of directories to traverse (``0`` = fully recursive, ``1`` = current dir, etc.)
     :param    bool    $hidden: Whether to include hidden paths
     :returns:    An array of files
     :rtype:    array
@@ -37,13 +37,13 @@ The following functions are available:
 
     Sub-folders contained within the directory will be mapped as well. If
     you wish to control the recursion depth, you can do so using the second
-    parameter (integer). A depth of ``1`` will only map the top level directory:
+    parameter (integer). A depth of ``1`` will only map the top-level directory:
 
     .. literalinclude:: filesystem_helper/003.php
 
     By default, hidden files will not be included in the returned array and
     hidden directories will be skipped. To override this behavior, you may
-    set a third parameter to ``true`` (boolean):
+    set the third parameter to ``true`` (boolean):
 
     .. literalinclude:: filesystem_helper/004.php
 
@@ -86,7 +86,7 @@ The following functions are available:
     :param    bool    $overwrite: Whether individual files overwrite on collision
 
     Recursively copies the files and directories of the origin directory
-    into the target directory, i.e. "mirror" its contents.
+    into the target directory, i.e., "mirrors" its contents.
 
     Example:
 
@@ -97,12 +97,12 @@ The following functions are available:
 .. php:function:: write_file($path, $data[, $mode = 'wb'])
 
     :param    string    $path: File path
-    :param    string    $data: Data to write to file
+    :param    string    $data: Data to write to the file
     :param    string    $mode: ``fopen()`` mode
     :returns:    ``true`` if the write was successful, ``false`` in case of an error
     :rtype:    bool
 
-    Writes data to the file specified in the path. If the file does not exist then the
+    Writes data to the file specified in the path. If the file does not exist, then the
     function will create it.
 
     Example:
@@ -121,7 +121,7 @@ The following functions are available:
         then the directory containing it must be writable.
 
     .. note:: The path is relative to your main site **index.php** file, NOT your
-        controller or view files. CodeIgniter uses a front controller so paths
+        controller or view files. CodeIgniter uses a front controller, so paths
         are always relative to the main site index.
 
     .. note:: This function acquires an exclusive lock on the file while writing to it.
@@ -161,7 +161,7 @@ The following functions are available:
 
     Takes a server path as input and returns an array containing the names of all files
     contained within it. The file path can optionally be added to the file names by setting
-    the second parameter to 'relative' for relative paths or any other non-empty value for
+    the second parameter to ``null`` for relative paths or ``true`` for
     a full file path.
 
     .. note:: Prior to v4.4.4, due to a bug, this function did not follow symlink folders.
@@ -179,7 +179,7 @@ The following functions are available:
 
     Reads the specified directory and builds an array containing the filenames, filesize,
     dates, and permissions. Sub-folders contained within the specified path are only read
-    if forced by sending the second parameter to false, as this can be an intensive
+    if forced by setting the second parameter to false, as this can be an intensive
     operation.
 
     Example:
@@ -189,15 +189,15 @@ The following functions are available:
 .. php:function:: get_file_info($file[, $returnedValues = ['name', 'server_path', 'size', 'date']])
 
     :param    string        $file: File path
-    :param    array|string  $returnedValues: What type of info to return to be passed as array or comma separated string
-    :returns:    An array containing info on the specified file or false on failure
-    :rtype:    array
+    :param    array|string  $returnedValues: What type of info to return, passed as an array or comma-separated string
+    :returns:    An array containing info on the specified file, or null if it is not a file
+    :rtype:    array|null
 
     Given a file and path, returns (optionally) the *name*, *path*, *size* and *date modified*
-    information attributes for a file. Second parameter allows you to explicitly declare what
+    information attributes for a file. The second parameter allows you to explicitly declare what
     information you want returned.
 
-    Valid ``$returnedValues`` options are: ``name``, ``size``, ``date``, ``readable``, ``writeable``,
+    Valid ``$returnedValues`` options are: ``name``, ``server_path``, ``size``, ``date``, ``readable``, ``writable``,
     ``executable`` and ``fileperms``.
 
 .. php:function:: symbolic_permissions($perms)
@@ -218,7 +218,7 @@ The following functions are available:
     :rtype:    string
 
     Takes numeric permissions (such as is returned by `fileperms() <https://www.php.net/manual/en/function.fileperms.php>`_) and returns
-    a three character octal notation of file permissions.
+    a three-character octal notation of file permissions.
 
     .. literalinclude:: filesystem_helper/013.php
 

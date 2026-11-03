@@ -11,8 +11,8 @@ What is MVC?
 ************
 
 Whenever you create an application, you have to find a way to organize the code to make it simple to locate
-the proper files and make it simple to maintain. Like most of the web frameworks, CodeIgniter uses the Model,
-View, Controller (MVC) pattern to organize the files. This keeps the data, the presentation, and flow through the
+the proper files and make it simple to maintain. Like most web frameworks, CodeIgniter uses the Model,
+View, Controller (MVC) pattern to organize the files. This keeps the data, the presentation, and the flow through the
 application as separate parts.
 
 It should be noted that there are many views on the exact roles of each element,
@@ -43,7 +43,7 @@ Views
 Views are the simplest files and are typically HTML with very small amounts of PHP. The PHP should be very simple,
 usually just displaying a variable's contents, or looping over some items and displaying their information in a table.
 
-Views get the data to display from the controllers, who pass it to the views as variables that can be displayed
+Views get the data to display from the controllers, which pass it to the views as variables that can be displayed
 with simple ``echo`` calls. You can also display other views within a view, making it pretty simple to display a
 common header or footer on every page.
 
@@ -66,7 +66,7 @@ In this case, the model's job has two parts: enforce business rules on the data 
 database; and handle the actual saving and retrieval of the data from the database.
 
 For many developers, the confusion comes in when determining what business rules are enforced. It simply means that
-any restrictions or requirements on the data is handled by the model. This might include normalizing raw data before
+any restrictions or requirements on the data are handled by the model. This might include normalizing raw data before
 it's saved to meet company standards, or formatting a column in a certain way before handing it to the controller.
 By keeping these business requirements in the model, you won't repeat code throughout several controllers and accidentally
 miss updating an area.
@@ -81,11 +81,11 @@ Controllers
 Controllers have a couple of different roles to play. The most obvious one is that they receive input from the user and
 then determine what to do with it. This often involves passing the data to a model to save it, or requesting data from
 the model that is then passed on to the view to be displayed. This also includes loading up other utility classes,
-if needed, to handle specialized tasks that is outside of the purview of the model.
+if needed, to handle specialized tasks that are outside of the purview of the model.
 
-The other responsibility of the controller is to handle everything that pertains to HTTP requests - redirects,
+The other responsibility of the controller is to handle everything that pertains to HTTP requests: redirects,
 authentication, web safety, encoding, etc. In short, the controller is where you make sure that people are allowed to
-be there, and they get the data they need in a format they can use.
+be there, and that they get the data they need in a format they can use.
 
 Controllers are typically stored in **app/Controllers**, though they can use a namespace to be grouped however
 you need.

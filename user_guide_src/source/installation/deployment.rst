@@ -42,7 +42,7 @@ When you deploy, don't forget to run the following command:
 
     composer install --no-dev
 
-The above command will remove the Composer packages only for development
+The above command will remove the development-only Composer packages
 that are not needed in the production environment. This will greatly reduce
 the vendor folder size.
 
@@ -92,16 +92,16 @@ Using preloading requires one dedicated PHP handler. Normally, web servers are c
 If you want to use preloading for multiple apps on one web server, configure your server to use virtual hosts with multiple PHP handlers like multiple PHP-FPMs, with each virtual host using one PHP handler.
 Preloading keeps the relevant definitions in memory by reading the files specified in ``opcache.preload``.
 
-.. note:: See :ref:`running-multiple-app` to make one core CodeIgniter4 to handle your multiple apps.
+.. note:: See :ref:`running-multiple-app` to make one core CodeIgniter4 handle your multiple apps.
 
 Configuration
 -------------
 
-Open ``php.ini`` or ``xx-opcache.ini`` if you have split INI configuration in PHP, and recommend to set ``opcache.preload=/path/to/preload.php`` and ``opcache.preload_user=myuser``.
+Open ``php.ini``, or ``xx-opcache.ini`` if you have split INI configuration in PHP. We recommend setting ``opcache.preload=/path/to/preload.php`` and ``opcache.preload_user=myuser``.
 
-.. note:: ``myuser`` is user running in your web server. If you want to find the location of the split INI configuration, just run ``php --ini`` or open file ``phpinfo()`` and search *Additional .ini files parsed*.
+.. note:: ``myuser`` is the user running your web server. If you want to find the location of the split INI configuration, just run ``php --ini`` or open a ``phpinfo()`` page and search for *Additional .ini files parsed*.
 
-Make sure you use the appstarter installation. If using manual installation, you must change the directory in ``include`` path.
+Make sure you use the appstarter installation. If using manual installation, you must change the directory in the ``include`` path.
 
 .. literalinclude:: preloading/001.php
 
@@ -140,14 +140,14 @@ Upload the contents of the **public** folder to **public_html** (the default
 document root) and the other files to the directory for the application::
 
     ├── example.com/ (for the application)
-    │       ├── app/
-    │       ├── vendor/ (or system/)
-    │       └── writable/
+    │   ├── app/
+    │   ├── vendor/ (or system/)
+    │   └── writable/
     └── public_html/ (the default document root)
-            ├── .htaccess
-            ├── favicon.ico
-            ├── index.php
-            └── robots.txt
+        ├── .htaccess
+        ├── favicon.ico
+        ├── index.php
+        └── robots.txt
 
 See
 `Install CodeIgniter 4 on Shared Hosting (cPanel) <https://forum.codeigniter.com/showthread.php?tid=76779>`_

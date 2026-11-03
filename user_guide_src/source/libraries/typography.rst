@@ -19,12 +19,12 @@ to load it manually:
 .. literalinclude:: typography/001.php
 
 **************************
-Available static functions
+Available Instance Methods
 **************************
 
 The following functions are available:
 
-.. php:function:: autoTypography($str[, $reduceLinebreaks = false])
+.. php:method:: autoTypography($str[, $reduceLinebreaks = false])
 
     :param    string    $str: Input string
     :param    bool    $reduceLinebreaks: Whether to reduce multiple instances of double newlines to two
@@ -38,12 +38,12 @@ The following functions are available:
 
     .. literalinclude:: typography/002.php
 
-    .. note:: Typographic formatting can be processor intensive, particularly if
+    .. note:: Typographic formatting can be processor-intensive, particularly if
         you have a lot of content being formatted. If you choose to use this
-        function you may want to consider :doc:`caching <../general/caching>` your
+        function, you may want to consider :doc:`caching <../general/caching>` your
         pages.
 
-.. php:function:: formatCharacters($str)
+.. php:method:: formatCharacters($str)
 
     :param    string    $str: Input string
     :returns:    String with formatted characters.
@@ -57,7 +57,7 @@ The following functions are available:
 
     .. literalinclude:: typography/003.php
 
-.. php:function:: nl2brExceptPre($str)
+.. php:method:: nl2brExceptPre($str)
 
     :param    string    $str: Input string
     :returns:    String with HTML-formatted line breaks

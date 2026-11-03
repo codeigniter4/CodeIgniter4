@@ -14,7 +14,7 @@ will be your public-facing document root. Do not change anything inside the **sy
 folder!
 
 .. note:: This is the installation technique closest to that described
-   for `CodeIgniter 3 <https://codeigniter.com/userguide3/installation/index.html>`_.
+    for `CodeIgniter 3 <https://codeigniter.com/userguide3/installation/index.html>`_.
 
 Installation
 ============
@@ -22,10 +22,10 @@ Installation
 Download the `latest version <https://github.com/CodeIgniter4/framework/releases/latest>`_,
 and extract it to become your project root.
 
-.. note:: Before v4.4.0, CodeIgniter autoloader did not allow special
+.. note:: Before v4.4.0, the CodeIgniter autoloader did not allow special
     characters that are illegal in filenames on certain operating systems.
     The symbols that can be used are ``/``, ``_``, ``.``, ``:``, ``\`` and space.
-    So if you installed CodeIgniter under the folder that contains the special
+    So if you installed CodeIgniter under a folder that contains special
     characters like ``(``, ``)``, etc., CodeIgniter didn't work. Since v4.4.0,
     this restriction has been removed.
 
@@ -33,7 +33,7 @@ Initial Configuration
 =====================
 
 After installation, a few initial configurations are required.
-See :ref:`initial-configuration` for the detail.
+See :ref:`initial-configuration` for details.
 
 .. _installing-manual-upgrading:
 
@@ -59,7 +59,7 @@ You need to check for file changes in the **project space**
 Structure
 =========
 
-Folders in your project after set up:
+Folders in your project after setup:
 
 - app, public, tests, writable, system
 
@@ -70,8 +70,8 @@ If you want to take advantage of the system message translations,
 they can be added to your project in a similar fashion.
 
 Download the `latest version of them <https://github.com/codeigniter4/translations/releases/latest>`_.
-Extract the downloaded zip, and copy the **Language** folder contents in it
-to your **app/Languages** folder.
+Extract the downloaded zip, and copy the contents of its **Language** folder
+to your **app/Language** folder.
 
 This would need to be repeated to incorporate any updates
 to the translations.

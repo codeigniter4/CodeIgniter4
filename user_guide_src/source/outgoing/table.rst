@@ -32,7 +32,7 @@ method described in the function reference below).
 .. literalinclude:: table/002.php
 
 Here is an example of a table created from a database query result. The
-table class will automatically generate the headings based on the table
+table class will automatically generate the headings based on the field
 names (or you can set your own headings using the ``setHeading()``
 method described in the class reference below).
 
@@ -61,7 +61,7 @@ specify the design of your layout. Here is the template prototype:
     elements that alternate with each iteration of the row data.
 
 You are NOT required to submit a complete template. If you only need to
-change parts of the layout you can simply submit those elements. In this
+change parts of the layout, you can simply submit those elements. In this
 example, only the table opening tag is being changed:
 
 .. literalinclude:: table/007.php
@@ -78,14 +78,14 @@ Synchronizing Rows with Headings
 
 .. versionadded:: 4.4.0
 
-The ``setSyncRowsWithHeading(true)`` method enables that each data value
+The ``setSyncRowsWithHeading(true)`` method ensures that each data value
 is placed in the same column as defined in ``setHeading()`` if an
-associative array was used as parameter. This is especially useful
+associative array was used as a parameter. This is especially useful
 when dealing with data loaded via REST API where the order is not to
 your liking, or if the API returned too much data.
 
 If a data row contains a key that is not present in the heading, its value is
-filtered. Conversely, if a data row does not have a key listed in the heading,
+filtered out. Conversely, if a data row does not have a key listed in the heading,
 an empty cell will be placed in its place.
 
 .. literalinclude:: table/019.php
@@ -213,15 +213,15 @@ Class Reference
         should call this method after each table has been
         generated to clear the previous table information.
 
-        Example
+        Example:
 
         .. literalinclude:: table/018.php
-    
+
     .. php:method:: setSyncRowsWithHeading(bool $orderByKey)
 
         :returns:   Table instance (method chaining)
         :rtype:     Table
 
         Enables each row data key to be ordered by heading keys. This gives
-        more control of data being displaced in the correct column. Make
+        more control over data being displayed in the correct column. Make
         sure to set this value before calling the first ``addRow()`` method.

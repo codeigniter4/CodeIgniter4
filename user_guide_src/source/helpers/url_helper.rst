@@ -21,7 +21,7 @@ The following functions are available:
 .. php:function:: site_url([$uri = ''[, $protocol = null[, $altConfig = null]]])
 
     :param  array|string         $uri: URI string or array of URI segments.
-    :param  string        $protocol: Protocol, e.g., ``'http'`` or ``'https'``. If empty string ``''`` is set, a protocol-relative link is returned.
+    :param  string        $protocol: Protocol, e.g., ``'http'`` or ``'https'``. If an empty string ``''`` is set, a protocol-relative link is returned.
     :param  \\Config\\App $altConfig: Alternate configuration to use.
     :returns: Site URL
     :rtype:    string
@@ -57,7 +57,7 @@ The following functions are available:
 .. php:function:: base_url([$uri = ''[, $protocol = null]])
 
     :param  array|string   $uri: URI string or array of URI segments.
-    :param  string  $protocol: Protocol, e.g., ``'http'`` or ``'https'``. If empty string ``''`` is set, a protocol-relative link is returned.
+    :param  string  $protocol: Protocol, e.g., ``'http'`` or ``'https'``. If an empty string ``''`` is set, a protocol-relative link is returned.
     :returns: Base URL
     :rtype: string
 
@@ -88,7 +88,7 @@ The following functions are available:
 
     .. literalinclude:: url_helper/026.php
 
-    This is useful because unlike :php:func:`site_url()`, you can supply a
+    This is useful because, unlike :php:func:`site_url()`, you can supply a
     string to a file, such as an image or stylesheet. For example:
 
     .. literalinclude:: url_helper/005.php
@@ -104,11 +104,11 @@ The following functions are available:
     :rtype:    string|\\CodeIgniter\\HTTP\\URI
 
     Returns the full URL of the page being currently viewed.
-    When returning string, the query and fragment parts of the URL are removed.
-    When returning URI, the query and fragment parts are preserved.
+    When returning a string, the query and fragment parts of the URL are removed.
+    When returning a URI, the query and fragment parts are preserved.
 
-    However for security reasons, it is created based on the ``Config\App`` settings,
-    and not intended to match the browser URL.
+    However, for security reasons, it is created based on the ``Config\App`` settings,
+    and is not intended to match the browser URL.
 
     Since v4.3.0, if you set ``Config\App::$allowedHostnames``,
     this returns the URL with the hostname set in it if the current URL matches.
@@ -160,9 +160,9 @@ The following functions are available:
         However, due to a bug, this function always returned a path relative to baseURL.
         Since v4.3.2, the parameter has been removed.
 
-    .. note:: In previous versions, when you navigate to the baseURL, this function
+    .. note:: In previous versions, when you navigated to the baseURL, this function
         returned ``/``. Since v4.3.2, the bug has been fixed and it returns an
-        empty string(``''``).
+        empty string (``''``).
 
 .. php:function:: index_page([$altConfig = null])
 
@@ -195,12 +195,12 @@ The following functions are available:
     URL. As with the :php:func:`site_url()` function above, segments can
     be a string or an array.
 
-    .. note:: If you are building links that are internal to your application
+    .. note:: If you are building links that are internal to your application,
         do not include the base URL (``http://...``). This will be added
         automatically from the information specified in your config file.
         Include only the URI segments you wish appended to the URL.
 
-    The second segment is the text you would like the link to say. If you
+    The second parameter is the text you would like the link to say. If you
     leave it blank, the URL will be used.
 
     The third parameter can contain a list of attributes you would like
@@ -216,7 +216,7 @@ The following functions are available:
     different site than yours, which contains different configuration preferences.
     We use this for unit testing the framework itself.
 
-    .. note:: Attributes passed into the anchor function are automatically escaped to protected against XSS attacks.
+    .. note:: Attributes passed into the anchor function are automatically escaped to protect against XSS attacks.
 
 .. php:function:: anchor_popup([$uri = ''[, $title = ''[, $attributes = false[, $altConfig = null]]]])
 
@@ -230,7 +230,7 @@ The following functions are available:
     Nearly identical to the :php:func:`anchor()` function except that it
     opens the URL in a new window. You can specify JavaScript window
     attributes in the third parameter to control how the window is opened.
-    If the third parameter is not set it will simply open a new window with
+    If the third parameter is not set, it will simply open a new window with
     your own browser settings.
 
     Here is an example with attributes:
@@ -242,9 +242,9 @@ The following functions are available:
     different site than yours, which contains different configuration preferences.
     We use this for unit testing the framework itself.
 
-    .. note:: The above attributes are the function defaults so you only need to
+    .. note:: The above attributes are the function defaults, so you only need to
         set the ones that are different from what you need. If you want the
-        function to use all of its defaults simply pass an empty array in the
+        function to use all of its defaults, simply pass an empty array in the
         third parameter:
 
         .. literalinclude:: url_helper/010.php
@@ -253,10 +253,10 @@ The following functions are available:
         the JavaScript `window.open() <https://www.w3schools.com/jsref/met_win_open.asp>`_
         method, which accepts either a window name or a window target.
 
-    .. note:: Any other attribute than the listed above will be parsed as an
+    .. note:: Any attribute other than those listed above will be parsed as an
         HTML attribute to the anchor tag.
 
-    .. note:: Attributes passed into the anchor_popup function are automatically escaped to protected against XSS attacks.
+    .. note:: Attributes passed into the anchor_popup function are automatically escaped to protect against XSS attacks.
 
 .. php:function:: mailto($email[, $title = ''[, $attributes = '']])
 
@@ -270,12 +270,12 @@ The following functions are available:
 
     .. literalinclude:: url_helper/011.php
 
-    As with the :php:func:`anchor()` tab above, you can set attributes using the
+    As with the :php:func:`anchor()` function above, you can set attributes using the
     third parameter:
 
     .. literalinclude:: url_helper/012.php
 
-    .. note:: Attributes passed into the mailto function are automatically escaped to protected against XSS attacks.
+    .. note:: Attributes passed into the mailto function are automatically escaped to protect against XSS attacks.
 
 .. php:function:: safe_mailto($email[, $title = ''[, $attributes = '']])
 
@@ -336,7 +336,7 @@ The following functions are available:
 
     .. literalinclude:: url_helper/017.php
 
-    The second parameter determines the word delimiter. By default dashes
+    The second parameter determines the word delimiter. By default, dashes
     are used. Preferred options are: ``-`` (dash) or ``_`` (underscore).
 
     Example:
@@ -344,7 +344,7 @@ The following functions are available:
     .. literalinclude:: url_helper/018.php
 
     The third parameter determines whether or not lowercase characters are
-    forced. By default they are not. Options are boolean true/false.
+    forced. By default, they are not. Options are boolean true/false.
 
     Example:
 
@@ -361,9 +361,9 @@ The following functions are available:
     This function works the same as :php:func:`url_title()` but it converts all
     accented characters automatically.
 
-.. php:function:: parse_subdomain($hostname)
+.. php:function:: parse_subdomain([$host = null])
 
-    :param  string|null  $hostname: The hostname to parse. If null, uses the current request's host.
+    :param  string|null  $host: The hostname to parse. If null, uses the current request's host.
     :returns: The subdomain, or an empty string if none exists.
     :rtype: string
 
@@ -392,7 +392,7 @@ The following functions are available:
 
 .. php:function:: url_to($controller[, ...$args])
 
-    :param  string  $controller: Route name or Controller::method
+    :param  string  $controller: Route name or ``Controller::method``
     :param  int|string ...$args:    One or more parameters to be passed to the route. The last parameter allows you to set the locale.
     :returns: Absolute URL
     :rtype: string
@@ -415,7 +415,7 @@ The following functions are available:
 
     .. literalinclude:: url_helper/025.php
 
-    For full details, see the :ref:`reverse-routing` and :ref:`using-named-routes`.
+    For full details, see :ref:`reverse-routing` and :ref:`using-named-routes`.
 
 .. php:function:: url_is($path)
 

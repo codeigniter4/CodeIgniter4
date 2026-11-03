@@ -20,7 +20,7 @@ sources that are not explicitly approved. This authorization is defined within
 the response's ``Content-Security-Policy`` header and offers various configuration
 options.
 
-This sounds complex, and on some sites, can definitely be challenging. For many simple sites, though, where all content
+This sounds complex, and on some sites can definitely be challenging. For many simple sites, though, where all content
 is served by the same domain (e.g., **http://example.com**), it is very simple to integrate.
 
 As this is a complex subject, this user guide will not go over all of the details. For more information, you should
@@ -36,9 +36,9 @@ Turning CSP On
 **************
 
 .. important:: The :ref:`Debug Toolbar <the-debug-toolbar>` may use Kint, which
-    outputs inline scripts. Therefore, when CSP is turned on, CSP nonce is
+    outputs inline scripts. Therefore, when CSP is turned on, a CSP nonce is
     automatically output for the Debug Toolbar. However, if you are not using
-    CSP nonce, this will change the CSP header to something you do not intend,
+    CSP nonces, this will change the CSP header to something you do not intend,
     and it will behave differently than in production; if you want to verify CSP
     behavior, turn off the Debug Toolbar.
 
@@ -59,8 +59,8 @@ of your choice.
 
 Our implementation provides for a default treatment, changeable through the ``reportOnly()`` method.
 When an additional entry is added to a CSP directive, as shown below, it will be added
-to the CSP header appropriate for blocking or preventing. That can be overridden on a per
-call basis, by providing an optional second parameter to the adding method call.
+to the CSP header appropriate for blocking or preventing. That can be overridden on a
+per-call basis, by providing an optional second parameter to the adding method call.
 
 *********************
 Runtime Configuration
@@ -82,7 +82,7 @@ Report Only
 ===========
 
 The ``reportOnly()`` method allows you to specify the default reporting treatment
-for subsequent sources, unless over-ridden.
+for subsequent sources, unless overridden.
 
 For instance, you could specify
 that youtube.com was allowed, and then provide several allowed but reported sources:
@@ -119,9 +119,9 @@ method:
 Inline Content
 **************
 
-It is possible to set a website to not protect even inline scripts and styles on its own pages, since this might have
-been the result of user-generated content. To protect against this, CSP allows you to specify a nonce within the
-``<style>`` and ``<script>`` tags, and to add those values to the response's header.
+Inline scripts and styles can be injected through user-generated content. To allow only trusted inline content,
+CSP lets you add a nonce to trusted ``<style>`` and ``<script>`` tags and include the same nonce in the response's
+Content-Security-Policy header.
 
 Using Placeholders
 ==================
@@ -153,9 +153,9 @@ Using Functions
 ===============
 
 If you don't like the auto replacement functionality above, you can turn it off
-with setting ``$autoNonce = false`` in **app/Config/ContentSecurityPolicy.php**.
+by setting ``$autoNonce = false`` in **app/Config/ContentSecurityPolicy.php**.
 
-In this case, you can use the functions, :php:func:`csp_script_nonce()` and :php:func:`csp_style_nonce()`::
+In this case, you can use the functions :php:func:`csp_script_nonce()` and :php:func:`csp_style_nonce()`::
 
     // Original
     <script <?= csp_script_nonce() ?>>

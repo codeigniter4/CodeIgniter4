@@ -4,7 +4,7 @@ Testing Controllers
 
 Testing your controllers is made convenient with a couple of new helper classes and traits. When testing controllers,
 you can execute the code within a controller, without first running through the entire application bootstrap process.
-Often times, using the :doc:`Feature Testing tools <feature>` will be simpler, but this functionality is here in
+Often, using the :doc:`Feature Testing tools <feature>` will be simpler, but this functionality is here in
 case you need it.
 
 .. note:: Because the entire framework has not been bootstrapped, there will be times when you cannot test a controller
@@ -17,7 +17,7 @@ case you need it.
 The Helper Trait
 ================
 
-To enable Controller Testing you need to use the ``ControllerTestTrait`` trait within your tests:
+To enable Controller Testing, you need to use the ``ControllerTestTrait`` trait within your tests:
 
 .. literalinclude:: controllers/001.php
 
@@ -101,8 +101,8 @@ representing a valid URI:
 
 It is a good practice to always provide the URI during testing to avoid surprises.
 
-.. note:: Since v4.4.0, this method creates a new Request instance with the URI.
-    Because the Request instance should have the URI instance. Also if the hostname
+.. note:: Since v4.4.0, this method creates a new Request instance with the URI,
+    because the Request instance should have the URI instance. Also, if the hostname
     in the URI string is invalid with ``Config\App``, the valid hostname will be
     set.
 
@@ -124,12 +124,12 @@ Filter Testing
 ==============
 
 Similar to Controller Testing, the framework provides tools to help with creating tests for
-custom :doc:`Filters </incoming/filters>` and your projects use of them in routing.
+custom :doc:`Filters </incoming/filters>` and your project's use of them in routing.
 
 The Helper Trait
 ----------------
 
-Just like with the Controller Tester you need to include the ``FilterTestTrait`` in your test
+Just like with the Controller Tester, you need to include the ``FilterTestTrait`` in your test
 cases to enable these features:
 
 .. literalinclude:: controllers/011.php
@@ -137,28 +137,28 @@ cases to enable these features:
 Configuration
 -------------
 
-Because of the logical overlap with Controller Testing ``FilterTestTrait`` is designed to
+Because of the logical overlap with Controller Testing, ``FilterTestTrait`` is designed to
 work together with ``ControllerTestTrait`` should you need both on the same class.
-Once the trait has been included ``CIUnitTestCase`` will detect its ``setUp`` method and
-prepare all the components needed for your tests. Should you need a special configuration
+Once the trait has been included, ``CIUnitTestCase`` will detect its ``setUp`` method and
+prepare all the components needed for your tests. Should you need a special configuration,
 you can alter any of the properties before calling the support methods:
 
 * ``$request`` A prepared version of the default ``IncomingRequest`` service
 * ``$response`` A prepared version of the default ``ResponseInterface`` service
-* ``$filtersConfig`` The default ``Config\Filters`` configuration (note: discovery is handle by ``Filters`` so this will not include module aliases)
+* ``$filtersConfig`` The default ``Config\Filters`` configuration (note: discovery is handled by ``Filters`` so this will not include module aliases)
 * ``$filters`` An instance of ``CodeIgniter\Filters\Filters`` using the three components above
 * ``$collection`` A prepared version of ``RouteCollection`` which includes the discovery of ``Config\Routes``
 
 The default configuration will usually be best for your testing since it most closely emulates
 a "live" project, but (for example) if you wanted to simulate a filter triggering accidentally
-on an unfiltered route you could add it to the Config:
+on an unfiltered route, you could add it to the Config:
 
 .. literalinclude:: controllers/012.php
 
 Checking Routes
 ---------------
 
-The first helper method is ``getFiltersForRoute()`` which will simulate the provided route
+The first helper method is ``getFiltersForRoute()``, which will simulate the provided route
 and return a list of all Filters (by their alias) that would have run for the given position
 ("before" or "after"), without actually executing any controller or routing code. This has
 a large performance advantage over Controller and HTTP Testing.
@@ -177,8 +177,8 @@ a large performance advantage over Controller and HTTP Testing.
 Calling Filter Methods
 ----------------------
 
-The properties describe in Configuration are all set up to ensure maximum performance without
-interfering or interference from other tests. The next helper method will return a callable
+The properties described in Configuration are all set up to ensure maximum performance without
+interference from other tests. The next helper method will return a callable
 method using these properties to test your Filter code safely and check the results.
 
 .. php:function:: getFilterCaller($filter, $position)
@@ -197,33 +197,33 @@ method using these properties to test your Filter code safely and check the resu
 Assertions
 ----------
 
-In addition to the helper methods above ``FilterTestTrait`` also comes with some assertions
+In addition to the helper methods above, ``FilterTestTrait`` also comes with some assertions
 to streamline your test methods.
 
 assertFilter()
 ^^^^^^^^^^^^^^
 
-The ``assertFilter()`` method checks that the given route at position uses the filter (by its alias):
+The ``assertFilter()`` method checks that the given route at the given position uses the filter (by its alias):
 
 .. literalinclude:: controllers/015.php
 
 assertNotFilter()
 ^^^^^^^^^^^^^^^^^
 
-The ``assertNotFilter()`` method checks that the given route at position does not use the filter (by its alias):
+The ``assertNotFilter()`` method checks that the given route at the given position does not use the filter (by its alias):
 
 .. literalinclude:: controllers/016.php
 
 assertHasFilters()
 ^^^^^^^^^^^^^^^^^^
 
-The ``assertHasFilters()`` method checks that the given route at position has at least one filter set:
+The ``assertHasFilters()`` method checks that the given route at the given position has at least one filter set:
 
 .. literalinclude:: controllers/017.php
 
 assertNotHasFilters()
 ^^^^^^^^^^^^^^^^^^^^^
 
-The ``assertNotHasFilters()`` method checks that the given route at position has no filters set:
+The ``assertNotHasFilters()`` method checks that the given route at the given position has no filters set:
 
 .. literalinclude:: controllers/018.php

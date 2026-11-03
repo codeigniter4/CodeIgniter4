@@ -22,19 +22,19 @@ Configuring the Locale
 Setting the Default Locale
 --------------------------
 
-Every site will have a default language/locale they operate in. This can be set in **app/Config/App.php**:
+Every site will have a default language/locale it operates in. This can be set in **app/Config/App.php**:
 
 .. literalinclude:: localization/001.php
 
 The value can be any string that your application uses to manage text strings and other formats. It is
 recommended that a `BCP 47 <http://www.rfc-editor.org/rfc/bcp/bcp47.txt>`_ language code is used. This results in
-language codes like en-US for American English, or fr-FR, for French/France. A more readable introduction
+language codes like en-US for American English, or fr-FR for French/France. A more readable introduction
 to this can be found on the `W3C's site <https://www.w3.org/International/articles/language-tags/>`_.
 
 The system is smart enough to fall back to more generic language codes if an exact match
-cannot be found. If the locale code was set to ``en-US`` and we only have language files set up for ``en``
+cannot be found. If the locale code was set to ``en-US`` and we only have language files set up for ``en``,
 then those will be used since nothing exists for the more specific ``en-US``. If, however, a language
-directory existed at the **app/Language/en-US** directory then that would be used first.
+directory existed at **app/Language/en-US**, then that would be used first.
 
 Locale Detection
 ================
@@ -61,8 +61,8 @@ The first value tells the Request class that we do want to negotiate a locale, s
 .. literalinclude:: localization/002.php
 
 Once this is enabled, the system will automatically negotiate the correct language based upon an array
-of locales that you have defined in ``$supportLocales``. If no match is found between the languages
-that you support, and the requested language, the first item in ``$supportedLocales`` will be used. In
+of locales that you have defined in ``$supportedLocales``. If no match is found between the languages
+that you support and the requested language, the first item in ``$supportedLocales`` will be used. In
 the following example, the ``en`` locale would be used if no match is found:
 
 .. literalinclude:: localization/003.php
@@ -83,7 +83,7 @@ In this example, if the user tried to visit **http://example.com/fr/books**, the
 set to ``fr``, assuming it was configured as a valid locale.
 
 If the value doesn't match a valid locale as defined in ``$supportedLocales`` in **app/Config/App.php**, the default
-locale will be used in its place, unless you set to use only the supported locales defined in the App configuration
+locale will be used in its place, unless you choose to use only the supported locales defined in the App configuration
 file:
 
 .. literalinclude:: localization/018.php
@@ -103,7 +103,7 @@ the :doc:`../incoming/incomingrequest`:
 .. literalinclude:: localization/020.php
     :lines: 2-
 
-Before setting the locale, you must set valid locales. Because any attempt to
+Before setting the locale, you must set valid locales, because any attempt to
 set a locale that is not valid will result in
 the :ref:`default locale <setting-the-default-locale>` being set.
 
@@ -120,7 +120,7 @@ Language Locale
 ---------------
 
 The ``Language`` class used in the :php:func:`lang()` function also has the current
-locale. This is set to the ``IncomingRequest`` locale during instantiating.
+locale. This is set to the ``IncomingRequest`` locale during instantiation.
 
 If you want to change the locale after instantiating the language class, use the
 ``Language::setLocale()`` method.
@@ -162,17 +162,17 @@ supported language (locale)::
 
 .. note:: The Language Files do not have namespaces.
 
-Languages do not have any specific naming convention that are required. The file should be named logically to
+Languages do not have any specific naming convention that is required. The file should be named logically to
 describe the type of content it holds. For example, let's say you want to create a file containing error messages.
 You might name it simply: **Errors.php**.
 
-Within the file, you would return an array, where each element in the array has a language key and can have string to return:
+Within the file, you would return an array, where each element in the array has a language key and can have a string to return:
 
 .. literalinclude:: localization/007.php
 
 .. note:: You cannot use dots (``.``) at the beginning and end of language keys.
 
-It also supports nested definition:
+It also supports nested definitions:
 
 .. literalinclude:: localization/008.php
 
@@ -190,7 +190,7 @@ language file, you would do the following:
 .. literalinclude:: localization/010.php
     :lines: 2-
 
-For nested definition, you would do the following:
+For nested definitions, you would do the following:
 
 .. literalinclude:: localization/011.php
     :lines: 2-
@@ -236,7 +236,7 @@ Here are a few examples:
 .. literalinclude:: localization/015.php
 
 You should be sure to read up on the MessageFormatter class and the underlying ICU formatting to get a better
-idea on what capabilities it has, like performing the conditional replacement, pluralization, and more. Both of the links provided
+idea of what capabilities it has, like performing conditional replacement, pluralization, and more. Both of the links provided
 earlier will give you an excellent idea as to the options available.
 
 Specifying Locale
@@ -252,7 +252,7 @@ If you want to change the current locale, see `Language Locale`_.
 Nested Arrays
 -------------
 
-Language files also allow nested arrays to make working with lists, etc... easier.
+Language files also allow nested arrays to make working with lists, etc. easier.
 
 .. literalinclude:: localization/017.php
 
@@ -285,7 +285,7 @@ You could download that repository, and copy its **Language** folder
 into your **app** folder. The incorporated translations will be automatically
 picked up because the ``App`` namespace is mapped to your **app** folder.
 
-Alternately, a better practice would be to run the following command inside your
+Alternatively, a better practice would be to run the following command inside your
 project:
 
 .. code-block:: console
@@ -298,7 +298,7 @@ up because the translations folders get mapped appropriately.
 Overriding System Message Translations
 ======================================
 
-The framework provide `System Message Translations`_, and packages that you
+The framework provides `System Message Translations`_, and packages that you
 installed may also provide the message translations.
 
 If you want to override some language messages, create language files in the
@@ -312,9 +312,9 @@ Generating Translation Files via Command
 
 .. versionadded:: 4.5.0
 
-You can automatically generate and update translation files in your **app** folder. The command will search for the use of the ``lang()`` function, combine the current translation keys in **app/Language** by defining the locale ``defaultLocale`` from ``Config\App``.
+You can automatically generate and update translation files in your **app** folder. The command will search for uses of the ``lang()`` function and combine them with the current translation keys in **app/Language**, using the ``defaultLocale`` locale from ``Config\App``.
 After the operation, you need to translate the language keys yourself.
-The command is able to recognize nested keys normally ``File.array.nested.text``.
+The command can recognize nested keys such as ``File.array.nested.text``.
 Previously saved keys do not change.
 
 .. note:: Keys that ``lang()`` can already resolve (for example ``Errors.*``
@@ -373,8 +373,8 @@ Detailed information can be found by running the command:
 
 .. _sync-translations-command:
 
-Synchronization Translation Files via Command
----------------------------------------------
+Synchronizing Translation Files via Command
+-------------------------------------------
 
 .. versionadded:: 4.6.0
 

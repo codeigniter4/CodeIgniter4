@@ -35,7 +35,7 @@ while connecting to specify a group name.
 DSN
 ---
 
-Some database drivers (such as Postgre, OCI8) requires a full DSN (Data Source Name) string to connect.
+Some database drivers (such as Postgre, OCI8) require a full DSN (Data Source Name) string to connect.
 But if you do not specify a DSN string for a driver that requires it, CodeIgniter
 will try to build it with the rest of the provided settings.
 
@@ -48,7 +48,7 @@ you're using the driver's underlying native PHP extension, like this:
 DSN in Universal Manner
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-You can also set a DSN in universal manner (URL like). In that case DSNs must have this prototype:
+You can also set a DSN in a universal manner (URL-like). In that case, DSNs must have this prototype:
 
 .. literalinclude:: configuration/003.php
     :lines: 11-14
@@ -161,7 +161,7 @@ Description of Values
 **swapPre**      A default table prefix that should be swapped with ``DBPrefix``. This is useful for distributed
                  applications where you might run manually written queries, and need the prefix to still be
                  customizable by the end user.
-**schema**       (``Postgre`` and ``SQLSRV`` only) The database schema, default value varies by driver.
+**schema**       (``Postgre`` and ``SQLSRV`` only) The database schema. The default value varies by driver.
 **encrypt**      (``MySQLi`` and ``SQLSRV`` only) Whether to use an encrypted connection.
                  See :ref:`MySQLi encrypt <mysqli-encrypt>` for ``MySQLi`` settings.
                  ``SQLSRV`` driver accepts true/false.
@@ -169,10 +169,10 @@ Description of Values
 **strictOn**     (``MySQLi`` only) true/false (boolean) - Whether to force "Strict Mode" connections, good for ensuring
                  strict SQL while developing an application.
 **port**         The database port number - Empty string ``''`` for default port (or dynamic port with ``SQLSRV``).
-**foreignKeys**  (``SQLite3`` only) true/false (boolean) - Whether to enable Foreign Key constraint.
+**foreignKeys**  (``SQLite3`` only) true/false (boolean) - Whether to enable Foreign Key constraints.
 **busyTimeout**  (``SQLite3`` only) milliseconds (int) - Sleeps for a specified amount of time when a table is locked.
 **synchronous**  (``SQLite3`` only) flag (int) - How strict SQLite will be at flushing to disk during transactions.
-                 Use `null` to stay with the default setting. This can be used since v4.6.0.
+                 Use ``null`` to stay with the default setting. This can be used since v4.6.0.
 **numberNative** (``MySQLi`` only) true/false (boolean) - Whether to enable MYSQLI_OPT_INT_AND_FLOAT_NATIVE.
 **foundRows**    (``MySQLi`` only) true/false (boolean) - Whether to enable MYSQLI_CLIENT_FOUND_ROWS.
 **dateFormat**   The default date/time formats as PHP's `DateTime format`_, with the keys listed below the table.
@@ -183,9 +183,9 @@ Description of Values
 .. note:: CodeIgniter doesn't support dots (``.``) in the table and column names.
     Since v4.5.0, database names with dots are supported.
 
-.. important:: SQLite3 Foreign Key constraint is disabled by default.
+.. important:: SQLite3 Foreign Key constraints are disabled by default.
     See `SQLite documentation <https://www.sqlite.org/pragma.html#pragma_foreign_keys>`_.
-    To enforce Foreign Key constraint, set **foreignKeys** to true.
+    To enforce Foreign Key constraints, set **foreignKeys** to true.
 
 The **dateFormat** array has the following keys:
 
@@ -200,7 +200,7 @@ Currently, the database drivers do not use these values directly,
 but :ref:`Model <model-saving-dates>` uses them.
 
 .. note:: Depending on what database driver you are using (``MySQLi``, ``Postgre``,
-    etc.) not all values will be needed. For example, when using ``SQLite3`` you
+    etc.), not all values will be needed. For example, when using ``SQLite3`` you
     will not need to supply a username or password, and the database name
     will be the path to your database file.
 
@@ -225,7 +225,7 @@ connection properly.
 encrypt
 -------
 
-MySQLi driver accepts an array with the following options:
+The MySQLi driver accepts an array with the following options:
 
 * ``ssl_key``    - Path to the private key file
 * ``ssl_cert``   - Path to the public key certificate file

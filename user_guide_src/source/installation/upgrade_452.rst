@@ -17,7 +17,7 @@ Project Files
 *************
 
 Some files in the **project space** (root, app, public, writable) received updates. Due to
-these files being outside of the **system** scope they will not be changed without your intervention.
+these files being outside of the **system** scope, they will not be changed without your intervention.
 
 .. note:: There are some third-party CodeIgniter modules available to assist
     with merging changes to the project space:
@@ -29,13 +29,13 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- app/Config/DocTypes.php
-- app/Config/Exceptions.php
-- preload.php
+- **app/Config/DocTypes.php**
+- **app/Config/Exceptions.php**
+- **preload.php**
 - spark
-- writable/.htaccess
-- writable/cache/index.html
-- writable/debugbar/index.html
-- writable/index.html
-- writable/logs/index.html
-- writable/session/index.html
+- **writable/.htaccess**
+- **writable/cache/index.html**
+- **writable/debugbar/index.html**
+- **writable/index.html**
+- **writable/logs/index.html**
+- **writable/session/index.html**

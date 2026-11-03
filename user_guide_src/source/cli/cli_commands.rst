@@ -4,7 +4,7 @@ Creating Spark Commands
 
 While the ability to use Controllers via CLI like any other route is convenient, you might find times where you
 need a little something different. That's where Spark commands come in. They are simple classes that do not
-need to have routes defined for, making them perfect for building tools that developers can use to make
+need to have routes defined, making them perfect for building tools that developers can use to make
 their jobs simpler, whether by handling migrations or database seeding, checking cronjob status, or even
 building out custom code generators for your company.
 
@@ -17,7 +17,7 @@ Creating New Commands
 *********************
 
 You can very easily create new commands to use in your own development. Each class must be in its own file,
-and must extend ``CodeIgniter\CLI\BaseCommand``, and implement the ``run()`` method.
+must extend ``CodeIgniter\CLI\BaseCommand``, and must implement the ``run()`` method.
 
 The following properties should be used in order to get listed in CLI commands and to add help functionality to your command:
 
@@ -38,7 +38,7 @@ so that the :doc:`Autoloader </concepts/autoloader>` can locate it. This could b
 a directory that you keep commands in to use in all of your project development, like **Acme/Commands**.
 
 .. note:: When the commands are executed, the full CodeIgniter CLI environment has been loaded, making it
- possible to get environment information, path information, and to use any of the tools you would use when making a Controller.
+    possible to get environment information, path information, and to use any of the tools you would use when making a Controller.
 
 An Example Command
 ==================
@@ -58,7 +58,7 @@ a space, and all characters must be valid on the command line itself. By convent
 with further grouping of commands being done by using a colon with the command name itself. This helps keep
 multiple commands from having naming collisions.
 
-The final property, ``$description`` is a short string that is displayed in the **list** command and should describe
+The final property, ``$description``, is a short string that is displayed in the **list** command and should describe
 what the command does.
 
 run()
@@ -100,7 +100,7 @@ You can use the ``EXIT_*`` exit code constants defined in the **app/Config/Const
 BaseCommand
 ***********
 
-The ``BaseCommand`` class that all commands must extend have a couple of helpful utility methods that you should
+The ``BaseCommand`` class that all commands must extend has a couple of helpful utility methods that you should
 be familiar with when creating your own commands. It also has a :doc:`Logger </general/logging>` available at
 ``$this->logger``.
 
@@ -127,7 +127,7 @@ be familiar with when creating your own commands. It also has a :doc:`Logger </g
 
     .. php:method:: showHelp()
 
-        A method to show command help: (usage,arguments,description,options)
+        A method to show command help (usage, arguments, description, options).
 
     .. php:method:: setPad(string $item, int $max, int $extra = 2, int $indent = 0): string
 
@@ -147,7 +147,7 @@ be familiar with when creating your own commands. It also has a :doc:`Logger </g
         .. deprecated:: 4.0.5
             Use :php:meth:`CodeIgniter\\CLI\\BaseCommand::setPad()` instead.
 
-        :param array    $array: The  $key => $value array.
+        :param array    $array: The ``$key`` => ``$value`` array.
         :param integer  $pad: The pad spaces.
 
-        A method to calculate padding for ``$key => $value`` array output. The padding can be used to output a will formatted table in CLI.
+        A method to calculate padding for ``$key => $value`` array output. The padding can be used to output a well-formatted table in CLI.

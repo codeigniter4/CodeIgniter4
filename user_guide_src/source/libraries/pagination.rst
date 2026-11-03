@@ -2,8 +2,8 @@
 Pagination
 ##########
 
-CodeIgniter provides a very simple, but flexible pagination library that is simple to theme, works with the model,
-and capable of supporting multiple paginators on a single page.
+CodeIgniter provides a very simple but flexible pagination library that is simple to theme, works with the model,
+and is capable of supporting multiple paginators on a single page.
 
 .. contents::
     :local:
@@ -34,7 +34,7 @@ To provide a paginated list of users in your application, your controller's meth
 .. literalinclude:: pagination/002.php
 
 In this example, we first create a new instance of our ``UserModel``. Then we populate the data to send to the view.
-The first element is the results from the database, **users**, which is retrieved for the correct page, returning
+The first element is the results from the database, **users**, which are retrieved for the correct page, returning
 10 users per page. The second item that must be sent to the view is the Pager instance itself. As a convenience,
 the Model will hold on to the instance it used and store it in the public property, ``$pager``. So, we grab
 that and assign it to the ``$pager`` variable in the view.
@@ -43,7 +43,7 @@ Customizing Query for Pagination
 ================================
 
 To customize a query for pagination in a model, you can add
-:doc:`Query Builder <../database/query_builder>` methods before ``paginate()``
+:doc:`Query Builder <../database/query_builder>` methods before the ``paginate()``
 method.
 
 Adding WHERE
@@ -89,10 +89,10 @@ for any pages more than two pages on either side of the current page.
 
 It is important to be aware that the library pattern for Next and Previous is different from what is used in the traditional way of paging results.
 
-Next and Previous here is linked to the group of links to be displayed in the pagination structure, and not to the next or previous page of records.
+Next and Previous here are linked to the group of links to be displayed in the pagination structure, and not to the next or previous page of records.
 
 If you prefer a simpler output, you can use the ``simpleLinks()`` method, which only uses "Older" and "Newer" links,
-instead of the details pagination links::
+instead of the detailed pagination links::
 
     <?= $pager->simpleLinks() ?>
 
@@ -110,8 +110,8 @@ methods to keep the data separate:
 Setting Page Manually
 =====================
 
-If you need to specify which page of results to return you can specify the page as the 3rd argument. This can be
-handy when you have a different manner than the default ``$_GET`` variable to control which page to show.
+If you need to specify which page of results to return, you can specify the page as the 3rd argument. This can be
+handy when you use a different way than the default ``$_GET`` variable to control which page to show.
 
 .. literalinclude:: pagination/005.php
 
@@ -124,13 +124,13 @@ like **https://domain.tld/foo/bar/[pageNumber]** instead of **https://domain.tld
 
 .. literalinclude:: pagination/006.php
 
-Please note: ``$segment`` value cannot be greater than the number of URI segments plus 1.
+Please note: the ``$segment`` value cannot be greater than the number of URI segments plus 1.
 
 *****************
 Manual Pagination
 *****************
 
-You may find times where you just need to create pagination based on known data. You can create links manually
+There may be times when you just need to create pagination based on known data. You can create links manually
 with the ``makeLinks()`` method, which takes the current page, the number of results per page, and
 the total number of items as the first, second, and third parameters, respectively:
 
@@ -147,13 +147,13 @@ the previous section. Specify the segment number to use as the fifth parameter t
 
     $pager->makeLinks($page, $perPage, $total, 'template_name', $segment);
 
-Please note: ``$segment`` value cannot be greater than the number of URI segments plus 1.
+Please note: the ``$segment`` value cannot be greater than the number of URI segments plus 1.
 
-If you need to show many pagers on one page then the additional parameter which will define a group could be helpful:
+If you need to show many pagers on one page, then an additional parameter that defines a group can be helpful:
 
 .. literalinclude:: pagination/007.php
 
-Pagination library uses **page** query parameter for HTTP queries by default (if no group or ``default`` group name given) or ``page_[groupName]`` for custom group names.
+The Pagination library uses the **page** query parameter for HTTP queries by default (if no group or the ``default`` group name is given) or ``page_[groupName]`` for custom group names.
 
 *************************************
 Paginating with Only Expected Queries
@@ -169,7 +169,7 @@ The ``only()`` method allows you to limit this just to queries already expected:
 
 .. literalinclude:: pagination/009.php
 
-The *page* query is enabled by default. And ``only()`` acts in all pagination links.
+The *page* query is enabled by default. The ``only()`` method applies to all pagination links.
 
 *********************
 Customizing the Links
@@ -188,9 +188,9 @@ should be used. The ``default_full`` and ``default_simple`` views are used for t
 methods, respectively. To change the way those are displayed application-wide, you could assign a new view here.
 
 For example, say you create a new view file that works with the Foundation CSS framework, and
-you place that file at **app/Views/Pagers/foundation_full.php**. Since the **application** directory is
+you place that file at **app/Views/Pagers/foundation_full.php**. Since the **app** directory is
 namespaced as ``App``, and all directories underneath it map directly to segments of the namespace, you can locate
-the view file through it's namespace::
+the view file through its namespace::
 
     'default_full' => 'App\Views\Pagers\foundation_full'
 
@@ -205,7 +205,7 @@ file. A common situation would be needing different styles for the frontend and 
 
 .. literalinclude:: pagination/011.php
 
-Once configured, you can specify it as a the last parameter in the ``links()``, ``simpleLinks()``, and ``makeLinks()``
+Once configured, you can specify it as the last parameter in the ``links()``, ``simpleLinks()``, and ``makeLinks()``
 methods::
 
     <?= $pager->links('group1', 'front_full') ?>
@@ -216,7 +216,7 @@ Creating the View
 =================
 
 When you create a new view, you only need to create the code that is needed for creating the pagination links themselves.
-You should not create unnecessary wrapping divs since it might be used in multiple places and you only limit their
+You should not create unnecessary wrapping divs, since the view might be used in multiple places and they would only limit its
 usefulness. It is easiest to demonstrate creating a new view by showing you the existing ``default_full`` template:
 
 .. literalinclude:: pagination/012.php
@@ -248,7 +248,7 @@ getPrevious() & getNext()
 
 These methods return the **URL** for the previous or next pages of results on either side of the numbered links.
 
-For example, you have the current page set at 5 and you want to have the links before and after (the surroundCount) to be 2 each, that will give you something like this::
+For example, if you have the current page set at 5 and you want the links before and after (the surroundCount) to be 2 each, that will give you something like this::
 
     3  |  4  |  5  |  6  |  7
 
@@ -265,14 +265,14 @@ result set.
 links()
 -------
 
-Returns an array of data about all of the numbered links. Each link's array contains the uri for the link, the
+Returns an array of data about all of the numbered links. Each link's array contains the URI for the link, the
 title, which is just the number, and a boolean that tells whether the link is the current/active link or not:
 
 .. literalinclude:: pagination/013.php
 
-In the code presented for the standard pagination structure, the methods `getPrevious() & getNext()`_ are used to obtain the links to the previous and next pagination groups respectively.
+In the code presented for the standard pagination structure, the methods `getPrevious() & getNext()`_ are used to obtain the links to the previous and next pagination groups, respectively.
 
-If you want to use the pagination structure where prev and next will be links to the previous and next pages based on the current page, just replace the `getPrevious() & getNext()`_ methods with `getPreviousPage() & getNextPage()`_, and the methods `hasPrevious() & hasNext()`_ by `hasPreviousPage() & hasNextPage()`_ respectively.
+If you want to use the pagination structure where prev and next will be links to the previous and next pages based on the current page, just replace the `getPrevious() & getNext()`_ methods with `getPreviousPage() & getNextPage()`_, and the methods `hasPrevious() & hasNext()`_ with `hasPreviousPage() & hasNextPage()`_, respectively.
 
 See the following example with these changes:
 
@@ -281,18 +281,18 @@ See the following example with these changes:
 hasPreviousPage() & hasNextPage()
 ---------------------------------
 
-This method returns a boolean ``true`` if there are links to a page before and after, respectively, the current page being displayed.
+These methods return a boolean ``true`` if there are links to a page before and after, respectively, the current page being displayed.
 
 For example, let's say we have 20 pages of data. The current
 page is page 3. If the surrounding count is 2, then the following links would show up like this::
 
     1  |  2  |  3  |  4  |  5
 
-``hasPreviousPage()`` would return ``true`` since there is page 2. And,
-``hasNextPage()`` would return ``true`` since there is page 4.
+``hasPreviousPage()`` would return ``true`` since page 2 exists, and
+``hasNextPage()`` would return ``true`` since page 4 exists.
 
-.. note:: The difference to `hasPrevious() & hasNext()`_ is that they are based
-    on the current page while `hasPrevious() & hasNext()`_ are based on the set
+.. note:: The difference from `hasPrevious() & hasNext()`_ is that these methods are based
+    on the current page, while `hasPrevious() & hasNext()`_ are based on the set
     of links to be displayed before and after the current page based on the value
     passed in `setSurroundCount()`_.
 
@@ -301,13 +301,13 @@ getPreviousPage() & getNextPage()
 
 These methods return a **URL** for the previous and next pages in relation to the current page being displayed.
 
-For example, you have the current page set at 5 and you want to have the links before and after (the surroundCount) to be 2 each, that will give you something like this::
+For example, if you have the current page set at 5 and you want the links before and after (the surroundCount) to be 2 each, that will give you something like this::
 
     3  |  4  |  5  |  6  |  7
 
 ``getPreviousPage()`` returns the URL for page 4. ``getNextPage()`` returns the URL for page 6.
 
-.. note:: `getPrevious() & getNext()`_ returns the URL for the previous or next
+.. note:: `getPrevious() & getNext()`_ return the URL for the previous or next
     pages of results on either side of the numbered links.
 
 If you want page numbers instead of URLs, you can use the following methods:
@@ -339,7 +339,7 @@ This method returns the page number of the current page.
 getPageCount()
 --------------
 
-This method returns total number of pages.
+This method returns the total number of pages.
 
 .. _displaying-the-number-of-items-on-the-page:
 
@@ -354,7 +354,7 @@ When paginating items, it’s often helpful to display the total number of items
 
 getTotal()
 ----------
-Returns the total items of the page.
+Returns the total number of items.
 
 getPerPage()
 ------------
@@ -362,8 +362,8 @@ Returns the number of items to be displayed on the page.
 
 getPerPageStart()
 -----------------
-Returns the number of items the page starts with.
+Returns the number of the item the page starts with.
 
 getPerPageEnd()
 ---------------
-Returns the number of items the page ends with.
+Returns the number of the item the page ends with.

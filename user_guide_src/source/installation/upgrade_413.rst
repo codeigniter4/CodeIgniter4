@@ -27,7 +27,7 @@ Project Files
 *************
 
 Only a few files in the project space (root, app, public, writable) received updates. Due to
-these files being outside of the system scope they will not be changed without your intervention.
+these files being outside of the system scope, they will not be changed without your intervention.
 The following files received changes and it is recommended that you merge the updated versions with your application:
 
 * ``app/Config/Cache.php``

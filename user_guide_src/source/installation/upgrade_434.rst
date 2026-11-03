@@ -1,6 +1,6 @@
-##############################
+#############################
 Upgrading from 4.3.3 to 4.3.4
-##############################
+#############################
 
 Please refer to the upgrade instructions corresponding to your installation method.
 
@@ -38,7 +38,7 @@ Project Files
 *************
 
 Some files in the **project space** (root, app, public, writable) received updates. Due to
-these files being outside of the **system** scope they will not be changed without your intervention.
+these files being outside of the **system** scope, they will not be changed without your intervention.
 
 There are some third-party CodeIgniter modules available to assist with merging changes to
 the project space: `Explore on Packagist <https://packagist.org/explore/?query=codeigniter4%20updates>`_.
@@ -52,7 +52,7 @@ and it is recommended that you merge the updated versions with your application:
 Config
 ------
 
-- app/Config/Generators.php
+- **app/Config/Generators.php**
 
 All Changes
 ===========
@@ -60,7 +60,7 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- app/Config/App.php
-- app/Config/Generators.php
-- composer.json
-- public/index.php
+- **app/Config/App.php**
+- **app/Config/Generators.php**
+- **composer.json**
+- **public/index.php**

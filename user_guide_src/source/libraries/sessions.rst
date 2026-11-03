@@ -5,7 +5,7 @@ Session Library
 The Session class permits you to maintain a user's "state" and track their
 activity while they browse your site.
 
-CodeIgniter comes with a few session storage drivers, that you can see
+CodeIgniter comes with a few session storage drivers, which you can see
 in the last section of the table of contents:
 
 .. contents::
@@ -25,7 +25,7 @@ To access and initialize the session:
 
 .. literalinclude:: sessions/001.php
 
-The ``$config`` parameter is optional - your application configuration.
+The ``$config`` parameter is your application configuration, and is optional.
 If not provided, the services register will instantiate your default
 one.
 
@@ -43,7 +43,7 @@ How Do Sessions Work?
 When a page is loaded, the session class will check to see if a valid
 session cookie is sent by the user's browser. If a session cookie does
 **not** exist (or if it doesn't match one stored on the server or has
-expired) a new session will be created and saved.
+expired), a new session will be created and saved.
 
 If a valid session does exist, its information will be updated. With each
 update, the session ID may be regenerated if configured to do so.
@@ -66,14 +66,14 @@ issues, then this note is exactly what you're looking for.
 
 Sessions in CodeIgniter v2.x didn't implement locking,
 which meant that two HTTP requests using the same session could run exactly
-at the same time. To use a more appropriate technical term - requests were
+at the same time. To use a more appropriate technical term: requests were
 non-blocking.
 
-However, non-blocking requests in the context of sessions also means
-unsafe, because, modifications to session data (or session ID regeneration)
+However, non-blocking requests in the context of sessions are also
+unsafe, because modifications to session data (or session ID regeneration)
 in one request can interfere with the execution of a second, concurrent
 request. This detail was at the root of many issues and the main reason why
-CodeIgniter 3 has a completely re-written Session library.
+CodeIgniter 3 has a completely rewritten Session library.
 
 Why are we telling you this? Because it is likely that after trying to
 find the reason for your performance issues, you may conclude that locking
@@ -82,7 +82,7 @@ is the issue and therefore look into how to remove the locks ...
 DO NOT DO THAT! Removing locks would be **wrong** and it will cause you
 more problems!
 
-Locking is not the issue, it is a solution. Your issue is that you still
+Locking is not the issue. It is a solution. Your issue is that you still
 have the session open, while you've already processed it and therefore no
 longer need it. So, what you need is to close the session for the
 current request after you no longer need it.
@@ -107,7 +107,7 @@ array.
 .. note:: In general, it is bad practice to use global variables.
     So using the superglobal ``$_SESSION`` directly is not recommended.
 
-In addition, CodeIgniter also provides 2 special types of session data
+In addition, CodeIgniter provides 2 special types of session data
 that are further explained below: `Flashdata`_ and `Tempdata`_.
 
 .. note:: For historical reasons, we refer to session data excluding Flashdata and Tempdata as "userdata".
@@ -137,7 +137,7 @@ Or even through the session helper method:
     to access does not exist.
 
 If you want to retrieve all of the existing session data, you can simply
-omit the item key (magic getter only works for single property values):
+omit the item key (the magic getter only works for single property values):
 
 .. literalinclude:: sessions/009.php
 
@@ -154,14 +154,14 @@ data globally available to you without having to run a database query when
 you need it.
 
 You can simply assign data to the ``$_SESSION`` array, as with any other
-variable. Or as a property of ``$session``.
+variable, or as a property of ``$session``.
 
 You can pass an array containing your new session data to the
 ``set()`` method:
 
 .. literalinclude:: sessions/010.php
 
-Where ``$array`` is an associative array containing your new data. Here's
+Here, ``$array`` is an associative array containing your new data. Here's
 an example:
 
 .. literalinclude:: sessions/011.php
@@ -184,7 +184,7 @@ Pushing New Value to Session Data
 =================================
 
 The ``push()`` method is used to push a new value onto a session value that is an array.
-For instance, if the ``hobbies`` key contains an array of hobbies, you can add a new value or replace the previous value onto the array like so:
+For instance, if the ``hobbies`` key contains an array of hobbies, you can add a new value or replace the previous value in the array like so:
 
 .. literalinclude:: sessions/015.php
 
@@ -330,7 +330,7 @@ unset it from the ``$_SESSION`` array:
 
 .. literalinclude:: sessions/035.php
 
-However, this won't remove the marker that makes this specific item to be
+However, this won't remove the marker that makes this specific item
 tempdata (it will be invalidated on the next HTTP request), so if you
 intend to reuse that same key in the same request, you'd want to use
 ``removeTempdata()``:
@@ -359,9 +359,9 @@ To close the current session manually after you no longer need it, use the
 
 .. literalinclude:: sessions/044.php
 
-You do not have to close the session manually, PHP will close it automatically
-after your script terminated. But as session data is locked to prevent concurrent
-writes only one request may operate on a session at any time. You may improve
+You do not have to close the session manually. PHP will close it automatically
+after your script terminates. But as session data is locked to prevent concurrent
+writes, only one request may operate on a session at any time. You may improve
 your site performance by closing the session as soon as all changes to session
 data are done.
 
@@ -387,7 +387,7 @@ This method will work in exactly the same way as PHP's
 This must be the last session-related operation that you do during the same request.
 All session data (including flashdata and tempdata) will be destroyed permanently.
 
-.. note:: You do not have to call this method from usual code. Cleanup session
+.. note:: You do not have to call this method from usual code. Clean up session
     data rather than destroying the session.
 
 Accessing Session Metadata
@@ -417,7 +417,7 @@ all of the options and their effects.
 .. note:: Since v4.3.0, the new **app/Config/Session.php** has been added.
     Previously, the Session Preferences were in your **app/Config/App.php** file.
 
-You'll find the following Session related preferences in your
+You'll find the following Session-related preferences in your
 **app/Config/Session.php** file:
 
 ======================= ============================================ ================================================= ============================================================================================
@@ -430,10 +430,10 @@ Preference                     Default                                      Opti
                                                                      CodeIgniter\\Session\\Handlers\\ArrayHandler
 **cookieName**          ci_session                                   [A-Za-z\_-] characters only                       The name used for the session cookie.
 **expiration**          7200 (2 hours)                               Time in seconds (integer)                         The number of seconds you would like the session to last.
-                                                                                                                       If you would like a non-expiring session (until browser is closed) set the value to zero: 0
-**savePath**            WRITEPATH . 'session'                        None                                              Specifies the storage location, depends on the driver being used.
+                                                                                                                       If you would like a non-expiring session (until browser is closed), set the value to zero: 0
+**savePath**            WRITEPATH . 'session'                        None                                              Specifies the storage location, which depends on the driver being used.
 **matchIP**             false                                        true/false (boolean)                              Whether to validate the user's IP address when reading the session cookie.
-                                                                                                                       Note that some ISPs dynamically changes the IP, so if you want a non-expiring session you
+                                                                                                                       Note that some ISPs dynamically change the IP, so if you want a non-expiring session you
                                                                                                                        will likely set this to false.
 **timeToUpdate**        300                                          Time in seconds (integer)                         This option controls how often the session class will regenerate itself and create a new
                                                                                                                        session ID. Setting it to 0 will disable session ID regeneration.
@@ -442,7 +442,7 @@ Preference                     Default                                      Opti
 ======================= ============================================ ================================================= ============================================================================================
 
 .. note:: As a last resort, the Session library will try to fetch PHP's
-    session related INI settings, as well as CodeIgniter 3 settings such as
+    session-related INI settings, as well as CodeIgniter 3 settings such as
     'sess_expire_on_close' when any of the above is not configured.
     However, you should never rely on this behavior as it can cause
     unexpected results or be changed in the future. Please configure
@@ -466,7 +466,7 @@ Preference           Default         Description
 ============== =============== ===========================================================================
 
 .. note:: The ``httponly`` setting (in **app/Config/Cookie.php**) doesn't have an effect on sessions.
-    Instead the HttpOnly parameter is always enabled, for security
+    Instead, the HttpOnly parameter is always enabled, for security
     reasons. Additionally, the ``Config\Cookie::$prefix`` setting is completely
     ignored.
 
@@ -487,9 +487,9 @@ because it is the safest choice and is expected to work everywhere
 (virtually every environment has a file system).
 
 However, any other driver may be selected via the ``$driver``
-setting in your **app/Config/Session.php** file, if you chose to do so.
-Have it in mind though, every driver has different caveats, so be sure to
-get yourself familiar with them (below) before you make that choice.
+setting in your **app/Config/Session.php** file, if you choose to do so.
+Keep in mind, though, that every driver has different caveats, so be sure to
+familiarize yourself with them (below) before you make that choice.
 
 .. note:: The ArrayHandler is used during testing and stores all data within
     a PHP array, while preventing the data from being persisted. See
@@ -508,18 +508,18 @@ To be more specific, it doesn't support PHP's `directory level and mode
 formats used in session.save_path
 <https://www.php.net/manual/en/session.configuration.php#ini.session.save-path>`_,
 and it has most of the options hard-coded for safety. Instead, only
-absolute paths are supported with ``$savePath`` setting.
+absolute paths are supported with the ``$savePath`` setting.
 
-Another important thing that you should know, is to make sure that you
-don't use a publicly-readable or shared directory for storing your session
+Another important thing is to make sure that you
+don't use a publicly readable or shared directory for storing your session
 files. *Only you* should have access to the contents of your
 chosen *savePath* directory. Otherwise, anybody can see and
-steal session data (also known as "session fixation" attack).
+steal session data, potentially enabling session hijacking.
 
 On UNIX-like operating systems, this is usually achieved by setting the
-0700 mode permissions on that directory via the `chmod` command, which
+0700 mode permissions on that directory via the ``chmod`` command, which
 allows only the directory's owner to perform read and write operations on
-it. But be careful because the system user *running* the script is usually
+it. But be careful, because the system user *running* the script is usually
 not your own, but something like 'www-data' instead, so only setting those
 permissions will probably break your application.
 
@@ -531,20 +531,20 @@ Instead, you should do something like this, depending on your environment:
     chmod 0700 /<path to your application directory>/writable/sessions/
     chown www-data /<path to your application directory>/writable/sessions/
 
-The `built-in mechanism <https://www.php.net/manual/ru/session.configuration.php#ini.session.gc-probability>`_ for automatically clearing expired sessions may not run often,
-and you will notice that the *saveDir* directory may be overflowing with files.
-To solve this problem, you will need to configure the **cron** or **Task Scheduler** to delete outdated files.
+The `built-in mechanism <https://www.php.net/manual/en/session.configuration.php#ini.session.gc-probability>`_ for automatically clearing expired sessions may not run often,
+and you will notice that the *savePath* directory may be overflowing with files.
+To solve this problem, you will need to configure **cron** or **Task Scheduler** to delete outdated files.
 
 Bonus Tip
 ---------
 
-Some of you will probably opt to choose another session driver because
+Some of you will probably choose another session driver because
 file storage is usually slower. This is only half true.
 
 A very basic test will probably trick you into believing that an SQL
 database is faster, but in 99% of the cases, this is true only if you
-have a few current sessions. As the sessions count and server loads
-increase - which is the time when it matters - the file system will
+have a few current sessions. As the session count and server load
+increase - which is when it matters - the file system will
 consistently outperform almost all relational database setups.
 
 In addition, if performance is your only concern, you may want to look
@@ -560,7 +560,7 @@ DatabaseHandler Driver
     supported, due to lack of advisory locking mechanisms on other
     platforms. Using sessions without locks can cause all sorts of
     problems, especially with heavy usage of AJAX. Use the :ref:`session-close` method
-    after you've done processing session data if you're having performance issues.
+    after you've finished processing session data if you're having performance issues.
 
 The 'DatabaseHandler' driver uses a relational database such as MySQL or
 PostgreSQL to store sessions. This is a popular choice among many users,
@@ -609,24 +609,32 @@ For PostgreSQL::
 
     CREATE INDEX "ci_sessions_timestamp" ON "ci_sessions" ("timestamp");
 
-.. note:: The ``id`` value contains the session cookie name (``Config\Session::$cookieName``)
-    and the session ID and a delimiter. It should be increased as needed, for example,
+.. note:: The ``id`` value contains the session cookie name (``Config\Session::$cookieName``),
+    the session ID, and a delimiter. Its size should be increased as needed, for example,
     when using long session IDs.
 
 Adding Primary Key
 ^^^^^^^^^^^^^^^^^^
 
 You will also need to add a PRIMARY KEY **depending on your $matchIP
-setting**. The examples below work both on MySQL and PostgreSQL::
+setting**. The following statements work on both MySQL and PostgreSQL::
 
-    // When $matchIP = true
+    -- When $matchIP = true
     ALTER TABLE ci_sessions ADD PRIMARY KEY (id, ip_address);
 
-    // When $matchIP = false
+    -- When $matchIP = false
     ALTER TABLE ci_sessions ADD PRIMARY KEY (id);
 
-    // To drop a previously created primary key (use when changing the setting)
+To drop a previously created primary key when changing the setting, use the
+appropriate statement for your database.
+
+For MySQL::
+
     ALTER TABLE ci_sessions DROP PRIMARY KEY;
+
+For PostgreSQL, use the constraint name assigned when the primary key was created::
+
+    ALTER TABLE ci_sessions DROP CONSTRAINT ci_sessions_pkey;
 
 .. important:: If you don't add the correct primary key, the following error
     may occur::
@@ -646,7 +654,7 @@ Setting Up Database Table with Command
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If you'd rather not do all of this by hand, you can use the ``make:migration --session`` command
-from the cli to generate a migration file for you:
+from the CLI to generate a migration file for you:
 
 .. code-block:: console
 
@@ -673,7 +681,7 @@ RedisHandler Driver
     this driver are emulated by a separate value that is kept for up
     to 300 seconds.
 
-.. note:: Starting with v4.3.2, you can connect Redis with **TLS** protocol.
+.. note:: Starting with v4.3.2, you can connect to Redis with the **TLS** protocol.
 
 Redis is a storage engine typically used for caching and popular because
 of its high performance, which is also probably your reason to use the
@@ -698,11 +706,11 @@ give a link to it:
 
     https://github.com/phpredis/phpredis
 
-.. important:::: CodeIgniter's Session library does NOT use the actual 'redis'
+.. important:: CodeIgniter's Session library does NOT use the actual 'redis'
     ``session.save_handler``. Take note **only** of the path format in
     the link above.
 
-For the most common case however, a simple ``host:port`` pair should be
+For the most common case, however, a simple ``host:port`` pair should be
 sufficient:
 
 .. literalinclude:: sessions/041.php
@@ -727,7 +735,7 @@ MemcachedHandler Driver
 The 'MemcachedHandler' driver is very similar to the 'RedisHandler' one in all of its
 properties, except perhaps for availability, because PHP's `Memcached
 <https://www.php.net/memcached>`_ extension is distributed via PECL and some
-Linux distributions make it available as an easy to install package.
+Linux distributions make it available as an easy-to-install package.
 
 Other than that, and without any intentional bias towards Redis, there's
 not much different to be said about Memcached - it is also a popular
@@ -754,7 +762,7 @@ Multi-server configuration with an optional *weight* parameter as the
 third colon-separated (``:weight``) value is also supported, but we have
 to note that we haven't tested if that is reliable.
 
-If you want to experiment with this feature (on your own risk), simply
+If you want to experiment with this feature (at your own risk), simply
 separate the multiple server paths with commas:
 
 .. literalinclude:: sessions/043.php

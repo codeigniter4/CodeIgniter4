@@ -9,11 +9,11 @@ Using CodeIgniter's Model
 Models
 ******
 
-The CodeIgniter's Model provides convenience features and additional functionality
+CodeIgniter's Model provides convenience features and additional functionality
 that people commonly use to make working with a **single table** in your database more convenient.
 
 It comes out of the box with helper
-methods for much of the standard ways you would need to interact with a database table, including finding records,
+methods for many of the standard ways you would need to interact with a database table, including finding records,
 updating records, deleting records, and more.
 
 .. _accessing-models:
@@ -28,7 +28,7 @@ You can access models within your classes by creating a new instance or using th
 
 .. literalinclude:: model/001.php
 
-The ``model()`` uses ``Factories::models()`` internally.
+The ``model()`` function uses ``Factories::models()`` internally.
 See :ref:`factories-loading-class` for details on the first parameter.
 
 CodeIgniter's Model
@@ -59,7 +59,7 @@ and a number of additional convenience methods.
 initialize()
 ============
 
-Should you need additional setup in your model you may extend the ``initialize()`` method
+Should you need additional setup in your model, you may extend the ``initialize()`` method,
 which will be run immediately after the Model's constructor. This allows you to perform
 extra steps without repeating the constructor parameters, for example extending other models:
 
@@ -112,12 +112,12 @@ $useAutoIncrement
 -----------------
 
 Specifies if the table uses an auto-increment feature for `$primaryKey`_. If set to ``false``
-then you are responsible for providing primary key value for every record in the table. This
-feature may be handy when we want to implement 1:1 relation or use UUIDs for our model. The
+then you are responsible for providing a primary key value for every record in the table. This
+feature may be handy when we want to implement a 1:1 relation or use UUIDs for our model. The
 default value is ``true``.
 
 .. note:: If you set `$useAutoIncrement`_ to ``false``, then make sure to set your primary
-    key in the database to ``unique``. This way you will make sure that all of Model's features
+    key in the database to ``unique``. This way you will make sure that all of the Model's features
     will still work the same as before.
 
 $returnType
@@ -146,8 +146,8 @@ part of a security trail. If true, the **find*()** methods will only return non-
 the ``withDeleted()`` method is called prior to calling the **find*()** method.
 
 This requires either a DATETIME or INTEGER field in the database as per the model's
-`$dateFormat`_ setting. The default field name is ``deleted_at`` however this name can be
-configured to any name of your choice by using `$deletedField`_ property.
+`$dateFormat`_ setting. The default field name is ``deleted_at``, but this name can be
+configured to any name of your choice by using the `$deletedField`_ property.
 
 .. important:: The ``deleted_at`` field in the database must be nullable.
 
@@ -169,8 +169,8 @@ $allowEmptyInserts
 .. versionadded:: 4.3.0
 
 Whether to allow inserting empty data. The default value is ``false``, meaning
-that if you try to insert empty data, ``DataException`` with
-"There is no data to insert." will raise.
+that if you try to insert empty data, a ``DataException`` with
+"There is no data to insert." will be raised.
 
 You may also change this setting with the :ref:`model-allow-empty-inserts` method.
 
@@ -181,10 +181,10 @@ $updateOnlyChanged
 
 .. versionadded:: 4.5.0
 
-Whether to update :doc:`Entity <./entities>`'s only changed fields. The default
-value is ``true``, meaning that only changed field data is used when updating to
-the database. So if you try to update an Entity without changes, ``DataException``
-with "There is no data to update." will raise.
+Whether to update only the changed fields of an :doc:`Entity <./entities>`. The default
+value is ``true``, meaning that only changed field data is used when updating
+the database. So if you try to update an Entity without changes, a ``DataException``
+with "There is no data to update." will be raised.
 
 Setting this property to ``false`` will ensure that all allowed fields of an Entity
 are submitted to the database and updated at any time.
@@ -206,7 +206,7 @@ $useTimestamps
 ^^^^^^^^^^^^^^
 
 This boolean value determines whether the current date is automatically added to all inserts
-and updates. If ``true``, will set the current time in the format specified by `$dateFormat`_. This
+and updates. If ``true``, it will set the current time in the format specified by `$dateFormat`_. This
 requires that the table have columns named **created_at**, **updated_at** and **deleted_at** in the appropriate
 data type. See also `$createdField`_, `$updatedField`_, and `$deletedField`_.
 
@@ -221,14 +221,14 @@ valid options are: ``'datetime'``, ``'date'``, or ``'int'`` (a UNIX timestamp). 
 $createdField
 ^^^^^^^^^^^^^
 
-Specifies which database field to use for data record create timestamp.
+Specifies which database field to use for the data record's create timestamp.
 Set to an empty string (``''``) to avoid updating it (even if `$useTimestamps`_ is enabled).
 
 $updatedField
 ^^^^^^^^^^^^^
 
-Specifies which database field should use for keep data record update timestamp.
-Set to an empty string (``''``) to avoid updating it (even `$useTimestamps`_ is enabled).
+Specifies which database field to use for the data record's update timestamp.
+Set to an empty string (``''``) to avoid updating it (even if `$useTimestamps`_ is enabled).
 
 $deletedField
 ^^^^^^^^^^^^^
@@ -255,7 +255,7 @@ $skipValidation
 ^^^^^^^^^^^^^^^
 
 Whether validation should be skipped during all **inserts** and **updates**. The default
-value is ``false``, meaning that data will always attempt to be validated. This is
+value is ``false``, meaning that validation will always be attempted. This is
 primarily used by the ``skipValidation()`` method, but may be changed to ``true`` so
 this model will never validate.
 
@@ -264,13 +264,13 @@ this model will never validate.
 $cleanValidationRules
 ^^^^^^^^^^^^^^^^^^^^^
 
-Whether validation rules should be removed that do not exist in the passed data.
+Whether validation rules for fields missing from the passed data should be removed.
 This is used in **updates**.
 The default value is ``true``, meaning that validation rules for the fields
 that are not present in the passed data will be (temporarily) removed before the validation.
 This is to avoid validation errors when updating only some fields.
 
-You can also change the value by the ``cleanRules()`` method.
+You can also change the value with the ``cleanRules()`` method.
 
 .. note:: Prior to v4.2.7, ``$cleanValidationRules`` did not work due to a bug.
 
@@ -289,7 +289,7 @@ $afterInsert
 $beforeUpdate
 ^^^^^^^^^^^^^
 $afterUpdate
-^^^^^^^^^^^^^
+^^^^^^^^^^^^
 $beforeFind
 ^^^^^^^^^^^
 $afterFind
@@ -326,7 +326,7 @@ the appropriate PHP type.
 
 .. important::
     If you use this feature with the :doc:`Entity <./entities>`, do not use
-    :ref:`Entity Property Casting <entities-property-casting>`. Using both casting
+    :ref:`Entity Property Casting <entities-property-casting>`. Using both
     at the same time does not work.
 
     Entity Property Casting works at (1)(4), but this casting works at (2)(3)::
@@ -334,9 +334,9 @@ the appropriate PHP type.
         [App Code] --- (1) --> [Entity] --- (2) --> [Database]
         [App Code] <-- (4) --- [Entity] <-- (3) --- [Database]
 
-    When using this casting, Entity will have correct typed PHP values in the
+    When using this casting, the Entity will have correctly typed PHP values in the
     attributes. This behavior is completely different from the previous behavior.
-    Do not expect the attributes hold raw data from database.
+    Do not expect the attributes to hold raw data from the database.
 
 Defining Data Types
 ===================
@@ -350,7 +350,7 @@ Data Types
 ==========
 
 The following types are provided by default. Add a question mark at the beginning
-of type to mark the field as nullable, i.e., ``?int``, ``?datetime``.
+of the type to mark the field as nullable, i.e., ``?int``, ``?datetime``.
 
 +---------------+----------------+---------------------------+
 | Type          | PHP Value Type | DB Column Type            |
@@ -398,16 +398,16 @@ The datetime format is set in the ``dateFormat`` array of the
 **app/Config/Database.php** file.
 
 .. note::
-    When you set ``ms`` or ``us`` as a parameter, **Model** takes care of second's
-    fractional part of the Time. But **Query Builder** does not. So you still need
+    When you set ``ms`` or ``us`` as a parameter, **Model** takes care of the
+    fractional seconds of the Time. But **Query Builder** does not. So you still need
     to use the ``format()`` method when you pass the Time to Query Builder's methods
     like ``where()``:
 
     .. literalinclude:: model/063.php
         :lines: 2-
 
-.. note:: Prior to v4.6.0, you cannot use ``ms`` or ``us`` as a parameter.
-    Because the second's fractional part of Time was lost due to bugs.
+.. note:: Prior to v4.6.0, you could not use ``ms`` or ``us`` as a parameter,
+    because the fractional seconds of Time were lost due to bugs.
 
 timestamp
 ---------
@@ -436,12 +436,12 @@ You can define your own conversion types.
 Creating Custom Handlers
 ------------------------
 
-At first you need to create a handler class for your type.
+First, you need to create a handler class for your type.
 Let's say the class will be located in the **app/Models/Cast** directory:
 
 .. literalinclude:: model/058.php
 
-If you don't need to change values when getting or setting a value. Then just
+If you don't need to change values when getting or setting a value, just
 don't implement the appropriate method:
 
 .. literalinclude:: model/060.php
@@ -466,7 +466,7 @@ with a comma like ``type[param1, param2]``.
 
 .. note:: If the casting type is marked as nullable like ``?bool`` and the passed
     value is not null, then the parameter with the value ``nullable`` will be
-    passed to the casting type handler. If casting type has predefined parameters,
+    passed to the casting type handler. If the casting type has predefined parameters,
     then ``nullable`` will be added to the end of the list.
 
 Working with Data
@@ -502,7 +502,7 @@ Returns null or an indexed array of column values:
 
 .. literalinclude:: model/008.php
 
-``$columnName`` should be a name of single column else you will get the ``DataException``.
+``$columnName`` should be the name of a single column. Otherwise, you will get a ``DataException``.
 
 findAll()
 ---------
@@ -515,7 +515,7 @@ This query may be modified by interjecting Query Builder commands as needed prio
 
 .. literalinclude:: model/010.php
 
-You can pass in a limit and offset values as the first and second
+You can pass in limit and offset values as the first and second
 parameters, respectively:
 
 .. literalinclude:: model/011.php
@@ -568,7 +568,7 @@ allowEmptyInserts()
 
 .. versionadded:: 4.3.0
 
-You can use ``allowEmptyInserts()`` method to insert empty data. The Model throws an exception when you try to insert empty data by default. But if you call this method, the check will no longer be performed.
+You can use the ``allowEmptyInserts()`` method to insert empty data. By default, the Model throws an exception when you try to insert empty data. But if you call this method, the check will no longer be performed.
 
 .. literalinclude:: model/056.php
 
@@ -581,13 +581,13 @@ update()
 
 Updates an existing record in the database. The first parameter is the `$primaryKey`_ of the record to update.
 An associative array of data is passed into this method as the second parameter. The array's keys must match the name
-of the columns in a `$table`_, while the array's values are the values to save for that key:
+of the columns in the `$table`_, while the array's values are the values to save for that key:
 
 .. literalinclude:: model/016.php
 
 .. important:: Since v4.3.0, this method raises a ``DatabaseException``
     if it generates an SQL statement without a WHERE clause.
-    In previous versions, if it is called without `$primaryKey`_ specified and
+    In previous versions, if it was called without `$primaryKey`_ specified and
     an SQL statement was generated without a WHERE clause, the query would still
     execute and all records in the table would be updated.
 
@@ -595,7 +595,7 @@ Multiple records may be updated with a single call by passing an array of primar
 
 .. literalinclude:: model/017.php
 
-When you need a more flexible solution, you can leave the parameters empty and it functions like the Query Builder's
+When you need a more flexible solution, you can leave the parameters empty, and it functions like the Query Builder's
 update command, with the added benefit of validation, events, etc:
 
 .. literalinclude:: model/018.php
@@ -641,12 +641,12 @@ it is a primary or unique key to avoid matching multiple rows.
 save()
 ------
 
-This is a wrapper around the ``insert()`` and ``update()`` methods that handle inserting or updating the record
+This is a wrapper around the ``insert()`` and ``update()`` methods that handles inserting or updating the record
 automatically, based on whether it finds an array key matching the **primary key** value:
 
 .. literalinclude:: model/019.php
 
-The save method also can make working with custom class result objects much simpler by recognizing a non-simple
+The save method can also make working with custom class result objects much simpler by recognizing a non-simple
 object and grabbing its public and protected values into an array, which is then passed to the appropriate
 insert or update method. This allows you to work with Entity classes in a very clean way. Entity classes are
 simple classes that represent a single instance of an object type, like a user, a blog post, a job, etc. This
@@ -662,7 +662,7 @@ A very simple model to work with this might look like:
 
 This model works with data from the ``jobs`` table, and returns all results as an instance of ``App\Entities\Job``.
 When you need to persist that record to the database, you will need to either write custom methods, or use the
-model's ``save()`` method to inspect the class, grab any public and private properties, and save them to the database:
+model's ``save()`` method to inspect the class, grab any public and protected properties, and save them to the database:
 
 .. literalinclude:: model/022.php
 
@@ -714,8 +714,8 @@ An array of primary keys can be passed in as the first parameter to delete multi
 
 .. literalinclude:: model/024.php
 
-If no parameters are passed in, will act like the Query Builder's delete method, requiring a where call
-previously:
+If no parameters are passed in, it will act like the Query Builder's delete method, requiring a prior where
+call:
 
 .. literalinclude:: model/025.php
 
@@ -747,8 +747,8 @@ prior to saving to the database with the ``insert()``, ``update()``, or ``save()
     However, this means that not all validation rules you set will be checked
     during updates. Thus, incomplete data may pass the validation.
 
-    For example, ``required*`` rules or ``is_unique`` rule that require the
-    values of other fields may not work as expected.
+    For example, ``required*`` rules or the ``is_unique`` rule, which require the
+    values of other fields, may not work as expected.
 
     To avoid such glitches, this behavior can be changed by configuration. See
     :ref:`clean-validation-rules` for details.
@@ -763,7 +763,7 @@ fields and rules that should be applied.
 
 .. note:: You can see the list of built-in Validation rules in :ref:`validation-available-rules`.
 
-If you have custom error message that you want to use, place them in the `$validationMessages`_ array:
+If you have custom error messages that you want to use, place them in the `$validationMessages`_ array:
 
 .. literalinclude:: model/027.php
 
@@ -774,7 +774,7 @@ group you created:
 
 .. literalinclude:: model/034.php
 
-The other way to set the validation rules to fields by functions,
+The other way to set the validation rules for fields is by using functions:
 
 .. php:namespace:: CodeIgniter
 
@@ -801,14 +801,14 @@ The other way to set the validation rules to fields by functions,
 
     .. literalinclude:: model/029.php
 
-The other way to set the validation message to fields by functions,
+The other way to set the validation messages for fields is by using functions:
 
 .. php:method:: setValidationMessage($field, $fieldMessages)
 
     :param  string  $field:
     :param  array   $fieldMessages:
 
-    This function will set the field wise error messages.
+    This function will set the field-wise error messages.
 
     Usage example:
 
@@ -859,7 +859,7 @@ method directly, with options:
 
 The ``$options`` parameter is an associative array with one element,
 whose key is either ``'except'`` or ``'only'``, and which has as its
-value an array of fieldnames of interest:
+value an array of field names of interest:
 
 .. literalinclude:: model/037.php
 
@@ -876,7 +876,7 @@ replaced by the **value** of the matched incoming field. An example should clari
 .. note:: Since v4.3.5, you must set the validation rules for the placeholder
     field (``id``).
 
-In this set of rules, it states that the email address should be unique in the database, except for the row
+This set of rules states that the email address should be unique in the database, except for the row
 that has an id matching the placeholder's value. Assuming that the form POST data had the following:
 
 .. literalinclude:: model/039.php
@@ -888,7 +888,7 @@ then the ``{id}`` placeholder would be replaced with the number **4**, giving th
 So it will ignore the row in the database that has ``id=4`` when it verifies the email is unique.
 
 .. note:: Since v4.3.5, if the placeholder (``id``) value does not pass the
-    validation, the placeholder would not be replaced.
+    validation, the placeholder will not be replaced.
 
 This can also be used to create more dynamic rules at runtime, as long as you take care that any dynamic
 keys passed in don't conflict with your form data.
@@ -938,15 +938,13 @@ Processing Large Amounts of Data
 ================================
 
 Sometimes, you need to process large amounts of data and would run the risk of running out of memory.
-To make this simpler, you may use the chunk() method to get smaller chunks of data that you can then
+To make this simpler, you may use the ``chunk()`` method to get smaller chunks of data that you can then
 do your work on. The first parameter is the number of rows to retrieve in a single chunk. The second
 parameter is a Closure that will be called for each row of data.
 
-This is best used during cronjobs, data exports, or other large tasks.
+This is best used during cron jobs, data exports, or other large tasks.
 
 .. literalinclude:: model/049.php
-
-.. _model-events-callbacks:
 
 Working with Query Builder
 **************************
@@ -1001,10 +999,12 @@ and specify the model's method at the end of the method chaining.
 
 .. _model-events:
 
+.. _model-events-callbacks:
+
 Model Events
 ************
 
-There are several points within the model's execution that you can specify multiple callback methods to run.
+There are several points within the model's execution at which you can specify multiple callback methods to run.
 These methods can be used to normalize data, hash passwords, save related entities, and much more.
 
 The following
@@ -1031,7 +1031,7 @@ The exact contents of the ``$data`` array will vary between events, but will alw
 contain a key named ``data`` that contains the primary data passed to the original
 method. In the case of the **insert*()** or **update*()** methods, that will be
 the key/value pairs that are being inserted into the database. The main ``$data``
-array will also contain the other values passed to the method, and be detailed
+array will also contain the other values passed to the method, as detailed
 in `Event Parameters`_.
 
 The callback method must return the original ``$data`` array so other callbacks
@@ -1043,7 +1043,7 @@ Specifying Callbacks To Run
 ===========================
 
 You specify when to run the callbacks by adding the method name to the appropriate class property (`$beforeInsert`_, `$afterUpdate`_,
-etc). Multiple callbacks can be added to a single event and they will be processed one after the other. You can
+etc.). Multiple callbacks can be added to a single event, and they will be processed one after the other. You can
 use the same callback in multiple events:
 
 .. literalinclude:: model/051.php
@@ -1082,15 +1082,15 @@ beforeFind        The name of the calling **method**, whether a **singleton** wa
                   the search, for ``findAll()``.
 afterFind         Same as **beforeFind** but including the resulting row(s) of data, or null if no result found.
 beforeDelete      **id** = an array of primary key rows being passed to the ``delete()`` method.
-                  **purge** = boolean whether soft-delete rows should be hard deleted.
+                  **purge** = boolean whether soft-deleted rows should be hard deleted.
 afterDelete       **id** = an array of primary key rows being passed to the ``delete()`` method.
-                  **purge** = boolean whether soft-delete rows should be hard deleted.
+                  **purge** = boolean whether soft-deleted rows should be hard deleted.
                   **result** = the result of the ``delete()`` call on the Query Builder.
                   **data** = unused.
 beforeInsertBatch **data** = associative array of values that are being inserted. If an object or Entity class is passed to the
                   ``insertBatch()`` method, it is first converted to an array.
 afterInsertBatch  **data** = the associative array of values being inserted.
-                  **result** = the results of the ``insertbatch()`` method used through the Query Builder.
+                  **result** = the results of the ``insertBatch()`` method used through the Query Builder.
 beforeUpdateBatch **data** = associative array of values that are being updated. If an object or Entity class is passed to the
                   ``updateBatch()`` method, it is first converted to an array.
 afterUpdateBatch  **data** = the key/value pairs being updated.
@@ -1098,20 +1098,20 @@ afterUpdateBatch  **data** = the key/value pairs being updated.
 ================= =========================================================================================================
 
 .. note:: When using the ``paginate()`` method in combination with the ``beforeFind`` event to modify the query,
-   the results may not behave as expected.
+    the results may not behave as expected.
 
-   This is because the ``beforeFind`` event only affects the actual retrieval of the results (``findAll()``),
-   but **not** the query used to count the total number of rows for pagination.
+    This is because the ``beforeFind`` event only affects the actual retrieval of the results (``findAll()``),
+    but **not** the query used to count the total number of rows for pagination.
 
-   As a result, the total row count used for generating pagination links may not reflect the modified query conditions,
-   leading to inconsistencies in pagination.
+    As a result, the total row count used for generating pagination links may not reflect the modified query conditions,
+    leading to inconsistencies in pagination.
 
 Modifying Find* Data
 ====================
 
 The ``beforeFind`` and ``afterFind`` methods can both return a modified set of data to override the normal response
-from the model. For ``afterFind`` any changes made to ``data`` in the return array will automatically be passed back
-to the calling context. In order for ``beforeFind`` to intercept the find workflow it must also return an additional
+from the model. For ``afterFind``, any changes made to ``data`` in the return array will automatically be passed back
+to the calling context. In order for ``beforeFind`` to intercept the find workflow, it must also return an additional
 boolean, ``returnData``:
 
 .. literalinclude:: model/054.php

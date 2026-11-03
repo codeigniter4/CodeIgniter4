@@ -1,8 +1,8 @@
 Authentication
-#####################################
+##############
 
 CodeIgniter provides an official authentication and authorization framework
-:ref:`CodeIgniter Shield <shield>` for CodeIgniter 4,
+:ref:`CodeIgniter Shield <shield>` for CodeIgniter 4.
 It is designed to be secure, flexible, and easily extendable to meet the needs
 of many different types of websites.
 

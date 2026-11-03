@@ -28,7 +28,7 @@ execution to capture inputs and outputs.
     :ref:`php-stream-wrapper`.
 
 Helper Methods
----------------
+--------------
 
 getOutput(?int $index = null): string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -54,7 +54,7 @@ How to Use
 - ``MockInputOutput::setInputs()`` sets the user input array.
 - ``MockInputOutput::getOutput()`` gets the command output.
 
-The following test code is to test the command ``spark db:table``:
+The following code tests the command ``spark db:table``:
 
 .. literalinclude:: cli/001.php
 
@@ -74,9 +74,9 @@ StreamFilterTrait
 
 .. versionadded:: 4.3.0
 
-**StreamFilterTrait** provides an alternate to these helper methods.
+**StreamFilterTrait** provides an alternative to ``MockInputOutput`` for capturing CLI output.
 
-You may need to test things that are difficult to test. Sometimes, capturing a stream, like PHP's own STDOUT, or STDERR,
+You may need to test things that are difficult to test. Sometimes, capturing a stream, like PHP's own STDOUT or STDERR,
 might be helpful. The ``StreamFilterTrait`` helps you capture the output from the stream of your choice.
 
 How to Use
@@ -100,7 +100,7 @@ If you override the ``setUp()`` or ``tearDown()`` methods in your test, then you
 CITestStreamFilter
 ------------------
 
-**CITestStreamFilter** for manual/single use.
+**CITestStreamFilter** is for manual/single use.
 
 If you need to capture streams in only one test, then instead of using the StreamFilterTrait trait, you can manually
 add a filter to streams.
@@ -134,7 +134,7 @@ such as ``CLI::prompt()``, ``CLI::wait()``, and ``CLI::input()``.
 .. note:: The PhpStreamWrapper is a stream wrapper class.
     If you don't know PHP's stream wrapper,
     see `The streamWrapper class <https://www.php.net/manual/en/class.streamwrapper.php>`_
-    in the PHP maual.
+    in the PHP manual.
 
 How to Use
 ^^^^^^^^^^
@@ -143,7 +143,7 @@ How to Use
 - ``PhpStreamWrapper::restore()`` Restore the php protocol wrapper back to the PHP built-in wrapper.
 - ``PhpStreamWrapper::setContent()`` Set the input data.
 
-.. important:: The PhpStreamWrapper is intended for only testing ``php://stdin``.
+.. important:: The PhpStreamWrapper is intended only for testing ``php://stdin``.
     But when you register it, it handles all the `php protocol <https://www.php.net/manual/en/wrappers.php.php>`_ streams,
     such as ``php://stdout``, ``php://stderr``, ``php://memory``.
     So it is strongly recommended that ``PhpStreamWrapper`` be registered/unregistered

@@ -3,7 +3,7 @@ Working with Uploaded Files
 ###########################
 
 CodeIgniter makes working with files uploaded through a form much simpler and
-more secure than using PHP's ``$_FILES`` array directly. This extends the
+more secure than using PHP's ``$_FILES`` array directly. The UploadedFile class extends the
 :doc:`File class </libraries/files>` and thus gains all of the features of that
 class.
 
@@ -22,15 +22,15 @@ File Upload Form Tutorial
 
 Uploading a file involves the following general process:
 
--  An upload form is displayed, allowing a user to select a file and
-   upload it.
--  When the form is submitted, the file is uploaded to the destination
-   you specify.
--  Along the way, the file is validated to make sure it is allowed to be
-   uploaded based on the preferences you set.
--  Once uploaded, the user will be shown a success message.
+- An upload form is displayed, allowing a user to select a file and
+  upload it.
+- When the form is submitted, the file is uploaded to the destination
+  you specify.
+- Along the way, the file is validated to make sure it is allowed to be
+  uploaded based on the preferences you set.
+- Once uploaded, the user will be shown a success message.
 
-To demonstrate this process here is a brief tutorial. Afterward you'll
+To demonstrate this process, here is a brief tutorial. Afterward, you'll
 find reference information.
 
 Creating the Upload Form
@@ -66,7 +66,7 @@ place this code and save it to your **app/Views** directory::
 
     <ul>
         <li>name: <?= esc($uploaded_fileinfo->getBasename()) ?></li>
-        <li>size: <?= esc($uploaded_fileinfo->getSizeByUnit('kb')) ?> KB</li>
+        <li>size: <?= esc($uploaded_fileinfo->getSizeByBinaryUnit(\CodeIgniter\Files\FileSizeUnit::KB)) ?> KB</li>
         <li>extension: <?= esc($uploaded_fileinfo->guessExtension()) ?></li>
     </ul>
 
@@ -89,10 +89,10 @@ Therefore, the rule ``required`` cannot be used either, so if the file is requir
 use the rule ``uploaded`` instead.
 
 Note that an empty array (``[]``) is passed as the first argument to
-``$this->validateData()``. It is because the file validation rules get the data
+``$this->validateData()``. This is because the file validation rules get the data
 for the uploaded file directly from the Request object.
 
-If the form has fields other than file upload, pass the field data as the first
+If the form has fields other than the file upload, pass the field data as the first
 argument.
 
 The Routes
@@ -115,7 +115,7 @@ To try your form, visit your site using a URL similar to this one::
     example.com/index.php/upload/
 
 You should see an upload form. Try uploading an image file (either a
-**jpg**, **gif**, **png**, or **webp**). If the path in your controller is correct it should
+**jpg**, **gif**, **png**, or **webp**). If the path in your controller is correct, it should
 work.
 
 .. _uploaded-files-accessing-files:
@@ -127,7 +127,7 @@ Accessing Files
 All Files
 =========
 
-When you upload files they can be accessed natively in PHP through the ``$_FILES`` superglobal. This array has some
+When you upload files, they can be accessed natively in PHP through the ``$_FILES`` superglobal. This array has some
 major shortcomings when working with multiple files uploaded at once, and has potential security flaws many developers
 are not aware of. CodeIgniter helps with both of these situations by standardizing your usage of files behind a
 common interface.
@@ -138,19 +138,19 @@ request, use ``getFiles()``. This will return an array of files represented by i
 .. literalinclude:: uploaded_files/003.php
 
 Of course, there are multiple ways to name the file input, and anything but the simplest can create strange results.
-The array returns in a manner that you would expect. With the simplest usage, a single file might be submitted like::
+The array is returned in a manner that you would expect. With the simplest usage, a single file might be submitted like::
 
     <input type="file" name="avatar">
 
-Which would return a simple array like::
+This would return a simple array like::
 
     [
         'avatar' => // UploadedFile instance,
     ];
 
-.. note:: The UploadedFile instance corresponds to ``$_FILES``. Even if a user just clicks the submit button and does not upload any file, the instance will still exist. You can check that the file was actually uploaded by the ``isValid()`` method in UploadedFile. See :ref:`verify-a-file`.
+.. note:: The UploadedFile instance corresponds to ``$_FILES``. Even if a user just clicks the submit button and does not upload any file, the instance will still exist. You can check that the file was actually uploaded with the ``isValid()`` method in UploadedFile. See :ref:`verify-a-file`.
 
-If you used an array notation for the name, the input would look something like::
+If you used array notation for the name, the input would look something like::
 
     <input type="file" name="my-form[details][avatar]">
 
@@ -175,7 +175,7 @@ In this case, the returned array of files would be more like::
     [
         'my-form' => [
             'details' => [
-                'avatar' => [
+                'avatars' => [
                     0 => // UploadedFile instance,
                     1 => // UploadedFile instance,
                 ],
@@ -186,7 +186,7 @@ In this case, the returned array of files would be more like::
 Single File
 ===========
 
-If you just need to access a single file, you can use ``getFile()`` to retrieve the file instance directly. This will return an instance of ``CodeIgniter\HTTP\Files\UploadedFile``:
+If you just need to access a single file, you can use ``getFile()`` to retrieve the file instance directly. This will return an instance of ``CodeIgniter\HTTP\Files\UploadedFile``.
 
 Simplest usage
 --------------
@@ -195,18 +195,18 @@ With the simplest usage, a single file might be submitted like::
 
     <input type="file" name="userfile">
 
-Which would return a simple file instance like:
+This would return a simple file instance like:
 
 .. literalinclude:: uploaded_files/004.php
 
 Array notation
 --------------
 
-If you used an array notation for the name, the input would look something like::
+If you used array notation for the name, the input would look something like::
 
     <input type="file" name="my-form[details][avatar]">
 
-For get the file instance:
+To get the file instance:
 
 .. literalinclude:: uploaded_files/005.php
 
@@ -217,19 +217,19 @@ Multiple files
 
     <input type="file" name="images[]" multiple>
 
-In controller:
+In the controller:
 
 .. literalinclude:: uploaded_files/006.php
 
-where the ``images`` is a loop from the form field name.
+Here, ``images`` is a loop from the form field name.
 
-If there are multiple files with the same name you can use ``getFile()`` to retrieve every file individually.
+If there are multiple files with the same name, you can use ``getFile()`` to retrieve every file individually.
 
-In controller:
+In the controller:
 
 .. literalinclude:: uploaded_files/007.php
 
-You might find it easier to use ``getFileMultiple()``, to get an array of uploaded files with the same name:
+You might find it easier to use ``getFileMultiple()`` to get an array of uploaded files with the same name:
 
 .. literalinclude:: uploaded_files/008.php
 
@@ -238,7 +238,7 @@ Another example::
     Upload an avatar: <input type="file" name="my-form[details][avatars][]">
     Upload an avatar: <input type="file" name="my-form[details][avatars][]">
 
-In controller:
+In the controller:
 
 .. literalinclude:: uploaded_files/009.php
 
@@ -324,7 +324,7 @@ getClientPath()
 .. versionadded:: 4.4.0
 
 Returns the `webkit relative path <https://developer.mozilla.org/en-US/docs/Web/API/File/webkitRelativePath>`_ of the uploaded file when the client has uploaded files via directory upload.
-In PHP versions below 8.1, this returns ``null``
+In PHP versions below 8.1, this returns ``null``.
 
 .. literalinclude:: uploaded_files/023.php
 
@@ -380,7 +380,7 @@ as the third parameter:
 Check if the File Moved
 -----------------------
 
-Once the file has been moved the temporary file is deleted. You can check if a file has been moved already with
+Once the file has been moved, the temporary file is deleted. You can check if a file has been moved already with
 the ``hasMoved()`` method, which returns a boolean:
 
 .. literalinclude:: uploaded_files/018.php
@@ -403,12 +403,12 @@ With the simplest usage, a single file might be submitted like::
 
     <input type="file" name="userfile">
 
-By default, upload files are saved in **writable/uploads** directory. The **YYYYMMDD** folder
-and random file name will be created. Returns a file path:
+By default, uploaded files are saved in the **writable/uploads** directory. A **YYYYMMDD** folder
+and a random file name will be created. The method returns a file path:
 
 .. literalinclude:: uploaded_files/019.php
 
-You can specify a directory to move the file to as the first parameter. A new filename by
+You can specify a directory to move the file to as the first parameter, and a new filename by
 passing it as the second parameter:
 
 .. literalinclude:: uploaded_files/020.php

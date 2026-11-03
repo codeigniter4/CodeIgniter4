@@ -4,7 +4,7 @@ HTTP Feature Testing
 
 Feature testing allows you to view the results of a single call to your application. This might be returning the
 results of a single web form, hitting an API endpoint, and more. This is handy because it allows you to test the entire
-life-cycle of a single request, ensuring that the routing works, the response is the correct format, analyze the results,
+life-cycle of a single request, ensuring that the routing works and the response is in the correct format, analyzing the results,
 and more.
 
 .. contents::
@@ -14,10 +14,10 @@ and more.
 The Test Class
 ==============
 
-Feature testing requires that all of your test classes use the ``CodeIgniter\Test\DatabaseTestTrait``
-and ``CodeIgniter\Test\FeatureTestTrait`` traits. Since these testing tools rely on proper database
-staging you must always ensure that ``parent::setUp()`` and ``parent::tearDown()``
-are called if you implement your own methods.
+Feature testing requires the ``CodeIgniter\Test\FeatureTestTrait`` trait. Add
+``CodeIgniter\Test\DatabaseTestTrait`` when your tests also need database staging.
+Ensure that ``parent::setUp()`` and ``parent::tearDown()`` are called if you
+implement your own methods.
 
 .. literalinclude:: feature/001.php
 
@@ -26,7 +26,7 @@ are called if you implement your own methods.
 Requesting a Page
 =================
 
-Essentially, feature tests simply allows you to call an endpoint on your application and get the results back.
+Essentially, feature tests simply allow you to call an endpoint on your application and get the results back.
 To do this, you use the ``call()`` method.
 
 1. The first parameter is the HTTP method to use (most frequently either ``GET`` or ``POST``).
@@ -38,7 +38,7 @@ To do this, you use the ``call()`` method.
    :ref:`feature-formatting-the-request`.
 
    .. note:: The ``$params`` array does not make sense for every HTTP verb, but is
-      included for consistency.
+       included for consistency.
 
 .. literalinclude:: feature/002.php
    :lines: 2-
@@ -60,7 +60,7 @@ override any existing routes in the system:
 .. literalinclude:: feature/004.php
    :lines: 2-
 
-Each of the "routes" is a 3 element array containing the HTTP verb (or "add" for all),
+Each of the "routes" is a 3-element array containing the HTTP verb (or "add" for all),
 the URI to match, and the routing destination.
 
 .. _feature-setting-session-values:
@@ -87,7 +87,7 @@ passed as a header into the call:
 Bypassing Events
 ----------------
 
-Events are handy to use in your application, but can be problematic during testing. Especially events that are used
+Events are handy to use in your application, but can be problematic during testing, especially events that are used
 to send out emails. You can tell the system to skip any event handling with the ``skipEvents()`` method:
 
 .. literalinclude:: feature/007.php
@@ -96,16 +96,16 @@ to send out emails. You can tell the system to skip any event handling with the 
 .. _feature-formatting-the-request:
 
 Formatting the Request
------------------------
+----------------------
 
-You can set the format of your request's body using the ``withBodyFormat()`` method. Currently this supports either
+You can set the format of your request's body using the ``withBodyFormat()`` method. Currently, this supports either
 ``json`` or ``xml``.
 This is useful when testing JSON or XML APIs so that you can set the request in the form that the controller will expect.
 
 This will take the parameters passed into ``call()``, ``post()``, ``get()``... and assign them to the
 body of the request in the given format.
 
-This will also set the `Content-Type` header for your request accordingly.
+This will also set the ``Content-Type`` header for your request accordingly.
 
 .. literalinclude:: feature/008.php
    :lines: 2-
@@ -115,11 +115,11 @@ This will also set the `Content-Type` header for your request accordingly.
 Setting the Body
 ----------------
 
-You can set the body of your request with the ``withBody()`` method. This allows you to format the body how you want
-to format it. It is recommended that you use this if you have more complicated XMLs to test.
+You can set the body of your request with the ``withBody()`` method. This allows you to format the body however you want.
+It is recommended that you use this if you have more complicated XML to test.
 
 This will not set
-the `Content-Type` header for you. If you need that, you can set it with the ``withHeaders()`` method.
+the ``Content-Type`` header for you. If you need that, you can set it with the ``withHeaders()`` method.
 
 Checking the Response
 =====================

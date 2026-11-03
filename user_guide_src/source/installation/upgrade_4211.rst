@@ -27,7 +27,7 @@ The config value format has been changed. Now you must set your proxy IP address
             '192.168.5.0/24' => 'X-Forwarded-For',
     ];
 
-``ConfigException`` will be thrown for old format config value.
+``ConfigException`` will be thrown for a config value in the old format.
 
 .. _upgrade-4211-session-key:
 
@@ -44,13 +44,13 @@ the upgrade if you are using these session handlers.
 - When using ``MemcachedHandler`` or ``RedisHandler``, the key value contains
   the session cookie name (``Config\App::$sessionCookieName``).
 
-There is maximum length for the ``id`` column and Memcached key (250 bytes).
-If the following values exceed those maximum length, the session will not work properly.
+There is a maximum length for the ``id`` column and Memcached key (250 bytes).
+If the following values exceed those maximum lengths, the session will not work properly.
 
 - the session cookie name, delimiter, and session id (32 characters by default)
   when using ``DatabaseHandler``
 - the prefix (``ci_session``), session cookie name, delimiters, and session id
-  when using  ``MemcachedHandler``
+  when using ``MemcachedHandler``
 
 Project Files
 *************
@@ -63,10 +63,10 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-* app/Config/App.php
-* app/Config/Autoload.php
-* app/Config/Logger.php
-* app/Config/Toolbar.php
-* app/Views/welcome_message.php
-* composer.json
-* phpunit.xml.dist
+* **app/Config/App.php**
+* **app/Config/Autoload.php**
+* **app/Config/Logger.php**
+* **app/Config/Toolbar.php**
+* **app/Views/welcome_message.php**
+* **composer.json**
+* **phpunit.xml.dist**

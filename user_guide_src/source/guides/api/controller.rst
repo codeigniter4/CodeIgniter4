@@ -3,8 +3,8 @@
 Building a RESTful Controller
 #############################
 
-In this chapter, we build the API endpoints to expose your ``book`` table through a proper RESTful API.
-We'll use :php:class:`CodeIgniter\\RESTful\\ResourceController` to handle CRUD actions with almost no boilerplate.
+In this chapter, we build the API endpoints to expose your ``books`` table through a proper RESTful API.
+We'll extend ``BaseController`` and use :php:trait:`CodeIgniter\\API\\ResponseTrait` with Improved Auto Routing.
 
 What is RESTful?
 ================
@@ -26,18 +26,18 @@ Open it and replace its contents with the following stubbed-out class:
 
 .. literalinclude:: code/009.php
 
-Since we're using auto-routing, we need to use the ``index`` method names so it doesn't interfere with mapping to the URI segments. But we can use the HTTP verb prefixes (``get``, ``post``, ``put``, ``delete``) to indicate which method handles which verb. The only one that is slightly odd is ``getIndex()``, which must be used to map to both listing all resources and listing a single resource by ID.
+Since we're using auto-routing, we need to use the ``index`` method names so they don't interfere with mapping to the URI segments. But we can use the HTTP verb prefixes (``get``, ``post``, ``put``, ``delete``) to indicate which method handles which verb. The only one that is slightly odd is ``getIndex()``, which must be used to map to both listing all resources and listing a single resource by ID.
 
 .. tip::
 
    If you prefer a different naming scheme, you would need to define routes explicitly in **app/Config/Routes.php** and turn auto-routing off.
 
 API Transformers
-=================
+================
 
 It is considered a best practice to separate your data models from the way they are presented in your API responses. This is often done using transformers or resource classes that format the data consistently. CodeIgniter provides API transformers to help with this.
 
-Create the transformers with the generator command:
+Create the transformer with the generator command:
 
 .. code-block:: console
 
@@ -71,13 +71,13 @@ In both of these cases, we use a new method on the model called ``withAuthorInfo
 Add the Model helper method
 ---------------------------
 
-In your BookModel, we add a new method called ``withAuthorInfo()``. This method uses the Query Builder to join the ``author`` table and select the relevant author fields. This way, when we retrieve books, we also get the associated author information without needing to make separate queries for each book.
+In your BookModel, we add a new method called ``withAuthorInfo()``. This method uses the Query Builder to join the ``authors`` table and select the relevant author fields. This way, when we retrieve books, we also get the associated author information without needing to make separate queries for each book.
 
 .. literalinclude:: code/014.php
 
 
 Test the list endpoint
------------------------
+----------------------
 
 Start the local server:
 

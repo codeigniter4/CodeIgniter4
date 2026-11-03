@@ -15,7 +15,7 @@ Loading the Library
 If your only interest in loading the library is to handle CSRF protection, then you will never need to load it,
 as it runs as a filter and has no manual interaction.
 
-If you find a case where you do need direct access though, you may load it through the Services file:
+If you find a case where you do need direct access, though, you may load it through the Services file:
 
 .. literalinclude:: security/001.php
 
@@ -31,7 +31,7 @@ Cross-Site Request Forgery (CSRF)
 Prerequisite
 ============
 
-When you use the CodeIgniter's CSRF protection, you still need to code as the following.
+When you use CodeIgniter's CSRF protection, you still need to code as follows.
 Otherwise, the CSRF protection may be bypassed.
 
 When Auto-Routing is Disabled
@@ -71,20 +71,20 @@ Config for CSRF
 CSRF Protection Methods
 -----------------------
 
-.. warning:: If you use :doc:`Session <./sessions>`, be sure to use Session based
-    CSRF protection. Cookie based CSRF protection will not prevent Same-site attacks.
+.. warning:: If you use :doc:`Session <./sessions>`, be sure to use Session-based
+    CSRF protection. Cookie-based CSRF protection will not prevent Same-site attacks.
     See
     `GHSA-5hm8-vh6r-2cjq <https://github.com/codeigniter4/shield/security/advisories/GHSA-5hm8-vh6r-2cjq>`_
     for details.
 
-By default, the Cookie based CSRF Protection is used. It is
+By default, the Cookie-based CSRF Protection is used. It is the
 `Double Submit Cookie <https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#double-submit-cookie>`_
-on OWASP Cross-Site Request Forgery Prevention Cheat Sheet.
+pattern on the OWASP Cross-Site Request Forgery Prevention Cheat Sheet.
 
-You can also use Session based CSRF Protection. It is
+You can also use Session-based CSRF Protection. It is the
 `Synchronizer Token Pattern <https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#synchronizer-token-pattern>`_.
 
-You can set to use the Session based CSRF protection by editing the following config parameter value in
+You can use the Session-based CSRF protection by editing the following config parameter value in
 **app/Config/Security.php**:
 
 .. literalinclude:: security/002.php
@@ -112,17 +112,17 @@ kept the same throughout the life of the Session or CSRF cookie.
 The default
 regeneration of tokens provides stricter security, but may result
 in usability concerns as other tokens become invalid (back/forward
-navigation, multiple tabs/windows, asynchronous actions, etc). You
+navigation, multiple tabs/windows, asynchronous actions, etc.). You
 may alter this behavior by editing the following config parameter value in
 **app/Config/Security.php**:
 
 .. literalinclude:: security/004.php
 
-.. warning:: If you use Cookie based CSRF protection, and :php:func:`redirect()`
+.. warning:: If you use Cookie-based CSRF protection, and :php:func:`redirect()`
     after the submission, you must call ``withCookie()`` to send the regenerated
     CSRF cookie. See :ref:`response-redirect` for details.
 
-.. note:: Since v4.2.3, you can regenerate CSRF token manually with the
+.. note:: Since v4.2.3, you can regenerate the CSRF token manually with the
     ``Security::generateHash()`` method.
 
 .. _csrf-redirection-on-failure:
@@ -131,10 +131,10 @@ Redirection on Failure
 ----------------------
 
 Starting with v4.5.0, when a request fails the CSRF validation check, by default,
-the user is redirected to the previous page in production environment, or a
+the user is redirected to the previous page in the production environment, or a
 SecurityException is thrown in other environments.
 
-.. note:: In production environment, when you use HTML forms, it is recommended
+.. note:: In the production environment, when you use HTML forms, it is recommended
     to enable this redirection for a better user experience.
 
     Upgrade users should check their configuration files.
@@ -158,12 +158,12 @@ Enable CSRF Protection
 ======================
 
 You can enable CSRF protection by altering your **app/Config/Filters.php**
-and enabling the `csrf` filter globally:
+and enabling the ``csrf`` filter globally:
 
 .. literalinclude:: security/006.php
 
-Select URIs can be whitelisted from CSRF protection (for example API
-endpoints expecting externally POSTed content). You can add these URIs
+Select URIs can be whitelisted from CSRF protection (for example, API
+endpoints expecting externally POSTed content). You can do this
 by adding them as exceptions in the filter:
 
 .. literalinclude:: security/007.php
@@ -184,15 +184,14 @@ HTML Forms
 ==========
 
 If you use the :doc:`form helper <../helpers/form_helper>`, then
-:func:`form_open()` will automatically insert a hidden csrf field in
+:func:`form_open()` will automatically insert a hidden CSRF field in
 your forms.
 
-.. note:: To use auto-generation of CSRF field, you need to turn CSRF filter on to the form page.
-    In most cases it is requested using the ``GET`` method.
+.. note:: To use auto-generation of the CSRF field, you need to turn the CSRF filter on for the form page.
+    In most cases, it is requested using the ``GET`` method.
 
 If not, then you can use the always available ``csrf_token()``
-and ``csrf_hash()`` functions
-::
+and ``csrf_hash()`` functions::
 
     <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
 
@@ -202,8 +201,8 @@ hidden input field for you::
     // Generates: <input type="hidden" name="{csrf_token}" value="{csrf_hash}" />
     <?= csrf_field() ?>
 
-When sending a JSON request the CSRF token can also be passed as one of the parameters.
-The next way to pass the CSRF token is a special Http header that's name is available by
+When sending a JSON request, the CSRF token can also be passed as one of the parameters.
+The next way to pass the CSRF token is a special HTTP header whose name is available from the
 ``csrf_header()`` function.
 
 Additionally, you can use the ``csrf_meta()`` method to generate this handy
@@ -245,7 +244,7 @@ Tries to sanitize filenames in order to prevent directory traversal attempts and
 particularly useful for files that were supplied via user input. The first parameter is the path to sanitize.
 
 If it is acceptable for the user input to include relative paths, e.g., **file/in/some/approved/folder.txt**, you can set
-the second optional parameter, ``$relativePath`` to ``true``.
+the second optional parameter, ``$relativePath``, to ``true``.
 
 .. literalinclude:: security/010.php
 

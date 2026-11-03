@@ -58,10 +58,10 @@ to change that in **app/Config/Constants.php**.
 system
 ======
 
-.. note:: If you install CodeIgniter with Composer, the **system** is located in
+.. note:: If you install CodeIgniter with Composer, the **system** directory is located in
     **vendor/codeigniter4/framework/system**.
 
-This directory stores the files that make up the framework, itself. While you
+This directory stores the files that make up the framework itself. While you
 have a lot of flexibility in how you use the application directory, the files in
 the system directory should never be modified. Instead, you should extend the
 classes, or create new classes, to provide the desired functionality.
@@ -77,7 +77,7 @@ The **public** folder holds the browser-accessible portion of your web applicati
 preventing direct access to your source code.
 
 It contains the main **.htaccess** file, **index.php**, and any application
-assets that you add, like CSS, javascript, or images.
+assets that you add, like CSS, JavaScript, or images.
 
 This folder is meant to be the "web root" of your site, and your web server
 would be configured to point to it.

@@ -34,14 +34,14 @@ See :ref:`urls-remove-index-php`.
 Only the default page loads
 ---------------------------
 
-If you find that no matter what you put in your URL only your default
+If you find that no matter what you put in your URL, only your default
 page is loading, it might be that your server does not support the
 REQUEST_URI variable needed to serve search-engine friendly URLs. As a
 first step, open your **app/Config/App.php** file and look for
 the URI Protocol information. It will recommend that you try a couple of
-alternate settings. If it still doesn't work after you've tried this
+alternate settings. If it still doesn't work after you've tried this,
 you'll need to force CodeIgniter to add a question mark (``?``) to your URLs. To
-do this open your **app/Config/App.php** file and change this:
+do this, open your **app/Config/App.php** file and change this:
 
 .. literalinclude:: troubleshooting/001.php
 
@@ -52,7 +52,7 @@ To this:
 No input file specified
 -----------------------
 
-If you see "No input file specified", try to change the rewrite rule like the following (to add ``?`` after ``index.php``):
+If you see "No input file specified", try changing the rewrite rule like the following (to add ``?`` after ``index.php``):
 
 .. code-block:: apache
 
@@ -95,7 +95,7 @@ the webapp, for better security.
 
 You can see the error in the log file. See `CodeIgniter Error Logs`_ below.
 
-If you reach this page while developing you should change your environment to
+If you reach this page while developing, you should change your environment to
 "development" (in **.env**). See :ref:`setting-development-mode` for more details.
 After that, reload the page. You will see the error and the back trace.
 

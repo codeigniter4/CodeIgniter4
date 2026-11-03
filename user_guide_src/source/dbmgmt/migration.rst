@@ -25,22 +25,22 @@ Migration File Names
 A migration file name is made up of a timestamp prefix, an underscore (``_``),
 and a descriptive name (classname).
 
-* 2024-09-08-013653_AddBlogTable.php
+* **2024-09-08-013653_AddBlogTable.php**
 
 Each migration is numbered using the timestamp (**2024-09-08-013653**) when the
 migration was created, in **YYYY-MM-DD-HHIISS** format.
 
 The descriptive name (**AddBlogTable**) for the migration is a classname in PHP.
-So you must name a valid classname.
+So you must use a valid classname.
 
 The year, month, day, and time in a prefix can be separated from each other by
 dashes (``-``), underscores (``_``), or not at all. For example:
 
-* 2012-10-31-100538_AlterBlogTrackViews.php
-* 2012_10_31_100539_AlterBlogAddTranslations.php
-* 20121031100537_AddBlog.php
+* **2012-10-31-100538_AlterBlogTrackViews.php**
+* **2012_10_31_100539_AlterBlogAddTranslations.php**
+* **20121031100537_AddBlog.php**
 
-Each Migration is run in numeric order forward or backwards depending on the
+Each migration is run in numeric order forward or backwards depending on the
 method taken. This helps prevent numbering conflicts when working in a team
 environment.
 
@@ -80,7 +80,7 @@ in that same configuration file.
 
 There may be times when you need different schemas for different
 database groups. Perhaps you have one database that is used for all general site information, while
-another database is used for mission critical data.
+another database is used for mission-critical data.
 
 You can ensure that migrations are run only
 against the proper group by setting the ``$DBGroup`` property on your migration. This name must
@@ -89,7 +89,7 @@ match the name of the database group exactly:
 .. literalinclude:: migration/003.php
 
 .. note:: The **migrations** table that tracks which migrations have already been
-    run will be always created in the default database group.
+    run will always be created in the default database group.
 
 Namespaces
 ==========
@@ -99,7 +99,7 @@ The migration library can automatically scan all namespaces you have defined wit
 the ``$psr4`` property for matching directory names. It will include all migrations
 it finds in **Database/Migrations**.
 
-Each namespace has its own version sequence, this will help you upgrade and downgrade each module (namespace) without affecting other namespaces.
+Each namespace has its own version sequence, which will help you upgrade and downgrade each module (namespace) without affecting other namespaces.
 
 For example, assume that we have the following namespaces defined in our Autoload
 configuration file:
@@ -113,9 +113,9 @@ re-usable, modular code suites.
 
 .. _command-line-tools:
 
-*******************
+******************
 Command-Line Tools
-*******************
+******************
 
 CodeIgniter ships with several :doc:`commands </cli/spark_commands>` that are available from the command line to help
 you work with migrations. These tools make things easier for those of you
@@ -132,11 +132,11 @@ Migrates a database group with all available migrations:
 
 You can use ``migrate`` with the following options:
 
-- ``-g`` - to specify database group. If specified, only migrations for the specified database group will be run. If not specified, all migrations will be run.
-- ``-n`` - to choose namespace, otherwise ``App`` namespace will be used.
+- ``-g`` - to specify a database group. If specified, only migrations for the specified database group will be run. If not specified, all migrations will be run.
+- ``-n`` - to choose a namespace, otherwise the ``App`` namespace will be used.
 - ``--all`` - to migrate all namespaces to the latest migration.
 
-This example will migrate ``Acme\Blog`` namespace with any new migrations on the test database group:
+This example will migrate the ``Acme\Blog`` namespace with any new migrations on the test database group:
 
 For Unix:
 
@@ -166,7 +166,7 @@ Rolls back all migrations to a blank slate, effectively migration 0:
 You can use ``migrate:rollback`` with the following options:
 
 - ``-b`` - to choose a batch: natural numbers specify the batch.
-- ``-f`` - to force a bypass confirmation question, it is only asked in a production environment.
+- ``-f`` - to bypass the confirmation question, which is only asked in a production environment.
 
 migrate:refresh
 ===============
@@ -179,10 +179,10 @@ Refreshes the database state by first rolling back all migrations, and then migr
 
 You can use ``migrate:refresh`` with the following options:
 
-- ``-g`` - to specify database group. If specified, only migrations for the specified database group will be run. If not specified, all migrations will be run.
-- ``-n`` - to choose namespace, otherwise ``App`` namespace will be used.
+- ``-g`` - to specify a database group. If specified, only migrations for the specified database group will be run. If not specified, all migrations will be run.
+- ``-n`` - to choose a namespace, otherwise the ``App`` namespace will be used.
 - ``--all`` - to refresh all namespaces.
-- ``-f`` - to force a bypass confirmation question, it is only asked in a production environment.
+- ``-f`` - to bypass the confirmation question, which is only asked in a production environment.
 
 migrate:status
 ==============
@@ -205,7 +205,7 @@ Displays a list of all migrations and the date and time they ran, or '--' if the
 
 You can use ``migrate:status`` with the following options:
 
-- ``-g`` - to specify database group. If specified, only migrations for the specified database group will be checked. If not specified, all migrations will be checked.
+- ``-g`` - to specify a database group. If specified, only migrations for the specified database group will be checked. If not specified, all migrations will be checked.
 
 make:migration
 ==============
@@ -221,14 +221,14 @@ creates is the Pascal case version of the filename.
 You can use ``make:migration`` with the following options:
 
 - ``--namespace`` - Set root namespace. Default: ``APP_NAMESPACE``.
-- ``--suffix``    - Append the component title to the class name.
+- ``--suffix`` - Append the component title to the class name.
 
 The following options are also available to generate the migration file for
 database sessions:
 
-- ``--session``   - Generates the migration file for database sessions.
-- ``--table``     - Table name to use for database sessions. Default: ``ci_sessions``.
-- ``--dbgroup``   - Database group to use for database sessions. Default: ``default``.
+- ``--session`` - Generates the migration file for database sessions.
+- ``--table`` - Table name to use for database sessions. Default: ``ci_sessions``.
+- ``--dbgroup`` - Database group to use for database sessions. Default: ``default``.
 
 *********************
 Migration Preferences
@@ -261,7 +261,7 @@ Class Reference
         :returns:    An array of migration files
         :rtype:    array
 
-        An array of migration filenames are returned that are found in the ``path`` property.
+        An array of migration filenames found in the ``path`` property is returned.
 
     .. php:method:: latest($group)
 
@@ -276,7 +276,7 @@ Class Reference
 
         :param    int    $targetBatch: previous batch to migrate down to; 1+ specifies the batch, 0 reverts all, negative refers to the relative batch (e.g., -3 means "three batches back")
         :param    ?string    $group: database group name, if null default database group will be used.
-        :returns:    ``true`` on success, ``false`` on failure or no migrations are found
+        :returns:    ``true`` on success, ``false`` on failure or if no migrations are found
         :rtype:    bool
 
         Regress can be used to roll back changes to a previous state, batch by batch.
@@ -291,7 +291,7 @@ Class Reference
         :returns:    ``true`` on success, ``false`` on failure
         :rtype:    bool
 
-        This forces a single file to migrate regardless of order or batches. Method ``up()`` or ``down()`` is detected based on whether it has already been migrated.
+        This forces a single file to migrate regardless of order or batches. The ``up()`` or ``down()`` method is detected based on whether it has already been migrated.
 
         .. note:: This method is recommended only for testing and could cause data consistency issues.
 
@@ -301,7 +301,7 @@ Class Reference
         :returns:   The current MigrationRunner instance
         :rtype:     CodeIgniter\\Database\\MigrationRunner
 
-        Sets the namespace the library should look for migration files:
+        Sets the namespace in which the library should look for migration files:
 
         .. literalinclude:: migration/007.php
 
@@ -313,6 +313,6 @@ Class Reference
         :returns:   The current MigrationRunner instance
         :rtype:     CodeIgniter\\Database\\MigrationRunner
 
-        Sets the group the library should look for migration files:
+        Sets the group in which the library should look for migration files:
 
         .. literalinclude:: migration/008.php

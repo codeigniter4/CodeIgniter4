@@ -25,7 +25,7 @@ The following functions are available:
 
     :param    array|Cookie|string    $name: Cookie name *or* associative array of all of the parameters available to this function *or* an instance of ``CodeIgniter\Cookie\Cookie``
     :param    string    $value: Cookie value
-    :param    int    $expire: Number of seconds until expiration. If set to ``0`` the cookie will only last as long as the browser is open
+    :param    int    $expire: Number of seconds until expiration. If set to ``0``, the cookie will only last as long as the browser is open
     :param    string    $domain: Cookie domain (usually: .yourdomain.com)
     :param    string    $path: Cookie path
     :param    string    $prefix: Cookie name prefix. If ``''``, the default from **app/Config/Cookie.php** is used
@@ -51,7 +51,7 @@ The following functions are available:
 
     :param    string    $index: Cookie name
     :param    bool    $xssClean: Whether to apply XSS filtering to the returned value
-    :param    string|null  $prefix: Cookie name prefix. If set to ``''``, the default value from **app/Config/Cookie.php** will be used. If set to ``null``, no prefix
+    :param    string|null  $prefix: Cookie name prefix. If set to ``''``, the default value from **app/Config/Cookie.php** will be used. If set to ``null``, no prefix is used
     :returns:    The cookie value or null if not found
     :rtype:    mixed
 
@@ -59,7 +59,7 @@ The following functions are available:
 
     This helper function gives you friendlier syntax to get browser
     cookies. Refer to the :doc:`IncomingRequest Library </incoming/incomingrequest>` for
-    detailed description of its use, as this function acts very
+    a detailed description of its use, as this function acts very
     similarly to :php:meth:`CodeIgniter\\HTTP\\IncomingRequest::getCookie()`,
     except it will also prepend
     the ``Config\Cookie::$prefix`` that you might've set in your
@@ -83,15 +83,15 @@ The following functions are available:
     This function is otherwise identical to :php:func:`set_cookie()`, except that it
     does not have the ``value`` and ``expire`` parameters.
 
-    This also just sets browser cookies for deleting the cookies to the global
+    This also just sets the deletion cookies on the global
     response instance that ``Services::response()`` returns.
 
     .. note:: When you use :php:func:`set_cookie()`,
-        if the ``value`` is set to empty string and the ``expire`` is set to ``0``, the cookie will be deleted.
-        If the ``value`` is set to non-empty string and the ``expire`` is set to ``0``, the cookie will only last as long as the browser is open.
+        if the ``value`` is set to an empty string and the ``expire`` is set to ``0``, the cookie will be deleted.
+        If the ``value`` is set to a non-empty string and the ``expire`` is set to ``0``, the cookie will only last as long as the browser is open.
 
     You can submit an
-    array of values in the first parameter or you can set discrete
+    array of values in the first parameter, or you can set discrete
     parameters.
 
     .. literalinclude:: cookie_helper/003.php

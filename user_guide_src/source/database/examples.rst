@@ -21,27 +21,27 @@ your :doc:`configuration <configuration>` settings:
 
 .. literalinclude:: examples/001.php
 
-Once loaded the class is ready to be used as described below.
+Once loaded, the class is ready to be used as described below.
 
-.. note:: If all your pages require database access you can connect
-    automatically. See the :doc:`Connecting to a Database <connecting>` page for details.
+.. note:: If all your controllers require database access, you can connect in
+    your base controller's ``initController()`` method. See
+    :doc:`Connecting to a Database <connecting>` for connection examples.
 
 Standard Query With Multiple Results (Object Version)
 =====================================================
 
 .. literalinclude:: examples/002.php
 
-| The above ``getResult()`` function returns an array of **objects**.
-| Example: ``$row->title``
+The above ``getResult()`` function returns an array of **objects**.
+Example: ``$row->title``
 
 Standard Query With Multiple Results (Array Version)
 ====================================================
 
 .. literalinclude:: examples/003.php
 
-| The above ``getResultArray()`` function returns an array of standard array
-  indexes.
-| Example: ``$row['title']``
+The above ``getResultArray()`` function returns an array of associative arrays.
+Example: ``$row['title']``
 
 Standard Query With Single Result
 =================================

@@ -3,7 +3,7 @@ Caching Driver
 ##############
 
 CodeIgniter features wrappers around some of the most popular forms of
-fast and dynamic caching. All but file-based caching require specific
+fast and dynamic caching. All but file-based caching have specific
 server requirements, and a Fatal Exception will be thrown if server
 requirements are not met.
 
@@ -35,7 +35,7 @@ the following items are available.
 $handler
 ========
 
-The is the name of the handler that should be used as the primary handler when starting up the engine.
+This is the name of the handler that should be used as the primary handler when starting up the engine.
 Available names are: apcu, dummy, file, memcached, redis, predis, wincache.
 
 $backupHandler
@@ -62,7 +62,7 @@ to projects and modules. This will replace the hard-coded value in a future rele
 $file
 =====
 
-This is an array of settings specific to the  **File** handler to determine how it should save the cache files.
+This is an array of settings specific to the **File** handler to determine how it should save the cache files.
 
 $memcached
 ==========
@@ -72,7 +72,7 @@ This is an array of servers that will be used when using the **Memcached** handl
 $redis
 ======
 
-The settings for the Redis server that you wish to use when using the **Redis** and **Predis** handler.
+The settings for the Redis server that you wish to use when using the **Redis** and **Predis** handlers.
 
 ******************
 Command-Line Tools
@@ -80,7 +80,7 @@ Command-Line Tools
 
 CodeIgniter ships with several :doc:`commands </cli/spark_commands>` that are available
 from the command line to help you work with Cache.
-These tools are not required to use Cache driver but might help you.
+These tools are not required to use the Cache driver, but might help you.
 
 cache:clear
 ===========
@@ -169,15 +169,15 @@ Class Reference
 
     .. php:method:: deleteMatching($pattern): integer
 
-        :param string $pattern: glob-style pattern to match cached items keys
+        :param string $pattern: glob-style pattern to match cached item keys
         :returns: number of deleted items
         :rtype: integer
 
         This method will delete multiple items from the cache store at once by
         matching their keys against a glob-style pattern. It will return the total number of deleted items.
 
-        .. important:: This method is only implemented for File, Redis and Predis handlers.
-            Due to limitations, it couldn't be implemented for Memcached and Wincache handlers.
+        .. important:: This method is only implemented for the File, Redis and Predis handlers.
+            Due to limitations, it couldn't be implemented for the Memcached and Wincache handlers.
 
         .. note:: With the File handler, the pattern is matched against cache
             file names only and cannot match files in subdirectories. A pattern
@@ -244,7 +244,7 @@ Class Reference
 
         .. literalinclude:: caching/010.php
 
-        .. note:: The information returned and the structure of the data is dependent
+        .. note:: The information returned and the structure of the data are dependent
             on which adapter is being used.
 
     .. php:method:: getMetadata(string $key)
@@ -260,9 +260,9 @@ Class Reference
 
         .. literalinclude:: caching/011.php
 
-        .. note:: The information returned and the structure of the data is dependent
-              on which adapter is being used. Some adapters (File, Memcached, Wincache)
-              still return ``false`` for missing items.
+        .. note:: The information returned and the structure of the data are dependent
+            on which adapter is being used. Some adapters (File, Memcached, Wincache)
+            still return ``false`` for missing items.
 
     .. php:staticmethod:: validateKey(string $key, string $prefix)
 
@@ -285,17 +285,17 @@ Drivers
 APCu Caching
 ============
 
-APCu is an in-memory key-value store for PHP. 
+APCu is an in-memory key-value store for PHP.
 
 To use it, you need the `APCu PHP extension <https://www.php.net/apcu>`_.
 
 File-based Caching
 ==================
 
-This requires a cache directory to be really writable by the application.
+This requires a cache directory to be writable by the application.
 
 Use this with care, and make sure to benchmark your application, as a point can
-come where disk I/O will negate positive gains by caching.
+come where disk I/O will negate positive gains from caching.
 
 Memcached Caching
 =================
@@ -319,9 +319,9 @@ Redis Caching
 =============
 
 Redis is an in-memory key-value store which can operate in LRU cache mode.
-To use it, you need `Redis server and phpredis PHP extension <https://github.com/phpredis/phpredis>`_.
+To use it, you need the `Redis server and phpredis PHP extension <https://github.com/phpredis/phpredis>`_.
 
-Config options to connect to redis server stored in the cache configuration file. Available options are:
+Config options to connect to the Redis server are stored in the cache configuration file. Available options are:
 
 .. literalinclude:: caching/014.php
 
@@ -332,13 +332,13 @@ Predis Caching
 ==============
 
 Predis is a flexible and feature-complete PHP client library for the Redis key-value store.
-To use it, from the command line inside your project root:
+To use it, run the following from the command line inside your project root:
 
 .. code-block:: console
 
     composer require predis/predis
 
-For more information on Redis, please see
+For more information on Predis, please see
 `https://github.com/nrk/predis <https://github.com/nrk/predis>`_.
 
 Dummy Cache

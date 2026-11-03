@@ -24,8 +24,8 @@ This event is triggered whenever a new query has been run, whether successful or
 not. The only parameter is a :doc:`Query </database/queries>` instance of the
 current query.
 
-You could use this to display all queries in STDOUT, or logging to a file, or
-even creating tools to do automatic query analysis to help you spot potentially
+You could use this to display all queries in STDOUT, to log them to a file, or
+even to create tools for automatic query analysis to help you spot potentially
 missing indexes, slow queries, etc.
 
 An example to log all queries:

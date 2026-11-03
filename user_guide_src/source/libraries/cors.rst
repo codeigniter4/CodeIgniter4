@@ -30,7 +30,7 @@ Configuring CORS
 Setting Default Config
 ======================
 
-CORS can be configured by **app/Config/Cors.php**.
+CORS can be configured in **app/Config/Cors.php**.
 
 At a minimum, the following items in the ``$default`` property must be set:
 
@@ -49,19 +49,19 @@ Enabling CORS
 
 To enable CORS, you need to do two things:
 
-1. Specify the ``cors`` filter to routes that you permit CORS.
+1. Set the ``cors`` filter on the routes that permit CORS.
 2. Add **OPTIONS** routes for CORS Preflight Requests.
 
 Set against Routes
 ------------------
 
-You can set the ``cors`` filter to routes with **app/Config/Routes.php**.
+You can set the ``cors`` filter on routes in **app/Config/Routes.php**.
 
 E.g.,
 
 .. literalinclude:: cors/001.php
 
-Don't forget to add OPTIONS routes for Preflight Requests. Because Controller
+Don't forget to add OPTIONS routes for Preflight Requests, because Controller
 Filters (except for Required Filters) do not work if the route does not exist.
 
 The CORS filter handles all Preflight Requests, so the closure controllers
@@ -70,13 +70,13 @@ for the OPTIONS routes are not normally called.
 Set in Config\\Filters
 ----------------------
 
-Alternatively, you can set the ``cors`` filter to URI paths in **app/Config/Filters.php**.
+Alternatively, you can set the ``cors`` filter on URI paths in **app/Config/Filters.php**.
 
 E.g.,
 
 .. literalinclude:: cors/002.php
 
-Don't forget to add OPTIONS routes for Preflight Requests. Because Controller
+Don't forget to add OPTIONS routes for Preflight Requests, because Controller
 Filters (except for Required Filters) do not work if the route does not exist.
 
 E.g.,

@@ -2,8 +2,8 @@
 Working with URIs
 *****************
 
-CodeIgniter provides an object oriented solution for working with URI's in your application. Using this makes it
-simple to ensure that the structure is always correct, no matter how complex the URI might be, as well as adding
+CodeIgniter provides an object-oriented solution for working with URIs in your application. Using this makes it
+simple to ensure that the structure is always correct, no matter how complex the URI might be, as well as to add a
 relative URI to an existing one and have it resolved safely and correctly.
 
 .. contents::
@@ -32,7 +32,7 @@ Since v4.4.0, if you don't pass a URL, it returns the current URI:
 .. literalinclude:: uri/002.php
     :lines: 2-
 
-.. note:: The above code returns the ``SiteURI`` instance, that extends the ``URI``
+.. note:: The above code returns a ``SiteURI`` instance, which extends the ``URI``
     class. The ``URI`` class is for general URIs, but the ``SiteURI`` class is
     for your site URIs.
 
@@ -45,7 +45,7 @@ you can use the :php:func:`current_url()` function available in the :doc:`../hel
 .. literalinclude:: uri/004.php
     :lines: 2-
 
-You must pass ``true`` as the first parameter, otherwise, it will return the string representation of the current URL.
+You must pass ``true`` as the first parameter. Otherwise, it will return the string representation of the current URL.
 
 This URI is based on the path (relative to your ``baseURL``) as determined by the current request object and
 your settings in ``Config\App`` (``baseURL``, ``indexPage``, and ``forceGlobalSecureRequests``).
@@ -107,7 +107,7 @@ If you do not want to display the port, pass in ``true`` as the only parameter:
 
 .. literalinclude:: uri/011.php
 
-.. note:: If the current port is the default port for the scheme it will never be displayed.
+.. note:: If the current port is the default port for the scheme, it will never be displayed.
 
 UserInfo
 --------
@@ -132,11 +132,11 @@ The host portion of the URI is typically the domain name of the URL. This can be
 Port
 ----
 
-The port is an integer number between 0 and 65535. Each scheme has a default value associated with it.
+The port is an integer between 0 and 65535. Each scheme has a default value associated with it.
 
 .. literalinclude:: uri/015.php
 
-When using the ``setPort()`` method, the port will be checked that it is within the valid range and assigned.
+When using the ``setPort()`` method, the port will be checked to ensure that it is within the valid range, and then assigned.
 
 Path
 ----
@@ -146,10 +146,10 @@ can be used to manipulate it:
 
 .. literalinclude:: uri/016.php
 
-.. note:: When setting the path it is sanitized to encode any dangerous
-    characters, and remove dot segments for safety.
+.. note:: When the path is set, it is sanitized to encode any dangerous
+    characters and remove dot segments for safety.
 
-.. note:: Since v4.4.0, the ``SiteURI::getRoutePath()`` method,
+.. note:: Since v4.4.0, the ``SiteURI::getRoutePath()`` method
     returns the URI path relative to baseURL, and the ``SiteURI::getPath()``
     method always returns the full URI path with leading ``/``.
 
@@ -168,7 +168,7 @@ be set as a string currently.
 
 The ``setQuery()`` method overwrites existing query variables.
 
-.. note:: Query values cannot contain fragments. An InvalidArgumentException will be thrown if it does.
+.. note:: Query values cannot contain fragments. An InvalidArgumentException will be thrown if they do.
 
 Setting Query from Array
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -206,15 +206,15 @@ you can use the ``stripQuery()`` and ``keepQuery()`` methods to change the actua
 
 .. literalinclude:: uri/021.php
 
-.. note:: By default ``setQuery()`` and ``setQueryArray()`` methods uses native ``parse_str()`` function to prepare data.
+.. note:: By default, the ``setQuery()`` and ``setQueryArray()`` methods use the native ``parse_str()`` function to prepare data.
     If you want to use more liberal rules (which allow key names to contain dots), you can use a special method
     ``useRawQueryString()`` beforehand.
 
 Fragment
 --------
 
-Fragments are the portion at the end of the URL, preceded by the pound-sign (``#``). In HTML URLs these are links
-to an on-page anchor. Media URI's can make use of them in various other ways.
+Fragments are the portion at the end of the URL, preceded by the pound sign (``#``). In HTML URLs these are links
+to an on-page anchor. Media URIs can make use of them in various other ways.
 
 .. literalinclude:: uri/022.php
 
@@ -225,7 +225,7 @@ URI Segments
 Each section of the path between the slashes is a single segment.
 
 .. note:: In the case of your site URI, URI Segments mean only the URI path part
-    relative to the baseURL. If your baseURL contains sub folders, the values
+    relative to the baseURL. If your baseURL contains subfolders, the values
     will be different from the current URI path.
 
 The URI class provides a simple way to determine
@@ -233,13 +233,13 @@ what the values of the segments are. The segments start at 1 being the furthest 
 
 .. literalinclude:: uri/023.php
 
-You can also set a different default value for a particular segment by using the second parameter of the ``getSegment()`` method. The default is empty string.
+You can also set a different default value for a particular segment by using the second parameter of the ``getSegment()`` method. The default is an empty string.
 
 .. literalinclude:: uri/024.php
 
 .. note:: You can get the last +1 segment. When you try to get the last +2 or
-    more segment, an exception will be thrown by default. You could prevent
-    throwing exceptions with the ``setSilent()`` method.
+    higher segment, an exception will be thrown by default. You can prevent
+    exceptions from being thrown with the ``setSilent()`` method.
 
 You can get a count of the total segments:
 

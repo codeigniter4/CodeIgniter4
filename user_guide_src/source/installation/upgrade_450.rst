@@ -55,7 +55,7 @@ standardized methods are defined in all-uppercase US-ASCII letters.
 See https://www.rfc-editor.org/rfc/rfc9110#name-overview.
 
 Now the deprecated ``$upper`` parameter in ``Request::getMethod()`` has been
-removed, and the ``getMethod()`` returns the as-is HTTP method name. That is,
+removed, and ``getMethod()`` returns the HTTP method name as-is. That is,
 uppercase like "GET", "POST", and so on.
 
 If you want lowercase HTTP method names, use PHP's ``strtolower()`` function::
@@ -80,8 +80,8 @@ CURLRequest::request()
 In previous versions, you could pass lowercase HTTP methods to the ``request()``
 method. But this bug has been fixed.
 
-Now you must pass the correct HTTP method names like ``GET``, ``POST``. Otherwise
-you would get the error response::
+Now you must pass the correct HTTP method names like ``GET``, ``POST``. Otherwise,
+you will get an error response::
 
     $client   = \Config\Services::curlrequest();
     $response = $client->request('get', 'https://www.google.com/', [
@@ -118,7 +118,7 @@ For example,
     });
 
 Now the ``csrf`` filter is executed for both the route ``admin`` and ``admin/users``.
-In previous versions, it is executed only for the route ``admin``.
+In previous versions, it was executed only for the route ``admin``.
 See also :ref:`routing-nesting-groups`.
 
 .. _upgrade-450-filter-execution-order:
@@ -128,52 +128,52 @@ Filter Execution Order
 
 The order in which Controller Filters are executed has changed.
 If you wish to maintain the same execution order as in previous versions, set
-``true`` to ``Config\Feature::$oldFilterOrder``. See also :ref:`filter-execution-order`.
+``Config\Feature::$oldFilterOrder`` to ``true``. See also :ref:`filter-execution-order`.
 
 1. The order of execution of filter groups has been changed.
 
-    Before Filters::
+   Before Filters::
 
-        Previous: route → globals → methods → filters
-             Now: globals → methods → filters → route
+       Previous: route → globals → methods → filters
+            Now: globals → methods → filters → route
 
-    After Filters::
+   After Filters::
 
-        Previous: route → globals → filters
-             Now: route → filters → globals
+       Previous: route → globals → filters
+            Now: route → filters → globals
 
 2. The After Filters in *Route* filters and *Filters* filters execution order is now
    reversed.
 
-    When you have the following configuration:
+   When you have the following configuration:
 
-    .. code-block:: php
+   .. code-block:: php
 
-        // In app/Config/Routes.php
-        $routes->get('/', 'Home::index', ['filter' => ['route1', 'route2']]);
+       // In app/Config/Routes.php
+       $routes->get('/', 'Home::index', ['filter' => ['route1', 'route2']]);
 
-        // In app/Config/Filters.php
-        public array $filters = [
-            'filter1' => ['before' => '*', 'after' => '*'],
-            'filter2' => ['before' => '*', 'after' => '*'],
-        ];
+       // In app/Config/Filters.php
+       public array $filters = [
+           'filter1' => ['before' => '*', 'after' => '*'],
+           'filter2' => ['before' => '*', 'after' => '*'],
+       ];
 
-    Before Filters::
+   Before Filters::
 
-        Previous: route1 → route2 → filter1 → filter2
-             Now: filter1 → filter2 → route1 → route2
+       Previous: route1 → route2 → filter1 → filter2
+            Now: filter1 → filter2 → route1 → route2
 
-    After Filters::
+   After Filters::
 
-        Previous: route1 → route2 → filter1 → filter2
-             Now: route2 → route1 → filter2 → filter1
+       Previous: route1 → route2 → filter1 → filter2
+            Now: route2 → route1 → filter2 → filter1
 
 .. _upgrade-450-api-response-trait:
 
 API\\ResponseTrait and String Data
 ==================================
 
-In previous versions, if you pass string data to a trait method, the framework
+In previous versions, if you passed string data to a trait method, the framework
 returned an HTML response, even if the response format was determined to be JSON.
 
 Now if you pass string data, it returns a JSON response correctly. See also
@@ -185,7 +185,7 @@ property to ``true`` in your controller.
 FileLocator::findQualifiedNameFromPath()
 ========================================
 
-In previous versions, ``FileLocator::findQualifiedNameFromPath()`` returns Fully
+In previous versions, ``FileLocator::findQualifiedNameFromPath()`` returned Fully
 Qualified Classnames with a leading ``\``. Now the leading ``\`` has been removed.
 
 If you have code that expects a leading ``\``, fix it.
@@ -193,16 +193,16 @@ If you have code that expects a leading ``\``, fix it.
 BaseModel::getIdValue()
 =======================
 
-The ``BaseModel::getIdValue()`` has been changed to ``abstract``, and the implementation
+The ``BaseModel::getIdValue()`` method has been changed to ``abstract``, and the implementation
 has been removed.
 
-If you extneds ``BaseModel``, implement the ``getIdValue()`` method in the child class.
+If you extend ``BaseModel``, implement the ``getIdValue()`` method in the child class.
 
 Factories
 =========
 
 :doc:`../concepts/factories` has been changed to a final class.
-In the unlikely event, you have inherited the Factories, stop inheriting and
+In the unlikely event that you have inherited Factories, stop inheriting and
 copy the code into your Factories class.
 
 Auto Routing (Legacy)
@@ -255,14 +255,14 @@ Validation::run() Signature
 
 The method signatures of ``Validation::run()`` and ``ValidationInterface::run()``
 have been changed. The ``?string`` typehint on the ``$dbGroup`` parameter was
-removed. Extending classes should likewise remove the parameter so as not to
+removed. Extending classes should likewise remove the typehint so as not to
 break LSP.
 
 Project Files
 *************
 
 Some files in the **project space** (root, app, public, writable) received updates. Due to
-these files being outside of the **system** scope they will not be changed without your intervention.
+these files being outside of the **system** scope, they will not be changed without your intervention.
 
 There are some third-party CodeIgniter modules available to assist with merging changes to
 the project space: `Explore on Packagist <https://packagist.org/explore/?query=codeigniter4%20updates>`_.
@@ -295,7 +295,7 @@ The following items are added in the ``$aliases`` property::
         'performance'   => \CodeIgniter\Filters\PerformanceMetrics::class,
     ];
 
-A new property ``$required`` is added, and set as the following::
+A new property ``$required`` is added, and set as follows::
 
     public array $required = [
         'before' => [
@@ -309,34 +309,47 @@ A new property ``$required`` is added, and set as the following::
         ],
     ];
 
-The  ``'toolbar'`` in the ``$global['after']`` was removed.
+The ``'toolbar'`` in the ``$globals['after']`` was removed.
 
 Others
 ^^^^^^
 
-- app/Config/Boot/production.php
-    - The default error level to ``error_reporting()`` has been changed to ``E_ALL & ~E_DEPRECATED``.
-- app/Config/Cors.php
-    - Added to handle CORS configuration.
-- app/Config/Database.php
-    - The default value of ``charset`` in ``$default`` has been change to ``utf8mb4``.
-    - The default value of ``DBCollat`` in ``$default`` has been change to ``utf8mb4_general_ci``.
-    - The default value of ``DBCollat`` in ``$tests`` has been change to ``''``.
-- app/Config/Feature.php
-    - ``Config\Feature::$oldFilterOrder`` has been added. See
-      :ref:`filter-execution-order`.
-    - ``Config\Feature::$limitZeroAsAll`` has been added. See
-      :ref:`v450-query-builder-limit-0-behavior`.
-    - ``Config\Feature::$multipleFilters`` has been removed, because now
-      :ref:`multiple-filters` are always enabled.
-- app/Config/Kint.php
-    - It no longer extends ``BaseConfig`` because enabling
-      :ref:`factories-config-caching` could cause errors.
-- app/Config/Optimize.php
-    - Added to handle optimization configuration.
-- app/Config/Security.php
-    - The property ``$redirect`` has been changed to ``true`` in ``production``
-      environment.
+- **app/Config/Boot/production.php**
+
+  - The default error level to ``error_reporting()`` has been changed to ``E_ALL & ~E_DEPRECATED``.
+
+- **app/Config/Cors.php**
+
+  - Added to handle CORS configuration.
+
+- **app/Config/Database.php**
+
+  - The default value of ``charset`` in ``$default`` has been changed to ``utf8mb4``.
+  - The default value of ``DBCollat`` in ``$default`` has been changed to ``utf8mb4_general_ci``.
+  - The default value of ``DBCollat`` in ``$tests`` has been changed to ``''``.
+
+- **app/Config/Feature.php**
+
+  - ``Config\Feature::$oldFilterOrder`` has been added. See
+    :ref:`filter-execution-order`.
+  - ``Config\Feature::$limitZeroAsAll`` has been added. See
+    :ref:`v450-query-builder-limit-0-behavior`.
+  - ``Config\Feature::$multipleFilters`` has been removed, because now
+    :ref:`multiple-filters` are always enabled.
+
+- **app/Config/Kint.php**
+
+  - It no longer extends ``BaseConfig`` because enabling
+    :ref:`factories-config-caching` could cause errors.
+
+- **app/Config/Optimize.php**
+
+  - Added to handle optimization configuration.
+
+- **app/Config/Security.php**
+
+  - The property ``$redirect`` has been changed to ``true`` in the ``production``
+    environment.
 
 All Changes
 ===========
@@ -344,25 +357,25 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- app/Config/Autoload.php
-- app/Config/Boot/production.php
-- app/Config/Cache.php
-- app/Config/Cors.php
-- app/Config/Database.php
-- app/Config/Feature.php
-- app/Config/Filters.php
-- app/Config/Generators.php
-- app/Config/Kint.php
-- app/Config/Optimize.php
-- app/Config/Routing.php
-- app/Config/Security.php
-- app/Config/Session.php
-- app/Views/errors/cli/error_exception.php
-- app/Views/errors/html/error_exception.php
-- app/Views/welcome_message.php
-- composer.json
+- **app/Config/Autoload.php**
+- **app/Config/Boot/production.php**
+- **app/Config/Cache.php**
+- **app/Config/Cors.php**
+- **app/Config/Database.php**
+- **app/Config/Feature.php**
+- **app/Config/Filters.php**
+- **app/Config/Generators.php**
+- **app/Config/Kint.php**
+- **app/Config/Optimize.php**
+- **app/Config/Routing.php**
+- **app/Config/Security.php**
+- **app/Config/Session.php**
+- **app/Views/errors/cli/error_exception.php**
+- **app/Views/errors/html/error_exception.php**
+- **app/Views/welcome_message.php**
+- **composer.json**
 - env
-- phpunit.xml.dist
-- preload.php
-- public/index.php
+- **phpunit.xml.dist**
+- **preload.php**
+- **public/index.php**
 - spark

@@ -5,8 +5,8 @@ Upgrade Working with Uploaded Files
     :local:
     :depth: 2
 
-Documentations
-==============
+Documentation
+=============
 - `File Uploading Class Documentation CodeIgniter 3.x <http://codeigniter.com/userguide3/libraries/file_uploading.html>`_
 - :doc:`Working with Uploaded Files Documentation CodeIgniter 4.x </libraries/uploaded_files>`
 
@@ -25,7 +25,7 @@ Code Example
 ============
 
 CodeIgniter Version 3.x
-------------------------
+-----------------------
 
 .. literalinclude:: upgrade_file_upload/ci3sample/001.php
 

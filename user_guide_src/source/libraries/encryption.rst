@@ -27,8 +27,8 @@ one of the other `Cryptography Extensions <https://www.php.net/manual/en/refs.cr
 A more comprehensive package like `Halite <https://github.com/paragonie/halite>`_
 (an O-O package built on libsodium) is another possibility.
 
-.. note:: Support for the ``MCrypt`` extension has been dropped, as that has
-    been deprecated as of PHP 7.2.
+.. note:: Support for the ``MCrypt`` extension has been dropped. PHP deprecated
+    it in 7.1 and removed it from the core in 7.2.
 
 .. contents::
     :local:
@@ -45,13 +45,13 @@ Like all services in CodeIgniter, it can be loaded via ``Config\Services``:
 .. literalinclude:: encryption/001.php
 
 Assuming you have set your starting key (see :ref:`configuration`),
-encrypting and decrypting data is simple - pass the appropriate string to ``encrypt()``
+encrypting and decrypting data is simple - pass the appropriate string to the ``encrypt()``
 and/or ``decrypt()`` methods:
 
 .. literalinclude:: encryption/002.php
 
 And that's it! The Encryption library will do everything necessary
-for the whole process to be cryptographically secure out-of-the-box.
+for the whole process to be cryptographically secure out of the box.
 You don't need to worry about it.
 
 .. _configuration:
@@ -108,12 +108,12 @@ SHA224      28                   56
 =========== ==================== ============================
 
 The reason for not including other popular algorithms, such as
-MD5 or SHA1 is that they are no longer considered secure enough
+MD5 or SHA1, is that they are no longer considered secure enough
 and as such, we don't want to encourage their usage.
 If you absolutely need to use them, it is easy to do so via PHP's
 native `hash_hmac() <http://php.net/manual/en/function.hash-hmac.php>`_ function.
 
-Stronger algorithms of course will be added in the future as they
+Stronger algorithms will, of course, be added in the future as they
 appear and become widely available.
 
 Default Behavior
@@ -147,7 +147,7 @@ Encoding Keys or Results
 
 You'll notice that the ``createKey()`` method outputs binary data, which
 is hard to deal with (i.e., a copy-paste may damage it), so you may use
-``bin2hex()``, or ``base64_encode`` to work with the key in
+``bin2hex()`` or ``base64_encode`` to work with the key in
 a more friendly manner. For example:
 
 .. literalinclude:: encryption/006.php
@@ -160,7 +160,7 @@ of encryption:
 Using Prefixes in Storing Keys
 ------------------------------
 
-You may take advantage of two special prefixes in storing your
+You may take advantage of two special prefixes when storing your
 encryption keys: ``hex2bin:`` and ``base64:``. When these prefixes
 immediately precede the value of your key, ``Encryption`` will
 intelligently parse the key and still pass a binary string to
@@ -267,10 +267,9 @@ Sodium Notes
 The `Sodium <https://www.php.net/manual/en/book.sodium>`_ extension is bundled by default in PHP as
 of PHP 7.2.0.
 
-Sodium uses the algorithms XSalsa20 to encrypt, Poly1305 for MAC, and XS25519 for key exchange in
-sending secret messages in an end-to-end scenario. To encrypt and/or authenticate a string using
-a shared-key, such as symmetric encryption, Sodium uses the XSalsa20 algorithm to encrypt and
-HMAC-SHA512 for the authentication.
+CodeIgniter's Sodium handler uses ``sodium_crypto_secretbox()`` for shared-key
+authenticated encryption. It uses XSalsa20 for encryption and Poly1305 for authentication.
+This handler does not perform public-key key exchange.
 
 Message Length
 ==============
@@ -280,7 +279,7 @@ An encrypted string is usually longer than the original, plain-text string (depe
 This is influenced by the cipher algorithm itself, the initialization vector (IV)
 prepended to the cipher-text, and the HMAC authentication message that is also prepended.
 Furthermore, the encrypted message is also Base64-encoded so that it is safe
-for storage and transmission regardless of the character-set in use.
+for storage and transmission regardless of the character set in use.
 
 Keep this information in mind when selecting your data storage mechanism.
 Cookies, for example, can only hold 4K of information.
@@ -293,7 +292,7 @@ you can create an "Encrypter" directly, or change the settings of an existing in
 
 .. literalinclude:: encryption/009.php
 
-Remember, that ``$config`` must be an instance of ``Config\Encryption`` class.
+Remember that ``$config`` must be an instance of the ``Config\Encryption`` class.
 
 ***************
 Class Reference
@@ -341,10 +340,10 @@ Class Reference
 
         If you pass parameters as the second argument, the ``key`` element
         will be used as the starting key for this operation if ``$params``
-        is an array; or the starting key may be passed as a string.
+        is an array. Alternatively, the starting key may be passed as a string.
 
         If you are using the SodiumHandler and want to pass a different ``blockSize``
-        on runtime, pass the ``blockSize`` key in the ``$params`` array.
+        at runtime, pass the ``blockSize`` key in the ``$params`` array.
 
         Examples:
 
@@ -358,14 +357,14 @@ Class Reference
         :rtype:    string
         :throws: ``CodeIgniter\Encryption\Exceptions\EncryptionException``
 
-        Decrypts the input data and returns it in plain-text.
+        Decrypts the input data and returns it in plain text.
 
         If you pass parameters as the second argument, the ``key`` element
         will be used as the starting key for this operation if ``$params``
-        is an array; or the starting key may be passed as a string.
+        is an array. Alternatively, the starting key may be passed as a string.
 
         If you are using the SodiumHandler and want to pass a different ``blockSize``
-        on runtime, pass the ``blockSize`` key in the ``$params`` array.
+        at runtime, pass the ``blockSize`` key in the ``$params`` array.
 
         Examples:
 

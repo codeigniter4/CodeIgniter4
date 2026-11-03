@@ -33,7 +33,7 @@ Then, in **app/Config/Routing.php**, confirm auto-routing is **enabled**:
 
     public bool $autoRoute = true;
 
-That's all you need for CodeIgniter to automatically map your controller classes and to URIs like ``GET /api/ping`` or ``POST /api/ping``.
+That's all you need for CodeIgniter to automatically map your controller classes to URIs like ``GET /api/ping`` or ``POST /api/ping``.
 
 Create a Ping Controller
 ========================
@@ -95,16 +95,18 @@ Here's how other verbs would map if you added them later:
 | HTTP Verb             | Method Name                    |
 +=======================+================================+
 | ``GET /api/ping``     | ``getIndex()``                 |
++-----------------------+--------------------------------+
 | ``POST /api/ping``    | ``postIndex()``                |
++-----------------------+--------------------------------+
 | ``DELETE /api/ping``  | ``deleteIndex()``              |
 +-----------------------+--------------------------------+
 
 Content Negotiation with the Format Class
 =========================================
 
-By default, CodeIgniter uses the :php:class:`CodeIgniter\\Format\\Format` class to automatically negotiate the response format. It can return responses in either JSON or XML depending on what the client requests.
+The :php:trait:`ResponseTrait` uses :php:class:`CodeIgniter\\Format\\Format` to format response data. When its ``$format`` property is ``null``, it negotiates a supported format from the request's ``Accept`` header.
 
-The :php:trait:`ResponseTrait` sets the format to JSON by default. You can change this to XML if desired, but this tutorial will focus on JSON responses.
+The default ``$format`` is ``'json'``. Set it to ``'xml'`` for XML responses, or to ``null`` for content negotiation. This tutorial keeps the default JSON format:
 
 .. literalinclude:: code/002.php
 

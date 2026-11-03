@@ -64,7 +64,7 @@ Valid options are:
   same cache is returned for requests with the same URI path but different query
   strings.
 - ``true``: Enabled, take all query parameters into account. Be aware that this
-  may result in numerous cache generated for the same page over and over
+  may result in numerous caches generated for the same page over and over
   again.
 - **array**: Enabled, but only take into account the specified list of query
   parameters. E.g., ``['q', 'page']``.
@@ -91,7 +91,7 @@ Valid options are:
   - ``[200, 404, 410]``: Cache successful responses and specific error codes.
   - ``[200, 201, 202, 203, 204]``: All 2xx successful responses.
 
-.. warning:: Using an empty array ``[]`` may cache temporary error pages (404, 500, etc).
+.. warning:: Using an empty array ``[]`` may cache temporary error pages (404, 500, etc.).
     For production applications, consider restricting this to ``[200]`` to avoid
     caching errors that should be temporary. For example, a cached 404 page would
     remain cached even after the resource is created, until the cache expires.
@@ -111,7 +111,7 @@ Where ``$n`` is the number of **seconds** you wish the page to remain
 cached between refreshes.
 
 The above tag can go anywhere within a method. It is not affected by
-the order that it appears, so place it wherever it seems most logical to
+the order in which it appears, so place it wherever it seems most logical to
 you. Once the tag is in place, your pages will begin being cached.
 
 .. important:: If you change configuration options that might affect
@@ -120,7 +120,7 @@ you. Once the tag is in place, your pages will begin being cached.
 Deleting Caches
 ===============
 
-If you no longer wish to cache a page you can remove the caching tag and
+If you no longer wish to cache a page, you can remove the caching tag and
 it will no longer be refreshed when it expires.
 
 .. note:: Removing the tag will not delete the cache immediately. It will

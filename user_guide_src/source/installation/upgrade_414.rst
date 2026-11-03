@@ -22,7 +22,7 @@ Method Scope
 ============
 
 The following methods were changed from ``public`` to ``protected`` to match their parent class methods and better align with their uses.
-If you relied on any of these methods being public (highly unlikely) adjust your code accordingly:
+If you relied on any of these methods being public (highly unlikely), adjust your code accordingly:
 
 * ``CodeIgniter\Database\MySQLi\Connection::execute()``
 * ``CodeIgniter\Database\MySQLi\Connection::_fieldData()``
@@ -46,7 +46,7 @@ If you relied on any of these methods being public (highly unlikely) adjust your
 * ``CodeIgniter\Images\Handlers\ImageMagickHandler::_flatten()``
 * ``CodeIgniter\Images\Handlers\ImageMagickHandler::_flip()``
 * ``CodeIgniter\Test\Mock\MockIncomingRequest::detectURI()``
-* ``CodeIgniter\Test\Mock\MockSecurity.php::sendCookie()``
+* ``CodeIgniter\Test\Mock\MockSecurity::sendCookie()``
 
 Project Files
 *************

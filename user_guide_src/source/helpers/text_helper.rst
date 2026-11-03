@@ -2,7 +2,7 @@
 Text Helper
 ###########
 
-The Text Helper file contains functions that assist in working with Text.
+The Text Helper file contains functions that assist in working with text.
 
 .. contents::
     :local:
@@ -30,7 +30,7 @@ The following functions are available:
     Generates a random string based on the type and length you specify.
     Useful for creating passwords or generating random hashes.
 
-    The first parameter specifies the type of string, the second parameter
+    The first parameter specifies the type of string, and the second parameter
     specifies the length. The following choices are available:
 
     - **alpha**: A string with lower and uppercase letters only.
@@ -39,12 +39,12 @@ The following functions are available:
     - **nozero**: Numeric string with no zeros.
     - **crypto**: A random string based on ``random_bytes()``.
 
-    .. note:: When you use **crypto**, you must set an even number to the second parameter.
+    .. note:: When you use **crypto**, you must pass an even number as the second parameter.
         Since v4.2.2, if you set an odd number, ``InvalidArgumentException`` will be thrown.
 
-    .. note:: Since v4.3.3, **alpha**, **alnum** and **nozero** use ``random_byte()``,
+    .. note:: Since v4.3.3, **alpha**, **alnum** and **nozero** use ``random_bytes()``,
         and **numeric** uses ``random_int()``.
-        In the previous versions, it used ``str_shuffle()`` that is not
+        In previous versions, they used ``str_shuffle()``, which is not
         cryptographically secure.
 
     Usage example:
@@ -60,7 +60,7 @@ The following functions are available:
     :rtype:    string
 
     Increments a string by appending a number to it or increasing the
-    number. Useful for creating "copies" or a file or duplicating database
+    number. Useful for creating "copies" of a file or duplicating database
     content which has unique titles or slugs.
 
     Usage example:
@@ -83,7 +83,7 @@ The following functions are available:
 
     .. literalinclude:: text_helper/005.php
 
-    .. note:: To use multiple separate calls to this function simply call the
+    .. note:: To use multiple separate calls to this function, simply call the
         function with no arguments to re-initialize.
 
 .. php:function:: reduce_double_slashes($str)
@@ -93,7 +93,7 @@ The following functions are available:
     :rtype:    string
 
     Converts double slashes in a string to a single slash, except those
-    found in URL protocol prefixes (e.g., http&#58;//).
+    found in URL protocol prefixes (e.g., ``http://``).
 
     Example:
 
@@ -116,7 +116,7 @@ The following functions are available:
     .. literalinclude:: text_helper/008.php
 
     .. note:: For historical reasons, this function will also accept
-        and handle string inputs. This however makes it just an
+        and handle string inputs. However, this makes it just an
         alias for ``stripslashes()``.
 
 .. php:function:: reduce_multiples($str[, $character = ','[, $trim = false]])
@@ -171,7 +171,7 @@ The following functions are available:
     .. literalinclude:: text_helper/013.php
 
     The third parameter is an optional suffix added to the string. By
-    default it adds an ellipsis.
+    default, it adds an ellipsis.
 
 .. php:function:: character_limiter($string[, $limit = 500[, $endChar = '&#8230;']])
 
@@ -182,15 +182,15 @@ The following functions are available:
     :rtype:    string
 
     Truncates a string to the number of *characters* specified. It
-    maintains the integrity of words so the character count may be slightly
+    maintains the integrity of words, so the character count may be slightly
     more or less than what you specify.
 
     Example:
 
     .. literalinclude:: text_helper/014.php
 
-    The third parameter is an optional suffix added to the string, if
-    undeclared this helper uses an ellipsis.
+    The third parameter is an optional suffix added to the string. If
+    undeclared, this helper uses an ellipsis.
 
     .. note:: If you need to truncate to an exact number of characters, please
         see the :php:func:`ellipsize()` function below.
@@ -252,7 +252,7 @@ The following functions are available:
     Enables you to censor words within a text string. The first parameter
     will contain the original string. The second will contain an array of
     words which you disallow. The third (optional) parameter can contain
-    a replacement value for the words. If not specified they are replaced
+    a replacement value for the words. If not specified, they are replaced
     with pound signs: ####.
 
     Example:
@@ -270,7 +270,7 @@ The following functions are available:
     .. literalinclude:: text_helper/018.php
 
     The function uses PHP's ``highlight_string()`` function, so the
-    colors used are the ones specified in your php.ini file.
+    colors used are the ones specified in your **php.ini** file.
 
 .. php:function:: highlight_phrase($str, $phrase[, $tag_open = '<mark>'[, $tag_close = '</mark>']])
 
@@ -282,7 +282,7 @@ The following functions are available:
     :rtype:    string
 
     Will highlight a phrase within a text string. The first parameter will
-    contain the original string, the second will contain the phrase you wish
+    contain the original string, and the second will contain the phrase you wish
     to highlight. The third and fourth parameters will contain the
     opening/closing HTML tags you would like the phrase wrapped in.
 
@@ -302,7 +302,7 @@ The following functions are available:
             mark {
                 background: #ff0;
                 color: #000;
-            };
+            }
 
 .. php:function:: word_wrap($str[, $charlim = 76])
 
@@ -330,14 +330,14 @@ The following functions are available:
     This function will strip tags from a string, split it at a defined
     maximum length, and insert an ellipsis.
 
-    The first parameter is the string to ellipsize, the second is the number
+    The first parameter is the string to ellipsize, and the second is the number
     of characters in the final string. The third parameter is where in the
     string the ellipsis should appear from 0 - 1, left to right. For
-    example. a value of 1 will place the ellipsis at the right of the
+    example, a value of 1 will place the ellipsis at the right of the
     string, .5 in the middle, and 0 at the left.
 
     An optional fourth parameter is the kind of ellipsis. By default,
-    &hellip; will be inserted.
+    ``&hellip;`` will be inserted.
 
     Example:
 
@@ -349,20 +349,20 @@ The following functions are available:
 
 .. php:function:: excerpt($text, $phrase = false, $radius = 100, $ellipsis = '...')
 
-    :param    string    $text: Text to extract an excerpt
+    :param    string    $text: Text to extract an excerpt from
     :param    string    $phrase: Phrase or word to extract the text around
-    :param    int        $radius: Number of characters before and after $phrase
+    :param    int        $radius: Number of characters before and after ``$phrase``
     :param    string    $ellipsis: What to use as the ellipsis character
     :returns:    Excerpt.
     :rtype:        string
 
-    This function will extract $radius number of characters before and after the
-    central $phrase with an ellipsis before and after.
+    This function will extract ``$radius`` number of characters before and after the
+    central ``$phrase`` with an ellipsis before and after.
 
-    The first parameter is the text to extract an excerpt from, the second is the
+    The first parameter is the text to extract an excerpt from, and the second is the
     central word or phrase to count before and after. The third parameter is the
-    number of characters to count before and after the central phrase. If no phrase
-    passed, the excerpt will include the first $radius characters with the ellipsis
+    number of characters to count before and after the central phrase. If no phrase is
+    passed, the excerpt will include the first ``$radius`` characters with the ellipsis
     at the end.
 
     Example:

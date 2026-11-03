@@ -2,8 +2,8 @@
 API Responses
 #############
 
-Much of modern PHP development requires building APIs, whether simply to provide data for a javascript-heavy
-single page application, or as a standalone product. CodeIgniter provides a couple of traits that can be
+Much of modern PHP development requires building APIs, whether simply to provide data for a JavaScript-heavy
+single-page application, or as a standalone product. CodeIgniter provides a couple of traits that can be
 used with any controller to make common response types simple, with no need to remember which HTTP status code
 should be returned for which response types.
 
@@ -30,7 +30,7 @@ exist for the most common use cases:
 Handling Response Types
 ***********************
 
-When you pass your data in any of these methods, they will determine the data type to format the results as based on
+When you pass your data to any of these methods, they will determine the data type to format the results as based on
 the following criteria:
 
 * The format is determined according to the controller's ``$this->format`` value.
@@ -43,13 +43,13 @@ the following criteria:
 .. note:: Prior to v4.5.0, due to a bug, if data is a string, it will be treated
     as HTML even if the format is JSON.
 
-To define the formatter that is used, edit **app/Config/Format.php**. The ``$supportedResponseFormats`` contains a list of
-mime types that your application can automatically format the response for. By default, the system knows how to
+To define the formatter that is used, edit **app/Config/Format.php**. The ``$supportedResponseFormats`` property contains a list of
+MIME types that your application can automatically format the response for. By default, the system knows how to
 format both XML and JSON responses:
 
 .. literalinclude:: api_responses/003.php
 
-.. note:: Since ``v4.7.0``, you can change the default JSON encoding depth by editing **app/Config/Format.php** file. The ``$jsonEncodeDepth`` value defines the maximum depth, with a default of ``512``.
+.. note:: Since ``v4.7.0``, you can change the default JSON encoding depth by editing the **app/Config/Format.php** file. The ``$jsonEncodeDepth`` value defines the maximum depth, with a default of ``512``.
 
 This is the array that is used during :doc:`Content Negotiation </incoming/content_negotiation>` to determine which
 type of response to return. If no matches are found between what the client requested and what you support, the first
@@ -61,7 +61,7 @@ support both JSON and XML:
 
 .. literalinclude:: api_responses/004.php
 
-So, if your request asks for JSON formatted data in an **Accept** header, the data array you pass any of the
+So, if your request asks for JSON formatted data in an **Accept** header, the data array you pass to any of the
 ``respond*`` or ``fail*`` methods will be formatted by the ``CodeIgniter\Format\JSONFormatter`` class. The resulting
 JSON data will be sent back to the client.
 
@@ -76,7 +76,7 @@ Class Reference
     This defines the format to be used when formatting arrays in responses. If you provide a ``null`` value for
     ``$format``, it will be automatically determined through content negotiation.
 
-.. literalinclude:: api_responses/005.php
+    .. literalinclude:: api_responses/005.php
 
 .. php:method:: respond($data[, $statusCode = 200[, $message = '']])
 
@@ -105,7 +105,7 @@ Class Reference
     :param string $message: A custom "reason" message to return.
     :returns: A multi-part response in the client's preferred format.
 
-    The is the generic method used to represent a failed response, and is used by all of the other "fail" methods.
+    This is the generic method used to represent a failed response, and is used by all of the other "fail" methods.
 
     The ``$messages`` element can be either a string or an array of strings.
 
@@ -119,6 +119,7 @@ Class Reference
     that match the status code.
 
     The response is an array with three elements: ``status``, ``code``, and ``messages``.
+
     - The ``status`` element contains the status code of the error.
     - The ``code`` element contains a custom, API-specific error code.
     - The ``messages`` element contains an array of error messages.
@@ -131,7 +132,7 @@ Class Reference
 
     :param mixed  $data: The data to return to the client. Either string or array.
     :param string $message: A custom "reason" message to return.
-    :returns: The value of the Response object's send() method.
+    :returns: The value of the Response object's ``send()`` method.
 
     Sets the appropriate status code to use when a new resource was created, typically 201:
 
@@ -141,16 +142,16 @@ Class Reference
 
     :param mixed  $data: The data to return to the client. Either string or array.
     :param string $message: A custom "reason" message to return.
-    :returns: The value of the Response object's send() method.
+    :returns: The value of the Response object's ``send()`` method.
 
-    Sets the appropriate status code to use when a new resource was deleted as the result of this API call, typically 200.
+    Sets the appropriate status code to use when a resource was deleted as the result of this API call, typically 200.
 
     .. literalinclude:: api_responses/008.php
 
 .. php:method:: respondNoContent(string $message = 'No Content')
 
     :param string $message: A custom "reason" message to return.
-    :returns: The value of the Response object's send() method.
+    :returns: The value of the Response object's ``send()`` method.
 
     Sets the appropriate status code to use when a command was successfully executed by the server but there is no
     meaningful reply to send back to the client, typically 204.
@@ -162,7 +163,7 @@ Class Reference
     :param string  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
     :param string $message: A custom "reason" message to return.
-    :returns: The value of the Response object's send() method.
+    :returns: The value of the Response object's ``send()`` method.
 
     Sets the appropriate status code to use when the user either has not been authorized,
     or has incorrect authorization. Status code is 401.
@@ -174,7 +175,7 @@ Class Reference
     :param string  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
     :param string $message: A custom "reason" message to return.
-    :returns: The value of the Response object's send() method.
+    :returns: The value of the Response object's ``send()`` method.
 
     Unlike ``failUnauthorized()``, this method should be used when the requested API endpoint is never allowed.
     Unauthorized implies the client is encouraged to try again with different credentials. Forbidden means
@@ -187,7 +188,7 @@ Class Reference
     :param string  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
     :param string $message: A custom "reason" message to return.
-    :returns: The value of the Response object's send() method.
+    :returns: The value of the Response object's ``send()`` method.
 
     Sets the appropriate status code to use when the requested resource cannot be found. Status code is 404.
 
@@ -198,7 +199,7 @@ Class Reference
     :param mixed  $errors: The error message or array of messages to show the user.
     :param string $code: A custom, API-specific, error code.
     :param string $message: A custom "reason" message to return.
-    :returns: The value of the Response object's send() method.
+    :returns: The value of the Response object's ``send()`` method.
 
     Sets the appropriate status code to use when data the client sent did not pass validation rules. Status code is typically 400.
 
@@ -209,7 +210,7 @@ Class Reference
     :param string  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
     :param string $message: A custom "reason" message to return.
-    :returns: The value of the Response object's send() method.
+    :returns: The value of the Response object's ``send()`` method.
 
     Sets the appropriate status code to use when the resource the client is trying to create already exists.
     Status code is typically 409.
@@ -221,7 +222,7 @@ Class Reference
     :param string  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
     :param string $message: A custom "reason" message to return.
-    :returns: The value of the Response object's send() method.
+    :returns: The value of the Response object's ``send()`` method.
 
     Sets the appropriate status code to use when the requested resource was previously deleted and
     is no longer available. Status code is typically 410.
@@ -233,10 +234,10 @@ Class Reference
     :param string  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
     :param string $message: A custom "reason" message to return.
-    :returns: The value of the Response object's send() method.
+    :returns: The value of the Response object's ``send()`` method.
 
     Sets the appropriate status code to use when the client has called an API endpoint too many times.
-    This might be due to some form of throttling or rate limiting. Status code is typically 400.
+    This might be due to some form of throttling or rate limiting. Status code is typically 429.
 
     .. literalinclude:: api_responses/016.php
 
@@ -245,7 +246,7 @@ Class Reference
     :param string $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
     :param string $message: A custom "reason" message to return.
-    :returns: The value of the Response object's send() method.
+    :returns: The value of the Response object's ``send()`` method.
 
     Sets the appropriate status code to use when there is a server error.
 
@@ -295,7 +296,7 @@ A typical response might look like:
             "first": "http://example.com/users?page=1",
             "last": "http://example.com/users?page=1",
             "next": null,
-            "previous": null
+            "prev": null
         }
     }
 

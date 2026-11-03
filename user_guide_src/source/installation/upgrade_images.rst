@@ -5,8 +5,8 @@ Upgrade Image Manipulation Class
     :local:
     :depth: 2
 
-Documentations
-==============
+Documentation
+=============
 
 - `Image Manipulation Class Documentation CodeIgniter 3.x <https://www.codeigniter.com/userguide3/libraries/image_lib.html>`_
 - :doc:`Image Manipulation Class Documentation CodeIgniter 4.x <../libraries/images>`
@@ -17,12 +17,12 @@ What has been changed
   have been changed to be specified in the new methods in CI4.
 - Some preferences like ``create_thumb`` are removed.
 - In CI4, the ``save()`` method must be called to save the manipulated image.
-- The ``display_errors()`` has been removed, and an exception will be thrown
+- The ``display_errors()`` method has been removed, and an exception will be thrown
   if an error occurs.
 
 Upgrade Guide
 =============
-1. Within your class change the ``$this->load->library('image_lib');`` to
+1. Within your class, change ``$this->load->library('image_lib');`` to
    ``$image = \Config\Services::image();``.
 2. Change the preferences passed to the constructor or ``initialize()`` method
    to be specified in the corresponding methods.
@@ -32,7 +32,7 @@ Code Example
 ============
 
 CodeIgniter Version 3.x
-------------------------
+-----------------------
 
 .. literalinclude:: upgrade_images/ci3sample/001.php
 

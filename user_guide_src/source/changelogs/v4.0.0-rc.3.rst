@@ -18,123 +18,116 @@ Enhancements
 App Changes
 -----------
 
-- New $CSRFHeaderName property in App/Config/App
-
-Message Changes
----------------
+- New ``$CSRFHeaderName`` property in **app/Config/App.php**
 
 Changed Files
 -------------
 
 The list of changed files follows, with PR numbers shown.
 
-- admin/
+.. code-block:: text
 
-- app/
-    - Config/
-        - App #2272
-
-- public/
-
-- system/
-    - Autoloader/
-        - FileLocator #2336
-    - Database/
-        - MySQLi/Forge #2100
-        - Postgre/Forge #2100
-        - SQLite3/Forge #2100
-        - BaseBuilder #2252, 2312
-        - Forge $2100
-        - Migration #2303
-        - MigrationRunner #2303
-    - Debug/
-        - Exceptions #2288
-        - Toolbar/Collectors/
-            - Route #2300
-        - Toolbar #2315
-        - Views/ #2283
-    - Helpers/
-        - inflector_helper #2296
-        - url_helper #2325
-    - HTTP/
-        - CURLRequest #2285, 2305
-        - Files/UploadedFile #2123
-    - Language/en/
-        - Encryption #2311
-        - RESTful #2311
-        - Session #2311
-    - Router/
-        - Exceptions/RedirectException #2338
-        - Router #2308, 2338
-    - Security/
-        - Security #2272, 2279
-    - Session/
-        - Handlers/
-            - DatabaseHandler #2298
-            - FileHandler #2298, 2307
-            - MemcachedHandler #2298
-            - RedisHandler #2298
-        - Session #2339
-    - Validation/
-        - Validation #2284, 2341
-    - View/
-        - View #2324
-    - CodeIgniter #2338
-    - Common #2279
-    - Model #2289, 2332
-
-- tests/README.md #2345
-
-- tests/_support/
-    - Config/
-        - MockAppConfig #2272
-
-- tests/system/
-    - Database/
-        - Builder/
-            - UpdateTest #2295
-        - Live/
-            - ForgeTest #2100
-    - Helpers/
-        - InflectorHelperTest #2296
-        - URLHelperTest #2325
-    - HTTP/
-        - CURLRequestTest #2285
-    - Log/
-        - FileHandlerTest #2346
-    - Security/
-        - SecurityTest #2279
-    - Session/
-        - SessionTest #2339
-    - CommonFunctionsTest #2279
-
-- user_guide_src/
-    - dbmgmt/
-        - forge #2100
-        - migration #2337
-    - general/
-        - common_functions #2279
-        - errors #2338
-        - modules #2290
-    - helpers/
-        - inflector_helper #2296
-    - incoming/
-        - message #2282
-        - restful #2313, 2321, 2333
-        - routing #2327
-    - libraries/
-        - curlrequest #2305
-        - security #2279
-    - models/
-        - model #2316, 2332
-    - outgoing/
-        - table #2337
+    .
+    ├── admin/
+    ├── app/
+    │   └── Config/
+    │       └── App #2272
+    ├── public/
+    ├── system/
+    │   ├── Autoloader/
+    │   │   └── FileLocator #2336
+    │   ├── Database/
+    │   │   ├── MySQLi/Forge #2100
+    │   │   ├── Postgre/Forge #2100
+    │   │   ├── SQLite3/Forge #2100
+    │   │   ├── BaseBuilder #2252, 2312
+    │   │   ├── Forge $2100
+    │   │   ├── Migration #2303
+    │   │   └── MigrationRunner #2303
+    │   ├── Debug/
+    │   │   ├── Exceptions #2288
+    │   │   ├── Toolbar/Collectors/
+    │   │   │   └── Route #2300
+    │   │   ├── Toolbar #2315
+    │   │   └── Views/ #2283
+    │   ├── Helpers/
+    │   │   ├── inflector_helper #2296
+    │   │   └── url_helper #2325
+    │   ├── HTTP/
+    │   │   ├── CURLRequest #2285, 2305
+    │   │   └── Files/UploadedFile #2123
+    │   ├── Language/en/
+    │   │   ├── Encryption #2311
+    │   │   ├── RESTful #2311
+    │   │   └── Session #2311
+    │   ├── Router/
+    │   │   ├── Exceptions/RedirectException #2338
+    │   │   └── Router #2308, 2338
+    │   ├── Security/
+    │   │   └── Security #2272, 2279
+    │   ├── Session/
+    │   │   ├── Handlers/
+    │   │   │   ├── DatabaseHandler #2298
+    │   │   │   ├── FileHandler #2298, 2307
+    │   │   │   ├── MemcachedHandler #2298
+    │   │   │   └── RedisHandler #2298
+    │   │   └── Session #2339
+    │   ├── Validation/
+    │   │   └── Validation #2284, 2341
+    │   ├── View/
+    │   │   └── View #2324
+    │   ├── CodeIgniter #2338
+    │   ├── Common #2279
+    │   └── Model #2289, 2332
+    ├── tests/README.md #2345
+    ├── tests/_support/
+    │   └── Config/
+    │       └── MockAppConfig #2272
+    ├── tests/system/
+    │   ├── Database/
+    │   │   ├── Builder/
+    │   │   │   └── UpdateTest #2295
+    │   │   └── Live/
+    │   │       └── ForgeTest #2100
+    │   ├── Helpers/
+    │   │   ├── InflectorHelperTest #2296
+    │   │   └── URLHelperTest #2325
+    │   ├── HTTP/
+    │   │   └── CURLRequestTest #2285
+    │   ├── Log/
+    │   │   └── FileHandlerTest #2346
+    │   ├── Security/
+    │   │   └── SecurityTest #2279
+    │   ├── Session/
+    │   │   └── SessionTest #2339
+    │   └── CommonFunctionsTest #2279
+    └── user_guide_src/
+        ├── dbmgmt/
+        │   ├── forge #2100
+        │   └── migration #2337
+        ├── general/
+        │   ├── common_functions #2279
+        │   ├── errors #2338
+        │   └── modules #2290
+        ├── helpers/
+        │   └── inflector_helper #2296
+        ├── incoming/
+        │   ├── message #2282
+        │   ├── restful #2313, 2321, 2333
+        │   └── routing #2327
+        ├── libraries/
+        │   ├── curlrequest #2305
+        │   └── security #2279
+        ├── models/
+        │   └── model #2316, 2332
+        └── outgoing/
+            └── table #2337
 
 PRs merged
 ----------
 
 - #2348 CodeIgniter Foundation gets copyright
-- #2346 Fix FilerHandlerTest.php wierdness
+- #2346 Fix FilerHandlerTest.php weirdness
 - #2345 Tests readme polish
 - #2344 Setup vs Set Up
 - #2343 User guide minor fixes. Fix class names and code area
@@ -146,7 +139,7 @@ PRs merged
 - #2333 Guide: RESTful table formatting
 - #2332 Change after methods to use actual data
 - #2328 Update Application structure
-- #2327 Correct the tourint UG page
+- #2327 Correct the routing UG page
 - #2325 Fix bug in url_title() function with diacritics
 - #2324 Renderer Toolbar Debug Toggle
 - #2321 Update RESTful User Guide
@@ -174,4 +167,4 @@ PRs merged
 - #2272 Handle X-CSRF-TOKEN - CSRF
 - #2252 Batch Update Where Reset
 - #2123 WIP fix store() default value bug
-- #2100 Added validation on exists database before created for MySQLi
+- #2100 Added validation to check whether a database exists before creating it for MySQLi

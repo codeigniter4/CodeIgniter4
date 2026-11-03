@@ -1,6 +1,6 @@
-##############################
+#############################
 Upgrading from 4.3.8 to 4.4.0
-##############################
+#############################
 
 Please refer to the upgrade instructions corresponding to your installation method.
 
@@ -39,7 +39,7 @@ Breaking Changes
 URI::setSegment() Change
 ========================
 
-Dut to a bug, in previous versions an exception was not thrown if the last segment
+Due to a bug, in previous versions an exception was not thrown if the last segment
 ``+2`` was specified. This bug has been fixed.
 
 If your code depends on this bug, fix the segment number.
@@ -70,17 +70,17 @@ Handler to be executed.
 Your overridden code will no longer be executed, so make any necessary changes
 by defining your own exception handler.
 
-See :ref:`custom-exception-handlers` for the detail.
+See :ref:`custom-exception-handlers` for details.
 
 Auto Routing (Improved) and translateURIDashes
 ==============================================
 
 When using Auto Routing (Improved) and ``$translateURIDashes`` is true
 (``$routes->setTranslateURIDashes(true)``), in previous versions due to a bug
-two URIs correspond to a single controller method, one URI for dashes
+two URIs corresponded to a single controller method, one URI for dashes
 (e.g., **foo-bar**) and one URI for underscores (e.g., **foo_bar**).
 
-This bug was fixed and now URIs for underscores (**foo_bar**) is not accessible.
+This bug was fixed and now URIs for underscores (**foo_bar**) are not accessible.
 
 If you have links to URIs for underscores (**foo_bar**), update them with URIs
 for dashes (**foo-bar**).
@@ -169,7 +169,7 @@ To clean up the routing system, the following changes were made:
 - The **app/Config/Routes.php** file was simplified so that it only contains the routes without settings and verbiage to clutter the file.
 - The environment-specific routes files are no longer loaded automatically.
 
-So you need to do:
+So you need to do the following:
 
 1. Copy **app/Config/Routing.php** from the new framework to your **app/Config**
    directory, and configure it.
@@ -290,7 +290,7 @@ Project Files
 *************
 
 Some files in the **project space** (root, app, public, writable) received updates. Due to
-these files being outside of the **system** scope they will not be changed without your intervention.
+these files being outside of the **system** scope, they will not be changed without your intervention.
 
 There are some third-party CodeIgniter modules available to assist with merging changes to
 the project space: `Explore on Packagist <https://packagist.org/explore/?query=codeigniter4%20updates>`_.
@@ -304,11 +304,14 @@ and it is recommended that you merge the updated versions with your application:
 Config
 ------
 
-- app/Config/CURLRequest.php
-    - The default value of :ref:`$shareOptions <curlrequest-sharing-options>` has been change to ``false``.
-- app/Config/Exceptions.php
-    - Added the new method ``handler()`` that define custom Exception Handlers.
-      See :ref:`custom-exception-handlers`.
+- **app/Config/CURLRequest.php**
+
+  - The default value of :ref:`$shareOptions <curlrequest-sharing-options>` has been changed to ``false``.
+
+- **app/Config/Exceptions.php**
+
+  - Added the new method ``handler()`` that defines custom Exception Handlers.
+    See :ref:`custom-exception-handlers`.
 
 All Changes
 ===========
@@ -316,15 +319,15 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- app/Config/App.php
-- app/Config/CURLRequest.php
-- app/Config/Cookie.php
-- app/Config/Database.php
-- app/Config/Events.php
-- app/Config/Exceptions.php
-- app/Config/Filters.php
-- app/Config/Routes.php
-- app/Config/Routing.php
-- app/Config/Toolbar.php
-- public/index.php
+- **app/Config/App.php**
+- **app/Config/CURLRequest.php**
+- **app/Config/Cookie.php**
+- **app/Config/Database.php**
+- **app/Config/Events.php**
+- **app/Config/Exceptions.php**
+- **app/Config/Filters.php**
+- **app/Config/Routes.php**
+- **app/Config/Routing.php**
+- **app/Config/Toolbar.php**
+- **public/index.php**
 - spark

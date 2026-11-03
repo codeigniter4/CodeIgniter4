@@ -22,7 +22,7 @@ Interface Changes
 AutoRouterInterface
 -------------------
 
-Now ``AutoRouterInterface::getRoute()`` has the new second parameter ``string $httpVerb``.
+Now ``AutoRouterInterface::getRoute()`` has a new second parameter ``string $httpVerb``.
 
 ValidationInterface::check()
 ----------------------------
@@ -48,12 +48,12 @@ Deprecations
 Bugs Fixed
 **********
 
-- **Validation:** Fixed a bug that ``$DBGroup`` is ignored when checking
+- **Validation:** Fixed a bug where ``$DBGroup`` was ignored when checking
   the value of a placeholder.
-- **Validation:** Fixed a bug that ``check()`` cannot specify non-default
+- **Validation:** Fixed a bug where ``check()`` could not specify a non-default
   database group.
-- **Database:** Fixed a bug where semicolon character (``;``) in one of the Postgre connection parameters would break the DSN string.
-- **AutoRouting Improved:** Fixed a bug that feature testing may not find
+- **Database:** Fixed a bug where a semicolon character (``;``) in one of the Postgre connection parameters would break the DSN string.
+- **AutoRouting Improved:** Fixed a bug where feature testing might not find the
   controller/method.
 
 See the repo's

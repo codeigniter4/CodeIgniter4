@@ -2,7 +2,7 @@
 HTTP Responses
 ==============
 
-The Response class extends the :doc:`HTTP Message Class </incoming/message>` with methods only appropriate for
+The Response class extends the :doc:`HTTP Message Class </incoming/message>` with methods appropriate only for
 a server responding to the client that called it.
 
 .. contents::
@@ -35,7 +35,7 @@ as the second parameter of the ``setStatusCode()`` method:
 
 .. literalinclude:: response/002.php
 
-You can set format an array into either JSON or XML and set the content type header to the appropriate mime with the
+You can format an array into either JSON or XML and set the content type header to the appropriate MIME type with the
 ``setJSON()`` and ``setXML()`` methods. Typically, you will send an array of data to be converted:
 
 .. literalinclude:: response/003.php
@@ -46,7 +46,7 @@ Setting Headers
 setHeader()
 ^^^^^^^^^^^
 
-Often, you will need to set headers to be set for the response. The Response class makes this very simple to do,
+Often, you will need to set headers for the response. The Response class makes this very simple to do,
 with the ``setHeader()`` method.
 
 The first parameter is the name of the header. The second parameter is the value,
@@ -54,14 +54,14 @@ which can be either a string or an array of values that will be combined correct
 
 .. literalinclude:: response/004.php
 
-Using these functions instead of using the native PHP functions allows you to ensure that no headers are sent
+Using these methods instead of the native PHP functions ensures that no headers are sent
 prematurely, causing errors, and makes testing possible.
 
 .. important:: Since v4.6.0, if you set a header using PHP's native ``header()``
     function and then use the ``Response`` class to set the same header, the
     previous one will be overwritten.
 
-.. note:: This method just sets headers to the response instance. So, if you create
+.. note:: This method just sets headers on the response instance. So, if you create
     and return another response instance (e.g., if you call :php:func:`redirect()`),
     the headers set here will not be sent automatically.
 
@@ -93,7 +93,7 @@ It returns a ``RedirectResponse`` instance. It is a different instance from the
 global response instance that ``Services::response()`` returns.
 
 .. warning:: If you set Cookies or Response Headers before you call ``redirect()``,
-    they are set to the global response instance, and they are not automatically
+    they are set on the global response instance, and they are not automatically
     copied to the ``RedirectResponse`` instance. To send them, you need to call
     the ``withCookies()`` or ``withHeaders()`` method manually.
 
@@ -113,20 +113,20 @@ When you want to pass a URI path (relative to baseURL), use ``redirect()->to()``
 
 .. note:: If there is a fragment in your URL that you want to remove, you can
     use the refresh parameter in the method.
-    Like ``return redirect()->to('admin/home', null, 'refresh');``.
+    For example, ``return redirect()->to('admin/home', null, 'refresh');``.
 
 Redirect to a Defined Route
 ---------------------------
 
-When you want to pass a :ref:`route name <using-named-routes>` or Controller::method
+When you want to pass a :ref:`route name <using-named-routes>` or ``Controller::method``
 for :ref:`reverse routing <reverse-routing>`, use ``redirect()->route()``:
 
 .. literalinclude:: ./response/029.php
     :lines: 2-
 
-When passing an argument into the function, it is treated as a route name or
-Controller::method for reverse routing, not a relative/full URI,
-treating it the same as using ``redirect()->route()``:
+An argument passed into the function is treated as a route name or
+``Controller::method`` for reverse routing, not a relative/full URI,
+the same as when using ``redirect()->route()``:
 
 .. literalinclude:: ./response/030.php
     :lines: 2-
@@ -139,14 +139,14 @@ When you want to redirect back, use ``redirect()->back()``:
 .. literalinclude:: ./response/031.php
     :lines: 2-
 
-.. note:: ``redirect()->back()`` is not the same as browser "back" button.
+.. note:: ``redirect()->back()`` is not the same as the browser "back" button.
     It takes a visitor to "the last page viewed during the Session" when the Session is available.
     If the Session hasn't been loaded, or is otherwise unavailable, then a sanitized version of HTTP_REFERER will be used.
 
 Redirect with Cookies
 ---------------------
 
-If you set Cookies before you call ``redirect()``, they are set to the global
+If you set Cookies before you call ``redirect()``, they are set on the global
 response instance, and they are not automatically copied to the ``RedirectResponse``
 instance.
 
@@ -158,7 +158,7 @@ To send the Cookies, you need to call the ``withCookies()`` method manually.
 Redirect with Headers
 ---------------------
 
-If you set Response Headers before you call ``redirect()``, they are set to the
+If you set Response Headers before you call ``redirect()``, they are set on the
 global response instance, and they are not automatically copied to the
 ``RedirectResponse`` instance.
 
@@ -184,7 +184,7 @@ You can specify the status code:
     actual redirect response might be changed even if a status code was specified.
     See :ref:`ChangeLog v4.3.4 <v434-redirect-status-code>`.
 
-If you don't know HTTP status code for redirection, it is recommended to read
+If you don't know the HTTP status codes for redirection, it is recommended to read
 `Redirections in HTTP <https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections>`_.
 
 .. _force-file-download:
@@ -195,7 +195,7 @@ Force File Download
 The Response class provides a simple way to send a file to the client, prompting the browser to download the data
 to your computer. This sets the appropriate headers to make it happen.
 
-The first parameter is the **name you want the downloaded file to be named**, the second parameter is the
+The first parameter is the **name you want to give the downloaded file**, and the second parameter is the
 file data.
 
 If you set the second parameter to null and ``$filename`` is an existing, readable
@@ -203,13 +203,13 @@ file path, then its content will be read instead.
 
 If you set the third parameter to boolean true, then the actual file MIME type
 (based on the filename extension) will be sent, so that if your browser has a
-handler for that type - it can use it.
+handler for that type, it can use it.
 
 Example:
 
 .. literalinclude:: response/007.php
 
-If you want to download an existing file from your server you'll need to
+If you want to download an existing file from your server, you'll need to
 pass ``null`` explicitly for the second parameter:
 
 .. literalinclude:: response/008.php
@@ -234,12 +234,12 @@ Some browsers can display files such as PDF. To tell the browser to display the 
 HTTP Caching
 ============
 
-Built into the HTTP specification are tools help the client (often the web browser) cache the results. Used correctly,
+Built into the HTTP specification are tools that help the client (often the web browser) cache the results. Used correctly,
 this can lead to a huge performance boost to your application because it will tell the client that they don't need
 to contact the server at all since nothing has changed. And you can't get faster than that.
 
 This is handled through the ``Cache-Control`` and ``ETag`` headers. This guide is not the proper place for a thorough
-introduction to all of the cache headers power, but you can get a good understanding over at
+introduction to the power of all the cache headers, but you can get a good understanding over at
 `Google Developers <https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching>`_.
 
 By default, all response objects sent through CodeIgniter have HTTP caching turned off. The options and exact
@@ -250,8 +250,8 @@ to set the Cache values to what you need, through the ``setCache()`` method:
 
 The ``$options`` array simply takes an array of key/value pairs that are, with a couple of exceptions, assigned
 to the ``Cache-Control`` header. You are free to set all of the options exactly as you need for your specific
-situation. While most of the options are applied to the ``Cache-Control`` header, it intelligently handles
-the ``etag`` and ``last-modified`` options to their appropriate header.
+situation. While most of the options are applied to the ``Cache-Control`` header, it intelligently applies
+the ``etag`` and ``last-modified`` options to their appropriate headers.
 
 Class Reference
 ===============
@@ -261,22 +261,17 @@ Class Reference
 
 The methods inherited from the Message Class are:
 
-* :meth:`CodeIgniter\\HTTP\\Message::body`
+* :meth:`CodeIgniter\\HTTP\\Message::getBody`
 * :meth:`CodeIgniter\\HTTP\\Message::setBody`
 * :meth:`CodeIgniter\\HTTP\\Message::populateHeaders`
 * :meth:`CodeIgniter\\HTTP\\Message::headers`
 * :meth:`CodeIgniter\\HTTP\\Message::header`
-* :meth:`CodeIgniter\\HTTP\\Message::headerLine`
+* :meth:`CodeIgniter\\HTTP\\Message::getHeaderLine`
 * :meth:`CodeIgniter\\HTTP\\Message::setHeader`
 * :meth:`CodeIgniter\\HTTP\\Message::removeHeader`
 * :meth:`CodeIgniter\\HTTP\\Message::appendHeader`
-* :meth:`CodeIgniter\\HTTP\\Message::protocolVersion`
+* :meth:`CodeIgniter\\HTTP\\Message::getProtocolVersion`
 * :meth:`CodeIgniter\\HTTP\\Message::setProtocolVersion`
-* :meth:`CodeIgniter\\HTTP\\Message::negotiateMedia`
-* :meth:`CodeIgniter\\HTTP\\Message::negotiateCharset`
-* :meth:`CodeIgniter\\HTTP\\Message::negotiateEncoding`
-* :meth:`CodeIgniter\\HTTP\\Message::negotiateLanguage`
-* :meth:`CodeIgniter\\HTTP\\Message::negotiateLanguage`
 
 .. php:namespace:: CodeIgniter\HTTP
 
@@ -287,7 +282,7 @@ The methods inherited from the Message Class are:
         :returns: The current HTTP status code for this response
         :rtype: int
 
-        Returns the currently status code for this response. If no status code has been set, a BadMethodCallException
+        Returns the current status code for this response. If no status code has been set, an ``HTTPException``
         will be thrown:
 
         .. literalinclude:: response/014.php
@@ -313,7 +308,7 @@ The methods inherited from the Message Class are:
         :returns: The current reason phrase.
         :rtype: string
 
-        Returns the current status code for this response. If not status has been set, will return an empty string:
+        Returns the current reason phrase for this response. If no status has been set, it will return an empty string:
 
         .. literalinclude:: response/017.php
 
@@ -369,7 +364,7 @@ The methods inherited from the Message Class are:
         * proxy-revalidate
         * no-transform
 
-        When passing the last-modified option, it can be either a date string, or a DateTime object.
+        When passing the last-modified option, it can be either a date string or a DateTime object.
 
     .. php:method:: setLastModified($date)
 
@@ -377,7 +372,7 @@ The methods inherited from the Message Class are:
         :returns: The current response instance.
         :rtype: ``CodeIgniter\HTTP\Response``
 
-        Sets the ``Last-Modified`` header. The ``$date`` object can be either a string or a ``DateTime``
+        Sets the ``Last-Modified`` header. The ``$date`` argument can be either a string or a ``DateTime``
         instance:
 
         .. literalinclude:: response/022.php
@@ -391,7 +386,7 @@ The methods inherited from the Message Class are:
         followed by the response body. For the main application response, you do not need to call
         this as it is handled automatically by CodeIgniter.
 
-    .. php:method:: setCookie($name = ''[, $value = ''[, $expire = 0[, $domain = ''[, $path = '/'[, $prefix = ''[, $secure = false[, $httponly = false[, $samesite = null]]]]]]]])
+    .. php:method:: setCookie($name = ''[, $value = ''[, $expire = 0[, $domain = ''[, $path = '/'[, $prefix = ''[, $secure = null[, $httponly = null[, $samesite = null]]]]]]]])
 
         :param array|Cookie|string $name: Cookie name *or* associative array of all of the parameters available to this method *or* an instance of ``CodeIgniter\Cookie\Cookie``
         :param string $value: Cookie value
@@ -399,9 +394,9 @@ The methods inherited from the Message Class are:
         :param string $domain: Cookie domain
         :param string $path: Cookie path
         :param string $prefix: Cookie name prefix. If set to ``''``, the default value from **app/Config/Cookie.php** will be used
-        :param bool $secure: Whether to only transfer the cookie through HTTPS. If set to ``null``, the default value from **app/Config/Cookie.php** will be used
-        :param bool $httponly: Whether to only make the cookie accessible for HTTP requests (no JavaScript). If set to ``null``, the default value from **app/Config/Cookie.php** will be used
-        :param string $samesite: The value for the SameSite cookie parameter. If set to ``''``, no SameSite attribute will be set on the cookie. If set to ``null``, the default value from **app/Config/Cookie.php** will be used
+        :param bool|null $secure: Whether to only transfer the cookie through HTTPS. If set to ``null``, the default value from **app/Config/Cookie.php** will be used
+        :param bool|null $httponly: Whether to only make the cookie accessible for HTTP requests (no JavaScript). If set to ``null``, the default value from **app/Config/Cookie.php** will be used
+        :param string|null $samesite: The value for the SameSite cookie parameter. If set to ``''`` or ``null``, the default value from **app/Config/Cookie.php** will be used
         :rtype: void
 
         .. note:: Prior to v4.2.7, the default values of ``$secure`` and ``$httponly`` were ``false``
@@ -420,20 +415,20 @@ The methods inherited from the Message Class are:
 
         .. literalinclude:: response/023.php
 
-        Only the ``name`` and ``value`` are required. To delete a cookie set it with the
+        Only the ``name`` and ``value`` are required. To delete a cookie, set it with the
         ``value`` blank.
 
         The ``expire`` is set in **seconds**, which will be added to the current
         time. Do not include the time, but rather only the number of seconds
         from *now* that you wish the cookie to be valid. If the ``expire`` is
-        set to zero the cookie will only last as long as the browser is open.
+        set to zero, the cookie will only last as long as the browser is open.
 
-        .. note:: But if the ``value`` is set to empty string and the ``expire`` is set to ``0``,
+        .. note:: However, if the ``value`` is set to an empty string and the ``expire`` is set to ``0``,
             the cookie will be deleted.
 
         For site-wide cookies regardless of how your site is requested, add your
         URL to the ``domain`` starting with a period, like this:
-        .your-domain.com
+        ``.your-domain.com``.
 
         The ``path`` is usually not needed since the method sets a root path.
 
@@ -445,7 +440,7 @@ The methods inherited from the Message Class are:
 
         The ``samesite`` value controls how cookies are shared between domains and sub-domains.
         Allowed values are ``'None'``, ``'Lax'``, ``'Strict'`` or a blank string ``''``.
-        If set to blank string, default SameSite attribute will be set.
+        If set to a blank string, the default SameSite attribute will be set.
 
         **Discrete Parameters**
 
@@ -462,9 +457,9 @@ The methods inherited from the Message Class are:
         :param string $prefix: Cookie name prefix
         :rtype: void
 
-        Delete an existing cookie.
+        Deletes an existing cookie.
 
-        .. note:: This also just sets browser cookie for deleting the cookie.
+        .. note:: This also just sets a browser cookie for deleting the cookie.
 
         Only the ``name`` is required.
 
@@ -485,7 +480,7 @@ The methods inherited from the Message Class are:
     .. php:method:: hasCookie($name = ''[, $value = null[, $prefix = '']])
 
         :param mixed $name: Cookie name or an array of parameters
-        :param string $value: cookie value
+        :param string $value: Cookie value
         :param string $prefix: Cookie name prefix
         :rtype: bool
 
@@ -521,5 +516,5 @@ The methods inherited from the Message Class are:
         :rtype: ``Cookie[]``
 
         Returns all cookies currently set within the Response instance.
-        These are any cookies that you have specifically specified to set during the current
+        These are any cookies that you have specifically set during the current
         request only.

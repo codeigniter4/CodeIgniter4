@@ -45,7 +45,7 @@ E.g. **app/Views/welcome_message.php**::
         <title><?= $this->renderSection('page_title', true) ?></title>
     </head>
     <body>
-        <h1><?= $this->renderSection('page_title') ?><h1>
+        <h1><?= $this->renderSection('page_title') ?></h1>
         <p><?= $this->renderSection('content') ?></p>
     </body>
     </html>
@@ -62,7 +62,7 @@ Whenever a view wants to be inserted into a layout, it must use the ``extend()``
 
 The ``extend()`` method takes the name of any view file that you wish to use. Since they are standard views, they will
 be located just like a view. By default, it will look in the application's View directory, but will also scan
-other PSR-4 defined namespaces. You can include a namespace to locate the view in particular namespace View directory::
+other PSR-4 defined namespaces. You can include a namespace to locate the view in a particular namespace's View directory::
 
     <?= $this->extend('Blog\default') ?>
 
@@ -95,7 +95,7 @@ Sections can contain nested sections::
 Rendering the View
 ******************
 
-Rendering the view and it's layout is done exactly as any other view would be displayed within a controller:
+Rendering the view and its layout is done exactly as any other view would be displayed within a controller:
 
 .. literalinclude:: view_layouts/001.php
 
@@ -108,7 +108,7 @@ Including View Partials
 ***********************
 
 View partials are view files that do not extend any layout. They typically include content that can be reused from
-view to view. When using view layouts you must use ``$this->include()`` to include any view partials.
+view to view. When using view layouts, you must use ``$this->include()`` to include any view partials.
 
 ::
 
@@ -120,7 +120,7 @@ view to view. When using view layouts you must use ``$this->include()`` to inclu
         <?= $this->include('sidebar') ?>
     <?= $this->endSection() ?>
 
-When calling the ``include()`` method, you can pass it all of the same options that can when rendering a normal view, including
+When calling the ``include()`` method, you can pass it all of the same options that you can when rendering a normal view, including
 cache directives, etc.
 
 *********************

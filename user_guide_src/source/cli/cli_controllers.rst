@@ -2,13 +2,13 @@
 Running Controllers via CLI
 ###########################
 
-As well as calling an application's :doc:`Controllers </incoming/controllers>`
-via the URL in a browser they can also be loaded via the command-line
+As well as being called via the URL in a browser, an application's
+:doc:`Controllers </incoming/controllers>` can also be loaded via the command-line
 interface (CLI).
 
 .. note:: It is recommended to use Spark Commands for CLI scripts instead of
     calling controllers via CLI.
-    See the :doc:`spark_commands` and :doc:`cli_commands` page for detailed
+    See the :doc:`spark_commands` and :doc:`cli_commands` pages for detailed
     information.
 
 .. contents::
@@ -23,7 +23,7 @@ Create a Controller
 ===================
 
 Let's create a simple controller so you can see it in action. Using your
-text editor, create a file called Tools.php, and put the following code
+text editor, create a file called **Tools.php**, and put the following code
 in it:
 
 .. literalinclude:: cli_controllers/001.php
@@ -52,7 +52,7 @@ For more information, see the :ref:`Routes <command-line-only-routes>` page.
 Run via CLI
 ===========
 
-Now normally you would visit your site using a URL similar to this::
+Normally, you would visit your site using a URL similar to this::
 
     example.com/index.php/tools/message/to
 
@@ -71,7 +71,7 @@ If you did it right, you should see "Hello World!" printed.
     $ php index.php tools message "John Smith"
 
 Here we are passing it an argument in the same way that URL parameters
-work. "John Smith" is passed as an argument and output is::
+work. "John Smith" is passed as an argument and the output is::
 
     Hello John Smith!
 
@@ -81,12 +81,12 @@ That's the Basics!
 
 That, in a nutshell, is all there is to know about controllers on the
 command line. Remember that this is just a normal controller, so routing
-and ``_remap()`` works fine.
+and ``_remap()`` work fine.
 
 .. note:: ``_remap()`` does not work with :ref:`auto-routing-improved`.
 
-If you want to make sure running via CLI, check the return value of :php:func:`is_cli()`.
+If you want to make sure the code is running via CLI, check the return value of :php:func:`is_cli()`.
 
 However, CodeIgniter provides additional tools to make creating CLI-accessible
-scripts even more pleasant, include CLI-only routing, and a library that helps
+scripts even more pleasant, including CLI-only routing and a library that helps
 you with CLI-only tools.

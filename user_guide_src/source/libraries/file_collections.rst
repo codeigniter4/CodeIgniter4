@@ -19,7 +19,7 @@ of files you set or build:
 
 .. literalinclude:: files/011.php
 
-After you have input the files you would like to work with you may remove files
+After you have input the files you would like to work with, you may remove files
 or use the filtering commands to remove or retain files matching a certain regex
 or glob-style pattern:
 
@@ -41,14 +41,14 @@ __construct(string[] $files = [])
 =================================
 
 The constructor accepts an optional array of file paths to use as the initial
-collection. These are passed to ``add()`` so any files supplied by child classes
-in the ``$files`` will remain.
+collection. These are passed to ``add()``, so any files supplied by child classes
+in ``$files`` will remain.
 
 define()
 ========
 
 Allows child classes to define their own initial files. This method is called by
-the constructor and allows predefined collections without having to use their
+the constructor and allows predefined collections without having to use the collection
 methods.
 
 Example:
@@ -99,10 +99,10 @@ sub-directories. Directories are absolute paths to actual directories.
 Filtering Files
 ***************
 
-removePattern(string $pattern, string $scope = null)
-====================================================
-retainPattern(string $pattern, string $scope = null)
-====================================================
+removePattern(string $pattern, ?string $scope = null)
+=====================================================
+retainPattern(string $pattern, ?string $scope = null)
+=====================================================
 
 Filters the current file list through the pattern (and optional scope), removing
 or retaining matched files.
@@ -112,7 +112,7 @@ pseudo-regex similar to ``glob()`` (like ``'*.css'``).
 
 If a ``$scope`` is provided then only files in or under that directory will be
 considered (i.e. files outside of ``$scope`` are always retained). When no scope
-is provided then all files are subject.
+is provided, all files are subject.
 
 Examples:
 
@@ -121,8 +121,8 @@ Examples:
 
 .. _file-collections-retain-multiple-patterns:
 
-retainMultiplePatterns(array $pattern, string $scope = null)
-============================================================
+retainMultiplePatterns(array $patterns, ?string $scope = null)
+==============================================================
 
 Provides the same functionality as ``retainPattern()`` but accepts an array of patterns to retain files from all patterns.
 

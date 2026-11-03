@@ -13,7 +13,7 @@ forms.
 Configuration
 *************
 
-Since v4.3.0, void HTML elements (e.g. ``<input>``) in ``form_helper`` functions have been changed to be HTML5-compatible by default and if you need to be compatible with XHTML, you must set the ``$html5`` property in **app/Config/DocTypes.php** to ``false``.
+Since v4.3.0, void HTML elements (e.g. ``<input>``) in ``form_helper`` functions have been changed to be HTML5-compatible by default. If you need to be compatible with XHTML, you must set the ``$html5`` property in **app/Config/DocTypes.php** to ``false``.
 
 *******************
 Loading this Helper
@@ -64,7 +64,7 @@ The following functions are available:
 
     Creates an opening form tag with a site URL **built from your** ``Config\App::$baseURL``.
     It will optionally let you add form attributes and hidden input fields, and
-    will always add the `accept-charset` attribute based on the ``$charset`` property in your
+    will always add the ``accept-charset`` attribute based on the ``$charset`` property in your
     **app/Config/App.php** config file.
 
     The main benefit of using this tag rather than hard coding your own HTML is that
@@ -103,21 +103,21 @@ The following functions are available:
 
             <form action="http://example.com/index.php/email/send" class="email" id="myform" method="post" accept-charset="utf-8">
 
-        If :ref:`CSRF <cross-site-request-forgery>` filter is turned on ``form_open()`` will generate CSRF field at the beginning of the form. You can specify ID of this field by passing **csrf_id** as an element of the ``$attributes`` array:
+        If the :ref:`CSRF <cross-site-request-forgery>` filter is turned on, ``form_open()`` will generate a CSRF field at the beginning of the form. You can specify the ID of this field by passing **csrf_id** as an element of the ``$attributes`` array:
 
         .. literalinclude:: form_helper/007.php
 
-        will return::
+        This will return::
 
             <form action="http://example.com/index.php/u/sign-up" method="post" accept-charset="utf-8">
             <input type="hidden" id="my-id" name="csrf_test_name" value="964ede6e0ae8a680f7b8eab69136717d">
 
-        .. note:: To use auto-generation of CSRF field, you need to turn on the :ref:`CSRF filter <enable-csrf-protection>` in **app/Config/Filters.php** file.
-            In most cases the form page is requested using the GET method. Normally, CSRF protection is required
-            for POST/PUT/DELETE/PATCH requests, but even for GET requests, CSRF filters must be enabled for pages that display Forms.
-            
-            If you enable CSRF filter with :ref:`filters-globals`, it will be active for all request types.
-            But if you enable CSRF filter with ``public array $methods = ['POST' => ['csrf']];``, the hidden CSRF field will not be added in GET requests.
+        .. note:: To use auto-generation of the CSRF field, you need to turn on the :ref:`CSRF filter <enable-csrf-protection>` in the **app/Config/Filters.php** file.
+            In most cases, the form page is requested using the GET method. Normally, CSRF protection is required
+            for POST/PUT/DELETE/PATCH requests, but even for GET requests, CSRF filters must be enabled for pages that display forms.
+
+            If you enable the CSRF filter with :ref:`filters-globals`, it will be active for all request types.
+            But if you enable the CSRF filter with ``public array $methods = ['POST' => ['csrf']];``, the hidden CSRF field will not be added in GET requests.
 
     **Adding Hidden Input Fields**
 
@@ -144,7 +144,7 @@ The following functions are available:
 
     This function is identical to :php:func:`form_open()` above,
     except that it adds a *multipart* attribute, which is necessary if you
-    would like to use the form to upload files with.
+    would like to use the form to upload files.
 
 .. php:function:: form_hidden($name[, $value = ''])
 
@@ -175,12 +175,12 @@ The following functions are available:
     :param    array    $data: Field attributes data
     :param    string    $value: Field value
     :param    mixed    $extra: Extra attributes to be added to the tag either as an array or a literal string
-    :param  string  $type: The type of input field. i.e., 'text', 'email', 'number', etc.
+    :param  string  $type: The type of input field, e.g., 'text', 'email', 'number', etc.
     :returns:    An HTML text input element
     :rtype:    string
 
     Lets you generate a standard text input field. You can minimally pass
-    the field name and value in the first and second parameter:
+    the field name and value in the first and second parameters:
 
     .. literalinclude:: form_helper/013.php
 
@@ -189,7 +189,7 @@ The following functions are available:
 
     .. literalinclude:: form_helper/014.php
 
-    If you want boolean attributes, pass the boolean value (``true``/``false``). In this case the boolean value does not matter:
+    If you want boolean attributes, pass the boolean value (``true``/``false``). In this case, the boolean value does not matter:
 
     .. literalinclude:: form_helper/035.php
 
@@ -240,8 +240,7 @@ The following functions are available:
     This function is identical in all respects to the :php:func:`form_input()`
     function above except that it generates a "textarea" type.
 
-    .. note:: Instead of the *maxlength* and *size* attributes in the above example,
-        you will instead specify *rows* and *cols*.
+    .. note:: Use the *rows* and *cols* attributes to set the size of the textarea.
 
 .. php:function:: form_dropdown([$name = ''[, $options = [][, $selected = [][, $extra = '']]]])
 
@@ -283,7 +282,7 @@ The following functions are available:
     :param    array    $options: An associative array of options to be listed
     :param    array    $selected: List of fields to mark with the *selected* attribute
     :param    mixed    $extra: Extra attributes to be added to the tag either as an array or a literal string
-    :returns:    An HTML select element with multiple attribute
+    :returns:    An HTML select element with the multiple attribute
     :rtype:    string
 
     Lets you create a standard multiselect field. The first parameter will
@@ -292,7 +291,7 @@ The following functions are available:
     value or values you wish to be selected.
 
     The parameter usage is identical to using :php:func:`form_dropdown()` above,
-    except of course that the name of the field will need to use POST array
+    except, of course, that the name of the field will need to use POST array
     syntax, e.g., foo[].
 
 .. php:function:: form_fieldset([$legend_text = ''[, $attributes = []]])
@@ -320,8 +319,8 @@ The following functions are available:
     :rtype:    string
 
     Produces a closing ``</fieldset>`` tag. The only advantage to using this
-    function is it permits you to pass data to it which will be added below
-    the tag. For example
+    function is that it permits you to pass data to it which will be added below
+    the tag. For example:
 
     .. literalinclude:: form_helper/023.php
 
@@ -423,7 +422,7 @@ The following functions are available:
     :rtype:    string
 
     Lets you generate a standard button element. You can minimally pass the
-    button name and content in the first and second parameter:
+    button name and content in the first and second parameters:
 
     .. literalinclude:: form_helper/031.php
 
@@ -444,7 +443,7 @@ The following functions are available:
     :rtype:    string
 
     Produces a closing ``</form>`` tag. The only advantage to using this
-    function is it permits you to pass data to it which will be added below
+    function is that it permits you to pass data to it which will be added below
     the tag. For example:
 
     .. literalinclude:: form_helper/034.php
@@ -462,7 +461,7 @@ The following functions are available:
     second (optional) parameter allows you to set a default value for the
     field value. The third (optional) parameter allows you to turn off HTML escaping
     of the value, in case you need to use this function in combination with
-    i.e., :php:func:`form_input()` and avoid double-escaping.
+    e.g., :php:func:`form_input()` and avoid double-escaping.
 
     Example::
 
@@ -474,7 +473,7 @@ The following functions are available:
 
     :param    string    $field: Field name
     :param    string    $value: Value to check for
-    :param    string    $default: Whether the value is also a default one
+    :param    bool      $default: Whether the value is also a default one
     :returns:    'selected' attribute or an empty string
     :rtype:    string
 
@@ -497,11 +496,11 @@ The following functions are available:
 
     :param    string    $field: Field name
     :param    string    $value: Value to check for
-    :param    string    $default: Whether the value is also a default one
+    :param    bool      $default: Whether the value is also a default one
     :returns:    'checked' attribute or an empty string
     :rtype:    string
 
-    Permits you to display a checkbox in the state it was submitted.
+    Permits you to display a checkbox in the state in which it was submitted.
 
     The first parameter must contain the name of the checkbox, the second
     parameter must contain its value, and the third (optional) parameter
@@ -516,11 +515,11 @@ The following functions are available:
 
     :param    string    $field: Field name
     :param    string    $value: Value to check for
-    :param    string    $default: Whether the value is also a default one
+    :param    bool      $default: Whether the value is also a default one
     :returns:    'checked' attribute or an empty string
     :rtype:    string
 
-    Permits you to display radio buttons in the state they were submitted.
+    Permits you to display radio buttons in the state in which they were submitted.
     This function is identical to the :php:func:`set_checkbox()` function above.
 
     Example::
