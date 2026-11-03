@@ -2,13 +2,12 @@
 Working with Uploaded Files
 ###########################
 
-CodeIgniter makes working with files uploaded through a form much simpler and
-more secure than using PHP's ``$_FILES`` array directly. This extends the
-:doc:`File class </libraries/files>` and thus gains all of the features of that
-class.
+CodeIgniter makes working with files uploaded through a form much simpler and more secure than using PHP's ``$_FILES``
+array directly. The UploadedFile class extends the :doc:`File class </libraries/files>` and thus gains all of the
+features of that class.
 
-.. note:: This is not the same as the File Uploading class in CodeIgniter 3.
-    This provides a raw interface to the uploaded files with a few small features.
+.. note:: This is not the same as the File Uploading class in CodeIgniter 3. This provides a raw interface to the
+    uploaded files with a few small features.
 
 .. contents::
     :local:
@@ -22,38 +21,32 @@ File Upload Form Tutorial
 
 Uploading a file involves the following general process:
 
--  An upload form is displayed, allowing a user to select a file and
-   upload it.
--  When the form is submitted, the file is uploaded to the destination
-   you specify.
--  Along the way, the file is validated to make sure it is allowed to be
-   uploaded based on the preferences you set.
--  Once uploaded, the user will be shown a success message.
+- An upload form is displayed, allowing a user to select a file and upload it.
+- When the form is submitted, the file is uploaded to the destination you specify.
+- Along the way, the file is validated to make sure it is allowed to be uploaded based on the preferences you set.
+- Once uploaded, the user will be shown a success message.
 
-To demonstrate this process here is a brief tutorial. Afterward you'll
-find reference information.
+To demonstrate this process, here is a brief tutorial. Afterward, you'll find reference information.
 
 Creating the Upload Form
 ========================
 
-Using a text editor, create a form called **upload_form.php**. In it, place
-this code and save it to your **app/Views** directory:
+Using a text editor, create a form called **upload_form.php**. In it, place this code and save it to your **app/Views**
+directory:
 
 .. literalinclude:: uploaded_files/001.php
 
-You'll notice we are using a form helper to create the opening form tag.
-File uploads require a multipart form, so the helper creates the proper
-syntax for you.
+You'll notice we are using a form helper to create the opening form tag. File uploads require a multipart form, so the
+helper creates the proper syntax for you.
 
-You'll also notice we have an ``$errors`` variable. This is
-so we can show error messages in the event the user does something
-wrong.
+You'll also notice we have an ``$errors`` variable. This is so we can show error messages in the event the user does
+something wrong.
 
 The Success Page
 ================
 
-Using a text editor, create a form called **upload_success.php**. In it,
-place this code and save it to your **app/Views** directory::
+Using a text editor, create a form called **upload_success.php**. In it, place this code and save it to your
+**app/Views** directory::
 
     <!DOCTYPE html>
     <html lang="en">
@@ -66,7 +59,7 @@ place this code and save it to your **app/Views** directory::
 
     <ul>
         <li>name: <?= esc($uploaded_fileinfo->getBasename()) ?></li>
-        <li>size: <?= esc($uploaded_fileinfo->getSizeByUnit('kb')) ?> KB</li>
+        <li>size: <?= esc($uploaded_fileinfo->getSizeByBinaryUnit(\CodeIgniter\Files\FileSizeUnit::KB)) ?> KB</li>
         <li>extension: <?= esc($uploaded_fileinfo->guessExtension()) ?></li>
     </ul>
 
@@ -78,22 +71,19 @@ place this code and save it to your **app/Views** directory::
 The Controller
 ==============
 
-Using a text editor, create a controller called **Upload.php**. In it, place
-this code and save it to your **app/Controllers** directory:
+Using a text editor, create a controller called **Upload.php**. In it, place this code and save it to your
+**app/Controllers** directory:
 
 .. literalinclude:: uploaded_files/002.php
 
 Only the :ref:`rules-for-file-uploads` can be used to validate uploaded files.
 
-Therefore, the rule ``required`` cannot be used either, so if the file is required,
-use the rule ``uploaded`` instead.
+Therefore, the rule ``required`` cannot be used either, so if the file is required, use the rule ``uploaded`` instead.
 
-Note that an empty array (``[]``) is passed as the first argument to
-``$this->validateData()``. It is because the file validation rules get the data
-for the uploaded file directly from the Request object.
+Note that an empty array (``[]``) is passed as the first argument to ``$this->validateData()``. This is because the file
+validation rules get the data for the uploaded file directly from the Request object.
 
-If the form has fields other than file upload, pass the field data as the first
-argument.
+If the form has fields other than the file upload, pass the field data as the first argument.
 
 The Routes
 ==========
@@ -114,9 +104,8 @@ To try your form, visit your site using a URL similar to this one::
 
     example.com/index.php/upload/
 
-You should see an upload form. Try uploading an image file (either a
-**jpg**, **gif**, **png**, or **webp**). If the path in your controller is correct it should
-work.
+You should see an upload form. Try uploading an image file (either a **jpg**, **gif**, **png**, or **webp**). If the
+path in your controller is correct, it should work.
 
 .. _uploaded-files-accessing-files:
 
@@ -127,30 +116,33 @@ Accessing Files
 All Files
 =========
 
-When you upload files they can be accessed natively in PHP through the ``$_FILES`` superglobal. This array has some
+When you upload files, they can be accessed natively in PHP through the ``$_FILES`` superglobal. This array has some
 major shortcomings when working with multiple files uploaded at once, and has potential security flaws many developers
-are not aware of. CodeIgniter helps with both of these situations by standardizing your usage of files behind a
-common interface.
+are not aware of. CodeIgniter helps with both of these situations by standardizing your usage of files behind a common
+interface.
 
 Files are accessed through the current ``IncomingRequest`` instance. To retrieve all files that were uploaded with this
-request, use ``getFiles()``. This will return an array of files represented by instances of ``CodeIgniter\HTTP\Files\UploadedFile``:
+request, use ``getFiles()``. This will return an array of files represented by instances of
+``CodeIgniter\HTTP\Files\UploadedFile``:
 
 .. literalinclude:: uploaded_files/003.php
 
-Of course, there are multiple ways to name the file input, and anything but the simplest can create strange results.
-The array returns in a manner that you would expect. With the simplest usage, a single file might be submitted like::
+Of course, there are multiple ways to name the file input, and anything but the simplest can create strange results. The
+array is returned in a manner that you would expect. With the simplest usage, a single file might be submitted like::
 
     <input type="file" name="avatar">
 
-Which would return a simple array like::
+This would return a simple array like::
 
     [
         'avatar' => // UploadedFile instance,
     ];
 
-.. note:: The UploadedFile instance corresponds to ``$_FILES``. Even if a user just clicks the submit button and does not upload any file, the instance will still exist. You can check that the file was actually uploaded by the ``isValid()`` method in UploadedFile. See :ref:`verify-a-file`.
+.. note:: The UploadedFile instance corresponds to ``$_FILES``. Even if a user just clicks the submit button and does
+    not upload any file, the instance will still exist. You can check that the file was actually uploaded with the
+    ``isValid()`` method in UploadedFile. See :ref:`verify-a-file`.
 
-If you used an array notation for the name, the input would look something like::
+If you used array notation for the name, the input would look something like::
 
     <input type="file" name="my-form[details][avatar]">
 
@@ -175,7 +167,7 @@ In this case, the returned array of files would be more like::
     [
         'my-form' => [
             'details' => [
-                'avatar' => [
+                'avatars' => [
                     0 => // UploadedFile instance,
                     1 => // UploadedFile instance,
                 ],
@@ -186,7 +178,8 @@ In this case, the returned array of files would be more like::
 Single File
 ===========
 
-If you just need to access a single file, you can use ``getFile()`` to retrieve the file instance directly. This will return an instance of ``CodeIgniter\HTTP\Files\UploadedFile``:
+If you just need to access a single file, you can use ``getFile()`` to retrieve the file instance directly. This will
+return an instance of ``CodeIgniter\HTTP\Files\UploadedFile``.
 
 Simplest usage
 --------------
@@ -195,18 +188,18 @@ With the simplest usage, a single file might be submitted like::
 
     <input type="file" name="userfile">
 
-Which would return a simple file instance like:
+This would return a simple file instance like:
 
 .. literalinclude:: uploaded_files/004.php
 
 Array notation
 --------------
 
-If you used an array notation for the name, the input would look something like::
+If you used array notation for the name, the input would look something like::
 
     <input type="file" name="my-form[details][avatar]">
 
-For get the file instance:
+To get the file instance:
 
 .. literalinclude:: uploaded_files/005.php
 
@@ -217,19 +210,19 @@ Multiple files
 
     <input type="file" name="images[]" multiple>
 
-In controller:
+In the controller:
 
 .. literalinclude:: uploaded_files/006.php
 
-where the ``images`` is a loop from the form field name.
+Here, ``images`` is a loop from the form field name.
 
-If there are multiple files with the same name you can use ``getFile()`` to retrieve every file individually.
+If there are multiple files with the same name, you can use ``getFile()`` to retrieve every file individually.
 
-In controller:
+In the controller:
 
 .. literalinclude:: uploaded_files/007.php
 
-You might find it easier to use ``getFileMultiple()``, to get an array of uploaded files with the same name:
+You might find it easier to use ``getFileMultiple()`` to get an array of uploaded files with the same name:
 
 .. literalinclude:: uploaded_files/008.php
 
@@ -238,7 +231,7 @@ Another example::
     Upload an avatar: <input type="file" name="my-form[details][avatars][]">
     Upload an avatar: <input type="file" name="my-form[details][avatars][]">
 
-In controller:
+In the controller:
 
 .. literalinclude:: uploaded_files/009.php
 
@@ -248,8 +241,8 @@ In controller:
 Working with the File
 *********************
 
-Once you've retrieved the UploadedFile instance, you can get information about the file in safe ways, as well as
-move the file to a new location.
+Once you've retrieved the UploadedFile instance, you can get information about the file in safe ways, as well as move
+the file to a new location.
 
 .. _verify-a-file:
 
@@ -261,8 +254,8 @@ You can check that a file was actually uploaded via HTTP with no errors by calli
 .. literalinclude:: uploaded_files/010.php
 
 As seen in this example, if a file had an upload error, you can retrieve the error code (an integer) and the error
-message with the ``getError()`` and ``getErrorString()`` methods. The following errors can be discovered through
-this method:
+message with the ``getError()`` and ``getErrorString()`` methods. The following errors can be discovered through this
+method:
 
 * The file exceeds your ``upload_max_filesize`` ini directive.
 * The file exceeds the upload limit defined in your form.
@@ -313,8 +306,8 @@ Returns the original file extension, based on the file name that was uploaded:
 getClientMimeType()
 -------------------
 
-Returns the mime type of the file as provided by the client. This is NOT a trusted value. For a trusted
-version, use ``getMimeType()`` instead:
+Returns the mime type of the file as provided by the client. This is NOT a trusted value. For a trusted version, use
+``getMimeType()`` instead:
 
 .. literalinclude:: uploaded_files/015.php
 
@@ -323,8 +316,8 @@ getClientPath()
 
 .. versionadded:: 4.4.0
 
-Returns the `webkit relative path <https://developer.mozilla.org/en-US/docs/Web/API/File/webkitRelativePath>`_ of the uploaded file when the client has uploaded files via directory upload.
-In PHP versions below 8.1, this returns ``null``
+Returns the `webkit relative path <https://developer.mozilla.org/en-US/docs/Web/API/File/webkitRelativePath>`_ of the
+uploaded file when the client has uploaded files via directory upload. In PHP versions below 8.1, this returns ``null``.
 
 .. literalinclude:: uploaded_files/023.php
 
@@ -338,21 +331,21 @@ Moving Files
     ``$folderName`` argument of ``store()`` are never sanitized, so an attacker-controlled value containing ``../`` can
     move the uploaded file outside the intended directory. Use directories controlled by your application.
 
-    Filenames are only sanitized by default: ``move()`` sanitizes the client-provided name when the ``$name`` argument is
-    omitted, and ``store()`` generates a random name when ``$fileName`` is omitted. A caller-supplied ``$name`` or
+    Filenames are only sanitized by default: ``move()`` sanitizes the client-provided name when the ``$name`` argument
+    is omitted, and ``store()`` generates a random name when ``$fileName`` is omitted. A caller-supplied ``$name`` or
     ``$fileName`` is NOT sanitized, so if you pass one, generate it yourself or sanitize it with
     :php:func:`sanitize_filename`.
 
     Sanitizing a client-provided filename does not make it safe to keep in a web-accessible directory where scripts can
     execute. Some web servers select a handler from any extension in a filename, including an extension before the final
-    one. Keep uploads outside the public directory with ``store()`` when possible. If they must be public, disable script
-    execution in the upload directory and pass ``$file->getRandomName()`` as the second argument to ``move()``.
+    one. Keep uploads outside the public directory with ``store()`` when possible. If they must be public, disable
+    script execution in the upload directory and pass ``$file->getRandomName()`` as the second argument to ``move()``.
 
 with Original Filename
 ----------------------
 
-Each file can be moved to its new location with the aptly named ``move()`` method. This takes the directory to move
-the file to as the first parameter:
+Each file can be moved to its new location with the aptly named ``move()`` method. This takes the directory to move the
+file to as the first parameter:
 
 .. literalinclude:: uploaded_files/016.php
 
@@ -368,20 +361,18 @@ You can specify a new filename by passing it as the second parameter:
 Overwriting Existing File
 -------------------------
 
-By default, if the destination file already exists, a new filename will be used.
-For example, if **image_name.jpg** already exists in the directory, then the
-filename will be **image_name_1.jpg** automatically.
+By default, if the destination file already exists, a new filename will be used. For example, if **image_name.jpg**
+already exists in the directory, then the filename will be **image_name_1.jpg** automatically.
 
-You can overwrite the existing file by passing ``true``
-as the third parameter:
+You can overwrite the existing file by passing ``true`` as the third parameter:
 
 .. literalinclude:: uploaded_files/022.php
 
 Check if the File Moved
 -----------------------
 
-Once the file has been moved the temporary file is deleted. You can check if a file has been moved already with
-the ``hasMoved()`` method, which returns a boolean:
+Once the file has been moved, the temporary file is deleted. You can check if a file has been moved already with the
+``hasMoved()`` method, which returns a boolean:
 
 .. literalinclude:: uploaded_files/018.php
 
@@ -403,13 +394,13 @@ With the simplest usage, a single file might be submitted like::
 
     <input type="file" name="userfile">
 
-By default, upload files are saved in **writable/uploads** directory. The **YYYYMMDD** folder
-and random file name will be created. Returns a file path:
+By default, uploaded files are saved in the **writable/uploads** directory. A **YYYYMMDD** folder and a random file name
+will be created. The method returns a file path:
 
 .. literalinclude:: uploaded_files/019.php
 
-You can specify a directory to move the file to as the first parameter. A new filename by
-passing it as the second parameter:
+You can specify a directory to move the file to as the first parameter, and a new filename by passing it as the second
+parameter:
 
 .. literalinclude:: uploaded_files/020.php
 

@@ -14,7 +14,7 @@ Release Date: February 1, 2026
 Highlights
 **********
 
-- Update minimal PHP requirement to ``8.2``.
+- Update minimum PHP requirement to ``8.2``.
 - Added experimental **FrankenPHP Worker Mode** support for improved performance.
 
 ********
@@ -54,20 +54,22 @@ Invalid primary key values will now throw ``InvalidArgumentException`` instead o
 - **Exception type:** Invalid primary keys now throw ``InvalidArgumentException`` with
   specific error messages instead of generic ``DatabaseException`` from the database layer.
 - **Validation timing:**
-    - For ``update()`` and ``delete()``: Validation happens **before** the ``beforeUpdate``/``beforeDelete``
-      events and before any database queries are executed.
-    - For ``insert()`` and ``insertBatch()`` (when auto-increment is disabled): Validation happens
-      **after** the ``beforeInsert`` event but **before** database queries are executed.
+
+  - For ``update()`` and ``delete()``: Validation happens **before** the ``beforeUpdate``/``beforeDelete``
+    events and before any database queries are executed.
+  - For ``insert()`` and ``insertBatch()`` (when auto-increment is disabled): Validation happens
+    **after** the ``beforeInsert`` event but **before** database queries are executed.
 
 - **Invalid values:** The following values are now explicitly rejected as primary keys:
-    - ``null`` (for insert when auto-increment is disabled)
-    - ``0`` (integer zero)
-    - ``'0'`` (string zero)
-    - ``''`` (empty string)
-    - ``true`` and ``false`` (booleans)
-    - ``[]`` (empty array)
-    - Nested arrays (e.g., ``[[1, 2]]``)
-    - Arrays containing any of the above invalid values
+
+  - ``null`` (for insert when auto-increment is disabled)
+  - ``0`` (integer zero)
+  - ``'0'`` (string zero)
+  - ``''`` (empty string)
+  - ``true`` and ``false`` (booleans)
+  - ``[]`` (empty array)
+  - Nested arrays (e.g., ``[[1, 2]]``)
+  - Arrays containing any of the above invalid values
 
   **Note:** ``RawSql`` objects are allowed as primary key values for complex scenarios
   where you need to use raw SQL expressions.
@@ -93,7 +95,7 @@ for objects and arrays instead of shallow comparison. This means:
   including timezone information.
 - **Collections** (``Traversable``) such as ``ArrayObject`` and ``ArrayIterator`` are converted
   to arrays for comparison.
-- **Value objects** with ``__toString()`` method are compared by their string representation when
+- **Value objects** with a ``__toString()`` method are compared by their string representation when
   properties are not accessible (fallback for objects with private properties).
 - **Nested entities** (using ``toRawArray()``), ``JsonSerializable`` objects, and objects with
   ``toArray()`` methods are recursively normalized for accurate change detection.
@@ -137,7 +139,7 @@ when encryption/decryption parameters are passed via the ``$params`` argument. K
 **Impact:**
 
 **You are only affected if** you passed a key via ``$params`` to ``encrypt()`` or ``decrypt()``
-and expected that the ``key`` will persist for subsequent operations. Most users are **not affected**:
+and expected the ``key`` to persist for subsequent operations. Most users are **not affected**:
 
 - **Not affected:** You always pass the key via ``$params`` for each operation
 - **Not affected:** You never use ``$params`` and always configure keys via ``Config\Encryption``
@@ -193,51 +195,60 @@ Method Signature Changes
 - **BaseModel:** The type of the ``$row`` parameter for the ``cleanValidationRules()`` method has been changed from ``?array $row = null`` to ``array $row``.
 - **PageCache:** The ``PageCache`` filter constructor now accepts an optional ``Cache`` configuration parameter: ``__construct(?Cache $config = null)``. This allows dependency injection for testing purposes. While this is technically a breaking change if you extend the ``PageCache`` class with your own constructor, it should not affect most users as the parameter has a default value.
 - Added the ``SensitiveParameter`` attribute to various methods to conceal sensitive information from stack traces. Affected methods are:
-    - ``CodeIgniter\Encryption\EncrypterInterface::encrypt()``
-    - ``CodeIgniter\Encryption\EncrypterInterface::decrypt()``
-    - ``CodeIgniter\Encryption\Handlers\OpenSSLHandler::encrypt()``
-    - ``CodeIgniter\Encryption\Handlers\OpenSSLHandler::decrypt()``
-    - ``CodeIgniter\Encryption\Handlers\SodiumHandler::encrypt()``
-    - ``CodeIgniter\Encryption\Handlers\SodiumHandler::decrypt()``
-    - ``CodeIgniter\HTTP\CURLRequest::setAuth()``
-    - ``CodeIgniter\HTTP\URI::setUserInfo()``
-    - ``CodeIgniter\Security\Security::derandomize()``
+
+  - ``CodeIgniter\Encryption\EncrypterInterface::encrypt()``
+  - ``CodeIgniter\Encryption\EncrypterInterface::decrypt()``
+  - ``CodeIgniter\Encryption\Handlers\OpenSSLHandler::encrypt()``
+  - ``CodeIgniter\Encryption\Handlers\OpenSSLHandler::decrypt()``
+  - ``CodeIgniter\Encryption\Handlers\SodiumHandler::encrypt()``
+  - ``CodeIgniter\Encryption\Handlers\SodiumHandler::decrypt()``
+  - ``CodeIgniter\HTTP\CURLRequest::setAuth()``
+  - ``CodeIgniter\HTTP\URI::setUserInfo()``
+  - ``CodeIgniter\Security\Security::derandomize()``
+
 - Added native types to ``CacheInterface`` methods that were missing them. The following methods were updated:
-    - ``initialize()``
-    - ``save()``
-    - ``delete()``
-    - ``increment()``
-    - ``decrement()``
-    - ``clean()``
-    - ``getCacheInfo()``
-    - ``getMetaData()``
+
+  - ``initialize()``
+  - ``save()``
+  - ``delete()``
+  - ``increment()``
+  - ``decrement()``
+  - ``clean()``
+  - ``getCacheInfo()``
+  - ``getMetaData()``
+
 - Added native parameter and return types to ``CodeIgniter\Database\QueryInterface`` methods:
-    - ``setQuery(string $sql, mixed $binds = null, bool $setEscape = true): self``
-    - ``getQuery(): string``
-    - ``setDuration(float $start, ?float $end = null): self``
-    - ``setError(int $code, string $error): self``
-    - ``swapPrefix(string $orig, string $swap): self``
+
+  - ``setQuery(string $sql, mixed $binds = null, bool $setEscape = true): self``
+  - ``getQuery(): string``
+  - ``setDuration(float $start, ?float $end = null): self``
+  - ``setError(int $code, string $error): self``
+  - ``swapPrefix(string $orig, string $swap): self``
+
 - Added native return types to ``CodeIgniter\Debug\Toolbar`` methods:
-    - ``prepare(): void``
-    - ``respond(): void``
-- Methods previously having ``#[ReturnTypeWillChange]`` attribute have been updated to include the native return types:
-    - ``CodeIgniter\Cookie\Cookie::offsetGet($offset): bool|int|string``
-    - ``CodeIgniter\Entity\Entity::jsonSerialize(): array``
-    - ``CodeIgniter\Files\File::getSize(): false|int``
-    - ``CodeIgniter\I18n\TimeLegacy::setTimestamp($timestamp): static``
-    - ``CodeIgniter\I18n\TimeTrait::createFromFormat($format, $time, $timezone = null): static``
-    - ``CodeIgniter\I18n\TimeTrait::setTimezone($timezone): static``
-    - ``CodeIgniter\Session\Handlers\Database\PostgreHandler::gc($max_lifetime): false|int``
-    - ``CodeIgniter\Session\Handlers\ArrayHandler::read($id): string``
-    - ``CodeIgniter\Session\Handlers\ArrayHandler::gc($max_lifetime): int``
-    - ``CodeIgniter\Session\Handlers\DatabaseHandler::read($id): false|string``
-    - ``CodeIgniter\Session\Handlers\DatabaseHandler::gc($max_lifetime): false|int``
-    - ``CodeIgniter\Session\Handlers\FileHandler::read($id): false|string``
-    - ``CodeIgniter\Session\Handlers\FileHandler::gc($max_lifetime): false|int``
-    - ``CodeIgniter\Session\Handlers\MemcachedHandler::read($id): false|string``
-    - ``CodeIgniter\Session\Handlers\MemcachedHandler::gc($max_lifetime): int``
-    - ``CodeIgniter\Session\Handlers\RedisHandler::read($id): false|string``
-    - ``CodeIgniter\Session\Handlers\RedisHandler::gc($max_lifetime): int``
+
+  - ``prepare(): void``
+  - ``respond(): void``
+
+- Methods previously having the ``#[ReturnTypeWillChange]`` attribute have been updated to include the native return types:
+
+  - ``CodeIgniter\Cookie\Cookie::offsetGet($offset): bool|int|string``
+  - ``CodeIgniter\Entity\Entity::jsonSerialize(): array``
+  - ``CodeIgniter\Files\File::getSize(): false|int``
+  - ``CodeIgniter\I18n\TimeLegacy::setTimestamp($timestamp): static``
+  - ``CodeIgniter\I18n\TimeTrait::createFromFormat($format, $time, $timezone = null): static``
+  - ``CodeIgniter\I18n\TimeTrait::setTimezone($timezone): static``
+  - ``CodeIgniter\Session\Handlers\Database\PostgreHandler::gc($max_lifetime): false|int``
+  - ``CodeIgniter\Session\Handlers\ArrayHandler::read($id): string``
+  - ``CodeIgniter\Session\Handlers\ArrayHandler::gc($max_lifetime): int``
+  - ``CodeIgniter\Session\Handlers\DatabaseHandler::read($id): false|string``
+  - ``CodeIgniter\Session\Handlers\DatabaseHandler::gc($max_lifetime): false|int``
+  - ``CodeIgniter\Session\Handlers\FileHandler::read($id): false|string``
+  - ``CodeIgniter\Session\Handlers\FileHandler::gc($max_lifetime): false|int``
+  - ``CodeIgniter\Session\Handlers\MemcachedHandler::read($id): false|string``
+  - ``CodeIgniter\Session\Handlers\MemcachedHandler::gc($max_lifetime): int``
+  - ``CodeIgniter\Session\Handlers\RedisHandler::read($id): false|string``
+  - ``CodeIgniter\Session\Handlers\RedisHandler::gc($max_lifetime): int``
 
 .. _v470-property-signature-changes:
 
@@ -254,23 +265,27 @@ Removed Deprecated Items
 - **BaseModel:** The deprecated method ``transformDataRowToArray()`` has been removed.
 - **Cache:** The deprecated return type ``false`` for ``CodeIgniter\Cache\CacheInterface::getMetaData()`` has been replaced with ``null`` type.
 - **CodeIgniter:** The deprecated ``CodeIgniter\CodeIgniter::resolvePlatformExtensions()`` has been removed.
-- **Entity:** The deprecated ``CodeIgniter\Entity\Entity::setAttributes()`` has been removed.  Use ``CodeIgniter\Entity\Entity::injectRawData()`` instead.
-- **IncomingRequest:** The deprecated methods has been removed:
-    - ``CodeIgniter\HTTP\IncomingRequest\detectURI()``
-    - ``CodeIgniter\HTTP\IncomingRequest\detectPath()``
-    - ``CodeIgniter\HTTP\IncomingRequest\parseRequestURI()``
-    - ``CodeIgniter\HTTP\IncomingRequest\parseQueryString()``
+- **Entity:** The deprecated ``CodeIgniter\Entity\Entity::setAttributes()`` has been removed. Use ``CodeIgniter\Entity\Entity::injectRawData()`` instead.
+- **IncomingRequest:** The following deprecated methods have been removed:
+
+  - ``CodeIgniter\HTTP\IncomingRequest\detectURI()``
+  - ``CodeIgniter\HTTP\IncomingRequest\detectPath()``
+  - ``CodeIgniter\HTTP\IncomingRequest\parseRequestURI()``
+  - ``CodeIgniter\HTTP\IncomingRequest\parseQueryString()``
+
 - **IncomingRequest:** The deprecated ``$config`` parameter has been removed from ``CodeIgniter\HTTP\IncomingRequest::setPath()``, and the method visibility has been changed from ``public`` to ``private``.
-- **Session:** The deprecated properties  in ``CodeIgniter\Session\Session`` has been removed:
-    - ``CodeIgniter\Session\Session::$sessionDriverName``
-    - ``CodeIgniter\Session\Session::$sessionCookieName``
-    - ``CodeIgniter\Session\Session::$sessionExpiration``
-    - ``CodeIgniter\Session\Session::$sessionSavePath``
-    - ``CodeIgniter\Session\Session::$sessionMatchIP``
-    - ``CodeIgniter\Session\Session::$sessionTimeToUpdate``
-    - ``CodeIgniter\Session\Session::$sessionRegenerateDestroy``
+- **Session:** The following deprecated properties in ``CodeIgniter\Session\Session`` have been removed:
+
+  - ``CodeIgniter\Session\Session::$sessionDriverName``
+  - ``CodeIgniter\Session\Session::$sessionCookieName``
+  - ``CodeIgniter\Session\Session::$sessionExpiration``
+  - ``CodeIgniter\Session\Session::$sessionSavePath``
+  - ``CodeIgniter\Session\Session::$sessionMatchIP``
+  - ``CodeIgniter\Session\Session::$sessionTimeToUpdate``
+  - ``CodeIgniter\Session\Session::$sessionRegenerateDestroy``
+
 - **Session:** The deprecated method ``CodeIgniter\Session\Session::stop()`` has been removed.
-- **Text Helper:** The deprecated types in ``random_string()`` function: ``basic``, ``md5``, and ``sha1`` has been removed.
+- **Text Helper:** The deprecated types ``basic``, ``md5``, and ``sha1`` in the ``random_string()`` function have been removed.
 
 ************
 Enhancements
@@ -281,23 +296,23 @@ Libraries
 
 - **API Transformers:** This new feature provides a structured way to transform data for API responses. See :ref:`API Transformers <api_transformers>` for details.
 - **CLI:** Added ``SignalTrait`` to provide unified handling of operating system signals in CLI commands.
-- **Cache:** Added ``async`` and ``persistent`` config item to Predis handler.
+- **Cache:** Added ``async`` and ``persistent`` config items to Predis handler.
 - **Cache:** Added ``persistent`` config item to Redis handler.
 - **Cache:** Added support for HTTP status in ``ResponseCache``.
 - **Cache:** Added ``Config\Cache::$cacheStatusCodes`` to control which HTTP status codes are allowed to be cached by the ``PageCache`` filter. Defaults to ``[]`` (all status codes for backward compatibility). Recommended value: ``[200]`` to only cache successful responses. See :ref:`Setting $cacheStatusCodes <web_page_caching_cache_status_codes>` for details.
 - **Cache:** Added `APCu <https://www.php.net/apcu>`_ caching driver.
-- **CURLRequest:** Added ``shareConnection`` config item to change default share connection.
-- **CURLRequest:** Added ``dns_cache_timeout`` option to change default DNS cache timeout.
-- **CURLRequest:** Added ``fresh_connect`` options to enable/disable request fresh connection.
+- **CURLRequest:** Added ``shareConnection`` config item to change the default shared connection.
+- **CURLRequest:** Added ``dns_cache_timeout`` option to change the default DNS cache timeout.
+- **CURLRequest:** Added ``fresh_connect`` option to enable/disable a fresh connection for the request.
 - **DataConverter:** Added ``EnumCast`` caster for database and entity.
-- **Email:** Added support for choosing the SMTP authorization method. You can change it via ``Config\Email::$SMTPAuthMethod`` option.
+- **Email:** Added support for choosing the SMTP authorization method. You can change it via the ``Config\Email::$SMTPAuthMethod`` option.
 - **Encryption:** Added ``Config\Encryption::$previousKeys`` configuration option to support encryption key rotation. When decryption with the current key fails, the system automatically falls back to previous keys, allowing you to rotate encryption keys without losing access to old encrypted data.
 - **Image:** The ``ImageMagickHandler`` has been rewritten to rely solely on the PHP ``imagick`` extension.
 - **Image:** Added ``ImageMagickHandler::clearMetadata()`` method to remove image metadata for privacy protection.
 - **ResponseTrait:** Added ``paginate()`` method to simplify paginated API responses. See :ref:`ResponseTrait::paginate() <api_response_trait_paginate>` for details.
 - **Session:** Added ``persistent`` config item to ``RedisHandler``.
 - **Session:** Added connection persistence for Redis and Memcached session handlers via ``PersistsConnection`` trait, improving performance in worker mode by reusing connections across requests.
-- **Time:** added methods ``Time::addCalendarMonths()`` and ``Time::subCalendarMonths()``
+- **Time:** Added methods ``Time::addCalendarMonths()`` and ``Time::subCalendarMonths()``
 - **Time:** Added ``Time::isPast()`` and ``Time::isFuture()`` convenience methods. See :ref:`isPast <time-comparing-two-times-isPast>` and :ref:`isFuture <time-comparing-two-times-isFuture>` for details.
 - **Toolbar:** Fixed an issue where the Debug Toolbar was incorrectly injected into responses generated by third-party libraries (e.g., Dompdf) that use native PHP headers instead of the framework's Response object.
 - **UserAgents:** Expanded the list of recognized ``robots`` with new search engine and service crawlers.
@@ -329,22 +344,25 @@ Content Security Policy
 
 - The ``script-src`` and ``style-src`` directives can now use SHA-256, SHA-384, and SHA-512 digests as their source expressions.
 - Added support for the new CSP Level 3 keywords:
-    - ``'strict-dynamic'``
-    - ``'unsafe-hashes'``
-    - ``'report-sample'``
-    - ``'unsafe-allow-redirects'``
-    - ``'wasm-unsafe-eval'``
-    - ``'trusted-types-eval'``
-    - ``'report-sha256'``
-    - ``'report-sha384'``
-    - ``'report-sha512'``
+
+  - ``'strict-dynamic'``
+  - ``'unsafe-hashes'``
+  - ``'report-sample'``
+  - ``'unsafe-allow-redirects'``
+  - ``'wasm-unsafe-eval'``
+  - ``'trusted-types-eval'``
+  - ``'report-sha256'``
+  - ``'report-sha384'``
+  - ``'report-sha512'``
+
 - Added support for the following CSP Level 3 directives:
-    - ``report-to``
-    - ``script-src-elem``
-    - ``script-src-attr``
-    - ``style-src-elem``
-    - ``style-src-attr``
-    - ``worker-src``
+
+  - ``report-to``
+  - ``script-src-elem``
+  - ``script-src-attr``
+  - ``style-src-elem``
+  - ``style-src-attr``
+  - ``worker-src``
 
   Update your CSP configuration in **app/Config/ContentSecurityPolicy.php** to include these new directives.
 
@@ -382,12 +400,17 @@ Deprecations
 ************
 
 - **ContentSecurityPolicy:**
-    - The ``CodeIgniter\HTTP\ContentSecurityPolicy::$nonces`` property has been deprecated. It was never used.
+
+  - The ``CodeIgniter\HTTP\ContentSecurityPolicy::$nonces`` property has been deprecated. It was never used.
+
 - **Encryption:**
-    - The method ``CodeIgniter\Encryption\Handlers\SodiumHandler::parseParams()`` has been deprecated. Parameters are now handled directly in ``encrypt()`` and ``decrypt()`` methods.
+
+  - The method ``CodeIgniter\Encryption\Handlers\SodiumHandler::parseParams()`` has been deprecated. Parameters are now handled directly in the ``encrypt()`` and ``decrypt()`` methods.
+
 - **Image:**
-    - The config property ``Config\Image::libraryPath`` has been deprecated. No longer used.
-    - The exception method ``CodeIgniter\Images\Exceptions\ImageException::forInvalidImageLibraryPath`` has been deprecated. No longer used.
+
+  - The config property ``Config\Image::libraryPath`` has been deprecated. No longer used.
+  - The exception method ``CodeIgniter\Images\Exceptions\ImageException::forInvalidImageLibraryPath`` has been deprecated. No longer used.
 
 **********
 Bugs Fixed

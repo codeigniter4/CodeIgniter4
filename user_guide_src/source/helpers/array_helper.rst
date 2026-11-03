@@ -3,7 +3,7 @@ Array Helper
 ############
 
 The array helper provides several functions to simplify more complex usages of arrays. It is not intended to duplicate
-any of the existing functionality that PHP provides - unless it is to vastly simplify their usage.
+any of the existing functionality that PHP provides, unless it is to vastly simplify its usage.
 
 .. contents::
     :local:
@@ -29,8 +29,8 @@ The following functions are available:
     :returns: The value found within the array, or null
     :rtype: mixed
 
-    This method allows you to use dot-notation to search through an array for a specific-key,
-    and allows the use of a the ``*`` wildcard. Given the following array:
+    This method allows you to use dot-notation to search through an array for a specific key,
+    and allows the use of the ``*`` wildcard. Given the following array:
 
     .. literalinclude:: array_helper/002.php
         :lines: 2-
@@ -41,8 +41,8 @@ The following functions are available:
     .. literalinclude:: array_helper/003.php
         :lines: 2-
 
-    You can use the asterisk (``*``) as a wildcard to replace any of the segments. When found, it will search through all
-    of the child nodes until it finds it. This is handy if you don't know the values, or if your values
+    You can use the asterisk (``*``) as a wildcard to replace any of the segments. When it reaches one, it will search through all
+    of the child nodes until it finds the value. This is handy if you don't know the values, or if your values
     have a numeric index:
 
     .. literalinclude:: array_helper/004.php
@@ -53,8 +53,8 @@ The following functions are available:
     .. literalinclude:: array_helper/005.php
         :lines: 2-
 
-.. note:: Prior to v4.2.0, ``dot_array_search('foo.bar.baz', ['foo' => ['bar' => 23]])`` returned ``23``
-    due to a bug. v4.2.0 and later returns ``null``.
+    .. note:: Prior to v4.2.0, ``dot_array_search('foo.bar.baz', ['foo' => ['bar' => 23]])`` returned ``23``
+        due to a bug. v4.2.0 and later return ``null``.
 
 ..  php:function:: array_deep_search($key, array $array)
 
@@ -63,30 +63,30 @@ The following functions are available:
     :returns: The value found within the array, or null
     :rtype: mixed
 
-    Returns the value of an element with a key value in an array of uncertain depth
+    Returns the value of an element with a key value in an array of uncertain depth.
 
 ..  php:function:: array_sort_by_multiple_keys(array &$array, array $sortColumns)
 
     :param  array  $array:       The array to be sorted (passed by reference).
-    :param  array  $sortColumns: The array keys to sort after and the respective PHP
+    :param  array  $sortColumns: The array keys to sort by and the respective PHP
                                  sort flags as an associative array.
     :returns: Whether sorting was successful or not.
     :rtype: bool
 
     This method sorts the elements of a multidimensional array by the values of one or
-    more keys in a hierarchical way. Take the following array, that might be returned
+    more keys in a hierarchical way. Take the following array, which might be returned
     from, e.g., the ``find()`` function of a model:
 
     .. literalinclude:: array_helper/006.php
         :lines: 2-
 
-    Now sort this array by two keys. Note that the method supports the dot-notation
+    Now sort this array by two keys. Note that the method supports dot-notation
     to access values in deeper array levels, but does not support wildcards:
 
     .. literalinclude:: array_helper/007.php
         :lines: 2-
 
-    The ``$players`` array is now sorted by the ``order`` value in each players'
+    The ``$players`` array is now sorted by the ``order`` value in each player's
     ``team`` subarray. If this value is equal for several players, these players
     will be ordered by their ``position``. The resulting array is:
 
@@ -94,7 +94,7 @@ The following functions are available:
         :lines: 2-
 
     In the same way, the method can also handle an array of objects. In the example
-    above it is further possible that each ``player`` is represented by an array,
+    above, it is further possible that each ``player`` is represented by an array,
     while the ``teams`` are objects. The method will detect the type of elements in
     each nesting level and handle it accordingly.
 
@@ -105,8 +105,8 @@ The following functions are available:
     :rtype: array
     :returns: The flattened array
 
-    This function flattens a multidimensional array to a single key-value array by using dots
-    as separators for the keys.
+    This function flattens a multidimensional array to a single key-value array by using dots as separators for the
+    keys.
 
     .. literalinclude:: array_helper/009.php
         :lines: 2-
@@ -116,9 +116,8 @@ The following functions are available:
     .. literalinclude:: array_helper/010.php
         :lines: 2-
 
-    Users may use the ``$id`` parameter on their own, but are not required to do so.
-    The function uses this parameter internally to track the flattened keys. If users
-    will be supplying an initial ``$id``, it will be prepended to all keys.
+    Users may use the ``$id`` parameter on their own, but are not required to do so. The function uses this parameter
+    internally to track the flattened keys. If users supply an initial ``$id``, it will be prepended to all keys.
 
     .. literalinclude:: array_helper/011.php
         :lines: 2-
@@ -126,26 +125,26 @@ The following functions are available:
 .. php:function:: array_group_by(array $array, array $indexes[, bool $includeEmpty = false]): array
 
     :param array $array:        Data rows (most likely from query results)
-    :param array $indexes:      Indexes to group values. Follows dot syntax
+    :param array $indexes:      Indexes to group values by. Follows dot syntax
     :param bool  $includeEmpty: If true, ``null`` and ``''`` values are not filtered out
     :rtype: array
-    :returns: An array grouped by indexes values
+    :returns: An array grouped by index values
 
-    This function allows you to group data rows together by index values.
-    The depth of returned array equals the number of indexes passed as parameter.
+    This function allows you to group data rows together by index values. The depth of the returned array equals the
+    number of indexes passed as a parameter.
 
-    The example shows some data (i.e. loaded from an API) with nested arrays.
+    The example shows some data (e.g., loaded from an API) with nested arrays.
 
     .. literalinclude:: array_helper/012.php
         :lines: 2-
 
-    We want to group them first by ``gender``, then by ``hr.department`` (max depth = 2).
-    First the result when excluding empty values:
+    We want to group them first by ``gender``, then by ``hr.department`` (max depth = 2). First, here is the result when
+    excluding empty values:
 
     .. literalinclude:: array_helper/013.php
         :lines: 2-
 
-    And here the same code, but this time we want to include empty values:
+    And here is the same code, but this time we want to include empty values:
 
     .. literalinclude:: array_helper/014.php
         :lines: 2-

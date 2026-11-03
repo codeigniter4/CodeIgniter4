@@ -2,8 +2,8 @@
 CLI Signals
 ###########
 
-Unix signals are a fundamental part of process communication and control. They provide a way to interrupt, control,
-and communicate with running processes. CodeIgniter's SignalTrait makes it easy to handle signals in your CLI commands,
+Unix signals are a fundamental part of process communication and control. They provide a way to interrupt, control, and
+communicate with running processes. CodeIgniter's SignalTrait makes it easy to handle signals in your CLI commands,
 enabling graceful shutdowns, pause/resume functionality, and custom signal handling.
 
 .. contents::
@@ -14,17 +14,18 @@ enabling graceful shutdowns, pause/resume functionality, and custom signal handl
 What are Signals?
 *****************
 
-Signals are software interrupts delivered to a process by the operating system. They notify processes of various
-events, from user-initiated interruptions (like pressing Ctrl+C) to system events (like terminal disconnection).
+Signals are software interrupts delivered to a process by the operating system. They notify processes of various events,
+from user-initiated interruptions (like pressing Ctrl+C) to system events (like terminal disconnection).
 
-``SignalTrait`` adds the ability to perform certain actions before the signal is consumed, as well as the capability
-to protect certain pieces of code from signal interruption. This protection mechanism guarantees the proper execution
-of critical command operations by ensuring they complete atomically without being interrupted by incoming signals.
+``SignalTrait`` adds the ability to perform certain actions before the signal is consumed, as well as the capability to
+protect certain pieces of code from signal interruption. This protection mechanism guarantees the proper execution of
+critical command operations by ensuring they complete atomically without being interrupted by incoming signals.
 
 Common Unix Signals
 ===================
 
-Here are the most commonly used signals in CLI applications:
+Here are the most commonly used signals in CLI applications. The numbers shown are Linux values. Signal numbers differ
+on macOS and BSD, so use the named PHP signal constants in portable code:
 
 **Handleable Signals:**
 
@@ -44,7 +45,8 @@ Some signals cannot be caught, blocked, or handled by user processes:
 * **SIGKILL (9)**: Forceful termination - cannot be caught or ignored
 * **SIGSTOP (19)**: Forceful suspend - cannot be caught or ignored
 
-These signals are handled directly by the kernel and will terminate or suspend your process immediately, bypassing any custom handlers.
+These signals are handled directly by the kernel and will terminate or suspend your process immediately, bypassing any
+custom handlers.
 
 System Requirements
 ===================
@@ -61,8 +63,8 @@ Signal handling requires:
 Using the SignalTrait
 *********************
 
-The ``SignalTrait`` provides a comprehensive signal handling system for CLI commands. To use it, simply add the trait
-to your command class and register signals in your command's ``run()`` method:
+The ``SignalTrait`` provides a comprehensive signal handling system for CLI commands. To use it, simply add the trait to
+your command class and register signals in your command's ``run()`` method:
 
 .. literalinclude:: cli_signals/001.php
 
@@ -86,8 +88,8 @@ For signals without explicit mappings, you can implement a generic ``onInterrupt
 Critical Sections
 *****************
 
-Some operations should never be interrupted (database transactions, file operations). Use ``withSignalsBlocked()``
-to create atomic operations:
+Some operations should never be interrupted (database transactions, file operations). Use ``withSignalsBlocked()`` to
+create atomic operations:
 
 .. literalinclude:: cli_signals/004.php
 
@@ -108,7 +110,8 @@ How Pause/Resume Works
 2. **Process suspends**: Using standard Unix job control
 3. **SIGCONT received**: Process resumes, then ``onResume()`` handler runs
 
-This allows you to save state before suspension and restore it after resumption while maintaining proper shell integration.
+This allows you to save state before suspension and restore it after resumption while maintaining proper shell
+integration.
 
 Important Limitations
 =====================
@@ -277,9 +280,9 @@ Class Reference
 
         Execute a critical operation with ALL signals blocked to prevent ANY interruption.
 
-        .. note:: This blocks ALL interruptible signals including termination signals (SIGTERM, SIGINT),
-                  pause/resume signals (SIGTSTP, SIGCONT), and custom signals (SIGUSR1, SIGUSR2).
-                  Only SIGKILL (unblockable) can still terminate the process.
+        .. note:: This blocks ALL interruptible signals including termination signals (SIGTERM, SIGINT), pause/resume
+            signals (SIGTSTP, SIGCONT), and custom signals (SIGUSR1, SIGUSR2). Only SIGKILL (unblockable) can still
+            terminate the process.
 
     .. php:method:: areSignalsBlocked()
 
@@ -327,8 +330,8 @@ Class Reference
         :returns:    Comprehensive process state information
         :rtype:    array
 
-        Get comprehensive process state information including process ID, memory usage,
-        signal handling status, and terminal control information.
+        Get comprehensive process state information including process ID, memory usage, signal handling status, and
+        terminal control information.
 
         .. literalinclude:: cli_signals/013.php
 

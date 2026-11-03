@@ -2,8 +2,8 @@
 Inflector Helper
 ################
 
-The Inflector Helper file contains functions that permit you to change
-**English** words to plural, singular, camel case, etc.
+The Inflector Helper file contains functions that permit you to change **English** words to plural, singular, camel
+case, etc.
 
 .. contents::
     :local:
@@ -58,8 +58,7 @@ The following functions are available:
     :returns:    Camel case string
     :rtype:    string
 
-    Changes a string of words separated by spaces or underscores to camel
-    case. Example:
+    Changes a string of words separated by spaces or underscores to camel case. Example:
 
     .. literalinclude:: inflector_helper/005.php
 
@@ -69,8 +68,8 @@ The following functions are available:
     :returns:    Pascal case string
     :rtype:    string
 
-    Changes a string of words separated by spaces or underscores to Pascal
-    case, which is camel case with the first letter capitalized. Example:
+    Changes a string of words separated by spaces or underscores to Pascal case, which is camel case with the first
+    letter capitalized. Example:
 
     .. literalinclude:: inflector_helper/006.php
 
@@ -80,8 +79,7 @@ The following functions are available:
     :returns:    String containing underscores instead of spaces
     :rtype:    string
 
-    Takes multiple words separated by spaces and underscores them.
-    Example:
+    Takes multiple words separated by spaces and underscores them. Example:
 
     .. literalinclude:: inflector_helper/007.php
 
@@ -91,8 +89,7 @@ The following functions are available:
     :returns:    String containing underscores between words
     :rtype:    string
 
-    Takes multiple words in camelCase or PascalCase and converts them to snake_case.
-    Example:
+    Takes multiple words in camelCase or PascalCase and converts them to snake_case. Example:
 
     .. literalinclude:: inflector_helper/014.php
 
@@ -103,8 +100,7 @@ The following functions are available:
     :returns:    Humanized string
     :rtype:    string
 
-    Takes multiple words separated by underscores and adds spaces between
-    them. Each word is capitalized.
+    Takes multiple words separated by underscores and adds spaces between them. Each word is capitalized.
 
     Example:
 
@@ -136,13 +132,11 @@ The following functions are available:
 
 .. php:function:: ordinal($integer)
 
-    :param    int    $integer: The integer to determine the suffix
+    :param    int    $integer: The integer to determine the suffix for
     :returns:    Ordinal suffix
     :rtype:    string
 
-    Returns the suffix that should be added to a
-    number to denote the position such as
-    1st, 2nd, 3rd, 4th. Example:
+    Returns the suffix that should be added to a number to denote the position, such as 1st, 2nd, 3rd, 4th. Example:
 
     .. literalinclude:: inflector_helper/012.php
 
@@ -152,8 +146,6 @@ The following functions are available:
     :returns:    Ordinalized integer
     :rtype:    string
 
-    Turns a number into an ordinal string used
-    to denote the position such as 1st, 2nd, 3rd, 4th.
-    Example:
+    Turns a number into an ordinal string used to denote the position, such as 1st, 2nd, 3rd, 4th. Example:
 
     .. literalinclude:: inflector_helper/013.php

@@ -16,17 +16,17 @@ Please refer to the upgrade instructions corresponding to your installation meth
 Project Files
 *************
 
-A few files in the **project space** (root, app, public, writable) received cosmetic updates.
-You need not touch these files at all. There are some third-party CodeIgniter modules available
-to assist with merging changes to the project space: `Explore on Packagist <https://packagist.org/explore/?query=codeigniter4%20updates>`_.
+A few files in the **project space** (root, app, public, writable) received cosmetic updates. You need not touch these
+files at all. There are some third-party CodeIgniter modules available to assist with merging changes to the project
+space: `Explore on Packagist <https://packagist.org/explore/?query=codeigniter4%20updates>`_.
 
 All Changes
 ===========
 
-This is a list of all files in the **project space** that received changes;
-many will be simple comments or formatting that have no effect on the runtime:
+This is a list of all files in the **project space** that received changes; many will be simple comments or formatting
+that have no effect on the runtime:
 
-* app/Config/App.php
-* app/Config/ContentSecurityPolicy.php
-* app/Config/Routes.php
-* app/Config/Validation.php
+* **app/Config/App.php**
+* **app/Config/ContentSecurityPolicy.php**
+* **app/Config/Routes.php**
+* **app/Config/Validation.php**

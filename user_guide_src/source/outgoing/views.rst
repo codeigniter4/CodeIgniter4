@@ -6,15 +6,14 @@ Views
     :local:
     :depth: 2
 
-A view is simply a web page, or a page fragment, like a header, footer, sidebar, etc. In fact,
-views can flexibly be embedded within other views (within other views, etc.) if you need
-this type of hierarchy.
+A view is simply a web page, or a page fragment, like a header, footer, sidebar, etc. In fact, views can flexibly be
+embedded within other views (within other views, etc.) if you need this type of hierarchy.
 
-Views are never called directly, they must be loaded by a controller or :ref:`view route <view-routes>`.
+Views are never called directly. They must be loaded by a controller or :ref:`view route <view-routes>`.
 
-Remember that in an MVC framework,
-the Controller acts as the traffic cop, so it is responsible for fetching a particular view. If you have
-not read the :doc:`Controllers </incoming/controllers>` page, you should do so before continuing.
+Remember that in an MVC framework, the Controller acts as the traffic cop, so it is responsible for fetching a
+particular view. If you have not read the :doc:`Controllers </incoming/controllers>` page, you should do so before
+continuing.
 
 Using the example controller you created in the controller page, let's add a view to it.
 
@@ -37,8 +36,8 @@ Then save the file in your **app/Views** directory.
 Displaying a View
 =================
 
-To load and display a particular view file you will use the :php:func:`view()`
-function like following code in your controller:
+To load and display a particular view file, you will use the :php:func:`view()` function in your controller, as in the
+following code:
 
 .. literalinclude:: views/001.php
    :lines: 2-
@@ -49,29 +48,28 @@ Where *name* is the name of your view file.
 
 .. note:: The ``view()`` function uses :doc:`view_renderer` internally.
 
-Now, create a file called **Blog.php** in the **app/Controllers** directory,
-and put this in it:
+Now, create a file called **Blog.php** in the **app/Controllers** directory, and put this in it:
 
 .. literalinclude:: views/002.php
 
-Open the routing file located at **app/Config/Routes.php**, and look for the "Route Definitions".
-Add the following code:
+Open the routing file located at **app/Config/Routes.php**, and look for the "Route Definitions". Add the following
+code:
 
 .. literalinclude:: views/013.php
    :lines: 2-
 
-If you visit your site, you should see your new view. The URL was similar to this::
+If you visit your site, you should see your new view. The URL is similar to this::
 
     example.com/index.php/blog/
 
 Loading Multiple Views
 ======================
 
-CodeIgniter will intelligently handle multiple calls to :php:func:`view()` from
-within a controller. If more than one call happens they will be appended together.
+CodeIgniter will intelligently handle multiple calls to :php:func:`view()` from within a controller. If more than one
+call happens, they will be appended together.
 
-For example, you may wish to have a header view, a menu view, a
-content view, and a footer view. That might look something like this:
+For example, you may wish to have a header view, a menu view, a content view, and a footer view. That might look
+something like this:
 
 .. literalinclude:: views/003.php
 
@@ -80,8 +78,8 @@ In the example above, we are using "dynamically added data", which you will see 
 Storing Views within Sub-directories
 ====================================
 
-Your view files can also be stored within sub-directories if you prefer that type of organization.
-When doing so you will need to include the directory name loading the view. Example:
+Your view files can also be stored within sub-directories if you prefer that type of organization. When doing so, you
+will need to include the directory name when loading the view. Example:
 
 .. literalinclude:: views/004.php
    :lines: 2-
@@ -91,23 +89,22 @@ When doing so you will need to include the directory name loading the view. Exam
 Namespaced Views
 ================
 
-You can store views under a **Views** directory that is namespaced, and load that view as if it was namespaced. While
-PHP does not support loading non-class files from a namespace, CodeIgniter provides this feature to make it possible
-to package your views together in a module-like fashion for easy re-use or distribution.
+You can store views under a **Views** directory that is namespaced, and load that view as if it were namespaced. While
+PHP does not support loading non-class files from a namespace, CodeIgniter provides this feature to make it possible to
+package your views together in a module-like fashion for easy re-use or distribution.
 
-If you have **example/blog** directory that has a PSR-4 mapping set up in the :doc:`Autoloader </concepts/autoloader>` living
-under the namespace ``Example\Blog``, you could retrieve view files as if they were namespaced also.
+If you have an **example/blog** directory that has a PSR-4 mapping set up in the
+:doc:`Autoloader </concepts/autoloader>` living under the namespace ``Example\Blog``, you could retrieve view files as
+if they were namespaced also.
 
-Following this
-example, you could load the **blog_view.php** file from **example/blog/Views** by prepending the namespace to the view name
-(specifying the end directory ``Views`` as in ``Example\Blog\Views\`` is not required):
+Following this example, you could load the **blog_view.php** file from **example/blog/Views** by prepending the
+namespace to the view name (specifying the end directory ``Views`` as in ``Example\Blog\Views\`` is not required):
 
 .. literalinclude:: views/005.php
 
-.. note:: You must use backslashes (``\``) when referencing namespaced views,
-    as this is how CodeIgniter distinguishes a namespaced view from a regular
-    file path. Forward slashes (``/``) are only used for subdirectories within
-    the standard **app/Views** folder.
+.. note:: You must use backslashes (``\``) when referencing namespaced views, as this is how CodeIgniter distinguishes a
+    namespaced view from a regular file path. Forward slashes (``/``) are only used for subdirectories within the
+    standard **app/Views** folder.
 
 .. _views-overriding-namespaced-views:
 
@@ -116,19 +113,21 @@ Overriding Namespaced Views
 
 .. versionadded:: 4.7.0
 
-You can override a namespaced view by creating a matching directory structure within your application's **app/Views** directory.
-This allows you to customize the output of modules or packages without modifying their core source code.
+You can override a namespaced view by creating a matching directory structure within your application's **app/Views**
+directory. This allows you to customize the output of modules or packages without modifying their core source code.
 
 Configuration
 -------------
 
-By default, overrides are looked for in the **app/Views/overrides** directory. You can configure this location via the ``$appOverridesFolder`` property in **app/Config/View.php**:
+By default, overrides are looked for in the **app/Views/overrides** directory. You can configure this location via the
+``$appOverridesFolder`` property in **app/Config/View.php**:
 
 .. code-block:: php
 
     public string $appOverridesFolder = 'overrides';
 
-If you prefer to map namespaces directly to the root of **app/Views** (without a subdirectory), you can set this value to an empty string (``''``).
+If you prefer to map namespaces directly to the root of **app/Views** (without a subdirectory), you can set this value
+to an empty string (``''``).
 
 Example
 -------
@@ -143,7 +142,8 @@ Assume you have a module named **Blog** with the namespace ``Example\Blog``. The
             └── Views
                 └── blog_view.php
 
-To override this view (using the default configuration), create a file at the matching path within **app/Views/overrides**:
+To override this view (using the default configuration), create a file at the matching path within
+**app/Views/overrides**:
 
 .. code-block:: text
 
@@ -154,28 +154,28 @@ To override this view (using the default configuration), create a file at the ma
                 └── Blog              <-- Matches the second part of namespace
                     └── blog_view.php <-- Your custom view
 
-Now, when you call ``view('Example\Blog\blog_view')``, CodeIgniter will automatically load your custom view from **app/Views/overrides/Example/Blog/blog_view.php** instead of the original module view file.
+Now, when you call ``view('Example\Blog\blog_view')``, CodeIgniter will automatically load your custom view from
+**app/Views/overrides/Example/Blog/blog_view.php** instead of the original module view file.
 
-.. note:: The override path must match exactly how you reference the view.
-    If you load a view as ``view('Example\Blog\blog_view')``, the override
-    path is **app/Views/overrides/Example/Blog/blog_view.php**. However,
-    if you explicitly include the ``Views`` directory in the call, e.g.,
-    ``view('Example\Blog\Views\blog_view')``, the override path must also
-    include it: **app/Views/overrides/Example/Blog/Views/blog_view.php**.
+.. note:: The override path must match exactly how you reference the view. If you load a view as
+    ``view('Example\Blog\blog_view')``, the override path is **app/Views/overrides/Example/Blog/blog_view.php**.
+    However, if you explicitly include the ``Views`` directory in the call, e.g.,
+    ``view('Example\Blog\Views\blog_view')``, the override path must also include it:
+    **app/Views/overrides/Example/Blog/Views/blog_view.php**.
 
 .. _caching-views:
 
 Caching Views
 =============
 
-You can cache a view with the :php:func:`view()` function by passing a ``cache``
-option with the number of seconds to cache the view for, in the third parameter:
+You can cache a view with the :php:func:`view()` function by passing a ``cache`` option with the number of seconds to
+cache the view for, in the third parameter:
 
 .. literalinclude:: views/006.php
    :lines: 2-
 
-By default, the view will be cached using the same name as the view file itself. You can customize this by passing
-along ``cache_name`` and the cache ID you wish to use:
+By default, the view will be cached using the same name as the view file itself. You can customize this by passing along
+``cache_name`` and the cache ID you wish to use:
 
 .. literalinclude:: views/007.php
    :lines: 2-
@@ -183,8 +183,8 @@ along ``cache_name`` and the cache ID you wish to use:
 Adding Dynamic Data to the View
 ===============================
 
-Data is passed from the controller to the view by way of an array in the second
-parameter of the :php:func:`view()` function.
+Data is passed from the controller to the view by way of an array in the second parameter of the :php:func:`view()`
+function.
 
 Here's an example:
 
@@ -211,26 +211,24 @@ Then load the page at the URL you've been using and you should see the variables
 The saveData Option
 -------------------
 
-The data passed in is retained for subsequent calls to :php:func:`view()`. If you
-call the function multiple times in a single request, you will not have to pass
-the desired data to each ``view()``.
+The data passed in is retained for subsequent calls to :php:func:`view()`. If you call the function multiple times in a
+single request, you will not have to pass the desired data to each ``view()``.
 
-But this might not keep any data from "bleeding" into
-other views, potentially causing issues. If you would prefer to clean the data after one call, you can pass the ``saveData`` option
-into the ``$option`` array in the third parameter.
+However, this might allow data to "bleed" into other views, potentially causing issues. If you would prefer to clean the
+data after one call, you can pass the ``saveData`` option into the ``$options`` array in the third parameter.
 
 .. literalinclude:: views/010.php
    :lines: 2-
 
-Additionally, if you would like the default functionality of the ``view()`` function to be that it does clear the data
-between calls, you can set ``$saveData`` to ``false`` in **app/Config/Views.php**.
+Additionally, if you would like the ``view()`` function to clear the data by default between calls, you can set
+``$saveData`` to ``false`` in **app/Config/View.php**.
 
 Creating Loops
 ==============
 
-The data array you pass to your view files is not limited to simple variables. You can pass multi dimensional
-arrays, which can be looped to generate multiple rows. For example, if you pull data from your database it will
-typically be in the form of a multi-dimensional array.
+The data array you pass to your view files is not limited to simple variables. You can pass multi-dimensional arrays,
+which can be looped to generate multiple rows. For example, if you pull data from your database, it will typically be in
+the form of a multi-dimensional array.
 
 Here's a simple example. Add this to your controller:
 

@@ -17,34 +17,30 @@ Result Arrays
 getResult()
 ===========
 
-This method returns the query result as an array of **objects**, or
-**an empty array** on failure.
+This method returns the query result as an array of **objects**, or **an empty array** on failure.
 
 Getting an Array of stdClass
 ----------------------------
 
-Typically you'll use this in a foreach
-loop, like this:
+Typically you'll use this in a foreach loop, like this:
 
 .. literalinclude:: results/001.php
 
 The above method is an alias of :php:meth:`CodeIgniter\\Database\\BaseResult::getResultObject()`.
 
-Getting an Array of Array
--------------------------
+Getting an Array of Arrays
+--------------------------
 
-You can pass in the string 'array' if you wish to get your results
-as an array of arrays:
+You can pass in the string 'array' if you wish to get your results as an array of arrays:
 
 .. literalinclude:: results/002.php
 
 The above usage is an alias of `getResultArray()`_.
 
-Getting an Array of Custom Object
----------------------------------
+Getting an Array of Custom Objects
+----------------------------------
 
-You can also pass a string to ``getResult()`` which represents a class to
-instantiate for each result object
+You can also pass a string to ``getResult()`` that represents a class to instantiate for each result object:
 
 .. literalinclude:: results/003.php
 
@@ -53,9 +49,8 @@ The above method is an alias of `getCustomResultObject()`_.
 getResultArray()
 ================
 
-This method returns the query result as a pure array, or an empty
-array when no result is produced. Typically you'll use this in a foreach
-loop, like this:
+This method returns the query result as a pure array, or an empty array when no result is produced. Typically you'll use
+this in a foreach loop, like this:
 
 .. literalinclude:: results/004.php
 
@@ -66,81 +61,67 @@ Result Rows
 getRow()
 ========
 
-This method returns a single result row. If your query has more than
-one row, it returns only the first row. The result is returned as an
-**object**. Here's a usage example:
+This method returns a single result row. If your query has more than one row, it returns only the first row. The result
+is returned as an **object**. Here's a usage example:
 
 .. literalinclude:: results/005.php
 
-If you want a specific row returned you can submit the row number as a
-digit in the first parameter:
+If you want a specific row returned, you can submit the row number as a digit in the first parameter:
 
 .. literalinclude:: results/006.php
 
-You can also add a second String parameter, which is the name of a class
-to instantiate the row with:
+You can also add a second string parameter, which is the name of a class to instantiate the row with:
 
 .. literalinclude:: results/007.php
 
 getRowArray()
 =============
 
-Identical to the above ``row()`` method, except it returns an array.
-Example:
+Identical to the above ``getRow()`` method, except it returns an array. Example:
 
 .. literalinclude:: results/008.php
 
-If you want a specific row returned you can submit the row number as a
-digit in the first parameter:
+If you want a specific row returned, you can submit the row number as a digit in the first parameter:
 
 .. literalinclude:: results/009.php
 
-In addition, you can walk forward/backward/first/last through your
-results using these variations:
+In addition, you can walk forward/backward/first/last through your results using these variations:
 
-    | ``$row = $query->getFirstRow()``
-    | ``$row = $query->getLastRow()``
-    | ``$row = $query->getNextRow()``
-    | ``$row = $query->getPreviousRow()``
+- ``$row = $query->getFirstRow()``
+- ``$row = $query->getLastRow()``
+- ``$row = $query->getNextRow()``
+- ``$row = $query->getPreviousRow()``
 
-By default they return an object unless you put the word "array" in the
-parameter:
+By default, they return an object unless you put the word "array" in the parameter:
 
-    | ``$row = $query->getFirstRow('array')``
-    | ``$row = $query->getLastRow('array')``
-    | ``$row = $query->getNextRow('array')``
-    | ``$row = $query->getPreviousRow('array')``
+- ``$row = $query->getFirstRow('array')``
+- ``$row = $query->getLastRow('array')``
+- ``$row = $query->getNextRow('array')``
+- ``$row = $query->getPreviousRow('array')``
 
-.. note:: All the methods above will load the whole result into memory
-    (prefetching). Use ``getUnbufferedRow()`` for processing large
-    result sets.
+.. note:: All the methods above will load the whole result into memory (prefetching). Use ``getUnbufferedRow()`` for
+    processing large result sets.
 
 getUnbufferedRow()
 ==================
 
-This method returns a single result row without prefetching the whole
-result in memory as ``row()`` does. If your query has more than one row,
-it returns the current row and moves the internal data pointer ahead.
+This method returns a single result row without prefetching the whole result in memory as ``getRow()`` does. If your
+query has more than one row, it returns the current row and moves the internal data pointer ahead.
 
 .. literalinclude:: results/010.php
 
-For use with MySQLi you may set MySQLi's result mode to
-``MYSQLI_USE_RESULT`` for maximum memory savings. Use of this is not
-generally recommended but it can be beneficial in some circumstances
-such as writing large queries to csv. If you change the result mode
-be aware of the tradeoffs associated with it.
+For use with MySQLi, you may set MySQLi's result mode to ``MYSQLI_USE_RESULT`` for maximum memory savings. Use of this
+is not generally recommended, but it can be beneficial in some circumstances, such as writing large queries to CSV. If
+you change the result mode, be aware of the tradeoffs associated with it.
 
 .. literalinclude:: results/011.php
 
-.. note:: When using ``MYSQLI_USE_RESULT`` all subsequent calls on the same
-    connection will result in error until all records have been fetched or
-    a ``freeResult()`` call has been made. The ``getNumRows()`` method will only
-    return the number of rows based on the current position of the data pointer.
-    MyISAM tables will remain locked until all the records have been fetched
-    or a ``freeResult()`` call has been made.
+.. note:: When using ``MYSQLI_USE_RESULT``, all subsequent calls on the same connection will result in an error until
+    all records have been fetched or a ``freeResult()`` call has been made. The ``getNumRows()`` method will only return
+    the number of rows based on the current position of the data pointer. MyISAM tables will remain locked until all the
+    records have been fetched or a ``freeResult()`` call has been made.
 
-You can optionally pass 'object' (default) or 'array' in order to specify
-the returned value's type:
+You can optionally pass 'object' (default) or 'array' in order to specify the returned value's type:
 
 .. literalinclude:: results/012.php
 
@@ -148,26 +129,23 @@ the returned value's type:
 Custom Result Objects
 *********************
 
-You can have the results returned as an instance of a custom class instead
-of a ``stdClass`` or array, as the ``getResult()`` and ``getResultArray()``
-methods allow. If the class is not already loaded into memory, the Autoloader
-will attempt to load it. The object will have all values returned from the
-database set as properties. If these have been declared and are non-public
-then you should provide a ``__set()`` method to allow them to be set.
+You can have the results returned as an instance of a custom class instead of a ``stdClass`` or array, as the
+``getResult()`` and ``getResultArray()`` methods allow. If the class is not already loaded into memory, the Autoloader
+will attempt to load it. The object will have all values returned from the database set as properties. If these have
+been declared and are non-public, then you should provide a ``__set()`` method to allow them to be set.
 
 Example:
 
 .. literalinclude:: results/013.php
 
-In addition to the two methods listed below, the following methods also can
-take a class name to return the results as: ``getFirstRow()``, ``getLastRow()``,
-``getNextRow()``, and ``getPreviousRow()``.
+In addition to the two methods listed below, the following methods can also take a class name to return the results as:
+``getFirstRow()``, ``getLastRow()``, ``getNextRow()``, and ``getPreviousRow()``.
 
 getCustomResultObject()
 =======================
 
-Returns the entire result set as an array of instances of the class requested.
-The only parameter is the name of the class to instantiate.
+Returns the entire result set as an array of instances of the class requested. The only parameter is the name of the
+class to instantiate.
 
 Example:
 
@@ -176,8 +154,8 @@ Example:
 getCustomRowObject()
 ====================
 
-Returns a single row from your query results. The first parameter is the row
-number of the results. The second parameter is the class name to instantiate.
+Returns a single row from your query results. The first parameter is the row number of the results. The second parameter
+is the class name to instantiate.
 
 Example:
 
@@ -196,39 +174,34 @@ Result Helper Methods
 getFieldCount()
 ===============
 
-The number of FIELDS (columns) returned by the query. Make sure to call
-the method using your query result object:
+The number of FIELDS (columns) returned by the query. Make sure to call the method using your query result object:
 
 .. literalinclude:: results/017.php
 
 getFieldNames()
 ===============
 
-Returns an array with the names of the FIELDS (columns) returned by the query.
-Make sure to call the method using your query result object:
+Returns an array with the names of the FIELDS (columns) returned by the query. Make sure to call the method using your
+query result object:
 
 .. literalinclude:: results/018.php
 
 getNumRows()
 ============
 
-The number of records returned by the query. Make sure to call
-the method using your query result object:
+The number of records returned by the query. Make sure to call the method using your query result object:
 
 .. literalinclude:: results/019.php
 
-.. note:: Because SQLite3 lacks an efficient method returning a record count,
-    CodeIgniter will fetch and buffer the query result records internally and
-    return a count of the resulting record array, which can be inefficient.
+.. note:: Because SQLite3 lacks an efficient method returning a record count, CodeIgniter will fetch and buffer the
+    query result records internally and return a count of the resulting record array, which can be inefficient.
 
 freeResult()
 ============
 
-It frees the memory associated with the result and deletes the result
-resource ID. Normally PHP frees its memory automatically at the end of
-script execution. However, if you are running a lot of queries in a
-particular script you might want to free the result after each query
-result has been generated in order to cut down on memory consumption.
+It frees the memory associated with the result and deletes the result resource ID. Normally PHP frees its memory
+automatically at the end of script execution. However, if you are running a lot of queries in a particular script, you
+might want to free the result after each query result has been generated in order to cut down on memory consumption.
 
 Example:
 
@@ -237,16 +210,14 @@ Example:
 dataSeek()
 ==========
 
-This method sets the internal pointer for the next result row to be
-fetched. It is only useful in combination with ``getUnbufferedRow()``.
+This method sets the internal pointer for the next result row to be fetched. It is only useful in combination with
+``getUnbufferedRow()``.
 
-It accepts a positive integer value, which defaults to 0 and returns
-true on success or false on failure.
+It accepts a positive integer value, which defaults to 0, and returns true on success or false on failure.
 
 .. literalinclude:: results/021.php
 
-.. note:: Not all database drivers support this feature and will return false.
-    Most notably - you won't be able to use it with PDO.
+.. note:: Not all database drivers support this feature, and those that do not will return false.
 
 ***************
 Class Reference
@@ -262,8 +233,7 @@ Class Reference
         :returns:    Array containing the fetched rows
         :rtype:    array
 
-        A wrapper for the ``getResultArray()``, ``getResultObject()``
-        and ``getCustomResultObject()`` methods.
+        A wrapper for the ``getResultArray()``, ``getResultObject()`` and ``getCustomResultObject()`` methods.
 
         Usage: see `Result Arrays`_.
 
@@ -272,8 +242,7 @@ Class Reference
         :returns:    Array containing the fetched rows
         :rtype:    array
 
-        Returns the query results as an array of rows, where each
-        row is itself an associative array.
+        Returns the query results as an array of rows, where each row is itself an associative array.
 
         Usage: see `Result Arrays`_.
 
@@ -282,8 +251,7 @@ Class Reference
         :returns:    Array containing the fetched rows
         :rtype:    array
 
-        Returns the query results as an array of rows, where each
-        row is an object of type ``stdClass``.
+        Returns the query results as an array of rows, where each row is an object of type ``stdClass``.
 
         Usage: see `Getting an Array of stdClass`_.
 
@@ -293,8 +261,7 @@ Class Reference
         :returns:    Array containing the fetched rows
         :rtype:    array
 
-        Returns the query results as an array of rows, where each
-        row is an instance of the specified class.
+        Returns the query results as an array of rows, where each row is an instance of the specified class.
 
     .. php:method:: getRow([$n = 0[, $type = 'object']])
 
@@ -303,8 +270,7 @@ Class Reference
         :returns:    The requested row or null if it doesn't exist
         :rtype:    mixed
 
-        A wrapper for the ``getRowArray()``, ``getRowObject()`` and
-        ``getCustomRowObject()`` methods.
+        A wrapper for the ``getRowArray()``, ``getRowObject()`` and ``getCustomRowObject()`` methods.
 
         Usage: see `Result Rows`_.
 
@@ -314,8 +280,7 @@ Class Reference
         :returns:    Next row from the result set or null if it doesn't exist
         :rtype:    mixed
 
-        Fetches the next result row and returns it in the
-        requested form.
+        Fetches the next result row and returns it in the requested form.
 
         Usage: see `Result Rows`_.
 
@@ -332,23 +297,21 @@ Class Reference
     .. php:method:: getRowObject([$n = 0])
 
         :param    int    $n: Index of the query results row to be returned
-                :returns:    The requested row or null if it doesn't exist
+        :returns:    The requested row or null if it doesn't exist
         :rtype:    stdClass
 
-        Returns the requested result row as an object of type
-        ``stdClass``.
+        Returns the requested result row as an object of type ``stdClass``.
 
         Usage: see `Result Rows`_.
 
-    .. php:method:: getCustomRowObject($n, $type)
+    .. php:method:: getCustomRowObject($n, $className)
 
         :param    int    $n: Index of the results row to return
-        :param    string    $class_name: Class name for the resulting row
+        :param    string    $className: Class name for the resulting row
         :returns:    The requested row or null if it doesn't exist
-        :rtype:    $type
+        :rtype:    object|null
 
-        Returns the requested result row as an instance of the
-        requested class.
+        Returns the requested result row as an instance of the requested class.
 
     .. php:method:: dataSeek([$n = 0])
 
@@ -363,7 +326,7 @@ Class Reference
     .. php:method:: setRow($key[, $value = null])
 
         :param    mixed    $key: Column name or array of key/value pairs
-        :param    mixed    $value: Value to assign to the column, $key is a single field name
+        :param    mixed    $value: Value to assign to the column, if ``$key`` is a single field name
         :rtype:    void
 
         Assigns a value to a particular column.
@@ -414,23 +377,21 @@ Class Reference
         :returns:    Array of column names
         :rtype:    array
 
-        Returns an array containing the field names in the
-        result set.
+        Returns an array containing the field names in the result set.
 
     .. php:method:: getFieldData()
 
         :returns:    Array containing field meta-data
         :rtype:    array
 
-        Generates an array of ``stdClass`` objects containing
-        field meta-data.
+        Generates an array of ``stdClass`` objects containing field meta-data.
 
     .. php:method:: getNumRows()
 
         :returns:    Number of rows in result set
         :rtype:    int
 
-        Returns number of rows returned by the query
+        Returns the number of rows returned by the query.
 
     .. php:method:: freeResult()
 

@@ -33,7 +33,7 @@ Changes
 Bugs Fixed
 **********
 
-- **AutoRouting Legacy:** Fixed a bug that when you added a route with
+- **AutoRouting Legacy:** Fixed a bug where, when you added a route with
   ``$routes->add()``, the controller's other methods were inaccessible from the
   web browser.
 

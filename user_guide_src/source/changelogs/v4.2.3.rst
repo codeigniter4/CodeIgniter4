@@ -12,7 +12,7 @@ Release Date: August 6, 2022
 Enhancements
 ************
 
-- Now ``Security::generateHash()`` is public, and can be used to regenerate CSRF token manually when ``Config\Security::$regenerate`` is false.
+- ``Security::generateHash()`` is now public and can be used to regenerate the CSRF token manually when ``Config\Security::$regenerate`` is false.
 
 Bugs Fixed
 **********

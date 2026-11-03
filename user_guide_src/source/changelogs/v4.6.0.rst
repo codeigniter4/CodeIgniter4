@@ -36,8 +36,8 @@ The following breaking changes have been made accordingly:
 - ``TestException`` now extends ``CodeIgniter\Exceptions\LogicException``
   instead of ``CodeIgniter\Exceptions\CriticalError``.
 
-Filters Changes
----------------
+Filter Changes
+--------------
 
 The ``Filters`` class has been changed to allow multiple runs of the same filter
 with different arguments in before or after. See
@@ -46,7 +46,7 @@ with different arguments in before or after. See
 Registrars
 ----------
 
-Added check to prevent Auto-Discovery of Registrars from running twice. If it is
+Added a check to prevent Auto-Discovery of Registrars from running twice. If it is
 executed twice, an exception will be thrown. See
 :ref:`upgrade-460-registrars-with-dirty-hack`.
 
@@ -54,14 +54,14 @@ Time::createFromTimestamp()
 ---------------------------
 
 ``Time::createFromTimestamp()`` handles timezones differently. If ``$timezone``
-is not explicitly passed then the instance has timezone set to UTC unlike earlier
+is not explicitly passed, then the instance has its timezone set to UTC, unlike earlier versions
 where the currently set default timezone was used.
 See :ref:`Upgrading Guide <upgrade-460-time-create-from-timestamp>` for details.
 
 Time with Microseconds
 ----------------------
 
-Fixed bugs that some methods in ``Time`` to lose microseconds have been fixed.
+Bugs that caused some methods in ``Time`` to lose microseconds have been fixed.
 See :ref:`Upgrading Guide <upgrade-460-time-keeps-microseconds>` for details.
 
 Time::setTimestamp()
@@ -73,12 +73,12 @@ See :ref:`Upgrading Guide <upgrade-460-time-set-timestamp>` for details.
 Error Reporting to Non-HTML Requests
 ------------------------------------
 
-In previous versions, when a request does not accept HTML, CodeIgniter showed
+In previous versions, when a request did not accept HTML, CodeIgniter showed
 error details only in the ``development`` and ``testing`` environments.
 
 But because it is not possible to display error details when using a custom
 environment, this behavior has been fixed so that error details are displayed if
-``display_errors`` in PHP ini setting is enabled.
+``display_errors`` in the PHP ini setting is enabled.
 
 With this fix, the error details are now displayed under the same conditions for
 both HTML requests and non-HTML requests.
@@ -86,7 +86,7 @@ both HTML requests and non-HTML requests.
 Session ID (SID)
 ----------------
 
-Now ``Session`` library forces to use the PHP default 32 character SIDs, with 4
+Now the ``Session`` library forces the use of the PHP default 32-character SIDs, with 4
 bits of entropy per character.
 See :ref:`Upgrading Guide <upgrade-460-sid-change>` for details.
 
@@ -102,7 +102,7 @@ In previous versions, headers set by the ``Response`` class were added to existi
 ones - giving no options to change them. That could lead to unexpected behavior when
 the same headers were set with mutually exclusive directives.
 
-For example, session will automatically set headers with the ``header()`` function:
+For example, the session will automatically set headers with the ``header()`` function:
 
 .. code-block:: none
 
@@ -110,7 +110,7 @@ For example, session will automatically set headers with the ``header()`` functi
     Cache-Control: no-store, no-cache, must-revalidate
     Pragma: no-cache
 
-So if we set **Expires** header one more time we will end up with a duplicated header:
+So if we set the **Expires** header one more time, we will end up with a duplicated header:
 
 .. code-block:: php
 
@@ -126,7 +126,7 @@ Response headers:
     Expires: Sun, 17 Nov 2024 14:17:37 GMT
 
 Now, we don't know which one will be picked by the browser or which header is the correct one.
-With changes in this version our previous header will be overridden:
+With the changes in this version, our previous header will be overridden:
 
 .. code-block:: none
 
@@ -143,11 +143,11 @@ Interface Changes
 
 - **Router:** The following methods have been added in ``RouteCollectionInterface``:
 
-    - ``getDefaultNamespace()``
-    - ``getRoutesOptions()``
-    - ``setHTTPVerb()``
-    - ``isFiltered()``
-    - ``getFiltersForRoute()``
+  - ``getDefaultNamespace()``
+  - ``getRoutesOptions()``
+  - ``setHTTPVerb()``
+  - ``isFiltered()``
+  - ``getFiltersForRoute()``
 
 .. _v460-method-signature-changes:
 
@@ -158,7 +158,7 @@ Method Signature Changes
   changed. The ``RouteCollection`` typehint has been changed to ``RouteCollectionInterface``.
 - **View:** The return type of the ``renderSection()`` method has been
   changed to ``string``, and now the method does not call ``echo``.
-- **Time:** The first parameter type of the ``createFromTimestamp()`` has been
+- **Time:** The first parameter type of ``createFromTimestamp()`` has been
   changed from ``int`` to ``int|float``, and the return type ``static`` has been
   added.
 - **Helpers:** ``character_limiter()`` parameter names have been updated. If you use named arguments, you need to update the function calls.
@@ -167,17 +167,18 @@ Removed Type Definitions
 ------------------------
 
 - **Database:**
-    - The type ``string`` of the first parameter in
-      ``BaseConnection::escapeIdentifier()`` has been removed.
-    - The type ``string`` of the first parameter in
-      ``BaseConnection::getFieldNames()`` and ``SQLite3\Connection::getFieldNames()``
-      have been removed.
-    - The type ``string`` of the first parameter in
-      ``BaseConnection::_listColumns()`` and ``MySQLi\Connection::_listColumns()``
-      and ``OCI8\Connection::_listColumns()``
-      and ``Postgre\Connection::_listColumns()``
-      and ``SQLSRV\Connection::_listColumns()``
-      and ``SQLite3\Connection::_listColumns()`` have been removed.
+
+  - The type ``string`` of the first parameter in
+    ``BaseConnection::escapeIdentifier()`` has been removed.
+  - The type ``string`` of the first parameter in
+    ``BaseConnection::getFieldNames()`` and ``SQLite3\Connection::getFieldNames()``
+    has been removed.
+  - The type ``string`` of the first parameter in
+    ``BaseConnection::_listColumns()`` and ``MySQLi\Connection::_listColumns()``
+    and ``OCI8\Connection::_listColumns()``
+    and ``Postgre\Connection::_listColumns()``
+    and ``SQLSRV\Connection::_listColumns()``
+    and ``SQLite3\Connection::_listColumns()`` has been removed.
 
 .. _v460-removed-deprecated-items:
 
@@ -192,12 +193,12 @@ Removed Deprecated Items
   ``CodeIgniter\Test\TestLogger::cleanup()`` have been removed. Use the
   ``clean_path()`` function instead.
 - **Router:** The deprecated ``CodeIgniter\Router\Exceptions\RedirectException`` has been removed. Use ``CodeIgniter\HTTP\Exceptions\RedirectException`` instead.
-- **Constants:** The deprecated constants ``EVENT_PRIORITY_*`` in has been removed. Use the class constants ``CodeIgniter\Events\Events::PRIORITY_LOW``, ``CodeIgniter\Events\Events::PRIORITY_NORMAL`` and ``CodeIgniter\Events\Events::PRIORITY_HIGH`` instead.
+- **Constants:** The deprecated constants ``EVENT_PRIORITY_*`` have been removed. Use the class constants ``CodeIgniter\Events\Events::PRIORITY_LOW``, ``CodeIgniter\Events\Events::PRIORITY_NORMAL`` and ``CodeIgniter\Events\Events::PRIORITY_HIGH`` instead.
 - **View:** The deprecated property ``CodeIgniter\View\View::$currentSection`` has been removed.
 - **Config:** The deprecated property ``Config\Cache::$storePath`` has been removed. Use ``Config\Cache::$file['storePath']`` instead.
 - **Formatter:** The deprecated ``Config\Format::getFormatter()`` has been removed. Use ``CodeIgniter\Format\Format::getFormatter()`` instead.
 - **Security:** ``Config\Security::$samesite`` has been removed. Use ``Config\Cookie::$samesite`` instead.
-- **Cookie:** Methods ``dispatch()``, ``setRawCookie()``, ``setCookie()`` in ``CodeIgniter\Cookie\CookieStore`` has been removed. They are now part of ``CodeIgniter\HTTP\ResponseTrait``.
+- **Cookie:** Methods ``dispatch()``, ``setRawCookie()``, ``setCookie()`` in ``CodeIgniter\Cookie\CookieStore`` have been removed. They are now part of ``CodeIgniter\HTTP\ResponseTrait``.
 
 ************
 Enhancements
@@ -226,7 +227,7 @@ The following new Exception interfaces have been added:
 - ``CodeIgniter\HTTP\Exceptions\ExceptionInterface``
 - ``CodeIgniter\Router\Exceptions\ExceptionInterface``
 
-Displaying exceptions for non-HTML responses now rely on the PHP ``display_errors`` setting instead of hardcoded environments.
+Displaying exceptions for non-HTML responses now relies on the PHP ``display_errors`` setting instead of hardcoded environments.
 
 Commands
 ========
@@ -234,7 +235,7 @@ Commands
 - The ``spark routes`` and ``spark filter:check`` commands now display filter
   arguments.
 - The ``spark filter:check`` command now displays filter classnames.
-- The ``spark lang:sync`` command to synchronize translation files. See :ref:`sync-translations-command`
+- Added the ``spark lang:sync`` command to synchronize translation files. See :ref:`sync-translations-command`
 - The ``spark phpini:check`` command now has an optional ``opcache`` argument,
   which when used will display information about opcache settings.
 
@@ -247,13 +248,13 @@ Negotiator
 ==========
 
 - Added a feature flag ``Feature::$strictLocaleNegotiation`` to enable strict locale comparison.
-  Previously, response with language headers ``Accept-language: en-US,en-GB;q=0.9`` returned the first allowed language ``en`` could instead of the exact language ``en-US`` or ``en-GB``.
+  Previously, a response with language headers ``Accept-language: en-US,en-GB;q=0.9`` returned the first allowed language ``en`` instead of the exact language ``en-US`` or ``en-GB``.
   Set the value to ``true`` to enable comparison not only by language code ('en' - ISO 639-1) but also by regional code ('en-US' - ISO 639-1 plus ISO 3166-1 alpha).
 
 Pagination
 ==========
 
-- Added a new feature to get the total and the range number of items of the current page.
+- Added a new feature to get the total number of items and the range of item numbers on the current page.
   See :ref:`Displaying the Number of Items on the Page <displaying-the-number-of-items-on-the-page>` for more details.
 
 Database
@@ -271,19 +272,19 @@ Others
 Libraries
 =========
 
-- **File:** Added ``getSizeByBinaryUnit()`` and ``getSizeByMetricUnit()`` to ``File`` class.
+- **File:** Added ``getSizeByBinaryUnit()`` and ``getSizeByMetricUnit()`` to the ``File`` class.
   See :ref:`File::getSizeByBinaryUnit() <file-get-size-by-binary-unit>` and :ref:`File::getSizeByMetricUnit() <file-get-size-by-metric-unit>`.
-- **FileCollection:** Added ``retainMultiplePatterns()`` to ``FileCollection`` class.
+- **FileCollection:** Added ``retainMultiplePatterns()`` to the ``FileCollection`` class.
   See :ref:`FileCollection::retainMultiplePatterns() <file-collections-retain-multiple-patterns>`.
-- **Validation:** Added ``min_dims`` validation rule to ``FileRules`` class. See
+- **Validation:** Added ``min_dims`` validation rule to the ``FileRules`` class. See
   :ref:`Validation <rules-for-file-uploads>`.
-- **Validation:** Rules: ``is_unique`` and ``is_not_unique`` now accept the optional
+- **Validation:** The rules ``is_unique`` and ``is_not_unique`` now accept the optional
   ``dbGroup`` as part of the first parameter. See :ref:`Validation <rules-for-general-use>`.
 
 Others
 ======
 
-- **Filters:** Now you can execute a filter more than once with the different
+- **Filters:** Now you can execute a filter more than once with different
   arguments in before or after.
 - **Services:** Added ``BaseService::resetServicesCache()`` method to reset
   the services cache. See :ref:`resetting-services-cache`.
@@ -330,20 +331,25 @@ Deprecations
 ************
 
 - **Filters:**
-    - The properties ``$arguments`` and ``$argumentsClass`` of ``Filters`` have
-      been deprecated. No longer used.
-    - The ``Filters::getArguments()`` method has been deprecated. No longer used.
+
+  - The properties ``$arguments`` and ``$argumentsClass`` of ``Filters`` have
+    been deprecated. No longer used.
+  - The ``Filters::getArguments()`` method has been deprecated. No longer used.
+
 - **File:**
-    - The function ``getSizeByUnit()`` of ``File`` has been deprecated.
-      Use either ``getSizeByBinaryUnit()`` or ``getSizeByMetricUnit()`` instead.
+
+  - The function ``getSizeByUnit()`` of ``File`` has been deprecated.
+    Use either ``getSizeByBinaryUnit()`` or ``getSizeByMetricUnit()`` instead.
 
 **********
 Bugs Fixed
 **********
 
 - **Response:**
-    - Headers set using the ``Response`` class are now prioritized and replace headers
-      that can be set manually using the PHP ``header()`` function.
+
+  - Headers set using the ``Response`` class are now prioritized and replace headers
+    that can be set manually using the PHP ``header()`` function.
+
 - **View:** Added support for multibyte strings for ``View::excerpt()``.
 - **Helpers:** Added support for multibyte strings for ``excerpt()``.
 
