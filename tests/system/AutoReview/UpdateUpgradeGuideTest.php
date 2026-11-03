@@ -44,7 +44,7 @@ final class UpdateUpgradeGuideTest extends TestCase
 
         $this->nextVersion = sprintf('%d.%d.%d', $parts[0], $parts[1], ++$parts[2]);
         $this->upgradePath = sprintf(
-            './user_guide_src/source/installation/upgrade_%s.rst',
+            './docs/installation/upgrade_%s.md',
             str_replace('.', '', $this->nextVersion),
         );
     }
@@ -102,7 +102,7 @@ final class UpdateUpgradeGuideTest extends TestCase
             $this->assertStringContainsString('"All Changes" section', $outputString);
 
             $contents   = (string) file_get_contents($this->upgradePath);
-            $allChanges = substr($contents, (int) strpos($contents, "All Changes\n"));
+            $allChanges = substr($contents, (int) strpos($contents, "### All Changes\n"));
 
             $this->assertStringNotContainsString('- @TODO', $contents);
             $this->assertMatchesRegularExpression('/^- \S/m', $allChanges);

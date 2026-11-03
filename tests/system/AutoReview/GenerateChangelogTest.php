@@ -149,18 +149,18 @@ final class GenerateChangelogTest extends TestCase
     private function latestVersionWithSecuritySection(): ?string
     {
         $versions = [];
-        $paths    = glob('./user_guide_src/source/changelogs/v*.rst');
+        $paths    = glob('./docs/changelogs/v*.md');
 
         if ($paths === false) {
             return null;
         }
 
         foreach ($paths as $path) {
-            if (preg_match('/v(\d+\.\d+\.\d+)\.rst$/', $path, $matches) !== 1) {
+            if (preg_match('/v(\d+\.\d+\.\d+)\.md$/', $path, $matches) !== 1) {
                 continue;
             }
 
-            if (str_contains((string) file_get_contents($path), "\nSECURITY\n")) {
+            if (str_contains((string) file_get_contents($path), "\n## SECURITY\n")) {
                 $versions[] = $matches[1];
             }
         }

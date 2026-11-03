@@ -6,14 +6,9 @@ if [[ -z $1 ]]; then
     exit 1
 fi
 
-FILES=("system/CodeIgniter.php" "user_guide_src/source/conf.py")
-LENGTH="${#FILES[@]}"
+CHANGELOG="docs/changelogs/v$1.md"
 
-for FILE in "${FILES[@]}"; do
-    COUNT="$((COUNT + $(grep -c "$FILE" -e "'$1'")))"
-done
-
-if [[ $COUNT -ne $LENGTH ]]; then
+if ! grep -q -e "'$1'" system/CodeIgniter.php || [[ ! -f $CHANGELOG ]] || grep -q -e "^Release Date: Unreleased" "$CHANGELOG"; then
     echo "CodeIgniter version is not updated to v"$1""
     exit 1
 fi
